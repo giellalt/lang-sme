@@ -15,7 +15,7 @@ isme.fst: ../bin/isme.fst
 ../bin/isme.fst: ../bin/pos-sme.fst ../bin/n-sme.fst ../bin/s-sme.fst \
 	../bin/sme.save ../bin/allcaps.fst ../bin/n-sme.fst \
 	../bin/caseconv.fst ../bin/d-sme.fst \
-	../bin/abbr.txt
+	../bin/abbr.txt ../bin/cap-sme
 	@echo
 	@echo "*** Building the inverse isme.fst ***"
 	@echo
@@ -285,6 +285,16 @@ abbr.txt: ../bin/abbr.txt
 		--lex=propernoun-sme-lex.txt,closed-sme-lex.txt,adv-sme-lex.txt,noun-sme-lex.txt,sme-num.txt \
 		--output=../bin/abbr.txt
 
+BINDIR := $(shell pwd | sed -e s/src/bin/)
+
+cap-sme: ../bin/cap-sme
+../bin/cap-sme:
+	@echo
+	@echo "*** Generating cap-sme ***";
+	@echo
+	@printf "analyzer ${BINDIR}/sme.fst\n\
+	allcaps ${BINDIR}/allcaps.fst\n\n\
+	allcaps analyzer \n" > $@
 
 
 # ========== #
