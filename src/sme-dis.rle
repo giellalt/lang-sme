@@ -501,7 +501,11 @@ LIST VAHKKU = "áigi" "beaivi" "bodda" "čakča" "čakča#geassi" "čuohte#jahki
  # The quoteless jahki here is since the preprocessor is not fine-tuned
  # yet, it still gives '"1870-" # jahki N Sg Com'.
 
-SET TIME = MANNU | VAHKKU ;
+ 
+LIST BEAIVI =	"mánnodat" "vuoss#árga" "disdat" "maŋŋeb#árga" "gaska#vahkku"
+		"duorastat" "bearjadat" "lávvardat" "lávvordat" "sotna#beaivi" ;
+
+SET TIME = MANNU | VAHKKU | BEAIVI;
 SET NOTIME = N - TIME ;
 
 LIST GEASSET = "dálvet" "dálvit" "giđđat" "geasset" "geassit" "čakčat" ;
@@ -698,11 +702,17 @@ MAP (@-FMAINV) TARGET ConNeg ;
 # -----------------------
 
 REMOVE N-DER IF (0 LEX-N); # SELECT instead of REMOVE if one wants to
-REMOVE A-DER IF (0 LEX-A); # investigate word structure
-REMOVE V-DER IF (0 LEX-V); # THIS IS PROBABLY TOO STRONG, MSC may differ
+REMOVE A-DER IF (0 LEX-A); # investigate word structure.
 	## Dat lea oahpaheaddjin doppe.
 	## Dábálaš mearrádusat.
+
+REMOVE V-DER IF (0 LEX-V)(NOT 0 (eaddji)); 
 	## Maid don doaivvut?
+
+ # The negative condition is to avoid ending up with only a PrfPrc reading e.g. for 
+ # "registrerejeaddji" in 
+ # "… dan láhkai ahte dieđuid registrerejeaddji, journálaovddasvástideaddji ja
+ # bearráigeahččoeiseválddit sáhttet viežž\ tdieđuid dárbbu mield".
  
 REMOVE V-DER-PASS IF (0 V-PASS);
  # It might be that this one is no longer needed. - No hits in corpus!
@@ -1548,7 +1558,7 @@ REMOVE V IF (1 ("ihkinassii"));
 	## Bargiid guottut mearkkašit seamma ollu go fáktadieđut.
 	## Mun áiggun čuovvut du ihkinassii manažat.
 
-REMOVE N IF (-1 ("nu") OR ("mihá") OR ("hui"));
+REMOVE N IF (-1 ("nu") OR ("mihá") OR ("hui"))(0 Adv OR A OR PrfPrc);
 	## Mun lean nu suhttan. 
 	## Lea hui easkka čuožžilan gažaldat.
 
@@ -3657,12 +3667,8 @@ SELECT Actio IF (-1 NP-HEAD-GEN)(NOT 0 LEX-N)(1 N)(2 NP-BORDER);
 
 # Present participle
 # ------------------
-SELECT PrsPrc IF (-1 Attr OR ("hui"))(1 N);
-	## Sáhttá šiitit dákkár spiehkasteddji áddejumiid gávdnot.
-	## Mudden ferte dagahit hui vahágahtti meassamiid.
-
-SELECT PrsPrc IF (-2 Attr)(-1 COMMA OR CC)(1 N);
-	## Eaige galggašii gierdat garra, vahágahtti meassamiid.
+SELECT PrsPrc IF (-1 ("hui"))(*1 N BARRIER NPNH);
+	## Mudden ferte dagahit janza ja hui vahágahtti meassamiid.
 
 REMOVE PrsPrc IF (0 N)(1C NP-BORDER);
 REMOVE PrsPrc IF (0 N)(1 CLB)(2 NP-BORDER);
@@ -4080,8 +4086,8 @@ SELECT Gen IF (*-2 BOS OR CS BARRIER NON-ADV-PCLE)(*-1 Num BARRIER NPNH)
 	## Okta ášši mas lea stuora mearkkašupmi, lea ahte... #NOT 0 Interr!
 
 SELECT Gen IF (*-1 VFIN BARRIER NON-ADV-PCLE OR CLB)(NOT 0 Nom OR Dem OR VGen 
-	OR PrfPrc OR Interr)(NOT 1 CLB)(*1C (N Nom) OR (N Acc) BARRIER NPNH 
-	OR CC OR PUNCT LINK NOT 0 Prop);
+	OR PrfPrc OR PrsPrc OR Interr)(NOT 1 CLB)(*1C (N Nom) OR (N Acc) 
+	BARRIER NPNH OR CC OR PUNCT LINK NOT 0 Prop);
 	## Lávdegottiid doaibmaáigi čuovvu Sámedikki válgaáigodaga.
 
 SELECT Gen IF (NOT 0 Dem OR Attr OR VERB)(NOT 0 (N Acc) LINK 1 (Prop Acc))
@@ -4869,7 +4875,7 @@ SELECT Acc IF (*-1 V-NON-AUX-PASS BARRIER NON-ADV-PCLE OR REALCLB)(0 Num)
 SELECT Acc IF (*-1C V-NON-AUX-PASS BARRIER NPNHA or CLB OR ("nugo"))
 	(NOT 0 (Sg Nom) LINK *-1 (V Sg3) BARRIER VFIN OR CS OR CP)
 	(NOT -1 PrfPrc LINK NOT *-1 ("leat") BARRIER CS OR CP)
-	(NOT 0 PrfPrc OR Adv OR VFIN OR Loc)(1C NP-BORDER);
+	(NOT 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME)(1C NP-BORDER);
 	## Sámegillii galbet universitehta lea šaddan realitehta.
 
 SELECT Acc IF (*-1C V-NON-AUX-PASS BARRIER NPNHAIIP OR COMMA)
@@ -6139,11 +6145,28 @@ SELECT Inf IF (1 CC)(2C Inf);
 # Present Participle
 # ------------------
  # PrsPrc = Imprt Prs Du2 (even-syll)
- # PrsPrc = V+N+Actor!
+ # PrsPrc = V+N+Actor, and often LEX-N.
 
-#SELECT PrsPrc IF (*-1 COPULAS BARRIER V-NON-AUX OR CS OR CP)
-	#(*-1 (Pl Nom) BARRIER V-NON-AUX OR CS OR CP)(NOT 0 LEX-N);
-	## ..ja gávdnon gálvvuid njuolggadusat leat ovttastahtti.
+ # An example: Njuolggadusat divššohasovddasvástideaddji doaktára birra.
+ #				N Sg Gen OR V PrsPrc
+ # Very difficult to come up with any general rules!
+
+
+SELECT PrsPrc IF (-2 Attr)(NOT -2 Prop)(-1 COMMA OR CC)(1 N);
+	## Čáppa ja fillejeaddji sániiguin...
+
+REMOVE Nom IF (*-1 V-PL3 BARRIER NPNHA)(0 PrsPrc)(*1 N BARRIER NPNH);
+	## ...mat rievdaduvvojit dahje sihkkojuvvojit journálaovddasvástideaddji 
+	## redigerenbarggu oktavuođas.
+
+SELECT PrsPrc IF (1 TIME);
+	## Oaččut dan boahtti sotnabeaivái.
+
+REMOVE PrsPrc IF (0 N)(1 COMMA)(2 NP-BORDER OR CC);
+	## Eai dearvvaš olbmot dárbbaš dálkkasteddji, muhto buohccit.
+
+REMOVE PrsPrc IF (0 N)(1 Indef);
+	## Ii dus leat gávdni masage.
 
 
 # Actio/Perfect Participle
@@ -6151,11 +6174,13 @@ SELECT Inf IF (1 CC)(2C Inf);
  # Actio = Prs Sg1 = PrfPrc (odd-syll verbs, contracted verbs)
  # Perfect Participle is also treated in "Disambiguating verbs - part 1".
 
-SELECT PrfPrc IF (*-1 BOS OR CS BARRIER NPNH)(*1 N BARRIER NPNH);
+SELECT PrfPrc IF (*-1 BOS OR CS BARRIER NPNH)(*1 N BARRIER NPNH LINK *1 VFIN
+	BARRIER NON-ADV-PCLE);
+	## Sajáiduvvan fágadoahpagiid sáhttá dieđusge geavahit.
 
 SELECT PrfPrc IF (*-1 PrfPrc BARRIER NON-ADV-PCLE)(*1 N BARRIER NPNH);
 
-SELECT PrfPrc IF (0 ("mannat"))(1 VAHKKU);
+SELECT PrfPrc IF (0 ("mannat"))(1 TIME);
 	## Mannan čuohtejagi gaskkamuttos lei stuorra gilvu.
 
 SELECT PrfPrc IF (-1 A)(0 ("dahkkot"));
@@ -6357,7 +6382,10 @@ REMOVE (Dem Gen) IF (*1 (N Nom) BARRIER NPNH);
 
 # Derived nouns
 # -----
-REMOVE (N Actor); # The N reading should remain.
+ # These rules need to come late, allowing Actor and Actio readings to be 
+ # picked out by earlier rules.
+
+REMOVE (N Actor) IF (0 LEX-N); # The N reading should remain.
 REMOVE Actio IF (NOT 0 Ess); # Same here.
 REMOVE (N Actio) IF (0 (V Actio));
 	##
@@ -6414,6 +6442,10 @@ SELECT (@SPRED) IF (*1 COPULAS BARRIER NON-ADV-PCLE LINK *1 Prop OR Pers
 SELECT (@SPRED) IF (*-1 BOS OR REALCLB OR PUNCT BARRIER NON-CC)(0 A)
 	(1 (Pers Nom));
 	##
+
+SELECT (@SPRED) IF (*-1 (Pers Nom) BARRIER NPNHA LINK *-1 COPULAS 
+	BARRIER NON-ADV-PCLE);
+	## Leat go don árgi bajándálkkis?
  
 SELECT (@SPRED) IF (0 A)(*-1 ("leat" Sg3)) ;
 
