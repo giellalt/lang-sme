@@ -65,9 +65,10 @@ LIST Gen = Gen ;
 
 #LIST Comp = Comp ; LIST Superl = Superl ;
 
-LIST Attr = Attr ; #LIST Clt = Clt ; LIST Card = Card ;
+LIST Attr = Attr ; LIST Clt = Clt ; #LIST Card = Card ;
 
-#LIST Pass = Pass ; LIST Ind = Ind ; LIST Prs = Prs ; LIST Prt = Prt;
+LIST Prt = Prt;
+#LIST Pass = Pass ; LIST Ind = Ind ; LIST Prs = Prs ; 
 #LIST Pot = Pot ; LIST Cond = Cond ;
 LIST Imprt = Imprt ;
 
@@ -113,26 +114,22 @@ LIST WORD = N A Adv V Pron CS CC Adp Po Pr Interj Pcle Num ; # any word
 # Derivational affixes
 # --------------------
 
-SET V-DER = (adda)|(alla)|(d)|(g)|(h)|(asti)|(hudda)|(huhtti)|(huvva) |
-(j)|(l)|(ahtti)|(st)|(stuvva)|(goahti) ;
+# not like this
+# SET V-DER = (adda)|(alla)|(d)|(g)|(h)|(asti)|(hudda)|(huhtti)|(huvva) |
+# (j)|(l)|(ahtti)|(st)|(stuvva)|(goahti) ;
 
-# Like this instead?
-# LIST V-DER = adda alla d g h asti hudda huhtti huvva j l ahtti st
-#              stuvva goahti ;
+#Like this instead
+LIST V-DER = adda alla d g h asti hudda huhtti huvva j l ahtti st
+              stuvva goahti ;
+LIST N-DER = eaddji eamos1 eapmi heapmi s1 mus1 us vuohta ;
+LIST A-DER = geahtes lágan las1 meahttun ;
 
+SET DER = V-DER | N-DER | A-DER ;
 
-SET N-DER = (eaddji)|(eamos1)|(eapmi)|(heapmi)|(s1)|(mus1)|(us)|(vuohta) ;
-
-SET A-DER = (geahtes)|(lágan)|(las1)|(meahttun) ;
-
-#SET DER = V-DER | N-DER | A-DER ;
-
-# Complementary sets
-# ------------------
 
 # Case sets
 # ---------
-SET ADVLCASE = Ill | Loc | Com | Ess ;
+LIST ADVLCASE = Ill Loc Com Ess ;
 
 # Syntactic sets
 # --------------
@@ -142,7 +139,9 @@ SET PRE-NP-HEAD = (Prop Attr) | (Pron Pers Gen) | (Pron Dem) | A ; # works.
 
 SET NON-ADV = WORD - Adv;
 
-SET NP-BORDER = ECL | COMMA | Adv | V | Pers | CS | Recipr | Dem ;
+SET NP-BORDER = ECL | CLB | Adv | V | Pers | CS | Recipr | Dem ;
+# too risky to use CLB, need more sophisticated way.
+# this allows for NP-internal commas to break NP.
 
 # Noun sets
 # ---------
@@ -245,21 +244,37 @@ SET A-ATTR = ( A Attr) ;
 
 SET LEX-A = A - A-DER ;
 
+# Sets for adverbials
+# -------------------
+
+LIST IKTE = "ikte" "dolin" "dovle" ;
+
 # Sets for closed classes
 # -----------------------
 SET PPOS = Adp | Po | Pr ;
+
+LIST POST-A = "rájes" ;
+LIST POST-B = "rádjái" ;
+
+# Sets of specific words
+# ----------------------
 
 # Miscellanious sets
 # ------------------
 
 
-
 SET NUMERALS = Num - OKTA ;
 SET COMP = (Pron Interr);
 
-# ====================
-# Disambiguation rules
-# ====================
+
+
+
+# ==================== #
+# ==================== #
+# Disambiguation rules #
+# ==================== #
+# ==================== #
+
 # ===================================
 # One-cohort disambiguation - cycle 0
 # ===================================
@@ -388,7 +403,9 @@ REMOVE Attr IF (0 Prop)(NOT 1 Prop); # Trond Trosteruda
 
 SELECT (N) IF (-1C (A Attr)); # c1uovvovas1 sajis
 SELECT (N) IF (-2C N) (-1 CC) (NOT 1 N OR A); # Mánát ja nuorat leat...
-SELECT (N) IF (1 Po); # sápmelac1c1aid birra.
+#SELECT (N) IF (1 Po); # sápmelac1c1aid birra. But: Dan gaskka.
+REMOVE V IF (1 Po); # sápmelac1c1aid birra. # problem with derived V > Nq
+REMOVE Adv IF (1 Po); 
 SELECT (N) IF (1 COMMA)(2 (Pron Interr)); # Doaimmat, maiguin... #too spec.
 
 REMOVE V IF (-1 Dem)(1 V-IND-FIN); ## Dán báhkis s1addá c1áppa gohppu.
@@ -422,16 +439,21 @@ SELECT Gen IF (-1 NUMERALS OR MANGA); #Golbma nieidda, mán1ga nieidda
 SELECT Gen IF (-1 CLB)(1 N)(*1 VFIN); # Nieidda girji lea ruoksat
 SELECT Gen IF (-1 BCL)(1 N)(*1 VFIN); # Din viessu s1attai oppa stuoris.
 
+# Genitive inside a two-part Po
+SELECT Gen IF (-1 POST-A)(1 N)(2 POST-B);
+## Nu leat 40 buolvva Dávveda rájes Babylonia fán1gavuod1a rádjái.
+
 #REMOVE Acc IF (-1 BCL)(1 (N Gen) OR (Attr) OR PPOS) ; # Mu birra don humat.
 # This should be covered by the others... Check.
 
 # Genitive in front of the final word in the sentence
-#SELECT Gen IF (0 CNOUN OR (Pron Pers))(1 N)(2 CLB); # Oainnán du biilla.
 SELECT Gen IF (0C CNOUN )(1C N)(2 CLB); # Oainnán nieidda biilla.
-SELECT Gen IF (0C (Pron Pers))(1C N)(2 CLB); # Oainnán nieidda biilla.
+SELECT Gen IF (0C (Pron Pers))(1C N)(2 CLB); # Oainnán su biilla.
+SELECT Gen IF (0C (N Prop) )(1C CNOUN)(2 CLB); # Oainnán Uria biilla.
+# Unify these? Look at the effect of each and one of them.
 
 # Genitive sequences
-SELECT Gen IF (NOT -1 V)(0C N)(1 N) (NOT 2 Po); ## Áhc1i viesu uksa lea alit.
+SELECT Gen IF (NOT -1 V)(0C N)(1 CNOUN) (NOT 2 Po); ## Áhc1i viesu uksa lea alit.
 
 
 # CONSTRAINTS # trying to sequentiate the gen and acc rules
@@ -447,10 +469,15 @@ SELECT Acc IF (-1 LEAT-FIN-NON-IMP) (1 PrfPrc); ## Mun lean dan dahkan.
 
 # Accusative at the end of the sentence
 # -------------------------------------
-SELECT Acc IF (-1 V)(NOT -1 ("leat"))(1 ECL); ## Mun oainnán du.
+SELECT Acc IF (-1 V)(NOT -1 ("leat"))(1 NP-BORDER); ## Mun oainnán du.
 SELECT Acc IF (-2 V)(NOT -1 ("leat"))(-1 PRE-NP-HEAD)(1 NP-BORDER);
 SELECT Acc IF (-2 V)(NOT -1 ("leat"))(-1 Adv OR ADVLCASE)(0 N OR Pron)
-              (1 ECL);
+              (1 NP-BORDER);
+
+# Earlier, more restrictive and specific versions of the above
+#SELECT Acc IF (-1 V)(NOT -1 ("leat"))(1 ECL); ## Mun oainnán du.
+#SELECT Acc IF (-2 V)(NOT -1 ("leat"))(-1 Adv OR ADVLCASE)(0 N OR Pron)
+#              (1 ECL);
 #SELECT Acc IF (-1 V-NON-COP)(1 ECL); ## Mun oainnán du.
 #SELECT Acc IF (-2 V-NON-COP )(-1 PRE-NP-HEAD)(1 NP-BORDER); 
 #SELECT Acc IF (-2 V-NON-COP) (-1 Adv OR ADVLCASE)(1 ECL);
@@ -459,6 +486,9 @@ SELECT Acc IF (-2 V)(NOT -1 ("leat"))(-1 Adv OR ADVLCASE)(0 N OR Pron)
 #SELECT Acc IF (*-1 V-NON-COP BARRIER (Pron Pers Nom) OR PPOS);
 
 REMOVE Acc IF (NOT *-1 V-NON-COP )(NOT *1 V-NON-COP ); #Need a verb for an obj.
+
+REMOVE Gen IF (-1 VFIN)(0 N)(1 CLB); ## Joramii riegádii Ussia, Ussiai riegadii
+# The rule is too specific.          ## Jotam.
 
 
 # Nom
@@ -517,10 +547,14 @@ SELECT (N Sg Nom) IF (-1 BCL)(1C V-SG3); ## Moras1 s1attai illun.
 SELECT Nom IF (-1 PROP) (0 PROP) (1 V-SG3); # Biret Anne galgá...
 
 
-# Rules for disambiguation around conjunctions
-# --------------------------------------------
+# Rules for disambiguation around conjunctions, in coordination
+# -------------------------------------------------------------
 
-SELECT Nom IF (-2 N-NOM) (-1 CC) (NOT 1 Gen); # Trond ja Kirsti leat ...
+SELECT Nom IF (-2C N-NOM)(-1 CC)(NOT 1 Gen); # Trond ja Kirsti leat ...
+SELECT Nom IF (1 CC)(2C N-NOM); # Kirsti  ja Trond leat ...
+
+REMOVE Gen IF (0 N)(1 CC)(2 (Pron Sg3 Gen)); ## Jos1iai riegádii
+# Peters and Pauls friend OK.                ## Jekonja ja su vieljat.
 
 SELECT Nom IF (-2 (Nom Cmpnd)) (-1 CC);
 SELECT Gen IF (-2 (Gen Cmpnd)) (-1 CC);
@@ -632,6 +666,9 @@ SELECT Pl1 IF (-1 MII-PERS);
 
 # Pl3
 # ---
+  # Prs Pl3 = Prt Sg2 = Prs Pl1 = Inf (odd syll)   muitalit
+  # Prs Pl3 = Prt Sg2 = Imprt Prs Pl2 (even syll)    vulget
+  # Prs Pl3 = Prt Sg2                 (contracted) fertejit
 
 SELECT Pl3 IF (0 LEAT) (-1 (Pl Loc)); # Mis leat
 SELECT Pl3 IF (0 LEAT) (-1 (Du Loc)); # Munnos leat
@@ -655,8 +692,10 @@ SELECT Pl3 IF (1 Pcle) (2C N-PL-NOM); # Nieiddat jerre
                                         # Jerre go nieida ja gánda?
                                         # Jerrego nieida ja gánda?
 
-SELECT Pl3 IF (-1 (Pron Interr Pl Nom)) (-2 COMMA) (-3 N-PL);
+SELECT Pl3 IF (-3 N-PL)(-2 COMMA)(-1 (Pron Interr Pl Nom)) ;
              #olbmot, geat fállet (too specific?)
+SELECT Pl3 IF (-2 N-PL)(-1 (Pron Interr Pl Nom)) ;
+             #olbmot geat fállet (too specific?)
 
 
 ## Dá livc1c1e dutnje sabehat.
@@ -689,10 +728,16 @@ REMOVE (Inf) IF (-1 (Inf)) ; # 1 hit
 
 # Past Sg2
 # --------
-# Past Pl1
-# Prt Sg2 = Prs Pl3 = Imprt Prs Pl2 (even syll)
-  # Prt Sg2 = Prs Pl3 = Prs Pl1 = Inf (odd syll)
-  # Prt Sg2 = Prs Pl3                 (contracted)
+  # Prt Sg2 = Prs Pl3 = Imprt Prs Pl2 (even syll)    vulget
+  # Prt Sg2 = Prs Pl3 = Prs Pl1 = Inf (odd syll)   muitalit
+  # Prt Sg2 = Prs Pl3                 (contracted) fertejit
+
+SELECT Sg2 IF (*-1 (Pron Pers Sg2 Nom))(0 Prt); ## Don vulget ikte.
+SELECT Sg2 IF (-1 BCL)(0 (Prt Clt))(1 (Pron Pers Sg2 Nom)); ## Vulgetgo don?
+
+SELECT Sg2 IF (*-1 IKTE)(0 Prt); ## Mun died1an, ahte vulget ikte.
+SELECT Sg2 IF (-1 BCL)(0 (Prt Clt))(*1 IKTE); ## Vulgetgo ikte?
+
 
 # Past Sg3
 # --------
@@ -949,7 +994,17 @@ SELECT Recipr IF (1  Recipr); # ... ...    guoimmiset
 # Disambiguating adpositions
 # ==========================
 
-SELECT Po IF (*-1 V)(-1 Gen)(0 ("alde")); # Láibi lea beavddi alde.
+#SELECT Po IF (*-1 V)(-1 Gen)(0 ("alde")); # Láibi lea beavddi alde.
+#SELECT Po IF (-1 Gen); ## Láibi lea beavddi alde.
+
+# using it for all Po
+REMOVE N IF (-1 Gen)(0 Po);
+REMOVE V IF (-1 Gen)(0 Po);
+REMOVE Adv IF (-1 Gen)(0 Po);
+REMOVE N IF (-1 Gen)(0 Adp);
+REMOVE V IF (-1 Gen)(0 Adp);
+REMOVE Adv IF (-1 Gen)(0 Adp);
+
 
 # Disambiguating subjunctions
 # ===========================
