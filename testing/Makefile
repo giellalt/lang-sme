@@ -2,9 +2,23 @@ SHELL = /bin/sh
 #!/usr/bin/make
 #
 # This is a makefile to automatise most of the testing.
+# It is language independent within the framework of the Sámi language
+# technology project. See further user documentation (and technical as well)
+# in $CVSROOT/gt/doc/docu-testing.html
+
+# VARIABLE DEFINITIONS
+# ====================
 
 # Where all the perl scripts are:
 BINDIR = ../../script/testing
+
+# The temp directory:
+TEMP = /tmp
+
+# This variable is holding the filename of the save file:
+# (makes the Makefile truly language independent for
+# the Sami languages)
+SAVEFILE = $(wildcard ../sm?.save)
 
 # Copied from old LS makefile:
 # Bond, James Bond
@@ -13,6 +27,20 @@ UMASK=@umask 007
 # Empty variable to be overridden by the user when
 # generating paradigms:
 WORD =
+
+# These variables define  the relationship between the source files
+# and the final output files (the reports), such that one can con-
+# struct a list of targets for the main target
+NGenFiles := $(patsubst %.txt,%.greport,$(wildcard n-*.txt))
+NAnaFiles := $(patsubst %.txt,%.areport,$(wildcard n-*.txt))
+VGenFiles := $(patsubst %.txt,%.greport,$(wildcard v-*.txt))
+VAnaFiles := $(patsubst %.txt,%.areport,$(wildcard v-*.txt))
+AGenFiles := $(patsubst %.txt,%.greport,$(wildcard a-*.txt))
+AAnaFiles := $(patsubst %.txt,%.areport,$(wildcard a-*.txt))
+
+
+# MAJOR TARGETS, HOUSEKEEPING TARGETS
+# ===================================
 
 # Default target:
 # Remove the comments in front of the verb and adjective
@@ -49,7 +77,7 @@ all-a: a-g.summary a-a.summary
 .PHONY: clean
 clean:
 	@echo
-	@echo "*** Now deleting all generated files ***"
+	@echo "*** Now deleting ALL the generated files ***"
 	@echo
 	@rm -f *.testbase \
 		  *.gtest \
@@ -65,18 +93,31 @@ clean:
 		  *paradigm \
 		  *.tgz	\
 		  *~ \
-		  /tmp/*test-script
+		  $(TEMP)/*test-script
 
-# These variables define  the relationship between the source files
-# and the final output files (the reports), such that one can con-
-# struct a list of targets for the main target
-NGenFiles := $(patsubst %.txt,%.greport,$(wildcard n-*.txt))
-NAnaFiles := $(patsubst %.txt,%.areport,$(wildcard n-*.txt))
-VGenFiles := $(patsubst %.txt,%.greport,$(wildcard v-*.txt))
-VAnaFiles := $(patsubst %.txt,%.areport,$(wildcard v-*.txt))
-AGenFiles := $(patsubst %.txt,%.greport,$(wildcard a-*.txt))
-AAnaFiles := $(patsubst %.txt,%.areport,$(wildcard a-*.txt))
+.PHONY: almost-clean
+almost-clean:
+	@echo
+	@echo "*** Now deleting all generated files but the summary files ***"
+	@echo
+	@rm -f *.testbase \
+		  *.gtest \
+		  *.atest \
+		  *.gfacit \
+		  *.afacit \
+		  *.greport \
+		  *.areport \
+		  *.gresult \
+		  *.aresult \
+		  *.ptest \
+		  *paradigm \
+		  *.tgz	\
+		  *~ \
+		  $(TEMP)/*test-script
 
+
+# POS SPECIFIC SECTIONS
+# =====================
 
 # NOUNS
 # =====
@@ -120,16 +161,18 @@ n-para.ptest: noun-codes.txt
 	@chmod 660 $@
 
 # Paradigm generation:
-n-paradigm: n-para.ptest
+.PHONY: n-paradigm
+n-paradigm: n-para.ptest savefile
 	@echo
 	@echo "*** Running the paradigm generator for '$(WORD)' ***"
 	@echo
-	@printf "load ../sme.save \n\
+	@printf "load $(SAVEFILE) \n\
 	apply down <$< \n\
-	quit \n" > /tmp/$@-gtest-script
-	@xfst < /tmp/$@-gtest-script > $@
-	@rm -f /tmp/$@-gtest-script
-	@less $@
+	quit \n" > $(TEMP)/$@-gtest-script
+	@xfst < $(TEMP)/$@-gtest-script > $(WORD).paradigm
+	@rm -f $(TEMP)/$@-gtest-script
+	@rm -f $<
+	@less $(WORD).paradigm
 
 
 # VERBS
@@ -174,16 +217,17 @@ v-para.ptest: verb-codes.txt
 	@chmod 660 $@
 
 # Paradigm generation:
-v-paradigm: v-para.ptest
+v-paradigm: v-para.ptest savefile
 	@echo
 	@echo "*** Running the paradigm generator for '$(WORD)' ***"
 	@echo
-	@printf "load ../sme.save \n\
+	@printf "load $(SAVEFILE) \n\
 	apply down <$< \n\
-	quit \n" > /tmp/$@-gtest-script
-	@xfst < /tmp/$@-gtest-script > $@
-	@rm -f /tmp/$@-gtest-script
-	@less $@
+	quit \n" > $(TEMP)/$@-gtest-script
+	@xfst < $(TEMP)/$@-gtest-script > $(WORD).paradigm
+	@rm -f $(TEMP)/$@-gtest-script
+	@rm -f $<
+	@less $(WORD).paradigm
 
 
 # ADJECTIVES
@@ -228,20 +272,25 @@ a-para.ptest: adj-codes.txt
 	@chmod 660 $@
 
 # Paradigm generation:
-a-paradigm: a-para.ptest
+a-paradigm: a-para.ptest savefile
 	@echo
 	@echo "*** Running the paradigm generator for '$(WORD)' ***"
 	@echo
-	@printf "load ../sme.save \n\
+	@printf "load $(SAVEFILE) \n\
 	apply down <$< \n\
-	quit \n" > /tmp/$@-gtest-script
-	@xfst < /tmp/$@-gtest-script > $@
-	@rm -f /tmp/$@-gtest-script
-	@less $@
+	quit \n" > $(TEMP)/$@-gtest-script
+	@xfst < $(TEMP)/$@-gtest-script > $(WORD).paradigm
+	@rm -f $(TEMP)/$@-gtest-script
+	@rm -f $<
+	@less $(WORD).paradigm
 
 
 # POS-independent parts:
 # ======================
+
+# Make sure there is an available smX.save in the parent directory:
+savefile:
+	@cd ../ && $(MAKE)
 
 # Word form generation:
 # ---------------------
@@ -269,15 +318,15 @@ a-paradigm: a-para.ptest
 	@chmod 660 $@
 
 # Here we run the actual generation test:
-%.gresult: %.gtest
+%.gresult: %.gtest savefile
 	@echo
 	@echo "*** Running the word form generator test for $*.txt ***"
 	@echo
-	@printf "load ../sme.save \n\
+	@printf "load $(SAVEFILE) \n\
 	apply down <$< \n\
-	quit \n" > /tmp/$*-gtest-script
-	@xfst < /tmp/$*-gtest-script > $@
-	@rm -f /tmp/$*-gtest-script
+	quit \n" > $(TEMP)/$*-gtest-script
+	@xfst < $(TEMP)/$*-gtest-script > $@
+	@rm -f $(TEMP)/$*-gtest-script
 
 # Then we compare with the facit, and report any differences:
 %.greport: %.gresult %.gfacit
@@ -297,7 +346,7 @@ a-paradigm: a-para.ptest
 
 # First, create the needed test file
 # NB! The sorting specified does not work completely as intended!
-# This will lead to smell differences between the facit file and
+# This will lead to small differences between the facit file and
 # the analysis output. This happens when one input string gives
 # more than one analysis. The expected output is according to the
 # order in the inflection lexicon, but the tags in the facit file
@@ -328,15 +377,15 @@ a-paradigm: a-para.ptest
 	@chmod 660 $@
 
 # Here we run the actual analysis test:
-%.aresult: %.atest
+%.aresult: %.atest savefile
 	@echo
 	@echo "*** Running the word form analysis test for verbs ***"
 	@echo
-	@printf "load ../sme.save \n\
+	@printf "load $(SAVEFILE) \n\
 	apply up <$< \n\
-	quit \n" > /tmp/$*-atest-script
-	@xfst < /tmp/$*-atest-script > $@
-	@rm -f /tmp/$*-atest-script
+	quit \n" > $(TEMP)/$*-atest-script
+	@xfst < $(TEMP)/$*-atest-script > $@
+	@rm -f $(TEMP)/$*-atest-script
 
 # Finally, we compare with the facit, and report any differences:
 # Due to the sorting problems mentioned above, there will always (?)
