@@ -288,6 +288,8 @@ SET SII = (Pron Pers Pl3 Nom);
 
 SET PPRON-DU-PL = MOAI | DOAI | SOAI | MII-PERS | DII | SII ;
 
+SET PPRON-NOT-SII = MUN | DON | SON | MOAI | DOAI | SOAI | MII-PERS | DII ;
+
 #SET PRON-PL-LOC = (Pron Pers Pl1 Loc)|(Pron Pers Pl2 Loc)|(Pron Pers Pl3 Loc);
 
 #SET MII-INTERR = ("mii" Pron Interr Sg Nom);
@@ -1425,7 +1427,8 @@ SELECT Acc IF (*-1 LEAT-FIN-NON-IMP BARRIER NPNHAI) (1 PrfPrc);
 
 SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAIIP)
               (0 NP-HEAD)(NOT 0 PrfPrc or Adv)
-              (1 NP-BORDER OR ADVLCASE)(NOT 1 Po) ;
+              (1 NP-BORDER OR ADVLCASE OR Adv OR A)
+              (NOT 1 Po) ;
               # instead of next two lines. hmm...
 #              (1 CLB OR Adv OR (A Comp) OR (A Superl) OR (A Attr) OR
 #              ("go") OR CS OR PUNCT);
@@ -1433,10 +1436,12 @@ SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAIIP)
                                  ## In mun sálten nu olu.
                                  ## Dázat eai atnán sámiid buoret go beanan.
                                  ## Sii badjelgehc1c1e olbmo jos sámiin náitala.
+                                 ## Son ráhkada gáhkuid hui buriid.
 # look at the NP-BORDER concept here...
 # NPNHAII there to include "indirect objects"
 # Added C to *-1C, to avoid interference from derived nouns. The problem will
 # become smaller as we improve the preprocessor.
+# The (1 Adv or Adj) is there to take care of object predicatives
 
 REMOVE Acc IF (NOT *-1 V-NON-AUX BARRIER CS)(NOT *1 V-NON-AUX BARRIER CS);
         ## Sápmelac1c1aid historjá álbmogin lea duháhiid jagiid boaris, muhto
@@ -1512,7 +1517,7 @@ SELECT Acc IF (0 VAHKKU)(NOT 1 Po);
 # Object predicatives
 # -------------------
 
-SELECT Acc IF (-1 Acc)(0 A)(1 CLB OR EOS OR CS);
+SELECT Acc IF (*-1 Acc BARRIER NPNHA)(0 A)(1 CLB OR EOS OR CS);
                                      ## Dáz1at eai atnán sámiid buoret go beanan.
 
 
@@ -2010,7 +2015,10 @@ SELECT Interr IF (0 ("mii" Pron Interr Sg Nom))
 # Preverbal subject
 
  # Single noun
-SELECT Pl3 IF (*-1C NP-HEAD-PL-NOM BARRIER NON-ADV-PCLE);   ## Nieiddat jerre
+SELECT Pl3 IF (*-1C NP-HEAD-PL-NOM BARRIER PPRON-NOT-SII OR (N Sg Nom));
+                            ## Nieiddat jerre
+                            ## Makkár vuoigatvuod1at dain leat riikavuloz1in?
+
 
  # Coordination
 SELECT Pl3 IF (*-1 NP-HEAD-SG-NOM BARRIER NON-ADV
