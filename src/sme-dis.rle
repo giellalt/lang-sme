@@ -48,7 +48,7 @@ LIST Interj = Interj ;
 LIST Ess = Ess ;
 LIST Sg = Sg ; LIST Pl = Pl ;
 LIST Nom = Nom ; LIST Acc = Acc ;
-#LIST Ill = Ill ;
+LIST Ill = Ill ;
 LIST Loc = Loc ; LIST Com = Com ;
 LIST Gen = Gen ;
 
@@ -211,6 +211,8 @@ SET V-NON-AUX = V - AUX ;
 
 SET VFIN-NON-AUX = VFIN - AUX ;
 
+LIST MOD = "áigot" "fertet" "galgat" "sáhttit" "viggat" ;
+# This is a tentative set of verbs taking infinitive complements.
 
 SET V-DER-PASS = V + V-DER + Pass;    # + is intersection, this should work
 #SET V-PASS = V + Pass - V-DER;       # hmm, what was the idea here?
@@ -335,6 +337,10 @@ LIST INITIAL =  "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m"
 
 LIST PROSEANTA = "proseanta" "%" ;
 
+LIST VAHKKU =  "beaivi" "jahki" "vahku" "mánnu" "idja" ;
+
+SET AIGI = MANNU | VAHKKU ;
+
 
 # Miscellanious sets
 # ------------------
@@ -355,7 +361,7 @@ SET NP-HEAD-SG-NOM = (Pron Sg Nom) | (N Sg Nom);
 SET NP-HEAD-PL-NOM = (Pron Pl Nom) | (N Pl Nom);
 
 SET PRE-NP-HEAD = (Prop Attr) | A | (Pron Pers Gen) | (N Gen) |
-                  (Pron Dem)  | (Pron Refl Gen) | CC ;
+                  (Pron Dem)  | (Pron Refl Gen) | (Pron Indef) | CC ;
 
 # There must be a sensible naming convention for these sets...
 SET NPNH = WORD - PRE-NP-HEAD ;                 # NPNH = "NON-PRE-NP-HEAD". 
@@ -633,7 +639,7 @@ SELECT Adv IF (0 GEASSET)(*1 VFIN);              ## Dálvet son vulggii meahccái.
 SELECT Adv IF (0 ("ikte"))(*1 (V Prt));          ## Ikte lei hui buolas1.
 SELECT Adv IF (*-1 (V Prt))(0 ("ikte"));         ## Ikte lei hui buolas1.
 
-SELECT Adv IF (0 ("de"))(NOT 1 Prop);      ## De lea vissa ahte De Silva boahtá.
+REMOVE Prop IF (0 ("de"))(NOT 1 Prop);      ## De lea vissa ahte De Silva boahtá.
 
 SELECT Adv IF (-1 VFIN)(0 ADV-NOT-OTHER-POS);    ## Lea dus1s1e okta Ipmil.
        # Cycle 1a?
@@ -668,6 +674,16 @@ SELECT Adv IF (-1 BOS)(0 ADV-NOT-NAMES);             ## De fidnejin.
 # álgu
 SELECT N IF (-1 Gen OR (A Attr))(0 ("álgu"));   ## Pros1eavtta álgu ii lean álki.
 
+# rádjai 
+SELECT Po IF (-1 Num)(0 ("rádjai"));
+ # this rule should be extended to all postpositions likely to occur after
+ # number expresseions. Todo: Make a set.
+
+# eanet
+SELECT Adv IF (-1 ("olu"))(0 ("eanet"));       ## Guovlu atnigoahtá olu eanet.
+ # This is really a low-level rule. It may perhaps be extended to
+ # SELECT Adv IF (-1 ("olu"));
+ # but we would like to see some examples of a general pattern first.
 
 
 # ========================= #
@@ -813,9 +829,10 @@ REMOVE (N Acc) IF (-1 NP-BORDER)(*1 N BARRIER NON-A LINK *1 VFIN);
 REMOVE (N Nom) IF (-1 NP-BORDER)(*1 N BARRIER NON-A LINK *1 VFIN);
                                          ## Nieidda girji lea ruoksat.
 
-REMOVE (Pron Acc) IF (-1 NP-BORDER)(*1 N BARRIER NON-A LINK *1 VFIN);
-REMOVE (Pron Nom) IF (-1 NP-BORDER)(*1 N BARRIER NON-A LINK *1 VFIN);
+REMOVE (Pron Pers Acc) IF (-1 NP-BORDER)(*1 N BARRIER NON-A LINK *1 VFIN);
+REMOVE (Pron Pers Nom) IF (-1 NP-BORDER)(*1 N BARRIER NON-A LINK *1 VFIN);
                                          ## Din viessu s1attai oppa stuoris.
+# Added Pers in order not to include 
 
 # The 'select' rule was too powerful, we do 'removeä instead.
 #SELECT Gen IF (-1 NP-BORDER)(*1 N BARRIER NON-A LINK *1 VFIN);
@@ -873,14 +890,18 @@ SELECT Gen IF (NOT -1 V)(0C N)(1C CNOUN) (NOT 2 Po); ##Áhc1i viesu uksa lea alit
 # ------------------------------------
 
 # In front of an infinitive
-SELECT Acc IF (*-1 V-IND-FIN BARRIER NPNHAI)(NOT 0 PrfPrc)(1 Inf);
+SELECT Acc IF (*-1 VFIN BARRIER NPNHAI)(NOT 0 PrfPrc)(1 Inf);
                           ## Od1astus addá vejolas1vuod1a muitalit.
                           ## Son lea beassan bargat.
+# changed V-IND-FIN to VFIN here and in subsequent rules.
 
-SELECT Acc IF (*-1 V-IND-FIN BARRIER NPNH)(1 CC)
+SELECT Acc IF (*-1 VFIN BARRIER NPNH)(1 CC)
               ( *2 NP-HEAD   BARRIER NPNH LINK 1 Inf);
 SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD LINK 
-              *-1 V-IND-FIN BARRIER NPNH)(1 Inf);
+              *-1 VFIN BARRIER NPNH)(1 Inf);
+
+
+
 
 # In front of a participle
 SELECT Acc IF (*-1 LEAT-FIN-NON-IMP BARRIER NPNHAI) (1 PrfPrc);
@@ -941,6 +962,12 @@ SELECT Acc IF (NOT *-1 VFIN)(NOT 0 Nom)
               (*1 VFIN BARRIER NON-ADV-PCLE LINK NOT *1 Acc);
                                      ## Dan lean mun váldán.
 
+# Accusative in time expressions
+# ------------------------------
+
+SELECT Acc IF (0 VAHKKU)(NOT 1 Po);
+ # Too general!
+
 
 # Object predicatives
 # -------------------
@@ -988,6 +1015,15 @@ SELECT (Sg Nom) IF (*-1 CC BARRIER NPNHAI LINK -1C (Sg Nom))(1 NP-BORDER);
 
 SELECT (Sg Nom) IF (1 CC)(*2C (Sg Nom) BARRIER NPNHAI LINK 1 NP-BORDER);
   ## Per Mikael Utsi ja Bror Berg leaba ruovttus.
+
+
+
+# Postverbal subjects
+# -------------------
+
+SELECT Nom IF (*-1 V-SG3 BARRIER NPNH LINK -1 BOS OR CLB)(NOT 0 PrfPrc);
+                     ## Dat lei 1827s, muitalii muhtin mátkkos1teaddji midjiide.
+
 
 # Nominative predicatives
 # - - - - - - - - - - - -
@@ -1122,6 +1158,13 @@ SELECT (Pl Nom) IF  (*-1 ("leat" Pl3) BARRIER NPNHAI
 #SELECT (Pl Nom) IF (NOT *-1 (N Pl Nom))(*1 V-PL3 BARRIER ()
 #                LINK NOT *-1 CC);     
 
+
+
+# Illative
+# ========
+
+SELECT Ill IF (-1 ("sivva"))(0 ("dat"));
+                             ## Sivva dasa lea, ahte in háliida dahkat idioma.
 
 
 # Locative singular
@@ -1429,8 +1472,10 @@ SELECT Pl3 IF (-1 Loc) (1 Attr OR Pron)(2 (N Pl Nom));## Mus leat od1d1a sabehat
 # Selecting some present
 # ----------------------
 
-SELECT Prs IF (0 LEAT) (NOT *-1 V-IND-FIN); # one strange hit, revise!
-# The same should be done ... hmm, for what?
+SELECT Prs IF (0 LEAT) (NOT *-1 V-IND-FIN BARRIER CS);
+ # More barriers? COLON?
+ # one strange hit, revise!
+ # The same should be done ... hmm, for what?
 
 SELECT Prs IF (-1 (Neg Prs)) ;
 
@@ -1546,6 +1591,19 @@ REMOVE VFIN IF (*-1 VFIN-NON-AUX OR ConNeg OR PrfPrc
 
 SELECT Inf IF (*-1 VFIN)(0 LEAT);
                            ## Jos galggas1 leat doaivva kristtalas1vuod1a nannet,
+
+SELECT Inf IF (*-1 MOD BARRIER CS);
+                           ## Skuvla galggai oahpahit sámemánáide dárogiela.
+                           ## 
+
+# Infinitive after predicative
+# There are two rules in the beginning, conflate when I see the effect.
+# The barrier may be too weak.
+SELECT Inf IF (-1 (A Sg Nom) BARRIER VFIN LINK -1 ("leat") OR ("s1addat"));
+                           ## Eará guovlluin lei vejolas1 nannet dárogiela.
+
+SELECT Inf IF (*-1 (N Sg Nom) BARRIER VFIN LINK -1 ("leat") OR ("s1addat"));
+                           ## Jos leat jaska, de lea dárbu singuin gulahaddat.
 
 REMOVE (Prs Pl1) IF (-1 BOS)(1C V-SG3);
                            ## Vuolgit lea suohtas
@@ -1740,7 +1798,11 @@ SELECT Indef IF (0 ("seammá"))(*1 N BARRIER NPNH);
 SELECT Attr IF (0 Pron)(*1 N BARRIER NON-A);
                    ## Dan muitalii muhtin mátkkos1teaddji gean namma lei Keilhau.
 
+SELECT Indef IF (0 ("nubbi"))(*1 CS OR CC OR COMMA LINK *1 ("nubbi"));
+                   ## Nubbi lei dáz1a, muhto nuppi bearras1is lei isit sápmelas1.
 
+SELECT Indef IF (-1 CS OR CC OR COMMA LINK *-1 ("nubbi"))(0 ("nubbi"));
+                   ## Nubbi lei dáz1a, muhto nuppi bearras1is lei isit sápmelas1.
 
 
 # ========================== #
@@ -1771,6 +1833,15 @@ REMOVE Adv IF (-1 Gen)(0 Adp);
 
 SELECT CS IF (-1 CLB); # this one too general, there must be separate
                          # rules for different groups of CS.
+
+# de
+# --
+
+SELECT CS IF (*-1 ("jos") OR ("go") LINK -1 BOS OR CS)(-1 COMMA)(0 ("de"));
+                     ## Jos died1ás1in, de dajas1in.
+                     ## Go olbmot jaskkodit, de sáhpánat álget jursit.
+                     ## Son diehtá, ahte jos galgá leat mielde, de ferte máksit.
+ 
 # go
 # --
 
@@ -1781,12 +1852,14 @@ SELECT Pcle IF (-3 BOS)(-2 CS)(0 go);             ## Muhto boad1át go?
 SELECT Pcle IF (-1 (V Neg));                      ## Son jerre it go boad1e?
 
 
-CONSTRAINTS # New cycle to get rid of Pcle "go"
+CONSTRAINTS # New cycle to get rid of unwanted CS readings
 
 SELECT CS IF (0 go); # All other go's are CS.
 #REMOVE CS IF (0 )(NOT -1 V);                ## Nu guhkás go mun died1án,
                                              ## buot leat ortnegis.
 
+# CS removal for "de"
+REMOVE CS IF (0 ("de"));
 
 # Numerals
 # ========
