@@ -14,7 +14,7 @@ sme.fst: sme.save caseconv.fst tok.fst
 	@xfst < /tmp/sme-fst-script
 	@rm -f /tmp/sme-fst-script
 
-# The second goal il to build the caseconv.fst file
+# The second goal is to build the caseconv.fst file
 # This goal depends on case.regex
 
 caseconv.fst: case.regex
