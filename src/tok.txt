@@ -623,22 +623,33 @@ define ABBR [ INTRANSABBR | INTRANSCAPABBR | INTRANSNUMABBR | TRANSABBR ] ;
 # =============================================================
 echo >>> some multi-words
 define MWE [
-{earret eará} | 
+{Helse Nord} |
+{Helse Vest} |
+{Helse Midt} |
+{Bassi Vuoign1a} |
+{Bassi Vuoin1n1a} |
 {dan dihte} | 
 {dan láhkái} |
-{man láhkai} | 
 {das go} | 
-{eará go} | 
+{earret eará} | 
 {earret go} | 
-{man1n1el go} | 
+{eará go} | 
 {ele ge} | 
 {hui amas} | 
+{man láhkai} | 
+{man1n1el go} | 
+{máná vuostái} |
 {ovdal go}
 ];
 
+# Marker for multi-words
+define M1 "<<" ;
+define M2 ">>" ;
+define MWE1 [M1 MWE M2] ;
+
 # =============================================================
 echo >>> define tokens
-define Token [ WORD | SYMBOL | ABBR | INIT | NUMOrd | NUMCASED | NUM | MWE ];
+define Token [ WORD | SYMBOL | ABBR | INIT | NUMOrd | NUMCASED | NUM | MWE1 ];
 
 # some non-functioning versions left for evaluation here.
 # define Token [ WORD | SYMBOL | TRANSABBR | INIT | NUM ];
@@ -648,7 +659,7 @@ define Token [ WORD | SYMBOL | ABBR | INIT | NUMOrd | NUMCASED | NUM | MWE ];
 
 # ==============================================================
 echo >>> finding titles etc.
-define TOK3 [ NL -> NL %. || _ NL ] ;
+#define TOK3 [ NL -> NL %. || _ NL ] ; # 2209 out!
 # I take two newlines, and insert a period in between them.
 # The result I call TOK3, and I insert it in the regex line at the
 # bottom of this file.
@@ -673,14 +684,32 @@ define TOKINTRANS [ INTRANSABBR @-> ... NL %. NL || _ WS+ CAPNUM ] ;
 #define TOK01 [ NUMOrd @-> ... NL ] ;
 
 echo >>> longest match--insert a newline after each token
-define TOK1 [ Token @-> ... NL ] ;
+
+# multi start
+define Bound [ SINGLE | WS | .#. ]; 
+define TOK1 [ MWE @-> M1 ... M2 || Bound _ Bound .o.
+              Token @-> ... NL .o. [M1|M2] -> 0 ] ;
+
+echo >>> normalize space
+define TOK0 [ WS+ @-> SP ];
+
+echo >>> remove spaces
+define WS1 [WS]+ & $[NL] ;
+
+
+
+#define TOK1 [ Token @-> ... NL ] ;
 
 echo >>> map spaces to a newline
-define TOK2 [ [WS]+ @-> NL ];
+define TOK2 [ [WS1]+ @-> NL ];
+
+#define TOK2 [ [WS]+ @-> NL ];
+# multi end, remove this note when working
 
 # =============================================================
 echo >>> compose the above
 read regex [TOKNUMOrd .o. TOKINTRANSCAP .o. TOKINTRANSNUM .o. TOKINTRANS 
-            .o. TOK1 .o. TOK2 .o. TOK3 ];
-#             .o. TOK1 .o. TOK2 ];
+#            .o. TOK1 .o. TOK2 .o. TOK3 ]; # 2209 out!
+#             .o. TOK1 .o. TOK2 ]; # this one works!
+             .o. TOK0 .o. TOK1 .o. TOK2 ];
 invert net
