@@ -4,7 +4,7 @@
 # The ultimate goal is to build isme.fst, the generator
 # This goal depends on sme.save being up to date.
 
-isme.fst: sme.fst sme.save tok.fst
+isme.fst: sme.fst sme.save tok.fst allcaps.fst
 	@echo
 	@echo "*** Building the inverse isme.fst ***"
 	@echo
@@ -19,7 +19,7 @@ isme.fst: sme.fst sme.save tok.fst
 # The first goal is to build sme.fst, the analyzer.
 # This goal depends on sme.save and caseconv.fst being up to date
 
-sme.fst: sme.save caseconv.fst tok.fst
+sme.fst: sme.save caseconv.fst allcaps.fst tok.fst
 	@echo
 	@echo "*** Building sme.fst ***" ;
 	@echo
@@ -42,6 +42,20 @@ caseconv.fst: case.regex
 	@xfst < /tmp/caseconv-script
 	@rm -f /tmp/caseconv-script
 
+
+# This goal depends on allcaps.regex
+
+allcaps.fst: allcaps.regex
+	@echo
+	@echo "*** Building allcaps.fst ***" ;
+	@echo
+	@printf "source allcaps.regex \n\
+	save stack allcaps.fst \n\
+	quit \n" > /tmp/tok-script
+	@xfst < /tmp/tok-script
+	@rm -f /tmp/tok-script
+
+
 # The third goal is to build sme.save
 # This goal depends on twol-sme.bin and a bunch of lexicon files
 
@@ -62,6 +76,7 @@ sme.save: twol-sme.bin sme-lex.txt adj-sme-lex.txt \
 	quit \n" > /tmp/sme-save-script
 	@lexc < /tmp/sme-save-script
 	rm -f /tmp/sme-save-script
+
 
 # The fourth goal is to build twol-sme.bin
 # This goal depends on twol-sme.txt
@@ -103,7 +118,7 @@ tok.fst: tok.txt
 
 
 clean:
-	@rm -f caseconv.fst sme.save
+	@rm -f *.fst *.save *.bin
 
 
 # ##############################################################
