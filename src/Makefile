@@ -358,7 +358,7 @@ foreign.fst: ../bin/new-foreign.fst
 	@echo
 	@printf "read text < ../../script/new-foreign.txt \n\
 	save stack ../bin/new-foreign.fst \n\
-	@quit \n" > ../../tmp/new-foreign-sme-script
+	quit \n" > ../../tmp/new-foreign-sme-script
 	@xfst < ../../tmp/new-foreign-sme-script
 	@rm -f ../../tmp/new-foreign-sme-script
 
