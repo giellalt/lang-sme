@@ -482,7 +482,10 @@ SET A-CASE = A - Attr - Adv ;
 
 LIST A-CC = A CC ;
 
+SET NON-ADJ = WORD - A ;
+
 SET NON-ADJ-CC = WORD - A-CC ;
+
 
 # Adverbial sets and their complements
 # ------------------------------------
@@ -1210,7 +1213,8 @@ REMOVE Recipr ;
 # Demonstrative pronouns
 # ======================
 
-# NP-internal concord
+# NP-internal number concord
+# --------------------------
 
 SELECT DEM-SG IF (-1 BOS)(0 Nom)(1 V-SG3); 
                             ## Dat lea duohta.
@@ -1218,8 +1222,24 @@ SELECT DEM-SG IF (-1 BOS)(0 Nom)(1 V-SG3);
 SELECT Pl IF (0 (Pron Dem))(*1 (N Pl) BARRIER NON-A);
                              ## Ja dát soad1it s1adde garrasit c1uohcat Supmii.
 
+# NP-internal case concord
+# ------------------------
+
+
+
+REMOVE (Dem Pl Nom) IF (NOT *1 (N Pl Nom) OR V-PL3 BARRIER NPNH);
+  # These are not good, we may have topicalised verbs...
+
+# rules like these are situated the noun case disambiguation rules:
+# REMOVE (Dem Acc) IF (*1 (N Ill) OR (N Loc) BARRIER NPNH);
+# REMOVE (Dem Gen) IF (*1 (N Acc) BARRIER NPNH LINK NOT 0 (N Gen));
+# REMOVE (Dem Acc) IF (*1 (N Gen) BARRIER NPNH LINK NOT 0 (N Acc));
+
+
+
 
 # Disambiguating against other POS
+# --------------------------------
 
 # Getting rid of problematic names.
 # Problematic here are the names Dan, Dien, and the essive of the noun duo.
@@ -1231,21 +1251,15 @@ REMOVE (Dem Sg Nom) IF (NOT *-1 V-SG3)
                                       ## Ii dat beassan.
   # The verb is there to capture intransitive Dem.
 
-REMOVE (Dem Pl Nom) IF (NOT *1 (N Pl Nom) OR V-PL3 BARRIER NPNH);
-  # These are not good, we may have topicalised verbs...
-
-REMOVE (Dem Acc) IF (*1 (N Ill) OR (N Loc)
-                    BARRIER NPNH);
-
-REMOVE (Dem Gen) IF (*1 (N Acc) BARRIER NPNH LINK NOT 0 (N Gen));
-REMOVE (Dem Acc) IF (*1 (N Gen) BARRIER NPNH LINK NOT 0 (N Acc));
 
 # dasa
   # The problem here is the VGen form of 'dassat', which is identical to the
   # Illative form of 'dat' (both 'dasa').
 REMOVE VGen IF (0 ("dat" Pron Dem Sg Ill));
 
+
 # Earlier specific rules, to be reactivated if the previous one is too strong.
+# ----------------------------------------------------------------------------
 #SELECT Dem IF (0 ("dat" Pron Dem Sg Ill))(1 VFIN); ## Dasa lea guhkes historjá.
 #SELECT Dem IF (0 ("dat" Pron Dem Sg Ill))(1 ("lassi" N Ess)); ## Dasa lassin.
 #SELECT Ill IF (-1 ("sivva"))(0 ("dat")); ## Sivva dasa lea, ahte ...
@@ -1749,7 +1763,7 @@ SELECT Acc IF (*-1 LEAT-FIN-NON-IMP BARRIER NPNHAI) (1 PrfPrc);
 # Object only.
 
 SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAIIP OR COMMA)
-              (0 NP-HEAD)(NOT 0 PrfPrc or Adv)
+              (0 NP-HEAD)(NOT 0 PrfPrc or Adv or Dem)
               (1 NP-BORDER OR ADVLCASE OR Adv) 
               (NOT 1 Po) ;
                                 ## Oainnán du.
@@ -1757,6 +1771,7 @@ SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAIIP OR COMMA)
                                 ## Dázat eai atnán sámiid buoret go beanan.
                                 ## Sii badjelgehc1c1e olbmo jos sámiin náitala.
                                 ## Son ráhkada gáhkuid hui buriid.
+                                ## Mun manan daid mánáidguin.
 # look at the NP-BORDER concept here...
 # NPNHAII there to include "indirect objects"
 # Added C to *-1C, to avoid interference from derived nouns. The problem will
@@ -2687,6 +2702,25 @@ SELECT VFIN IF (NOT *-1 VFIN BARRIER CS OR Interr)(NOT *1 VFIN)
 
 
 
+# ===================== #
+#    Residual cases
+# ===================== #
+       CONSTRAINTS      #
+# ===================== #
+
+# This is a section for local disambiguation that must come after the main POS
+
+
+# Demonstrative pronouns
+# ======================
+
+SELECT Acc IF (0 Dem)(*1C (N Acc) BARRIER NON-ADJ) ;
+                                              ## Mun oainnán daid mánáid
+
+
+SELECT Gen IF (0 Dem)(*1C (N Gen) OR (N Sg Ill) OR (N Sg Loc) OR (N Pl Com)
+                          BARRIER NON-ADJ) ;
+                                              ## Mun manan daid mánáiguin
 
 # ===================== #
 # Global disambiguation #
@@ -2727,6 +2761,9 @@ REMOVE Attr IF (1C V OR EOS)(NOT 1 N);             ## Diet lea beare unnán.
 
 REMOVE Sg IF (0 DEM-PL) (NOT *1 V-SG3);       ## Dat lea buorre.
 REMOVE Pl IF (0 DEM-SG) (NOT *1 V-PL3);       ## Dat lea od1d1a niibbit.
+
+
+
 
 # Finite verbs
 # ------------
