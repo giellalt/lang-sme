@@ -14,8 +14,8 @@
 isme.fst: ../bin/isme.fst
 ../bin/isme.fst: ../bin/pos-sme.fst ../bin/n-sme.fst ../bin/s-sme.fst \
 	../bin/sme.save ../bin/allcaps.fst ../bin/n-sme.fst \
-	../bin/caseconv.fst ../bin/d-sme.fst \
-	../bin/abbr.txt ../bin/cap-sme
+	../bin/caseconv.fst ../bin/d-sme.fst ../bin/g-sme.fst \
+	../bin/abbr.txt ../bin/cap-sme ../bin/guess-sme
 	@echo
 	@echo "*** Building the inverse isme.fst ***"
 	@echo
@@ -122,6 +122,28 @@ tag-sme.fst: ../bin/tag-sme.fst
 	@xfst < ../../tmp/tag-sme-script
 	@rm -f ../../tmp/tag-sme-script
 
+
+g-sme.fst: ../bin/g-sme.fst
+../bin/g-sme.fst: ../bin/sme.fst
+	@echo
+	@echo "*** Building g-sme.fst ***" ;
+	@echo
+	@printf "source guess-script.xfst \n\
+	read regex $[%+Guess] .o. AllInclusive ; \n\
+	save stack ../bin/g-sme.fst \n\
+	quit \n" > ../../tmp/guess-sme-script
+	@xfst < ../../tmp/guess-sme-script
+	@rm -f ../../tmp/guess-sme-script
+
+
+guess-sme: ../bin/guess-sme
+../bin/guess-sme:
+	@echo
+	@echo "*** Generating guess-sme ***" ;
+	@printf "sme ${BINDIR}/sme.fst\n\
+	guesser ${BINDIR}/g-sme.fst\n\n\
+	sme
+	guesser \n > $@
 
 
 # Here we build d-sme.fst, the morphological tagger geared towards 
