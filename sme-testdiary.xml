@@ -10,10 +10,12 @@
     <section id="Test_diary_for_the_Northern_Sámi_rule_and_lexicon_files">
       <title>Test diary for the Northern Sámi rule and lexicon files</title>
 
-      <p>This document is not for error reports (they should be filed to our
-      bug database <a href="http://giellatekno.uit.no/bugzilla/">Bugzilla</a>.
-      Rather, what is found here is an overview of what has been tested, both
-      text testing and grammatical testing.</p>
+      <p>This document is not for error reports (they should be filed
+      to our bug database <a
+      href="http://giellatekno.uit.no/bugzilla/">Bugzilla</a>.
+      Rather, what is found here is an overview of what has been
+      tested, both vocabulary testing, testing of the disambiguator,
+      and testing of the morphological analysis.</p>
 
       <section id="Test_planning">
         <title>Test plan</title>
@@ -25,35 +27,106 @@
 
         <ul>
           <li>Fiction</li>
-
           <li>Religious texts</li>
-
           <li>Administrative language, politics, etc.</li>
-
-          <li>Fagspråk</li>
+          <li>Scientific texts</li>
         </ul>
+
+
+
+        <p>Testing of the disambiguator:</p>
+
+<p>Disambiguating is tested in the following way:</>
+
+<ul>
+<li> Ambiguity = #Parses / #Tokens</li>
+<li> Recall = #Tokens Correctly Disambiguated / # Tokens = TP/P</li>
+<li> Precision = #Tokens Correctly disambiguated / #Parses = TP/(TP+FP)</li>
+</ul>
+
+<p>A token is correctly disambiguated when <em>at least one</em> of
+the readings (parses) of the token is correct.</p>.
+
+<p>In the ideal case each token is uniquely and correctly
+disambiguated with the correct parse. Here, both recall and precision
+will be 1.0. A text where each token is annotated with all possible
+parses, the recall will be 1.0, but the precision will be low. A high
+recall thus comes with a price of low presicion. In other words: A
+recall of less than 100% indicates that some correct analyses were
+removed, and a precision of less than 100% indicates that some
+wrong analyses were not removed. The goal is to have
+both recall and precision as high as possible.</p>
+
+<p>Testing procedure:</p>
+<ol>
+
+<li>Choose a reasonable short test, that has not been run on the
+parser before</li> 
+
+<li>Run the test
+<ol>
+<li>Run the text through the morphological parser, and inspect the
+words that are not recognised by the parser. Add them to the parser,
+or remove the sentence in question from the text. Eventually: just run
+the test, but remove the sentences with unknown words afterwards. The
+idea here is that it is unreasonable to demand disambiguation from a
+sentence where some words are not recognised in the first place
+</li>
+
+<li>A different test would be to include all sentences, and just count
+the failed words as well. They will have the analysis '?+', which of
+course is wrong.</li> 
+</ol></li>
+
+<li>Count the ambiguity, prior to disambiguation. The number of parses
+is found like this: <code>cat file.txt | preprocess
+--abbr=bin/abbr.txt | lookup -flags mbTT -utf8 bin/sme.fst | lookup2cg
+| egrep '\t\"' | wc -l</code>. The number of tokens is <code>cat
+file.txt | preprocess --abbr=bin/abbr.txt | wc -l</code></li>
+
+<li>Count the tokens correctly disambiguated (by hand): Read through
+the analysed text, and count the number of words that have got a
+correct analysis. The string is <code>cat file.txt | preprocess
+--abbr=bin/abbr.txt | lookup -flags mbTT -utf8 bin/sme.fst | lookup2cg
+| vislcg --grammar=src/sme-dis.rle | less</code>.</li>
+
+<li>Then divide this number with the number of parses and get the
+presicion, and with the number of tokens, and get the recall.</li>
+</ol>
+
+<p>During parser construction the recall and presicion data need not
+be a goal in themselves. Another, equally important goal is to
+identify errors and try to correct them. Deleting correct readings is
+a more serious error than leaving the token ambigous.</p>
+
+
+
 
         <p>Grammatical testing:</p>
 
+<p>We want to test the following:</p>
+
         <ul>
           <li>All forms of all paradigms</li>
-
           <li>All consonant gradation patterns</li>
-
           <li>All vowel alternations</li>
-
           <li>Compounds</li>
         </ul>
+
+<p>There is a discussion of this on the newsgroup. TODO: copy that discussion into this document.</p>
+
       </section>
 
       <section id="Test_results">
         <title>Test results</title>
 
         <section id="Testing_the_parser_on_various_texts">
-          <title>Testing the parser on various texts</title>
+          <title>Vocabualry testing</title>
 
-          <p>The following table records recall for word forms in various
-          texts.</p>
+          <p>The following table records recall for word forms in
+          various texts. Here we measure coverage of the vocabulary,
+          by recording all word forms that are not recognised.</p>
+
 
           <source>---------------------------------------------------
 nisson_ovddasteapmi.txt
