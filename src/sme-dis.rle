@@ -607,7 +607,7 @@ REMOVE N IF (0 Po)(-1 (N Gen) OR (Pron Pers Gen)); # dan várás, dan áigi
 # Personal pronouns
 # =================
 
-SELECT Pers IF (*-1 V-SG3)(0 (Pron Pers Sg3 Nom)); ## leago son?
+SELECT Pers IF (*-1 V-SG3)(0 ("son" Pron Pers Sg3 Nom)); ## leago son?
 # There is still a problem here since son might as well be a particle 
 # in the example.
 
@@ -759,6 +759,8 @@ SELECT (Pl Nom) IF (1C (V Pl3))(NOT 0 Adv);
 SELECT A IF (-1 CC)(0 (N as1))(1 Cmpnd);
            ## Lea sahka oppalac1c1at eamiálbmot- ja unnitloguás1s1iid dutkamiin.
 
+SELECT A IF (-1 ("mii" Interr Sg Gen));
+
 REMOVE A IF (-1 Dem)(1 (Pron Interr));    ## Son lea dan sápmelas1 gean dovddan.
 
 REMOVE (A Sg Nom) IF (NOT *-1 VFIN OR ("mii" Sg Gen))(0 (N Sg Nom))
@@ -907,7 +909,7 @@ SELECT Pcle IF (-2 BOS)(NOT -1 CC OR Adv)(0 go);  ## Boad1át go?
                                                   ## Ja go beasai fas bargui.
 SELECT Pcle IF (-3 BOS)(-2 CS)(0 go);             ## Muhto boad1át go?
 
-SELECT Pcle IF (-1 (V Neg));                      ## Son jerre it go boad1e?
+SELECT Pcle IF (-1 (V Neg))(0 go);                ## Son jerre it go boad1e?
 
 SELECT Pcle IF (-2 CLB)(-1 V);                    ## Jus juo, lea go nu ahte..
 
@@ -1256,12 +1258,9 @@ SELECT (Pron Ill) IF (0 ("son"))(1 (Pron Sg));
  # Pron Dem PL Nom
 
 SELECT Pers IF (0 ("dat"))(NOT 1 A OR Num OR N); 
+SELECT Ill IF (0 ("dat"))(1 ("lassi" Ess));
 
-SELECT (Sg3 Nom) IF (0 ("dat"))(1 (V Sg3))(NOT 1 (N Pl));  # Sg3 or Pl3 is Pers.
-SELECT (Pl3 Nom) IF (0 ("dat"))(1 (V Pl3));
-#SELECT (Sg Nom) IF (0 ("dat"))(*1 (V Sg3) BARRIER NON-ADV); #Sg or Pl is Dem.
-#SELECT (Pl Nom) IF (0 ("dat"))(*1 (V Pl3) BARRIER NON-ADV); 
-
+# More rules for "dat" after demonstratives.
 
 # Moai
 # ----
@@ -1332,7 +1331,7 @@ SELECT Interr IF (NOT -1 (V Pl1))(0 ("mii"))
 SELECT Interr IF (0 ("mii" Sg Nom))(-1 COMMA)(1 Sg3);
 SELECT Interr IF (NOT -1 (V Pl1))(0 ("mii" Sg Nom))(*1 Sg3 BARRIER V-PL1);
 
-SELECT (Gen Sg) IF (0 ("mii" Interr))(1 A);
+SELECT (Sg Gen) IF (0 ("mii" Interr))(1 A);
 
 SELECT Gen IF (*1 BOS)(0 (Pron Interr))(NOT *1 V-NON-AUX);# No hits!
  
@@ -1366,7 +1365,9 @@ SELECT Pl IF (*1  V-PL)(0 ("ies1" Pron Refl Pl Nom));
 SELECT Recipr IF (-1 Recipr); # ... guhtet
 SELECT Recipr IF  (1 Recipr); # ... ...    guoimmiset
 
-CONSTRAINTS
+# =========== #
+  CONSTRAINTS
+# =========== #
 
 REMOVE Recipr ;
 
@@ -1374,6 +1375,7 @@ REMOVE Recipr ;
 # Demonstrative pronouns
 # ======================
 
+REMOVE Pcle IF (-1 Interr)(0 ("dat"));
 REMOVE Pers IF (-1 CC)(0 Gen)(*1 N BARRIER NPNH LINK 1 CS OR CLB);
 
 # NP-internal number concord
@@ -1388,10 +1390,10 @@ SELECT Pl IF (0 (Pron Dem))(*1C (N Pl) BARRIER NON-A);
 # NP-internal case concord
 # ------------------------
 
-# Remove some Cs? Rules for Dem in front of NUMERALS must be added.
+# More rules for Dem in front of NUMERALS must be added.
 
-SELECT (Dem Nom) IF (0 ("dat"))(1C (Num Nom));
-SELECT (Dem Nom) IF (0 ("dat"))(*1C (N Nom) BARRIER NON-ADJ);
+SELECT (Dem Nom) IF (0 ("dat"))(1 (Num Nom));
+SELECT (Dem Nom) IF (0 ("dat"))(*1 (N Nom) BARRIER NON-ADJ);
 SELECT (Dem Acc) IF (0 ("dat"))(1C (Num Acc));
 #SELECT (Dem Acc) IF (0 ("dat"))(*1C (N Acc) BARRIER NON-ADJ); # Could be Gen 
 SELECT (Dem Gen) IF (0 ("dat"))(1C (Num Gen));
@@ -1409,14 +1411,21 @@ SELECT (Dem Pl Gen) IF (0 ("dat"))(*1C (N Pl Com) BARRIER NPNH);
 
 SELECT (Dem Ess) IF (0 ("dat"))(*1C (N Ess) BARRIER NPNH);
 
+REMOVE (Dem Nom) IF (0 ("dat"))(NOT *1 (N Nom) BARRIER NPNH);
+REMOVE (Dem Sg Loc) IF (0 ("dat"));
+REMOVE (Dem Sg Ill) IF (0 ("dat"));
 
 REMOVE (Dem Pl Nom) IF (NOT *1 (N Pl Nom) OR V-PL3 BARRIER NPNH);
   # These are not good, we may have topicalised verbs...
 
-# rules like these are situated the noun case disambiguation rules:
-# REMOVE (Dem Acc) IF (*1 (N Ill) OR (N Loc) BARRIER NPNH);
-# REMOVE (Dem Gen) IF (*1 (N Acc) BARRIER NPNH LINK NOT 0 (N Gen));
-# REMOVE (Dem Acc) IF (*1 (N Gen) BARRIER NPNH LINK NOT 0 (N Acc));
+
+# Some rules for personal pronouns again (will hit "dat")
+# ------------------------------------------------------- 
+
+SELECT (Sg3 Nom) IF (*-1 (V Sg3) BARRIER CC OR CS OR CLB OR Interr OR PUNCT); 
+SELECT (Sg3 Nom) IF (*1 (V Sg3) BARRIER VFIN OR CS OR Interr LINK NOT 0 (N Pl));
+SELECT (Pl3 Nom) IF (*-1 (V Pl3) BARRIER NON-ADV-PCLE);
+SELECT (Pl3 Nom) IF (*1 (V Pl3) BARRIER NON-ADV-PCLE);
 
 
 # Disambiguating against other POS
@@ -1429,7 +1438,6 @@ REMOVE (Prop) IF (-1 BOS)(0 Dem)(1 N)(NOT 1 Prop); ## Dan nieidda mun dovddan.
 
 REMOVE (Dem Sg Nom) IF (NOT *-1 V-SG3)
                        (NOT *1 (N Sg Nom) OR V-SG3);
-                                      ## Ii dat beassan.
   # The verb is there to capture intransitive Dem.
 
 
@@ -1792,7 +1800,7 @@ SELECT Gen IF (-1 Pr); ## Earret mu ii giige lea boahtán.
 REMOVE Nom IF (*-1 (Pron Dem Acc) OR (Pron Dem Gen) BARRIER NON-A);
                                    ## Dan ás1s1i ferte dutkat.
 
-REMOVE Nom IF (*-1 Nom)(1 Actio);
+REMOVE Nom IF (*-1 Nom)(NOT 0 NUMERALS)(1 Actio);
 
 REMOVE Nom IF (*-1 V-NOT-SG3 BARRIER CC)(NOT *-1 COPULAS OR Pass BARRIER V)
 	      (0 (N Sg Acc) OR (N Sg Gen))(NOT *1 CC)(NOT *1 V-SG3);
@@ -2090,7 +2098,8 @@ REMOVE Gen IF (-1 CS)(1C VFIN);  # No hits?
   # The "1C" part is problematic, as this rule should have been placed
   # after the verb disambiguation. Keep in mind.
 
-REMOVE Nom IF (NOT *-1 (V Pl3) BARRIER CS)(0 NUMERALS)(NOT *1 (V Pl3) BARRIER CS);
+REMOVE Nom IF (NOT *-1 (V Pl3) BARRIER CS)(0 NUMERALS)(NOT 1 CC)
+		(NOT *1 (V Pl3) BARRIER CS);
 
 
 # Accusative between Aux and main verb
@@ -3193,7 +3202,7 @@ REMOVE Pl IF (0 DEM-SG) (NOT *1 V-PL3);       ## Dat lea od1d1a niibbit.
 # Accusative
 # ----------
 
-REMOVE Acc IF (0 Pron)(1C Acc); # Mun oainnán du vielja.
+REMOVE Acc IF (0 Pron)(NOT 0 Dem)(1C Acc); # Mun oainnán du vielja.
   # Afterthought, get rid of Acc in specifier position.
   # Move to logical place, but after the primary Acc cycle.
 
