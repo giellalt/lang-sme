@@ -574,6 +574,48 @@ SET NP-BORDER = BOS | EOS | REALCLB | Adv | VFIN | Inf | ConNeg | VGen |
 
 
 
+# ============= #
+# ============= #
+# Mapping rules #
+# ============= #
+# ============= #
+    MAPPINGS    #
+# ============= #
+
+MAP (@CC) TARGET CC ;
+MAP (@CS) TARGET CS ;
+
+MAP (@SUBJ @SPRED) TARGET Nom ;
+MAP (@OBJ) TARGET Acc ;
+MAP (@ADVL) TARGET Adv ;
+MAP (@ADVL) TARGET Po ;
+MAP (@ADVL) TARGET Pr ;
+
+MAP (@ADVL) TARGET Ill ;
+MAP (@ADVL) TARGET Loc ;
+MAP (@ADVL) TARGET Com ;
+MAP (@ADVL @SPRED @OPRED) TARGET Ess ;
+
+MAP (@QN>) TARGET Num IF (*1 Gen OR Ill OR Loc OR Com OR Ess BARRIER NPNH) ;
+
+# Genitive mappings
+MAP (@GN>) TARGET Gen IF (*1 N BARRIER NPNH) ;
+MAP (@GP>) TARGET Gen IF (1 Po) ;
+MAP (@<GP) TARGET Gen IF (*-1 Pr BARRIER NPNH) ;
+
+# Attributive mappings
+MAP (@AN>) TARGET (A Attr) ;
+
+
+# Verb mappings
+
+MAP (@+FAUXV) TARGET Neg ;
+MAP (@+FAUXV @+FMAINV) TARGET VFIN ;  #IF (1 (Inf) OR (PrfPrc)) ;
+
+MAP (@-FMAINV) TARGET PrfPrc IF (*-1 VFIN) ;
+MAP (@-FMAINV) TARGET Inf IF (*-1 VFIN) ;
+MAP (@-FMAINV) TARGET ConNeg ;
+
 
 # ==================== #
 # ==================== #
@@ -6188,6 +6230,22 @@ REMOVE Acc IF (0 Pron)(NOT 0 Dem)(1C Acc); # Mun oainnán du vielja.
   # Move to logical place, but after the primary Acc cycle.
 
 
+
+# ===================== #
+# Disambiguating syntax #
+# ===================== #
+      CONSTRAINTS       #
+# ===================== #
+
+SELECT (@SPRED) IF (-1 COPULAS)(-2 Nom) ;
+SELECT (@OPRED) IF (*-1 (@OBJ) BARRIER NPNH) ;
+SELECT (@+FAUXV) IF (*1 Inf OR PrfPrc or ConNeg BARRIER NON-ADV) ;
+#
+
+CONSTRAINTS
+REMOVE (@+FAUXV) ;
+REMOVE (@SPRED) ;
+REMOVE (@OPRED) ;
 
 #=====#
   END #
