@@ -356,9 +356,9 @@ LIST LOC-VERB = "ballat" "beros1tit" "bihtit" "ceavzit" "c1uoc1c1ut" "c1uovvut"
                 "dolkat" "fuollat" "geargat" "heaitit" "nohkkot" "váruhit"
                 "ilbmat" ;
 
-LIST COM-VERB = "árvalit" "árvvohus1s1at" "riidalit" "bargat"
-                "bártas1uvvat" "háladig" "humadit" "náitalit" "ságastaddat"
-                "ságastallat" "hilbos1it" "meannudit" ;
+LIST COM-VERB = "árvalit" "árvvohus1s1at" "bargat" "bártas1uvvat" 
+		"háladit" "hilbos1it" "humadit" "meannudit" "náitalit" "riidalit" 
+		"ságastaddat" "ságastallat" ;
 
 LIST ILL-VERB = "áibbas1it" "dorvvastit" "duhtat" "jáhkkit" "liikot"
                 "luohttit" "oskut" "suhttat" "álgit" "gullat" "guoskat"
@@ -610,7 +610,7 @@ REMOVE V-DER-PASS IF (0 V-PASS);
 # -----------------------
 
 REMOVE N IF (0 Pr)(*1 (N Gen) OR (Pron Pers Gen) BARRIER NPNH);
-REMOVE N IF (0 Po)(-1 (N Gen) OR (Pron Pers Gen)); # dan várás, dan áigi
+REMOVE N IF (0 Po)(NOT 0 ("guovddás1"))(-1 (N Gen) OR (Pron Pers Gen)); 
 
 
 
@@ -733,6 +733,8 @@ SELECT N IF (-2 BOS)(-1C Gen)(1 EOS);        ## Son lea Ruot1a c1álli.
                                               # (titles)
 REMOVE PrsPrc IF (-1 A)(NOT -1 Adv) ;
 
+SELECT A IF (-1 ("eambbo"));
+
 
 # Based on right context
 # ----------------------
@@ -829,6 +831,10 @@ REMOVE N IF (-1 ("nu") OR ("mihá") OR ("hui"));#(*1 go BARRIER NON-NA);
 # ---
 SELECT Pcle IF (-2 BOS)(-1 Nom)(NOT -1 A)(0 ("dat" Nom));  ## Mun dat lean boahtán.
 
+# guovddás1
+# -------- 
+SELECT Attr IF (0 ("guovddás1"))(1 N); 
+
 # imas1
 # -----
 SELECT N IF (-1 VFIN OR ConNeg OR A OR Dem)(0 ("imas1"));
@@ -864,7 +870,6 @@ REMOVE Qst IF (0 Adv)(NOT *1 EOS LINK -1 ("?")); ## Nugo died1át, de lean dál.
 # ========================== #
         CONSTRAINTS          #
 # ========================== #
-
 
 # The case of GASKAL
 
@@ -909,7 +914,7 @@ SELECT Pr IF (NOT 0 Attr)(*1 (N Gen) OR (Pron Gen) BARRIER PUNCT
 
 REMOVE Pr IF (NOT 1 (Pron Gen));
 
-SELECT Po IF (-1 Gen)(NOT -1 ("leat" PrfPrc))(NOT 0 Attr)(NOT 1C Po);
+SELECT Po IF (-1 Gen)(NOT -1 ("leat" PrfPrc))(NOT 0 Attr OR ("guovddás1"))(NOT 1C Po);
 		       ## ... dan njealji beali ektui.
                 
 SELECT Po IF (-1 Num)(0 ("rádjai")); # make general rule!
@@ -917,7 +922,7 @@ SELECT Po IF (-1 Num)(0 ("rádjai")); # make general rule!
 REMOVE Po IF (NOT -1 Gen);
 
 # using it for all Po
-REMOVE N IF (-1 Gen)(0 Po)(NOT 1C Po);
+REMOVE N IF (-1 Gen)(0 Po)(NOT 0 ("guovddás1"))(NOT 1C Po);
 REMOVE V IF (-1 Gen)(0 Po)(NOT 1C Po);
 REMOVE Adv IF (-1 Gen)(NOT -1 ("leat" PrfPrc))(0 Po)(NOT 1C Po);
 
@@ -1119,7 +1124,7 @@ REMOVE (A Comp) IF (-1 N OR Pron)(1 VFIN);
 
 REMOVE (V Ind) IF (-1 Nom LINK *-1 (V Ind) BARRIER NPNH)(0 ADV-NOT-VERB);
 
-REMOVE VFIN IF (*1C VFIN BARRIER CLB OR CS OR CP); 
+REMOVE VFIN IF (NOT *-1 Interr BARRIER VERB)(*1C VFIN BARRIER CLB OR CS OR CP); 
 
 
 # Adverbs, not nouns
@@ -1970,7 +1975,7 @@ SELECT Gen IF (1 COMMA)(*2C NP-HEAD-GEN BARRIER NPNH LINK 1 CC);
 REMOVE Nom IF (*-1 (Pron Dem Acc) OR (Pron Dem Gen) BARRIER NON-A);
                                    ## Dan ás1s1i ferte dutkat.
 
-REMOVE Nom IF (*-1 Nom)(NOT 0 NUMERALS)(1 Actio);
+REMOVE Nom IF (*-1 Nom)(NOT 0 NUMERALS)(1C Actio);
 
 REMOVE Nom IF (*-1 V-NOT-SG3 BARRIER CC)(NOT *-1 COPULAS OR Pass BARRIER V)
 	      (0 (N Sg Acc) OR (N Sg Gen))(NOT *1 CC)(NOT *1 V-SG3);
@@ -2038,7 +2043,7 @@ SELECT (Num Nom) IF (-1 (Dem Sg Nom));
 # Ordinary preverbal subjects
 # - - - - - - - - - - - - - - 
 
-SELECT Nom IF (-1 CS OR BOS OR (Interr Sg))(0 Sg)(1C V-SG3);
+SELECT Nom IF (-1 CS OR BOS OR CC OR (Interr Sg))(0 Sg)(NOT 0 Adv OR Loc)(1C V-SG3);
                                  ## Died1án, ahte plána movttiidahttá dan.
 
 SELECT Nom IF (-1 CS OR BOS)(0 Pl)(NOT 0 Adv)(1C V-PL3); 
@@ -2426,7 +2431,7 @@ REMOVE Acc IF (*-1 V-PASS BARRIER VFIN)(NOT 0 TIME)(NOT *1 V-NON-AUX BARRIER CS 
 #              (*2 NP-HEAD-ACC BARRIER NPNHA LINK 1 CLB);
                                        ## Oainnán vilges biilla ja rukses viesu.
 
-SELECT Acc IF (0 N)(1 CC)(*2C NP-HEAD-ACC BARRIER NPNHA OR Gen LINK 1 CLB) ;
+SELECT Acc IF (0 N)(1 CC)(*2C NP-HEAD-ACC BARRIER NPNHA OR Gen LINK 1 NP-BORDER) ;
 	## Dalle skáhppo biergasiid nugo firpmiid ja buod1d1omuoraid.
 # Only one problem found: 
 	## Romssa universitehta sámi(*ACC) ja eamiálbmotguoskevas1 dutkama.
@@ -2436,8 +2441,8 @@ SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAII)(0 Num)(1 CC)
 		## Ja de ráhkadit ovtta dahje moadde s1luppoha vel.  
 
 # Second part
-SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD-ACC LINK 
-              *-1 V-NON-AUX BARRIER NPNHAII)(0 N)(1 CLB);
+SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD-ACC LINK *-1 V-NON-AUX 
+	BARRIER NPNHAII)(0 N)(1 NP-BORDER);
                                        ## Oainnán vilges biilla ja rukses viesu.
 
 SELECT Acc IF (-1 CC LINK *-1C Acc BARRIER NON-NA OR CLB)(0 Num) ;
@@ -2724,11 +2729,11 @@ SELECT Com IF (0 Prop); # assuming proper names come in sg
 
 
 # Disambiguation based upon verb valency
-#SELECT Com IF (*-1 COM-VERB)(0 (Sg)) ;
-SELECT Com IF (*-1 COM-VERB BARRIER CS)(0 Sg);
+
+SELECT Com IF (*-1 COM-VERB BARRIER CS OR CP LINK 0 VERB)(0 Sg);
                              ## Son náitali nieiddain.
 
-SELECT Com IF (0 Sg)(*1 COM-VERB BARRIER CS);
+SELECT Com IF (0 Sg)(*1 COM-VERB BARRIER CS OR CP LINK 0 VERB);
                              ## Nieiddain son náitali.
 
 # Locative plural
@@ -3304,6 +3309,8 @@ SELECT Inf IF (-3 (Sg Nom) OR (Sg3 Nom))(-1 (Interr Sg Nom))(-2 COMMA)
 
 SELECT Inf IF (-1 V-PL1)(NOT -1 Neg)(*-2C MII-PERS BARRIER SII OR MOAI OR CLB);
 
+SELECT Inf IF (-1 ("dilli"))(NOT 0 ("leat"));
+
 
 # Infinitive after predicative
 # - - - - - - - - - - - - - - 
@@ -3339,9 +3346,10 @@ SELECT Inf IF (*-1 CC BARRIER NON-ADV-PCLE LINK *-1 Inf BARRIER VERB);
 
 # Present Participle
 # ------------------
-
 # PrsPrc = Imprt Prs Du2 (even-syll)
 
+REMOVE PrsPrc IF (0 Nom)(1 V-SG3);
+ 
 
 # Actio/PrfPrc
 # ------------
@@ -3362,8 +3370,8 @@ REMOVE PrfPrc IF (NOT -1 LEAT-FIN-NON-IMP LINK *-1 CP BARRIER VFIN)
 
 SELECT PrfPrc IF (*-1 LEAT-FIN-NON-IMP)(NOT *1 PrfPrc BARRIER CC OR CP OR CS);
 
-#REMOVE PrfPrc IF (*1 PrfPrc BARRIER VFIN OR CC OR CP OR CS 
-#		LINK NOT 0 Pass OR ("leapma" Dimin));
+REMOVE PrfPrc IF (*-1 Gen BARRIER NPNH LINK -1 BOS OR CLB);
+	## Sámi dutkan ii leat dan dihte soaittáhagas válljejuvvon. 
 
 REMOVE PrfPrc IF (NOT *-1 VFIN)(NOT 0 Pass)(NOT *1 VFIN BARRIER CP OR CS);
 
