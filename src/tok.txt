@@ -28,17 +28,47 @@ define Char \[ WS | SINGLE ] ;
 
 # =============================================================
 echo >>> define SYMBOL
-define SYMBOL [ SINGLE | PUNCT ] ;
+#define SYMBOL [ SINGLE | PUNCT ] ;
+define SYMBOL [ SINGLE | PUNCT | EXTRAPERIOD ] ;
 
 echo >>> define WORD
 define WORD [ Char ]+ ;
 
 # =============================================================
+echo >>> regular abbreviations
+
+define Capital [
+C1|D1|N1|S1|T1|Z1|
+A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|
+Å|Ä|Ö|Ø|Æ|Á|É|Ó|Ú|Í|À|È|Ò|Ù|Ì|Ë|Ü|Ï|Â|Ê|Ô|Û|Î|Ã|Ý|þ|Ñ|Ð ] ;
+
+define Small [ c1|d1|n1|s1|t1|z1|
+a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|
+å|ä|ö|ø|æ|á|é|ó|ú|í|à|è|ò|ù|ì|ë|ü|ï|â|ê|ô|û|î|ã|ý|þ|ñ|ð|ç|ß];
+
+define Letter [ Small | Capital ] ;
+define INIT [ Letter %. ]+ ;
+
+# =============================================================
 # Later, this list shall be divided acc. to whether they may end a clause
 # (such as kap.) or whether they may not (such as gc1.).
 echo >>> list of abbreviations
-define ABBR [
-{Mr.} | {Mrs.} | {Ms.} | {etc.} | {e.g.} | {i.e.} | {ltd.} | {Ltd.} | {inc.} | {Inc.} | 
+
+define INTRANSABBR [
+{Kr.f.} |
+{Elvegt.} |
+{ltd.} | {Ltd.} | {inc.} | {Inc.} ] ;
+
+define TRANSABBR [
+{Johs.} |
+{Eftf.} | 
+{prof.} | 
+{Mr.} | 
+{Mrs.} | 
+{Ms.} | 
+{etc.} | 
+{e.g.} | 
+{i.e.} |  
 {Chr.} | 
 {Eks.} | 
 {Innst.} | 
@@ -74,19 +104,14 @@ define ABBR [
 {op.} | 
 {prp.} | 
 {rev.} | 
-{s1,} | 
+{s1.} | 
 {utg.} |
 {v.r.d.} ];
 
-# =============================================================
-echo >>> regular abbreviations
-define Letter [
-C1|D1|N1|S1|T1|Z1|c1|d1|n1|s1|t1|z1|
-A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|
-Å|Ä|Ö|Ø|Æ|Á|É|Ó|Ú|Í|À|È|Ò|Ù|Ì|Ë|Ü|Ï|Â|Ê|Ô|Û|Î|Ã|Ý|þ|Ñ|Ð|
-a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z
-å|ä|ö|ø|æ|á|é|ó|ú|í|à|è|ò|ù|ì|ë|ü|ï|â|ê|ô|û|î|ã|ý|þ|ñ|ð|ç|ß];
-define INIT [ Letter %. ]+ ;
+define TOK0 [ INTRANSABBR @-> ... NL %. NL || _ WS Small ] ; 
+
+define ABBR [ INTRANSABBR | TRANSABBR ] ;
+
 
 # =============================================================
 echo >>> numeric expressions
@@ -107,5 +132,5 @@ define TOK2 [ [WS]+ @-> NL ];
 
 # =============================================================
 echo >>> compose
-read regex [TOK1 .o. TOK2 ];
+read regex [TOK0 .o. TOK1 .o. TOK2 ];
 invert net
