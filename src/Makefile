@@ -142,8 +142,8 @@ guess-sme: ../bin/guess-sme
 	@echo "*** Generating guess-sme ***" ;
 	@printf "sme ${BINDIR}/sme.fst\n\
 	guesser ${BINDIR}/g-sme.fst\n\n\
-	sme
-	guesser \n > $@
+	sme \n\
+	guesser \n" > $@
 
 
 # Here we build d-sme.fst, the morphological tagger geared towards 
