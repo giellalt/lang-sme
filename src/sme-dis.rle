@@ -151,7 +151,7 @@ LIST WORD = N A Adv V Pron CS CC Po Pr Interj Pcle Num ; # any word
 LIST V-DER = adda alla d g h asti hudda huhtti huvva j l ahtti st
               stuvva goahti ;
 LIST N-DER = eaddji eamos1 eapmi heapmi s1 mus1 upmi us vuohta ;
-LIST A-DER = geahtes lágan las1 meahttun ;
+LIST A-DER = geahtes heapmi lágan las1 meahttun ;
 
 #SET DER = V-DER | N-DER | A-DER ;
 
@@ -447,7 +447,7 @@ LIST PREGEN = ("oktavuohta" N Sg Loc);
 LIST NOPX = "1600-#lohku";
 	# Nominals that probably do not have a Px.
 
-LIST PX = "bárdni";
+LIST PX = "bárdni" "nieida";
 	# Nominals that might have a Px.
 
 
@@ -667,10 +667,14 @@ SELECT (PxSg3) IF (-1 V-SG3)(NOT -1 ("leat") OR Pass)(NOT 0 NOPX)(-2 ("son"));
 	## Dat ráhkaduvvo gáttis gárvvisin.
 
 # Px for names for relatives
+SELECT (Nom PxSg1) IF (-1 PUNCT OR CLB)(0 PX)(1 COMMA);
 SELECT (PxSg3) IF (*-1 (Sg Nom) OR (Sg3 Nom) BARRIER CS OR CP)(0 PX);
 
 # Px for diminutives
 
+# Other
+SELECT (Gen PxSg2) IF (*-1 Sg2 BARRIER CS OR CP)(0 (N Pl Nom))(1 Po)
+	(NOT *2 NP-HEAD-GEN BARRIER NPNH);
 
 # Certain verb forms
 # ==================
@@ -990,6 +994,10 @@ SELECT CS IF (*-1 ("jos") OR ("go") LINK -1 BOS OR CS)(-1 COMMA)(0 ("de"));
                      ## Jos died1ás1in, de dajas1in.
                      ## Go olbmot jaskkodit, de sáhpánat álget jursit.
                      ## Son diehtá, ahte jos galgá leat mielde, de ferte máksit.
+
+# dego
+# ----
+REMOVE Qst IF (0 ("dego")); 
  
 # go
 # --
@@ -1102,7 +1110,7 @@ REMOVE Prop IF (0 ("Lassi"))(1 Pron OR N );
 SELECT Adv IF (-2 VFIN)(-1 ("nu"))(1 COMMA)(2 ("ahte"));
                                        ## Lohku lassánii nu johtilit, ahte ...
 
-SELECT Adv IF (*-1C VFIN-NON-AUX BARRIER NON-ADV)
+SELECT Adv IF (*-1C VFIN-NON-AUX BARRIER NON-ADV OR PUNCT)
               (0 A-ATTR)(NOT 0 Inf)(NOT 1 N);     # Adv if postverbally
 
 REMOVE Adv IF (-1 (N Gen) OR (Pron Gen))(NOT -1 Adv OR ("leat" PrfPrc))
@@ -1308,8 +1316,8 @@ SELECT Adv IF (*-1 CS BARRIER VFIN OR CLB)(NOT -1 go)(0 ("maid"))
 SELECT Interj IF (-1 BOS)(0 ("maid"))(1 COMMA);
 
 # manne
-SELECT Adv IF (-1 BOS)(0 ("manne"))(1 VFIN);     ## Manne ii leat áviisa boahtán?
-SELECT Adv IF (-1 BOS)(0 ("manne"))(1 N OR Pron)(2 VFIN); ## Manne don leat dál?
+SELECT Adv IF (-1 BOS OR PUNCT)(0 ("manne"))(1 VFIN);     ## Manne ii leat áviisa boahtán?
+SELECT Adv IF (-1 BOS OR PUNCT)(0 ("manne"))(1 N OR Pron)(2 VFIN); ## Manne don leat dál?
   # Need a rule for "Manne + NP + VFIN".
 
 # mielas
@@ -1569,9 +1577,11 @@ REMOVE (Dem Sg Ill) IF (0 ("dat"));
 # Some rules for personal pronouns again (will hit "dat")
 # ------------------------------------------------------- 
 
-SELECT (Sg3 Nom) IF (*-1 (V Sg3) BARRIER CC OR CS OR CLB OR CP OR PUNCT); 
+SELECT (Sg3 Nom) IF (*-1 (V Sg3) BARRIER CC OR CS OR CLB OR CP OR PUNCT)
+	(NOT *1 (N Sg Nom) BARRIER NPNH); 
 SELECT (Pl3 Nom) IF (*-1 (V Pl3) BARRIER CC OR CS OR CLB OR CP OR Nom);
-SELECT (Sg3 Nom) IF (*1 (V Sg3) BARRIER VFIN OR CS OR CP LINK NOT 0 (N Pl));
+SELECT (Sg3 Nom) IF (*1 (V Sg3) BARRIER VFIN OR CS OR CP LINK NOT 0 (N Pl))
+	(NOT *-1 V-SG3 BARRIER NON-ADV);
 SELECT (Pl3 Nom) IF (*1 (V Pl3) BARRIER VFIN OR CS OR CP);
 
 SELECT (Pron Sg3) IF (1 (Pron Interr Sg)); ## Dat mas boallu lea,... 
@@ -1839,7 +1849,7 @@ REMOVE VGen IF (NOT *-1 V-IND-FIN BARRIER CLB OR CS)
 REMOVE ConNeg IF (NOT *-1 (Neg) BARRIER CLB OR V-IND-FIN); 
 
 REMOVE Imprt IF (*-1 (Neg Ind) BARRIER CLB OR V-IND-FIN);
-REMOVE Imprt IF (*-1 ConNeg BARRIER VFIN OR CS OR CP);
+REMOVE Imprt IF (*-1 ConNeg BARRIER VFIN OR COMMA OR CS OR CP);
 
 REMOVE Prs IF (*-1 (Neg Imprt) BARRIER CLB OR V-IND-FIN)(0 (ConNeg));
 
@@ -1875,7 +1885,7 @@ SELECT Inf IF (-2 Inf)(-1 COMMA)(1 COMMA OR CC);
 SELECT Inf IF (*-1 VFIN BARRIER CS OR CP OR CONTRA LINK *-1 (Pron Interr) BARRIER CS
 	LINK *-1 INF-VERB BARRIER VFIN OR CS OR CP);
 
-SELECT Inf IF (*-1 ACC-INF-VERB BARRIER CS OR CP OR Nom OR Neg);
+SELECT Inf IF (*-1 ACC-INF-VERB BARRIER Inf OR CS OR CP OR Nom OR Neg);
 
 SELECT Inf IF (-1 (A Nom))(*-2 COPULAS BARRIER NON-ADV-PCLE);
 
@@ -2112,6 +2122,11 @@ REMOVE Nom IF (-1 BOS)(NOT 0 (Pron Pers))(1C V-1-2);
 SELECT Nom IF (-1 BOS)(0 Prop)(1 COMMA); 
                                  ## Biera, du sabehiid!
 
+# Nominative after 'dego'
+# - - - - - - - - - - - - 
+SELECT Nom IF (*-1 ("dego") BARRIER NPNH)(1 NP-BORDER OR CLB);
+SELECT Nom IF (-2 ("dego"))(-1 Gen)(1 NP-BORDER);
+REMOVE Imprt IF (*-1 ("dego") BARRIER VFIN OR CS OR CP);
 
 # Coordinated subjects
 # - - - - - - - - - -
@@ -2131,9 +2146,9 @@ SELECT Nom IF (*-1 COMMA BARRIER NPNHAI LINK -1 Nom)(1 CC);
 # - - - - - - - - - -
 
 # Singular
-SELECT (Sg Nom) IF (*-1 V-SG3 BARRIER NPNHAIIP LINK *-1 BOS OR CS OR CLB BARRIER Nom)
-                (0 (N Sg) or (Pron Pers Sg) OR (Pron Interr Sg))(NOT 0 PrfPrc)
-		(NOT 1 Po)(Not 0 Gen);
+SELECT (Sg Nom) IF (*-1 V-SG3 BARRIER NPNHAIIP LINK NOT 0 (Imprt Sg2) 
+	LINK *-1 BOS OR CS OR CLB BARRIER Nom)(0 (N Sg) OR (Pron Pers Sg) OR (Pron Interr Sg))
+	(NOT 0 PrfPrc)(NOT 1 Po)(Not 0 Gen);
                     ## Dat lei 1827s, muitalii muhtin mátkkos1teaddji midjiide.
                     ## Riikkaid galgá Piera oaidnit.
 
@@ -2417,8 +2432,8 @@ SELECT Acc IF (*-1C Po BARRIER NPNHAIIP LINK -1 N OR Pron
                   ## Ii olmmos1 gille guoddit, go beare deaivá dan mad1e bohcco
                   ## ahte lea niesteseahkkaguoddi.
 
-REMOVE Nom IF (*-1 VFIN-NON-AUX BARRIER NPNHA LINK *-1 NP-HEAD-SG-NOM OR NP-HEAD-PL-NOM
-	BARRIER NON-ADV OR CLB); 
+REMOVE Nom IF (*-1 VFIN-NON-AUX BARRIER NPNHA OR PUNCT 
+	LINK *-1 NP-HEAD-SG-NOM OR NP-HEAD-PL-NOM BARRIER NON-ADV OR CLB); 
 
 SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAIIP OR COMMA)
               (0 NP-HEAD)(NOT 0 PrfPrc OR Adv OR Dem OR Inf )
@@ -2983,6 +2998,8 @@ SELECT V-SG3 IF (*-1 (N Sg Nom) OR (Pron Sg3 Nom) BARRIER VFIN)
 		(NOT *-1 V-SG3 BARRIER CS OR CP)
 		(NOT *1 V-SG3 BARRIER CC OR CS OR CP);
 
+SELECT V-SG3 IF (*-1 (Pron Sg3 Nom) BARRIER NON-ADV);
+
 SELECT V-SG3 IF (-2 V-SG3)(-1 CC)(NOT 0 Adv OR A);
 
 # Rules that look for a subject across a relative clause:
@@ -3176,6 +3193,7 @@ SELECT Prs IF (-1 (Neg Prs)) ;
 
 # Select some finite
 REMOVE Inf IF (-2 CLB) (-1 CS); ## Dus1s1e, juos leat doarvái...
+REMOVE Inf IF (*-1 (Pron Interr) BARRIER VFIN);
 REMOVE Inf IF (-1 Inf) ; # This will work when all INF-VERBs are identified!
 
 
@@ -3288,19 +3306,19 @@ SELECT (Pl3) IF (-1 Loc)(1 (N Pl Nom)); # Mus livc1c1e guolit.
 
 SELECT (Imprt ConNeg) IF (-1 (Neg Imprt)) ; ## Ale suhta munnje.
 
-SELECT Imprt IF (-1 COMMA OR CC)(*-2 Imprt BARRIER VFIN);
+SELECT Imprt IF (-1 COMMA OR CC)(*-2 Imprt); # No barrier needed?
 
 SELECT Imprt IF (NOT *-1 VFIN-NOT-IMP BARRIER CS OR CP)
 	(*1 CC BARRIER VFIN LINK *1C Imprt BARRIER VFIN OR CS OR CP)(NOT 0 PrfPrc);
 
+SELECT (Imprt Sg2) IF (NOT *-1 V-SG2 BARRIER VFIN)(*-1 PUNCT OR CLB BARRIER NON-ADV-PCLE)
+	(1 (PxSg2));
+
 SELECT (Imprt Pl2) IF (*1 CC BARRIER VFIN LINK *1C (Imprt Pl2) BARRIER VFIN OR CS OR CP);
 
-#REMOVE Imprt IF (NOT -1 COMMA OR BOS OR PUNCT OR Pcle)(NOT 0 (ConNeg)) ;
-# Imprt must be either a negative verb form, or in the middle of a sentence. (???)
-
-REMOVE Imprt IF (NOT -2 Nom)(-1 COMMA) ;
-            ## Máret, boad1e deike!
-            ## Dan maid dárbbas1a fievrridit, ferte olmmos1 noad1uhit.
+# Rule that finds a coordinated Imprt across a relative clause:
+SELECT (Imprt Pl2) IF (-1 CC OR COMMA)(*-2 VFIN BARRIER CS OR CP OR CONTRA 
+	LINK *-1 (Pron Interr) BARRIER CS LINK *-1 (Imprt Pl2) BARRIER VFIN OR CS OR CP);
 
 # Negative imperative
   # Neg Imprt Pl2 = allet V Inf = Prs Pl1 = Prs Pl3
@@ -3313,12 +3331,11 @@ REMOVE (V Ind Prs Sg3) IF (-2 BOS)(-1 Pcle)(0 (V Imprt Prs Sg2));
                            # Note that this is dangerous, and kept specific in
                            # order to play safe. May need to be generalised.
 
-SELECT (Imprt Pl2) IF (-1 CC OR COMMA)(*-2 VFIN BARRIER CS OR CP OR CONTRA 
-	LINK *-1 (Pron Interr) BARRIER CS LINK *-1 (Imprt Pl2) BARRIER VFIN OR CS OR CP);
+REMOVE Imprt IF (-1 Interr OR CP OR CS)(NOT -1 ("de"));
 
+REMOVE (Imprt Sg2) IF (0 V-SG2);
 
-#REMOVE Imprt IF (
-
+REMOVE Imprt IF (*-1 VERB BARRIER NON-ADV OR CLB LINK NOT 0 Neg);
 
 
 # Infinite forms #
@@ -3378,11 +3395,11 @@ SELECT Inf IF (-1 ("dilli"))(NOT 0 ("leat"));
 # There are two rules in the beginning, conflate when I see the effect.
 # The barrier may be too weak.
 
-SELECT Inf IF (-1 A BARRIER VFIN LINK *-1 ("leat") OR ("s1addat") 
+SELECT Inf IF (-1 A BARRIER VFIN OR CP LINK *-1 ("leat") OR ("s1addat") 
               BARRIER NON-ADV)(NOT 0 (N Pl Nom));
                            ## Eará guovlluin lei vejolas1 nannet dárogiela.
 
-SELECT Inf IF (*-1 N BARRIER VFIN LINK *-1 ("leat") OR ("s1addat") 
+SELECT Inf IF (*-1 N BARRIER VFIN OR CP LINK *-1 ("leat") OR ("s1addat") 
               BARRIER NPNHAI)(NOT 0 (N Pl Nom));
                            ## Jos leat jaska, de lea dárbu singuin gulahaddat.
 
@@ -3521,8 +3538,8 @@ SELECT Gen IF (0 Dem)(*1C (N Gen) OR (N Sg Ill) OR (N Sg Loc) OR (N Pl Com)
 # =====================
 # Now we select the Px that are connected to Imprt: 
 
-SELECT (PxSg2) IF (*-1 (Imprt Sg2) BARRIER VFIN OR Sup)(NOT 0 (N Pl Nom) OR (A Pl Nom) 
-	LINK *1 V-PL3 BARRIER NON-A);
+SELECT (PxSg2) IF (*-1 (Imprt Sg2) BARRIER VFIN OR Sup)
+	(NOT 0 (N Pl Nom) OR (A Pl Nom) LINK *1 V-PL3 BARRIER CS OR CP);
 #SELECT (PxSg2) IF (*-1 (Imprt Sg2) BARRIER VFIN OR Sup OR CC OR CP OR CS 
 #	LINK NOT 0 A OR Adv)(0 (N Pl Nom))(NOT 0 Pot OR Inf);
 	## Buvtte dasto oaffarsken1kkat!
