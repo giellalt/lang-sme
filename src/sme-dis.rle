@@ -1053,9 +1053,6 @@ SELECT Pers IF (0 MII-PERS)(1 CC)(2 (N Nom));
 
 # don ( = Pron Dem Sg Acc/Gen)
 # - - - - - - - - - - - - - -
-SELECT (Dem Gen) IF (0 DON)(1 ("beallái") OR ("bealde"));
-	## Vulgot don beallái jávrri.
-
 SELECT Pers IF (*-1 V-SG2)(0 DON); 
 SELECT Pers IF (0 DON)(*1 V-SG2 BARRIER PUNCT);  
 	## Liikotgo don Abbai?
@@ -1202,6 +1199,12 @@ SELECT PxSg3 IF (*-1 (V Sg3) BARRIER CS OR REALCLB)(0 Gen)(1 Po);
 	## Maid sáhttá olmmoš addit máksun heakkas ovddas?
 
  # More rules must be added here, and the set N-PX expanded. 
+
+REMOVE PxSg3 IF (0 ("ođđasis"));
+	## Byrokratiijat hábmemušaideaset geažil dušše ráhkadit ođđasis
+	## daid čuolmmaid.
+ # We could perhaps have selected Adv instead.
+ 
 
 
 # ------------------- #
@@ -1728,6 +1731,15 @@ SELECT Po IF (-1 (N Gen) LINK *-1 CC BARRIER NPNH LINK -1 (N Gen))(0 GASKAL);
 
 SELECT Po IF (-3 Inf)(-2 ("ja"))(-1 Inf)(0 GASKAL);
 	## Sániid oamastit ja eaiggáduššat gaskkas geavahuvvo "ja".
+
+
+# Adpositions that take modifiers
+# -------------------------------
+
+SELECT Pr IF (-1 Gen)(0 ("bealde") OR ("beale") OR ("beallái") OR ("geahčai")
+	OR ("geahčen") OR ("geaže"))(1 Gen);
+	## Daid sáhttá heaŋggastit dan heargái mii daid eará goahtemuoraid lea 
+	## guoddimin, guokte bealji goappáge beallái hearggi. 
 
 
 
@@ -2970,7 +2982,7 @@ SELECT Dem IF (NOT -1 VERB)(1 (Indef Attr));
 	## Nuppi geahči dan seammá lávžžis fas biddjojuvvo bađa birra.
 
 REMOVE (Dem Sg) IF (0 ("dat" Sg))(NOT *1 (N Sg) BARRIER NON-NP LINK 0 HNOUN)
-	(NOT 1 PrfPrc LINK *1 (N Sg) BARRIER NON-NP);  
+	(NOT 1 PrfPrc LINK *1 (N Sg) BARRIER NON-NP)(NOT 1 (Indef Sg));  
 	## .. ja dan golut leat govttolaččat veahki ektui.
 
 REMOVE (Dem Pl) IF (0 ("dat" Pl))(NOT *1 (N Pl) OR (Indef Pl) OR NUMERALS 
@@ -4078,6 +4090,13 @@ SELECT Gen IF (-1 POST-A)(1 N)(2 POST-B);
 	## Nu leat 40 buolvva Dávveda rájes Babylonia fáŋgavuođa rádjái.
 
 
+# Genitive attribute of adposition.
+# - - - - - - - - - - - - - - - - -
+SELECT Gen IF (1 ("bealde" Pr) OR ("beale" Pr) OR ("beallái" Pr) OR ("geahčai" Pr)
+	OR ("geahčen" Pr) OR ("geaže" Pr));
+	## Ánde boahtá don bealde joga.
+
+
 # Genitive with "dan mađe N"
 # - - - - - - - - - - - - -
 SELECT (Gen Sg) IF (0 ("dat"))(2 ("mađe"));
@@ -5106,8 +5125,11 @@ SELECT Acc IF (*-1C V-NON-AUX-PASS BARRIER NPNHAIIP OR COMMA)(0 NP-HEAD)
 	## Bearašsuodjaluskantuvrrat fállet divššu ja rávvejit bearrašiid.
  # Could this rule be modified so that it accepts a subject between 0 and verb? 
 
-SELECT Acc IF (*-1 V-NON-AUX-PASS BARRIER NON-ADV-PCLE)(1 Pers);
+REMOVE Gen IF (*-1 V-NON-AUX-PASS BARRIER NON-ADV-PCLE)(1 Pers);
 	## Sii bilkidit ja doarrádallet din mu dihtii.
+
+REMOVE Gen IF (*-1 V-NON-AUX-PASS BARRIER NON-ADV-PCLE)(1 Dem);
+	## De gohčui doalvut iežas don beallái jávrri.
 
 SELECT Acc IF (NOT *-1 Acc BARRIER CS OR CP)(NOT *-1 CC BARRIER NPNH LINK -1 Acc)
 	(0 NP-HEAD)(NOT 0 VFIN)(1 (A Ess))(NOT *1 Actio BARRIER NON-ADJ-CC);
@@ -5125,8 +5147,8 @@ REMOVE Gen IF (*-1 V-NON-AUX-PASS BARRIER NPNHA)(0 N)(1 (Pron Indef))
 	(NOT *1 Ill BARRIER NPNH LINK 1 Acc);
 	## ...čájehit vuollegašvuođa juohke ovtta divššohasa eallimii.
 
-REMOVE Gen IF (*-1 V-NON-AUX-PASS BARRIER NPNHA LINK NOT 0 ILL-VERB OR ACC-ILL-VERB 
-	OR VGen)(NOT 1 Acc)(*1 Ill BARRIER NPNH LINK NOT 0 ("láhki"));
+REMOVE Gen IF (*-1 V-NON-AUX-PASS BARRIER NPNHA OR Acc LINK NOT 0 ILL-VERB 
+	OR ACC-ILL-VERB OR VGen)(NOT 1 Acc)(*1 Ill BARRIER NPNH LINK NOT 0 ("láhki"));
 	## Dasto son vuolggahii sin Betlehemii ja dajai:...
   
 REMOVE Gen IF (*-1 Nom BARRIER NON-ADV-PCLE LINK *-1 V-NON-AUX-PASS BARRIER 
@@ -5638,6 +5660,16 @@ SELECT Gen IF (NOT *-1 V-NON-AUX-PASS BARRIER NON-ADV-PCLE)(0 Dem)
 	(*1C (N Gen) OR (N Sg Ill) OR (N Sg Loc) OR (N Pl Com)
 	BARRIER NON-ADJ LINK NOT 0 Cmpnd);
 	## Mii eat galgga dán digaštallamii searvat dán oktavuođas.
+
+SELECT Acc IF (0 Indef)(1 (A Acc));
+	## Dasgo mun in leat goassege borran maidege eahpebasiid.
+
+REMOVE Gen IF (1 (Pers Gen));
+	## Dii huksebehtet hávdemuittuid profehtaide geaid din máddarat godde! 
+
+SELECT Gen IF (*-1 (Indef Acc) BARRIER NON-ADV)(0 Pers);
+	## Oktan suinna sii russiinávlejedje guokte rievvára, nuppi su olgeš ja 
+	## nuppi fas su gurut beallái.
 
 
 
@@ -6329,6 +6361,10 @@ SELECT Inf IF (*-1 Inf BARRIER VERB);
 SELECT Inf IF (*-2 ("leat") BARRIER VERB)(-1 Ess);
 	## ...lea Sámedikkiin dáhpin geavahit... 
 
+SELECT Inf IF (-1 ("mo"));
+	## Dakkár doaimmat berrejit ráhkadit njuolggadusaid, mo gieđahallat
+ 	## journálaid.
+
 
 # Infinitive after predicative
 # - - - - - - - - - - - - - - -
@@ -6574,10 +6610,11 @@ SELECT VFIN IF (*-1 CP OR CS BARRIER VFIN)(NOT 1 (Pron Interr))
 	(NOT *1 VERB BARRIER CS OR CP);
 	## Son lea dan sápmelaš gean dovddan.
 
+ # This rule finds the finite verbs in embedded finite clauses. 
+
 SELECT VFIN IF (0 INF-VERB)(1 ("go" Pcle))(*2 Inf BARRIER VERB);
 	## Lea go son vuolgimin min álbmotguimmiid lusa geat ásset 
 	## greikalaččaid gaskkas, ja áigu go sárdnidit greikalaččaide ge?
-
 
 REMOVE (V Prt Pl3) IF (0 AUX)(0 (V Prs Sg3));
 	## Giellabargguid ferte viidásetfievrridit.
@@ -6590,7 +6627,7 @@ REMOVE (V Prt Pl3) IF (0 AUX)(0 (V Prs Sg3));
        CONSTRAINTS      #
 # ===================== #
 
-# This is a section for local disambiguation that must come after the main POS
+# This is a section for local disambiguation that must come after the main POS.
 
 
 # Case rules
@@ -6600,18 +6637,6 @@ REMOVE Nom IF (*-1 Inf BARRIER NPNH)(*1 CC OR CS OR CP OR EOS BARRIER WORD
 	LINK 1 NP-BORDER);
 	## Gonagas sáhttá viidáseappot mearridit dárkilet mearrádusaid mo geavahit 
 	## elektrovnnalaš journála, ja das maiddái bidjat gáibádusaid oahpahussii.
-
-REMOVE Gen IF (NOT -2 Gen)(-1 CC)(1C VFIN);
-	## Mus lea doaivu ja dan sáhttá čállit čuovvovaččat.
-
-REMOVE Gen IF (*-1 CLB BARRIER NON-CC)(1C VFIN);
-	## Mus lea doaivu, ja dan sáhttá čállit čuovvovaččat.
-
-REMOVE Gen IF (-1 CS)(1C VFIN);  # No hits?
-	## Mun jáhkán, ahte dan sáhttá čállit čuovvovaččat.
-
-REMOVE Acc IF (0 Pron)(NOT 0 Dem)(1C Acc); # Mun oainnán du vielja.
-	##
 
 
 # Other rules for nominals
@@ -6698,7 +6723,7 @@ REMOVE (Dem Gen) IF (*1 (N Nom) BARRIER NPNH);
 
 
 # Derived nouns
-# -----
+# -------------
  # These rules need to come late, allowing Actor and Actio readings to be 
  # picked out by earlier rules.
 
