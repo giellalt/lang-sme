@@ -10,14 +10,15 @@ Alphabet
  h2:h g2:g m2:m n2:n b3:b d3:d g3:g h3:h m3:m n3:n p3:p z3:z
  X1:0 X2:0 X3:0 X4:0 X5:0 X6:0 X7:0 X8:0 X9:0
  Q1:0 Q2:0 Q3:0 Q4:0 Q5:0 Q6:0 Q7:0 Q8:0 Q9:0
- Y1:0 Y2:0 Y3:0 Y4:0 Y5:0 Y6:0 Y7:0 Y8:0 Y9:0 ;
+ Y1:0 Y2:0 Y3:0 Y4:0 Y5:0 Y6:0 Y7:0 Y8:0 Y9:0 
+ W1:0 ;
 
 Sets
   Vow = a á e e1 i i1 o o1 o3 u u1 æ ø å ä ö ;
   Cns = b b3 c c1 d d1 d3 f g g2 g3 h h2 h3 j k l m m2 m3 n n1 n2 n3 p p3 r s s1 t t1 v z 
   z1 z3 ' '1 ;
   StemCns = b d g g2 h h2 j l m m2 n n2 r s s1 m3 n3 d3 g3 h3 b3 ;
-  WeG = X4 X5 X6 X8 X9 Q4 Q5 Q6 Q7 Q8 ;
+  WeG = X4 X5 X6 X8 X9 Q4 Q5 Q6 Q7 Q8 W1 ;
   Len = Y1 Y2 Y3 Y4 Y5 Y6 Y7 Y9 ¤ ;
   Dummy = X1 X2 X3 X4 X5 X6 X7 X8 X9 Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 Y1 Y2 Y3 Y4 Y5 Y6 Y7 Y8 ¤ ;
   FinalDummy = X2 X4 X7 X8 ;
@@ -202,11 +203,17 @@ Rules
 			matched ;
 
 "Gradation: Clusters lbm, jdn, vdn etc."
-  Cx:Cy <=> [ l | j: | v ] _ Cz Vow ( StemCns:) (:StemCns) WeG: ;
+  Cx:Cy <=> [ l | j: | v ] _ Cz Vow (Cns) ( StemCns:) (:StemCns) WeG: ;
 			where Cx in (b d g)
 				Cy in (m n n1)
 				Cz in (m n n1)
 			matched ;
+! "(Cns)" is added. I do not like it. But the rule as it was blocked the 
+! "olmmoz1in" essive of "olmmos1", since the "z1" was neither an underlying
+! nor a surface stem consonant, I had to do something. The rule as it stands
+! is meaningless, "(Cns)" contains both (StemCns:) and (:StemCns).
+! Think through this.
+
 
 "Gradation: Clusters ldnj, vdnj etc."
   d:n <=> [ l | v ] _ n j Vow ( StemCns:) (:StemCns) WeG: ;
@@ -319,10 +326,14 @@ Rules
 			matched ;
 
 "Vowel Shortening in Compounds after Long 1st Syllable 1"
-  Vx:Vy <=> [ Vow Vow | á ] Cns:+ Cns _ StemCns:* [ X7: | X8: ] ;
+  Vx:Vy <=> [ Vow Vow | á ] Cns:+ Cns _ StemCns:* X7: ;
 			where Vx in (u i)
 				Vy in (o e)
 			matched ;
+! Vx:Vy <=> [ Vow Vow | á ] Cns:+ Cns _ StemCns:* [ X7: | X8: ] ;
+! the problem with this one was that it was not restricted to compounds !!
+! The X7: | X8: line was commented out since no lexicon in sme-lex.txt
+! pointed from X8 to R. This move should be checked for compounds later.
 
 !"Vowel Shortening in Compounds after Long 1st Syllable 2"
 !  Vx:Vy <=> [ #: | Cns ] Vz Cns+ Cns: Cns+ _ StemCns:* [ X7: | X8: ] ;
@@ -334,12 +345,14 @@ Rules
 ! spoils the i:á alternation of verbs (boahtit:boad1án, for some reason.
 ! This should be looked into.
 
+
 "Optional Vowel Shortening after Short 1st Syllable"
   Vx:Vy => [ #: | Cns ] [a|i|o|u] [ Cns: Cns | h: ': Cns: ] 
 		_ StemCns:* [ X7: | X8: ] ;
 			where Vx in (u i)
 				Vy in (o e)
 			matched ;
+
 
 "Optional Vowel Shortening in Caritives"
   Vx:Vy => [ #: | Cns ] [a|i|o|u] Cns:+ _ ( DelCns:) X9: ;
@@ -361,12 +374,18 @@ Rules
 				Vy in (o e)
 			matched ;
 
-
-"Vowel Shortening in Attributive Forms"
-  Vx:Vy <=> Cns:+ _  X8: s #: ;
+"Vowel Shortening in Attributive Forms, V-final Adjectives"
+  Vx:Vy <=> Cns:+ _  W1: s #: ;
 			where Vx in (u i)
 				Vy in (o e)
 			matched ;
+
+"Vowel Shortening in Attributive Forms, s-final Adjectives"
+  Vx:Vy <=> Cns:+ _  s W1: #: ;
+			where Vx in (u i)
+				Vy in (o e)
+			matched ;
+! Tentative rule.
 
 
 "Allegro Forms in Compounds"
