@@ -150,7 +150,7 @@ d-sme.fst: ../bin/d-sme.fst
 
 sme.fst: ../bin/sme.fst
 ../bin/sme.fst: ../bin/sme.save ../bin/caseconv.fst \
-	../bin/allcaps.fst ../bin/abbr.txt
+	../bin/allcaps.fst ../bin/abbr.txt ../bin/cap-sme
 	@echo
 	@echo "*** Building sme.fst ***" ;
 	@echo
@@ -184,7 +184,7 @@ caseconv.fst: ../bin/caseconv.fst
 # This goal depends on allcaps.regex
 
 allcaps.fst: ../bin/allcaps.fst
-../bin/allcaps.fst: allcaps.regex
+../bin/allcaps.fst: allcaps.regex ../bin/cap-sme
 	@echo
 	@echo "*** Building allcaps.fst ***" ;
 	@echo
