@@ -151,11 +151,20 @@ g-sme.fst: ../bin/g-sme.fst
 	@lexc < ../../tmp/g-sme-save-script
 	@rm -f ../../tmp/g-sme-save-script
 
+	@printf "read regex @\"../bin/g-sme.fst\" .o. \
+	@\"../bin/caseconv.fst\" ; \n\
+	save stack ../bin/g-sme.fst \n\
+	quit \n " > ../../tmp/g-sme-fst-script
+	@xfst < ../../tmp/g-sme-fst-script
+	@rm -f ../../tmp/g-sme-fst-script
+
+
 
 guess-sme: ../bin/guess-sme
 ../bin/guess-sme:
 	@echo
 	@echo "*** Generating guess-sme ***" ;
+	@echo
 	@printf "sme ${BINDIR}/sme.fst\n\
 	guesser ${BINDIR}/g-sme.fst\n\n\
 	sme \n\
