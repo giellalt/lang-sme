@@ -200,6 +200,9 @@ SET VERB = V - (V N);   # V is all readings with a V tag in them, VERB should
 SET V-NON-COP = V - LEAT-COP ;        # SET V-NON-COP = VERB - LEAT-COP ;
 SET LEX-V = VERB - V-DER;             # VERB but not V-DER
 
+SET AUX = LEAT-COP | Neg ;
+SET V-NON-AUX = V - AUX ;
+
 SET V-DER-PASS = V + V-DER + (Pass);   # + is intersection, this should work
 SET V-PASS = V + (Pass) - V-DER;       # hmm
 
@@ -262,6 +265,10 @@ LIST POST-B = "rádjái" ;
 # Sets of specific words
 # ----------------------
 
+LIST ADV-LOOKALIKES = Ain Anne De Diego Dieppe Enge Galle Haga Joba
+                      Johan Liikka Mai Mannes Mo Naba Nan Oktan Sierra Sokka 
+                      Villa ;
+
 LIST MANNU = "od1d1a/jage/mánnu" "od1d1a/jagi/mánnu" 
              "guovva/mánnu" 
              "njukc1a/mánnu" "njuvc1c1a/mánnu" "márs/mánnu" 
@@ -307,6 +314,10 @@ SET NON-ADV = WORD - Adv;
 SET NON-ADV-PCLE = WORD - Adv - Pcle ;
 
 SET NON-A   = WORD - A ;
+
+LIST A-CC = A CC ;
+
+SET NON-ADJ-CC = WORD - A-CC ;
 
 SET NON-NP = VFIN | Adv | Pcle | Interj | CS | CC ;
 
@@ -587,16 +598,18 @@ SELECT Acc IF (-1 LEAT-FIN-NON-IMP) (1 PrfPrc); ## Mun lean dan dahkan.
 # -------------------------------------
 
 # Object only.
-SELECT Acc IF (*-1 V-NON-COP BARRIER NPNH OR Adv)(1 CLB); ## Oainnán du.
+#SELECT Acc IF (*-1 V-NON-COP BARRIER NPNH OR Adv)(1 CLB); ## Oainnán du.
+SELECT Acc IF (*-1 V-NON-AUX BARRIER NPNH OR Adv)(1 CLB); ## Oainnán du.
+                                       ## In mun sálten nu olu.
 
 # Coordinated object
   # First part
-SELECT Acc IF (*-1 V-NON-COP BARRIER NPNH OR Adv)(1 CC)
+SELECT Acc IF (*-1 V-NON-COP BARRIER NPNH OR Adv)(0 N)(1 CC)
               ( *2 NP-HEAD   BARRIER NPNH OR Adv LINK 1 CLB);
                                        ## Oainnán vilges biilla ja rukses viesu.
   # Second part
 SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD LINK 
-              *-1 V-NON-COP BARRIER NPNH OR Adv)(1 CLB);
+              *-1 V-NON-COP BARRIER NPNH OR Adv)(0 N)(1 CLB);
                                        ## Oainnán vilges biilla ja rukses viesu.
 
 
@@ -608,6 +621,11 @@ REMOVE Acc IF (NOT *-1 V-NON-COP )(NOT *1 V-NON-COP ); #Need a verb for an obj.
 
 REMOVE Gen IF (-1 VFIN)(0 N)(1 CLB); ## Joramii riegádii Ussia, Ussiai riegadii
 # The rule is too specific.          ## Jotam.
+
+# Topicalised object
+
+SELECT Acc IF (NOT 0 Nom)(1 (V Sg3))(NOT *2 Nom);
+# A bit strange rule, this, should be made more general. XXX
 
 
 # Nom
@@ -645,37 +663,38 @@ REMOVE Nom IF (-1 BOS)(NOT 0 (Pron Pers))(1C V-1-2);
 
 
 SELECT Nom IF (*-1 ("leat" V Sg1) BARRIER NPNH OR PrfPrc
-           LINK *-1 MUN BARRIER NON-ADV-PCLE);
+           LINK *-1 MUN BARRIER NON-ADV-PCLE)(NOT 0 PrfPrc)(NOT *1 PrfPrc);
 SELECT Nom IF (*-1 ("leat" V Sg2) BARRIER NPNH OR PrfPrc
-           LINK *-1 DON BARRIER NON-ADV-PCLE);
+           LINK *-1 DON BARRIER NON-ADV-PCLE)(NOT 0 PrfPrc)(NOT *1 PrfPrc);
                                       ## Mun lean Anna. Don leat Anna.
 
 SELECT (Sg Nom) IF (*-1 ("leat" V Sg3) BARRIER NPNH
-                LINK *-1 (Sg Nom) BARRIER NON-ADV-PCLE);
+                LINK *-1 (Sg Nom) BARRIER NON-ADV-PCLE)(NOT 0 PrfPrc);
                                       ## Tor lea od1d1a oahpaheaddji.
 
 SELECT (Pl Nom) IF (*-1 ("leat" V Pl3) BARRIER NPNH
-                LINK *-1 (Pl Nom) BARRIER NON-ADV-PCLE);
+                LINK *-1 (Pl Nom) BARRIER NON-ADV-PCLE)(NOT 0 PrfPrc);
 
-SELECT Nom IF (-2 Nom)(-1 COPULAS)(0 A)(1 EOS);
+SELECT Nom IF (-2 Nom)(-1 COPULAS)(0 A)(NOT 0 PrfPrc)(1 EOS);
                                       ## Biilla ivdni lea vielgat.
 
-SELECT Nom IF (-2 Nom)(-1 COPULAS)(0 A)(1 CC)(2 A);
+SELECT Nom IF (-2 Nom)(-1 COPULAS)(0 A)(NOT 0 PrfPrc)(1 CC)(2 A);
                                       ## Viessu lea vielgat ja ruksat.
 
-SELECT Nom IF (-4 Nom)(-3 COPULAS)(-2 A)(-1 CC)(0 A)(1 EOS);
+SELECT Nom IF (-4 Nom)(-3 COPULAS)(-2 A)(-1 CC)(0 A)(NOT 0 PrfPrc)(1 EOS);
                                       ## Viessu lea vielgat ja ruksat
 
 
-SELECT Nom IF (-3 BOS)(-2 Nom)(-1 ("leat"))(1 EOS);
+SELECT Nom IF (-3 BOS)(-2 Nom)(-1 ("leat"))(NOT 0 PrfPrc)(1 EOS);
                                            ## Mun lean Bond.
                                            ## Mun lean gánda.
 
 
-SELECT Nom IF (-2 NP-HEAD-SG-NOM)(-1 ("leat" V Sg3));
+SELECT Nom IF (-2 NP-HEAD-SG-NOM)(-1 ("leat" V Sg3))(NOT 0 PrfPrc);
 
 
-SELECT Nom  IF (-4 BOS)(-3 Nom)(-2 ("leat"))(-1 Prop OR (ABBR))(1 NP-BORDER);
+SELECT Nom  IF (-4 BOS)(-3 Nom)(-2 ("leat"))(-1 Prop OR (ABBR))(NOT 0 PrfPrc)
+               (1 NP-BORDER);
 
 SELECT Nom  IF (*-5 BOS BARRIER NPNH)(-4 Nom)(-3 ("leat"))
                 (-2 Prop OR (ABBR))(-1 Prop)(0 Prop)(1 NP-BORDER);
@@ -796,7 +815,7 @@ REMOVE ABBR IF (0 Neg)(*1 ConNeg);  # Don it leat dál.
 
 SELECT Sg1 IF (0 LEAN) (1 PrfPrc); # Mun lean boahtán.
 SELECT Sg1 IF (*-1 (Pers Pron Sg1 Nom) BARRIER (V Neg));# Mun ferten lohkat.
-SELECT Sg1 IF (NOT *-1 PrfPrc OR Act OR V-NOT-SG1); ## Háliidan hupmat.
+SELECT Sg1 IF (NOT *-1 PrfPrc OR Act OR V-SG1); ## Háliidan hupmat.
 
 # This homonymy is solved by rules selecting PrfPrc.
 # Note: We will need a rule selecting Sg1. # Mun muitalan Suoma birra.
@@ -984,13 +1003,15 @@ SELECT Sg2 IF (-1 BOS)(0 (Prt Clt))(*1 IKTE); ## Vulgetgo ikte?
 # --------
 # Past Pl3
 # --------
+  # Prt Pl3 = Prs Du1
+
+SELECT Pl3 IF (NOT *-1 MOAI or CC)(NOT *1 MOAI OR CC);
+
 
 # leai disambiguation
 SELECT Prt IF (0 LEAI)(-1 NP-HEAD-SG-NOM); # Introduced 0 LEAI
 
-# Pl3
-# ---
-# Prt Pl3 = Prs Du1
+
 
 REMOVE (Prs Du1) IF (0 (Prt Sg3)) (-1 (N Pl Nom)); # Dokumeantat c1ilge, mo...
 
@@ -1111,7 +1132,14 @@ SELECT PrfPrc IF (-1 NP-BORDER)(0 Pass)(1 CNOUN); ## namuhuvvon guovlluin ja
 # -------
 
 # VGen
-# -------
+# ----
+
+REMOVE VGen IF (0 VFIN)(NOT *-1 VFIN)(NOT *1 VFIN);
+                              ## Báldáhan ferte din1got, jos galgá fidnet.
+
+  # This rule assumes that VGen comes parasitically upon a finite verb,
+  # and removes VGen if this is not the case. More rules are needed in order
+  # to remove more cases.
 
 # Gerund,  Verb abessive and Supine do have uniqe forms and need no rules
 
@@ -1127,8 +1155,6 @@ SELECT PrfPrc IF (-1 NP-BORDER)(0 Pass)(1 CNOUN); ## namuhuvvon guovlluin ja
 # Attribute disambiguation
 # ------------------------
 
-
-
 SELECT Attr IF (1C N) ;              ## Garra muorra. Rolf Berg.
   # This rule is too general.
 
@@ -1142,8 +1168,15 @@ SELECT Attr IF (1 CC)(2 Attr)(3 N);
 SELECT A IF (*-1 ("leat" V) BARRIER NON-ADV)(1 N OR EOS);
                                      ## Ikte lei hui buolas1.
 
-
 REMOVE Attr IF (0 A)(NOT 1 A OR CC OR COMMA); ## Vuolgit lea suohtas.
+
+
+# special rules for 'buorre' (the only adjective showing case agreement)
+# ----------------------------------------------------------------------
+
+SELECT Gen IF (0 ("buorre"))(*1C (N Gen) BARRIER NON-ADJ-CC);
+SELECT Acc IF (0 ("buorre"))(*1C (N Acc) BARRIER NON-ADJ-CC);
+
 
 # Comparatives
 # ------------
@@ -1204,6 +1237,9 @@ SELECT Adv IF (NOT -1 Dem or (A Attr))(0 ("duo")); ## Áddjá go duo lea boahtime?
 
 SELECT Adv IF (-1 VFIN)(0 ("gusto")); ## Diet lea gusto ávkkálas1.
 
+#SELECT Adv IF (NOT -1 BOS)(0 ("died1usge")); ## Mun lean died1usge oaddán.
+SELECT Adv IF (0 ("died1usge")); ## Mun lean died1usge oaddán.
+
   # Todo: Make a set of these verb-like adverbs, and make a rule for them.
   # Eventually more sets, if they have different syctactic properties...
 
@@ -1214,7 +1250,8 @@ SELECT Adv IF (-1 BOS)(0 ("manne"))(1 N OR Pron)(2 VFIN); ## Manne don leat dál?
 
 
 
-
+SELECT Adv IF (-1 BOS)(0 ADV-LOOKALIKES)(NOT 1 VFIN);
+  # Evaluate this one. Too careful?
 
 
 # Disambiguating pronouns #
