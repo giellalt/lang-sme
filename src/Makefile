@@ -284,7 +284,7 @@ sme.save: ../bin/sme.save
 # The fourth goal is to build twol-sme.bin
 # This goal depends on twol-sme.txt
 
-twol-sme.bin: ../bin/twol.sme.bin
+twol-sme.bin: ../bin/twol-sme.bin
 ../bin/twol-sme.bin: twol-sme.txt
 	@echo
 	@echo "*** Building twol-sme.bin ***" ;
