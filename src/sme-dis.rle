@@ -690,7 +690,6 @@ REMOVE (PxSg3) ; # IF (0 Loc);
 
 
 
-
 # Noun or not?
 # ============
 
@@ -756,11 +755,6 @@ SELECT (Pl Nom) IF (1C (V Pl3))(NOT 0 Adv);
 # Based on circumscribed context
 # ------------------------------
 
-SELECT A IF (-1 CC)(0 (N as1))(1 Cmpnd);
-           ## Lea sahka oppalac1c1at eamiálbmot- ja unnitloguás1s1iid dutkamiin.
-
-SELECT A IF (-1 ("mii" Interr Sg Gen));
-
 REMOVE A IF (-1 Dem)(1 (Pron Interr));    ## Son lea dan sápmelas1 gean dovddan.
 
 REMOVE (A Sg Nom) IF (NOT *-1 VFIN OR ("mii" Sg Gen))(0 (N Sg Nom))
@@ -778,6 +772,20 @@ REMOVE (V Ind) IF (-1 Dem)(0 N)(1C (V Ind));
 
 REMOVE (V Ind) IF (-1 CS)(0 N)(NOT 0 (V Pl1)) (1 (Pron Interr) LINK *1 (V Ind)); 
 		## Dasgo mánná mii lea su siste... 
+
+# Adjectives and adverbs
+# ======================
+
+SELECT A IF (-2 BOS)(-1 ("mii" Interr Sg Gen));
+
+REMOVE VERB IF (-1 ("mii" Interr Sg Gen)); 
+
+REMOVE VERB IF (-1 ("nu"))(*1 go BARRIER NON-NA); 
+
+REMOVE N IF (-1 ("nu"))(*1 go BARRIER NON-NA);
+
+#SELECT A IF (-1 CC)(0 (N as1))(1 Cmpnd);
+           ## Lea sahka oppalac1c1at eamiálbmot- ja unnitloguás1s1iid dutkamiin.
 
 
 # ======================= #
@@ -905,20 +913,20 @@ SELECT CS IF (*-1 ("jos") OR ("go") LINK -1 BOS OR CS)(-1 COMMA)(0 ("de"));
 # go
 # --
 
-SELECT Pcle IF (-2 BOS)(NOT -1 CC OR Adv)(0 go);  ## Boad1át go?
-                                                  ## Ja go beasai fas bargui.
+SELECT Pcle IF (-2 BOS)(NOT -1 CC OR CS OR PUNCT OR Adv)(0 go);  ## Boad1át go?
+                                                  
 SELECT Pcle IF (-3 BOS)(-2 CS)(0 go);             ## Muhto boad1át go?
 
 SELECT Pcle IF (-1 (V Neg))(0 go);                ## Son jerre it go boad1e?
 
-SELECT Pcle IF (-2 CLB)(-1 V);                    ## Jus juo, lea go nu ahte..
+SELECT Pcle IF (-2 CLB)(-1 V)(0 go);              ## Jus juo, lea go nu ahte..
 
 SELECT Pcle IF (-3 BOS)(-2 CC)(-1 V);             ## Dahje leat go aiddonassii...
 
+SELECT Pcle IF (0 go)(*1 EOS BARRIER VFIN);       ## Mus ii leat go okta beana.
 
-#SELECT Pcle IF (-1 VFIN)(0 ("go"))(*1 CLB BARRIER VFIN);
-SELECT Pcle IF (0 go)(*1 CLB BARRIER VFIN);
-SELECT Pcle IF (-2 N OR Pron)(-1 VFIN)(0 ("go"));
+#SELECT Pcle IF (-2 ("nu"))(-1 A OR Adv)(0 go);
+
 SELECT Pcle IF (-3 N OR Pron)(-2 ("ahte"))(-1 VFIN)(0 ("go"));
                   ## Politihkas lei 1866 rájes sáhka galggai go stivrregoahtit 
                   ## gii oaz1z1u eatnama láigohit stáhtas.
@@ -949,11 +957,10 @@ SELECT Pron IF (0 ("vaikko"))
   CONSTRAINTS # New cycle to get rid of unwanted CS readings
 # =========== #
 
-SELECT CS IF (0 go); # All other go's are CS.
-#REMOVE CS IF (0 go)(NOT -1 V);                ## Nu guhkás go mun died1án,
-                                             ## buot leat ortnegis.
-
 # CS selection for specific CS candidates
+
+SELECT CS IF (0 go); # All other go's are CS.
+
 SELECT CS IF (0 ("vaikko"));
 
 # CS removal for specific CS candidates
@@ -1063,7 +1070,7 @@ REMOVE (V Ind) IF (-1 Nom LINK *-1 (V Ind) BARRIER NPNH)(0 ADV-NOT-VERB);
 # Nouns, not adverbs
 # ------------------
 
-Remove Adv IF (-1 Gen)(0 (N Loc)) ;      ## Son bod1ii njukc1amánu loahpas.
+Remove Adv IF (-1 Gen)(NOT -1 Interr)(0 (N Loc)) ;   ## Son bod1ii njukc1amánu loahpas.
    
 
 # Rules related to specific adverbs
@@ -1260,7 +1267,7 @@ SELECT (Pron Ill) IF (0 ("son"))(1 (Pron Sg));
 SELECT Pers IF (0 ("dat"))(NOT 1 A OR Num OR N); 
 SELECT Ill IF (0 ("dat"))(1 ("lassi" Ess));
 
-# More rules for "dat" after demonstratives.
+# More rules for "dat" are found after rules for demonstratives.
 
 # Moai
 # ----
@@ -1331,7 +1338,7 @@ SELECT Interr IF (NOT -1 (V Pl1))(0 ("mii"))
 SELECT Interr IF (0 ("mii" Sg Nom))(-1 COMMA)(1 Sg3);
 SELECT Interr IF (NOT -1 (V Pl1))(0 ("mii" Sg Nom))(*1 Sg3 BARRIER V-PL1);
 
-SELECT (Sg Gen) IF (0 ("mii" Interr))(1 A);
+SELECT (Sg Gen) IF (0 ("mii" Interr))(1 A OR Adv)(NOT 1 Comp OR Superl);
 
 SELECT Gen IF (*1 BOS)(0 (Pron Interr))(NOT *1 V-NON-AUX);# No hits!
  
@@ -1590,7 +1597,7 @@ REMOVE Nom IF (0 Comp)(1 N)(NOT 1 (N Nom));
    # This block of rules is there to ensure case agreement for attributive
    # comparatives.
 
-SELECT Comp IF (NOT -1 ("nu") OR CC) (*1 ("go") BARRIER NON-N);
+SELECT Comp IF (NOT -1 ("nu") OR CC) (*1 ("go" Pcle) BARRIER NON-N);
             ## Son lea buoret go mun.
             ## Dáz1at navde Finnmárkku buoret guovlun go iez1aset ruovttubáiki.
 
@@ -1848,6 +1855,10 @@ SELECT Nom IF (-2 BOS)(-1 Attr)(1 EOS);
 SELECT Nom IF (-2 BOS)(-1 (Pron Dem Sg Nom))(0 Sg)
               (*1 V-SG3 BARRIER NON-ADV);
                                        ## Dat died1us mielddisbuvtii ahte ...
+
+# A numeral preceded by a Nom demonstrative is nominative
+
+SELECT (Num Nom) IF (-1 (Dem Sg Nom));
 
 
 # Nominative subjects
@@ -2230,7 +2241,7 @@ REMOVE Acc IF (*1 LEAT-COP BARRIER V-NON-AUX OR CS LINK *1 Ger
 	## Vihtta bivdovuogi leat Deanus luosa bivdidettiin.  
 	# An overly specific rule? And what about time expressions?
 
-REMOVE Acc IF (NOT *-1 V-NON-AUX BARRIER CS)(*1 V-PASS BARRIER CS);
+REMOVE Acc IF (NOT *-1 V-NON-AUX BARRIER CS)(*1 V-PASS BARRIER V-NON-AUX OR CS);
 REMOVE Acc IF (*-1 V-PASS BARRIER VFIN)(NOT *1 V-NON-AUX);
                             ## Dál nannejuvvui girku sámeguovlluin.
 
