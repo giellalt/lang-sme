@@ -1533,7 +1533,7 @@ SELECT Indef IF (*-1 ("nubbi"))(-1 COMMA)(0 ("nubbi"));
 # In this section, we include safe verbal rules, rules that should come before
 # the nominal rules. Two things may be done to improve this:
 # 1. These rules may be moved to the front of the cycle, before other POS
-# 2. More save V rules may be moved earlier in the rule file.
+# 2. More safe V rules may be moved earlier in the rule file.
 
 
 
@@ -1542,7 +1542,7 @@ SELECT Indef IF (*-1 ("nubbi"))(-1 COMMA)(0 ("nubbi"));
 
 SELECT (Imprt ConNeg) IF (*-1 (Neg Imprt) BARRIER VFIN OR ConNeg);#OR PrfPrc);
 SELECT (Ind ConNeg)   IF (*-1 (Neg Ind) BARRIER VFIN OR ConNeg);#OR PrfPrc);
-
+SELECT (Cond ConNeg) IF  (*-1 (Neg Ind) BARRIER VFIN OR ConNeg);
 
 REMOVE ConNeg IF (NOT *-1 Neg);
 
@@ -1921,7 +1921,7 @@ REMOVE Gen IF (-1 CS)(1C VFIN);
   # The "1C" part is problematic, as this rule should have been placed
   # after the verb disambiguation. Keep in mind.
 
-REMOVE Nom IF (0 Num)(NOT *1 (V Pl3) BARRIER CS OR EOS) ;
+REMOVE Nom IF (0 Num)(NOT *1 (V Pl3) BARRIER CS OR EOS)(NOT *-1 (V Pl3) BARRIER CS);
 
 
 # Accusative between Aux and main verb
@@ -1932,7 +1932,8 @@ REMOVE Nom IF (0 Num)(NOT *1 (V Pl3) BARRIER CS OR EOS) ;
 
 
 # In front of an infinitive
-SELECT Acc IF (*-1 VFIN BARRIER NPNHAI)(NOT 0 VERB)(NOT 0 Nom)(1 Inf);
+SELECT Acc IF (*-1 VFIN BARRIER NPNHAI)(NOT 0 VERB)(NOT 0 Nom)
+		(*1 Inf BARRIER NON-ADV-PCLE);
                           ## Od1astus addá vejolas1vuod1a muitalit.
                           ## Son lea beassan bargat.
 # changed V-IND-FIN to VFIN here and in subsequent rules.
@@ -2001,11 +2002,14 @@ SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAIIP OR COMMA)
               (1 CC)(*2 VFIN BARRIER NON-ADV-NEG) ;  
 		## Ovddemus dáidá oastit árppuid ja god1d1a firpmiid.	
 
+# Could this rule be modified so that it accepts a subject between 0 and verb? 
+
+
 # Accusative sentence-finally
 # ---------------------------
 
 REMOVE Gen IF (NOT *-1 Pr OR Num OR CC BARRIER NPNH)(0 NOTIME)
-		(*1 CLB BARRIER NON-ADV) ;
+		(*1 CLB BARRIER NON-ADV-PCLE) ;
           ## Fylkka mearrida olugo galgá atnit sámi leavgga.
           ## C1uovvovas1 seminára cealkagat govahallet seminára loahppabohtosa.
           ## Man1n1il lea viessu viiddiduvvon guovtte geardde.
@@ -2172,7 +2176,7 @@ REMOVE Gen IF (0 Adv)(NOT *-1 Pr BARRIER NPNH)
 # Genitive in front of noun at the end of a sentence
 # - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-SELECT Gen IF (NOT 0 Attr OR PrfPrc)(*1C Acc BARRIER NPNH LINK 1 EOS);
+SELECT Gen IF (NOT 0 Attr OR VERB)(*1C Acc BARRIER NPNH OR CC LINK 1 EOS);
 
    ## Fylkka mearrida olugo galgá atnit sámi od1d1a leavgga.
    ## Ulbmiliin lea nannet sámegiela máhtolas1vuod1a Sámedikki organisas1uvnnas.
@@ -2416,7 +2420,6 @@ SELECT PrfPrc IF (*-1 VFIN BARRIER Nom OR V OR CS OR CC OR CLB OR PUNCT);
 # ============ #
    CONSTRAINTS #
 # ============ #
-
 
 
 
@@ -2803,7 +2806,7 @@ REMOVE (V Ind Prs Sg3) IF (-2 BOS)(-1 Pcle)(0 (V Imprt Prs Sg2));
 # ----------
 
 REMOVE VFIN IF (*-1 VFIN-NON-AUX OR ConNeg OR PrfPrc
-                    BARRIER ("mii" Pers Pron Nom Pl1) OR SII OR CS OR CLB)
+                    BARRIER ("mii" Pers Pron Nom Pl1) OR SII OR CS OR CC OR CLB)
                (0 Inf)(NOT 0 LEAT);
                            ## Mun háliidan bargat. Son ii háliidan bargat.
                            ## Stockfleth lea beassan bargat sámegiela buorrin.
@@ -2912,7 +2915,7 @@ REMOVE VGen IF (*-1 CS OR Interr OR BOS BARRIER VFIN)(0 VFIN)
 # Selecting some finite.
 # ----------------------
 
-SELECT VFIN IF (NOT *-1 VFIN BARRIER CS OR Interr)(NOT *1 VFIN)
+SELECT VFIN IF (NOT *-1 VFIN BARRIER CS OR Interr)(NOT *1 VFIN BARRIER CS)
                (NOT -1 BOS LINK 2 EOS);
                                ## Son lea dan sápmelas1 gean dovddan.
                                ## Gos don dál boad1át? Siiddas.
