@@ -81,13 +81,13 @@ LIST Interj = Interj ;
 # Morphosyntactic properties
 
 LIST Ess = Ess ;
-LIST Sg = Sg ; LIST Pl = Pl ;
+LIST Sg = Sg ; LIST Pl = Pl ; LIST Du = Du ;
 LIST Nom = Nom ; LIST Acc = Acc ;
 LIST Ill = Ill ;
 LIST Loc = Loc ; LIST Com = Com ;
 LIST Gen = Gen ;
 
-#LIST Cmpnd = Cmpnd ;
+LIST Cmpnd = Cmpnd ;
 
 #LIST PxSg1 = PxSg1 ; LIST PxSg2 = PxSg2 ; LIST PxSg3 = PxSg3 ; LIST
 #PxDu1 = PxDu1 ; LIST PxDu2 = PxDu2 ; LIST PxDu3 = PxDu3 ; LIST PxPl1 =
@@ -116,17 +116,20 @@ LIST Act = Act ;
 #LIST Ger = Ger ; LIST Sup = Sup ; 
 #LIST VAbess = VAbess ; LIST Actio = Actio ; LIST Actor = Actor ;
 
-LIST ABBR = ABBR ; LIST CLB = CLB ;
+# Derivation
 
+LIST as1 = "as1" ;
+
+# Other tags
+
+LIST ABBR = ABBR ; LIST CLB = CLB ;
 LIST PUNCT = PUNCT ;
 
 
+# Single-word sets
+
 LIST OKTA = "okta"; LIST go = "go" ; 
-# These single-word sets do not work, BUT THEY SHOULD!
-# Try again, they are changed now, and refer to inflected form, not to lexeme.
-
 LIST COMMA = "<,>" ;
-
 LIST MANGA = "mán1ga" "galle" ;
 
 
@@ -214,6 +217,9 @@ LIST V-PL3 = (V  Ind Prs Pl3) (V Ind Prt Pl3) (V Cond Prs Pl3)
 
 # Some subsets of the VFIN sets
 # - - - - - - - - - - - - - - -
+
+SET V-DU = V-DU1 | V-DU2 | V-DU3 ;
+SET V-PL = V-PL1 | V-PL2 | V-PL3 ;
 
 SET V-DU-PL = V-DU1 | V-DU2 | V-DU3 | V-PL1 | V-PL2 | V-PL3 ;
 
@@ -662,6 +668,13 @@ SELECT (Pl Nom) IF (1 (V Pl3));
   # preceed other rules.
 
 
+# Based on circumscribed context
+
+SELECT A IF (-1 CC)(0 (N as1))(1 Cmpnd);
+           ## Lea sahka oppalac1c1at eamiálbmot- ja unnitloguás1s1iid dutkamiin.
+
+
+
 
 # ======================= #
 # Certain singleton words #
@@ -669,6 +682,8 @@ SELECT (Pl Nom) IF (1 (V Pl3));
 
 SELECT Gen IF (0 ("nubbi"))(1 N);
                       ## Son oac1c1ui c1áda ás1s1i fas nuppi Stuorradikkis.
+
+
 
 
 # ========================== #
@@ -743,7 +758,8 @@ SELECT Pcle IF (-1 (V Neg));                      ## Son jerre it go boad1e?
 
 SELECT Pcle IF (-1 VFIN)(0 ("go"))(*2 CLB BARRIER VFIN);
 
-SELECT Pcle IF (-2 N)(-1 VFIN)(0 ("go"));
+SELECT Pcle IF (-2 N OR Pron)(-1 VFIN)(0 ("go"));
+SELECT Pcle IF (-3 N OR Pron)(-2 ("ahte"))(-1 VFIN)(0 ("go"));
                   ## Politihkas lei 1866 rájes sáhka galggai go stivrregoahtit 
                   ## gii oaz1z1u eatnama láigohit stáhtas.
 # Note! This is a tentative rule! (too specific (-2 N) and to general
@@ -1002,10 +1018,26 @@ SELECT Pl IF (-2C (N Pl) OR (Pron Pl))(-1 COMMA)
 
 # Reflexive pronouns
 # ==================
+  # iez1as is Gen or Acc
+  # iez1a is Pl or Du
+
+# reflexive iez1as
+# ----------------
 
 SELECT Gen IF (-1 Acc)(0 ("ies1" Gen) OR (Pron Pers Gen))(1 N);
                        ## , muhto it fuomás1 hirssa iez1at c1almmis?
 
+# Emphatic ies1
+# -------------
+  # Sg ies1 is uniqie, there is homonymy Du/Pl for iez1a.
+
+SELECT Du IF (*-1 V-DU)(0 ("ies1" Pron Refl Du Nom));
+SELECT Du IF (*1  V-DU)(0 ("ies1" Pron Refl Du Nom));
+SELECT Pl IF (*-1 V-PL)(0 ("ies1" Pron Refl Pl Nom));
+SELECT Pl IF (*1  V-PL)(0 ("ies1" Pron Refl Pl Nom));
+                       ## Dii lehpet iez1a dan oaidnán.
+                       ## Iez1a dii lephet dan oaidnan.
+                       ## Doai galgabeahtti iez1a mannat.
 
 # Reciprocal pronouns
 # ===================
@@ -1052,8 +1084,16 @@ REMOVE (Dem Gen) IF (*1 (N Acc) BARRIER NPNH LINK NOT 0 (N Gen));
 REMOVE (Dem Acc) IF (*1 (N Gen) BARRIER NPNH LINK NOT 0 (N Acc));
 
 # dasa
-SELECT Dem IF (0 ("dat" Pron Dem Sg Ill))(1 VFIN); ## Dasa lea guhkes historjá
-SELECT Dem IF (0 ("dat" Pron Dem Sg Ill))(1 ("lassi" N Ess)); ## Dasa lassin.
+  # The problem here is the VGen form of 'dassat', which is identical to the
+  # Illative form of 'dat' (both 'dasa').
+REMOVE VGen IF (0 ("dat" Pron Dem Sg Ill));
+
+# Earlier specific rules, to be reactivated if the previous one is too strong.
+#SELECT Dem IF (0 ("dat" Pron Dem Sg Ill))(1 VFIN); ## Dasa lea guhkes historjá.
+#SELECT Dem IF (0 ("dat" Pron Dem Sg Ill))(1 ("lassi" N Ess)); ## Dasa lassin.
+#SELECT Ill IF (-1 ("sivva"))(0 ("dat")); ## Sivva dasa lea, ahte ...
+#SELECT Ill IF (-1 PrfPrc)(0 ("dat")); ## Sii leat c1ujuhan dasa vuosttas jagi.
+
 
 
 # Indefinite pronouns
@@ -1152,6 +1192,20 @@ SELECT Comp IF (*1 ("go") BARRIER NON-N);
 REMOVE Comp IF (-1 ("hui"))(0 Adv);        ## Dat lea hui c1ielgasit.
 
 
+
+
+# Cardinal numbers
+# ----------------
+
+SELECT Card IF (*-1 ("okta" Num))(-1 COMMA)(0 ("nubbi"));
+SELECT Indef IF (*-1 ("nubbi"))(-1 COMMA)(0 ("nubbi"));
+                             ## Okta ás1s1i lea mii lágas mearriduvvui, nubbi
+                             ## lea man kommis1uvnnat c1uvvo mearrádusaid.
+  # Hmm. remove or select Card? It depends on how we understand the situation.
+  # If "okta" is to be seen as numeral, then it should have a numeral as com-
+  # panion along the road. Better would perhaps be to see both "okta" and
+  # "nubbi" as indefinite pronouns in this context.
+  # Here in any case: okta ... nubbi => card and nubbi ... nubbi => indef.
 
 
 
@@ -1334,7 +1388,7 @@ SELECT Acc IF (*-1 LEAT-FIN-NON-IMP BARRIER NPNHAI) (1 PrfPrc);
 
 # Object only.
 
-SELECT Acc IF (*-1 V-NON-AUX BARRIER NPNHAIIP)
+SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAIIP)
               (0 NP-HEAD)(NOT 0 PrfPrc or Adv)
               (1 NP-BORDER OR ADVLCASE)(NOT 1 Po) ;
               # instead of next two lines. hmm...
@@ -1346,6 +1400,8 @@ SELECT Acc IF (*-1 V-NON-AUX BARRIER NPNHAIIP)
                                  ## Sii badjelgehc1c1e olbmo jos sámiin náitala.
 # look at the NP-BORDER concept here...
 # NPNHAII there to include "indirect objects"
+# Added C to *-1C, to avoid interference from derived nouns. The problem will
+# become smaller as we improve the preprocessor.
 
 REMOVE Acc IF (NOT *-1 V-NON-AUX BARRIER CS)(NOT *1 V-NON-AUX BARRIER CS);
         ## Sápmelac1c1aid historjá álbmogin lea duháhiid jagiid boaris, muhto
@@ -1624,10 +1680,6 @@ SELECT (Pl Nom) IF  (*-1 ("leat" Pl3) BARRIER NPNHAI
 # Illative
 # ========
 
-SELECT Ill IF (-1 ("sivva"))(0 ("dat"));
-                             ## Sivva dasa lea, ahte in háliida dahkat idioma.
-
-
 # Locative singular
 # =================
 
@@ -1677,16 +1729,12 @@ SELECT Loc IF (-1 (Dem Pl Loc));         ## Mii c1ohkkát dain biillain.
 SELECT Loc IF (-2 (Dem Pl Loc))(-1 Adv); ## Mii c1ohkkát dain biillain.
 # Not too elegant, the rule set might be done more general with a barrier
 
-SELECT (Pl Loc) IF (*-1 CC LINK *-1 (Sg Loc) BARRIER NPNH);
-                                     ## Son lea skuvllas ja od1d1a mediain.
-
-SELECT (Pl Loc) IF (1 CC)(*2 (Sg Loc) BARRIER NPNH);
-                                     ## Son lea od1d1a mediain ja skuvllas.
 
 SELECT (Pl Loc) IF (-2 Num)(-1 PROSEANTA); ## Dat lea 50 % rud1ain.
 
 SELECT Loc IF (1 ("gos"));           ## Son lea guovlluin gos sámit ásset.
 SELECT Loc IF (1 COMMA)(2 ("gos"));  ## Son lea guovlluin, gos sámit ásset.
+
 
 
 # Disambiguation based upon type of NP
@@ -1707,6 +1755,55 @@ SELECT Loc IF (0 Pl)(*1 LOC-VERB BARRIER CS);
 SELECT Loc IF (*-1 N-NON-GEN BARRIER NPNH)(0 Pl);
         ## Ii leat dus1s1e sáhka olbmuid oktavuod1ain juohkebeaivválas1 eallimis.
 # Note: There may be counter examples here, I cannot come up with any.
+
+
+
+
+# Disambiguation based upon coordination
+# =========== #
+  CONSTRAINTS
+# =========== #
+# The idea is to let the other rules work first, and then let the
+# coordination follow suit.
+
+# Simple coordination
+SELECT (Pl Loc) IF (*-1 CC LINK *-1 Loc BARRIER NPNH LINK NOT 0 Com);
+                                     ## Son lea skuvllas ja od1d1a mediain.
+SELECT (Pl Loc) IF (1 CC)(*2 Loc BARRIER NPNH LINK NOT 0 Com);
+                                     ## Son lea od1d1a mediain ja skuvllas.
+
+SELECT (Sg Com) IF (*-1 CC LINK *-1 Com BARRIER NPNH LINK NOT 0 Loc);
+SELECT (Sg Com) IF (1 CC)(*2 Com BARRIER NPNH LINK NOT 0 Loc);
+
+
+# Coordination within coordination
+# Context to the left:
+SELECT (Pl Loc) IF (*-1 CC BARRIER NPNH
+                   LINK -1 Cmpnd LINK *-1 CC BARRIER NPNH 
+                   LINK -1 Loc LINK NOT 0 Com);
+                   ## Son lea skuvllas ja od1d1a fylkka- ja riikkamediain.
+
+SELECT (Sg Com) IF (*-1 CC BARRIER NPNH
+                   LINK -1 Cmpnd LINK *-1 CC BARRIER NPNH
+                   LINK -1 Com LINK NOT 0 Loc);
+
+# Context to the right:
+SELECT (Pl Loc) IF (1 CC)
+                   (*2 Cmpnd BARRIER NPNH LINK 1 CC
+                   LINK *1 Loc LINK NOT 0 Com);
+                 ## Son lea od1d1a fylkka- ja riikkamediain ja skuvllas.
+
+# This part is the addition for right context checking of
+# coordination within coordination:
+# LINK -1 Cmpnd LINK *-1 CC BARRIER NPNH 
+
+SELECT (Sg Com) IF (1 CC)(*2 Com BARRIER NPNH LINK NOT 0 Loc);
+
+
+# Generalising the Cmpnd addition:
+# Cmpnd in the left branch, checking to the left:
+
+
 
 
 # ==================== #
