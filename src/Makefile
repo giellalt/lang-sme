@@ -201,6 +201,9 @@ sme.fst: ../bin/sme.fst
 
 
 
+
+
+
 # ================================================= #
 # Building auxiliary files for case conversion etc. #
 # ================================================= #
@@ -336,17 +339,39 @@ cap-sme: ../bin/cap-sme
 
 
 foreign.fst: ../bin/foreign.fst 
-../bin/foreign.fst: ../../script/foreign.txt
+../bin/foreign.fst: ../bin/old-foreign.fst ../bin/new-foreign.fst
 	@echo
 	@echo "*** Building a transducer for foreign words ***" ;
 	@echo
-	@printf "read text < ../../script/foreign.txt \n\
+	@printf "load stack ../bin/old-foreign.fst \n\
+	load stack ../bin/new-foreign.fst  \n\
+	union net \n\
 	save stack ../bin/foreign.fst \n\
 	quit \n" > ../../tmp/foreign-sme-script
 	@xfst < ../../tmp/foreign-sme-script
 	@rm -f ../../tmp/foreign-sme-script
 
+foreign.fst: ../bin/new-foreign.fst 
+../bin/new-foreign.fst: ../../script/new-foreign.txt
+	@echo
+	@echo "*** Our transducer for new foreign words ***" ;
+	@echo
+	@printf "read text < ../../script/new-foreign.txt \n\
+	save stack ../bin/new-foreign.fst \n\
+	@quit \n" > ../../tmp/new-foreign-sme-script
+	@xfst < ../../tmp/new-foreign-sme-script
+	@rm -f ../../tmp/new-foreign-sme-script
 
+foreign.fst: ../bin/old-foreign.fst 
+../bin/old-foreign.fst: ../../script/old-foreign.txt
+	@echo
+	@echo "*** Our ready-built transducer for foreign words ***" ;
+	@echo
+	@printf "read text < ../../script/old-foreign.txt \n\
+	save stack ../bin/old-foreign.fst \n\
+	quit \n" > ../../tmp/old-foreign-sme-script
+	@xfst < ../../tmp/old-foreign-sme-script
+	@rm -f ../../tmp/old-foreign-sme-script
 
 
 # ========== #
