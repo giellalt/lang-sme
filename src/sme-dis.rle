@@ -400,7 +400,7 @@ LIST INF-VERB = "adnot" "astat" "ádjánit" "áigut" "álgit" "ásahit" "bávc1c1agit"
 		"geahc1c1alit" "geatnegahttit" "gillet" "háhppehit" 
 		"hálidit" "háliidit" "hárjánit" "heivet" "lávet" "mannat" "máhttit" 
 		"navdit" "oahppat" "oaz1z1ut" "ollet" "ribahit" "riepmat" "sáhttit" 
-		"sihtat" "soaitit" "s1addat" "stad1d1at" "veadjit" "viggat" "vis1s1at" 
+		"sihtat" "soaitit" "s1addat" "stad1d1at" "veadjit" "viggat" "vis1s1at"
 		"vuogáiduvvat" "vuolgit" "vuollánit" "vuordit";
 
 LIST ACC-INF-VERB = "bivdit" "c1uorvut" "diktit" "gohc1c1ut" "movttiidahttit" 
@@ -575,6 +575,12 @@ REMOVE V-DER-PASS IF (0 V-PASS);
 # It might be that this one is no longer needed. - No hits in corpus!
 
 
+# Lexicalised adjectives
+# ----------------------
+REMOVE VGen IF (0 A);
+	## Na varas guolli dal lea buorre.
+
+
 # Lexicalised adverbs
 # -------------------
 REMOVE (A* Adv) IF (0 LEX-ADV) ;
@@ -650,6 +656,7 @@ REMOVE (Pr Foc) IF (0 ("c1ad1a")); # To get rid of <c1ad1ahan> "c1ad1a" Pr Foc.
 # Adposition + Px
 # ---------------
 SELECT Adp IF (0 ("gaska" N Ess)); ## Sii árvalis1gohte gaskaneaset.
+
 
 # Pass and Imprt
 # --------------
@@ -836,7 +843,7 @@ SELECT (V Sg1) IF (*-1 MUN BARRIER Nom OR CS LINK NOT *-1 V-SG1 BARRIER NON-ADV-
 
 # Sg2
 # - - 
-SELECT (V Ind Sg2) IF (*-1 DON BARRIER V-SG2 OR CS LINK NOT *-1 V-SG2 
+SELECT V-SG2 IF (*-1 DON BARRIER V-SG2 OR CS LINK NOT *-1 V-SG2 
 	BARRIER NON-ADV-PCLE);
 	## ...jos don fal luoitádat ja gudnejahtát mu.
 	## ...don guhte leat almmis.
@@ -1371,6 +1378,20 @@ SELECT Adv IF (-2 VERB)(NOT -2 COPULAS)(-1 ("hui") OR ("nu"))
 	(NOT *1 N BARRIER NP-BORDER);
 	## Son c1állá hui c1ábbát.
 
+SELECT Adv IF (*-1 (V Sg1) OR (V Sg3) BARRIER COPULAS OR Nom OR CS OR CP OR PUNCT)
+	(0 (A Pl Nom))(NOT 0 Inf)(NOT 1 N)
+	(NOT *-1 COPULAS BARRIER NON-ADV-PCLE LINK *-1 Nom BARRIER NON-ADV-PCLE);
+	## Dál ii leat oktage Romssa universitehta guovddás1hálddahusas gii
+	## hálddas1a sámegiela njálmmálac1c1at ja c1álálac1c1at.
+	## Jus lea geavatlac1c1at vejolas1, galget divs1s1ohasat...
+ # The last condition covers cases where 0 is a comparative adjective.
+
+SELECT Adv IF (*-1 COPULAS BARRIER NON-ADV-PCLE)(NOT *-1 V-PL3 BARRIER CS)
+	(NOT *-1 ("leapma" Dimin) LINK NOT *-1 VFIN BARRIER CS)	
+	(0 (A Pl Nom))(NOT 0 Inf)(1 A);
+	## Dát mearrádus lei formálalac1c1at gustojeaddjin gitta dassáigo...
+
+
 REMOVE Nom IF (-1 (Pron Interr Nom))(0 Adv);
 	## Iige leat duopmu mii c1ielgasit ja njuolga mearrida...
 
@@ -1432,7 +1453,8 @@ SELECT Adv IF (-2C Adv)(-1 CC)(1 VERB);
 # ------------------
 
 REMOVE (V Ind) IF (-1 Nom LINK *-1 (V Ind) BARRIER NPNH)(0 ADV-NOT-VERB);
-REMOVE VFIN IF (NOT *-1 Interr BARRIER VERB)(*1C VFIN BARRIER CLB OR CC OR CS OR CP);
+REMOVE VFIN IF (NOT *-1 Interr BARRIER VERB)
+	(*1C VFIN BARRIER CLB OR CC OR CS OR CP OR go);
 	## Oar-julggiid atnet olbmot dus1s1e dalle go bodni lea nu garas ahte...
 	## Manne ii leat áviisa boahtán? 
 
@@ -1809,7 +1831,8 @@ SELECT Interr IF (NOT -1 V-PL1)(0 ("mii"))
               (*1 V-SG3 BARRIER V-PL1 LINK NOT 0 (Pl1));
 	## Dát ii guoskka diks1ui mii boahtá psykiatriija vuollái.
 
-SELECT (Pl Gen) IF (0 ("gii") OR ("mii" Interr))(1C N)(NOT 1 Ess OR PROP)(2 NP-BORDER);
+SELECT (Pl Gen) IF (0 ("gii") OR ("mii" Interr))(1C N)(NOT 1 Ess OR PROP)
+	(2 NP-BORDER);
 	## Dasa lassin bohte kvenaid 1700-logus, geaid logu eat died1e.
 	## Dáidda gulle dávjá 10-12 ládjogietti, maid gaska sáhtii leahkit... 
 	## Dan áigge galge ges olbmot Finnmárkkus geaid golgolaz1z1an gohc1odedje,
@@ -1913,13 +1936,10 @@ REMOVE Recipr ;
 
 
 
-# Indefinite pronouns
-# ===================
-
-# nubbi
-# -----
-# These rules have to precede the general rules, or the Ord reading will
-# be removed where it should remain.
+# Ordinals
+# ========
+ # These rules have to precede the rules for indefinite pronouns, or the Ord 
+ # reading will be removed where it should remain.
 
 SELECT Ord IF (*-2 ("vuosttas") OR ("vuosttas1"))(-1 CC OR COMMA)(0 ("nubbi"));
 SELECT Ord IF (0 ("nubbi"))(*1 CC OR COMMA LINK 1 ("goalmmát")); 
@@ -1930,6 +1950,7 @@ SELECT Ord IF (0 ("nubbi"))(*1 CC OR COMMA LINK 1 ("goalmmát"));
 
 SELECT Gen IF (0 ("nubbi"))(1 N);
 	## Son oac1c1ui c1áda ás1s1i fas nuppi Stuorradikkis.
+
 
 SELECT Indef IF (0 ("nubbi"))(*1 CC OR COMMA LINK 1 ("nubbi"));
 SELECT Indef IF (*-2 ("nubbi"))(-1 CC OR COMMA)(0 ("nubbi"));
@@ -1951,6 +1972,9 @@ REMOVE Attr IF (0 ("nubbi"))(1 Dem OR Adv);
 	## ... ja nubbi dán suorggi siskkabeale hálddahusortnegiid birra.
 	## ...nubbi fas rávesolbmuid psykiatriijas.
 
+
+# Indefinite pronouns
+# ===================
 
 # General rules
 # -------------
@@ -2261,13 +2285,17 @@ REMOVE N IF (0 (A Attr))(NOT 1 VFIN OR PrfPrc OR CLB)
 	## ...muhto dakkár radikála rievdadus eahpitkeahttá buktá garra
 	## reaks1uvnnaid,...
 
+SELECT (A Attr) IF (NOT *-1 COPULAS BARRIER NON-ADJ-CC)
+	(NOT 0 Inf OR Comp OR ("nubbi"))(1 N)(NOT 1 VFIN OR Inf)
+	(NOT 0 Adv LINK 1 Gen LINK 1 N);
+	## Od1da huksehusat galbejuvvojit automáhtalac1c1at sámegillii gusto-
+	## jeaddji rutiinnaid mielde.
+
 REMOVE Adv IF (-2 A OR N)(-1 ("go" Pcle))(1 N);
-	## Sámedikki ásaheapmi lea eanet ideologalas1 go c1ielga mearrádus.  
+	## No longer needed after the introduction of the previous rule?
 
 REMOVE PrsPrc IF (0 (A Attr))(1 N);
-REMOVE VGen IF (0 Attr)(1 N);
         ## Sidjiide maid lei guollerikkis Ruija geasuheaddji guovlu.
-	## Dan galgá leat vejolas1 oaidnit man1it áiggis ge.
  
 REMOVE (A Loc) IF (0 Attr)(1 N);
 	## Olggosaddin sáhttá liikká dáhpáhuvvat jo gávdnojit dasa beaktilis sivat.
@@ -2282,11 +2310,8 @@ REMOVE VFIN IF (-1 Gen OR Dem OR Indef)(0 Attr)(1 N);
 	## Oktasas1 vuoigatvuod1at ledje s1addan dolos1 áiggi rájes...
 	## Lávz1i goallostuvvo dan ovddit noad1d1ehearggi c1eabehii.
 
-REMOVE Adv IF (-2 (N Nom))(-1 CC)(0 Attr)(*1 (N Nom) BARRIER NON-ADJ-CC OR PUNCT);
-	## ...son gean divs1s1ohas died1iha leat oapmahas1 ja lagamus oapmahas1.
-
 REMOVE Adv IF (NOT -2 V-NON-AUX)(-1 Gen OR Dem OR Indef)(0 Attr)(1 N);
-	## ...lea divs1s1ohasa lagamus oapmahas1 vuoigatvuohta...  
+	## ...galget divs1s1ohasa lagamus oapmahac1c1at oaz1z1ut died1u...
 
 SELECT (A Attr) IF (-1 COMPAR)(1 ("go" Pcle))(2 (A Attr))(*3 N BARRIER NON-ADJ);  
 	## Sámedikki ásaheapmi lea eanet ideologalas1 go c1ielga mearrádus.
@@ -2342,33 +2367,36 @@ SELECT Gen IF (0 ("buorre"))(NOT 0 Comp OR Superl)
 # ========================
 
 SELECT (A Pl Nom) IF (*-1 COPULAS BARRIER NON-ADV-PCLE LINK *-1 (N Pl Nom) OR
-	(Pron Pl Nom) OR (Pl1 Nom) OR (Pl2 Nom) OR (Pl3 Nom) BARRIER NON-ADV-PCLE)
-	(NOT 0 N)(NOT 1 VERB);
+	(Pron Pl Nom) OR (Pl1 Nom) OR (Pl2 Nom) OR (Pl3 Nom) BARRIER CS)
+	(NOT 0 N)(NOT 1 VERB OR A)(NOT 1 Adv LINK 1 A);
 	## ...ja dan golut leat govttolac1c1at veahki ektui.
 
-SELECT (A Pl Nom) IF (*-1 COPULAS BARRIER NON-ADV-PCLE LINK *-1 (Du1 Nom) OR (Du2 Nom) 
-	OR (Du3 Nom) BARRIER NON-ADV-PCLE)(NOT 0 N)(NOT 1 VERB);
+SELECT (A Pl Nom) IF (*-1 COPULAS BARRIER NON-ADV-PCLE LINK *-1 (Du1 Nom) OR 
+	(Du2 Nom) OR (Du3 Nom) BARRIER CS)(NOT 0 N)(NOT 1 VERB OR A);
 	## I have found no examples, but the rule should work! 
 
-SELECT (A Pl Nom) IF (*-1 COPULAS BARRIER NON-ADV-PCLE LINK *-1 Nom BARRIER
-	NON-ADV-PCLE LINK *-1 CC BARRIER NPNH LINK -1 Nom)(NOT 0 N)(NOT 1 VERB);
-	## Ámtalihput ja vejolas1 diggelogahallan ledje hirbmat hálbbit.
+SELECT (A Pl Nom) IF (*-1 COPULAS BARRIER NON-ADV-PCLE LINK *-1 Nom BARRIER CS 
+	LINK *-1 CC BARRIER NPNH LINK -1 Nom)(NOT 0 N)(NOT 1 VERB OR A);
+	## Sámegiella ja dárogiella leat ovttaárvvosac1c1at.  
 
 SELECT (A Sg Nom) IF (*-1 COPULAS BARRIER NON-ADV-PCLE LINK *-1 (N Sg Nom) OR
-	(Pron Sg Nom) OR (Sg1 Nom) OR (Sg2 Nom) OR (Sg3 Nom) BARRIER NON-ADV-PCLE)
+	(Pron Sg Nom) OR (Sg1 Nom) OR (Sg2 Nom) OR (Sg3 Nom) BARRIER CS)
 	(NOT 0 N OR Inf OR Adv)(NOT 1 VERB);
-	## Dat geaidnu lea govdat mii doalvu gád1ohussii.
+	## Mun in leat dohkálas1 ahte don boad1ás1it mu vissui.
+
+SELECT (A Sg Nom) IF (*-1 COPULAS LINK 0 Sg1 OR Sg2 OR Sg3 BARRIER PrfPrc OR CS OR CP)
+	(NOT 0 N OR Inf); 
+	## Lea ártet go it gallet fulkkiin.
 
 SELECT (A Sg Nom) IF (-1 (N Sg Nom) OR (Pron Sg Nom) OR (Sg1 Nom) OR (Sg2 Nom)
-	OR (Sg3 Nom))(*-2 COPULAS BARRIER NPNHA)(NOT 0 N OR Inf)(NOT 1 VERB);
+	OR (Sg3 Nom))(*-2 COPULAS BARRIER NPNHA OR ("mielde"))(NOT 0 N OR Inf)(NOT 1 VERB);
 	## ...de ii leat s1at dát riektedilli dohkálas1.
 
 SELECT (A Pl Nom) IF (-1 (N Pl Nom) OR (Pron Pl Nom) OR (Pl1 Nom) OR (Pl2 Nom)
 	OR (Pl3 Nom))(*-2 COPULAS BARRIER NPNHA)(NOT 0 N)(NOT 1 VERB);
-	## Dán oktavuod1as leat dolos1 geavahusa njoulggadusat miellagiddevac1c1at.
+	## Dán oktavuod1as leat dolos1 geavahusa njuolggadusat miellagiddevac1c1at.
 
  
-REMOVE VGen IF (*-1 COPULAS BARRIER NON-ADV-INDEF)(0 Attr)(1 N OR EOS);
 REMOVE VFIN IF (*-1 COPULAS BARRIER NON-ADV-INDEF)(0 Attr)(1 N OR EOS);
 
 SELECT A IF (*-1 COPULAS BARRIER NON-ADV-INDEF)(NOT 0 VERB OR N)
@@ -2395,7 +2423,8 @@ REMOVE (A Gen) IF (*-1 COPULAS BARRIER NON-ADV-PCLE)(1 Inf);
 
 REMOVE (A Sg Nom) IF (0 (A Attr))(*1C N BARRIER NON-Attr);
   # When 1 = object predicative, this is a bad rule. Perhaps:
-  # (-1 COPULAS)? Keep it in mind. - Also compare first rule of Attribute disambiguation.
+  # (-1 COPULAS)? Keep it in mind. 
+ # - Also compare first rule of Attribute disambiguation.
 
 SELECT (A Sg Nom) IF (*-1 COPULAS BARRIER NON-ADV LINK 0 V-SG3)(NOT -1 Gen)
 	(NOT 0 Inf OR Attr)(NOT 0 Adv LINK *1 VERB BARRIER NON-ADV)(NOT 1 PrfPrc);
@@ -2445,7 +2474,7 @@ REMOVE Adv IF (*-1 ("go" Pcle) BARRIER NPNH OR CC)(*1 N BARRIER NON-ADJ-CC);
 
 # And now a rule for adverbs that modify adjectives
 # -------------------------------------------------
-SELECT Adv IF (-1 NON-NP)(NOT 0 VERB)(1C A);
+#SELECT Adv IF (-1 NON-NP)(NOT 0 VERB)(1C A);
 
 
 
@@ -2553,8 +2582,8 @@ SELECT PrfPrc IF (*-1 VFIN BARRIER Nom OR V OR CS OR CC OR CLB OR PUNCT)
 REMOVE (V Sg1) IF (*-1 ("leat") BARRIER NON-ADV-PCLE);
 
 REMOVE Foc IF (0 Actio);
-# Further qualification may be needed. The idea is to avoid focus reading of 
-# oahpahan etc. Seems best to have this rule early. 
+ # Further qualification may be needed. The idea is to avoid focus reading of 
+ # "oahpahan" etc. Seems best to have this rule early. 
 
 # Old rules, remove asap.
 #SELECT PrfPrc IF (0 LEAN) (-1 (Neg));
@@ -2598,6 +2627,7 @@ SELECT Attr IF (-3 BOS)(-2 Nom)(-1 ("leat"))(0 Prop)(1  Prop)(2 NP-BORDER);
 SELECT (Prop Attr) IF (NOT -1 Prop)(1 CC)(2 (Prop Attr))(3 (N Prop));
         ## Dá leaba Brita ja Ove Kåven.
 
+
 # Choosing between different proper nouns
 # ---------------------------------------
 
@@ -2616,6 +2646,36 @@ REMOVE ("Nilse") IF (0 ("Nilsen" N Prop Sg Nom));
 # Norga vs. Norge
 REMOVE ("Norge") IF (0 ("Norga"));            ## Mun vuolggán Norgii.
 
+
+# Nouns versus adjectives
+# =======================
+ # Note that although the following rules are single cohort rules, they could 
+ # not come very early, since correct readings might then be removed. Also note 
+ # that we do not remove (A Sg Nom) or (A Pl Nom).
+
+REMOVE (A Sg Acc) IF (0 (N Sg Acc));
+REMOVE (A Sg Gen) IF (0 (N Sg Gen))(NOT 0 Ord);
+	## Beaivvás1 addá eatnamii lieggasa. 
+	## Muhtomin ferte guokte gurpasa bidjat oktan noad1d1ebeallin.
+
+REMOVE (A Sg Loc) IF (0 (N Sg Loc));
+REMOVE (A Sg Ill) IF (0 (N Sg Ill));
+REMOVE (A Sg Com) IF (0 (N Sg Com));
+	## Ovtta ovddasteaddjis divs1s1ohasa ovttas lea vuoigatvuohta...
+	## Juohke gurpasii biddjojuvvo guottahat.
+	## Lean mun gal oaidnán c1akc1aseavdjadiin dola rievdamiin c1ázi alde.
+
+REMOVE (A Pl Acc) IF (0 (N Pl Acc));
+REMOVE (A Pl Gen) IF (0 (N Pl Gen));
+	## Ulbmil lea movttiidahttit sámi nuoraid gazzagoahtit universitehtaoahpu.
+	## ...de lea inuihtaid dilli áibbas eará go sápmelac1c1aid. 
+
+REMOVE (A Pl Loc) IF (0 (N Pl Loc));
+REMOVE (A Pl Ill) IF (0 (N Pl Ill));
+REMOVE (A Pl Com) IF (0 (N Pl Com));
+	## Leigo sápmelac1c1ain maid vuoigatvuohta bivdimii.
+	## Sámi nuoraide láhc1c1ojuvvo vejolas1vuohta oassálastit gieddebargguide.
+	## Sii ledje gávpejasat oktavuoigatvuod1ain gávppas1it sápmelac1c1aiguin.
 
 
 # Case disambiguation
@@ -3799,14 +3859,14 @@ REMOVE Sg2 IF (-1 Nom)(NOT -1 Sg2);
 # Preverbal subject
 # - - - - - - - - - 
  # Single noun
-SELECT Pl3 IF (*-1C NP-HEAD-PL-NOM BARRIER PPRON-NOT-SII OR (N Sg Nom))
+SELECT (V Pl3) IF (*-1C NP-HEAD-PL-NOM BARRIER PPRON-NOT-SII OR (N Sg Nom))
 		(NOT *-1 (V Pl3) BARRIER CS);
                             ## Nieiddat jerre.
                             ## Makkár vuoigatvuod1at dain leat riikavuloz1in?
 			## Ciza atnet olbmot firpmiid várjalit.	
 
  # Coordination
-SELECT Pl3 IF (*-1 NP-HEAD-SG-NOM BARRIER NON-ADV LINK *-1 CC BARRIER NPNH
+SELECT (V Pl3) IF (*-1 NP-HEAD-SG-NOM BARRIER NON-ADV LINK *-1 CC BARRIER NPNH
            LINK -1 NP-HEAD-SG-NOM);        ## Nieida ja gánda jerre.
 
  # Pronoun
