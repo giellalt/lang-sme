@@ -4,9 +4,9 @@
 # ==================================================================== #
 # ==================================================================== #
 
-#        Sámi language technology project, University of Tromsø
+#      Sámi language technology project 2003, University of Tromsø     #
 
- 
+
 
 DELIMITERS = "<.>" "<!>" "<?>" ;
 
@@ -252,7 +252,6 @@ SET DEM-PL = (Pron Dem Pl Nom);
 # Adjective sets
 # --------------
 
-#SET A-ADV = ( A Adv ) ;
 SET A-ATTR = ( A Attr) ;
 
 SET LEX-A = A - A-DER ;
@@ -347,7 +346,7 @@ SET NP-BORDER = EOS | CLB | Adv | V | Pers | CS | Recipr | Dem | Po | Pr | Adp ;
    # too risky to use CLB, need more sophisticated way.
    # this allows for NP-internal commas to break NP.
 
-
+LIST CONTRA = "muhto" ; # In lean muitalan, muhto dál muitalan.
 
 
 
@@ -440,6 +439,9 @@ SELECT (PxSg1) IF (-1 V-SG1)(NOT -1 ("leat"))(-2 MUN);
 SELECT (PxSg2) IF (-1 V-SG2)(NOT -1 ("leat"))(-2 DON);
 SELECT (PxSg3) IF (-1 V-SG3)(NOT -1 ("leat"))(-2 SON);
 
+# Px for names for relatives
+
+# Px for diminutives
 
 
 # Certain verb forms
@@ -495,8 +497,9 @@ CONSTRAINTS
 # Proper nouns
 # ============
 
-SELECT Prop IF (NOT -1 BOS);
-# Capitalised nouns in the middle of a sentence are names.
+SELECT Prop IF (NOT *-1 BOS OR (":") OR (""") BARRIER WORD); # still does
+# Capitalised nouns in the middle of a sentence are names.   # not work
+# Jesus dajai: "Lea c1állojuvvon: ..."
 
 REMOVE Attr IF (0 Prop)(NOT 1 Prop OR INITIAL);   ## Trond Trosterud lea dál.
 
@@ -509,6 +512,8 @@ SELECT Attr IF (0 Prop)(1 INITIAL)(2 Prop);   ## Mathis K. Sara.
 # Noun or not?
 # ============
 
+# Based on left context
+
 SELECT N IF (-1C (A Attr));                     ## c1uovvovas1 sajis
 
 SELECT N IF (-2C N) (-1 CC) (NOT 1 N OR A);     ## Mánát ja nuorat leat...
@@ -518,7 +523,7 @@ SELECT N IF (1 COMMA)(2 (Pron Interr));         ## Doaimmat, maiguin...
 
 SELECT N IF (-2 BOS)(-1C Gen)(1 EOS);           ## Ruot1a c1álli. #(titles)
 
-REMOVE A IF (-1 Dem)(1 (Pron Interr));     ## .. dan sápmelas1 gean ..
+REMOVE A IF (-1 Dem)(1 (Pron Interr));          ## .. dan sápmelas1 gean ..
 
 REMOVE V IF (1 Po);                             ## sápmelac1c1aid birra.
                                                 #  problem with derived V > N
@@ -527,7 +532,12 @@ REMOVE V IF (-1 Dem)(1 V-IND-FIN);          ## Dán báhkis s1addá c1áppa gohppu.
 
 REMOVE VFIN IF (-1 BOS)(0 NP-HEAD-SG-NOM)(1C V-SG3);## Lásse lea mus rean1gan.
 
-REMOVE Adv IF (1C Po); 
+# Based on right context
+
+REMOVE Adv IF (1C Po);
+
+REMOVE (A Gen) IF (0 N)(*1 N BARRIER NON-A);
+
 
 
 
@@ -565,7 +575,7 @@ SELECT Gen IF (-1 NUMERALS OR MANGA); #Golbma nieidda, mán1ga nieidda
 # Genitive in front of noum in the beginning of a sentence
 #SELECT Gen IF (-1 CLB)(*1 N BARRIER NON-A LINK 1 VFIN);      # äh
 #SELECT Gen IF (-1 BOS)(*1 N BARRIER NON-A LINK 1 VFIN);      # safest
-SELECT Gen IF (-1 NP-BORDER)(*1 N BARRIER NON-A LINK 1 VFIN); # hmm
+SELECT Gen IF (-1 NP-BORDER)(*1 N BARRIER NON-A LINK *1 VFIN); # hmm
   ## Nieidda girji lea ruoksat
   ## Din viessu s1attai oppa stuoris.
 
@@ -596,8 +606,10 @@ SELECT Gen IF (NOT -1 V)(0C N)(1C CNOUN) (NOT 2 Po); ##Áhc1i viesu uksa lea alit
 # CONSTRAINTS # trying to sequentiate the gen and acc rules
 # perhaps not needed.
 
-# Acc
-# ===
+
+
+# Accusative
+# ==========
 
 
 # Accusative between Aux and main verb
@@ -616,13 +628,20 @@ SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD LINK
 SELECT Acc IF (-1 LEAT-FIN-NON-IMP) (1 PrfPrc); ## Mun lean dan dahkan.
 
 
-# Accusative at the end of the sentence
-# -------------------------------------
+
+# Accusative postverbally
+# -----------------------
 
 # Object only.
-#SELECT Acc IF (*-1 V-NON-AUX BARRIER NPNHA)(1 CLB); ## Oainnán du.
-SELECT Acc IF (*-1 V-NON-AUX BARRIER NPNHA)(1 CLB); ## Oainnán du.
-                                       ## In mun sálten nu olu.
+
+SELECT Acc IF (*-1 V-NON-AUX BARRIER NPNHA)(0 NP-HEAD)(NOT 0 PrfPrc)(1 CLB);
+                                             ## Oainnán du.
+                                             ## In mun sálten nu olu.
+
+REMOVE Acc IF (NOT *-1 V-NON-AUX BARRIER CS)(NOT *1 V-NON-AUX BARRIER CS);
+        ## Sápmelac1c1aid historjá álbmogin lea duháhiid jagiid boaris, muhto
+        ## dálá ássanguovlluin sápmelac1c1at eai leat ássan nu guhká.
+  # We need a verb for an obj. The barrier must be refined, though!
 
 # Coordinated object
   # First part
@@ -635,23 +654,20 @@ SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD LINK
                                        ## Oainnán vilges biilla ja rukses viesu.
 
 
-# title!
-SELECT Acc IF (*-2 V-NON-AUX BARRIER NPNHA OR ADVLCASE)
-              (0 N OR Pron)(NOT 0 PrfPrc)(1 NP-BORDER)(NOT 1 Po OR Adp);
 
-REMOVE Acc IF (NOT *-1 V-NON-AUX )(NOT *1 V-NON-AUX ); #Need a verb for an obj.
 
 REMOVE Gen IF (-1 VFIN)(0 N)(1 CLB); ## Joramii riegádii Ussia, Ussiai riegadii
 # The rule is too specific.          ## Jotam.
 
 # Topicalised object
+# ------------------
 
 SELECT Acc IF (NOT 0 Nom)(1 (V Sg3))(NOT *2 Nom);
 # A bit strange rule, this, should be made more general. XXX
 
 
-# Nom
-# ===
+# Nominative
+# ==========
 
 # Nominative in titles and sentence fragments
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -679,6 +695,7 @@ REMOVE Nom IF (-1 BOS)(NOT 0 (Pron Pers))(1C V-1-2);
 # - - - - - - - - - - - -
 
   # Here, we handle both nouns and adjectives.
+
 
 # Case disambiguation of predicatives
 # -----------------------------------
@@ -739,8 +756,10 @@ SELECT Nom IF (-2 NP-HEAD-SG-NOM)(-1 COPULAS + (V Sg))(1 EOS);
 
 # Nominative as objects in existential clauses
 # --------------------------------------------
+
 REMOVE Acc IF (-2 Loc)(-1 ("leat"))(NOT *1 V); # Mus lea golli.
 SELECT Nom IF (-2 Loc)(-1 ("leat"))(1 EOS); # Mus lea golli.
+
 
 # Unclassified
 # - - - - - -
@@ -834,8 +853,6 @@ SELECT Loc IF (1 COMMA)(2 ("gos"));  # guovlluin, gos sámit ásset
 
 
 
-# make this one more general
-
 # ==================== #
 # Disambiguating verbs #
 # ==================== #
@@ -843,8 +860,29 @@ SELECT Loc IF (1 COMMA)(2 ("gos"));  # guovlluin, gos sámit ásset
 # ==================== #
 
 
-# Finite forms
-# ============
+# Perfect Participle
+# -------------------
+# PrfPrc to the right of negated verb
+SELECT PrfPrc IF (*-1 Neg BARRIER CONTRA);
+
+SELECT PrfPrc IF (*-1 VFIN BARRIER CLB OR CS)
+                 (NOT -1 CC LINK -1 (V Ind Sg1)); ## Mun lean muitalan.
+
+# Topicalised participle
+# ???
+
+# Old rules, remove asap.
+#SELECT PrfPrc IF (0 LEAN) (-1 (Neg));
+#SELECT PrfPrc IF (*-1 VFIN-NOT-IMP); # Too general!!
+#SELECT PrfPrc IF (-1 NP-BORDER)(0 Pass)(1 CNOUN); ## namuhuvvon guovlluin ja
+
+
+
+# Finite forms #
+# ============ #
+   CONSTRAINTS #
+# ============ #
+
 
 # Indicative Negative
 # -------------------
@@ -852,9 +890,8 @@ SELECT Loc IF (1 COMMA)(2 ("gos"));  # guovlluin, gos sámit ásset
   # hom: "it", where Sg2 = ABBR.
 
 # Select Neg Sg2 instead of ABBR
-REMOVE ABBR IF (*-1 ConNeg)(0 Neg); # Dat don deat it. # Ah, bad WO 
-REMOVE ABBR IF (0 Neg)(*1 ConNeg);  # Don it leat dál.
-
+REMOVE ABBR IF (*-1 ConNeg OR PrfPrc)(0 Neg); ## Dáppe don leamas1 it. (!)
+REMOVE ABBR IF (0 Neg)(*1 ConNeg OR PrfPrc);  ## Don it leat dál.
 
 
 # Indicative Present
@@ -862,21 +899,25 @@ REMOVE ABBR IF (0 Neg)(*1 ConNeg);  # Don it leat dál.
 
 # Sg1
 # ---
-  # Sg1 = PtcPrf (copula)
-  # Sg1 = V Act (even)
+  # Sg1 = PtcPrf (odd-syllables), and Sg1 = V Act (even-syllables)
 
-SELECT Sg1 IF (0 LEAN) (1 PrfPrc);
-                                              ## Mun lean boahtán.
+SELECT Sg1 IF (0 LEAN) (*1 PrfPrc);           ## Mun lean boahtán.
+  # So, what kind of barrier could we have here?
 
-SELECT Sg1 IF (*-1 (Pers Pron Sg1 Nom) BARRIER (V Neg));
-                                              ## Mun ferten lohkat.
+SELECT Sg1 IF (*-1 MUN BARRIER Neg OR LEAN);  ## Mun ferten lohkat.
 
-SELECT Sg1 IF (NOT *-1 (V Neg))(NOT *-1 PrfPrc OR Act OR V-SG1);
-                                              ## Háliidan hupmat.
+SELECT Sg1 IF (-1 CC)(-2 (V Sg1));              ## Mun human ja human.
+
+#SELECT Sg1 IF (NOT *-1 (V Neg))(NOT *-1 PrfPrc OR Act OR V-SG1);
+SELECT Sg1 IF (NOT *-1 VFIN);                 ## Háliidan hupmat.
                                               ## In háliidan hupmat.
 
-# This homonymy is solved by rules selecting PrfPrc.
 # Note: We will need a rule selecting Sg1. # Mun muitalan Suoma birra.
+
+
+
+
+
 
 # Sg2
 # ---
@@ -1172,26 +1213,12 @@ REMOVE (Prs) IF (*-1 (Neg Imprt) BARRIER CLB OR V-IND-FIN)(0 (ConNeg));
 # => make rules for Act.
 
 
-# Perfect Participle
-# -------------------
-
-SELECT PrfPrc IF (-1 V-IND-FIN ) ;
-
-SELECT PrfPrc IF (-1 (Neg)) ;
-SELECT PrfPrc IF (-1 Pcle)(-2 (Neg)) ;
-
-SELECT PrfPrc IF (0 LEAN) (-1 (Neg));
-
-SELECT PrfPrc IF (*-1 VFIN-NOT-IMP); # Too general!!
- 
-SELECT PrfPrc IF (-1 NP-BORDER)(0 Pass)(1 CNOUN); ## namuhuvvon guovlluin ja
-
-
-
 # Present Participle
 # ------------------
 
 # PrsPrc = Imprt Prs Du2 (even-syll)
+
+# Perfect Participle is treated at the Ind Prs Sg1 chapter.
 
 
 
