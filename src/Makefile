@@ -14,8 +14,8 @@
 isme.fst: ../bin/isme.fst
 ../bin/isme.fst: ../bin/pos-sme.fst ../bin/n-sme.fst ../bin/s-sme.fst \
 	../bin/sme.save ../bin/allcaps.fst ../bin/n-sme.fst \
-	../bin/caseconv.fst ../bin/d-sme.fst ../bin/g-sme.fst \
-	../bin/abbr.txt ../bin/cap-sme ../bin/guess-sme
+	../bin/caseconv.fst ../bin/d-sme.fst  ../bin/guess-sme \
+	../bin/abbr.txt ../bin/cap-sme ../bin/foreign.fst
 	@echo
 	@echo "*** Building the inverse isme.fst ***"
 	@echo
@@ -317,6 +317,20 @@ cap-sme: ../bin/cap-sme
 	@printf "analyzer ${BINDIR}/sme.fst\n\
 	allcaps ${BINDIR}/allcaps.fst\n\n\
 	allcaps analyzer \n" > $@
+
+
+foreign.fst: ../bin/foreign.fst 
+../bin/foreign.fst: ../../script/foreign.txt
+	@echo
+	@echo "*** Building a transducer for foreign words ***" ;
+	@echo
+	@printf "read text < ../../script/foreign.txt \n\
+	save stack ../bin/foreign.fst \n\
+	quit \n" > ../../tmp/foreign-sme-script
+	@xfst < ../../tmp/foreign-sme-script
+	@rm -f ../../tmp/foreign-sme-script
+
+
 
 
 # ========== #
