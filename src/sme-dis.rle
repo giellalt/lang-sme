@@ -359,10 +359,10 @@ LIST ILL-VERB = "áibbas1it" "dorvvastit" "duhtat" "jáhkkit" "liikot"
 LIST INF-VERB = "astat" "ádjánit" "áigut" "álgit" "bávc1c1agit"
 "beassat" "berret" "bivvat" "bistit" "boahtit" "c1ohkkát" "c1ohkkedit"
 "c1ohkkánit" "c1uoc1c1ahit" "c1uoc1c1astit" "c1urggodit" "dáhttut"
-"dáidit" "doapmat" "duostat" "fertet" "galgat" "háhppehit" "háliidit"
-"heivet" "lávet" "leat" "mannat" "máhttit" "oaz1z1ut" "ollet" "ribahit"
-"riepmat" "sáhttit" "sihtat" "soaitit" "s1addat" "stad1d1at" "veadjit"
-"viggat" "vis1s1at" "vuolgit" "vuollánit" ;
+"dáidit" "dárbbas1it" "doapmat" "duostat" "fertet" "fuobmát" "galgat" 
+"háhppehit" "háliidit" "heivet" "lávet" "leat" "mannat" "máhttit" 
+"oaz1z1ut" "ollet" "ribahit" "riepmat" "sáhttit" "sihtat" "soaitit" 
+"s1addat" "stad1d1at" "veadjit" "viggat" "vis1s1at" "vuolgit" "vuollánit" ;
 
 LIST ACC-INF-VERB = "bivdit" "c1uorvut" "diktit" "gohc1c1ut" "sihtat"
                     "suovvat" ;
@@ -1182,7 +1182,10 @@ SELECT (Pron Pers Sg3 Nom) IF (*-1 V-SG3);     ## Boahtágo son fargga?
  # Pron Dem PL Nom
 
 SELECT Pers IF (0 ("dat"))(NOT 1 A OR Num OR N); 
+SELECT Dem IF (0 ("dat"))(1C A OR Num OR N); # Add rules that refer to case? 
+				## Son ráhkkana dasa dálvvi mielde.
 
+SELECT (Sg Nom) IF (0 ("dat"))(*1 (V Sg3) BARRIER NON-ADV);
 
 # Moai
 # ----
@@ -1237,14 +1240,13 @@ SELECT Pers IF (0 ("mii))(1 COMMA)(2C Interr);
 # Interrogative pronouns
 # ======================
 
-SELECT Sg IF (-1C (N Sg) OR (Pron Sg))
-             (0 (Pron Interr));
-SELECT Pl IF (-1C (N Pl) OR (Pron Pl))
-             (0 (Pron Interr));
-SELECT Sg IF (-2C (N Sg) OR (Pron Sg))(-1 COMMA)
-             (0 (Pron Interr));
-SELECT Pl IF (-2C (N Pl) OR (Pron Pl))(-1 COMMA)
-             (0 (Pron Interr));
+REMOVE Interr IF (-1 Interr); 
+	## Dat lea c1uonz1z1a, mii maid gorgn1u detnui c1akc1ageasi.
+
+SELECT Sg IF (-1C (N Sg) OR (Pron Sg))(0 (Pron Interr));
+SELECT Pl IF (-1C (N Pl) OR (Pron Pl))(0 (Pron Interr));
+SELECT Sg IF (-2C (N Sg) OR (Pron Sg))(-1 COMMA)(0 (Pron Interr));
+SELECT Pl IF (-2C (N Pl) OR (Pron Pl))(-1 COMMA)(0 (Pron Interr));
                                    ## Giella, maid dovdán.
                                    ## Gielat, maid dovdán.
 
@@ -1264,7 +1266,7 @@ SELECT Gen IF (-1 Acc)(0 ("ies1" Gen) OR (Pron Pers Gen))(1 N);
 
 # Emphatic ies1
 # -------------
-  # Sg ies1 is uniqie, there is homonymy Du/Pl for iez1a.
+  # Sg ies1 is unique, there is homonymy Du/Pl for iez1a.
 
 SELECT Du IF (*-1 V-DU)(0 ("ies1" Pron Refl Du Nom));
 SELECT Du IF (*1  V-DU)(0 ("ies1" Pron Refl Du Nom));
@@ -1299,8 +1301,6 @@ SELECT Pl IF (0 (Pron Dem))(*1C (N Pl) BARRIER NON-A);
 
 # NP-internal case concord
 # ------------------------
-
-
 
 REMOVE (Dem Pl Nom) IF (NOT *1 (N Pl Nom) OR V-PL3 BARRIER NPNH);
   # These are not good, we may have topicalised verbs...
@@ -1467,6 +1467,8 @@ REMOVE Nom IF (0 Comp)(1 N)(NOT 1 (N Nom));
 SELECT Comp IF (NOT -1 ("nu"))(*1 ("go") BARRIER NON-N);
             ## Son lea buoret go mun.
             ## Dáz1at navde Finnmárkku buoret guovlun go iez1aset ruovttubáiki.
+
+REMOVE Comp IF (-1 ("nu"))(*1 ("go") BARRIER NON-N);
 	    ## C1almmit leat aiddo nu baskit go láhka suovvá.	
 
 
@@ -2069,7 +2071,7 @@ REMOVE (N Nom) IF (-1 NP-BORDER)
                                          ## Nieidda girji lea ruoksat.
 
 REMOVE (Pron Pers Acc) IF (-1 NP-BORDER)(*1 N BARRIER NON-Attr LINK *1 VFIN);
-REMOVE (Pron Pers Nom) IF (-1 NP-BORDER)(*1 N BARRIER NON-Attr LINK *1 VFIN);
+REMOVE (Pron Pers Nom) IF (-1 NP-BORDER)(*1C N BARRIER NON-Attr LINK *1 VFIN);
                                          ## Din viessu s1attai oppa stuoris.
 # Added Pers in order not to include 
 
@@ -2295,9 +2297,12 @@ SELECT (Sg Com) IF (1 CC)(*2 Com BARRIER NPNH LINK NOT 0 Loc);
 # Infinitive
 # ----------
 
-SELECT Inf IF (*-1 INF-VERB BARRIER CS);
+SELECT Inf IF (*-1 INF-VERB BARRIER CS OR Nom OR Interr OR Neg);
                            ## Skuvla galggai oahpahit sámemánáide dárogiela.
                            ## Pros1eavtta áigut c1ad1ahit.
+
+SELECT Inf IF (-1 (Neg Sup)); # Use *-1 instead, and define barrier? 
+
 # Perfect Participle
 # -------------------
 # PrfPrc to the right of negated verb
@@ -2478,7 +2483,7 @@ SELECT Pl3 IF (*-1C NP-HEAD-PL-NOM BARRIER PPRON-NOT-SII OR (N Sg Nom))
  # Coordination
 SELECT Pl3 IF (*-1 NP-HEAD-SG-NOM BARRIER NON-ADV
            LINK *-1 CC BARRIER NPNH
-           LINK -1 NP-HEAD-SG-NOM);        ## Nieida ja gánda jerre
+           LINK -1 NP-HEAD-SG-NOM);        ## Nieida ja gánda jerre.
 
  # Pronoun
 SELECT Pl3 IF (*-1 SII BARRIER MII-PERS OR MOAI OR CLB); ## Sii jerre.
@@ -2749,10 +2754,6 @@ SELECT Inf IF (-1 (Interr Sg Nom))(-2 COMMA)(-3 (Sg Nom) OR (Sg3 Nom))
  # This rule is all to specific. It tries to capture topicalised objects
  # Within a subject relative clause.
 
-
-SELECT Inf IF (*-1 INF-VERB BARRIER Nom OR Interr);
-                                            ## Geassesajiid ii oz1z1on vuovdit.
-                                            ## Mii ávkkiid lea min doppe johtit.
 
 
 # Infinitive after predicative
