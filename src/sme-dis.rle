@@ -113,8 +113,6 @@ LIST Inf = Inf ; LIST ConNeg = ConNeg ; LIST Neg = Neg ;
 LIST PrfPrc = PrfPrc ; LIST VGen = VGen ;
 LIST PrsPrc = PrsPrc ; 
 
-LIST Act = Act ;
-
 LIST Ger = Ger ; LIST Sup = Sup ; LIST Actio = Actio ;
 #LIST VAbess = VAbess ;  LIST Actor = Actor ;
 
@@ -275,6 +273,9 @@ SET V-DER-PASS = V + V-DER + Pass;    # + is intersection, this should work
 #SET V-PASS = V + Pass - V-DER;       # hmm, what was the idea here?
 SET V-PASS = (V Pass);                # better?
 SET V-NON-AUX-PASS = V - AUX - V-PASS ;
+SET V-PRFP = (V PrfPrc);
+SET ACT-PRFP = V-PRFP - V-PASS;  
+
 
 # Pronoun sets
 # ------------
@@ -297,8 +298,6 @@ SET PPRON-NOT-SII = MUN | DON | SON | MOAI | DOAI | SOAI | MII-PERS | DII ;
 #SET PRON-PL-LOC = (Pron Pers Pl1 Loc)|(Pron Pers Pl2 Loc)|(Pron Pers Pl3 Loc);
 
 #SET MII-INTERR = ("mii" Pron Interr Sg Nom);
-
-
 
 
 SET DEM-SG = (Pron Dem Sg Nom);
@@ -374,6 +373,8 @@ LIST ACC-INF-VERB = "bivdit" "c1uorvut" "diktit" "gohc1c1ut" "sihtat"
 #  These are verbs taking accusative objects and infinitives.
 
 
+LIST OPRED-VERB = "dahkat" ;
+# Verbs that often occur with secondary predicates.
 
 # Sets for adverbs that have lookalikes
 # - - - - - - - - - - - - - - - - - - -
@@ -1201,7 +1202,7 @@ SELECT Pers IF (0 ("mii))(1 COMMA)(2C Interr);
 
 
 # Mis and sis
-# ---
+# -----------
   # mun Pron Pers Pl1 Loc = mis Adv, corr. for son Pron Pers Pl3 Nom = sis Adv
   # This one is hard to resolve, as they have the same distribution.
 
@@ -1360,7 +1361,7 @@ SELECT Attr IF (NOT *-1 V-SG3)(0 ("garas" A Attr))(1 N)(NOT *1 V-SG3);
 # ========================
 
 
-REMOVE (A Nom) IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
+REMOVE (A Nom) IF (0 (A Attr))(*1C N BARRIER NON-A LINK NOT 1 Po);
 REMOVE (A Gen) IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
 REMOVE (A Acc) IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
                                      ## Dat lea c1uovvovas1 sajis.
@@ -1405,10 +1406,10 @@ REMOVE Attr IF (0 A-CASE OR Adv)(1 CC)(NOT *2 N BARRIER (A Attr) OR ("buorre"));
   # Is there something wrong with this rule?
 
 
-REMOVE (A Sg Nom) IF (0 (A Attr))(*1 N BARRIER NON-Attr);
+REMOVE (A Sg Nom) IF (0 (A Attr))(*1C N BARRIER NON-Attr);
   # When 1 = object predicative, this is a bad rule. Perhaps:
-  # (-1 COPULAS)? Keep it in mind.
-
+  # (-1 COPULAS)? Keep it in mind. - Also compare first rule of Attribute disambiguation.
+	## Lea deat1alas1 movttiidahttit studenttaide gazzat doavttergrádaoahpu. 
 
 
 # special rules for 'buorre' (the only adjective showing case agreement)
@@ -1832,6 +1833,8 @@ SELECT Acc IF (*-1 VFIN BARRIER NPNHAI)(NOT 0 PrfPrc)(1 Inf);
                           ## Son lea beassan bargat.
 # changed V-IND-FIN to VFIN here and in subsequent rules.
 
+SELECT Acc IF (*-1 Nom BARRIER CS)(*-1 VFIN)(NOT 0 PrfPrc)(1 Inf);
+
 SELECT Acc IF (*-1 VFIN BARRIER NPNH)(1 CC)
               ( *2 NP-HEAD   BARRIER NPNH LINK 1 Inf);
 SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD LINK 
@@ -1840,8 +1843,7 @@ SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD LINK
 
 # In front of a participle
 SELECT Acc IF (*-1 LEAT-FIN-NON-IMP BARRIER NPNHAI)(NOT 0 Adv)
-		(*1 PrfPrc BARRIER NON-ADV)
-		(NOT 1 Pass) ;
+		(*1 ACT-PRFP BARRIER NON-ADV);
                         ## Mun lean dan dahkan.
 			## Váfistan dihte bargovugiid lea komitea viiddiduvvon.
 			## Ruot1as leaat guhká jo ságastallan dán ás1s1is.
@@ -2308,7 +2310,7 @@ REMOVE ABBR IF (0 Neg)(*1 ConNeg OR PrfPrc);  ## Don it leat dál.
 
 # Sg1
 # ---
-  # Sg1 = PtcPrf (odd-syllables), and Sg1 = V Act (even-syllables)
+  # Sg1 = PtcPrf (odd-syllables), and Sg1 = V Actio (even-syllables)
 
 SELECT Sg1 IF (0 LEAN) (*1 PrfPrc);           ## Mun lean boahtán.
   # So, what kind of barrier could we have here?
@@ -2318,7 +2320,7 @@ SELECT Sg1 IF (*-1 MUN BARRIER Neg OR LEAN-SG1);  ## Mun ferten lohkat.
 
 SELECT Sg1 IF (-1 CC)(-2 (V Sg1));              ## Mun human ja human.
 
-#SELECT Sg1 IF (NOT *-1 (V Neg))(NOT *-1 PrfPrc OR Act OR V-SG1);
+#SELECT Sg1 IF (NOT *-1 (V Neg))(NOT *-1 PrfPrc OR Actio OR V-SG1);
 SELECT Sg1 IF (NOT *-1 VFIN)(NOT 1 CC)(NOT 2 Actio) ;                
 					 ## Háliidan hupmat.
                                        	 ## In háliidan hupmat.
@@ -2746,10 +2748,10 @@ REMOVE Prs IF (*-1 (Neg Imprt) BARRIER CLB OR V-IND-FIN)(0 (ConNeg));
 
 
 
-# Act
+# Actio
 # ---
-# Act = Prs Sg1 = PrfPrc (odd-syll verbs, contracted verbs)
-# => make rules for Act.
+# Actio = Prs Sg1 = PrfPrc (odd-syll verbs, contracted verbs)
+# => make rules for Actio.
 
 
 # Present Participle
@@ -2762,7 +2764,7 @@ REMOVE Prs IF (*-1 (Neg Imprt) BARRIER CLB OR V-IND-FIN)(0 (ConNeg));
 
 # Perfect Participle
 # ------------------
-  # PrfPrc = V Act
+  # PrfPrc = V Actio
   # PrfPrc = Ind Sg1
 
 SELECT PrfPrc IF (0 ("mannat"))(1 VAHKKU);
