@@ -60,7 +60,7 @@ LIST Gen = Gen ;
 
 LIST Comp = Comp ; LIST Superl = Superl ;
 
-LIST Attr = Attr ; LIST Clt = Clt ; #LIST Card = Card ;
+LIST Attr = Attr ; LIST Clt = Clt ; LIST Card = Card ;
 
 LIST Pass = Pass ;
 LIST Prt = Prt; #LIST Prs = Prs ; 
@@ -296,6 +296,7 @@ LIST MANNU = "od1d1a/jage/mánnu" "od1d1a/jagi/mánnu"
              "skábma/mánnu" "november/mánnu" "ritne/mánnu" 
              "juovla/mánnu" ;
 
+LIST GUOVLU = "guovlu" "ássan/guovlu" "gávpot" "sádji" "viessu" "goahti" ;
 LIST GEASSET = "dálvet" "dálvit" "gid1d1at" "geasset" "geassit" "c1akc1at" ;
 
 LIST INITIAL =  "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m"
@@ -335,6 +336,9 @@ SET NON-ADV-INDEF = WORD - Adv - Indef ;
 SET NON-ADV-PCLE-INDEF = WORD - Adv - Pcle - Indef ;
 
 SET NON-A   = WORD - A ;
+SET NON-DEM = WORD - Dem ;
+
+SET A-CASE = A - Attr - Adv ;
 
 LIST A-CC = A CC ;
 
@@ -523,7 +527,12 @@ SELECT N IF (1 COMMA)(2 (Pron Interr));         ## Doaimmat, maiguin...
 
 SELECT N IF (-2 BOS)(-1C Gen)(1 EOS);           ## Ruot1a c1álli. #(titles)
 
-REMOVE A IF (-1 Dem)(1 (Pron Interr));          ## .. dan sápmelas1 gean ..
+REMOVE A IF (-1 Dem)(1 (Pron Interr));     ## .. dan sápmelas1 gean ..
+
+
+REMOVE (A Sg Nom) IF (NOT *-1 VFIN)(0 (N Sg Nom))(*1 V-SG3 BARRIER NON-ADV-PCLE);
+REMOVE (A Pl Nom) IF (NOT *-1 VFIN)(0 (N Pl Nom))(*1 V-PL3 BARRIER NON-ADV-PCLE);
+                     ## Dálá guovlluin sápmelac1c1at eai leat ássan nu guhká.
 
 REMOVE V IF (1 Po);                             ## sápmelac1c1aid birra.
                                                 #  problem with derived V > N
@@ -532,15 +541,17 @@ REMOVE V IF (-1 Dem)(1 V-IND-FIN);          ## Dán báhkis s1addá c1áppa gohppu.
 
 REMOVE VFIN IF (-1 BOS)(0 NP-HEAD-SG-NOM)(1C V-SG3);## Lásse lea mus rean1gan.
 
-# Based on right context
+REMOVE Adv IF (1C Po); 
 
-REMOVE Adv IF (1C Po);
+
+
+REMOVE A-CASE IF (*-1 BOS BARRIER NON-DEM)(0 N)(NOT 0 ("buorre"))(1 N);
+                                       ## Sápmelac1c1aid historjá lea boaris.
+  # No adjective, except buorre, agrees with a head noun in case. The correct
+  # reading for a case-inflected prenominal word must thus be N.
+  # (Problem: we have not considered a string predicative adj + other NP)
 
 REMOVE (A Gen) IF (0 N)(*1 N BARRIER NON-A);
-
-
-
-
 
 
 # Case disambiguation
@@ -599,6 +610,12 @@ SELECT Gen IF (0C (N Prop) )(1C CNOUN)(2 CLB); # Oainnán Uria biilla.
 #SELECT Gen IF (0 MANNU)(1 (Num Ord));       ## Miessemánu 1. beaivvi.
 SELECT Gen IF (0 ("miesse\/mánnu"))(1 (Num Ord));     ## Miessemánu 1. beaivvi.
 
+# Genitive if cardinal number
+SELECT Gen IF (0 Card)(1 (N Gen));       ## Dat lea duháhiid jagiid boaris.
+
+# Genitive in proper name sequences
+REMOVE Acc IF (0 Prop)(1 Prop);          ## Dat lea Norgga Röros ja Máhte Piera.
+  # Hmm, very general indeed!
 # Genitive sequences
 SELECT Gen IF (NOT -1 V)(0C N)(1C CNOUN) (NOT 2 Po); ##Áhc1i viesu uksa lea alit.
   # This is a bad rule. I need more constraints on the noun in pos 1.
@@ -814,6 +831,10 @@ SELECT (Pl Nom) IF  (*-1 ("leat" Pl3) BARRIER NPNHAI
 
 # Missing Du3 and Pl3 rules for coordinated subjects and pl subjects
 
+SELECT (Pl Nom) IF (NOT *-1 (N Pl Nom))(*1 V-PL3 BARRIER (N Pl Nom)
+                LINK NOT *-1 CC);    ## 
+
+
 
 # Locative singular
 # =================
@@ -845,6 +866,9 @@ SELECT (Pl Loc) IF (*-1 CC LINK *-1 (Sg Loc) BARRIER NPNH);
 SELECT (Pl Loc) IF (1 CC)(*2 (Sg Loc) BARRIER NPNH);
   ## Son lea od1d1a mediain ja skuvllas.
 
+SELECT (Pl Loc) IF (0 GUOVLU);
+
+SELECT (Pl Loc) IF (-2 Num)(-1 ("%")); ## Dat lea 50 % rud1ain.
 
 SELECT Loc IF (1 ("gos"));           # guovlluin gos sámit ásset
 SELECT Loc IF (1 COMMA)(2 ("gos"));  # guovlluin, gos sámit ásset
@@ -1265,6 +1289,8 @@ SELECT A IF (*-1 ("leat" V) BARRIER NON-ADV-INDEF)(1 N OR EOS);
 
 REMOVE Attr IF (0 A)(NOT 1 A OR CC OR COMMA); ## Vuolgit lea suohtas.
 
+REMOVE Attr IF (0 A-CASE OR Adv)(1 CC)(NOT *2 (A Attr) OR ("buorre") LINK 1 N);
+                    ## Guovlu lea 1500 km guhkkosas1 ja 300 km govdosas1.
 
 # special rules for 'buorre' (the only adjective showing case agreement)
 # ----------------------------------------------------------------------
