@@ -4,7 +4,7 @@
 # The first goal is to build sme.fst
 # This goal depends on sme.save and caseconv.fst being up to date
 
-sme.fst: sme.save caseconv.fst
+sme.fst: sme.save caseconv.fst tok.fst
 	@echo
 	@echo "*** Building sme.fst ***" ;
 	@echo
@@ -63,6 +63,25 @@ twol-sme.bin: twol-sme.txt
 	@rm -f /tmp/twol-sme-script
 
 
+
+# If sme.fst had included the preprocessor, this part would have come in.
+# Now, it does not, and this must wait for a new makefile.
+# This goal depends on tok.txt
+
+tok.fst: tok.txt
+	@echo
+	@echo "*** Building the tokenizer tok.fst ***" ;
+	@echo
+	@printf "source tok.txt \n\
+	save stack tok.fst \n\
+	quit \n" > /tmp/tok-script
+	@xfst < /tmp/tok-script
+	@rm -f /tmp/tok-script
+
+
+# Added this, and added a mentioning of the tok.txt in the beginning of
+# the file (under the dependencies of sme.fst)
+
 # Then, the intermediate files will be cleaned up
 # I leave twol-sme.bin because I need it for twolc, and tok.fst
 # because that is used seperately on the command line.
@@ -74,19 +93,4 @@ clean:
 
 # ##############################################################
 
-
-
-# If sme.fst had included the preprocessor, this part would have come in.
-# Now, it does not, and this must wait for a new makefile.
-# This goal depends on tok.txt
-
-#tok.fst: tok.txt
-#	@echo
-#	@echo "*** Building the tokenizer tok.fst ***" ;
-#	@echo
-#	@printf "source tok.txt \n\
-#	save stack tok.fst \n\
-#	quit \n" > /tmp/tok-script
-#	@xfst < /tmp/tok-script
-#	@rm -f /tmp/tok-script
 
