@@ -4,7 +4,7 @@
 # The ultimate goal is to build isme.fst, the generator
 # This goal depends on sme.save being up to date.
 
-isme.fst: sme.fst sme.save
+isme.fst: sme.fst sme.save tok.fst
 	@echo
 	@echo "*** Building the inverse isme.fst ***"
 	@echo
