@@ -443,7 +443,8 @@ SET NUMERALS = Num - OKTA ;
 
 SET NON-CC = WORD - CC ;
 
-LIST COMPAR = "dávjjit" "earalágan" "seammás" ; # Combine with "go" Pcle.
+LIST COMPAR = "dávjjit" "earalágan" "seammás" "seammalágan" "seammalágán" 
+		"seammaláhkai"; # Combine with "go" Pcle.
 
 
 # Syntactic sets
@@ -1698,8 +1699,10 @@ REMOVE (A Sg Nom) IF (0 (A Attr))(*1C N BARRIER NON-Attr);
 
 # In the two next rules, an alternative would be to leave out the reference to the
 # subject and simply refer to the number marking of the copula. 
-SELECT (A Sg Nom) IF (*-1 COPULAS BARRIER NON-ADV LINK *-1 (N Sg Nom) OR (Sg3 Nom) 
-	BARRIER V-NON-AUX)(NOT 0 Inf);
+#SELECT (A Sg Nom) IF (*-1 COPULAS BARRIER NON-ADV LINK *-1 (N Sg Nom) OR (Sg3 Nom) 
+#	BARRIER V-NON-AUX)(NOT 0 Inf);
+SELECT (A Sg Nom) IF (*-1 COPULAS BARRIER NON-ADV LINK 0 (Sg3))(NOT 0 Inf OR Attr)
+	(NOT 1 PrfPrc);
 
 SELECT (A Pl Nom) IF (*-1 COPULAS BARRIER NON-ADV LINK *-1 (N Pl Nom) OR (Pl3 Nom) 
 	BARRIER V-NON-AUX);
@@ -1839,8 +1842,10 @@ SELECT PrfPrc IF (*-1 VFIN BARRIER Nom OR V OR CS OR CC OR CLB OR PUNCT)
                                                    ## Mun lean muitalan dan.
 REMOVE (V Sg1) IF (*-1 ("leat") BARRIER NON-ADV-PCLE);
 
-# Topicalised participle
-# ???
+REMOVE Foc IF (0 Actio);
+# Further qualification may be needed. The idea is to avoid focus reading of 
+# oahpahan etc. Seems best to have this rule early. 
+
 
 # Old rules, remove asap.
 #SELECT PrfPrc IF (0 LEAN) (-1 (Neg));
@@ -2230,7 +2235,7 @@ SELECT Acc IF (NOT *-1 VFIN BARRIER CS)(NOT -1 ("mii"))(NOT 0 Nom OR TIME OR ("l
 				   ## Dat leamas1 vissa gobmi.	
 				   ## Min áiggi lea dat gildojuvvon.
   	
-SELECT Acc IF (-1 CLB)(0 ("mii"))(1 (N Pl Gen))(2 NP-BORDER); 
+SELECT Acc IF (-1 BOS)(0 ("mii"))(1 (N Pl Gen))(2 NP-BORDER); 
 
 SELECT Acc IF (*-1 (V Neg))(NOT 0 Nom)
               (*1 ConNeg OR PrfPrc BARRIER NON-ADV-PCLE LINK NOT *1 Acc);
@@ -2271,8 +2276,9 @@ SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD LINK
               *-1 VFIN BARRIER NPNH)(1 Inf);
 
 # In front of a participle
-SELECT Acc IF (*-1 LEAT-FIN-NON-IMP BARRIER NPNHAI)(NOT 0 Adv)
-		(*1 ACT-PRFP BARRIER NON-ADV);
+SELECT Acc IF (*-1 LEAT-FIN-NON-IMP BARRIER NPNHAI)(NOT 0 Adv OR Nom OR TIME)
+		(*1 ACT-PRFP BARRIER NON-ADV LINK NOT *1 ("leat" PrfPrc) 
+		BARRIER CS OR CP);
                         ## Mun lean dan dahkan.
 			## Váfistan dihte bargovugiid lea komitea viiddiduvvon.
 			## Ruot1as leat guhká jo ságastallan dán ás1s1is.
@@ -3222,7 +3228,7 @@ SELECT Inf IF (-1 V-PL1)(NOT -1 Neg)(*-2C MII-PERS BARRIER SII OR MOAI OR CLB);
 
 
 # Infinitive after predicative
-# ----------------------------
+# - - - - - - - - - - - - - - 
 
 # There are two rules in the beginning, conflate when I see the effect.
 # The barrier may be too weak.
@@ -3236,7 +3242,7 @@ SELECT Inf IF (*-1 N BARRIER VFIN LINK *-1 ("leat") OR ("s1addat")
                            ## Jos leat jaska, de lea dárbu singuin gulahaddat.
 
 # Infinitive as subject
-# ---------------------
+# - - - - - - - - - - - 
 
 REMOVE (Prs Pl1) IF (-1 BOS)(1C V-SG3);
                            ## Vuolgit lea suohtas.
@@ -3245,7 +3251,7 @@ REMOVE NP-HEAD-PL-NOM IF (0 (Inf) OR NP-HEAD-SG-NOM)(1C V-SG3);
 
 
 # Infinitive in coordination
-# --------------------------
+# - - - - - - - - - - - - -
 
 SELECT Inf IF (1 CC)(2C Inf); ## Mus lea árvalusat mo skuvlla nannet ja buoridit.
 SELECT Inf IF (-2C Inf)(-1 CC);
@@ -3253,46 +3259,52 @@ SELECT Inf IF (-2C Inf)(-1 CC);
 SELECT Inf IF (*-1 CC BARRIER NON-ADV-PCLE LINK *-1 Inf BARRIER VERB); 
 
 
-# Actio
-# ---
-# Actio = Prs Sg1 = PrfPrc (odd-syll verbs, contracted verbs)
-# => make rules for Actio.
-
-REMOVE (V Ind) IF (-1 NP-HEAD)(-1 Gen)(NOT -1 TIME)(1 N);
-REMOVE PrfPrc IF (-1 NP-HEAD)(-1 Gen)(NOT -1 TIME)(1 N);
-REMOVE PrfPrc IF (*1 LEAT-FIN-NON-IMP BARRIER Nom OR CC OR CLB 
-		LINK *1 PrfPrc BARRIER CS);
-
-SELECT Actio IF (1C Po);
-
 # Present Participle
 # ------------------
 
 # PrsPrc = Imprt Prs Du2 (even-syll)
 
+
+# Actio/PrfPrc
+# ------------
+# Actio = Prs Sg1 = PrfPrc (odd-syll verbs, contracted verbs)
 # Perfect Participle is also treated at the Ind Prs Sg1 chapter.
-
-
-# Perfect Participle
-# ------------------
-  # PrfPrc = V Actio
-  # PrfPrc = Ind Sg1
 
 SELECT PrfPrc IF (0 ("mannat"))(1 VAHKKU);
                      ## Mannan c1uohtejagi gaskkamuttos lei stuorra gilvu.
 
-SELECT PrfPrc IF (*-1 LEAT-FIN-NON-IMP BARRIER NON-ADV-PCLE-ILL);
+REMOVE (V Ind) IF (-1 NP-HEAD)(-1 Gen)(NOT -1 TIME)(1 N);
+REMOVE PrfPrc IF (-1C NP-HEAD)(-1 Gen LINK NOT *-1 Num BARRIER NON-A)
+	(NOT -1 TIME)(1 N);
 
-SELECT PrfPrc IF (*-1 CC BARRIER NON-ADV LINK -1 PrfPrc)
-		(*1 CLB OR CS BARRIER NON-ADV); 
+# This rule is aimed at actio in coordination (I know it looks ugly): 
+REMOVE PrfPrc IF (NOT -1 LEAT-FIN-NON-IMP LINK *-1 CP BARRIER VFIN)
+		(1 CLB LINK *1 N BARRIER NPNH LINK *1 CC BARRIER VFIN 
+		LINK *1 N BARRIER NPNH LINK NOT 0 Loc);
+
+SELECT PrfPrc IF (*-1 LEAT-FIN-NON-IMP)(NOT *1 PrfPrc BARRIER CC OR CP OR CS);
+
+#REMOVE PrfPrc IF (*1 PrfPrc BARRIER VFIN OR CC OR CP OR CS 
+#		LINK NOT 0 Pass OR ("leapma" Dimin));
+
+REMOVE PrfPrc IF (NOT *-1 VFIN)(NOT 0 Pass)(NOT *1 VFIN BARRIER CP OR CS);
+
+SELECT Actio IF (1C Po);
+
+#REMOVE V-SG1 IF (*-1 LEAT-FIN-NON-IMP BARRIER CS OR CP);
+
+REMOVE V-SG1 IF (*-1 VFIN BARRIER CS OR CP);
+
 
 # leamas1 without finite verb
-# - - - - - - - - - -
+# - - - - - - - - - - - - - -
 
 SELECT PrfPrc IF (-1 NP-HEAD)(NOT -1 Gen)(0 ("leapma" Dimin)); 
 SELECT PrfPrc IF (0 ("leapma" Dimin))(*1 A-CASE BARRIER NON-ADV-PCLE);
 SELECT PrfPrc IF (NOT *-1 VFIN BARRIER CS)(0 ("leapma" Dimin))
 		(NOT *1 VFIN BARRIER CP OR CS);
+
+
 
 # ImprtII
 # -------
