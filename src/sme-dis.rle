@@ -430,6 +430,9 @@ SET NUMERALS = Num - OKTA ;
 
 SETS
 
+# NP sets
+# -------
+
 LIST NP-HEAD = Pron N ;
 SET NP-HEAD-SG = (Pron Sg) | (N Sg);
 SET NP-HEAD-PL = (Pron Pl) | (N Pl);
@@ -447,6 +450,10 @@ SET NPNHAI = WORD - PRE-NP-HEAD - Adv - Indef ; # NPNHAI " "...-OR-INDEF"
 SET NPNHAII = WORD - PRE-NP-HEAD - Adv - Indef - Ill ; # Illative indir.obj.
 SET NPNHAIIP = WORD - PRE-NP-HEAD - Adv - Indef - Ill - Pcle ;
 
+
+# Other nominal sets
+# ------------------
+
 SET NON-ADV = WORD - Adv;
 SET NON-ADV-PCLE = WORD - Adv - Pcle ;
 SET NON-ADV-INDEF = WORD - Adv - Indef ;
@@ -457,21 +464,41 @@ SET NON-A   = WORD - A ;
 SET NON-A-PCLE = WORD - A - Pcle ;
 SET NON-DEM = WORD - Dem ;
 
-SET NON-N = WORD - N ;
+SET NON-N =  WORD - N ;
+SET NON-NP = VFIN | Adv | Pcle | Interj | CS | CC ;
+
+
+# Adjectival sets and their complements
+# -------------------------------------
+
 SET A-CASE = A - Attr - Adv ;
 
 LIST A-CC = A CC ;
 
 SET NON-ADJ-CC = WORD - A-CC ;
 
-SET NON-CC = WORD - CC ;
 
-SET NON-NP = VFIN | Adv | Pcle | Interj | CS | CC ;
+# Adverbial sets and their complements
+# ------------------------------------
+
+SET ADVERBIAL = Adv | Ill | Loc | Com | Ess ;
+
+# SET NON-ADV = WORD - Adv ;
+
+
+# Border sets and their complements
+# ---------------------------------
 
 SET NP-BORDER = BOS | EOS | CLB | Adv | V | Pers | CS | Recipr | Refl | Dem |
                 Interr | Po | Pr | Pcle ;
    # too risky to use CLB, need more sophisticated way.
    # this allows for NP-internal commas to break NP.
+
+SET NON-CC = WORD - CC ;
+
+
+# Semantically defined sets
+# -------------------------
 
 LIST CONTRA = "muhto" ; # In lean muitalan, muhto dál muitalan.
 
@@ -1015,6 +1042,11 @@ SELECT Adv IF (0 ("sullii"))(1 Num);    ## Dat lea sullii 20 kg.
   # to a set of adverbs denoting quantification, and Num must be extended to
   # more measures (or parallel rules must be written).
 
+# visot
+SELECT Adv IF (0 ("viso"))(NOT 1 (N Pl));
+   ## Visot dan maid NRK sádde digitála fierpmis sáhttá maid gullat Nettradios.
+ # This is not a particularly good rule for 'visot'.
+
 
 
 # ======================= #
@@ -1228,7 +1260,7 @@ SELECT Attr IF (NOT *-1 V-SG3)(0 ("garas" A Attr))(1 N)(NOT *1 V-SG3);
 
 
 # Attribute disambiguation
-# ------------------------
+# ========================
 
 
 REMOVE (A Nom) IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
@@ -1236,16 +1268,28 @@ REMOVE (A Gen) IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
 REMOVE (A Acc) IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
                                      ## Dat lea c1uovvovas1 sajis.
 
+# These two are too heavy.
+REMOVE V IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
+REMOVE N IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
+               ## Olles doaibmaviessu lea sullii 2300 njealjehasmetera stuoru. 
+
+
 REMOVE PrsPrc IF (0 (A Attr))(1 N)(NOT 1 Gen);
                   ## Sidjiide maid lei guollerikkis Ruija geasuheaddji guovlu.
 
-# Rule for predicative attributes
-SELECT Attr IF (-3 BOS)(-2 Nom)(-1 ("leat"))(0 Prop)(1  Prop)(2 NP-BORDER);
 
+# Rule for predicative attributes
+# - - - - - - - - - - - - - - - - 
+
+SELECT Attr IF (-3 BOS)(-2 Nom)(-1 ("leat"))(0 Prop)(1  Prop)(2 NP-BORDER);
 
 SELECT (A Attr) IF (1 CC)(2 (A Attr))(3 N); ## Dat lea od1d1a ja vilges gákti.
 
+
+
 # Coordinated attributive surnames
+# - - - - - - - - - - - - - - - - 
+
 SELECT (Prop Attr) IF (NOT -1 Prop)(1 CC)(2 (Prop Attr))(3 (N Prop));
                                       ## Dál leaba Brita ja Ove Kåven.
 
@@ -1264,6 +1308,8 @@ REMOVE (A Sg Nom) IF (0 (A Attr))(1 N);
   # When 1 = object predicative, this is a bad rule. Perhaps:
   # (-1 COPULAS)? Keep it in mind.
 
+
+
 # special rules for 'buorre' (the only adjective showing case agreement)
 # ----------------------------------------------------------------------
 
@@ -1272,6 +1318,8 @@ SELECT Gen IF (0 ("buorre"))(NOT 0 Comp OR Superl)
 
 SELECT Acc IF (0 ("buorre"))(NOT 0 Comp OR Superl)
               (*1C (N Acc) BARRIER NON-ADJ-CC);
+
+
 
 
 # Comparatives
@@ -1340,7 +1388,9 @@ SELECT Prop IF (NOT *-1 BOS OR (":") OR (""") BARRIER WORD); # still does
 # Prop as Attr or not
 # -------------------
 
-REMOVE Attr IF (0 Prop)(NOT 1 Prop OR INITIAL);   ## Trond Trosterud lea dál.
+REMOVE Attr IF (0 Prop)(NOT 0 A)(NOT 1 Prop OR INITIAL);   
+                 ## Trond Trosterud lea dál.
+                 ## Olles doaibmaviessu lea sullii 2300 njealjehasmetera. 
 
 # Note:  the rule for selecting attribute reading of surnames is given
 #        in the section on adjectives.
@@ -1384,22 +1434,31 @@ SELECT Nom IF (-2 BOS)(-1 (Pron Dem Sg Nom))(0 Sg)
 
 
 # Nominative subjects
-# - - - - - - - - - -
+# -------------------
 
 # Find the subject, and assume it is nominative
+
+# Ordinary preverbal subjects
+# - - - - - - - - - - - - - - 
 
 SELECT Nom IF (-1 CS OR BOS OR (Interr Sg))(0 Sg)(1C V-SG3); 
                                  ## Died1án, ahte plána movttiidahttá dan.
 
 SELECT Nom IF (-1 CS OR BOS)(0 Pl)(1C V-PL3); 
-                                 # ... and in pl..
-
-SELECT Nom IF (-1 BOS)(0 Prop)(1 COMMA); 
-                                 ## Biera, du sabehiid!
+                                 # ... and the same in pl..
 
 REMOVE Nom IF (-1 BOS)(NOT 0 (Pron Pers))(1C V-1-2);
                                  ## Dan oainnán viesu duohkin.  
                                  ## Moai c1ilge dan ás1s1i dutnje.
+
+
+# Vocatives, subjects of sentence fragments
+# - - - - - - - - - - - - - - - - - - - - - 
+
+SELECT Nom IF (-1 BOS)(0 Prop)(1 COMMA); 
+                                 ## Biera, du sabehiid!
+
+
 
 # Coordinated subjects
 # --------------------
@@ -1415,11 +1474,20 @@ SELECT (Sg Nom) IF (1 CC)(*2C (Sg Nom) BARRIER NPNHAI LINK 1 NP-BORDER);
 # Postverbal subjects
 # -------------------
 
-#SELECT Nom IF (*-1 V-SG3 BARRIER NPNH LINK -1 BOS OR CLB)
-SELECT Nom IF (*-1 V-SG3 BARRIER NPNH LINK *-1 BOS OR CLB BARRIER Nom)
-              (0 N or (Pron Pers) OR (Pron Interr))(NOT 0 PrfPrc);
+# Singular
+SELECT (Sg Nom) IF (*-1 V-SG3 BARRIER NPNHAIIP LINK *-1 BOS OR CLB BARRIER Nom)
+                (0 (N Sg) or (Pron Pers Sg) OR (Pron Interr Sg))(NOT 0 PrfPrc);
                     ## Dat lei 1827s, muitalii muhtin mátkkos1teaddji midjiide.
                     ## Riikkaid galgá Piera oaidnit.
+
+# Plural
+SELECT (Pl Nom) IF (*-1 V-PL3 BARRIER NPNHAIIP LINK *-1 BOS OR CLB BARRIER Nom)
+                (0 (N Pl) or (Pron Pers Pl) OR (Pron Interr Pl))(NOT 0 PrfPrc);
+                    ## 1995:s gárvánedje rádiobuvttadeapmái lanjat.
+
+
+
+
 
 # Nominative predicatives
 # - - - - - - - - - - - -
@@ -1530,7 +1598,9 @@ SELECT Acc IF (-2 (Acc Cmpnd)) (-1 CC);
     CONSTRAINT
 # =================
 
-
+# Nominative plural is also covered by many of the rules found in the general 
+# Nominative section above. Rules related to Nominative plural but #not# No-
+# minative singular should go here.
 
 # Postverbal predicative
 
@@ -1728,10 +1798,10 @@ SELECT Acc IF (-1 (N Nom) LINK *-1 VFIN BARRIER NPNHAIIP)
 # Accusative sentence-finally
 # ---------------------------
 
-REMOVE Gen IF (NOT -1 Pr)(1 EOS OR CLB) ;
-            ## Fylkka mearrida olugo galgá atnit sámi leavgga.
-            ## C1uovvovas1 seminára cealkagat govahallet seminára loahppabohtosa.
-
+REMOVE Gen IF (NOT -1 Pr OR Num)(1 EOS OR CLB) ;
+          ## Fylkka mearrida olugo galgá atnit sámi leavgga.
+          ## C1uovvovas1 seminára cealkagat govahallet seminára loahppabohtosa.
+          ## Man1n1il lea viessu viiddiduvvon guovtte geardde.
 
 
 # Accusative in time expressions
@@ -2179,6 +2249,7 @@ SELECT Interr IF (0 ("mii" Pron Interr Sg Nom))
 
 
 # Preverbal subject
+# - - - - - - - - - 
 
  # Single noun
 SELECT Pl3 IF (*-1C NP-HEAD-PL-NOM BARRIER PPRON-NOT-SII OR (N Sg Nom));
@@ -2189,11 +2260,12 @@ SELECT Pl3 IF (*-1C NP-HEAD-PL-NOM BARRIER PPRON-NOT-SII OR (N Sg Nom));
  # Coordination
 SELECT Pl3 IF (*-1 NP-HEAD-SG-NOM BARRIER NON-ADV
            LINK *-1 CC BARRIER NPNH
-           LINK -1 NP-HEAD-SG-NOM);                      ## Nieida ja gánda jerre
+           LINK -1 NP-HEAD-SG-NOM);        ## Nieida ja gánda jerre
 
  # Pronoun
-
 SELECT Pl3 IF (*-1 SII BARRIER MII-PERS OR MOAI OR CLB); ## Sii jerre.
+
+
 
 # Postverbal subject
 # - - - - - - - - -
@@ -2205,11 +2277,17 @@ SELECT Pl3 IF (*-1 BOS BARRIER NON-ADV-PCLE)
 
  # Sentence-initial verb with question particle and subject 'sii'
 SELECT Pl3 IF (*-1 BOS BARRIER NON-ADV-PCLE)
-              (*1 SII BARRIER NON-ADV-PCLE);                ## Jerrego sii?
+              (*1 SII BARRIER NON-ADV-PCLE);          ## Jerrego sii?
 
  # Sentence-initial verb with question particle and ordinary plural subject
 SELECT Pl3 IF (*-1 BOS BARRIER NON-ADV-PCLE)(*1C NP-HEAD-PL-NOM
-              BARRIER NON-ADV-PCLE OR NPNH);                ## Jerrego nieiddat?
+              BARRIER NON-ADV-PCLE OR NPNH);          ## Jerrego nieiddat?
+
+ # Post-adverbial verb with final subject
+SELECT Pl3 IF (-1 Adv OR ADVERBIAL LINK *-1 BOS BARRIER NPNH)
+              (*1 (N Pl) BARRIER NPNHAI);
+
+
 
 
 # Relative pronoun as subject
