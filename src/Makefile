@@ -1,7 +1,22 @@
 # This is a makefile that builds the Northern Sami morphological parser
 # *****************************************************************
+
+# The ultimate goal is to build isme.fst, the generator
+# This goal depends on sme.save being up to date.
+
+isme.fst: sme.fst sme.save
+	@echo
+	@echo "*** Building the inverse isme.fst ***"
+	@echo
+	@printf "load sme.save \n\
+	invert net \n\
+	save stack isme.fst \n\
+	quit \n" > /tmp/isme-fst-script
+	@xfst < /tmp/isme-fst-script
+	@rm -f /tmp/isme-fst-script
+
  
-# The first goal is to build sme.fst
+# The first goal is to build sme.fst, the analyzer.
 # This goal depends on sme.save and caseconv.fst being up to date
 
 sme.fst: sme.save caseconv.fst tok.fst
