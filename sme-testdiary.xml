@@ -1,0 +1,143 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.3//EN" "document-v13.dtd">
+<document>
+  <header>
+    <title>Test diary</title>
+  </header>
+  <body>
+    <section id="Test_diary_for_the_Northern_Sámi_rule_and_lexicon_files" >
+      <title>Test diary for the Northern Sámi rule and lexicon files</title>
+      <p>This document is not for error reports (they are found in the file <link href="docu-sme-bugs.html" >docu-sme-bugs.html</link>. Rather, what is found here is an overview of what is tested, both text testing and grammatical testing.</p>
+      <section id="Test_planning" >
+        <title>Test planning</title>
+        <p>Testing of text:</p>
+        <p>Texts from various domains should be tested (the sme/corp/ mainly contains administrative texts (and the New Testament)):</p>
+        <ul>
+          <li>Fiction</li>
+          <li>Religious texts</li>
+          <li>Administrative language, politics, etc.</li>
+          <li>Fagspråk</li>
+        </ul>
+        <p>Grammatical testing:</p>
+        <ul>
+          <li>All forms of all paradigms</li>
+          <li>All consonant gradation patterns</li>
+          <li>All vowel alternations</li>
+          <li>Compounds</li>
+        </ul>
+      </section>
+      <section id="Test_results" >
+        <title>Test results</title>
+        <section id="Testing_the_parser_on_various_texts" >
+          <title>Testing the parser on various texts</title>
+          <p>The following table records recall for word forms in various texts.</p>
+          <source>---------------------------------------------------
+nisson_ovddasteapmi.txt
+Test 6  Wftot Wf-tkn  %-recall Tytot  Wf-typ %-recall
+040903  38360  35704  93.0 %   20660  19102 92.4 %
+---------------------------------------------------
+hjh-nod1iid.txt
+Test 5  Wftot Wf-tkn  %-recall Tytot  Wf-typ %-recall
+040903   1580   1532  96.7 %     683   636  93.1 %
+---------------------------------------------------
+sd-divas-2002-{1,2}.txt
+Test 4  Wftot Wf-tkn  %-recall Tytot  Wf-typ %-recall
+041005  32835  31834  96.9 %    6664  6054  90.8 %
+040913  32883  31255  95.0 %    6759  5856  86.6 %
+---------------------------------------------------
+sd-divas-2001-1.txt
+Test 4  Wftot Wf-tkn  %-recall Tytot  Wf-typ %-recall
+040903  60522  58549  96.7 %    8610  7610  88.4 %
+040329  62459  60159  95.3 %    8496  7406  87.2 %
+---------------------------------------------------
+handlingsplan_samisk.txt
+Test 3  Wftot Wf-tkn  %-recall Tytot  Wf-typ %-recall
+031120   2148   2053  95,6 %    1044   984  94.3 %
+040329   2461   2389  97.1 %     955   898  94.0 % (new preprocessor)
+---------------------------------------------------
+Test 2  Wftot Wf-tkn  %-recall Tytot  Wf-typ %-recall
+Collection    225355                 32467 (test closed)
+020815        203080  90.1 %         22721  70.0 %
+020918        204315  90.7 %         22956  70.7 %
+030210 227062~214845  94.6 %   31474~24398  77.5 %
+---------------------------------------------------
+Test 1     Wf-tokens  %-recall    Wf-types %-recall
+New Testament 139681                 14888 (test closed)
+011110         36471  26.1 %          4983  33.5 %
+011116         36980  26.5 %          5050  33.9 %
+011214         37736  27.0 %          5177  34.8 %
+011218         40741  29.2 %          5955  40.0 % (closed classes added)
+020129        126765  90.6 %         11676  78.4 % (proper names added)
+020205        128702  92.1 %         12340  82.9 %
+020206        129857  92.9 %         12328  82.8 % (nom_nom compound)
+020207        131846  94.4 %         12500  84.0 %
+020212        132394  94.8 %         12621  84.8 %
+020213        132878  95.1 %         12652  85.0 %
+020217        132993  95.2 %         12674  85.1 %
+020306        133791  95.8 %         12850  86.4 %
+020307        133821  95.8 %         12878  86.5 %
+020318        134042  95.9 %         12914  86.7 %
+020321        135446  97.0 %         13292  89.3 %
+020323        136120  97.5 %         13373  89.8 %
+020404        136621  97.8 %         13524  90.8 %
+020410        136974  98.1 %         13609  91.4 %
+020417        137435  98.4 %         13762  92.4 %
+020418        137977  98.8 %         13875  93.2 %
+020423        138101  98.9 %         13964  93.8 %
+021104        138254  99.0 %         14003  94.1 %
+---------------------------------------------------
+</source>
+        </section>
+        <section id="Explaining_the_table" >
+          <title>Explaining the table</title>
+          <p>Lower token than type percentage indicates that the parser misses common words more often than seldom ones.</p>
+          <p>Each text is given a separate section in the table, ordered chronologically, with the oldest test case (Test 1) at the bottom. The first line of each section gives the name of the file (note: the files of the test cases 2 and 3 are so changed that these two test cases are closed). Each line represents a test run. The first colum gives the test date (in the format ddmmyy), the second (WFtot) the total number of words in the file question, the third (Wf-tkn) the number of recognised word form tokens, and the percentage compared to the total. The next columns does the same for wordform types (cf. below for the commands used to calculate the numbers).</p>
+          <source>-------------------------------------------------------------------------
+Wftot:
+cat filename | preprocess --abbr=bin/abbr.txt | wc -l
+
+Non_recognised_wf:
+cat filename | preprocess --abbr=bin/abbr.txt | lookup -flags mbTT bin/sme.fst
+ | grep '\?' | grep -v CLB | wc -l
+
+Wf-tkn = Wftot - Non_recognised_wf
+
+%-recall = Wf-tkn * 100 / Wftot
+-------------------------------------------------------------------------
+Tytot (Total number of wordform types):
+cat filename | preprocess --abbr=bin/abbr.txt | sort | uniq | wc -l
+
+Non_recognised_wt (Number of non-analysed wordform types:
+cat filename | preprocess --abbr=bin/abbr.txt | sort | uniq |
+lookup -flags mbTT bin/sme.fst | grep '\?' | grep -v CLB | wc -l
+
+Wf-typ (Number of recognised wordform types)
+Wf-typ = Tytot - Non_recognised_wt
+
+%-recall = Wf-typ * 100 / Tytot
+--------------------------------------------------------------------------
+</source>
+        </section>
+      </section>
+      <section id="Grammatical_testing" >
+        <title>Grammatical testing</title>
+        <section id="Testing_routines" >
+          <title>Testing routines</title>
+          <p>Now, there are procedures for grammatical testing. Cf. gt/sme/testing.</p>
+        </section>
+        <section id="Date" >
+          <title>2001-11-16</title>
+          <p>All noun paradigms in Nickel are checked, and everything is OK.</p>
+          <p>The CG pattern xy:xyy (biila:biilla) has been systematically tested, and appr. 6 patterns do not work. Cf. the bug file referred to above. TODO: Test all CG patterns.</p>
+        </section>
+        <section id="November_2001" >
+          <title>November 2001</title>
+          <p>The files all-smeX.save and twolrules-saame.txt are tested. The files represent the improved versions of Pekka's first files, i.e. before the verbs and closed classes were included.</p>
+          <p>Trond Trosterud</p>
+          <p>
+<!-- hhmts start -->Last modified: Tue Oct 5 11:22:48 2004 <!-- hhmts end -->          </p>
+        </section>
+      </section>
+    </section>
+  </body>
+</document>

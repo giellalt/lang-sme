@@ -1,0 +1,91 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.3//EN" "document-v13.dtd">
+<document>
+  <header>
+    <title>Preprocessing the input</title>
+  </header>
+  <body>
+      <section id="Introduction" >
+        <title>Introduction</title>
+        <p>Within the Xerox framework, this is done with the <em>tokenize</em>tool. The code itself is written as a set of regular expressions, and the source file (tok.txt) is compiled by xfst.</p>
+        <p>In the present project, we have temporarily (spring 2004) abandoned this preprocessor, and replaced it with a perl-based preprocessor (see the <link href="preprocessor.html" >documentation</link> for the file <link href="../script/preprocess" >preprocess</link>. The main reason why we abandoned the preprocessor that we document here is that its compilation time ecxeeded half an hour on cochise, and several hours on local machines. The reason why compilaton time exploded was our use of the Replace operator @-> (see below), it looks for the longest match, which takes time.</p>
+        <p>When the abbreviation list was part of the tok.txt file, it meant a pause of more than half an hour for every added abbreviation or multiword expression. Thus, we moved to a non-compiled version, perl, during the developmental phase. In a stable, finished parser, tokenize is probably faster than perl, and we should consider migrating back. This documentation will be important if and when we migrate back, but also in the meantime it contains program-independent documentation on abbreviation handling which deserves to be browsed through.</p>
+      </section>
+      <section id="Tokenizing" >
+        <title>Tokenizing</title>
+        <section id="The_tokenizer_file" >
+          <title>The tokenizer file</title>
+          <p>The starting point for the preprocessor was the tok1.fst preprocessor file, written by Anne Schiller, and printed in the Karttunen/Beesley book (cf. the first cvs versions of the tok.txt file). This file has been revised several times. The leading idea behind the file is the following:</p>
+          <p>The tokenizer has two purposes: It cuts text into sentences, and it cuts sentences into words. Thus, symbols that are not letters or numbers are separated from words and numbers. Sentence delimiter symbols (.?!) are treated as separate tokens. In the morphological parser itself, these symbols are given the tag '+CLB', for clause boundary.</p>
+          <p>The file is an xfst source file. It defines sets, joins them together as either words, symbols, abbreviations, initials, or numerals (all being referred to by the variable 'Token'. Then, a newline (NL) is introduced after each token (Token + NL is called TOK1), all spaces are replaced by newlines (TOK2). The abbreviations get a separate treatment, as described in the next sentence. At the end of the tok.txt file, the different token types (TOK1, TOK1, and the different classes of abbreviations are composed together into one regular expression.</p>
+        </section>
+        <section id="Handling_abbreviations" >
+          <title>Handling abbreviations</title>
+          <p>The challenge is to handle abbreviations, like e.g. this one. Even though e.g. contains a final period, it shall not end a sentence. Then there are other abbreviations, like &quot;Ltd.&quot;, that may end sentences. The preprocessor thus divides the abbreviations in 4 different groups, according to whether they take <em>objects</em> or not (i.e. according to whether there is an obligatory word or numeral following them or not):</p>
+          <ul>
+            <li>INTRANSABBR (abbr that do not take an object: 'Lloyds Ltd.')</li>
+            <li>INTRANSNUMABBR (abbr that take CAP objects: '')</li>
+            <li>INTRANSCAPABBR (abbr that take NUM objects: 'Downing Str. 10')</li>
+            <li>TRANSABBR (abbr. that do take an object: 'Mr. Peters')</li>
+          </ul>
+          <p>Here is the rule set that lies behind the treatment of abbreviations:</p>
+          <ol>
+            <li>
+              <em>WORD + dot + space -> sentence boundary</em>
+              <br/>
+            </li>
+            <li>When there is a listed abbreviation + space, it is detected what follows after the space. There are three possibilities: there can be a small letter, an capital letter or a number:</li>
+            <li>
+              <em>Any abbreviation + space + small letter -> no sentence boundary</em>
+              <br/> Thus, all groups: TRANSABBR + INTRANSNUMABBR + INTRANSCAPABBR + INTRANSABBR. When a word starting with a small letter follows the abbreviation, all listed abbreviations are treated as <em>transitive</em>, i.e. no sentence boundary is inserted.</li>
+            <li>Certain abbreviations + space + <strong>capital letter</strong> -> no sentence boundary (TRANSABBR + INTRANSNUMABBR)<br/> All other abbreviations (complement of &quot;certain&quot;) + space + capital letter -> sentence boundary (INTRANSCAPABBR + INTRANSABBR)</li>
+            <li>Certain abbreviations + space + <strong>number</strong> -> no sentence boundary (TRANSABBR + INTRANSCAPABBR)<br/> All other abbreviations (complement of &quot;certain&quot;) + space + number -> sentence boundary<br/> (from INTRANSNUMABBR + INTRANSABBR)</li>
+          </ol>
+          <p>We thus have four groups:</p>
+          <ul>
+            <li>A list of abbreviations that never end a sentence (A set called <strong>TRANSABBR</strong>)<br/>
+            </li>
+            <li>A list of abbreviations that do not end a sentence if followed by any letter. These abbreviations do end a sentence if followed by a number (A set called <strong>INTRANSNUMABBR</strong>)<br/>
+            </li>
+            <li>A list of abbreviations that do not end a sentence if followed by a number or a small letter. These abbreviations do end a sentence if followed by a capital letter. (A set called <strong>INTRANSCAPABBR</strong>)<br/>
+            </li>
+            <li>A list of abbreviations end a sentence if followed by a capital letter or a number. These do no end a sentence if followed by a small case letter. (A set called <strong>INTRANSABBR</strong>)<br/>
+            </li>
+          </ul>
+          <p>In other words:</p>
+          <p>TRANSABBR / INTRANSNUMABBR / INTRANSCAPABBR / INTRANSABBR + small -> no sentence boundary</p>
+          <p>TRANSABBR + capital -> no sentence boundary<br/>TRANSABBR + number -> no sentence boundary</p>
+          <p>INTRANSNUMABBR + capital -> no sentence boundary<br/>INTRANSNUMABBR + number -> a sentence boundary</p>
+          <p>INTRANSCAPABBR + capital -> a sentence boundary<br/>INTRANSCAPABBR + number -> no sentence boundary</p>
+          <p>INTRANSABBR + capital -> a sentence boundary<br/>INTRANSABBR + number -> a sentence boundary<br/>
+          </p>
+          <p>It is better to have too few sentence boundaries than too many. Of the 4 sets listed above, the first invokes no sentence boundaries, and the following ones invoke an increasing amount of them. Thus, when in doubt, put the abbreviation in question in the sets as follows:<br/>
+            <em>TRANSABBR</em> is better than <em>INTRANSNUMABBR</em>, which is better than <em>INTRANSCAPABBR</em>, which is better than <em>INTRANSABBR</em>.</p>
+        </section>
+      </section>
+      <section id="Examples" >
+        <title>Examples</title>
+        <p>
+          <em>Jeg kjøpte epler. de var dyre.</em> A sentence boundary, rule 1. A sentence beginning with a small letter will be found in the grammar checker.<br/>
+          <em>Siv.ing. Pia Aho stakk innom.</em> No sentence boundary, rule 3.<br/>
+          <em>Siv.ing. og kunstner Pia Aho stakk innom.</em> No sentence boundary, rule 2.<br/>
+          <em>Dette er Pia Aho, siv.ing. Hun kjøper ost.</em> No sentence boundary, rule 3. This is where there is a sentence boundary (in real life), but we have to trust probabilities: it is likely that the first type of example is more common than this type of example. If this hypothesis turns out to be wrong, abbreviations can be moved into a more proper set. The point is that we need to have this kind of an option.<br/>
+          <em>F.eks. i Europa kjøpes det mye ost.</em> No sentence boundary, rule 3.<br/>
+          <em>F.eks. kunstnerne kjøper mye ost.</em> No sentence boundary, rule 2.<br/>
+          <em>Kjøp f.eks. 12 epler.</em> No sentence boundary, rule 4.<br/>
+          <em>Jeg kjøper ost o.a. godt.</em> No sentence boundary, rule 2.<br/>
+          <em>Jeg kjøper ost o.a. Ta med litt melk også.</em> A sentence boundary, rule 3<br/>
+          <em>Jeg kjøpte epler, pærer, osv. Jeg tok også med meg melk.</em> A sentence boundary, rule 3.<br/>
+          <em>Kjøp epler, pærer, osv. ta med melk også.</em> No sentence boundary, rule 2.<br/>
+          <em>Kjøp epler, pærer, osv. og ta også med melk.</em> No sentence boundary, rule 2.<br/>
+          <em>Også § 9, 3. avsn. nevner denne saka.</em> No sentence boundary, rule 2.<br/>
+          <em>Les også § 9, 3. avsn. Der tar man opp denne saka.</em> A sentence boundary, rule 3.<br/>
+          <em>I Trosterudveien 6, leilighet nr. 7 bor det en mann.</em> No sentence boundary, rule 4.<br/>
+          <em>Jeg trekker lodd i Lotto. I fjor trakk jeg 110 000 nr. Året før trakk jeg bare 18 000 nr. og det første året mitt 500 nr.</em> Two cases: A sentence boundary, rule 3, and no sentence boundary, rule 2.</p>
+        
+        <p>Trond Trosterud</p>
+        <p>
+<!-- hhmts start -->Last modified: Mon Nov 1 21:34:08 2004 <!-- hhmts end -->        </p>
+      </section>
+  </body>
+</document>
