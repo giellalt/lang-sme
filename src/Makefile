@@ -15,7 +15,7 @@ isme.fst: ../bin/isme.fst
 ../bin/isme.fst: ../bin/pos-sme.fst ../bin/n-sme.fst ../bin/s-sme.fst \
 	../bin/sme.save ../bin/allcaps.fst ../bin/n-sme.fst \
 	../bin/caseconv.fst ../bin/d-sme.fst  ../bin/guess-sme \
-	../bin/abbr.txt ../bin/cap-sme ../bin/foreign.fst ../bin/g-sme.fst
+	../bin/abbr.txt ../bin/cap-sme ../bin/foreign.fst 
 	@echo
 	@echo "*** Building the inverse isme.fst ***"
 	@echo
