@@ -13,8 +13,9 @@
 
 isme.fst: ../bin/isme.fst
 ../bin/isme.fst: ../bin/pos-sme.fst ../bin/n-sme.fst ../bin/s-sme.fst \
-	../bin/sme.save ../bin/tok.fst ../bin/allcaps.fst ../bin/n-sme.fst \
-	../bin/tok.fst ../bin/caseconv.fst ../bin/d-sme.fst
+	../bin/sme.save ../bin/allcaps.fst ../bin/n-sme.fst \
+	../bin/caseconv.fst ../bin/d-sme.fst \
+	../bin/abbr.txt
 	@echo
 	@echo "*** Building the inverse isme.fst ***"
 	@echo
@@ -148,8 +149,8 @@ d-sme.fst: ../bin/d-sme.fst
 # handle initial capitals.
 
 sme.fst: ../bin/sme.fst
-../bin/sme.fst: ../bin/sme.save ../bin/caseconv.fst ../bin/allcaps.fst \
-	../bin/tok.fst
+../bin/sme.fst: ../bin/sme.save ../bin/caseconv.fst \
+	../bin/allcaps.fst ../bin/abbr.txt
 	@echo
 	@echo "*** Building sme.fst ***" ;
 	@echo
@@ -260,16 +261,29 @@ dis-tag.fst: ../bin/dis-tag.fst
 # Here we include a preprocessor.
 # This goal depends on tok.txt
 
-tok.fst: ../bin/tok.fst 
-../bin/tok.fst: tok.txt
+#tok.fst: ../bin/tok.fst 
+#../bin/tok.fst: tok.txt
+#	@echo
+#	@echo "*** Building the tokenizer tok.fst ***" ;
+#	@echo
+#	@printf "source tok.txt \n\
+#	save stack ../bin/tok.fst \n\
+#	quit \n" > ../../tmp/tok-sme-script
+#	@xfst < ../../tmp/tok-sme-script
+#	@rm -f ../../tmp/tok-sme-script
+
+
+abbr.txt: ../bin/abbr.txt
+../bin/abbr.txt: ../../script/abbr-extract abbr-sme-lex.txt \
+		propernoun-sme-lex.txt closed-sme-lex.txt adv-sme-lex.txt \
+		noun-sme-lex.txt sme-num.txt
 	@echo
-	@echo "*** Building the tokenizer tok.fst ***" ;
+	@echo "*** Extracting abbreviations from abbr-sme-lex.txt to abbr.txt ***" ;
 	@echo
-	@printf "source tok.txt \n\
-	save stack ../bin/tok.fst \n\
-	quit \n" > ../../tmp/tok-sme-script
-	@xfst < ../../tmp/tok-sme-script
-	@rm -f ../../tmp/tok-sme-script
+	@perl ../../script/abbr-extract \
+		--abbr_lex=abbr-sme-lex.txt \
+		--lex=propernoun-sme-lex.txt,closed-sme-lex.txt,adv-sme-lex.txt,noun-sme-lex.txt,sme-num.txt \
+		--output=../bin/abbr.txt
 
 
 
@@ -280,7 +294,7 @@ tok.fst: ../bin/tok.fst
 # "make clean" is there to remove the binary files at will.
 
 clean:
-	@rm -f ../bin/*.fst ../bin/*.save ../bin/*.bin
+	@rm -f ../bin/*.fst ../bin/*.save ../bin/*.bin ../bin/abbr.txt
 
 
 
