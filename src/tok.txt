@@ -1,10 +1,10 @@
 # =============================================================
-# CONTENT: Sample Finite-State Tokenizer (no multi-words)
+# CONTENT: Finite-State Tokenizer (no multi-words)
 # AUTHOR: Original version by Anne Schiller, copied from the
 # Karttunen/Beesley book on finite state grammar
-# Modified by Trond Trosterud, 2002.
+# Modified and extended by Trond Trosterud, 2001-2003.
 # CREATED: 12-Jun-1997
-# UPDATED: 05-Sep-2001
+# UPDATED: 05-Sep-2001 - 15-Feb-2003
 # =============================================================
 # Usage: xfst -f [ThisFile]
 # =============================================================
@@ -22,6 +22,10 @@ echo >>> define single character symbols
 define SINGLE [ %" | %. | %, | %; | %: | %! | %?
 | %( | %) | %[ | %] | %{ | %} | %/ | %% 
 ];
+# The parser errouneously #stops# for a % mark, awaits the next one
+# (cf. trying 987% in xfst lookup mode).
+
+
 # Added the string ' | %/' above, for ja/dahje cases.
 define PUNCT [ %. %. (%.) | %' %' | %' %' | %, %, ] ;
 define Char \[ WS | SINGLE ] ;
@@ -50,102 +54,113 @@ a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|
 echo >>> numeric expressions
 define Digit [ %0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9];
 define NumOp [ %- | %+ | %* | %/ | %= | %: ];
-define NumSep [ %. | %, ];
+define NumSep [ %. | %, | %: ]; # %: added to original, for 1993:18 etc.
 define NUM [ Digit | NumOp | NumSep]+ & $[Digit] ;
+define ROM [ I|V|X ]+ ; # does not work :-(
+define NUMROM [ NUM | ROM ] ;
+# Does this mean a string of at least one of Digit or NumOp or NumSep, 
+# followed by at least one Digit?
+# It seems that the preproc errouneously leaves NumOp and NumSep on the
+# numbers, instead of separating (it splits 987" but not 987: or 987.
+# Thus, it errouneously tells that a number cannot close a sentence.
 
 # =============================================================
 define Letter [ Small | Capital ] ;
 #define INIT [ Capital %. ]+ ;
-define INIT [ Letter %. ]+ ; # Thus, INIT not only for T. Trosterud, 
-                             # but also for t. Trosterud and s. 43.
+define INIT [ Letter %. ]+ ; # Thus, INIT not only for J. Smith
+                             # but also for j. Smith and s. 43.
 define CAPNUM [ Capital | NUM ] ;
 
 # =============================================================
 echo >>> list of abbreviations
+#<cn> There are four groups of abbreviations:
+#<++> INTRANSABBR - ends a snt when foll. by capital letter or number.
+#<-+> INTRANSNUMABBR - ends a snt when foll. by number.
+#<+-> INTRANSCAPABBR - ends a snt when foll. by capital letter.
+#<--> TRANSABBR - does not end a snt.
 
-# There are four groups of abbreviations:
-# INTRANSABBR - may end a sentence.
-
-# dot_abbr.db
-# <+c,+n>
+# <+c,+n> (+c,+n means clb if followed by capital,number)
 # Abbreviations that end a sentence if 
-# followed by letter in upper case
-# or a number.
+# followed by letter in upper case or a number.
+# These are typically nouns.
 
 define INTRANSABBR [
-{Kr.f.} |
-{Eftf.} |
-{ltd.} | 
-{Ltd.} | 
-{inc.} | 
-{Inc.} |
 {A.L.} | 
 {A.S.} | 
-{O.S.} | 
-{Fr.P.} | 
+{Eftf.} |
+{FUOM.} | 
 {Fr.% P.} | 
 {Fr.% p.} | 
+{Fr.P.} | 
 {Fr.p.} | 
+{Fuom.} | 
+{Inc.} |
 {K.S.} | 
 {Kbh.} | 
-{Kr.F.} | 
 {Kr.% F.} | 
 {Kr.% f.} | 
-{Kr.f.} | 
+{Kr.F.} | 
+{Kr.f.} |
 {Krf.} | 
+{Ltd.} | 
 {N.A.F.} | 
 {NB.} | 
-{FUOM.} | 
-{Fuom.} | 
-{fuom.} | 
-{Nkr.} | 
+{O.S.} | 
 {Sth.} | 
 {adj.} | 
 {adm.} | 
-{háldd.} | 
 {adv.} | 
 {arkeol.} | 
 {avd.} | 
-{oss.} | 
 {bakt.} | 
+{bea.} |
+{bear.} |
+{bearj.} |
 {bm.} | 
 {bot.} | 
+{c1ál.} | 
 {d.% e.} | 
 {d.% y.} | 
 {d.e.} | 
 {d.y.} | 
+{dis.} |
 {disp.} | 
 {do.} | 
+{duo.} |
+{duor.} |
 {dy.} | 
-{e.Kr.} | 
-{m.Kr.} | 
 {e.% Kr.} | 
+{e.Kr.} | 
+{e.e} | 
+{ea.ea} | 
+{ee.} |
 {eg.} | 
 {eng.} | 
 {est.} | 
 {etc.} | 
-{jnv.} | 
-{jna.} | 
 {ev.luth.} | 
 {f.Kr.} | 
-{o.Kr.} | 
 {fem.} | 
 {fi.} | 
 {fil.} | 
 {fl.} | 
 {fon.} | 
-{c1ál.} | 
+{fuom.} | 
 {fut.} | 
+{gas.} |
+{gask.} |
 {gen.} | 
 {gram.} | 
 {hell.} | 
 {hist.} | 
 {hoh.} | 
 {holl.} | 
+{háldd.} | 
 {id.} | 
 {imp.} | 
 {imperat.} | 
 {imperf.} | 
+{inc.} | 
 {iness.} | 
 {inf.} | 
 {innb.} | 
@@ -155,11 +170,14 @@ define INTRANSABBR [
 {intr.} | 
 {intrans.} | 
 {inv.} | 
+{jna.} | 
+{jnv.} | 
+{joatkkask.} | 
 {jr.} | 
+{kem.} |
 {kgl.% res.} | 
 {kgl.res.} | 
 {kjem.} | 
-{kem.} |
 {km.} | 
 {lat.} | 
 {lg.} | 
@@ -167,20 +185,10 @@ define INTRANSABBR [
 {ln.} | 
 {lst.} | 
 {lstr.} | 
-{lávv.} | 
-{vuoss.} |
-{mán.} |
-{mánn.} |
-{dis.} |
-{gask.} |
-{gas.} |
-{duo.} |
-{duor.} |
-{bea.} |
-{bearj.} |
-{bear.} |
+{ltd.} | 
 {láv.} |
-{sotn.} |
+{lávv.} | 
+{m.Kr.} | 
 {ma.} | 
 {mat.} | 
 {med.} | 
@@ -190,15 +198,17 @@ define INTRANSABBR [
 {min.} | 
 {mod.} | 
 {mus.} | 
+{mán.} |
+{mánn.} |
 {ndf.} | 
 {ned.} | 
 {nl.} | 
 {nn.} | 
 {nord.} | 
-{ea.ea} | 
-{e.e} | 
-{ee.} |
+{nuor.} |
+{o.Kr.} | 
 {on.} | 
+{oss.} | 
 {p.s.} | 
 {pass.} | 
 {pluskv.} | 
@@ -223,6 +233,7 @@ define INTRANSABBR [
 {sg.} | 
 {sing.} |
 {sk.} | 
+{sotn.} |
 {ss.} | 
 {strl.} | 
 {sø.} | 
@@ -230,14 +241,11 @@ define INTRANSABBR [
 {to.} | 
 {tv.} | 
 {tyrk.} | 
-{nuor.} |
 {ung.} | 
 {v.v.} | 
-{vgs.} |
-{joatkkask.} ] ;
+{vuoss.} |
+{vgs.} ] ;
 
-
-# upp% noStb.db
 # <-c,+n>
 # Abbreviations that are only CLB 
 # if followed by a number.
@@ -249,14 +257,16 @@ define INTRANSNUMABBR [
 {Chr.} | 
 {Dep.} | 
 {Edv.} | 
+{Fr.} |
 {H.K.H.} | 
 {H.M.} | 
-{Johs.} | 
+{Johs.} |
 {Kr.} | 
 {Mlle.} | 
 {Mme.} | 
 {Mr.} | 
 {Mrs.} | 
+{Ms.} | 
 {Seb.} | 
 {agric.} | 
 {aman.} | 
@@ -264,28 +274,28 @@ define INTRANSNUMABBR [
 {avd.dir.} | 
 {avs.} | 
 {bet.} | 
-{cand.} | 
 {cand.mag.} | 
 {cand.oecon.} | 
 {cand.philol.} | 
 {cand.real.} | 
 {cand.scient.} | 
 {cand.theol.} | 
+{cand.} | 
 {dipl.ing.} | 
 {dipl.ins.} | 
 {dir.} | 
-{dr.} | 
 {dr.art.} | 
 {dr.med.} | 
 {dr.philos.} | 
 {dr.theol.} | 
-{eksp.sj.} | 
+{dr.} | 
 {eksp.hoavd.} |
+{eksp.sj.} | 
 {fenr.} | 
 {frk.} | 
 {gen.lt.} | 
-{genr.} | 
 {genr.lt.} | 
+{genr.} | 
 {h.r.adv.} | 
 {hr.} | 
 {kapt.} | 
@@ -294,8 +304,8 @@ define INTRANSNUMABBR [
 {lekt.} | 
 {lic.} | 
 {ltn.} | 
-{mag.} | 
 {mag.art.} | 
+{mag.} | 
 {merc.} | 
 {mr.} | 
 {mrs.} | 
@@ -310,6 +320,7 @@ define INTRANSNUMABBR [
 {philol.} | 
 {polit.} | 
 {prof.} | 
+{prof.} | 
 {psychol.} | 
 {psyk.} | 
 {res.kap.} | 
@@ -318,13 +329,13 @@ define INTRANSNUMABBR [
 {sgt.} | 
 {siv.ark.} | 
 {sjt.} | 
-{stud.} | 
 {stud.phil.} | 
 {stud.polit.} | 
 {stud.psych.} | 
 {stud.real.} | 
 {stud.scient.} | 
 {stud.theol.} | 
+{stud.} | 
 {sykepl.} | 
 {u.dir.} | 
 {varaordf.} | 
@@ -332,18 +343,15 @@ define INTRANSNUMABBR [
 
 
 
-# dot% num% noStb.db
 # <+c,-n>
 # Abbreviations that only end a sentence
 # if followed by an upper case letter,
 # not when followed by a number.
 
-
 define INTRANSCAPABBR [
 {1.Sam.} | 
 {2.Sam.} | 
 {Akersgt.} | 
-{Elvegt.} |
 {B.innst.S.nr.} | 
 {Besl.L.nr.} | 
 {Besl.O.nr.} | 
@@ -352,6 +360,7 @@ define INTRANSCAPABBR [
 {Dok.nr.} | 
 {Dronningensgt.} | 
 {Eidsvollsgt.} | 
+{Elvegt.} |
 {Elvegt.} | 
 {Hausmannsgt.} | 
 {Holmegt.} | 
@@ -383,20 +392,29 @@ define INTRANSCAPABBR [
 {Storgt.} | 
 {Strandgt.} | 
 {Trondheimsv.} | 
-{a.D.} | 
 {a.% D.} | 
+{a.D.} | 
 {apr.} | 
 {aug.} | 
+{bd.} |
+{borg.} |
+{c1akc1.} |
+{cuon1.} |
 {d.} | 
 {da.} | 
 {des.} | 
 {feb.} | 
+{geas.} |
 {gnr.} | 
+{golg.} |
+{guov.} |
 {it.} | 
 {jan.} | 
 {jnr.} | 
 {jul.} | 
 {jun.} | 
+{juov.} |
+{kap.} | 
 {kr.} | 
 {litt.omsetn.} | 
 {lnr.} | 
@@ -405,29 +423,22 @@ define INTRANSCAPABBR [
 {maks.} | 
 {mar.} | 
 {mask.} | 
+{mies.} |
 {mobiltlf.} | 
+{njuk.} |
 {no.} | 
 {nov.} | 
 {nr.} | 
+{od1d1j.} |
 {okt.} | 
 {p.b.} | 
 {pb.} | 
 {pgf.} | 
 {rv.} | 
 {sept.} | 
-{tlf.} | 
-{od1d1j.} |
-{guov.} |
-{njuk.} |
-{cuon1.} |
-{mies.} |
-{geas.} |
-{suoi.} |
-{borg.} |
-{c1akc1.} |
-{golg.} |
 {skáb.} |
-{juov.} ] ;
+{suoi.} |
+{tlf.}  ] ;
 
 
 # dot% noStb.db
@@ -436,31 +447,36 @@ define INTRANSCAPABBR [
 # by a capital letter or a number.
 
 define TRANSABBR [
-{Mr.} |
 {Dom.} |
+{Eftf.} | 
+{Eks.} | 
 {Esek.} | 
-{I.N.D.} | 
 {I.% N.% D.} | 
+{I.N.D.} | 
 {IL.} | 
+{Innst.} | 
 {Jer.} | 
 {Joh.} | 
 {Lim.} | 
 {Lt.} | 
 {Neh.} | 
-{Ot.} | 
+{Nkr.} | 
+{Od.} | 
 {Ot.% prp.} | 
 {Ot.prp.} | 
+{Ot.} | 
 {Pf.} | 
 {Pfg.} | 
-{St.} | 
+{Rt.} | 
 {St.% meld.} | 
 {St.% prp.} | 
 {St.meld.} | 
+{St.} | 
 {Su.} | 
 {Sv.} | 
 {Tel.} | 
-{Tlf.} | 
 {Tlf.nr.} | 
+{Tlf.} | 
 {Univ.} | 
 {adr.} | 
 {afr.} | 
@@ -482,12 +498,16 @@ define TRANSABBR [
 {biol.} | 
 {bnr.} | 
 {brig.} | 
-{brit.} | 
 {brit.-am.} | 
 {brit.-austr.} | 
+{brit.} | 
 {bto.} | 
+{buo.} | 
+{c1uo.} |
 {ca.} | 
+{cea.} |
 {cf.} | 
+{cit.} |
 {co.} | 
 {d.% c.} | 
 {d.% d.} | 
@@ -497,15 +517,21 @@ define TRANSABBR [
 {d.m.} | 
 {d.s.} | 
 {dat.} | 
+{dea.} | 
 {dept.} | 
+{died1.} | 
 {dim.} | 
 {div.} | 
 {dkr.} | 
+{dok.} |
 {ds.} | 
+{e.g.} | 
+{ee.} | 
 {eftf.} | 
 {eks.} | 
 {ekskl.} | 
 {et.} | 
+{etc.} | 
 {eur.} | 
 {ev.} | 
 {evt.} | 
@@ -513,17 +539,22 @@ define TRANSABBR [
 {fig.} | 
 {fol.} | 
 {fr.} | 
+{gc1.} | 
 {geom.} | 
+{ggl.} |
 {gr.} | 
 {hebr.} | 
 {i.% e.} | 
 {i.e.} | 
 {ib.} | 
-{ibid.} | 
+{ibid.} |
 {ill.} | 
 {ind.} | 
 {indoeur.} | 
 {inkl.} | 
+{j.d.} | 
+{j.e.} | 
+{j.s.} | 
 {jap.} | 
 {jur.} | 
 {jvf.} | 
@@ -536,11 +567,15 @@ define TRANSABBR [
 {kst.} | 
 {kurd.} | 
 {kvm.} | 
+{l.c.} | 
+{l.r.d.} | 
 {lab.} | 
 {lat.-gr} | 
 {log.} | 
+{m.v.} | 
 {m/sek.} | 
 {mek.} | 
+{meld.} | 
 {mil.-tekn.} | 
 {mill.} | 
 {mrd.} | 
@@ -550,27 +585,27 @@ define TRANSABBR [
 {nkr.} | 
 {no.-da.} | 
 {nom.} | 
+{nr.} |
 {num.} | 
-{nåv.} | 
-{o.m.} | 
 {o.m.a.} | 
+{o.m.} | 
 {obj.} | 
 {obs.} | 
 {off.} | 
-{op.} | 
 {op.% cit.} | 
 {op.cit.} | 
+{op.} | 
 {ot.% prp.} | 
 {ot.prp.} | 
 {p.% a.} | 
 {p.% m.} | 
-{p.% p.} | 
 {p.% p.% m.} | 
+{p.% p.} | 
 {p.% r.} | 
 {p.a.} | 
 {p.m.} | 
-{p.p.} | 
 {p.p.m.} | 
+{p.p.} | 
 {p.r.} | 
 {p.t.} | 
 {pa.} | 
@@ -578,14 +613,16 @@ define TRANSABBR [
 {pkt.} | 
 {pl.} | 
 {pop.} | 
-{pr.} | 
 {pr.pr.} | 
+{pr.} | 
 {prep.} | 
 {pron.} | 
 {prp.} | 
 {q.s.} | 
 {red.} | 
 {rek.} | 
+{rev.} | 
+{ru.} |
 {rum.-am.} | 
 {sc.} | 
 {sd.} | 
@@ -594,65 +631,24 @@ define TRANSABBR [
 {sovj.} | 
 {spes.} | 
 {sr.} | 
-{st.} | 
 {st.% meld.} | 
 {st.% meld.} | 
 {st.% prp.} | 
 {st.meld.} | 
 {st.meld.} | 
 {st.prp.} | 
+{st.} | 
 {subj.} | 
 {subst.} | 
 {sveits.} | 
 {sørafr.} | 
-{tel.} | 
 {tekn.} | 
-{tlf.} | 
+{tel.} | 
 {tlf.nr.} | 
+{tlf.} | 
+{utg.} |
 {vol.} | 
 {vs.} | 
-{Johs.} |
-{Eftf.} | 
-{prof.} | 
-{Mr.} | 
-{Mrs.} | 
-{Ms.} | 
-{etc.} | 
-{e.g.} | 
-{i.e.} |  
-{Chr.} | 
-{Eks.} | 
-{Innst.} | 
-{Od.} | 
-{Ot.} | 
-{Rt.} | 
-{St.} | 
-{art.} |
-{buo.} | 
-{cea.} |
-{cit.} |
-{c1uo.} |
-{dea.} | 
-{died1.} | 
-{dok.} |
-{ee.} | 
-{gc1.} | 
-{ggl.} |
-{ibid.} |
-{j.d.} | 
-{j.e.} | 
-{j.s.} | 
-{kap.} | 
-{l.c.} | 
-{l.r.d.} | 
-{meld.} | 
-{mill.} |
-{m.v.} | 
-{nr.} |
-{op.} | 
-{prp.} | 
-{rev.} | 
-{utg.} |
 {v.r.d.} ];
 
 
@@ -676,7 +672,7 @@ define TOK2 [ [WS]+ @-> NL ];
 echo >>> copy period of all intransitive abbreviations
 
 define TOKINTRANSCAP [ INTRANSCAPABBR @-> ... NL %. NL || _ WS Capital ] ; 
-define TOKINTRANSNUM [ INTRANSNUMABBR @-> ... NL %. NL || _ WS NUM ] ; 
+define TOKINTRANSNUM [ INTRANSNUMABBR @-> ... NL %. NL || _ WS NUMROM ] ; 
 define TOKINTRANS [ INTRANSABBR @-> ... NL %. NL || _ WS CAPNUM ] ; 
 
 # =============================================================
