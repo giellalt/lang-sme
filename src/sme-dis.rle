@@ -913,11 +913,33 @@ SELECT Pron IF (0 ("eanaš") OR ("eanas"))(1 (Dem Loc) OR (Pers Loc));
 # First select some clear Px cases
 # Let these come directly after local disambiguation.
 
-SELECT (PxSg1) IF (-1 V-SG1)(NOT -1 ("leat"))(-2 MUN); # Also hits some essives.
-SELECT (PxSg2) IF (-1 V-SG2)(NOT -1 ("leat"))(-2 DON);
+# PxSg1
+# - - -
+SELECT (PxSg1) IF (-1 V-SG1)(NOT -1 ("leat"))(-2 MUN);
 	## Mun attán heaggan du ovddas.
+ # Also hits some essives.
+
+SELECT (Nom PxSg1) IF (-1 PUNCT OR CLB)(0 N-PX)(1 COMMA);
+	## Bárdnán, leage dorvvolaš.
+
+# PxSg2
+# - - -
+SELECT (PxSg2) IF (-1 V-SG2)(NOT -1 ("leat"))(-2 DON);
 	## Don attát heakkat mu ovddas?
 
+SELECT (PxSg2) IF (*-1C (V Sg2) BARRIER CS OR CP OR REALCLB OR PUNCT OR (Neg Sup) OR 
+	("nugo") OR ("dego"))(0 (Pl Nom))(NOT 0 Inf);
+	## It galgga geahččalit Hearrá Ipmilat.
+
+SELECT (PxSg2) IF (0 (N Pl Nom))(*1C (V Sg2) BARRIER NON-ADV-PCLE);
+	## Hearrá Ipmilat galggat gudnejahttit.
+
+SELECT (Gen PxSg2) IF (*-1 Sg2 BARRIER CS OR CP)(0 (N Pl Nom))(1 Po)
+	(NOT *2 NP-HEAD-GEN BARRIER NPNH);
+	## Go don rohkadalat, de mana gámmárat sisa.
+
+# PxSg3
+# - - -
 SELECT (PxSg3) IF (-1 V-SG3)(NOT -1 ("leat") OR Pass)(NOT 0 N-NOPX)(-2 ("son"));
 	## Son beastá álbmogis sin suttuin.
 	## Dat ráhkaduvvo gáttis gárvvisin. # NOT -1 Pass!
@@ -930,19 +952,9 @@ SELECT (PxSg3) IF (*-3 NP-HEAD-SG-NOM BARRIER V-NON-AUX)(-2 A)(-1 go);
 	## Máhttájeaddji ii leat stuorit go oahpaheaddjis, ii ge bálvaleaddji
 	## stuorit go hearrás.
 
-# Px for names for relatives
-# More rules must be added here, and the set N-PX expanded. 
-SELECT (Nom PxSg1) IF (-1 PUNCT OR CLB)(0 N-PX)(1 COMMA);
 SELECT (PxSg3) IF (*-1 (Sg Nom) OR (Sg3 Nom) BARRIER CS OR CP OR LOC-VERB)(0 N-PX);
-	## Bárdnán, leage dorvvolaš.
 	## Dat guhte ráhkista bártnis dahje nieiddas eanebut go mu...
-
-# Px for diminutives
-
-# Other Px rules
-SELECT (Gen PxSg2) IF (*-1 Sg2 BARRIER CS OR CP)(0 (N Pl Nom))(1 Po)
-	(NOT *2 NP-HEAD-GEN BARRIER NPNH);
-	## Go don rohkadalat, de mana gámmárat sisa.
+ # More rules must be added here, and the set N-PX expanded. 
 
 
 # ------------------- #
@@ -967,15 +979,18 @@ SELECT (V Sg1) IF (*-1 MUN BARRIER Nom OR CS LINK NOT *-1 V-SG1
 SELECT (V Sg1) IF (*1 MUN BARRIER NON-ADV-PCLE OR CLB);
 	## Man guhká ferten mun gierdat din?
 
+
 # Sg2
 # - - 
-SELECT V-SG2 IF (*-1 DON BARRIER V-SG2 OR CS LINK NOT *-1 V-SG2 
-	BARRIER NON-ADV-PCLE);
+
+SELECT V-SG2 IF (*-1 DON BARRIER V-SG2 OR ConNeg OR CS LINK NOT *-1 V-SG2 
+	BARRIER CS OR CP OR REALCLB);
 	## ...jos don fal luoitádat ja gudnejahtát mu.
-	## ...don guhte leat almmis.
+	## Rohkadallet dasto ná: Áhččámet, don guhte leat almmis.
 
 SELECT V-SG2 IF (*1 DON BARRIER NON-ADV-PCLE OR CLB);
 	## Leat go don dat guhte galgá boahtit? 
+
 
 # Sg3
 # - - 
@@ -987,6 +1002,7 @@ SELECT (V Sg3) IF (*1 SON BARRIER NON-ADV-PCLE OR go OR CLB)
 	(NOT 0 CS)(NOT 0 Adv LINK *1 (V Sg3) BARRIER CC OR CS OR CP);
 	## ...oažžu son atnit dušše dan čázis mii sutnje lea mearriduvvon.
 
+
 # Du1
 # - - 
 SELECT (V Du1) IF (*-1 MOAI BARRIER V-DU1 OR CS OR PUNCT LINK NOT *-1 V-DU1 
@@ -997,6 +1013,7 @@ SELECT (V Du1) IF (NOT 0 Adv LINK *-1 (V Du1) BARRIER CS OR CP OR CC OR CLB)
 	(*1 MOAI BARRIER NON-ADV-PCLE OR CLB);
 	##
 
+
 # Du2
 # - - 
 SELECT (V Du2) IF (*-1 DOAI BARRIER V-DU2 OR CS OR PUNCT LINK NOT *-1 V-DU2 
@@ -1005,6 +1022,7 @@ SELECT (V Du2) IF (*-1 DOAI BARRIER V-DU2 OR CS OR PUNCT LINK NOT *-1 V-DU2
 
 SELECT (V Du2) IF (*1 DOAI BARRIER NON-ADV-PCLE OR CLB);
 	##
+
 
 # Du3
 # - -
@@ -1016,13 +1034,14 @@ SELECT (V Du3) IF (*-1 SOAI BARRIER V-DU3 OR CS OR PUNCT LINK NOT *-1 V-DU3
 SELECT (V Du3) IF (*1 SOAI BARRIER NON-ADV-PCLE OR CLB);
 	## Fertebago soai mannat? 
 
-SELECT (Du3) IF (-1 (N Sg Nom))
-                (*-2 CC BARRIER NPNH LINK -1 (N Sg Nom));
-                           ## Per Berg ja Rolf Olsen leaba doppe.
-                           ## Stuorra nieida ja unna gánda ferteba leat doppe.
+SELECT (V Du3) IF (-1 (N Sg Nom))(*-2 CC BARRIER NPNH LINK -1 (N Sg Nom));
+	## Per Berg ja Rolf Olsen leaba doppe.
+        ## Stuorra nieida ja unna gánda ferteba leat doppe.
 
-SELECT (Du3) IF (*-1 ("guokte")) ; ## Guokte viesu leaba dál.
-	# The competition is -ba Foc.
+SELECT (V Du3) IF (*-1 ("guokte")) ; 
+	## Guokte nissona ferdneba milluin.
+ # The competition is -ba Foc.
+
 
 # Pl1
 # - - 
@@ -1034,6 +1053,7 @@ SELECT (V Pl1) IF (*1 MII-PERS BARRIER NON-ADV-PCLE OR CLB LINK NOT *1 V-SG3
 	BARRIER NON-ADV);
 	## Galgat go mii vuordit muhtun eará? 
 
+
 # Pl2
 # - -
 SELECT (V Pl2) IF (*-1 DII BARRIER NON-ADV-PCLE OR CLB);
@@ -1041,6 +1061,7 @@ SELECT (V Pl2) IF (*-1 DII BARRIER NON-ADV-PCLE OR CLB);
 
 SELECT (V Pl2) IF (*1 DII BARRIER NON-ADV-PCLE OR MO OR CLB);
 	## Addet dii sidjiide borramuša!
+
 
 # Pl3
 # - -
@@ -1056,6 +1077,7 @@ REMOVE (V Ind Pl3) IF (1C VFIN)(NOT 1 Pl3) ;
 	## Manne ii leat áviisa boahtán?
 	## Máhtte manai čuoigga skuvlii.
 	## Vihtta bivdovuogi mun gal dušše namahin.  
+
 
 # PrsPrc
 # - - - -
@@ -1103,9 +1125,11 @@ REMOVE (Nom PxSg2);
 	## Ale bala váldimis Márjjá ruktosat áhkkán.  
 	## Su lusa bohte olbmot Jerusalemis.
 
-REMOVE (PxSg2) IF (NOT *-1 (Imprt Sg2) OR MOD-ASP BARRIER CS OR CP LINK 0 Sg2); 
-REMOVE (PxSg2) IF (*-1 (Sg Gen) OR (Sg3 Gen) BARRIER NPNH LINK -1 CC);
+REMOVE (PxSg2) IF (NOT *-1 (Imprt Sg2) OR MOD-ASP BARRIER CS OR CP LINK 0 Sg2)
+	(NOT *1 (V Sg2) BARRIER VFIN OR CS); 
 	## De bohte ruđat. 
+
+REMOVE (PxSg2) IF (*-1 (Sg Gen) OR (Sg3 Gen) BARRIER NPNH LINK -1 CC);
 	## ...eará čuovvoleapmi mii johtui biddjo ja dan bohtosat.
  # The remaining Px readings will be taken care of later.
 
@@ -3183,6 +3207,7 @@ SELECT Inf IF (*-1 NP-HEAD-SG-NOM BARRIER NON-ADV-PCLE LINK *-1 CC BARRIER NPNHA
 	LINK *-1 Inf BARRIER NON-ADV);
 	## Dearvvašvuođaveahkkedárbu galgá árvvoštallojuvvot ja diehto addo-
 	## juvvot.
+ # This rule has to come before the ones below.
  
 
 # Rules that prevent later selection of Inf for a finite verb in the frame 
@@ -3248,6 +3273,10 @@ REMOVE VGen IF (NOT *-1 V-IND-FIN BARRIER CLB OR CS)
 
 # Perfect Participle
 # -------------------
+
+SELECT PrfPrc IF (0 Pass);
+	## ...nu go namahuvvon vuosttas ja nuppi teakstaoasis.
+ # Exceptions might turn up.
 
 REMOVE PrfPrc IF (*-1 CC BARRIER NPNH LINK -1 N LINK NOT *-1 ("leat") BARRIER NPNHA)
 	(0 N)(NOT 0 ("leapma" Dimin));
@@ -5084,6 +5113,14 @@ SELECT Inf IF (-1 Acc)(NOT -1 Interr)(*1 Ill BARRIER NPNH);
 	## Son vuolggahii bálvaleaddjiidis rávkat bovdejuvvon gussiid heajaide.
 	## ...leago dieđiheamis doarvái vuođđu ášši váldit meannudeapmái.
 
+SELECT Inf (*-1 COMMA BARRIER VERB OR MO LINK -1C Inf)(NOT 0 (Neg Imprt))
+	(NOT *-1 (Pl Nom) BARRIER CS)(NOT *1 (Pl Nom) BARRIER CS);
+	## Mun in leat boahtán gomihit, muhto ollašuhttit.
+	## Son galgá stuorrut, mun fas uhccut.
+
+SELECT Inf IF (*-1 CC BARRIER VFIN OR CS LINK *-1C Inf BARRIER WORD); 
+	## Hearrá Ipmilat galggat gudnejahttit, ja áivvestassii su bálvalit.
+
 
 # Indicative or imperative
 # ========================
@@ -5106,9 +5143,13 @@ REMOVE Imprt IF (-1 Adv)(NOT -1 ("nu") OR ("de"));
 REMOVE Imprt IF (-1 Imprt)(NOT 0 ConNeg); 
 	## Geahča lagat Hálddašanjoavkku čielggadeami.
 
-SELECT Imprt IF (-3 BOS OR PUNCT)(-2 (N Nom))(NOT -2 Actio)
-	(-1 COMMA)(NOT 0 AUX)(NOT *1 ("?"));
+SELECT Imprt IF (-2C (N Nom) LINK *-1 BOS OR PUNCT BARRIER NPNH)
+	(-1 COMMA)(NOT 0 AUX OR Pass OR (N Nom))(NOT *1 ("?"));
 	## Ustiban, daga dan man várás don leat boahtán!.
+
+SELECT Imprt IF (-2C (N Nom) LINK *-1 COMMA BARRIER NPNH LINK -1 (N Nom) LINK *-1 BOS 
+	OR PUNCT BARRIER NPNH)(-1 COMMA)(NOT 0 AUX OR Pass OR (N Nom))(NOT *1 ("?"));
+	## Hearra, Davveda bárdni, árpmit mu!
 
 SELECT Imprt IF (*-2 ("dadjat") OR ("cealkit") OR ("vástidit") BARRIER VERB)
 	(-1 PUNCT)(NOT 0 Pass)(NOT 0 MOD-ASP);
@@ -5147,10 +5188,6 @@ SELECT (Imprt Pl2) IF (*1 (PxPl2) BARRIER CC OR CS OR CP);
 
 # Imperative in coordination
 # --------------------------
-SELECT (Imprt Pl2) IF (*1 CC BARRIER VFIN LINK *1C (Imprt Pl2)
-	BARRIER VFIN OR CS OR CP);
-	## Vulget ja ohppet maid dát mearkkaša.
- 
 SELECT Imprt IF (-1 BOS OR COMMA)(*1 COMMA LINK 1 Imprt)(NOT 0 (A Attr) LINK 1 N);
 	## Bohtet, goddot su, de mii oažžut su árbbi.
 
@@ -5158,13 +5195,23 @@ SELECT Imprt IF (NOT *-1 VFIN-NOT-IMP BARRIER CS OR CP)(NOT 0 PrfPrc)
 	(*1 CC BARRIER VFIN LINK *1C Imprt BARRIER VFIN OR CS OR CP);
 	## Čoavdi daid ja bukti mu lusa!
 
-SELECT Imprt IF (-1 COMMA OR CC)(*-2 Imprt BARRIER VFIN LINK NOT *-1 CP); 
+SELECT Imprt IF (-1 COMMA OR CC)(*-2 Imprt BARRIER VFIN LINK NOT *-1 CP 
+	BARRIER PUNCT OR REALCLB); 
 	## Mannet dal ja guorahallet dán máná hárrái!
 
 SELECT Imprt IF (*-2C Imprt)(-1 COMMA);
 	## Allet almmi bokte, dasgo dat lea Ipmila truvdnu, allet ge eatnama bokte...
 
-REMOVE Imprt IF (*-1 CC BARRIER NON-ADV-PCLE LINK NOT *-1 Imprt);
+SELECT (Imprt Sg2) IF (*1 CC OR COMMA BARRIER VFIN LINK *1C (Imprt Sg2)
+	BARRIER VFIN OR CS OR CP);
+	## Gohčo bargiid boahtit ja atte dáidda bálkká!
+ 
+SELECT (Imprt Pl2) IF (*1 CC OR COMMA BARRIER VFIN LINK *1C (Imprt Pl2)
+	BARRIER VFIN OR CS OR CP);
+	## Čatnet su gieđaid ja julggiid ja bálkestehket su olggobeallái..
+ 
+REMOVE Imprt IF (*-1 CC BARRIER NON-ADV-PCLE OR REALCLB LINK NOT *-1 Imprt)
+	(NOT -1 CC LINK -1 BOS);
 	## Sus lea goaivu gieđas ja áigu buhtistit gortniidis.
 
 
@@ -5191,24 +5238,28 @@ SELECT (Neg Imprt Pl2) IF (*1 ConNeg BARRIER Neg);
 
 # Sg1
 # ---
-  # Prs Sg1 = PtcPrf (odd-syllables), and Prs Sg1 = V Actio (even-syllables)
+ # Prs Sg1 = PtcPrf (odd-syllables), and Prs Sg1 = V Actio (even-syllables)
+ # Past Sg1 is unique.
 
-SELECT Sg1 IF (0 LEAN) (*1 PrfPrc);           ## Mun lean boahtán.
-  # So, what kind of barrier could we have here?
+SELECT Sg1 IF (0 LEAN) (*1 PrfPrc BARRIER CS);
+	## Dál lean cealkán dan dudnuide.
 
+SELECT Sg1 IF (NOT *-1 VFIN BARRIER CS OR PUNCT OR REALCLB)(0 LEAN);
+	## Jesus celkkii: "Oanehis áiggi lean velá din luhtte."
 
-SELECT V-SG1 IF (-2C (V Sg1))(-1 CC);              ## Mun human ja human.
+SELECT V-SG1 IF (NOT *-1 VFIN OR PrfPrc BARRIER CS)(NOT 0 Pass)
+	(NOT *1 VFIN BARRIER CS);
+	## Oađidettiin gullen olbmo boahtimin.
 
-REMOVE (V Sg1) IF (NOT *-2 (V Sg1))(-1 CC);
+SELECT V-SG1 IF (*-1 CS BARRIER VFIN LINK -1 BOS)(*1 COMMA BARRIER VFIN);
+	## Ovdal go čielggadan dan lagabui,...
+
+SELECT V-SG1 IF (*-1 CC BARRIER VERB LINK *-1C V-SG1 BARRIER VERB)(NOT 0 Pass);
+	## Das maŋŋá dajan juoidá álbmotrievtti mearkkašumi birra, ja geavahan
+	## das veahkkin ođđaseamos riektegáldu.
+
+REMOVE (V Sg1) IF (*-1 CC BARRIER VERB LINK NOT *-1 V-SG1);
 	## Olbmot ledje ija dolastallan ja oggon.
-
-#SELECT Sg1 IF (NOT *-1 (V Neg))(NOT *-1 PrfPrc OR Actio OR V-SG1);
-#SELECT Sg1 IF (NOT *-1 VFIN)(NOT 1 CC)(NOT 2 Actio) ; # many wrong results            
-					 ## Háliidan hupmat.
-                                       	 ## In háliidan hupmat.
-			## Váfistan ja áimmuhuššan dihte... 
-
- # Past Sg1 is unique
 
 
 # Sg2
@@ -5219,20 +5270,29 @@ REMOVE (V Sg1) IF (NOT *-2 (V Sg1))(-1 CC);
   # Prt Sg2 = Prs Pl3 = Prs Pl1 = Inf (odd syll)   muitalit
   # Prt Sg2 = Prs Pl3                 (contracted) fertejit
 
-SELECT Sg2 IF (0 LEAT) (*-1 DON BARRIER NON-ADV); # no hits
 
-SELECT V-SG2 IF (*-1C DON BARRIER Neg LINK NOT *-1 V-SG2 BARRIER CS OR CP); 
+SELECT V-SG2 IF (*1C DON BARRIER CC OR Neg); 
+	## De, don fertet vuolgit.
 
-SELECT V-SG2 IF (*1C DON BARRIER CC OR Neg); ## De, don fertet vuolgit.
+SELECT V-SG2 IF (*-2C V-SG2 BARRIER VFIN OR CS OR CP OR PUNCT OR REALCLB)
+	(-1 ("gii" Interr Sg Nom));
+	## Don leat garra olmmái gii láddjet doppe gosa it leat gilván.
 
+SELECT V-SG2 IF (*-1 (Pron Pers Sg2 Nom) BARRIER CS OR CP)(0 Prt);
+SELECT V-SG2 IF (-1 BOS)(0 (Prt Clt))(1 (Pron Pers Sg2 Nom)); 
+	## Don vulget ikte.
+	## Vulgetgo don?
 
-SELECT V-SG2 IF (*-1 (Pron Pers Sg2 Nom) BARRIER CS OR CP)(0 Prt); ## Don vulget ikte.
-SELECT V-SG2 IF (-1 BOS)(0 (Prt Clt))(1 (Pron Pers Sg2 Nom)); ## Vulgetgo don?
+SELECT V-SG2 IF (*-1 IKTE)(0 Prt);
+SELECT V-SG2 IF (-1 BOS)(0 (Prt Clt))(*1 IKTE);  
+	## Mun dieđan, ahte vulget ikte.
+	## Vulgetgo ikte?
 
-SELECT V-SG2 IF (*-1 IKTE)(0 Prt);               ## Mun dieđan, ahte vulget ikte.
-SELECT V-SG2 IF (-1 BOS)(0 (Prt Clt))(*1 IKTE);  ## Vulgetgo ikte?
+SELECT V-SG2 IF (*-1 CC BARRIER VFIN LINK *-1C V-SG2 BARRIER VFIN OR Inf OR CS);
+	## Dasgo sániidat mielde don dahkkojuvvot friddjan, ja sániidat mielde
+	## dubmejuvvot.
 
-
+ 
 # Sg3
 # ---
   # Prs Sg3 = ConNeg (even)
@@ -5247,7 +5307,7 @@ REMOVE (V Sg3) IF (0 (Sg Nom))(*1C (V Sg3) BARRIER CLB OR CC OR CS OR CP
 	LINK NOT 1 ("go" Pcle));
 	## Man uhccán osku dus lea!
  
-SELECT V-SG1 IF (NOT *-1 VFIN)(NOT *1 VFIN);
+SELECT V-SG1 IF (NOT *-1 VFIN)(NOT 0 (Pass PrfPrc))(NOT *1 VFIN);
 
 SELECT V-SG3 IF (*-1 (N Sg Nom) OR (Pron Sg3 Nom) BARRIER VFIN OR CS OR PUNCT)
 	(NOT *-1 V-SG3 BARRIER CS OR CP)(NOT *1 V-SG3 BARRIER CC OR CS OR CP)
@@ -5802,14 +5862,16 @@ SELECT VGen IF (-2 VGen)(-1 CC);
 # Selecting some finite.
 # ----------------------
 
-SELECT VFIN IF (NOT *-1 VFIN BARRIER CS OR CP)(NOT 0 N)(NOT *1 VFIN BARRIER CS)
-               (NOT -1 BOS LINK 2 EOS)(NOT -2 BOS LINK 1 N LINK 2 EOS)(NOT 1 ("§"));
+SELECT VFIN IF (NOT *-1 VFIN BARRIER CS OR CP)(NOT 0 N)(NOT 0 (Pass PrfPrc))
+	(NOT *1 VFIN BARRIER CS)(NOT -1 BOS LINK 2 EOS)
+	(NOT -2 BOS LINK 1 N LINK 2 EOS)(NOT 1 ("§"));
                                ## Son lea dan sápmelaš gean dovddan.
                                ## Gos don dál boađát? Siiddas.
   # first approximation
   # BOS/EOS is there to allow for fragments like the "Siiddas" example.
   # and headlines like ## Giellabarggu organiseren.
   # But the rules goes wrong with lists consisting of infinitives.
+	# and in "Reálapolitihkalaččat gehččojuvvon, de lea... (i jus.txt)
 
 SELECT VFIN IF (*-1 CP OR CS BARRIER VFIN)(NOT 1 (Pron Interr))
 	(NOT *1 VERB BARRIER CS OR CP);
