@@ -8,6 +8,8 @@ DELIMITERS = "<.>" "<!>" "<?>" ;
 # Tags and sets
 # =============
 
+#SETS # for vislcg, remove this line if you want to use Connexor's CG-2
+
 # This intro will be moved to the help file when it is finished. I hope
 # eventual commentators will read it, as I have problems with my sets and lists.
 
@@ -31,8 +33,11 @@ DELIMITERS = "<.>" "<!>" "<?>" ;
 # Tags declared as single-membered LISTs
 # ======================================
 
-LIST <s> = (<s>); LIST </s> = (</s>); # end and beg. of clause.
-# hmm, this tag is still not in use.
+# Here, I define end of clause and beginning of clause so that the file
+# may be read both by the CG-2 and the vislcg formalisms.
+LIST BCL = (>>>) (<s>); LIST ECL = (<<<) (</s>); # vislcg and CG-2 together.
+#LIST BCL = (>>>); LIST ECL = (<<<); # end and beg. of clause. for vislcg.
+
 
 LIST N = N ;
 LIST A = A ; LIST Adv = Adv ; LIST V = V ; LIST Pron = Pron ;
@@ -134,7 +139,7 @@ SET PRE-NP-HEAD = (Prop Attr) | (Pron Pers Gen) | (Pron Dem) | A ; # works.
 
 SET NON-ADV = WORD - Adv;
 
-SET NP-BORDER = (</s>) | COMMA | Adv | V | Pers | CS | Recipr | Dem ;
+SET NP-BORDER = ECL | COMMA | Adv | V | Pers | CS | Recipr | Dem ;
 
 # Noun sets
 # ---------
@@ -263,7 +268,7 @@ REMOVE (Prop Pl) IF (0 (Prop Sg)); # Marit N Sg, not Mari+t Nom Pl
 # Removing propernouns that are lookalikes
 # ----------------------------------------
 
-REMOVE ("Lea") IF (-1 <s>)(NOT 1 V-SG3); ## Lea dus1s1e okta Ipmil. Lea idja.
+REMOVE ("Lea") IF (-1 BCL)(NOT 1 V-SG3); ## Lea dus1s1e okta Ipmil. Lea idja.
 
 # Lexicalised adverbs
 # -------------------
@@ -342,7 +347,7 @@ REMOVE (PxSg3) ; # IF (0 Loc);
 # Note: Perhaps rather allow Px only for some key nouns (mother, father, etc).
 
 # Removing remaining Prt Sg2 (philosophy: these are not pro-drop)
-REMOVE (V Ind Prt Sg2) IF (NOT -1 <s>) (NOT 0 (Clt));
+REMOVE (V Ind Prt Sg2) IF (NOT -1 BCL) (NOT 0 (Clt));
 # Proseassas láhc1c1ojuvvojit dilálas1vuod1at nu, ahte 
 # fertejitgo dahkat dan?
 
@@ -367,7 +372,7 @@ CONSTRAINTS
 # Proper nouns
 # ============
 
-SELECT Prop IF (NOT -1 <s>);
+SELECT Prop IF (NOT -1 BCL);
 # Capitalised nouns in the middle of a sentence are names.
 
 REMOVE Attr IF (0 Prop)(NOT 1 Prop); # Trond Trosteruda
@@ -382,7 +387,7 @@ SELECT (N) IF (1 COMMA)(2 (Pron Interr)); # Doaimmat, maiguin... #too spec.
 
 REMOVE V IF (-1 Dem)(1 V-IND-FIN); ## Dán báhkis s1addá c1áppa gohppu.
 
-REMOVE VFIN IF (-1 <s>)(0 (N Sg))(1C V-SG3); ## Lásse lea mus rean1gan.
+REMOVE VFIN IF (-1 BCL)(0 (N Sg))(1C V-SG3); ## Lásse lea mus rean1gan.
 
 
 # Case disambiguation
@@ -409,9 +414,9 @@ SELECT Gen IF (-1 NUMERALS OR MANGA); #Golbma nieidda, mán1ga nieidda
 
 # Genitive in front of noum in the beginning of a sentence
 SELECT Gen IF (-1 CLB) (1 N); # Nieidda girji lea ruoksat
-SELECT Gen IF (-1 <s>) (1 N); # Din viessu s1attai oppa stuoris.
+SELECT Gen IF (-1 BCL) (1 N); # Din viessu s1attai oppa stuoris.
 
-#REMOVE Acc IF (-1 <s>)(1 (N Gen) OR (Attr) OR PPOS) ; # Mu birra don humat.
+#REMOVE Acc IF (-1 BCL)(1 (N Gen) OR (Attr) OR PPOS) ; # Mu birra don humat.
 # This should be covered by the others... Check.
 
 # Genitive in front of the final word in the sentence
@@ -439,13 +444,13 @@ SELECT Acc IF (-1 LEAT-FIN-NON-IMP) (1 PrfPrc); ## Mun lean dan dahkan.
 
 # Accusative at the end of the sentence
 # -------------------------------------
-SELECT Acc IF (-1 V)(NOT -1 ("leat"))(1 (</s>)); ## Mun oainnán du.
+SELECT Acc IF (-1 V)(NOT -1 ("leat"))(1 ECL); ## Mun oainnán du.
 SELECT Acc IF (-2 V)(NOT -1 ("leat"))(-1 PRE-NP-HEAD)(1 NP-BORDER);
 SELECT Acc IF (-2 V)(NOT -1 ("leat"))(-1 Adv OR ADVLCASE)(0 N OR Pron)
-              (1 (</s>));
-#SELECT Acc IF (-1 V-NON-COP)(1 (</s>)); ## Mun oainnán du.
+              (1 ECL);
+#SELECT Acc IF (-1 V-NON-COP)(1 ECL); ## Mun oainnán du.
 #SELECT Acc IF (-2 V-NON-COP )(-1 PRE-NP-HEAD)(1 NP-BORDER); 
-#SELECT Acc IF (-2 V-NON-COP) (-1 Adv OR ADVLCASE)(1 (</s>));
+#SELECT Acc IF (-2 V-NON-COP) (-1 Adv OR ADVLCASE)(1 ECL);
         ## Áhc1c1i lea oastán munnje sabehiid.
 
 #SELECT Acc IF (*-1 V-NON-COP BARRIER (Pron Pers Nom) OR PPOS);
@@ -460,7 +465,7 @@ REMOVE Acc IF (NOT *-1 V-NON-COP )(NOT *1 V-NON-COP ); #Need a verb for an obj.
 # - - - - - - - - - - - - - - - - - - - - - -
 
 # A single word is nominative
-SELECT Nom IF (-1 <s>)(0 N OR A OR Pron)(1 (</s>)); # Sisdoallu
+SELECT Nom IF (-1 BCL)(0 N OR A OR Pron)(1 ECL); # Sisdoallu
 
 # Nominative subjects
 # - - - - - - - - - -
@@ -469,30 +474,30 @@ SELECT Nom IF (-1 <s>)(0 N OR A OR Pron)(1 (</s>)); # Sisdoallu
 SELECT Nom IF (-1 CS)(0 Sg)(1 V-SG3); ## ahte plána movttiidahttá...
 SELECT Nom IF (-1 CS)(0 Pl)(1 V-PL3); # ... and in pl..
 
-SELECT Nom IF (-1 <s>)(0 Prop)(1 COMMA); ## Biera, du sabehiid!
+SELECT Nom IF (-1 BCL)(0 Prop)(1 COMMA); ## Biera, du sabehiid!
 
 
 # Nominative predicatives
 # - - - - - - - - - - - -
 
 # Predicatives are in the nominative
-SELECT Nom IF (-3 <s>)(-2 Nom)(-1 ("leat"))(1 (</s>)); # Mun lean Bond.
+SELECT Nom IF (-3 BCL)(-2 Nom)(-1 ("leat"))(1 ECL); # Mun lean Bond.
                                                        # Mun lean gánda.
-SELECT Attr IF (-3 <s>)(-2 Nom)(-1 ("leat"))(0 Prop)(1  Prop)(2 (</s>));
-SELECT Nom IF (-4 <s>)(-3 Nom)(-2 ("leat"))(-1 Prop OR (ABBR))(1 (</s>));
+SELECT Attr IF (-3 BCL)(-2 Nom)(-1 ("leat"))(0 Prop)(1  Prop)(2 ECL);
+SELECT Nom IF (-4 BCL)(-3 Nom)(-2 ("leat"))(-1 Prop OR (ABBR))(1 ECL);
  # Mun lean James Bond. # Mun in leat James Bond.
  # Again, these rules are too specific. Need empirical data to enlarge them.
 
 
 
-SELECT Nom IF (-2 (N Sg))(-1 COPULAS + (V Sg))(1 </s>); ## Tor lea oahpaheaddji.
+SELECT Nom IF (-2 (N Sg))(-1 COPULAS + (V Sg))(1 ECL); ##Tor lea oahpaheaddji.
 # but note that there are essive-predicates as well. All lexical Nom = Ess thus
 # will give wrong result.
 
 # Nominative as objects in existential clauses
 # --------------------------------------------
 REMOVE Acc IF (-2 Loc)(-1 ("leat"))(NOT *1 V); # Mus lea golli.
-SELECT Nom IF (-2 Loc)(-1 ("leat"))(1 (</s>)); # Mus lea golli.
+SELECT Nom IF (-2 Loc)(-1 ("leat"))(1 ECL); # Mus lea golli.
 
 # Unclassified
 # - - - - - -
@@ -501,7 +506,7 @@ SELECT Nom IF (-1 Gen)(0 N-SG-NOM)(1 V-SG3);
 # HMM, brave..
 # Note that the tag is selected, the set is in the condition.
 
-SELECT (N Sg Nom) IF (-1 <s>)(1C V-SG3); ## Moras1 s1attai illun.
+SELECT (N Sg Nom) IF (-1 BCL)(1C V-SG3); ## Moras1 s1attai illun.
 
 # Nominative if two names in a row
 SELECT Nom IF (-1 PROP) (0 PROP) (1 V-SG3); # Biret Anne galgá...
@@ -520,10 +525,10 @@ SELECT Acc IF (-2 (Acc Cmpnd)) (-1 CC);
 # Locative singular
 # =================
 
-SELECT Loc IF (-1 <s>)(1 ("leat")); ## Ádjásgo lea od1d1a fanas.
+SELECT Loc IF (-1 BCL)(1 ("leat")); ## Ádjásgo lea od1d1a fanas.
 # This rule is all too general, it must be sharpened in some way.
 
-SELECT Loc IF (-2 <s>)(-1 ("leat" Clt)); ## Leago mus rud1aid?
+SELECT Loc IF (-2 BCL)(-1 ("leat" Clt)); ## Leago mus rud1aid?
 # hmm...
 
 # Comitative singular
@@ -736,7 +741,7 @@ SELECT (Pl3) IF (-1 Loc)(1 (N Pl Nom)); # Mus livc1c1e guolit.
 
 SELECT (Imprt ConNeg) IF (-1 (Neg Imprt)) ; ## Ale suhta munnje.
 
-REMOVE Imprt IF (NOT -1 COMMA OR <s> or Pcle)(NOT 0 (ConNeg)) ;
+REMOVE Imprt IF (NOT -1 COMMA OR BCL or Pcle)(NOT 0 (ConNeg)) ;
 # Imprt must be either a negative verb form, or in the middle of a sentencne.
 
 # Negative imperative
@@ -744,7 +749,7 @@ REMOVE Imprt IF (NOT -1 COMMA OR <s> or Pcle)(NOT 0 (ConNeg)) ;
 
 SELECT (Neg Imprt Sg2) IF (*1 ConNeg); ## Allet ge gátte ahte ...
 
-REMOVE (V Ind Prs Sg3) IF (-2 <s>)(-1 Pcle)(0 (V Imprt Prs Sg2));
+REMOVE (V Ind Prs Sg3) IF (-2 BCL)(-1 Pcle)(0 (V Imprt Prs Sg2));
   ## Na attes munnje daid. # Note that this is dangerous, and kept specific in
                            # order to play safe. May need to be generalised.
 
@@ -755,10 +760,10 @@ REMOVE (V Ind Prs Sg3) IF (-2 <s>)(-1 Pcle)(0 (V Imprt Prs Sg2));
 # ----------
 
 #SELECT (Inf) IF (*-1 V-IND-FIN BARRIER MII-PERS OR SII)(NOT 0 LEAT);#23000 hits
-SELECT (Inf) IF (*-1 V-IND-FIN BARRIER MII-PERS OR SII OR CS OR CLB OR <s>);
+SELECT (Inf) IF (*-1 V-IND-FIN BARRIER MII-PERS OR SII OR CS OR CLB OR BCL);
 # reintroduce (NOT 0 LEAT)? check this!
 
-REMOVE (Prs Pl1) IF (-1 <s>)(1C V-SG3); ## Vuolgit lea suohtas
+REMOVE (Prs Pl1) IF (-1 BCL)(1C V-SG3); ## Vuolgit lea suohtas
 REMOVE (N Pl) IF (0 (Inf) OR (N Sg))(1C V-SG3); # EXAMPLE? 
 
 # ConNeg forms
@@ -829,7 +834,7 @@ SELECT Attr IF (1C N) ; # This still does not open for coordination!
 SELECT Attr IF (1 CC)(2 Attr)(3 N);
 SELECT A IF (*-1 ("leat" V) BARRIER NON-ADV); ## Ikte lei hui buolas1.
 
-#REMOVE Attr IF (1 </s>); ## Vuolgit lea suohtas.
+#REMOVE Attr IF (1 ECL); ## Vuolgit lea suohtas.
 REMOVE Attr IF (0 A)(NOT 1 A OR CC OR COMMA); # This one is more radical
 
 # Disambiguating adverbs
@@ -837,7 +842,7 @@ REMOVE Attr IF (0 A)(NOT 1 A OR CC OR COMMA); # This one is more radical
 SELECT Adv IF (-1C V-IND-FIN) (0 A-ATTR)(NOT 1 N); # Adv if postverbally
 REMOVE Adv IF (-1 (N Gen) OR (Pron Gen))(0 Po OR Adp); # Po if after Gen
 
-SELECT Adv IF (-2 V)(NOT -2 ("leat"))(-1 Adv)(1 (</s>)); # Too specific!!
+SELECT Adv IF (-2 V)(NOT -2 ("leat"))(-1 Adv)(1 ECL); # Too specific!!
   ## Son c1állá hui c1ábbát.
 
 # Rules related to specific adverbs
@@ -855,8 +860,8 @@ SELECT Adv IF (-1 VFIN)(0 ("gusto")); ## Diet lea gusto ávkkálas1.
 # Todo: Make a set of these verb-like adverbs, and make a rule for them.
 # Eventually more sets, if they have different syctactic properties...
 
-SELECT Adv IF (-1 <s>)(0 ("manne"))(1 VFIN); ## Manne ii leat áviisa boahtán?
-SELECT Adv IF (-1 <s>)(0 ("manne"))(1 N OR Pron)(2 VFIN); ## Manne don leat dál?
+SELECT Adv IF (-1 BCL)(0 ("manne"))(1 VFIN); ## Manne ii leat áviisa boahtán?
+SELECT Adv IF (-1 BCL)(0 ("manne"))(1 N OR Pron)(2 VFIN); ## Manne don leat dál?
 # Need a rule for "Manne + NP + VFIN".
 
 # Disambiguating demonstratives
@@ -869,7 +874,7 @@ SELECT DEM-SG IF (1 V-SG3); # no hits
 # Getting rid of problematic names.
 # Problematic here are the names Dan, Dien, and the essive of the noun duo.
 
-REMOVE (Prop) IF (-1 <s>)(0 Dem)(1 N)(NOT 1 Prop); ## Dan nieidda mun dovddan.
+REMOVE (Prop) IF (-1 BCL)(0 Dem)(1 N)(NOT 1 Prop); ## Dan nieidda mun dovddan.
 
 
 # Disambiguating pronouns
@@ -911,8 +916,8 @@ SELECT CS IF (-1 CLB); # this one too general, there must be separate
                          # rules for different groups of CS.
 # go
 # --
-SELECT Pcle IF (-2 <s>)(NOT -1 COMMA)(0 ("go")); ## Boad1át go?
-SELECT Pcle IF (-3 <s>)(-2 CS)(NOT -1 COMMA)(0 ("go")); ## Muhto boad1át go?
+SELECT Pcle IF (-2 BCL)(NOT -1 COMMA)(0 ("go")); ## Boad1át go?
+SELECT Pcle IF (-3 BCL)(-2 CS)(NOT -1 COMMA)(0 ("go")); ## Muhto boad1át go?
 
 CONSTRAINTS
 SELECT CS IF (0 go);
