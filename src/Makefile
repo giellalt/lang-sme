@@ -2,6 +2,15 @@
 # *****************************************************************
 
 
+# =============================== #
+# Variable definitions			#
+# =============================== #
+
+# Tools used when compiling the transducers
+XFST = xfst -utf8
+TWOLC = twolc -utf8
+LEXC =  lexc -utf8
+
 
 # =============================== #
 # Building the last file isme.fst # 
@@ -23,7 +32,7 @@ isme.fst: ../bin/isme.fst
 	invert net \n\
 	save stack ../bin/isme.fst \n\
 	quit \n" > ../../tmp/isme-fst-script
-	@xfst < ../../tmp/isme-fst-script
+	$(XFST) < ../../tmp/isme-fst-script
 	@rm -f ../../tmp/isme-fst-script
 
 
@@ -44,7 +53,7 @@ pos-sme.fst: ../bin/pos-sme.fst
 	[@\"../bin/sme.fst\"]] ; \n\
 	save stack ../bin/pos-sme.fst \n\
 	quit \n" > ../../tmp/pos-sme-fst-script
-	@xfst < ../../tmp/pos-sme-fst-script
+	$(XFST) < ../../tmp/pos-sme-fst-script
 	@rm -f ../../tmp/pos-sme-fst-script
 
 # In order to make pos-sme.fst we need a binary tag-pos.fst
@@ -59,7 +68,7 @@ tag-pos.fst: ../bin/tag-pos.fst
 	@printf "read regex < tag-pos.regex \n\
 	save stack ../bin/tag-pos.fst \n\
 	quit \n" > ../../tmp/sme-tag-pos-script
-	@xfst < ../../tmp/sme-tag-pos-script
+	$(XFST) < ../../tmp/sme-tag-pos-script
 	@rm -f ../../tmp/sme-tag-pos-script
 
 
@@ -75,7 +84,7 @@ n-sme.fst: ../bin/n-sme.fst
 	[@\"../bin/sme.fst\"]] ; \n\
 	save stack ../bin/n-sme.fst \n\
 	quit \n" > ../../tmp/n-sme-fst-script
-	@xfst < ../../tmp/n-sme-fst-script
+	$(XFST) < ../../tmp/n-sme-fst-script
 	@rm -f ../../tmp/n-sme-fst-script
 
 
@@ -90,7 +99,7 @@ tag-no.fst: ../bin/tag-no.fst
 	@printf "read regex < tag-no.regex \n\
 	save stack ../bin/tag-no.fst \n\
 	quit \n" > ../../tmp/sme-tag-no-script
-	@xfst < ../../tmp/sme-tag-no-script
+	$(XFST) < ../../tmp/sme-tag-no-script
 	@rm -f ../../tmp/sme-tag-no-script
 
 # We also want an analyzer with Sami tags. It takes the linguistic 
@@ -105,7 +114,7 @@ s-sme.fst: ../bin/s-sme.fst
 	[@\"../bin/sme.fst\"]] ; \n\
 	save stack ../bin/s-sme.fst \n\
 	quit \n" > ../../tmp/s-sme-fst-script
-	@xfst < ../../tmp/s-sme-fst-script
+	$(XFST) < ../../tmp/s-sme-fst-script
 	@rm -f ../../tmp/s-sme-fst-script
  
 # In order to make s-sme.fst we need a binary tag-no.fst
@@ -119,7 +128,7 @@ tag-sme.fst: ../bin/tag-sme.fst
 	@printf "read regex < tag-sme.regex \n\
 	save stack ../bin/tag-sme.fst \n\
 	quit \n" > ../../tmp/tag-sme-script
-	@xfst < ../../tmp/tag-sme-script
+	$(XFST) < ../../tmp/tag-sme-script
 	@rm -f ../../tmp/tag-sme-script
 
 
@@ -134,13 +143,13 @@ g-sme.fst: ../bin/g-sme.fst
 	abbr-sme-lex.txt propernoun-sme-lex.txt punct-sme-lex.txt \n\
 	save-source ../bin/g-sme.save \n\
 	quit \n" > ../../tmp/g-sme-save-script
-	@lexc < ../../tmp/g-sme-save-script
+	$(LEXC) < ../../tmp/g-sme-save-script
 	@rm -f ../../tmp/g-sme-save-script
 
 	@printf "source guess-script.xfst \n\
 	save stack ../bin/g-sme.fsm \n\
 	quit \n" > ../../tmp/guess-sme-script
-	@xfst < ../../tmp/guess-sme-script
+	$(XFST) < ../../tmp/guess-sme-script
 	@rm -f ../../tmp/guess-sme-script
 
 	@printf "read-source ../bin/g-sme.fsm \n\
@@ -148,14 +157,14 @@ g-sme.fst: ../bin/g-sme.fst
 	compose-result \n\
 	save-result ../bin/g-sme.fst \n\
 	quit \n" > ../../tmp/g-sme-save-script
-	@lexc < ../../tmp/g-sme-save-script
+	$(LEXC) < ../../tmp/g-sme-save-script
 	@rm -f ../../tmp/g-sme-save-script
 
 	@printf "read regex @\"../bin/g-sme.fst\" .o. \
 	@\"../bin/caseconv.fst\" ; \n\
 	save stack ../bin/g-sme.fst \n\
 	quit \n " > ../../tmp/g-sme-fst-script
-	@xfst < ../../tmp/g-sme-fst-script
+	$(XFST) < ../../tmp/g-sme-fst-script
 	@rm -f ../../tmp/g-sme-fst-script
 
 
@@ -183,7 +192,7 @@ d-sme.fst: ../bin/d-sme.fst
 	[@\"../bin/sme.fst\"]] ; \n\
 	save stack ../bin/d-sme.fst \n\
 	quit \n" > ../../tmp/d-sme-fst-script
-	@xfst < ../../tmp/d-sme-fst-script
+	$(XFST) < ../../tmp/d-sme-fst-script
 	@rm -f ../../tmp/d-sme-fst-script
 
 
@@ -205,7 +214,7 @@ sme.fst: ../bin/sme.fst
 	@\"../bin/caseconv.fst\" ; \n\
 	save stack ../bin/sme.fst \n\
 	quit \n" > ../../tmp/sme-fst-script
-	@xfst < ../../tmp/sme-fst-script
+	$(XFST) < ../../tmp/sme-fst-script
 	@rm -f ../../tmp/sme-fst-script
 
 
@@ -228,7 +237,7 @@ caseconv.fst: ../bin/caseconv.fst
 	@printf "read regex < case.regex \n\
 	save stack ../bin/caseconv.fst \n\
 	quit \n" > ../../tmp/caseconv-sme-script
-	@xfst < ../../tmp/caseconv-sme-script
+	$(XFST) < ../../tmp/caseconv-sme-script
 	@rm -f ../../tmp/caseconv-sme-script
 
 # This goal depends on allcaps.regex
@@ -241,7 +250,7 @@ allcaps.fst: ../bin/allcaps.fst
 	@printf "source allcaps.regex \n\
 	save stack ../bin/allcaps.fst \n\
 	quit \n" > ../../tmp/allcaps-sme-script
-	@xfst < ../../tmp/allcaps-sme-script
+	$(XFST) < ../../tmp/allcaps-sme-script
 	@rm -f ../../tmp/allcaps-sme-script
 
 
@@ -269,7 +278,7 @@ sme.save: ../bin/sme.save
 	compose-result \n\
 	save-result ../bin/sme.save \n\
 	quit \n" > ../../tmp/sme-save-script
-	@lexc < ../../tmp/sme-save-script
+	$(LEXC) < ../../tmp/sme-save-script
 	@rm -f ../../tmp/sme-save-script
 
 # The fourth goal is to build twol-sme.bin
@@ -284,7 +293,7 @@ twol-sme.bin: ../bin/twol.sme.bin
 	compile \n\
 	save-binary ../bin/twol-sme.bin \n\
 	quit \n" > ../../tmp/twol-sme-script
-	@twolc < ../../tmp/twol-sme-script
+	$(TWOLC) < ../../tmp/twol-sme-script
 	@rm -f ../../tmp/twol-sme-script
 
 
@@ -304,7 +313,7 @@ dis-tag.fst: ../bin/dis-tag.fst
 	@printf "source dis-tag.txt \n\
 	save stack ../bin/dis-tag.fst \n\
 	quit \n" > ../../tmp/dis-tag-sme-script
-	@xfst < ../../tmp/dis-tag-sme-script
+	$(XFST) < ../../tmp/dis-tag-sme-script
 	@rm -f ../../tmp/dis-tag-sme-script
 
 
@@ -319,7 +328,7 @@ dis-tag.fst: ../bin/dis-tag.fst
 #	@printf "source tok.txt \n\
 #	save stack ../bin/tok.fst \n\
 #	quit \n" > ../../tmp/tok-sme-script
-#	@xfst < ../../tmp/tok-sme-script
+#	$(XFST) < ../../tmp/tok-sme-script
 #	@rm -f ../../tmp/tok-sme-script
 
 
@@ -357,7 +366,7 @@ foreign.fst: ../bin/foreign.fst
 	union net \n\
 	save stack ../bin/foreign.fst \n\
 	quit \n" > ../../tmp/foreign-sme-script
-	@xfst < ../../tmp/foreign-sme-script
+	$(XFST) < ../../tmp/foreign-sme-script
 	@rm -f ../../tmp/foreign-sme-script
 
 foreign.fst: ../bin/new-foreign.fst 
@@ -368,7 +377,7 @@ foreign.fst: ../bin/new-foreign.fst
 	@printf "read text < ../../script/new-foreign.txt \n\
 	save stack ../bin/new-foreign.fst \n\
 	quit \n" > ../../tmp/new-foreign-sme-script
-	@xfst < ../../tmp/new-foreign-sme-script
+	$(XFST) < ../../tmp/new-foreign-sme-script
 	@rm -f ../../tmp/new-foreign-sme-script
 
 foreign.fst: ../bin/old-foreign.fst 
@@ -379,7 +388,7 @@ foreign.fst: ../bin/old-foreign.fst
 	@printf "read text < ../../script/old-foreign.txt \n\
 	save stack ../bin/old-foreign.fst \n\
 	quit \n" > ../../tmp/old-foreign-sme-script
-	@xfst < ../../tmp/old-foreign-sme-script
+	$(XFST) < ../../tmp/old-foreign-sme-script
 	@rm -f ../../tmp/old-foreign-sme-script
 
 
