@@ -657,6 +657,20 @@ MAP (@VOC) TARGET Nom IF (-1 BOS OR REALCLB)(1 COMMA)(2 VFIN);
 	## Ustiban, in mun daga dutnje vearrut.
 
 
+# Verb mappings
+# -------------
+
+MAP (@+FAUXV) TARGET Neg ;
+MAP (@+FAUXV @+FMAINV) TARGET VFIN ;  #IF (1 (Inf) OR (PrfPrc)) ;
+
+MAP (@-FMAINV) TARGET PrfPrc IF (*-1 VFIN) ;
+MAP (@-FMAINV) TARGET PrfPrc IF (0 ("leapma" Dimin));
+MAP (@-FMAINV) TARGET Inf;
+MAP (@-FMAINV) TARGET Inf IF (*-1 VFIN);
+MAP (@-FMAINV) TARGET ConNeg ;
+MAP (@-FMAINV) TARGET (V Actio Ess);
+
+
 # Argument mappings
 # -----------------
 
@@ -677,19 +691,6 @@ MAP (@ADVL) TARGET Com ;
 MAP (@ADVL @SPRED @OPRED) TARGET Ess ;
 
 MAP (@ADVL) TARGET Gen IF (0 TIME);
-
-
-# Verb mappings
-# -------------
-
-MAP (@+FAUXV) TARGET Neg ;
-MAP (@+FAUXV @+FMAINV) TARGET VFIN ;  #IF (1 (Inf) OR (PrfPrc)) ;
-
-MAP (@-FMAINV) TARGET PrfPrc IF (*-1 VFIN) ;
-MAP (@-FMAINV) TARGET PrfPrc IF (0 ("leapma" Dimin));
-MAP (@-FMAINV) TARGET Inf;
-MAP (@-FMAINV) TARGET Inf IF (*-1 VFIN);
-MAP (@-FMAINV) TARGET ConNeg ;
 
 
 # Default mapping
@@ -1642,15 +1643,33 @@ SELECT VFIN IF (NOT *-1 VFIN BARRIER CS)(0 ("miehtá"));
 # ------------------
 
 SELECT Pr IF (0 GASKAL)(1 (Pron Gen))(2 CC)(3 (Pron Gen));
+	## Dat lei gaskal min ja din.
+
 SELECT Po IF (-3 (Pron Gen))(-2 CC)(-1 (Pron Gen))(0 GASKAL);
+	## Dat lei min ja din gaskkas.
 
 SELECT Pr IF (0 GASKAL)(1 Num)(2 CC)(3 Num);
-SELECT Po IF (-3 Num)(-2 CC)(-1 Num)(0 GASKAL);
+	## Gaskal 12 ja 16 jahkásaš mánáin lea muhtun muddui iešheanalis
 
-SELECT Pr IF (0 GASKAL)(*1 (N Gen) BARRIER NPNH 
-          LINK 1 CC LINK *1 (N Gen) BARRIER NPNH LINK 0 HNOUN);
+SELECT Po IF (-3 Num)(-2 CC)(-1 Num)(0 GASKAL);
+	## Alimusriekti veadjá leat jagiid 1854 ja 1897 gaskka doallan
+	## siskkáldas čoahkkima.
+
+SELECT Pr IF (0 GASKAL)(*1 (N Gen) BARRIER NPNH LINK 1 CC LINK *1 (N Gen) 
+	BARRIER NPNH LINK 0 HNOUN);
+	## Lága mearrádusat galget váikkuhit luohttevašvuođa gaskal divššohasa
+	## ja dearvvašvuođabálvalusa.
+
 SELECT Pr IF (0 GASKAL)(1 A)(2 CC)(3 A LINK *1 (N Gen) LINK 0 HNOUN); # Barrier?
-SELECT Po IF (-1 (N Gen) LINK *1 CC BARRIER NPNH LINK -1 (N Gen))(0 GASKAL);
+	## Galgá válljejuvvot gaskal vejolaš ja dohkálaš iskkadan- ja
+	## dikšunvugiid.
+
+SELECT Po IF (-1 (N Gen) LINK *-1 CC BARRIER NPNH LINK -1 (N Gen))(0 GASKAL);
+	## Riiddut boazodolliid ja eará vuoigatvuođaoamásteddjiid gaskkas 
+	## livčče lassánan. 
+
+SELECT Po IF (-3 Inf)(-2 ("ja"))(-1 Inf)(0 GASKAL);
+	## Sániid oamastit ja eaiggáduššat gaskkas geavahuvvo "ja".
 
 
 
@@ -6240,7 +6259,8 @@ REMOVE PrsPrc IF (0 N)(1 Indef);
  # Actio = Prs Sg1 = PrfPrc (odd-syll verbs, contracted verbs)
  # Perfect Participle is also treated in "Disambiguating verbs - part 1".
  # The order of rules is of some importance here.
-
+ # We do not SELECT Actio, we remove PrfPrc instead, since there might be a 
+ # non-derived N reading alongside Actio. 
 
 SELECT PrfPrc IF (0 ("mannat"))(1 TIME);
 	## Ii leat boahtán mannan vahkus.
@@ -6275,20 +6295,21 @@ SELECT PrfPrc IF (1 CC)(2C PrfPrc)(3 CS OR EOS);
 	## čiŋahuvvon.
 
 REMOVE PrfPrc IF (*-1 Gen BARRIER NPNH LINK -1 BOS OR CS OR CLB);
-	## 
+	## Divššohasjournálaid geahččan dálkkasgeahččalemiid oktavuođas...
 
 REMOVE PrfPrc IF (NOT *-1 VFIN)(NOT 0 Pass)(NOT *1 VFIN BARRIER CP OR CS);
-	##
+	## Miehtan nuoraid ovddas geain ii leat miehtangealbu.
 
 REMOVE PrfPrc IF (*-1 PrfPrc OR ConNeg BARRIER NPNHA LINK NOT 0 ("leat"));
-#SELECT Actio IF (*-1 PrfPrc OR ConNeg BARRIER NPNHA LINK NOT 0 ("leat"));
-	##
+	## Ii ávžžuhuvvo dieđuid geahččan sivas olbmuid geat čužžot 
+	## divššohasa lahka.
 
-REMOVE PrfPrc IF (-1 Attr)(0 LEX-N);
-	## Dás ii leat dahkkon makkárge riektesosiologalaš guorahallan.
+REMOVE PrfPrc IF (-1 Attr)(0 N);
+	## Sámegiella hállet áidna giellan mánát, geat eai leat vel álgán skuvlii.
 
 REMOVE V-SG1 IF (*-1 VFIN BARRIER CLB OR CS OR CP);
-	##
+	## Báikkálaš PPB-deaddočuokkiskantuvrrat jotket stáhta ruhtadan 
+	## bálvalusaideaset.
 
 
 # Coordinated actios
@@ -6296,15 +6317,21 @@ REMOVE V-SG1 IF (*-1 VFIN BARRIER CLB OR CS OR CP);
 
 REMOVE PrfPrc IF (NOT *-1 ("leat") BARRIER VERB OR CS)(*1 Actio BARRIER NPNH
 	LINK 1 CC);
-	##
+	## Eiseválddiid oainnu mielde lea okta Sámedikki deaŧaleamos rollain 
+	## bidjat eavttuid servodat hábmemis seailluhan, nannen ja ovddidan dihte 
+	## sámi servodaga.
 
 REMOVE PrfPrc IF (*-1 COMMA BARRIER NPNH LINK -1 Actio)(1 CC OR COMMA)
 	(*2 Actio BARRIER NPNH);
-	##
+	## Eiseválddiid oainnu mielde lea okta Sámedikki deaŧaleamos rollain 
+	## bidjat eavttuid servodat hábmemis seailluhan, nannen ja ovddidan dihte 
+	## sámi servodaga.
 
 REMOVE VFIN IF (*-1 COMMA BARRIER NPNH LINK -1 Actio)(1 CC OR COMMA)
 	(*2 Actio BARRIER NPNH);
-	##
+	## Eiseválddiid oainnu mielde lea okta Sámedikki deaŧaleamos rollain 
+	## bidjat eavttuid servodat hábmemis seailluhan, nannen ja ovddidan dihte 
+	## sámi servodaga.
 
 REMOVE PrfPrc IF (NOT -1 LEAT-FIN-NON-IMP LINK *-1 CP BARRIER VFIN)
 	(1 CLB LINK *1 N BARRIER NPNH LINK *1 CC BARRIER VFIN 
@@ -6312,6 +6339,7 @@ REMOVE PrfPrc IF (NOT -1 LEAT-FIN-NON-IMP LINK *-1 CP BARRIER VFIN)
 	## Sámedikki hálddahusa nannen, dearvvašvuođa- ja eallindili-
 	## iskkadeami ruhtadeapmi ja Sámi dearvvašvuođadutkanguovddáža 
 	## doaimmaid viiddideapmi váldojit ovdan 2002 bušeahta oktavuođas.
+
 
 
 # Imperative II
@@ -6325,9 +6353,9 @@ REMOVE VGen IF (*-1 CS OR CP OR BOS BARRIER VFIN)(0 VFIN)
                ( *1 CS OR CP OR EOS BARRIER VFIN);
                               ## Báldáhan ferte diŋgot, jos galgá fidnet.
 
-  # This rule assumes that VGen comes parasitically upon a finite verb,
-  # and removes VGen if this is not the case. More rules are needed in order
-  # to remove more cases.
+ # This rule assumes that VGen comes parasitically upon a finite verb,
+ # and removes VGen if this is not the case. More rules are needed in order
+ # to remove more cases.
 
 REMOVE VGen IF (-1 Attr);
 REMOVE VGen IF (0 Num)(*1 (N Gen) BARRIER NPNH);
@@ -6341,8 +6369,9 @@ SELECT VGen IF (-2 VGen)(-1 CC);
 # Gerund, Verb abessive and Supine have unique forms and need no rules.
 
 
-# Selecting some finite.
-# ----------------------
+
+# Selecting some finite verbs
+# ===========================
 
 SELECT VFIN IF (NOT *-1 VFIN BARRIER CS OR CP)(NOT 0 N)(NOT 0 (Pass PrfPrc))
 	(NOT *1 VFIN BARRIER CS)(NOT -1 BOS LINK 2 EOS)
@@ -6555,6 +6584,7 @@ CONSTRAINTS
 REMOVE (@+FAUXV) ;
 REMOVE (@SPRED) ;
 REMOVE (@OPRED) ;
+
 
 #=====#
   END #
