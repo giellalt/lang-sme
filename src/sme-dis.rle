@@ -80,6 +80,12 @@ SET A-DER = geahtes | lágan | las1 | meahttun ;
 
 SET DER = V-DER | N-DER | A-DER ;
 
+# Nominal sets
+# ------------
+
+SET ADVLCASE = (Ill)|(Loc)|(Com)|(Ess);
+SET PRE-NP-HEAD = (Pron Pers Gen)|(Pron Dem)|(A);
+SET NON-PRE-NP-HEAD = WORD - PRE-NP-HEAD ; 
 
 # Noun sets
 # ---------
@@ -219,30 +225,36 @@ REMOVE V-DER IF (0 LEX-V); # THIS IS PROBABLY TOO STRONG, MSC may differ
 REMOVE V-DER-PASS IF (0 V-PASS);
 # It might be that this one is no longer needed.
 
-# Lexiclaised p-positions
+# Lexicalised p-positions
 # -----------------------
 
 REMOVE (N) IF (0 Po OR Pr OR Adp); # dan várás, dan
 
-# ==============================
-# Local disambiguation - cycle 1
-# ==============================
+# ====================================
+# Local disambiguation - cycles 1 and 2
+# ====================================
 
-# -------------------------------------------------
-# Cases that will need careful mode later: cycle 1a
-# -------------------------------------------------
+# ---------------------------------------------------------
+# Cycle 1a: cases that will be needed in careful mode later
+# ---------------------------------------------------------
+
+# The idea with cycle 1a is to disambiguate cases that are judged as easier and
+# more secure than later cases, and that at the same may be used as context
+# for other rules in later cycles.
+
+
 
 CONSTRAINTS
 
 
-# Personal or not?
-# ----------------
+# Personal pronouns
+# =================
 
 SELECT (Pers) IF (*-1 V-SG3)(0 (Pron Pers Sg3 Nom)); # leago son? (not Pcle)
-SELECT (Pers) IF (-1 V-SG3)(0 (Pron Pers Sg3 Nom));  # de son lea.(not Pcle)
+SELECT (Pers) IF (*1 V-SG3)(0 (Pron Pers Sg3 Nom));  # de son lea.(not Pcle)
 
 SELECT (Pers) IF (*-1 V-SG2)(0 (Pron Pers Sg2 Nom)); # leatgo don  (not dem)
-SELECT (Pers) IF (-1 V-SG2)(0 (Pron Pers Sg2 Nom));  # de don leat (not dem)
+SELECT (Pers) IF (*1 V-SG2)(0 (Pron Pers Sg2 Nom));  # de don leat (not dem)
 
 # Px constraints
 # ==============
@@ -255,32 +267,52 @@ SELECT (PxSg1) IF (-1 V-SG1) (-2 PRON-SG1-NOM);
 SELECT (PxSg2) IF (-1 V-SG2) (-2 PRON-SG2-NOM);
 SELECT (PxSg3) IF (-1 V-SG3) (-2 PRON-SG3-NOM);
 
+# Certain verb forms
+# ==================
 
-# -------------------------------------------------
-# Cases that may need the preceeding ones: cycle 1b
-# -------------------------------------------------
+# Pret Sg2
+# --------
+
+SELECT (V Ind Pret Sg2) IF (*-1 (Pron Pers Sg2 Nom));
+SELECT (V Ind Pret Sg2) IF (*-1 (Pron Pers Sg2 Nom));
+
+# ----------------------------------------------------------------
+# Cycle 1b: removing the readings that were left from the 1a rules
+# ----------------------------------------------------------------
 
 CONSTRAINTS
 
-# Disambiguating nouns
-# ====================
-
-# Px constraints
-# --------------
-
 # Removing all remaining Px
-
 REMOVE (PxSg1) ; # IF (0 Ess); # yes, kill'em all
 REMOVE (PxSg2) ; # IF (0 Pl);
 REMOVE (PxSg3) ; # IF (0 Loc);
+# Note: Perhaps rather allow Px only for some key nouns (mother, father, etc).
 
-# Note: Perhaps rather allow Px only for some key nouns (mothern, father, etc).
+# Removing remaining Prt Sg2 (philosophy: these are not pro-drop)
+REMOVE (V Ind Prt Sg2) IF (NOT -1 (<s>)) (NOT 0 (Clt));
+# Proseassas láhc1c1ojuvvojit dilálas1vuod1at nu, ahte 
+# fertejitgo dahkat dan?
+
+
+# --------------------------------------------
+# Cycle 2: Other cases of local disambiguation
+# --------------------------------------------
+
+CONSTRAINTS
+
+# This is the main part of the local disambiguation.
+# Here we go through the grammar in a systematic way.
+# Cases that should be handled before or after the main disambiguation, will be
+# taken care of in cycoes before or after this one.
+
+
+# Disambiguating nouns
+# ====================
 
 
 # Proper nouns
 # ============
 
-CONSTRAINTS
 
 SELECT (Prop) IF (NOT -1 (<s>));
 # Capitalised nouns in the middle of a sentence are names.
@@ -293,14 +325,16 @@ SELECT (N) IF (-2C (N)) (-1 CC) (NOT 1 N OR A); # Mánát ja nuorat leat...
 SELECT (N) IF (1 Po); # sápmelac1c1aid birra.
 SELECT (N) IF (1 COMMA)(2 (Pron Interr)); # Doaimmat, maiguin... #too spec.
 
-# Acc or Gen or Nom
-# =================
+
+# Case disambiguation
+# ===================
+
 
 # Gen
-# ---
+# ===
 
 # Genitive as complement
-# - - - - - - - - - - - 
+# ----------------------
 
 # Genitive in front of postposition
 SELECT (Gen) IF (1 Po) ;  # nieidda vuod1ul
@@ -310,16 +344,18 @@ SELECT (Gen) IF (1 Adp) ; # nieidda birra
 SELECT (Gen) IF (-1 NUMERALS OR MANGA); #Golbma nieidda, mán1ga nieidda
 
 # Genitive as specifier
-# - - - - - - - - - - -
+# ---------------------
 
 # Genitive in front of noum in the beginning of a sentence
 SELECT (Gen) IF (-1 CLB) (1 N); # Nieidda girji lea ruoksat
+REMOVE (Acc) IF (-1 (<s>))(1 (N Gen) OR (Attr) OR PPOS) ; # Mu birra don humat.
 
 # Genitive in front of the final word in the sentence
-SELECT (Gen) IF (0 CNOUN OR (Pron))(1 N)(2 CLB); # Oainnán du biilla.
+#SELECT (Gen) IF (0 CNOUN OR (Pron Pers))(1 N)(2 CLB); # Oainnán du biilla.
+SELECT (Gen) IF (0 (N))(1 N)(2 CLB); # Oainnán nieidda biilla.
 
 # Strange rule
-SELECT (Gen) IF (NOT -1 V)(NOT 0 A OR (Prop))(1 N) (NOT 2 Po);
+SELECT (Gen) IF (NOT -1 V)(NOT 0 A OR (Prop) OR ("don"))(1 N) (NOT 2 Po);
 # NOT A bec. of addit., NOT Prop bec. of firstname lastname sequences.
 
 
@@ -328,19 +364,24 @@ SELECT (Gen) IF (NOT -1 V)(NOT 0 A OR (Prop))(1 N) (NOT 2 Po);
 # perhaps not needed.
 
 # Acc
-# ---
+# ===
 
+# Accusative between Aux and main verb
+# ------------------------------------
 SELECT (Acc) IF (-1 V-IND-FIN) (1 Inf); # Od1astus addá vejolasvuod1a geavahit
+
+# Accusative at the end of the sentence
+# -------------------------------------
 SELECT (Acc) IF (-1 V-NON-COP) (1 CLB)(2 (</s>)); # Hmm, evaluate..
+SELECT (Acc) IF (-2 V-NON-COP) (-1 (Adv) OR ADVLCASE)(1 CLB)(2 (</s>));
+        ## Áhc1c1i lea oastán munnje sabehiid.
 
 #SELECT (Acc) IF (*-1 V-NON-COP BARRIER (Pron Pers Nom) OR PPOS);
-#SELECT (Acc) IF (*-1 V-NON-COP BARRIER (Pron Pers Nom) OR (Po) OR (Adp) OR (Pr)); fjern denne når den förre funkar
 
-REMOVE (Acc) IF (-1 (<s>))(1 (N Gen) OR (Attr) OR PPOS) ;
 REMOVE (Acc) IF (NOT *-1 V-NON-COP)(NOT *1 V-NON-COP); #Need a verb for an obj.
 
 # Nom
-# ---
+# ===
 
 # Nominative in titles and sentence fragments
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -388,15 +429,20 @@ SELECT (Nom) IF (-2 (Nom Cmpnd)) (-1 CC);
 SELECT (Gen) IF (-2 (Gen Cmpnd)) (-1 CC);
 SELECT (Acc) IF (-2 (Acc Cmpnd)) (-1 CC);
 
-# LocPl or ComSg
-# ==============
+
+# ComSg
+# =====
 
 SELECT (Com) IF (0 Prop); # assuming proper names come in sg
 
-SELECT (Com) IF (-1 (Dem Sg Com)); # dainna biillain
-SELECT (Loc) IF (-1 (Dem Pl Loc)); # dain   biillain
+SELECT (Com) IF (-1 (Dem Sg Com));         # dainna biillain
 SELECT (Com) IF (-2 (Dem Sg Com))(-1 Adv); # dainna biillain
-SELECT (Loc) IF (-2 (Dem Pl Loc))(-1 Adv); # dain   biillain
+
+# LocPl
+# =====
+
+SELECT (Loc) IF (-1 (Dem Pl Loc));         # dain biillain
+SELECT (Loc) IF (-2 (Dem Pl Loc))(-1 Adv); # dain biillain
 # Not too elegant, the rule set might be done more general with a barrier
 
 SELECT (Loc) IF (1 ("gos"));           # guovlluin gos sámit ásset
@@ -405,126 +451,238 @@ SELECT (Loc) IF (1 COMMA)(2 ("gos"));  # guovlluin, gos sámit ásset
 # Disambiguating verbs
 # ====================
 
-# leat disambiguation
+# Finite forms
+# ============
+
+# Indicative Negative
 # -------------------
+  # Unique are Sg1, Sg3, Du1, Du2, Du3, Pl1, Pl2, Pl3
+  # hom: "it", where Sg2 = ABBR.
 
-SELECT (ConNeg) IF (0 LEAT) (-1 Neg);
-SELECT (ConNeg) IF (0 LEAT) (-2 Neg) (-1 Pcle);
-REMOVE (ConNeg) IF (0 LEAT) (NOT *-1 Neg);
+# Select Neg Sg2 instead of ABBR
+REMOVE (ABBR) IF (*-1 (ConNeg))(0 (Neg)); # Dat don deat it. # äh, bad WO 
+REMOVE (ABBR) IF (0 (Neg))(*1 (ConNeg));  # Don it leat dál.
 
-# Need more advanced rule to select ConNeg when more
-# material between neg and conneg
-# SELECT (ConNeg IF (0 LEAT) (*-1 Neg);
-
-SELECT (Prs) IF (0 LEAT) (NOT *-1 V-IND-FIN); # one strange hit, revise!
-SELECT (Sg2) IF (0 LEAT) (-1 PRON-SG2-NOM); # no hits
-SELECT (Pl3) IF (0 LEAT) (-1 (Pl Loc)); # Mis leat
-SELECT (Pl3) IF (0 LEAT) (-1 (Du Loc)); # Munnos leat
-
-# leai disambiguation
-# -------------------
-SELECT (Prt) IF (0 LEAI)(-1 N-SG); # Introduced 0 LEAI
-
-# lean disambiguation
-# -------------------
-
-SELECT (Sg1) IF (0 LEAN) (1 PrfPrc);
-SELECT (PrfPrc) IF (0 LEAN) (-1 Neg);
-
-# Infinite verbforms
+# Indicative Present
 # ------------------
 
-REMOVE (VGen) IF (NOT *-1 V-IND-FIN)(Not *1 V-IND-FIN); # too sloppy!
+# Sg1
+# ---
+  # Sg1 = PtcPrf (copula)
+  # Sg1 = V Act (even)
 
-# Imperatives
-# -----------
+SELECT (Sg1) IF (0 LEAN) (1 PrfPrc); # Mun lean boahtán.
+SELECT (Sg1) IF (*-1 (Pers Pron Sg1 Nom) BARRIER (V Neg)); # Mun ferten lohkat.
 
-REMOVE (Imprt) IF (NOT -1 COMMA OR (<s>))(NOT 0 ConNeg) ;
-# Imprt must be either a negative verb form, or in the middle of a sentencne.
+# This homonymy is solved by rules selecting PrfPrc.
+# Note: We will need a rule selecting Sg1. # Mun muitalan Suoma birra.
 
-# Du1 or Pl3 or Sg3
-# -----------------
+# Sg2
+# ---
+  # Sg2 = Inf (even syllables, copula)
+  # Note the homonymy with derived verbs (jearat = jearadit + ...
 
-# this is a huge set. it should be collapsed.
-
-# Here we start collapsing, generalising on pron + ... + verb sequences
-SELECT (Pl3) IF (*-1  PRON-PL3-NOM BARRIER PRON-PL1-NOM OR PRON-DU1-NOM OR CLB);
-SELECT (DU1) IF (*-1  PRON-DU1-NOM BARRIER PRON-PL1-NOM OR PRON-PL1-NOM OR CLB);
-SELECT (Pl1) IF (*-1C PRON-PL1-NOM BARRIER PRON-PL3-NOM OR PRON-DU1-NOM OR CLB);
-
-REMOVE (Du1) IF (0 Sg3) (-1 (N Sg Nom)); # Dokumeanta c1ilge, mo...
-REMOVE (Pl3) IF (0 Sg3) (-1 (N Sg Nom)); # Dokumeanta c1ilge, mo...
-
-# Here we have the huge, non-collapsed set
-# Make generalised rules for post-verbal subject pronouns as well.
-
-# SELECT (Du1) IF (-1 PRON-DU1-NOM); # moai jerre # no hits
-SELECT (Du1) IF (1 Pcle) (2 PRON-DU1-NOM); # jerre go moai # no hits
-
-#SELECT (Pl3) IF (-1 PRON-PL3-NOM); # sii jerre
-SELECT (Pl3) IF (-1C N-PL-NOM); # Nieiddat jerre
-SELECT (Pl3) IF (-3 N-NOM)(-2 CC)(-1 N-NOM); # Nieida ja gánda jerre
-
-SELECT (Pl3) IF (1 Pcle) (2 PRON-PL3-NOM); # jerre go sii
-SELECT (Pl3) IF (1 Pcle) (2C N-PL-NOM); # Nieiddat jerre
-SELECT (Pl3) IF (1 Pcle) (2 N-NOM) (3 CC) (4 N-NOM);
-                                        # Jerre go nieida ja gánda?
-
-SELECT (Pl3) IF (0 Clt) (1 PRON-PL3-NOM); # Jerrego sii 
-SELECT (Pl3) IF (0 Clt) (1C N-PL-NOM); # Jerrego nieiddat
-SELECT (Pl3) IF (0 Clt) (1 N-NOM) (2 CC) (3 N-NOM); 
-                                        # Jerrego nieida ja gánda?
-
-SELECT (Pl3) IF (-1 Adv) (1 PRON-PL3-NOM); # Nu jerre sii
-SELECT (Pl3) IF (-1 Adv) (1C N-PL-NOM); # Nu jerre nieiddat
-SELECT (Pl3) IF (-1 Adv) (1 N-NOM)(2 CC)(3 N-NOM);
-					# Nu jerre ieida ja gánda
-
-
-# Number phrases as subjects
-# --------------------------
-SELECT (Pl3) IF (-2 Num) (-1 N-GEN) ; # Golbma nieidda leat boahtán.
-SELECT (Pl3) IF (-1 Adv) (1 Num); # Nu jerre golbma nieidda
-
-# Inf or Pl1 or Pl3 or Prt Du2
-# ----------------------------
-
-SELECT (Pl1) IF (-1 MII-PERS);
-#SELECT (Pl3) IF (-1 SII); # no hits, cf. 3rd rule of prev section
-SELECT (Pl3) IF (-1 (Pron Interr Pl Nom)) (-2 COMMA) (-3 N-PL);
-             #olbmot, geat fállet (too specific?)
-
-REMOVE (Inf) IF (-2 CLB) (-1 CS); # dus1s1e, juos leat doarvái...
-REMOVE (Inf) IF (-1 Inf ) ; # 1 hit
-#SELECT (Inf) IF (*-1 V-IND-FIN BARRIER MII-PERS OR SII)(NOT 0 LEAT);#23000 hits
-SELECT (Inf) IF (*-1 V-IND-FIN BARRIER MII-PERS OR SII OR CS OR CLB OR (<s>));
-SELECT (Sg1) IF (-1 Sg1) ;
-
-# VGen or Sg2 or ConNeg 
-# ---------------------
+SELECT (Sg2) IF (0 LEAT) (-1 PRON-SG2-NOM); # no hits
 
 SELECT (Sg2) IF (*-1C (Pron Pers Sg2 Nom)); # fertetgo don vuolgit?
 SELECT (Sg2) IF ( *1C (Pron Pers Sg2 Nom)); # de, don fertet vuolgit.
 
-SELECT (ConNeg) IF (*-1 Neg BARRIER CLB OR V-IND-FIN) ;
-REMOVE (ConNeg) IF (NOT *-1 Neg BARRIER CLB OR V-IND-FIN); # 20000 hits
+# Sg3
+# ---
+  # Sg3 = ConNeg (even)
+  # Sg3 = ConNeg = Imprt Sg2 (contracted)
+  # Disambiguating Prs Sg3 is taken care of by rules removing the other 
+  # readings whenever their conditions are not fulfilled.
 
-SELECT (Imprt) IF (-1 Neg + Imprt) ; # 2 hits
-REMOVE (Imprt) IF (*-1 (Neg Ind) BARRIER CLB OR V-IND-FIN)(0 ConNeg);
-REMOVE (Prs) IF (*-1 (Neg Imprt) BARRIER CLB OR V-IND-FIN)(0 ConNeg);
+# Du1
+# ---
+  # Du1 = Prt Pl3
+
+REMOVE (Pl3) IF (0 Sg3) (-1 (N Sg Nom)); # Dokumeanta c1ilge, mo...
+
+SELECT (DU1) IF (*-1  PRON-DU1-NOM BARRIER PRON-PL1-NOM OR PRON-PL1-NOM OR CLB);
+SELECT (Du1) IF (1 Pcle) (2 PRON-DU1-NOM); # jerre go moai # no hits
+# SELECT (Du1) IF (-1 PRON-DU1-NOM); # moai jerre # no hits
+
+### Du2, unique, no rules needed
+
+# Du3 
+  # Du3 = PrsPrc Clt = Imprt Prs Du2 Clt
+
+# Pl1
+# ---
+  # Pl1 = Inf for all stem classes
+  # Pl1 = Inf = Pl3 = Prt Sg2 for odd syll
+  # Pl1 = Inf = Pl3 = Sg2 = ConNeg (copula)
+
+SELECT (Pl1) IF (*-1C PRON-PL1-NOM BARRIER PRON-PL3-NOM OR PRON-DU1-NOM OR CLB);
+
+SELECT (Pl1) IF (-1 MII-PERS);
+
+### Pl2 unique, no rules needed
+
+# Pl3
+# ---
+
+SELECT (Pl3) IF (0 LEAT) (-1 (Pl Loc)); # Mis leat
+SELECT (Pl3) IF (0 LEAT) (-1 (Du Loc)); # Munnos leat
+
+SELECT (Pl3) IF (*-1  PRON-PL3-NOM BARRIER PRON-PL1-NOM OR PRON-DU1-NOM OR CLB);
+SELECT (Pl3) IF (-1 Adv) (1 N-NOM)(2 CC)(3 N-NOM);
+SELECT (Pl3) IF (-1 Adv) (1 PRON-PL3-NOM); # Nu jerre sii
+SELECT (Pl3) IF (-1 Adv) (1C N-PL-NOM); # Nu jerre nieiddat
+
+SELECT (Pl3) IF (-1C N-PL-NOM); # Nieiddat jerre
+SELECT (Pl3) IF (-3 N-NOM)(-2 CC)(-1 N-NOM); # Nieida ja gánda jerre
+
+SELECT (Pl3) IF (0 Clt) (1 N-NOM) (2 CC) (3 N-NOM); 
+SELECT (Pl3) IF (0 Clt) (1 PRON-PL3-NOM); # Jerrego sii 
+SELECT (Pl3) IF (0 Clt) (1C N-PL-NOM); # Jerrego nieiddat
+
+SELECT (Pl3) IF (1 Pcle) (2 N-NOM) (3 CC) (4 N-NOM);
+SELECT (Pl3) IF (1 Pcle) (2 PRON-PL3-NOM); # jerre go sii
+SELECT (Pl3) IF (1 Pcle) (2C N-PL-NOM); # Nieiddat jerre
+					# Nu jerre ieida ja gánda
+                                        # Jerre go nieida ja gánda?
+                                        # Jerrego nieida ja gánda?
+
+SELECT (Pl3) IF (-1 (Pron Interr Pl Nom)) (-2 COMMA) (-3 N-PL);
+             #olbmot, geat fállet (too specific?)
+
+# Number phrases as subjects
+SELECT (Pl3) IF (-2 Num) (-1 N-GEN) ; # Golbma nieidda leat boahtán.
+SELECT (Pl3) IF (-1 Adv) (1 Num); # Nu jerre golbma nieidda
+
+SELECT ("leat" Pl3) IF (-1 (Loc))(1 (N Pl)); ## Mis leat beatnagat.
+
+
+# Selecting some present
+# ----------------------
+SELECT (Prs) IF (0 LEAT) (NOT *-1 V-IND-FIN); # one strange hit, revise!
+# The same should be done 
 
 SELECT (Prs) IF (-1 Neg + Prs) ; # no hits
 
-# Sg1 or PrfPrc
-# -------------
+# Select some finite
+REMOVE (Inf) IF (-2 CLB) (-1 CS); # dus1s1e, juos leat doarvái...
+REMOVE (Inf) IF (-1 Inf ) ; # 1 hit
+
+# Indicative Past
+# ---------------
+
+### Past Sg1 is unique
+
+# Past Sg2
+# --------
+# Past Pl1
+# Prt Sg2 = Prs Pl3 = Imprt Prs Pl2 (even syll)
+  # Prt Sg2 = Prs Pl3 = Prs Pl1 = Inf (odd syll)
+  # Prt Sg2 = Prs Pl3                 (contracted)
+
+# Past Sg3
+# --------
+  # Prt Sg3 = Imprt Prs Sg3 (leai)
+ 
+# Past Du1
+# --------
+# Past Du2
+# --------
+# Past Du3
+# --------
+# Past Pl1
+# --------
+# Past Pl2
+# --------
+# Past Pl3
+# --------
+
+# leai disambiguation
+SELECT (Prt) IF (0 LEAI)(-1 N-SG); # Introduced 0 LEAI
+
+# Pl3
+# ---
+# Pl3 = Prs Du1
+
+REMOVE (Du1) IF (0 Sg3) (-1 (N Sg Nom)); # Dokumeanta c1ilge, mo...
+
+
+# Potential Present
+# -----------------
+# Potential Past
+# --------------
+# Conditional
+# -----------
+# Imperative
+# ----------
+
+SELECT (Imprt) IF (0 ConNeg) (-1 Neg + Imprt);
+#SELECT (Imprt) IF (0 ConNeg) (-1 Neg + Imprt);
+
+SELECT (Imprt) IF (-1 Neg + Imprt) ;
+
+REMOVE (Imprt) IF (NOT -1 COMMA OR (<s>))(NOT 0 ConNeg) ;
+# Imprt must be either a negative verb form, or in the middle of a sentencne.
+
+# Infinite forms
+# ==============
+
+# Infinitive
+# ----------
+
+#SELECT (Inf) IF (*-1 V-IND-FIN BARRIER MII-PERS OR SII)(NOT 0 LEAT);#23000 hits
+SELECT (Inf) IF (*-1 V-IND-FIN BARRIER MII-PERS OR SII OR CS OR CLB OR (<s>));
+# reintroduce (NOT 0 LEAT)? check this!
+
+REMOVE (Prs Pl1) IF (-1 (<s>))(1C V-SG3); ## Vuolgit lea suohtas
+REMOVE (N Pl) IF (0 (Inf) OR (N Sg))(1C V-SG3); # EXAMPLE? 
+
+# ConNeg forms
+# ------------
+
+SELECT (ConNeg) IF (0 LEAT) (-1 Neg);
+SELECT (ConNeg) IF (0 LEAT) (-2 Neg) (-1 Pcle);
+REMOVE (ConNeg) IF (0 LEAT) (NOT *-1 Neg);
+# Need more advanced rule to select ConNeg when more
+# material between neg and conneg
+# SELECT (ConNeg IF (0 LEAT) (*-1 Neg);
+
+REMOVE (VGen) IF (NOT *-1 V-IND-FIN)(Not *1 V-IND-FIN); # too sloppy!
+
+SELECT (ConNeg) IF (*-1 Neg BARRIER CLB OR V-IND-FIN) ;
+REMOVE (ConNeg) IF (NOT *-1 Neg BARRIER CLB OR V-IND-FIN); # 20000 hits
+
+REMOVE (Imprt) IF (*-1 (Neg Ind) BARRIER CLB OR V-IND-FIN)(0 ConNeg);
+REMOVE (Prs) IF (*-1 (Neg Imprt) BARRIER CLB OR V-IND-FIN)(0 ConNeg);
+
+# Act
+# ---
+# Act = Prs Sg1 = PrfPrc (odd-syll verbs, contracted verbs)
+# => make rules for Act.
+
+
+# PrfPrc
+# ------
 
 SELECT (PrfPrc) IF (-1 V-IND-FIN ) ;
 
 SELECT (PrfPrc) IF (-1 Neg) ;
 SELECT (PrfPrc) IF (-1 Pcle)(-2 Neg) ;
 
-SELECT (Imprt) IF (0 ConNeg) (-1 Neg + Imprt);
-#SELECT (Imprt) IF (0 ConNeg) (-1 Neg + Imprt); # feil tag i lexc!
+SELECT (PrfPrc) IF (0 LEAN) (-1 Neg);
+
+# PrsPrc
+# ------
+# PrsPrc = Imprt Prs Du2 (even-syll)
+
+
+
+
+# ImprtII
+# VGen
+# -------
+
+# Gerund,  Verb abessive and Supine do have uniqe forms and need no rules
+
                                                 
 
 # Disambiguating adjectives
@@ -544,6 +702,7 @@ REMOVE (Attr) IF (NOT 1 N ) ; # 11000
 SELECT (Adv) IF (-1C V-IND-FIN) (0 A-ATTR)(NOT 1 N); # Adv if postverbally
 REMOVE (Adv) IF (-1 (N Gen) OR (Pron Gen))(0 (Po) OR (Adp)); # Po if after Gen
 
+SELECT (Adv) IF (0 "ikte")(*1 (V Prt)); ## Ikte lei hui buolas1
 
 # Disambiguating demonstratives
 # =============================
@@ -555,6 +714,7 @@ SELECT DEM-SG IF (1 V-SG3); # no hits
 # Disambiguating pronouns
 # =======================
 
+# Personal pronouns
 
 
 # Mii
