@@ -162,6 +162,11 @@ LIST A-DER = geahtes lágan las1 meahttun ;
 
 LIST ADVLCASE = Ill Loc Com Ess ;
 
+LIST CASE = Nom Acc Gen Ill Loc Com Ess ;
+
+SET NON-NOM = CASE - Nom ;
+SET NON-GEN = CASE - Gen ;
+SET NON-ACC = CASE - Acc ;
 
 # Noun sets
 # ---------
@@ -1414,10 +1419,14 @@ SELECT Attr IF (NOT *-1 V-SG3)(0 ("garas" A Attr))(1 N)(NOT *1 V-SG3);
 # ========================
 
 
-REMOVE (A Nom) IF (0 (A Attr))(*1C N BARRIER NON-A LINK NOT 1 Po);
+ # REMOVE (A Nom) IF (0 (A Attr))(*1C N BARRIER NON-A LINK NOT 1 Po);
+REMOVE (A Nom) IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
 REMOVE (A Gen) IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
 REMOVE (A Acc) IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
-                                     ## Dat lea c1uovvovas1 sajis.
+               ## Dat lea c1uovvovas1 sajis.
+               ## Sámegiella ja dárogiella leat ovttaárvosas1 gielat.
+ # The careful mode (*1C N) was removed because of the second example.
+
 
 # These two are too heavy.
 REMOVE V IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
@@ -1960,7 +1969,7 @@ SELECT Acc IF (*-1 LEAT-FIN-NON-IMP BARRIER NPNHAI)(NOT 0 Adv)
 
 SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAIIP OR COMMA)
               (0 NP-HEAD)(NOT 0 PrfPrc or Adv or Dem or Nom)(NOT 0 TIME) 
-              (1 NP-BORDER OR Adv OR TIME) 
+              (1 NP-BORDER OR Adv OR TIME OR (Num Nom)) 
               (NOT 1 Po) ;
                      ## Oainnán du.
                      ## In mun sálten nu olu.
@@ -1970,12 +1979,17 @@ SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAIIP OR COMMA)
                      ## Mun manan daid mánáidguin.
                      ## Skuvla galggai oahpahit dárogiela vissis guovlluin.
                      ## Berit lei oz1z1on permis1uvnna guovvamánu 22. b.
+                     ## Berit lei oz1z1on permis1uvnna 22.10.
 
 # earlier formulation: (NP-BORDER OR ADVLCASE OR Adv), which gives the wrong
 # result with ## Dat ii gal mearkkas1 ollu álbmoga ealáhussii.
 
 # Removed  (1 NP-BORDER OR Adv OR TIME OR Attr) because of
 		## Fylka mearrida olugo galgá atnit sámi od1d1a leavgga.
+
+# The (Num Nom) is not optimal, we need to consider the Num Ord and Num Card
+# tagging. Now, 22. is given Num Ord and 22.10. is given Num Nom, this gives
+# the correct result, but is not satisfying, linguistically.
 
 # look at the NP-BORDER concept here...
 # NPNHAII there to include "indirect objects"
@@ -2030,6 +2044,10 @@ REMOVE Acc IF (NOT *-1 V-NON-AUX BARRIER CS)(NOT *1 V-NON-AUX BARRIER CS);
   # We need a verb for an obj. The barrier must be refined, though!
   # Cf the last example, that gives the wrong result.
   # But the preceding Remove GEN rule fixes it!
+
+REMOVE Acc IF (NOT *-1 V-NON-AUX BARRIER CS)
+                   (*1 V-NON-AUX BARRIER CS LINK *1 Acc);
+
 
 REMOVE Acc IF (*1 LEAT-COP BARRIER V-NON-AUX OR CS LINK *1 Ger 
 		BARRIER V-NON-AUX OR CS) ;
@@ -2160,7 +2178,18 @@ REMOVE (N Nom) IF (-1 NP-BORDER)
 REMOVE (Pron Pers Acc) IF (-1 NP-BORDER)(*1 N BARRIER NON-Attr LINK *1 VFIN);
 REMOVE (Pron Pers Nom) IF (-1 NP-BORDER)(*1C N BARRIER NON-Attr LINK *1 VFIN);
                                          ## Din viessu s1attai oppa stuoris.
-# Added Pers in order not to include 
+
+
+#REMOVE (Dem Acc) IF (-1 NP-BORDER)(NOT -1 V)
+#                  (*1 N BARRIER NON-A LINK *1 VFIN BARRIER CS);
+                                         ## Dan girji lea ruoksat.
+#REMOVE (Dem Nom) IF (-1 NP-BORDER)
+#                  (*1 N BARRIER NON-A LINK *1 VFIN BARRIER CS);
+# Desse to var for nokre akkusativ-pronomen som skulle vore Gen, men no
+# finn eg dei ikkje att.
+
+
+
 
 # The 'select' rule was too powerful, we do 'remove' instead.
 #SELECT Gen IF (-1 NP-BORDER)(*1 N BARRIER NON-A LINK *1 VFIN);
