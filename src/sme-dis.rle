@@ -257,7 +257,7 @@ LIST LEAN-SG1 = ("leat" V Ind Prs Sg1);
 LIST COPULAS = "leat" "s1addat" ;
 
 SET VERB = V - (V N);   # V is all readings with a V tag in them, VERB should
-                        # be the ones withoud an N tag following the V
+                        # be the ones without an N tag following the V
 
 #SET V-IND-FIN-NON-COP =  V-IND-FIN - LEAT-COP  ;
 
@@ -278,6 +278,7 @@ SET V-DER-PASS = V + V-DER + Pass;    # + is intersection, this should work
 SET V-PASS = (V Pass);                # better?
 SET V-NON-AUX-PASS = V - AUX - V-PASS ;
 SET ACT-PRFP = PrfPrc - V-PASS;
+
 
 # Pronoun sets
 # ------------
@@ -873,6 +874,12 @@ REMOVE Adv IF (-1 Gen)(0 Po)(NOT 1C Po);
 SELECT CS IF (-1 CLB); # this one too general, there must be separate
                        # rules for different groups of CS.
 
+# dasgo
+# -----
+
+SELECT CS IF (-1 BOS)(0 ("dasgo"))(NOT *1 ("?"));
+
+
 # de
 # --
 
@@ -1296,7 +1303,7 @@ REMOVE Interr IF (-1 Interr);
 
 SELECT Sg IF (-1C (N Sg) OR (Pron Sg))(0 (Pron Interr));
 SELECT Pl IF (-1C (N Pl) OR (Pron Pl))(0 (Pron Interr));
-SELECT Sg IF (-2C (N Sg) OR (Pron Sg))(-1 COMMA)(0 (Pron Interr));
+SELECT Sg IF (NOT -3 CC)(-2C (N Sg) OR (Pron Sg))(-1 COMMA)(0 (Pron Interr));
 SELECT Pl IF (-2C (N Pl) OR (Pron Pl))(-1 COMMA)(0 (Pron Interr));
                                    ## Giella, maid dovdán.
                                    ## Gielat, maid dovdán.
@@ -1368,7 +1375,6 @@ REMOVE (Dem Pl Nom) IF (NOT *1 (N Pl Nom) OR V-PL3 BARRIER NPNH);
 
 
 
-
 # Disambiguating against other POS
 # --------------------------------
 
@@ -1436,14 +1442,15 @@ SELECT Attr IF (NOT *-1 V-SG3)(0 ("garas" A Attr))(1 N)(NOT *1 V-SG3);
 # Attribute disambiguation
 # ========================
 
- # REMOVE (A Nom) IF (0 (A Attr))(*1C N BARRIER NON-A LINK NOT 1 Po);
-REMOVE (A Nom) IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
+REMOVE (A Nom) IF (0 (A Attr))(*1C N BARRIER NON-A LINK NOT 1 Po);
+#REMOVE (A Nom) IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
 REMOVE (A Gen) IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
 REMOVE (A Acc) IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
                ## Dat lea c1uovvovas1 sajis.
                ## Sámegiella ja dárogiella leat ovttaárvosas1 gielat.
+	## Lea deat1alas1 movttiidahttit studenttaide gazzat doavttergrádaoahpu. 
  # The careful mode (*1C N) was removed because of the second example.
-
+ # But reintroduced because of the third example.
 
 # These two are too heavy.
 REMOVE V IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
@@ -1456,6 +1463,17 @@ REMOVE PrsPrc IF (0 (A Attr))(1 N)(NOT 1 Gen);
 
 REMOVE (A Loc) IF (0 Attr)(1 N);
  
+
+# Special rules for 'buorre' (the only adjective showing case agreement)
+# ----------------------------------------------------------------------
+
+SELECT Gen IF (0 ("buorre"))(NOT 0 Comp OR Superl)
+              (*1C (N Gen) BARRIER NON-ADJ-CC);
+
+SELECT Acc IF (0 ("buorre"))(NOT 0 Comp OR Superl)
+              (*1C (N Acc) BARRIER NON-ADJ-CC);
+
+
 
 # Rule for predicative attributes
 # - - - - - - - - - - - - - - - - 
@@ -1472,6 +1490,10 @@ SELECT (A Attr) IF (1 CC)(2 (A Attr))(3 N); ## Dat lea od1d1a ja vilges gákti.
 SELECT (Prop Attr) IF (NOT -1 Prop)(1 CC)(2 (Prop Attr))(3 (N Prop));
                            ## Dál leaba Brita ja Ove Kåven.
 
+
+# Adjectives as predicates
+# ========================
+
 SELECT A IF (*-1 ("leat" V) BARRIER NON-ADV-INDEF)(1 N OR EOS);
                            ## Ikte lei hui buolas1.
 
@@ -1486,23 +1508,11 @@ REMOVE Attr IF (0 A-CASE OR Adv)(1 CC)(NOT *2 N BARRIER (A Attr) OR ("buorre"));
                     ## Guovlu lea 1500 km guhkkosas1 ja 300 km govdosas1.
   # Is there something wrong with this rule?
 
+REMOVE (A Gen) IF (*-1 COPULAS BARRIER NON-ADV-PCLE)(1 Inf); ## Lea hávski oaz1z1ut reivve.
 
 REMOVE (A Sg Nom) IF (0 (A Attr))(*1C N BARRIER NON-Attr);
   # When 1 = object predicative, this is a bad rule. Perhaps:
   # (-1 COPULAS)? Keep it in mind. - Also compare first rule of Attribute disambiguation.
-	## Lea deat1alas1 movttiidahttit studenttaide gazzat doavttergrádaoahpu. 
-
-
-# special rules for 'buorre' (the only adjective showing case agreement)
-# ----------------------------------------------------------------------
-
-SELECT Gen IF (0 ("buorre"))(NOT 0 Comp OR Superl)
-              (*1C (N Gen) BARRIER NON-ADJ-CC);
-
-SELECT Acc IF (0 ("buorre"))(NOT 0 Comp OR Superl)
-              (*1C (N Acc) BARRIER NON-ADJ-CC);
-
-
 
 
 # Comparatives
@@ -1598,6 +1608,10 @@ SELECT Inf IF (*-1 INF-VERB BARRIER CS OR Nom OR Interr OR Neg);
                            ## Skuvla galggai oahpahit sámemánáide dárogiela.
                            ## Pros1eavtta áigut c1ad1ahit.
 
+SELECT Inf IF (*-1 ACC-INF-VERB BARRIER CS OR Nom OR Interr OR Neg);
+
+SELECT Inf IF (-1 (A Nom))(*-2 COPULAS BARRIER NON-ADV-PCLE);
+
 SELECT Inf IF (-1 (Neg Sup)); # Use *-1 instead, and define barrier? 
 
 
@@ -1610,7 +1624,7 @@ SELECT PrfPrc IF (*-1 Neg BARRIER CONTRA);
 SELECT PrfPrc IF (*-1 VFIN BARRIER CLB OR CS)(NOT 0 Actio)
                  (NOT *-1 CC BARRIER VFIN); ## Mun lean muitalan.
                                             ## Mun muitalan ja muitalan.
-                                            ## Mun lean muitalan.
+        
   # Hmm: PrfPrc if there is not a Sg1 to the left, but if there is a CC to
   # the right of a possible Sg1, then we forget about the Sg1.
 
@@ -2094,7 +2108,7 @@ REMOVE Gen IF (NOT *-1 Pr OR Num OR CC BARRIER NPNH)(0 NOTIME)
 # CC in the preceding rule because of coordination after Pr. The next rule 
 # compensates for it.
 
-SELECT Acc IF (NOT *-1 Pr OR Num BARRIER NPNH)(0 NOTIME)(NOT 0 VERB)
+SELECT Acc IF (NOT *-1 Pr OR Num BARRIER NPNH)(0 NOTIME)(NOT 0 Nom OR VERB)
 		(*1 CLB BARRIER NON-ADV-PCLE);
 
 REMOVE Gen IF (NOT *-1 Pr OR CC BARRIER NPNH)(-1 Gen)(0 NOTIME)
@@ -2114,7 +2128,7 @@ REMOVE Gen IF (NOT *-1 Pr OR Num BARRIER NPNH)(0 NOTIME)(NOT 0 VERB)
 REMOVE Acc IF (NOT *-1 V-NON-AUX BARRIER CS)(NOT *1 V-NON-AUX BARRIER CS);
         ## Sápmelac1c1aid historjá álbmogin lea duháhiid jagiid boaris, muhto
         ## dálá ássanguovlluin sápmelac1c1at eai leat ássan nu guhká.
-        ## Eai lean váldán go niestebohccu.
+        ## Eai lean váldán go niestebohcco.
   # We need a verb for an obj. The barrier must be refined, though!
   # Cf the last example, that gives the wrong result.
   # But the preceding Remove GEN rule fixes it!
@@ -2188,7 +2202,7 @@ REMOVE Gen IF (@1 V-NON-AUX + Clt)(NOT -1 (N Acc))
 
 #REMOVE Gen IF (-1 VFIN)(0 N)(1 CLB); ## Joramii riegádii Ussia, Ussiai riegádii
 # The rule is too specific.          ## Jotam.
-# See rule under "Accusative sentence-finally"!
+# - And not needed any more for these examples. See rule under "Accusative sentence-finally"!
 
 
 # Numeral as object after postverbal subject
@@ -2307,6 +2321,8 @@ SELECT Gen IF (NOT 0 A)(*1 (N Acc) BARRIER NPNH OR CC LINK 1 PrfPrc);
 
 # Specifier disambiguation in coordination constructions
 # - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+REMOVE Acc IF (-1 CC)(*1C (N Nom) BARRIER NPNH);
 
 SELECT Gen IF (-2 Ill)(-1 CC)(*1 Ill BARRIER NPNH);
 SELECT Gen IF (-2 Com)(-1 CC)(*1 Com BARRIER NPNH);
@@ -2609,7 +2625,6 @@ SELECT (Du3) IF (*-1 ("guokte")) ;
                            ## Guokte viesu leaba dál.
 
 
-
 # Pl1
 # ---
   # Pl1 = Inf for all stem classes
@@ -2668,11 +2683,13 @@ SELECT Pl3 IF (*-1 NP-HEAD-SG-NOM BARRIER NON-ADV
 SELECT Pl3 IF (*-1 SII BARRIER MII-PERS OR MOAI OR CLB); ## Sii jerre.
 
 
-
 # Postverbal subject
 # - - - - - - - - -
 
 SELECT Pl3 IF (0C VERB)(*1 (Pl Nom) BARRIER NPNH OR CLB);
+
+SELECT Pl3 IF (NOT *-1 INF-VERB)(NOT 0 Pron OR Adv) # Instead: (0C VERB)? 
+		(*1 (Num Nom) BARRIER NON-ADV-PCLE LINK NOT 0 OKTA);
 
  # Sentence-initial verb with question particle and coordinated subject
 SELECT Pl3 IF (*-1 BOS BARRIER NON-ADV-PCLE)
@@ -2690,6 +2707,7 @@ SELECT Pl3 IF (*-1 BOS BARRIER NON-ADV-PCLE)(*1C NP-HEAD-PL-NOM
  # Post-adverbial verb with final subject
 SELECT Pl3 IF (-1 Adv OR ADVERBIAL LINK *-1 BOS BARRIER NPNH)
               (*1 (N Pl) BARRIER NPNHAI);
+
 
 
 
