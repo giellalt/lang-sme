@@ -699,7 +699,7 @@ REMOVE (PxSg3) ; # IF (0 Loc);
 
 SELECT N IF (-1C (A Attr));                  ## Dat lea c1uovvovas1 sajis.
 
-SELECT N IF (-2C N) (-1 CC) (NOT 1 N OR A);  ## Mánát ja nuorat leat dál.
+SELECT N IF (-2C N)( -1 CC)(NOT 0 VERB)(NOT 1 N OR A);  ## Mánát ja nuorat leat dál.
 
 SELECT N IF (-2 BOS)(-1C Gen)(1 EOS);        ## Son lea Ruot1a c1álli.
                                               # (titles)
@@ -862,15 +862,15 @@ REMOVE Pr IF (NOT 1 (Pron Gen));
 # Po or not
 # =========
 
-SELECT Po IF (-1 Gen)(NOT 1C Po);           ## ... dan njealji beali ektui.
-                                            
-
+SELECT Po IF (-1 Gen)(NOT -1 ("leat" PrfPrc))(NOT 1C Po);
+		       ## ... dan njealji beali ektui.
+                
 SELECT Po IF (-1 Num)(0 ("rádjai")); # make general rule!
 
 # using it for all Po
 REMOVE N IF (-1 Gen)(0 Po)(NOT 1C Po);
 REMOVE V IF (-1 Gen)(0 Po)(NOT 1C Po);
-REMOVE Adv IF (-1 Gen)(0 Po)(NOT 1C Po);
+REMOVE Adv IF (-1 Gen)(NOT -1 ("leat" PrfPrc))(0 Po)(NOT 1C Po);
 
 
 
@@ -993,7 +993,7 @@ SELECT Adv IF (-2 VFIN)(-1 ("nu"))(1 COMMA)(2 ("ahte"));
 SELECT Adv IF (*-1C VFIN-NON-AUX BARRIER NON-ADV)
               (0 A-ATTR)(NOT 1 N);                    # Adv if postverbally
 
-REMOVE Adv IF (-1 (N Gen) OR (Pron Gen))(NOT -1 Adv)
+REMOVE Adv IF (-1 (N Gen) OR (Pron Gen))(NOT -1 Adv OR ("leat" PrfPrc))
               (0 Po);                                 # Po if after Gen
 
 REMOVE Adv IF (-1 ("leat"))(0 (A Attr))(1 N);  ## Bussás leat alit c1almmit.
@@ -1252,7 +1252,7 @@ SELECT (Pron Ill) IF (0 ("son"))(1 (Pron Sg));
 
 SELECT Pers IF (0 ("dat"))(NOT 1 A OR Num OR N); 
 
-SELECT (Sg3 Nom) IF (0 ("dat"))(1 (V Sg3));  # Sg3 or Pl3 is Pers.
+SELECT (Sg3 Nom) IF (0 ("dat"))(1 (V Sg3))(NOT 1 (N Pl));  # Sg3 or Pl3 is Pers.
 SELECT (Pl3 Nom) IF (0 ("dat"))(1 (V Pl3));
 #SELECT (Sg Nom) IF (0 ("dat"))(*1 (V Sg3) BARRIER NON-ADV); #Sg or Pl is Dem.
 #SELECT (Pl Nom) IF (0 ("dat"))(*1 (V Pl3) BARRIER NON-ADV); 
@@ -1490,9 +1490,9 @@ REMOVE (A Acc) IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
  # The careful mode (*1C N) was removed because of the second example.
  # But reintroduced because of the third example.
 
-# These two are too heavy.
+# These two are too heavy. (The second one is modified. MJ) 
 REMOVE V IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
-REMOVE N IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
+REMOVE N IF (0 (A Attr))(NOT 1 PrfPrc) (*1 N BARRIER NON-A LINK NOT 1 Po);
                ## Olles doaibmaviessu lea sullii 2300 njealjehasmetera stuoru. 
 
 
@@ -1668,7 +1668,8 @@ SELECT Inf IF (-1 (A Nom))(*-2 COPULAS BARRIER NON-ADV-PCLE);
 # -------------------
 # PrfPrc to the right of negated verb
 
-SELECT PrfPrc IF (*-1 Neg BARRIER CONTRA);
+SELECT PrfPrc IF (*-1 Neg BARRIER CONTRA OR VFIN); 
+	# This rule also hits "Ii leat boahtán", but that is OK.
 
 SELECT PrfPrc IF (*-1 VFIN BARRIER CLB OR CS)(NOT 0 Actio)
                  (NOT *-1 CC BARRIER VFIN); ## Mun lean muitalan.
@@ -1765,7 +1766,7 @@ SELECT Gen IF (*-1C NUMERALS BARRIER NPNH OR Gen) ;
 
 # Genitive in front of postposition
 
-SELECT Gen IF (NOT 0 Adv)(1 Po) ;    ## Dat lea nieidda dihte, nieidda birra.
+SELECT Gen IF (NOT 0 Adv OR PrfPrc)(1 Po) ;    ## Dat lea nieidda dihte, nieidda birra.
   # As it stands, this rule has no conditions. So, what errors will we get?
 
 # Genitive after preposition
@@ -2327,7 +2328,7 @@ REMOVE (V Ind Prt Sg3) IF (*-1 Acc BARRIER NPNH LINK *-1 VFIN);
 REMOVE (N Acc) IF (-1 NP-BORDER)(NOT -1 V)
                   (*1 N BARRIER NON-A LINK *1 VFIN BARRIER CS);
 
-REMOVE (N Nom) IF (-1 NP-BORDER)
+REMOVE (N Nom) IF (-1 NP-BORDER)(NOT 1 ("leat"))
                   (*1 N BARRIER NON-A OR CLB LINK *1 VFIN BARRIER CS);
                                          ## Nieidda girji lea ruoksat.
 
@@ -2658,7 +2659,11 @@ SELECT Sg3 IF (-2 CLB)(-1 (N Sg Nom));
 SELECT Sg3 IF (-1 CLB)(NOT 0 Adv)(1 (Sg3 Nom));
 SELECT Sg3 IF (-1 CLB)(NOT 0 Adv)(1 (N Sg Nom));
 
+SELECT V-SG3 IF (*-1 (N Sg Nom) OR (Pron Sg3 Nom) BARRIER VFIN)
+		(NOT *-1 V-SG3 BARRIER CS)(NOT *1 V-SG3 BARRIER CS);
+
 SELECT V-SG3 IF (-2 V-SG3)(-1 CC)(NOT 0 Adv OR A);
+
 
 # Du1
 # ---
@@ -2760,6 +2765,8 @@ SELECT Pl3 IF (*-1 (Num Nom) BARRIER CS OR PPRON-NOT-SII OR (N Sg Nom))
 # - - - - - - - - -
 
 SELECT Pl3 IF (0C VERB)(*1 (Pl Nom) BARRIER NPNH OR CLB);
+
+SELECT Pl3 IF (0C VERB)(*1 (Pl Nom) BARRIER NON-ADV);
 
 SELECT Pl3 IF (NOT *-1 INF-VERB)(NOT 0 Pron OR Adv) # Instead: (0C VERB)? 
 		(*1 (Num Nom) BARRIER NON-ADV-PCLE LINK NOT 0 OKTA);
@@ -3062,10 +3069,10 @@ SELECT PrfPrc IF (*-1 CC BARRIER NON-ADV LINK -1 PrfPrc)
 # leamas1 without finite verb
 # - - - - - - - - - -
 
-SELECT PrfPrc IF (0 ("leat"))(NOT *-1 VFIN BARRIER CS)(NOT *1 VFIN) ; 
-	# This rule still picks out some instances of "lean". How can we
-	# identify "leamas1"?	## Lean áibbas ovttamielas.
-
+SELECT PrfPrc IF (-1 NP-HEAD)(NOT -1 Gen)(0 ("leapma" Dimin)); 
+SELECT PrfPrc IF (0 ("leapma" Dimin))(*1 A-CASE BARRIER NON-ADV-PCLE);
+SELECT PrfPrc IF (NOT *-1 VFIN BARRIER CS)(0 ("leapma" Dimin))
+		(NOT *1 VFIN BARRIER Interr OR CS);
 
 # ImprtII
 # -------
@@ -3081,13 +3088,13 @@ REMOVE VGen IF (*-1 CS OR Interr OR BOS BARRIER VFIN)(0 VFIN)
   # and removes VGen if this is not the case. More rules are needed in order
   # to remove more cases.
 
-# Gerund,  Verb abessive and Supine do have uniqe forms and need no rules
+# Gerund,  Verb abessive and Supine do have unique forms and need no rules.
 
 
 # Selecting some finite.
 # ----------------------
 
-SELECT VFIN IF (NOT *-1 VFIN BARRIER CS OR Interr)(NOT *1 VFIN BARRIER CS)
+SELECT VFIN IF (NOT *-1 VFIN BARRIER CS OR Interr)(NOT 0 N)(NOT *1 VFIN BARRIER CS)
                (NOT -1 BOS LINK 2 EOS)(NOT -2 BOS LINK 1 N LINK 2 EOS);
                                ## Son lea dan sápmelas1 gean dovddan.
                                ## Gos don dál boad1át? Siiddas.
