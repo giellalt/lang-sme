@@ -131,7 +131,7 @@ LIST PUNCT = PUNCT ;
 # Single-word sets
 
 LIST OKTA = "okta"; LIST go = "go" ; 
-LIST COMMA = "<,>" ;
+LIST COMMA = "," ;
 LIST MANGA = "mán1ga" "galle" ;
 
 
@@ -437,6 +437,9 @@ LIST INITIAL =  "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m"
 
 LIST PROSEANTA = "proseanta" "%" ;
 
+LIST PREGEN = ("oktavuohta" N Sg Loc);
+	# Nominals that take a preceding genitive.
+
 
 # Miscellaneous sets
 # ------------------
@@ -463,17 +466,18 @@ SET NP-HEAD-PL = (Pron Pl) | (Pron Pl3) | (N Pl);
 SET NP-HEAD-SG-NOM = (Pron Sg Nom) | (Pron Sg3 Nom) | (N Sg Nom);
 SET NP-HEAD-PL-NOM = (Pron Pl Nom) | (Pron Pl3 Nom) | (N Pl Nom);
 SET NP-HEAD-ACC = (Pron Acc) | (N Acc);
+SET NP-HEAD-GEN = (Pron Gen) | (N Gen);
 
 SET PRE-NP-HEAD = (Prop Attr) | A | (Pron Pers Gen) | (N Gen) | Num |
                   (Pron Dem)  | (Pron Refl Gen) | (Pron Indef) | CC ; # PrfPrc?
 
 # There must be a sensible naming convention for these sets...
 SET NPNH = WORD - PRE-NP-HEAD ;                 # NPNH = "NON-PRE-NP-HEAD". 
-
-SET NPNHA = WORD - PRE-NP-HEAD - Adv ;     # NPNHA = "NON-PRE-NP-HEAD-OR-ADV"
+SET NPNHA = WORD - PRE-NP-HEAD - Adv ;     # NPNHA = "NON (PRE-NP-HEAD-OR-ADV)"
 SET NPNHAI = WORD - PRE-NP-HEAD - Adv - Indef ; # NPNHAI " "...-OR-INDEF"
 SET NPNHAII = WORD - PRE-NP-HEAD - Adv - Indef - Ill ; # Illative indir.obj.
 SET NPNHAIIP = WORD - PRE-NP-HEAD - Adv - Indef - Ill - Pcle ;
+SET NPNHC = WORD - PRE-NP-HEAD - Com ; # "njan1ggofirpmiiguin bivdin"
 
 
 # Other nominal sets
@@ -1272,7 +1276,7 @@ SELECT Adv IF (*-1 CS BARRIER VFIN OR CLB)(NOT -1 go)(0 ("maid"))
 	(*1 VFIN LINK NOT *1 VFIN);
 	##... nu ahte dat maid siskkilda ávnnalas1 kultureavttuid.    
 
-SELECT Interj IF (-1 BOS)(0 ("maid"))(1 CLB);
+SELECT Interj IF (-1 BOS)(0 ("maid"))(1 COMMA);
 
 # manne
 SELECT Adv IF (-1 BOS)(0 ("manne"))(1 VFIN);     ## Manne ii leat áviisa boahtán?
@@ -1827,7 +1831,7 @@ SELECT Inf IF (*-1 INF-VERB BARRIER CS OR CLB OR CP OR Neg);#(NOT 0 Adv);
                            ## Skuvla galggai oahpahit sámemánáide dárogiela.
                            ## Pros1eavtta áigut c1ad1ahit.
 
-SELECT Inf IF (-2 Inf)(-1 CLB)(1 CLB OR CC);
+SELECT Inf IF (-2 Inf)(-1 COMMA)(1 COMMA OR CC);
 
 # This rule looks across a relative clause:
 SELECT Inf IF (*-1 VFIN BARRIER CS OR CP LINK *-1 (Pron Interr) BARRIER CS
@@ -1950,8 +1954,14 @@ SELECT Gen IF (NOT 0 Adv OR PrfPrc)(1 Po);    ## Dat lea nieidda dihte, nieidda 
 # Genitive after preposition
 SELECT Gen IF (*-1 Pr BARRIER NPNH)(1 NP-BORDER OR CC); ## Earret mu ii giige lea boahtán.
 
-# Genitive in front of 'oktavuod1as' (expand to set?)
-SELECT Gen IF (1 ("oktavuohta" N Sg Loc));  
+# Genitive in front of 'oktavuod1as'
+SELECT Gen IF (1 PREGEN);  
+
+# Coordination
+# - - - - - -
+
+SELECT Gen IF (1 CC)(*2 NP-HEAD-GEN BARRIER NON-A LINK 1 Po OR PREGEN);
+SELECT Gen IF (1 COMMA)(*2C NP-HEAD-GEN BARRIER NPNH LINK 1 CC);
 
 
 # Various
@@ -1980,7 +1990,7 @@ REMOVE Gen IF (*-1 OPRED-VERB BARRIER NPNH)(1 Ess);
 # Nominative or Accusative
 # ------------------------
 
-REMOVE Gen IF (-1 BOS)(1 Adv) ; # Dan láhkai - Gen or Acc?
+REMOVE Gen IF (-1 BOS)(1 Adv) ; 
             ## Dan maid dalle dárbbas1a fievrridit.
 
 REMOVE Gen IF (NOT *-1 Pr OR NUMERALS BARRIER NPNH)(NOT -1 ("mii"))(NOT 0 TIME)
@@ -2065,7 +2075,7 @@ SELECT Nom IF (1 CC)(*2C Nom BARRIER NPNHAI LINK 1 NP-BORDER);
   ## Per Mikael Utsi ja Bror Berg leaba ruovttus.
   ## Bivdoearrái gullet dorski ja diksu.
 
-SELECT Nom IF (*-1 CLB BARRIER NPNHAI LINK -1 Nom)(1 CC);
+SELECT Nom IF (*-1 COMMA BARRIER NPNHAI LINK -1 Nom)(1 CC);
  
 
 # Postverbal subjects
@@ -2088,7 +2098,7 @@ SELECT (Pl Nom) IF (*-1 V-PL3 BARRIER NPNHAIIP LINK *-1 BOS OR CLB BARRIER Nom)
 SELECT Nom IF (*-1 (V Pl3) BARRIER NPNH LINK NOT *-1 (Pl Nom) OR (Pl3 Nom) 
 		BARRIER CS OR CP)(1 CC)(*2 Nom BARRIER NPNH);
 
-SELECT Nom IF (*-1 CC BARRIER NPNH OR PUNCT LINK -1 Nom)(0C N OR Num);
+SELECT Nom IF (*-1 CC BARRIER NPNHC OR PUNCT LINK -1 Nom)(0C N OR Num)(1 NP-BORDER);
 
 
 # Nominative predicatives
@@ -2379,7 +2389,7 @@ REMOVE Gen IF (NOT *-1 Pr OR Num OR CC BARRIER NPNH)(0 NOTIME OR Pron)
 # compensates for it.
 
 SELECT Acc IF (NOT *-1 Pr OR Num BARRIER NPNH)(0 NOTIME OR Pron)(NOT 0 Nom OR VERB)
-		(*1 CLB BARRIER NON-ADV-PCLE);
+		(*1 CLB BARRIER NON-ADV-PCLE LINK NOT *1 Gen BARRIER NPNH);
 
 REMOVE Gen IF (NOT *-1 Pr OR CC BARRIER NPNH)(-1 Gen)(0 NOTIME OR Pron)
 		(*1 CLB BARRIER NON-ADV-PCLE);
@@ -2442,15 +2452,17 @@ SELECT Acc IF (*-1 V-NON-AUX BARRIER NPNHAII)(0 N)(1 COMMA)
 
   # Second part
 SELECT Acc IF (*-1 COMMA BARRIER NPNH LINK -1 NP-HEAD-ACC LINK 
-               *-1 V-NON-AUX BARRIER NPNHAII)(0 N)(1 CC LINK
-                 1 NP-HEAD-ACC   BARRIER NPNHA LINK 1 NP-BORDER);
+               *-1 V-NON-AUX BARRIER NPNHAII)(0 N)(1 CC);
+		# LINK 1 NP-HEAD-ACC BARRIER NPNHA LINK 1 NP-BORDER);
          ## Jos juohká dáz1aid, sámiid ja láddelac1c1aid ies1 gud1et sadjái, ...
 
   # Third part
 SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD-ACC LINK -1 COMMA BARRIER
                NPNH LINK -1 NP-HEAD-ACC LINK *-1 V-NON-AUX BARRIER NPNHAII)
-               (0 N)( 1 NP-BORDER);
+               (0 N)(1 NP-BORDER OR Gen);
          ## Jos juohká dáz1aid, sámiid ja láddelac1c1aid ies1 gud1et sadjái, ...
+	## Ferte vuhtiiváldit divs1s1ohasa dárbbuid, beros1tumiid ja riektesihkar-
+	## vuod1a dearvvas1vuod1abálvalusa ektui. 
 
 
 # Accusative for a topicalised verb
@@ -2524,6 +2536,10 @@ REMOVE (N Nom) IF (-1 NP-BORDER)(NOT 1 ("leat") OR Inf)
                   (*1 N BARRIER NON-A OR CLB LINK *1 VFIN BARRIER CS);
                                          ## Nieidda girji lea ruoksat.
 
+REMOVE Acc IF (NOT *-1 VERB BARRIER CS OR CP)(*1 Po BARRIER VERB);
+	## Romssa universitehta vuosttas1 c1ielgadeapmi sámi dutkama ja oahpahusa
+	## birra dahkkui 1988/89s.
+
 REMOVE (Pron Pers Acc) IF (-1 NP-BORDER)(*1 N BARRIER NON-Attr LINK *1 VFIN);
 #REMOVE (Pron Pers Nom) IF (-1 NP-BORDER)(*1C N BARRIER NON-Attr LINK *1 VFIN);
                                          ## Din viessu s1attai oppa stuoris.
@@ -2593,6 +2609,7 @@ SELECT Gen IF (NOT 0 A)(*1 (N Acc) BARRIER NPNH OR CC LINK 1 PrfPrc);
 
 REMOVE Acc IF (-1 CC)(*1C (N Nom) BARRIER NPNH);
 
+SELECT Gen IF (-1 CC)(*1 Gen BARRIER NPNH LINK 1 NP-BORDER);
 SELECT Gen IF (-2 Ill)(-1 CC)(*1 Ill BARRIER NPNH);
 SELECT Gen IF (-2 Com)(-1 CC)(*1 Com BARRIER NPNH);
 SELECT Gen IF (-2 Loc)(-1 CC)(*1 Loc BARRIER NPNH);
