@@ -10,6 +10,10 @@ BINDIR = ../../script/testing
 # Bond, James Bond
 UMASK=@umask 007
 
+# Empty variable to be overridden by the user when
+# generating paradigms:
+WORD =
+
 # Default target:
 # Remove the comments in front of the verb and adjective
 # targets when you have codes and test cases for them
@@ -57,6 +61,8 @@ clean:
 		  *.gresult \
 		  *.aresult \
 		  *.summary \
+		  *.ptest \
+		  *paradigm \
 		  *.tgz	\
 		  *~ \
 		  /tmp/*test-script
@@ -103,6 +109,29 @@ n-a.summary: $(NAnaFiles)
 	@echo
 #	@less $@
 
+# Create noun paradigm generation input file:
+n-para.ptest: noun-codes.txt
+	@echo
+	@echo "*** Creating the noun paradigm input file for '$(WORD)' ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNword.pl $< $(WORD) > $@
+	@chmod 660 $@
+
+# Paradigm generation:
+n-paradigm: n-para.ptest
+	@echo
+	@echo "*** Running the paradigm generator for '$(WORD)' ***"
+	@echo
+	@printf "load ../sma.save \n\
+	apply down <$< \n\
+	quit \n" > /tmp/$@-gtest-script
+	@xfst < /tmp/$@-gtest-script > $@
+	@rm -f /tmp/$@-gtest-script
+	@less $@
+
+
 # VERBS
 # =====
 
@@ -134,6 +163,29 @@ v-a.summary: $(VAnaFiles)
 	@echo
 #	@less $@
 
+# Create verb paradigm generation input file:
+v-para.ptest: verb-codes.txt
+	@echo
+	@echo "*** Creating the verb paradigm input file for '$(WORD)' ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNword.pl $< $(WORD) > $@
+	@chmod 660 $@
+
+# Paradigm generation:
+v-paradigm: v-para.ptest
+	@echo
+	@echo "*** Running the paradigm generator for '$(WORD)' ***"
+	@echo
+	@printf "load ../sma.save \n\
+	apply down <$< \n\
+	quit \n" > /tmp/$@-gtest-script
+	@xfst < /tmp/$@-gtest-script > $@
+	@rm -f /tmp/$@-gtest-script
+	@less $@
+
+
 # ADJECTIVES
 # ==========
 
@@ -164,6 +216,29 @@ a-a.summary: $(AAnaFiles)
 	@echo "*** The concatenated reports are stored in $@. ***"
 	@echo
 #	@less $@
+
+# Create adjective paradigm generation input file:
+a-para.ptest: adj-codes.txt
+	@echo
+	@echo "*** Creating the adjective paradigm input file for '$(WORD)' ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNword.pl $< $(WORD) > $@
+	@chmod 660 $@
+
+# Paradigm generation:
+a-paradigm: a-para.ptest
+	@echo
+	@echo "*** Running the paradigm generator for '$(WORD)' ***"
+	@echo
+	@printf "load ../sma.save \n\
+	apply down <$< \n\
+	quit \n" > /tmp/$@-gtest-script
+	@xfst < /tmp/$@-gtest-script > $@
+	@rm -f /tmp/$@-gtest-script
+	@less $@
+
 
 # POS-independent parts:
 # ======================
@@ -215,6 +290,7 @@ a-a.summary: $(AAnaFiles)
 	-$(UMASK) && \
 	diff --side-by-side --width=70 $< $*.gfacit > $@
 	@chmod 660 $@
+
 
 # Word form analysis:
 # -------------------
