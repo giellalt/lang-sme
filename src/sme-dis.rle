@@ -1748,6 +1748,14 @@ SELECT Gen IF (*-1C Num BARRIER NPNH OR Gen) ;
                     ## Dál leat mán1ga nieidda
                     ## Ovdal 1920 orru guovtti goalmmátoasis ohcamiin nu geavvan.
 
+# Genitive in front of postposition
+
+SELECT Gen IF (NOT 0 Adv)(1 Po) ;    ## Dat lea nieidda dihte, nieidda birra.
+  # As it stands, this rule has no conditions. So, what errors will we get?
+
+# Genitive after preposition
+SELECT Gen IF (-1 Pr); # Earret mu ii giige lea boahtán.
+
 REMOVE Nom IF (*-1 (Pron Dem Acc) OR (Pron Dem Gen) BARRIER NON-A);
                                    ## Dan ás1s1i ferte dutkat.
 
@@ -1774,7 +1782,6 @@ REMOVE Gen IF (-1 BOS)(1 Adv) ;
 # =========== #
 
 
-
 # Topicalised object
 # ------------------
 
@@ -1792,8 +1799,10 @@ SELECT Acc IF (*-1 (V Neg))(NOT 0 Nom)
 
 REMOVE Gen IF (NOT -2 Gen)(-1 CC)(1C VFIN);
                      ## Mus lea doaivu ja dan sáhttá c1állit c1uovvovac1c1at.
+
 REMOVE Gen IF (*-1 CLB BARRIER NON-CC)(1C VFIN);
                      ## Mus lea doaivu, ja dan sáhttá c1állit c1uovvovac1c1at.
+
 REMOVE Gen IF (-1 CS)(1C VFIN);
                      ## Mun jáhkán, ahte dan sáhttá c1állit c1uovvovac1c1at.
   # The "1C" part is problematic, as this rule should have been placed
@@ -1821,7 +1830,6 @@ SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD LINK
 SELECT Acc IF (*-1 LEAT-FIN-NON-IMP BARRIER NPNHAI) (1 PrfPrc)(NOT 1 Pass) ;
                         ## Mun lean dan dahkan.
 			## Váfistan dihte bargovugiid lea komitea viiddiduvvon.
-
 
 
 # Accusative postverbally
@@ -1873,6 +1881,17 @@ SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAIIP OR COMMA)
               (1 CC)(*2 VFIN BARRIER NON-ADV-NEG) ;  
 		## Ovddemus dáidá oastit árppuid ja god1d1a firpmiid.	
 
+# Accusative sentence-finally
+# ---------------------------
+
+REMOVE Gen IF (NOT *-1 Pr OR Num BARRIER NPNH)(0 NOTIME)(1 EOS OR CLB) ;
+          ## Fylkka mearrida olugo galgá atnit sámi leavgga.
+          ## C1uovvovas1 seminára cealkagat govahallet seminára loahppabohtosa.
+          ## Man1n1il lea viessu viiddiduvvon guovtte geardde.
+
+# Not accusative
+# --------------
+
 REMOVE Acc IF (NOT *-1 V-NON-AUX BARRIER CS)(NOT *1 V-NON-AUX BARRIER CS);
         ## Sápmelac1c1aid historjá álbmogin lea duháhiid jagiid boaris, muhto
         ## dálá ássanguovlluin sápmelac1c1at eai leat ássan nu guhká.
@@ -1883,7 +1902,7 @@ REMOVE Acc IF (NOT *-1 V-NON-AUX BARRIER CS)(NOT *1 V-NON-AUX BARRIER CS);
 REMOVE Acc IF (*1 LEAT-COP BARRIER V-NON-AUX OR CS LINK *1 Ger 
 		BARRIER V-NON-AUX OR CS) ;
 	## Vihtta bivdovuogi leat Deanus luosa bivdidettiin.  
-	# An overly specific rule?
+	# An overly specific rule? And what about time expressions?
 
 REMOVE Acc IF (NOT *-1 V-NON-AUX BARRIER CS)(*1 V-PASS BARRIER CS);
 REMOVE Acc IF (*-1 V-PASS BARRIER VFIN)(NOT *1 V-NON-AUX);
@@ -1893,18 +1912,24 @@ REMOVE Acc IF (*-1 V-PASS BARRIER VFIN)(NOT *1 V-NON-AUX);
 # - - - - - - - - -
 
 # First part
-SELECT Acc IF (*-1 V-NON-AUX   BARRIER NPNHAII)(0 N)(1 CC)
-              ( *2 NP-HEAD-ACC BARRIER NPNHA LINK 1 CLB);
+# SELECT Acc IF (*-1 V-NON-AUX   BARRIER NPNHAII)(0 N)(1 CC)
+#              (*2 NP-HEAD-ACC BARRIER NPNHA LINK 1 CLB);
                                        ## Oainnán vilges biilla ja rukses viesu.
+
+SELECT Acc IF (0 N)(1 CC)(*2C NP-HEAD-ACC BARRIER NPNHA OR Gen LINK 1 CLB) ;
+	## Dalle skáhppo biergasiid nugo firpmiid ja buod1d1omuoraid.
+# Only one problem found: 
+	## Romssa universitehta sámi(*ACC) ja eamiálbmotguoskevas1 dutkama.
 
 SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAII) (0 Num) (*1 CC BARRIER NON-NA) ;
 		## Ja de ráhkadit ovtta dahje moadde s1luppoha vel.  
 
-  # Second part
+# Second part
 SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD-ACC LINK 
               *-1 V-NON-AUX BARRIER NPNHAII)(0 N)(1 CLB);
                                        ## Oainnán vilges biilla ja rukses viesu.
-SELECT Acc IF (-1 CC LINK *-1 Acc BARRIER NON-NA)(0 Num) ;
+
+SELECT Acc IF (-1 CC LINK *-1 Acc BARRIER NON-NA OR CLB)(0 Num) ;
 		## Ja de ráhkadit ovtta dahje moadde s1luppoha vel.    
 
 # Three coordinated objects
@@ -1952,15 +1977,6 @@ SELECT Acc IF (-1 (N Nom) LINK *-1 VFIN BARRIER NPNHAIIP)
 
 
 
-# Accusative sentence-finally
-# ---------------------------
-
-REMOVE Gen IF (NOT -1 Pr OR Num)(0 NOTIME)(1 EOS OR CLB) ;
-          ## Fylkka mearrida olugo galgá atnit sámi leavgga.
-          ## C1uovvovas1 seminára cealkagat govahallet seminára loahppabohtosa.
-          ## Man1n1il lea viessu viiddiduvvon guovtte geardde.
-
-
 # Accusative in time expressions
 # ------------------------------
 
@@ -1992,14 +2008,6 @@ REMOVE (V Ind Prt Sg3) IF (-1 (N Gen))(0 Ill);
 # Genitive as complement
 # ----------------------
 
-# Genitive in front of postposition
-SELECT Gen IF (NOT 0 Adv)(1 Po) ;    ## Dat lea nieidda dihte, nieidda birra.
-  # As it stands, this rule has no conditions. So, what errors will we get?
-
-# Genitive after preposition
-SELECT Gen IF (-1 Pr); # Earret mu ii giige lea boahtán.
-
-                                      
 CONSTRAINTS # The genitives preceeding this CONSTRAINTS symbol are 
             # firmer than the ones folling it.
 
@@ -2078,10 +2086,6 @@ SELECT Gen IF (-2 Ess)(-1 CC)(*1 Ess BARRIER NPNH);
                         ## Suoma sisafárrejeaddjiide ja sin man1isboahttiide.
 
 
-
-
-
-
 # Genitive relative pronouns
 # --------------------------
 
@@ -2103,16 +2107,10 @@ REMOVE Acc IF (0 Prop)(1 Prop);          ## Dat lea Norgga Röros ja Máhte Piera.
 
 
 
-
-
-
-
 # Locative singular
 # ================= #
       CONSTRAINTS
 # ================= #
-
-
 
 SELECT Loc IF (*-1 BOS OR CS BARRIER NPNHAI)
               (*1 ("leat") BARRIER NON-ADV-NEG);
@@ -2198,8 +2196,6 @@ SELECT Loc IF (*1 LOC-VERB BARRIER CS);
 # coordination follow suit.
 
 # Simple coordination
-
-SELECT Acc IF (0C N) (1 CC) (*2 Acc BARRIER NPNH) ; # Too strict?
 
 SELECT Gen IF (1 CC)(*2 Po BARRIER NON-NP) ; # Overgenerates?
 	# Váfistan ja áimmahus1s1an dihte od1d1a bargovugiid..
