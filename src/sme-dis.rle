@@ -418,8 +418,8 @@ LIST INITIAL =  "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m"
 
 LIST PROSEANTA = "proseanta" "%" ;
 
-LIST VAHKKU = "áigi" "beaivi" "c1uohte/jahki" "geardi" "geassi" "idja" "jahki" "mánnu" 
-		"vahku" jahki ;
+LIST VAHKKU = "áigi" "beaivi" "c1akc1a/geassi" "c1uohte/jahki" "geardi" "geassi" 
+		"idja" "jahki" "mánnu" "vahku" jahki ;
  # The quoteless jahki here is since the preprocessor is not fine-tuned
  # yet, it still gives '"1870-" # jahki N Sg Com'.
 
@@ -699,15 +699,13 @@ REMOVE (A Sg Nom) IF (NOT *-1 VFIN)(0 (N Sg Nom))(*1 V-SG3 BARRIER NON-ADV-PCLE)
 REMOVE (A Pl Nom) IF (NOT *-1 VFIN)(0 (N Pl Nom))(*1 V-PL3 BARRIER NON-ADV-PCLE);
                      ## Dálá guovlluin sápmelac1c1at eai leat ássan nu guhká.
 
+
 # Based on right context
 # ----------------------
 
 REMOVE A IF (0 N)(1 Po);                ## C1ohkkán dárolac1c1aid gaskkas.
 
 REMOVE A IF (0 N)(1C VFIN) ;            ## Dál go sápmelac1c1ain leat bohccot.
-
-REMOVE A IF (NOT *-1 COPULAS OR ("dahkat") BARRIER V-NON-AUX)(0 N)(1 CLB) ;
-	## Sii dahke sámi kultuvrra oainnusin.
 
 REMOVE V IF (-1 Dem)(1 V-IND-FIN);      ## Dán báhkis s1addá c1áppa gohppu.
 
@@ -746,10 +744,10 @@ SELECT (Pl Nom) IF (1 (V Pl3));
 
 
 # Based on circumscribed context
+# ------------------------------
 
 SELECT A IF (-1 CC)(0 (N as1))(1 Cmpnd);
            ## Lea sahka oppalac1c1at eamiálbmot- ja unnitloguás1s1iid dutkamiin.
-
 
 
 
@@ -1027,15 +1025,24 @@ Remove Adv IF (-1 Gen)(0 (N Loc)) ;      ## Son bod1ii njukc1amánu loahpas.
 SELECT N IF (-1 Gen OR (A Attr))(0 ("álgu"));  ## Pros1eavtta álgu ii lean álki.
 
 # beare
-SELECT Adv IF (0 ("beare"))(1 ("ollu"));  ## orohagas leat beare olu bohccot.
+SELECT Adv IF (0 ("beare"))(1 ("ollu"));  ## Orohagas leat beare olu bohccot.
 
 # beallái
   # XXX write rules for this as postposition as well!
 
 
 # danin
-SELECT Adv IF (0 ("danin"))(NOT *1 (N Ess) BARRIER NPNH);
+SELECT Adv IF (0 ("danin"))(NOT *1 (N Ess) BARRIER NPNH)
+		(NOT *-1 COPULAS BARRIER NON-ADV)(NOT 1 CLB)
+		(NOT *-1 ("atnit") BARRIER NON-ADV)
+		(NOT *1 ("atnit") BARRIER NON-ADV);
                                         ## Danin badjánii jurdda lága ráhkadit.
+					## Návetruitu lávejit danin atnit.
+	# Make SET instead of "atnit"?
+
+SELECT Ess IF (0 ("danin"))(*-1 COPULAS BARRIER NON-ADV)(1 CLB); 
+					## ...jos fierpmit leat danin,...
+
 # dákko
 REMOVE (V Imprt Prs Sg2) IF (0 ("dákko"))(*1 VFIN);
 REMOVE (V Imprt Prs Sg2) IF (*-1 VFIN)(0 ("dákko"));
@@ -1597,6 +1604,11 @@ SELECT (Pl Nom) IF (*-1 V-PL3 BARRIER NPNHAIIP LINK *-1 BOS OR CLB BARRIER Nom)
 
   # Here, we handle both nouns and adjectives.
 
+REMOVE A IF (NOT *-1 COPULAS OR ("dahkat") BARRIER V-NON-AUX)(0 N)(1 CLB) ;
+	## Sii dahke sámi kultuvrra oainnusin.
+	## De lea cihca gárvvis.
+# This rule has to follow identification of subject.
+
 
 # Case disambiguation of predicatives
 # -----------------------------------
@@ -1827,10 +1839,12 @@ SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD LINK
 
 
 # In front of a participle
-SELECT Acc IF (*-1 LEAT-FIN-NON-IMP BARRIER NPNHAI) (1 PrfPrc)(NOT 1 Pass) ;
+SELECT Acc IF (*-1 LEAT-FIN-NON-IMP BARRIER NPNHAI)(NOT 0 Adv)
+		(*1 PrfPrc BARRIER NON-ADV)
+		(NOT 1 Pass) ;
                         ## Mun lean dan dahkan.
 			## Váfistan dihte bargovugiid lea komitea viiddiduvvon.
-
+			## Ruot1as leaat guhká jo ságastallan dán ás1s1is.
 
 # Accusative postverbally
 # -----------------------
@@ -1838,7 +1852,7 @@ SELECT Acc IF (*-1 LEAT-FIN-NON-IMP BARRIER NPNHAI) (1 PrfPrc)(NOT 1 Pass) ;
 # Object only.
 
 SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAIIP OR COMMA)
-              (0 NP-HEAD)(NOT 0 PrfPrc or Adv or Dem)
+              (0 NP-HEAD)(NOT 0 PrfPrc or Adv or Dem)(NOT 0 TIME) 
               (1 NP-BORDER OR Adv OR TIME) 
               (NOT 1 Po) ;
                      ## Oainnán du.
@@ -1884,7 +1898,8 @@ SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAIIP OR COMMA)
 # Accusative sentence-finally
 # ---------------------------
 
-REMOVE Gen IF (NOT *-1 Pr OR Num BARRIER NPNH)(0 NOTIME)(1 EOS OR CLB) ;
+REMOVE Gen IF (NOT *-1 Pr OR Num BARRIER NPNH)(0 NOTIME)
+		(*1 EOS OR CLB BARRIER NON-ADV) ;
           ## Fylkka mearrida olugo galgá atnit sámi leavgga.
           ## C1uovvovas1 seminára cealkagat govahallet seminára loahppabohtosa.
           ## Man1n1il lea viessu viiddiduvvon guovtte geardde.
@@ -2418,10 +2433,11 @@ SELECT Interr IF (0 ("mii" Pron Interr Sg Nom))
 # - - - - - - - - - 
 
  # Single noun
-SELECT Pl3 IF (*-1C NP-HEAD-PL-NOM BARRIER PPRON-NOT-SII OR (N Sg Nom));
-                            ## Nieiddat jerre
+SELECT Pl3 IF (*-1C NP-HEAD-PL-NOM BARRIER PPRON-NOT-SII OR (N Sg Nom))
+		(NOT *-1 (V Pl3));
+                            ## Nieiddat jerre.
                             ## Makkár vuoigatvuod1at dain leat riikavuloz1in?
-
+			## Ciza atnet olbmot firpmiid várjalit.	
 
  # Coordination
 SELECT Pl3 IF (*-1 NP-HEAD-SG-NOM BARRIER NON-ADV
