@@ -95,7 +95,9 @@ LIST Cmpnd = Cmpnd ;
 
 LIST Comp = Comp ; LIST Superl = Superl ;
 
-LIST Attr = Attr ; LIST Clt = Clt ; LIST Card = Card ;
+LIST Attr = Attr ; LIST Card = Card ;
+LIST Clt = Clt ; LIST Qst = Qst ; LIST Foc = Foc ;
+
 
 LIST Pass = Pass ;
 LIST Prt = Prt; LIST Prs = Prs ; 
@@ -543,12 +545,13 @@ REMOVE N IF (0 Po)(-1 (N Gen) OR (Pron Pers Gen)); # dan várás, dan áigi
 # Personal pronouns
 # =================
 
-SELECT Pers IF (*-1 V-SG3)(0 (Pron Pers Sg3 Nom)); # leago son? (not Pcle)
-SELECT Pers IF (*1 V-SG3)(0 (Pron Pers Sg3 Nom));  # de son lea.(not Pcle)
+SELECT Pers IF (*-1 V-SG3)(0 (Pron Pers Sg3 Nom)); ## leago son?
+SELECT Pers IF (*1 V-SG3)(0 (Pron Pers Sg3 Nom));  ## de son lea.
+  # (Not Pcle)
 
-SELECT Pers IF (*-1 V-SG2)(0 (Pron Pers Sg2 Nom)); # leatgo don  (not dem)
-SELECT Pers IF (*1 V-SG2)(0 (Pron Pers Sg2 Nom));  # de don leat (not dem)
-
+SELECT Pers IF (*-1 V-SG2)(0 (Pron Pers Sg2 Nom)); ## leatgo don  
+SELECT Pers IF (*1 V-SG2)(0 (Pron Pers Sg2 Nom));  ## de don leat 
+  # (Not dem)
 
 
 # Px constraints
@@ -575,9 +578,12 @@ SELECT (PxSg3) IF (-1 V-SG3)(NOT -1 ("leat"))(-2 SON);
 # --------
 
 SELECT (V Ind Prt Sg2) IF (*-1 DON BARRIER V-SG2);
-                                 ## Amma don áiggut guollegáhkuid ráhkadit.
+                                 ## Don muitalit mu birra.
 
-
+# Imperatives
+# -----------
+REMOVE Imprt IF (0 (Clt Qst));     ## Heivego gávtti coggat?
+REMOVE Imprt IF (1 ("go" Pcle));   ## Heive go gávtti coggat?
 
 
 
@@ -641,11 +647,18 @@ REMOVE (A Pl Nom) IF (NOT *-1 VFIN)(0 (N Pl Nom))(*1 V-PL3 BARRIER NON-ADV-PCLE)
 # Based on right context
 # ----------------------
 
-REMOVE A IF (1 Po);                         ## C1oahkkán dárolac1c1aid gaskkas.
+REMOVE A IF (1 Po);                         ## C1ohkkán dárolac1c1aid gaskkas.
 
 REMOVE V IF (-1 Dem)(1 V-IND-FIN);          ## Dán báhkis s1addá c1áppa gohppu.
 
-REMOVE VFIN IF (-1 BOS)(0 NP-HEAD-SG-NOM)(1C V-SG3);## Lásse lea mus rean1gan.
+REMOVE VFIN IF (-1 BOS)(0 NP-HEAD-SG-NOM)(1C V-SG3); ## Lásse lea mus rean1gan.
+  # Here I am careful, and require the V-SG3 to be a secure reading.
+
+REMOVE VFIN IF (-1 BOS)(0 Prop)(1 V-SG3);   ## Máhtte ferte leat vuolgime.
+  # Here I am less careful, and accept also ambiguous V-SG3, since I take it
+  # that when the left context is a name, it is a more secure subject-candidate.
+  # Alternatively, I might drop the 1C in the previous rule, or include the
+  # pronouns.
 
 REMOVE Adv IF (1C Po); 
 
@@ -860,6 +873,13 @@ SELECT N IF (-1 Gen OR (A Attr))(0 ("álgu"));  ## Pros1eavtta álgu ii lean álki.
 # danin
 SELECT Adv IF (0 ("danin"))(NOT *1 (N Ess) BARRIER NPNH);
                                         ## Danin badjánii jurdda lága ráhkadit.
+# dákko
+REMOVE (V Imprt Prs Sg2) IF (0 ("dákko"))(*1 VFIN);
+REMOVE (V Imprt Prs Sg2) IF (*-1 VFIN)(0 ("dákko"));
+                                        ## Dákko ii oac1c1o mannat ii oktage.
+  # Alternatively, on could remove all imperatives. Here, I remove the
+  # impertative reading of 'dággut' if there is some finite verb somewhere
+  # else.
 
 # de
 REMOVE Prop IF (0 ("de"))(NOT 1 Prop);  ## De lea vissa ahte De Silva boahtá.
@@ -890,10 +910,15 @@ REMOVE N IF (0 ("easkka"))(*1 AIGI OR A);
 
 # goas
 SELECT Adv IF (0 ("goas"))(*1 ("<?>"));         ## Goas heajat leat?
-# This is not an optimal rule for getting rid of the former Portuguese colony.
+  # This is not an optimal rule for getting rid of the former Portuguese colony.
 
 # gusto
 SELECT Adv IF (-1 VFIN)(0 ("gusto"));           ## Diet lea gusto ávkkálas1.
+
+# ihttin
+SELECT Adv IF (0 ("ihttin"));                   ## Mii vuolgit ihttin juo.
+  # The competitor is '"ihtit" V N Actor Ess'. This reading will now never be
+  # selected. Have a look at this when dealing with Actor nouns.
 
 # ikte
 SELECT Adv IF (0 ("ikte"))(*1 (V Prt));         ## Ikte lei hui buolas1.
