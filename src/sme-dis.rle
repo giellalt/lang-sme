@@ -652,6 +652,8 @@ REMOVE A IF (1 Po);                         ## C1ohkkán dárolac1c1aid gaskkas.
 
 REMOVE V IF (-1 Dem)(1 V-IND-FIN);          ## Dán báhkis s1addá c1áppa gohppu.
 
+REMOVE V IF (-1 BOS)(0 N)(1 ("go"))(2 VFIN); ## Ádjás go lea od1d1a fanas?
+
 REMOVE VFIN IF (-1 BOS)(0 NP-HEAD-SG-NOM)(1C V-SG3); ## Lásse lea mus rean1gan.
   # Here I am careful, and require the V-SG3 to be a secure reading.
 
@@ -833,6 +835,8 @@ SELECT Adv IF (*-1C VFIN-NON-AUX BARRIER NON-ADV)
 REMOVE Adv IF (-1 (N Gen) OR (Pron Gen))(NOT -1 Adv)
               (0 Po);                                 # Po if after Gen
 
+REMOVE Adv IF (-1 ("leat"))(0 (A Attr))(1 N);  ## Bussás leat alit c1almmit.
+
 SELECT Adv IF (-2 V)(NOT -2 ("leat"))(-1 Adv)(1 EOS); # Too specific!!
                                                      ## Son c1állá hui c1ábbát.
 
@@ -842,6 +846,9 @@ SELECT Adv IF (0 (Pron Indef))(1 CS);              ## Dat lea nu ahte boad1án.
 SELECT Adv IF (0 (Pron Indef))(1 COMMA)(2 CS);     ## Dat lea nu, ahte boad1án.
 
 REMOVE Po IF (-1 NON-NP)(0 Adv)(1 NON-NP OR CLB);  ## Mun in leat mielde.
+
+REMOVE (N Gen) IF (-1 VFIN)(0 Adv)(NOT 1 N or Po); ## Diet lea beare unnán.
+
 
 # Adverbs, not interjections
 REMOVE Interj IF (NOT -1 Interj OR BOS)(0 Adv);      ## Dat dinii bures doppe.
@@ -1926,20 +1933,6 @@ SELECT Sg2 IF (NOT 0 Imprt)(*1C DON BARRIER Neg); ## De, don fertet vuolgit.
 
 
 
-REMOVE Sg3 IF (*-1 Neg)(0 (Sg Ill));    ## Iiba leat skuvlii álgán.
-
-REMOVE Ill IF (*-1 (N Sg) OR (Pron Sg) BARRIER NON-ADV-PCLE
-              LINK *-1 BOS OR CS OR CC OR Adv BARRIER NPNHAI)
-              (0 (V Ind Sg3));
-                               ## Muhto eanandoallu gillái rievdemiid bokte.
-
-REMOVE Ill IF (-2 BOS)(-1 Adv OR ADVLCASE)(0 (V Ind Sg3));
-                               ## Dattege loktii dáz1a sisafárren gitta 1850.
-
-REMOVE Ill IF (1 ("go" Pcle)); ## Gos lei riegádan, ja máhtii go dárogiela?
-
-
-
 # Du1
 # ---
   # Du1 = Prt Pl3
@@ -2112,7 +2105,26 @@ SELECT Sg2 IF (-1 BOS)(0 (Prt Clt))(*1 IKTE);  ## Vulgetgo ikte?
 # Past Sg3
 # --------
   # Prt Sg3 = Imprt Prs Sg3 (leai)
- 
+
+
+REMOVE Sg3 IF (*-1 Neg)(0 (Sg Ill));    ## Iiba leat skuvlii álgán.
+
+REMOVE Sg3 IF (-1 VFIN)(0 (N Sg Ill));   ## Mánná galggai skuvlii.
+
+REMOVE Ill IF (*-1 (N Sg) OR (Pron Sg) BARRIER NON-ADV-PCLE
+              LINK *-1 BOS OR CS OR CC OR Adv BARRIER NPNHAI)
+              (0 (V Ind Sg3));
+                               ## Muhto eanandoallu gillái rievdemiid bokte.
+
+REMOVE Ill IF (-2 BOS)(-1 Adv OR ADVLCASE)(0 (V Ind Sg3));
+                               ## Dattege loktii dáz1a sisafárren gitta 1850.
+
+REMOVE Ill IF (1 ("go" Pcle)); ## Gos lei riegádan, ja máhtii go dárogiela?
+
+
+
+
+
 # Past Du1
 # --------
 # Past Du2
@@ -2155,8 +2167,16 @@ SELECT Pl3 IF (*-1 BOS LINK 1 ("go") LINK *1 (V Pl3))(-1 COMMA)
 
 # Sg3
   # copula sg3 = pl3 livc1c1e (in the eastern dialect)
-  # These rules may be generalised. Let's first see whether they work.
 
+SELECT Sg3 IF (NOT *-1 (Pl Nom) OR CC)(0 ("leat V Cond Sg3))
+              (NOT  *1 (Pl Nom) OR CC);         ## Dá livc1c1e dutnje gahpir
+
+SELECT Pl3 IF (*-1 (Pl Nom))(0 ("leat V Cond Pl3));
+
+SELECT Pl3 IF (NOT *-1 (Sg Nom))(0 ("leat" V Cond Pl3))(*1 (Pl Nom));
+                                      ## Dá livc1c1e dutnje sabehat.
+
+# These rules may be generalised. Let's first see whether they work.
 SELECT (Sg3) IF (-1 ("Son" Pron Pers Sg Nom))(0 ("leat"));
 SELECT (Sg3) IF (NOT *-2 CC)(-1 (N Sg Nom) OR ("son" Pron Pers Sg Nom))
              (0 ("leat")); # strange rule, revise!
@@ -2231,8 +2251,11 @@ SELECT Inf IF (-1 (Interr Sg Nom))(-2 COMMA)(-3 (Sg Nom) OR (Sg3 Nom))
  # Within a subject relative clause.
 
 
-SELECT Inf IF (-1 INF-VERB);         ## Geassesajiid ii oz1z1on vuovdit.
-# perhaps 'remove A' etc. would have been more appr
+SELECT Inf IF (*-1 INF-VERB BARRIER Nom);   ## Geassesajiid ii oz1z1on vuovdit.
+                                            ## Mii ávkkiid lea min doppe johtit.
+
+
+
 
 # Infinitive after predicative
 # ----------------------------
@@ -2335,6 +2358,11 @@ SELECT VFIN IF (NOT *-1 VFIN BARRIER CS OR Interr)(NOT *1 VFIN);
 # ===================== #
 
 
+REMOVE Attr IF (1C V OR EOS)(NOT 1 N);             ## Diet lea beare unnán.
+  # When all rules are executed, remove the Attrs
+  # The double requirement is there because of the compounds.
+
+
 REMOVE Sg IF (0 DEM-PL) (NOT *1 V-SG3);       ## Dat lea buorre.
 REMOVE Pl IF (0 DEM-SG) (NOT *1 V-PL3);       ## Dat lea od1d1a niibbit.
 
@@ -2348,9 +2376,9 @@ REMOVE Pl IF (0 DEM-SG) (NOT *1 V-PL3);       ## Dat lea od1d1a niibbit.
 # cut these two because of titles. They would be ok if we could
 # recognise titles.
 
-# Afterthought, get rid of Acc in specifier position.
-# Move to logical place, but after the primary Acc cycle.
-Remove Acc IF (0 Pron)(1C Acc); # Mun oainnán du vielja.
+REMOVE Acc IF (0 Pron)(1C Acc); # Mun oainnán du vielja.
+  # Afterthought, get rid of Acc in specifier position.
+  # Move to logical place, but after the primary Acc cycle.
 
 END
 
