@@ -342,7 +342,7 @@ REMOVE (PxSg3) ; # IF (0 Loc);
 # Note: Perhaps rather allow Px only for some key nouns (mother, father, etc).
 
 # Removing remaining Prt Sg2 (philosophy: these are not pro-drop)
-REMOVE (V Ind Prt Sg2) IF (NOT -1 (<s>)) (NOT 0 (Clt));
+REMOVE (V Ind Prt Sg2) IF (NOT -1 <s>) (NOT 0 (Clt));
 # Proseassas láhc1c1ojuvvojit dilálas1vuod1at nu, ahte 
 # fertejitgo dahkat dan?
 
@@ -367,7 +367,7 @@ CONSTRAINTS
 # Proper nouns
 # ============
 
-SELECT Prop IF (NOT -1 (<s>));
+SELECT Prop IF (NOT -1 <s>);
 # Capitalised nouns in the middle of a sentence are names.
 
 REMOVE Attr IF (0 Prop)(NOT 1 Prop); # Trond Trosteruda
@@ -411,7 +411,7 @@ SELECT Gen IF (-1 NUMERALS OR MANGA); #Golbma nieidda, mán1ga nieidda
 SELECT Gen IF (-1 CLB) (1 N); # Nieidda girji lea ruoksat
 SELECT Gen IF (-1 <s>) (1 N); # Din viessu s1attai oppa stuoris.
 
-#REMOVE Acc IF (-1 (<s>))(1 (N Gen) OR (Attr) OR PPOS) ; # Mu birra don humat.
+#REMOVE Acc IF (-1 <s>)(1 (N Gen) OR (Attr) OR PPOS) ; # Mu birra don humat.
 # This should be covered by the others... Check.
 
 # Genitive in front of the final word in the sentence
@@ -460,7 +460,7 @@ REMOVE Acc IF (NOT *-1 V-NON-COP )(NOT *1 V-NON-COP ); #Need a verb for an obj.
 # - - - - - - - - - - - - - - - - - - - - - -
 
 # A single word is nominative
-SELECT Nom IF (-1 (<s>))(0 N OR A OR Pron)(1 (</s>)); # Sisdoallu
+SELECT Nom IF (-1 <s>)(0 N OR A OR Pron)(1 (</s>)); # Sisdoallu
 
 # Nominative subjects
 # - - - - - - - - - -
@@ -599,6 +599,7 @@ SELECT Sg2 IF ( *1C (Pron Pers Sg2 Nom)); # de, don fertet vuolgit.
 REMOVE Pl3 IF (0 Sg3) (-1 (N Sg Nom)); # Dokumeanta c1ilge, mo...
 
 SELECT Du1 IF (*-1  PRON-DU1-NOM BARRIER PRON-PL1-NOM OR PRON-PL1-NOM OR CLB);
+SELECT Du1 IF (*1  PRON-DU1-NOM BARRIER PRON-PL1-NOM OR PRON-PL1-NOM OR CLB);
 SELECT Du1 IF (1 Pcle) (2 PRON-DU1-NOM); # jerre go moai # no hits
 # SELECT Du1 IF (-1 PRON-DU1-NOM); # moai jerre # no hits
 
@@ -735,8 +736,17 @@ SELECT (Pl3) IF (-1 Loc)(1 (N Pl Nom)); # Mus livc1c1e guolit.
 
 SELECT (Imprt ConNeg) IF (-1 (Neg Imprt)) ; ## Ale suhta munnje.
 
-REMOVE (Imprt) IF (NOT -1 COMMA OR (<s>))(NOT 0 (ConNeg)) ;
+REMOVE Imprt IF (NOT -1 COMMA OR <s> or Pcle)(NOT 0 (ConNeg)) ;
 # Imprt must be either a negative verb form, or in the middle of a sentencne.
+
+# Negative imperative
+  # Neg Imprt Pl2 = allet V Inf = Prs Pl1 = Prs Pl3
+
+SELECT (Neg Imprt Sg2) IF (*1 ConNeg); ## Allet ge gátte ahte ...
+
+REMOVE (V Ind Prs Sg3) IF (-2 <s>)(-1 Pcle)(0 (V Imprt Prs Sg2));
+  ## Na attes munnje daid. # Note that this is dangerous, and kept specific in
+                           # order to play safe. May need to be generalised.
 
 # Infinite forms
 # ==============
@@ -745,18 +755,24 @@ REMOVE (Imprt) IF (NOT -1 COMMA OR (<s>))(NOT 0 (ConNeg)) ;
 # ----------
 
 #SELECT (Inf) IF (*-1 V-IND-FIN BARRIER MII-PERS OR SII)(NOT 0 LEAT);#23000 hits
-SELECT (Inf) IF (*-1 V-IND-FIN BARRIER MII-PERS OR SII OR CS OR CLB OR (<s>));
+SELECT (Inf) IF (*-1 V-IND-FIN BARRIER MII-PERS OR SII OR CS OR CLB OR <s>);
 # reintroduce (NOT 0 LEAT)? check this!
 
-REMOVE (Prs Pl1) IF (-1 (<s>))(1C V-SG3); ## Vuolgit lea suohtas
+REMOVE (Prs Pl1) IF (-1 <s>)(1C V-SG3); ## Vuolgit lea suohtas
 REMOVE (N Pl) IF (0 (Inf) OR (N Sg))(1C V-SG3); # EXAMPLE? 
 
 # ConNeg forms
 # ------------
 
-SELECT (ConNeg) IF (0 LEAT) (-1 (Neg));
-SELECT (ConNeg) IF (0 LEAT) (-2 (Neg)) (-1 Pcle);
-REMOVE (ConNeg) IF (0 LEAT) (NOT *-1 (Neg));
+#SELECT (ConNeg) IF (0 LEAT) (-1 (Neg));
+#SELECT (ConNeg) IF (0 LEAT) (-2 (Neg)) (-1 Pcle);
+#REMOVE (ConNeg) IF (0 LEAT) (NOT *-1 (Neg));
+
+#SELECT (ConNeg) IF (-1 (Neg));
+#SELECT (ConNeg) IF (-2 (Neg)) (NOT -1 V);
+SELECT (ConNeg) IF (*-1 Neg BARRIER VFIN);
+REMOVE (ConNeg) IF (NOT *-1 (Neg));
+
 # Need more advanced rule to select ConNeg when more
 # material between neg and conneg
 # SELECT (ConNeg IF (0 LEAT) (*-1 (Neg));
@@ -765,7 +781,7 @@ REMOVE (VGen) IF (NOT *-1 V-IND-FIN)(Not *1 V-IND-FIN); # too sloppy!
 
 REMOVE (ConNeg) IF (NOT *-1 (Neg) BARRIER CLB OR V-IND-FIN); 
 
-REMOVE (Imprt) IF (*-1 (Neg Ind) BARRIER CLB OR V-IND-FIN)(0 (ConNeg));
+REMOVE Imprt IF (*-1 (Neg Ind) BARRIER CLB OR V-IND-FIN)(0 (ConNeg));
 REMOVE (Prs) IF (*-1 (Neg Imprt) BARRIER CLB OR V-IND-FIN)(0 (ConNeg));
 
 # Act
@@ -809,7 +825,7 @@ SELECT (PrfPrc) IF (0 LEAN) (-1 (Neg));
 # ------------------------
 
 
-SELECT Attr IF (1 N) ; # This still does not open for coordination!
+SELECT Attr IF (1C N) ; # This still does not open for coordination!
 SELECT Attr IF (1 CC)(2 Attr)(3 N);
 SELECT A IF (*-1 ("leat" V) BARRIER NON-ADV); ## Ikte lei hui buolas1.
 
@@ -835,6 +851,13 @@ SELECT Adv IF (0 ("goas"))(@1 ("<?>")); ## Goas heajat leat?
 
 SELECT Adv IF (NOT -1 Dem or (A Attr))(0 ("duo")); ## Áddjá go duo lea boahtime?
 
+SELECT Adv IF (-1 VFIN)(0 ("gusto")); ## Diet lea gusto ávkkálas1.
+# Todo: Make a set of these verb-like adverbs, and make a rule for them.
+# Eventually more sets, if they have different syctactic properties...
+
+SELECT Adv IF (-1 <s>)(0 ("manne"))(1 VFIN); ## Manne ii leat áviisa boahtán?
+SELECT Adv IF (-1 <s>)(0 ("manne"))(1 N OR Pron)(2 VFIN); ## Manne don leat dál?
+# Need a rule for "Manne + NP + VFIN".
 
 # Disambiguating demonstratives
 # =============================
@@ -888,8 +911,11 @@ SELECT CS IF (-1 CLB); # this one too general, there must be separate
                          # rules for different groups of CS.
 # go
 # --
-SELECT Pcle IF (-2 <s>)(-1 VFIN)(NOT -1 Imprt)(0 ("go")); ## Boad1át go?
-SELECT Pcle IF (-3 <s>)(-2 CS)(-1 VFIN)(0 ("go")); ## Muhto boad1át go?
+SELECT Pcle IF (-2 <s>)(NOT -1 COMMA)(0 ("go")); ## Boad1át go?
+SELECT Pcle IF (-3 <s>)(-2 CS)(NOT -1 COMMA)(0 ("go")); ## Muhto boad1át go?
+
+CONSTRAINTS
+SELECT CS IF (0 go);
 SELECT CS IF (NOT -1 V); ## Nu guhkás go mun died1án, 
 
 
@@ -920,10 +946,11 @@ REMOVE Pl IF (0 DEM-PL) (NOT *1 V-PL3);
 
 # At least one finite verb in the sentence
 # The rule scans to the left until it finds a finite verb
-SELECT V-IND-FIN IF (NOT *-1 V-IND-FIN)(NOT *1 V-IND-FIN); # no hits
+SELECT VFIN IF (NOT *-1 VFIN)(NOT *1 VFIN);
+# cut this one...
 
 # Stop at guhto to the left and comma to the right.
-SELECT V-IND-FIN IF (NOT *-1 V-IND-FIN BARRIER COMP)(NOT *1 V-IND-FIN BARRIER CLB);
+SELECT VFIN IF (NOT *-1 VFIN BARRIER COMP)(NOT *1 VFIN BARRIER CLB);
 # This does not work... # no hits
 
 # Afterthought, get rid of Acc in specifier position.
