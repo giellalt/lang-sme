@@ -1637,7 +1637,10 @@ REMOVE ("Nilse") IF (0 ("Nilsen" N Prop Sg Nom));
 SELECT Nom IF (-1 BOS)(NOT 0 VFIN)(0 N OR A OR Pron)(1 EOS); ## Katja.
 
 # An NP head with a genitive modifier is nominative
-SELECT Nom IF (-2 BOS)(-1 Gen)(0C N)(1 EOS); # .
+SELECT Nom IF (-2 BOS)(-1 Gen)(0C N)(1 EOS);
+
+# An NP head with an Attr modifier is nominative.
+SELECT Nom IF (-2 BOS)(-1 Attr)(1 EOS);
 
 # An NP head with a nominative Pron Dem modifier is nominative
 SELECT Nom IF (-2 BOS)(-1 (Pron Dem Sg Nom))(0 Sg)
@@ -1696,7 +1699,8 @@ SELECT (Sg Nom) IF (1 CC)(*2C (Sg Nom) BARRIER NPNHAI LINK 1 NP-BORDER);
 
 # Singular
 SELECT (Sg Nom) IF (*-1 V-SG3 BARRIER NPNHAIIP LINK *-1 BOS OR CLB BARRIER Nom)
-                (0 (N Sg) or (Pron Pers Sg) OR (Pron Interr Sg))(NOT 0 PrfPrc);
+                (0 (N Sg) or (Pron Pers Sg) OR (Pron Interr Sg))(NOT 0 PrfPrc)
+		(NOT 1 Po) ;
                     ## Dat lei 1827s, muitalii muhtin mátkkos1teaddji midjiide.
                     ## Riikkaid galgá Piera oaidnit.
 
@@ -2028,10 +2032,15 @@ REMOVE Gen IF (NOT *-1 Pr OR Num OR CC BARRIER NPNH)(0 NOTIME)
           ## C1uovvovas1 seminára cealkagat govahallet seminára loahppabohtosa.
           ## Man1n1il lea viessu viiddiduvvon guovtte geardde.
 
-# CC in the preceding rule because of coordination after Pr. This rule 
+# CC in the preceding rule because of coordination after Pr. The next rule 
 # compensates for it.
+
 SELECT Acc IF (NOT *-1 Pr OR Num BARRIER NPNH)(0 NOTIME)(NOT 0 VERB)
-		(*1 CLB BARRIER NON-ADV);
+		(*1 CLB BARRIER NON-ADV-PCLE);
+
+REMOVE Gen IF (NOT *-1 Pr OR CC BARRIER NPNH)(-1 Gen)(0 NOTIME)
+		(*1 CLB BARRIER NON-ADV-PCLE);
+
  
 
 # Not accusative
@@ -2463,12 +2472,6 @@ REMOVE Imprt IF (0 Qst);     ## Bijatgo don sohkkara dedjii?
 
 
 
-
-
-
-
-
-
 # Indicative Negative
 # -------------------
   # Unique are Sg1, Sg3, Du1, Du2, Du3, Pl1, Pl2, Pl3
@@ -2525,7 +2528,9 @@ SELECT Sg2 IF (NOT 0 Imprt)(*1C DON BARRIER Neg); ## De, don fertet vuolgit.
   # Disambiguating Prs Sg3 is taken care of by rules removing the other 
   # readings whenever their conditions are not fulfilled.
 
+SELECT Sg3 IF (-1 (Sg3 Nom))(-2 CLB); # Allow for phrasal subject?
 
+SELECT Sg3 IF (-1 CLB)(1 (Sg3 Nom));
 
 # Du1
 # ---
