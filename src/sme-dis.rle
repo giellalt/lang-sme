@@ -418,12 +418,13 @@ LIST INITIAL =  "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m"
 
 LIST PROSEANTA = "proseanta" "%" ;
 
-LIST VAHKKU =  "beaivi" "c1uohte/jahki" "jahki" "vahku" "mánnu" "idja" jahki ;
+LIST VAHKKU = "áigi" "beaivi" "c1uohte/jahki" "jahki" "vahku" "mánnu" "idja" 
+              jahki ;
  # The quoteless jahki here is since the preprocessor is not fine-tuned
  # yet, it still gives '"1870-" # jahki N Sg Com'.
 
 
-SET AIGI = MANNU | VAHKKU ;
+SET TIME = MANNU | VAHKKU ;
 
 
 # Miscellanious sets
@@ -446,6 +447,7 @@ SET NP-HEAD-SG = (Pron Sg) | (N Sg);
 SET NP-HEAD-PL = (Pron Pl) | (N Pl);
 SET NP-HEAD-SG-NOM = (Pron Sg Nom) | (N Sg Nom);
 SET NP-HEAD-PL-NOM = (Pron Pl Nom) | (N Pl Nom);
+SET NP-HEAD-ACC = (Pron Acc) | (N Acc);
 
 SET PRE-NP-HEAD = (Prop Attr) | A | (Pron Pers Gen) | (N Gen) |
                   (Pron Dem)  | (Pron Refl Gen) | (Pron Indef) | CC ;
@@ -474,6 +476,7 @@ SET NON-A-PCLE = WORD - A - Pcle ;
 SET NON-DEM = WORD - Dem ;
 
 SET NON-N =  WORD - N ;
+SET NON-NA = WORD - N - A ;
 SET NON-NP = VFIN | Adv | Pcle | Interj | CS | CC ;
 
 
@@ -712,8 +715,10 @@ REMOVE VFIN IF (-1 BOS)(0 Prop)(1 V-SG3);   ## Máhtte ferte leat vuolgime.
   # Alternatively, I might drop the 1C in the previous rule, or include the
   # pronouns.
 
-REMOVE Adv IF (1C Po); 
-
+REMOVE Adv IF (1C Po)(NOT 1 Adv);   
+                        ## Mun vulgen dus1s1e mielde.
+  # NBN! This example clause still gets the wrong analysis, it removes
+  # Adv of dus1s1e although 1 not is (only) Po, but also Adv.
 
 
 REMOVE A-CASE IF (*-1 BOS BARRIER NON-DEM)(0 N)(NOT 0 ("buorre"))(1 N);
@@ -1058,7 +1063,7 @@ SELECT Adv IF (-1 ("olu"))(0 ("eanet"));       ## Guovlu atnigoahtá olu eanet.
 SELECT Adv IF (0 ("eanet"))(1 ("go")) ;      ## Dat lea eanet go 10.
 
 # easkka
-REMOVE N IF (0 ("easkka"))(*1 AIGI OR A);
+REMOVE N IF (0 ("easkka"))(*1 TIME OR A);
                             ## Muhto easkka N. V. Stockfleth áiggis lei nu.
                             ## Dat lei boahtán ruot1agielain easkka j. 1863.
 
@@ -1084,6 +1089,7 @@ SELECT Adv IF (-1 N LINK *-1 BOS BARRIER NPNH)
               (0 ("maid"));                     ## Suomas maid lei dilli váttis.
 SELECT Adv IF (-2 BOS)(-1 (Pron Pers) OR (Pron Dem))
               (0 ("maid"));                     ## Sidjide maid lei Ruija.
+SELECT Adv IF (-1 BOS)(1 COMMA);                ## Maid, iigo leat boahtán? 
 
 # manne
 SELECT Adv IF (-1 BOS)(0 ("manne"))(1 VFIN);     ## Manne ii leat áviisa boahtán?
@@ -1551,9 +1557,12 @@ SELECT Nom IF (-1 BOS)(0 Prop)(1 COMMA);
 
 SELECT (Sg Nom) IF (*-1 CC BARRIER NPNHAI LINK -1C (Sg Nom))(1 NP-BORDER);
   ## Bror Berg ja Per Mikael Utsi leaba ruovttus.
+  ## Bivdoearrái gullet diksu ja dorski.
+
 
 SELECT (Sg Nom) IF (1 CC)(*2C (Sg Nom) BARRIER NPNHAI LINK 1 NP-BORDER);
   ## Per Mikael Utsi ja Bror Berg leaba ruovttus.
+  ## Bivdoearrái gullet dorski ja diksu.
 
 
 
@@ -1724,7 +1733,7 @@ SELECT (Pl Nom) IF  (*-1 ("leat" Pl3) BARRIER NPNHAI
 # Genitive after quantifier
 
 SELECT Gen IF (*-1C Num BARRIER NPNH OR Gen) ;  
-# Problem: ## Dan eatnamis oaz1z1u ovtta gusa fuod1d1ara.
+# Gen as barrier because of: ## Dan eatnamis oaz1z1u ovtta gusa fuod1d1ara.
 
 # SELECT Gen IF (NOT -2 Pr)(-1 NUMERALS OR MANGA);
                     ## Dat leat golbma nieidda.
@@ -1736,7 +1745,8 @@ REMOVE Nom IF (*-1 (Pron Dem Acc) OR (Pron Dem Gen) BARRIER NON-A);
 
 
 REMOVE Nom IF (*-1 V-NOT-SG3 BARRIER CC)(0 (Sg Acc) OR (Sg Gen))
-               (*1 EOS BARRIER V-SG3);
+              (NOT *1 CC LINK *1 (N Nom)) # BARRIER NPNHAIIP) (reintroduce?)
+              (*1 EOS BARRIER V-SG3);
         ## C1uovvovas1 seminára cealkagat govahallet seminára loahppabohtosa.
 
 
@@ -1758,7 +1768,7 @@ REMOVE Gen IF (-1 BOS)(1 Adv) ;
 # Topicalised object
 # ------------------
 
-SELECT Acc IF (NOT *-1 VFIN BARRIER CS)(NOT 0 Nom)
+SELECT Acc IF (NOT *-1 VFIN BARRIER CS)(NOT 0 Nom)(NOT 1 COMMA)
               (*1 VFIN BARRIER NON-ADV-PCLE);#check w/o care LINK NOT *1 Acc);
                                      ## Dan lean mun váldán.
 
@@ -1861,30 +1871,36 @@ REMOVE Acc IF (*-1 V-PASS BARRIER VFIN)(NOT *1 V-NON-AUX);
 # - - - - - - - - -
 
 # First part
-SELECT Acc IF (*-1 V-NON-AUX BARRIER NPNHAII)(0 N)(1 CC)
-              ( *2 NP-HEAD   BARRIER NPNHA LINK 1 CLB);
+SELECT Acc IF (*-1 V-NON-AUX   BARRIER NPNHAII)(0 N)(1 CC)
+              ( *2 NP-HEAD-ACC BARRIER NPNHA LINK 1 CLB);
                                        ## Oainnán vilges biilla ja rukses viesu.
+
+SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAII) (0 Num) (*1 CC BARRIER NON-NA) ;
+		## Ja de ráhkadit ovtta dahje moadde s1luppoha vel.  
+
   # Second part
-SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD LINK 
+SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD-ACC LINK 
               *-1 V-NON-AUX BARRIER NPNHAII)(0 N)(1 CLB);
                                        ## Oainnán vilges biilla ja rukses viesu.
+SELECT Acc IF (-1 CC LINK *-1 Acc BARRIER NON-NA)(0 Num) ;
+		## Ja de ráhkadit ovtta dahje moadde s1luppoha vel.    
 
 # Three coordinated objects
   # First part
 SELECT Acc IF (*-1 V-NON-AUX BARRIER NPNHAII)(0 N)(1 COMMA)
-              ( *2 NP-HEAD   BARRIER NPNHA LINK 1 CC LINK
-                 1 NP-HEAD   BARRIER NPNHA LINK 1 NP-BORDER);
+              ( *2 NP-HEAD-ACC   BARRIER NPNHA LINK 1 CC LINK
+                 1 NP-HEAD-ACC   BARRIER NPNHA LINK 1 NP-BORDER);
          ## Jos juohká dáz1aid, sámiid ja láddelac1c1aid ies1 gud1et sadjái, ...
 
   # Second part
-SELECT Acc IF (*-1 COMMA BARRIER NPNH LINK -1 NP-HEAD LINK 
+SELECT Acc IF (*-1 COMMA BARRIER NPNH LINK -1 NP-HEAD-ACC LINK 
                *-1 V-NON-AUX BARRIER NPNHAII)(0 N)(1 CC LINK
-                 1 NP-HEAD   BARRIER NPNHA LINK 1 NP-BORDER);
+                 1 NP-HEAD-ACC   BARRIER NPNHA LINK 1 NP-BORDER);
          ## Jos juohká dáz1aid, sámiid ja láddelac1c1aid ies1 gud1et sadjái, ...
 
   # Third part
-SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD LINK -1 COMMA BARRIER
-               NPNH LINK -1 NP-HEAD LINK *-1 V-NON-AUX BARRIER NPNHAII)
+SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD-ACC LINK -1 COMMA BARRIER
+               NPNH LINK -1 NP-HEAD-ACC LINK *-1 V-NON-AUX BARRIER NPNHAII)
                (0 N)( 1 NP-BORDER);
          ## Jos juohká dáz1aid, sámiid ja láddelac1c1aid ies1 gud1et sadjái, ...
 
@@ -1933,7 +1949,7 @@ SELECT Acc IF (0 VAHKKU)(NOT 1 Po);
 # Object predicatives
 # -------------------
 
-SELECT Acc IF (*-1 Acc BARRIER NPNHA)(0 A)(1 CLB OR EOS OR CS);
+SELECT Acc IF (*-1 Acc BARRIER NPNHA)(0 A)(NOT 0 Adv)(1 CLB OR EOS OR CS);
                                      ## Dáz1at eai atnán sámiid buoret go beanan.
 
 
@@ -2656,8 +2672,8 @@ SELECT Inf IF (*-1 N BARRIER VFIN LINK *-1 ("leat") OR ("s1addat")
               BARRIER NPNHAI)(NOT 0 (N Pl Nom));
                            ## Jos leat jaska, de lea dárbu singuin gulahaddat.
 
-# Title!
-# ------
+# Infinitive as subject
+# ---------------------
 
 REMOVE (Prs Pl1) IF (-1 BOS)(1C V-SG3);
                            ## Vuolgit lea suohtas
