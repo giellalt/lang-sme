@@ -456,7 +456,7 @@ SET NP-HEAD-SG-NOM = (Pron Sg Nom) | (N Sg Nom);
 SET NP-HEAD-PL-NOM = (Pron Pl Nom) | (N Pl Nom);
 SET NP-HEAD-ACC = (Pron Acc) | (N Acc);
 
-SET PRE-NP-HEAD = (Prop Attr) | A | (Pron Pers Gen) | (N Gen) |
+SET PRE-NP-HEAD = (Prop Attr) | A | (Pron Pers Gen) | (N Gen) | Num |
                   (Pron Dem)  | (Pron Refl Gen) | (Pron Indef) | CC ;
 
 # There must be a sensible naming convention for these sets...
@@ -763,6 +763,8 @@ REMOVE V IF (-1 BOS)(0 N)(1 ("go"))(2 VFIN); ## Ádjás go lea od1d1a fanas?
 
 REMOVE (V Ind) IF (-1 Dem)(0 N)(1C (V Ind));
 
+REMOVE (V Ind) IF (-1 CS)(0 N)(NOT 0 (V Pl1)) (1 (Pron Interr) LINK *1 (V Ind)); 
+		## Dasgo mánná mii lea su siste... 
 
 
 # ======================= #
@@ -1226,7 +1228,7 @@ SELECT (Pron Pers Sg2 Nom) IF (*-1 V-SG2);     ## Don boad1át fargga.
 # ---
   # son Pcle
 
-SELECT (Pron Pers Sg3 Nom) IF (0 ("son"))(*1 V-SG3 BARRIER N);     ## Son boahtá fargga.
+SELECT (Pron Pers Sg3 Nom) IF (0 ("son"))(*1 V-SG3 BARRIER N); ## Son boahtá fargga.
 #SELECT (Pron Pers Sg3 Nom) IF (*-1 V-SG3);     ## Boahtágo son fargga?
   
  # Sutnje (pronoun, not verb)
@@ -1279,34 +1281,27 @@ SELECT (Dem Ess) IF (0 ("dat"))(*1C (N Ess) BARRIER NPNH);
 SELECT (Pron Pers Du1 Nom) IF ( *1 V-DU1);     ## Moai c1ilge dan ás1s1i.
 SELECT (Pron Pers Du1 Nom) IF (*-1 V-DU1);     ## C1ilgego moai dan?
 
+
 # Mii
 # ---
-
-# Select Interr
-
-SELECT Interr IF (0 ("mii" Sg Nom))(-1 COMMA)(1 Sg3);
-SELECT Interr IF (0 ("mii" Sg Nom))(*1 Sg3 BARRIER V-PL1);
-
-
-# Select Pers
 
 # Left conditions
 SELECT Pers IF (-3 BOS)(-2 V-PL1)(-1 go)(0 ("mii")); 
 SELECT Pers IF (-2 BOS)(-1 (V Ind Prs Pl1 Clt))(0 ("mii"));
 
-
 SELECT Pers IF (-1 (V Ind Prs Pl1 Clt))(0 ("mii"));
 SELECT Pers IF (-1 (V Neg Pl1))(0 ("mii"));     ## Eat mii sáhte vuolgit.
 
+SELECT Pers IF (*-1 V-PL1 BARRIER NON-ADV)(0 ("mii"))(0 (Pl1 Nom));
+
 # Right conditions
 
-SELECT Pers IF (0 ("mii" Pl Nom))(*1 V-PL1 BARRIER NON-ADV) ;
+SELECT Pers IF (0 ("mii"))(0 (Pl1 Nom))(*1 V-PL1 BARRIER NON-ADV) ;
 
 SELECT Pers IF (0 ("mii"))(*1 V-PL1 BARRIER NON-ADV) ;
 
 SELECT Pers IF (0 ("mii))(1C Interr);
 SELECT Pers IF (0 ("mii))(1 COMMA)(2C Interr);
-
 
 
 # Mis and sis
@@ -1341,6 +1336,14 @@ REMOVE Pl IF (-1 BOS)(0 ("mii" Pron Interr))(NOT *1 (N Pl) BARRIER NPNH);
 
 SELECT Interr IF (-1 BOS)(*1 ("?"));
 SELECT Interr IF (-2 BOS)(-1 Pcle)(*1 ("?"));
+
+SELECT Interr IF (NOT -1 (V Pl1))(0 ("mii"))
+                 (*1 Sg3 BARRIER V-PL1 LINK NOT 0 Pl1);
+
+SELECT Interr IF (0 ("mii" Sg Nom))(-1 COMMA)(1 Sg3);
+SELECT Interr IF (NOT -1 (V Pl1))(0 ("mii" Sg Nom))(*1 Sg3 BARRIER V-PL1);
+
+SELECT Gen IF (0 ("mii" Interr))(1 A);
 
 
 # Reflexive pronouns
@@ -1758,6 +1761,9 @@ SELECT Nom IF (-1 CS OR BOS OR (Interr Sg))(0 Sg)(1C V-SG3);
 SELECT Nom IF (-1 CS OR BOS)(0 Pl)(NOT 0 Adv)(1C V-PL3); 
                                  # ... and the same in pl..
 
+SELECT Nom IF (*-1 CS OR BOS BARRIER NON-ADV)(0 NUMERALS)
+	(*1 (V Pl3) BARRIER CS)(NOT *1 Nom BARRIER CS);
+
 SELECT Nom IF (0 NOTIME OR Pron)(NOT 0 ("leat")) 
 		(*1C Pass BARRIER V-NON-AUX OR NP-HEAD OR Po OR CS OR CLB) ;
 	## Váfistan dihte od1d1a bargovugiid lea komitea viiddiduvvon.
@@ -1804,7 +1810,6 @@ SELECT (Sg Nom) IF (*-1 V-SG3 BARRIER NPNHAIIP LINK *-1 BOS OR CLB BARRIER Nom)
 SELECT (Pl Nom) IF (*-1 V-PL3 BARRIER NPNHAIIP LINK *-1 BOS OR CLB BARRIER Nom)
                 (0 (N Pl) or (Pron Pers Pl) OR (Pron Interr Pl))(NOT 0 PrfPrc);
                     ## 1995:s gárvánedje rádiobuvttadeapmái lanjat.
-
 
 
 # Nominative predicatives
@@ -1964,10 +1969,10 @@ SELECT (Pl Nom) IF  (*-1 ("leat" Pl3) BARRIER NPNHAI
 
 # Genitive after quantifier
 
-SELECT Gen IF (*-1C Num BARRIER NPNH OR Gen) ;  
+SELECT Gen IF (*-1C NUMERALS BARRIER NPNH OR Gen) ;  
 # Gen as barrier because of: ## Dan eatnamis oaz1z1u ovtta gusa fuod1d1ara.
 
-# SELECT Gen IF (NOT -2 Pr)(-1 NUMERALS OR MANGA);
+# SELECT Gen IF (NOT -2 Pr)(-1 NUMERALS);
                     ## Dat leat golbma nieidda.
                     ## Dál leat mán1ga nieidda
                     ## Ovdal 1920 orru guovtti goalmmátoasis ohcamiin nu geavvan.
@@ -1981,7 +1986,6 @@ SELECT Gen IF (NOT 0 Adv)(1 Po) ;    ## Dat lea nieidda dihte, nieidda birra.
 
 SELECT Gen IF (-1 Pr); ## Earret mu ii giige lea boahtán.
 
-			  
 REMOVE Nom IF (*-1 (Pron Dem Acc) OR (Pron Dem Gen) BARRIER NON-A);
                                    ## Dan ás1s1i ferte dutkat.
 
@@ -2006,6 +2010,8 @@ REMOVE Gen IF (*-1 OPRED-VERB BARRIER NPNH)(1 Ess);
 
 REMOVE Gen IF (-1 BOS)(1 Adv) ;
             ## Dan maid dalle dárbbas1a fievrridit.
+
+REMOVE Gen IF (NOT *-1 Pr OR NUMERALS BARRIER NPNH)(NOT 0 TIME)(1C NP-BORDER); 
 
 
 # Accusative
@@ -2035,7 +2041,7 @@ REMOVE Gen IF (NOT -2 Gen)(-1 CC)(1C VFIN);
 REMOVE Gen IF (*-1 CLB BARRIER NON-CC)(1C VFIN);
                      ## Mus lea doaivu, ja dan sáhttá c1állit c1uovvovac1c1at.
 
-REMOVE Gen IF (-1 CS)(1C VFIN);
+REMOVE Gen IF (-1 CS)(1C VFIN);  # No hits?
                      ## Mun jáhkán, ahte dan sáhttá c1állit c1uovvovac1c1at.
   # The "1C" part is problematic, as this rule should have been placed
   # after the verb disambiguation. Keep in mind.
@@ -2127,6 +2133,8 @@ SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAIIP OR COMMA)
 		## Ovddemus dáidá oastit árppuid ja god1d1a firpmiid.	
 
 # Could this rule be modified so that it accepts a subject between 0 and verb? 
+
+REMOVE Gen IF (NOT *-1 Pr OR NUMERALS BARRIER NPNH)(0 N)(1 Dem);
 
 
 # Accusative sentence-finally
@@ -2264,8 +2272,6 @@ SELECT Acc IF (*-1 Acc BARRIER NPNHA)(0 A)(NOT 0 Adv)(1 CLB OR EOS OR CS);
 # Illative
 # ========
 
-
-
 REMOVE (V Ind Prt Sg3) IF (-1 (N Gen))(0 Ill);
                            ## Mud1ui gustojit seamma njuoggadusat sámi levgii.
 
@@ -2293,11 +2299,11 @@ REMOVE (N Acc) IF (-1 NP-BORDER)(NOT -1 V)
                   (*1 N BARRIER NON-A LINK *1 VFIN BARRIER CS);
 
 REMOVE (N Nom) IF (-1 NP-BORDER)
-                  (*1 N BARRIER NON-A LINK *1 VFIN BARRIER CS);
+                  (*1 N BARRIER NON-A OR CLB LINK *1 VFIN BARRIER CS);
                                          ## Nieidda girji lea ruoksat.
 
 REMOVE (Pron Pers Acc) IF (-1 NP-BORDER)(*1 N BARRIER NON-Attr LINK *1 VFIN);
-REMOVE (Pron Pers Nom) IF (-1 NP-BORDER)(*1C N BARRIER NON-Attr LINK *1 VFIN);
+#REMOVE (Pron Pers Nom) IF (-1 NP-BORDER)(*1C N BARRIER NON-Attr LINK *1 VFIN);
                                          ## Din viessu s1attai oppa stuoris.
 
 
@@ -2310,7 +2316,8 @@ REMOVE (Pron Pers Nom) IF (-1 NP-BORDER)(*1C N BARRIER NON-Attr LINK *1 VFIN);
 # finn eg dei ikkje att.
 
 
-SELECT Gen IF (*-1 BOS BARRIER NPNH)(1 N);
+SELECT Gen IF (*-1 BOS BARRIER NPNH)(NOT 0 ("mii" Interr) OR Dem OR Attr)
+	(1C (N Nom) OR (N Acc));
 
 # The 'select' rule was too powerful, we do 'remove' instead.
 #SELECT Gen IF (-1 NP-BORDER)(*1 N BARRIER NON-A LINK *1 VFIN);
@@ -2618,6 +2625,8 @@ SELECT Sg3 IF (-1 (N Sg Nom))(-2 CLB);
 SELECT Sg3 IF (-1 CLB)(NOT 0 Adv)(1 (Sg3 Nom));
 SELECT Sg3 IF (-1 CLB)(NOT 0 Adv)(1 (N Sg Nom));
 
+SELECT V-SG3 IF (-2 V-SG3)(-1 CC)(NOT 0 Adv OR A);
+
 # Du1
 # ---
   # Du1 = Prt Pl3
@@ -2667,8 +2676,6 @@ SELECT (Du3) IF (*-1 ("guokte")) ;
 SELECT Pl1 IF (*-1C MII-PERS BARRIER SII OR MOAI OR CLB
                     OR V-PL1);
 
-SELECT Inf IF (-1 V-PL1)(NOT -1 Neg)(*-2C MII-PERS BARRIER SII OR MOAI OR CLB);
-
 #SELECT Pl1 IF (-1 CC -2 V-PL1 LINK *-1C MII-PERS BARRIER SII OR
 #                                  MOAI OR CLB);
 
@@ -2680,9 +2687,7 @@ SELECT Pl1 IF (NOT -2 (V Ind Prs Pl1 Clt))(-1 MII-PERS);
 
 SELECT Pl1 IF (-1 BOS)(0 (Clt))(1 MII-PERS);
 
-SELECT Interr IF (0 ("mii" Pron Interr Sg Nom))
-                 (*1 Sg3 BARRIER V-PL1 LINK NOT 0 Pl1);
-
+SELECT Pl1 IF (1 MII-PERS)(NOT *2 V-PL1 BARRIER CLB);
 
 
   # Pl2 unique, no rules needed
@@ -2714,6 +2719,10 @@ SELECT Pl3 IF (*-1 NP-HEAD-SG-NOM BARRIER NON-ADV
 
  # Pronoun
 SELECT Pl3 IF (*-1 SII BARRIER MII-PERS OR MOAI OR CLB); ## Sii jerre.
+
+ # Numeral
+SELECT Pl3 IF (*-1 (Num Nom) BARRIER CS OR PPRON-NOT-SII OR (N Sg Nom))
+		(NOT *-1 (V Pl3) BARRIER CS);
 
 
 # Postverbal subject
@@ -2960,6 +2969,7 @@ SELECT Inf IF (-1 (Interr Sg Nom))(-2 COMMA)(-3 (Sg Nom) OR (Sg3 Nom))
  # This rule is all to specific. It tries to capture topicalised objects
  # Within a subject relative clause.
 
+SELECT Inf IF (-1 V-PL1)(NOT -1 Neg)(*-2C MII-PERS BARRIER SII OR MOAI OR CLB);
 
 
 # Infinitive after predicative
@@ -2999,7 +3009,8 @@ SELECT Inf IF (-2C Inf)(-1 CC);
 
 REMOVE (V Ind) IF (-1 NP-HEAD)(-1 Gen)(NOT -1 TIME)(1 N);
 REMOVE PrfPrc IF (-1 NP-HEAD)(-1 Gen)(NOT -1 TIME)(1 N);
-
+REMOVE PrfPrc IF (*1 LEAT-FIN-NON-IMP BARRIER Nom OR CC OR CLB 
+		LINK *1 PrfPrc BARRIER CS);
 
 # Present Participle
 # ------------------
