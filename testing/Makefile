@@ -2,12 +2,15 @@ SHELL = /bin/sh
 #!/usr/bin/make
 #
 # This is a makefile to automatise most of the testing.
-# It is language independent within the framework of the Sámi language
+# It is language independent within the framework of the Sï¿½mi language
 # technology project. See further user documentation (and technical as well)
 # in $CVSROOT/gt/doc/docu-testing.html
 
 # VARIABLE DEFINITIONS
 # ====================
+
+# Tools used when compiling
+XFST = xfst -utf8
 
 # Where all the perl scripts are:
 BINDIR = ../../script/testing
@@ -174,7 +177,7 @@ n-paradigm: n-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply down <$< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	@xfst < $(TEMP)/$@-gtest-script > $(WORD).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 	@less $(WORD).paradigm
@@ -229,7 +232,7 @@ v-paradigm: v-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply down <$< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	@xfst < $(TEMP)/$@-gtest-script > $(WORD).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 	@less $(WORD).paradigm
@@ -284,7 +287,7 @@ a-paradigm: a-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply down <$< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	@xfst < $(TEMP)/$@-gtest-script > $(WORD).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 	@less $(WORD).paradigm
@@ -330,7 +333,7 @@ savefile:
 	@printf "load $(SAVEFILE) \n\
 	apply down <$< \n\
 	quit \n" > $(TEMP)/$*-gtest-script
-	@xfst < $(TEMP)/$*-gtest-script > $@
+	$(XFST) < $(TEMP)/$*-gtest-script > $@
 	@rm -f $(TEMP)/$*-gtest-script
 
 # Then we compare with the facit, and report any differences:
@@ -389,7 +392,7 @@ savefile:
 	@printf "load $(SAVEFILE) \n\
 	apply up <$< \n\
 	quit \n" > $(TEMP)/$*-atest-script
-	@xfst < $(TEMP)/$*-atest-script > $@
+	$(XFST) < $(TEMP)/$*-atest-script > $@
 	@rm -f $(TEMP)/$*-atest-script
 
 # Finally, we compare with the facit, and report any differences:
