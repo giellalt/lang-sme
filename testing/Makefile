@@ -12,13 +12,19 @@ SHELL = /bin/sh
 # Where all the perl scripts are:
 BINDIR = ../../script/testing
 
+# Directory where all the compiled fst's are:
+FSTDIR = ../bin
+
+# Directory for the source files (which compile into fst's):
+SRCDIR = ../src
+
 # The temp directory:
 TEMP = /tmp
 
 # This variable is holding the filename of the save file:
 # (makes the Makefile truly language independent for
 # the Sami languages)
-SAVEFILE = $(wildcard ../sm?.save)
+SAVEFILE = $(wildcard $(FSTDIR)/sm?.save)
 
 # Copied from old LS makefile:
 # Bond, James Bond
@@ -48,8 +54,8 @@ AAnaFiles := $(patsubst %.txt,%.areport,$(wildcard a-*.txt))
 .PHONY: all
 all: n-g.summary \
 	 n-a.summary \
-#	 v-g.summary \
-#	 v-a.summary \
+	 v-g.summary \
+	 v-a.summary \
 #	 a-g.summary \
 #	 a-a.summary
 
@@ -98,7 +104,7 @@ clean:
 .PHONY: almost-clean
 almost-clean:
 	@echo
-	@echo "*** Now deleting all generated files but the summary files ***"
+	@echo "*** Now deleting all generated files but the summary & parad. files ***"
 	@echo
 	@rm -f *.testbase \
 		  *.gtest \
@@ -110,7 +116,6 @@ almost-clean:
 		  *.gresult \
 		  *.aresult \
 		  *.ptest \
-		  *paradigm \
 		  *.tgz	\
 		  *~ \
 		  $(TEMP)/*test-script
@@ -290,7 +295,7 @@ a-paradigm: a-para.ptest savefile
 
 # Make sure there is an available smX.save in the parent directory:
 savefile:
-	@cd ../ && $(MAKE)
+	@cd $(SRCDIR)/ && $(MAKE)
 
 # Word form generation:
 # ---------------------
