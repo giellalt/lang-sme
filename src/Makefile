@@ -5,8 +5,9 @@
 # This goal depends on sme.save being up to date.
 
 isme.fst: ../bin/isme.fst
-../bin/isme.fst: ../bin/sme.fst ../bin/sme.save ../bin/tok.fst \
-	../bin/allcaps.fst
+../bin/isme.fst: ../bin/n-sme.fst ../bin/s-sme.fst ../bin/sme.save \
+	../bin/tok.fst ../bin/allcaps.fst ../bin/n-sme.fst ../bin/tok.fst \
+	../bin/caseconv.fst
 	@echo
 	@echo "*** Building the inverse isme.fst ***"
 	@echo
@@ -17,9 +18,63 @@ isme.fst: ../bin/isme.fst
 	@xfst < /tmp/isme-fst-script
 	@rm -f /tmp/isme-fst-script
 
+# We want an analyzer with Norwegian tags. It takes the linguistic 
+# sme.fst as input and gives us an alternate n-sme.fst
+
+n-sme.fst: ../bin/n-sme.fst
+../bin/n-sme.fst: ../bin/sme.fst ../bin/tag-no.fst
+	@echo
+	@echo "*** Building n-sme.fst, sme.fst with Norwegian tags ***"
+	@echo
+	@printf "read regex [[@\"../bin/tag-no.fst\"] .o. \
+	[@\"../bin/sme.fst\"]] ; \n\
+	save stack ../bin/n-sme.fst \n\
+	quit \n" > /tmp/n-sme-fst-script
+	@xfst < /tmp/n-sme-fst-script
+	@rm -f /tmp/n-sme-fst-script
+
+# In order to make n-sme.fst we need a binary tag-no.fst
+# This goal depends on tag-no.regex
+
+tag-no.fst: ../bin/tag-no.fst
+../bin/tag-no.fst: tag-no.regex
+	@echo
+	@echo "*** Building tag-no.fst ***" ;
+	@echo
+	@printf "read regex < tag-no.regex \n\
+	save stack ../bin/tag-no.fst \n\
+	quit \n" > /tmp/tag-no-script
+	@xfst < /tmp/tag-no-script
+	@rm -f /tmp/tag-no-script
+
+# We also want an analyzer with Sami tags. It takes the linguistic 
+# sme.fst as input and gives us an alternate s-sme.fst
+
+s-sme.fst: ../bin/s-sme.fst
+../bin/s-sme.fst: ../bin/sme.fst ../bin/tag-sme.fst
+	@echo
+	@echo "*** Building s-sme.fst, sme.fst with Sami tags ***"
+	@echo
+	@printf "read regex [[@\"../bin/tag-sme.fst\"] .o. \
+	[@\"../bin/sme.fst\"]] ; \n\
+	save stack ../bin/s-sme.fst \n\
+	quit \n" > /tmp/s-sme-fst-script
+	@xfst < /tmp/s-sme-fst-script
+	@rm -f /tmp/s-sme-fst-script
  
-# The first goal is to build sme.fst, the analyzer.
-# This goal depends on sme.save and caseconv.fst being up to date
+# In order to make s-sme.fst we need a binary tag-no.fst
+# This goal depends on tag-sme.regex
+
+tag-sme.fst: ../bin/tag-sme.fst
+../bin/tag-sme.fst: tag-sme.regex
+	@echo
+	@echo "*** Building tag-sme.fst ***" ;
+	@echo
+	@printf "read regex < tag-sme.regex \n\
+	save stack ../bin/tag-sme.fst \n\
+	quit \n" > /tmp/tag-sme-script
+	@xfst < /tmp/tag-sme-script
+	@rm -f /tmp/tag-sme-script
 
 sme.fst: ../bin/sme.fst
 ../bin/sme.fst: ../bin/sme.save ../bin/caseconv.fst ../bin/allcaps.fst \
@@ -58,9 +113,9 @@ allcaps.fst: ../bin/allcaps.fst
 	@echo
 	@printf "source allcaps.regex \n\
 	save stack ../bin/allcaps.fst \n\
-	quit \n" > /tmp/tok-script
-	@xfst < /tmp/tok-script
-	@rm -f /tmp/tok-script
+	quit \n" > /tmp/allcaps-script
+	@xfst < /tmp/allcaps-script
+	@rm -f /tmp/allcaps-script
 
 
 # The third goal is to build sme.save
@@ -84,7 +139,6 @@ sme.save: ../bin/sme.save
 	quit \n" > /tmp/sme-save-script
 	@lexc < /tmp/sme-save-script
 	rm -f /tmp/sme-save-script
-
 
 # The fourth goal is to build twol-sme.bin
 # This goal depends on twol-sme.txt
@@ -114,7 +168,6 @@ tok.fst: ../bin/tok.fst
 	quit \n" > /tmp/tok-script
 	@xfst < /tmp/tok-script
 	@rm -f /tmp/tok-script
-
 
 # "make clean" is there to remove the binary files at will.
 
