@@ -358,6 +358,7 @@ SET NON-ADV-PCLE-INDEF = WORD - Adv - Pcle - Indef ;
 SET NON-A   = WORD - A ;
 SET NON-DEM = WORD - Dem ;
 
+SET NON-N = WORD - N ;
 SET A-CASE = A - Attr - Adv ;
 
 LIST A-CC = A CC ;
@@ -428,19 +429,20 @@ REMOVE N IF (0 Po OR Adp)(-1 (N Gen) OR (Pron Pers Gen)); # dan várás, dan áigi
 
 
 
-# ====================================
-# Local disambiguation - cycles 1 and 2
-# ====================================
+# ===================================== #
+# Local disambiguation - cycles 1 and 2 #
+# ===================================== #
 
-# ---------------------------------------------------------
-# Cycle 1a: cases that will be needed in careful mode later
-# ---------------------------------------------------------
-
+# --------------------------------------------------------- #
+# Cycle 1a: cases that will be needed in careful mode later #
+# --------------------------------------------------------- #
+                             CONSTRAINTS                    #
+# --------------------------------------------------------- #
 # The idea with cycle 1a is to disambiguate cases that are judged as easier and
 # more secure than later cases, and that at the same may be used as context
 # for other rules in later cycles.
 
-CONSTRAINTS
+
 
 
 
@@ -705,6 +707,9 @@ REMOVE Nom IF (0 Comp)(1 N)(NOT 1 (N Nom));
    # This block of rules is there to ensure case agreement for attributive
    # comparatives.
 
+SELECT Comp IF (*1 ("go") BARRIER NON-N);
+            ## Son lea buoret go mun.
+            ## Dáz1at navde Finnmárkku buoret guovlun go iez1aset ruovttubáiki.
 
 
 
@@ -944,8 +949,9 @@ SELECT (Sg Nom) IF (*-1 ("leat" V Sg3) BARRIER NPNH
 SELECT (Pl Nom) IF (*-1 ("leat" V Pl3) BARRIER NPNH
                 LINK *-1 (Pl Nom) BARRIER NON-ADV-PCLE)(NOT 0 PrfPrc);
 
-SELECT Nom IF (-2 Nom)(-1 COPULAS)(0 A)(NOT 0 PrfPrc)(1 EOS);
+SELECT Nom IF (-2 Nom)(-1 COPULAS)(0 A)(NOT 0 PrfPrc)(1 EOS OR ("go"));
                                       ## Biilla ivdni lea vielgat.
+                                      ## Biilla ivdni lea vielgadeabbo go mielki.
 
 SELECT Nom IF (-2 Nom)(-1 COPULAS)(0 A)(NOT 0 PrfPrc)(1 CC)(2 A);
                                       ## Viessu lea vielgat ja ruksat.
@@ -1619,7 +1625,10 @@ REMOVE (Dem Acc) IF (*1 (N Gen) BARRIER NPNH LINK NOT 0 (N Acc));
 # ===================
 
 SELECT Indef IF (0 ("seammá"))(*1 N BARRIER NPNH);
-                     ## Dat lea dohkkehuvvon stáhtarád1is seammá beaivvi
+                   ## Dat lea dohkkehuvvon stáhtarád1is seammá beaivvi
+
+SELECT Attr IF (0 Pron)(*1 N BARRIER NON-A);
+                   ## Dan muitalii muhtin mátkkos1teaddji gean namma lei Keilhau.
 
 
 
