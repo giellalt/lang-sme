@@ -262,7 +262,7 @@ SET VERB = V - (V N);   # V is all readings with a V tag in them, VERB should
 SET V-NON-COP = V - LEAT-COP ;        # SET V-NON-COP = VERB - LEAT-COP ;
 SET LEX-V = VERB - V-DER;             # VERB but not V-DER
 
-SET AUX = LEAT-COP | Neg ;
+SET AUX = COPULAS | Neg ;
 
 SET V-NON-AUX = V - AUX ;
 
@@ -2004,6 +2004,18 @@ CONSTRAINTS # The genitives preceeding this CONSTRAINTS symbol are
 # Genitive as specifier
 # ---------------------
 
+# Genitive in clause that has no accusative object
+# - - - - - - - - - - - - - - - - - - - - - - - -
+
+SELECT Gen IF (0 NOTIME)(NOT 0 Nom)(*-1 Pass BARRIER CC OR CS OR BOS) ; 
+SELECT Gen IF (0 NOTIME)(NOT 0 Nom)(*1 Pass BARRIER CC OR CS OR EOS) ;
+SELECT Gen IF (0 NOTIME)(NOT 0 Nom)(*-1 COPULAS BARRIER V-NON-AUX OR 
+		CC OR CS OR BOS) ;  
+
+SELECT Gen IF (0 NOTIME)(NOT 0 Attr)(*-1 Pass BARRIER CC OR CS OR BOS)
+		(1C Nom) ;
+	## 2001 nuppástuhttojuvvui ovddes1 ovttasbargoorgána namma.
+
 # Genitive in front of noun in the beginning of a sentence
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -2025,21 +2037,32 @@ REMOVE (Pron Pers Nom) IF (-1 NP-BORDER)(*1 N BARRIER NON-Attr LINK *1 VFIN);
 REMOVE Gen IF (-1 CLB)(1 (Pron Pers))(*1 VFIN); ## Na, du mun lean oaidnán.
 REMOVE Gen IF (-1 BOS)(1 (Pron Pers))(*1 VFIN); ## Du mun lean oaidnán.
 
-REMOVE Gen IF (0 Adv)(NOT *-1 Pr BARRIER NPNH)(NOT *1 Po BARRIER NON-NP)
-		(NOT *1 N BARRIER NON-NP) ;  
+REMOVE Gen IF (0 Adv OR TIME)(NOT *-1 Pr BARRIER NPNH)
+              (NOT *1 Po BARRIER NON-NP)
+	      (NOT *1 N BARRIER NON-NP) ;  
 
 
 # Genitive in front of noun at the end of a sentence
 # - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-SELECT Gen IF (NOT 0 Attr)
-              (NOT *-1 V BARRIER PRE-NP-HEAD)
-              (*1C N BARRIER NON-A LINK 1 NP-BORDER OR CC) ;
+SELECT Gen IF (NOT 0 Attr OR PrfPrc)(*1C Acc BARRIER NPNH LINK 1 EOS);
 
-# This rule is not good. Evaluate it.
    ## Fylkka mearrida olugo galgá atnit sámi od1d1a leavgga.
    ## Ulbmiliin lea nannet sámegiela máhtolas1vuod1a Sámedikki organisas1uvnnas.
    ## Ulbmiliin lea duohtan dahkat sámegiela geavaheapmi Sámedikkis.
+
+# Genitive in front of the final word in the sentence, or: NP-initially
+SELECT Gen IF (0C CNOUN)(*1C (N Acc) BARRIER NPNH)
+              (2 NP-BORDER OR ADVLCASE);  # earlier: (2 CLB);
+                                            ## Oainnán nieidda biilla.
+                                            ## Oainnán nieidda biillas.
+
+SELECT Gen IF (0C (Pron Pers))(*1 Acc BARRIER NPNH LINK 1 CLB);
+                                            ## Oainnán su od1d1a biilla.
+                    # Unify these? Look at the effect of each and one of them.
+
+SELECT Gen IF (0C (N Prop) )(*1C CNOUN BARRIER NPNH LINK 1 CLB);
+                                            ## Oainnán Uria biilla.
 
 
 
@@ -2052,19 +2075,6 @@ SELECT Gen IF (-1 POST-A)(1 N)(2 POST-B);
 #REMOVE Acc IF (-1 BOS)(1 (N Gen) OR (Attr) OR PPOS) ;
                                             ## Mu birra don humat.
                         # This should be covered by the others... Check.
-
-# Genitive in front of the final word in the sentence, or: NP-initially
-SELECT Gen IF (0C CNOUN)(*1C (N Acc) BARRIER NPNH)
-              (2 NP-BORDER OR ADVLCASE);  # earlier: (2 CLB);
-                                            ## Oainnán nieidda biilla.
-                                            ## Oainnán nieidda biillas.
-
-SELECT Gen IF (0C (Pron Pers))(*1 (N Acc) BARRIER NPNH)(2 CLB);
-                                            ## Oainnán su od1d1a biilla.
-                    # Unify these? Look at the effect of each and one of them.
-
-SELECT Gen IF (0C (N Prop) )(*1C CNOUN BARRIER NPNH)(2 CLB);
-                                            ## Oainnán Uria biilla.
 
 
 # Specifier disambiguation in coordination constructions
