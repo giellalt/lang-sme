@@ -499,7 +499,7 @@ SET NOTIME = N - TIME ;
 
 LIST GEASSET = "dálvet" "dálvit" "giđđat" "geasset" "geassit" "čakčat" ;
 
-LIST GUOVLU = "ássan#guovlu" "báiki" "gávpot" "gielda" "goahti" "guovlu" "sádji" 
+LIST GUOVLU = "ássan#guovlu" "báiki" "gávpot" "gielda" "guovlu" "sádji" 
 	"viessu" ;
 
 LIST ROUTE = "geaidnu" "luodda"; # and others!
@@ -508,8 +508,8 @@ LIST PL-NOUN = "beassaš" "čalbme#láse" "gálssot" "headja" "sabet" "sisttet"
 	"skárri"; 
 	# Nominals that appear with plural numerals.
 
-LIST PREGEN = ("gaskavuohta" N Sg Loc)("guoskevaš")("miella" N Sg Loc)
-	("oktavuohta" N Sg Loc);
+LIST PREGEN = ("bealli" N Sg Loc)("gaskavuohta" N Sg Loc)("guoskevaš")
+	("miella" N Sg Loc)("oktavuohta" N Sg Loc);
 	# Nouns and adjectives that take a preceding genitive.
 
 LIST N-NOPX = "lohku";
@@ -670,6 +670,9 @@ REMOVE ("Man") IF (-1 BOS OR PUNCT OR (":"))(0 (V Imprt));
 REMOVE Prop IF (-1 BOS)(0 ("Mo"))(NOT 1 go)(*1 ("?"));
 REMOVE Prop IF (-2 CLB)(-1 PUNCT)(0 ("Mo"));
 	## Mo sáhttá su riika dalle bissut?
+
+REMOVE Prop IF (0 ("oassi"));
+	## Osiid ektui, dárkojuvvo Finnmárku muđui Almennehin,...
 
 
 # Selecting proper nouns
@@ -2026,7 +2029,7 @@ SELECT Adv IF (0 ("jahkásaččat"));
 
 # láhkai
 # - - - -
-SELECT N IF (-1 Attr)(0 ("láhkai"));
+SELECT N IF (-1 Dem OR Attr)(0 ("láhkai"));
 	## Seammá láhkai go váldojournála ja lassijournála geavaheami oktavuođas...
 
 # maid
@@ -2376,7 +2379,7 @@ SELECT Indef IF (*-1 Neg BARRIER CS OR CP)(0 ("galle"));
 	## Eaige sámiid ássanguovllus leat galle gieldda, mat...
  
 REMOVE Indef IF (0 ("galle"));
-SELECT Num IF (0 ("galle"))(*1 N BARRIER NPNH);
+SELECT Num IF (NOT -1 Neg)(0 ("galle"))(*1 N BARRIER NPNH);
 	## ...ja govve galle joga leat Deanučázádaga njuoskkadagas.
 
 
@@ -2833,13 +2836,13 @@ REMOVE V IF (NOT -1 (N Nom))(0 (A Attr))(*1 N BARRIER NON-ADJ LINK NOT 1 Po)
 	(NOT 0 Inf)(*2 VFIN BARRIER CC OR CLB OR CP OR CS);
         ## Olles doaibmaviessu lea sullii 2300 njealjehasmetera stuoru. 
 
-REMOVE N IF (0 (A Attr))(NOT 1 VFIN OR PrfPrc OR CLB) 
+REMOVE N IF (0 (A Attr))(NOT 1 VFIN OR PrfPrc OR CLB)(NOT 1 PREGEN) 
 	(*1 N BARRIER NON-ADJ LINK NOT 1 Po);
 	## ...muhto dakkár radikála rievdadus eahpitkeahttá buktá garra
 	## reakšuvnnaid,...
 
 SELECT (A Attr) IF (NOT *-1 COPULAS BARRIER NP-HEAD-NOM OR V-NON-AUX)
-	(NOT 0 Inf OR Comp OR ("nubbi"))(1 N)(NOT 1 VFIN OR Inf)
+	(NOT 0 Inf OR Comp OR ("nubbi"))(1 N)(NOT 1 VFIN OR Inf OR PREGEN)
 	(NOT 0 Adv LINK 1 Gen LINK 1 N);
 	## Gonagas sáhttá mearridit sierranaš njuolggadusaid báikkalaš
 	## dilálašvuođaid ektui.
@@ -4326,8 +4329,8 @@ REMOVE Nom IF (*-1 VFIN BARRIER NON-ADV-PCLE LINK *-1C Nom BARRIER NON-ADV-PCLE)
 	## ...jus sierranas sivat eai eará cealkke.
 	## Dii galgabehtet vuđolaččat bargat.
 
-REMOVE Nom IF (*-1 Inf BARRIER VFIN OR PrfPrc OR CS OR CP OR REALCLB)
-	(NOT *1 VFIN BARRIER CS);
+REMOVE Nom IF (*-1 Inf BARRIER VFIN OR PrfPrc OR CS OR CP OR REALCLB LINK 
+	0 V-NON-AUX)(NOT *1 VFIN BARRIER CS);
 	## Universitehtii lea ain hastalussan jorgalit dárogielmateriála.
 
 REMOVE Nom IF (*-1 BOS OR CS OR REALCLB BARRIER NON-NP)(NOT 1 Prop)
@@ -4750,10 +4753,70 @@ REMOVE (Prt Du2) IF (*-1 VFIN OR Inf BARRIER CS OR CP);
 
 
 
-# Locative singular
 # ================= #
       CONSTRAINTS
 # ================= #
+
+# Locative
+# ========
+
+# NP-internal disambiguation of Loc
+# ---------------------------------
+SELECT Loc IF (*-1C (Dem Pl Loc) BARRIER NPNH);
+SELECT Loc IF (-2C (Dem Pl Loc))(-1 Adv);
+	## Ollu dáin doaibmabijuin sáhttá álggahit...
+	## ??
+ # "Dain" is unambiguously Loc. "Dainna" is not.
+
+SELECT Loc IF (*-1 ("guhtemuš") OR ("goappašat") OR ("oassi") OR ("ollu") OR 
+	("ollut") BARRIER NPNH);
+	## Guhtemuš dainna bivdovugiin guhkimus leaš gevahuvvon...
+	## Dat sáhttet leat oassin árvvoštallamiin.
+
+SELECT (Pl Loc) IF (-2 Num)(-1 PROSEANTA); 
+	## Dat lea 50 % ruđain.
+
+
+# Disambiguation based upon type of NP
+# ------------------------------------
+
+SELECT (Pl Loc) IF (0 (laš) OR ("sápmelaš"))(NOT 0 (A*));
+	## Sápmelaččain sáhttet leat erenoamáš vuoigatvuođat.
+
+SELECT Loc IF (NOT -1 Num)(0 VAHKKU);
+	## 1870-jagiin lea čielggas ahte láddelaččaide guske ortnegat.
+	## ...gal guhkui ruoššaid gávppašanriekti guvttiin vahkuin. NOT -1 Num!
+
+SELECT (Pl Loc) IF (0 GUOVLU);
+	## Sápmelaččat leat unnitlogus earret muhtun unnit guovlluin.
+
+SELECT Loc IF (0 Num)(*1 PL-NOUN BARRIER NON-ADJ);
+SELECT Loc IF (0 PL-NOUN);
+	## Mun ledjen golmmain heajain.
+
+
+# Disambiguation based upon verb valency
+# --------------------------------------
+
+SELECT Loc IF (*-1 LOC-VERB BARRIER CS OR CP OR VFIN LINK NOT 0 Adv)
+	(NOT *-1 CC BARRIER CS OR CP LINK -1 LOC-VERB);
+	## Juohke dáhpáhusas ferte áibbas boastut leat beroškeahttá sámiid
+	## riekteáddejumiin.
+
+SELECT Loc IF (NOT *1C Com BARRIER NPNH)(*1 LOC-VERB BARRIER CS OR CP OR V-NON-AUX);
+	## Maiddái sámi fágabirrasiin ja ásahusain sáhttá jearrat ráđiid.
+
+
+# Other locative rules
+# --------------------
+
+SELECT Loc IF (*-1 ("sáhka") BARRIER NPNH);
+        ## Ii leat dušše sáhka olbmuid oktavuođain juohkebeaivválaš eallimis.
+
+SELECT Loc IF (1 ("gos"));
+SELECT Loc IF (1 COMMA)(2 ("gos"));  
+	## Riikkain gos lea čearddalaš, oskkolaš dahje gielalaš minoritehtat,...
+	## Sajiin, gos ii leat oktage priváhta eanaeaiggát,...
 
 SELECT Loc IF (*-1 BOS OR CS OR REALCLB BARRIER NPNHAI)(NOT 0 (A Nom))
 	(*1 ("leat") BARRIER NON-ADV-PCLE-NEG);
@@ -4769,124 +4832,88 @@ SELECT Loc IF (1 COPULAS)(*2 NP-HEAD-NOM BARRIER NPNHA LINK NOT *1 V-NON-AUX
 SELECT Loc IF (-1 ("leat" Clt) LINK *-1 BOS OR CS OR REALCLB BARRIER NON-CC); 
 SELECT Loc IF (-1 ("go" Pcle))(-2 ("leat") LINK *-1 BOS OR CS OR REALCLB 
 	BARRIER NON-CC); 
-	## Leago mus ruđaid?
-	## 
+	## Leago dis ruđaid?
+	## Lea go dis ruđaid?
 
-SELECT Loc IF (NOT -1 Num)(0 VAHKKU);
-	## 1870-jagiin lea čielggas ahte láddelaččaide guske ortnegat.
-	## ...gal guhkui ruoššaid gávppašanriekti guvttiin vahkuin.		
-
-SELECT Loc IF (*-1 NP-HEAD-NOM BARRIER NPNH LINK *-1 COPULAS BARRIER NPNH);
-	## Art. 10 lea dat oassi lassebeavdegirjjis, mii...
-
-SELECT Loc IF (0 Num)(*1 PL-NOUN BARRIER NON-ADJ);
-SELECT Loc IF (0 PL-NOUN);
-
-SELECT (Sg Loc) IF (1 CC)(*2 (Sg Loc) BARRIER NPNH);
-	## Dan čuolddas dahje oar-juolggis ráhkadišgoahtá olmmoš doarrása.
+SELECT (Sg Loc) IF (*-1 NP-HEAD-NOM BARRIER NPNH LINK *-1 COPULAS BARRIER NPNHA);
+	## Dat lei váldooaidnu boazodoallolága dulkomis. 
 
 SELECT (Prop Loc) IF (*-1 COPULAS BARRIER NON-ADV-PCLE LINK NOT *-1 ("namma")
-	BARRIER CS OR CP);
+	OR ("áhčči") BARRIER CS OR CP);
 	## Go sii ledje ain čoahkis Galileas, de...
-	## Su namma galgá leat Johanas.
+	## Su namma galgá leat Johanas. NOT *-1 "namma"!
+
+SELECT (Pl Loc) IF (1 LEAT-FIN-NON-IMP)(*2 NP-HEAD-NOM OR (Num Nom) 
+	BARRIER V-NON-AUX OR CS);
+	## Badjel 16 jahkásaš mánáin lea iešheanalis vuoigatvuohta...
 
 SELECT Loc IF (0 ("láhka"))(1 ("§")); 
+	## ...mat leat namahuvvon Dearvvašvuođabargiid lágas § 3.
+
+REMOVE (Sg Loc) IF (0 (V Actio Loc))(*1 Acc BARRIER NPNH);
+	## Ii leat sáhka juohkimis iešguđet journálačálli olbmuid ektui.
 
 
-# Comitative singular
-# ===================
+# Comitative
+# ==========
+
+# Various rules
+# -------------
+SELECT Com IF (*-1 ("ovttas") OR ("oktan") OR ("searválagaid") BARRIER (N Com));
+	## Ii lean dárbu dábálaš eanavuovdimii, oktan opmodatregistreremiin.
+
 
 # NP-internal disambiguation of Com
 # ---------------------------------
-SELECT Com IF (-1C (Dem Sg Com));         ## Vuolggán dainna biillain.
-SELECT Com IF (-2C (Dem Sg Com))(-1 Adv); ## Vuolggán dainna biillain.
+SELECT Com IF (*-1C (Dem Sg Com) BARRIER NPNH);
+SELECT Com IF (-2C (Dem Sg Com))(-1 Adv);
+	## Romssa guovllubuohcceviessu lea bargamin dáinna áššiin.
+	## ??
 
 SELECT Com IF (0 Num); # Cf. rules for PL-NOUN above.
-SELECT Com IF (*-1C Num BARRIER NON-ADJ OR ("jahkásaš")); 
+SELECT Com IF (*-1C Num BARRIER NON-ADJ OR ("jahkásaš"));
+	## ...de son gal luoitá nođiid; ovttain sániin dadjat: luoitala.
+	## Mo sáhttá mottiin sániin dadjat...
 
 
 # Disambiguation based upon type of NP
 # ------------------------------------ 
-SELECT Com IF (0 Prop)(NOT 0 (Sámediggi")); # Person names are normally sg.
-
+SELECT Com IF (0 Prop)(NOT 0 ("Sápmi") OR ("Sámediggi")); 
+	##
+ # Person names are normally sg.
+	
 
 # Disambiguation based upon verb valency
 # --------------------------------------
-SELECT Com IF (*-1 COM-VERB BARRIER VERB OR CS OR CP LINK 0 VERB)(0 Sg)(NOT 0 GUOVLU);
-                             ## Son náitali nieiddain.
+SELECT Com IF (*-1 COM-VERB BARRIER VERB OR CS OR CP LINK 0 VERB)(NOT 0 GUOVLU);
+	## Dieđut galget meannuduvvot várrugasvuođain.
 
 SELECT Com IF (0 Sg)(*1 COM-VERB BARRIER CS OR CP LINK 0 VERB)
 	(NOT *1 COPULAS BARRIER VERB LINK *1 COM-VERB BARRIER NON-ADV-PCLE LINK 0 Inf);
-                             ## Nieiddain son náitalii.
-
-# Other cases
-# -----------
-SELECT Com IF (*-1 ("ovttas") OR ("oktan") OR ("searválagaid") BARRIER (N Com));
+        ## ...go sápmelaččat duođas álge eanadoaluin bargat.
 
 
-
-# Locative plural
-# ===============
-
-SELECT Loc IF (*-1 ("guhtemuš") OR ("goappašat") BARRIER NPNH);
-	##
-
-SELECT (Pl Loc) IF (1 LEAT-FIN-NON-IMP)(*2 NP-HEAD-NOM OR (Num Nom) 
-	BARRIER V-NON-AUX OR CS);
-	##
-
-SELECT (Pl Loc) IF (*-1C (Dem Pl Loc));# BARRIER? 
- # 'Dain' is unambiguosly (Pl Loc). 'Dainna' is not.
-
-
-SELECT (Pl Loc) IF (*-1 ("guhtemuš") BARRIER NPNH);
-	## Guhtemuš dainna bivdovugiin guhkimus leaš geavahuvvon...
- 
-
-# NP-internal disambiguation of Loc
-# ---------------------------------
-SELECT Loc IF (-1C (Dem Pl Loc));         ## Mii čohkkát dain biillain.
-SELECT Loc IF (-2C (Dem Pl Loc))(-1 Adv); ## Mii čohkkát dain biillain.
-# Not too elegant, the rule set might be done more general with a barrier
-
-
-SELECT (Pl Loc) IF (-2 Num)(-1 PROSEANTA); ## Dat lea 50 % ruđain.
-
-SELECT Loc IF (1 ("gos"));           ## Son lea guovlluin gos sámit ásset.
-SELECT Loc IF (1 COMMA)(2 ("gos"));  ## Son lea guovlluin, gos sámit ásset.
-
-
-# Disambiguation based upon type of NP
-# ------------------------------------
-
-SELECT (Pl Loc) IF (0 GUOVLU);
-
-
-# Disambiguation based upon verb valency
-# --------------------------------------
-
-SELECT Loc IF (*-1 LOC-VERB BARRIER CS);
-                             ## Son balla nieiddain.
-
-SELECT Loc IF (*1 LOC-VERB BARRIER CS);
-                             ## Nieiddain son balla.
-
-SELECT Loc IF (*-1 ("sáhka"))(0 Pl);
-        ## Ii leat dušše sáhka olbmuid oktavuođain juohkebeaivválaš eallimis.
-
-
-
-# Disambiguation based upon coordination
-# --------------------------------------
 
 # =========== #
   CONSTRAINTS
 # =========== #
-# The idea is to let the other rules work first, and then let the
-# coordination follow suit.
+
+# Locative and comitative - Disambiguation based upon coordination
+# ================================================================
+ # The idea is to let the other rules work first, and then let the
+ # coordination follow suit.
 
 # Simple coordination
-# - - - - - - - - - - 
+# -------------------
+
+SELECT (Sg Loc) IF (1 CC)(*2C Loc BARRIER NPNH);
+	## Dan čuolddas dahje oar-juolggis ráhkadišgoahtá olmmoš doarrása.
+
+SELECT (Sg Loc) IF (*-1 CC BARRIER NPNH LINK -1C Loc); 
+	## Go 110a:s lea sáhka sápmelaččaid "ealáhusaid" sihkkarastimis
+	## ja ovdánahttimis,...
+
+
 SELECT (Pl Loc) IF (*-1 CC LINK *-1 Loc BARRIER NPNH LINK NOT 0 Com);
                                      ## Son lea skuvllas ja ođđa mediain.
 SELECT (Pl Loc) IF (1 CC)(*2 Loc BARRIER NPNH LINK NOT 0 Com);
@@ -4897,8 +4924,10 @@ SELECT (Sg Com) IF (1 CC)(*2 Com BARRIER NPNH LINK NOT 0 Loc);
 
 
 # Coordination within coordination
-# - - - - - - - - - - - - - - - - -
+# --------------------------------
+
 # Context to the left:
+# - - - - - - - - - - 
 SELECT (Pl Loc) IF (*-1 CC BARRIER NPNH
                    LINK -1 Cmpnd LINK *-1 CC BARRIER NPNH 
                    LINK -1 Loc LINK NOT 0 Com);
@@ -4909,6 +4938,7 @@ SELECT (Sg Com) IF (*-1 CC BARRIER NPNH
                    LINK -1 Com LINK NOT 0 Loc);
 
 # Context to the right:
+# - - - - - - - - - - - 
 SELECT (Pl Loc) IF (1 CC)
                    (*2 Cmpnd BARRIER NPNH LINK 1 CC
                    LINK *1 Loc LINK NOT 0 Com);
