@@ -124,7 +124,7 @@ n-paradigm: n-para.ptest
 	@echo
 	@echo "*** Running the paradigm generator for '$(WORD)' ***"
 	@echo
-	@printf "load ../sma.save \n\
+	@printf "load ../sme.save \n\
 	apply down <$< \n\
 	quit \n" > /tmp/$@-gtest-script
 	@xfst < /tmp/$@-gtest-script > $@
@@ -178,7 +178,7 @@ v-paradigm: v-para.ptest
 	@echo
 	@echo "*** Running the paradigm generator for '$(WORD)' ***"
 	@echo
-	@printf "load ../sma.save \n\
+	@printf "load ../sme.save \n\
 	apply down <$< \n\
 	quit \n" > /tmp/$@-gtest-script
 	@xfst < /tmp/$@-gtest-script > $@
@@ -232,7 +232,7 @@ a-paradigm: a-para.ptest
 	@echo
 	@echo "*** Running the paradigm generator for '$(WORD)' ***"
 	@echo
-	@printf "load ../sma.save \n\
+	@printf "load ../sme.save \n\
 	apply down <$< \n\
 	quit \n" > /tmp/$@-gtest-script
 	@xfst < /tmp/$@-gtest-script > $@
@@ -273,7 +273,7 @@ a-paradigm: a-para.ptest
 	@echo
 	@echo "*** Running the word form generator test for $*.txt ***"
 	@echo
-	@printf "load ../sma.save \n\
+	@printf "load ../sme.save \n\
 	apply down <$< \n\
 	quit \n" > /tmp/$*-gtest-script
 	@xfst < /tmp/$*-gtest-script > $@
@@ -297,7 +297,7 @@ a-paradigm: a-para.ptest
 
 # First, create the needed test file
 # NB! The sorting specified does not work completely as intended!
-# This will lead to small differences between the facit file and
+# This will lead to smell differences between the facit file and
 # the analysis output. This happens when one input string gives
 # more than one analysis. The expected output is according to the
 # order in the inflection lexicon, but the tags in the facit file
@@ -332,7 +332,7 @@ a-paradigm: a-para.ptest
 	@echo
 	@echo "*** Running the word form analysis test for verbs ***"
 	@echo
-	@printf "load ../sma.save \n\
+	@printf "load ../sme.save \n\
 	apply up <$< \n\
 	quit \n" > /tmp/$*-atest-script
 	@xfst < /tmp/$*-atest-script > $@
