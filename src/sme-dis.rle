@@ -308,7 +308,6 @@ SET DEM-SG = (Pron Dem Sg Nom);
 SET DEM-PL = (Pron Dem Pl Nom);
 
 
-
 # Adjective sets
 # --------------
 
@@ -317,13 +316,14 @@ SET A-ATTR = ( A Attr) ;
 SET LEX-A = A - A-DER ;
 
 
-
 # Sets for adverbials
 # -------------------
 
 SET LEX-ADV = Adv - A ;
 
 LIST IKTE = "ikte" "dolin" "dovle" ;
+
+LIST MO = "gokko" "gos" "mo" "nugo"; # Introduce clause.
 
 
 # Clitic sets
@@ -365,7 +365,7 @@ LIST ILL-VERB = "áibbas1it" "dorvvastit" "duhtat" "jáhkkit" "liikot"
 LIST INF-VERB = "adnot" "astat" "ádjánit" "áigut" "álgit" "bávc1c1agit"
 "beassat" "berret" "bivvat" "bistit" "boahtit" "c1ohkkát" "c1ohkkedit"
 "c1ohkkánit" "c1uoc1c1ahit" "c1uoc1c1astit" "c1urggodit" "dáhttut"
-"dáidit" "dárbbas1it" "doapmat" "duostat" "fertet" "fuobmát" "galgat" 
+"dáidit" "dárbbas1it" "doaivut" "doapmat" "duostat" "fertet" "fuobmát" "galgat" 
 "gáibidit" "gártat" "geahc1c1alit" "háhppehit" "hálidit" "háliidit" "heivet" 
 "lávet" "mannat" "máhttit" "navdit" "oahppat" "oaz1z1ut" 
 "ollet" "ribahit" "riepmat" "sáhttit" "sihtat" "soaitit" "s1addat" 
@@ -440,7 +440,7 @@ SET NOTIME = N - TIME ;
 # ------------------
 
 SET NUMERALS = Num - OKTA ;
-#SET COMP = (Pron Interr);
+SET CP = (Pron Interr) | MO ;
 
 
 # Syntactic sets
@@ -708,7 +708,7 @@ REMOVE PrsPrc IF (-1 A)(NOT -1 Adv) ;
 # Based on right context
 # ----------------------
 
-SELECT N IF (1 COMMA)(2 (Pron Interr));      ## Doaimmat, maiguin mun barggan.
+SELECT N IF (1 COMMA)(2 (Pron Interr));   ## Doaimmat, maiguin mun barggan.
                                               # too specific!
 
 REMOVE A IF (0 N)(1 Po);                ## C1ohkkán dárolac1c1aid gaskkas.
@@ -1416,7 +1416,7 @@ SELECT (Dem Sg Com) IF (0 ("dat"))(*1C (N Sg Com) BARRIER NPNH);
 SELECT (Dem Pl Com) IF (0 ("dat"))(*1C (N Pl Com) BARRIER NPNH);
 SELECT (Dem Pl Gen) IF (0 ("dat"))(*1C (N Pl Com) BARRIER NPNH);
 
-SELECT (Dem Ess) IF (0 ("dat"))(*1C (N Ess) BARRIER NPNH);
+SELECT (Dem Ess) IF (0 ("dat"))(*1C (N Ess) BARRIER NPNH); # Not good. Danin=adv.
 
 REMOVE (Dem Nom) IF (0 ("dat"))(NOT *1 (N Nom) BARRIER NPNH);
 REMOVE (Dem Sg Loc) IF (0 ("dat"));
@@ -1429,10 +1429,10 @@ REMOVE (Dem Pl Nom) IF (NOT *1 (N Pl Nom) OR V-PL3 BARRIER NPNH);
 # Some rules for personal pronouns again (will hit "dat")
 # ------------------------------------------------------- 
 
-SELECT (Sg3 Nom) IF (*-1 (V Sg3) BARRIER CC OR CS OR CLB OR Interr OR PUNCT); 
-SELECT (Sg3 Nom) IF (*1 (V Sg3) BARRIER VFIN OR CS OR Interr LINK NOT 0 (N Pl));
-SELECT (Pl3 Nom) IF (*-1 (V Pl3) BARRIER NON-ADV-PCLE);
-SELECT (Pl3 Nom) IF (*1 (V Pl3) BARRIER NON-ADV-PCLE);
+SELECT (Sg3 Nom) IF (*-1 (V Sg3) BARRIER CC OR CS OR CLB OR CP OR PUNCT); 
+SELECT (Pl3 Nom) IF (*-1 (V Pl3) BARRIER CC OR CS OR CLB OR CP OR Nom);
+SELECT (Sg3 Nom) IF (*1 (V Sg3) BARRIER VFIN OR CS OR CP LINK NOT 0 (N Pl));
+SELECT (Pl3 Nom) IF (*1 (V Pl3) BARRIER VFIN OR CS OR CP);
 
 
 # Disambiguating against other POS
@@ -1673,17 +1673,18 @@ SELECT Inf IF (*-1 (Neg Sup) BARRIER CLB);
 REMOVE Inf IF (*-1 (N Nom) OR (Pron Nom) BARRIER NPNH LINK -1 CC)
 	(NOT -1 INF-VERB OR A);
 
-REMOVE Inf IF (*-1 (Num Nom) BARRIER NON-NA LINK -1 CC LINK NOT *-1 Inf BARRIER VFIN);
+REMOVE Inf IF (*-1 (Num Nom) BARRIER NON-NA LINK -1 CC LINK 
+		NOT *-1 Inf OR INF-VERB BARRIER VFIN);
 
 REMOVE Inf IF (-1 CC LINK NOT *-1 Inf); # Barrier? 
 
 #Now we select Inf:
 
-SELECT Inf IF (*-1 INF-VERB BARRIER CS OR CLB OR Interr OR Neg)(NOT 0 A);
+SELECT Inf IF (*-1 INF-VERB BARRIER CS OR CLB OR CP OR Neg); #(NOT 0 A);
                            ## Skuvla galggai oahpahit sámemánáide dárogiela.
                            ## Pros1eavtta áigut c1ad1ahit.
 
-SELECT Inf IF (*-1 ACC-INF-VERB BARRIER CS OR Nom OR Interr OR Neg);
+SELECT Inf IF (*-1 ACC-INF-VERB BARRIER CS OR CP OR Nom OR Neg);
 
 SELECT Inf IF (-1 (A Nom))(*-2 COPULAS BARRIER NON-ADV-PCLE);
 
@@ -1922,6 +1923,10 @@ SELECT (Sg Nom) IF (*-1 V-SG3 BARRIER NPNHAIIP LINK *-1 BOS OR CLB BARRIER Nom)
 SELECT (Pl Nom) IF (*-1 V-PL3 BARRIER NPNHAIIP LINK *-1 BOS OR CLB BARRIER Nom)
                 (0 (N Pl) or (Pron Pers Pl) OR (Pron Interr Pl))(NOT 0 PrfPrc);
                     ## 1995:s gárvánedje rádiobuvttadeapmái lanjat.
+
+# Coordinated
+SELECT Nom IF (*-1 (V Pl3) BARRIER NPNH LINK NOT *-1 (Pl Nom) OR (Pl3 Nom) 
+		BARRIER CS OR CP)(1 CC)(*2 Nom BARRIER NPNH);
 
 
 # Nominative predicatives
@@ -2218,7 +2223,7 @@ REMOVE Gen IF (NOT *-1 Pr OR CC BARRIER NPNH)(-1 Gen)(0 NOTIME OR Pron)
 # ------------
  
 REMOVE Gen IF (NOT *-1 Pr OR Num BARRIER NPNH)(NOT -1 ("mii"))(0 NOTIME OR Pron)
-		(NOT 0 VERB)(1C (Pron Interr) OR VFIN OR CS ); 
+		(NOT 0 VERB)(1C VFIN OR CS OR CP); 
 
 
 # Not accusative
@@ -2625,6 +2630,8 @@ REMOVE Imprt IF (0 Qst);     ## Bijatgo don sohkkara dedjii?
 
 REMOVE Imprt IF (-1 BOS)(0 Adv)(*1 ("?") BARRIER CS); ## Gosa don dál?
 
+REMOVE (Imprt Sg2) IF (*1 (Sg3 Nom) OR (N Nom)); # Looks brave but works.
+
 
 # Indicative Negative
 # -------------------
@@ -2689,7 +2696,8 @@ SELECT Sg3 IF (-1 CLB)(NOT 0 Adv)(1 (Sg3 Nom));
 SELECT Sg3 IF (-1 CLB)(NOT 0 Adv)(1 (N Sg Nom));
 
 SELECT V-SG3 IF (*-1 (N Sg Nom) OR (Pron Sg3 Nom) BARRIER VFIN)
-		(NOT *-1 V-SG3 BARRIER CS)(NOT *1 V-SG3 BARRIER CS);
+		(NOT *-1 V-SG3 BARRIER CS OR CP)
+		(NOT *1 V-SG3 BARRIER CC OR CS OR CP);
 
 SELECT V-SG3 IF (-2 V-SG3)(-1 CC)(NOT 0 Adv OR A);
 
@@ -2713,6 +2721,9 @@ REMOVE (V Du1) IF (NOT *-1 MOAI)(NOT *1 MOAI);
 
 # Du2
 # ---
+
+REMOVE (Du2) IF (*1 (Sg3)); # Add barriers, and a rule for preceding Sg3?
+
   # leahppi = ("leahppi" N Sg Nom)
 
 REMOVE ("leahppi") IF (*-1 DOAI)(0 ("leat" V Ind Prs Du2));
@@ -3001,8 +3012,10 @@ REMOVE (V Ind Prs Sg3) IF (-2 BOS)(-1 Pcle)(0 (V Imprt Prs Sg2));
 # Infinitive
 # ----------
 
+REMOVE VFIN IF (*-1 VFIN BARRIER NON-ADV-PCLE);
+
 REMOVE VFIN IF (*-1 VFIN-NON-AUX OR ConNeg OR PrfPrc
-	BARRIER ("mii" Pers Pron Nom Pl1) OR SII OR Interr OR CS OR CC OR CLB)
+	BARRIER ("mii" Pers Pron Nom Pl1) OR SII OR CP OR CS OR CC OR CLB)
                (0 Inf)(NOT 0 LEAT);
                            ## Mun háliidan bargat. Son ii háliidan bargat.
                            ## Stockfleth lea beassan bargat sámegiela buorrin.
@@ -3025,8 +3038,8 @@ REMOVE (V Pl3) IF (-1 (N Sg Nom))(*1 V-SG3 BARRIER VFIN OR CS);
 #SELECT Inf IF (*-1 VFIN BARRIER Neg)(0 LEAT);
 #                           ## Jos galggas1 leat doaivva kristtalas1vuod1a nannet,
                             
-SELECT Inf IF (-1 (Interr Sg Nom))(-2 (Sg Nom) OR (Sg3 Nom))(1 (V Sg3));
-SELECT Inf IF (-1 (Interr Sg Nom))(-2 COMMA)(-3 (Sg Nom) OR (Sg3 Nom))
+SELECT Inf IF (-2 (Sg Nom) OR (Sg3 Nom))(-1 (Interr Sg Nom))(1 (V Sg3));
+SELECT Inf IF (-3 (Sg Nom) OR (Sg3 Nom))(-1 (Interr Sg Nom))(-2 COMMA)
               (1 (V Sg3));
                            ## Son gii ohcat áiggui, fertii...
  # This rule is all to specific. It tries to capture topicalised objects
@@ -3103,7 +3116,7 @@ SELECT PrfPrc IF (*-1 CC BARRIER NON-ADV LINK -1 PrfPrc)
 SELECT PrfPrc IF (-1 NP-HEAD)(NOT -1 Gen)(0 ("leapma" Dimin)); 
 SELECT PrfPrc IF (0 ("leapma" Dimin))(*1 A-CASE BARRIER NON-ADV-PCLE);
 SELECT PrfPrc IF (NOT *-1 VFIN BARRIER CS)(0 ("leapma" Dimin))
-		(NOT *1 VFIN BARRIER Interr OR CS);
+		(NOT *1 VFIN BARRIER CP OR CS);
 
 # ImprtII
 # -------
@@ -3111,8 +3124,8 @@ SELECT PrfPrc IF (NOT *-1 VFIN BARRIER CS)(0 ("leapma" Dimin))
 # VGen
 # ----
 
-REMOVE VGen IF (*-1 CS OR Interr OR BOS BARRIER VFIN)(0 VFIN)
-               ( *1 CS OR Interr OR EOS BARRIER VFIN);
+REMOVE VGen IF (*-1 CS OR CP OR BOS BARRIER VFIN)(0 VFIN)
+               ( *1 CS OR CP OR EOS BARRIER VFIN);
                               ## Báldáhan ferte din1got, jos galgá fidnet.
 
   # This rule assumes that VGen comes parasitically upon a finite verb,
@@ -3125,14 +3138,14 @@ REMOVE VGen IF (*-1 CS OR Interr OR BOS BARRIER VFIN)(0 VFIN)
 # Selecting some finite.
 # ----------------------
 
-SELECT VFIN IF (NOT *-1 VFIN BARRIER CS OR Interr)(NOT 0 N)(NOT *1 VFIN BARRIER CS)
+SELECT VFIN IF (NOT *-1 VFIN BARRIER CS OR CP)(NOT 0 N)(NOT *1 VFIN BARRIER CS)
                (NOT -1 BOS LINK 2 EOS)(NOT -2 BOS LINK 1 N LINK 2 EOS);
                                ## Son lea dan sápmelas1 gean dovddan.
                                ## Gos don dál boad1át? Siiddas.
   # first approximation
   # BOS/EOS is there to allow for fragments like the "Siiddas" example.
   # and headlines like ## Giellabarggu organiseren.
-
+  # But the rules goes wrong with lists consisting of infinitives.
 
 
 
