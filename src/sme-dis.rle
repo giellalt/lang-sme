@@ -1369,6 +1369,8 @@ REMOVE Recipr ;
 # Demonstrative pronouns
 # ======================
 
+REMOVE Pers IF (-1 CC)(0 Gen)(*1 N BARRIER NPNH LINK 1 CS OR CLB);
+
 # NP-internal number concord
 # --------------------------
 
@@ -1386,7 +1388,7 @@ SELECT Pl IF (0 (Pron Dem))(*1C (N Pl) BARRIER NON-A);
 SELECT (Dem Nom) IF (0 ("dat"))(1C (Num Nom));
 SELECT (Dem Nom) IF (0 ("dat"))(*1C (N Nom) BARRIER NON-ADJ);
 SELECT (Dem Acc) IF (0 ("dat"))(1C (Num Acc));
-SELECT (Dem Acc) IF (0 ("dat"))(*1C (N Acc) BARRIER NON-ADJ);
+#SELECT (Dem Acc) IF (0 ("dat"))(*1C (N Acc) BARRIER NON-ADJ); # Could be Gen 
 SELECT (Dem Gen) IF (0 ("dat"))(1C (Num Gen));
 SELECT (Dem Gen) IF (0 ("dat"))(*1C (N Gen) BARRIER NON-ADJ);
 
@@ -1645,13 +1647,15 @@ REMOVE Prs IF (*-1 (Neg Imprt) BARRIER CLB OR V-IND-FIN)(0 (ConNeg));
 
 SELECT Inf IF (*-1 (Neg Sup) BARRIER CLB); 
 
-# Rules that prevent later selection of Inf for a verb in the frame
-# INF-VERB...CC NOM-PL VERB
+# Rules that prevent later selection of Inf for a finite verb in the frame
+# INF-VERB...CC... ____
  
-REMOVE Inf IF (*-1 (N Nom) OR (Pron Nom)  BARRIER NPNH LINK -1 CC)
+REMOVE Inf IF (*-1 (N Nom) OR (Pron Nom) BARRIER NPNH LINK -1 CC)
 	(NOT -1 INF-VERB OR A);
 
-REMOVE Inf IF (*-1 (Num Nom) BARRIER NON-NA LINK -1 CC);
+REMOVE Inf IF (*-1 (Num Nom) BARRIER NON-NA LINK -1 CC LINK NOT *-1 Inf BARRIER VFIN);
+
+REMOVE Inf IF (-1 CC LINK NOT *-1 Inf); # Barrier? 
 
 #Now we select Inf:
 
@@ -1783,9 +1787,7 @@ REMOVE Nom IF (*-1 (Pron Dem Acc) OR (Pron Dem Gen) BARRIER NON-A);
 REMOVE Nom IF (*-1 Nom)(1 Actio);
 
 REMOVE Nom IF (*-1 V-NOT-SG3 BARRIER CC)(NOT *-1 COPULAS OR Pass BARRIER V)
-		(0 (Sg Acc) OR (Sg Gen))
-              (NOT *1 CC LINK *1 (N Nom)) # BARRIER NPNHAIIP) (reintroduce?)
-              (*1 EOS BARRIER V-SG3);
+	      (0 (N Sg Acc) OR (N Sg Gen))(NOT *1 CC)(NOT *1 V-SG3);
         ## C1uovvovas1 seminára cealkagat govahallet seminára loahppabohtosa.
 	## Dat leamas1 vissa gobmi.
 	## Eai das leat go áibbas moadde c1uoldda.
@@ -2080,7 +2082,7 @@ REMOVE Gen IF (-1 CS)(1C VFIN);  # No hits?
   # The "1C" part is problematic, as this rule should have been placed
   # after the verb disambiguation. Keep in mind.
 
-REMOVE Nom IF (NOT *-1 (V Pl3) BARRIER CS)(0 Num)(NOT *1 (V Pl3) BARRIER CS);
+REMOVE Nom IF (NOT *-1 (V Pl3) BARRIER CS)(0 NUMERALS)(NOT *1 (V Pl3) BARRIER CS);
 
 
 # Accusative between Aux and main verb
@@ -2238,7 +2240,7 @@ SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 NP-HEAD-ACC LINK
               *-1 V-NON-AUX BARRIER NPNHAII)(0 N)(1 CLB);
                                        ## Oainnán vilges biilla ja rukses viesu.
 
-SELECT Acc IF (-1 CC LINK *-1 Acc BARRIER NON-NA OR CLB)(0 Num) ;
+SELECT Acc IF (-1 CC LINK *-1C Acc BARRIER NON-NA OR CLB)(0 Num) ;
 		## Ja de ráhkadit ovtta dahje moadde s1luppoha vel.    
 
 # Three coordinated objects
@@ -2764,9 +2766,9 @@ SELECT Pl3 IF (*-1 (Num Nom) BARRIER CS OR PPRON-NOT-SII OR (N Sg Nom))
 # Postverbal subject
 # - - - - - - - - -
 
-SELECT Pl3 IF (0C VERB)(*1 (Pl Nom) BARRIER NPNH OR CLB);
+SELECT Pl3 IF (0C VERB)(*1 (N Pl Nom) OR (Pl3 Nom) BARRIER NPNH OR CLB);
 
-SELECT Pl3 IF (0C VERB)(*1 (Pl Nom) BARRIER NON-ADV);
+SELECT Pl3 IF (0C VERB)(*1 (N Pl Nom) OR (Pl3 Nom) BARRIER NON-ADV);
 
 SELECT Pl3 IF (NOT *-1 INF-VERB)(NOT 0 Pron OR Adv) # Instead: (0C VERB)? 
 		(*1 (Num Nom) BARRIER NON-ADV-PCLE LINK NOT 0 OKTA);
@@ -3117,7 +3119,7 @@ SELECT VFIN IF (NOT *-1 VFIN BARRIER CS OR Interr)(NOT 0 N)(NOT *1 VFIN BARRIER 
 # Demonstrative pronouns
 # ======================
 
-SELECT Acc IF (0 Dem)(*1C (N Acc) BARRIER NON-ADJ) ;
+#SELECT Acc IF (0 Dem)(*1C (N Acc) BARRIER NON-ADJ) ; # Could be Gen.
                                               ## Mun oainnán daid mánáid.
 
 SELECT Gen IF (0 Dem)(*1C (N Gen) OR (N Sg Ill) OR (N Sg Loc) OR (N Pl Com)
