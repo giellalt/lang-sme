@@ -360,7 +360,7 @@ LIST INF-VERB = "astat" "ádjánit" "áigut" "álgit" "bávc1c1agit"
 "beassat" "berret" "bivvat" "bistit" "boahtit" "c1ohkkát" "c1ohkkedit"
 "c1ohkkánit" "c1uoc1c1ahit" "c1uoc1c1astit" "c1urggodit" "dáhttut"
 "dáidit" "doapmat" "duostat" "fertet" "galgat" "háhppehit" "háliidit"
-"heivet" "lávet" "leat" "mannat" "máhttit" "oaz1z1ut" "ollet"
+"heivet" "lávet" "leat" "mannat" "máhttit" "oaz1z1ut" "ollet" "ribahit"
 "riepmat" "sáhttit" "sihtat" "soaitit" "s1addat" "stad1d1at" "veadjit"
 "viggat" "vis1s1at" "vuolgit" "vuollánit" ;
 
@@ -711,7 +711,8 @@ REMOVE A IF (0 N)(1 Po);                ## C1ohkkán dárolac1c1aid gaskkas.
 
 REMOVE A IF (0 N)(1C VFIN) ;            ## Dál go sápmelac1c1ain leat bohccot.
 
-REMOVE V IF (-1 Dem)(1 V-IND-FIN);      ## Dán báhkis s1addá c1áppa gohppu.
+REMOVE V IF (-1C Dem)(1 V-IND-FIN);      ## Dán báhkis s1addá c1áppa gohppu.
+				# Problem: ## Dat áiggu leat ruovttus.
 
 REMOVE V IF (-1 BOS)(0 N)(1 ("go"))(2 VFIN); ## Ádjás go lea od1d1a fanas?
 
@@ -1172,6 +1173,17 @@ SELECT (Pron Pers Sg2 Nom) IF (*-1 V-SG2);     ## Don boad1át fargga.
 SELECT (Pron Pers Sg3 Nom) IF ( *1 V-SG3);     ## Son boahtá fargga.
 SELECT (Pron Pers Sg3 Nom) IF (*-1 V-SG3);     ## Boahtágo son fargga?
   
+
+# Dat
+# ---
+ # Pron Pers Sg Nom
+ # Pron Pers Pl Nom
+ # Pron Dem Sg Nom
+ # Pron Dem PL Nom
+
+SELECT Pers IF (0 ("dat"))(NOT 1 A OR Num OR N); 
+
+
 # Moai
 # ----
   # N Prop Ill Moa
@@ -1279,7 +1291,7 @@ REMOVE Recipr ;
 # NP-internal number concord
 # --------------------------
 
-SELECT DEM-SG IF (-1 BOS)(0 Nom)(1 V-SG3); 
+#SELECT DEM-SG IF (-1 BOS)(0 Nom)(1 V-SG3); 
                             ## Dat lea duohta.
 
 SELECT Pl IF (0 (Pron Dem))(*1C (N Pl) BARRIER NON-A);
@@ -1839,12 +1851,12 @@ REMOVE Nom IF (0 Num)(NOT *1 (V Pl3) BARRIER CS OR EOS) ;
 # ------------------------------------
 
 # In front of an infinitive
-SELECT Acc IF (*-1 VFIN BARRIER NPNHAI)(NOT 0 PrfPrc)(1 Inf);
+SELECT Acc IF (*-1 VFIN BARRIER NPNHAI)(NOT 0 VERB)(NOT 0 Nom)(1 Inf);
                           ## Od1astus addá vejolas1vuod1a muitalit.
                           ## Son lea beassan bargat.
 # changed V-IND-FIN to VFIN here and in subsequent rules.
 
-SELECT Acc IF (*-1 Nom BARRIER CS)(*-1 VFIN)(NOT 0 PrfPrc)(1 Inf);
+SELECT Acc IF (*-1 Nom BARRIER CS)(*-1 VFIN)(NOT 0 PrfPrc)(NOT 0 Nom)(1 Inf);
 
 SELECT Acc IF (*-1 VFIN BARRIER NPNH)(1 CC)
               ( *2 NP-HEAD   BARRIER NPNH LINK 1 Inf);
@@ -1865,7 +1877,7 @@ SELECT Acc IF (*-1 LEAT-FIN-NON-IMP BARRIER NPNHAI)(NOT 0 Adv)
 # Object only.
 
 SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAIIP OR COMMA)
-              (0 NP-HEAD)(NOT 0 PrfPrc or Adv or Dem)(NOT 0 TIME) 
+              (0 NP-HEAD)(NOT 0 PrfPrc or Adv or Dem or Nom)(NOT 0 TIME) 
               (1 NP-BORDER OR Adv OR TIME) 
               (NOT 1 Po) ;
                      ## Oainnán du.
@@ -2426,7 +2438,7 @@ SELECT (Du3) IF (*-1 ("guokte")) ;
 SELECT Pl1 IF (*-1C MII-PERS BARRIER SII OR MOAI OR CLB
                     OR V-PL1);
 
-SELECT Inf IF (-1 V-PL1)(*-2C MII-PERS BARRIER SII OR MOAI OR CLB);
+SELECT Inf IF (-1 V-PL1)(NOT -1 Neg)(*-2C MII-PERS BARRIER SII OR MOAI OR CLB);
 
 #SELECT Pl1 IF (-1 CC -2 V-PL1 LINK *-1C MII-PERS BARRIER SII OR
 #                                  MOAI OR CLB);
@@ -2681,10 +2693,15 @@ REMOVE (V Ind Prs Sg3) IF (-2 BOS)(-1 Pcle)(0 (V Imprt Prs Sg2));
 # ConNeg forms
 # ------------
 
-SELECT ConNeg IF (*-1 Neg BARRIER VFIN OR ConNeg);#OR PrfPrc);
+SELECT (Imprt ConNeg) IF (*-1 (Neg Imprt) BARRIER VFIN OR ConNeg);#OR PrfPrc);
+SELECT (Ind ConNeg)   IF (*-1 (Neg Ind) BARRIER VFIN OR ConNeg);#OR PrfPrc);
+
+
 REMOVE ConNeg IF (NOT *-1 Neg);
 
-SELECT ConNeg IF (*-1 CC BARRIER NON-ADV LINK *-1 ConNeg BARRIER VERB);
+
+SELECT (Imprt ConNeg) IF (*-1 CC BARRIER NON-ADV LINK *-1 (Imprt ConNeg) BARRIER VERB);
+SELECT (Ind ConNeg) IF (*-1 CC BARRIER NON-ADV LINK *-1 (Ind ConNeg) BARRIER VERB);
 
 # Need more advanced rule to select ConNeg when more
 # material between neg and conneg.
