@@ -367,7 +367,7 @@ LIST INF-VERB = "adnot" "astat" "ádjánit" "áigut" "álgit" "bávc1c1agit"
 "c1ohkkánit" "c1uoc1c1ahit" "c1uoc1c1astit" "c1urggodit" "dáhttut"
 "dáidit" "dárbbas1it" "doapmat" "duostat" "fertet" "fuobmát" "galgat" 
 "gáibidit" "gártat" "geahc1c1alit" "háhppehit" "hálidit" "háliidit" "heivet" 
-"lávet" "leat" "mannat" "máhttit" "navdit" "oahppat" "oaz1z1ut" 
+"lávet" "mannat" "máhttit" "navdit" "oahppat" "oaz1z1ut" 
 "ollet" "ribahit" "riepmat" "sáhttit" "sihtat" "soaitit" "s1addat" 
 "stad1d1at" "veadjit" "viggat" "vis1s1at" "vuogáiduvvat"
 "vuolgit" "vuollánit" "vuordit";
@@ -452,10 +452,10 @@ SETS
 # -------
 
 LIST NP-HEAD = Pron N ;
-SET NP-HEAD-SG = (Pron Sg) | (N Sg);
-SET NP-HEAD-PL = (Pron Pl) | (N Pl);
-SET NP-HEAD-SG-NOM = (Pron Sg Nom) | (N Sg Nom);
-SET NP-HEAD-PL-NOM = (Pron Pl Nom) | (N Pl Nom);
+SET NP-HEAD-SG = (Pron Sg) | (Pron Sg3) | (N Sg);
+SET NP-HEAD-PL = (Pron Pl) | (Pron Pl3) | (N Pl);
+SET NP-HEAD-SG-NOM = (Pron Sg Nom) | (Pron Sg3 Nom) | (N Sg Nom);
+SET NP-HEAD-PL-NOM = (Pron Pl Nom) | (Pron Pl3 Nom) | (N Pl Nom);
 SET NP-HEAD-ACC = (Pron Acc) | (N Acc);
 
 SET PRE-NP-HEAD = (Prop Attr) | A | (Pron Pers Gen) | (N Gen) | Num |
@@ -1128,7 +1128,8 @@ SELECT Adv IF (-1 ("olu"))(0 ("eanet"));       ## Guovlu atnigoahtá olu eanet.
 
 SELECT Adv IF (0 ("eanet"))(1 ("go")) ;      ## Dat lea eanet go 10.
 
-SELECT Adv IF (0 ("eanet"))(1 ("uhcit"));
+SELECT Adv IF (0 ("eanet"))(1 ("uhcit") OR ("unnit));
+SELECT Adv IF (-1 ("uhcit") OR ("unnit"))(0 ("eanet"));
 
 # easkka
 REMOVE N IF (0 ("easkka"))(*1 TIME OR A);
@@ -1137,6 +1138,9 @@ REMOVE N IF (0 ("easkka"))(*1 TIME OR A);
 # goas
 SELECT Adv IF (0 ("goas"))(*1 ("<?>"));         ## Goas heajat leat?
   # This is not an optimal rule for getting rid of the former Portuguese colony.
+
+# goassige
+SELECT Adv IF (*-1 Neg BARRIER VFIN)(0 ("goassige"));
 
 # gosa
 SELECT Adv IF (0 ("gosa"))(*1 VFIN BARRIER CLB OR CS);
@@ -1198,9 +1202,10 @@ SELECT Adv IF (-1 ("leat"))(0 ("sullii"));
                                         ## Dat lea sullii 20 kg.
   # The idea is that 'leat' doesn't subcategorise for illatives.
 
-# uhcit
+# uhcit/unnit
 
-SELECT Adv IF (-1 ("eanet"))(0 ("uhcit"));
+SELECT Adv IF (-1 ("eanet"))(0 ("uhcit") OR ("unnit"));
+SELECT Adv IF (0 ("uhcit") OR ("unnit"))(1 ("eanet"));
 
 # visot
 SELECT Adv IF (0 ("viso"))(NOT 1 (N Pl));
@@ -1667,6 +1672,9 @@ SELECT Inf IF (*-1 ACC-INF-VERB BARRIER CS OR Nom OR Interr OR Neg);
 
 SELECT Inf IF (-1 (A Nom))(*-2 COPULAS BARRIER NON-ADV-PCLE);
 
+SELECT Inf IF (*-1 LEAT-COP BARRIER NON-ADV-PCLE OR CLB 
+		LINK *-1 Loc BARRIER NON-ADV-PCLE);
+
 
 # Perfect Participle
 # -------------------
@@ -2116,8 +2124,7 @@ SELECT Acc IF (*-1 LEAT-FIN-NON-IMP BARRIER NPNHAI)(NOT 0 Adv)
 
 SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAIIP OR COMMA)
               (0 NP-HEAD)(NOT 0 PrfPrc or Adv or Dem or Nom)(NOT 0 TIME) 
-              (1 NP-BORDER OR Adv OR TIME OR (Num Nom)) 
-              (NOT 1 Po) ;
+              (1 NP-BORDER OR (Num Nom))(NOT 1 Po) ;
                      ## Oainnán du.
                      ## In mun sálten nu olu.
                      ## Dáz1at eai atnán sámiid buoret go beanan.
@@ -2992,6 +2999,8 @@ REMOVE (V Ind Prs ConNeg) IF (*-1 VFIN-NON-AUX OR ConNeg OR PrfPrc
                     BARRIER ("mii" Pers Pron Nom Pl1) OR SII OR CS OR CLB)
                (0 Inf)(NOT 0 LEAT);
 
+REMOVE (V Pl3) IF (-1 (N Sg Nom))(*-1 V-SG3 BARRIER VFIN OR CS);
+REMOVE (V Pl3) IF (-1 (N Sg Nom))(*1 V-SG3 BARRIER VFIN OR CS);
 
 #SELECT Inf IF (*-1 VFIN BARRIER Neg)(0 LEAT);
 #                           ## Jos galggas1 leat doaivva kristtalas1vuod1a nannet,
