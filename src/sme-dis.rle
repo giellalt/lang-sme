@@ -367,7 +367,7 @@ LIST INF-VERB = "adnot" "astat" "ádjánit" "áigut" "álgit" "ásahit" "bávc1c1agit"
 "c1ohkkánit" "c1uoc1c1ahit" "c1uoc1c1astit" "c1urggodit" "dáhttut"
 "dáidit" "dárbbas1it" "doaivut" "doapmat" "duostat" "fertet" "fuobmát" "fuolahit" 
 "galgat" "gáibidit" "gártat" "geahc1c1alit" "geatnegahttit" "gillet" "háhppehit" 
-"hálidit" "háliidit" "heivet" "lávet" "mannat" "máhttit" "navdit" "oahppat" 
+"hálidit" "háliidit" "hárjánit" "heivet" "lávet" "mannat" "máhttit" "navdit" "oahppat" 
 "oaz1z1ut" "ollet" "ribahit" "riepmat" "sáhttit" "sihtat" "soaitit" "s1addat" 
 "stad1d1at" "veadjit" "viggat" "vis1s1at" "vuogáiduvvat"
 "vuolgit" "vuollánit" "vuordit";
@@ -379,7 +379,7 @@ LIST ACC-INF-VERB = "bivdit" "c1uorvut" "diktit" "gohc1c1ut" "movttiidahttit"
 #  These are verbs taking accusative objects and infinitives.
 
 
-LIST OPRED-VERB = "dahkat" ;
+LIST OPRED-VERB = "atnit" "dahkat" ;
 # Verbs that often occur with secondary predicates.
 
 
@@ -714,7 +714,7 @@ REMOVE (PxSg3) ; # IF (0 Loc);
 # Based on left context
 # ---------------------
 
-SELECT N IF (-1C (A Attr));                  ## Dat lea c1uovvovas1 sajis.
+SELECT N IF (-1 (A Attr))(NOT -1 Adv)(1 NP-BORDER);   ## Dat lea c1uovvovas1 sajis.
 
 SELECT N IF (-2C N)( -1 CC)(NOT 0 VERB)(NOT 1 N OR Pron OR Num OR A);  
 						## Mánát ja nuorat leat dál.
@@ -763,8 +763,7 @@ REMOVE (A Gen) IF (0 N)(*1 N BARRIER NON-A);
 
 
 # Preverbal subject
-SELECT (Pl Nom) IF (1C (V Pl3))(NOT 0 Adv);
-
+SELECT (Pl Nom) IF (NOT 0 Inf LINK -1 INF-VERB)(1C (V Pl3))(NOT 0 Adv);
 	## Olu nuorat bohte naitalanahkái.
   # This is a brave rule, probably too strong. It comes this early in order to
   # precede other rules.
@@ -892,12 +891,12 @@ SELECT Po IF (*-1 BOS OR CLB BARRIER NPNH)(-1 Gen);
 
 SELECT Po IF (-1 Gen)(1 CC);
 
-SELECT Pr IF (*1 (N Gen) OR (Pron Gen) BARRIER PUNCT 
+SELECT Pr IF (NOT 0 Attr)(*1 (N Gen) OR (Pron Gen) BARRIER PUNCT 
 	LINK NOT *1 N OR Po BARRIER CP OR CS OR CLB);
 
 REMOVE Pr IF (NOT 1 (Pron Gen));
 
-SELECT Po IF (-1 Gen)(NOT -1 ("leat" PrfPrc))(NOT 1C Po);
+SELECT Po IF (-1 Gen)(NOT -1 ("leat" PrfPrc))(NOT 0 Attr)(NOT 1C Po);
 		       ## ... dan njealji beali ektui.
                 
 SELECT Po IF (-1 Num)(0 ("rádjai")); # make general rule!
@@ -934,11 +933,13 @@ SELECT CS IF (0 ("amas"))(1 Neg);
 
 SELECT CS IF (0 ("amas"))(*1 Nom BARRIER NPNH); 
 
+# daningo
+# -------
+SELECT CS IF (0 ("daningo"))(NOT *1 ("?"));
+
 # dasgo
 # -----
-
-SELECT CS IF (-1 BOS)(0 ("dasgo"))(NOT *1 ("?"));
-
+SELECT CS IF (0 ("dasgo"))(NOT *1 ("?"));
 
 # de
 # --
@@ -1159,11 +1160,10 @@ SELECT Adv IF (0 ("beare"))(1 ("ollu"));  ## Orohagas leat beare olu bohccot.
 # danin
 SELECT Adv IF (0 ("danin"))(NOT *1 (N Ess) BARRIER NPNH)
 		(NOT *-1 COPULAS BARRIER NON-ADV)(NOT 1 CLB)
-		(NOT *-1 ("atnit") BARRIER NON-ADV)
-		(NOT *1 ("atnit") BARRIER NON-ADV);
+		(NOT *-1 OPRED-VERB BARRIER NON-ADV)
+		(NOT *1 OPRED-VERB BARRIER NON-ADV);
                                         ## Danin badjánii jurdda lága ráhkadit.
 					## Návetruitu lávejit danin atnit.
-	# Make SET instead of "atnit"?
 
 SELECT Ess IF (0 ("danin"))(*-1 COPULAS BARRIER NON-ADV)(1 CLB); 
 					## ...jos fierpmit leat danin,...
@@ -1342,7 +1342,7 @@ SELECT (Pron Pers Sg3 Nom) IF (0 ("son"))(*1 V-SG3 BARRIER N); ## Son boahtá far
  # -------------------------- 
 
 SELECT (Pron Ill) IF (*-1 (V Ind)) (0 ("son"));
-SELECT (Pron Ill) IF (0 ("son"))(1 (Pron Sg)); 
+SELECT (Pron Ill) IF (0 ("son"))(1 (Pron Interr Sg)); 
 
 # Dat
 # ---
@@ -1531,10 +1531,11 @@ SELECT (Pl3 Nom) IF (*1 (V Pl3) BARRIER VFIN OR CS OR CP);
 SELECT (Pron Sg3) IF (1 (Pron Interr Sg)); ## Dat mas boallu lea,... 
 SELECT (Pron Pl3) IF (1 (Pron Interr Pl));
 
+REMOVE (Pers Acc) IF (*1C (N Acc) LINK NOT 0 TIME BARRIER CS OR CP);
+
 
 # Disambiguating against other POS
 # --------------------------------
-
 # Getting rid of problematic names.
 # Problematic here are the names Dan, Dien, and the essive of the noun duo.
 
@@ -1549,7 +1550,7 @@ REMOVE (Dem Sg Nom) IF (NOT *-1 V-SG3)
   # The problem here is the VGen form of 'dassat', which is 
   # identical to the Illative form of 'dat' (both 'dasa').
 
-REMOVE VGen IF (0 ("dat" Pron Dem Sg Ill));
+REMOVE VGen IF (0 Pron);
 
 
 # Earlier specific rules, to be reactivated if the previous one is too strong.
@@ -1813,6 +1814,8 @@ SELECT Inf IF (*-1 INF-VERB BARRIER CS OR CLB OR CP OR Neg);#(NOT 0 Adv);
                            ## Skuvla galggai oahpahit sámemánáide dárogiela.
                            ## Pros1eavtta áigut c1ad1ahit.
 
+SELECT Inf IF (-2 Inf)(-1 CLB)(1 CLB OR CC);
+
 # This rule looks across a relative clause:
 SELECT Inf IF (*-1 VFIN BARRIER CS OR CP LINK *-1 (Pron Interr) BARRIER CS
 	LINK *-1 INF-VERB BARRIER VFIN OR CS OR CP);
@@ -2037,18 +2040,19 @@ SELECT Nom IF (-1 BOS)(0 Prop)(1 COMMA);
 # Coordinated subjects
 # --------------------
 
-SELECT (Sg Nom) IF (*-1 CC BARRIER NPNHAI LINK -1C (Sg Nom))(1 NP-BORDER);
+SELECT Nom IF (*-1 CC BARRIER NPNHAI LINK -1C Nom)(1 NP-BORDER);
   ## Bror Berg ja Per Mikael Utsi leaba ruovttus.
   ## Bivdoearrái gullet diksu ja dorski.
 
-
-SELECT (Sg Nom) IF (1 CC)(*2C (Sg Nom) BARRIER NPNHAI LINK 1 NP-BORDER);
+SELECT Nom IF (1 CC)(*2C Nom BARRIER NPNHAI LINK 1 NP-BORDER);
   ## Per Mikael Utsi ja Bror Berg leaba ruovttus.
   ## Bivdoearrái gullet dorski ja diksu.
 
+SELECT Nom IF (*-1 CLB BARRIER NPNHAI LINK -1 Nom)(1 CC);
+ 
 
 # Postverbal subjects
-# -------------------
+# - - - - - - - - - -
 
 # Singular
 SELECT (Sg Nom) IF (*-1 V-SG3 BARRIER NPNHAIIP LINK *-1 BOS OR CS OR CLB BARRIER Nom)
@@ -2062,11 +2066,12 @@ SELECT (Pl Nom) IF (*-1 V-PL3 BARRIER NPNHAIIP LINK *-1 BOS OR CLB BARRIER Nom)
                 (0 (N Pl) or (Pron Pers Pl) OR (Pron Interr Pl))(NOT 0 PrfPrc);
                     ## 1995:s gárvánedje rádiobuvttadeapmái lanjat.
 
-# Coordinated
+# Coordinated nominatives
+# - - - - - - - - - - - - 
 SELECT Nom IF (*-1 (V Pl3) BARRIER NPNH LINK NOT *-1 (Pl Nom) OR (Pl3 Nom) 
 		BARRIER CS OR CP)(1 CC)(*2 Nom BARRIER NPNH);
 
-SELECT Nom IF (*-1 CC BARRIER NPNH OR PUNCT LINK -1 Nom)(0 N OR Num);
+SELECT Nom IF (*-1 CC BARRIER NPNH OR PUNCT LINK -1 Nom)(0C N OR Num);
 
 
 # Nominative predicatives
@@ -3332,8 +3337,6 @@ REMOVE VGen IF (*-1 CS OR CP OR BOS BARRIER VFIN)(0 VFIN)
   # This rule assumes that VGen comes parasitically upon a finite verb,
   # and removes VGen if this is not the case. More rules are needed in order
   # to remove more cases.
-
-REMOVE VGen IF (0 Pron); # Hits 'dasa'.
 
 REMOVE VGen IF (0 Attr) (*1 N BARRIER NON-A);
 
