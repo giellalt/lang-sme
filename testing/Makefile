@@ -1,0 +1,275 @@
+SHELL = /bin/sh
+#!/usr/bin/make
+#
+# This is a makefile to automatise most of the testing.
+
+# Where all the perl scripts are:
+BINDIR = ../../script/testing
+
+# Copied from old LS makefile:
+# Bond, James Bond
+UMASK=@umask 007
+
+# Default target:
+# Remove the comments in front of the verb and adjective
+# targets when you have codes and test cases for them
+.PHONY: all
+all: n-g.summary \
+	 n-a.summary \
+#	 v-g.summary \
+#	 v-a.summary \
+#	 a-g.summary \
+#	 a-a.summary
+
+# If you only want to test nouns:
+.PHONY: all-n
+all-n: n-g.summary n-a.summary
+
+# If you only want to test verbs:
+.PHONY: all-v
+all-v: v-g.summary v-a.summary
+
+# If you only want to test adjectives:
+.PHONY: all-a
+all-a: a-g.summary a-a.summary
+
+# If you only want to test verbal generation, use v-g.summary
+# as target. Etc. for the other cases. And do you only want to
+# test a specific word or inflection class, type the name of
+# the file containing the infl. word, but replace the suffix
+# .txt with .greport for generation, and .areport for analysis.
+
+# Clean up all the mess created during a test pass, to prepare for new tests:
+#		  *.tgz	\	# just to remove archive files used for file transfering
+#		  *~		# to remove backup copies that may clutter the directory
+.PHONY: clean
+clean:
+	@echo
+	@echo "*** Now deleting all generated files ***"
+	@echo
+	@rm -f *.testbase \
+		  *.gtest \
+		  *.atest \
+		  *.gfacit \
+		  *.afacit \
+		  *.greport \
+		  *.areport \
+		  *.gresult \
+		  *.aresult \
+		  *.summary \
+		  *.tgz	\
+		  *~ \
+		  /tmp/*test-script
+
+# These variables define  the relationship between the source files
+# and the final output files (the reports), such that one can con-
+# struct a list of targets for the main target
+NGenFiles := $(patsubst %.txt,%.greport,$(wildcard n-*.txt))
+NAnaFiles := $(patsubst %.txt,%.areport,$(wildcard n-*.txt))
+VGenFiles := $(patsubst %.txt,%.greport,$(wildcard v-*.txt))
+VAnaFiles := $(patsubst %.txt,%.areport,$(wildcard v-*.txt))
+AGenFiles := $(patsubst %.txt,%.greport,$(wildcard a-*.txt))
+AAnaFiles := $(patsubst %.txt,%.areport,$(wildcard a-*.txt))
+
+
+# NOUNS
+# =====
+
+# Create all the noun test file bases:
+n-%.testbase: n-%.txt noun-codes.txt
+	@echo
+	@echo "*** Creating the test base for n-$*.txt ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNforms.pl noun-codes.txt $< > $@
+	@chmod 660 $@
+
+# Finally, we concatenate all *.greports
+n-g.summary: $(NGenFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All noun word form generation testing is done.      ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# Finally, we concatenate all *.areports:
+n-a.summary: $(NAnaFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All noun word form analysis testing is done.        ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# VERBS
+# =====
+
+# Create all the verb test file bases:
+v-%.testbase: v-%.txt verb-codes.txt
+	@echo
+	@echo "*** Creating the test base for v-$*.txt ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNforms.pl verb-codes.txt $< > $@
+	@chmod 660 $@
+
+# Finally, we concatenate all *.greports:
+v-g.summary: $(VGenFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All verb word form generation testing is done.      ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# Finally, we concatenate all *.areports:
+v-a.summary: $(VAnaFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All verb word form analysis testing is done.        ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# ADJECTIVES
+# ==========
+
+# Create all the adjective test file bases:
+a-%.testbase: a-%.txt adj-codes.txt
+	@echo
+	@echo "*** Creating the test base for a-$*.txt ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNforms.pl adj-codes.txt $< > $@
+	@chmod 660 $@
+
+# Finally, we concatenate all *.greports:
+a-g.summary: $(AGenFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All noun word form generation testing is done.      ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# Finally, we concatenate all *.areports:
+a-a.summary: $(AAnaFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All noun word form analysis testing is done.        ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# POS-independent parts:
+# ======================
+
+# Word form generation:
+# ---------------------
+
+# Make test cases for word form generation tests,
+# based on the test file bases:
+%.gtest: %.testbase
+	@echo
+	@echo "*** Creating test cases for word form generation for $*.txt ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/make-gen-test.pl $< > $@
+	@chmod 660 $@
+
+# Make facit files containing the expected output from the
+# word form generation test run:
+%.gfacit: %.testbase
+	@echo
+	@echo "*** Creating facit file for word form generation for $*.txt ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/make-gen-test-facit.pl $< > $@
+	@chmod 660 $@
+
+# Here we run the actual generation test:
+%.gresult: %.gtest
+	@echo
+	@echo "*** Running the word form generator test for $*.txt ***"
+	@echo
+	@printf "load ../sma.save \n\
+	apply down <$< \n\
+	quit \n" > /tmp/$*-gtest-script
+	@xfst < /tmp/$*-gtest-script > $@
+	@rm -f /tmp/$*-gtest-script
+
+# Then we compare with the facit, and report any differences:
+%.greport: %.gresult %.gfacit
+	@echo
+	@echo "*** Diffing the test result and the facit file for   ***"
+	@echo "*** word form generation for $*.txt ***"
+	@echo "*** \"Error 1 (ignored)\" means that there were diffs. ***"
+	@echo
+	@rm -f $@
+	-$(UMASK) && \
+	diff --side-by-side --width=70 $< $*.gfacit > $@
+	@chmod 660 $@
+
+# Word form analysis:
+# -------------------
+
+# First, create the needed test file
+# NB! The sorting specified does not work completely as intended!
+# This will lead to small differences between the facit file and
+# the analysis output. This happens when one input string gives
+# more than one analysis. The expected output is according to the
+# order in the inflection lexicon, but the tags in the facit file
+# are sorted alphabetically (due to the way sorting is performed -
+# there is no way to tell GNU sort to ONLY sort on a specified key).
+# For a completely satisfactory result we need a different solution.
+# The present solution will have to be good enough for now.
+%.atest: %.testbase
+	@echo
+	@echo "*** Creating test cases for word form analysis for $*.txt ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/make-ana-test.pl $< \
+	| sort -t '\t' -k 1 | cut -f 1 | uniq > $@
+	@chmod 660 $@
+
+# Make facit files containing the expected output from the
+# word form analysis test run:
+%.afacit: %.testbase
+	@echo
+	@echo "*** Creating facit file for word form analysis for $*.txt ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/make-ana-test.pl $< \
+	| sort -t '\t' -k 1 | cut -f 2 > $@
+	@chmod 660 $@
+
+# Here we run the actual analysis test:
+%.aresult: %.atest
+	@echo
+	@echo "*** Running the word form analysis test for verbs ***"
+	@echo
+	@printf "load ../sma.save \n\
+	apply up <$< \n\
+	quit \n" > /tmp/$*-atest-script
+	@xfst < /tmp/$*-atest-script > $@
+	@rm -f /tmp/$*-atest-script
+
+# Finally, we compare with the facit, and report any differences:
+# Due to the sorting problems mentioned above, there will always (?)
+# be (small) differences.
+%.areport: %.aresult %.afacit
+	@echo
+	@echo "*** Diffing the test result and the facit file for ***"
+	@echo "*** word form analysis for $*.txt       ***"
+	@echo "*** \"Error 1 (ignored)\" means that there were diffs.   ***"
+	@echo
+	-@diff --side-by-side --width=70 $< $*.afacit > $@
+
