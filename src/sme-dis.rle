@@ -311,7 +311,7 @@ SET DEM-PL = (Pron Dem Pl Nom);
 # Adjective sets
 # --------------
 
-SET A-ATTR = ( A Attr) ;
+SET A-ATTR = ( A Attr) ; # Used in one rule. Not needed? 
 
 SET LEX-A = A - A-DER ;
 
@@ -799,7 +799,7 @@ REMOVE N IF (-1 ("nu"))(*1 go BARRIER NON-NA);
 
 # dat
 # ---
-SELECT Pcle IF (-1 Nom)(NOT -1 A)(0 ("dat" Nom));  ## Mun dat lean boahtán.
+SELECT Pcle IF (-2 BOS)(-1 Nom)(NOT -1 A)(0 ("dat" Nom));  ## Mun dat lean boahtán.
 
 # imas1
 # -----
@@ -945,7 +945,7 @@ SELECT Pcle IF (-2 ("vai"))(0 go);
 
 SELECT Pcle IF (0 go)(*1 EOS BARRIER VFIN);       ## Mus ii leat go okta beana.
 
-#SELECT Pcle IF (-2 ("nu"))(-1 A OR Adv)(0 go);
+SELECT Pcle IF (-2 ("nu"))(-1 A OR Adv)(0 go);
 
 SELECT Pcle IF (-3 N OR Pron)(-2 ("ahte"))(-1 VFIN)(0 ("go"));
                   ## Politihkas lei 1866 rájes sáhka galggai go stivrregoahtit 
@@ -1029,7 +1029,7 @@ SELECT Adv IF (-2 VFIN)(-1 ("nu"))(1 COMMA)(2 ("ahte"));
                                        ## Lohku lassánii nu johtilit ahte ...
 
 SELECT Adv IF (*-1C VFIN-NON-AUX BARRIER NON-ADV)
-              (0 A-ATTR)(NOT 1 N);                    # Adv if postverbally
+              (0 A-ATTR)(NOT 0 Inf)(NOT 1 N);     # Adv if postverbally
 
 REMOVE Adv IF (-1 (N Gen) OR (Pron Gen))(NOT -1 Adv OR ("leat" PrfPrc))
               (0 Po);                                 # Po if after Gen
@@ -1156,11 +1156,14 @@ SELECT Adv IF (NOT -1 Dem or (A Attr))(0 ("duo"));
 # dus1s1e
 # There is a rule "Lea dus1s1e okta Ipmil" for the typical dus1s1e cases.
 
+REMOVE N IF (0 ("dus1s1e")); # Brutal, but the noun is almost always "dus1s1i".
+REMOVE A IF (0 ("dus1s1e"));
 REMOVE VFIN IF (*-1 VFIN BARRIER CP OR CS)(0 ("dus1s1e"));
 REMOVE VFIN IF (0 ("dus1s1e"))(*1 VFIN BARRIER CP OR CS);
-REMOVE (Actor) IF (0 ("dus1s1e"));
+REMOVE (Actor) IF (0 ("dus1s1at")); # Make a set for non-agentive verbs?
 
-SELECT Adv IF (-1 BOS)(0 ADV-NOT-VERB)(*1 VFIN BARRIER CC OR CS OR CLB);
+SELECT Adv IF (-1 BOS)(0 ADV-NOT-VERB);#(*1 VFIN BARRIER CC OR CS OR CLB);
+SELECT Adv IF (-2 BOS)(-1 Pcle)(0 ADV-NOT-VERB);
                              ## Dus1s1e borrásat ledje girkus.
 
 # eanet
@@ -1422,9 +1425,6 @@ REMOVE Pers IF (-1 CC)(0 Gen)(*1 N BARRIER NPNH LINK 1 CS OR CLB);
 # NP-internal number concord
 # --------------------------
 
-#SELECT DEM-SG IF (-1 BOS)(0 Nom)(1 V-SG3); 
-                            ## Dat lea duohta.
-
 SELECT Pl IF (0 (Pron Dem))(*1C (N Pl) BARRIER NON-A);
                              ## Ja dát soad1it s1adde garrasit c1uohcat Supmii.
 SELECT Pl IF (0 (Pron Dem))(1 (Num Pl));
@@ -1434,8 +1434,20 @@ SELECT Pl IF (0 (Pron Dem))(1 (Num Pl));
 
 # More rules for Dem in front of NUMERALS must be added.
 
+SELECT (Dem Sg Nom) IF (0 ("dat"))(*1 (N Sg Nom) BARRIER NON-ADJ 
+	LINK *1 V-SG3 BARRIER CS);
+SELECT (Dem Sg Nom) IF (0 ("dat"))(*1C N BARRIER NON-ADJ LINK 0 (Sg Nom)
+	LINK *-1 V-SG3 BARRIER CS OR CP);
+SELECT (Dem Pl Nom) IF (*1 (N Pl Nom) BARRIER NON-ADJ LINK *1 V-PL3
+	BARRIER CS);
+SELECT (Dem Pl Nom) IF (*1 (N Pl Nom) BARRIER NON-ADJ LINK *-1 V-PL3 
+	BARRIER CS OR CP);
+SELECT (Dem Pl Nom) IF (*1 (N Pl Nom) BARRIER NON-ADJ LINK *1 V-DU3
+	BARRIER CS);
+SELECT (Dem Pl Nom) IF (*1 (N Pl Nom) BARRIER NON-ADJ LINK *-1 V-DU3 
+	BARRIER CS OR CP);
 SELECT (Dem Pl Nom) IF (0 ("dat"))(1 (Num Nom));
-SELECT (Dem Nom) IF (0 ("dat"))(*1C (N Nom) BARRIER NON-ADJ); # C necessary
+
 SELECT (Dem Acc) IF (0 ("dat"))(1C (Num Acc));
 #SELECT (Dem Acc) IF (0 ("dat"))(*1C (N Acc) BARRIER NON-ADJ); # Could be Gen 
 SELECT (Dem Gen) IF (0 ("dat"))(1C (Num Gen));
@@ -1456,9 +1468,6 @@ SELECT (Dem Ess) IF (0 ("dat"))(*1C (N Ess) BARRIER NPNH); # Not good. Danin=adv
 REMOVE (Dem Nom) IF (0 ("dat"))(NOT *1 (N Nom) BARRIER NPNH);
 REMOVE (Dem Sg Loc) IF (0 ("dat"));
 REMOVE (Dem Sg Ill) IF (0 ("dat"));
-
-REMOVE (Dem Pl Nom) IF (NOT *1 (N Pl Nom) OR (Num Pl Nom) OR V-PL3 BARRIER NPNH);
-  # This is not good, we may have topicalised verbs...
 
 
 # Some rules for personal pronouns again (will hit "dat")
@@ -1714,9 +1723,9 @@ REMOVE Inf IF (*-1 (Num Nom) BARRIER NON-NA LINK -1 CC LINK
 
 REMOVE Inf IF (-1 CC LINK NOT *-1 Inf); # Barrier? 
 
-#Now we select Inf:
+#Now we select Inf (the rule seems much better without the Not 0 Adv) :
 
-SELECT Inf IF (*-1 INF-VERB BARRIER CS OR CLB OR CP OR Neg)(NOT 0 Adv);
+SELECT Inf IF (*-1 INF-VERB BARRIER CS OR CLB OR CP OR Neg);#(NOT 0 Adv);
                            ## Skuvla galggai oahpahit sámemánáide dárogiela.
                            ## Pros1eavtta áigut c1ad1ahit.
 
@@ -1875,6 +1884,9 @@ REMOVE Gen IF (NOT *-1 Pr OR NUMERALS BARRIER NPNH)(NOT -1 ("mii"))(NOT 0 TIME)
 # =========== #
 # Nominative
 # ==========
+
+SELECT (N Nom) IF (*-1 (Dem Nom) BARRIER NON-A);
+REMOVE (N Nom) IF (*-1 (Pers Nom) BARRIER NON-A);
 
 # Nominative in titles and sentence fragments
 # - - - - - - - - - - - - - - - - - - - - - -
