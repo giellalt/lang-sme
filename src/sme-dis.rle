@@ -29,7 +29,7 @@
                   # Disambiguating clitics
                   # Disambiguating determiners 
                   # Disambiguating adpositions
-                  # Disambiguating subjuncitons
+                  # Disambiguating subjunctions
                   # Disambiguating adverbs
                   # Disambiguating pronouns
                   # Disambiguating adjectives
@@ -323,7 +323,7 @@ SET LEX-ADV = Adv - A ;
 
 LIST IKTE = "ikte" "dolin" "dovle" ;
 
-LIST MO = "gokko" "gos" "mo" "nugo"; # Introduce finite clauses.
+LIST MO = "danne" "gokko" "gos" "mo" "nugo"; # Introduce finite clauses.
 
 
 # Clitic sets
@@ -630,7 +630,8 @@ SELECT Pers IF (*1 V-SG2)(0 (Pron Pers Sg2 Nom));  ## de don leat
 
 SELECT (PxSg1) IF (-1 V-SG1)(NOT -1 ("leat"))(-2 MUN);
 SELECT (PxSg2) IF (-1 V-SG2)(NOT -1 ("leat"))(-2 DON);
-SELECT (PxSg3) IF (-1 V-SG3)(NOT -1 ("leat"))(-2 SON);
+SELECT (PxSg3) IF (-1 V-SG3)(NOT -1 ("leat") OR Pass)(-2 SON);
+	## Dat ráhkaduvvo gáttis gárvvisin.
 
 # Px for names for relatives
 
@@ -796,8 +797,9 @@ REMOVE N IF (-1 ("nu"))(*1 go BARRIER NON-NA);
 # Certain singleton words #
 # ======================= #
 
-SELECT Gen IF (0 ("nubbi"))(1 N);
-                      ## Son oac1c1ui c1áda ás1s1i fas nuppi Stuorradikkis.
+# dat
+# ---
+SELECT Pcle IF (-1 Nom)(NOT -1 A)(0 ("dat" Nom));  ## Mun dat lean boahtán.
 
 # imas1
 # -----
@@ -805,10 +807,11 @@ SELECT N IF (-1 VFIN OR ConNeg OR A OR Dem)(0 ("imas1"));
                       ## Lei imas1, go buvddas eai vuovdde albma varramárffiid.
                       ## dakkár imas1 ja ártegis dilli ahte ...
 
-# dat
-# ---
+# nubbi
+# -----
+SELECT Gen IF (0 ("nubbi"))(1 N);
+                      ## Son oac1c1ui c1áda ás1s1i fas nuppi Stuorradikkis.
 
-SELECT Pcle IF (-1 Nom)(NOT -1 A)(0 ("dat" Nom));  ## Mun dat lean boahtán.
 
 
 # ========================== #
@@ -901,7 +904,7 @@ SELECT CS IF (-1 CLB)(0 ("de") OR go OR ("vaikko"));
 
 # amas
 # ----
-# CS if followed by (nominative) subject and (infinitival) verb. 
+# A, or Neg Sup, or CS (if followed by (nominative) subject and (infinitival) verb). 
 
 SELECT A IF (0 ("amas"))(1 CC)(2 A);
 
@@ -1152,6 +1155,11 @@ SELECT Adv IF (NOT -1 Dem or (A Attr))(0 ("duo"));
 
 # dus1s1e
 # There is a rule "Lea dus1s1e okta Ipmil" for the typical dus1s1e cases.
+
+REMOVE VFIN IF (*-1 VFIN BARRIER CP OR CS)(0 ("dus1s1e"));
+REMOVE VFIN IF (0 ("dus1s1e"))(*1 VFIN BARRIER CP OR CS);
+REMOVE (Actor) IF (0 ("dus1s1e"));
+
 SELECT Adv IF (-1 BOS)(0 ADV-NOT-VERB)(*1 VFIN BARRIER CC OR CS OR CLB);
                              ## Dus1s1e borrásat ledje girkus.
 
@@ -1539,8 +1547,7 @@ REMOVE (A Acc) IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
  # The careful mode (*1C N) was removed because of the second example.
  # But reintroduced because of the third example.
 
-# These two are too heavy. (The second one is modified. MJ) 
-REMOVE V IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
+REMOVE V IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po)(*2 VFIN BARRIER CLB OR CP);
 REMOVE N IF (0 (A Attr))(NOT 1 PrfPrc) (*1 N BARRIER NON-A LINK NOT 1 Po);
                ## Olles doaibmaviessu lea sullii 2300 njealjehasmetera stuoru. 
 
@@ -2393,7 +2400,7 @@ REMOVE (V Ind Prt Sg3) IF (*-1 Acc BARRIER NPNH LINK *-1 VFIN);
 REMOVE (N Acc) IF (-1 NP-BORDER)(NOT -1 V)
                   (*1 N BARRIER NON-A LINK *1 VFIN BARRIER CS);
 
-REMOVE (N Nom) IF (-1 NP-BORDER)(NOT 1 ("leat"))
+REMOVE (N Nom) IF (-1 NP-BORDER)(NOT 1 ("leat") OR Inf)
                   (*1 N BARRIER NON-A OR CLB LINK *1 VFIN BARRIER CS);
                                          ## Nieidda girji lea ruoksat.
 
@@ -2643,12 +2650,14 @@ SELECT (Sg Com) IF (1 CC)(*2 Com BARRIER NPNH LINK NOT 0 Loc);
 # Disambiguating verbs #
 # ==================== #
 
-
 # Finite forms #
 # ============ #
    CONSTRAINTS #
 # ============ #
 
+SELECT VFIN IF (-1 BOS)(0 INF-VERB)(*1 Inf BARRIER CS OR CP); # Looks brave but works!
+			## Áigugo skuvlii álgit? 
+			## Sáhttit maid namahit ahte ...
 
 # Indicative or imperative #
 # ======================== #
@@ -3162,6 +3171,8 @@ REMOVE VGen IF (*-1 CS OR CP OR BOS BARRIER VFIN)(0 VFIN)
   # This rule assumes that VGen comes parasitically upon a finite verb,
   # and removes VGen if this is not the case. More rules are needed in order
   # to remove more cases.
+
+REMOVE VGen IF (*1 N BARRIER NON-A); # Modifications may be needed.
 
 # Gerund,  Verb abessive and Supine do have unique forms and need no rules.
 
