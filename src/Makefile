@@ -14,9 +14,9 @@ isme.fst: ../bin/isme.fst
 	@printf "load ../bin/sme.save \n\
 	invert net \n\
 	save stack ../bin/isme.fst \n\
-	quit \n" > /tmp/isme-fst-script
-	@xfst < /tmp/isme-fst-script
-	@rm -f /tmp/isme-fst-script
+	quit \n" > ../../tmp/isme-fst-script
+	@xfst < ../../tmp/isme-fst-script
+	@rm -f ../../tmp/isme-fst-script
 
 # We want an analyzer with Norwegian tags. It takes the linguistic 
 # sme.fst as input and gives us an alternate n-sme.fst
@@ -29,9 +29,9 @@ n-sme.fst: ../bin/n-sme.fst
 	@printf "read regex [[@\"../bin/tag-no.fst\"] .o. \
 	[@\"../bin/sme.fst\"]] ; \n\
 	save stack ../bin/n-sme.fst \n\
-	quit \n" > /tmp/n-sme-fst-script
-	@xfst < /tmp/n-sme-fst-script
-	@rm -f /tmp/n-sme-fst-script
+	quit \n" > ../../tmp/n-sme-fst-script
+	@xfst < ../../tmp/n-sme-fst-script
+	@rm -f ../../tmp/n-sme-fst-script
 
 # In order to make n-sme.fst we need a binary tag-no.fst
 # This goal depends on tag-no.regex
@@ -43,9 +43,9 @@ tag-no.fst: ../bin/tag-no.fst
 	@echo
 	@printf "read regex < tag-no.regex \n\
 	save stack ../bin/tag-no.fst \n\
-	quit \n" > /tmp/tag-no-script
-	@xfst < /tmp/tag-no-script
-	@rm -f /tmp/tag-no-script
+	quit \n" > ../../tmp/sme-tag-no-script
+	@xfst < ../../tmp/sme-tag-no-script
+	@rm -f ../../tmp/sme-tag-no-script
 
 # We also want an analyzer with Sami tags. It takes the linguistic 
 # sme.fst as input and gives us an alternate s-sme.fst
@@ -58,9 +58,9 @@ s-sme.fst: ../bin/s-sme.fst
 	@printf "read regex [[@\"../bin/tag-sme.fst\"] .o. \
 	[@\"../bin/sme.fst\"]] ; \n\
 	save stack ../bin/s-sme.fst \n\
-	quit \n" > /tmp/s-sme-fst-script
-	@xfst < /tmp/s-sme-fst-script
-	@rm -f /tmp/s-sme-fst-script
+	quit \n" > ../../tmp/s-sme-fst-script
+	@xfst < ../../tmp/s-sme-fst-script
+	@rm -f ../../tmp/s-sme-fst-script
  
 # In order to make s-sme.fst we need a binary tag-no.fst
 # This goal depends on tag-sme.regex
@@ -72,9 +72,9 @@ tag-sme.fst: ../bin/tag-sme.fst
 	@echo
 	@printf "read regex < tag-sme.regex \n\
 	save stack ../bin/tag-sme.fst \n\
-	quit \n" > /tmp/tag-sme-script
-	@xfst < /tmp/tag-sme-script
-	@rm -f /tmp/tag-sme-script
+	quit \n" > ../../tmp/tag-sme-script
+	@xfst < ../../tmp/tag-sme-script
+	@rm -f ../../tmp/tag-sme-script
 
 sme.fst: ../bin/sme.fst
 ../bin/sme.fst: ../bin/sme.save ../bin/caseconv.fst ../bin/allcaps.fst \
@@ -85,9 +85,9 @@ sme.fst: ../bin/sme.fst
 	@printf "read regex @\"../bin/sme.save\" .o. \
 	@\"../bin/caseconv.fst\" ; \n\
 	save stack ../bin/sme.fst \n\
-	quit \n" > /tmp/sme-fst-script
-	@xfst < /tmp/sme-fst-script
-	@rm -f /tmp/sme-fst-script
+	quit \n" > ../../tmp/sme-fst-script
+	@xfst < ../../tmp/sme-fst-script
+	@rm -f ../../tmp/sme-fst-script
 
 # The second goal is to build the caseconv.fst file
 # This goal depends on case.regex
@@ -99,9 +99,9 @@ caseconv.fst: ../bin/caseconv.fst
 	@echo
 	@printf "read regex < case.regex \n\
 	save stack ../bin/caseconv.fst \n\
-	quit \n" > /tmp/caseconv-script
-	@xfst < /tmp/caseconv-script
-	@rm -f /tmp/caseconv-script
+	quit \n" > ../../tmp/caseconv-sme-script
+	@xfst < ../../tmp/caseconv-sme-script
+	@rm -f ../../tmp/caseconv-sme-script
 
 
 # This goal depends on allcaps.regex
@@ -113,9 +113,9 @@ allcaps.fst: ../bin/allcaps.fst
 	@echo
 	@printf "source allcaps.regex \n\
 	save stack ../bin/allcaps.fst \n\
-	quit \n" > /tmp/allcaps-script
-	@xfst < /tmp/allcaps-script
-	@rm -f /tmp/allcaps-script
+	quit \n" > ../../tmp/allcaps-sme-script
+	@xfst < ../../tmp/allcaps-sme-script
+	@rm -f ../../tmp/allcaps-sme-script
 
 
 # The third goal is to build sme.save
@@ -136,9 +136,9 @@ sme.save: ../bin/sme.save
 	read-rules ../bin/twol-sme.bin \n\
 	compose-result \n\
 	save-result ../bin/sme.save \n\
-	quit \n" > /tmp/sme-save-script
-	@lexc < /tmp/sme-save-script
-	rm -f /tmp/sme-save-script
+	quit \n" > ../../tmp/sme-save-script
+	@lexc < ../../tmp/sme-save-script
+	@rm -f ../../tmp/sme-save-script
 
 # The fourth goal is to build twol-sme.bin
 # This goal depends on twol-sme.txt
@@ -151,9 +151,9 @@ twol-sme.bin: ../bin/twol.sme.bin
 	@printf "read-grammar twol-sme.txt \n\
 	compile \n\
 	save-binary ../bin/twol-sme.bin \n\
-	quit \n" > /tmp/twol-sme-script
-	@twolc < /tmp/twol-sme-script
-	@rm -f /tmp/twol-sme-script
+	quit \n" > ../../tmp/twol-sme-script
+	@twolc < ../../tmp/twol-sme-script
+	@rm -f ../../tmp/twol-sme-script
 
 # Here we include a preprocessor.
 # This goal depends on tok.txt
@@ -165,9 +165,9 @@ tok.fst: ../bin/tok.fst
 	@echo
 	@printf "source tok.txt \n\
 	save stack ../bin/tok.fst \n\
-	quit \n" > /tmp/tok-script
-	@xfst < /tmp/tok-script
-	@rm -f /tmp/tok-script
+	quit \n" > ../../tmp/tok-sme-script
+	@xfst < ../../tmp/tok-sme-script
+	@rm -f ../../tmp/tok-sme-script
 
 # "make clean" is there to remove the binary files at will.
 

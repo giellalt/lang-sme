@@ -19,7 +19,7 @@ FSTDIR = ../bin
 SRCDIR = ../src
 
 # The temp directory:
-TEMP = /tmp
+TEMP = ../../tmp
 
 # This variable is holding the filename of the save file:
 # (makes the Makefile truly language independent for
