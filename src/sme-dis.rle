@@ -664,6 +664,9 @@ SELECT (V Ind Prt Sg2) IF (*-1 DON BARRIER V-SG2);
 REMOVE (V Ind Pl3) IF (1C VFIN)(NOT 1 Pl3) ;
 		## Vihtta bivdovuogi mun gal dus1s1e namahin.  
 
+REMOVE V IF (-1 CS)(0 ("dus1s1e"))(*1 Acc BARRIER NPNH); 
+	# This rule had to precede particle rules.
+
 # Imperatives
 # -----------
 REMOVE Imprt IF (0 (Clt Qst));     ## Heivego gávtti coggat?
@@ -860,6 +863,7 @@ SELECT Po IF (-3 Num)(-2 CC)(-1 Num)(0 GASKAL);
 
 SELECT Pr IF (0 GASKAL)(*1 (N Gen) BARRIER NPNH 
           LINK 1 CC LINK *1 (N Gen) BARRIER NPNH);
+SELECT Pr IF (0 GASKAL)(1 A)(2 CC)(3 A LINK *1 (N Gen)); # Barrier?
 SELECT Po IF (-1 (N Gen) 
           LINK *1 CC BARRIER NPNH LINK -1 (N Gen))(0 GASKAL);
 
@@ -876,13 +880,18 @@ REMOVE Po IF (-1 N)(NOT -1 Gen);   ## Leansmánni lea kommis1uvnnas fárus.
 REMOVE Pr IF (NOT *1 N OR A OR Num OR Pron BARRIER NPNH);
 
 
-SELECT Pr IF (NOT -1 Gen)(*1 (N Gen) BARRIER NPNH);
+SELECT Pr IF (NOT -1 Gen OR (Pron Interr Nom))(*1 (N Gen) BARRIER NPNH);
                                 ## Olbmuin bisttii luossaguolli miehtá dálvvi. 
 SELECT Pr IF (NOT -1 Gen)(1 (Pron Gen));
 
 REMOVE Pr IF (NOT *1 (N Gen) BARRIER NPNH);
 
-SELECT Pr IF (*1 (N Gen) OR (Pron Gen) LINK NOT *1 N OR Po BARRIER CP OR CS);
+SELECT Po IF (*-1 BOS OR CLB BARRIER NPNH)(-1 Gen);
+
+SELECT Po IF (-1 Gen)(1 CC);
+
+SELECT Pr IF (*1 (N Gen) OR (Pron Gen) BARRIER PUNCT 
+	LINK NOT *1 N OR Po BARRIER CP OR CS OR CLB);
 
 REMOVE Pr IF (NOT 1 (Pron Gen));
 
@@ -940,7 +949,9 @@ SELECT CS IF (*-1 ("jos") OR ("go") LINK -1 BOS OR CS)(-1 COMMA)(0 ("de"));
 # go
 # --
 
-SELECT Pcle IF (-2 BOS)(NOT -1 CC OR CS OR PUNCT OR Adv)(0 go);  ## Boad1át go?
+#SELECT Pcle IF (-2 BOS)(NOT -1 CC OR CS OR PUNCT OR Adv)(0 go);  ## Boad1át go?
+
+SELECT Pcle IF (-2 BOS)(0 go)(*1 ("?"));
                                                   
 SELECT Pcle IF (-3 BOS)(-2 CS)(0 go);             ## Muhto boad1át go?
 
@@ -952,7 +963,7 @@ SELECT Pcle IF (-3 BOS)(-2 CC)(-1 V)(0 go);      ## Dahje leat go aiddonassii...
 
 SELECT Pcle IF (-2 ("vai"))(0 go);
 
-SELECT Pcle IF (*-1 A OR Adv LINK *-1 ("nu") OR ("mihá"))(0 go);
+SELECT Pcle IF (*-1 A OR Adv LINK *-1 ("nu") OR ("mihá") BARRIER CS)(0 go);
 
 SELECT Pcle IF (*-1 ("seammá"))(NOT -1 VFIN)(0 go);  ## Seammá gusto go...
 
@@ -960,7 +971,7 @@ SELECT Pcle IF (-1 COMPAR)(0 go);
 
 SELECT Pcle IF (0 go)(*1 EOS BARRIER VFIN);       ## Mus ii leat go okta beana.
 
-SELECT Pcle IF (-1 A OR Adv)(0 go)(*1 Interr BARRIER VFIN);
+SELECT Pcle IF (-1 A OR Adv)(NOT -1 Po)(0 go)(*1 Interr BARRIER VFIN);
 
 SELECT Pcle IF (0 go)(1 ("ahte"));
 
@@ -1053,7 +1064,7 @@ REMOVE Adv IF (-1 (N Gen) OR (Pron Gen))(NOT -1 Adv OR ("leat" PrfPrc))
 
 REMOVE Adv IF (-1 ("leat"))(0 (A Attr))(1 N);  ## Bussás leat alit c1almmit.
 
-SELECT Adv IF (-2 V)(NOT -2 ("leat"))(-1 Adv)(1 EOS); # Too specific!!
+SELECT Adv IF (-2 V)(NOT -2 COPULAS)(-1 Adv)(1 EOS); # Too specific!!
                                                      ## Son c1állá hui c1ábbát.
 
 SELECT Adv IF (-1 BOS OR CLB)(0C Adv OR Po);
@@ -1278,6 +1289,10 @@ SELECT Adv IF (0 ("sullii"))(1 Num);    ## Dat lea sullii 20 kg.
 SELECT Adv IF (-1 ("leat"))(0 ("sullii"));
                                         ## Dat lea sullii 20 kg.
   # The idea is that 'leat' doesn't subcategorise for illatives.
+
+# unnán
+
+SELECT Adv IF (0 ("unnán"))(1 VFIN OR PrfPrc);
 
 # uhcit/unnit
 
@@ -1545,6 +1560,8 @@ REMOVE VGen IF (0 ("dat" Pron Dem Sg Ill));
 # Indefinite pronouns
 # ===================
 
+#SELECT Attr IF (-1 Pr)(*1 N BARRIER NON-A);
+
 SELECT Attr IF (0 ("seamma"))(1 A);
 
 REMOVE Attr IF (0 ("seammá"))(NOT *1 N OR A BARRIER NPNH);
@@ -1559,6 +1576,8 @@ SELECT Indef IF (0 ("nubbi"))(*1 CS OR CC OR COMMA LINK *1 ("nubbi"));
 
 SELECT Indef IF (-1 CS OR CC OR COMMA LINK *-1 ("nubbi"))(0 ("nubbi"));
                   ## Nubbi lei dáz1a, muhto nuppi bearras1is lei isit sápmelas1.
+
+SELECT Indef IF (*-1 COPULAS BARRIER V-NON-AUX)(0 ("unnán"));
 
 
 
@@ -1592,7 +1611,8 @@ REMOVE (A Acc) IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
  # The careful mode (*1C N) was removed because of the second example.
  # But reintroduced because of the third example.
 
-REMOVE V IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po)(*2 VFIN BARRIER CLB OR CP);
+REMOVE V IF (NOT -1 (N Nom))(0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po)
+	(*2 VFIN BARRIER CC OR CLB OR CP OR CS);
 REMOVE N IF (0 (A Attr))(NOT 1 VFIN OR PrfPrc OR CLB) 
 	(*1 N BARRIER NON-A LINK NOT 1 Po);
                ## Olles doaibmaviessu lea sullii 2300 njealjehasmetera stuoru. 
@@ -1605,6 +1625,17 @@ REMOVE (A Loc) IF (0 Attr)(1 N);
 
 SELECT (A Attr) IF (NOT -1 ("leat") LINK -1 Nom)(NOT -1 CS)(0 (N Nom) OR (A Nom))
 	(NOT 0 VERB)(1 N)(NOT 1 VFIN OR TIME OR ("leapma" Dimin));
+
+
+REMOVE VGen IF (-1 Gen OR Dem OR Indef)(0 Attr)(1 N)(2 NP-BORDER);
+REMOVE N    IF (-1 Gen OR Dem OR Indef)(0 Attr)(1 N)(2 NP-BORDER);
+REMOVE Adv  IF (-1 Gen OR Dem OR Indef)(0 Attr)(1 N)(2 NP-BORDER);
+REMOVE VFIN IF (-1 Gen OR Dem OR Indef)(0 Attr)(1 N)(2 NP-BORDER);
+
+	## Dat lea died1áhus sámepolitihka bajit linjáid birra.
+
+   # This is a highly specified context. The idea is that the Spec ___ N
+   # position should have and Attr or some other adjective. Look out for probl.
  
 
 # Special rules for 'buorre' (the only adjective showing case agreement)
@@ -1637,7 +1668,11 @@ SELECT (Prop Attr) IF (NOT -1 Prop)(1 CC)(2 (Prop Attr))(3 (N Prop));
 # Adjectives as predicates
 # ========================
 
-SELECT A IF (*-1 ("leat" V) BARRIER NON-ADV-INDEF)(NOT 0 VERB OR N)(1 N OR EOS);
+# Two rules here to avoid removing infinitive:
+REMOVE VGen IF (*-1 COPULAS BARRIER NON-ADV-INDEF)(0 Attr)(1 N OR EOS);
+REMOVE VFIN IF (*-1 COPULAS BARRIER NON-ADV-INDEF)(0 Attr)(1 N OR EOS);
+
+SELECT A IF (*-1 COPULAS BARRIER NON-ADV-INDEF)(NOT 0 VERB OR N)(1 N OR EOS);
                            ## Ikte lei hui buolas1.
 #REMOVE Adv IF (*-1 ("leat" V) BARRIER NON-ADV-INDEF)(NOT *1 VERB BARRIER CS OR CP);
 
@@ -1658,22 +1693,17 @@ REMOVE (A Sg Nom) IF (0 (A Attr))(*1C N BARRIER NON-Attr);
   # When 1 = object predicative, this is a bad rule. Perhaps:
   # (-1 COPULAS)? Keep it in mind. - Also compare first rule of Attribute disambiguation.
 
+# In the two next rules, an alternative would be to leave out the reference to the
+# subject and simply refer to the number marking of the copula. 
+SELECT (A Sg Nom) IF (*-1 COPULAS BARRIER NON-ADV LINK *-1 (N Sg Nom) OR (Sg3 Nom) 
+	BARRIER V-NON-AUX)(NOT 0 Inf);
+
 SELECT (A Pl Nom) IF (*-1 COPULAS BARRIER NON-ADV LINK *-1 (N Pl Nom) OR (Pl3 Nom) 
 	BARRIER V-NON-AUX);
 
 
 # Comparatives
 # ------------
-
-REMOVE VGen IF (-1 Gen OR Dem)(0 Attr OR Comp OR Superl)(1 N)(2 NP-BORDER);
-REMOVE N    IF (-1 Gen OR Dem)(0 Attr OR Comp OR Superl)(1 N)(2 NP-BORDER);
-REMOVE Adv  IF (-1 Gen OR Dem)(0 Attr OR Comp OR Superl)(1 N)(2 NP-BORDER);
-REMOVE VFIN IF (-1 Gen OR Dem)(0 Attr OR Comp OR Superl)(1 N)(2 NP-BORDER);
-
-	## Dat lea died1áhus sámepolitihka bajit linjáid birra.
-
-   # This is a highly specified context. The idea is that the Spec ___ N
-   # position should have and Attr or some other adjective. Look out for probl.
 
 REMOVE Gen IF (0 Comp)(1 N)(NOT 1 (N Gen));
 REMOVE Acc IF (0 Comp)(1 N)(NOT 1 (N Acc));
@@ -1894,7 +1924,7 @@ SELECT Gen IF (NOT 0 Adv OR PrfPrc)(1 Po) ;    ## Dat lea nieidda dihte, nieidda
 
 # Genitive after preposition
 
-SELECT Gen IF (-1 Pr); ## Earret mu ii giige lea boahtán.
+SELECT Gen IF (*-1 Pr BARRIER NPNH)(1 NP-BORDER OR CC); ## Earret mu ii giige lea boahtán.
 
 
 # Various
