@@ -32,6 +32,7 @@
                   # Disambiguating adverbs
                   # Disambiguating pronouns
                   # Disambiguating adjectives
+                  # Disambiguating certain safe verbs
                   # Disambiguating nouns
                   # Disambiguating verbs
                   # Other words
@@ -767,6 +768,11 @@ SELECT Gen IF (0 ("nubbi"))(1 N);
                       ## Son oac1c1ui c1áda ás1s1i fas nuppi Stuorradikkis.
 
 
+# imas1
+# -----
+SELECT N IF (-1 VFIN OR ConNeg OR A OR Dem)(0 ("imas1"));
+                      ## Lei imas1, go buvddas eai vuovdde albma varramárffiid.
+                      ## dakkár imas1 ja ártegis dilli ahte ...
 
 
 # ========================== #
@@ -1053,6 +1059,13 @@ SELECT Adv IF (0 ("danin"))(NOT *1 (N Ess) BARRIER NPNH)
 SELECT Ess IF (0 ("danin"))(*-1 COPULAS BARRIER NON-ADV)(1 CLB); 
 					## ...jos fierpmit leat danin,...
 
+
+# dassá
+REMOVE (V Ind Prs Sg3) IF (0 ("dassá"))( *1 VFIN BARRIER CS OR CLB);
+REMOVE (V Ind Prs Sg3) IF (0 ("dassá"))(*-1 VFIN BARRIER CS OR CLB);
+                                  ## Leago guhkes áigi dassá?
+  # If this is to strict, IF (1 ("go")) is also possible.
+
 # dákko
 REMOVE (V Imprt Prs Sg2) IF (0 ("dákko"))(*1 VFIN);
 REMOVE (V Imprt Prs Sg2) IF (*-1 VFIN)(0 ("dákko"));
@@ -1076,6 +1089,10 @@ SELECT Adv IF (NOT -1 Dem or (A Attr))(0 ("duo"));
 
 # dus1s1e
 # There is a rule "Lea dus1s1e okta Ipmil" for the typical dus1s1e cases.
+SELECT Adv IF (-1 BOS)(0 ("dus1s1e"))(*1 VFIN BARRIER CC OR CS OR CLB);
+                             ## Dus1s1e borrásat ledje girkus.
+                             ##
+
 
 
 # eanet
@@ -1094,6 +1111,15 @@ REMOVE N IF (0 ("easkka"))(*1 TIME OR A);
 # goas
 SELECT Adv IF (0 ("goas"))(*1 ("<?>"));         ## Goas heajat leat?
   # This is not an optimal rule for getting rid of the former Portuguese colony.
+
+
+# gosa
+SELECT Adv IF (0 ("gosa"))(*1 VFIN BARRIER CLB OR CS);
+                            ## Gosa don c1ihket dan?
+                            ## Son oinnii báikkiid gosa juo ledje ásaiduvvan. 
+  # Here, the rule giving the verbal reading of 'gosa' is missing. It must
+  # be added.
+
 
 # gusto
 SELECT Adv IF (-1 VFIN)(0 ("gusto"));           ## Diet lea gusto ávkkálas1.
@@ -1122,6 +1148,13 @@ SELECT Adv IF (-1 BOS)(0 ("manne"))(1 N OR Pron)(2 VFIN); ## Manne don leat dál?
 
 # mielas
 REMOVE Adv IF (-1 Gen)(0 ("mielas"));   ## Mu mielas don sáhtát mielas boahtit.
+
+# naba
+SELECT Adv IF (0 ("naba"))(NOT 1 V-SG3);
+                               ## Naba don, man ollu don leat dahkan.
+  # "Naba" is a proper noun also, but ardly relevant in a Sami context.
+  # Thus, it could perhaps be deleted in all contexts. The intended context
+  # here is one of the subject, but it is somewhat halfheartedly written.
 
 # rádjai 
 SELECT Po IF (-1 Num)(0 ("rádjai") OR ("rádjái"));
@@ -1489,6 +1522,48 @@ SELECT Indef IF (*-1 ("nubbi"))(-1 COMMA)(0 ("nubbi"));
 
 
 
+
+
+# ==================== #
+# Disambiguating verbs #
+# ==================== #
+      CONSTRAINTS      #
+# ==================== #
+
+# In this section, we include safe verbal rules, rules that should come before
+# the nominal rules. Two things may be done to improve this:
+# 1. These rules may be moved to the front of the cycle, before other POS
+# 2. More save V rules may be moved earlier in the rule file.
+
+
+
+# ConNeg forms
+# ------------
+
+SELECT (Imprt ConNeg) IF (*-1 (Neg Imprt) BARRIER VFIN OR ConNeg);#OR PrfPrc);
+SELECT (Ind ConNeg)   IF (*-1 (Neg Ind) BARRIER VFIN OR ConNeg);#OR PrfPrc);
+
+
+REMOVE ConNeg IF (NOT *-1 Neg);
+
+
+SELECT (Imprt ConNeg) IF (*-1 CC BARRIER NON-ADV LINK *-1 (Imprt ConNeg) BARRIER VERB);
+SELECT (Ind ConNeg) IF (*-1 CC BARRIER NON-ADV LINK *-1 (Ind ConNeg) BARRIER VERB);
+
+# Need more advanced rule to select ConNeg when more
+# material between neg and conneg.
+# SELECT (ConNeg IF (0 LEAT) (*-1 Neg);
+
+REMOVE VGen IF (NOT *-1 V-IND-FIN BARRIER CLB OR CS)
+               (Not *1 V-IND-FIN BARRIER CLB OR CS);
+  # too sloppy, but a bit better with the barrier...
+
+REMOVE ConNeg IF (NOT *-1 (Neg) BARRIER CLB OR V-IND-FIN); 
+
+REMOVE Imprt IF (*-1 (Neg Ind) BARRIER CLB OR V-IND-FIN)(0 (ConNeg));
+REMOVE Prs IF (*-1 (Neg Imprt) BARRIER CLB OR V-IND-FIN)(0 (ConNeg));
+
+
 # ==================== #
 # Disambiguating nouns #
 # ==================== #
@@ -1852,6 +1927,10 @@ REMOVE Nom IF (0 Num)(NOT *1 (V Pl3) BARRIER CS OR EOS) ;
 # Accusative between Aux and main verb
 # ------------------------------------
 
+# This sentence is still to complicated:
+## Leago guhkes áigi dassá go Máreha oidnet?
+
+
 # In front of an infinitive
 SELECT Acc IF (*-1 VFIN BARRIER NPNHAI)(NOT 0 VERB)(NOT 0 Nom)(1 Inf);
                           ## Od1astus addá vejolas1vuod1a muitalit.
@@ -2042,10 +2121,14 @@ SELECT Acc IF (*-1 Acc BARRIER NPNHA)(0 A)(NOT 0 Adv)(1 CLB OR EOS OR CS);
 # Illative
 # ========
 
+
+
 REMOVE (V Ind Prt Sg3) IF (-1 (N Gen))(0 Ill);
                            ## Mud1ui gustojit seamma njuoggadusat sámi levgii.
 
 
+REMOVE (V Ind Prt Sg3) IF (*-1 Acc BARRIER NPNH LINK *-1 VFIN);
+                           ## Cokka láibbiid sehkkii.
 
 
 #  Genitive
@@ -2333,6 +2416,25 @@ SELECT PrfPrc IF (*-1 VFIN BARRIER Nom OR V OR CS OR CC OR CLB OR PUNCT);
 # ============ #
    CONSTRAINTS #
 # ============ #
+
+
+
+
+# Indicative or imperative #
+# ======================== #
+
+REMOVE Imprt IF (0 Qst);     ## Bijatgo don sohkkara dedjii?
+
+  # We could perhaps have had some restrictions here, like
+  # (0 Ind) and/or (1 Nom) or something. But Both Imprt and Qst sounds
+  # unlikely.
+
+
+
+
+
+
+
 
 
 # Indicative Negative
@@ -2695,31 +2797,6 @@ REMOVE (V Ind Prs Sg3) IF (-2 BOS)(-1 Pcle)(0 (V Imprt Prs Sg2));
     CONSTRAINTS  #
 # ============== #
 
-# ConNeg forms
-# ------------
-
-SELECT (Imprt ConNeg) IF (*-1 (Neg Imprt) BARRIER VFIN OR ConNeg);#OR PrfPrc);
-SELECT (Ind ConNeg)   IF (*-1 (Neg Ind) BARRIER VFIN OR ConNeg);#OR PrfPrc);
-
-
-REMOVE ConNeg IF (NOT *-1 Neg);
-
-
-SELECT (Imprt ConNeg) IF (*-1 CC BARRIER NON-ADV LINK *-1 (Imprt ConNeg) BARRIER VERB);
-SELECT (Ind ConNeg) IF (*-1 CC BARRIER NON-ADV LINK *-1 (Ind ConNeg) BARRIER VERB);
-
-# Need more advanced rule to select ConNeg when more
-# material between neg and conneg.
-# SELECT (ConNeg IF (0 LEAT) (*-1 Neg);
-
-REMOVE VGen IF (NOT *-1 V-IND-FIN BARRIER CLB OR CS)
-               (Not *1 V-IND-FIN BARRIER CLB OR CS);
-  # too sloppy, but a bit better with the barrier...
-
-REMOVE ConNeg IF (NOT *-1 (Neg) BARRIER CLB OR V-IND-FIN); 
-
-REMOVE Imprt IF (*-1 (Neg Ind) BARRIER CLB OR V-IND-FIN)(0 (ConNeg));
-REMOVE Prs IF (*-1 (Neg Imprt) BARRIER CLB OR V-IND-FIN)(0 (ConNeg));
 
 
 # Infinitive
