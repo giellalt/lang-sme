@@ -181,6 +181,8 @@ SET CNOUN-PL-NOM = (N Pl Nom) - Prop ;
 
 SET N-NON-GEN = N - (N Gen) ;
 
+LIST PL-NOUN = "beassas1" "c1albme#láse" "gálssot" "headja" "sabet" "sisttet" "skárri"; 
+
 
 # Verb sets
 # ---------
@@ -403,20 +405,20 @@ SET ADV-NOT-OTHER-POS = ADV-NOT-VERB | ADV-NOT-NOUN | ADV-NOT-NAMES ;
 # Sets for nouns with common syntactic behaviour
 # - - - - - - - - - - - - - - - - - - - - - - - 
 
-LIST MANNU = "od1d1a/jage/mánnu" "od1d1a/jagi/mánnu" 
-             "guovva/mánnu" 
-             "njukc1a/mánnu" "njuvc1c1a/mánnu" "márs/mánnu" 
-             "cuon1o/mánnu" "cuon1os/mánnu" "gáranas/mánnu" 
-             "miesse/mánnu" "mái/mánnu" 
-             "geasse/mánnu" 
-             "suoidne/mánnu" 
-             "borge/mánnu" "s1njilc1a/mánnu" "s1njilz1a/mánnu" 
-             "c1akc1a/mánnu" 
-             "golggot/mánnu" 
-             "skábma/mánnu" "november/mánnu" "ritne/mánnu" 
-             "juovla/mánnu" ;
+LIST MANNU = "od1d1a#jage#mánnu" "od1d1a#jagi#mánnu" 
+             "guovva#mánnu" 
+             "njukc1a#mánnu" "njuvc1c1a#mánnu" "márs#mánnu" 
+             "cuon1o#mánnu" "cuon1os#mánnu" "gáranas#mánnu" 
+             "miesse#mánnu" "mái#mánnu" 
+             "geasse#mánnu" 
+             "suoidne#mánnu" 
+             "borge#mánnu" "s1njilc1a#mánnu" "s1njilz1a#mánnu" 
+             "c1akc1a#mánnu" 
+             "golggot#mánnu" 
+             "skábma#mánnu" "november#mánnu" "ritne#mánnu" 
+             "juovla#mánnu" ;
 
-LIST VAHKKU = "áigi" "beaivi" "c1akc1a/geassi" "c1uohte/jahki" "geardi" "geassi" 
+LIST VAHKKU = "áigi" "beaivi" "c1akc1a#geassi" "c1uohte#jahki" "geardi" "geassi" 
 		"hávvi" "idja" "jahki" "mánnu" "vahkku" jahki ;
  # The quoteless jahki here is since the preprocessor is not fine-tuned
  # yet, it still gives '"1870-" # jahki N Sg Com'.
@@ -425,7 +427,7 @@ SET TIME = MANNU | VAHKKU ;
 SET NOTIME = N - TIME ;
 
 
-LIST GUOVLU = "guovlu" "ássan/guovlu" "gávpot" "sádji" "viessu" "goahti" ;
+LIST GUOVLU = "guovlu" "ássan#guovlu" "gávpot" "sádji" "viessu" "goahti" ;
 
 LIST GEASSET = "dálvet" "dálvit" "gid1d1at" "geasset" "geassit" "c1akc1at" ;
 
@@ -574,9 +576,15 @@ REMOVE ("Dan" Attr) IF (NOT 1 Prop);
 REMOVE ("Dan" Prop) IF (1 CNOUN); # Dan is Nom or Attr.
 
 
+# Names of months
+# ---------------
+SELECT (N Sg Loc) IF (0 MANNU); # To avoid "skábma#mánus" N Sg Nom.
+
+
 # Removing a spurious Pr reading
 # ------------------------------
 REMOVE (Pr Foc) IF (0 ("c1ad1a")); # To get rid of 'c1ad1ahan' Pr Foc. 
+
 
 # Lexicalised adverbs
 # -------------------
@@ -637,7 +645,6 @@ SELECT Pers IF (*1 V-SG2)(0 (Pron Pers Sg2 Nom));  ## de don leat
 
 # First select some clear Px cases
 # Let these come directly after local disamb
-
 
 SELECT (PxSg1) IF (-1 V-SG1)(NOT -1 ("leat"))(-2 MUN);
 SELECT (PxSg2) IF (-1 V-SG2)(NOT -1 ("leat"))(-2 DON);
@@ -792,6 +799,7 @@ REMOVE (V Ind) IF (-1 Dem)(0 N)(1C (V Ind));
 REMOVE (V Ind) IF (-1 CS)(0 N)(NOT 0 (V Pl1)) (1 (Pron Interr) LINK *1 (V Ind)); 
 		## Dasgo mánná mii lea su siste... 
 
+
 # Adjectives and adverbs
 # ======================
 
@@ -823,6 +831,10 @@ SELECT N IF (-1 VFIN OR ConNeg OR A OR Dem)(0 ("imas1"));
                       ## Lei imas1, go buvddas eai vuovdde albma varramárffiid.
                       ## dakkár imas1 ja ártegis dilli ahte ...
 
+# mán1ga
+# ------
+REMOVE N IF (0 ("mán1ga"))(*1 N BARRIER NPNH);
+
 # nubbi
 # -----
 SELECT Gen IF (0 ("nubbi"))(1 N);
@@ -840,9 +852,6 @@ REMOVE Qst IF (0 Adv)(NOT *1 EOS LINK -1 ("?")); ## Nugo died1át, de lean dál.
 # ========================== #
 # Disambiguating determiners #
 # ========================== #
-
-
-SELECT Loc IF (*-1 Num BARRIER NON-A) ; 
 
 
 
@@ -1035,14 +1044,13 @@ REMOVE CS IF (0 ("de"));
 
 REMOVE ("guovttes") IF (1 (Sg Gen));         ## Viesus leat guokte olbmo.
 
-# other words
+# Other words
 # ===========
 
 SELECT Pron IF (0 ("don" Nom Sg))(*1 V-SG2);
 
-REMOVE Prop IF (0 ("Lassi"))(1 ("dát" Pron Dem Sg Ill));
-                                             ## Lassin dása mun lean dál.
-  # all too specific!
+REMOVE Prop IF (0 ("Lassi"))(1 Pron OR N );
+                              ## Lassin dása mun lean dál.
 
 
 
@@ -1437,7 +1445,7 @@ SELECT Gen IF (*1 BOS)(0 (Pron Interr))(NOT *1 V-NON-AUX);# No hits!
   # iez1as is Gen or Acc
   # iez1a is Pl or Du
 
-# reflexive iez1as
+# Reflexive iez1as
 # ----------------
 
 SELECT Gen IF (-1 Acc)(0 ("ies1" Gen) OR (Pron Pers Gen))(1 N);
@@ -1460,6 +1468,7 @@ SELECT Pl IF (*1  V-PL)(0 ("ies1" Pron Refl Pl Nom));
 
 SELECT Recipr IF (-1 Recipr); # ... guhtet
 SELECT Recipr IF  (1 Recipr); # ... ...    guoimmiset
+
 
 # =========== #
   CONSTRAINTS
@@ -1607,6 +1616,8 @@ SELECT Attr IF (NOT *-1 V-SG3)(0 ("garas" A Attr))(1 N)(NOT *1 V-SG3);
 
 # Attribute disambiguation
 # ========================
+
+SELECT Attr IF (*-1 BOS BARRIER NPNH)(NOT 0 VERB)(NOT 1 Dem OR VERB)(*1 N BARRIER NPNH);
 
 REMOVE (A Nom) IF (0 (A Attr))(*1C N BARRIER NON-A LINK NOT 1 Po);
 #REMOVE (A Nom) IF (0 (A Attr))(*1 N BARRIER NON-A LINK NOT 1 Po);
@@ -1933,13 +1944,14 @@ SELECT Gen IF (*-1C NUMERALS BARRIER NPNH OR Gen LINK NOT 0 Ord);
                     ## Ovdal 1920 orru guovtti goalmmátoasis ohcamiin nu geavvan.
 
 # Genitive in front of postposition
-
 SELECT Gen IF (NOT 0 Adv OR PrfPrc)(1 Po);    ## Dat lea nieidda dihte, nieidda birra.
   # As it stands, this rule has no conditions. So, what errors will we get?
 
 # Genitive after preposition
-
 SELECT Gen IF (*-1 Pr BARRIER NPNH)(1 NP-BORDER OR CC); ## Earret mu ii giige lea boahtán.
+
+# Genitive in front of 'oktavuod1as' (expand to set?)
+SELECT Gen IF (1 ("oktavuohta" N Sg Loc));  
 
 
 # Various
@@ -2182,7 +2194,7 @@ SELECT Nom IF (-1 PROP) (0 PROP) (1 V-SG3); # Biret Anne galgá mannat.
 
 SELECT Nom IF (-2C N-NOM)(-1 CC)(NOT 1 Gen OR (Prop Attr));
  ## Trond ja Kirsti leat dál. Bror Berg ja Per Mikael Utsi leat ruovttus.
-SELECT Nom IF (1 CC)(2C N-NOM); # Kirsti  ja Trond leat dál.
+SELECT Nom IF (1 CC)(2C N-NOM); # Kirsti ja Trond leat dál.
 
 REMOVE Gen IF (0 N)(1 CC)(2 (Pron Sg3 Gen)); ## Jos1iai riegádii.
 # Peters and Pauls friend OK.                ## Jekonja ja su vieljat leat dál.
@@ -2534,7 +2546,7 @@ SELECT Gen IF (*-1 BOS BARRIER NPNH)(NOT 0 ("mii" Interr) OR Dem OR Attr)
 REMOVE Gen IF (-1 CLB)(1 (Pron Pers))(*1 VFIN); ## Na, du mun lean oaidnán.
 REMOVE Gen IF (-1 BOS)(1 (Pron Pers))(*1 VFIN); ## Du mun lean oaidnán.
 
-REMOVE Gen IF (0 Adv)(NOT *-1 Pr BARRIER NPNH)
+REMOVE Gen IF (0 Adv)(NOT 0 TIME)(NOT *-1 Pr BARRIER NPNH)
               (NOT *1 Po BARRIER NON-NP)
 	      (NOT *1 N BARRIER NON-NP) ;  
 
@@ -2659,7 +2671,7 @@ SELECT (N Pl Gen) IF (-1 ("mii"))(1 NP-BORDER)(*1 ("?"));
       CONSTRAINTS
 # ================= #
 
-SELECT Loc IF (*-1 BOS OR CS BARRIER NPNHAI)
+SELECT Loc IF (*-1 BOS OR CS BARRIER NPNHAI)(NOT 0 (A Nom))
               (*1 ("leat") BARRIER NON-ADV-NEG);
                                           ## Ádjásgo lea od1d1a fanas.
                                           ## Suomas maid lei dilli váttis.
@@ -2669,8 +2681,12 @@ SELECT Loc IF (*-1 BOS OR CS BARRIER NPNHAI)
 SELECT Loc IF (-2 BOS)(-1 ("leat" Clt)); ## Leago mus rud1aid?
 # hmm...
 
-SELECT Loc IF (0 VAHKKU);
+SELECT Loc IF (NOT -1 Num)(0 VAHKKU);
            ## 1870-jagiin lea c1ielggas ahte láddelac1c1aide guske ortnegat.
+	   ## ...gal guhkui ruos1s1aid gávppas1anriekti guvttiin vahkuin.		
+
+SELECT Loc IF (0 Num)(*1 PL-NOUN BARRIER NON-A);
+SELECT Loc IF (0 PL-NOUN);
 
 
 # Comitative singular
@@ -2680,6 +2696,9 @@ SELECT Loc IF (0 VAHKKU);
 
 SELECT Com IF (-1C (Dem Sg Com));         ## Vuolggán dainna biillain.
 SELECT Com IF (-2C (Dem Sg Com))(-1 Adv); ## Vuolggán dainna biillain.
+
+SELECT Com IF (0 Num); # Cf. rules for PL-NOUN above.
+SELECT Com IF (*-1C Num BARRIER NON-A); 
 
 
 # Disambiguation based upon type of NP
@@ -2781,6 +2800,12 @@ SELECT (Sg Com) IF (1 CC)(*2 Com BARRIER NPNH LINK NOT 0 Loc);
 # Cmpnd in the left branch, checking to the left:
 
 
+# Late case rules (after other case rules have worked). 
+# ===================================================== 
+
+REMOVE (N Nom) IF (NOT *-1 VFIN)(*1 (N Nom) BARRIER PUNCT OR CLB OR CC OR VERB);  
+		## Romssa universitehta sámi strategiijaplána.
+ 
 
 
 # ==================== #
