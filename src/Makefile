@@ -1,13 +1,20 @@
 # This is a makefile that builds the Northern Sami morphological parser
 # *****************************************************************
 
+
+
+# =============================== #
+# Building the last file isme.fst # 
+# =============================== #
+
+
 # The ultimate goal is to build isme.fst, the generator
 # This goal depends on sme.save being up to date.
 
 isme.fst: ../bin/isme.fst
 ../bin/isme.fst: ../bin/pos-sme.fst ../bin/n-sme.fst ../bin/s-sme.fst \
 	../bin/sme.save ../bin/tok.fst ../bin/allcaps.fst ../bin/n-sme.fst \
-	../bin/tok.fst ../bin/caseconv.fst
+	../bin/tok.fst ../bin/caseconv.fst ../bin/d-sme.fst
 	@echo
 	@echo "*** Building the inverse isme.fst ***"
 	@echo
@@ -17,6 +24,12 @@ isme.fst: ../bin/isme.fst
 	quit \n" > ../../tmp/isme-fst-script
 	@xfst < ../../tmp/isme-fst-script
 	@rm -f ../../tmp/isme-fst-script
+
+
+# ======================================================= #
+# Building different versions of the basic sme.fst tagger #
+# ======================================================= #
+
 
 # We want an analyzer with POS tags only. It takes the linguistic 
 # sme.fst as input and gives us an alternate pos-sme.fst. 
@@ -108,6 +121,32 @@ tag-sme.fst: ../bin/tag-sme.fst
 	@xfst < ../../tmp/tag-sme-script
 	@rm -f ../../tmp/tag-sme-script
 
+
+
+# Here we build d-sme.fst, the morphological tagger geared towards 
+# disambiguation.
+
+d-sme.fst: ../bin/d-sme.fst
+../bin/d-sme.fst: ../bin/sme.fst ../bin/dis-tag.fst
+	@echo
+	@echo "*** Building d-sme.fst, sme.fst w/ tags for disambiguation ***"
+	@echo
+	@printf "read regex [[@\"../bin/dis-tag.fst\"] .o. \
+	[@\"../bin/sme.fst\"]] ; \n\
+	save stack ../bin/d-sme.fst \n\
+	quit \n" > ../../tmp/d-sme-fst-script
+	@xfst < ../../tmp/d-sme-fst-script
+	@rm -f ../../tmp/d-sme-fst-script
+
+
+# ================================= #
+# Building the basic tagger sme.fst #
+# ================================= #
+
+# Here we build sme.fst, the core morphological tagger
+# It takes sme.save as input and adds the caseconv fst in order to 
+# handle initial capitals.
+
 sme.fst: ../bin/sme.fst
 ../bin/sme.fst: ../bin/sme.save ../bin/caseconv.fst ../bin/allcaps.fst \
 	../bin/tok.fst
@@ -120,6 +159,12 @@ sme.fst: ../bin/sme.fst
 	quit \n" > ../../tmp/sme-fst-script
 	@xfst < ../../tmp/sme-fst-script
 	@rm -f ../../tmp/sme-fst-script
+
+
+
+# ================================================= #
+# Building auxiliary files for case conversion etc. #
+# ================================================= #
 
 # The second goal is to build the caseconv.fst file
 # This goal depends on case.regex
@@ -135,7 +180,6 @@ caseconv.fst: ../bin/caseconv.fst
 	@xfst < ../../tmp/caseconv-sme-script
 	@rm -f ../../tmp/caseconv-sme-script
 
-
 # This goal depends on allcaps.regex
 
 allcaps.fst: ../bin/allcaps.fst
@@ -149,6 +193,11 @@ allcaps.fst: ../bin/allcaps.fst
 	@xfst < ../../tmp/allcaps-sme-script
 	@rm -f ../../tmp/allcaps-sme-script
 
+
+
+# ========================================================= #
+# Building the basic parser from morphophonolgy and lexicon #
+# ========================================================= #
 
 # The third goal is to build sme.save
 # This goal depends on twol-sme.bin and a bunch of lexicon files
@@ -187,6 +236,27 @@ twol-sme.bin: ../bin/twol.sme.bin
 	@twolc < ../../tmp/twol-sme-script
 	@rm -f ../../tmp/twol-sme-script
 
+
+
+# =========================== #
+# Building preprocessor files #
+# =========================== #
+
+# We want to make a parser with tags for parsing. 
+# In order to get that we make a tag modifier
+
+dis-tag.fst: ../bin/dis-tag.fst
+../bin/dis-tag.fst: dis-tag.txt
+	@echo
+	@echo "*** Building the tag manipulator dis-tag.fst ***" ;
+	@echo
+	@printf "source dis-tag.txt \n\
+	save stack ../bin/dis-tag.fst \n\
+	quit \n" > ../../tmp/dis-tag-sme-script
+	@xfst < ../../tmp/dis-tag-sme-script
+	@rm -f ../../tmp/dis-tag-sme-script
+
+
 # Here we include a preprocessor.
 # This goal depends on tok.txt
 
@@ -200,6 +270,12 @@ tok.fst: ../bin/tok.fst
 	quit \n" > ../../tmp/tok-sme-script
 	@xfst < ../../tmp/tok-sme-script
 	@rm -f ../../tmp/tok-sme-script
+
+
+
+# ========== #
+# make clean #
+# ========== #
 
 # "make clean" is there to remove the binary files at will.
 
