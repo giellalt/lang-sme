@@ -392,12 +392,15 @@ LIST LOC-VERB = "ballat" "beroštit" "biehttalit" "bihtit" "ceavzit" "čuoččut
 
 LIST COM-VERB = "árvalit" "árvvohuššat" "bargat" "bártašuvvat" 
 		"háladit" "hilbošit" "humadit" "meannudit" "náitalit" "riidalit" 
-		"ságastaddat" "ságastallat" ;
+		"ságastaddat" "ságastallat" "šiehtadit" ;
 
 LIST ILL-VERB = "áibbašit" "álgit" "báitit" "beassat" "dorvvastit" "došket" 
 		"duhtat" "gullat" "guoskat" "gustot" "heivet" "irggástallat" "jáhkkit" 
 		"liikot" "luohttit" "mannat" "oskut" "riepmat" "ráhkkanit" "soahpat" 
 		"suhttat" "vuolgit";
+
+
+LIST ACC-LOC-VERB = "viežžat" ;
 
 LIST ACC-ILL-VERB = "addit" "bidjat" ;
 
@@ -499,7 +502,7 @@ SET NOTIME = N - TIME ;
 
 LIST GEASSET = "dálvet" "dálvit" "giđđat" "geasset" "geassit" "čakčat" ;
 
-LIST GUOVLU = "ássan#guovlu" "báiki" "gávpot" "gielda" "guovlu" "sádji" 
+LIST GUOVLU = "ássan#guovlu" "báiki" "gávpot" "guovlu" "sádji" 
 	"viessu" ;
 
 LIST ROUTE = "geaidnu" "luodda"; # and others!
@@ -3957,6 +3960,12 @@ SELECT (Pl Nom) IF (*-1 MII-PERS OR DII OR SII BARRIER NON-AA
 	LINK *-1 BOS OR (":") BARRIER NON-ADJ-CC)(1 EOS);
 	## Dii uhcán oskkolaččat!
 
+SELECT Nom IF (*-1 BOS OR PUNCT BARRIER NPNH)(1 COMMA)(2 Imprt);
+	## Sáhtán, gáidda eret!
+
+SELECT Nom IF (-1 BOS OR PUNCT)(1 COMMA);
+	## Oahpaheaddji, mun áiggun čuovvut du.
+
 
 # Nominative in titles and sentence fragments
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -4488,6 +4497,10 @@ SELECT Acc IF (NOT *-1 Acc BARRIER CS OR CP)(NOT *-1 CC BARRIER NPNH LINK -1 Acc
 	(0 NP-HEAD)(1 (A Ess))(NOT *1 Actio BARRIER NON-ADJ-CC);
 	## ...go beaktilis almmolaš beroštumit dagahit dan govttolažžan.
 
+SELECT Acc IF (*-1 ACC-LOC-VERB BARRIER NON-ADV-PCLE LINK NOT 0 Pass)
+	(*1 Loc BARRIER NON-NP);
+	## Sáhttá viežžat dieđuid divššohasa oapmahaččain.
+
 SELECT Acc IF (*-1 ACC-ILL-VERB BARRIER NON-ADV-PCLE LINK NOT 0 Pass)
 	(*1 Ill BARRIER NPNH);
 	## Ii oktage bija duohpakeahtes duogŋasa boares biktasii.
@@ -4806,12 +4819,18 @@ SELECT Loc IF (*-1 LOC-VERB BARRIER CS OR CP OR VFIN LINK NOT 0 Adv)
 SELECT Loc IF (NOT *1C Com BARRIER NPNH)(*1 LOC-VERB BARRIER CS OR CP OR V-NON-AUX);
 	## Maiddái sámi fágabirrasiin ja ásahusain sáhttá jearrat ráđiid.
 
+SELECT Loc IF (*-1 ACC-LOC-VERB BARRIER NON-NP);
+	## Sáhttá viežžat dieđuid divššohasa oapmahaččain.
+
 
 # Other locative rules
 # --------------------
 
 SELECT Loc IF (*-1 ("sáhka") BARRIER NPNH);
         ## Ii leat dušše sáhka olbmuid oktavuođain juohkebeaivválaš eallimis.
+
+SELECT Loc IF (*-1 ("fuolahus") BARRIER NPNH);
+	## Jus mánáidsuodjalusbálvalus lea váldán fuolahusa mánáin...
 
 SELECT Loc IF (1 ("gos"));
 SELECT Loc IF (1 COMMA)(2 ("gos"));  
@@ -4828,6 +4847,13 @@ SELECT Loc IF (*-1 BOS OR CS OR REALCLB BARRIER NPNHAI)(NOT 0 (A Nom))
 SELECT Loc IF (1 COPULAS)(*2 NP-HEAD-NOM BARRIER NPNHA LINK NOT *1 V-NON-AUX
 	BARRIER NON-ADV-PCLE);
 	## ..gos čoavjevuliin leat geažit latnjalagaid. 
+
+SELECT Loc IF (*-1 BOS OR CS OR REALCLB BARRIER NON-NP)(*1 Interr BARRIER WORD
+	LINK *1 VFIN BARRIER CS OR CP LINK *1 VFIN BARRIER CS OR CP LINK 0 ("leat")
+	LINK *1 NP-HEAD-NOM BARRIER NPNHA LINK NOT *1 PrfPrc BARRIER NON-ADV-PCLE);
+	## Váhnemiin dahje earáin, geain lea váhnenovddasvástádus, lea vuoigatvuohta 
+	## miehtat dearvvašvuođaveahki divššohasaide.
+
 
 SELECT Loc IF (-1 ("leat" Clt) LINK *-1 BOS OR CS OR REALCLB BARRIER NON-CC); 
 SELECT Loc IF (-1 ("go" Pcle))(-2 ("leat") LINK *-1 BOS OR CS OR REALCLB 
@@ -4861,6 +4887,12 @@ REMOVE (Sg Loc) IF (0 (V Actio Loc))(*1 Acc BARRIER NPNH);
 # -------------
 SELECT Com IF (*-1 ("ovttas") OR ("oktan") OR ("searválagaid") BARRIER (N Com));
 	## Ii lean dárbu dábálaš eanavuovdimii, oktan opmodatregistreremiin.
+
+SELECT Com IF (*-1 ("oktavuohta") OR ("gaskavuohta") OR ("ovttasráđiid") BARRIER NPNH);
+	## ...go sii váldet oktavuođa doaktáriin.
+
+SELECT Com IF (*-1 ("váldit") BARRIER NPNH LINK -1 ("oktavuohta"));
+	## Vuoigatvuohta oktavuođa váldit divššohasbearráigeahččiin.
 
 
 # NP-internal disambiguation of Com
@@ -4903,8 +4935,6 @@ SELECT Com IF (0 Sg)(*1 COM-VERB BARRIER CS OR CP LINK 0 VERB)
  # The idea is to let the other rules work first, and then let the
  # coordination follow suit.
 
-# Simple coordination
-# -------------------
 
 SELECT (Sg Loc) IF (1 CC)(*2C Loc BARRIER NPNH);
 	## Dan čuolddas dahje oar-juolggis ráhkadišgoahtá olmmoš doarrása.
@@ -4914,45 +4944,19 @@ SELECT (Sg Loc) IF (*-1 CC BARRIER NPNH LINK -1C Loc);
 	## ja ovdánahttimis,...
 
 
-SELECT (Pl Loc) IF (*-1 CC LINK *-1 Loc BARRIER NPNH LINK NOT 0 Com);
-                                     ## Son lea skuvllas ja ođđa mediain.
+SELECT (Pl Loc) IF (*-1 CC BARRIER NPNH LINK -1 Loc LINK NOT 0 Com);
+	## Seamma olmmoš áimmuhuššá máŋga dáin doaimmain dahje rollain.
+
 SELECT (Pl Loc) IF (1 CC)(*2 Loc BARRIER NPNH LINK NOT 0 Com);
-                                     ## Son lea ođđa mediain ja skuvllas.
+	## Son lea ođđa mediain ja skuvllas.
 
-SELECT (Sg Com) IF (*-1 CC LINK *-1 Com BARRIER NPNH LINK NOT 0 Loc);
-SELECT (Sg Com) IF (1 CC)(*2 Com BARRIER NPNH LINK NOT 0 Loc);
-
-
-# Coordination within coordination
-# --------------------------------
-
-# Context to the left:
-# - - - - - - - - - - 
-SELECT (Pl Loc) IF (*-1 CC BARRIER NPNH
-                   LINK -1 Cmpnd LINK *-1 CC BARRIER NPNH 
-                   LINK -1 Loc LINK NOT 0 Com);
-                   ## Son lea skuvllas ja ođđa fylkka- ja riikkamediain.
-
-SELECT (Sg Com) IF (*-1 CC BARRIER NPNH
-                   LINK -1 Cmpnd LINK *-1 CC BARRIER NPNH
-                   LINK -1 Com LINK NOT 0 Loc);
-
-# Context to the right:
-# - - - - - - - - - - - 
-SELECT (Pl Loc) IF (1 CC)
-                   (*2 Cmpnd BARRIER NPNH LINK 1 CC
-                   LINK *1 Loc LINK NOT 0 Com);
-                 ## Son lea ođđa fylkka- ja riikkamediain ja skuvllas.
-
-# This part is the addition for right context checking of
-# coordination within coordination:
-# LINK -1 Cmpnd LINK *-1 CC BARRIER NPNH 
+SELECT (Sg Com) IF (*-1 CC BARRIER NPNH LINK -1 Com LINK NOT 0 Loc);
+	## Ii lean dárbu dábálaš eanavuovdimii, oktan opmodatregistreremiin
+	## ja čuoldimiin.
 
 SELECT (Sg Com) IF (1 CC)(*2 Com BARRIER NPNH LINK NOT 0 Loc);
-
-
-# Generalising the Cmpnd addition:
-# Cmpnd in the left branch, checking to the left:
+	## Fága galgá ovddiidit ovttasbarggus Sámedikkiin ja sámi dearvvašvuođa-
+	## ja sosiálabargiiguin.
 
 
 # Essive
@@ -4976,20 +4980,16 @@ SELECT (Num Nom) IF (*-1 CC BARRIER NON-ADV-PCLE LINK *-1 (Num Nom) BARRIER NPNH
 REMOVE (Dem Gen) IF (0 ("dat"))(*1 (N Acc) BARRIER NPNH);
 	## Naba daid stuora dorskiid, gosa daid bidjet?
 
-SELECT Nom IF (*-1 BOS OR PUNCT BARRIER NPNH)(1 COMMA)(2 Imprt);
-	## Sáhtán, gáidda eret!
-
-SELECT Nom IF (-1 BOS OR PUNCT)(1 COMMA);
-	## Oahpaheaddji, mun áiggun čuovvut du.
-
 SELECT Nom IF (*1 Loc BARRIER NPNH LINK 1 COPULAS LINK *1 (A Nom) BARRIER 
 	NON-ADV-PCLE);
 	## ...ahte boazosápmelaččaid luonddoriggodagaid ávkkástallan orohagain 
 	## lei ovdal viidát go dat mii lea addon sidjiide.
 
-SELECT Gen IF (0 Dem)(*1C (N Gen) OR (N Sg Ill) OR (N Sg Loc) OR (N Pl Com)
+SELECT Gen IF (NOT *-1 V-NON-AUX-PASS BARRIER NON-ADV-PCLE)(0 Dem)
+	(*1C (N Gen) OR (N Sg Ill) OR (N Sg Loc) OR (N Pl Com)
 	BARRIER NON-ADJ LINK NOT 0 Cmpnd);
- 
+	## Mii eat galgga dán digaštallamii searvat dán oktavuođas.
+
 
 
 # ============================= #
@@ -5005,12 +5005,13 @@ SELECT Gen IF (0 Dem)(*1C (N Gen) OR (N Sg Ill) OR (N Sg Loc) OR (N Pl Com)
 # =============
 
 SELECT VFIN IF (*-1 BOS OR CS BARRIER VERB)(0 INF-VERB)(*1 Inf BARRIER CS OR CP);
-			## Áigugo skuvlii álgit? 
+			## Áigugo fas skuvlii álgit? 
 			## Sáhttit maid namahit ahte ...
  # Looks brave but works!
 
 
 SELECT VFIN IF (NOT *-1C VFIN BARRIER CS OR CP)(-1 Loc)(0 LOC-VERB); 
+	## Nuppi lađđasis čuovvu, ahte...
 
 REMOVE VFIN IF (NOT -2 BOS OR CLB)(-1 Inf)(NOT 0 Qst);
 	## Lága juksanmearrin lea váikkuhit sihkkarastit álbmogii 
@@ -5056,18 +5057,21 @@ SELECT Inf IF (-1 Acc)(NOT -1 Interr)(*1 Ill BARRIER NPNH);
 # Indicative or imperative
 # ========================
 
-REMOVE Imprt IF (0 Qst);     ## Bijatgo don sohkkara dedjii?
+REMOVE Imprt IF (0 Qst);     
+	## Bijatgo don sohkkara dedjii?
 
   # We could perhaps have had some restrictions here, like
   # (0 Ind) and/or (1 Nom) or something. But Both Imprt and Qst sounds
   # unlikely.
 
-REMOVE Imprt IF (-1 BOS)(0 Adv)(*1 ("?") BARRIER CS); ## Gosa don dál?
+REMOVE Imprt IF (-1 BOS)(0 Adv)(*1 ("?") BARRIER CS); 
+	## Gosa don dál?
 
 REMOVE Imprt IF (*-1 CS OR MO BARRIER PUNCT);
 	## Vuoigatvuohta gusto dušše jus divššohas oažžu ávkki veahkis.
 	## Leago guhkes áigi dassá go Máreha oidnet?
 	## Maid ipmašiid doppe dagat?
+
  # Very unlikely that an imperative should show up in an embedded clause, except in 
  # quotations (...de son celkkii: Manni eret!). But it can be preceded by a relative
  # clause. 
@@ -5087,8 +5091,8 @@ REMOVE ABBR IF (0 Neg)(*1 ConNeg OR PrfPrc);  ## Don it leat dál.
 # Imperative
 # ==========
 
-SELECT (Imprt ConNeg) IF (-1 (Neg Imprt)); ## Ale suhta munnje.
 REMOVE Imprt IF (-1 Imprt)(NOT 0 ConNeg); 
+	##
 
 REMOVE Imprt IF (-2 (A Attr))(-1 CC OR COMMA);
 	## Eaige galggašii gierdat eahpegovttolaš garra, vahágahtti meassamiid.
