@@ -5,9 +5,9 @@
 # This goal depends on sme.save being up to date.
 
 isme.fst: ../bin/isme.fst
-../bin/isme.fst: ../bin/n-sme.fst ../bin/s-sme.fst ../bin/sme.save \
-	../bin/tok.fst ../bin/allcaps.fst ../bin/n-sme.fst ../bin/tok.fst \
-	../bin/caseconv.fst
+../bin/isme.fst: ../bin/pos-sme.fst ../bin/n-sme.fst ../bin/s-sme.fst \
+	../bin/sme.save ../bin/tok.fst ../bin/allcaps.fst ../bin/n-sme.fst \
+	../bin/tok.fst ../bin/caseconv.fst
 	@echo
 	@echo "*** Building the inverse isme.fst ***"
 	@echo
@@ -17,6 +17,37 @@ isme.fst: ../bin/isme.fst
 	quit \n" > ../../tmp/isme-fst-script
 	@xfst < ../../tmp/isme-fst-script
 	@rm -f ../../tmp/isme-fst-script
+
+# We want an analyzer with POS tags only. It takes the linguistic 
+# sme.fst as input and gives us an alternate pos-sme.fst. 
+
+pos-sme.fst: ../bin/pos-sme.fst
+../bin/pos-sme.fst: ../bin/sme.fst ../bin/tag-pos.fst
+	@echo
+	@echo "*** Building pos-sme.fst, sme.fst with POS tags ***"
+	@echo
+	@printf "read regex [[@\"../bin/tag-pos.fst\"] .o. \
+	[@\"../bin/sme.fst\"]] ; \n\
+	save stack ../bin/pos-sme.fst \n\
+	quit \n" > ../../tmp/pos-sme-fst-script
+	@xfst < ../../tmp/pos-sme-fst-script
+	@rm -f ../../tmp/pos-sme-fst-script
+
+# In order to make pos-sme.fst we need a binary tag-pos.fst
+# This goal depends on tag-pos.regex. The way it
+# is done is that all tags except the POS one are deleted.
+
+tag-pos.fst: ../bin/tag-pos.fst
+../bin/tag-pos.fst: tag-pos.regex
+	@echo
+	@echo "*** Building tag-pos.fst ***" ;
+	@echo
+	@printf "read regex < tag-pos.regex \n\
+	save stack ../bin/tag-pos.fst \n\
+	quit \n" > ../../tmp/sme-tag-pos-script
+	@xfst < ../../tmp/sme-tag-pos-script
+	@rm -f ../../tmp/sme-tag-pos-script
+
 
 # We want an analyzer with Norwegian tags. It takes the linguistic 
 # sme.fst as input and gives us an alternate n-sme.fst
@@ -32,6 +63,7 @@ n-sme.fst: ../bin/n-sme.fst
 	quit \n" > ../../tmp/n-sme-fst-script
 	@xfst < ../../tmp/n-sme-fst-script
 	@rm -f ../../tmp/n-sme-fst-script
+
 
 # In order to make n-sme.fst we need a binary tag-no.fst
 # This goal depends on tag-no.regex
