@@ -323,7 +323,7 @@ SET LEX-ADV = Adv - A ;
 
 LIST IKTE = "ikte" "dolin" "dovle" ;
 
-LIST MO = "gokko" "gos" "mo" "nugo"; # Introduce clause.
+LIST MO = "gokko" "gos" "mo" "nugo"; # Introduce finite clauses.
 
 
 # Clitic sets
@@ -388,7 +388,7 @@ LIST OPRED-VERB = "dahkat" ;
 # Here comes some adverbs that have identical twins in other POS. If these
 # are found in Adv contexts, we treat them as adverbs.
 
-LIST ADV-NOT-VERB = "dus1s1e"  ;
+LIST ADV-NOT-VERB = "dus1s1e" ;
 
 LIST ADV-NOT-NOUN = "easka" ;
 
@@ -440,8 +440,8 @@ SET NOTIME = N - TIME ;
 # ------------------
 
 SET NUMERALS = Num - OKTA ;
-SET CP = (Pron Interr) | MO ;
 
+SET NON-CC = WORD - CC ;
 
 # Syntactic sets
 # --------------
@@ -459,7 +459,7 @@ SET NP-HEAD-PL-NOM = (Pron Pl Nom) | (Pron Pl3 Nom) | (N Pl Nom);
 SET NP-HEAD-ACC = (Pron Acc) | (N Acc);
 
 SET PRE-NP-HEAD = (Prop Attr) | A | (Pron Pers Gen) | (N Gen) | Num |
-                  (Pron Dem)  | (Pron Refl Gen) | (Pron Indef) | CC ;
+                  (Pron Dem)  | (Pron Refl Gen) | (Pron Indef) | CC ; # PrfPrc?
 
 # There must be a sensible naming convention for these sets...
 SET NPNH = WORD - PRE-NP-HEAD ;                 # NPNH = "NON-PRE-NP-HEAD". 
@@ -518,7 +518,8 @@ SET NP-BORDER = BOS | EOS | CLB | Adv | V | Pers | CS | Recipr |# Refl |
    # this allows for NP-internal commas to break NP.
    # Refl is deactivated because of "sin iez1aset vieruid" etc.	
 
-SET NON-CC = WORD - CC ;
+
+SET CP = (Pron Interr) | MO ;
 
 
 # Semantically defined sets
@@ -708,8 +709,10 @@ REMOVE PrsPrc IF (-1 A)(NOT -1 Adv) ;
 # Based on right context
 # ----------------------
 
-SELECT N IF (1 COMMA)(2 (Pron Interr));   ## Doaimmat, maiguin mun barggan.
-                                              # too specific!
+SELECT N IF (NOT 0 Adv OR Inf OR PrfPrc)(1 COMMA)(2 CP);   
+				## Doaimmat, maiguin mun barggan.
+                       		## Gaz1aldat lea dus1s1e, man ollu ...
+				## Lea miellagiddevas1 lohkat, maid ...
 
 REMOVE A IF (0 N)(1 Po);                ## C1ohkkán dárolac1c1aid gaskkas.
 
@@ -893,8 +896,19 @@ REMOVE Adv IF (-1 Gen)(NOT -1 ("leat" PrfPrc))(0 Po)(NOT 1C Po);
 
 # Subjunctions are disambiguated in two subcycles. This is the first.
 
-SELECT CS IF (-1 CLB); # this one too general, there must be separate
-                       # rules for different groups of CS.
+SELECT CS IF (-1 CLB)(0 ("de") OR go OR ("vaikko"));
+
+# amas
+# ----
+# CS if followed by (nominative) subject and (infinitival) verb. 
+
+SELECT A IF (0 ("amas"))(1 CC)(2 A);
+
+SELECT A IF (*-1 ("leat") BARRIER NON-ADV OR CLB)(0 ("amas"));
+
+SELECT CS IF (0 ("amas"))(1 Neg);
+
+SELECT CS IF (0 ("amas"))(*1 Nom BARRIER NPNH); 
 
 # dasgo
 # -----
@@ -921,7 +935,9 @@ SELECT Pcle IF (-1 (V Neg))(0 go);                ## Son jerre it go boad1e?
 
 SELECT Pcle IF (-2 CLB)(-1 V)(0 go);              ## Jus juo, lea go nu ahte..
 
-SELECT Pcle IF (-3 BOS)(-2 CC)(-1 V);             ## Dahje leat go aiddonassii...
+SELECT Pcle IF (-3 BOS)(-2 CC)(-1 V)(0 go);      ## Dahje leat go aiddonassii...
+
+SELECT Pcle IF (-2 ("vai"))(0 go);
 
 SELECT Pcle IF (0 go)(*1 EOS BARRIER VFIN);       ## Mus ii leat go okta beana.
 
@@ -936,8 +952,16 @@ SELECT Pcle IF (-3 N OR Pron)(-2 ("ahte"))(-1 VFIN)(0 ("go"));
 # vai
 # ---
 # This one may be CS (vai = 'in order to') or CC (vai = 'or').
+
 SELECT CC IF (0 ("vai"))(1 Neg)(2 CLB);
                    ## Leago sámeálbmogis vuoigatvuod1at vai eai, dahje...
+
+SELECT CC IF (0 ("vai"))(1 Qst);	## ... vai leago ..
+
+SELECT CC IF (0 ("vai"))(2 ("go"));
+
+SELECT CC IF (0 ("vai"))(NOT *1 VFIN BARRIER CS OR CP); 
+
 
 # vaikko
 
@@ -963,9 +987,10 @@ SELECT CS IF (0 go); # All other go's are CS.
 
 SELECT CS IF (0 ("vaikko"));
 
+SELECT CS IF (0 ("vai")); 
+
 # CS removal for specific CS candidates
 REMOVE CS IF (0 ("de"));
-
 
 
 # Numerals
@@ -1393,14 +1418,15 @@ REMOVE Pers IF (-1 CC)(0 Gen)(*1 N BARRIER NPNH LINK 1 CS OR CLB);
 
 SELECT Pl IF (0 (Pron Dem))(*1C (N Pl) BARRIER NON-A);
                              ## Ja dát soad1it s1adde garrasit c1uohcat Supmii.
+SELECT Pl IF (0 (Pron Dem))(1 (Num Pl));
 
 # NP-internal case concord
 # ------------------------
 
 # More rules for Dem in front of NUMERALS must be added.
 
-SELECT (Dem Nom) IF (0 ("dat"))(1 (Num Nom));
-SELECT (Dem Nom) IF (0 ("dat"))(*1 (N Nom) BARRIER NON-ADJ);
+SELECT (Dem Pl Nom) IF (0 ("dat"))(1 (Num Nom));
+SELECT (Dem Nom) IF (0 ("dat"))(*1C (N Nom) BARRIER NON-ADJ); # C necessary
 SELECT (Dem Acc) IF (0 ("dat"))(1C (Num Acc));
 #SELECT (Dem Acc) IF (0 ("dat"))(*1C (N Acc) BARRIER NON-ADJ); # Could be Gen 
 SELECT (Dem Gen) IF (0 ("dat"))(1C (Num Gen));
@@ -1422,8 +1448,8 @@ REMOVE (Dem Nom) IF (0 ("dat"))(NOT *1 (N Nom) BARRIER NPNH);
 REMOVE (Dem Sg Loc) IF (0 ("dat"));
 REMOVE (Dem Sg Ill) IF (0 ("dat"));
 
-REMOVE (Dem Pl Nom) IF (NOT *1 (N Pl Nom) OR V-PL3 BARRIER NPNH);
-  # These are not good, we may have topicalised verbs...
+REMOVE (Dem Pl Nom) IF (NOT *1 (N Pl Nom) OR (Num Pl Nom) OR V-PL3 BARRIER NPNH);
+  # This is not good, we may have topicalised verbs...
 
 
 # Some rules for personal pronouns again (will hit "dat")
@@ -1667,6 +1693,8 @@ REMOVE Prs IF (*-1 (Neg Imprt) BARRIER CLB OR V-IND-FIN)(0 (ConNeg));
 
 SELECT Inf IF (*-1 (Neg Sup) BARRIER CLB); 
 
+SELECT Inf IF (*-1 ("amas" CS) BARRIER VERB);
+
 # Rules that prevent later selection of Inf for a finite verb in the frame
 # INF-VERB...CC... ____
  
@@ -1680,7 +1708,7 @@ REMOVE Inf IF (-1 CC LINK NOT *-1 Inf); # Barrier?
 
 #Now we select Inf:
 
-SELECT Inf IF (*-1 INF-VERB BARRIER CS OR CLB OR CP OR Neg); #(NOT 0 A);
+SELECT Inf IF (*-1 INF-VERB BARRIER CS OR CLB OR CP OR Neg)(NOT 0 Adv);
                            ## Skuvla galggai oahpahit sámemánáide dárogiela.
                            ## Pros1eavtta áigut c1ad1ahit.
 
@@ -1927,6 +1955,8 @@ SELECT (Pl Nom) IF (*-1 V-PL3 BARRIER NPNHAIIP LINK *-1 BOS OR CLB BARRIER Nom)
 # Coordinated
 SELECT Nom IF (*-1 (V Pl3) BARRIER NPNH LINK NOT *-1 (Pl Nom) OR (Pl3 Nom) 
 		BARRIER CS OR CP)(1 CC)(*2 Nom BARRIER NPNH);
+
+SELECT Nom IF (*-1 CC BARRIER NPNH OR PUNCT LINK -1 Nom)(0 N OR Num);
 
 
 # Nominative predicatives
@@ -2204,7 +2234,7 @@ REMOVE Gen IF (NOT *-1 Pr OR NUMERALS BARRIER NPNH)(0 N)(1 Dem);
 # ---------------------------
 
 REMOVE Gen IF (NOT *-1 Pr OR Num OR CC BARRIER NPNH)(0 NOTIME OR Pron)
- 		(*1 CS OR EOS BARRIER NON-ADV-PCLE) ;
+ 		(*1 CS OR CP OR EOS BARRIER NON-ADV-PCLE) ;
           ## Fylkka mearrida olugo galgá atnit sámi leavgga.
           ## C1uovvovas1 seminára cealkagat govahallet seminára loahppabohtosa.
           ## Man1n1il lea viessu viiddiduvvon guovtte geardde.
