@@ -1,0 +1,2153 @@
+! ========================================================================== !
+!                     North Sámi morphological analyser                      !
+! ========================================================================== !
+!
+! sme-lex.txt
+! The file contains morphological affixes for the nouns, verbs and adjectives
+!
+
+
+
+Multichar_Symbols
+
+! Tags for POS
+ +N +A +Adv +V
+ +Pron +CS +CC +Adp +Po +Pr +Interj +Pcle +Num +Prop
+
+! Tags for Inflection
+ +Pers +Dem +Interr +Refl +Recipr +Rel +Indef
+ +Ess +Sg +Du +Pl +Nom +Gen +Acc +Ill +Loc +Com
+ +isuf +asuf +Cmpnd +Cmpnd+ +Guess
+ +PxSg1 +PxSg2 +PxSg3 +PxDu1 +PxDu2 +PxDu3 +PxPl1 +PxPl2 +PxPl3
+ +Comp +Superl
+ +Qst +Foc +Attr +Card +Ord !+Clt (removed bec. of clarity)
+ +Pass +Ind +Prs +Prt +Pot +Cond +Imprt
+ +Sg1 +Sg2 +Sg3 +Du1 +Du2 +Du3 +Pl1 +Pl2 +Pl3
+ +Inf +Ger +ConNeg +Neg +ImprtII +PrsPrc +PrfPrc +Sup +VGen +VAbess
+ +Actio +Actor +ABBR +ACR +CLB +PUNCT +LEFT +RIGHT ^GUESSNOUNROOT
+
+! Tags for derivation
+ +adda +ahtti +alla +asti +aš +d +eaddji +eamoš +eapmi +g +geahtes +h
+ +heapmi +hudda +huhtti +huvva +j +l +laš +las
+ +meahttun +muš +n +š +st +stuvva +upmi +us +vuohta +goahti  +lágan
+ +Dimin
+
+! Triggers for morphophonological rules
+ X1 X2 X3 X4 X5 X6 X7 X8 X9 Y1 Y2 Y3 Y4 Y5 Y6 Y7 Y8 Y9 
+ Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 W1 W2
+
+! Morphophonemes and Sámi letters
+ b3 č e1 đ d3 g2 g3 h2 h3 i1 j3 m2 m3 ŋ n2 n3 o1 o3 p3 
+ š s3 ŧ t3 u1 ž z3 '1
+ B3 Č E1 Đ D3 G2 G3 H2 H3 I1 J3 M2 M3 Ŋ N2 N3 O1 O3 P3
+ Š S3 Ŧ T3 U1 Ž Z3
+
+! Flag diacritics
+ @P.NeedNoun.ON@  @D.NeedNoun.ON@  @C.NeedNoun@ ! (Dis)allowing compounds
+ @U.Cap.Obl@  @U.Cap.Opt@			! Allowing downcasing of
+						! derived names: deatnulaš. 
+
+! Testing instruction:
+! For testing purposes, the string !^C^ is added to every line that causes 
+! circularity. In order to use the "check-all" option of lexc (that lists all 
+! generated forms), the file  should be trimmed by the command "grep -v '\^C\^'
+! > noncirc-sme-lex.txt". The resulting file may then be compiled in lexc with 
+! the relevant part(s) of the lexicon.
+
+
+
+
+
+
+
+! Basic lexica, pointing to the other lexicon files
+! =================================================
+
+
+LEXICON Root 
+ Prefixes ;					!^C^
+ +Cmpnd+:%- NounRoot ;				!^C^
+ NounRoot ;					!^C^
+! @U.Cap.Obl@	ProperNoun ;			!^C^  ! if opt, why obl?
+ @U.Cap.Opt@	ProperNoun ;			!^C^
+ ProperNounFirstPart ;				!^C^
+ AdjectiveRoot ;				!^C^
+ VerbRoot ;					!^C^	
+ Copula ;					!^C^
+ Negativeverb ;					!^C^
+ Adverb ;					!^C^		
+ Particles ;					!^C^
+ Subjunction ;					!^C^
+ Conjunction ;					!^C^
+ Adposition ;					!^C^
+ Interjection ;					!^C^
+ Pronoun ;					!^C^
+ Numeral ;					!^C^
+ Acronym ;					!^C^
+ Abbreviation ;					!^C^
+ Punctuation ;					!^C^
+
+ ! All POS have ^C^ tag, remove
+ ! one or more for testing.
+
+
+
+
+
+! Prefixing and compounding
+! =========================
+
+LEXICON Prefixes
+ii%- AdjectiveRoot ;  ! ii-biologalaš
+Lulle%- ProperNoun ;  ! Lulli-Trøndelaga etc.
+Lulli%- ProperNoun ;
+Lullinuorta%- ProperNoun ;
+Máttá%- ProperNoun ;
+Davvi%- ProperNoun ;
+Oarje%- ProperNoun ;
+Oarjel%- ProperNoun ;
+Nuorta%- ProperNoun ;
+Ođđa%- ProperNoun ;
+
+
+LEXICON R !^C^
+ # NounRoot ;                      ! This is the normal case.		    ^C^
+ #@P.NeedNoun.ON@  VerbRoot ;      ! Flag diacr declares that the compound  ^C^
+ #@P.NeedNoun.ON@  AdjectiveRoot ; ! needs a +N tag later in the derivation ^C^
+ #:%- NounRoot ;                        ! These 3 cases add a hyphen, so    ^C^
+ #:%-@P.NeedNoun.ON@  VerbRoot ;        ! Sem-julggaštus and the like	    ^C^
+ #:%-@P.NeedNoun.ON@  AdjectiveRoot ;   ! is allowed.			    ^C^
+ # ProperNoun ;     ! Now, let us allow proper nouns as the 2nd part of com-^C^
+ #:%- ProperNoun ;  ! pounds. Thus: London-Hull, LondonHull, Hull-viessu    ^C^
+                    ! and viessuLondon are now all ok. Some refinement could^C^
+                    ! perhaps be done, but corpus research is needed.	    ^C^
+ +Cmpnd:%- # ;     ! This to take care of Oahpo- ja dutkandept.		    ^C^
+
+
+! It seems the P flag in the AdjectiveRoot entry is irrelevant, since there
+! are no N + [A-N] compounds. The pointers to AdjectiveRoot are temorarily 
+! (030129) left for inspection, they (line 3 and 6 of R) should be removed
+! if no deadjectival nouns turn up.
+
+
+
+
+
+
+
+! Lexica for nominal declension classes
+! =====================================
+
+! Lexica for nouns
+! ----------------
+
+! Bisyllabic nouns
+! - - - - - - - - 
+
+LEXICON GOAHTI !Inanim. Bisyll. V-Nouns
+ +N: DEVNVCASE ;
+ +N: DenominalAdjsV ;					!^C^
+ +N: DenominalNounsV ;					!^C^
+
+LEXICON VIVVA !Animate Bisyll. V-Nouns
+ +N+Sg+Gen:X4 R ;	!^C^
+ GOAHTI ;
+
+LEXICON STAHTA !Bisyll. Non-Gradating a-Nouns; a/i-Illative
+ +N: STAHTACASE ;
+ +N:X3 GOAHTAI ;
+ +N: DenominalAdjsV ;					!^C^
+ +N: DenominalNounsV ;					!^C^
+
+LEXICON IIJA !Bisyll. Non-Gradating a-Nouns; a-Illative
+ +N: STAHTACASE ;
+ +N: GOAHTAI ;
+ +N: DenominalAdjsV ;					!^C^
+ +N: DenominalNounsV ;					!^C^
+
+LEXICON GADDI !Bisyll. V-Nouns with Comp. Forms
+ +N: DEVNVCASE ;
+ +N:X4 BU/MUS ;
+ +N: DenominalNounsV ;				!^C^
+ +N: DenominalAdjsV ;				!^C^
+
+
+
+! Trisyllabic nouns
+! - - - - - - - - -
+
+LEXICON MATTAR !Tris. Anim. Gradating C-Nouns
+ +N+Sg+Gen:X2 R ;	!^C^
+ MALIS ;
+
+LEXICON MALIS !Tris. Inanim. Gradating C-Nouns
+ +N:X4 MALIS0 ;
+ +N:X8 MALES ;		!^C^
+ +N:X2 MALLAS- ;
+ +N:X4 DenominalAdjsC ;					!^C^
+ +N:X2 DenominalNounsC ;				!^C^
+ +N:X2 GEAHTES ;
+ +N+š+Dimin:žX2 DIMINC ;
+
+LEXICON BEANA !Trisyll. Anim. Gradating 0-Nouns
+ +N+Sg+Gen:X2 R ;	!^C^
+ SEAMU ;
+
+LEXICON SEAMU !Trisyll. Inanim. Gradating 0-Nouns
+ +N:X4 BOAZU- ;
+ +N:X8 MALES ;		!^C^
+ +N:X2 MALLAS- ;
+ +N:X2 DenominalNounsC ;				!^C^
+ +N: DenominalAdjsV ;					!^C^
+
+LEXICON GAHPIR !Trisyll. Non-Gradating C-Nouns
+ +N: MALIS0 ;		! NE
+ +N:X7 MALES ;		!^C^ ! This gives gahper and gahpir##
+ +N: MALLAS- ;		! GAI, NPx, NPl
+ +N: DenominalNounsC ;					!^C^
+ +N: DenominalAdjsC ;					!^C^
+ +N:X2 GEAHTES ;
+
+! What about Trisyll. Non-Gradating 0-Nouns ??? Are there some?
+
+
+
+! Contracted nouns
+! - - - - - - - - 
+
+LEXICON BOAZU !Anim. Contracted 0-Nouns
+ +N+Sg+Gen:Y5 R ;				!^C^
+ SUOLU ;
+
+LEXICON SUOLU !Inanim. Contracted 0-Nouns
+ +N:X4 BOAZU- ;
+ +N:X8 MALES ;					!^C^
+ +N:Y5 BOHCCO ;
+ +N:Y6 BOHCCU ;
+ +N:Y5 DenominalNounsV ;			!^C^
+ +N: DenominalAdjsV ;				!^C^
+
+LEXICON SATTU
+ +N:Y5 SADDO ;
+ +N:Y6 SADDU ;
+ +N:X4 SATTU- ;
+ +N: DenominalAdjsV ;				!^C^
+ +N: DenominalNounsV ;				!^C^
+
+LEXICON GISTTA !The Noun gistta, gist -
+ +N:s'taX4 BOAZU- ;
+ +N:stáY5 FALLA- ;
+ +N:stáY5 DenominalNounsV ;
+ +N:stá DenominalAdjsV ;
+
+LEXICON FALIS !Contracted Anim. C-Nouns
+ +N:X4 MALIS0 ;
+ +N:X8 MALES ;					!^C^
+ +N:Y5 FALLA- ;
+ +N: DenominalNounsC ;				!^C^
+ +N: DenominalAdjsC ;				!^C^
+
+LEXICON LASIS !Contracted Inanim. C-Nouns
+!Tentatively copying entries from FALIS
+!This must be checked! 020207 TT.
+ +N:X4 MALIS0 ;
+ +N:X8 MALES ;				!^C^
+ +N:Y5 FALLA- ;
+ +N: DenominalNounsC ;			!^C^
+ +N: DenominalAdjsC ;			!^C^
+
+LEXICON GARGIA
+! light fin syll
+! gen = nom ill = -i
+ +N+Sg+Nom: K ;
+ +N+Sg+Nom:X7 R ;	!^C^
+ +N+Sg+Gen: K ;
+ +N+Sg+Gen:X7 R ;	!^C^
+ +N+Sg+Acc: K ;
+ +N+Sg+Ill:j K ;
+ +N+Sg+Loc:s K ;
+ +N+Sg+Com:jn K ;
+ +N+Ess:n K ;
+ +N+Pl+Nom:t K ;
+ +N+Pl+Gen:jd K ;
+ +N+Pl+Gen:jd R ;	!^C^
+ +N+Pl+Acc:jd K ;
+ +N+Pl+Ill:jde K ;
+ +N+Pl+Loc:jn K ;
+ +N+Pl+Com:jgujn K ;
+ +N+Sg+Nom: PxA ;
+ +N+Sg+Gen: PxA ;
+ +N+Sg+Acc: PxA ;
+ +N+Sg+Ill:sa PxA ;
+ +N+Sg+Loc:st PxC ;
+ +N+Sg+Com:jn PxC ;
+ +N+Ess:n PxC ;
+ +N+Pl+Gen:jd PxC ;
+ +N+Pl+Acc:jd PxC ;
+ +N+Pl+Ill:jddás PxC ;
+ +N+Pl+Loc:jn PxC ;
+ +N+Pl+Com:jd PxPlComC ;
+ +N:Y5 DenominalNounsV ;			!^C^
+ +N:Y5 DenominalAdjsV ;				!^C^
+
+
+LEXICON BUFFALO
+! heavy fin syll
+! gen = -a ill = -ai
+! parallel to NYSTØ
+ +N+Sg+Nom: K ;
+ +N+Sg+Nom:X7 R ;	!^C^
+ +N+Sg+Gen:a K ;
+ +N+Sg+Gen:aX7 R ;	!^C^
+ +N+Sg+Acc:a K ;
+ +N+Sg+Ill:aj K ;
+ +N+Sg+Loc:as K ;
+ +N+Sg+Com:ajn K ;
+ +N+Ess:an K ;
+ +N+Pl+Nom:at K ;
+ +N+Pl+Gen:ajd K ;
+ +N+Pl+Gen:ajd R ;	!^C^
+ +N+Pl+Acc:ajd K ;
+ +N+Pl+Ill:ajdda K ;
+ +N+Pl+Loc:ajn K ;
+ +N+Pl+Com:ajgujn K ;
+ +N+Sg+Nom: PxC ;
+ +N+Sg+Gen: PxC ;
+ +N+Sg+Acc: PxC ;
+ +N+Sg+Ill:asa PxA ;
+ +N+Sg+Loc:ast PxC ;
+ +N+Sg+Com:ajn PxC ;
+ +N+Ess:an PxC ;
+ +N+Pl+Gen:ajd PxC ;
+ +N+Pl+Acc:ajd PxC ;
+ +N+Pl+Ill:ajddás PxC ;
+ +N+Pl+Loc:ajn PxC ;
+ +N+Pl+Com:ajd PxPlComC ;
+ +N:Y5 DenominalNounsV ;			!^C^
+ +N:Y5 DenominalAdjsV ;				!^C^
+
+
+
+ 
+! Miscellaneous noun types
+! - - - - - - - - - - - - 
+
+LEXICON OLLUVUOHTA !Exceptional vuohta-Nouns
+ +N: VUOHTAMORPH ;
+
+LEXICON MAGASH
+ +N: MALIS0 ;
+ +N: MALLAS- ;
+! This lexicon is not correct. It is copied from DIMINC, 
+! (except that the tags +N are added),  but in the 
+! noun lexicon DIMINC is marked "pl.r.V)" and MAGASH is
+! marked !(pl.r.). XXX Look into this.
+
+LEXICON EGEZHAGAT
+ +N+Pl+Nom:aX4t K ;
+ +N+Ess:an K ;
+ +N+Ess:an PxC ;
+ +N:aX5 EGEZHAHKII ;
+
+LEXICON EGEZHAHKII
+ +Pl+Gen:jd K ;
+ +Pl+Gen:jd R ;	!^C^
+ +Pl+Gen:jd PxC ;
+ +Pl+Acc:jd K ;
+ +Pl+Acc:jd PxC ;
+ +Pl+Ill:jde K ;
+ +Pl+Ill:jdasa PxV ;
+ +Pl+Loc:jn K ;
+ +Pl+Loc:jn PxC ;
+ +Pl+Com:jgujn K ;
+ +Pl+Com:jd PxPlComC ;
+
+LEXICON FIRSTCOMPOUND  ! This lexicon for errors only
+ +N+Cmpnd: # ;         ! they are of the isolated vuođđo skuvlla type.
+ +N+Sg+Nom: # ;
+
+
+
+
+
+! Lexica for adjectives
+! ---------------------
+
+
+! Bisyllabic adjectives 
+! - - - - - - - - - - -
+
+
+
+LEXICON BUORRE ! For this adj only
+ +A:X7 NomV "good A" ;
+ +A+Comp:X8b BUStem ;
+ +A+Superl:X8muss BUOREMUS ;
+ +A:X1 EssV "good A" ;
+ +A: GOAHTI-OBL "good A" ;
+ +A+lágan:X4lágan LAGAN ;			!^C^
+ +A+lágan:X7lágan LAGAN ;			!^C^
+
+
+
+
+LEXICON ALKI ! Bisyll V-Adj, -es-Attr, no WeG.
+ +A+Attr:W2s ATTR ;
+ +A: LAIKI0 ;
+ +A: BU/MUS ; ! no CG in comparative?
+
+LEXICON SEARRA !Bisyll. V-Adj's with s-Attr in WeG.
+ +A+Attr:W1s ATTR ;
+ +A: LAIKI0 ;
+ +A:X4 BU/MUS ;
+
+LEXICON HOHPI !Bisyll. V-Adj's with s-Attr. in WeG & Adv.
+ +A+Attr:X4s ATTR ; ! X4 => WeG, not W1 => no vow ch
+ +A: LAIKI0 ;
+ +A:X4 BU/MUS ;
+ +A: ADVV ;
+
+LEXICON LAIKI !Bisyll. V-Adj's with es-Attr. in WeG & Adv.
+ +A+Attr:W1s ATTR ;
+ +A: LAIKI0 ;
+ +A:X4 BU/MUS ;
+ +A: ADVV ;
+
+LEXICON LODJI !bisyll V-Adj with -es and -is Attr in WeG
+ +A+Attr:X4s ATTR ; ! #lojis
+ +A+Attr:W1s ATTR ; ! #lojes
+ +A: LAIKI0 ;
+ +A:X4 BU/MUS ;
+ +A: ADVV ;
+! LODJI combines HOHPI and LAIKI
+ 
+!LEXICON VEADDJI ! bisyll, s Attr, no CG
+!K ; ne, det er JUHKKIS som er riktig leksikon.
+
+LEXICON JUHKKIS !Bisyll. V-Adj. with s-Attr; no Adv.
+ +A+Attr:s ATTR ;
+ +A: LAIKI0 ;
+ +A:X4 BU/MUS ;
+! this lexicon is in conflict with dictionary info
+
+LEXICON NUORRA !Bisyll. V-Adj. without Separate Attr; no Adv.
+ +A+Attr: ATTR ;
+ +A: LAIKI0 ;
+ +A:X4 BU/MUS ;
+
+LEXICON VIELG ! adj with -es -attrib. (cns final adj)
+ +A+Attr:Y9es ATTR ;
+ +A:ad VIELGAT ;
+
+LEXICON VIELGAT
+ EABBO/EAMOS ;
+ GAPPUS- ;
+ GAPPUS0 ;
+! GARRAS- ; ! GAPPUS- instead
+ 
+LEXICON CAHKK
+! Double set of attr forms here
+ +A+Attr:Y9es ATTR ;
+ :ad JOHTIL ;
+
+LEXICON JALGAT
+ +A+Attr:a ATTR ;
+ VIELG ;
+
+LEXICON UHCC
+ +A+Attr:aW1 ATTR ;
+ +A:i LAIKI0 ;
+ +A:iX4 BU/MUS ;
+
+
+LEXICON JEAGOHEAPMI 
+ +A+Attr:is ATTR ;
+ +A:eapmi HEAPMI ;
+ +A: EABBO/EAMOS ;
+ +A:is VUOHTA ;
+
+
+! Consonant-final even-syllabic adjectives
+! - - - - - - - - - - - - - - - - - - - - 
+
+LEXICON ISSORAS ! ( )
+ +A+Attr: ATTR ;
+ +A: EABBO/EAMOS ;
+ +A: JOHTOLAT0 ;
+ +A: VUOHTA ;
+ +A:a ISSORASSA- ;
+ :ass DEARVVASLAS ;
+! The last line is cryptic.
+
+LEXICON DABALAS ! ( )
+ +A: EABBO/EAMOS ;
+ :ažž DEARVVASLAS ;
+
+LEXICON DEARVVASLAS ! ( ) 
+ +A+Attr: ATTR ;
+ +A: JOHTOLAT0 ;
+ +A: VUOHTA ;
+ +A:a ISSORASSA- ;
+
+LEXICON ASEHAS
+ +A+Attr:is ATTR ;
+ +A: EABBO/EAMOS ;
+ +A:is VUOHTA ;
+ +A:ažž JOHTOLAT0 ;
+ +A:ažža ISSORASSA- ;
+
+
+
+
+! Trisyllabic adjectives
+! - - - - - - - - - - - 
+
+LEXICON BEAKKAN !Trisyll. Non-gradating C-Adj. without Separate Attr.
+ +A+Attr: ATTR ;
+ +A: EABBO/EAMOS ;
+! +A: GAPPUS- ;
+ +A: GAPPUS0 ;
+! +A: GARRAS- ; ! id to GAPPUS0
++A+Sg+Gen:a K ;
++A+Sg+Acc:a K ;
++A+Pl+Nom:at K ;
++A:i MALLASI-/NUORABU- ;
+
+LEXICON JOHTIL !Trisyll. Non-gradating C-Adj. with is-Attr.
+ +A+Attr:is ATTR ;
+ +A: EABBO/EAMOS ;
+ +A: GAPPUS- ;
+ +A: GAPPUS0 ;
+! +A:X2 GARRAS- ; ! GARRAS- removed, pointing to GAPPUS- instead
+! two continuation patterns because there are
+! adjectives with both strong av weak form.
+
+LEXICON GUOHCA !Trisyll. Gradating V-Adj., no sep. Attr.
+ +A+Attr:X4 K ;
+ +A: EABBO/EAMOS ;
+ +A:X2 MALLAS- ;
+ +A:X4 BOAZU- ;
+
+LEXICON GARAS !Trisyll. Gradating C-Adj. with Bisyll. a-Attr. and final s
+ +A+Attr: ATTR ;
+ +A:sX2 EABBO/EAMOS ;
+ +A:sX2 GAPPUS- ;
+ +A:sX4 GAPPUS0 ;
+! :sX4 GAPPUS ;
+! Something is wrong here !! Both GARAS and GAPPUS point to ATTR.
+! Thus, the 3 last lines of GARAS was inserted, and the line pointing
+! to GAPPUA was removed, to avoid double pointing to an ATTR form.
+
+LEXICON LOSSAT !Trisyll. Gradating C-Adj. with Bisyll. a-Attr. and final t
+ +A+Attr: ATTR ;
+ +A:dX2 EABBO/EAMOS ;
+ +A:dX2 GAPPUS- ;
+ +A:d GAPPUS0 ;
+
+LEXICON CIENAL !Trisyll. Gradating C-Adj. with Strong Grade is-Attr.
+ +A+Attr:X2is ATTR ;
+ +A:X2 EABBO/EAMOS ;
+ +A:X2 GAPPUS- ;
+! +A:X2 GARRAS- ; ! GARRAS- removed
+ +A:X4 GAPPUS0 ;
+! +A:X4 GARAS0 ; ! GARAS0 removed
+
+LEXICON NJUORAS !Trisyll. Gradating C-Adj., with Strong Grade a-Attr.
+ +A+Attr: ATTR ;
+ :s GAPPUS ;
+
+LEXICON DILDDAS ! ,-ld-(#=is) Trisyll Grad., facult is-Attr.
+ +A+Attr:iX4s ATTR ;
+ GAPPUS ;
+
+LEXICON HEAHKAS ! ,-hkk-#=is~heahkka Trisyll Grad., is-Attr
+! this gives heahkasis as attributive form. Check.
+ +A+Attr:X4sis ATTR ;
+ GARAS ;
+
+LEXICON EATTAS ! ,-dd-#=is Trisyll. Grad. C-Adj. with WeG is-Attr.
+ +A+Attr:iX4s ATTR ;
+ +A:X2 EABBO/EAMOS ;
+ +A:X2 GAPPUS- ;
+ +A:X4 GAPPUS0 ;
+
+LEXICON BOAKKAS ! ,-gg-#boagge3- Trisyll
+ +A:X2 EABBO/EAMOS ;
+ +A:X2 GAPPUS- ;
+ +A:X4 GAPPUS0 ;
+
+LEXICON FARGAT ! :d#Ø Trisyll
+ +A: EABBO/EAMOS ;
+ +A: GAPPUS- ;
+ +A: GAPPUS0 ;
+
+LEXICON GAPPUS ! -bbo- Trisyll
+ +A+Attr:X4 ATTR ;
+ +A:X2 EABBO/EAMOS ;
+ +A:X2 GAPPUS- ;
+ +A:X4 GAPPUS0 ;
+
+LEXICON VATTIS ! Trisyll CG, -es Attr
+ +A+Attr:W1 ATTR ;
+ +A:X2 EABBO/EAMOS ;
+ +A:X2 GAPPUS- ;
+ +A:X4 GAPPUS0 ;
+
+LEXICON BIEKKUS ! ,-iggo-#=is Trisyll Grad, is-Attr, 
+ +A+Attr:iX4s ATTR ;
+ +A:X2 EABBO/EAMOS ;
+ +A:X2 GAPPUS- ;
+ +A:X4 GAPPUS0 ;
+
+LEXICON LIEKKUS ! ,-iggo-(#=is)
+ +A+Attr:X4 ATTR ;
+ BIEKKUS ;
+
+LEXICON GUOROS 
+! guoro3s,-u2rro- ~ guorus,-u2rro-#guoro3s
+ +A+Attr:W1 ATTR ;
+ +A+Ess:W1in K ;
+ +A+Sg+Nom:W1 K ;
+! NB only the ATTR form works for this lexicon!!
+
+LEXICON NUOLUS ! ,-u2llo-(#nuolo3s)
+ +A+Attr:W1 ATTR ;
+ GAPPUS ;
+
+LEXICON GEARGGUS ! ,-ergo-#gearggo3s
+ +A+Attr:W1 ATTR ;
+ +A:X2 EABBO/EAMOS ;
+ +A:X2 GAPPUS- ;
+ +A:X4 GAPPUS0 ;
+
+LEXICON VUDDJII !
+ +A+Adv:it K ;
+ +A+Attr:Y5s ATTR ;
+ +A+Sg+Nom:00 K ;
+ +A:Y5 BU/MUS ;
+ +A:Y5 VUDDJE- ;
+ +A:Y6 VUDDJI- ;
+ VUOHTA ;
+
+LEXICON RAHKIS ! As BOARIS, but with facultative -is -Attr
+ +A+Attr:is ATTR ;
+ +A+Attr:es ATTR ;
+ +A: EABBO/EAMOS ;
+ +A:is VUOHTA ;
+ +A:isX2 GAPPUS- ; ! as VATTIS
+ +A:isX4 GAPPUS0 ; ! as VATTIS
+
+LEXICON BOARIS ! As GAPPUS, but with different (stem and) attr.
+ +A+Attr:es ATTR ;
+ +A:risX2 EABBO/EAMOS ;
+ +A:is VUOHTA ;
+ +A:risX2 GAPPUS- ; ! as VATTIS
+ +A:risX4 GAPPUS0 ; ! as VATTIS
+ ! +A:ažž JOHTOLAT0 ;
+ ! +A:ažža ISSORASSA- ; ! Wrong, essive and BU/MUS
+
+LEXICON AKTIIVA
+ +A+Attr: ATTR;
+ +A: LAIKI0 ;
+ +A:X4 BU/MUS ;
+!Modeled on the basis of NUORRA
+
+LEXICON ALLAT
+ +A+Attr:a ATTR ;
+ +A:iX4 BU/MUS ;
+ +A:ad ALLAGA ;
+ +A:ag ALLAGA ;
+
+LEXICON ALLAGA
+ 00:i MALLASI-/NUORABU- ;
+ EABBO/EAMOS ;
+ GAPPUS- ;
+ GAPPUS0 ;
+ VUOHTA ;
+
+ 
+
+! Contracted adjectives
+! - - - - - - - - - - -
+
+LEXICON FIINNIS ! ,-dná-(:Ø)#fiinna
+ +A+Attr:aX4 ATTR ;
+! +A:X4 GAPPUS0 ; ! replaced
+ +A:isX2 EABBO/EAMOS_CONT ;
+ +A:isX4 GAPPUS0 ;
+ +A:isY5 BU/MUS ;
+ +A:isY5 FIIDNA- ;
+
+LEXICON DIMIS ! as fiinnis, but with StrGr in Attr
+ +A+Attr:a ATTR ;
+! +A:X4 GAPPUS0 ; ! replaced
+ +A:isX2 EABBO/EAMOS_CONT ;
+ +A:isX4 GAPPUS0 ;
+ +A:isY5 BU/MUS ;
+ +A:isY5 FIIDNA- ;
+
+LEXICON ROAVIS ! as dimis but with more Attr forms
+ +A+Attr:aX4 ATTR ;
+ DIMIS ;
+ 
+LEXICON SMAVIS ! as dimis, but with even more Attr forms
+! +A+Attr:á ATTR ; ! Voted down.
+ +A+Attr:iX4s ATTR ;
+ +A+Comp:iX4t SHORTCOMP ;
+  DIMIS ;
+
+LEXICON STUORIS ! As fiinnis, but with different comparation
+ +A+Attr:aX4 ATTR ;
+! +A:X4 GAPPUS0 ; ! stuoris different
+! +A+Comp:it SHORTCOMP ; ! No shortcomp for stuoris
+! +A+Comp:át SHORTCOMP ;
+ +A:isX4 GAPPUS0 ;
+ +A:iX4 BU/MUS ; ! stuorit, stuorimus
+ +A:áX4 BU/MUS ; ! stuorát, stuorámus
+ +A:isY5 FIIDNA- ;
+! Tentative, cf. FIINNIS and check.
+
+LEXICON NJALGGAT
+! ,-lgá-:Ø#njálgga ~ njálggis,-lgá-: Ø#njálgga ~ 
+! njálgga,-lgá-:Ø#njálgga (komp., superl. njálgá- ~ njálga3s-)
+ +A+Attr:X4 ATTR ;
+! +A:X4 GARAS0 ; ! removed
+ +A:X4 GAPPUS0 ; ! replaced
+ +A:hX4 GAPPUS0 ;
+ +A:hY5 BU/MUS ;
+ +A:hY5 FIIDNA- ;
+
+LEXICON JIEDNAI
+ +A+Attr: ATTR ;
+ +A:X4 MALIS0 ;
+ +A:W1 MALES ;		!^C^
+ +A:Y5 FALLA- ;
+
+LEXICON RIKKIS
+ +A+Attr:esX4 ATTR ;
+ +A+Attr:isX4 ATTR ; 
+ +A:isX4 MALIS0 ;
+ +A:á FALLA- ; 
+ +A+Comp:át SHORTCOMP ;
+! THEN COMPARATIVE, here tentative
+ +A:isX2 EABBO/EAMOS_CONT ;
+ +A:isY5 BU/MUS ;
+ +A:isY5 FIIDNA- ;
+
+LEXICON VIISSIS  ! Contr, CG and -is -> -á, attr -es
+! As RIKKIS, but without -is attribute.
+ +A+Attr:esX4 ATTR ;
+ +A:isX4 MALIS0 ;  ! Nom and Ess
+ +A+Comp:át SHORTCOMP ;
+! THEN COMPARATIVE, here tentative
+ +A:isX2 EABBO/EAMOS_CONT ;
+ +A:isY5 BU/MUS ;
+ +A:isY5 FIIDNA- ; ! This gives StrG OBL forms
+
+
+
+! todo: Rewrite thees adj lexica so that the attr variation is kept separate 
+! from the otherwise uniform declension.
+
+
+
+! --------------------------- !
+! Sublexica for nominal stems !
+! --------------------------- !
+
+
+
+! Declension
+! ----------
+
+
+! Noun declension
+! - - - - - - - - 
+
+LEXICON DEVNVCASE
+ GOAHTI-NE ;
+ GOAHTI-OBL ;
+ GOAHTE- ;				!^C^
+
+LEXICON GOAHTI-NE !Bisyll. V-Nouns; Nominative Sg. + Essive
+ NomV ;
+ EssV ;
+
+LEXICON NomV
+ +Sg+Nom: K ;
+ +Sg+Nom: Px3V ;
+ +Sg+Nom:X7 R ;	!^C^
+
+LEXICON EssV
+ +Ess:n K ;
+ +Ess:n PxC ;
+
+LEXICON GOAHTI-OBL
+ :X2 GOAHTA- ; ! Px sublexicon
+ :X3 GOAHTAI ; ! Ill sublexicon
+ :X4 GOADI- ; ! weak grade abs decl
+ :X5 GODII- ; ! weak gr dipth simpl
+ :X6 GOADA- ; ! AG Px
+ :X8 GOADE- ; ! Ditto (?)
+
+LEXICON GOAHTE-		!^C^
+ :X7 MALES ;		!^C^
+
+
+
+LEXICON GOADE-
+ +Sg+Gen: K ;   ! This escape hatch for X8 gives gieldda as Gen of gieldá.
+ +Sg+Gen: R ;	!^C^
+
+LEXICON GOAHTA-
+ +Sg+Nom: Px1V ;
+ +Sg+Gen: Px1V ;
+ +Sg+Acc: Px1V ;
+ +Sg+Nom: Px2V ;
+ +Sg+Ill:s PxC ;
+
+LEXICON GOAHTAI
+ +Sg+Ill:j K ;
+
+LEXICON GOADI-
+ +Sg+Gen: K ;
+ +Sg+Acc: K ;
+ +Sg+Gen: R ;	!^C^
+ +Sg+Gen: Px3V ;
+ +Sg+Acc: Px3V ;
+ +Sg+Loc:s K ;
+ +Sg+Loc:st PxC ;
+ +Pl+Nom:t K ;
+
+LEXICON GODII-
+ +Sg+Com:jn K ;
+ +Sg+Com:jn PxC ;
+ +Pl+Gen:jd K ;
+ +Pl+Gen:jd R ;	!^C^
+ +Pl+Gen:jd PxC ;
+ +Pl+Acc:jd K ;
+ +Pl+Acc:jd PxC ;
+ +Pl+Ill:jde K ;
+ +Pl+Ill:jdasa PxV ;
+ +Pl+Loc:jn K ;
+ +Pl+Loc:jn PxC ;
+ +Pl+Com:jgujn K ;
+ +Pl+Com:jd PxPlComC ;
+
+LEXICON GOADA-
+ +Sg+Gen: Px2V ;
+ +Sg+Acc: Px2V ;
+
+
+
+LEXICON STAHTACASE
+ GOAHTI-NE ;
+ GOAHTA- ;
+! :X3 GOAHTAI ; ! POINTED TO IN MOTHER LEXICA
+ GOADI- ;
+ GODII- ;
+ GOADA- ;
+ GOADE- ;
+ MALES ;		!^C^
+
+
+
+LEXICON HEANDARAT-COMM ! this lexicon is differet from HEANDARAT in one
+ +N:00 JOHTOLAT0 ;     ! respect: it does not have the +Prop tag.
+ +N:a JOHTOLAHKA- ;
+ +N+Dimin:aX6ž DIMINC ;
+ 
+
+
+LEXICON MALIS0
+ +Sg+Nom: K ;
+ +Sg+Nom:X7 R ;	!^C^
+ +Ess:in K ;
+ +Ess:ini PxV ;
+
+
+LEXICON MALLAS-
+ +Sg+Nom:00 PxC ;
+ +Sg+Gen:a K ;
+ +Sg+Gen: K ;
+ +Sg+Gen: PxC ;
+ +Sg+Acc:a K ;
+ +Sg+Acc: K ;
+ +Sg+Acc: PxC ;
+ +Pl+Nom:at K ;
+ +Sg+Ill:asa PxV ;
+! +Ess:in K ;      ! Replace this
+! +Ess:ini PxV ;   ! and use MALIS0
+                   ! instead.
+ :i MALLASI-/NUORABU- ;
+! :i MALLASI- ;
+
+LEXICON MALLASI-/NUORABU-
+ +Sg+Ill:j K ;
+ +Sg+Loc:s K ;
+ +Sg+Com:jn K ;
+ +Pl+Gen:jd K ;
+ +Pl+Gen:jd R ;	!^C^
+ +Pl+Acc:jd K ;
+ +Pl+Ill:jdda K ;
+ +Pl+Loc:jn K ;
+ +Pl+Com:jgujn K ;
+ +Sg+Loc:stti PxV ;
+ +Sg+Com:jnni PxV ;
+ +Pl+Gen:jddi PxV ;
+ +Pl+Acc:jddi PxV ;
+ +Pl+Ill:jddás PxC ;
+ +Pl+Loc:jnni PxV ;
+ +Pl+Com:jddi PxPlComV1 ;
+
+
+
+LEXICON EAMOSH  ! Devarbal nouns
+ +Sg+Nom:X4 K ;
+ +Sg+Nom:X7 R ;	!^C^
+ +Ess:iX4n K ;
+ +Sg+Gen:X2a K ;
+ +Sg+Gen:X2 K ;
+ +Sg+Acc:X2a K ;
+ +Sg+Acc:X2 K ;
+ +Pl+Nom:X2at K ;
+ 00:X2i MALLASI-/NUORABU- ;
+
+LEXICON BOAHTIN  ! Devarbal nouns
+ +Sg+Nom: K ;
+ +Sg+Nom:X7 R ;	!^C^
+ +Ess:in K ;   ! Dialects
+ +Ess:en K ;   ! Dialects
+ +Ess:e K ;    ! Dialects
+ +Sg+Gen:a K ;
+ +Sg+Gen: K ;
+ +Sg+Acc:a K ;
+!+Sg+Acc: K ; ! We suspect the Acc is never short
+ +Pl+Nom:at K ;
+ 00:i MALLASI-/NUORABU- ;
+
+
+
+!LEXICON MALLASI-
+! +Sg+Loc:stti PxV ;
+! +Sg+Com:jnni PxV ;
+! +Pl+Gen:jddi PxV ;
+! +Pl+Acc:jddi PxV ;
+! +Pl+Ill:jddás PxC ;
+! +Pl+Loc:jnni PxV ;
+! +Pl+Com:jddi PxPlComV1 ;
+! Included in MALLASI-/NUORABU-
+! KEEP IN MIND
+
+LEXICON FALLA-
+ BOHCCO ;
+ BOHCCU ;
+
+LEXICON BOAZU-
+ +Sg+Nom: K ;
+ +Sg+Nom:X7 R ;	!^C^
+ +Ess:n K ;
+ +Ess:n PxC ;
+
+LEXICON BOHCCO
+ +Sg+Nom: PxV2 ;
+ +Sg+Gen: K ;
+ +Sg+Gen: PxV2 ;
+ +Sg+Gen: R ; 		!^C^! Already in LEXICON BOAZU
+ +Sg+Acc: K ;
+ +Sg+Acc: PxV2 ;
+ +Sg+Ill:s PxC ;
+ +Sg+Loc:s K ;
+ +Sg+Loc:st PxC ;
+ +Pl+Nom:t K ;
+
+LEXICON BOHCCU
+ +Sg+Ill:j K ;
+ +Sg+Com:jn K ;
+ +Sg+Com:jn PxC ;
+ +Pl+Gen:jd K ;
+ +Pl+Gen:jd R ;	!^C^
+ +Pl+Gen:jd PxC ;
+ +Pl+Acc:jd K ;
+ +Pl+Acc:jd PxC ;
+ +Pl+Ill:jde K ;
+ +Pl+Ill:jdasa PxV ;
+ +Pl+Loc:jn K ;
+ +Pl+Loc:jn PxC ;
+ +Pl+Com:jgujn K ;
+ +Pl+Com:jd PxPlComC ;
+
+LEXICON SADDO ! From contr noun SATTU
+ +Pl+Nom:t K ;
+
+LEXICON SADDU ! From contr noun SATTU
+ +Pl+Gen:jd K ;
+ +Pl+Gen:jd R ;	!^C^
+ +Pl+Gen:jd PxC ;
+ +Pl+Acc:jd K ;
+ +Pl+Acc:jd PxC ;
+ +Pl+Ill:jde K ;
+ +Pl+Ill:jdasa PxV ;
+ +Pl+Loc:jn K ;
+ +Pl+Loc:jn PxC ;
+ +Pl+Com:jgujn K ;
+ +Pl+Com:jd PxPlComC ;
+
+LEXICON SATTU- ! From contr noun SATTU
+ +Sg+Nom:X7 R ;	!^C^
+ +Ess:n K ;
+ +Ess:n PxC ;
+
+
+
+
+
+
+
+
+! Adjective declension
+! - - - - - - - - - - 
+
+LEXICON ATTR
+ K ;                  ! Plain attributive
+ -:#%- ProperNoun ;   ! Compounds		!^C^
+ # AGADJECT ;	      !				!^C^
+ +lágan:lágan LAGAN ; ! Derivation		!^C^ ! tentative !
+
+
+
+LEXICON LAIKI0    ! Directing adjectives ...
+ DEVNVCASE ;      ! ... to bisyllabic nominal declension
+ VUOHTA ;         ! ... to A > N -vuohta derivation
+
+
+LEXICON JOHTOLAT
+ +geahtes+A:#geahtes K ;
+ @C.NeedNoun@ HEANDARAT-COMM ; 
+! The flag is there because verbs are derived via +us suffix to
+! JOHTOLAT, and then pick up their +N tag in HEANDARAT-COMM, but not
+! via +geahtes.
+ 
+LEXICON JOHTOLAT0
+ +Sg+Nom: K ;
+ +Sg+Nom: R ; 		!^C^! test this
+! +Sg+Nom:X7 R ; 		!^C^! removed since cons-final.
+! +Sg+Gen: K ;
+! +Sg+Acc: K ;
+! This must be a typo!
+
+LEXICON JOHTOLAHKA-
+ +Sg+Nom:00 Px3V ;
+ +Ess:n K ;
+ +Ess:n PxC ;
+ GOAHTI-OBL ;
+
+
+
+LEXICON ISSORASSA-
+ +Ess:n K ;
+ :X4 BU/MUS ;
+ EABBUCASE2 ;
+
+LEXICON EABBO/EAMOS
+ ADVC ;
+ EABBO/EAMOS_CONT ;
+
+LEXICON EABBO/EAMOS_CONT
+ +Comp:it SHORTCOMP ;
+ +Comp:et SHORTCOMP ;
+ +Comp:ut SHORTCOMP ;
+ +Comp:eabbu EABBU ;
+ +Comp:ab'bu EABBU ;
+ +Superl:amos EAMOS ;
+ +Superl:eapmo1s EAMOS ;
+ +Superl:eapmus EAMOS ;
+
+LEXICON SHORTCOMP
+ JOHTOLAT0 ;
+ VUOHTA ;
+ +Attr: K ;  ! Comp are also Attr.
+
+
+LEXICON EABBU
+ +Dimin:X6ž DIMINC ;
+ +Dimin:X6ž VUOHTA ;
+ +Dimin+Adv:X6žit K ;
+ EABBUCASE1 ;
+ EABBUCASE2 ;
+ +Adv:X8t K ;
+ +Attr: K ;  ! Comp are also Attr.
+
+
+LEXICON EABBUCASE1
+ +Sg+Nom:X1 K ;
+ +Sg+Nom:X7 K ;
+! +Sg+Nom:X1 Px3V ;
+! +Sg+Nom:X7 Px3V ;
+ +Sg+Nom: PxV ;
+ +Ess:X1n K ;
+ +Ess:X7n K ;
+ +Ess:X1n PxC ;
+ +Ess:X7n PxC ;
+
+LEXICON EABBUCASE2
+ +Sg+Gen:X4 K ;
+ +Sg+Gen:X8 K ;
+! +Sg+Gen:X4 PxV ;
+! +Sg+Gen:X8 PxV ;
+ +Sg+Gen:X2 Px1V ;
+ +Sg+Gen:X6 Px2V ;
+ +Sg+Gen:X4 Px3V ;
+ +Sg+Acc:X4 K ;
+ +Sg+Acc:X8 K ;
+ +Sg+Acc:X2 Px1V ;
+ +Sg+Acc:X6 Px2V ;
+ +Sg+Acc:X4 Px3V ;
+! +Sg+Acc:X4 PxV ;
+! +Sg+Acc:X8 PxV ;
+ +Sg+Ill:X3j K ;
+! +Sg+Ill:s PxC ;
+ +Sg+Ill:X2s PxC ;
+ +Sg+Loc:X4s K ;
+ +Sg+Loc:X8s K ;
+ +Sg+Loc:X4st PxC ;
+ +Sg+Loc:X8st PxC ;
+ +Sg+Com:X5jn K ;
+ +Sg+Com:X5jn PxC ;
+ +Pl+Nom:X4t K ;
+ +Pl+Gen:X5jd K ;
+ +Pl+Gen:X5jd R ;	!^C^
+ +Pl+Gen:X5jd PxC ;
+ +Pl+Acc:X5jd K ;
+ +Pl+Acc:X5jd PxC ;
+ +Pl+Ill:X5jde K ;
+ +Pl+Ill:X5jdasa PxV  ;
+ +Pl+Loc:X5jn K ;
+ +Pl+Loc:X5jn PxC ;
+ +Pl+Com:X5jgujn K ;
+ +Pl+Com:X5jd PxPlComC ;
+
+LEXICON BU/MUS
+ +Comp:b BUStem ;
+ +Superl:muss BUOREMUS ;
+ +Adv:t K ;
+
+LEXICON BUStem
+ +Sg+Nom: K ;
+ +Attr: K ;
+ VUOHTA ;
+ +Sg+Gen:u K ;
+ +Sg+Gen: K ;
+ +Sg+Acc:u K ;
+ +Sg+Acc: K ;
+ +Pl+Nom:ut K ;
+ +Ess:un K ;
+ +Dimin:užž BUOREMUS ;
+ :u MALLASI-/NUORABU- ;
+ +Adv:ut K ;
+
+LEXICON EAMOS
+ :X4 MALIS0 ;
+ :X8 MALES ;		!^C^
+ :X2 MALLAS- ;
+ :X8 VUOHTA ;
+ :X2 ADVC ;
+ +Attr:X4 K ; ! Attributive superaltives
+              ! Here and not in MALIS0 because
+              ! also nouns go there.
+
+LEXICON VUDDJE-
+ +Sg+Acc: K ;
+ +Pl+Nom:t K ;
+ +Attr:s K ;
+ +Adv:t K ;
+
+LEXICON VUDDJI-
+ +Pl+Acc:jd K ;
+
+LEXICON GAPPUS0
+ +Sg+Nom: K ;
+ +Sg+Nom:X7 R ;	!^C^
+ VUOHTA ;
+ +Ess:in K ;
+
+LEXICON GAPPUS-
+ MALLAS- ;
+! +Sg+Nom:00 PxC ;
+! +Sg+Gen:a K ;
+! +Sg+Gen: K ;
+! +Sg+Gen: PxC ;
+! +Sg+Acc:a K ;
+! +Sg+Acc: K ;
+! +Sg+Acc: PxC ;
+! +Pl+Nom:at K ;
+! +Sg+Ill:asa PxV ;
+! 00:i MALLASI-/NUORABU- ;
+
+! Now that MALLASI- is deleted, 
+! GAPPUS- and MALLAS- are
+! identical. We check by pointing 
+! GAPPUS- to MALLAS-. Look into this.
+! and remove GAPPUS- for MALLAS-
+! eventually.
+
+
+
+LEXICON MEAHTTUN  ! Deverbal adjectives
+ +Sg+Nom:00 K ;
+ +Sg+Nom:X7 R ;	!^C^
+ +Ess:in K ;
+ +Sg+Gen:a K ;
+ +Sg+Gen: K ;
+ +Sg+Acc:a K ;
+ +Sg+Acc: K ;
+ +Pl+Nom:at K ;
+ :i MALLASI-/NUORABU- ;
+ VUOHTA ;
+
+
+
+LEXICON FIIDNA- ! From contr adjs
+ +Sg+Gen: K ;
+ +Sg+Acc: K ;
+ +Sg+Loc:s K ;
+ +Pl+Nom:t K ;
+ +Sg+Ill:j K ;
+ +Sg+Com:jn K ;
+ +Pl+Gen:jd K ;
+ +Pl+Gen:jd R ;	!^C^
+ +Pl+Acc:jd K ;
+ +Pl+Ill:jde K ;
+ +Pl+Loc:jn K ;
+ +Pl+Com:jgujn K ;
+
+LEXICON MALES			!^C^
+! +Sg+Nom:# K " R" ;		!^C^
+ +Sg+Nom: R ;			!^C^
+!typo on the previous one?
+
+LEXICON GEAHTES
+ +geahtes+A:geahtes K ;
+ +geahtes+A:keahtes K ;
+
+
+
+LEXICON OVDDIT ! Inherently comparative adjectives
+ +A+Attr:b K ;
+ +A:b      BUStem ;
+
+
+
+
+
+
+
+! Nominal derivation
+! ------------------
+
+! Noun derivation
+! - - - - - - - - 
+
+
+LEXICON VUOHTA					!^C^
+ +vuohta+N:#vuoh'ta@C.NeedNoun@ VUOHTAMORPH ;	!^C^
+
+LEXICON VUOHTAMORPH
+ NomV ;
+ EssV ;
+ GOAHTI-OBL ;
+ GOAHTE- ;
+ +Sg+Gen:X4 R ;	!^C^
+
+
+
+
+LEXICON AGNoun
+ juolgi:juol'gi AGAdj "foot N" ;
+ čalbmi AGAdj "eye N" ;
+ njunni AGAdj ;
+ gieh0ta:gieh'ta AGAdj ;
+ čielgi:čiel'gi AGAdj "back N" ;
+ suorbma AGAdj "finger N" ;
+
+
+LEXICON DenominalNounsV		  !^C^
+ +š+Dimin+N:X6ž DIMINC ;	  !^C^
+! +Der/š+N:X6ž DIMINC ;
+! This is what I want, do this at some point!
+! +laš+N:lažž MUSH ;
+! this one was removed bec. of +laš+A in the DenominalAdjsV
+! lexicon. But was there any good reason for the laš -> MUSH
+! pointer in the first place?
+
+LEXICON DenominalNounsC			!^C^
+ +aš+Dimin:ažž DIMINV ;		!^C^
+
+
+! Adjective derivation
+! - - - - - - - - - - 
+
+
+LEXICON LAS
+ +Attr: K ;  ! To capture the attributive forms before going to N lexica.
+ VUOHTA ;
+ MUSH ;
+
+LEXICON LEXMUSH
+ +N: MUSH ;
+
+LEXICON MUSH  ! Devarbal nouns
+ JOHTOLAT0 ;
+ :a MUSSHA ;
+
+LEXICON MUSSHA
+ +Ess:n K ;
+ EABBUCASE2 ;
+
+LEXICON BUOREMUS
+ +Attr: K ; ! Attributive superlatives
+ JOHTOLAT0 ;
+ VUOHTA ;
+ :a BUOREMUSSA- ;
+
+LEXICON BUOREMUSSA-
+ +Ess:n K ;
+ +Adv:X8t K ;
+ EABBUCASE2 ;
+
+LEXICON LEXDIMINC
+ +N: DIMINC ;
+
+LEXICON DIMINC
+ MALIS0 ;
+ MALLAS- ;
+
+
+LEXICON DIMINV
+ JOHTOLAT0 ;
+ :a JOHTOLAHKA- ;
+
+LEXICON HEAPMI
+ +Dimin:X6ž DIMINC ;
+ EABBUCASE1 ;
+ EABBUCASE2 ;
+ +Adv:X8t K ;
+
+
+LEXICON LAGAN					!^C^
+ +Attr: K ;					!^C^
+ EABBO/EAMOS ;					!^C^
+ GAPPUS- ;					!^C^
+ GAPPUS0 ;					!^C^
+! GARRAS- ; ! GAPPUS- instead			!^C^
+ -:#%- ProperNoun ;				!^C^			
+ # AGADJECT ;					!^C^
+
+
+
+LEXICON AttributeFormList
+!  garas+A+Attr:garra K "hard A" ;
+  galmmas+A+Attr:galbma K "cold A" ;
+  čáppat+A+Attr:čáppa K "beautiful A" ;
+!  čáppis+A+Attr:čáppa K "beautiful A" ;
+!  fiinnis+A+Attr:fijnna K "fine A" ;
+! removed beacause lexicon FIINNA works
+
+
+
+
+LEXICON DenominalAdjsV			!^C^
+ +heapmi+A:X9heapmi HEAPMI ;		!^C^
+ +heapmi+A+Attr:X9his K ;		!^C^
+ +heapmi+A:X9his VUOHTA ;		!^C^
+ +heapmi+A:X9h EABBO/EAMOS_CONT ;	!^C^
+ +huvva+V:X9huvva SG3PASSV ;		!^C^
+ +huhtti+V:X9huhtti DIEHTIStem ;	!^C^
+ +hudda+V:X9hudda SG3PASSV ;		!^C^
+ +laš:X6lažž ISSORAS ;		!^C^
+ +laš+A:X6l EABBO/EAMOS_CONT ;		!^C^
+ +laš:X7lažž ISSORAS ;       !^C^
+ +laš+A:X7l EABBO/EAMOS_CONT ;     !^C^
+
+LEXICON DenominalAdjsC			!^C^
+ +laš:#lažž ISSORAS ;		!^C^
+
+LEXICON AGADJECT !Denominal Adj's with Deriv. -ag/og		!^C^
+ agat:agag BEAKKAN "aged A" ;					!^C^
+
+
+
+! Adverbs from adjectives
+
+LEXICON ADVV
+ +Adv:Q7t K ;
+
+LEXICON ADVC
+ +Adv:it K ;
+
+
+
+
+! Adjectives from nouns
+
+LEXICON AGAdj
+ +g:Q8g BEAKKAN ;
+ +g+A:Q8g K ;
+
+
+
+
+
+! ------------------- !
+! Possessive suffixes !
+! ------------------- !
+
+LEXICON PxV
+ :X2 Px1V ;
+ :X2 Px2V ;
+ :X1 Px3V ;
+
+LEXICON PxV2
+ Px1V ;
+ Px2V ;
+ Px3V ;
+
+LEXICON Px1V
+ +PxSg1:n K ;
+ +PxDu1:me K ;
+ +PxPl1:met K ;
+
+LEXICON Px2V
+ +PxSg2:t K ;
+ +PxDu2:de K ;
+ +PxPl2:det K ;
+
+LEXICON Px3V
+ +PxSg3:s K ;
+ +PxDu3:ska K ;
+ +PxPl3:set K ;
+
+LEXICON PxA
+! symposiaskka
+ +PxSg1:n K ;
+ +PxSg2:t K ;
+ +PxSg3:s K ;
+ +PxDu1:me K ;
+ +PxDu2:tte K ;
+ +PxDu3:skka K ;
+ +PxPl1:met K ;
+ +PxPl2:ttet K ;
+ +PxPl3:set K ;
+
+LEXICON PxC
+ +PxSg1:an K ;
+ +PxSg2:at K ;
+ +PxSg3:is K ;
+ +PxDu1:eame K ;
+ +PxDu2:eatte K ;
+ +PxDu3:easkka K ;
+ +PxPl1:eamet K ;
+ +PxPl2:eattet K ;
+ +PxPl3:easet K ;
+
+LEXICON PxPlComC
+ +PxSg1:angujn K ;
+ +PxSg2:atgujn K ;
+ +PxSg3:isgujn K ;
+ +PxDu1:eamegujn K ;
+ +PxDu2:eattegujn K ;
+ +PxDu3:easkkagujn K ;
+ +PxPl1:eametgujn K ;
+ +PxPl2:eattetgujn K ;
+ +PxPl3:easetgujn K ;
+
+LEXICON PxPlComV1
+ :X2 PxPlCom12V ;
+ :X1 PxPlCom3V ;
+
+LEXICON PxPlCom12V
+ +PxSg1:ngujn K ;
+ +PxSg2:tgujn K ;
+ +PxDu1:megujn K ;
+ +PxDu2:degujn K ;
+ +PxPl1:metgujn K ;
+ +PxPl2:detgujn K ;
+
+LEXICON PxPlCom3V
+ +PxSg3:sgujn K ;
+ +PxDu3:skagujn K ;
+ +PxPl3:setgujn K ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+! ================ !
+! Verb conjugation !
+! ================ !
+
+
+
+! --------------------------------- !
+! Basic lexica for bisyllabic verbs !
+! --------------------------------- !
+
+
+! Modals
+! ------
+
+! These are treated separately because
+!  modals do not participate in derivation
+
+LEXICON GALGA
+ +V: DIEHTIStem ;
+
+
+LEXICON FERTE
+ +V: DOHPPEStem ;
+! +V: DOHPPEINCH ;
+ +V: DOHPPECnj ;    
+! if fertegoahtit is possible, if not, go right to DOHPPECnj
+
+
+! Ordinary bisyllabic verbs
+! -------------------------
+
+
+LEXICON ARVI !Bisyllabic Impersonal Verbs!
+ +V+Ind+Prs+Sg3:Q1 K ; ! Q1 because arvi is wrong
+ +V+Ind+Prt+Sg3:j K ;
+ +V+Ind+Prs+ConNeg: K ;
+ +V+Cond+Prs+Sg3:šij K ;
+ +V+Cond+Prs+Sg3:lij K ;
+ +V+Cond+Prs+ConNeg:še K ;
+ +V+Cond+Prs+ConNeg:še K ;
+ +V+Pot+Prs+Sg3:ž K ; 
+ +V+Pot+Prs+Sg3:ža K ; 
+ +V+Pot+Prs+ConNeg:ž K ;
+ +V+ImprtP+Prs+Sg3:jehkos K ;
+ +V+PrfPrc:n K ;
+ :X1 NominalFormsV1 ;		
+ :X4 NominalFormsV7 ;		
+ :Q6 NominalFormsV8 ;		
+ +goahti:goah'ti BOAHTICnj " INCH" ; ! Directly to this INCH, and not via the
+                                     ! same path as the others, as arvi- does
+                                     ! not get passive (& not deverbal nouns?)
+                                     ! As a safety first -option, I do not add
+                                     ! more than this one line now.
+
+LEXICON DIEHTI !Bisyllabic Verbs with Personal Passive
+ +V: DIEHTIStem ;
+ +V: DeverbalVerbsDIEHTI ;
+
+LEXICON DIEHTIStem
+ :Y7j PASSIVE ;
+ BOAHTIINCH ;
+
+
+LEXICON BOAHTI ! Bisyllabic Verbs without Personal Passive but with Actor
+ +V: BOAHTIStem ;
+ +V: DeverbalVerbsBOAHTI ;
+
+LEXICON BOAHTIStem
+ SG3PASSV ;
+ BOAHTIINCH ;
+
+LEXICON BOAHTIINCH
+ DeverbalNounsV ;			!^C^
+ +goahti:goah'ti BOAHTICnj " INCH" ;
+ BOAHTICnj ;
+
+LEXICON BOAHTICnj
+ +Ind+Prs: PrsV ;
+ +Ind+Prt: PrtV ;
+ +Pot+Prs:Q7ž PrsC ;
+ +Cond: CondV1 ;
+ +Imprt: ImprtVA ;
+ NominalFormsV ;		
+
+LEXICON CondV1
+ +Prs:X6š CondBOAHTI ;         ! General -š- forms
+ +Prs:Q5l CondBOAHTI ;          ! Western -l- forms
+
+LEXICON CondBOAHTI
+ PrtČ ;
+ PrtC2 ;
+ +ConNeg:e K ;
+
+
+
+LEXICON CIELGA  ! Bisyllabic Verbs withouut Personal Passive and without Actor
++V: SG3PASSV ;
++V+goahti:goah'ti BOAHTICnj ;
++V: BOAHTICnj ;
++V: DeverbalNounsDOHPPE- ;		!^C^
+
+
+
+
+
+
+
+! Basic lexica for contracted verbs
+! ---------------------------------
+
+LEXICON GILLE !Contracted Verbs without Personal Passive
+ +V+j:j SG3PASS ;
+ +V: DOHPPEINCH ;
+ +V: DeverbalVerbsGILLE ;
+
+LEXICON DOHPPE !Contracted Verbs with Personal Passive
+ +V: DOHPPEStem ;
+ +V+j:j PASSIVE ;
+ +V: DOHPPEINCH ;
+ +V: DeverbalVerbsDOHPPE ;
+
+LEXICON BORGE !Contracted Impersonal Verbs
+ +V: ContrImpersonal ;
+ +V+j:j SG3PASS ;
+ +V: DOHPPEINCH ;
+! +V: DeverbalVerbsBORGE ;				!^C^
+ +V: DeverbalVerbsDOHPPE ;				!^C^
+! Here I have exchanged Pekka's original BORGE with DOHPPE. DeverbalVerbsBORGE
+! was not defined, and since they are deverbal verbs, intransitive impersonal 
+! BORGE should behave like intransitive personal DOHPPE. TT 020108.
+
+
+! Substems for contracted verbs
+! - - - - - - - - - - - - - - -
+
+LEXICON DOHPPEStem				 	!^C^
+ +j:j DeverbalNounsDOHPPEJ ;				!^C^
+ DeverbalNounsDOHPPE- ;					!^C^
+
+LEXICON DOHPPEINCH
+ +goahti:goah'ti BOAHTICnj ; ! +goah0ti changed to +goahti, as 0 is bad in tag
+ +goahti:šgoah'ti BOAHTICnj ; ! ditto
+ DOHPPECnj ;
+
+LEXICON DOHPPECnj
+ :j jStemsDOHPPE ;
+ :Y5 VStemsDOHPPE ;
+ :Y6 VjStemsDOHPPE ;
+!removed "+j" in front of ":j"
+
+
+
+LEXICON VStemsDOHPPE
+ +Ind+Prs: VSufDOHPPE ;
+ +Cond: CondV2 ;
+ +Pot+Prs:ž PrsC ;
+ +Imprt+Prs: ImprtSg2 ;
+ NominalFormsVCŦ ;
+
+LEXICON CondV2
+ +Prs:š CondBOAHTI ;
+ +Prs:l CondBOAHTI ;
+
+
+LEXICON VjStemsDOHPPE
+ +Ind+Prt: PrtV1 ;
+
+LEXICON jStemsDOHPPE
+ +Ind: CSufDOHPPE ;
+ ImprtC ;
+ NominalFormsC2 ;
+
+LEXICON VSufDOHPPE
+ PrsV1 ;
+ PrsV2 ;
+ PrsV4 ;
+ PrsV5 ;
+
+LEXICON CSufDOHPPE
+ +Prs: PrsČ ;
+ +Prt: PrtČ ;
+
+
+
+! Basic lexica for trisyllabic verbs
+! ----------------------------------
+
+LEXICON MUITAL !Trisyllabic Verbs with Personal Passive
+ +V: MUITALStem ;
+ +V: DeverbalVerbsMUITAL ;				!^C^
+
+LEXICON MUITALStem
+ PASSIVE ;
+ MUITALINCH ;
+ DeverbalNounsC ;					!^C^
+
+LEXICON MUITALINCH
+ +goahti:išgoah'ti BOAHTICnj ;
+ MUITALCnj ;
+
+LEXICON MUITALCnj !Substems for Consonantal Verb Stems
+ +Ind+Prs: PrsC ;
+ +Ind+Prt: PrtC ;
+ +Cond+Prs:ivčče CondC ;
+ +Pot+Prs+Sg3:eaš K ;
+ +Pot+Prs+Sg3:eš K ;
+ +Pot+Prs+ConNeg:eaš K ;
+ +Pot+Prs+ConNeg:eš K ;
+ +Pot+Prs:eažža PrsV ;
+ +Imprt+Prs: ImprtSg2 ;
+ ImprtC ;
+ NominalFormsC ;
+
+
+LEXICON CondC
+ +ConNeg: K ;
+ PrtV ;
+
+
+LEXICON ALIST !Trisyllabic Verbs without Personal Passive
+ +V: ALISTStem ;
+ +V: DeverbalVerbsALIST ;				!^C^
+
+LEXICON ALISTStem
+ SG3PASS ;
+ MUITALINCH ;
+ DeverbalNounsC ;					!^C^
+
+
+
+
+
+
+
+
+! Passives and impersonals
+! ------------------------
+
+
+LEXICON SG3PASSV
+ :Y7j SG3PASS ;
+
+LEXICON SG3PASS
+ +Pass: ContrImpersonal ;
+
+LEXICON ContrImpersonal
+ +Ind+Prs+Sg3: K ;
+ +Ind+Prs+ConNeg: K ;
+ +Ind+Prt+Sg3:j K ;
+ +Cond+Prs+Sg3:šij K ;
+ +Cond+Prs+Sg3:lij K ;
+ +Cond+Prs+ConNeg:še K ;
+ +Cond+Prs+ConNeg:le K ;
+ +Pot+Prs+Sg3:ž K ;
+ +Pot+Prs+ConNeg:ž K ;
+ +Imprt+Prs+Sg3:jehkos K ;
+ +Imprt+Prs+ConNegII:jehko K ;
+ +PrfPrc:n K ;
+ NominalFormsV1 ;
+ NominalFormsV7 ;
+ NominalFormsV8 ;
+
+LEXICON PASSIVE
+ +Pass:uvvo DOHPPEINCH ;
+ +Pass+meahttun+A:uvvomeahttum MEAHTTUN ;		   !^C^
+ +Pass+PrfPrc:un K ;
+ +Pass+PrsPrc:uvvi@C.NeedNoun@ K ; ! XXX evaluate this
+ +Pass+eaddji+N+Actor:uvvojeaddji¤@C.NeedNoun@ DEVNVCASE ; !^C^
+ +Pass+upmi+N:upmi@C.NeedNoun@ DEVNVCASE ;		   !^C^
+
+
+
+
+
+
+
+
+! ----------------- !
+! Finite declension !
+! ----------------- !
+
+
+
+! Present tense
+! -------------
+
+! Vocalic stems
+
+LEXICON PrsV !Present Tense in Vocalic Verb Stems
+ :Q4 PrsV1 ;
+ :Q1 PrsV2 ;
+ :Q2 PrsV3 ;
+ :Q6 PrsV4 ;
+ :X1 PrsV5 ;
+
+LEXICON PrsV1 !Present Tense Endings for Vocalic Verb Stems
+ +Sg1:n K ;
+ +Sg2:t K ;
+
+LEXICON PrsV2 !Present Tense Endings for Vocalic Verb Stems
+ +Sg3: K ;
+
+LEXICON PrsV3 !Present Tense Endings for Vocalic Verb Stems
+ +Du1: K ;
+ +Pl3:t K ;
+
+LEXICON PrsV4 !Present Tense Endings for Vocalic Verb Stems
+ +ConNeg: K ;
+
+LEXICON PrsV5 !Present Tense Endings for Vocalic Verb Stems
+ +Du2:beahtti K ;
+ +Du3:ba K ;
+ +Pl1:t K ;
+ +Pl2:behtet K ;
+
+
+
+! Consonantal stems
+
+LEXICON PrsC !Present Tense in Consonantal Verb Stems
+ PrsČ ;
+ PrsC2 ;
+
+LEXICON PrsČ !Present Tense in Contr/Non-Contr Consonantal Verb Stems
+ +Du1:e K ;
+ +Du1:edne K ;
+ +Du1:etne K ;
+ +Pl3:it K ;
+
+LEXICON PrsC2 !Present Tense in Non-Contracted Consonantal Verb Stems
+ +Sg1:an K ;
+ +Sg2:at K ;
+ +Sg3:a K ;
+ +Sg3: K ;
+ +Du2:eahppi K ;
+ +Du3:eaba K ;
+ +Pl1:it K ;
+ +Pl2:ehpet K ;
+ +ConNeg: K ;
+
+
+
+
+
+
+! Past tense
+! ----------
+
+
+LEXICON PrtV !Preterite Endings for Vocalic Verb Stems
+ :X5 PrtV1 ;
+ :Q2 PrtV2 ;
+
+LEXICON PrtV1 !Preterite Endings for Vocalic Weak Grade Verb Stems
+ +Sg3:j K ;
+ +Du1:jme K ;
+ +Du2:jde K ;
+ +Du3:jga K ;
+ +Pl1:jmet K ;
+ +Pl2:jdet K ;
+
+LEXICON PrtV2 !Preterite Endings for Vocalic Strong Grade Verb Stems
+ +Sg1:n K ;
+ +Sg2:t K ;
+ +Pl3: K ;
+
+
+
+LEXICON PrtC !Preterite Endings for Consonantal Verb Stems
+ PrtČ ;
+ PrtC2 ;
+
+LEXICON PrtČ !Preterite Endings for Consonantal Contr./Non-Contr. Verb Stems
+ +Sg1:in K ;
+ +Sg2:it K ;
+ +Pl3:e K ;
+ +Pl3:edje K ;
+
+LEXICON PrtC2 !Preterite Endings for Consonantal Non-Contr. Verb Stems
+ +Sg3:ij K ;
+ +Du1:eimme K ;
+ +Du2:eidde K ;
+ +Du3:eigga K ;
+ +Pl1:eimmet K ;
+ +Pl2:eiddet K ;
+
+
+! Imperative mood
+! ---------------
+
+LEXICON ImprtVA         ! Imperative Forms for Vocalic Verb Stems
+ +Prs: ImprtVB ;
+ +Prs:Q6 ImprtSg2 ;
+
+LEXICON ImprtVB         ! Imperative Forms for Vocalic Verb Stems
+ ImprtV1 ;
+ ImprtV2 ;
+
+
+LEXICON ImprtV1         ! Imperative Forms for Vocalic Verb Stems
+ +Sg1:Q3n K ;       ! bohton
+ +Sg3:Q3s K ;       ! bohtos
+ +Du2:Y1 K ;        ! boahtti
+ +Du3:Q3ska K ;     ! bohtoska
+ +Pl1:Q3t K ;       ! bohtot       ! West
+ +Pl1:Y3t K ;       ! boahttut     ! East
+ +Pl2:Q2t K ;       ! bohtet       ! West
+ +Pl2:Y3t K ;       ! boahttit     ! East
+ +Pl3:Q3set K ;     ! bohtoset
+ +ConNegII:Q3 K ;
+
+LEXICON ImprtV2 !Imperative Forms for Vocalic Verb Stems and Substems
+ +Du1:Y2 K ;
+ +Pl1:Q3t K ;
+ +Pl1:Y4t K ;
+
+LEXICON ImprtSg2 !Imperative Forms For Consonantal and Contracted Verb Stems
+ +Sg2: K ;
+ +ConNeg: K ;
+
+
+LEXICON ImprtC          ! Imperative Substems for Consonantal Verb Stems
+ +Imprt+Prs:eah'ki ImprtVB ;
+ +Imprt+Prs:eatni ImprtV2 ;
+
+
+
+
+! Infinite forms
+! --------------
+
+
+! V- and C-final
+! - - - - - - - 
+
+LEXICON NominalFormsV  ! Vowel-final stems
+ :X1 NominalFormsV1 ;
+ :X4 NominalFormsV2 ;			
+ :Q6 NominalFormsV3 ;
+ :X2 NominalFormsV4 ;
+ :Q3 NominalFormsV5 ;
+ :Y1 NominalFormsV6 ;
+! check whether V7 and V8 should
+! be deleted as V3 doublets!
+ :X6 NominalFormsV9 ; ! supine forms
+
+LEXICON NominalFormsC  ! Cons-final stems
+ NominalFormsČ ;
+ NominalFormsC2 ;
+
+
+! Continuation lex
+! - - - - - - - - 
+
+LEXICON NominalFormsVCŦ
+ NominalFormsV1 ;
+ NominalFormsV2 ;
+ NominalFormsV4 ;
+
+LEXICON NominalFormsV1
+ +Inf:t K ;
+ +Actio+Nom:an K ;
+ +Actio+Gen:an K ;
+ +Actio:n@C.NeedNoun@ R ;	!^C^
+ +Actio+Ess:me K ;
+ +Actio+Ess:min K ;
+ +Actio+Ess:men K ;
+ +Actio+Loc:mis K ;
+
+LEXICON NominalFormsV2
+ +Ger:dettiin K ;
+ +Ger:dettiin PxC ;
+ +VAbess:keahttá K ;
+ +VAbess:haga K ;
+ +A+Attr:keahtes K ;
+ +VGen: K ;
+
+LEXICON NominalFormsV3
+ +Ger:dettiin K ;
+ +Ger:dettiin PxC ;
+ +VAbess:keahttá K ;
+ +VAbess:haga K ;
+ +A+Attr:keahtes K ;
+
+LEXICON NominalFormsV4
+ +PrfPrc:n K ;
+
+LEXICON NominalFormsV5
+ +Imprt+Prs+ConNegII:00 K ;
+
+LEXICON NominalFormsV6
+ +PrsPrc:¤@C.NeedNoun@ K ;
+
+LEXICON NominalFormsV7
+ +Ger:dettiin K ;
+ +VAbess:keahttá K ;
+ +VAbess:haga K ;
+ +A+Attr:keahtes K ;
+
+LEXICON NominalFormsV8
+ +Ger:dettiin K ;
+ +VAbess:keahttá K ;
+ +VAbess:haga K ;
+ +A+Attr:keahtes K ;
+
+LEXICON NominalFormsV9
+ +Sup:žit K ; ! Rare form !!!
+
+
+
+LEXICON NominalFormsČ
+ +Inf:it K ;
+ +Sup:eažžat K ; ! Rare form !!!
+ +Actio+Nom:an K ;
+ +Actio+Gen:an K ;
+ +Actio:an@C.NeedNoun@ R ;	!^C^ ! No case here
+ +Actio+Ess:eame K ;
+ +Actio+Ess:eamen K ;
+ +Actio+Loc:eames K ;
+ +Ger:ettiin K ;
+ +Ger:ettiin PxC ;
+ +PrfPrc:an K ;
+ +VAbess:#keahttá K ;
+ +A+Attr:#keahtes K ;
+ +VAbess:#haga K ;
+ +VGen: K ;
+
+LEXICON NominalFormsC2
+ +PrsPrc:eaddji@C.NeedNoun@ K ;
+
+
+
+! ---------- !
+! Derivation !
+! ---------- !
+
+LEXICON DeverbalNounsV	  	!^C^
+ DeverbalNounsBOAHTI ;		!^C^
+ DeverbalNounsDOHPPE- ;		!^C^
+
+LEXICON DeverbalNounsC		!^C^
+ DeverbalNounsMUITAL ;		!^C^
+ DeverbalNounsDOHPPEJ ;		!^C^
+
+LEXICON DeverbalNounsBOAHTI			!^C^
+ +N+Actor:¤@C.NeedNoun@ DEVNVCASE ;		!^C^
+ +las+A:X2lass LAS ;				!^C^
+
+LEXICON DeverbalNounsDOHPPE-			!^C^
+ +n+N+Actio:m@C.NeedNoun@ BOAHTIN ;		!^C^
+ +muš+N:mušš@C.NeedNoun@ MUSH ;		!^C^
+ +meahttun+A:X7#meahttum MEAHTTUN ;		!^C^
+
+LEXICON DeverbalNounsDOHPPEJ				!^C^
+ +eaddji+N:eaddji¤@C.NeedNoun@ DEVNVCASE ;		!^C^
+ +eaddji+N+š+Dimin:eaddjáž@C.NeedNoun@ DIMINC ;	!^C^
+
+LEXICON DeverbalNounsMUITAL		
+ +eapmi+N+Actio:eapmi@C.NeedNoun@ DEVNVCASE ;			!^C^
+ +eamoš+N:eapmo1š@C.NeedNoun@ EAMOSH ;		!^C^
+ +meahttun+A:#meahttum MEAHTTUN ;			!^C^
+ +us:X1uss JOHTOLAT ;					!^C^
+
+LEXICON DeverbalVerbsBOAHTI			!^C^
+ +st:X8st ALISTStem ;				!^C^
+ +st+alla:X6stalla BOAHTIStem ;			!^C^
+ +st+adda:X6stadda BOAHTIStem ;			!^C^
+ +l:l ALISTStem ;				!^C^
+ +l+adda:X2ladda BOAHTIStem ;			!^C^
+ +l+ahtti:lahtti BOAHTIStem ;			!^C^
+ +l+asti:las'ti BOAHTIStem ;			!^C^
+ +h:X4h MUITALStem ;				!^C^
+ +h+alla:X6halla DIEHTIStem ;			!^C^
+ +h+adda:X6hadda DIEHTIStem ;			!^C^
+ +h+asti:X4has'ti DIEHTIStem ;			!^C^
+ +stuvva:X8stuvva SG3PASSV ;			!^C^
+ +d:Q8d ALISTStem ;				!^C^
+
+LEXICON DeverbalVerbsDIEHTI			!^C^
+ +st:X8st MUITALStem ;				!^C^
+ +st+alla:X6stalla DIEHTIStem ;			!^C^
+ +st+adda:X6stadda DIEHTIStem ;			!^C^
+ +l:l MUITALStem ;				!^C^
+ +l+adda:X2ladda DIEHTIStem ;			!^C^
+ +l+ahtti:lahtti DIEHTIStem ;			!^C^
+ +l+asti:las'ti DIEHTIStem ;			!^C^
+ +h:X4h MUITALStem ;				!^C^
+ +h+alla:X6halla DIEHTIStem ;			!^C^
+ +h+adda:X6hadda DIEHTIStem ;			!^C^
+ +h+asti:X4has'ti DIEHTIStem ;			!^C^
+ +stuvva:X8stuvva SG3PASSV ;			!^C^
+ +d:Q8d MUITALStem ;				!^C^
+
+LEXICON DeverbalVerbsDOHPPE			!^C^
+ +st:st MUITALStem ;				!^C^
+ +st+alla:stalla DIEHTIStem ;			!^C^
+ +st+adda:stadda DIEHTIStem ;			!^C^
+ +h:h MUITALStem ;				!^C^
+ +h+alla:halla DIEHTIStem ;			!^C^
+ +h+adda:hadda DIEHTIStem ;			!^C^
+ +h+asti:has'ti DIEHTIStem ;			!^C^
+ +stuvva:stuvva SG3PASSV ;			!^C^
+ +d:d MUITALStem ;				!^C^
+
+LEXICON DeverbalVerbsGILLE			!^C^
+ +st:st ALISTStem ;				!^C^
+ +st+alla:stalla BOAHTIStem ;			!^C^
+ +st+adda:stadda BOAHTIStem ;			!^C^
+ +h:h MUITALStem ;				!^C^
+ +h+alla:halla DIEHTIStem ;			!^C^
+ +h+adda:hadda DIEHTIStem ;			!^C^
+ +h+asti:has'ti DIEHTIStem ;			!^C^
+ +stuvva:stuvva SG3PASSV ;			!^C^
+ +d:d ALISTStem ;				!^C^
+				!^C^
+LEXICON DeverbalVerbsMUITAL				!^C^
+ +ahtti:ahtti DIEHTIStem ;				!^C^
+ +alla:X1alla DIEHTIStem ;				!^C^
+ +adda:X1adda DIEHTIStem ;				!^C^
+ +asti:as'ti DIEHTIStem ;				!^C^
+				!^C^
+LEXICON DeverbalVerbsALIST				!^C^
+ +ahtti:ahtti DIEHTIStem ;				!^C^
+ +alla:X1alla BOAHTIStem ;				!^C^
+ +adda:X1adda BOAHTIStem ;				!^C^
+ +asti:as'ti BOAHTIStem ;				!^C^
+
+
+
+
+! -------
+! Clitics
+! -------
+
+LEXICON K
+ ENDLEX ;
+ +Qst:#go ENDLEX ;	!^C^
+ +Foc:#ge ENDLEX ;	!^C^
+ +Foc:#ges ENDLEX ;	!^C^   ! Attested for 'muges'. Others?
+ +Foc:#naj ENDLEX ;	!^C^
+ +Foc:#najgo ENDLEX ;	!^C^
+ +Foc:#ba ENDLEX ;	!^C^
+ +Foc:#be ENDLEX ;	!^C^
+ +Foc:#hal ENDLEX ;	!^C^   ! XXX Is this required?
+ +Foc:#han ENDLEX ;	!^C^
+ +Foc:#goson ENDLEX ;	!^C^
+ +Foc:#bat ENDLEX ;	!^C^
+
+LEXICON K-son
+ K ;
+ +Foc:#son ENDLEX ;	!^C^
+! ENDLEX ;
+! This is a Continuation Class for Interrogative Pronouns and Adverbs like 
+! gii(son), gosa(son) etc.. These have now been added to the lexicon(s).
+! I tentatively direct it to K, so that they have #son plus the K clitics.
+
+LEXICON ENDLEX
+ @D.NeedNoun.ON@ # ;
+! This ENDLEX business in order to remove illegal compounds.
+=======
+>>>>>>> 1.132

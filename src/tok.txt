@@ -1,0 +1,739 @@
+# =============================================================
+# CONTENT: Finite-State Tokenizer (no multi-words)
+# AUTHOR: Original version by Anne Schiller, copied from the
+# Karttunen/Beesley book on finite state grammar
+# Modified and extended by Trond Trosterud, 2001-2003.
+# CREATED: 12-Jun-1997
+# UPDATED: 05-Sep-2001 - 15-Feb-2003
+# =============================================================
+# Usage: xfst -f [ThisFile]
+# =============================================================
+
+clear stack
+echo >>> define white space
+define SP " ";
+define TAB "\t";
+define NL "\n";
+
+define WS [SP|NL|TAB];
+
+# =============================================================
+echo >>> define single character symbols
+define SINGLE [ %" | %« | %» | %. | %, | %; | %: | %! | %?
+| %( | %) | %[ | %] | %{ | %} | %/ | %% 
+| %' ];
+# Added %' to include 'dat' pro "dat", this may crash due to the grade 3 mark.
+# The parser errouneously #stops# for a % mark, awaits the next one
+# (cf. trying 987% in xfst lookup mode).
+
+# Added the string ' | %/' above, for ja/dahje cases.
+define PUNCT [ %. %. (%.) | %' %' | %' %' | %, %, ] ;
+define Char \[ WS | SINGLE ] ;
+
+# =============================================================
+echo >>> define SYMBOL
+#define SYMBOL [ SINGLE | PUNCT ] ;
+define SYMBOL [ SINGLE | PUNCT | EXTRAPERIOD ] ;
+
+echo >>> define WORD
+define WORD [ Char ]+ ;
+
+# =============================================================
+echo >>> regular abbreviations
+
+define Capital [
+Č|Đ|Ŋ|Š|Ŧ|Ž|
+A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|
+Å|Ä|Ö|Ø|Æ|Á|É|Ó|Ú|Í|À|È|Ò|Ù|Ì|Ë|Ü|Ï|Â|Ê|Ô|Û|Î|Ã|Ý|þ|Ñ|Ð ] ;
+
+define Small [ č|đ|ŋ|š|ŧ|ž|
+a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|
+å|ä|ö|ø|æ|á|é|ó|ú|í|à|è|ò|ù|ì|ë|ü|ï|â|ê|ô|û|î|ã|ý|þ|ñ|ð|ç|ß];
+
+# =============================================================
+echo >>> numeric expressions
+define Digit [ %0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9];
+define NumOp [ %- | %+ | %* | %/ | %= | %: ];
+define NumSep [ %. | %, | %: ]; # %: added to original, for 1993:18 etc.
+!define NUM [ Digit | NumOp | NumSep]+ & $[Digit] ;
+define NUM [ Digit | NumOp | NumSep]+ Digit+ ;
+define NUMOrd NUM %. ;
+define ROM [ I|V|X ]+ ; # does not work :-(
+define NUMROM [ NUM | ROM ] ;
+define NUMCASED [ NUM+ %: Small+ ] ;
+# Does this mean a string of at least one of Digit or NumOp or NumSep, 
+# followed by at least one Digit?
+# It seems that the preproc errouneously leaves NumOp and NumSep on the
+# numbers, instead of separating (it splits 987" but not 987: or 987.
+# Thus, it errouneously tells that a number cannot close a sentence.
+
+# =============================================================
+define Letter [ Small | Capital ] ;
+#define INIT [ Capital %. ]+ ;
+define INIT [ Letter %. ]+ ; # Thus, INIT not only for J. Smith
+                             # but also for j. Smith and s. 43.
+define CAPNUM [ Capital | NUM ] ;
+
+# =============================================================
+echo >>> list of abbreviations
+#<cn> There are four groups of abbreviations:
+#<++> INTRANSABBR - ends a snt when foll. by capital letter or number.
+#<-+> INTRANSNUMABBR - ends a snt when foll. by number.
+#<+-> INTRANSCAPABBR - ends a snt when foll. by capital letter.
+#<--> TRANSABBR - does not end a snt.
+
+# Many of the abbreviations are commented out, awaiting
+# a more thorough evaluation, and, while waiting, in
+# order to shorten compilation time.
+# They should be re-introduced on an individual
+# basis.
+
+# <+c,+n> (+c,+n means clb if followed by capital,number)
+# Abbreviations that end a sentence if 
+# followed by letter in upper case or a number.
+# These are typically nouns.
+
+define INTRANSABBR [
+#{A.L.} | 
+{A.S.} | 
+{Eftf.} |
+#{Fr.P.} | 
+{Fr.p.} | 
+{Fuom.} | 
+#{Inc.} |
+#{K.S.} | 
+{Kbh.} | 
+#{Kr.F.} | 
+{Kr.f.} |
+{Krf.} | 
+{Ltd.} | 
+#{N.A.F.} | 
+{NB.} | 
+{O.S.} | 
+{Sth.} | 
+{adj.} | 
+#{adm.} | 
+{adv.} | 
+{arkeol.} | 
+{avd.} | 
+#{bakt.} | 
+{bea.} |
+{bear.} |
+{bearj.} |
+#{bm.} | 
+{bot.} | 
+{čál.} | 
+{dis.} |
+#{disp.} | 
+#{do.} | 
+{duo.} |
+{duor.} |
+#{e.e} | # wrong, TA
+#{ee.} | # wrong
+#{eg.} | # wrong
+#{eng.} | 
+{eŋg.} |
+#{est.} | 
+{etc.} | 
+#{ev.luth.} | 
+{fem.} | 
+{ff.} |
+{fi.} | 
+{fil.} | 
+#{fl.} | 
+#{fon.} | 
+{fuom.} | 
+#{fut.} | 
+{gas.} |
+{gask.} |
+{gen.} | 
+{gram.} | 
+#{hell.} | 
+{hist.} | 
+#{hoh.} | 
+{holl.} | 
+{háldd.} | 
+{ibid.} | 
+{id.} | 
+{imp.} | 
+#{imperat.} | 
+#{imperf.} | 
+#{inc.} | 
+{iness.} | 
+{inf.} | 
+#{innb.} | 
+{instr.} | 
+{int.} | 
+{interj.} | 
+{intr.} | 
+{intrans.} | 
+{inv.} | 
+{jna.} | 
+{jnv.} | 
+{joatkkask.} | 
+{jr.} | 
+{kem.} |
+{kgl.res.} | 
+{km.} | 
+{lat.} | 
+#{lg.} | 
+#{lim.} | 
+#{ln.} | 
+{lst.} | 
+{lstr.} | 
+#{ltd.} | 
+{láv.} |
+{lávv.} | 
+{m.Kr.} | 
+{ma.} | 
+{mat.} | 
+{med.} | 
+#{medl.} | 
+{miel.} |
+#{mil.} | 
+{mill.} | 
+{milj.} | 
+{mrd.} | 
+{min.} | 
+#{mod.} | 
+{mus.} | 
+{mán.} |
+{mánn.} |
+{ndf.} | 
+{ned.} | 
+{nl.} | 
+{nn.} | 
+#{nord.} | 
+{nuor.} |
+{o.Kr.} | 
+{oKr.} | 
+{oss.} | 
+{p.s.} | 
+{pass.} | 
+{pol.} | 
+#{port.} | 
+{pres.} | 
+{pret.} | 
+{pst.} | 
+#{q.e.d.} | 
+{refl.} | 
+{reg.} | 
+{repr.} | 
+{rom.} | 
+{ru.} | 
+{sek.} | 
+{sen.} | 
+{sg.} | 
+{sing.} |
+{sotn.} |
+{ss.} | 
+#{strl.} | 
+#{tyrk.} | 
+{ung.} | 
+{v.v.} | 
+{vuoss.} |
+{vgs.} ] ;
+
+# <-c,+n>
+# Abbreviations that are only CLB 
+# if followed by a number.
+# Mainly titles.
+
+define INTRANSNUMABBR [
+{1.aman.} | 
+{Avd.dir.} |
+{Bj.} | 
+{Chr.} | 
+{Dep.} | 
+{Edv.} | 
+#{Fr.} |
+{H.K.H.} | 
+{H.M.} | 
+{Johs.} |
+{Kr.} | 
+#{Mme.} | 
+{Mr.} | 
+{Mrs.} | 
+{Ms.} | 
+{Seb.} | 
+#{Siv.ark.} |
+{aman.} | 
+{ass.} | 
+{avd.dir.} | 
+#{avs.} | 
+#{bet.} | 
+{cand.mag.} | 
+#{cand.oecon.} | 
+{cand.philol.} | 
+{cand.real.} | 
+{cand.scient.} | 
+{cand.theol.} | 
+{cand.} | 
+{dipl.ing.} | 
+{dipl.ins.} | 
+{dir.} | 
+{dr.art.} | 
+{dr.med.} | 
+#{dr.philos.} | 
+{dr.theol.} | 
+{dr.} | 
+{eksp.hoavd.} |
+#{eksp.sj.} | 
+{fil.tri.} |
+#{fenr.} | 
+#{gen.lt.} | 
+#{genr.lt.} | 
+#{genr.} | 
+#{h.r.adv.} | 
+{hr.} | 
+#{kapt.} | 
+#{korp.} | 
+#{korpr.} | 
+#{lekt.} | 
+#{lic.} | 
+#{ltn.} | 
+#{mag.art.} | 
+#{mag.} | 
+#{merc.} | 
+#{mr.} | 
+#{mrs.} | 
+{ms.} | 
+#{obl.} | 
+#{oblt.} | 
+#{odont.} | 
+{oecon.} | 
+#{ordf.} | 
+{ossod.dir.} |
+#{overs.} | 
+{pharm.} | 
+{philol.} | 
+{polit.} | 
+{prof.} | 
+#{psychol.} | 
+{psyk.} | 
+{res.kap.} | 
+#{scient.} | 
+#{sekr.} | 
+#{sgt.} | 
+#{siv.ark.} | 
+#{sjt.} | 
+#{stud.phil.} | 
+#{stud.polit.} | 
+#{stud.psych.} | 
+#{stud.real.} | 
+#{stud.scient.} | 
+#{stud.theol.} | 
+#{stud.} | 
+#{u.dir.} | 
+{varaordf.} | 
+{vit.ass.} ] ;
+
+
+# <+c,-n>
+# Abbreviations that only end a sentence
+# if followed by an upper case letter,
+# not when followed by a number.
+
+define INTRANSCAPABBR [
+#{1.Sam.} | 
+#{2.Sam.} | 
+{Akersgt.} | 
+#{B.innst.S.nr.} | 
+#{Besl.L.nr.} | 
+#{Besl.O.nr.} | 
+{Co.} | 
+{Dan.} | 
+{Dok.nr.} | 
+#{Dronningensgt.} | 
+#{Eidsvollsgt.} | 
+#{Elvegt.} | 
+#{Hausmannsgt.} | 
+#{Holmegt.} | 
+#{Industrigt.} | 
+{Innst.O.nr.} | 
+{Innst.S.nr.} | 
+#{Johansgt.} | 
+{Josv.} | 
+#{Kirkegt.} | 
+{Kong.} | 
+#{Kongensgt.} | 
+#{Langgt.} | 
+{Mark.} | 
+{Matt.} | 
+{Mos.} | 
+#{Musegt.} | 
+{Nkr.} | 
+{Ob.} | 
+#{Olavsgt.} | 
+#{Oslov.} | 
+{Ot.prp.nr.} | 
+{Paul.} | 
+#{Prinsensgt.} | 
+{Rom.} | 
+#{Rådhusgt.} | 
+{Sam.} | 
+#{Slottsgt.} | 
+{St.dieđ.nr.} | 
+{St.meld.nr.} | 
+{St.prp.nr.} | 
+{Storgt.} | 
+{Tel.} | 
+{Tlf.nr.} | 
+{Tlf.} | 
+#{Strandgt.} | 
+#{Trondheimsv.} | 
+#{a.D.} | 
+{bd.} |
+{borg.} |
+{čakč.} |
+{cuoŋ.} |
+#{da.} | 
+{geas.} |
+{gnr.} | 
+{golg.} |
+{guov.} |
+#{it.} | 
+{jnr.} | 
+{juov.} |
+{kap.} | 
+{kr.} | 
+{lnr.} | 
+{ltd.} | 
+{ltr.} | 
+{maks.} | 
+{mar.} | 
+{mask.} | 
+{mies.} |
+{mobiltlf.} | 
+{njuk.} |
+{no.} | 
+{nr.} | 
+{ođđj.} |
+{p.b.} | 
+{pb.} | 
+{pgf.} | 
+{ru.} |
+{rv.} | 
+{skáb.} |
+{suoi.} ] ;
+
+
+# dot% noStb.db
+# <-c,-n>
+# Abbreviations that never end a sentence, also if followed
+# by a capital letter or a number.
+
+define TRANSABBR [
+{Alm.} |
+{Dom.} |
+#{Eftf.} | 
+#{Eks.} | 
+#{Esek.} | 
+#{I.% N.% D.} | 
+#{I.N.D.} | 
+#{IL.} | 
+{Innst.} | 
+#{Jer.} | 
+#{Joh.} | 
+#{Lim.} | 
+#{Lt.} | 
+#{Neh.} | 
+{Od.} | 
+#{Ot.% prp.} | 
+{Ot.prp.} | 
+{Ot.} | 
+#{Pf.} | 
+#{Pfg.} | 
+{Rt.} | 
+{St.% meld.} | 
+{St.% prp.} | 
+{St.meld.} | 
+{Sd.% dieđ.} |
+{Sd.% prp.} |
+{Sd.} | 
+{St.} | 
+#{Su.} | 
+#{Sv.} | 
+{Univ.} | 
+{adr.} | 
+#{afr.} | 
+{akk.} | 
+#{alb.} | 
+{alm.} | 
+{am.} | 
+{amer.} | 
+#{arab.} | 
+{art.} | 
+#{atomnr.} | 
+#{att.} | 
+#{austr.} | 
+{aut.} | 
+#{balt.} | 
+#{bet.} | 
+{bib.} | 
+{biol.} | 
+{bnr.} | 
+#{brig.} | 
+#{brit.-am.} | 
+#{brit.-austr.} | 
+{brit.} | 
+{bto.} | 
+{buo.} | 
+{čuo.} |
+{ca.} | 
+{cea.} |
+{cf.} | 
+{cit.} |
+{co.} | 
+#{d.% c.} | 
+#{d.% d.} | 
+#{d.% m.} | 
+#{d.c.} | 
+#{d.d.} | 
+#{d.m.} | 
+#{d.s.} | 
+{dat.} | 
+{dbm.} |
+{dea.} | 
+{dept.} | 
+{dieđ.} | 
+{dim.} | 
+{div.} | 
+{dkr.} | 
+{dok.} |
+{ds.} | 
+{e.g.} | 
+{ea.} |
+{ea.ea.} |
+{ee.} | 
+{eftf.} | 
+#{eks.} | 
+#{ekskl.} | 
+#{et.} | 
+{etc.} | 
+{eur.} | 
+{ev.} | 
+#{evt.} | 
+#{fec.} | 
+{fig.} | 
+#{fol.} | 
+{fr.} | 
+{gč.} | 
+#{geom.} | 
+{ggl.} |
+{gr.} | 
+#{hebr.} | 
+#{i.% e.} | 
+{i.e.} | 
+{ib.} | 
+{ibid.} |
+{ill.} | 
+{ind.} | 
+#{indoeur.} | 
+{inkl.} | 
+#{j.d.} | 
+#{j.e.} | 
+#{j.s.} | 
+#{jap.} | 
+{jur.} | 
+#{jvf.} | 
+{kat.} | 
+{kgl.} | 
+{kl.} | 
+{km/t.} | 
+{konj.} | 
+{konst.} | 
+{kst.} | 
+#{kurd.} | 
+{kvm.} | 
+#{l.c.} | 
+#{l.r.d.} | 
+#{lab.} | 
+#{lat.-gr} | 
+#{log.} | 
+#{m.v.} | 
+{m/sek.} | 
+{mek.} | 
+#{meld.} | 
+#{mil.-tekn.} | 
+{mv.} | 
+{mva.} | 
+{myt.} | 
+{nkr.} | 
+#{no.-da.} | 
+{nom.} | 
+{nr.} |
+{num.} | 
+{o.m.a.} | 
+{o.m.d.} | 
+{o.m.} | 
+{Omd.} | 
+{omd.} | 
+{obj.} | 
+{obs.} | 
+{off.} | 
+#{op.% cit.} | 
+{op.cit.} | 
+{op.} | 
+#{ot.% prp.} | 
+{ot.prp.} | 
+#{p.% a.} | 
+#{p.% m.} | 
+#{p.% p.% m.} | 
+#{p.% p.} | 
+#{p.% r.} | 
+#{p.a.} | 
+#{p.m.} | 
+#{p.p.m.} | 
+#{p.p.} | 
+#{p.r.} | 
+#{p.t.} | 
+#{pa.} | 
+#{pf.} | 
+{pkt.} | 
+{pl.} | 
+{pop.} | 
+#{pr.pr.} | 
+{pr.} | 
+{prep.} | 
+{pron.} | 
+{prp.} | 
+{q.s.} | 
+{red.} | 
+{rek.} | 
+{rev.} | 
+#{rum.-am.} | 
+#{sc.} | 
+#{sd.} | 
+#{serbokr.} | 
+{sign.} | 
+#{sovj.} | 
+#{spes.} | 
+#{sr.} | 
+{st.} | 
+{subj.} | 
+{subst.} | 
+#{sveits.} | 
+#{tekn.} | 
+{tel.} | 
+{tlf.nr.} | 
+{tlf.} | 
+{vol.} | 
+{vrd.} | 
+{vs.} | 
+{v.r.d.} ];
+
+echo >>> collecting all abbreviations into one set
+define ABBR [ INTRANSABBR | INTRANSCAPABBR | INTRANSNUMABBR | TRANSABBR ] ;
+
+# =============================================================
+echo >>> some multi-words
+define MWE [
+{Bassi Vuoigŋa} |
+{Bassi Vuoiŋŋa} |
+{Helse Midt} |
+{Helse Nord} |
+{Helse Vest} |
+{dan dihte} | 
+{dan láhkái} |
+{dan oktavuođas} |
+{danin go} |
+{das go} | 
+{earret eará} | 
+{earret go} | 
+{eará go} | 
+{ele ge} | 
+{feara gii} |
+{feara mii} |
+{gii nu} |
+{guhkit áiggi}
+{hui amas} | 
+{makkaráš nu} |
+{makkár nu} |
+{man láhkai} | 
+{maŋŋel go} | 
+{mii nu} |
+{muhtun muddui} |
+{máná vuostái} |
+{ovdal go}
+];
+
+# Marker for multi-words
+define M1 "<<" ;
+define M2 ">>" ;
+define MWE1 [M1 MWE M2] ;
+
+# =============================================================
+echo >>> define web addresses
+define URL [ [{http://www.}|{www.}] [ Char | SINGLE ]+ ];
+
+
+# =============================================================
+echo >>> define tokens
+define Token [ WORD | SYMBOL | ABBR | INIT | 
+               NUMOrd | NUMCASED | NUM | MWE1 | URL ];
+
+# some non-functioning versions left for evaluation here.
+# define Token [ WORD | SYMBOL | TRANSABBR | INIT | NUM ];
+# define Token [ WORD | SYMBOL | ABBR | INIT | NUM | NUMCASED ];
+# define Token [ 
+# WORD | SYMBOL | TRANSCAPABBR | TRANSNUMABBR | TRANSABBR  | INIT | NUM ];
+
+# ==============================================================
+echo >>> finding titles etc.
+#define TOK3 [ NL -> NL %. || _ NL ] ; # 2209 out!
+# I take two newlines, and insert a period in between them.
+# The result I call TOK3, and I insert it in the regex line at the
+# bottom of this file.
+
+
+# =============================================================
+# handling the abbreviations
+
+echo >>> newline and period copying after numeral
+define TOKNUMOrd [ NUMOrd @-> ... NL %. NL || _ WS+ Capital ] ;
+
+echo >>> newline and period copying before abbr. that are intr. wrt. capitals
+define TOKINTRANSCAP [ INTRANSCAPABBR @-> ... NL %. NL || _ WS+ Capital ] ; 
+
+echo >>> newline and period copying before abbr. that are intr. wrt. numbers
+define TOKINTRANSNUM [ INTRANSNUMABBR @-> ... NL %. NL || _ WS+ NUMROM ] ; 
+
+echo >>> newline and period copying before abbr. that are always intr.
+define TOKINTRANS [ INTRANSABBR @-> ... NL %. NL || _ WS+ CAPNUM ] ; 
+
+#echo >>> fix the 34.
+#define TOK01 [ NUMOrd @-> ... NL ] ;
+
+echo >>> longest match--insert a newline after each token
+
+# multi start
+define Bound [ SINGLE | WS | .#. ]; 
+define TOK1 [ MWE @-> M1 ... M2 || Bound _ Bound .o.
+              Token @-> ... NL .o. [M1|M2] -> 0 ] ;
+
+echo >>> normalize space
+define TOK0 [ WS+ @-> SP ];
+
+echo >>> remove spaces
+define WŠ [WS]+ & $[NL] ;
+
+
+
+#define TOK1 [ Token @-> ... NL ] ;
+
+echo >>> map spaces to a newline
+define TOK2 [ [WŠ]+ @-> NL ];
+
+#define TOK2 [ [WS]+ @-> NL ];
+# multi end, remove this note when working
+
+# =============================================================
+echo >>> compose the above
+read regex [TOKNUMOrd .o. TOKINTRANSCAP .o. TOKINTRANSNUM .o. TOKINTRANS 
+#            .o. TOK1 .o. TOK2 .o. TOK3 ]; # 2209 out!
+#             .o. TOK1 .o. TOK2 ]; # this one works!
+             .o. TOK0 .o. TOK1 .o. TOK2 ];
+invert net
+=======
+>>>>>>> 1.31
