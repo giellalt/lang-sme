@@ -26,6 +26,7 @@
                 # Cycle 2: Other local disambiguation
                   # Noun or nout?
                   # Certain singleton words
+                  # Disambiguating clitics
                   # Disambiguating adpositions
                   # Disambiguating subjuncitons
                   # Disambiguating adverbs
@@ -463,6 +464,8 @@ LIST A-CC = A CC ;
 
 SET NON-ADJ-CC = WORD - A-CC ;
 
+SET NON-CC = WORD - CC ;
+
 SET NON-NP = VFIN | Adv | Pcle | Interj | CS | CC ;
 
 SET NP-BORDER = BOS | EOS | CLB | Adv | V | Pers | CS | Recipr | Refl | Dem |
@@ -544,7 +547,6 @@ REMOVE N IF (0 Po)(-1 (N Gen) OR (Pron Pers Gen)); # dan várás, dan áigi
 
 
 
-v
 # Personal pronouns
 # =================
 
@@ -705,6 +707,13 @@ SELECT Gen IF (0 ("nubbi"))(1 N);
 
 
 # ========================== #
+# Disambiguating clitics     #
+# ========================== #
+
+REMOVE Qst IF (0 Adv)(NOT *1 EOS LINK -1 ("?")); ## Nugo died1át, de lean dál.
+
+
+# ========================== #
 # Disambiguating adpositions #
 # ========================== #
         CONSTRAINTS          #
@@ -736,14 +745,15 @@ SELECT Pr IF (-1 (N Gen)
 
 
 SELECT Po IF (*-1 V)(-1 Gen)(0 ("alde"));   ## Láibi lea beavddi alde.
-SELECT Po IF (-1 Gen);                      ## Láibi lea beavddi alde.
+SELECT Po IF (-1 Gen)(NOT 1C Po);           ## Láibi lea beavddi alde.
+                                            ## ... dan njealji beali ektui..
 
 SELECT Po IF (-1 Num)(0 ("rádjai")); # make general rule!
 
 # using it for all Po
-REMOVE N IF (-1 Gen)(0 Po);
-REMOVE V IF (-1 Gen)(0 Po);
-REMOVE Adv IF (-1 Gen)(0 Po);
+REMOVE N IF (-1 Gen)(0 Po)(NOT 1C Po);
+REMOVE V IF (-1 Gen)(0 Po)(NOT 1C Po);
+REMOVE Adv IF (-1 Gen)(0 Po)(NOT 1C Po);
 
 
 
@@ -753,6 +763,8 @@ REMOVE Adv IF (-1 Gen)(0 Po);
 # =========================== #
         CONSTRAINTS           #
 # =========================== #
+
+# Subjunctions are disambiguated in two subcycles. This is the first.
 
 SELECT CS IF (-1 CLB); # this one too general, there must be separate
                          # rules for different groups of CS.
@@ -767,15 +779,19 @@ SELECT CS IF (*-1 ("jos") OR ("go") LINK -1 BOS OR CS)(-1 COMMA)(0 ("de"));
  
 # go
 # --
-v
+
 SELECT Pcle IF (-2 BOS)(NOT -1 CC OR Adv)(0 go);  ## Boad1át go?
                                                   ## Ja go beasai fas bargui.
 SELECT Pcle IF (-3 BOS)(-2 CS)(0 go);             ## Muhto boad1át go?
 
 SELECT Pcle IF (-1 (V Neg));                      ## Son jerre it go boad1e?
 
-SELECT Pcle IF (-1 VFIN)(0 ("go"))(*2 CLB BARRIER VFIN);
+SELECT Pcle IF (-2 CLB)(-1 V);                    ## Jus juo, lea go nu ahte..
 
+SELECT Pcle IF (-3 BOS)(-2 CC)(-1 V);             ## Dahje leat go aiddonassii...
+
+
+SELECT Pcle IF (-1 VFIN)(0 ("go"))(*2 CLB BARRIER VFIN);
 SELECT Pcle IF (-2 N OR Pron)(-1 VFIN)(0 ("go"));
 SELECT Pcle IF (-3 N OR Pron)(-2 ("ahte"))(-1 VFIN)(0 ("go"));
                   ## Politihkas lei 1866 rájes sáhka galggai go stivrregoahtit 
@@ -784,18 +800,32 @@ SELECT Pcle IF (-3 N OR Pron)(-2 ("ahte"))(-1 VFIN)(0 ("go"));
 # (will probably remove some correct CS).
 
 # vaikko
-SELECT CS IF (-1 BOS)(0 ("vaikko"))(*1 ("de"));
+
+SELECT Pron IF (0 ("vaikko"))
+               (1 ("mii") OR ("gii") OR ("guhte") OR ("goabbá") OR
+                  ("guhtemus1") OR ("makkár"));
+  # "vaikko mii", etc. is a pronoun. Other vaikko cases are CS.
+  # This should probably rather be taken care of in the preprocessor.
+
+#SELECT CS IF (-1 BOS OR CS)(0 ("vaikko"))(*1 ("de"));
 
 
 
-CONSTRAINTS # New cycle to get rid of unwanted CS readings
+# Subjunctions are disambiguated in two subcycles. This is the second.
+  CONSTRAINTS # New cycle to get rid of unwanted CS readings
+# =========== #
 
 SELECT CS IF (0 go); # All other go's are CS.
 #REMOVE CS IF (0 )(NOT -1 V);                ## Nu guhkás go mun died1án,
                                              ## buot leat ortnegis.
 
-# CS removal for "de"
+# CS selection for specific CS candidates
+SELECT CS IF (0 ("vaikko"));
+
+# CS removal for specific CS candidates
 REMOVE CS IF (0 ("de"));
+
+
 
 # Numerals
 # ========
@@ -873,6 +903,11 @@ SELECT Adv IF (-1 BOS)(0 ADV-NOT-NAMES);             ## De fidnejin.
 SELECT Adv IF (-2 BOS)(-1 ("leat" V Ind))(1 ("ahte"));
                         ## Lea duohta, ahte mán1ggas eai oz1z1on oastit eatnama.
 
+# Nouns, not adverbs
+# ------------------
+
+Remove Adv IF (-1 Gen)(0 (N Loc)) ;      ## Son bod1ii njukc1amánu loahpas.
+   
 
 # Rules related to specific adverbs
 # ---------------------------------
@@ -1309,11 +1344,14 @@ CONSTRAINTS # The genitives preceeding this CONSTRAINTS symbol are
 # Genitive as specifier
 # ---------------------
 
-# Genitive in front of noum in the beginning of a sentence
+# Genitive in front of noun in the beginning of a sentence
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-REMOVE (N Acc) IF (-1 NP-BORDER)(*1 N BARRIER NON-A LINK *1 VFIN BARRIER CS);
-REMOVE (N Nom) IF (-1 NP-BORDER)(*1 N BARRIER NON-A LINK *1 VFIN BARRIER CS);
+REMOVE (N Acc) IF (-1 NP-BORDER)(NOT -1 V)
+                  (*1 N BARRIER NON-A LINK *1 VFIN BARRIER CS);
+
+REMOVE (N Nom) IF (-1 NP-BORDER)
+                  (*1 N BARRIER NON-A LINK *1 VFIN BARRIER CS);
                                          ## Nieidda girji lea ruoksat.
 
 REMOVE (Pron Pers Acc) IF (-1 NP-BORDER)(*1 N BARRIER NON-A LINK *1 VFIN);
@@ -1363,13 +1401,6 @@ SELECT Gen IF (-2 Ess)(-1 CC)(*1 Ess BARRIER NPNH);
 
 
 
-# Genitive specifier sequences
-# - - - - - - - - - - - - - - 
-
-SELECT Gen IF (NOT -1 V)(0C N)(1C CNOUN) (NOT 2 Po); ##Áhc1i viesu uksa lea alit.
-
-# This is a bad rule. I need more constraints on the noun in pos 1.
-# Today, this sentences gets a wrong analysis: ## Bijatgo don sohkkara dedjii?
 
 
 
@@ -1394,8 +1425,9 @@ REMOVE Acc IF (0 Prop)(1 Prop);          ## Dat lea Norgga Röros ja Máhte Piera.
 
 
 # Accusative
-# ==========
-
+# =========== #
+  CONSTRAINTS #
+# =========== #
 
 # Accusative between Aux and main verb
 # ------------------------------------
@@ -1425,7 +1457,7 @@ SELECT Acc IF (*-1 LEAT-FIN-NON-IMP BARRIER NPNHAI) (1 PrfPrc);
 
 # Object only.
 
-SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAIIP)
+SELECT Acc IF (*-1C V-NON-AUX BARRIER NPNHAIIP OR COMMA)
               (0 NP-HEAD)(NOT 0 PrfPrc or Adv)
               (1 NP-BORDER OR ADVLCASE OR Adv OR A)
               (NOT 1 Po) ;
@@ -1506,6 +1538,17 @@ SELECT Acc IF (NOT *-1 VFIN BARRIER CS)(NOT 0 Nom)
 SELECT Acc IF (*-1 (V Neg))(NOT 0 Nom)
               (*1 ConNeg OR PrfPrc BARRIER NON-ADV-PCLE LINK NOT *1 Acc);
                                      ## Ii go mánáid sáhte oahpahit dåarogillii?
+
+REMOVE Gen IF (NOT -2 Gen)(-1 CC)(1C VFIN);
+                     ## Mus lea doaivu ja dan sáhttá c1állit c1uovvovac1c1at.
+REMOVE Gen IF (*-1 CLB BARRIER NON-CC)(1C VFIN);
+                     ## Mus lea doaivu, ja dan sáhttá c1állit c1uovvovac1c1at.
+REMOVE Gen IF (-1 CS)(1C VFIN);
+                     ## Mun jáhkán, ahte dan sáhttá c1állit c1uovvovac1c1at.
+  # The "1C" part is problematic, as this rule should have been placed
+  # after the verb disambiguation. Keep in mind.
+
+
 
 # Accusative in time expressions
 # ------------------------------
@@ -2302,12 +2345,16 @@ REMOVE ConNeg IF (NOT *-1 Neg);
 # material between neg and conneg
 # SELECT (ConNeg IF (0 LEAT) (*-1 Neg);
 
-REMOVE VGen IF (NOT *-1 V-IND-FIN)(Not *1 V-IND-FIN); # too sloppy!
+REMOVE VGen IF (NOT *-1 V-IND-FIN BARRIER CLB OR CS)
+               (Not *1 V-IND-FIN BARRIER CLB OR CS);
+  # too sloppy, but a bit better with the barrier...
 
 REMOVE ConNeg IF (NOT *-1 (Neg) BARRIER CLB OR V-IND-FIN); 
 
 REMOVE Imprt IF (*-1 (Neg Ind) BARRIER CLB OR V-IND-FIN)(0 (ConNeg));
 REMOVE Prs IF (*-1 (Neg Imprt) BARRIER CLB OR V-IND-FIN)(0 (ConNeg));
+
+
 
 # Act
 # ---
@@ -2366,14 +2413,41 @@ SELECT VFIN IF (NOT *-1 VFIN BARRIER CS OR Interr)(NOT *1 VFIN);
 # ===================== #
 
 
+# This is the section for rules of more global scope.
+# It is also the section for rules that we would like to work in careful mode,
+# i.e. after the other rules have removed as many false readings as possible.
+
+
+# Adverbs
+# -------
+
+SELECT Adv IF (-1C N)(NOT 0 N)(1C Inf);
+    ## Geain lea leamas1 vejolas1vuohta systemáhtalac1c1at guorahallat válggaid?
+  # The idea is that we between a noun an an infinitive will have an adverb, and
+  # not an adjective.
+  # A weaker version (in case of trouble) will be to say:
+  # REMOVE (A Sg) ...
+  # REMOVE (A Pl) ...
+  # i.e., this weaker version will keep readings that are neither adverbs not
+  # adjectives.
+
+
+
+# Adjectives
+# ----------
+
 REMOVE Attr IF (1C V OR EOS)(NOT 1 N);             ## Diet lea beare unnán.
   # When all rules are executed, remove the Attrs
   # The double requirement is there because of the compounds.
 
+# Determiners
+# -----------
 
 REMOVE Sg IF (0 DEM-PL) (NOT *1 V-SG3);       ## Dat lea buorre.
 REMOVE Pl IF (0 DEM-SG) (NOT *1 V-PL3);       ## Dat lea od1d1a niibbit.
 
+# Finite verbs
+# ------------
 
 # At least one finite verb in the sentence
 # The rule scans to the left until it finds a finite verb
@@ -2384,11 +2458,20 @@ REMOVE Pl IF (0 DEM-SG) (NOT *1 V-PL3);       ## Dat lea od1d1a niibbit.
 # cut these two because of titles. They would be ok if we could
 # recognise titles.
 
+# Accusative
+# ----------
+
 REMOVE Acc IF (0 Pron)(1C Acc); # Mun oainnán du vielja.
   # Afterthought, get rid of Acc in specifier position.
   # Move to logical place, but after the primary Acc cycle.
 
-END
+
+
+#=====#
+  END #
+#=====#
+
+
 
 # Notes for future thought:
 # =========================
