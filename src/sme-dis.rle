@@ -8,6 +8,12 @@ DELIMITERS = "<.>" "<!>" "<?>" ;
 # Tags
 # ====
 
+LIST <s> = (<s>); LIST </s> = (</s>); # end and beg. of clause.
+
+LIST WORD = N A Adv V Pron CS CC Adp Po Pr Interj Pcle Num ; # any word
+
+
+
 # Atomic tags
 # (is there a better way of doing this?)
 
@@ -80,7 +86,6 @@ SET DER = V-DER | N-DER | A-DER ;
 
 SET N-SG = (N Sg); SET N-PL = (N Pl) ;
 SET N-SG-NOM = (N Sg Nom); SET N-PL-NOM = (N Pl Nom);
-
 SET N-NOM = (N Nom) ; SET N-GEN = (N Gen);
 
 SET N-DER-SG-NOM = (N-DER N Sg Nom) ;
@@ -88,7 +93,7 @@ SET N-DER-PL-NOM = (N-DER N Pl Nom) ;
 SET LEX-N = N - N-DER;
 
 SET PROP = (N Prop);
-
+SET CNOUN = (N) - (Prop);
 
 # Verb sets
 # ---------
@@ -128,7 +133,7 @@ SET LEAT-FIN-COP = ("leat" V Ind)|("leat" V Imp)|("leat" V Cond)|
 SET LEAT-COP = ("leat" V );
 #SET LEAT-COP = LEAT | LEAN | LEA | LEAI | LIVCCE ;
 
-SET VERB = V - ( V N ); # V is all readings with a V tag in them, VERB should
+SET VERB = (V) - ( V N ); # V is all readings with a V tag in them, VERB should
                         # be the ones withoud an N tag following the V
 SET V-IND-FIN-NON-COP =  V-IND-FIN - LEAT-COP  ;
 SET V-NON-COP = VERB - LEAT-COP ;
@@ -136,6 +141,7 @@ SET LEX-V = VERB - V-DER;
 
 SET V-DER-PASS = V + V-DER + Pass;
 SET V-PASS = V + Pass - V-DER;
+
 
 
 # Pronoun sets
@@ -168,15 +174,21 @@ SET A-ATTR = ( A Attr) ;
 
 SET LEX-A = A - A-DER;
 
+# Sets for closed classes
+# -----------------------
+#SET PPOS = Adp | Po | Pr ;
+SET PPOS = (Adp) | (Po) | (Pr) ;
+
 # Miscellanious sets
 # ------------------
 
 LIST COMMA = "<,>" ;
+SET MANGA = ("mán1ga")|("galle") ;
 #LIST Don = "<Don>"; # ??
 SET Don-PRON = ("don" Pron);
 
 
-#SET NUM-PL = Num - "okta";
+SET NUMERALS = (Num) - ("okta");
 SET COMP = (Pron Interr);
 
 # ====================
@@ -287,14 +299,30 @@ SELECT (N) IF (1 COMMA)(2 (Pron Interr)); # Doaimmat, maiguin... #too spec.
 # Gen
 # ---
 
-SELECT (Gen) IF (1 Po) ; #nieidda birra
-SELECT (Gen) IF (1 Adp) ;
+# Genitive as complement
+# - - - - - - - - - - - 
+
+# Genitive in front of postposition
+SELECT (Gen) IF (1 Po) ;  # nieidda vuod1ul
+SELECT (Gen) IF (1 Adp) ; # nieidda birra
+
+# Genitive after quantifier
+SELECT (Gen) IF (-1 NUMERALS OR MANGA); #Golbma nieidda, mán1ga nieidda
+
+# Genitive as specifier
+# - - - - - - - - - - -
+
+# Genitive in front of noum in the beginning of a sentence
+SELECT (Gen) IF (-1 CLB) (1 N); # Nieidda girji lea ruoksat
+
+# Genitive in front of the final word in the sentence
+SELECT (Gen) IF (0 CNOUN OR (Pron))(1 N)(2 CLB); # Oainnán du biilla.
+
+# Strange rule
 SELECT (Gen) IF (NOT -1 V)(NOT 0 A OR (Prop))(1 N) (NOT 2 Po);
 # NOT A bec. of addit., NOT Prop bec. of firstname lastname sequences.
-SELECT (Gen) IF (-1 Num); #Golbma nieidda
-SELECT (Gen) IF (-1 CLB) (1 N + Nom); # XXX does not work?, well, 24 hits
-SELECT (Gen) IF (0 (N) OR (Pron))(1 N)(2 CLB); # Oainnán du biilla.
-REMOVE (Gen) IF (0 Nom)(-1 (<s>))(1 (</s>)); # A single word is Nom.
+
+
 
 # CONSTRAINTS # trying t sequentiate the gen and acc rules
 # perhaps not needed.
@@ -304,23 +332,57 @@ REMOVE (Gen) IF (0 Nom)(-1 (<s>))(1 (</s>)); # A single word is Nom.
 
 SELECT (Acc) IF (-1 V-IND-FIN) (1 Inf); # Od1astus addá vejolasvuod1a geavahit
 SELECT (Acc) IF (-1 V-NON-COP) (1 CLB)(2 (</s>)); # Hmm, evaluate..
-SELECT (Acc) IF (*-1 V-NON-COP BARRIER (Pron Pers Nom) OR (Po) OR (Adp) OR (Pr));
+
+#SELECT (Acc) IF (*-1 V-NON-COP BARRIER (Pron Pers Nom) OR PPOS);
+#SELECT (Acc) IF (*-1 V-NON-COP BARRIER (Pron Pers Nom) OR (Po) OR (Adp) OR (Pr)); fjern denne når den förre funkar
+
+REMOVE (Acc) IF (-1 (<s>))(1 (N Gen) OR (Attr) OR PPOS) ;
 REMOVE (Acc) IF (NOT *-1 V-NON-COP)(NOT *1 V-NON-COP); #Need a verb for an obj.
 
 # Nom
 # ---
 
-SELECT (Nom) IF (-2 N-NOM) (-1 CC) (NOT 1 Gen); # Trond ja Kirsti leat ...
-SELECT (Nom) IF (-1 PROP) (0 PROP) (1 V-SG3); # Biret Anne galgá...
+# Nominative in titles and sentence fragments
+# - - - - - - - - - - - - - - - - - - - - - -
+
+# A single word is nominative
+SELECT (Nom) IF (-1 (<s>))(0 (N))(1 (</s>)); # Sisdoallu
+
+# Nominative subjects
+# - - - - - - - - - -
+
+# Find the subject, and assume it is nominative
 SELECT (Nom) IF (-1 CS)(0 Sg)(1 V-SG3); # ahte plána movttiidahttá...
 SELECT (Nom) IF (-1 CS)(0 Pl)(1 V-PL3); # ... and in pl..
+
+# Nominative predicates
+# - - - - - - - - - - -
+
+# Predicatives are in nominative
+SELECT (Nom) IF (-2 (Nom) OR (Ind) )(-1 ("leat"))(1 (</s>)); # Mun lean Bond.
+SELECT (Nom) IF (-2 (Nom) OR (Ind))(-1 ("leat"))(1  (Prop))(2 (</s>));
+SELECT (Nom) IF (-3 (Nom) OR (Ind))(-2 ("leat"))(-1 (Prop) OR (ABBR))(1 (</s>));
+ # Mun lean James Bond. # Mun in leat James Bond.
+ # Again, these rules are too specific. Need empirical data to enlarge them.
+
+
+# Unclassified
+# - - - - - -
 
 SELECT (Nom) IF (-1 Gen)(0 N-SG-NOM)(1 V-SG3);
 # HMM, brave..
 # Note that the tag is selected, the set is in the condition.
 
+
+
+# Nominative if two names in a row
+SELECT (Nom) IF (-1 PROP) (0 PROP) (1 V-SG3); # Biret Anne galgá...
+
+
 # Rules for disambiguation around conjunctions
 # --------------------------------------------
+
+SELECT (Nom) IF (-2 N-NOM) (-1 CC) (NOT 1 Gen); # Trond ja Kirsti leat ...
 
 SELECT (Nom) IF (-2 (Nom Cmpnd)) (-1 CC);
 SELECT (Gen) IF (-2 (Gen Cmpnd)) (-1 CC);
@@ -337,7 +399,9 @@ SELECT (Com) IF (-2 (Dem Sg Com))(-1 Adv); # dainna biillain
 SELECT (Loc) IF (-2 (Dem Pl Loc))(-1 Adv); # dain   biillain
 # Not too elegant, the rule set might be done more general with a barrier
 
-
+SELECT (Loc) IF (1 ("gos"));           # guovlluin gos sámit ásset
+SELECT (Loc) IF (1 COMMA)(2 ("gos"));  # guovlluin, gos sámit ásset
+                                       # make this one more general
 # Disambiguating verbs
 # ====================
 
@@ -477,8 +541,9 @@ REMOVE (Attr) IF (NOT 1 N ) ; # 11000
 
 # Disambiguating adverbs
 # ======================
-SELECT (Adv) IF (-1C V-IND-FIN) (NOT 0 A-ATTR);
-SELECT (Adv) IF (-1C V-IND-FIN) (0 A-ATTR)(NOT 1 N);
+SELECT (Adv) IF (-1C V-IND-FIN) (0 A-ATTR)(NOT 1 N); # Adv if postverbally
+REMOVE (Adv) IF (-1 (N Gen) OR (Pron Gen))(0 (Po) OR (Adp)); # Po if after Gen
+
 
 # Disambiguating demonstratives
 # =============================
@@ -546,22 +611,3 @@ SELECT V-IND-FIN IF (NOT *-1 V-IND-FIN BARRIER COMP)(NOT *1 V-IND-FIN BARRIER CL
 
 
 END
-nb
-rádjái som postpos, slik som rájes.
-
-
-Problem:
-
-ektui
-bör desse to vere unifisert på ein måte?
-
-prepros
-mu mielas
-
-Notes:
-
-SELECT (Nom) IF "no other nom in clause AND V-IND-FIN in clause"
-
-
-Problem:
-Nu leat nappo oktibuot njealljenuppelohkái sohkabuolvva Abrahama rájes Dávveda rádjái.
