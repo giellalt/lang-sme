@@ -1,0 +1,29 @@
+!define upper [A|Á|B|C|C1|D|D1|E|F|G|H|I|J|K|L|M|N|N1|O|P|R|S|S1|T|T1|U|V|Z|Z1];
+!define lower [a|á|b|c|c1|d|d1|e|f|g|h|i|j|k|l|m|n|n1|o|p|r|s|s1|t|t1|u|v|z|z1];
+!define alphabet [upper|lower];
+
+define vowel [a|á|e|i|o|u];
+define cons [b|c|c1|d|d1|f|g|h|j|k|l|m|n|n1|p|q|r|s|s1|t|t1|v|z|z1];
+
+!define syll cons* vowel+ cons*;
+!define word alphabet* syll syll;
+
+!define wg [{pp}|{tt}|{kk}|{cc}|{c1c1}|];
+!define sg [];
+define center s1 0 s1 : s1 ' s1 | s1 s1 : s1 s1 | s1 s1 : s1 ;
+
+define PossWord cons^{0,2} vowel^{0,2} center vowel^{0,2} cons^{0,1} ;
+define PossRoot PossWord "+Guess":0 ;
+!define PossRoot word{0,1} PossWord word^{0,1} "+Guess":0 ;
+
+load stack ../bin/sme.fst
+!read lexc < ../dev/all-sme-lex.txt 
+
+substitute defined PossRoot for "^GUESSNOUNROOT"
+define AllInclusive
+
+
+!read regex ~$[%+Guess] .o. AllInclusive ;
+!save stack ../bin/t-sme.fst
+!clear
+
