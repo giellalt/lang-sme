@@ -664,8 +664,8 @@ REMOVE (PxSg2) ; # IF (0 Pl);
 REMOVE (PxSg3) ; # IF (0 Loc);
 # Note: Perhaps rather allow Px only for some key nouns (mother, father, etc).
 
-# Removing remaining Prt Sg2 (philosophy: these are not pro-drop)
-REMOVE (V Ind Prt Sg2) IF (NOT -1 BOS) (NOT 0 (Clt));
+# Removing remaining Prt Sg2 (philosophy: these are not pro-drop (BUT THEY ARE!!))
+# REMOVE (V Ind Prt Sg2) IF (NOT -1 BOS) (NOT 0 (Clt));
 # Proseassas láhc1c1ojuvvojit dilálas1vuod1at nu, ahte 
 # fertejitgo dahkat dan?
 
@@ -680,7 +680,7 @@ REMOVE (V Ind Prt Sg2) IF (NOT -1 BOS) (NOT 0 (Clt));
 # This is the main part of the local disambiguation.
 # Here we go through the grammar in a systematic way.
 # Cases that should be handled before or after the main disambiguation, will be
-# taken care of in cycoes before or after this one.
+# taken care of in cycles before or after this one.
 
 
 
@@ -897,7 +897,8 @@ SELECT Pcle IF (-2 CLB)(-1 V);                    ## Jus juo, lea go nu ahte..
 SELECT Pcle IF (-3 BOS)(-2 CC)(-1 V);             ## Dahje leat go aiddonassii...
 
 
-SELECT Pcle IF (-1 VFIN)(0 ("go"))(*2 CLB BARRIER VFIN);
+#SELECT Pcle IF (-1 VFIN)(0 ("go"))(*1 CLB BARRIER VFIN);
+SELECT Pcle IF (0 go)(*1 CLB BARRIER VFIN);
 SELECT Pcle IF (-2 N OR Pron)(-1 VFIN)(0 ("go"));
 SELECT Pcle IF (-3 N OR Pron)(-2 ("ahte"))(-1 VFIN)(0 ("go"));
                   ## Politihkas lei 1866 rájes sáhka galggai go stivrregoahtit 
@@ -1144,11 +1145,13 @@ SELECT Adv IF (0 ("ikte"))(*1 (V Prt));         ## Ikte lei hui buolas1.
 SELECT Adv IF (*-1 (V Prt))(0 ("ikte"));        ## Ikte lei hui buolas1.
 
 # maid
-SELECT Adv IF (-1 VFIN)(0 ("maid"));            ## Mun háliidan maid mannat.
+SELECT Adv IF (-1C VFIN)(0 ("maid"));            ## Mun háliidan maid mannat.
 SELECT Adv IF (-1 N LINK *-1 BOS BARRIER NPNH)
               (0 ("maid"));                     ## Suomas maid lei dilli váttis.
 SELECT Adv IF (-2 BOS)(-1 (Pron Pers) OR (Pron Dem))
               (0 ("maid"));                     ## Sidjide maid lei Ruija.
+
+SELECT Adv IF (0 ("maid"))(*1 Inf BARRIER VERB);
 
 # manne
 SELECT Adv IF (-1 BOS)(0 ("manne"))(1 VFIN);     ## Manne ii leat áviisa boahtán?
@@ -1297,6 +1300,7 @@ REMOVE Pl IF (-1 BOS)(0 ("mii" Pron Interr))(NOT *1 (N Pl) BARRIER NPNH);
 #SELECT Sg IF (-1C (N Sg))(0 (Pron Interr));
 
 SELECT Interr IF (-1 BOS)(*1 ("?"));
+SELECT Interr IF (-2 BOS)(-1 Pcle)(*1 ("?"));
 
 
 # Reflexive pronouns
@@ -1553,7 +1557,6 @@ SELECT Indef IF (*-1 ("nubbi"))(-1 COMMA)(0 ("nubbi"));
 # 2. More safe V rules may be moved earlier in the rule file.
 
 
-
 # ConNeg forms
 # ------------
 
@@ -1581,12 +1584,48 @@ REMOVE Imprt IF (*-1 (Neg Ind) BARRIER CLB OR V-IND-FIN)(0 (ConNeg));
 REMOVE Prs IF (*-1 (Neg Imprt) BARRIER CLB OR V-IND-FIN)(0 (ConNeg));
 
 
+# Infinitive
+# ----------
+
+SELECT Inf IF (*-1 INF-VERB BARRIER CS OR Nom OR Interr OR Neg);
+                           ## Skuvla galggai oahpahit sámemánáide dárogiela.
+                           ## Pros1eavtta áigut c1ad1ahit.
+
+SELECT Inf IF (-1 (Neg Sup)); # Use *-1 instead, and define barrier? 
+
+
+# Perfect Participle
+# -------------------
+# PrfPrc to the right of negated verb
+
+SELECT PrfPrc IF (*-1 Neg BARRIER CONTRA);
+
+SELECT PrfPrc IF (*-1 VFIN BARRIER CLB OR CS)(NOT 0 Actio)
+                 (NOT *-1 CC BARRIER VFIN); ## Mun lean muitalan.
+                                            ## Mun muitalan ja muitalan.
+                                            ## Mun lean muitalan.
+  # Hmm: PrfPrc if there is not a Sg1 to the left, but if there is a CC to
+  # the right of a possible Sg1, then we forget about the Sg1.
+
+SELECT PrfPrc IF (*-1 VFIN BARRIER Nom OR V OR CS OR CC OR CLB OR PUNCT)
+		(NOT 0 Actio);
+                                                   ## Mun lean muitalan dan.
+
+# Topicalised participle
+# ???
+
+# Old rules, remove asap.
+#SELECT PrfPrc IF (0 LEAN) (-1 (Neg));
+#SELECT PrfPrc IF (*-1 VFIN-NOT-IMP); # Too general!!
+#SELECT PrfPrc IF (-1 NP-BORDER)(0 Pass)(1 CNOUN);
+                                     
+
+
 # ==================== #
 # Disambiguating nouns #
 # ==================== #
       CONSTRAINTS      #
 # ==================== #
-
 
 
 # Proper nouns
@@ -1791,7 +1830,7 @@ SELECT (N Sg Nom) IF (*-1 V-SG3 LINK NOT *-1 NP-HEAD-SG-NOM)
                                     (NOT  -1 NP-HEAD-SG-NOM)
                                     (NOT 0 PrfPrc)(1 EOS);
 
-SELECT Nom IF (*-1 COPULAS BARRIER V-NON-AUX OR CS OR CC)
+SELECT Nom IF (*-1 COPULAS BARRIER V-NON-AUX OR CS OR CC)(NOT 0 Inf)
 		(NOT 0 PrfPrc)(*1 CLB OR CS BARRIER NP-HEAD) ;
 
 
@@ -1921,7 +1960,7 @@ REMOVE Gen IF (-1 BOS)(1 Adv) ;
 
 SELECT Acc IF (NOT *-1 VFIN BARRIER CS)(NOT 0 Nom)(NOT 0 ("leat"))(NOT 1 COMMA)
               (*1 VFIN BARRIER NON-ADV-PCLE)
-		(*1 V-NON-AUX-PASS BARRIER V-PASS OR CLB) ;
+		(*1 V-NON-AUX-PASS BARRIER V-PASS OR CLB)(NOT 1 Actio) ;
 		#check w/o care LINK NOT *1 Acc);
                                    ## Dan lean mun váldán.
 				   ## Dat leamas1 vissa gobmi.	
@@ -1953,13 +1992,13 @@ REMOVE Nom IF (0 Num)(NOT *1 (V Pl3) BARRIER CS OR EOS)(NOT *-1 (V Pl3) BARRIER 
 
 
 # In front of an infinitive
-SELECT Acc IF (*-1 VFIN BARRIER NPNHAI)(NOT 0 VERB)(NOT 0 Nom)
+SELECT Acc IF (*-1 VFIN BARRIER NPNHAI)(NOT 0 VERB)(NOT 0 Nom)(NOT 0 Adv)
 		(*1 Inf BARRIER NON-ADV-PCLE);
                           ## Od1astus addá vejolas1vuod1a muitalit.
                           ## Son lea beassan bargat.
 # changed V-IND-FIN to VFIN here and in subsequent rules.
 
-SELECT Acc IF (*-1 Nom BARRIER CS)(*-1 VFIN)(NOT 0 PrfPrc)(NOT 0 Nom)(1 Inf);
+SELECT Acc IF (*-1 Nom BARRIER CS)(*-1 VFIN)(NOT 0 PrfPrc)(NOT 0 Nom)(NOT 0 Adv)(1 Inf);
 
 SELECT Acc IF (*-1 VFIN BARRIER NPNH)(1 CC)
               ( *2 NP-HEAD   BARRIER NPNH LINK 1 Inf);
@@ -2281,6 +2320,11 @@ SELECT Gen IF (NOT -1 BOS)(0 (Pron Interr))(1 N);
                                ## Oidnen mátkkos1teaddji, gean namma lei Keilhau.
 				## Maid Biret-Elle áigu dahkat?
 
+# Genitive as agent of Actio
+# --------------------------
+
+SELECT Gen IF (-1 BOS)(0 Interr)(1 Actio);
+
 
 # Genitive in time expressions
 # ----------------------------
@@ -2432,50 +2476,12 @@ SELECT (Sg Com) IF (1 CC)(*2 Com BARRIER NPNH LINK NOT 0 Loc);
 # ==================== #
 # Disambiguating verbs #
 # ==================== #
-      CONSTRAINTS      #
-# ==================== #
-
-# Infinitive
-# ----------
-
-SELECT Inf IF (*-1 INF-VERB BARRIER CS OR Nom OR Interr OR Neg);
-                           ## Skuvla galggai oahpahit sámemánáide dárogiela.
-                           ## Pros1eavtta áigut c1ad1ahit.
-
-SELECT Inf IF (-1 (Neg Sup)); # Use *-1 instead, and define barrier? 
-
-# Perfect Participle
-# -------------------
-# PrfPrc to the right of negated verb
-
-SELECT PrfPrc IF (*-1 Neg BARRIER CONTRA);
-
-SELECT PrfPrc IF (*-1 VFIN BARRIER CLB OR CS)(NOT 0 Actio)
-                 (NOT *-1 CC BARRIER VFIN); ## Mun lean muitalan.
-                                            ## Mun muitalan ja muitalan.
-                                            ## Mun lean muitalan.
-  # Hmm: PrfPrc if there is not a Sg1 to the left, but if there is a CC to
-  # the right of a possible Sg1, then we forget about the Sg1.
-
-SELECT PrfPrc IF (*-1 VFIN BARRIER Nom OR V OR CS OR CC OR CLB OR PUNCT);
-                                                   ## Mun lean muitalan dan.
-
-# Topicalised participle
-# ???
-
-# Old rules, remove asap.
-#SELECT PrfPrc IF (0 LEAN) (-1 (Neg));
-#SELECT PrfPrc IF (*-1 VFIN-NOT-IMP); # Too general!!
-#SELECT PrfPrc IF (-1 NP-BORDER)(0 Pass)(1 CNOUN);
-                                     
-
 
 
 # Finite forms #
 # ============ #
    CONSTRAINTS #
 # ============ #
-
 
 
 # Indicative or imperative #
@@ -2509,7 +2515,7 @@ REMOVE ABBR IF (0 Neg)(*1 ConNeg OR PrfPrc);  ## Don it leat dál.
 SELECT Sg1 IF (0 LEAN) (*1 PrfPrc);           ## Mun lean boahtán.
   # So, what kind of barrier could we have here?
 
-SELECT Sg1 IF (*-1 MUN BARRIER Neg OR LEAN-SG1);  ## Mun ferten lohkat.
+SELECT Sg1 IF (*-1 MUN BARRIER Neg OR LEAN-SG1 OR Inf);  ## Mun ferten lohkat.
                                                   ## Mun lean muitalan dan. 
 
 SELECT Sg1 IF (-1 CC)(-2 (V Sg1));              ## Mun human ja human.
@@ -2928,6 +2934,8 @@ SELECT Inf IF (-2C Inf)(-1 CC);
 # => make rules for Actio.
 
 REMOVE (V Ind) IF (-1 NP-HEAD)(-1 Gen)(NOT -1 TIME)(1 N);
+REMOVE PrfPrc IF (-1 NP-HEAD)(-1 Gen)(NOT -1 TIME)(1 N);
+
 
 # Present Participle
 # ------------------
