@@ -1,6 +1,6 @@
 # This is a makefile that builds the Northern Sami morphological parser
 # *****************************************************************
-
+ 
 # The first goal is to build sme.fst
 # This goal depends on sme.save and caseconv.fst being up to date
 
