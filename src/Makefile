@@ -15,7 +15,7 @@ isme.fst: ../bin/isme.fst
 ../bin/isme.fst: ../bin/pos-sme.fst ../bin/n-sme.fst ../bin/s-sme.fst \
 	../bin/sme.save ../bin/allcaps.fst ../bin/n-sme.fst \
 	../bin/caseconv.fst ../bin/d-sme.fst  ../bin/guess-sme \
-	../bin/abbr.txt ../bin/cap-sme ../bin/foreign.fst
+	../bin/abbr.txt ../bin/cap-sme ../bin/foreign.fst ../bin/g-sme.fst
 	@echo
 	@echo "*** Building the inverse isme.fst ***"
 	@echo
@@ -124,16 +124,32 @@ tag-sme.fst: ../bin/tag-sme.fst
 
 
 g-sme.fst: ../bin/g-sme.fst
-../bin/g-sme.fst: ../bin/sme.fst
+../bin/g-sme.fst: ../bin/sme.fst guess-script.xfst
 	@echo
 	@echo "*** Building g-sme.fst ***" ;
 	@echo
+	@printf "compile-source sme-lex.txt adj-sme-lex.txt adv-sme-lex.txt \
+	noun-sme-lex.txt verb-sme-lex.txt closed-sme-lex.txt \
+	pp-sme-lex.txt acro-sme-lex.txt \
+	abbr-sme-lex.txt propernoun-sme-lex.txt punct-sme-lex.txt \n\
+	save-source ../bin/g-sme.save \n\
+	quit \n" > ../../tmp/g-sme-save-script
+	@lexc < ../../tmp/g-sme-save-script
+	@rm -f ../../tmp/g-sme-save-script
+
 	@printf "source guess-script.xfst \n\
-	read regex $[%+Guess] .o. AllInclusive ; \n\
-	save stack ../bin/g-sme.fst \n\
+	save stack ../bin/g-sme.fsm \n\
 	quit \n" > ../../tmp/guess-sme-script
 	@xfst < ../../tmp/guess-sme-script
 	@rm -f ../../tmp/guess-sme-script
+
+	@printf "read-source ../bin/g-sme.fsm \n\
+	read-rules ../bin/twol-sme.bin \n\
+	compose-result \n\
+	save-result ../bin/g-sme.fst \n\
+	quit \n" > ../../tmp/g-sme-save-script
+	@lexc < ../../tmp/g-sme-save-script
+	@rm -f ../../tmp/g-sme-save-script
 
 
 guess-sme: ../bin/guess-sme
