@@ -1,0 +1,463 @@
+!Now that long double cons. have been analyzed having lexical triple consonants,
+!many of the grad. rules of the form ':Cx may be collapsed to a single rule
+!without left context: _ Cx Vow: WeG: ; where XXXX matched ; . This has not 
+!been done yet (29.11.1993).
+
+Alphabet
+ a b c d e f g h i j k l m n o p q
+ r s u t v w x y z å ä ö ø æ %-
+ a1 e1:e i1:i u1:u c1 d1 h1 t1 n1 o1:o s1 z1
+ ':0 Q:0
+ h2:h g2:g m2:m n2:n
+ X1:0 X2:0 X3:0 X4:0 X5:0 X6:0 X7:0 X8:0 X9:0
+ Q1:0 Q2:0 Q3:0 Q4:0 Q5:0 Q6:0 Q7:0 Q8:0 Q9:0
+ Y1:0 Y2:0 Y3:0 Y4:0 Y5:0 Y6:0 Y7:0 Y8:0;
+
+Sets
+  Vow = a a1 e e1 i i1 o o1 u u1 ;
+  Cns = b c c1 d d1 f g g2 h h2 j k l m m2 n n1 n2 p r s s1 t t1 v z z1 ' ;
+  StemCns = b d g g2 h h2 j l m m2 n n2 r s s1 ;
+  WeG = X4 X5 X6 X8 X9 Q4 Q5 Q6 Q7 Q8 ;
+  Len = Y1 Y2 Y3 Y4 Y5 Y6 Y7 Q ;
+  Dummy = X1 X2 X3 X4 X5 X6 X7 X8 X9 Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 Y1 Y2 Y3 Y4 Y5 Y6 Y7 Y8 Q;
+  FinalDummy = X2 X4 X7 X8 ;
+  NonMPDummy = X1 X4 X7 X8 Q ;
+  HighVow = i u ;
+  NonHighVow = a e o ;
+  Stop = k p t c c1 ;
+  DelCns = g2 m2 n2 h2 ;
+  CntrCns = s j h z1 ;
+  DummyNotY5 = X1 X2 X3 X4 X5 X6 X7 X8 X9 Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 Y1 Y2 Y3 Y4 Y6 Y7 Y8 Q;
+Rules
+
+
+
+"Postvocalic j Surfacing"
+  j:i <= _ [ Cns | ( DummyNotY5: ) #: ] ;
+
+"Postvocalic j in the stem of words"
+  j:i <= Vow _ [ Cns | ': ] ;
+
+"Word Final Consonant Neutralization"
+  Cx:Cy <=> Vow: (( CntrCns:) Dummy:+) _ ( DummyNotY5: ) #: ;
+			where Cx in (z z1 m h p d g b)
+				Cy in (s s1 n t t t t t)
+			matched ;
+
+"Deletion: Final h s j z1 in Contracted Stems"
+  Cx:0 <=> Vow _ [ Y5: | Y6: j: ] ;
+			where Cx in (h s j z1) ;
+
+"Word Final Cluster Simplification 1"
+  Cy:0 <=> Vow Cx _ #: ;
+			where Cx in (l r)
+				Cy in (d g) ;
+
+"Word Final Cluster Simplification 2"
+  Cx:0 <=> Vow s _ #: ;
+			where Cx in (t k m) ;
+
+"Word Final Cluster Simplification 3"
+  t:0 <=> Vow s1 _ #: ;
+
+"Word Final Cluster Simplification 4"
+  Cx:0 <=> Vow h: _ #: ;
+			where Cx in (t k) ;
+
+"Word Final Double Consonant Simplification"
+  Cy:0 <=> Vow Cx: _ #: ;
+			where Cx in (s s1 d z1)
+				Cy in (s s1 d z1)
+			matched ;
+!Check for Final Geminate z1z1/dd and Cluster h't Simplification (sápmelaz1z1 > sápmelas1; duháhadd > duháhat, sarvváskah´t > sarvváskat)
+
+"Gradation: h Loss"
+  h:0 <=> _ ': Cy: Vow ( StemCns:) WeG: ;
+			where Cy in (p t k c c1) ;
+
+"Gradation: Prenasal Stops"
+  Cx:0 <=> _ Cy Vow ( StemCns:) WeG: ;
+			where Cx in (p t k)
+				Cy in (m n n1)
+			matched ;
+
+"Gradation: tnj"
+  t:0 <=> _ n j Vow ( StemCns:) WeG: ;
+
+"Gradation: dj"
+  d:0 <=> Vow: _ ': j Vow ( StemCns:) WeG: ;
+
+"Gradation: Double Consonant"
+  Cx:0 <=> Vow: _ Cy Vow ( StemCns:) WeG: ;
+			where Cx in (d1 f l m n n1 r s s1 t1 v)
+				Cy in (d1 f l m n n1 r s s1 t1 v)
+			matched ;
+
+"Gradation: Long Double Consonant"
+  Cx:0 <=> Vow: Cy _ Cy Vow ( StemCns:) WeG: ;
+			where Cx in (l m n n1 r s s1 v)
+				Cy in (l m n n1 r s s1 v)
+			matched ;
+
+"Gradation: Preaspirated Geminates"
+  Cx:0 <=> h _ Cy Vow ( StemCns:) WeG: ;
+			where Cx in (k p t c c1 l r)
+				Cy in (k p t c c1 l r)
+			matched ;
+
+"Gradation: Jodded Double Consonants"
+  Cx:0 <=> Vow: _ Cy j Vow ( StemCns:) WeG: ;
+			where Cx in (l d n)
+				Cy in (l d n)
+			matched ; 
+
+"Gradation: Cluster Non-nasal Sonorant + Non-sonorant"
+  ':Cx <=> Vow: [ l | r | d1 | v | j: ] _ Cz Vow ( StemCns:) WeG: ;
+			where Cx in (f g d b k p t z z1 c c1 s s1)
+				Cz in (f g d b k p t z z1 c c1 s s1)
+			matched ;
+
+"Gradation: Cluster n1g"
+  ':g <=> Vow: n1 _ g Vow ( StemCns:) WeG: ;
+
+"Gradation: Cluster m + Non-sonorant"
+  ':Cx <=> Vow: m _ Cz Vow ( StemCns:) WeG: ;
+			where Cx in (f b p s s1)
+				Cz in (f b p s s1)
+			matched ;
+
+"Gradation: Cluster n + Non-sonorant"
+  ':Cx <=> Vow: n _ Cz Vow ( StemCns:) WeG: ;
+			where Cx in (d t z z1 c c1 s s1)
+				Cz in (d t z z1 c c1 s s1)
+			matched ;
+
+"Gradation: Cluster j/v + Liquid"
+  ':Cx <=> Vow: [ j: | v ] _ Cz Vow ( StemCns:) WeG: ;
+			where Cx in (l r)
+				Cz in (l r)
+			matched ;
+
+"Gradation: Clusters lv, rj etc."
+  ':Cx <=> Vow: [ d1 | l | r ] _ Cz Vow ( StemCns:) WeG: ;
+			where Cx in (v j)
+				Cz in (v j)
+			matched ;
+
+"Gradation: Clusters tk, tm"
+  ':Cx <=> Vow: [ t | t1 ] _ Cy Vow ( StemCns:) WeG: ;
+			where Cx in (k m)
+				Cy in (k m)
+			matched ;
+
+"Gradation: Clusters ts, ks"
+  0:s <=> Vow: [ t | k ] _ s Vow ( StemCns:) WeG: ;
+
+"Gradation: Clusters sk, sm etc."
+  ':Cx <=> Vow: [ s | s1 ] _ Cz: Vow ( StemCns:) WeG: ;
+			where Cx in (k p t l m v)
+				Cz in (k p t l m v)
+			matched ;
+
+"Gradation: Cluster vj"
+  ':j <=> Vow: v _ j Vow ( StemCns:) WeG: ;
+
+"Gradation: Cluster jv"
+  ':v <=> Vow: j: _ v Vow ( StemCns:) WeG: ;
+
+"Gradation: ihm, vhl etc."
+  ':Cx <=> Vow: [ j: | v ] h _ Cy Vow ( StemCns:) WeG: ;
+			where Cx in (l m n)
+				Cy in (l m n)
+			matched ;
+
+"Gradation: Clusters lbm, jdn, vdn etc."
+  Cx:Cy <=> [ l | j: | v ] _ Cz Vow ( StemCns:) WeG: ;
+			where Cx in (b d g)
+				Cy in (m n n1)
+				Cz in (m n n1)
+			matched ;
+
+"Gradation: Clusters ldnj, vdnj etc."
+  d:n <=> [ l | v ] _ n j Vow ( StemCns:) WeG: ;
+
+"Gradation: Clusters rbm, rdn rgn1"
+  Cx:Cy <=> r _ Cz Vow ( StemCns:) WeG: ;
+			where Cx in (b d g)
+				Cy in (p t k)
+				Cz in (m n n1)
+			matched ;
+
+"Gradation: Clusters rdnj"
+  Cx:Cy <=> r _ Cz j Vow ( StemCns:) WeG: ;
+			where Cx in (b d g)
+				Cy in (p t k)
+				Cz in (m n n1)
+			matched ;
+
+"Gradation: ist, vsk etc."
+  ':Cx <=> Vow: [ j: | v | l | r | m | n ] s _ Cy Vow ( StemCns:) WeG: ;
+			where Cx in (k t)
+				Cy in (k t)
+			matched ;
+
+"Gradation: ms1k, rs1k"
+  ':k <=> Vow: [ m | r ] s1 _ k Vow ( StemCns:) WeG: ;
+
+"Gradation: Clusters kc ks etc. 1"
+  k:v <=> Vow: _ ': Cx Vow ( StemCns:) WeG: ;
+			where Cx in (t c c1 s s1) ;
+
+"Gradation: Clusters kc ks etc. 2"
+  ':Cx <=> Vow: k: _ Cy Vow ( StemCns:) WeG: ;
+			where Cx in (t c c1 s s1)
+				Cy in (t c c1 s s1)
+			matched ;
+
+"Gradation: Cluster kst 1"
+  k:v <=> Vow: _ s ': t Vow ( StemCns:) WeG: ;
+
+"Gradation: Cluster kst 2"
+  ':t <=> Vow k: s _ t Vow: ( StemCns:) WeG: ;
+
+"Gradation: bb dd etc.1"
+  Cx:Cy <=> Vow: _ Cz: Vow ( StemCns:) WeG: ;
+			where Cx in (b d g z z1)
+				Cy in (p t k c c1)
+				Cz in (b d g z z1)
+			matched ;
+
+"Gradation: bb dd etc.2"
+  Cx:Cy <=> :Cy _ Vow ;
+			where Cx in (b d g z z1)
+				Cy in (p t k c c1)
+			matched ;
+
+"Lengthening of Central Consonants hk etc."
+  ':Cy <=> h: _ Cz Vow ( CntrCns:) Len: ;
+			where Cy in (p t k c c1)
+				Cz in (p t k c c1)
+			matched ;
+
+"Lengthening of Central Consonants pm etc."
+  Cx:Cy <=> Vow: _ Cz Vow ( CntrCns:) Len: ;
+			where Cx in (p t k)
+				Cy in (b d g)
+				Cz in (m n n1)
+			matched ;
+
+"Lengthening of Central Consonants tnj"
+  t:d <=> Vow: _ n j Vow ( CntrCns:) Len: ;
+
+"Lengthening of Central Consonants dj"
+  ':d <=> Vow: d _ j Vow ( CntrCns:) Len: ;
+
+"Lenition: Intervocalic Stops and Affricates"
+  Cx:Cy <=> h:0 ':0 _ Vow ;
+			where Cx in (k p c c1 t)
+				Cy in (g b z z1 d1)
+			matched ;
+
+"Vowel Shortening in Bisyllabic Sg2 Imperatives and Connegatives"
+  Vx:Vy <=> Cns _ Q6: ;
+			where Vx in (u i)
+				Vy in (o e)
+			matched ;
+
+"Vowel Shortening in Compounds after Long 1st Syllable 1"
+  Vx:Vy <=> [ Vow Vow | a1 ] Cns:+ Cns _ StemCns:* [ X7: | X8: ] ;
+			where Vx in (u i)
+				Vy in (o e)
+			matched ;
+
+
+
+"Optional Vowel Shortening after Short 1st Syllable"
+  Vx:Vy => [ #: | Cns ] [a|i|o|u] [ Cns: Cns | h: ': Cns: ] 
+		_ StemCns:* [ X7: | X8: ] ;
+			where Vx in (u i)
+				Vy in (o e)
+			matched ;
+
+"Optional Vowel Shortening in Caritives"
+  Vx:Vy => [ #: | Cns ] [a|i|o|u] Cns:+ _ ( DelCns:) X9: ;
+			where Vx in (u i)
+				Vy in (o e)
+			matched ;
+
+"Optional Shortening of a1 in Compounds after Long 1st Syllable 2"
+  a1:a => [ #: | Cns ] Vz Cns+ Cns: Cns+ _ StemCns:* [ X7: | X8: ] ;
+			where Vz in (a i o u) ;
+
+
+
+"Optional Shortening of a1 in Compounds after Long 1st Syllable 1"
+  a1:a => [ Vow Vow | a1 ] Cns:+ Cns _ StemCns:* [ X7: | X8: ] ;
+
+
+"Optional Shortening of a1 in Compounds after Long 1st Syllable 2"
+  a1:a => [ #: | Cns ] Vz Cns+ Cns: Cns+ _ StemCns:* [ X7: | X8: ] ;
+			where Vz in (a i o u) ;
+
+"Vowel Shortening in Caritives"
+  Vx:Vy <=> [ Vow Vow | a1 ] Cns:+ _ ( DelCns:) X9: ;
+			where Vx in (u i)
+				Vy in (o e)
+			matched ;
+
+"Diphthong Simplification in i-Stems before Suffixes Beginning with j:"
+  Vx:0 <=> Vow _ Cns:+ [ i: | e1: ] X5: ;
+			where Vx in (e o a) ;
+
+"Diphthong Simplification in Actor Nouns from i- and a-Stems (Optional)"
+  Vx:0 => Vow _ Cns:+ [ i: | a: ] Q: X5: ;
+			where Vx in (e o a) ;
+
+"Diphthong Simplification in Certain Forms from u-Stems"
+  Vx:0 <=> Vow _ Cns:+ [ u: | o1: ] [ X2: | X3: | ( DelCns:) X6: | Q8: | Y5: | Y6: ] ;
+			where Vx in (e o a) ;
+
+"Diphthong Simplification in Actor Nouns from u-Verbs (Optional)"
+  Vx:0 => Vow _ Cns:+ u: Q: [ X2: | X3: | X6: ] ;
+			where Vx in (e o a) ;
+
+"Diphthong Simplification in Diminutives etc. from Trisyllabics with 2nd Syll u/o"
+  Vx:0 <=> Vow _ Cns:+ [ u: | o1: ] ( NonMPDummy:) Cns:+ X2: ;
+			where Vx in (e o a) ;
+
+"Diphthong Simplification: Conditional in -alla- etc. Derivatives from Trisyllabics"
+  Vx:0 <=> Vow _ Cns:+ u:o ( NonMPDummy:) Cns:+ X1: ;
+			where Vx in (e o a) ;
+
+"Diphthong Simplification in IllSg and Certain Conjug. Forms of a-Stems"
+  Vx:0 <=> Vow _ Cns:+ a: [ X3: | Q2: | Q3: | Y7: ] ;
+			where Vx in (e o a) ;
+
+"Diphthong Simplification in Certain Conjugational Forms of i- and u-Stems"
+  Vx:0 <=> Vow _ Cns:+ HighVow: [ Q2: | Q3: | Q7: | Y7: ] ;
+			where Vx in (e o a) ;
+
+"Diphthong Simplification: Optional before Deverbal -alla-, -adda-, -us"
+  Vx:0 => Vow _ Cns:+ o1: ( NonMPDummy:) Cns:+ X1: ;
+			where Vx in (e o a) ;
+
+"Diphthong Simplification in u-Stems before Conditional Marker"
+  Vx:0 => Vow _ Cns:+ u: Q5: ;
+			where Vx in (a e o) ;
+
+"Vowel Rising"
+  Vx:Vy <=> Vow: Cns:+ _ ( CntrCns:0 ) ( Dummy:+) j:i ;
+			where Vx in (e o)
+				Vy in (i u)
+			matched ;
+
+"General Metaphony"
+  Vx:Vy <=> Cns _ Cns:* [ X2: | X6: ] ;
+			where Vx in (i e1 u)
+				Vy in (a1 a1 o)
+			matched ;
+
+"Metaphony in Derivatives -us, -alla, -adda 1"
+  u:o => Cns _ ( NonMPDummy:) Cns:+ X1: ;
+
+"Metaphony in Derivatives -us, -alla, -adda 2"
+  Vx:a1 <=> Cns _ ( NonMPDummy:) Cns:+ X1: ;
+			where Vx in (i e1) ;
+
+"Illative Singular Metaphony"
+  Vx:Vy <=> Cns _ X3: ;
+			where Vx in (i a e1)
+				Vy in (a1 i a1)
+			matched ;
+
+"Metaphony in Actor Nouns of i-, a-, and u-Verbs"
+  Vx:Vy <=> Cns _ Q: [ X2: | X3: | X6: ] ;
+			where Vx in (i a u)
+				Vy in (a1 a1 o)
+			matched ;
+
+"Metaphony in MUSH-Derivatives"
+  i:a1 => Cns _ m: u: s1: s1: ;
+
+"Potential Marker Metaphony"
+  Vx:Vy <=> Cns _ Q7: ;
+			where Vx in (i u)
+				Vy in (e o)
+			matched ;
+
+"Stem Vowel in Contracted Stems"
+  Vx:Vy <=> Cns _ ( CntrCns:) Y5: ;
+			where Vx in (i a u)
+				Vy in (a1 a1 o)
+			matched ;
+
+"Stem Vowel before Frequentative d"
+  Vx:Vy <=> Cns _ Q8: ;
+			where Vx in (i u)
+				Vy in (a o)
+			matched ;
+
+"Stem Vowel before Frequentative l"
+  i:a <=> Cns _ Q9: ;
+
+"Stem Vowel before Reflexive s"
+  Vx:Vy <=> Cns _ Y8: ;
+			where Vx in (i u)
+				Vy in (a1 a)
+			matched ;
+
+"Indicative Present Singular 3rd Final Vowel"
+  Vx:a1 <=> Cns _ Q1: ;
+			where Vx in (a i) ;
+
+"Imperative Present 1st/3rd Person and Connegative Final Vowel"
+  Vx:o <=> Cns _ Q3: ;
+			where Vx in (a i u) ;
+
+"Stem Vowel Shift a:e, i:e, u:o"
+  Vx:Vy <=> Cns _ Q2: ;
+			where Vx in (a i u)
+				Vy in (e e o)
+			matched ;
+
+"Stem Vowel in 1st and 2nd Person Singular Present"
+  i:a1 <=> Cns _ Q4: ;
+
+"Stem Vowel before Conditional Marker"
+  Vx:Vy <=> Cns _ Q5: ;
+			where Vx in (u i)
+				Vy in (o a1)
+			matched ;
+
+"Stem Vowel in Dual 2nd Person Imperative"
+  a:i <=> Cns _ Y1: ;
+
+"Stem Vowel in Present Participials from i-Verbs"
+  a:i <=> Cns _ Q: [ X1: | X4: | X5: | X7: | X8: | #: ] ;
+
+"Stem Vowel in Dual 1st Person Imperative"
+  Vx:u <=> Cns _ Y2: ;
+			where Vx in (a i) ;
+
+"Stem Vowel in Plural 2nd Person Imperative"
+  Vx:Vy <=> Cns _ Y3: ;
+			where Vx in (a i u)
+				Vy in (e e o)
+			matched ;
+
+"Stem Vowel in Imperative Plural 1st Person and Passive Stem"
+  Vx:o <=> Cns _ [ Y4: | Y7: ] ;
+			where Vx in (a i u) matched ;
+
+"Word Final Deletion of n2 m2 g2 h2"
+  Cx:0 <=> Vow _ [ X4: | X8: | X6: Cns: | X9: ] ;
+			where Cx in (DelCns) matched ;
+
+
+"Word Final Neutralization of g2, h2, m2"
+  Cx:Cy <=> Vow _ [ X2: | X7: ] #: ;
+			where Cx in (g2 h2 m2)
+				Cy in (t t n)
+			matched ;
+
+ 
