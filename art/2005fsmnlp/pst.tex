@@ -3,6 +3,7 @@
 \usepackage{ucs}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{psfrag}
 \usepackage{a4wide}
 
 \begin{document}
@@ -36,7 +37,7 @@ Since nouns have partly the same mophophonological variants as verbs, the morpho
 
 \section{Disambiguation}\label{disamb}
 
-May be done in several ways. fsig, as suggested by \cite{Koskenniemi89}, and it may be done with CG-2, as shown by Tapanainen. here, in Eckhard Bick's version vislcg.
+Disambiguation may be done in several ways. One is Finite-state intersection grammar, as suggested by \cite{Koskenniemi97}. In our Sámi project, we have chosen a different path, and use constraint grammar, as presented by \cite{Tapanainen96}, here in Eckhard Bick's open-source version \textit{vislcg}. This component is being written by Trond Trosterud and Marit Julien. Although still under development, it is already good enough to match the level of statistically-based POS taggers. At its present stage, it contains approximately 1300 disambiguation rules.
 
 
 \section{Twol in use}
@@ -45,31 +46,104 @@ A grammatical analysator can be used for many purposes. We will here have a look
 
 \subsection{Pedagogical programs}\label{ped}
 
-The Sámi analysator has been used to analyse sentences for interactive pedagogical syntax learning in the so-called visl project (Visual Syntax Learning) at Syddansk Universitet. The format in itself is not dependent upon having a grammatical analysator, but the analysator makes it possible to add sentences automatically. 
+The Sámi analysator has been used to analyse sentences for interactive pedagogical syntax learning in the so-called visl project (Visual Syntax Learning) at Syddansk Universitet. The format in itself is not dependent upon having a grammatical analysator, but the analysator makes it possible to add sentences automatically. The process behind the analysis in Figure \ref{underlying} consists of three parts:
 
-\begin{table}[htdp]
-\caption{Underlying representation of sentences in visl}
+\begin{enumerate}
+\item The morphological analyser gives all possible analyses
+\item A morphological disambiguator removes the incorrect ones, and add syntactic functions
+\item A phrase structure grammar gives the linear representation a hierarchical structure
+\end{enumerate}
+
+At present, beta versions of the first two components are in place. The third component is still missing.
+For a sentence like \textit{Áhčči lea oastán munnje divrras sabehiid} 'Father has bought me a an expensive pair of skis', the morphological analyser gives the representation in Figure \ref{fatherall}.
+
+\begin{figure}[htdp]
+\caption{Morphological analysis}
 \begin{center}
-\begin{verbatim}{|c|c|}
-Áhčči lea oastán munnje sabehiid. (Father has bought me a a pair of skis.)
+\begin{verbatim}
+"<Áhčči>"
+         "áhčči" N Sg Nom
+"<lea>"
+         "leat" V Ind Prs Sg3
+"<oastán>"
+         "oastit" V PrfPrc
+         "oastit" V* N Actor Sg Nom PxSg1
+         "oastit" V* N Actor Sg Gen PxSg1
+         "oastit" V* N Actor Sg Acc PxSg1
+         "oasti" N Sg Nom PxSg1
+         "oasti" N Sg Gen PxSg1
+         "oasti" N Sg Acc PxSg1
+"<munnje>"
+         "mun" Pron Pers Sg1 Ill
+"<divrras>"
+         "divrras" A Attr
+         "divrras" A Sg Nom
+"<sabehiid>"
+         "sabet" N Pl Gen
+         "sabet" N Pl Acc
+"<.>"
+         "." CLB
+\end{verbatim}
+\end{center}
+\label{fatherall}
+\end{figure}%
+
+After disambiguation and adding of syntactic functions, the same sentence can be seen in Figure \ref{fatherdis}.
+
+\begin{figure}[htdp]
+\caption{Disambiguated version}
+\begin{center}
+\begin{verbatim}
+"<Áhčči>"
+        "áhčči" N Sg Nom @SUBJ
+"<lea>"
+        "leat" V Ind Prs Sg3 @+FAUXV
+"<oastán>"
+        "oastit" V PrfPrc @-FMAINV
+"<munnje>"
+        "mun" Pron Pers Sg1 Ill @ADVL
+"<divrras>"
+         "divrras" A Attr @AN>
+"<sabehiid>"
+        "sabet" N Pl Acc @OBJ
+"<.>"
+\end{verbatim}
+\end{center}
+\label{fatherdis}
+\end{figure}%
+
+The underlying representation of the pedagogical program takes the disambiguated analysis as input, and makes a tree structure, as seen in Figure \ref{underlying}. At present, this process is only partly automatised, the bracketing of constituents (denoted with '=') must be done manually, making such a component is the next task ahead.
+
+\begin{figure}[htdp]
+\caption{Underlying representation in the pedagogical program}
+\begin{center}
+\begin{verbatim}
 S:n('áhčči',sg,nom)	Áhčči
 P:g
 =D:v('leat',ind,pr,3sg)	lea
 =H:v('oastit',pcp2)	oastán
 A:pron('mun',<pers>,1sg,ill)	munnje
-Od:n('sabet',pl,acc)	sabehiid
+Od:g
+=D:adj('divrras',attr)  divrras
+=H:n('sabet',pl,acc)	sabehiid
 \end{verbatim}
 \end{center}
 \label{underlying}
-\end{table}%
+\end{figure}%
+
+A pilot set of 200 Sámi sentences will shortly be included in the \textit{http://visl.sdu.dk/visl/}. As an illutration of the format, figure \ref{fin} gives an impression of what the representation will look like, for the sentence \textit{Vanhemmat olivat pitkän riidan jälkeen kauhean väsyneitä} (The parents were terribly tired after a long argument). The sentence is taken from the Finnish sentences at the \textit{visl} homepage, and int is analysed by Esa Aaltonen.
 
 
-Include a representation of the tree structure of sentence.
+\begin{figure}
+\caption{Graphical version of a similar sentence in Finnish}
+\begin{center}
+\includegraphics{finsnt.png}
+\end{center}
+\label{fin}
+\end{figure}
 
 
-Here I will include something on how this works.
-
-Later, when the analysator becomes better, it will also be possible to offer an open system, where the computer analyses user input and offers an interface for the user to analyse for himself. Today, this has been done for Danish, and other languages will follow (?).
+Later, when the analysator becomes better, it will also be possible to offer an open system, where the computer analyses user input and offers an interface for the user to analyse for himself. Today, this has been done for Danish.
 
 
 
