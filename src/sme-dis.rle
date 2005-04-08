@@ -357,7 +357,7 @@ SETS
 # VERBS
 # -----
 
-LIST COPULAS = "bissut" "gártat" "leat" "orrut" "šaddat" ;
+LIST COPULAS = "bissut" "gártat" "leahkit" "leat" "orrut" "šaddat" ;
 
 SET V-NON-COP = V - COPULAS ;
 
@@ -621,7 +621,7 @@ MAP (@<GQ) TARGET Gen IF (*-1 NUMERALS BARRIER NPNH);
 # Qantifier mappings
 # ------------------
 
-MAP (@QH-SUBJ @QH-OBJ) TARGET NUMERALS IF (0 Nom)(*1 Gen BARRIER NPNH);
+MAP (@SUBJ-QH @OBJ-QH) TARGET NUMERALS IF (0 Nom)(*1 Gen BARRIER NPNH);
 
 MAP (@QN>) TARGET Num IF (*1 Ill OR Loc OR Com OR Ess BARRIER NPNH) ;
 
@@ -4159,7 +4159,7 @@ SELECT (N Pl Gen) IF (-1 ("mihkkege"));
 # Genitive in front of actio
 # - - - - - - - - - - - - - -
 SELECT Gen IF (NOT *-1 ("leat") BARRIER CS)(NOT 0 Interr)(1 Actio)(NOT 1 Ess)
-	(NOT 2 Po);
+	(NOT 1 (V Actio Loc))(NOT 2 Po);
 	## Divššohas sáhttá geassit iežas miehtama ruovttoluotta.
 
 
@@ -4189,7 +4189,7 @@ SELECT Acc IF (*-1 ("vuoi") BARRIER NPNH)(NOT 0 TIME LINK *-1 (N Acc) BARRIER ("
 	(NOT *1 N BARRIER NPNH OR CC OR CLB);
 	## Vuoi du, Betsaida!
 
-SELECT Acc IF (*-1 ("vuoi") BARRIER NON-NP OR CLB)(0 N)
+SELECT Acc IF (*-1 ("vuoi") BARRIER NON-NP OR CLB OR CP)
 	(NOT 0 TIME LINK *-1 (N Acc) BARRIER ("vuoi"))(1 NP-BORDER);
 	## Vuoi dán máilmmi ja dan fillehusaid!
  
@@ -4199,6 +4199,9 @@ SELECT Acc IF (*-1 ("vuoi") BARRIER NON-NP)(0 Dem);
 SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 Acc LINK *-1 ("vuoi") BARRIER NON-NP)
 	(NOT 0 Dem OR Pers);
 	## Vuoi áhpehemiid ja njamaheddjiid daid beivviid! 
+
+SELECT Acc IF (*-1 Pers BARRIER NPNH OR CLB LINK *-1 ("vuoi") BARRIER NON-ADV);
+	##  Muhto vuoi din riggáid, dasgo dii lehpet juo ožžon iludet.
 
 
 # Genitive (or nominative) in clause without full verb
@@ -6687,6 +6690,10 @@ REMOVE Nom IF (*-1 Inf BARRIER NPNH)(*1 CC OR CS OR CP OR EOS BARRIER WORD
 SELECT Nom IF (-1 ("okta" Nom))(0 ("eará"));
 	## Ii oktage eará go báhpat oaččo borrat.
 
+SELECT Acc IF (*-1 (V Actio Loc) BARRIER NPNHA)(NOT *1 N BARRIER NPNH);
+	## Álbmotčeardan geaid eallindilli hehttii sin ráhkadeames 
+	## makkárge sierra stáhta.
+
 
 # Other rules for nominals
 # ========================
@@ -6821,59 +6828,58 @@ REMOVE V-DER; # Removes only if there is another reading.
 SELECT (@SUBJ) IF (0 (N Pl Nom))(*-1 COPULAS BARRIER NPNH)
 	(*-1 V-PL3 BARRIER VFIN LINK *-1 (Sg Nom) BARRIER NON-ADV-PCLE
 	LINK NOT *-1 CC BARRIER NPNH LINK -1 Nom); 
-	##
+	## Erenoamáš ulbmiljoavku leat doavttergrádastudeanttat.
  
 SELECT (@SUBJ) IF (*-1 CC BARRIER NPNH LINK -1 Nom)
 	(*1 V-PL3 BARRIER NON-ADV-PCLE);
-	##
+	## Muhto buođđogeažit ja giđđabuođut ráhkaduvvojit muđui seammá vugiid 
+	## mielde.
 
-SELECT (@QH-SUBJ) IF (0 Nom);
-	##
+SELECT (@SUBJ-QH) IF (0 Nom);
+	## olbma čáppa, doaimmalaš nieidda livžo áhčiset riegádanbeaivve.
 
 SELECT (@SPRED) IF (*-1 COPULAS BARRIER VERB OR CS OR CP OR go LINK *-1 Nom 
 	BARRIER VERB OR CS OR CP)(NOT 0 Prop)(NOT 0 Actio LINK 1 N);
-	##
+	## Dat lea oahpaheaddjin doppe.
 
 SELECT (@SPRED) IF (*-1 COPULAS BARRIER NPNH OR COMMA LINK 0 PrfPrc 
 	LINK *-1 ("leat") BARRIER NON-ADV-PCLE LINK *-1 
 	Nom BARRIER VERB OR CS OR CP);
 	## Arkelaus lei šaddan Judea gonagassan áhčis Herodesa maŋŋil.
 
-SELECT (@SPRED) IF (*1 COPULAS BARRIER NON-ADV-PCLE LINK *1 Prop OR Pers 
-	BARRIER NON-ADV-PCLE LINK 0 Nom);
+SELECT (@SPRED) IF (*1 COPULAS BARRIER NON-ADV-PCLE OR CLB LINK *1 Prop OR Pers 
+	BARRIER NON-ADV-PCLE OR CLB LINK 0 Nom);
 	## Salmai riegadii Boas, gean eadni lei Rahab.
 
 SELECT (@SPRED) IF (*-1 BOS OR REALCLB OR PUNCT BARRIER NON-CC)(0 A)
 	(1 (Pers Nom));
-	##
+	## Heittogat dat leat maiddái.
+	## Ávdugasat sii geat moraštit.
 
-SELECT (@SPRED) IF (*-1 (Pers Nom) BARRIER NPNHA LINK *-1 COPULAS 
-	BARRIER NON-ADV-PCLE);
+SELECT (@SPRED) IF (*-1 (Pers Nom) BARRIER NPNHA OR CLB LINK *-1 COPULAS 
+	BARRIER NON-ADV-PCLE)(NOT 0 Interr);
 	## Leat go don árgi bajándálkkis?
  
-SELECT (@SPRED) IF (0 A)(*-1 ("leat" Sg3)) ;
-	##
+SELECT (@SPRED) IF (0 A)(*-1 ("leat" Sg3) BARRIER VFIN);
+	## Dutnje lea buoret ahte don massát ovtta lahtu.
 
-SELECT (@SPRED) IF (0 (Sg Nom))(*1 COPULAS BARRIER NON-ADV-PCLE LINK 0 (Pl3) 
+SELECT (@SPRED) IF (0 (Sg Nom))(*1 COPULAS BARRIER NON-ADV-PCLE OR CLB LINK 0 (Pl3) 
 	LINK *1 (Pl Nom) BARRIER NPNHA);
-	##
+	## Erenoamáš ulbmiljoavku leat doavttergrádastudeanttat.
 	
 SELECT (@SPRED) IF (-1 ("mii" Pron Interr Sg Gen))(0 A);
 	## Man guhkki lea skuvlii?
 	## In dieđe man buorit dat leat.
 
 
-# Other grammatical functions
-# ---------------------------
+# Verbal functions
+# ----------------
 
-REMOVE (@QH-SUBJ) IF (NOT 0 Nom);
-	##
-
-SELECT (@OPRED) IF (*-1 (@OBJ) BARRIER NON-NP)(0 Ess) ;
-	##
-
-SELECT (@+FAUXV) IF (*1 Inf OR PrfPrc OR (Actio Ess) OR ConNeg BARRIER CS OR CP) ;
+SELECT (@+FAUXV) IF (*1 Inf OR PrfPrc OR (Actio Ess) BARRIER CS OR CP OR VFIN);
 	## Máhtte áigu heaitit vuola juhkamis.
+
+SELECT (@+FAUXV) IF (*1 ConNeg BARRIER CS OR CP OR Neg);
+	## Allos dattege šatta nu go mun dáhtun, muhto nugo don dáhtut.
 
 REMOVE (@+FAUXV) IF (NOT *1 Inf OR PrfPrc OR (Actio Ess) OR ConNeg BARRIER CS OR CP);
 	## Maid Máret áiggui goarrumis?
@@ -6881,11 +6887,30 @@ REMOVE (@+FAUXV) IF (NOT *1 Inf OR PrfPrc OR (Actio Ess) OR ConNeg BARRIER CS OR
 SELECT (@-FAUXV) IF (*1 Inf OR PrfPrc OR (Actio Ess) BARRIER CS OR CP);
 	## In beassan dal deatnojohtima oaidnit.
 
+REMOVE (@-FAUXV) IF (0 (@-FMAINV));
+	## Sápmelaččat ledje orron dáin guovlluin 1600-logu birrasiin. 
 
-CONSTRAINTS
+
+# Other grammatical functions
+# ---------------------------
+
+REMOVE (@SUBJ-QH) IF (NOT 0 Nom);
+	## Mun máksen 100 ruvnno duvle.
+
+SELECT (@OPRED) IF (*-1 (@OBJ) BARRIER NON-NP)(0 Ess) ;
+	##
+
+
+# ----------- #
+  CONSTRAINTS
+# ----------- #
 
 REMOVE (@+FAUXV) ;
+
+
 REMOVE (@SPRED) ;
+
+
 REMOVE (@OPRED) ;
 
 
