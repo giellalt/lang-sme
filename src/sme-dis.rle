@@ -534,6 +534,10 @@ LIST N-PX = "áhčči" "bárdni" "eadni" "nieida";
  # Nominals that well may have a Px.
 
 
+LIST ALU = ("allu" Gen)("assu" Gen)("čiekŋu" Gen)("gassu" Gen)("govdu" Gen)
+	   ("guhkku" Gen)("lossu" Gen)("stuorru" Gen)("viidu" Gen);
+
+
 # Miscellaneous sets
 # ------------------
 
@@ -611,7 +615,7 @@ MAP (@DN>) TARGET Dem IF (*1 Num OR Pron OR A OR N BARRIER NPNH);
 # Genitive mappings
 # -----------------
 
-MAP (@GN>) TARGET Gen IF (*1 N BARRIER NPNH) ;
+MAP (@GN>) TARGET Gen IF (NOT 0 ALU)(*1 N BARRIER NPNH) ;
 MAP (@GP>) TARGET Gen IF (1 Po) ;
 MAP (@<GP) TARGET Gen IF (*-1 Pr BARRIER NPNH) ;
 
@@ -621,9 +625,12 @@ MAP (@<GQ) TARGET Gen IF (*-1 NUMERALS BARRIER NPNH);
 # Qantifier mappings
 # ------------------
 
-MAP (@SUBJ-QH @OBJ-QH) TARGET NUMERALS IF (0 Nom)(*1 Gen BARRIER NPNH);
+MAP (@SUBJ-QH @OBJ-QH) TARGET NUMERALS IF (0 Nom)(*1 Gen BARRIER NPNH)
+	(NOT *1 ALU BARRIER NON-NP);
 
 MAP (@QN>) TARGET Num IF (*1 Ill OR Loc OR Com OR Ess BARRIER NPNH) ;
+
+MAP (@QN>) TARGET Num IF (0 Acc)(*1 ALU BARRIER NON-NP);
 
 
 # Attribute mappings
@@ -709,6 +716,9 @@ MAP (@-FMAINV) TARGET (V Actio Ess);
 # -----------------
 
 MAP (@SUBJ @SPRED) TARGET Nom ;
+
+MAP (@SPRED) TARGET ALU ;
+
 MAP (@OBJ) TARGET Acc ;
 
 
@@ -1436,9 +1446,6 @@ REMOVE N IF (-1 (N Gen) OR (Pron Pers Gen))(NOT -1 Nom)(0 Po)(NOT 0 ("guovddáš
 
 REMOVE PrsPrc IF (-1 A)(NOT -1 Adv)(NOT 1 Ess); 
 	## Dainnna ii leat vissis mearri galljodagas.
-
-REMOVE VGen IF (*-1 Num BARRIER NPNH OR Gen)(0 N);
-	## Golbma nuora ledje mielde golmma vahkosaš gieddebarggus. 
 
 SELECT A IF (-1 ("eambbo"));
 	## Muhto eambbo eahpidahtti lea čielggadusa s. 17 cealkámuš.
@@ -3476,7 +3483,8 @@ SELECT (A Sg Nom) IF (-1 NP-HEAD-SG-NOM)(*-2 COPULAS BARRIER NON-ADV-PCLE)
 	## Dábálaččat lea čuollu guhkit, golbma, njellja firbmebaji guhku.
 
 SELECT (Sg Nom) IF (*-1 Ill BARRIER NON-ADV-PCLE LINK *-1 COPULAS 
-	BARRIER NON-ADV-PCLE)(NOT 0 PrfPrc)(*-1 V-SG3 BARRIER V-NON-AUX);
+	BARRIER NON-ADV-PCLE)(*-1 V-SG3 BARRIER V-NON-AUX)(NOT 0 PrfPrc)
+	(NOT 0 NUMERALS LINK *1 ALU BARRIER NON-NP);
 	## ...muhtun gii lei sutnje velggolaš logi duhát taleantta.
 	## Mus lea dutnje juoga dadjamuš.
 
@@ -4030,6 +4038,19 @@ SELECT N IF (NOT 0 Po OR Adv OR VFIN OR Inf OR PrfPrc OR PrsPrc OR (Num Nom))
   CONSTRAINTS #
 # =========== #
 
+# Special rules
+# =============
+
+# Accusative or genitive in front of ALU
+# --------------------------
+
+SELECT Acc IF (0 NUMERALS)(*1 ALU BARRIER NON-NP);
+	## Visti lei vihtta mehter alu.
+
+SELECT Gen IF (0 ("okta"))(1 ALU);
+	## Dábálaččat leat joddut sullii ovtta guhku.
+
+
 # Genitive
 # ========
  # Since disambiguation between accusative and genitive is very difficult, let us
@@ -4188,7 +4209,7 @@ SELECT (Actio Gen) IF (1 ("láhki" N Sg Ill));
 	## láhkái.
 
 
-# Accusative after "vuoi" (exceptions to next rule)
+# Accusative after "vuoi" (exceptions to REMOVE Acc-rule below)
 # - - - - - - - - - - - - - - - - - - - - - - - - -
 SELECT Acc IF (*-1 ("vuoi") BARRIER NPNH)(NOT 0 TIME LINK *-1 (N Acc) BARRIER ("vuoi"))
 	(NOT *1 N BARRIER NPNH OR CC OR CLB);
