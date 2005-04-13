@@ -11,6 +11,13 @@ XFST = xfst -utf8
 TWOLC = twolc -utf8
 LEXC =  lexc -utf8
 
+SOURCEFILES = sme-lex.txt adj-sme-lex.txt \
+	adv-sme-lex.txt noun-sme-lex.txt verb-sme-lex.txt \
+	closed-sme-lex.txt pp-sme-lex.txt acro-sme-lex.txt \
+	abbr-sme-lex.txt propernoun-sme-lex.txt punct-sme-lex.txt
+
+NONRECFILES := $(patsubst %.txt,%.nonrec,$(SOURCEFILES))
+
 
 # =============================== #
 # Building the last file isme.fst # 
@@ -280,6 +287,28 @@ sme.save: ../bin/sme.save
 	quit \n" > ../../tmp/sme-save-script
 	$(LEXC) < ../../tmp/sme-save-script
 	@rm -f ../../tmp/sme-save-script
+
+# We need a variant of this third goal, to build a non-recursive sme.save
+# This goal depends on twol-sme.bin and a bunch of lexicon files
+
+nonrec-sme.save: ../bin/nonrec-sme.save
+../bin/nonrec-sme.save: ../bin/twol-sme.bin $(NONRECFILES)
+	@echo
+	@echo "*** Building nonrec-sme.save ***" ;
+	@echo
+	printf "compile-source $(NONRECFILES) \n\
+	read-rules ../bin/twol-sme.bin \n\
+	compose-result \n\
+	save-result ../bin/nonrec-sme.save \n\
+	quit \n" > ../../tmp/nonrec-sme-save-script
+	$(LEXC) < ../../tmp/nonrec-sme-save-script
+	@rm -f ../../tmp/nonrec-sme-save-script
+
+$(NONRECFILES): $(SOURCEFILES)
+	@echo
+	@echo "*** Removing circular entries ***" ;
+	@echo
+	@grep -v '^C^' $^ > $@
 
 # The fourth goal is to build twol-sme.bin
 # This goal depends on twol-sme.txt
