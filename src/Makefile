@@ -431,6 +431,7 @@ foreign.fst: ../bin/old-foreign.fst
 clean:
 	@rm -f ../bin/*.fst ../bin/*.save ../bin/*.bin ../bin/abbr.txt *.nonrec
 
-
-
-
+# Another clean target to remove only the temp files for making the 
+# non-circular transducer:
+rec-clean:
+	@rm -f *.nonrec
