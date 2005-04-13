@@ -308,7 +308,7 @@ $(NONRECFILES): $(SOURCEFILES)
 	@echo
 	@echo "*** Removing circular entries ***" ;
 	@echo
-	@grep -v '^C^' $^ > $@
+	@grep -v '\^C\^' $< > $@
 
 # The fourth goal is to build twol-sme.bin
 # This goal depends on twol-sme.txt
@@ -425,10 +425,11 @@ foreign.fst: ../bin/old-foreign.fst
 # make clean #
 # ========== #
 
-# "make clean" is there to remove the binary files at will.
+# "make clean" is there to remove the binary files, as well as the
+# temporary nonrec files, at will.
 
 clean:
-	@rm -f ../bin/*.fst ../bin/*.save ../bin/*.bin ../bin/abbr.txt
+	@rm -f ../bin/*.fst ../bin/*.save ../bin/*.bin ../bin/abbr.txt *.nonrec
 
 
 
