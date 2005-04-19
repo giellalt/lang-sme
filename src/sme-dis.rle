@@ -435,7 +435,7 @@ LIST ACC-INF-VERB = "bivdit" "čuorvut" "dagahit" "diktit" "gohččut" "movttiid
 	## Ii suova nieiddas náitalit.
 
 
-LIST OPRED-VERB = "atnit" "dahkat" "gohčodit" "oaidnit" "válljet";
+LIST OPRED-VERB = "atnit" "dahkat" "gohčodit" "gohččut" "válljet";
  # Verbs that often occur with objects that have secondary predicates.
 
 LIST MOVEMENT-VERB = "mannat";
@@ -640,6 +640,9 @@ MAP (@GN>) TARGET Gen IF (NOT 0 ALU OR Cmpnd)(*1 N BARRIER NPNH) ;
 MAP (@<GQ) TARGET Gen IF (*-1 NUMERALS BARRIER NPNH);
 	## Mun máksen 100 ruvnno duvle.
 
+MAP (@SPRED) TARGET Gen IF (*-1 COPULAS BARRIER NON-ADV-PCLE)(1 EOS OR CS);
+	## Dat lea mu.
+
  
 # Qantifier mappings
 # ------------------
@@ -689,6 +692,7 @@ MAP (@AN>) TARGET PrfPrc IF (*-1 BOS OR REALCLB BARRIER NPNH)(NOT 0 ("leat"))
 	## Sajáiduvvan fágadoahpagiid sáhttá dieđusge geavahit.
 
 MAP (@AN>) TARGET PrfPrc IF (NOT *-1 ("leat") OR Neg BARRIER CS)(NOT 0 ("leat"))
+	(NOT *-1 Acc BARRIER NON-ADV-PCLE LINK *-1 V-NON-AUX BARRIER NPNHA)
 	(*1 N BARRIER NPNH);
 	## Vuoigatvuohta dearvvašvuođaveahkkái gusto riikka almmolaš ruhtaduvvon 
 	## spesialistadearvvašvuođabálvalussii.
@@ -750,6 +754,9 @@ MAP (@-FAUXV) TARGET AUX IF (*-1 Neg)(0 ConNeg OR PrfPrc);
 MAP (@-FAUXV) TARGET PrfPrc IF (0 ("leapma" Dimin));
 	## Máŋgga oktavuođas lea leamaš stuora jearru ja dárbu
 	## eamiálbmotdutkamiid fágaidgaskasaš semináraide.
+
+MAP (@-FAUXV) TARGET AUX IF (*-1 INF-VERB BARRIER VFIN OR CC OR CS OR CP)(0 Inf);
+	## Dat áigu leat ruovttus.
 
 MAP (@+FAUXV) TARGET AUX IF (0 VFIN);
 	## Don šattat vel joksat Sirpmás gohcciid.
@@ -1081,7 +1088,7 @@ REMOVE Foc IF (0 Actio OR VGen);
 
  # Many Actios in -han are also PrfPrcs, but targeting Actio gives a better result.
  
-REMOVE (N Ess) IF (0 (V Actio Ess));
+REMOVE (N Ess) IF (NOT *-1 OPRED-VERB BARRIER VERB)(0 (V Actio Ess));
 	## Son oinnii Ipmila Vuoiŋŋa boahtimin vuolás.
 	## Luosahat adnojuvvojit dalle goas stuorát guolli lea vuodjamin.
 
@@ -2532,6 +2539,11 @@ SELECT Adv IF (0 ("gosa"))(*1 VFIN BARRIER CLB OR CS);
        ## Son oinnii báikkiid gosa juo ledje ásaiduvvan. 
  # Here, the rule giving the verbal reading of "gosa" is missing. It must
  # be added.
+
+# gosage
+# - - - -
+SELECT ("gosage") IF (*-1 Neg BARRIER VFIN);
+	## Mii eat sáhttán vuolgit gosage.
 
 # gusto
 # - - -
@@ -4284,7 +4296,8 @@ SELECT (N Pl Gen) IF (-1 ("mihkkege"));
 # Genitive in front of actio
 # - - - - - - - - - - - - - -
 SELECT Gen IF (NOT *-1 ("leat") BARRIER CS)(NOT 0 Interr)(1 Actio)(NOT 1 Ess)
-	(NOT 1 (V Actio Loc))(NOT 2 Po);
+	(NOT 1 (V Actio Loc))(NOT 1 PrfPrc LINK *1 NP-HEAD-ACC BARRIER NPNH)
+	(NOT 2 Po);
 	## Divššohas sáhttá geassit iežas miehtama ruovttoluotta.
 
 
@@ -5400,6 +5413,11 @@ SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 Ess LINK -1 Acc)(NOT 0 PrsPrc)
 	(1 A OR Ess);
 	## ...dahkan doaimmaid vuoiggaleabbun ja sosiálabálvalusaid álkibut.
 
+SELECT Acc IF (*-1 V-NON-AUX BARRIER NON-ADV-PCLE)(1 Ess);
+	## Mun oidnen Máreha mánnán.
+	## Mun oidnen Máreha boahtime.
+ # The rule also hits objects in front of Actio Ess, which seems OK.
+
 REMOVE Acc IF (*-1 Acc BARRIER NON-NP OR Inf OR CLB LINK *-1 OPRED-VERB 
 	BARRIER NPNH)
 	(NOT -1 ("/") OR CC LINK -1 Acc);
@@ -5418,6 +5436,10 @@ REMOVE Acc IF (*-1 Acc BARRIER NON-NP LINK *-1 OPRED-VERB BARRIER NON-NP)
 SELECT Acc IF (*-1 V-NON-AUX-PASS BARRIER NON-NP)(NOT 0 Gen LINK *1 (N Acc) 
 	BARRIER NPNH OR CC)(*1 (Actio Ess) BARRIER NON-NP LINK NOT -1 CC);
 	## De oinnii olbmá čohkkámin tuolloviesus.
+
+SELECT Acc IF (*-1 V-NON-AUX-PASS BARRIER NON-NP)(NOT 0 Gen LINK *1 (N Acc) 
+	BARRIER NPNH OR CC)(*1 PrfPrc BARRIER NON-ADV-PCLE);
+	## Niillas logai Máhte geahččan Máreha ráfálaččan.
 
 
 # Accusative in apposition
@@ -6722,7 +6744,7 @@ SELECT Actio IF (-1 NP-HEAD-GEN)(1 N)(2 NP-BORDER);
  # giela geavaheapmi journálain". Hence, the reading we get in both cases is 
  # V* n N Actio Sg Gen. 
 
-SELECT (Actio Gen) IF (1 ("dihte" Po) OR ("dihtii"))(*2 Acc BARRIER NPNH);
+SELECT (V Actio Gen) IF (1 ("dihte" Po) OR ("dihtii"))(*2 Acc BARRIER NPNH);
 	## Mun dál boađán du lusa čállin dihte dan reivve.
 
 REMOVE (Actio Pl Loc) IF (0 (Actio Sg Com));
