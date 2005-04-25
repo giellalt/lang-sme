@@ -36,8 +36,8 @@
                   # Disambiguating verbs - part 2
                   # Residual cases
                 # Cycle 3: Global and final disambiguation
+		# Cycle 4: Syntactic disambiguation
 
-             # Notes for future thought are put after the END symbol
 
 
 # ========== #
@@ -423,9 +423,9 @@ LIST INF-VERB = "adnot" "astat" "ádjánit" "áigut" "álgit" "ásahit" "bágget
 		"fertet" "fuobmát" "fuolahit" "galgat" "gáibidit" "gárrut" "gártat" 
 		"geahččalit" "geatnegahttit" "gierdat" "gillet" "gohččut" "háhppehit" 
 		"hálidit" "háliidit" "hárjánit" "heivet" "lávet" "mannat" "máhttit" 
-		"máššat" "movttiidahttit" "nagodit" "navdit" "oahpahit" "oahppat" 
-		"oažžut" "ollet" "ribahit" "riepmat" "sáhttit" "sihtat" "soaitit" 
-		"suovvat" "šaddat" "stađđat" "veadjit" "viggat" "viššat" 
+		"máššat" "movttiidahttit" "muitit" "nagodit" "navdit" "oahpahit" 
+		"oahppat" "oažžut" "ollet" "ribahit" "riepmat" "sáhttit" "sihtat" 
+		"soaitit" "suovvat" "šaddat" "stađđat" "veadjit" "viggat" "viššat" 
 		"vuogáiduvvat" "vuolgit" "vuollánit" "vuordit";
 
 LIST ACC-INF-VERB = "bivdit" "čuorvut" "dagahit" "diktit" "gohččut" "movttiidahttit" 
@@ -624,7 +624,7 @@ MAP (@DN>) TARGET Dem IF (*1 Num OR Pron OR A OR N BARRIER NPNH);
 # Genitive mappings
 # -----------------
 
-MAP (@GP>) TARGET Gen IF (1 Po) ;
+MAP (@GP>) TARGET Gen IF (NOT 0 (V Actio))(1 Po) ;
 	## Na mun gal hupmen dan birra.
 
 MAP (@<GP) TARGET Gen IF (*-1 Pr BARRIER NPNH) ;
@@ -643,6 +643,9 @@ MAP (@<GQ) TARGET Gen IF (*-1 NUMERALS BARRIER NPNH);
 MAP (@SPRED) TARGET Gen IF (*-1 COPULAS BARRIER NON-ADV-PCLE)(1 EOS OR CS);
 	## Dat lea mu.
 
+MAP (@SUBJ) TARGET Gen IF (1 Ger);
+	## Máhte lihkai Máreha boađedettiin.
+
  
 # Qantifier mappings
 # ------------------
@@ -657,8 +660,11 @@ MAP (@SUBJ-QH @OBJ-QH) TARGET NUMERALS IF (0 Nom)(*1 Gen BARRIER NPNH)
 MAP (@SUBJ @SPRED) TARGET (N Num Nom);
 	## Go sotnabeaivi šattai, de čuoigaledje máŋggas várrái.
 
-MAP (@QN>) TARGET Num IF (*1 Ill OR Loc OR Com OR Ess BARRIER NPNH) ;
+MAP (@QN>) TARGET Num IF (*1 Ill OR Loc OR Com BARRIER NPNH) ;
 	## Bargu ollašuhttit mánga dáin doaibmabijuin lea juo álggahuvvon.
+
+MAP (@QN>) TARGET Num IF (*1 Ess BARRIER NPNH LINK NOT 0 (V Actio));
+	##
 
 MAP (@QN>) TARGET Num IF (0 Acc)(*1 ALU BARRIER NON-NP);
 	## Noađđespagáin leat dat geažit guokte golbma tumá guhku.
@@ -755,7 +761,7 @@ MAP (@-FAUXV) TARGET PrfPrc IF (0 ("leapma" Dimin));
 	## Máŋgga oktavuođas lea leamaš stuora jearru ja dárbu
 	## eamiálbmotdutkamiid fágaidgaskasaš semináraide.
 
-MAP (@-FAUXV) TARGET AUX IF (*-1 INF-VERB BARRIER VFIN OR CC OR CS OR CP)(0 Inf);
+MAP (@-FAUXV) TARGET AUX IF (*-1 INF-VERB BARRIER VFIN OR CLB OR CS OR CP)(0 Inf);
 	## Dat áigu leat ruovttus.
 
 MAP (@+FAUXV) TARGET AUX IF (0 VFIN);
@@ -778,6 +784,12 @@ MAP (@-FMAINV) TARGET ConNeg ;
 
 MAP (@-FMAINV) TARGET (V Actio Ess);
 	## Oađidettiin gullen olbmo boahtimin.
+
+MAP (@-FMAINV) TARGET (V Actio Gen);
+	## Boađán du lusa čállin dihte dan reivve.
+
+MAP (@-FMAINV) TARGET (V Actio Loc) IF (*-1 V-NON-AUX BARRIER NON-ADV-PCLE);
+	## Juhán heittii suhkamis.
 
 
 # Argument mappings
@@ -810,6 +822,9 @@ MAP (@ADVL) TARGET (VAbess) ;
 
 MAP (@ADVL) TARGET VGen ;
 	##
+
+MAP (@ADVL) TARGET Ger ;
+	## Biigá lei bassaladdame báhpa boađedettiin.
 
 MAP (@ADVL) TARGET Ill ;
 	##
@@ -2228,9 +2243,6 @@ REMOVE (A Nom) IF (0 Adv)(1 (A Nom) LINK NOT *1 N BARRIER NPNH);
 REMOVE (V Ind) IF (-1 Nom LINK *-1 (V Ind) BARRIER NPNHA)(0 ADV-NOT-VERB);
 	## Oar-julggiid atnet olbmot dušše dalle go bodni lea nu garas ahte...
 
-REMOVE V-SG3 IF (*-1 V-SG3 BARRIER CS OR CP)(-1 ("dušše"))(0 ("oktii"));
-	## Vuoigatvuohta gusto dušše oktii.
-
 SELECT Adv IF (-1 (Pron Interr))(1 CC)(2C Adv)(NOT *3 A BARRIER NON-ADV);
 	## ... dan dearvvašvuođabálvalussii, mii ollásit dahje osohahkii... 
 
@@ -2684,6 +2696,9 @@ SELECT Adv IF (*-1 NUMERALS BARRIER NPNH LINK 0 Nom)(0 ("ovttas"))
 
 # oktii
 # - - -
+REMOVE V-SG3 IF (*-1 V-SG3 BARRIER CS OR CP)(-1 ("dušše"))(0 ("oktii"));
+	## Vuoigatvuohta gusto dušše oktii.
+
 REMOVE V IF (*-1 VFIN BARRIER CC OR CS OR CP)(0 ("oktii"));
 	## Vuoigatvuohta gusto dušše oktii seammá dilálašvuođa ovddas.
 
@@ -3053,8 +3068,8 @@ SELECT Indef IF (-1 ("menddo"))(0 N);
 	## ...ahte doaimmat eai juogaduvvo menddo ollugiidda.
 
 
-# Particular pronouns
-# -------------------
+# Particular indefinite pronouns
+# ------------------------------
 
 # eará
 # - - -
@@ -5353,6 +5368,10 @@ SELECT Acc IF (*-1 ("dihte") BARRIER NON-NP OR PUNCT LINK -1 Actio)
 SELECT Acc IF (*-1 V-NON-AUX-PASS BARRIER NPNHA)(1 (VAbess));
 	## In mun dáhto vuolggahit sin borakeahttá ruoktut.
 
+REMOVE Gen IF (*-1 V-NON-AUX BARRIER NPNHA)(*1 CC BARRIER WORD LINK *1 Nom BARRIER
+	NPNH LINK *1 VFIN BARRIER NON-ADV-PCLE);
+	## Mun lohken girjji ja Niillas guldalii ođđasiid.
+ 
 
 # Accusative sentence-finally
 # ---------------------------
@@ -6215,6 +6234,9 @@ SELECT V-SG3 IF (*-1 (N Sg Nom) BARRIER NON-ADV-PCLE)(0 (N Sg Ill))
 REMOVE Ill IF (NOT *-1 ("seammá") OR ("eará") BARRIER NPNH)(1 ("go" Pcle));
            ## Gos lei riegádan, ja máhtii go dárogiela?
 
+REMOVE (V Prt Pl3) IF (0 AUX)(0 (V Prs Sg3));
+	## Giellabargguid ferte viidásetfievrridit.
+
 
 # Infinitive subject
 # - - - - - - - - - -
@@ -6814,8 +6836,6 @@ SELECT VFIN IF (0 INF-VERB)(1 ("go" Pcle))(*2 Inf BARRIER VERB);
 	## Lea go son vuolgimin min álbmotguimmiid lusa geat ásset 
 	## greikalaččaid gaskkas, ja áigu go sárdnidit greikalaččaide ge?
 
-REMOVE (V Prt Pl3) IF (0 AUX)(0 (V Prs Sg3));
-	## Giellabargguid ferte viidásetfievrridit.
 
 
 
