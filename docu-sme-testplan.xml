@@ -1,96 +1,324 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN"
+"http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
   <header>
     <title>Test plan for sme</title>
+
     <authors>
       <person email="trond.trosterud@hum.uit.no" name="Trond Trosterud" />
     </authors>
   </header>
+
   <body>
     <section>
       <title>Test plan for sme</title>
+
       <section>
-        <title>Testing corpus text</title>
-        <p>At regular intervals, the corpus should be inspected, e.g. with the following command (~/gt/sme/ as the working directory):</p>
-        <p>
-          <code>cat corp/* | preprocess abbr=bin/abbr.txt | lookup -flags mbTT mbTT bin/sme.fst | grep '\?' | grep -v CLB | sort | uniq -c | sort -nr | less</code>
-        </p>
-        <p>The result will contain all non-Sami words in the lexicon. In order to remove these foreign words from the list, the following command may be used:</p>
-        <p>
-          <code>cat corp/* | preprocess abbr=bin/abbr.txt | lookup -flags mbTT mbTT bin/s\ me.fst | grep '\?' | grep -v CLB | cut -f1 | lookup -flags mbTT bin/foreign.fst | grep '\?' | sort | uniq -c | sort -nr | less</code>
-        </p>
-        <p>The resulting list is an overview over words not recognised by the parser. All-capital words should be ignored, or they could be tested separately, with the command</p>
-        <p>
-          <code>... | lookup -flags mbTT -f bin/cap-sme | ...</code>
-        </p>
-        <p>By using this script words written in CAPITALS are analysed as well, but run in this mode, the parser is to slow to analyse the full one-million word corpus.</p>
-        <p>The remaining words should be inspected. Failure of recognising words has one of three reasons:</p>
-        <ol>
-          <li>They are misspellings</li>
-          <li>They are missing from the lexicon</li>
-          <li>They are listed in the lexicon, but an error in the morphological or morphophonological system prevents the parser from recognising them.</li>
-        </ol>
-        <p>In simple cases, errors should just be corrected. Otherwise they should be reported to the <a href="http://giellatekno.uit.no/bugzilla/" >Bugzilla database</a>. Misspellings may be ignored, or, if they are frequent, they should be added to the lexicon, with a tag (at present the tag is &quot;! XXX substandard&quot;). When developing a spell checker, misspellings become interesting in their own right, but for the development of the disambiguator, we are more interested in actually analysing the words, than in pointing out that they are misspelled.</p>
-        <p>Clear formatting errors may be corrected in the corpus files, with the following command:</p>
-        <p>
-          <code>perl -i -pe 's/formatting_error/corrected_formatting/g' corp/filename</code>
-        </p>
-        <p>This should be done with care, and only when it is totally clear that the input string cannot be interpreted as anything else than a formatting error. The preferred way of dealing with formatting errors is to improve our <a href="../../tools/docu-conversionscripts.html" >conversion tools</a>.</p>
-        <p>Words missing in the lexicon should be added, with their proper lexicon.</p>
-        <p>Words listed in the lexicon, but with one or more word forms not analysed, are the most challenging ones. This implies that there is an error in the morphophonological file twol-sme.txt or more probably in the morphological section (for nouns, verbs and adjectives this means sme-lex.txt). In case of morphological errors, the path through the morphological derivation should be traced and inspected. In case of morphophonological errors there are procedures within twolc for detecting them (see the twolc manual).</p>
-      </section>
-      <section>
-        <title>Testing recall of texts</title>
-        <p>At regular intervals, new, previously unseen texts should be tested for type and token recall. The test prcedure, as well as test results, are explained in the <a href="sme-testdiary.html" >sme test diary</a>.</p>
-      </section>
-      <section>
-        <title>Testing the parser</title>
-        <p><a href="../infra/docu-testing.html" >testing tools</a></p>
-        <p>Status quo and directions for actively testing the parser:</p>
+        <title>Testing the morphological multitagger</title>
+
         <section>
-          <title>Testing the morphology</title>
-          <p>The best way of testing the morphology is perhaps the command <code>make n-paradigm WORD=johka</code>, as described in the testing tools. This method is fine for the inflection of nouns, verbs and adjectives. As of september 2004, the basic noun paradigms in Nickel have all ben tested, as have the CG patterns. Priority should now be given to adjectives, and to the verbs. The sublexica should all be run through the generator.</p>
+          <title>Lexical testing</title>
+
+          <p>Texts from various domains should be tested at regular
+          intervals</p>
+
+          <ul>
+            <li>Fiction</li>
+
+            <li>Religious texts</li>
+
+            <li>Administrative language, politics, etc.</li>
+
+            <li>Scientific texts</li>
+          </ul>
+
+          <p>The corpus should be inspected, e.g. with the following command
+          (~/gt/sme/ as the working directory):</p>
+
+          <p><code>cat corp/* | preprocess abbr=bin/abbr.txt | lookup -flags
+          mbTT mbTT bin/sme.fst | grep '\?' | grep -v CLB | sort | uniq -c |
+          sort -nr | less</code></p>
+
+          <p>The result will contain all non-Sami words in the lexicon. In
+          order to remove these foreign words from the list, the following
+          command may be used:</p>
+
+          <p><code>cat corp/* | preprocess abbr=bin/abbr.txt | lookup -flags
+          mbTT mbTT bin/s\ me.fst | grep '\?' | grep -v CLB | cut -f1 | lookup
+          -flags mbTT bin/foreign.fst | grep '\?' | sort | uniq -c | sort -nr
+          | less</code></p>
+
+          <p>The resulting list is an overview over words not recognised by
+          the parser. All-capital words should be ignored, or they could be
+          tested separately, with the command</p>
+
+          <p><code>... | lookup -flags mbTT -f bin/cap-sme | ...</code></p>
+
+          <p>By using this script words written in CAPITALS are analysed as
+          well, but run in this mode, the parser is to slow to analyse the
+          full one-million word corpus.</p>
+
+          <p>The remaining words should be inspected. Failure of recognising
+          words has one of three reasons:</p>
+
+          <ol>
+            <li>They are misspellings</li>
+
+            <li>They are missing from the lexicon</li>
+
+            <li>They are listed in the lexicon, but an error in the
+            morphological or morphophonological system prevents the parser
+            from recognising them.</li>
+          </ol>
+
+          <p>In simple cases, errors should just be corrected. Otherwise they
+          should be reported to the <a
+          href="http://giellatekno.uit.no/bugzilla/">Bugzilla database</a>.
+          Misspellings may be ignored, or, if they are frequent, they should
+          be added to the lexicon, with a tag (at present the tag is "! XXX
+          substandard"). When developing a spell checker, misspellings become
+          interesting in their own right, but for the development of the
+          disambiguator, we are more interested in actually analysing the
+          words, than in pointing out that they are misspelled.</p>
+
+          <p>Clear formatting errors may be corrected in the corpus files,
+          with the following command:</p>
+
+          <p><code>perl -i -pe 's/formatting_error/corrected_formatting/g'
+          corp/filename</code></p>
+
+          <p>This should be done with care, and only when it is totally clear
+          that the input string cannot be interpreted as anything else than a
+          formatting error. The preferred way of dealing with formatting
+          errors is to improve our <a
+          href="../../tools/docu-conversionscripts.html">conversion
+          tools</a>.</p>
+
+          <p>Words missing in the lexicon should be added, with their proper
+          lexicon.</p>
+
+          <p>Words listed in the lexicon, but with one or more word forms not
+          analysed, are the most challenging ones. This implies that there is
+          an error in the morphophonological file twol-sme.txt or more
+          probably in the morphological section (for nouns, verbs and
+          adjectives this means sme-lex.txt). In case of morphological errors,
+          the path through the morphological derivation should be traced and
+          inspected. In case of morphophonological errors there are procedures
+          within twolc for detecting them (see the twolc manual).</p>
         </section>
+
+        <section>
+          <title>Grammatical testing</title>
+
+          <p>We want to test the following:</p>
+
+          <ul>
+            <li>All forms of all paradigms</li>
+
+            <li>All consonant gradation patterns</li>
+
+            <li>All vowel alternations</li>
+
+            <li>Compounds</li>
+          </ul>
+
+          <p>There is a discussion of this on the newsgroup. TODO: copy that
+          discussion into this document.</p>
+        </section>
+
+        <section>
+          <title>Testing the parser</title>
+
+          <p><a href="../infra/docu-testing.html">testing tools</a></p>
+
+          <p>Status quo and directions for actively testing the parser:</p>
+
+          <section>
+            <title>Testing the morphology</title>
+
+            <p>The best way of testing the morphology is perhaps the command
+            <code>make n-paradigm WORD=johka</code>, as described in the
+            testing tools. This method is fine for the inflection of nouns,
+            verbs and adjectives. As of september 2004, the basic noun
+            paradigms in Nickel have all ben tested, as have the CG patterns.
+            Priority should now be given to adjectives, and to the verbs. The
+            sublexica should all be run through the generator.</p>
+          </section>
+        </section>
+
         <section>
           <title>Testing the individual lexemes</title>
+
           <section>
             <title>Adjectives</title>
-            <p>As for the adjectives, there are several subtypes that are not covered by the existing lexica. One possible way of monitoring the situation would be to write a perl script (or shell script) that takes as input a list of adjectives, and gives their nom.sg., attributive form, gen.sg, comparative nominative, comparative genitive, superlative and superlative genitive forms, and then run representative lists of adjectives through the script.</p>
+
+            <p>As for the adjectives, there are several subtypes that are not
+            covered by the existing lexica. One possible way of monitoring the
+            situation would be to write a perl script (or shell script) that
+            takes as input a list of adjectives, and gives their nom.sg.,
+            attributive form, gen.sg, comparative nominative, comparative
+            genitive, superlative and superlative genitive forms, and then run
+            representative lists of adjectives through the script.</p>
           </section>
+
           <section>
             <title>Verbs</title>
-            <p>As for the verbs, the verb file should be read through and checked for transitivity (the question is whether the verbs are assigned correct sublexicon).</p>
+
+            <p>As for the verbs, the verb file should be read through and
+            checked for transitivity (the question is whether the verbs are
+            assigned correct sublexicon).</p>
           </section>
+
           <section>
             <title>P-positions and adverbs</title>
-            <p>TODO for a person with Sami as mother tongue: Read through the pp-sme-lex.txt and adv-sme-lex.txtfiles and evaluate the division into prepositions, postpositions, adpositions and adverbs.</p>
+
+            <p>TODO for a person with Sami as mother tongue: Read through the
+            pp-sme-lex.txt and adv-sme-lex.txtfiles and evaluate the division
+            into prepositions, postpositions, adpositions and adverbs.</p>
           </section>
+
           <section>
             <title>Pronouns</title>
-            <p>Perhaps a script could be made to run all pronouns through a test.</p>
+
+            <p>Perhaps a script could be made to run all pronouns through a
+            test.</p>
           </section>
+
           <section>
             <title>Numerals</title>
-            <p>The chapter on numerals is still not properly written. Wait with testing this until the code is more stable.</p>
+
+            <p>The chapter on numerals is still not properly written. Wait
+            with testing this until the code is more stable.</p>
           </section>
         </section>
+
+        <section>
+          <title>Testing the correctness of the given analyses</title>
+
+          <p>When we test whether words are let through or not, we do not test
+          whether the parser actually gives correct analyses. A word may thus
+          be misanalysed, in two ways:</p>
+
+          <ol>
+            <li>It is misspelled, but still given an (errouneous)
+            analysis</li>
+
+            <li>It is correctly spelled, but given a grammatical analysis that
+            it should not have had</li>
+          </ol>
+
+          <p>The first issue is of major concern to the spell checker project,
+          and will not be dealt with here.</p>
+
+          <p>The second issue has great importance to the disambiguator, and
+          to the form generator isme.fst. Errors of this type pop up in two
+          contexts: When the parser is used as input to the disambiguator (and
+          the correct reading is missing from the input), and as a result of
+          regularly reading through the analysis of a shorter,
+          non-disambiguated text.</p>
+        </section>
       </section>
+
       <section>
-        <title>Testing the correctness of the given analyses</title>
-        <p>When we test whether words are let through or not, we do not test whether the parser actually gives correct analyses. A word may thus be misanalysed, in two ways:</p>
-        <ol>
-          <li>It is misspelled, but still given an (errouneous) analysis</li>
-          <li>It is correctly spelled, but given a grammatical analysis that it should not have had</li>
-        </ol>
-        <p>The first issue is of major concern to the spell checker project, and will not be dealt with here.</p>
-        <p>The second issue has great importance to the disambiguator, and to the form generator isme.fst. Errors of this type pop up in two contexts: When the parser is used as input to the disambiguator (and the correct reading is missing from the input), and as a result of regularly reading through the analysis of a shorter, non-disambiguated text.</p>
+        <title>Testing of the disambiguator</title>
+
+        <section>
+          <title>Methods</title>
+
+          <p>Disambiguating is tested in the following way:</p>
+
+          <ul>
+            <li>Ambiguity = #Parses / #Tokens</li>
+
+            <li>Recall = #Tokens Correctly Disambiguated / # Tokens =
+            TP/P</li>
+
+            <li>Precision = #Tokens Correctly disambiguated / #Parses =
+            TP/(TP+FP)</li>
+          </ul>
+
+          <p>A token is correctly disambiguated when <em>at least one</em> of
+          the readings (parses) of the token is correct.</p>
+
+          <p>In the ideal case each token is uniquely and correctly
+          disambiguated with the correct parse. Here, both recall and
+          precision will be 1.0. A text where each token is annotated with all
+          possible parses, the recall will be 1.0, but the precision will be
+          low. A high recall thus comes with a price of low presicion. In
+          other words: A recall of less than 100% indicates that some correct
+          analyses were removed, and a precision of less than 100% indicates
+          that some wrong analyses were not removed. The goal is to have both
+          recall and precision as high as possible.</p>
+
+          <p>Testing procedure:</p>
+
+          <ol>
+            <li>Choose a reasonable short test, that has not been run on the
+            parser before</li>
+
+            <li>Run the test <ol>
+                <li>Run the text through the morphological parser, and inspect
+                the words that are not recognised by the parser. Add them to
+                the parser, or remove the sentence in question from the text.
+                Eventually: just run the test, but remove the sentences with
+                unknown words afterwards. The idea here is that it is
+                unreasonable to demand disambiguation from a sentence where
+                some words are not recognised in the first place</li>
+
+                <li>A different test would be to include all sentences, and
+                just count the failed words as well. They will have the
+                analysis '?+', which of course is wrong.</li>
+              </ol></li>
+
+            <li>Count the ambiguity, prior to disambiguation. The number of
+            parses is found like this: <code>cat file.txt | preprocess
+            --abbr=bin/abbr.txt | lookup -flags mbTT -utf8 bin/sme.fst |
+            lookup2cg | egrep '\t' | wc -l</code>. The number of tokens is
+            <code>cat file.txt | preprocess --abbr=bin/abbr.txt | wc
+            -l</code></li>
+
+            <li>Count the tokens correctly disambiguated (by hand): Read
+            through the analysed text, and count the number of words that have
+            got a correct analysis. The string is <code>cat file.txt |
+            preprocess --abbr=bin/abbr.txt | lookup -flags mbTT -utf8
+            bin/sme.fst | lookup2cg | vislcg --grammar=src/sme-dis.rle |
+            less</code>.</li>
+
+            <li>Then divide this number with the number of parses and get the
+            presicion, and with the number of tokens, and get the recall.</li>
+          </ol>
+
+          <p>During parser construction the recall and presicion data need not
+          be a goal in themselves. Another, equally important goal is to
+          identify errors and try to correct them. Deleting correct readings
+          is a more serious error than leaving the token ambigous.</p>
+        </section>
+
+        <section>
+          <title>Testing recall of texts</title>
+
+          <p>At regular intervals, new, previously unseen texts should be
+          tested for type and token recall. The test prcedure, as well as test
+          results, are explained in the <a href="sme-testdiary.html">sme test
+          diary</a>.</p>
+        </section>
       </section>
+
       <section>
         <title>Reading through the code</title>
-        <p>Although the parser might give correct output, the internal lexicon structure may not be optimal. At some point, the code should be read through with this in mind.</p>
+
+        <p>Although the parser might give correct output, the internal lexicon
+        structure may not be optimal. At some point, the code should be read
+        through with this in mind.</p>
       </section>
-      <p class="last_modified">Last modified: $Date$, by $Author$</p>
     </section>
+
+    <section>
+      <title></title>
+    </section>
+
+    <p class="last_modified">Last modified: $Date$, by
+    $Author$</p>
   </body>
 </document>
