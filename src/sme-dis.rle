@@ -400,8 +400,9 @@ LIST COM-VERB = "árvalit" "árvvohuššat" "bargat" "bártašuvvat"
 		"háladit" "hilbošit" "humadit" "meannudit" "náitalit" "riidalit" 
 		"ságastaddat" "ságastallat" "šiehtadit" ;
 
-LIST ILL-VERB = "áibbašit" "álgit" "báitit" "beassat" "čuohcit" "dahkat" "dorvvastit" 
-		"došket" "duhtat" "geahččat" "gullat" "guoskat" "gustot" "heivet" 
+LIST ILL-VERB = "áibbašit" "álgit" "báitit" "beassat" "čuohcit" "dahkat" "deaivat"
+		"doaškut" "dorvvastit" "došket" "duhtat" "geahččat" "gullat" "guoskat" 
+		"gustot" "heivet" 
 		"irggástallat" "jáhkkit" "liikot" "luohttit" "mannat" "oskut" "riepmat" 
 		"ráhkkanit" "soahpat" "suhttat" "vuolgit";
 
@@ -624,7 +625,7 @@ MAP (@DN>) TARGET Dem IF (*1 Num OR Pron OR A OR N BARRIER NPNH);
 # Genitive mappings
 # -----------------
 
-MAP (@GP>) TARGET Gen IF (NOT 0 (V Actio))(1 Po) ;
+MAP (@GP>) TARGET Gen IF (NOT 0 (V Actio) LINK 1 ("dihte") OR ("dihtii"))(1 Po) ;
 	## Na mun gal hupmen dan birra.
 
 MAP (@<GP) TARGET Gen IF (*-1 Pr BARRIER NPNH) ;
@@ -2872,9 +2873,7 @@ SELECT (Sg Gen) IF (0 ("mii" Interr))(1 Adv)(NOT 1 Superl);
 	## It go don gula man garrasit sii sivahallet du?
 	
 SELECT Gen IF (0 (Pron Interr))(1 Po); 
-SELECT Gen IF (0 (Pron Interr))(NOT *1 V-NON-AUX);
 	## Son gean birra dieđut leat,...  
-	## Gii galgá árvvoštallat guđe dieđut galget leat journálas.
 
 REMOVE Acc IF (0 (Pron Interr))(*1 NP-HEAD-NOM BARRIER NPNH LINK *1 COPULAS BARRIER
 	NON-ADV-PCLE LINK NOT *1 PrfPrc BARRIER CS OR CP);
@@ -3066,6 +3065,9 @@ SELECT Indef IF (*-1 ("jus") OR ("jos") BARRIER CS)(0 Interr);
 SELECT Indef IF (-1 ("menddo"))(0 N);
 	## Jus guhtege dadjá áhččásis dahje eadnásis:...
 	## ...ahte doaimmat eai juogaduvvo menddo ollugiidda.
+
+SELECT Indef IF (0 (Interr Foc))(NOT *1 VFIN);
+	## Dat oste guđege sabehiid.
 
 
 # Particular indefinite pronouns
@@ -4315,7 +4317,7 @@ SELECT (N Pl Gen) IF (-1 ("mihkkege"));
 
 # Genitive in front of actio
 # - - - - - - - - - - - - - -
-SELECT Gen IF (NOT *-1 ("leat") BARRIER CS)(NOT 0 Interr)(1 Actio)(NOT 1 Ess)
+SELECT Gen IF (NOT *-1 ("leat") BARRIER CS)(NOT 0 Interr)(1 Actio)(NOT 1 Ess OR Com)
 	(NOT 1 (V Actio Loc))(NOT 1 PrfPrc LINK *1 NP-HEAD-ACC BARRIER NPNH)
 	(NOT 2 Po);
 	## Divššohas sáhttá geassit iežas miehtama ruovttoluotta.
@@ -4496,11 +4498,11 @@ SELECT Gen IF (*-2 BOS OR CS BARRIER NON-ADV-PCLE)(*-1 Num BARRIER NPNH)
 	## Okta ášši mas lea stuora mearkkašupmi, lea ahte... #NOT 0 Interr!
 
 SELECT Gen IF (*-1 VFIN BARRIER NON-ADV-PCLE OR CLB)
-	(NOT 0 Nom OR Dem OR VGen OR PrfPrc OR PrsPrc OR Interr)(NOT 1 CLB)
+	(NOT 0 Nom OR Dem OR VGen OR PrfPrc OR PrsPrc OR Indef OR Interr)(NOT 1 CLB)
 	(*1C (N Nom) OR (N Acc) BARRIER NPNH OR CC OR PUNCT LINK NOT 0 Prop);
 	## Lávdegottiid doaibmaáigi čuovvu Sámedikki válgaáigodaga.
 
-SELECT Gen IF (NOT 0 Dem OR Attr OR VERB)(NOT 0 (N Acc) LINK 1 (Prop Acc))
+SELECT Gen IF (NOT 0 Dem OR Attr OR Indef OR VERB)(NOT 0 (N Acc) LINK 1 (Prop Acc))
 	(*1C Acc BARRIER NPNH OR CLB OR CC OR PUNCT LINK 1 EOS);
 	## Divššohas galgá ieš beassat mearridit dearvvašvuođaveahki
 	## miehtama.
@@ -5481,6 +5483,12 @@ SELECT Acc IF (-2C Acc)(-1 (PUNCT LEFT))(NOT 1 Acc)
 	## biktasiid.
 
 
+# Accusative indefinite pronouns
+# ------------------------------
+SELECT Acc IF (0 (Pron Indef))(*1C (N Acc) BARRIER NPNH OR N);
+	## Galgetgo sii guldalit iešguđet geavaheaddjijoavkkuid. 
+
+
 # Accusative in coordination
 # --------------------------
 
@@ -5765,7 +5773,10 @@ SELECT Loc IF (0 ("láhka"))(1 ("§"));
 REMOVE (Sg Loc) IF (0 (V Actio Loc))(*1 Acc BARRIER NPNH);
 	## Ii leat sáhka juohkimis iešguđet journálačálli olbmuid ektui.
 
+SELECT Loc IF (0 (Acc PxSg3))(1 NP-BORDER)(*-1C NP-HEAD-ACC BARRIER CC OR CS OR CP);
+	## Beassá dárogiela maid vehá oahppat dulkomis.
 
+ 
 # Comitative
 # ==========
 
@@ -5780,6 +5791,9 @@ SELECT Com IF (*-1 ("oktavuohta") OR ("gaskavuohta") OR ("ovttasráđiid") BARRI
 
 SELECT Com IF (*-1 ("váldit") BARRIER NPNH LINK -1 ("oktavuohta"));
 	## Vuoigatvuohta oktavuođa váldit divššohasbearráigeahččiin.
+
+SELECT Com IF (*-1 ("malssidit") BARRIER VERB);
+	## Máhtte malssidii lávkkas Máreha lávkkain.
 
 
 # NP-internal disambiguation of Com
@@ -6751,8 +6765,8 @@ REMOVE PrfPrc IF (NOT -1 LEAT-FIN-NON-IMP LINK *-1 CP BARRIER VFIN)
 # - - - - - - - - - - - - - -
 
 SELECT (V Actio Loc) IF (*-1 ("ádjánit") OR ("beassat") OR ("biehttalit") OR 
-	("dolkat") OR ("eastadit") OR ("geargat") OR ("heaitit") OR ("jaska") OR 
-	("váibat") OR ("vajálduhttit") BARRIER VERB);
+	("dolkat") OR ("eastadit") OR ("geargat") OR ("heaitit") OR ("jaska") OR
+	("máššat") OR ("váibat") OR ("vajálduhttit") BARRIER VERB);
 	## Doaktárii dahje advokáhttii ii sáhte biehttalit dieđuid geahččamis.
 
 SELECT (V Actio Ess) IF (*-2 ("leat") BARRIER NON-ADV)(-1 ("mielde"));
@@ -7022,7 +7036,7 @@ SELECT (@SUBJ-QH) IF (0 Nom);
 	## Golbma čáppa, doaimmalaš nieidda livžo áhčiset riegádanbeaivve.
 
 SELECT (@SPRED) IF (*-1 COPULAS BARRIER VERB OR CLB OR CS OR CP OR go LINK 
-	*-1 Nom BARRIER VERB OR CS OR CP)(NOT 0 Prop)(NOT 0 Actio LINK 1 N);
+	*-1 Nom BARRIER V-NON-AUX OR CS OR CP)(NOT 0 Prop)(NOT 0 Actio LINK 1 N);
 	## Dat lea oahpaheaddjin doppe.
 
 SELECT (@SPRED) IF (*-1 COPULAS BARRIER NPNH OR COMMA LINK 0 PrfPrc 
