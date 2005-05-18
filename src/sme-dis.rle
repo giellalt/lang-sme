@@ -718,7 +718,7 @@ MAP (@ADVL) TARGET Gen IF (0 TIME)(NOT *1 N BARRIER NPNH)
 	(NOT 0 MANNU LINK *1 ("b" ABBR));
 	## Maid Biret-Elle áigu dán dálvve dahkat?
 
-MAP (@ADVL) TARGET Gen IF (0 NUMERALS)(1 TIME);
+MAP (@ADVL) TARGET Gen IF (0 NUMERALS)(1 TIME)(NOT 1 ADVLCASE)(NOT 2 Po);
 	## ...ja geasset vel moatte háve dađi miel go dárbu lea.
 
 MAP (@ADVL) TARGET Gen IF (0 ROUTE)(NOT *1 N BARRIER NPNH);
@@ -733,13 +733,13 @@ MAP (@-FSUBJ) TARGET Gen IF (1 Ger);
 MAP (@-FSUBJ) TARGET Gen IF (*-1 ("leat") BARRIER NPNHA)(1 (V Actio Loc));
 	## Dat ii leat geafes olbmo nagodeames. 
 
-MAP (@GN>) TARGET Gen IF (NOT 0 ALU OR Cmpnd OR ("okta"))
+MAP (@GN>) TARGET Gen IF (NOT 0 ALU OR Cmpnd OR Num)
 	(*1 N BARRIER NOT-NP OR REALCLB)
 	(NOT 1 CC LINK *1 Gen BARRIER NOT-NP LINK 1 Po)
 	(NOT 0 Actio LINK 1 ("dihte") OR ("dihtii"));
 	## Leatgo oaidnán Máreha misiid?
 
-MAP (@GN>) TARGET Gen IF (NOT 0 ALU OR Cmpnd OR TIME OR ROUTE OR ("okta"))
+MAP (@GN>) TARGET Gen IF (NOT 0 ALU OR Cmpnd OR TIME OR ROUTE OR Num)
 	(*1 N BARRIER NOT-AA OR CLB);
 	## Vuosttaš vuojahaga fávllimus čuolda lea goaratčuoldan.
 
@@ -4815,6 +4815,9 @@ SELECT Gen IF (*-1 BOS OR CS BARRIER NPNHA)
 SELECT Gen IF (1 ("riegádan#beaivi"));
 	## Golbma čáppa, doaimmalaš nieidda livžo áhčiset riegádanbeaivve.
 
+SELECT Gen IF (0 Num)(1 TIME)(1 ADVLCASE);
+	## Journálat sáhttet lágiduvvot fylkkamánne rádjui 10 jahkái.
+
 	
 # Genitive in place adverbials
 # ----------------------------
@@ -4876,6 +4879,12 @@ SELECT Gen IF (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1C Nom BARRIER CS OR CP O
 	CC OR CLB)(*1C ADVLCASE BARRIER NPNH LINK NOT 0 Ess)(NOT 1 CC);
 	## Arkelaus lei šaddan Judea gonagassan.
 	## Don it leat guhkkin eret Ipmila riikkas.
+
+SELECT Gen IF (*-1 ACC-ILL-VERB BARRIER NOT-ADV-PCLE)
+	(*1 Ill BARRIER NPNH LINK *1 Acc BARRIER NPNH OR CC LINK NOT 0 Interr)
+	(NOT *1 Ill BARRIER NPNH LINK *1 Acc BARRIER NPNH LINK 1 Po);
+	## Láhkaásahus ii bija doaimma guđege oassái ovddasvástádusa ásahit
+	## journálavuogádaga.
 
 REMOVE Acc IF (*-1 CLB BARRIER WORD)(NOT 0 Interr)(NOT 1 CC OR CLB)
 	(*1 Nom BARRIER NPNH OR CC LINK NOT 0 Interr);
@@ -5852,6 +5861,9 @@ SELECT Acc IF (*-1 V-TRANS-ACT BARRIER NOT-NP)(NOT 0 Gen LINK *1 (N Acc)
 REMOVE Nom IF (*-1 (@SUBJ) BARRIER CS OR CP)(NOT *-1 ("leat") BARRIER VERB)
 	(0 NUMERALS)(1 TIME);
 	## Fierbmi bistá guokte- golbma jagi.
+
+SELECT Acc IF (NOT *-1 ("leat") BARRIER VERB)(0 Num)(1 TIME)(NOT 2 N OR Po);
+	## Go fylkkadoavttir lea seailluhan journála 10 jagi,...
 
 
 # Accusative in apposition
@@ -7557,7 +7569,8 @@ SELECT (@SPRED) IF (*-1 (N Nom) BARRIER NOT-ADV-PCLE OR go OR ("nugo") OR CLB OR
 	(NOT 0 Interr); #  After "NPHNA": LINK NOT *-1 Loc BARRIER NOT-ADV-PCLE
 	## Ledjego guolit divrasat?
 
-SELECT (@SPRED) IF (*-1 COPULAS BARRIER VFIN LINK 0 Sg3)(0 A OR ("imaš"));
+SELECT (@SPRED) IF (*-1 COPULAS BARRIER VFIN LINK 0 Sg3)(0 A OR ("imaš"))
+	(NOT *1 PrfPrc BARRIER NOT-ADV-PCLE);
 	## Dutnje lea buoret ahte don massát ovtta lahtu.
 
 SELECT (@SPRED) IF (*-1 COPULAS BARRIER VFIN LINK *-1 AUX BARRIER NOT-ADV-PCLE
@@ -7690,7 +7703,7 @@ SELECT (@OBJ) IF (*-1 Inf BARRIER NPNHA LINK 0 V-TRANS-ACT LINK NOT *-1 (@OBJ)
 	BARRIER V-NOT-AUX OR CS OR CP)(1 (@OPRED) LINK 1 NP-BORDER);
 	## Divššohasbearráigeahčči galgá dahkat ortnega dovddusin.
 
-SELECT (@OBJ-QH) IF (*-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE OR PUNCT)
+SELECT (@OBJ-QH) IF (*-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE OR PUNCT LINK NOT 0 AUX)
 	(NOT 1 N LINK 0 ADVLCASE);
 	## Go manná lea deavdán 12 jagi,...
 
@@ -7746,8 +7759,14 @@ SELECT (@ADVL) IF (0 (@SUBJ))(*-1C (@SUBJ) BARRIER CS OR CP OR CC);
 SELECT (@ADVL) IF (0 Num)(*-1 V-NOT-AUX LINK 0 IV);
 	## Fierbmi bistá guokte-golbma jagi.
 
+SELECT (@ADVL) IF (*-1 INF-VERB BARRIER NOT-ADV-PCLE)(0 Num)(1 TIME)
+	(*2 Inf BARRIER NOT-ADV-PCLE);
+	## ...mas sáhttá ain máŋga jagi addit gieldda ássiide boaldin...
 
+SELECT (@ADVL) IF (*-1 (@OBJ) BARRIER NOT-ADV-PCLE OR go)(0 Num)(1 TIME);
+	## Go fylkkadoavttir lea seailluhan journála 10 jagi, de...
 
+ 
 # ----------- #
   CONSTRAINTS
 # ----------- #
