@@ -450,7 +450,7 @@ LIST ACC-INF-VERB = "bivdit" "čuorvut" "dagahit" "diktit" "gohččut" "movttiid
 	## Ii suova nieiddas náitalit.
 
 
-LIST OPRED-VERB = "atnit" "dahkat" "gohčodit" "gohččut" "válljet";
+LIST OPRED-VERB = "atnit" "dadjat" "dahkat" "gohčodit" "gohččut" "válljet";
  # Verbs that often occur with objects that have secondary predicates.
 
 LIST MOVEMENT-VERB = "mannat";
@@ -701,18 +701,19 @@ MAP (@GN>) TARGET (Pron Pl2 Gen) IF (1 (Refl PxPl2));
 MAP (@GN>) TARGET (Pron Pl3 Gen) IF (1 (Refl PxPl3));
 	## Sii orro sin iežaset dahkan darfegođiid siste.
  
-MAP (@GP>) TARGET Gen IF (NOT 0 (V Actio) LINK 1 ("dihte") OR ("dihtii"))(1 Po) ;
+MAP (@GP>) TARGET Gen IF (NOT 0 (V Actio) LINK 1 ("dihte") OR ("dihtii"))(1 Po) 
+	(NOT -1 NUMERALS LINK 2 Pr LINK *1 Gen BARRIER NPNH);
 	## Na mun gal hupmen dan birra.
 
 MAP (@GP>) TARGET Gen IF (NOT 0 Cmpnd)(1 CC)(2 Gen)(3 Po);
 	## Divššohas galgá maiddái oažžut dieđuid vejolaš riskkaid ja 
 	## lassiváikkuhusaid birra.
 
-MAP (@<GP) TARGET Gen IF (*-1 Pr BARRIER NPNH) ;
+MAP (@GP<) TARGET Gen IF (*-1 Pr BARRIER NPNH) ;
 	## Lága mearrádusat galget váikkuhit luohttevašvuođa gaskal 
 	##  divššohasa ja dearvvašvuođabálvalusa.
 
-MAP (@<GQ) TARGET Gen IF (*-1 NUMERALS BARRIER NOT-NP OR REALCLB OR PUNCT);
+MAP (@GQ<) TARGET Gen IF (*-1 NUMERALS BARRIER NOT-NP OR REALCLB OR PUNCT);
 	## Mun máksen 100 ruvnno duvle.
 
 MAP (@ADVL) TARGET Gen IF (0 TIME)(NOT *1 N BARRIER NPNH)
@@ -744,7 +745,7 @@ MAP (@GN>) TARGET Gen IF (NOT 0 ALU OR Cmpnd OR TIME OR ROUTE OR Num)
 	(*1 N BARRIER NOT-AA OR CLB);
 	## Vuosttaš vuojahaga fávllimus čuolda lea goaratčuoldan.
 
-MAP (@<NPRON) TARGET (N Pl Gen) IF (-1 ("mii" Interr) OR ("mihkkege"));
+MAP (@NPRON<) TARGET (N Pl Gen) IF (-1 ("mii" Interr) OR ("mihkkege"));
 	## Maid ipmašiid doppe dagat?
 	## Ii šaddan mihkkege gávnnademiid.
 
@@ -754,6 +755,10 @@ MAP (@<NPRON) TARGET (N Pl Gen) IF (-1 ("mii" Interr) OR ("mihkkege"));
 
 MAP (@AN>) TARGET (Ord);
 	## Dalle gusto vuosttas, nubbi ja goalmmát teakstaoassi seammaláhkái.
+
+MAP (@PCLE-COMPL) TARGET Num IF (-1 ("go"))(NOT 1 N LINK 0 ADVLCASE)
+	(NOT *1 VFIN BARRIER CS);
+	## Ii heargi gal nagot guoddit eambbo go guokte diekkára. 
 
 MAP (@ADVL @OBJ-QH) TARGET Acc IF (0 NUMERALS)(*1 Gen BARRIER NPNH LINK 0 TIME);
 	## Fierbmi bistá guokte- golbma jagi.
@@ -781,6 +786,9 @@ MAP (@QN>) TARGET Num IF (0 Acc)(*1 ALU BARRIER NOT-NP);
 MAP (@QN>) TARGET ("okta") IF (*1 N BARRIER NPNH)(NOT 1 Prop OR Dem);
 	## Sámegiela doaibmaplánas lei okta doaibmabidju sámegillii jorgalit
 	## dieđalaš artihkkaliid.
+
+MAP (@NUMBER) TARGET Num IF (NOT 0 Nom OR Acc OR Gen OR ADVLCASE);
+	## Viidáseappot mearrida dearvvašvuođabargiidlága § 10 vuosttas lađđasa...
 
 
 # Attribute mappings
@@ -858,20 +866,19 @@ MAP (@AN>) TARGET (A Attr) ;
 MAP (@AN>) TARGET ("buorre") IF (*1 N BARRIER NPNH);
 	## Leatgo buorit guolit?
 
-MAP (@AN>) TARGET PrfPrc IF (*-1 PrfPrc BARRIER NPNHA LINK 0 V-NOT-AUX 
+MAP (@PrcN>) TARGET PrfPrc IF (*-1 PrfPrc BARRIER NPNHA LINK 0 V-NOT-AUX 
 	LINK NOT 0 Actio)(*1C N BARRIER NOT-ADJ);
 	## Ii leat boahtán mannan váhkus.
 
-MAP (@AN>) TARGET PrfPrc IF (*-1 BOS OR REALCLB BARRIER NPNH)(NOT 0 ("leat"))
-	(*1 N BARRIER NPNH);
+MAP (@PrcN>) TARGET PrfPrc IF (*-1 BOS OR REALCLB BARRIER NPNH)(NOT 0 ("leat"))
+	(*1 N BARRIER NPNH LINK NOT 1 TIME);
 	## Sajáiduvvan fágadoahpagiid sáhttá dieđusge geavahit.
 
-MAP (@AN>) TARGET PrfPrc IF (NOT *-1 ("leat") OR Neg BARRIER ("dego") OR CS)
-	(NOT *-1 Acc BARRIER NOT-ADV-PCLE LINK *-1 V-NOT-AUX BARRIER NPNHA)
-	(NOT 0 ("leat"))(*1 N BARRIER NPNH);
+MAP (@PrcN>) TARGET PrfPrc IF (*-1 V-NOT-AUX BARRIER CS OR CP OR AUX)(0 Pass)
+	(1 N)(NOT 1 TIME);
 	## Vuoigatvuohta dearvvašvuođaveahkkái gusto riikka almmolaš ruhtaduvvon 
 	## spesialistadearvvašvuođabálvalussii.
- 
+
 MAP (@PronN<) TARGET (Refl Sg Nom) IF (*-1 MUN OR DON OR (Pron Sg3 Nom) OR 
 	(Pron Sg Nom)OR (N Sg Nom) BARRIER CS OR CP OR REALCLB);
 	## Dasgo mun lean ieš gohčohallama vuloš. 
@@ -912,7 +919,8 @@ MAP (@VOC) TARGET Nom IF (-1 BOS OR REALCLB)(1 COMMA)(2 VFIN);
 
 MAP (@VOC) TARGET Nom IF (*-1 COMMA BARRIER CC OR NOT-NP OR CONTRA 
 	LINK *-1 (V Sg2) OR (V Du2) OR (V Pl2) OR (Pron Sg2) OR (Pron Du2) OR 
-	(Pron Pl2) LINK NOT 0 ("leat"))(1 EOS);
+	(Pron Pl2) LINK NOT 0 ("leat"))(1 EOS)
+	(NOT 0 Sg LINK *-1 V-SG3 BARRIER VERB);
 	## Vuoi du, Betsaida!
 
 MAP (@VOC>) TARGET Nom IF (-1 COMMA)(0 Pers)(*1 Nom BARRIER NPNH LINK 1 EOS);
@@ -999,40 +1007,40 @@ MAP (@-FMAINV) TARGET (V Actio Loc) IF (-1 NP-HEAD-ACC LINK *-1 V-NOT-AUX
 # Argument mappings
 # -----------------
 
-MAP (@<PCLE-COMPL) TARGET Nom IF (*-1 ("go") BARRIER NOT-NP LINK NOT -1 VFIN)
+MAP (@PCLE-COMPL) TARGET Nom IF (*-1 ("go") BARRIER NOT-NP LINK NOT -1 VFIN)
 	(1 EOS OR CLB);
 	## Dat galgá čuovvoluvvot nu guhkás go vejolaš.
 
-MAP (@<PCLE-COMPL) TARGET Nom IF (*-1 ("go") BARRIER NOT-NP LINK *-1 Nom 
+MAP (@PCLE-COMPL) TARGET Nom IF (*-1 ("go") BARRIER NOT-NP LINK *-1 Nom 
 	BARRIER CS OR CONTRA)(1 EOS OR CLB)(NOT 2 Interr LINK *1 VFIN LINK *1 VFIN 
 	BARRIER CS); 
 	## ...muhto galjebut dat lea go guv-čalmmit.
 
-MAP (@<PCLE-COMPL) TARGET Nom IF (-1 ("dego"))
+MAP (@PCLE-COMPL) TARGET Nom IF (-1 ("dego"))
 	(NOT *1 VFIN-NOT-IMP BARRIER CS OR CLB);
 	## Sii leat dego eŋgelat almmis.
 
-MAP (@<PCLE-COMPL) TARGET Nom IF (*-1 ("dego") BARRIER NOT-NP)(1 EOS OR CLB);
+MAP (@PCLE-COMPL) TARGET Nom IF (*-1 ("dego") BARRIER NOT-NP)(1 EOS OR CLB);
 	## Son oahppaladdá min allagasas dego beaivváža badjáneapmi.
 
-MAP (@<PCLE-COMPL) TARGET (N Nom) IF (*-1 ("go") BARRIER NPNH LINK -1 A)
+MAP (@PCLE-COMPL) TARGET (N Nom) IF (*-1 ("go") BARRIER NPNH LINK -1 A)
 	(NOT *1 VFIN BARRIER NOT-ADV-PCLE);
 	## Máhttájeaddji ii leat stuorit go oahpaheaddjis.
 
-MAP (@<PCLE-COMPL) TARGET Nom IF (*-1 ("dego") BARRIER NOT-NP)(1 (Pron Interr))
+MAP (@PCLE-COMPL) TARGET Nom IF (*-1 ("dego") BARRIER NOT-NP)(1 (Pron Interr))
 	(*2 VFIN LINK NOT *1 VFIN);
 	## Dat lea dego olmmái gii manai olgoriikii.
 
-MAP (@<PCLE-COMPL) TARGET Nom IF (*-1 ("dego") BARRIER NOT-NP)
+MAP (@PCLE-COMPL) TARGET Nom IF (*-1 ("dego") BARRIER NOT-NP)
 	(NOT 0 Attr LINK *1 Nom BARRIER NPNH)(NOT *1 VFIN-NOT-IMP BARRIER CS OR CLB)
 	(NOT 1 ("go") OR ("dego"));
 	## Dego njamaheaddji eadni dikšumin mánáidis...
 
-MAP (@<PCLE-COMPL) TARGET Nom IF (*-1 ("dego") BARRIER NPNH)(0 Sg)(1 CC)
+MAP (@PCLE-COMPL) TARGET Nom IF (*-1 ("dego") BARRIER NPNH)(0 Sg)(1 CC)
 	(*2 (Sg Nom) OR (Sg3 Nom) BARRIER NPNH LINK *1 V-SG3 BARRIER NOT-ADV-PCLE);
 	## Dat guhte ii biso mu siste, bálkestuvvo olggos dego oaksi ja son goldná.
 
-MAP (@<PCLE-COMPL) TARGET Acc IF (-2 Acc)(-1 ("dego"));
+MAP (@PCLE-COMPL) TARGET Acc IF (-2 Acc)(-1 ("dego"));
 	## Mun vuolggahan din dego sávzzaid gumppiid gaskii.
 
 MAP (@OPRED) TARGET ("veara") IF (*-1 NP-HEAD-ACC BARRIER NOT-NP 
@@ -2125,6 +2133,14 @@ SELECT Pr IF (-1 Nom LINK *-1 COPULAS BARRIER NPNHA)(0 ("miehtá"))
 SELECT VFIN IF (NOT *-1 VFIN BARRIER CS)(0 ("miehtá"));
 	## Jus divššohas dasa miehtá, dahje dilálašvuohta lea nu,...
  
+# vuostá
+# - - - -
+
+SELECT Adv IF (-1 ("váldit"))(0 ("vuostá"));
+	## Sámi servodagas váilu árbevierru váldit vuostá almmolaš diehto-
+	## juohkima dakkár hámis.
+
+
 
 # The case of GASKAL
 # ------------------
@@ -2215,10 +2231,11 @@ SELECT Po IF (-1 Gen)(NOT -1 VERB OR Adv)(1 TIME);
 SELECT Po IF (-1 (Interr Gen));
 	## Vuoi dan olbmo gean bokte fillehusat bohtet.
 
-SELECT Pr IF (NOT 0 Attr OR VFIN)(*1 (N Gen) OR (Pron Gen) BARRIER PUNCT 
+SELECT Pr IF (NOT 0 Attr OR VFIN)(NOT 1 VFIN)(*1 (N Gen) OR (Pron Gen) BARRIER PUNCT 
 	LINK NOT 0 Cmpnd LINK NOT *1 N OR Po BARRIER CC OR CP OR CS OR CLB);
-SELECT Pr IF (1 (Num Gen));
 	## Sáhttá dahttege vurket journála olggobealde doaimma. 
+
+SELECT Pr IF (1 (Num Gen));
 	## Vuollel 12 jahkásaš mánáin ii leat iešheanalis geahččanvuoigatvuohta.
 
 REMOVE Pr IF (NOT 1 (Pron Gen));
@@ -4586,7 +4603,7 @@ SELECT Gen IF (1 (PUNCT LEFT))(*2 (PUNCT RIGHT) LINK 1 Po);
 
 # Genitive after preposition
 # - - - - - - - - - - - - - -
-SELECT Gen IF (*-1 Pr BARRIER NPNH OR REALCLB)(NOT 0 VFIN)
+SELECT Gen IF (*-1 Pr BARRIER NPNH OR REALCLB OR CONTRA)(NOT 0 VFIN)
 	(1 NP-BORDER OR CC OR COMMA OR ("ieš")); 
 	## Earret mu ii giige lea boahtán.
 	## Sáhka su birra viidánii miehtá Syria, ja ...
@@ -5184,6 +5201,9 @@ SELECT Nom IF (-2 ("dego") OR ("nugo"))(-1 Gen OR PrsPrc)(1 NP-BORDER);
 REMOVE Imprt IF (*-1 ("dego") BARRIER VFIN OR CS OR CP);
 	## ...dego vuonccis čohkke čivggaidis soajáidis vuollái.
 
+SELECT Nom IF (-1 ("go" Pcle))(0 Num);
+	## ...go heaittihanáigemearri lea oanehat go vihtta jagi.
+
 
 # Nominative subjects
 # -------------------
@@ -5501,7 +5521,7 @@ SELECT Nom IF (*-1 COMMA BARRIER VFIN LINK -1C NP-HEAD-NOM)(1 COMMA)
 	(*2 NP-HEAD-NOM BARRIER NPNH);
 	## ..persovdnarievtti dábálaš láhkavuogádagat, bearašriekti, árberiekti,... 
 
-SELECT Nom IF (1 COMMA)(*2 NP-HEAD-NOM BARRIER NPNH OR CC OR COMMA 
+SELECT Nom IF (NOT 0 VERB)(1 COMMA)(*2 NP-HEAD-NOM BARRIER NPNH OR CC OR COMMA 
 	LINK 1 EOS OR CP OR CS);
 	## Jáhkobii riegádii Jovsset, Márjjá boadnja.
 
@@ -5647,12 +5667,12 @@ SELECT Acc IF (*-1 (V Neg) BARRIER CS OR CP)(NOT *-1 ConNeg BARRIER Neg
 
 # In front of an infinitive
 # - - - - - - - - - - - - - 
-SELECT Acc IF (*-1 VFIN BARRIER NPNHAI)(NOT 0 VERB)(NOT 0 Nom OR Adv OR TIME)
+SELECT Acc IF (*-1 VFIN BARRIER NPNHAI)(NOT 0 VERB)(NOT 0 Nom OR Loc OR Adv OR TIME)
 	(*1 Inf BARRIER NOT-ADV-PCLE OR CLB);
 	## Dasgo Herodes lei bidjan olbmuid váldit Johanasa gitta.
 
 SELECT Acc IF (*-1 VFIN BARRIER CS OR CP OR PUNCT LINK *-1 Nom BARRIER CS OR CP)
-	(NOT 0 PrfPrc OR Nom OR Adv OR TIME)(1 Inf);
+	(NOT 0 PrfPrc OR Nom OR Loc OR Adv OR TIME)(1 Inf);
 	## Almmolaš buohcceviessu dahje guovlopsykiatralaš guovddáš galgá
 	## divššu čađahit.
 
@@ -5755,7 +5775,7 @@ SELECT Acc IF (*-1 Loc BARRIER NPNH LINK -1 LOC-VERB)(1 NP-BORDER OR CC OR CLB);
 	## Divššohasas lea vuoigatvuohta biehttalit vuostáváldimis vara dahje
 	## varrabuktagiid.
 
-SELECT Acc IF (*-1 ("dihte") BARRIER NOT-NP OR PUNCT LINK -1 Actio)
+SELECT Acc IF (*-1 ("dihte") OR ("dihtii") BARRIER NOT-NP OR PUNCT LINK -1 Actio)
 	(NOT 0 Inf)(1 NP-BORDER OR PUNCT);
 	## ...ja ovdanbuktin dihte ođđa čoavddusevttohusaid.
 
@@ -6021,8 +6041,8 @@ REMOVE Acc IF (0C HNOUN OR (Pron Pers))(NOT 1 CLB)
 	## fágagealbbu.
 	## ...de rahpá čoahkkima ovddit áigodaga Sámedikki čoahkkinjođiheaddji.
 
-SELECT Gen IF (*-1 ("dihte") BARRIER NPNH LINK -1 Actio)(NOT 0 Inf LINK -1 CC)
-	(NOT 1 CC)(*1 (N Acc) BARRIER NPNH);
+SELECT Gen IF (*-1 ("dihte") OR ("dihtii") BARRIER NPNH LINK -1 Actio)
+	(NOT 0 Inf LINK -1 CC)(NOT 1 CC)(*1 (N Acc) BARRIER NPNH);
 	## ...váfistan dihte Romssa universitehta sámi dutkama.
 
 
@@ -6669,12 +6689,15 @@ REMOVE (V Prt Pl3) IF (0 AUX)(0 (V Prs Sg3));
 	## Giellabargguid ferte viidásetfievrridit.
 
 
-# Infinitive subject
-# - - - - - - - - - -
+# Infinitive and clausal subject
+# - - - - - - - - - - - - - - - -
 SELECT V-SG3 IF (NOT *-1 Nom BARRIER CS OR REALCLB)(NOT 0 AUX)
 	(NOT 0 (Pl Nom) LINK *1 V-PL3 BARRIER NOT-ADV-PCLE)
 	(NOT 0 INF-VERB LINK 0 (Ind Sg2))(*1 Inf BARRIER NOT-ADV-PCLE);
 	## Eamiálbmotrievtti guovddášosiide gullá maiddái sihkkarastit...
+
+SELECT V-SG3 IF (*1 ("ahte") BARRIER NOT-ADV-PCLE);
+	## Dearvvašvuođabargiidlága § 26 olis čuovvu ahte...
 
 
 # Rules that look for a subject across a relative clause:
@@ -7700,6 +7723,10 @@ SELECT (@OPRED) IF (*-1 (@OBJ) BARRIER CS OR CP OR CC LINK 0 N)(0 A)(NOT 0 Adv)
 	(NOT 0 Attr LINK *1 N BARRIER NPNH);
 	## Gáhkuid son ráhkada hui buriid.
 
+SELECT (@OPRED) IF (0 Ess)(*1 OPRED-VERB BARRIER V-NOT-AUX LINK NOT 0 Pass);
+	## Buođđogeahčin gohčodit olbmot dakkár buođu mii dulvvi áiggi bidjaluvvo 
+	## gáddegurii.
+
 REMOVE (@OBJ) IF (0 (@GN>))(NOT 0 Interr)(*1 (@SUBJ) BARRIER NPNH LINK *1C (@OBJ) 
 	BARRIER CLB OR CS OR CP)(NOT 1 VFIN);
 	## ...go su iežas anistumit gesset ja giktalit su.
@@ -7726,12 +7753,25 @@ SELECT (@OBJ) IF (*-1 Inf BARRIER NPNHA LINK 0 V-TRANS-ACT LINK NOT *-1 (@OBJ)
 	BARRIER V-NOT-AUX OR CS OR CP)(1 (@OPRED) LINK 1 NP-BORDER);
 	## Divššohasbearráigeahčči galgá dahkat ortnega dovddusin.
 
+REMOVE (@GN>) IF (1 (@-FMAINV))(1 V-TRANS-ACT);
+	## Divššohas dahje su ovddasteaddji galgá leat váidalusa vuolláičállán.
+
+SELECT (@OBJ) IF (*-1 V-TRANS-ACT BARRIER VERB OR CS)(NOT *-1 (@OBJ) BARRIER CS)
+	(NOT 0 Loc)(*1 ADVLCASE BARRIER NOT-ADV-PCLE LINK NOT *1 (@OBJ) BARRIER CS);
+	## De olahit olbmot luosa buođđogežiin.
+
+SELECT (@OBJ) IF (*-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE)(1 Num)(2 TIME);
+	## Go fylkkadoavttir lea seailluhan journála 10 jagi,...
+
 SELECT (@OBJ-QH) IF (*-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE OR PUNCT LINK NOT 0 AUX)
 	(NOT 1 N LINK 0 ADVLCASE);
 	## Go manná lea deavdán 12 jagi,...
 
 SELECT (@OBJ-QH) IF (1 ("jahki"))(2 ("deavdit"));
 	## ...maŋŋá go lea 16 jagi deavdán.
+
+REMOVE (@GN>) IF (1 CC)(2C (@OBJ));
+	## Ferte váldit vuhtii máná ági ja láttasvuođa ja muđui eará beliid.
 
 
 # Verbal functions
@@ -7758,6 +7798,9 @@ SELECT (@-FMAINV) IF (*-1 (@SUBJ) BARRIER CS OR CP LINK 0 Sg)(0 Inf);
 SELECT (@+FMAINV) IF (*-1 (@OBJ) BARRIER NOT-ADV-PCLE LINK *-1 (@SUBJ) 
 	BARRIER NOT-ADV-PCLE LINK 0 Sg)(0 Sg3);
 	## Juohke háve go olmmoš joddosaji molsu...
+
+SELECT (@+FMAINV) IF (NOT *-2 VFIN BARRIER CS)(-1 Adv)(NOT 0 Inf);
+	## Dalle bidjet buođđogeaži.
 
 
 # Other grammatical functions
@@ -7788,6 +7831,10 @@ SELECT (@ADVL) IF (*-1 INF-VERB BARRIER NOT-ADV-PCLE)(0 Num)(1 TIME)
 
 SELECT (@ADVL) IF (*-1 (@OBJ) BARRIER NOT-ADV-PCLE OR go)(0 Num)(1 TIME);
 	## Go fylkkadoavttir lea seailluhan journála 10 jagi, de...
+
+SELECT (@<GP) IF (*-1 Pr BARRIER NPNH);
+	## Dalle bisttii luossaguolli miehtá dálvvi bearaš atnui.
+
 
  
 # ----------- #
