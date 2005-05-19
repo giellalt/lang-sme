@@ -29,19 +29,38 @@ NONRECFILES := $(patsubst %.txt,%.nonrec,$(SOURCEFILES))
 
 isme.fst: ../bin/isme.fst
 ../bin/isme.fst: ../bin/pos-sme.fst ../bin/n-sme.fst ../bin/s-sme.fst \
-	../int/sme.save ../int/allcaps.fst ../bin/n-sme.fst \
+	../bin/sme.save ../int/allcaps.fst ../bin/n-sme.fst \
 	../int/caseconv.fst ../bin/d-sme.fst  ../bin/guess-sme \
 	../bin/abbr.txt ../bin/cap-sme ../bin/foreign.fst ../bin/typos.fst \
-	../int/typoslist.txt
+	../int/typoslist.txt ../int/tag-not-save.fst
 	@echo
 	@echo "*** Building the inverse isme.fst ***"
 	@echo
-	@printf "load ../int/sme.save \n\
+	@printf "read regex [[@\"../int/tag-not-save.fst\"] .o. \
+	[@\"../bin/sme.save\"]] ; \n\
 	invert net \n\
 	save stack ../bin/isme.fst \n\
 	quit \n" > ../../tmp/isme-fst-script
 	$(XFST) < ../../tmp/isme-fst-script
 	@rm -f ../../tmp/isme-fst-script
+
+#	@printf "read regex [[0 <- %+TV, 0 <- %+IV ] .o. @\"../bin/sme.save\"] ; \n\
+#	invert net \n\
+#	save stack ../bin/isme.fst \n\
+#	quit \n" > ../../tmp/isme-fst-script
+#	$(XFST) < ../../tmp/isme-fst-script
+#	@rm -f ../../tmp/isme-fst-script
+
+#	Original:
+#	@printf "load ../bin/sme.save \n\
+#	invert net \n\
+#	save stack ../bin/isme.fst \n\
+#	quit \n" > ../../tmp/isme-fst-script
+#	$(XFST) < ../../tmp/isme-fst-script
+#	@rm -f ../../tmp/isme-fst-script
+
+
+
 
 
 # ======================================================= #
@@ -78,6 +97,20 @@ tag-pos.fst: ../int/tag-pos.fst
 	quit \n" > ../../tmp/sme-tag-pos-script
 	$(XFST) < ../../tmp/sme-tag-pos-script
 	@rm -f ../../tmp/sme-tag-pos-script
+
+
+# We want to delete the +TV +IV tags for the generator (and other
+# tags later on?. For that we need our tag-deleter.
+tag-not-save.fst: ../int/tag-not-save.fst
+../int/tag-not-save.fst: tag-not-save.regex
+	@echo
+	@echo "*** Building tag-not-save.fst ***" ;
+	@echo
+	@printf "read regex < tag-not-save.regex \n\
+	save stack ../int/tag-not-save.fst \n\
+	quit \n" > ../../tmp/sme-tag-not-save-script
+	$(XFST) < ../../tmp/sme-tag-not-save-script
+	@rm -f ../../tmp/sme-tag-not-save-script
 
 
 # We want an analyzer with Norwegian tags. It takes the linguistic 
@@ -213,12 +246,12 @@ d-sme.fst: ../bin/d-sme.fst
 # handle initial capitals.
 
 sme.fst: ../bin/sme.fst
-../bin/sme.fst: ../int/sme.save ../int/caseconv.fst \
+../bin/sme.fst: ../bin/sme.save ../int/caseconv.fst \
 	../int/allcaps.fst ../bin/abbr.txt ../bin/cap-sme
 	@echo
 	@echo "*** Building sme.fst ***" ;
 	@echo
-	@printf "read regex @\"../int/sme.save\" .o. \
+	@printf "read regex @\"../bin/sme.save\" .o. \
 	@\"../int/caseconv.fst\" ; \n\
 	save stack ../bin/sme.fst \n\
 	quit \n" > ../../tmp/sme-fst-script
@@ -270,8 +303,8 @@ allcaps.fst: ../int/allcaps.fst
 # The third goal is to build sme.save
 # This goal depends on twol-sme.int and a bunch of lexicon files
 
-sme.save: ../int/sme.save
-../int/sme.save: ../int/twol-sme.bin sme-lex.txt adj-sme-lex.txt \
+sme.save: ../bin/sme.save
+../bin/sme.save: ../int/twol-sme.bin sme-lex.txt adj-sme-lex.txt \
 	adv-sme-lex.txt noun-sme-lex.txt verb-sme-lex.txt \
 	closed-sme-lex.txt pp-sme-lex.txt acro-sme-lex.txt \
 	abbr-sme-lex.txt propernoun-sme-lex.txt punct-sme-lex.txt
@@ -284,7 +317,7 @@ sme.save: ../int/sme.save
 	abbr-sme-lex.txt propernoun-sme-lex.txt punct-sme-lex.txt \n\
 	read-rules ../int/twol-sme.bin \n\
 	compose-result \n\
-	save-result ../int/sme.save \n\
+	save-result ../bin/sme.save \n\
 	quit \n" > ../../tmp/sme-save-script
 	$(LEXC) < ../../tmp/sme-save-script
 	@rm -f ../../tmp/sme-save-script
