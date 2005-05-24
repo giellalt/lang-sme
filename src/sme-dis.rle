@@ -375,7 +375,8 @@ LIST MOD-ASP = "berret" "dáidit" "fertet" "galgat" "gillet" "lávet" "sáhttit"
 	"soaitit" "viggat" ;
 # Verbs that never have arguments of their own - so we leave out "áigut", for ex.
 
-LIST AUX-OR-MAIN = "áigut" "beassat" "máhttit" "nagodit" "orrut" "sihtat" "veadjit";
+LIST AUX-OR-MAIN = "áigut" "beassat" "hálidit" "háliidit" "máhttit" "nagodit" "orrut" 
+	"sihtat" "veadjit";
  # These verbs can take arguments, so they do not belong in the AUX group, but
  # they are nevertheless mapped to (@+FAUXV). 
 
@@ -755,6 +756,9 @@ MAP (@GN>) TARGET Gen IF (NOT 0 ALU OR Cmpnd OR TIME OR ROUTE OR Num)
 MAP (@GA>) TARGET Gen IF (1C A)(1 (Sg Loc))(2C NP-BORDER); #  (NOT 0 Interr OR ALU)
 	## ...dan čuldii mii lea joddočuoldda lagamusas.
 
+MAP (@GA>) TARGET Gen IF (1 (A Comp))(NOT 1 VERB OR Adv)(NOT *2 N BARRIER NOT-NP);
+	## Mun jáhkán du iežan falibun.
+
 MAP (@NPRON<) TARGET (N Pl Gen) IF (-1 ("mii" Interr) OR ("mihkkege"));
 	## Maid ipmašiid doppe dagat?
 	## Ii šaddan mihkkege gávnnademiid.
@@ -1014,7 +1018,7 @@ MAP (@-FMAINV) TARGET (V Actio Loc) IF (*-1 V-NOT-AUX BARRIER NOT-ADV-PCLE);
 	## Juhán heittii suhkamis.
 
 MAP (@-FMAINV) TARGET (V Actio Loc) IF (*-1 NP-HEAD-ACC BARRIER VERB 
-	LINK *-1 V-NOT-AUX BARRIER NPNHA);
+	LINK *-1 V-NOT-AUX OR ("jaska") BARRIER NPNHA);
 	## Dat galgá hehttet guoli jorggiheames vulos.
 
 
@@ -1075,6 +1079,10 @@ MAP (@SUBJ) TARGET Indef IF (NOT *-1 Nom BARRIER NOT-ADV-PCLE)
 	(NOT -1 ("mii" Interr Sg Gen))(NOT 0 Acc OR ADVLCASE)(1 V-SG3)
 	(NOT *2 Nom BARRIER CS LINK NOT 0 PrfPrc);
 	## Ollu lea daddjon lobálašvuođa birra.
+
+MAP (@SUBJ) TARGET ("buot") IF (*1 V-SG3 BARRIER NOT-ADV-PCLE)
+	(NOT *1 V-TRANS-ACT BARRIER CS OR CP)(NOT 1 ("buohkanassii"));
+	## Buot lei varran.
 
 MAP (@SUBJ) TARGET ("buot") IF (-1 COPULAS);
 	## Danin lea buot nu olu álkit inuihtaide.
@@ -1151,7 +1159,10 @@ MAP (@ADVL) TARGET Loc ;
 MAP (@ADVL) TARGET Com ;
 	## Dieđut galget meannuduvvot várrugasvuođain.
 
-MAP (@ADVL @SPRED @OPRED) TARGET Ess ;
+MAP (@ADVL) TARGET Ess IF (0 ("bievla") OR ("dulvi") OR ("seavdnjat"));
+	## Ii leat bievlan vejolaš fievrridit gálvvu gerresiiguin. 
+
+MAP (@SPRED @OPRED) TARGET Ess ;
 	## Dat lea oahpaheaddjin doppe.
 
 ADD (@ADVL) TARGET Nom IF (0 TIME);  # tentative
@@ -1292,7 +1303,7 @@ SELECT Adv IF (0 ("absoluhtalaš") OR ("agálaččat") OR ("aitosaččat") OR
 # Proper nouns
 # ------------
 
-REMOVE (Prop Pl) IF (0 (Prop Sg))(NOT 0 ("Sámediggi"));    
+REMOVE (Prop Pl) IF (0 (Prop Sg))(NOT 0 ("Sámediggi") OR (laš));    
 	## Marit lea dál.
   # Marit N Sg, not Mari+t Pl Nom
 
@@ -1599,6 +1610,9 @@ SELECT Pron IF (0 ("eanaš") OR ("eanas"))(1 (Dem Loc) OR (Pers Loc));
 
 # PxSg1
 # - - -
+SELECT (Nom PxSg1) IF (-1 BOS)(1 EOS);
+	## Ustibažžan!
+
 SELECT (PxSg1) IF (-1 V-SG1)(NOT -1 ("leat"))(-2 MUN);
 	## Mun attán heaggan du ovddas.
  # Also hits some essives.
@@ -2500,10 +2514,6 @@ SELECT Adv IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(NOT *-1 V-PL3 BARRIER CS)
 	(0 (A Pl Nom))(NOT 0 Inf)(1 A);
 	## Dát mearrádus lei formálalaččat gustojeaddjin gitta dassáigo...
 
-SELECT (@ADVL) IF (-1 ("leat"))(0 Ess)(1 (A Nom) LINK NOT *1 N BARRIER NPNH);
-	## Boazosápmelaččain ii leat bievlan vejolaš fievrridit gálvvu
-	## gerresiiguin.
-
 REMOVE Nom IF (-1 (Pron Interr Nom))(0 Adv);
 	## Iige leat duopmu mii čielgasit ja njuolga mearrida...
 
@@ -2534,11 +2544,14 @@ SELECT Adv IF (NOT -1 CC LINK -1 Indef)(0 (Pron Indef))(1 COMMA)(2 CS);
 	## Muhto geavadis ráddjejuvvui vuoigatvuohta veaháš, go ráfáiduhttima
 	## spiehkastat mearralottiid ektui gáržžui.
 
-REMOVE Po IF (-1C NOT-NP)(0 Adv)(1 NOT-NP OR CLB);  ## Mun in leat mielde.
+REMOVE Po IF (-1C NOT-NP)(0 Adv)(1 NOT-NP OR CLB);  
+	## Mun in leat mielde.
 
-REMOVE (N Gen) IF (-1 VFIN)(0 Adv)(NOT 1 N or Po); ## Diet lea beare unnán.
+REMOVE (N Gen) IF (-1 VFIN)(0 Adv)(NOT 1 N or Po); 
+	## Diet lea beare unnán.
 
-REMOVE (Pron Interr) IF (1 CLB);  		   ## Dá lea reivve maid.
+REMOVE (Pron Interr) IF (NOT *-1 Neg BARRIER VFIN)(NOT 0 Foc)(1 CLB);
+	## Dá lea reivve maid.
 
 
 # Adverbs, not interjections
@@ -2661,7 +2674,7 @@ SELECT Adv IF (-1 CC)(0 ADV-NOT-NOUN)(NOT *1 VFIN);
 	## árvvoštallama mielde mearridit. 
 	## Dás lea unnimus 150 jagis sáhka ja várra 200 jagis.
 
-SELECT Adv IF (0 Ess);
+SELECT Adv IF (0 Ess)(NOT 0 ("mii" Foc));
 	## Eatnagat bohtet nuortan ja oarjin.
 	## ...amadet gaikut nisuid bajás oktan árvvohis rásiiguin.
  # This rule also hits "ihttin", "guhkkin", "muhtumin", "iehčanassii",
@@ -4274,7 +4287,7 @@ SELECT Inf IF (-3 ("dat" Sg3 Gen))(-2 ("ala"))(-1 ("ahte"));
 SELECT VGen IF (-1 ("gaskan"));
 	## Gaskan viessobasa bohte guossit.
 
-REMOVE VGen IF (0 N);
+REMOVE VGen IF (0 N)(NOT 0 TV LINK *1 Acc BARRIER NOT-NP);
 	## Dakko ii leat menddo fávlái buođu bissehit.
 
 REMOVE VGen IF (0 Inf);
@@ -4480,7 +4493,8 @@ REMOVE (Prop Attr) IF (NOT 1 Prop OR INITIAL);
         ## Olles doaibmaviessu lea sullii 2300 njealjehasmetera. 
 
 SELECT Attr IF (0 Prop)(1 INITIAL)(2 Prop);
-SELECT Attr IF (0 Prop)(NOT 0 Loc)(1C (N Prop)); 
+SELECT Attr IF (0 Prop)(NOT 0 Loc)(1C (N Prop))
+	(NOT 0 (@OBJ) LINK *1 (@OPRED) BARRIER NOT-NP); 
 	## Áirras nr. 17 Randi S. Pedersen oaččui permišuvnna.
 	## Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna.
 
@@ -4676,16 +4690,17 @@ SELECT Gen IF (1 ("bealde" Pr) OR ("beale" Pr) OR ("beallái" Pr) OR ("geahčai"
 	## Ánde boahtá don bealde joga.
 
 
+# Genitive in front of "láhkái"
+# - - - - - - - - - - - - - - - 
+SELECT (Actio Gen) IF (1 ("láhki" N Sg Ill));
+	## ...go dearvvašvuođabargit iežaset árvvoštallama mielde gávnnahit...
+	## Dat ráhkaduvvo gáttis gárvvisin ja gessojuvvo vatnasii suohppun
+	## láhkái.
+
+
 # Genitive with "dan mađe N"
 # - - - - - - - - - - - - -
 SELECT (Gen Sg) IF (0 ("dat"))(2 ("mađe"));
-
-	
-# Genitive relative pronouns
-# - - - - - - - - - - - - - -
-SELECT (Pron Interr Gen) IF (NOT 0 Indef)(1 N)(*1 COPULAS BARRIER CLB)
-	(NOT *1 V-TRANS-ACT BARRIER CLB);
-        ## Oidnen mátkkošteaddji, gean namma lei Keilhau.
 
 
 # Genitive with "veara"
@@ -4694,6 +4709,20 @@ SELECT Gen IF (NOT 0 Nom)(*1 COPULAS BARRIER V-NOT-AUX OR CS
 	LINK *1 ("veara") BARRIER VERB OR CS);
 	## Min ii leat veara dohko vuolgit.
 	## Dasgo bargi lea bálkkás veara. # NOT 0 Nom!
+
+
+# Genitive in comparison
+# ----------------------
+SELECT Gen IF (1 (A Comp))(NOT 1 VERB OR Adv);
+	## Mun jáhkán du iežan falibun.
+
+	
+# Genitive relative pronouns
+# - - - - - - - - - - - - - -
+SELECT (Pron Interr Gen) IF (NOT 0 Indef)(1 N)(*1 COPULAS BARRIER CLB)
+	(NOT *1 V-TRANS-ACT BARRIER CLB);
+        ## Oidnen mátkkošteaddji, gean namma lei Keilhau.
+
  
 # Genitive indefinite pronouns
 # - - - - - - - - - - - - - - -
@@ -4704,9 +4733,9 @@ SELECT Gen IF (0 Indef)(1 (N Ill) OR (N Loc) OR (N Com));
 
 # Genitive in proper name sequences
 # - - - - - - - - - - - - - - - - - 
-REMOVE Acc IF (0 Prop)(1 Prop)(NOT 1 ADVLCASE);          
+REMOVE Acc IF (NOT *-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE)(0 Prop)(1 Prop)
+	(NOT 1 ADVLCASE);          
 	## Dat lea Norgga Röros ja Máhte Piera.
-  # Hmm, very general indeed!
 
 
 # Genitive after "mii" and "mihkkege"
@@ -4744,14 +4773,6 @@ SELECT Acc IF (*-1C Actio BARRIER HNOUN-NOM OR (Pron Nom) OR VERB OR CS OR CP
 	LINK NOT 0 Cmpnd OR Gen OR IV)(NOT -1 CC LINK -1 Actio LINK NOT 0 Cmpnd)
 	(NOT 0 TIME OR ROUTE)(NOT 0 Num LINK -1 ("§"))(1 NP-BORDER)(NOT 1 N); 
 	## ...dahje biehttalit botkemis nealgudeami mii lea jođus. 
-
-
-# Genitive in front of "láhkái"
-# - - - - - - - - - - - - - - - 
-SELECT (Actio Gen) IF (1 ("láhki" N Sg Ill));
-	## ...go dearvvašvuođabargit iežaset árvvoštallama mielde gávnnahit...
-	## Dat ráhkaduvvo gáttis gárvvisin ja gessojuvvo vatnasii suohppun
-	## láhkái.
 
 
 # Accusative after "vuoi" (exceptions to REMOVE Acc-rule below)
@@ -6462,8 +6483,12 @@ SELECT Inf IF (-1 COMMA LINK *-1 (Pron Interr) LINK *-1 (Pron Interr)
 	## iežaset kultuvra, dovddastit ja geavahit iežaset oskku, dahje geavahit 
 	## iežaset giela.
 
+SELECT Inf IF (NOT *-1 (Pl Nom) BARRIER NOT-ADV-PCLE)
+	(1 LEAT-FIN-NOT-IMP)(NOT 1 Qst);
+	## Dáidda heŋgejuvvojit gurpasat, ja maid dál de guottehit lea áigumin.
+
 REMOVE Inf IF (NOT *-1 VFIN BARRIER CS)(0 ("leat"))(*1 PrfPrc BARRIER VERB);
-	##
+	## De leat máksán.
 
 
 # Coordinated infinitives
@@ -7634,7 +7659,7 @@ SELECT (@SUBJ) IF (*-1 COPULAS BARRIER NPNH LINK *-1 ("veara") BARRIER NOT-ADV-P
 	## Man ollu eanet veara lea olmmoš go sávza!
 
 SELECT (@SPRED) IF (*-1 COPULAS BARRIER VERB OR CLB OR CS OR CP OR go OR ("dego") 
-	OR (@OBJ) LINK *-1 Nom BARRIER V-NOT-AUX OR CLB OR CS OR CP LINK 
+	OR (@OBJ) LINK *-1 (@SUBJ) BARRIER V-NOT-AUX OR CLB OR CS OR CP LINK 
 	NOT *-1 (@SPRED) BARRIER CS)(NOT 0 Prop OR Interr)(NOT 0 Actio LINK 1 N);
 	## Dat lea oahpaheaddjin doppe.
 	## Mu namma lea Søren. 
@@ -7698,7 +7723,8 @@ SELECT (@SPRED) IF (-1 ("mii" Pron Interr Sg Gen))(0 A);
 	## In dieđe man buorit dat leat.
 
 SELECT (@SPRED) IF (*-1 VFIN BARRIER Acc OR CS OR CP OR ("dego") 
-	LINK *-1 Nom BARRIER NOT-ADV-PCLE)(0 Ess)(NOT 1 Inf);
+	LINK *-1 Nom BARRIER NOT-ADV-PCLE LINK NOT *-1 (@OBJ) BARRIER CS)
+	(0 Ess)(NOT 1 Inf);
 	## Máhtte álggii reaŋgan.
 
 SELECT (@SPRED) IF (*-1 BOS OR REALCLB OR PUNCT BARRIER NOT-CC)(0 A)
@@ -7788,9 +7814,13 @@ SELECT (@OPRED) IF (*-1 (@OBJ) BARRIER CS OR CP OR CC LINK 0 N)(0 A)(NOT 0 Adv)
 	(NOT 0 Attr LINK *1 N BARRIER NPNH);
 	## Gáhkuid son ráhkada hui buriid.
 
-SELECT (@OPRED) IF (0 Ess)(*1 OPRED-VERB BARRIER V-NOT-AUX LINK NOT 0 Pass);
+SELECT (@OPRED) IF (0 Ess)(NOT 0 Acc)(*1 OPRED-VERB BARRIER V-NOT-AUX LINK NOT 0 Pass);
 	## Buođđogeahčin gohčodit olbmot dakkár buođu mii dulvvi áiggi bidjaluvvo 
 	## gáddegurii.
+
+REMOVE (@OPRED) IF (NOT *-1 V-TRANS-ACT BARRIER CS LINK NOT 0 AUX)
+	(NOT *1 V-TRANS-ACT BARRIER CS LINK NOT 0 AUX);
+	## Itgo boađáše munnje veahkkin?
 
 REMOVE (@OBJ) IF (0 (@GN>))(NOT 0 Interr)(*1 (@SUBJ) BARRIER NPNH LINK *1C (@OBJ) 
 	BARRIER CLB OR CS OR CP)(NOT 1 VFIN);
@@ -7950,7 +7980,7 @@ REMOVE (@OPRED) ;
 # - - - - - - - - - - - - - - - - - - - - - - - - -
 
 SELECT (PxSg2) IF (*-1 (Imprt Sg2) BARRIER VFIN OR Sup)
-	(NOT 0 (N Pl Nom) OR (A Pl Nom) LINK *1 V-PL3 BARRIER CS OR CP);
+	(NOT 0 (N Pl Nom) OR (A Pl Nom) LINK *1 V-PL3 BARRIER CS OR CP)(NOT 0 Adv);
 	## Muhto go don anát borakeahttáivuođa, de vuoidda oaivvát ja basa
 	## muođuidat.
  
@@ -7980,3 +8010,4 @@ REMOVE (PxSg2);
 # Notes for future thought:
 # =========================
 
+#Add a rule REMOVE (@X) at the end?
