@@ -32,7 +32,7 @@ isme.fst: ../bin/isme.fst
 	../bin/sme.save ../int/allcaps.fst ../bin/n-sme.fst \
 	../int/caseconv.fst ../bin/d-sme.fst  ../bin/guess-sme \
 	../bin/abbr.txt ../bin/cap-sme ../bin/foreign.fst ../bin/typos.fst \
-	../int/typoslist.txt ../int/tag-not-save.fst
+	../int/typoslist.txt ../int/tag-not-save.fst ../bin/missing
 	@echo
 	@echo "*** Building the inverse isme.fst ***"
 	@echo
@@ -208,7 +208,7 @@ g-sme.fst: ../int/g-sme.fst
 	$(XFST) < ../../tmp/g-sme-fst-script
 	@rm -f ../../tmp/g-sme-fst-script
 
-
+BINDIR := $(shell pwd | sed -e s/src/bin/)
 
 guess-sme: ../int/guess-sme
 ../int/guess-sme:
@@ -409,6 +409,19 @@ abbr.txt: ../bin/abbr.txt
 
 INTDIR := $(shell pwd | sed -e s/src/int/)
 
+
+missing: ../bin/missing
+../bin/missing:
+	@echo
+	@echo "*** Generating missing ***";
+	@echo
+	@printf "analyzer ${BINDIR}/sme.fst\n\
+	foreign ${BINDIR}/foreign.fst\n\
+	typos ${BINDIR}/typos.fst\n\n\
+	analyzer foreign typos\n" > $@
+
+
+
 cap-sme: ../bin/cap-sme
 ../bin/cap-sme:
 	@echo
@@ -417,7 +430,6 @@ cap-sme: ../bin/cap-sme
 	@printf "analyzer ${BINDIR}/sme.fst\n\
 	allcaps ${INTDIR}/allcaps.fst\n\n\
 	allcaps analyzer \n" > $@
-
 
 foreign.fst: ../bin/foreign.fst 
 ../bin/foreign.fst: ../int/old-foreign.fst ../int/new-foreign.fst
