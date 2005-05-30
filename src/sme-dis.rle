@@ -382,9 +382,11 @@ LIST AUX-OR-MAIN = "áigut" "beassat" "hálidit" "háliidit" "máhttit" "nagodit
 
 SET AUX = COPULAS | Neg | MOD-ASP | AUX-OR-MAIN ; 
 
-SET V-NOT-AUX = V - AUX ;
+SET V-NOT-AUX = V - AUX ;  # Does not include AUX-OR-MAIN
 
 SET VFIN-NOT-AUX = VFIN - AUX ;
+
+SET V-MAIN = V - COPULAS - Neg - MOD-ASP ;  # Includes AUX-OR-MAIN
 
 SET V-DER-PASS = V + V-DER + Pass;    # + is intersection, this should work
 				      # The set is used in one rule with no hits.
@@ -1021,6 +1023,9 @@ MAP (@-FMAINV) TARGET (V Actio Loc) IF (*-1 NP-HEAD-ACC BARRIER VERB
 	LINK *-1 V-NOT-AUX OR ("jaska") BARRIER NPNHA);
 	## Dat galgá hehttet guoli jorggiheames vulos.
 
+MAP (@-FMAINV) TARGET Sup;
+	## Áddjá bázii mállása vuoššažit. 
+
 
 # Complements of particles in comparison
 # --------------------------------------
@@ -1610,7 +1615,7 @@ SELECT Pron IF (0 ("eanaš") OR ("eanas"))(1 (Dem Loc) OR (Pers Loc));
 
 # PxSg1
 # - - -
-SELECT (Nom PxSg1) IF (-1 BOS)(1 EOS);
+SELECT (Nom PxSg1) IF (-1 BOS)(NOT 0 VFIN)(1 EOS);
 	## Ustibažžan!
 
 SELECT (PxSg1) IF (-1 V-SG1)(NOT -1 ("leat"))(-2 MUN);
@@ -4799,7 +4804,7 @@ SELECT Acc IF (*-1 Pers BARRIER NPNH OR CLB LINK *-1 ("vuoi") BARRIER NOT-ADV);
 
 # Genitive (or nominative) in clause without full verb
 # - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REMOVE Acc IF (NOT *-1 V-TRANS-ACT BARRIER CS LINK 0 V-NOT-AUX)(NOT 0 TIME)
+REMOVE Acc IF (NOT *-1 V-TRANS-ACT BARRIER CS LINK 0 V-MAIN)(NOT 0 TIME)
 	(NOT 0 NUMERALS LINK 1 TIME)(NOT *1 V-TRANS-ACT BARRIER CS)
 	(NOT *1 CLB BARRIER NOT-NP LINK *1 (Pron Acc) BARRIER NOT-ADV-PCLE);
 	## Leago doppe kafea?
@@ -7866,6 +7871,9 @@ SELECT (@OBJ) IF (NOT *-1 VFIN BARRIER CS)
 	(1 COMMA LINK *1 COMMA LINK *1 V-TRANS-ACT BARRIER V-NOT-AUX);
 	## Muhto gittabivdosa, nugo buođu ja njaŋgofierpmi, oažžu son atnit 
 	## dušše dan čázis mii sutnje lea mearriduvvon.
+
+SELECT (@OBJ) IF (1 (TV Sup) LINK NOT *1 (@OBJ) BARRIER CS OR CC);
+	## Boađe sisa gáfe jugažit.
 
 SELECT (@OBJ-QH) IF (*-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE OR PUNCT LINK NOT 0 AUX)
 	(NOT 1 N LINK 0 ADVLCASE);
