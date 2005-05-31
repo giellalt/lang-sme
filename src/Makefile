@@ -33,7 +33,7 @@ isme.fst: ../bin/isme.fst
 	../int/caseconv.fst ../bin/d-sme.fst  ../bin/guess-sme \
 	../bin/abbr.txt ../bin/cap-sme ../bin/foreign.fst ../bin/typos.fst \
 	../int/typoslist.txt ../int/tag-not-save.fst ../bin/missing \
-	../int/nonrec-sme.save
+#	../int/nonrec-sme.save
 	@echo
 	@echo "*** Building the inverse isme.fst ***"
 	@echo
