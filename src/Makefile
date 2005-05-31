@@ -381,9 +381,9 @@ dis-tag.fst: ../int/dis-tag.fst
 	@rm -f ../../tmp/dis-tag-sme-script
 
 
-# Here we include a preprocessor.
-# This goal depends on tok.txt
-
+# Here we include a preprocessor. This goal depends on tok.txt
+# Note! This preprocessor is obsolete, and replaced with preprocess. 
+# Do not use unless we decide to go back to tokenize!
 #tok.fst: ../int/tok.fst 
 #../int/tok.fst: tok.txt
 #	@echo
@@ -395,6 +395,9 @@ dis-tag.fst: ../int/dis-tag.fst
 #	$(XFST) < ../../tmp/tok-sme-script
 #	@rm -f ../../tmp/tok-sme-script
 
+
+# Here we make the abbrevation file for our current preprocessor, 
+# the perl-based preprocess (located in the script catalogue)
 
 abbr.txt: ../bin/abbr.txt
 ../bin/abbr.txt: ../../script/abbr-extract abbr-sme-lex.txt \
@@ -410,6 +413,10 @@ abbr.txt: ../bin/abbr.txt
 
 INTDIR := $(shell pwd | sed -e s/src/int/)
 
+
+# Here we build a transducer that gives us only the Sámi wordforms missing from
+# our transducers. Non-Sámi words from Norwegian, Finnish, English, etc. are filtered
+# out by this script, as are registered typos.
 
 missing: ../bin/missing
 ../bin/missing:
