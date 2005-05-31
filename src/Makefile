@@ -32,7 +32,8 @@ isme.fst: ../bin/isme.fst
 	../bin/sme.save ../int/allcaps.fst ../bin/n-sme.fst \
 	../int/caseconv.fst ../bin/d-sme.fst  ../bin/guess-sme \
 	../bin/abbr.txt ../bin/cap-sme ../bin/foreign.fst ../bin/typos.fst \
-	../int/typoslist.txt ../int/tag-not-save.fst ../bin/missing
+	../int/typoslist.txt ../int/tag-not-save.fst ../bin/missing \
+	../int/nonrec-sme.save
 	@echo
 	@echo "*** Building the inverse isme.fst ***"
 	@echo
@@ -418,7 +419,9 @@ missing: ../bin/missing
 	@printf "analyzer ${BINDIR}/sme.fst\n\
 	foreign ${BINDIR}/foreign.fst\n\
 	typos ${BINDIR}/typos.fst\n\n\
-	analyzer foreign typos\n" > $@
+	analyzer\n\
+	foreign\n\
+	typos\n" > $@
 
 
 
