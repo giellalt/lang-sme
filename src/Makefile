@@ -16,7 +16,7 @@ SOURCEFILES = sme-lex.txt adj-sme-lex.txt \
 	closed-sme-lex.txt pp-sme-lex.txt acro-sme-lex.txt \
 	abbr-sme-lex.txt propernoun-sme-lex.txt punct-sme-lex.txt
 
-NONRECFILES := $(patsubst %.txt,%.nonrec,$(SOURCEFILES))
+NONRECFILES := $(patsubst %.txt,../int/%.nonrec,$(SOURCEFILES))
 
 
 # =============================== #
@@ -33,7 +33,7 @@ isme.fst: ../bin/isme.fst
 	../int/caseconv.fst ../bin/d-sme.fst  ../bin/guess-sme \
 	../bin/abbr.txt ../bin/cap-sme ../bin/foreign.fst ../bin/typos.fst \
 	../int/typoslist.txt ../int/tag-not-save.fst ../bin/missing \
-#	../int/nonrec-sme.save
+	../int/nonrec-sme.save
 	@echo
 	@echo "*** Building the inverse isme.fst ***"
 	@echo
@@ -343,7 +343,7 @@ $(NONRECFILES): $(SOURCEFILES)
 	@echo
 	@echo "*** Removing circular entries ***" ;
 	@echo
-	@grep -v '\^C\^' $< > $@
+	@grep -v '\^C\^' $(patsubst ../int/%.nonrec,../src/%.txt,$@) > $@
 
 # The fourth goal is to build twol-sme.bin
 # This goal depends on twol-sme.txt
@@ -511,4 +511,4 @@ clean:
 # Another clean target to remove only the temp files for making the 
 # non-circular transducer:
 rec-clean:
-	@rm -f *.nonrec
+	@rm -f $(NONRECFILES)
