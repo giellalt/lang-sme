@@ -948,7 +948,7 @@ MAP (@VOC) TARGET Nom IF (*-1 COMMA BARRIER CC OR NOT-NP OR CONTRA
 	(NOT 0 Sg LINK *-1 V-SG3 BARRIER VERB);
 	## Vuoi du, Betsaida!
 
-MAP (@VOC>) TARGET Nom IF (-1 COMMA)(0 Pers)(*1 Nom BARRIER NPNH LINK 1 EOS);
+MAP (@VOC) TARGET Nom IF (-1 COMMA)(0 Pers)(*1 Nom BARRIER NPNH LINK 1 EOS);
 	## Gáidet eret mu luhtte, dii verrošeaddjit! 
 
 MAP (@CMPND) TARGET Cmpnd;
@@ -1977,13 +1977,8 @@ REMOVE VFIN IF (-1 BOS OR CS)(0 Prop)(NOT 0 ("Lea"))(1 V-SG3);
   # Alternatively, I might drop the 1C in the previous rule, or include the
   # pronouns.
 
-#XXX
-#REMOVE PrsPrc IF (NOT *1 N BARRIER NOT-ADJ-CC)(NOT -1 ("nu"))
-#	(NOT *-1 COPULAS BARRIER NOT-ADV-PCLE)(NOT 1 COMMA OR CC LINK 1 A) ;
-# Testing a CC-less version, because of Acc / non-Acc in : 
-## Son ferte nannet ealli. Son ferte nannet ealli ja anihahtti.
-REMOVE PrsPrc IF (NOT -1 ("nu"))
-	(NOT *-1 COPULAS BARRIER NOT-ADV-PCLE)(NOT 1 COMMA LINK 1 A) ;
+REMOVE PrsPrc IF (NOT *1 N BARRIER NOT-ADJ-CC)(NOT -1 ("nu"))
+	(NOT *-1 COPULAS BARRIER NOT-ADV-PCLE)(NOT 1 COMMA OR CC LINK 1 A) ;
 	## Bearráigeahčči galgá doaimmahit bargguidis iešheanálaččat.
 	## ...ja ahte dat dáhttu čielgasit berre doahttaluvvot.
  # This rule hits many nouns as well, like "dáhttu" in the last example. OK! 
@@ -4080,8 +4075,9 @@ REMOVE (A Gen) IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(1 Inf);
 	## Lea hávski oažžut reivve.
 
 
-SELECT (A Sg Nom) IF (*-1 COPULAS BARRIER NOT-ADV LINK 0 V-SG3)(NOT -1 Gen)
-	(NOT 0 Inf OR Attr)(NOT 0 Adv LINK *1 VERB BARRIER NOT-ADV)(NOT 1 PrfPrc)
+SELECT (A Sg Nom) IF (*-1 COPULAS BARRIER NOT-ADV LINK 0 V-SG3 LINK NOT *-1 Loc
+	BARRIER N)(NOT -1 Gen)(NOT 0 Inf OR Attr)
+	(NOT 0 Adv LINK *1 VERB BARRIER NOT-ADV)(NOT 1 PrfPrc)
 	(NOT 1 CC LINK 1 Adv);
 	## Buođđu lea dál gárvvis.
 	## Dalle lea lunddolaš, ahte...
@@ -4825,6 +4821,9 @@ SELECT Acc IF (*-1 Pers BARRIER NPNH OR CLB LINK *-1 ("vuoi") BARRIER NOT-ADV);
 # Accusative after adjectives
 # - - - - - - - - - - - - - -
 
+SELECT Acc IF (-1 (A Nom) OR (N Nom))(NOT -1 VERB OR ("buorre"))(NOT 0 VERB)(1 EOS);
+	## Mus lea divvunmiella áiddi.
+
 SELECT Acc IF (*-1 A BARRIER NPNH OR CC OR CLB OR PUNCT LINK 0 Nom LINK 
 	NOT 0 Attr OR ("buorre") OR Adv OR N)(NOT 0 Px OR PrfPrc OR Adv)(1 EOS OR CLB); 
 	#(NOT 0 TIME);
@@ -5012,7 +5011,7 @@ REMOVE Acc IF (*-1 Nom BARRIER NOT-ADV-PCLE LINK *-1 ILL-VERB
 	## ...mat gullet sámilága giellanjuolggadusaid hálddašanguvlui.
 
 REMOVE Acc IF (*-1 LOC-VERB BARRIER NPNHA OR Loc OR CLB)
-	(*1 Loc BARRIER NOT-NP LINK NOT 0 Prop);
+	(*1 Loc BARRIER NOT-NP LINK NOT 0 (TV Actio) OR Prop);
 	## Divššohasas lea vuoigatvuohta biehttalit journála olggosaddimis.
 
 REMOVE Acc IF (*-1 Nom BARRIER NOT-ADV-PCLE LINK *-1 LOC-VERB 
@@ -5529,6 +5528,10 @@ SELECT Nom IF (-2 Nom)(-1 COPULAS)(0 N OR A)(NOT 0 PrfPrc OR (Prop Loc))
 
 # Nominative as objects in existential clauses
 # --------------------------------------------
+SELECT Nom IF (-1 COPULAS LINK *-1 Loc BARRIER V-NOT-AUX OR N OR CS OR CP)
+	(NOT 0 Adv);
+	## Ii dus leat gávdni masage.
+
 SELECT Nom IF (*-1 COPULAS BARRIER NPNHA OR Nom LINK *-1 Loc BARRIER N OR A OR 
 	V-NOT-AUX OR CLB OR CC OR CS OR CP)(NOT 0 PrfPrc)(1 NP-BORDER)
 	(NOT 0 Attr OR PrsPrc LINK *1 N BARRIER NOT-ADJ-CC)
@@ -7339,15 +7342,15 @@ SELECT (V Actio Ess) IF (*-2 V-TRANS-ACT BARRIER NPNH)(-1 Acc);
 	## Mii gulaimet soapmása čoalkkuheame uvssa.
  # If necessary, list the higher verbs that appear in this frame.
 
-SELECT Actio IF (-1 NP-HEAD-GEN)(1 N)(2 NP-BORDER OR Dem);
+SELECT (V Actio Nom) IF (-1 NP-HEAD-GEN)(1 N)(2 NP-BORDER OR Dem);
 	## Nieida ii čájehan geasage irggi čállin reivve.
 
  # In the so-called agens constructions, like "irggi čállin reive", we probably
  # have the verbal actio. However, unless we have a tag for short actios, it is not 
  # possible to write rules that distinguish between this construction, where the 
- # actio is always shortened, from constructions with the long genitive form, such 
- # as "sámegiela geavaheapmi journálain". Hence, the reading we get in both cases is 
- # V* n N Actio Sg Gen. 
+ # actio is always shortened, from constructions with the long nominative form, such 
+ # as "sámegiela geavaheapmi journálain". Now both types get the analysis V Actio Nom. 
+
 
 SELECT (V Actio Gen) IF (1 ("dihte" Po) OR ("dihtii"))(*2 Acc BARRIER NPNH);
 	## Mun dál boađán du lusa čállin dihte dan reivve.
@@ -7945,6 +7948,9 @@ REMOVE (@OBJ) IF (*-1 ("gullat") BARRIER VERB OR ("gč") OR CS LINK *-1 Ill
 	BARRIER NOT-ADV-PCLE);
 	## Dasa gullet maiddái riekteásahusat.
 
+REMOVE (@OBJ-QH) IF (NOT *-1 V-TRANS-ACT BARRIER CS)
+	(NOT *1 V-TRANS-ACT BARRIER CS LINK NOT 0 AUX);
+	## Dat orui doppe vihtta jagi.
 
 REMOVE (@OBJ-QH) IF (*-1 ("gullat") BARRIER VERB OR CS LINK *-1 Ill 
 	BARRIER NOT-ADV-PCLE);
@@ -8054,7 +8060,7 @@ REMOVE (@SUBJ) IF (0 (@ADVL))(*1C (@SUBJ) BARRIER CC OR CLB OR CS OR CP);
 REMOVE (@SUBJ) IF (*-1 (@SUBJ) BARRIER CS OR CLB LINK NOT 0 Gen)(0 Gen);
 	## Salomo, gean eadni lei Uria áhkká,...
 
-SELECT (@<GP) IF (*-1 Pr BARRIER NPNH);
+SELECT (@GP<) IF (*-1 Pr BARRIER NPNH);
 	## Dalle bisttii luossaguolli miehtá dálvvi bearaš atnui.
 
 
