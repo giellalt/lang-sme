@@ -601,7 +601,7 @@ SET REALCLB = CLB - COMMA ;
 
 SET CP = (Pron Interr) | MO ;
 
-SET NP-BORDER = BOS | EOS | REALCLB | Adv | VFIN | Inf | ConNeg | VGen | 
+SET NP-BORDER = BOS | EOS | REALCLB | Adv | VFIN | Inf | ConNeg | VGen | Sup | 
 	PPRON-NOT-GEN | Recipr | Po | Pr | Pcle | ("jed") | Interj | CS | CP ;
 
  # CLB removed from set in order to allow for NP-internal commas.
@@ -4334,6 +4334,10 @@ SELECT Inf IF (-3 ("dat" Sg3 Gen))(-2 ("ala"))(-1 ("ahte"));
 SELECT VGen IF (-1 ("gaskan"));
 	## Gaskan viessobasa bohte guossit.
 
+SELECT (VGen) IF (*-2 VFIN BARRIER CS)(NOT -1 CC)(-1 ("nu") OR ("hui"))(NOT 0 Adv); 
+ # Probably also after other modifiers.
+	## Dat hálai nu huikki.
+
 REMOVE VGen IF (0 N)(NOT 0 TV LINK *1 Acc BARRIER NOT-NP);
 	## Dakko ii leat menddo fávlái buođu bissehit.
 
@@ -5918,6 +5922,9 @@ SELECT Acc IF (*-1 ("dihte") OR ("dihtii") BARRIER NOT-NP OR PUNCT LINK -1 Actio
 SELECT Acc IF (*-1 V-TRANS-ACT BARRIER NPNHA)(1 (VAbess));
 	## In mun dáhto vuolggahit sin borakeahttá ruoktut.
 
+SELECT Acc IF (*-1 V-TRANS-ACT BARRIER NPNHA)(NOT 0 Adv)(1 Sup)(NOT 1 Neg);
+	## Máhtte guđii bohccuid livadeažžat.
+
 REMOVE Gen IF (*-1 V-TRANS-ACT BARRIER NPNHA)(*1 CC BARRIER WORD LINK *1 Nom 
 	BARRIER NPNH LINK *1 VFIN BARRIER NOT-ADV-PCLE);
 	## Mun lohken girjji ja Niillas guldalii ođđasiid.
@@ -6954,6 +6961,9 @@ SELECT (V Pl1) IF (*-2C (V Pl1) BARRIER VFIN OR CS)(-1 CS);
 REMOVE (V Pl1) IF (NOT -2 (V Pl1))(-1 CC);
 	## Eamiálbmogiid luondduriggodagat leat leamaš ja leat duoguštuvvon.
 
+REMOVE (V Pl1) IF (*-1 (V Pl3) BARRIER CC OR CS OR CP);
+	## Bártnit ledje mannán meahccái ozažit meahcce-elliid.
+
 
 # Pl2
 # ---
@@ -7469,8 +7479,15 @@ SELECT VFIN IF (0 INF-VERB)(1 ("go" Pcle))(*2 Inf BARRIER VERB);
 # Lexical disambiguation of verbs #
 # ------------------------------- #
 
-# boahtit vs. bohtat # 
-# ------------------ #
+# beassat vs. besset
+# ------------------
+
+REMOVE ("besset") IF (0 ("beassat"))(*1 (V Actio Loc) BARRIER VERB OR CS);
+	## Mun bessen vuolgimis.
+
+
+# boahtit vs. bohtat 
+# ------------------
 # These verbs have 5 homonym forms, Prs Du1/Pl3 bohte, Prt Sg1 bohten,
 # Prs Pl3/Prt Sg2 bohtet, Imprt Sg1 bohton, Imprt Pl1 bohtot
 # bohtat = 'become thick, large', e.g. of a dough in the oven
@@ -7495,6 +7512,7 @@ REMOVE ("bohtat") IF (0 ("boahtit"))(*-1 (@ADVL)) ;
 
 REMOVE ("caggát") IF (0 ("caggat"))(*1 NP-HEAD-ACC BARRIER NPNHA);
 	## Olmmoš caggá čuolu rávdnjái fávlli guvlui.
+
 
 # duđđat vs. duhtat
 # -----------------
@@ -7818,8 +7836,8 @@ SELECT (@SPRED) IF (*-1 (Pers Nom) BARRIER NPNHA OR CLB LINK *-1 COPULAS
 	BARRIER NOT-ADV-PCLE)(NOT 0 Interr);
 	## Leat go don árgi bajándálkkis?
 
-SELECT (@SPRED) IF (*-2 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 (@SUBJ) BARRIER V-NOT-AUX)
-	(-1 PrfPrc);
+SELECT (@SPRED) IF (*-2 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 (@SUBJ) 
+	BARRIER V-NOT-AUX OR CS)(-1 (PrfPrc))(NOT -1 Pass)(0C Nom)(1 NP-BORDER);
 	## Son lea oahppan olmmoš.
 
 SELECT (@SPRED) IF (*-1 COPULAS BARRIER V-NOT-COP LINK 0 Pl3)(0 (A Pl))
@@ -7944,7 +7962,7 @@ SELECT (@-FSUBJ) IF (NOT *-1 V-TRANS-ACT BARRIER CS)(1 VAbess);
 
 SELECT (@OPRED) IF (*-1 (@OBJ) BARRIER VERB OR CC OR CLB OR CP OR go)
 	(NOT 0 Gen LINK *1 N BARRIER NPNH)(NOT 0 Interr OR TIME OR ROUTE)
-	(NOT 0 Num LINK 1 ROUTE OR TIME);
+	(NOT 0 Num LINK 1 ROUTE OR TIME)(NOT 1 (TV Actio) LINK NOT *1 (@OBJ) BARRIER CS);
 	## Divššohasbearráigeahčči galgá dahkat ortnega dovddusin.
  
 SELECT (@OPRED) IF (*-1 (@OBJ) BARRIER NOT-NP OR Interr)(0 Ess)(NOT 1 V-SG3);
@@ -7976,7 +7994,7 @@ REMOVE (@OBJ) IF (0 (@GN>))(NOT 0 Interr)(*1 (@SUBJ) BARRIER NPNH LINK *1C (@OBJ
 	## ...go su iežas anistumit gesset ja giktalit su.
 
 REMOVE (@OBJ) IF (*-1C (@OBJ) OR (@OBJ-QH) BARRIER NPNH OR CC OR CLB OR PUNCT)
-	(NOT 0 Interr);
+	(NOT 0 Interr)(NOT 1 (TV Actio) LINK NOT *1 (@OBJ) BARRIER CS);
 	## Das maŋŋá dajan juoidá álbmotrievtti mearkkašumi birra.
  
 REMOVE (@OBJ) IF (*-1C (@OBJ) BARRIER CS OR CP OR CC OR CLB OR Inf OR PUNCT 
@@ -8030,6 +8048,11 @@ SELECT (@OBJ) IF (NOT *-1 VFIN BARRIER CS)
 
 SELECT (@OBJ) IF (1 (TV Sup) LINK NOT *1 (@OBJ) BARRIER CS OR CC);
 	## Boađe sisa gáfe jugažit.
+
+SELECT (@OBJ) IF (1 (TV Actio Loc))(NOT 1 N)(NOT *2 (@OBJ) BARRIER CS);
+ # This rule would work just fine if it were not for the fact that the verbal actio 
+ # -eames (instead of -eamis) is often used where we would expect a nominal actio.
+	## Manin don gielddát mu dan muitaleames?
 
 SELECT (@OBJ-QH) IF (*-1 V-TRANS-ACT BARRIER VERB OR CS OR (@OBJ) OR PUNCT OR 
 	REALCLB LINK NOT 0 AUX)(NOT 1 N LINK 0 ADVLCASE)(NOT 1 TIME);
