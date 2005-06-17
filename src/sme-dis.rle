@@ -540,6 +540,8 @@ LIST GUOVLU = "ássan#guovlu" "báiki" "gávpot" "guovlu" "sádji"
 
 LIST ROUTE = "fávli" "geaidnu" "guorra" "luodda" "miila"; # and others!
 
+LIST MEASURE = "mehtar" "milli#mehtar";
+
 LIST PL-NOUN = "beassaš" "čalbme#láse" "gálssot" "headja" "sabet" "sisttet" 
 	"skárri"; 
  # Nominals that appear with plural numerals.
@@ -775,7 +777,7 @@ MAP (@NPRON<) TARGET (N Pl Gen) IF (-1 ("mii" Interr) OR ("mihkkege"));
 	## Ii šaddan mihkkege gávnnademiid.
 
  
-# Qantifier mappings
+# Quantifier mappings
 # ------------------
 
 MAP (@AN>) TARGET (Ord);
@@ -784,6 +786,12 @@ MAP (@AN>) TARGET (Ord);
 MAP (@PCLE-COMPL) TARGET Num IF (-1 ("go"))(NOT 1 N LINK 0 ADVLCASE)
 	(NOT *1 VFIN BARRIER CS);
 	## Ii heargi gal nagot guoddit eambbo go guokte diekkára. 
+
+MAP (@QN>) TARGET Num IF (0 Acc)(*1 ALU BARRIER NOT-NP);
+	## Noađđespagáin leat dat geažit guokte golbma tumá guhku.
+
+MAP (@QN>) TARGET Num IF (0 (Num Acc))(1 MEASURE OR TIME)(2 A);
+	## Suorpmas lea guokte millimehtara govdat.
 
 MAP (@ADVL @OBJ-QH) TARGET Acc IF (0 NUMERALS)
 	(*1 Gen BARRIER NPNH LINK 0 TIME OR ROUTE);
@@ -794,7 +802,7 @@ MAP (@SUBJ-QH) TARGET Nom IF (0 NUMERALS)
 	(NOT *1 ALU BARRIER NOT-NP);
 	## Dá dat leat, 350 ruvnno.
 
-MAP (@OBJ-QH) TARGET Acc IF (0 NUMERALS)
+MAP (@OBJ-QH) TARGET Acc IF (0 NUMERALS)(NOT 1 MEASURE)
 	(*1 Gen BARRIER NPNH LINK NOT 0 TIME OR ROUTE)
 	(NOT *1 ALU BARRIER NOT-NP);
 	## Vihtta bivdavuogi mun gal dušše namahin.
@@ -808,9 +816,6 @@ MAP (@QN>) TARGET Num IF (NOT -1 Num)(*1 Ill OR Loc OR Com BARRIER NPNH) ;
 MAP (@QN>) TARGET Num IF (*1 Ess BARRIER NPNH LINK NOT 0 (V Actio));
 	##
 
-MAP (@QN>) TARGET Num IF (0 Acc)(*1 ALU BARRIER NOT-NP);
-	## Noađđespagáin leat dat geažit guokte golbma tumá guhku.
-
 MAP (@QN>) TARGET ("okta") IF (*1 N BARRIER NPNH)(NOT 1 Prop OR Dem);
 	## Sámegiela doaibmaplánas lei okta doaibmabidju sámegillii jorgalit
 	## dieđalaš artihkkaliid.
@@ -818,7 +823,10 @@ MAP (@QN>) TARGET ("okta") IF (*1 N BARRIER NPNH)(NOT 1 Prop OR Dem);
 MAP (@NUMBER) TARGET Num IF (NOT 0 Nom OR Acc OR Gen OR ADVLCASE);
 	## Viidáseappot mearrida dearvvašvuođabargiidlága § 10 vuosttas lađđasa...
 
+MAP (QN<) TARGET Num IF (-1 ("diibmu" Nom));
+	## Mun boađán diibmu vihtta/viđas.
 
+ 
 # Attribute mappings
 # ------------------
 
@@ -937,8 +945,9 @@ MAP (@PronN<) TARGET (Indef Pl Nom) IF (*-1 PPRON-DU-PL OR (N Pl) LINK 0 Nom
 # Fragment mappings
 # -----------------
 
-MAP (@HNOUN) TARGET (N Nom) IF (NOT *-1 VFIN)(NOT *1 (N Nom) BARRIER CS)
-	(NOT *1 VFIN BARRIER CS);
+MAP (@HNOUN) TARGET (N Nom) IF (NOT *-1 VFIN OR CP)
+	(NOT *1 (N Nom) BARRIER CS OR CC)
+	(NOT *1 VFIN BARRIER CS)(NOT 1 go OR COMMA);
 	## Luossa-bidin jođđu-buođuin Deanus.
 
 MAP (@HNOUN) TARGET (N Nom) IF (NOT *-1 VFIN)(1 Inf)(NOT *2 VFIN)
@@ -963,6 +972,16 @@ MAP (@VOC) TARGET Nom IF (*-1 COMMA BARRIER CC OR NOT-NP OR CONTRA
 
 MAP (@VOC) TARGET Nom IF (-1 COMMA)(0 Pers)(*1 Nom BARRIER NPNH LINK 1 EOS);
 	## Gáidet eret mu luhtte, dii verrošeaddjit! 
+
+MAP (@VOC) TARGET (N Nom) IF (-2 BOS)(-1 (Imprt Sg2))(NOT -1 Adv OR Qst)
+	(NOT 0 ACR)(NOT *1 VFIN BARRIER CS OR CS OR CP);
+	## Gula eadni!
+
+MAP (@VOC) TARGET (N Nom) IF (-3 BOS)(-2 (Imprt Sg2) OR (Sg2 Qst))(-1 COMMA)(1 COMMA);
+	## Buvttes, Máhtte, goikemuoraid!
+
+MAP (@VOC) TARGET (N Nom) IF (-4 BOS)(-3 (V Sg2))(-2 go)(-1 COMMA)(1 COMMA);
+	## It go, bártnážan, boađáše fargga ruoktot?
 
 MAP (@CMPND) TARGET Cmpnd;
 	## Dát ii guoskka dikšui mii boahtá mánáid- ja nuoraidpsykiatriija 
@@ -1124,7 +1143,7 @@ MAP (@SUBJ) TARGET ("buot") IF (-1 COPULAS);
 	## Danin lea buot nu olu álkit inuihtaide.
 
 MAP (@OBJ @OPRED) TARGET Acc IF (NOT 0 TIME OR ROUTE)
-	(NOT 0 Num LINK *1 TIME OR ROUTE BARRIER NPNH);
+	(NOT 0 Num LINK *1 TIME OR ROUTE OR MEASURE BARRIER NPNH);
 	## Manaigo Biret-Elle viežžat boastta? 
 
 MAP (@OBJ) TARGET Indef IF (*-1 V-TRANS-ACT BARRIER N OR CLB)
@@ -1202,9 +1221,6 @@ MAP (@ADVL) TARGET Ess IF (0 ("bievla") OR ("čuoika") OR ("dálki") OR ("dulvi"
 
 MAP (@SPRED @OPRED) TARGET Ess ;
 	## Dat lea oahpaheaddjin doppe.
-
-MAP (@ADVL) TARGET Nom IF (-1 ("diibmu"))(0 Num);
-	## Mun boađán diibmu vihtta.
 
 MAP (@ADVL) TARGET Acc IF (0 TIME OR ROUTE);
 	## Beaivvi mun čohkkájin doppe.
@@ -4743,6 +4759,12 @@ SELECT Gen IF (1 ("bealde" Pr) OR ("beale" Pr) OR ("beallái" Pr) OR ("geahčai"
 	## Ánde boahtá don bealde joga.
 
 
+# Genitive in front of "guvlui"
+# - - - - - - - - - - - - - - -
+SELECT Gen IF (NOT 0 Dem OR Loc)(1 ("guovlu" N Sg Ill));
+	## Áddjá lei nohkkan, láse guvlui oaivi.
+
+
 # Genitive in front of "láhkái"
 # - - - - - - - - - - - - - - - 
 SELECT (Actio Gen) IF (1 ("láhki" N Sg Ill));
@@ -4865,7 +4887,7 @@ SELECT Acc IF (-1 ("ahkit"));
 # Genitive (or nominative) in clause without full verb
 # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REMOVE Acc IF (NOT *-1 V-TRANS-ACT BARRIER CS LINK 0 V-MAIN)(NOT 0 TIME)
-	(NOT 0 NUMERALS LINK 1 TIME)(NOT *1 V-TRANS-ACT BARRIER CS)
+	(NOT 0 NUMERALS LINK 1 TIME OR MEASURE)(NOT *1 V-TRANS-ACT BARRIER CS)
 	(NOT *1 CLB BARRIER NOT-NP LINK *1 (Pron Acc) BARRIER NOT-ADV-PCLE);
 	## Leago doppe kafea?
 	## Amma duot lei Niillasa guollebiila?
@@ -5208,7 +5230,8 @@ REMOVE Nom IF (*-1 Acc BARRIER CS OR CP OR CONTRA OR VFIN LINK *-1 ACC-INF-VERB
 	(NOT *-1 COPULAS BARRIER NOT-ADV-PCLE)(NOT *-1 (Interr Acc) BARRIER Acc);
 	## Hearrá, suova mu vuos mannat ruoktot hávdádit áhččán.
  
-REMOVE Acc IF (NOT *-1 V-TRANS-ACT BARRIER CS)(NOT 0 TIME)(NOT 0 NUMERALS LINK 1 TIME)
+REMOVE Acc IF (NOT *-1 V-TRANS-ACT BARRIER CS)(NOT 0 TIME)
+	(NOT 0 NUMERALS LINK 1 TIME OR MEASURE)
 	(NOT *1 V-TRANS-ACT BARRIER CS);
 	## Sámedikkis lea leamaš čoahkkin 14.03.01.  
 
@@ -5716,6 +5739,7 @@ REMOVE Nom IF (*-1 COPULAS BARRIER NPNHA LINK *-1 Loc BARRIER NOT-ADV-PCLE)
 	## áššiin.
 
 REMOVE (Sg Nom) IF (*-1 VFIN BARRIER CS OR CP OR CONTRA OR ("dego") LINK NOT 0 Sg3)
+	(NOT -1 COMMA LINK *-1 (Imprt Sg2) BARRIER CS)
 	(NOT 0 NUMERALS OR (Cmpnd) OR ("veara"));
 	## Dan mađe čuovggai mánnu, ahte earuhedje albmáid reagas.
 
@@ -6036,6 +6060,13 @@ SELECT Acc IF (-1C NP-BORDER)(NOT -1 Interr OR Indef OR Pr)(0 TIME)(NOT 0 Loc)
 
 SELECT Acc IF (0 ("bodda"));
 	## Mun finan gávppašeame dan botta.
+
+
+# Accusative in measure expressions
+# ---------------------------------
+
+SELECT Acc IF (0 Num)(1 TIME OR MEASURE OR ("ruvnno"))(2 A);
+	## Mánná lea golbma jagi boaris.
 
 
 # Accusative in apposition
@@ -7879,7 +7910,7 @@ SELECT (@SPRED) IF (*-1 VFIN BARRIER Acc OR CS OR CP OR ("dego")
 	(0 Ess)(NOT 1 Inf);
 	## Máhtte álggii reaŋgan.
 
-SELECT (@SPRED) IF (*-1 BOS OR REALCLB OR PUNCT BARRIER NOT-CC)(0 A)
+SELECT (@SPRED) IF (*-1 BOS OR CLB OR PUNCT BARRIER NOT-CC)(0 A)
 	(1 (Pers Nom));
 	## Heittogat dat leat maiddái.
 	## Ávdugasat sii geat moraštit.
@@ -7916,7 +7947,8 @@ SELECT (@SPRED) IF (0 ("veara"))(*1 COPULAS BARRIER NOT-ADV-PCLE);
 	## Mearkkašan veara lea ahte...
 
 SELECT (@SPRED) IF (*-1 CC BARRIER NPNH LINK -1C (@SPRED))
-	(NOT *1 VFIN BARRIER CS OR REALCLB);
+	(NOT *1 VFIN BARRIER CS OR REALCLB)(NOT *1 (@SPRED) BARRIER NPNH)
+	(NOT 1 (@ADVL));
 	## Dalle ledje noaiddis erenoamáš rolla oaidnilin ja dálkkodeaddjin.
 
 SELECT (@SPRED) IF (*-1 COMMA BARRIER NPNH LINK -1C (@SPRED))
