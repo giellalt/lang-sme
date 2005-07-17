@@ -35,9 +35,9 @@
                   # Disambiguating nouns
                   # Disambiguating verbs - part 2
                   # Residual cases
-                # Cycle 3: Global and final disambiguation
+                # Cycle 3: Global disambiguation
 		# Cycle 4: Syntactic disambiguation
-
+		# Cycle 5: Post-syntactic morphological disambiguation
 
 
 # ========== #
@@ -421,17 +421,16 @@ LIST COM-VERB = "árvalit" "árvvohuššat" "bargat" "bártašuvvat"
 		"háladit" "hilbošit" "humadit" "meannudit" "náitalit" "riidalit" 
 		"ságastaddat" "ságastallat" "šiehtadit" ;
 
-LIST ILL-VERB = "áibbašit" "álgit" "báitit" "beassat" "čohkkedit" "čuohcit" "dahkat" 
+LIST ILL-VERB = "áibbašit" "álgit" "báitit" "beassat" "čohkkedit" "čuohcit" 
 		"deaivat" "doaškut" "dorvvastit" "došket" "duhtat" "geahččat" "gullat" 
 		"guoskat" "gustot" "heivet" "irggástallat" "jáhkkit" "liikot" 
-		"luohttit" "mannat" "oskut" "riepmat" "ráhkkanit" "soahpat" 
+		"luohttit" "mannat" "ollet" "oskut" "riepmat" "ráhkkanit" "soahpat" 
 		"suhttat" "vuolgit";
 
 
 LIST ACC-LOC-VERB = "biehttalit" "earuhit" "gieldit" "jearrat" "viežžat" ;
 
 LIST ACC-ILL-VERB = "addit" "bidjat" "mearkkašit";
-
 
 
 # Other verb sets
@@ -1473,65 +1472,6 @@ REMOVE (N* Dimin) IF (0 Adv OR A);
 	## Mun vuolggán ihttážis mánnu.
 
 
-# Proper nouns
-# ------------
-
-REMOVE (Prop Pl) IF (0 (Prop Sg))(NOT 0 ("Sámediggi") OR (laš));    
-	## Marit lea dál.
-  # Marit N Sg, not Mari+t Pl Nom
-
-REMOVE (Prop Pl) IF (-1 BOS)(0 CNOUN-PL-NOM);        
-	## Sámit leat álgoálbmot.
-
-REMOVE (Prop Pl Nom) IF (-1 BOS)(NOT *1 V-PL3);	     
-	## Unnit nuppástusaiguin.	
-
-
-# Removing proper nouns that are lookalikes
-# - - - - - - - - - - - - - - - - - - - - -
-
-REMOVE ("Dan" Attr) IF (NOT 1 Prop);
-REMOVE ("Dan" Prop) IF (1 CNOUN); # Dan is Nom or Attr.
-
-REMOVE ("Hu" Ill) IF (1 A or Adv);
-
-REMOVE Prop IF (-1 BOS)(0 ("Lassi")); 
-#REMOVE Prop IF (0 ("Lassi"))(1 Pron);
-#REMOVE Prop IF (0 ("Lassi"))(*1 N BARRIER NPNH);
-	## Lassi dutkandoarjagat sáhttet leat mielde... 
-	## Lassin dasa ferte váldit vuhtii sierralágan dilálašvuođaid.
-	## Lassin jorgalandoarjagii, de lea dárbu sihke...
-  	## Lassin leat oalle viiddis boazuguohtunguovllut.
-
-SELECT Prop IF (0 ("Lásse"))(*1 VFIN BARRIER CS);
-	## Lásse dat leigga sihtan mu váldit lusan.
- 
-REMOVE ("Lea") IF (-1 BOS OR PUNCT)(NOT 1 V-SG3); 
-REMOVE ("Lea") IF (-1 BOS OR PUNCT OR (":"))(1 A); 
-	## Lea dušše okta Ipmil. Lea idja.
-	 ## Lea buolaš. Son dajai: Leage gierdávaš.
- 
-REMOVE ("Man") IF (-1 BOS OR PUNCT OR (":"))(0 (V Imprt));
-	## De son celkkii sutnje: "Mana basadit Siloaláddos."
-  # Cannot think of sensible conditions.
-
-REMOVE Prop IF (-1 BOS)(0 ("Mo"))(NOT 1 go)(*1 ("?"));
-REMOVE Prop IF (-2 CLB)(-1 PUNCT)(0 ("Mo"));
-	## Mo sáhttá su riika dalle bissut?
-
-REMOVE Prop IF (0 ("oassi"));
-	## Osiid ektui, dárkojuvvo Finnmárku muđui Almennehin,...
-
-
-# Selecting proper nouns
-# - - - - - - - - - - - -
-SELECT (Prop Nom) IF (0 ("Rabbi"))(1 COMMA);
-	## Rabbi, lea buorre go mii leat dáppe.
-
-SELECT Prop IF (0 ("Ruoŧŧa"))(1 CC)(2 Prop);
-	## Ruoŧa ja Suoma beale riektedilli lea measta ovttalágan.
-
-
 # Lexical N versus Actio
 # ----------------------
 
@@ -2386,6 +2326,14 @@ SELECT Adv IF (-1 ("váldit"))(0 ("vuostá"));
 	## juohkima dakkár hámis.
 
 
+# Adpositions that take modifiers
+# -------------------------------
+
+SELECT Pr IF (-1 Gen)(0 ("bealde") OR ("beale") OR ("beallái") OR ("geahčai")
+	OR ("geahčen") OR ("geaže"))(1 Gen);
+	## Daid sáhttá heaŋggastit dan heargái mii daid eará goahtemuoraid lea 
+	## guoddimin, guokte bealji goappáge beallái hearggi. 
+
 
 # The case of GASKAL
 # ------------------
@@ -2424,15 +2372,6 @@ SELECT Po IF (-1 (N Gen) LINK *-1 CC BARRIER NPNH LINK -1 (N Gen))(0 GASKAL);
 
 SELECT Po IF (-3 Inf)(-2 ("ja"))(-1 Inf)(0 GASKAL);
 	## Sániid oamastit ja eaiggáduššat gaskkas geavahuvvo "ja".
-
-
-# Adpositions that take modifiers
-# -------------------------------
-
-SELECT Pr IF (-1 Gen)(0 ("bealde") OR ("beale") OR ("beallái") OR ("geahčai")
-	OR ("geahčen") OR ("geaže"))(1 Gen);
-	## Daid sáhttá heaŋggastit dan heargái mii daid eará goahtemuoraid lea 
-	## guoddimin, guokte bealji goappáge beallái hearggi. 
 
 
 
@@ -3502,7 +3441,6 @@ REMOVE Acc IF (0 (Pron Interr))(*1 NP-HEAD-NOM BARRIER NPNH LINK *1 COPULAS BARR
 
 
 
-
 # Reflexive pronouns
 # ==================
   # iežas is Gen or Acc
@@ -3706,6 +3644,9 @@ REMOVE Adv IF (*-1 ("leat") BARRIER VERB OR CC OR CLB OR CS OR CP)(0 Indef)
 	## Diet gal lei beare unnán.
  # Indefinite pronouns, not adverbs, if there is no verb other than 'leat'.
 
+REMOVE Adv IF (*-1 CC OR CLB BARRIER NOT-ADV)(0 Indef)(NOT 0 Loc)(*1 N BARRIER NPNH);
+	## Dán áššis, nugo eanaš eará áššiin,...
+
 
 # Particular indefinite pronouns
 # ------------------------------
@@ -3748,7 +3689,6 @@ SELECT Indef IF (*-1 COPULAS BARRIER V-NOT-AUX)(0 ("unnán"))
 
  # In the last example "unnán" is an Adv. Hence the last condition. Alternative:
  # (NOT 1 PrfPrc LINK 1 Inf)?
-
 
 
 # Demonstrative pronouns
@@ -4359,7 +4299,6 @@ REMOVE Attr IF (0 A-CASE OR Adv)(1 CC)(NOT *2 N BARRIER NP-BORDER);
 REMOVE (A Gen) IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(1 Inf); 
 	## Lea hávski oažžut reivve.
 
-
 SELECT (A Sg Nom) IF (*-1 COPULAS BARRIER NOT-ADV LINK 0 V-SG3 LINK NOT *-1 Loc
 	BARRIER N)(NOT -1 Gen)(NOT 0 Inf OR Attr)
 	(NOT 0 Adv LINK *1 VERB BARRIER NOT-ADV)(NOT 1 PrfPrc)
@@ -4769,13 +4708,6 @@ SELECT Inf IF (*-1 COPULAS BARRIER NOT-ADV)(0 ("addit"))
 	## ...man ulbmil lea addit oppalaš ipmárdusa sámi kultuvrras.
 
 
-# Rule for "berret" vs. "bearrat"
-# -------------------------------
-
-REMOVE ("bearrat") IF (0 ("berret"))(*1 Inf BARRIER VERB OR CS);
-	## Válljedettiin journálaovddasvástideaddji berre árvvoštallat su
-	## fágagealbbu.
-
 
 
 # ==================== #
@@ -4794,6 +4726,61 @@ REMOVE ("bearrat") IF (0 ("berret"))(*1 Inf BARRIER VERB OR CS);
 SELECT Prop IF (NOT *-1 BOS OR (":") OR (""") BARRIER WORD); 
 	## Áirras Egil Olli nammaduvvui Sámedikki ovddasteaddjin.
  # Capitalised nouns in the middle of a sentence are names.
+
+REMOVE (Prop Pl) IF (0 (Prop Sg))(NOT 0 ("Sámediggi") OR (laš));    
+	## Marit lea dál.
+  # Marit N Sg, not Mari+t Pl Nom
+
+REMOVE (Prop Pl) IF (-1 BOS)(0 CNOUN-PL-NOM);        
+	## Sámit leat álgoálbmot.
+
+REMOVE (Prop Pl Nom) IF (-1 BOS)(NOT *1 V-PL3);	     
+	## Unnit nuppástusaiguin.	
+
+
+# Removing proper nouns that are lookalikes
+# - - - - - - - - - - - - - - - - - - - - -
+
+REMOVE ("Dan" Attr) IF (NOT 1 Prop);
+REMOVE ("Dan" Prop) IF (1 CNOUN); # Dan is Nom or Attr.
+
+REMOVE ("Hu" Ill) IF (1 A or Adv);
+
+REMOVE Prop IF (-1 BOS)(0 ("Lassi")); 
+#REMOVE Prop IF (0 ("Lassi"))(1 Pron);
+#REMOVE Prop IF (0 ("Lassi"))(*1 N BARRIER NPNH);
+	## Lassi dutkandoarjagat sáhttet leat mielde... 
+	## Lassin dasa ferte váldit vuhtii sierralágan dilálašvuođaid.
+	## Lassin jorgalandoarjagii, de lea dárbu sihke...
+  	## Lassin leat oalle viiddis boazuguohtunguovllut.
+
+SELECT Prop IF (0 ("Lásse"))(*1 VFIN BARRIER CS);
+	## Lásse dat leigga sihtan mu váldit lusan.
+ 
+REMOVE ("Lea") IF (-1 BOS OR PUNCT)(NOT 1 V-SG3); 
+REMOVE ("Lea") IF (-1 BOS OR PUNCT OR (":"))(1 A); 
+	## Lea dušše okta Ipmil. Lea idja.
+	 ## Lea buolaš. Son dajai: Leage gierdávaš.
+ 
+REMOVE ("Man") IF (-1 BOS OR PUNCT OR (":"))(0 (V Imprt));
+	## De son celkkii sutnje: "Mana basadit Siloaláddos."
+  # Cannot think of sensible conditions.
+
+REMOVE Prop IF (-1 BOS)(0 ("Mo"))(NOT 1 go)(*1 ("?"));
+REMOVE Prop IF (-2 CLB)(-1 PUNCT)(0 ("Mo"));
+	## Mo sáhttá su riika dalle bissut?
+
+REMOVE Prop IF (0 ("oassi"));
+	## Osiid ektui, dárkojuvvo Finnmárku muđui Almennehin,...
+
+
+# Selecting proper nouns
+# - - - - - - - - - - - -
+SELECT (Prop Nom) IF (0 ("Rabbi"))(1 COMMA);
+	## Rabbi, lea buorre go mii leat dáppe.
+
+SELECT Prop IF (0 ("Ruoŧŧa"))(1 CC)(2 Prop);
+	## Ruoŧa ja Suoma beale riektedilli lea measta ovttalágan.
 
 
 # Prop as Attr or not
@@ -5350,6 +5337,10 @@ REMOVE Acc IF (*-1 CLB BARRIER WORD)(NOT 0 Interr)(NOT 1 CC OR CLB)
 REMOVE Acc IF (*-1 ILL-VERB BARRIER NPNHA)(*1 Ill BARRIER NPNH);
 	## Ehpet eisege beasa almmi riikii.
 
+REMOVE Acc IF (*-1 Ill BARRIER VERB OR CC OR CLB OR CS OR CP)
+	(*1 ILL-VERB BARRIER V-NOT-AUX OR CC OR CLB OR CS OR CP);
+	## Dan válddi, masa Ruonáeatnama ruovttustivra lea ollen,...
+
 REMOVE Acc IF (*-1 Nom BARRIER NOT-ADV-PCLE LINK *-1 ILL-VERB 
 	BARRIER NOT-ADV-PCLE)(*1 Ill BARRIER NPNH);
 	## ...mat gullet sámilága giellanjuolggadusaid hálddašanguvlui.
@@ -5365,6 +5356,10 @@ REMOVE Acc IF (*-1 Nom BARRIER NOT-ADV-PCLE LINK *-1 LOC-VERB
 REMOVE Acc IF (*-1 LOC-VERB BARRIER NOT-ADV-PCLE OR go LINK NOT 0 ACC-LOC-VERB
 	LINK *-1 Loc BARRIER V-NOT-AUX OR (@SUBJ) OR CC OR CLB OR CS OR CP);
 	## Das čuovvu mu oainnu mielde dat, ahte...
+
+REMOVE Acc IF (*-1 ILL-VERB BARRIER NOT-ADV-PCLE OR go LINK NOT 0 ACC-ILL-VERB
+	LINK *-1 Ill BARRIER V-NOT-AUX OR (@SUBJ) OR CC OR CLB OR CS OR CP);
+	## ...masa gullet Kárášjoga, Guovdageainnu, ...ja Gáivuona gielddat.
 
 SELECT Gen IF (*-1 Ill BARRIER NPNH LINK NOT 0 Px)
 	(*1 Po BARRIER NPNH LINK NOT 0 Px);
@@ -5431,6 +5426,10 @@ SELECT Gen IF (-2C NP-HEAD-GEN LINK *-1 NP-BORDER BARRIER NPNH)(-1 CC);
 
 SELECT Gen IF (-2C NP-HEAD-GEN)(-1 CC)(*1 NP-HEAD-GEN BARRIER NPNH);
 	## ...šiehtadus Hálkavári ja Iŋggásguolbana báhčinguovlluid dáfus. 
+
+SELECT Gen IF (-2C Gen)(-1 COMMA)(1 COMMA)(2 Gen);
+	## ...masa gullet Kárášjoga, Guovdageainnu, Unjárgga, Porsáŋggu, Deanu
+	## ja Gáivuona gielddat.
 
 SELECT Gen IF (NOT *-1 V-NOT-AUX BARRIER NPNHA OR CLB)(NOT -1 Gen)
 	(NOT 0 Nom OR PrsPrc)(1 CC)(2 Gen)(*3 Loc BARRIER NPNH OR CLB);
@@ -7130,8 +7129,8 @@ SELECT (Neg Imprt Pl2) IF (*1 ConNeg BARRIER Neg);
 # Verbs according to person and number
 # ====================================
 
-# First person singular
-# ---------------------
+# First person singular - Sg1
+# ---------------------------
  # Prs Sg1 = PtcPrf (odd-syllables), and Prs Sg1 = V Actio (even-syllables)
  # Past Sg1 is unique.
 
@@ -7160,8 +7159,8 @@ REMOVE V-SG1 IF (0 PrfPrc OR Actio)(*1C VFIN BARRIER CC OR CLB OR CS OR CP);
 	## dán livččii galgan dahkat.
 
 
-# Second person singular
-# ----------------------
+# Second person singular - Sg2
+# ----------------------------
  # Sg2 = Inf (even syllables, copula)
  # Note the homonymy with derived verbs (jearat = jearadit + ...
  # Prt Sg2 = Prs Pl3 = Imprt Prs Pl2 (even syll)    vulget
@@ -7195,8 +7194,8 @@ REMOVE (V Sg2) IF (0 COPULAS)(*1 (Pl Nom) BARRIER NOT-ADV-PCLE);
 	## Leatgo doppe olu gávppit?
 
 
-# Third person singular
-# ---------------------
+# Third person singular - Sg3
+# ---------------------------
  # Prs Sg3 = ConNeg (even)
  # Prs Sg3 = ConNeg = Imprt Sg2 (contracted)
  # Prs Sg3 = VGen
@@ -7313,8 +7312,8 @@ REMOVE V-SG3 IF (*-1 VFIN BARRIER CS OR CP)(0 (Sg Ill))(NOT 1 ("go" Pcle));
 	## Sámekommišuvnna evttohus lei boaris ja báidnon dálá oidnui.
 
 
-# First person dual
-# -----------------
+# First person dual - Du1
+# -----------------------
  # Prs Du1 = Prt Pl3 (even syllable verbs); also similar to Prs Sg3 of other verbs.
 
 SELECT (V Du1) IF (*-1 CC BARRIER VFIN LINK *-1C (V Du1) BARRIER VFIN);
@@ -7325,8 +7324,8 @@ REMOVE (V Du1) IF (NOT *-1 MOAI)(NOT *1 MOAI);
 	## Nieiddat jerre.
 
 
-# Second person dual
-# ------------------
+# Second person dual - Du2
+# ------------------------
 
 # Rules for leahppi = ("leahppi" N Sg Nom)
 
@@ -7337,8 +7336,8 @@ SELECT Du2 IF (0 ("leat" V Ind Prs Du2))(*1 PrfPrc BARRIER NOT-ADV);
 	## Gean nammii leahppi dahkan dan?
 
 
-# Third person dual
-# -----------------
+# Third person dual - Du3
+# -----------------------
  # Du3 = PrsPrc Clt = Imprt Prs Du2 Clt
  # Du3 = Ind Prs Sg3 Clt "leaba, ferteba leat"
 
@@ -7348,8 +7347,8 @@ SELECT V-DU3 IF (*-1 (Pl Nom) OR ("dat" Pl3 Nom) BARRIER NOT-ADV-PCLE);
 	## Ja duot eará oskuvieljat leaba searvegotti áirasat.
 
 
-# First person plural
-# -------------------
+# First person plural - Pl1
+# -------------------------
  # Pl1 = Inf for all stem classes
  # Pl1 = Inf = Pl3 = Prt Sg2 for odd syll
  # Pl1 = Inf = Pl3 = Sg2 = ConNeg (copula)
@@ -7376,8 +7375,8 @@ SELECT V-PL1 IF (*-1 Nom BARRIER NOT-ADV-PCLE LINK *-1 CC BARRIER NPNH
  # Pl1 if a first person pronoun is coordinated with something else.
 
 
-# Second person plural
-# --------------------
+# Second person plural - Pl2
+# --------------------------
  # Imprt Pl2 = Ind Prt Sg2 (even syllable verbs)
  # Imprt Pl2 = Imprt Pl1 (verbs ending in -ut)
 
@@ -7393,8 +7392,8 @@ SELECT (V Pl2) IF (*-1 CC BARRIER NOT-ADV LINK *-1C (V Pl2) BARRIER VFIN OR CS);
 	## Váldet ja borret!
 
 
-# Third person plural
-# -------------------
+# Third person plural - Pl3
+# -------------------------
  # Prs Pl3 = Prt Sg2 = Prs Pl1 = Inf (odd syll)   muitalit
  # Prs Pl3 = Prt Sg2 = Imprt Prs Pl2 (even syll)    vulget
  # Prs Pl3 = Prt Sg2                 (contracted) fertejit
@@ -7893,8 +7892,18 @@ SELECT VFIN IF (0 INF-VERB)(1 ("go" Pcle))(*2 Inf BARRIER VERB);
 # Lexical disambiguation of verbs #
 # ------------------------------- #
 
+# bearrat vs. berret
+# ------------------
+# bearrat = 'inherit; demand' etc., berret 'ought'
+
+REMOVE ("bearrat") IF (0 ("berret"))(*1 Inf BARRIER VERB OR CS);
+	## Válljedettiin journálaovddasvástideaddji berre árvvoštallat su
+	## fágagealbbu.
+
+
 # beassat vs. besset
 # ------------------
+# beassat = 'get out of; get into' etc., besset 'strip off bark'
 
 REMOVE ("besset") IF (0 ("beassat"))(*1 (V Actio Loc) BARRIER VERB OR CS);
 	## Mun bessen vuolgimis.
@@ -7902,22 +7911,33 @@ REMOVE ("besset") IF (0 ("beassat"))(*1 (V Actio Loc) BARRIER VERB OR CS);
 
 # boahtit vs. bohtat 
 # ------------------
+# boahtit 'come', bohtat 'swell'
+
 # These verbs have 5 homonym forms, Prs Du1/Pl3 bohte, Prt Sg1 bohten,
 # Prs Pl3/Prt Sg2 bohtet, Imprt Sg1 bohton, Imprt Pl1 bohtot
-# bohtat = 'become thick, large', e.g. of a dough in the oven
 # In almost all cases, the correct choice will be "boahtit", the 
 # challenge is not to remove the cases where it might be "bohtat"
 # TODO: Have native speakers make good 'bohtat' sentences.
 # This rule tries to disambiguate lexically, it is thus a new type of
 # rule, whether it is a good idea remains to see.  
 
-REMOVE ("bohtat") IF (0 ("boahtit"))(0 Sg1 OR Du1 OR Pl1 OR Sg2) ;
+REMOVE ("bohtat" Sg1) IF (0 ("boahtit")); # Will hit 'bohton'.
+REMOVE ("bohtat" Sg2) IF (0 ("boahtit")); # Will hit 'bohtet'.
+	##
+	## Journálat álmmolaš doaimmas bohtet arkiivalága vuollái.
+
+REMOVE ("bohtat" Du1) IF (0 ("boahtit")); # Will hit 'bohte'.
+REMOVE ("bohtat" Pl1) IF (0 ("boahtit")); # Will hit 'bohtot'.
+	##
+	## 
 # With a personal subject, we go for "boahtit"
 
-REMOVE ("bohtat") IF (0 ("boahtit"))(*1 (@ADVL)) ;
-REMOVE ("bohtat") IF (0 ("boahtit"))(*-1 (@ADVL)) ;
+REMOVE ("bohtat") IF (0 ("boahtit"))(*1 ADVLCASE BARRIER CS) ;
+REMOVE ("bohtat") IF (0 ("boahtit"))(*-1 ADVLCASE BARRIER CS OR CP);
+	## Bohtetgo ruđat munnje?
+	## 
 # When it is coming to or from, go for "boahtit"
-# These last two rules may be too risky than the first.
+# These last two rules may be riskier than the first.
 
 
 # caggat vs.caggát
@@ -7939,8 +7959,8 @@ REMOVE ("duđđat") IF (0 ("duhtat"))(1 go)(*2 Ill BARRIER NPNHA);
 	## Duđat go mu čállimii?
 
 
-# eallit vs. eallát #
-# ----------------- #
+# eallit vs. eallát
+# -----------------
 # These verbs have 2 homonym forms: Ind Prs Sg3 eallá, PrfPrc eallán
 # eallát = 'to recover, become alive again', eallit = 'to live'
 
@@ -7952,13 +7972,13 @@ REMOVE ("eallát") IF (0 ("eallit"))(*1 Loc OR ("siste") OR (VAbess)) ;
         ## Son eallá naitalkeahttá.
 
 
-# gieldit vs. gildit #
-# ------------------ #
+# gieldit vs. gildit 
+# ------------------
+# gieldit = 'deny sb sth', gildit = 'shine'
+# Here, we have a transitivity difference.
 # Homonym in the diphtong simplification cases: Prs Du1 gilde, Prs Pl3 gildet
 # all Prt forms, gilden, gildet, ..., all Pot forms gilddežan, ..., 
 # some of the Imprt forms.  
-# gieldit = 'deny sb sth', gildit = 'shine'
-# Here, we have a transitivity difference
 
 REMOVE ("gildit") IF (0 ("gieldit"))(*1 Acc BARRIER VFIN) ;
         ## Jesus gilddii sudno garrasit:
@@ -7969,10 +7989,10 @@ SELECT ("gieldit") IF (*1 (V Actio Loc) BARRIER VERB OR CS OR CP);
 	## Mun gilden Máhte boahtimis.
 
 
-# goaddat vs. goddit #
-# ------------------ #
-# Homonym in the diphtong simplification cases.
+# goaddat vs. goddit 
+# ------------------ 
 # goaddat = 'stick to, tarrautua', goddit = 'kill'
+# Homonym in the diphtong simplification cases.
 
 REMOVE ("goaddat") IF (0 ("goddit"))(*1 Acc BARRIER VFIN) ;
         ## Ja sii goddet su.
@@ -7986,16 +8006,16 @@ REMOVE ("goddet") IF (0 ("goddit"))(*1C (@OBJ) BARRIER NPNHA);
 	## Vuovdái godde dán guovžža.
 
 
-# gođđat vs. gođđit #
-# ----------------- #
+# gođđat vs. gođđit 
+# ----------------- 
 # gođđat = 'spawn', gođđit = 'knit, weave'
 
 REMOVE ("gođđat") IF (0 ("gođđit"))(*1 Acc BARRIER VFIN);
 	## Ovddemus dáida oastit árppuid ja gođđá firpmiid.
 
 
-# guođđit vs. guđđat #
-# ------------------ #
+# guođđit vs. guđđat
+# ------------------
 # guođđit = 'leave sth swh', guđđat = 'swarm' 
 
 REMOVE ("guđđat") IF (0 ("guođđit"))(*1 Acc BARRIER VFIN) ;
@@ -8014,21 +8034,21 @@ SELECT ("gullat") IF (*-1 Ill BARRIER NOT-ADV-PCLE)(0 ("gullát"));
 	## Doaimma divššohasjournálaide gullá persovdnaregisttar.
 
 
-# gárrat vs. gárrut #
-# ----------------- #
+# gárrat vs. gárrut 
+# ----------------- 
 # gárrat = 'bind sth to sth', gárrut = 'get sth done, +Inf'
 
 REMOVE ("gárrat") IF (0 ("gárrut"))(*1 Inf BARRIER NOT-ADV-PCLE-NEG) ;
         ## Mii lávlluimet morašlávlagiid, ehpet ge dii gárron luoibmat.
 
 
-# máhccat vs. máhccut #
+# máhccat vs. máhccut 
 # ------------------- #
-# máhccat = 'return, retreat', máhccut = 'taitella (paperia tms.)'
+# máhccat = 'return, retreat', máhccut = 'make folds in'
 
 	
-# sihtat vs. sihtit #
-# ------------------- #
+# sihtat vs. sihtit
+# -----------------
 # sihtat = 'want +Acc/+Inf', sihtit = 'luoda karvansa, puhdistua (oravan-
 # nahasta syystalvella'
 # This will in almost all cases mean 'sihtat'.
@@ -8177,11 +8197,11 @@ REMOVE V-DER; # Removes only if there is another reading.
 
 
 
-# ===================== #
-# Disambiguating syntax #
-# ===================== #
-      CONSTRAINTS       #
-# ===================== #
+# =============================== #
+# Disambiguating syntax - Cycle 4 #
+# =============================== #
+             CONSTRAINTS          #
+# =============================== #
 
 # Subject
 # -------
@@ -8419,6 +8439,9 @@ SELECT (@SPRED) IF (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK NOT *-1 V-NOT-AUX BARR
 	(0 Ess)(*1 Qst BARRIER WORD);
 	## Ruonáetnama hárrái šaddá váldoáššin, berrešiigo jienastuslohku ráddje-
 	## juvvot nu, ahte...
+
+SELECT (@SPRED) IF (*-1 ("leat") BARRIER VERB)(0 Ess)(*1 Inf BARRIER VERB);
+	## Universitehtii lea ain hástalussan jorgalit dárogielmateriála.
  
 SELECT (@-FSUBJ) IF (NOT *-1 V-TRANS-ACT BARRIER CS)(1 VAbess);
 	## Diet dáhpáhuvai mu dieđikeahttá.
@@ -8691,11 +8714,14 @@ REMOVE (@OPRED) ;
 
 
 
-# =========================================== #
-# Post-syntactic morphological disambiguation #
-# =========================================== #
+# ===================================================== #
+# Post-syntactic morphological disambiguation - Cycle 5 #
+# ===================================================== #
+                      CONSTRAINTS                       #
+# ===================================================== #
 
-
+# FUOM! These Px rules should either be modified so that they make reference 
+# to syntactic functions, or else moved to the end of cycle 2.
 
 # Remaining Px readings
 # ---------------------
