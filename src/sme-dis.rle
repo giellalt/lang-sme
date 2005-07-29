@@ -545,7 +545,8 @@ LIST GUOVLU = "ássan#guovlu" "báiki" "gávpot" "guovlu" "sádji"
 
 LIST ROUTE = "fávli" "geaidnu" "guorra" "luodda" "miila"; # and others!
 
-LIST MEASURE = "miila" "kilo#mehtar" "mehtar" "centi#mehtar" "milli#mehtar" "tumá";
+LIST MEASURE = "miila" "kilo#mehtar" "mehtar" "centi#mehtar" "milli#mehtar" "tumá"
+	"lihtter" ;
 
 LIST PL-NOUN = "beassaš" "čalbme#láse" "gálssot" "headja" "sabet" "sisttet" 
 	"skárri"; 
@@ -845,6 +846,9 @@ MAP (@MEASURE) TARGET TIME IF (-1 Num)(1 ("maŋŋil"));
 MAP (@MEASURE) TARGET N IF (-1 Num)(1 ("velggolaš"));
 	## Ánde lea minnje vihttalot ruvnno velggolaš.
 
+MAP (@MEASURE) TARGET (N Sg Acc) IF (-1 (Num Acc))(0 MEASURE)(1 (N Acc));
+	##
+
 
 # Genitive mappings
 # -----------------
@@ -925,6 +929,10 @@ MAP (@GA>) TARGET Gen IF (*-1 COPULAS BARRIER VERB OR CS OR CP)(1 (A Comp))
 	(NOT 1 N);
 	## Máret lea vieljaidis boarráset.
 
+MAP (@GA>) TARGET Gen IF (1 (A Comp))(*2 COPULAS BARRIER VERB OR CS OR CC OR CP LINK
+	NOT *1 V-NOT-AUX BARRIER CS);
+	## Duon guovtti girjji buoret dat gal lea.
+
 MAP (@GA>) TARGET Gen IF (1 (A Comp))(NOT 1 VERB OR Adv)(NOT *2 N BARRIER NOT-NP);
 	## Mun jáhkán du iežan falibun.
 
@@ -976,18 +984,20 @@ MAP (@QN>) TARGET (Num Gen) IF (1 TIME)(2 ("boaris"));
 MAP (QN>) TARGET (Num Gen) IF (1 MEASURE)(2 ALU OR A);
 	## Min viessu lea viđa mehtara alu.
 
-MAP (@SUBJ-QH @SPRED) TARGET Nom IF (0 NUMERALS)
-	(*1 Gen BARRIER NOT-NP LINK NOT 0 ROUTE OR TIME)
-	(NOT 1 CC)(NOT *1 ALU BARRIER NOT-NP);
-	## Dá dat leat, 350 ruvnno.
-
-MAP (@NUM-PRON) TARGET (N Num Nom) IF (-1 (Pers Nom))(-1 Pl1 OR Pl2 OR Pl3);
+MAP (@NUM-PRON) TARGET (N Num Nom) IF (-1 (Pers Nom))(NOT -1 Dem)
+	(-1 Pl1 OR Pl2 OR Pl3);
 	## Mii golmmas oktan du vieljain finaimet Niillas-čeazi geahčen.
 
 MAP (@SUBJ @SPRED) TARGET (N Num Nom);
 	## Go sotnabeaivi šattai, de čuoigaledje máŋggas várrái.
 
-MAP (@QN>) TARGET Num IF (NOT -1 Num)(*1 Gen OR Ill OR Loc OR Com BARRIER NPNH) ;
+MAP (@SUBJ-QH @SPRED) TARGET Nom IF (0 NUMERALS)
+	(*1 Gen BARRIER NOT-NP LINK NOT 0 ROUTE OR TIME)
+	(NOT 1 CC)(NOT *1 ALU BARRIER NOT-NP);
+	## Dá dat leat, 350 ruvnno.
+
+MAP (@QN>) TARGET Num IF (NOT -1 Num)(*1 Gen OR Ill OR Loc OR Com BARRIER NPNH)
+	(NOT 0 (N Num) LINK 1 (Sg Com))(NOT 1 CC LINK 1 Num LINK 1 NP-BORDER);
 	## Bargu ollašuhttit mánga dáin doaibmabijuin lea juo álggahuvvon.
 
 MAP (@QN>) TARGET Num IF (*1 Ess BARRIER NPNH LINK NOT 0 (V Actio));
@@ -1916,16 +1926,25 @@ SELECT (V Du3) IF (*-1 SOAI BARRIER V-DU3 OR CS OR PUNCT LINK NOT *-1 V-DU3
 SELECT (V Du3) IF (*1 SOAI BARRIER NOT-ADV-PCLE OR CLB);
 	## Fertebago soai mannat? 
 
-SELECT (V Du3) IF (-1 (N Sg Nom))(*-2 CC BARRIER NPNH LINK -1 (N Sg Nom));
-	## Per Berg ja Rolf Olsen leaba doppe.
-        ## Stuorra nieida ja unna gánda ferteba leat doppe.
-
-SELECT (V Du3) IF (*-1 ("guokte")) ; 
+SELECT (V Du3) IF (*-1 ("guokte" Nom) BARRIER CS OR CP) ; 
 	## Guokte nissona ferdneba milluin.
+
+REMOVE (V Sg3) IF (0 Du3)(*1 ("guokte" Nom) BARRIER NPNHA);
+	## Mus leaba dušše dát guokte oappá geaid don dás oainnát.
+
+SELECT (V Du3) IF (-1 (N Nom))(*-2 CC BARRIER NPNH LINK -1 (N Nom));
+	## Per Berg ja Rolf Olsen leaba doppe.
+	## Deanu Searat ja Sámi Siida leaba ovttas ordnen dáid gilvvohallamiid.
+        ## Stuorra nieida ja unna gánda ferteba leat doppe.
+ # Note that 'Searat' is Pl, hence no number requirement in this rule.
 
 SELECT (V Du3) IF (*1 (Sg Nom) BARRIER NPNHA LINK 1 CC LINK *1 (Sg Nom)
 	BARRIER NPNH);
 	## Dá leaba Brita ja Ole Kåven.
+
+REMOVE (V Sg3) IF (*-1 (N Num Nom) BARRIER VERB OR CLB OR CC OR CS OR CP)
+	(0 (V Du3));
+	## Biera-guovttos Márehiin leaba daid mánáid váhnemat.
 
 
 # Pl1
@@ -5983,6 +6002,10 @@ SELECT Nom IF (-2 Nom)(-1 COPULAS)(0 N OR A)(NOT 0 PrfPrc OR Ess OR (Prop Loc))
 	## ...ahte dat leat earalágan go eará joavkkut.
  # Hits here because "earalágan" does not agree?
 
+SELECT Nom IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(0 (N Num));
+	## Stobus leigga guovttis.
+	## Mii leimmet golmmas.
+
 
 # Nominative as objects in existential clauses
 # --------------------------------------------
@@ -6758,6 +6781,7 @@ SELECT Loc IF (*-1 LOC-VERB BARRIER CS OR CP OR VFIN LINK NOT 0 Adv)
 	## riekteáddejumiin.
 
 SELECT Loc IF (NOT 0 ("dat"))(NOT *1C Com BARRIER NPNH)
+	(NOT 0 (N Num Nom) LINK 1 (Sg Com))(NOT 0 (Sg Com) LINK -1 (N Num Nom))
 	(*1 LOC-VERB BARRIER CS OR CP OR V-NOT-AUX);
 	## Maiddái sámi fágabirrasiin ja ásahusain sáhttá jearrat ráđiid.
 
@@ -6780,6 +6804,7 @@ SELECT Loc IF (1 COMMA)(2 ("gos"));
 	## Sajiin, gos ii leat oktage priváhta eanaeaiggát,...
 
 SELECT Loc IF (*-1 BOS OR CS OR REALCLB BARRIER NPNHAI)(NOT 0 (A Nom))
+	(NOT 0 (N Num Nom) LINK *1 (V Du3) BARRIER NOT-ADV-PCLE)
 	(*1 ("leat") BARRIER NOT-ADV-PCLE-NEG);
 	## Ádjásgo lea ođđa fanas?
         ## Suomas maid lei dilli váttis.
@@ -7308,6 +7333,7 @@ REMOVE (V Sg2) IF (0 COPULAS)(*1 (Pl Nom) BARRIER NOT-ADV-PCLE);
  # Prs Sg3 = VGen
  # Prt Sg3 = Sg Ill for certain words!!
  # Prt Sg3 = Imprt Prs Sg3 (leai)
+ # leat Prs Sg3 Foc = leat Prs Du3 (leaba) 
 
 SELECT V-SG3 IF (*-1 (Sg Nom) BARRIER NOT-ADV-PCLE)
 	(*1 (Neg Sg3) BARRIER VFIN LINK 1 ("ge"));
@@ -8321,7 +8347,7 @@ SELECT (@SUBJ) IF (0 DII)(*1 ("leat" Pl2) BARRIER NOT-ADV-PCLE) ;
 	## Moai letne studeanttat.
 
 SELECT (@SUBJ) IF (0 (N Num))(1 (Sg Com))(*1 V-DU3 BARRIER VERB OR CS OR CP);
-	##
+	## Máhte-guovttos Lássiin eaba boahtán.
 
 SELECT (@SUBJ) IF (0 (Interr Sg))(*1 V-SG3 BARRIER NOT-ADV);
 	## Márjá riegádahtii Jesusa, guhte gohčoduvvo Kristusin.
@@ -8350,6 +8376,9 @@ SELECT (@SUBJ) IF (*-1 COPULAS BARRIER NPNH LINK *-1 ("veara") BARRIER NOT-ADV-P
 
 SELECT (@SUBJ) IF (0 (N Sg Nom) LINK 0 TIME)(*1 V-SG3 BARRIER NOT-ADV-PCLE);
 	## Sii eai diehtán ahte mánnu šaddá.
+
+SELECT (@SUBJ) IF (0 ("guovttis" Nom))(*1 Du3 BARRIER VERB OR CLB OR CC OR CS OR CP);
+	## Guovttis jámiiga dan bárttis.
 
 REMOVE (@SUBJ) IF (*-1C V-1-2 BARRIER NOT-ADV-PCLE)(0 Sg OR Pl);
 	## Mii leimmet viđas.
@@ -8494,7 +8523,7 @@ SELECT (@SPRED) IF (*-1 ("leat" Imprt) BARRIER VERB)(NOT 0 Pers)
 	## Leage buorre!
 
 SELECT (@SPRED) IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(*-1 VFIN LINK NOT 0 Sg3 OR Pl3)
-	(0 (Sg Nom));
+	(0 (A Sg Nom));
 	## ...ahte áiggošin leat bahánihkkán, váttis dahje fuikolas.
 
 SELECT (@SPRED) IF (0 ("veara"))(1 COPULAS LINK *1 (@SUBJ) OR (@SUBJ-QH) BARRIER NPNHA);
