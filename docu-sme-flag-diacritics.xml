@@ -1,59 +1,128 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN"
+"http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
   <header>
-    <title>Flags diacritics for Sami compounds</title>
+    <title>Flags diacritics</title>
+
     <authors>
       <person email="trond.trosterud@hum.uit.no" name="Trond Trosterud" />
     </authors>
   </header>
+
   <body>
     <section>
-      <title>Flags diacritics for Sami compounds</title>
+      <title>Flag diacritics</title>
+
       <section>
         <title>Introduction</title>
-        <p>Flag diacritics are used in the Sami morphological parser in order to remove illegal compounds. The use of flag diacritics is documented in chapter 8 of the Xerox book. The present page documents the flag diacritics format, and the use of them in the parser.</p>
+
+        <p>The use of flag diacritics is documented in chapter 8 of the Xerox
+        book. The present page documents the flag diacritics format, and the
+        use of them in the parser.</p>
+
+        <p>Flag diacritics are used in the Sami morphological parser in order
+        to remove illegal compounds, and (hopefully) in order to handle
+        automatic downcasing of proper names when they are converted to e.g.
+        adjectives (the <em>oslolaš</em> issue).</p>
       </section>
+
       <section>
         <title>Flag diacritics format</title>
-        <p>There are four types of flag diacritics, all of them with the format @operator.feature.value@ or @operator.feature@:</p>
+
+        <p>There are four types of flag diacritics, all of them with the
+        format @operator.feature.value@ or @operator.feature@:</p>
+
         <dl>
           <dt>U or Unification flags, @U.feature.value@</dt>
-          <dd>U is the unification operator, and the form is accepted if, for the relevant feature, the two flags in the derivation string have the same value.</dd>
+
+          <dd>U is the unification operator, and the form is accepted if, for
+          the relevant feature, the two flags in the derivation string have
+          the same value.</dd>
+
           <dt>P or Positive (Re)Setting, @P.feature.value@</dt>
+
           <dd>Sets or resets the feature to the given value.</dd>
+
           <dt>N or Negative (Re)Setting, @N.feature.value@</dt>
-          <dd>Sets or resets the feature to the negation of the given value.</dd>
+
+          <dd>Sets or resets the feature to the negation of the given
+          value.</dd>
+
           <dt>R or Require Test, @R.feature.value@</dt>
-          <dd>For this diacritic, a test is performed, and it succeeds iff feature is currently set to value, otherwise the path is blocked.</dd>
+
+          <dd>For this diacritic, a test is performed, and it succeeds iff
+          feature is currently set to value, otherwise the path is
+          blocked.</dd>
+
           <dt>D or Disallow Test, @D.feature.value@</dt>
-          <dd>A test is performed that succeds if feature is neutral or set to a value that is incompatible with value.</dd>
+
+          <dd>A test is performed that succeds if feature is neutral or set to
+          a value that is incompatible with value.</dd>
+
           <dt>C or Clear Feature, @C.feature@</dt>
+
           <dd>For this flag, the value of feature is reset to neutral.</dd>
+
           <dt>U or Unification Test, @U.feature.value@</dt>
-          <dd>If feature is currently neutra, this diacritic causes feature to be set to value. Else if feature is currently set, then the test succeeds iff value is compatible with the current value of feature.</dd>
+
+          <dd>If feature is currently neutra, this diacritic causes feature to
+          be set to value. Else if feature is currently set, then the test
+          succeeds iff value is compatible with the current value of
+          feature.</dd>
         </dl>
       </section>
+    </section>
+
+    <section>
+      <title>Flags diacritics for Sami compounds</title>
+
+      <section>
+        <title>Introduction</title>
+
+        <p>Flag diacritics are used in the Sami morphological parser in order
+        to remove illegal compounds. </p>
+      </section>
+
       <section>
         <title>The problem</title>
-        <p>Without flag diacritics, compounds with derived nouns are errouneously blocked, or, if they are accepted,</p>
+
+        <p>Without flag diacritics, compounds with derived nouns are
+        errouneously blocked, or, if they are accepted,</p>
+
         <source>Too strict: only N + N accepted, N + [V-suf]N is not
 Too sloppy: also N + V accepted, not only N + [V-suf]N
 Correct: accept compound only if 2nd part is N at end of derivation
 </source>
       </section>
+
       <section>
         <title>A solution</title>
+
         <ol>
-          <li>The Nominative and Genitive sublexica of all NounRoot entries are lead to the R lexicon (as earlier).</li>
-          <li>From there, they go to NounRoot again without flag diacritics. They are also led to VerbRoot and AdjectiveRoot, but equipped with a compound flag diacritic. Then, all affixes that turn adjectives and verbs into nouns are equipped with a corresponding diacritic.</li>
-          <li>Compounds with only an unsaturated diacritic are removed, whereas compounds with a saturated diacritic are accepted.</li>
+          <li>The Nominative and Genitive sublexica of all NounRoot entries
+          are lead to the R lexicon (as earlier).</li>
+
+          <li>From there, they go to NounRoot again without flag diacritics.
+          They are also led to VerbRoot and AdjectiveRoot, but equipped with a
+          compound flag diacritic. Then, all affixes that turn adjectives and
+          verbs into nouns are equipped with a corresponding diacritic.</li>
+
+          <li>Compounds with only an unsaturated diacritic are removed,
+          whereas compounds with a saturated diacritic are accepted.</li>
         </ol>
       </section>
+
       <section>
         <title>A sketch</title>
-        <p>Here, the P and R diacritics are used, as shown with the R lexicon and two lexica for deverbal nouns, that takes verbal stems as input. The P diacritic sets the value of cmpnd to N, and the R diacritic requires a test.</p>
+
+        <p>Here, the P and R diacritics are used, as shown with the R lexicon
+        and two lexica for deverbal nouns, that takes verbal stems as input.
+        The P diacritic sets the value of cmpnd to N, and the R diacritic
+        requires a test.</p>
+
         <p>.</p>
+
         <source>LEXICON R
  # NounRoot ;
  #@P.cmpnd.N@   VerbRoot ;
@@ -68,7 +137,181 @@ LEXICON DeverbalNounsDOHPPE-
  +meahttun+A:X7#meahttum MEAHTTUN ;
 </source>
       </section>
-      <p class="last_modified">Last modified: $Date$, by $Author$</p>
+
+      <p class="last_modified">Last modified: $Date$, by
+      $Author$</p>
+    </section>
+
+    <section>
+      <title>Flag diacritics for downcasing of derived proper nouns</title>
+
+      <section>
+        <title>The problem</title>
+
+        <p>All proper nouns may be turned into adjectives of the type London
+        &gt; Londoner, in Sámi, Oslo &gt; oslolaš. In Sámi, the capital letter
+        of the proper name must be downcased.</p>
+
+        <p>An earlier solution was to write a twol rule that exchanged all
+        initial uppercase letters with an initial lowercase one if the stem
+        was followed by the right kind of derivational suffix (this rule is
+        still found at the end of the twol-sme.txt file, where it is commented
+        out). This solution was abandoned, since the compilation time was
+        simply too long</p>
+      </section>
+
+      <section>
+        <title>A solution involving flag diacritics</title>
+
+        <p>A possible solution is to use flag diacritics, in the same way as
+        we used flag diacritics to fix compounds.</p>
+
+        <p>The tags <code>@U.Cap.Obl@ @U.Cap.Opt@</code> were introduced (cf.
+        the <code>sme-lext.txt </code>file), but so far, we don't have a
+        working solution. The problem is documented (for Finnish) in section
+        8.5.5. (of the pre-published version), and on pp. 368-372 in the
+        published version of the B&amp;K book.</p>
+
+        <p>Working on it (Trond): I copied the two files demo-lex.txt (the
+        lexc file) and lexscript.xfst (the xfst script). I then saved the
+        former as lex.fst (in lexc) and ran the latter (in xfst). The lexc
+        commands were:</p>
+
+        <source>compile-source demo-lex.txt
+obey-flags
+source-to-result
+save-result lex.fst</source>
+
+        <p>The sole xfst command was:</p>
+
+        <source>source paloscript.xfst</source>
+
+        <p>The resulting message from xfst is seen below:</p>
+
+        <source>xfst[0]: source paloscript.xfst
+Opening file paloscript.xfst...
+defined UC: 568 bytes. 2 states, 26 arcs, 26 paths.
+5.2 Kb. 6 states, 356 arcs, Circular.
+ &gt;&gt;&gt;&gt;This leaves the rule transducer on the stack
+0: 5.2 Kb. 6 states, 356 arcs, Circular.
+ &gt;&gt;&gt;&gt;Loading lex.fst onto the stack
+Opening 'lex.fst'
+Closing 'lex.fst'
+ &gt;&gt;&gt;&gt;There should now be two networks on the stack
+0: 1.5 Kb. 32 states, 35 arcs, 12 paths.
+1: 5.2 Kb. 6 states, 356 arcs, Circular.
+ &gt;&gt;&gt;&gt;Composing the rules under the lexicon
+1.8 Kb. 38 states, 45 arcs, 18 paths.
+flex scanner jammed</source>
+
+        <p>According to the Book, we should have two networks, so that is ok.
+        The question is why we get the final message (<code>flex scanner
+        jammed</code>), and how we shall get the demo work, and thereafter how
+        we can make our own problem work.</p>
+      </section>
+
+      <section>
+        <title>Appendix: The files used</title>
+
+        <p>These two files were copied from the B&amp;K book. No attempt was
+        done do modify them, as the first goal should be to get them to
+        work.</p>
+
+        <p>The lexc file demo-lex.txt</p>
+
+        <source>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! demo-lex.txt
+!
+! Simple Finnish Lexicon with Flag Diacritics
+!
+! Includes words like "Pariisi" (Paris) "pariisilainen"
+! (Parisian), "Palo Alto", "paloaltolainen" (Palo Altan).
+! The initial capital is obligatory in "Pariisi",
+! optional in "pariisilainen". The internal space in
+! "Palo Alto" is not present in "paloaltolainen".
+
+Multichar_Symbols
+ @U.Cap.Obl@ @U.Cap.Opt@
+ +PN +Adj +Der+
+
+LEXICON Root
+ @U.Cap.Obl@ PropNoun ;
+ @U.Cap.Opt@ PropNoun ;
+
+LEXICON PropNoun
+ Pariisi PNSuff ;
+ Grenoble PNSuff ;
+ Palo_Alto PNSuff ;
+
+! N.B. that _ denotes the literal space
+! character in this grammar
+
+LEXICON PNSuff
+ @U.Cap.Obl@ PN ;
+ @U.Cap.Opt@ AdjSuff ;
+
+LEXICON PN
++PN:0 # ;
+
+LEXICON AdjSuff
+ +Der+:0 LAINEN ;
+
+LEXICON LAINEN
+ lainen ADJ ;
+
+LEXICON ADJ
+ +Adj:0 # ;</source>
+
+        <p>The xfst script paloscript.xfst</p>
+
+        <source>clear stack
+define UC A | B | C | D | E | F | G | H |
+I | J | K | L | M | N | O | P | Q | R | S |
+T | U | V | W | X | Y | Z ;
+
+read regex [
+# Allow optional initial downcasing after @U.Cap.Opt@
+A (-&gt;) a, B (-&gt;) b, C (-&gt;) c, D (-&gt;) d, E (-&gt;) e,
+F (-&gt;) f, G (-&gt;) g, H (-&gt;) h, I (-&gt;) i, J (-&gt;) j,
+K (-&gt;) k, L (-&gt;) l, M (-&gt;) m, N (-&gt;) n, O (-&gt;) o,
+P (-&gt;) p, Q (-&gt;) q, R (-&gt;) r, S (-&gt;) s, T (-&gt;) t,
+U (-&gt;) u, V (-&gt;) v, W (-&gt;) w, X (-&gt;) x, Y (-&gt;) y,
+Z (-&gt;) z
+                || .#. %@U%.Cap%.Opt%@ _
+
+.o.
+
+# No uppercase in the middle of a downcasable word
+
+A-&gt;a, B-&gt;b, C-&gt;c, D-&gt;d, E-&gt;e, F-&gt;f, G-&gt;g, H-&gt;h,
+I-&gt;i, J-&gt;j, K-&gt;k, L-&gt;l, M-&gt;m, N-&gt;n, O-&gt;o, P-&gt;p,
+Q-&gt;q, R-&gt;r, S-&gt;s, T-&gt;t, U-&gt;u, V-&gt;v, W-&gt;w, X-&gt;x,
+Y-&gt;y, Z-&gt;z
+
+|| %@U%.Cap%.Opt%@ ?+ _
+
+.o.
+
+# Eliminate internal spaces inside a downcasable word
+# Spaces are indicated here with the literal
+# underscore character
+%_ -&gt; [] || .#. %@U%.Cap%.Opt%@ ?+ _
+] ;
+
+echo &gt;&gt;&gt;&gt;This leaves the rule transducer on the stack
+print stack
+
+echo &gt;&gt;&gt;&gt;Loading lex.fst onto the stack
+load stack lex.fst
+
+echo &gt;&gt;&gt;&gt;There should now be two networks on the stack
+print stack
+
+echo &gt;&gt;&gt;&gt;Composing the rules under the lexicon
+compose net
+
+echo &gt;&gt;&gt;&gt;Composition complete</source>
+      </section>
     </section>
   </body>
 </document>

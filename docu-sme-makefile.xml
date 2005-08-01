@@ -1,32 +1,176 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN"
+"http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
   <header>
-    <title>A documentation of the sme Makefile</title>
+    <title>The sme Makefile and scripts</title>
+
     <authors>
       <person email="trond.trosterud@hum.uit.no" name="Trond Trosterud" />
     </authors>
   </header>
+
   <body>
     <section>
-      <title>A documentation of the sme Makefile</title>
+      <title>The sme Makefile and scripts</title>
+
+      <p>The Makefile is used to compile the source files, i.e. to make the
+      programs. It is put to use by (being in <code>gt/sme/src/</code> and)
+      writing the command <code>make</code>. Makefiles in general are
+      documented in introductions to the program <code>make</code>, and the
+      format of the makefiles used in this project is found in Appendix C of
+      the Beesley and Karttunen book. The makefiles for the other languages
+      follow the same layout, but they are simpler.</p>
+
       <section>
         <title>The Makefile itself</title>
-        <p>The Makefile is organized as follows: It contains of a number of blocks, each block builds one binary file. Each binary file is dependent upon a number of other files. The first line of each block, the dependency line, mentions the target file, a colon, and the address of the dependency file. On the next line comes the file with address, thereafter again a colon, and after the colon the dependency files are listed. The dependency line can go over several lines with the backslash character (\). In the first block, the dependency lines look as follows:</p>
+
+        <p>The sme Makefile is organized as follows: It contains of a number
+        of blocks, each block builds one binary file. Each binary file is
+        dependent upon a number of other files. The first line of each block,
+        the dependency line, mentions the target file, a colon, and the
+        address of the dependency file. On the next line comes the file with
+        address, thereafter again a colon, and after the colon the dependency
+        files are listed. The dependency line can go over several lines with
+        the backslash character (\). In the first block, the dependency lines
+        look as follows:</p>
+
         <source>isme.fst: ../bin/isme.fst
 ../bin/isme.fst: ../bin/sme.fst ../bin/sme.save ../bin/tok.fst \
         ../bin/allcaps.fst
 </source>
-        <p>After the dependency line comes the actions themselves. In the Makefile, each line is initiated with a TAB character. Commands are initiated with the &quot;@&quot; character, and arguments delimited with quotes. Quotes within the quotes are preceded by \.</p>
-        <p>The commands are initiated by an informative banner printed to the screen. Then comes the actions. They are printed to a temporary script file (in the first block, the file is &quot;isme-fst-script&quot;, by the @printf command. Then the relevant program (e.g. the program xfst in the first block of the sme Makefile) reads the scriptfile and executes it. Finally, the temporary script file is removed by the @rm command. The makefiles for the other languages are made in the same way.</p>
-        <p>Note that the source files are taken from the src directory (and referred to by filenames only, since the Makefile itself is in the src directory), whereas the binary files are taken from the bin directory, and hence prefixed with '../bin/'.</p>
+
+        <p>After the dependency line comes the actions themselves. In the
+        Makefile, each line is initiated with a TAB character. Commands are
+        initiated with the "@" character, and arguments delimited with quotes.
+        Quotes within the quotes are preceded by \.</p>
+
+        <p>The commands are initiated by an informative banner printed to the
+        screen. Then comes the actions. They are printed to a temporary script
+        file (in the first block, the file is "isme-fst-script", by the
+        @printf command. Then the relevant program (e.g. the program xfst in
+        the first block of the sme Makefile) reads the scriptfile and executes
+        it. Finally, the temporary script file is removed by the @rm command.
+        The makefiles for the other languages are made in the same way.</p>
+
+        <p>Note that the source files are taken from the src directory (and
+        referred to by filenames only, since the Makefile itself is in the src
+        directory), whereas the binary files are taken from the bin directory,
+        and hence prefixed with '../bin/'.</p>
+
         <section>
           <title>lookup: the lookup scripts</title>
-          <p>No lookup scripts are written. They should be, to make it easier to analyse files.</p>
+
+          <p>There are three lookup scripts (i.e. scripts for the Xerox
+          program <code>lookup</code>) in the bin directory, cap-sme,
+          guess-sme and missing. They are all invoked with the lookup -f flag,
+          i.e. when the ordinary parser is called as in 1., the script version
+          is called as in 2the.:</p>
+
+          <ol>
+            <li>... | lookup -flags mbTT -utf8 bin/sme.fst | ...</li>
+
+            <li>... | lookup -flags mbTT -utf8 -f bin/cap-sme | ...</li>
+          </ol>
+
+          <p>The general format of the Xerox lookup scripts is documented in
+          the chapter on lookup in the Beesley and Karttunen book. To take one
+          example, the script missing looks like this (for the user
+          <code>trond</code>, the Makefile generates scripts with a unique
+          absolute path for each user):</p>
+
+          <source>analyzer /Users/trond/gt/sme/bin/sme.fst
+ foreign /Users/trond/gt/sme/bin/foreign.fst
+ typos /Users/trond/gt/sme/bin/typos.fst
+
+ analyzer
+ foreign
+ typos</source>
+
+          <p>The script names three transducers (by arbitrary names), and
+          gives an absolute path to each of the transducers. Then comes an
+          empty line, and then the transducers, in the order they are meant to
+          apply.</p>
+
+          <p>The main point with the scripts is that it is possible to chunk
+          different transducers together, without making one large transducer.
+          The main drawback with them is that they are much slower than simple
+          transducers. The script cap-sme makes it possible to analyse words
+          written with capital letters, but if you want to analyse a larger
+          text with this script, you should rather issue the command before
+          lunch break, and then return after lunch to have a look at what has
+          happened.</p>
+
+          <p>Since these scripts need a user-unique path, involving the user
+          name, they must be generated in the makefile. This is done as
+          follows (using the same script as example):</p>
+
+          <source>missing: ../bin/missing
+../bin/missing:
+        @echo
+        @echo "*** Generating missing ***";
+        @echo
+        @printf "analyzer ${BINDIR}/sme.fst\n\                                                                                             
+        foreign ${BINDIR}/foreign.fst\n\                                                                                                   
+        typos ${BINDIR}/typos.fst\n\n\                                                                                                     
+        analyzer\n\                                                                                                                        
+        foreign\n\                                                                                                                         
+        typos\n" &gt; $@</source>
+
+          <section>
+            <title>The cap-sme script</title>
+
+            <p>This script chunks the transducers sme.fst and allcap.fst,
+            i.e., it analyses both biilla, Biilla and BIILLA (but not
+            BiilLA).</p>
+          </section>
+
+          <section>
+            <title>The guess-sme script</title>
+
+            <p>This script involves the transducers sme.fst (the ordinary sme
+            transducer) and g-sme.fst (the guesser). </p>
+
+            <fixme author="Tomi">It is unclear to what extent this script
+            works.</fixme>
+          </section>
+
+          <section>
+            <title>The missing script</title>
+
+            <p>The script itself was quoted in the introductory text above.
+            The idea behind the script is to first run the incoming text
+            through the ordinary sme transducer, then to run it through an
+            extensive list of foreign (i.e. Norwegian, Swedish, Finnish and
+            English) word forms, and then to run it through a list of known
+            typos, both typos that we know are common, and typos that we have
+            attested in our corpora. A typical command involving this script
+            is the following:</p>
+
+            <source>cat corp/ntunix corp/*txt | preprocess --abbr=bin/abbr.txt | 
+ lookup -flags mbTT -utf8 -f bin/missing | grep '\?' | 
+ cut -f1 | sort | uniq -c | sort -nr | less</source>
+
+            <p>Here, the text is preprocessed as usal. Then it is lead to the
+            missing script, and all wordforms that are either Såmi words,
+            Norwegian etc. words or known typos, get an analysis. The
+            remaining words (the ones picked out with the <code>grep '\?'
+            </code>command) are the words really missing from the transducer
+            (thereby the name of the script).</p>
+          </section>
         </section>
+
         <section>
           <title>The preprocessor</title>
-          <p>The sme Makefile contains target for generating a file <code>abbr.txt</code> which contains a list of abbreviations used in the preprocessing phase. The file is generated by script <code>abbr-extract</code> which is located in <code>gt/script</code> directory. It gets as a command line parameter the main abbreviation file and then a list of files from where multiword expressions should be searched for. Basically:</p>
+
+          <p>The sme Makefile contains target for generating a file
+          <code>abbr.txt</code> which contains a list of abbreviations used in
+          the preprocessing phase. The file is generated by script
+          <code>abbr-extract</code> which is located in <code>gt/script</code>
+          directory. It gets as a command line parameter the main abbreviation
+          file and then a list of files from where multiword expressions
+          should be searched for. Basically:</p>
+
           <source>abbr.txt: ../bin/abbr.txt
 ../bin/abbr.txt: ../../script/abbr-extract abbr-sme-lex2.txt \
         propernoun-sme-lex.txt closed-sme-lex.txt adv-sme-lex.txt
@@ -37,29 +181,34 @@
 </source>
         </section>
       </section>
+
       <section>
         <title>If one ever should need to manage without make...</title>
-        <p>In case the actual commands themeselves are sometimes needed: This is a list of the commands that were needed to build a morphological parser before the time of the makefile.</p>
-        <source>exchange &quot;sme&quot; for other lg (smj, sms)
+
+        <p>In case the actual commands themeselves are sometimes needed: This
+        is a list of the commands that were needed to build a morphological
+        parser before the time of the makefile.</p>
+
+        <source>exchange "sme" for other lg (smj, sms)
 
 Compiling the parser
 ====================
 
-in twolc (open by typing &quot;twolc&quot;)
+in twolc (open by typing "twolc")
 ---------------------------------
 read-grammar twol-sme.txt
 compile
 save-binary twol-sme.bin
 
-in lexc (open by typing &quot;lexc&quot;)
+in lexc (open by typing "lexc")
 -------------------------------
 compile-source *-sme.txt
-or: run-script skript1 (smj has script file &quot;lskr&quot;, sms has no script file)
+or: run-script skript1 (smj has script file "lskr", sms has no script file)
 read-rules twol-sme.bin
 compose-result
 save-result sme.save
 
-in xfst (open by typing &quot;xfst&quot;)
+in xfst (open by typing "xfst")
 -------------------------------
 load stack caseconv.fst
 load stack sme.save
@@ -72,7 +221,9 @@ read-regex &lt; case.regex
 save stack caseconv.fst
 </source>
       </section>
-      <p class="last_modified">Last modified: $Date$, by $Author$</p>
+
+      <p class="last_modified">Last modified: $Date$, by
+      $Author$</p>
     </section>
   </body>
 </document>
