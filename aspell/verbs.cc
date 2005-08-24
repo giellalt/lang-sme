@@ -51,9 +51,9 @@
 // (Conditional vowel change is back-front vowel symmetric.)
 //
 // STATUS: Produces all verb forms of all verbs, but not the past forms
-//         of all verbs, whose stems end in '-a' or '-ä'.
+//         of all verbs, whose stems end in '-a' or '-ï¿½'.
 //
-//         There are two problems: anta/a verbs sometimes change -ta or -tä
+//         There are two problems: anta/a verbs sometimes change -ta or -tï¿½
 //         to -s in their past form. I don't know how it can be determined.
 //
 //         Other problem is the fact, that words, whose declination stem
@@ -75,11 +75,11 @@
 
 
 // Following forms form from infinitive stem:
-//      - 1st and 2nd infinitives      (nähdä, nähdä/kseni; nähde/ssä, nähd/en)
+//      - 1st and 2nd infinitives      (nï¿½hdï¿½, nï¿½hdï¿½/kseni; nï¿½hde/ssï¿½, nï¿½hd/en)
 //      - all passive forms, except for the type_1 or anta/a verbs
-//      - imperative (except the singular 3rd form)    (näh/köön, näh/kää)
-//      - potential                                    (näh/nen, näh/nee)
-//      - perfect participe                            (näh/nyt, näh/neet)
+//      - imperative (except the singular 3rd form)    (nï¿½h/kï¿½ï¿½n, nï¿½h/kï¿½ï¿½)
+//      - potential                                    (nï¿½h/nen, nï¿½h/nee)
+//      - perfect participe                            (nï¿½h/nyt, nï¿½h/neet)
 //
 // 1st infinitive form is used as the base of flags herein.
 // It is also the passive present negative form.
@@ -173,83 +173,83 @@ void do_verbs_infinitive_stem()
         Suffix suffixes[] =
         {
                 // All verbs:
-                Suffix("A", "", infinitive_1st_suffixes),
+                Suffix("a", "", infinitive_1st_suffixes),
                 
-                Suffix("EA", "EA",
+                Suffix("ea", "ea",
                        prefix_strings(infinitive_2nd_suffixes, "i")),
-                Suffix("[^E]A", "A",
+                Suffix("[^e]a", "a",
                        infinitive_2nd_suffixes),
                 
                 // anta/a (type1) verbs (whose passive doesn't form
                 //                       from this stem)
-                Suffix("[AEIOU]A", "A",
+                Suffix("[aeiou]a", "a",
                        prefix_strings(combine(participe_and_potential_suffixes,
                                               potential_singular_1st_suffix),
                                       "n")),
-                Suffix("[AEIOU]A", "A", imperative_suffixes),
+                Suffix("[aeiou]a", "a", imperative_suffixes),
 
                 // huomat/a (type2) verbs
-                Suffix("[^S]TA", "TA",
+                Suffix("[^s]ta", "ta",
                        combine(add_and_suffix(new_list("taan", NULL),
                                               suffix_particles_verbs),
                                prefix_strings(passive_suffixes, "t"))),
-                Suffix("[^S]TA", "TA",
+                Suffix("[^s]ta", "ta",
                        prefix_strings(combine(participe_and_potential_suffixes,
                                               potential_singular_1st_suffix),
                                       "nn")),
-                Suffix("[^S]TA", "A", imperative_suffixes),
+                Suffix("[^s]ta", "a", imperative_suffixes),
 
                 // saa/da (type3) verbs
-                Suffix("DA", "DA",
+                Suffix("da", "da",
                        combine(add_and_suffix(new_list("daan", NULL),
                                               suffix_particles_verbs),
                                passive_suffixes)),
-                Suffix("DA", "DA",
+                Suffix("da", "da",
                        prefix_strings(combine(participe_and_potential_suffixes,
                                               potential_singular_1st_suffix),
                                       "n")),
-                Suffix("DA", "DA", imperative_suffixes),
+                Suffix("da", "da", imperative_suffixes),
 
                 
                 // nous/ta (type4) verbs
-                Suffix("STA", "TA",
+                Suffix("sta", "ta",
                        combine(add_and_suffix(new_list("taan", NULL),
                                               suffix_particles_verbs),
                                passive_suffixes)),
-                Suffix("STA", "TA",
+                Suffix("sta", "ta",
                        prefix_strings(combine(participe_and_potential_suffixes,
                                               potential_singular_1st_suffix),
                                       "s")),
-                Suffix("STA", "TA", imperative_suffixes),
+                Suffix("sta", "ta", imperative_suffixes),
 
                 
                 // tul/la (type5) verbs
-                Suffix("LA", "LA",
+                Suffix("la", "la",
                        combine(add_and_suffix(new_list("laan", NULL),
                                               suffix_particles_verbs),
                                passive_suffixes)),
-                Suffix("LA", "A",
+                Suffix("la", "a",
                        participe_and_potential_suffixes),
-                Suffix("LA", "LA", imperative_suffixes),
+                Suffix("la", "la", imperative_suffixes),
 
                 
-                // men/nä (type5) verbs
-                Suffix("NA", "NA",
+                // men/nï¿½ (type5) verbs
+                Suffix("na", "na",
                        combine(add_and_suffix(new_list("naan", NULL),
                                               suffix_particles_verbs),
                                passive_suffixes)),
-                Suffix("NA", "A",
+                Suffix("na", "a",
                        participe_and_potential_suffixes),
-                Suffix("NA", "NA", imperative_suffixes),
+                Suffix("na", "na", imperative_suffixes),
                 
                 // pur/ra (type5) verbs
-                Suffix("R A", "RA",
+                Suffix("ra", "ra",
                        combine(add_and_suffix(new_list("raan", NULL),
                                               suffix_particles_verbs),
                                passive_suffixes)),
-                Suffix("RA", "A",
+                Suffix("ra", "a",
                        participe_and_potential_suffixes),
-                Suffix("RA", "RA", imperative_suffixes)
+                Suffix("ra", "ra", imperative_suffixes)
         };
         int suffixes_n = sizeof(suffixes) / sizeof(Suffix);
 
@@ -392,75 +392,75 @@ void do_verbs_declination_stem()
         Suffix suffixes[] =
         {
                 /// First the active agent participe and 1st participe forms
-                Suffix("VA", "VA", basic_suffixes),    // palava -> palavassa
+                Suffix("va", "va", basic_suffixes),    // palava -> palavassa
 
                 /// Then form the present active singular 3rd form.
                 // Words which haven't got dipthong or double vowel before
                 // -va get their vowel doubled
-                Suffix("[^A]AVA", "VA",              // jakava -> jakaa
-                       prefix_strings(prefixable_suffixes, "A")),
-                Suffix("[^EI]EVA", "VA",             // hakeva -> hakee
-                       prefix_strings(prefixable_suffixes, "E")),       
-                Suffix("[^AEIOU]IVA", "VA",          // raapiva -> raapii
-                       prefix_strings(prefixable_suffixes, "I")),    
-                Suffix("[^OU]OVA", "VA",             // halkova -> halkoo
-                       prefix_strings(prefixable_suffixes, "O")),       
-                Suffix("[^AEIOU]UVA", "VA",          // sortuva -> sortuu
-                       prefix_strings(prefixable_suffixes, "U")),    
+                Suffix("[^a]ava", "va",              // jakava -> jakaa
+                       prefix_strings(prefixable_suffixes, "a")),
+                Suffix("[^ei]eva", "va",             // hakeva -> hakee
+                       prefix_strings(prefixable_suffixes, "e")),       
+                Suffix("[^aeiou]iva", "va",          // raapiva -> raapii
+                       prefix_strings(prefixable_suffixes, "i")),    
+                Suffix("[^ou]ova", "va",             // halkova -> halkoo
+                       prefix_strings(prefixable_suffixes, "o")),       
+                Suffix("[^aeiou]uva", "va",          // sortuva -> sortuu
+                       prefix_strings(prefixable_suffixes, "u")),    
                 // Other words just drop their -va suffix
-                Suffix("AAVA", "VA",                 // saava -> saa
+                Suffix("aava", "va",                 // saava -> saa
                        prefixable_suffixes),            
-                Suffix("[EI]EVA", "VA",              // ? -> ?
+                Suffix("[ei]eva", "va",              // ? -> ?
                        prefixable_suffixes),         
-                Suffix("[AEIOU]IVA", "VA",           // ? -> ?
+                Suffix("[aeiou]iva", "va",           // ? -> ?
                        prefixable_suffixes),      
-                Suffix("[OU]OVA", "VA",              // juova -> juo
+                Suffix("[ou]ova", "va",              // juova -> juo
                        prefixable_suffixes),         
-                Suffix("[AEIOU]UVA", "VA",           // ? -> ?
+                Suffix("[aeiou]uva", "va",           // ? -> ?
                        prefixable_suffixes),      
 
                 /// Then the present active plural 3rd form
-                Suffix("VA", "",                       // lukeva -> lukevat
-                       prefix_strings(prefixable_suffixes, "T")),
+                Suffix("va", "",                       // lukeva -> lukevat
+                       prefix_strings(prefixable_suffixes, "t")),
 
                 /// Past active singular 3rd form
 
                 // Triggers the vowel change, which is not back-front vowel
-                // symmetric on declination stems ending in '-a' or '-ä'.
+                // symmetric on declination stems ending in '-a' or '-ï¿½'.
                 // There is also other trickery about in these forms.
 
                 // Note, that I haven't included here those vowel change
                 // rules, which lead to forms not appearing in verbs.
                 // Same applies to the conditional forms.
-                Suffix("[^EI]EVA", "EVA",            // lukeva -> luki
-                       prefix_strings(prefixable_suffixes, "I")),      
-                Suffix("IVA", "VA",                   // juhliva -> juhli
+                Suffix("[^ei]eva", "eva",            // lukeva -> luki
+                       prefix_strings(prefixable_suffixes, "i")),      
+                Suffix("iva", "va",                   // juhliva -> juhli
                        prefix_strings(prefixable_suffixes, "")),
-                Suffix("[^OU]OVA", "VA",             // uskova -> uskoi
-                       prefix_strings(prefixable_suffixes, "I")),       
-                Suffix("UOVA", "UOVA",               // juova -> joi
-                       prefix_strings(prefixable_suffixes, "OI")),        
-                Suffix("[^U]UVA", "VA",              // sattuva -> sattui
-                       prefix_strings(prefixable_suffixes, "I")),
+                Suffix("[^ou]ova", "va",             // uskova -> uskoi
+                       prefix_strings(prefixable_suffixes, "i")),       
+                Suffix("uova", "uova",               // juova -> joi
+                       prefix_strings(prefixable_suffixes, "oi")),        
+                Suffix("[^u]uva", "va",              // sattuva -> sattui
+                       prefix_strings(prefixable_suffixes, "i")),
 
                 // NOTE, FIXME: saada doesn't declinate this way!
                 //              Thus this extremely ugly hack.
-                Suffix("[ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ] [^AEIOU] [AEIOU] A V A", "AVA",
+                Suffix("[ABCDEFGHIJKLMNOPQRSTUVWXYZï¿½ï¿½ï¿½] [^AEIOU] [AEIOU] A V A", "AVA",
                        prefix_strings(prefixable_suffixes, "SI")),
-                Suffix("[ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ] [^AEIOU] [AEIOU] A V A", "AVA",
+                Suffix("[ABCDEFGHIJKLMNOPQRSTUVWXYZï¿½ï¿½ï¿½] [^AEIOU] [AEIOU] A V A", "AVA",
                        prefix_strings(prefixable_suffixes, "SIVAT")),
 
                 // Past active plural 3rd form 
-                Suffix("[^EI]EVA", "EVA",    // lukeva -> lukivat
-                       prefix_strings(prefixable_suffixes, "IVAT")),   
-                Suffix("IVA", "VA",           // juhliva -> juhlivat
-                       prefix_strings(prefixable_suffixes, "VAT")),
-                Suffix("[^OU]OVA", "VA",     // uskova -> uskoivat
-                       prefix_strings(prefixable_suffixes, "IVAT")),    
-                Suffix("UOVA", "UOVA",       // juova -> joivat
-                       prefix_strings(prefixable_suffixes, "OIVAT")),     
-                Suffix("[^U]UVA", "VA",      // sattuva -> sattuivat
-                       prefix_strings(prefixable_suffixes, "IVAT")),
+                Suffix("[^ei]eva", "eava",    // lukeva -> lukivat
+                       prefix_strings(prefixable_suffixes, "ivat")),   
+                Suffix("iva", "va",           // juhliva -> juhlivat
+                       prefix_strings(prefixable_suffixes, "vat")),
+                Suffix("[^ou]ova", "va",     // uskova -> uskoivat
+                       prefix_strings(prefixable_suffixes, "ivat")),    
+                Suffix("uova", "uova",       // juova -> joivat
+                       prefix_strings(prefixable_suffixes, "oivat")),     
+                Suffix("[^u]uva", "va",      // sattuva -> sattuivat
+                       prefix_strings(prefixable_suffixes, "ivat")),
 
 
                 /// Conditional
@@ -495,17 +495,17 @@ void do_verbs_declination_stem()
 //        output_flag('X');
         output_suffix_list_to_front(suffixes, suffixes_n, 'X');
 
-        // In anta/a (type1) verbs if stem ends in -ta or -tä, the -ta or -tä
+        // In anta/a (type1) verbs if stem ends in -ta or -tï¿½, the -ta or -tï¿½
         // changes in imperfect to -s. This doesn't happen always, and is
         // thus considered ambiguous, and not implemented here.
 
         // Other anta/a verbs 
-        output_suffix_group((char) NULL, "[^ÄEIÖYT]ÄVÄ", "ÄVÄ",   // elävä -> eli
+        output_suffix_group((char) NULL, "[^ï¿½EIï¿½YT]ï¿½Vï¿½", "ï¿½Vï¿½",   // elï¿½vï¿½ -> eli
                             to_front_vowel(prefix_strings(prefixable_suffixes,
                                                           "I")));
-        output_suffix_group((char) NULL, "[^ÄEIÖYT]ÄVÄ", "ÄVÄ",   // elävä -> elivät
+        output_suffix_group((char) NULL, "[^ï¿½EIï¿½YT]ï¿½Vï¿½", "ï¿½Vï¿½",   // elï¿½vï¿½ -> elivï¿½t
                             to_front_vowel(prefix_strings(prefixable_suffixes,
-                                                          "IVÄT")));
+                                                          "IVï¿½T")));
 }
 
 
@@ -558,13 +558,13 @@ void do_verbs_consonant_gradated_declination_stem()
 
                 /// Active past forms, except the 3rd forms
                 // Triggers the vowel change, which is not back-front vowel
-                // symmetric on declination stems ending in '-a' or '-ä'.
+                // symmetric on declination stems ending in '-a' or '-ï¿½'.
                 // There is also other trickery about in these forms.
 
                 // Note, that I haven't included here those vowel change
                 // rules, which lead to forms not appearing in verbs.
                 // Verbs, whose this stem ends in -i don't have past forms
-                Suffix("[^EI]EN", "EN",            // näen -> näin
+                Suffix("[^EI]EN", "EN",            // nï¿½en -> nï¿½in
                        prefix_strings(past_person_endings, "I")),
                 Suffix("[^OU]ON", "N",             // uskon -> uskoin
                        prefix_strings(past_person_endings, "I")),       
@@ -576,7 +576,7 @@ void do_verbs_consonant_gradated_declination_stem()
                 /// huomat/a verbs
                 // NOTE, FIXME: saada doesn't declinate this way!
                 //              Thus this extremely ugly hack.
-                Suffix("[ABCDEFGHIJKLMNOPQRSTUVWXZÅ] [^AEIOU] [AEIOU] A N",
+                Suffix("[ABCDEFGHIJKLMNOPQRSTUVWXZï¿½] [^AEIOU] [AEIOU] A N",
                        "AN",
                        prefix_strings(past_person_endings, "SI")),
                         

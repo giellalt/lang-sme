@@ -136,17 +136,17 @@ void do_adjectives()
 
 // Output adjective suffix lists...
 //        output_flag('H');
-        output_suffix_group('H', "M P I", "MPI",
+        output_suffix_group('H', "mpi", "mpi",
                             adjective_comparative_suffixes);
         
 //        output_flag('I');
-        output_suffix_group('I', "M P I", "MPI",
+        output_suffix_group('I', "mpi", "mpi",
                             to_front_vowel(adjective_comparative_suffixes));
 
 //        output_flag('J');
-        output_suffix_group('J', "I N", "IN", adjective_superlative_suffixes);
+        output_suffix_group('J', "in", "in", adjective_superlative_suffixes);
         
 //        output_flag('K');
-        output_suffix_group('K', "I N", "IN",
+        output_suffix_group('K', "in", "in",
                             to_front_vowel(adjective_superlative_suffixes));
 }
