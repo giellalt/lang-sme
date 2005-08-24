@@ -30,10 +30,12 @@ vector<string> possessive_suffixes = new_list(
 vector<string> suffix_particles = new_list(
         "ge", "ges", "go", "gis", "han", "nai", "naigo", "goson", "hal",
         "ba", "be", "bat", NULL);
-vector<string> case_suffixes = new_list(
-        "s", "i", "in", "n", "t", "id", "ide", "iguin", NULL);
+vector<string> case_suffixes_even = new_list(
+             "s",  "i",  "in",  "n",  "t",  "id",  "ide",   "iguin", NULL);
+vector<string> case_suffixes_odd = new_list(
+        "a", "is", "ii", "iin", "in", "at", "iid", "iidda", "iiguin", NULL);
 vector<string> case_possessivable_suffixes = new_list(
-        "s", "st", "in", "n", "id", "ide", "iguin", NULL);
+             "s",  "st",  "in",  "n", "id", "ide", "iguin", NULL);
 
 // No, we need different case suffixes for different stem classes.
 // This is where we differ from finnish, with same suffixes for different stem classes.
@@ -51,8 +53,11 @@ vector<string> suffix_particles_verbs = new_list(
 vector<string> negative_suffix_particles = new_list(
         "ge", NULL);
 vector<string> imperative_suffix_particles = new_list(
-        "kin", "han", "pa", NULL);
+        "ge", "ges", "go", "gis", "han", "nai", "naigo", "goson", "hal",
+        "ba", "be", "bat", NULL);
 
+// Today all verforms get all clitics. If this is too much, we should cut down
+// their number both here and in the sme-lex.txt file.       
 
 // These are the suffixes common to all passive forms.
 vector<string> passive_suffixes = new_list(
