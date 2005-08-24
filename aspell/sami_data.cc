@@ -1,5 +1,6 @@
 ////
-///  genfisuffix - a Finnish affix table generator for ispell
+///  This file is a file for Sámi, modified from the file
+//   genfisuffix - a Finnish affix table generator for ispell
 //   Copyright (C) 2000  Pauli Virtanen <pauli.virtanen@saunalahti.fi>
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -30,9 +31,15 @@ vector<string> suffix_particles = new_list(
         "ge, "ges", "go", "gis", "han", "nai", "naigo", "goson", "hal",
         "ba", "be", "bat", NULL);
 vector<string> case_suffixes = new_list(
-        "n", "ssa", "sta", "lla", "lta", "lle", "ksi", NULL);
+        "s", "i", "in", "n", "t", "id", "ide", "iguin", NULL);
 vector<string> case_possessivable_suffixes = new_list(
-        "ssa", "sta", "lla", "lta", "lle", "kse", NULL);
+        "s", "st", "in", "n", "id", "ide", "iguin", NULL);
+
+// No, we need different case suffixes for different stem classes.
+// This is where we differ from finnish, with same suffixes for different stem classes.
+// Thus "ide" and "idda" in different sets.
+
+// 
 
 // These are the suffix particles commonly suffixed to verbs
 vector<string> suffix_particles_verbs = new_list(
@@ -104,3 +111,32 @@ void init_sami_data()
         // These passive forms don't have suffix particles
         add_to_vector(passive_suffixes, passive_no_suffix_particles_suffixes);
 }
+
+
+/*
+ * I put in a suffix grammar here.
+
+Nouns
+=====
+STEM-DIPH-STR (goahti)
+STEM-MONO-STR  n/a
+STEM-DIPH-WEA (goađi)
+STEM-MONO-WEA (gođii)
+
+
+case/number
+
+px
+
+Adjectives
+case/number
+attribute -s
+comparative
+
+Verbs
+finite morphology: indicative/conditional/imperative/potential
+infinite morphology
+derivation: passive and stuff
+
+
+*/

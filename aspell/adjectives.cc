@@ -1,5 +1,6 @@
 ////
-///  genfisuffix - a Finnish affix table generator for ispell
+///  This file is a file for Sámi, modified from the file
+//   genfisuffix - a Finnish affix table generator for ispell
 //   Copyright (C) 2000  Pauli Virtanen <pauli.virtanen@saunalahti.fi>
 //
 //   This program is free software; you can redistribute it and/or modify
