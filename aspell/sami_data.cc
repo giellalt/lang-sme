@@ -28,7 +28,7 @@
 vector<string> possessive_suffixes = new_list(
         "n", "t", "s", "me", "de", "ska", "met", "det", "set", NULL);
 vector<string> suffix_particles = new_list(
-        "ge, "ges", "go", "gis", "han", "nai", "naigo", "goson", "hal",
+        "ge", "ges", "go", "gis", "han", "nai", "naigo", "goson", "hal",
         "ba", "be", "bat", NULL);
 vector<string> case_suffixes = new_list(
         "s", "i", "in", "n", "t", "id", "ide", "iguin", NULL);

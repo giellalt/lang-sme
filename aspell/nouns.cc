@@ -44,15 +44,15 @@
 
 void do_suffix_particles()
 {
-        Suffix suffixes("", "",
-                        new_list("kin", "ko", "kaan", "han", "pa", "kinko",
-                                 "pahan", "kohan", "kaanko", NULL));
+        Suffix suffixes("", "", new_list("ge", "ges", "go",
+                        "gis", "han", "nai", "naigo",
+                        "goson", "hal", "ba", "be", "bat", NULL));
 
 //        output_flag('L');
         output_suffix_list(&suffixes, 1, 'L');
 
 //        output_flag('M');
-        output_suffix_list_to_front(&suffixes, 1, 'M');
+//        output_suffix_list_to_front(&suffixes, 1, 'M');
 }
 
 /// These flags add possessive suffixes to
@@ -62,11 +62,17 @@ void do_suffix_particles()
 void do_possessive_suffixes()
 {
         vector<string> noun_possessive_suffixes = new_list(
-                "ni", "si", "nsa", "mme", "nne", NULL);
+                "n", "t", "s", "me", "de", "ska", "met", "det", "set", NULL);
+        
+        vector<string> noun_possessive_suffix_vowels = new_list(
+                "a", "i", "á", "o", "u", "e", NULL);
 
         // Add suffix particles
         if (options.use_all_suffix_particles)
         {
+                add_to_vector(noun_possessive_suffixes,
+                              suffix_strings(noun_possessive_suffix_vowels,
+                                             noun_possessive_suffixes));
                 add_to_vector(noun_possessive_suffixes,
                               suffix_strings(noun_possessive_suffixes,
                                              suffix_particles));
@@ -83,13 +89,13 @@ void do_possessive_suffixes()
                 // "misuse" of these flags.
                 
                 // Add possessive suffixes
-                Suffix("A", "",
+                Suffix("[aeioá]", "",
                        noun_possessive_suffixes),
-                Suffix("[AEIOU] N", "N",
+                Suffix("[aeiou]n", "n",
                        noun_possessive_suffixes),
 
                 // Add the Vn possessive suffix
-                Suffix("[^A] A", "",
+                Suffix("[^a]a", "",
                        add_and_suffix(new_list("an", NULL),
                                       suffix_particles)),
         };
@@ -144,12 +150,12 @@ void do_nouns()
         Suffix suffixes[] =
         {
                 // [^I] S S A > -SSA,T  # talossa -> talot
-                Suffix("[^I] S S A", "SSA",
+                Suffix("[^i]ssa", "ssa",
                        add_and_suffix(new_list("t", NULL),
                                       suffix_particles)),
 
                 // S S A >  -SSA,STAAN  # talossa -> talostaan
-                Suffix("S S A", "SSA",
+                Suffix("ssa", "ssa",
                        noun_suffixes)
         };
         int suffixes_n = sizeof(suffixes) / sizeof(Suffix);
@@ -222,12 +228,12 @@ void do_possessive_and_illative()
         Suffix suffixes[] =
         {
                 // N I > -NI,SI         # taloni -> talosi
-                Suffix("N I", "NI",
+                Suffix("ni", "ni",
                        noun_possessive_suffixes),
 
                 // Essive
                 // N I > -NI,NA         # taloni -> talona
-                Suffix("N I", "NI",
+                Suffix("ni", "ni",
                        noun_essive_suffixes),
 
                 // Hard part: illative
@@ -240,19 +246,19 @@ void do_possessive_and_illative()
                 // 4. and otherwise singular -seen and plural -siin     TODO
                 
                 // [^A] A N I > -NI,AN       # kermani -> kermaan
-                Suffix("[^A] A N I", "NI",
+                Suffix("[^a]ani", "ni",
                        prefix_strings(noun_illative_suffixes, "a")),
         
                 // [^OU] O N I > -NI,ON      # peltoni -> peltoon
-                Suffix("[^OU] O N I", "NI",
+                Suffix("[^ou]oni", "ni",
                        prefix_strings(noun_illative_suffixes, "o")),
         
                 // [^AEIOU] U N I > -NI,UN   # laskuni -> laskuun
-                Suffix("[^AEIOU] U N I", "NI",
+                Suffix("[^aeiou]uni", "ni",
                        prefix_strings(noun_illative_suffixes, "u")),
         
                 // [^AEIOU] I N I > -NI,IN   # kahvini -> kahviin
-                Suffix("[^AEIOU] I N I", "NI",
+                Suffix("[^aeiou]ini", "ni",
                        prefix_strings(noun_illative_suffixes, "i")),
         };
         int suffixes_n = sizeof(suffixes) / sizeof(Suffix);
