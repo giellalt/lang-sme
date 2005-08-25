@@ -154,9 +154,9 @@ void init_sami_data()
 
 Nouns (what stems to direct to what suffix lexicon)
 =====
-even     a-st     á-st    i-st   e-st      u-st    o-st
-DIPH-STR giella   guorbá  goahti njoađve   viessu  reŋko
-DIPH-WEA giela    gurbbá goađi  njoađvve  viesu   reŋkko
+even     a-st     á-st    i-st   e-st      u-st    o-st (all these are GOAHTI)
+DIPH-STR giella   goarbá  goahti njoađve   viessu  reŋko
+DIPH-WEA giela    goarbbá goađi  njoađvve  viesu   reŋkko
 MONO-STR gillii     -       -     -        vissui    -
 MONO-WEA   -        -     gođii   -        visot     -
 
