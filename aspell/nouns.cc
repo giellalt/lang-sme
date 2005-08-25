@@ -42,6 +42,7 @@
 #include "genfisuffix.hh"
 #include "sami_data.hh"
 
+// Here we add clitics to the stem.
 void do_suffix_particles()
 {
         Suffix suffixes("", "", new_list("ge", "ges", "go",
