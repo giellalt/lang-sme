@@ -30,12 +30,40 @@ vector<string> possessive_suffixes = new_list(
 vector<string> suffix_particles = new_list(
         "ge", "ges", "go", "gis", "han", "nai", "naigo", "goson", "hal",
         "ba", "be", "bat", NULL);
-vector<string> case_suffixes_even = new_list(
-             "s",  "i",  "in",  "n",  "t",  "id",  "ide",   "iguin", NULL);
+        
+//But these case suffixes go to different stems
+vector<string> case_suffixes_even_diph_str = new_list(
+             "i",  "in",  "n",  "t",  "id",  "ide",   "iguin", NULL);
+vector<string> case_suffixes_even_diph_we = new_list(
+             "s",  "in",  "t",  "id",  "ide",   "iguin", NULL);
+vector<string> case_suffixes_even_mono_str = new_list(
+             "i",  "s",  "in",  "n",  "t",  "id",  "ide",   "iguin", NULL);
+vector<string> case_suffixes_even_mono_we = new_list(
+             "i",  "s",  "in",  "n",  "t",  "id",  "ide",   "iguin", NULL);
+
+//These always attach to the same stem
 vector<string> case_suffixes_odd = new_list(
-        "a", "is", "ii", "iin", "in", "at", "iid", "iidda", "iiguin", NULL);
-vector<string> case_possessivable_suffixes = new_list(
-             "s",  "st",  "in",  "n", "id", "ide", "iguin", NULL);
+        "a", "ii", "is", "iin", "in", "at", "iid", "iidda", "iiguin", NULL);
+
+vector<string> esscase_suffixes_odd = new_list(
+        "a", "ii", "is", "iin", "in", "at", "iid", "iidda", "iiguin", NULL);
+
+
+//Px forms to nouns.cc
+vector<string> case_possessivable_suffixes_even = new_list(
+             "s",  "st",  "in",  "n", "id", "ide", NULL);
+            
+vector<string> case_possessivable_suffixes_odd = new_list(
+        "a", "as",  "istt",  "iin",  "in", "iidd", "iidda", NULL);
+
+//pl com different since suffix order is deviant        
+vector<string> pl_com_possessive_suffixes_even = new_list(
+        "idanguin", "idatguin", "idisguin", "ideameguin", "ideatteguin", 
+        "ideaskkaguin", "ideametguin", "ideattetguin", "ideasetguin", NULL);
+
+vector<string> pl_com_possessive_suffixes_odd = new_list(
+        "iiddánguin", "iiddátguin", "iiddisguin", "iiddámeguin", "iiddádeguin", 
+        "iiddiskaguin", "iiddámetguin", "iiddádetguin", "iiddisetguin", NULL);
 
 // No, we need different case suffixes for different stem classes.
 // This is where we differ from finnish, with same suffixes for different stem classes.
@@ -120,18 +148,182 @@ void init_sami_data()
 
 /*
  * I put in a suffix grammar here.
+ 
+ For Finnish, the challenge is to combine the suffixes
+ For Sámi, the challenge is to find the right stems (and thereafter to add the clitics)
 
-Nouns
+Nouns (what stems to direct to what suffix lexicon)
 =====
-STEM-DIPH-STR (goahti)
-STEM-MONO-STR  n/a
-STEM-DIPH-WEA (goađi)
-STEM-MONO-WEA (gođii)
+even     a-st     á-st    i-st   e-st      u-st    o-st
+DIPH-STR giella   goarbá  goahti njoađve   viessu  reŋko
+DIPH-WEA giela    goarbbá goađi  njoađvve  viesu   reŋkko
+MONO-STR gillii     -       -     -        vissui    -
+MONO-WEA   -        -     gođii   -        visot     -
 
+Listing the case-number-px suffixes for each stem:
+Adding the clitics in a separate lexicon.
+Each of these lists should get a flag and a definition, and be concatenated in the string:
+properstem + relevant-case-number-px-set + clitics
+
+Here we go:
+
+giella
+n
+n
+n
+n
+san
+nan
+t
+sat
+nat
+s
+sis
+nis
+me
+me
+me
+seame
+neame
+de
+seatte
+neatte
+ska
+seaskka
+neaskka
+met
+met
+met
+seamet
+neamet
+det
+seattet
+neattet
+set
+seaset
+neaset
+
+
+giela
+s
+in
+t
+id
+id
+ide
+in
+iguin
+stan
+inan
+idan
+idan
+idan
+idasan
+inan
+idanguin
+t
+t
+stat
+inat
+idat
+idat
+idasat
+inat
+idatguin
+s
+s
+stis
+inis
+idis
+idis
+idasas
+inis
+idisguin
+steame
+ineame
+ideame
+ideame
+ideame
+idasame
+ineame
+ideameguin
+de
+de
+steatte
+ineatte
+ideatte
+ideatte
+idasade
+ineatte
+ideatteguin
+ska
+ska
+steaskka
+ineaskka
+ideaskka
+ideaskka
+idasaska
+ineaskka
+ideaskkaguin
+steamet
+ineamet
+ideamet
+ideamet
+ideamet
+idasamet
+ineamet
+ideametguin
+det
+det
+steattet
+ineattet
+ideattet
+ideattet
+idasadet
+ineattet
+ideattetguin
+set
+set
+steaset
+ineaset
+ideaset
+ideaset
+idasaset
+ineaset
+ideasetguin
+
+gillii
+i
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+odd
+STEM-WEA (beana
+STEM-STR (beatnag)
+
+contract
+STEM-DIPH-WEA (suolu)
+STEM-MONO-STR (sullo)
 
 case/number
 
-px
+casenum2 px cl
+
+
 
 Adjectives
 case/number
@@ -139,9 +331,13 @@ attribute -s
 comparative
 
 Verbs
+=====
+Active:
 finite morphology: indicative/conditional/imperative/potential
 infinite morphology
-derivation: passive and stuff
 
+derivation: 
+passive and stuff
+stem + (j)uvvo + ordinary morphology
 
 */
