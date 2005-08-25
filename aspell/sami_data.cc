@@ -155,8 +155,8 @@ void init_sami_data()
 Nouns (what stems to direct to what suffix lexicon)
 =====
 even     a-st     á-st    i-st   e-st      u-st    o-st
-DIPH-STR giella   goarbá  goahti njoađve   viessu  reŋko
-DIPH-WEA giela    goarbbá goađi  njoađvve  viesu   reŋkko
+DIPH-STR giella   guorbá  goahti njoađve   viessu  reŋko
+DIPH-WEA giela    gurbbá goađi  njoađvve  viesu   reŋkko
 MONO-STR gillii     -       -     -        vissui    -
 MONO-WEA   -        -     gođii   -        visot     -
 
@@ -296,10 +296,132 @@ gillii
 i
 
 
+guorbá
+de
+det
+i
+me
+met
+n
+nan
+nat
+neame
+neamet
+neaset
+neaskka
+neatte
+neattet
+nis
+s
+san
+sat
+seame
+seamet
+seaset
+seaskka
+seatte
+seattet
+set
+sis
+ska
+t
+
+guorbbá
+de
+det
+id
+idan
+idanguin
+idasade
+idasadet
+idasame
+idasamet
+idasan
+idasas
+idasaset
+idasaska
+idasat
+idat
+idatguin
+ide
+ideame
+ideameguin
+ideamet
+ideametguin
+ideaset
+ideasetguin
+ideaskka
+ideaskkaguin
+ideatte
+ideatteguin
+ideattet
+ideattetguin
+idis
+idisguin
+iguin
+in
+inan
+inat
+ineame
+ineamet
+ineaset
+ineaskka
+ineatte
+ineattet
+inis
+s
+set
+ska
+stan
+stat
+steame
+steamet
+steaset
+steaskka
+steatte
+steattet
+stis
+t
 
 
-
-
+# hmm, what should we do with the -i again...
+goahti
+i
+ái
+in
+án
+án
+án
+ásan
+inan
+át
+ásat
+inat
+is
+ásis
+inis
+áme
+áme
+áme
+áseame
+ineame
+áde
+áseatte
+ineatte
+iska
+áseaskka
+ineaskka
+ámet
+ámet
+ámet
+áseamet
+ineamet
+ádet
+áseattet
+ineattet
+iset
+áseaset
+ineaset
 
 
 
