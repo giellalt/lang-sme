@@ -211,8 +211,8 @@ g-sme.fst: ../int/g-sme.fst
 
 BINDIR := $(shell pwd | sed -e s/src/bin/)
 
-guess-sme: ../int/guess-sme
-../int/guess-sme:
+guess-sme: ../bin/guess-sme
+../bin/guess-sme:
 	@echo
 	@echo "*** Generating guess-sme ***" ;
 	@echo
