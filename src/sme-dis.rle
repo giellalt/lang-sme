@@ -526,14 +526,14 @@ LIST MANNU = "ođđa#jage#mánnu" "ođđa#jagi#mánnu"
 
 LIST VAHKKU = "áigi" "beaivi" "bodda" "čakča" "čakča#geassi" "čuohte#jahki" 
 		"dálvi"	"diibmu" "geardi" "geassi" "giđđa" "hávvi" "idja" "jahki" 
-		"jahke#čuohti" "mánnu" "tiibmu" "vahkku" jahki ;
+		"jahke#čuohti" "mánnu" "riegádan#beaivi" "tiibmu" "vahkku" jahki ;
  # The quoteless jahki here is since the preprocessor is not fine-tuned
  # yet, it still gives '"1870-" # jahki N Sg Com'.
 
  
 LIST BEAIVI =	"mánnodat" "vuoss#árga" "disdat" "maŋŋeb#árga" "gaska#vahkku"
 		"duorastat" "bearjadat" "lávvardat" "lávvordat" "sotna#beaivi" 
-		"riegádan#beaivi" "duopmo#beaivi";
+		"duopmo#beaivi";
 
 SET TIME = MANNU | VAHKKU | BEAIVI;
 
@@ -547,7 +547,7 @@ LIST GUOVLU = "ássan#guovlu" "báiki" "gávpot" "guovlu" "sádji"
 LIST ROUTE = "fávli" "geaidnu" "guorra" "luodda" "miila"; # and others!
 
 LIST MEASURE = "miila" "kilo#mehtar" "mehtar" "mehter" "centi#mehtar" "sente"
-	"milli#mehtar" "tumá" "lihtter" "gilo" ;
+	"cm" "milli#mehtar" "tumá" "állan" "salla" "lihtter" "gilo" ;
 
 LIST PL-NOUN = "beassaš" "čalbme#láse" "gálssot" "headja" "sabet" "sisttet" 
 	"skárri"; 
@@ -755,6 +755,10 @@ MAP (@PronN>) TARGET Indef IF (1 N)(NOT 0 Nom LINK 1 Acc)(NOT 0 ADVLCASE)
 	(NOT 1 VFIN OR Ess OR ("veara"));
 	## Son galgá beassat buktit oaivilis buot gažaldagaide.
 
+MAP (@PronN>) TARGET Indef IF (0 Nom)(*1 (N Nom) BARRIER NOT-ADJ)
+	(NOT 0 Pl LINK 1 Inf);
+	## Goabbáge báddi galgá leahkit 60 alen guhku.
+
 MAP (@PronN>) TARGET Indef IF (1 A-CASE)(NOT 1 ("veara"));
 	## Sáhttáge ollu buriid dadjat bohtosiid birra.
 
@@ -865,6 +869,9 @@ MAP (@PrcN>) TARGET PrfPrc IF (-1 Adv LINK *-1 COPULAS BARRIER NOT-ADV-PCLE LINK
 
 MAP (@PrcN>) TARGET PrfPrc IF (NOT *-1 Neg BARRIER VERB)(NOT 0 AUX)(1C (N Nom));
 	## Son lea oahppan olmmoš.
+
+MAP (@PrcN>) TARGET PrfPrc IF (0 ("mannat"))(1 TIME);
+	## Ii leat boahtán mannan váhkus.
 
 MAP (@PrcN>) TARGET PrfPrc IF (-1 ("nu"))(0 ("gohčodit" Pass));
 	## Dáin áššiin sáhttet Sámedikkit várra nu gohčoduvvon friija 
@@ -1192,7 +1199,8 @@ MAP (@VOC) TARGET Nom IF (*-1 COMMA BARRIER CC OR NOT-NP OR CONTRA
 	(NOT 0 Sg LINK *-1 V-SG3 BARRIER VERB);
 	## Vuoi du, Betsaida!
 
-MAP (@VOC) TARGET Nom IF (-1 COMMA)(0 Pers)(*1 Nom BARRIER NPNH LINK 1 EOS);
+MAP (@VOC) TARGET Nom IF (-1 COMMA)(0 Pers)(0 Sg2 OR Du2 Or Pl2)
+	(*1 Nom BARRIER NPNH LINK 1 EOS);
 	## Gáidet eret mu luhtte, dii verrošeaddjit! 
 
 MAP (@VOC) TARGET (N Nom) IF (-2 BOS)(-1 (Imprt Sg2))(NOT -1 Adv OR Qst)
@@ -4941,6 +4949,10 @@ SELECT PrfPrc IF (-1 NP-HEAD-GEN LINK *-1 ("dadjat") BARRIER NPNHA)(1 N)
 	## Dat dajai iežas gávdnan golli.
  # More verbs should be listed here.
 
+SELECT PrfPrc IF (0 ("mannat"))(1 TIME);
+	## Ii leat boahtán mannan vahkus.
+	## Mannan čuohtejagi gaskkamuttos lei stuorra gilvu.
+
 REMOVE (V Pass Sg1) IF (*1 (N Nom) BARRIER CS OR CP);
 	## Juolluduvvon permišuvnnat.
 
@@ -5216,6 +5228,10 @@ SELECT Acc IF (-1 Num)(1 ("velggolaš"));
 
 SELECT Gen IF (0 ("okta"))(1 ALU);
 	## Dábálaččat leat joddut sullii ovtta guhku.
+
+SELECT Acc IF (0 Num)(1 ("gitta"))(2 (Num Acc));
+	## Dát ledje gáddenuohtit mat ledje 180 gitta 200 sala guhku, ja 15 gitta 
+	## 20 sala čieŋu.
 
 
 # Locative, not PxSg3
@@ -5869,6 +5885,9 @@ REMOVE Gen IF (NOT *-1 Pr OR NUMERALS BARRIER NPNH)(0 N)(1 Dem);
 	## Jahkásaš bušeahttarámma dán prošeavtta doaimmaide gártá oktiibuot
 	## 70.000 ruvnno. 
 
+REMOVE Gen IF (NOT *-1 Pr OR NUMERALS BARRIER NPNH)(1 BEAIVI);
+	## Sii bivdet luosa mánnodaga.
+
 REMOVE Gen IF (*-1 OPRED-VERB BARRIER NPNH LINK NOT *-1 NP-HEAD-ACC
 	BARRIER V-NOT-AUX OR CC OR CLB OR CS OR CP)(1 Ess);
 	## Don galggat gohčodit su Jesusin.
@@ -6278,7 +6297,7 @@ SELECT (Pl Nom) IF (*-1 COPULAS BARRIER VERB OR CLB OR CP OR CS OR PUNCT OR go O
 	NP-HEAD-NOM OR (@SPRED) LINK 0 Pl3)(0 A OR NP-HEAD)(NOT 0 Inf)(1C NP-BORDER);
 	## Vuollel 7% Finnmárkku eatnamiin leat vuovddit. 
 	## Olmmošlassáneami geažil šadde eanebut geat galge juogadit buriid.
-v
+
 SELECT (Pl Nom) IF (*-1 COPULAS BARRIER VERB OR CLB OR CP OR CS OR PUNCT OR go OR 
 	NP-HEAD-NOM LINK 0 Pl3)(0 A OR NP-HEAD)(NOT 0 Inf)(1 CLB)(2 NOT-NP);
 	## ...main leat mielde dušše priváhta oasálaččat, ii leat...
@@ -8200,10 +8219,6 @@ REMOVE PrsPrc IF (0 N)(1 Indef);
 
 SELECT (V Actio Gen) IF (1 ("veara"));
 	## Dát sátni lea vuostáiváldin veara.
-
-SELECT PrfPrc IF (0 ("mannat"))(1 TIME);
-	## Ii leat boahtán mannan vahkus.
-	## Mannan čuohtejagi gaskkamuttos lei stuorra gilvu.
 
 SELECT PrfPrc IF (*-1 BOS OR CS BARRIER NPNH)(*1 N BARRIER NPNH LINK *1 VFIN
 	BARRIER NOT-ADV-PCLE);
