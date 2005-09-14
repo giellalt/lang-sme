@@ -1292,6 +1292,10 @@ MAP (@-FMAINV) TARGET PrfPrc IF (*-1 (Actio Nom) BARRIER NOT-ADV-PCLE LINK
 	*-1 ("leat" Sg3) BARRIER NPNHA LINK NOT *-1 Nom BARRIER CS);
 	## Leago miehtan vižžojuvvon divššohasas...
 
+MAP (@-FMAINV) TARGET PrfPrc IF (*-1 ("leat") BARRIER CS)(NOT 0 Pass);
+	## Dalle livčče njuolggadusaid giehtaguššan issorasat geahpidan 
+	## guolástanvuoigaduvvomiid logu.
+
 MAP (@-FMAINV) TARGET PrfPrc IF (-2 PrfPrc)(-1 CC);
 	## Artihkal lea sámegillii jorgaluvvon ja almmuhuvvon Romssa universitehta 
 	## Juridihka fakultehta čálaráiddus.
@@ -1605,8 +1609,11 @@ MAP (@X) TARGET WORD ;
 # SELECT instead of REMOVE if one wants to investigate word structure.
 
 REMOVE N-DER IF (0 LEX-N LINK NOT 0 Ess);
+       ## Dat lea oahpaheaddjin doppe.
+ # Since Actio was included in the N-DER set, this rule now removes many Actios.
+ # This may be unfortunate. If so, the remedy is to remove Actio from the N-DER set.
+
 REMOVE A-DER IF (0 LEX-A);
-	## Dat lea oahpaheaddjin doppe.
 	## Dábálaš mearrádusat.
 
 REMOVE V-DER IF (0 LEX-V)(NOT 0 (eaddji)); 
@@ -2286,9 +2293,11 @@ SELECT N IF (-1 (A Attr))(NOT 0 Inf OR VFIN OR ("veara") OR ("mearkkašan#veara"
 	("namuhan#veara"))(NOT -1 Adv)(1 NP-BORDER);   
 	## Dat lea čuovvovaš sajis.
 
-SELECT N IF (-2C N)(-1 CC)(NOT 0 VERB OR Pron)(NOT 0 (A Ess) LINK -2 Ess)
+SELECT (N Nom) IF (-2C (N Nom))(-1 CC)(NOT 0 VERB OR Pron)(NOT 0 (A Ess) LINK -2 Ess)
 	(NOT 1 N OR Pron OR Num OR A);  
 	## Mánát ja nuorat leat dál.
+
+ # and other cases
 
 SELECT N IF (-2 BOS)(-1C Gen)(1 EOS);        ## Son lea Ruoŧa čálli.
                                               # (titles)
@@ -4943,7 +4952,7 @@ SELECT PrfPrc IF (*-1 ("leat") BARRIER NOT-ADV-PCLE)
 	(NOT 0 Ess LINK 1 (A Nom) OR PrfPrc)
 	(NOT 0 Actio LINK 1 PrfPrc LINK 0 (@-FMAINV))(NOT 1 ("veara"))
 	(NOT 1 CC LINK 1 Actio LINK NOT 0 PrfPrc)
-	(NOT 0 Actio LINK 1 CC LINK 1 Actio LINK *1 PrfPrc BARRIER NOT-ADV-PCLE);
+	(NOT 0 Actio OR N LINK *1 ("leat" PrfPrc) BARRIER COPULAS);
 	## Norgga láhkaaddit leat áigá jo suokkardan vuđolaččat kvenaid 
 	## eamiálbmotstáhtusa gažaldaga.
 
@@ -4953,11 +4962,12 @@ SELECT PrfPrc IF (*-1 (@OBJ) BARRIER NOT-ADV LINK *-1 ("leat") BARRIER NPNHA)
 	## Leago barggu ohcan?
 
 SELECT PrfPrc IF (-1 (@SUBJ) LINK *-1 ("leat") BARRIER NOT-NP)
-	(NOT 0 Actio LINK -1 PrsPrc);
+	(NOT 0 Actio LINK -1 PrsPrc)(NOT 0 Actio LINK 1 CC LINK 1 Actio LINK 
+	*1 N BARRIER NOT-NP);
 	## Leatgo sii njuovadan juo?
 
 SELECT PrfPrc IF (*-1 ("leat") BARRIER VERB OR CS OR CP OR CC LINK NOT 0 PrfPrc)
-	(NOT 0 Actio LINK *1 PrfPrc BARRIER NOT-ADV-PCLE LINK 0 (@-FMAINV))
+	(NOT 0 Actio LINK *1 PrfPrc BARRIER NOT-ADV-PCLE LINK NOT 0 (@PrcN>))
 	(NOT 0 Ess LINK 1 (A Nom) OR PrfPrc)(NOT 1 ("dihte") OR ("dihtii"))
 	(NOT 1 COMMA OR CC LINK *1 Actio BARRIER NPNH)(NOT 1 ("veara"));
 	## Biret-Elle lea easka skuvllas geargan.
@@ -7903,7 +7913,15 @@ SELECT Du2 IF (0 ("leat" V Ind Prs Du2))(*1 PrfPrc BARRIER NOT-ADV);
 SELECT V-DU3 IF (*-1 (Pl Nom) OR ("dat" Pl3 Nom) BARRIER NOT-ADV-PCLE);
 	## Ja duot eará oskuvieljat leaba searvegotti áirasat.
 
+REMOVE (V Sg3 Foc) IF (-1 CS OR CLB LINK *-1 (V Du3) BARRIER VFIN)(0 (V Du3));
+	## Spahkágeažit šaddaba ruossalagaid geaigut bajás, go leaba boalo-
+	## huvvon oktii.
 
+REMOVE (V Sg3 Foc) IF (*-1 (Pl Nom) BARRIER CC OR CLB OR CS OR CP OR (Sg Nom))
+	(0 (V Du3));
+	## Geažit guovtte dakkár čoavjevuolisgorrojuvvoba oktii.
+
+ 
 # First person plural - Pl1
 # -------------------------
  # Pl1 = Inf for all stem classes
@@ -7971,14 +7989,14 @@ SELECT V-PL3 IF (*-1C NP-HEAD-PL-NOM BARRIER PPRON-NOT-SII OR (N Sg Nom) OR CS)
 	(NOT *-1 (V Pl3) BARRIER CS OR CP OR PUNCT);
 	## Makkár vuoigatvuođat dain leat riikavuložin?
 	
-
- # Pronoun
-
-SELECT V-PL3 IF (*-1C (N Pl Nom) BARRIER MII-PERS OR MOAI OR CLB);
+SELECT V-PL3 IF (*-1C (N Pl Nom) BARRIER MII-PERS OR MOAI OR Nom OR CLB OR CS);
 	## Dathan gal leat buorit guolit.
 # Shall be moved away from this chapter, just for testing here.
 
-SELECT V-PL3 IF (*-1 (Pron Pl3 Nom) BARRIER MII-PERS OR MOAI OR CLB);
+
+ # Pronoun
+
+SELECT V-PL3 IF (*-1 (Pron Pl3 Nom) BARRIER MII-PERS OR MOAI OR CLB OR CS);
 	## Dathan gal leat buorit guolit.
 
 SELECT Pl3 IF (*-1 (Pron Interr Pl Nom) BARRIER CP OR CS OR VFIN);
@@ -8365,7 +8383,7 @@ SELECT (V Actio Ess) IF (*-2 ("leat") BARRIER NOT-ADV)(-1 ("mielde"));
 	## Doaibmaplána lea bidjan buori vuođđu ja leamaš mielde rievdadeame
 	## miellagottuid sámegiela geavaheami ektui.
 
-SELECT (V Actio Ess) IF (*-2 V-TRANS-ACT BARRIER NPNH)(-1 Acc);
+SELECT (V Actio Ess) IF (*-2 V-TRANS-ACT BARRIER NPNH)(-1 Acc)(NOT 0 (N Ess));
 	## Mii gulaimet soapmása čoalkkuheame uvssa.
  # If necessary, list the higher verbs that appear in this frame.
 
