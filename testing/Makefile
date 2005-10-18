@@ -447,4 +447,5 @@ twol-neg: TYPE=neg
 twol-neg: FILE=$(FILENEG)
 twol-neg: twol-test
 
+# This doesn't work, because both twol-pos and twol-neg call twol-test
 twol-both: twol-pos twol-neg
