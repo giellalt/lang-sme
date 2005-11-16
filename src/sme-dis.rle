@@ -337,6 +337,7 @@ SET NOT-ADV-INDEF = WORD - Adv - Indef ;
 SET NOT-ADV-PCLE-ILL = WORD - Adv - Pcle - Ill ;
 SET NOT-ADV-PCLE-INDEF = WORD - Adv - Pcle - Indef ;
 SET NOT-ADV-PCLE-NEG = WORD - Adv - Pcle - Neg ;
+#SET NOT-ADVL-PCLE-NEG = WORD - @ADVL - @GP< - Pcle - Neg ; #Ask Eckhardt.
 
 LIST IKTE = "ikte" "dolin" "dovle" ;
 
@@ -578,6 +579,8 @@ LIST TITLE = "ámta#mánni" "direktevra" "eanan#hearrá" ("gásttašit" eaddji) 
 	"justitiarius" "korefereanta" "ossodat#direktevra" 
 	"profehta" "professor" "ráđđe#addi" "stipendiáhta" "sundi" 
 	"universitehtalektor" "vuosttas#konsuleanta";
+
+LIST COUNTABLE = "oassi" "kapihttal" "paragráfa" ;
 
 
 # Miscellaneous sets
@@ -1173,10 +1176,10 @@ MAP (@NUMBER) TARGET Num IF (NOT 0 Nom OR Acc OR Gen OR ADVLCASE);
 	## Viidáseappot mearrida dearvvašvuođabargiidlága § 10 vuosttas lađđasa...
  # Should hit numerals that only have to do with numbering, not with amount. 
 
-MAP (@NUMBER) TARGET Num IF (-1 ("s") OR ("nr") OR ("§") OR ("kapihttal"));
+MAP (@NUMBER) TARGET Num IF (-1 ("s") OR ("nr") OR ("§") OR ("kapihttal") OR ("oassi"));
 	## s. 240.
 
-MAP (@NUMBER) TARGET Num IF (-3 ("s") OR ("nr") OR ("§") OR ("kapihttal"))
+MAP (@NUMBER) TARGET Num IF (-3 ("s") OR ("nr") OR ("§") OR ("kapihttal") OR ("oassi"))
 	(-2 Num)(-1 CC);
 	## ...gč. dearvvašvuođabargiidlága kapihttal 6 ja 7.
 
@@ -2657,6 +2660,12 @@ REMOVE Qst IF (0 Adv)(NOT *1 ("?"));
 	## Nugo dieđát, de lean dál.
 
 
+# ========================== #
+# Disambiguating Numerals    #
+# ========================== #
+
+SELECT Num IF (-1 COUNTABLE)(0 ABBR OR ACR) ;
+	## Dieđáhusa oasis I ovdanbuktojuvvo Bb:a sámepolitihkalaš vuođđolávdi.
 
 # ========================== #
 # Disambiguating adpositions #
@@ -4328,6 +4337,14 @@ REMOVE (Dem Pl Nom) IF (NOT *-1 V-PL3 BARRIER CS)(NOT *1 (N Pl Nom) OR NUMERALS
 # Rules related to specific adjectives
 # ====================================
 
+
+# alit
+# - - 
+
+SELECT ("allat" A Comp Attr) IF (*1 ("oahpu") OR ("dutkan") BARRIER V);
+ # Too weak barrier...
+	## Dutkanministtar lea ráhkadan diđáhusa alit sámi oahpu ja dutkama birra.
+
 # dološ
 # - - - - 
 SELECT A IF (0 ("dološ"))(1 N);
@@ -5211,6 +5228,9 @@ REMOVE (Prop Pl Nom) IF (-1 BOS)(NOT *1 V-PL3 BARRIER CS);
 REMOVE (Prop Pl Acc) IF (-1 BOS)(0 CNOUN);
 	## Gunaid galgá leat várrogas atnit.
 
+SELECT Prop IF (-1 BOS)(0 Loc)(1 COMMA)(2 MANNU)(3 Num) ;
+SELECT Prop IF (-1 BOS)(0 Loc)(1 COMMA)(2 Num) ;
+	## Deanus, borgemánu 31. b. 2005.
 
 # Removing proper nouns that are lookalikes
 # - - - - - - - - - - - - - - - - - - - - -
@@ -6762,6 +6782,11 @@ REMOVE (N Gen) IF (NOT *-1 Pr OR Num BARRIER NPNH)(1 (Pron Pers Gen));
 	## Gonagas sáhttá addit láhkaásahusaid dán birra.
 
 
+REMOVE (N Gen) IF (1C Gen LINK *1 Po OR N BARRIER V); 
+	##  Ráđđehus láhčá dilálašvuođaid sámi kultuvrra máŋggadáfotvuođa seailluheapmái.
+ # The barrier is too weak. The logic is that when we know sámi is Gen, then the
+ # constituent before it cannot modify it, hence must be Acc or Nom.
+
 # Topicalised object
 # ------------------
 
@@ -6778,6 +6803,9 @@ SELECT Acc IF (*-1 BOS OR CS BARRIER NPNH)(NOT 0 Nom)
 	## Dáid doaibmabijuid viidáset ovdáneami, earret eará ođasmahttit 
 	## sámegieloahppomateriála, sáhttá áimmahuššat universitehta bušeahtta-
 	## rámmaid  siskkobealde.
+
+SELECT Acc IF (-1 BOS)(0 (Pron Dem))(*1C Acc BARRIER NPNH) ;
+	## Dán máŋggadáfotvuođa háliidit mii bisuhit.
 
  
 # Accusative between Aux and main verb
@@ -7368,7 +7396,8 @@ SELECT Loc IF (1 COMMA)(2 ("gos"));
 
 SELECT Loc IF (*-1 BOS OR CS OR REALCLB BARRIER NPNHAI)(NOT 0 (A Nom))
 	(NOT 0 (N Num Nom) LINK *1 (V Du3) BARRIER NOT-ADV-PCLE)
-	(*1 ("leat") BARRIER NOT-ADV-PCLE-NEG);
+	(*1 ("leat") BARRIER (@SUBJ) OR (@OBJ) OR (@SPRED) OR (@OPRED) );
+#	(*1 ("leat") BARRIER NOT-ADV-PCLE-NEG ); # Check this rule with the positive barrier.
 	## Ádjásgo lea ođđa fanas?
         ## Suomas maid lei dilli váttis.
         ## Lágas eai leat mearrádusat.
@@ -8236,6 +8265,12 @@ SELECT (V Pl3) IF (*-1 Nom BARRIER NOT-ADV-PCLE LINK *-1 CC
 SELECT (V Pl3) IF (*-1 CC BARRIER NOT-ADV-PCLE LINK *-1C (V Pl3) BARRIER VERB OR CS);
 	## Journála dieđut divvojuvvojit dahje sihkkojuvvojit njuolggadusaid mielde.
 
+# Subordinate null subjects
+
+SELECT (V Pl3) IF (-1 CS LINK -1C (V Pl3)) ;
+	## Sii moaráhuvve go gulle dan.
+
+
 
 # Postverbal subject
 # - - - - - - - - - -
@@ -9011,15 +9046,6 @@ REMOVE V-DER; # Removes only if there is another reading.
 	## Dat ihte johtilit.
 
 
-# ========================== #
-# Tidying up some loose ends #
-# ========================== #
-
-REMOVE Gen IF (0 (ACR Nom));
-REMOVE Acc IF (0 (ACR Nom));
-    ## IT lea dehálaš.
-
-
 
 # =============================== #
 # Disambiguating syntax - Cycle 4 #
@@ -9644,7 +9670,7 @@ REMOVE (@AN>) IF (NOT *1 N OR A BARRIER NPNH);
 SELECT (@NUMBER) IF (-2 (@NUMBER))(-1 CC);
 	## ...gč. dearvvašvuođabargiidlága kapihttal 6 ja 7.
 	
-REMOVE (@QN) IF (0 (*ADVL))(1 N OR A) ;	
+REMOVE (@QN>) IF (0 (@ADVL))(1 N OR A OR Pron) ;	
 	## Ráđđehus oktii áigodagas galgá bidjat ovdan dieđáhusa Stuorradiggái
 	
 	
@@ -9747,6 +9773,20 @@ REMOVE (@OPRED) ;
                       CONSTRAINTS                       #
 # ===================================================== #
 
+
+
+# ========================== #
+# Tidying up some loose ends #
+# ========================== #
+
+REMOVE Gen IF (0 (ACR Nom));
+REMOVE Acc IF (0 (ACR Nom));
+    ## IT lea dehálaš.
+
+REMOVE Gen IF (0 (Num Nom));
+REMOVE Acc IF (0 (Num Nom));
+ # This in order to constrain the proliferation of case. If no context has hit, 
+ # then be it a stray nominative.
 
 
 #=====#
