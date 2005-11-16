@@ -630,6 +630,16 @@ SET NP-BORDER = BOS | EOS | REALCLB | VFIN | Inf | (Actio Ess) | ConNeg | VGen |
 
 
 
+# Syntactic sets
+# --------------
+
+#SET SYNTAG = @+FAUXV | @+FMAINV | @-FAUXV | @-FMAINV | @-FSUBJ |
+#             @ADV-A | @ADV-ADV | @ADVL | @AN> @ActioN> | @CC | @CMPND
+#             | @CS | @DN> | @GA> | @GN> | @GP< | @GP> | @HNOUN | @INTERJ @MEASURE |
+#             @NPRON< | @NQ< | @NUM-PRON | @NUMBER | @OBJ | @OPRED | @PCLE |
+#             @PCLE-COMPL @PROP> | @PrcN> | @PronN< | @PronN> | @QN< | @QN> | @SPRED
+#             | @SUBJ | @SUBJ-QH | @TIME @TITLE | @VOC ;
+# Does not work, not even when declared in andvance.
 
 # ============= #
 # ============= #
@@ -3083,6 +3093,15 @@ REMOVE Adv IF (-1 ("leat"))(0 (A Attr))(NOT 0 ("eanaš") OR ("eanas"))
 SELECT Adv IF (0 (Pron Indef))(1 CS);
 	## Dat mearridit seammás ahte stáhtaeiseválddit galget ovddidit 
 	## doaibmabijuid. 
+
+#REMOVE Indef IF (-1 BOS OR CC OR ("go"))(0 (Pron Indef));
+#REMOVE Indef IF (-1 BOS OR CC OR ("go"))(0 (Pron Indef Loc));
+SELECT Adv IF (-1 BOS OR CC OR ("go"))(0 (Pron Indef));
+	## Dat mearridit seammás ahte stáhtaeiseválddit galget ovddidit 
+	## doaibmabijuid. 
+	
+SELECT (Indef Loc) IF (*-1 LOC-VERB OR ("orrut") BARRIER NPNH)(0 (Pron Indef)) ;	
+    ## Moai orro seammás.
 
 SELECT Adv IF (NOT -1 CC LINK -1 Indef)(0 (Pron Indef))(1 COMMA)(2 CS);
 	## Muhto geavadis ráddjejuvvui vuoigatvuohta veaháš, go ráfáiduhttima
@@ -8992,6 +9011,15 @@ REMOVE V-DER; # Removes only if there is another reading.
 	## Dat ihte johtilit.
 
 
+# ========================== #
+# Tidying up some loose ends #
+# ========================== #
+
+REMOVE Gen IF (0 (ACR Nom));
+REMOVE Acc IF (0 (ACR Nom));
+    ## IT lea dehálaš.
+
+
 
 # =============================== #
 # Disambiguating syntax - Cycle 4 #
@@ -9615,6 +9643,11 @@ REMOVE (@AN>) IF (NOT *1 N OR A BARRIER NPNH);
 
 SELECT (@NUMBER) IF (-2 (@NUMBER))(-1 CC);
 	## ...gč. dearvvašvuođabargiidlága kapihttal 6 ja 7.
+	
+REMOVE (@QN) IF (0 (*ADVL))(1 N OR A) ;	
+	## Ráđđehus oktii áigodagas galgá bidjat ovdan dieđáhusa Stuorradiggái
+	
+	
 
 
 # Adverbials
@@ -9697,7 +9730,14 @@ REMOVE (@SPRED) ; #IF (NOT 0 PrfPrc);
 
 REMOVE (@OPRED) ;
 
-
+#REMOVE (@X) IF (0 (@+FAUXV) OR (@+FMAINV) OR (@-FAUXV) OR (@-FMAINV) OR (@-FSUBJ) OR
+#                  (@ADV-A) OR (@ADV-ADV) OR (@ADVL) OR (@AN>) OR (@ActioN>) OR (@CC) OR
+#                  (@CMPND) OR (@CS) OR (@DN>) OR (@GA>) OR (@GN>) OR (@GP<) OR (@GP>) OR
+#                  (@HNOUN) OR (@INTERJ) OR (@MEASURE) OR (@NPRON<) OR (@NQ<) OR 
+#                  (@NUM-PRON) OR (@NUMBER) OR (@OBJ) OR (@OPRED) OR (@PCLE) OR 
+#                  (@PCLE-COMPL) OR (@PROP>) OR (@PrcN>) OR (@PronN<) OR (@PronN>) OR 
+#                  (@QN<) OR (@QN>) OR (@SPRED) OR
+#                  (@SUBJ) OR (@SUBJ-QH) OR (@TIME) OR (@TITLE) OR (@VOC)) ;
 
 
 
