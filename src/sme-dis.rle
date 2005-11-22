@@ -125,6 +125,14 @@ LIST Actor = Actor ; LIST VAbess = VAbess ;
 
 LIST aš = "aš" ;
 
+# Semantic tags
+# -------------
+
+LIST Ani = Ani ; LIST Fem = Fem ; LIST Mal = Mal ;
+LIST Obj = Obj ; List Org = Org ; LIST Plc = Plc ;
+LIST Sur = Sur ; LIST Tit = Tit ;
+
+
 # Other tags
 # ----------
 
@@ -601,6 +609,8 @@ LIST GASKAL = "gaskal" "gaskkal" "gaskii" "gaskka" "gaskkas" ;
  # p-positions that like coordination
 
 SET NUMERALS = Num - OKTA ;
+
+SET NOT-NUMERALS = WORD - Num ;
 
 LIST MANGA = "máŋga" "galle" ; # Not referred to by any rule.
 
@@ -4114,16 +4124,23 @@ SELECT Pron IF (-2 Pron)(-1 CC)(0 ("ollu"));
 
 # seamma/seammá
 # - - - - - - - 
-SELECT Attr IF (0 ("seamma") OR ("seammá"))(1 A OR N);
+
+#SELECT Attr IF (-1 Num)(0 ("seamma") OR ("seammá"))(1 A OR N ); # Old version.
+SELECT Attr IF (0 ("seamma") OR ("seammá"))(*1 A OR N BARRIER NOT-NUMERALS );
 	## Dasto smiehttatge fas seamma sullasaš jearaldagaid. 
 	## Sáhttá leat ulbmillaš, ahte seamma olmmoš áimmahuššá máŋga
 	## dain doaimmain.
 
-SELECT Attr IF (0 ("seamma") OR ("seammá"))(1 Adv)(NOT 1 VERB);
+SELECT Attr IF (0 ("seamma") OR ("seammá"))(1 Adv)(NOT 1 VERB OR ("gusto")) ;
 	## Mu oainnu mielde sáhttá seammá bures oaidnit dan láhkai, ahte... 
+    #  The "gusto" here should be removed by a set of sentence adeverbials
 
-REMOVE Attr IF (0 ("seamma") OR ("seammá"));
+# Then we kill the rest of the attributes...
+# But did we catch enough attributes?    
+
+#REMOVE Attr IF (0 ("seamma") OR ("seammá")) ;
 	## Seammá gusto poliklinihkalaš divššus. 
+    ## Seamma gusto poliklinihkalaš divššus. 
 
 # unnán
 # - - -
@@ -5336,6 +5353,14 @@ REMOVE ("Nilse") IF (0 ("Nilsen" N Prop Sg Nom));
 # - - - - - - - -
 REMOVE ("Norge") IF (0 ("Norga"));
 	## Mun vuolggán Norgii.
+	
+	
+# Disambiguating the semantic tags
+# ================================
+
+REMOVE Plc (-1 (Prop Mal Attr) OR (Prop Fem Attr))(0 Sur);
+    ## Trond Trosterud lea dál.	
+	
 
 
 # Nouns versus adjectives
