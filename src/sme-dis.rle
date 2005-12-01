@@ -1188,11 +1188,17 @@ MAP (@NUM-PRON) TARGET (N Num Nom) IF (-1 (Pers Nom))(NOT -1 Dem)
 
 MAP (@SUBJ @SPRED) TARGET (N Num Nom);
 	## Go sotnabeaivi šattai, de čuoigaledje máŋggas várrái.
+	
+MAP (@NumN<) TARGET (Num Nom) IF (-1 ("nr" Nom))(-2 (@OBJ) OR (@ADVL));
+    ## Mun lean ilus go beasan ovdanbuktit St.dieđ.  nr. 33.
+    #ADD (@NumN<) TARGET (Num Nom) IF (-1 ("nr" Nom))(-2 (@OBJ) OR (@ADVL));
+    #Maybe it has to be (N @ADVL).
 
 MAP (@SUBJ-QH @SPRED) TARGET (Num Nom) IF (0 NUMERALS)
 	(*1 Gen BARRIER NP-BORDER LINK NOT 0 ROUTE OR TIME OR Loc)
-	(NOT 1 CC)(NOT *1 ALU BARRIER NP-BORDER);
+	(NOT 1 CC)(NOT *1 ALU BARRIER NP-BORDER)(NOT -1 (@NNum) LINK -2 (@OBJ));
 	## Dá dat leat, 350 ruvnno.
+	#Maybe "OR (N @ADVL)" has to be added.
 
 MAP (@SUBJ-QH @SPRED) TARGET (Num Nom) IF (1 (Dem Pl Loc));
 	## Okta dain doaimmain lea redigeret ja čorget journála.
@@ -1220,6 +1226,9 @@ MAP (@NUMBER) TARGET Num IF (-1 ("s") OR ("nr") OR ("nummar") OR ("§") OR ("kap
 MAP (@NUMBER) TARGET Num IF (-3 ("s") OR ("nr") OR ("nummar") OR ("§") OR ("kapihttal") OR ("oassi"))
 	(-2 Num)(-1 CC);
 	## ...gč. dearvvašvuođabargiidlága kapihttal 6 ja 7.
+	
+MAP (@NNum>) TARGET ("nr" Nom) IF (1 Num);
+    ##Mun lean ilus go beasan ovdanbuktit St.dieđ. nr. 33
 
 MAP (@QN>) TARGET Num IF (NOT -1 Num)(NOT 0 ADVLCASE)(*1 Gen OR Ill OR Loc OR Com 
 	BARRIER NPNH OR REALCLB LINK NOT 0 Interr)(NOT 0 (N Num) LINK 1 (Sg Com))
@@ -3992,8 +4001,11 @@ REMOVE Recipr ;
 # General rules
 # -------------
 
-REMOVE Nom IF (-1 ABBR OR ACR OR ("§") OR ("paragráfa") OR ("kapihttal") OR 
+REMOVE Nom IF (-1 ACR OR ("§") OR ("paragráfa") OR ("kapihttal") OR 
 	("kapihtal") OR ("jahki") OR GEASSET)(0 Num);
+	
+#REMOVE Nom IF (-1 ABBR OR ACR OR ("§") OR ("paragráfa") OR ("kapihttal") #OR 
+	#("kapihtal") OR ("jahki") OR GEASSET)(0 Num);
 REMOVE Acc IF (-1 ABBR OR ACR OR ("§") OR ("paragráfa") OR ("kapihttal") OR 
 	("kapihtal") OR ("jahki") OR GEASSET)(0 Num);
 REMOVE Gen IF (-1 ABBR OR ACR OR ("§") OR ("paragráfa") OR ("kapihttal") OR 
@@ -5507,7 +5519,7 @@ SELECT Loc IF (NOT *-1 Sg3)(0 PxSg3);
 # Genitive after quantifier
 # - - - - - - - - - - - - - 
 SELECT Gen IF (*-1C (Num Nom) BARRIER NPNH OR Gen OR CC OR PUNCT OR REALCLB 
-	LINK NOT 0 ("okta") OR Ord)(NOT 0 VERB);
+	LINK NOT 0 ("okta") OR Ord)(NOT 0 VERB OR ("nr") OR ("nummar") OR ("s"));
 	## Golbma čáppa, doaimmalaš nieidda livžo áhčiset riegádanbeaivve.
 
 SELECT Gen IF (*-1 (Num Nom) BARRIER NPNH OR Gen OR PUNCT OR REALCLB LINK 
@@ -6012,10 +6024,15 @@ REMOVE Acc IF (*-1 LOC-VERB BARRIER NOT-ADV-PCLE OR go LINK NOT 0 ACC-LOC-VERB
 REMOVE Acc IF (*-1 ILL-VERB BARRIER NOT-ADV-PCLE OR go LINK NOT 0 ACC-ILL-VERB
 	LINK *-1 Ill BARRIER V-NOT-AUX OR (@SUBJ) OR CC OR CLB OR CS OR CP);
 	## ...masa gullet Kárášjoga, Guovdageainnu, ...ja Gáivuona gielddat.
+	
+SELECT (Nom) IF (0 ("nr") LINK -1 (@OBJ) OR (N @ADVL))(1 (Num));
 
-SELECT Gen IF (*-1 Ill BARRIER NPNH LINK NOT 0 Px)
-	(*1 Po BARRIER NPNH LINK NOT 0 Px);
+CONSTRAINTS
+
+#SELECT Gen IF (*-1 Ill BARRIER NPNH LINK NOT 0 Px)
+	#(*1 Po BARRIER NPNH LINK NOT 0 Px);
 	## Son bijai su alimussii tempela geađgemuvrra ala.
+	#Might have to be checked.
 
 SELECT Gen IF (*-1 Loc BARRIER NPNH LINK NOT 0 Actio)(NOT 0 VFIN)
 	(NOT 1 Pers)(*1 Po BARRIER NPNH);
@@ -9589,7 +9606,8 @@ SELECT (@OBJ) IF (*-1 V-TRANS-ACT BARRIER CS OR CP OR go OR (@OBJ)
 	(NOT 0 Nom LINK *-1 (TV N Gen) BARRIER NPNH)(NOT 0 TIME)
 	(NOT 0 Dem LINK *1 N BARRIER NPNH)(NOT 0 Loc LINK *-1 (IV) BARRIER VERB)
 	(NOT 0 (Acc PxSg3) LINK 0 Loc)(NOT 1 TV)
-	(NOT *1 (@OBJ) BARRIER CC OR CS OR CP);
+	(NOT *1 (@OBJ) BARRIER CC OR CS OR CP)
+	(NOT 0 ("nr") LINK -1 (@OBJ));
 	## Mun oidnen guovžža golbma kilomehtara dábbelis.
 
 REMOVE (@GN>) IF (*-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE LINK 0 VERB 
