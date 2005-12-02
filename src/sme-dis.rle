@@ -1189,9 +1189,9 @@ MAP (@NUM-PRON) TARGET (N Num Nom) IF (-1 (Pers Nom))(NOT -1 Dem)
 MAP (@SUBJ @SPRED) TARGET (N Num Nom);
 	## Go sotnabeaivi šattai, de čuoigaledje máŋggas várrái.
 	
-MAP (@NumN<) TARGET (Num Nom) IF (-1 ("nr" Nom))(-2 (@OBJ) OR (@ADVL));
-    ## Mun lean ilus go beasan ovdanbuktit St.dieđ.  nr. 33.
-    #ADD (@NumN<) TARGET (Num Nom) IF (-1 ("nr" Nom))(-2 (@OBJ) OR (@ADVL));
+MAP (@NumN<) TARGET (Num Nom) IF (-1 ("nr" Nom))(-2 N OR A OR ABBR OR ACR);
+    ## Mun lean ilus go beasan ovdanbuktit St.dieđ. nr. 33.
+#ADD (@NumN<) TARGET (Num Nom) IF (-1 ("nr" Nom));
     #Maybe it has to be (N @ADVL).
 
 MAP (@SUBJ-QH @SPRED) TARGET (Num Nom) IF (0 NUMERALS)
@@ -1220,15 +1220,17 @@ MAP (@NUMBER) TARGET Num IF (NOT 0 Nom OR Acc OR Gen OR ADVLCASE);
 	## Viidáseappot mearrida dearvvašvuođabargiidlága § 10 vuosttas lađđasa...
  # Should hit numerals that only have to do with numbering, not with amount. 
 
-MAP (@NUMBER) TARGET Num IF (-1 ("s") OR ("nr") OR ("nummar") OR ("§") OR ("kapihttal") OR ("oassi"));
-	## s. 240.
+MAP (@NUMBER) TARGET Num IF (-1 ("s") OR ("nr") OR ("nummar") OR ("§") OR ("kapihttal") OR ("oassi"))(NOT -2 N OR A OR ABBR OR ACR);
+	## Dat lea s. 240.
+	#We have to see if A, ABBR and ACR work.
 
 MAP (@NUMBER) TARGET Num IF (-3 ("s") OR ("nr") OR ("nummar") OR ("§") OR ("kapihttal") OR ("oassi"))
 	(-2 Num)(-1 CC);
 	## ...gč. dearvvašvuođabargiidlága kapihttal 6 ja 7.
 	
-MAP (@NNum>) TARGET ("nr" Nom) IF (1 Num);
-    ##Mun lean ilus go beasan ovdanbuktit St.dieđ. nr. 33
+#MAP (@NNum>) TARGET ("nr" Nom) IF (1 Num);
+MAP (@NNum>) TARGET ("nr" Attr) IF (1 WORD OR Num);
+    ##Mun lean ilus go beasan ovdanbuktit St.dieđ. nr. 33.
 
 MAP (@QN>) TARGET Num IF (NOT -1 Num)(NOT 0 ADVLCASE)(*1 Gen OR Ill OR Loc OR Com 
 	BARRIER NPNH OR REALCLB LINK NOT 0 Interr)(NOT 0 (N Num) LINK 1 (Sg Com))
@@ -3998,21 +4000,26 @@ REMOVE Recipr ;
  # These rules have to precede the rules for indefinite pronouns, or the Ord 
  # reading of "nubbi" will be removed where it should remain.
 
+
 # General rules
 # -------------
 
-REMOVE Nom IF (-1 ACR OR ("§") OR ("paragráfa") OR ("kapihttal") OR 
-	("kapihtal") OR ("jahki") OR GEASSET)(0 Num);
+REMOVE Nom IF (-1 ABBR OR ACR OR ("§") OR ("paragráfa") OR ("kapihttal") OR 
+	("kapihtal") OR ("jahki") OR GEASSET)(NOT -1 ("nr"))(0 Num);
+	## 
 	
 #REMOVE Nom IF (-1 ABBR OR ACR OR ("§") OR ("paragráfa") OR ("kapihttal") #OR 
 	#("kapihtal") OR ("jahki") OR GEASSET)(0 Num);
+
 REMOVE Acc IF (-1 ABBR OR ACR OR ("§") OR ("paragráfa") OR ("kapihttal") OR 
 	("kapihtal") OR ("jahki") OR GEASSET)(0 Num);
+	
 REMOVE Gen IF (-1 ABBR OR ACR OR ("§") OR ("paragráfa") OR ("kapihttal") OR 
 	("kapihtal") OR ("jahki") OR GEASSET)(NOT -1 ("b" ABBR))(0 Num);
 	## Rievdaduvvon lágain geassemánu 15. b. 2001 nr 93.
 	## ...maid KITH gárvvistii ja almmuhii geasset 2001.
- # These rules leave only the caseless Num reading.
+ # These rules leave only the caseless Num reading. # Well, now we have case everywhere
+ # SELECT Nom is much stronger than
 
 SELECT (Num Acc) IF (-1 (Num Acc))(0 ("duhát"))(1 (N Acc));
 	## Dat máksá guokte duhát ruvnno.
@@ -6025,7 +6032,7 @@ REMOVE Acc IF (*-1 ILL-VERB BARRIER NOT-ADV-PCLE OR go LINK NOT 0 ACC-ILL-VERB
 	LINK *-1 Ill BARRIER V-NOT-AUX OR (@SUBJ) OR CC OR CLB OR CS OR CP);
 	## ...masa gullet Kárášjoga, Guovdageainnu, ...ja Gáivuona gielddat.
 	
-SELECT (Nom) IF (0 ("nr") LINK -1 (@OBJ) OR (N @ADVL))(1 (Num));
+SELECT (Attr) IF (0 ("nr"));
 
 CONSTRAINTS
 
@@ -9243,7 +9250,8 @@ SELECT (@SPRED) IF (*-1 (@SUBJ) BARRIER NPNHA OR CC OR CLB OR CS OR CP OR ("/")
 
 SELECT (@SPRED) IF (*-1 (N Nom) BARRIER NOT-ADV-PCLE OR go OR ("nugo") OR CLB OR 
 	PUNCT OR CP LINK NOT 0 ("buorre") LINK *-1 COPULAS BARRIER NPNHA)
-	(NOT 0 Interr OR Pers); #  After "NPHNA": LINK NOT *-1 Loc BARRIER NOT-ADV-PCLE
+	(NOT 0 Interr OR Pers)(NOT 0 ("nr") LINK 1 @NumN<); 
+	#  After "NPHNA": LINK NOT *-1 Loc BARRIER NOT-ADV-PCLE
 	## Ledjego guolit divrasat?
 
 SELECT (@SPRED) IF (*-1 COPULAS BARRIER VERB LINK 0 Sg3 LINK NOT *-1 Loc BARRIER
@@ -9607,7 +9615,7 @@ SELECT (@OBJ) IF (*-1 V-TRANS-ACT BARRIER CS OR CP OR go OR (@OBJ)
 	(NOT 0 Dem LINK *1 N BARRIER NPNH)(NOT 0 Loc LINK *-1 (IV) BARRIER VERB)
 	(NOT 0 (Acc PxSg3) LINK 0 Loc)(NOT 1 TV)
 	(NOT *1 (@OBJ) BARRIER CC OR CS OR CP)
-	(NOT 0 ("nr") LINK -1 (@OBJ));
+	(NOT 0 ("nr") LINK -1 N OR A OR ACR OR ABBR);
 	## Mun oidnen guovžža golbma kilomehtara dábbelis.
 
 REMOVE (@GN>) IF (*-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE LINK 0 VERB 
@@ -9888,6 +9896,9 @@ REMOVE Acc IF (0 (Num Nom));
  # This in order to constrain the proliferation of case. If no context has hit, 
  # then be it a stray nominative.
 
+REMOVE (@X) ; # Kein Spur...
+ # @X is our "didn§t find a syntactic tag -tag.
+ # Here we remove it if we have any other suggestion.
 
 #=====#
   END #
