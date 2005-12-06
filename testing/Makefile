@@ -18,8 +18,9 @@ BINDIR = ../../script/testing
 # Directory where all the compiled fst's are:
 FSTDIR = ../bin
 
-# Directory for the source files (which compile into fst's):
-SRCDIR = ../src
+# Directory for the source files (which compile into fst's)
+# Changed this to point into the directory where the common makefile is:
+SRCDIR = ../../
 
 # The temp directory:
 TEMP = ../../tmp
@@ -298,7 +299,7 @@ a-paradigm: a-para.ptest savefile
 
 # Make sure there is an available smX.save in the parent directory:
 savefile:
-	@cd $(SRCDIR)/ && $(MAKE)
+	@cd $(SRCDIR)/ && $(MAKE) TARGET=sme
 
 # Word form generation:
 # ---------------------
