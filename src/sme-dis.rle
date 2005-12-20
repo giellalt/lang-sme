@@ -508,9 +508,8 @@ LIST MOVEMENT-VERB = "mannat";
  # (i.e. not accusative).
 
 LIST TOGETHER-VERB = "goallostuvvot" "beaškkehat" "bidjat" "čatnit" "suddat" 
-         "heivet" "biddjojuvvot, časkit" "geassit" "gullat" "rehkenastit" "ordnet"
-         "soahpat" "gávnnadit" "heivehit" "čatnat" "doaibmat" "iskat" "láktit"
-         "láktat" ;
+          "heivet" "biddjojuvvot" "časkit" "geassit" "gullat" "rehkenastit" "ordnet"
+          "soahpat" "gávnnadit" "heivehit" "čatnat" "doaibmat" "iskat" "laktit";
  # Danger: This list could be to long, in certain respects. 
  # TODO: Think of counter examples, i.e. sentences where we have these verbs, but
  # where oktii is not an adverbial.
@@ -570,6 +569,8 @@ LIST MANNU = "ođđa#jage#mánnu" "ođđa#jagi#mánnu"
              "golggot#mánnu" 
              "skábma#mánnu" "november#mánnu" "ritne#mánnu" 
              "juovla#mánnu" ;
+LIST AIGODAT = "áigodat" "stuoradigge#áigodat" "sámedigge#áigodat" 
+              "guođohan#áigodat" "doaibma#áigodat" ;             
 
 LIST VAHKKU = "áigi" "beaivi" "bodda" "čakča" "čakča#geassi" "čuohte#jahki" 
 		"dálvi"	"diibmu" "dbm" "geardi" "geassi" "giđđa" "hávvi" "idja" "jahki" 
@@ -584,7 +585,7 @@ LIST BEAIVI =	"mánnodat" "vuoss#árga" "disdat" "maŋŋeb#árga" "gaska#vahkku"
 		"duorastat" "bearjadat" "lávvardat" "lávvordat" "sotna#beaivi" 
 		"duopmo#beaivi" "sábbát";
 
-SET TIME = MANNU | VAHKKU | BEAIVI;
+SET TIME = MANNU | VAHKKU | BEAIVI | AIGODAT ;
 
 SET NOTIME = N - TIME ;
 
@@ -3759,8 +3760,19 @@ SELECT Adv IF (*-1 NUMERALS BARRIER NPNH LINK 0 Nom)(0 ("ovttas"))
 
 # oktii
 # - - -
-REMOVE V-SG3 IF (*-1 V-SG3 BARRIER CS OR CP)(-1 ("dušše"))(0 ("oktii"));
+REMOVE V-SG3 IF (*-1 VFIN BARRIER CS OR CP)(-1 ("dušše"))(0 ("oktii"));
 	## Vuoigatvuohta gusto dušše oktii.
+
+REMOVE V-SG3 IF (-1 ("dušše") LINK *-1 BOS BARRIER VFIN)(0 ("oktii"))
+    (*1 VFIN BARRIER CS OR CP);
+    ## Dušše oktii lean oaidnán čájáhusa mii čájehii álgoálbmoga rávdebarggu.
+    ## Ja dušše oktii lean oaidnán čájáhusa mii čájehii álgoálbmoga rávdebarggu.
+
+SELECT Adv IF (-1 ("dušše") LINK *-1 BOS BARRIER VFIN)(0 ("oktii"))
+    (*1 VFIN BARRIER CS OR CP)(NOT *1 ILL-VERB);
+    
+SELECT Num IF (-1 ("dušše") LINK *-1 BOS BARRIER VFIN)(0 ("oktii"))
+    (*1 VFIN BARRIER CS OR CP)(*1 ILL-VERB);
 
 REMOVE V IF (*-1 VFIN BARRIER CC OR CS OR CP)(0 ("oktii"));
 	## Vuoigatvuohta gusto dušše oktii seammá dilálašvuođa ovddas.
@@ -3772,18 +3784,23 @@ SELECT Adv IF (-1 BOS OR CS)(0 ("oktii"))(1 go);
 SELECT Adv IF (0 ("oktii")) (1 ("njunni" N Pl Gen) OR ("juolgi"  N Pl Gen) OR 
        ("sealgi"  N Pl Gen) OR ("geahči" N Pl Gen));
     ## Dat čohkkáiga oktii njuniid.
-
-REMOVE Num IF (0 ("oktii")) (1 ("njunni" N Gen Pl) OR  ("juolgi"  N Pl Gen) OR 
-       ("sealgi"  N Pl Gen) OR ("geahči" N Pl Gen));
-    ## Dat čohkkáiga oktii njuniid.
     
 SELECT Adv IF (*-1 TOGETHER-VERB OR COM-VERB) (0 ("oktii"));
     ## Porsáŋggu loguin leat buot klássaid submi biddjon oktii.
     #  Here we definitely need some barriers.
+    # This rule works definitely with a com in position 1
     
-SELECT Adv IF (*1 TIME BARRIER NPNH);    
+SELECT Adv IF (*1 TIME BARRIER NPNH LINK 0 Loc OR Ill);    
     ## Oktii  juohke  stuorradiggeáigodagas  ovddiduvvo  dieđáhus daid
     ## doaibmabijuid  birra  mat  galget sihkkarastit ja ovddidit sámi giela
+    # This rule just works if TIME is Loc or Ill
+    
+SELECT Adv IF (-1 ("vel"))(0 ("oktii")); 
+
+    ## Lea go Sámedikki mielas Microsoft duodaid anssašan vel oktii
+    ## nuvttá máidnosa, mii ii leat duohta ge?
+
+SELECT Adv IF (0 ("oktii"))(1 ("vel"));
 
 
     
@@ -7684,6 +7701,11 @@ SELECT Com IF (0 Sg)(*1 COM-VERB BARRIER CS OR CP LINK 0 VERB)
 	(NOT *1 COPULAS BARRIER VERB LINK *1 COM-VERB BARRIER NOT-ADV-PCLE 
 	LINK 0 Inf);
         ## ...go sápmelaččat duođas álge eanadoaluin bargat.
+
+
+REMOVE (Pl Loc) IF (*-2 TOGETHER-VERB OR COM-VERB)(*-1 ("oktii"))(0 N BARRIER Loc);
+    ## Mii heive bures oktii ránes datneláiggiin.
+    # we have to think about a barrier, another Loc to the right for example
 
 
 # Coordination
