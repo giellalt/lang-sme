@@ -1209,7 +1209,7 @@ MAP (@NUM-PRON) TARGET (N Num Nom) IF (-1 (Pers Nom))(NOT -1 Dem)
 MAP (@SUBJ @SPRED) TARGET (N Num Nom);
 	## Go sotnabeaivi šattai, de čuoigaledje máŋggas várrái.
 	
-MAP (@NumN<) TARGET (Num Nom) IF (-1 ("nr" Nom))(0 CARDINALS)(-2 N OR A OR ABBR OR ACR);
+MAP (@NumN<) TARGET (Num Nom) IF (-1 ("nr" Nom))(0 CARDINALS)(-2 N OR A OR ABBR OR ACR)(NOT -2 Gen);
 #MAP (@NumN<) TARGET (Num Nom) IF (-1 ("nr" Nom))(-2 N OR A OR ABBR OR ACR);
     ## Mun lean ilus go beasan ovdanbuktit St.dieđ. nr. 33.
     #Maybe it has to be (N @ADVL).
@@ -1236,15 +1236,17 @@ MAP (@SUBJ-QH) TARGET (Num Nom) IF (-1 CC)(1 Prop);
 #MAP (@TIME) TARGET Num IF (-1 ("jahki" Gen));  # Not the best term?
 	## Sápmelaččat leat jagi 1897 lihkostuvvan cealkit riektái, ahte...
 
-#MAP (@NumN<) TARGET Num IF (NOT 0 Nom OR Acc OR Gen OR ADVLCASE); 
-#MAP (@NumN<) TARGET Num IF (-1 N)(0 CARDINALS)(1 EOS);
-MAP (@NumN<) TARGET Num IF (-1 N)(0 CARDINALS)(1 EOS);
+MAP (@NumN<) TARGET Num IF (-1 N OR ACR)(0 CARDINALS)(1 EOS)
+    (NOT -1 ("nr") OR ("nummar") OR ("nummir"));
     ## Dat lea dieđáhus 4.
-    ## Dat lea dieđáhus nr. 4.
 	## Viidváseappot mearrida dearvvašvuođabargiidlága § 10 vuosttas lađđasa...
  # Should hit numerals that only have to do with numbering, not with amount. 
  
-MAP (@Num<) TARGET Num IF (-1 N OR A OR ACR)(0 CARDINALS)(NOT 1 N OR A OR ACR);
+MAP (@NumN<) TARGET Num IF (-2 N)(-1 ("nr") OR ("nummar") OR ("nummir"))(0 CARDINALS)(1 EOS);
+    ## Dat lea dieđáhus nr. 4.
+ 
+MAP (@NumN<) TARGET Num IF (-1 N OR A OR ACR)(0 CARDINALS)(NOT 1 N OR A OR ACR)
+    (NOT -1 ("nr") OR ("nummar") OR ("nummir"));
     ## Bearjadaga 21.03.1980.
     #This one is still too strict.
 
@@ -1257,9 +1259,10 @@ MAP (@NumN<) TARGET Num IF (-3 ("s") OR ("siidu") OR ("§") OR ("pragráfa") OR
 	(-2 Num)(-1 CC)(0 CARDINALS);
 	## ...gč. dearvvašvuođabargiidlága kapihttal 6 ja 7.
 	
-#MAP (@NNum>) TARGET ("nr" Nom) IF (1 Num);
 MAP (@NNum>) TARGET ("nr" Attr) IF (1 WORD OR Num);
     ##Mun lean ilus go beasan ovdanbuktit St.dieđ. nr. 33.
+    
+MAP (@NNum>) TARGET N IF (0 ("nummar") OR ("nummir"))(1 WORD OR Num);
 
 MAP (@QN>) TARGET Num IF (NOT -1 Num)(NOT 0 ADVLCASE)(*1 Gen OR Ill OR Loc OR Com
   	BARRIER NPNH OR REALCLB LINK NOT 0 Interr)(NOT 0 (N Num) LINK 1 (Sg Com))
@@ -1303,6 +1306,7 @@ MAP (@ADVL) TARGET Num IF (-1 MANNU)(1 NP-BORDER);
 # -----------------
 
 MAP (@HNOUN) TARGET (N Nom) IF (NOT *-1 VFIN OR ("leat" PrfPrc) OR CP)
+    (NOT 0 ("nummar") OR ("nummir))(1 CARDINALS)
 	(NOT *1 (N Nom) BARRIER CS OR CC)
 	(NOT *1 VFIN BARRIER CS)(NOT 1 go OR COMMA);
 	## Luossa-bidin jođđu-buođuin Deanus.
@@ -1312,9 +1316,12 @@ MAP (@HNOUN) TARGET (N Nom) IF (NOT *-1 VFIN)(NOT *-1 ("leapma" Dimin))
 	(NOT *-1 CC BARRIER NOT-NP LINK -1 Nom);
 	## Stipeanda čállit prošeaktaohcamiid.
 
-MAP (@HNOUN) TARGET (N Nom) IF (NOT *-1 VFIN OR ("leat" PrfPrc))(1 EOS);
+#MAP (@HNOUN) TARGET (N Nom) IF (NOT *-1 VFIN OR ("leat" PrfPrc))(1 EOS);
 	## Vuosttaš boddu.
-
+	
+MAP (@HNOUN) TARGET (N Nom) IF (NOT *-1 VFIN OR ("leat" PrfPrc) OR (N Nom) OR (ACR Nom))(NOT 0 ("nummar") OR ("nummir") LINK 1 CARDINALS)(NOT *1 VFIN);
+	## Vuosttaš boddu.
+	
 MAP (@HNOUN) TARGET (N Sg Nom) IF (*-1 BOS BARRIER NOT-NP)
 	(NOT *-1 CC BARRIER NOT-NP LINK -1 Nom)
 	(NOT 1 CC LINK *1 Nom BARRIER NOT-NP)
@@ -1585,10 +1592,8 @@ ADD (@ADVL) TARGET ("mearkkašan#veara");
 ADD (@ADVL) TARGET ("namuhan#veara");
 	##
 
-MAP (@HNOUN) TARGET (Num Nom) IF (-1 BOS)(1 EOS);
-
 MAP (@SUBJ @SPRED) TARGET Nom IF (NOT 0 ("diibmu") OR ("dbm") LINK *1 Num BARRIER NP-BORDER)
-	(NOT 0 Num LINK *-1 ("diibmu") OR ("dbm") BARRIER NP-BORDER) (NOT 0 (Num Nom) LINK NOT -1 (BOS) LINK NOT 1 (EOS));
+	(NOT 0 Num LINK *-1 ("diibmu") OR ("dbm") BARRIER NP-BORDER);
 	## Manne ii leat áviisa boahtán?
 
 MAP (@SPRED) TARGET PrfPrc IF (*-1 ("orrut") BARRIER NOT-ADV-PCLE)(1 NP-BORDER);
@@ -1728,6 +1733,9 @@ MAP (@ADVL) TARGET Acc IF (0 TIME OR ROUTE);
 MAP (@ADVL) TARGET Gen IF (1 NP-BORDER OR Num)(NOT 1 Adv);
 	## Áddjá lei soggái čalmmiid.
     ## Mun čálán dieđáhusa 4.
+    
+MAP (@SPRED) TARGET Num IF (-2 N)(-1 (":"))(0 CARDINALS)(1 CLB);
+    ## Fáksa: 22242786.
 
 
 # Default mapping
@@ -1814,7 +1822,7 @@ REMOVE Adv IF (0 ("ášše#oassi" laš) OR ("bosnialaš") OR ("čuovvovaš") OR
 	("ohcejohkalaš") OR ("palestinalaš") OR ("romalaš") OR ("sadjásaš") OR 
 	("sápmelaš") OR ("sogalaš") OR ("sorjavaš") OR  ("sullasaš") OR ("suddu" laš) 
 	OR ("vepselaš"));
-
+	
 
 # Lexicalised adverbs
 # -------------------
@@ -2052,7 +2060,7 @@ SELECT Pcle IF (NOT -2 CLB)(-1 Qst or ("go"))(0 ("son"))(1 Nom)
 
 SELECT (Pron Pers Sg3 Nom) IF (0 ("son"))(*1 V-SG3 BARRIER N);  
 	## Son fertii vuolgit. 
-
+	
   
 # sutnje ( = forms of the verb "suotnjat")
 # - - - - - - - - - - - - - - - - - - - -
@@ -2765,8 +2773,11 @@ REMOVE Qst IF (0 Adv)(NOT *1 ("?"));
 # Disambiguating Numerals    #
 # ========================== #
 
-SELECT Num IF (-1 COUNTABLE)(0 ABBR OR ACR) ;
+SELECT Num IF (-1 COUNTABLE OR ("nr"))(0 ABBR OR ACR) ;
 	## Dieđáhusa oasis I ovdanbuktojuvvo Bb:a sámepolitihkalaš vuođđolávdi.
+	
+SELECT Num IF (-1 (@HNOUN))(0 (Num Nom) OR (Num Attr));
+
 
 # ========================== #
 # Disambiguating adpositions #
@@ -6468,7 +6479,10 @@ REMOVE Imprt IF (*-1 ("dego") BARRIER VFIN OR CS OR CP);
 
 SELECT Nom IF (-1 ("go" Pcle))(0 Num);
 	## ...go heaittihanáigemearri lea oanehat go vihtta jagi.
-
+	
+# Nominative of "nummar" and "nummir" preceding a cardinal
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+REMOVE (N Gen) IF (0 ("nummar") OR ("nummir"))(1 CARDINALS OR WORD);
 
 # Nominative subjects
 # -------------------
@@ -7581,7 +7595,6 @@ SELECT Loc IF (*-1 ACC-LOC-VERB BARRIER NOT-NP);
 
 # Other locative rules
 # --------------------
-
 SELECT Loc IF (*-1 ("sáhka") BARRIER NPNH);
         ## Ii leat dušše sáhka olbmuid oktavuođain juohkebeaivválaš eallimis.
 
@@ -7651,6 +7664,15 @@ SELECT Loc IF (0 (Acc PxSg3))(1 NP-BORDER)(*-1C NP-HEAD-ACC BARRIER CC OR CS OR 
 REMOVE (Sg Com) IF (0 Pl)(1C (Interr Pl));
 	## Mearrádusa ferte čađahit láhkaaddimiin ja eará doaimmain mat almmolaš 
 	## eiseválddit mearridit.
+	
+REMOVE Com IF (-1 (N Ill) OR (ACR Ill));
+    # Disambiguation of locative and comitative.
+    
+REMOVE Com IF (*-3 (N Ill) OR (ACR Ill))(-1 CC OR COMMA)(-2 Com);
+    ## Doarjjaruđaiguin Sámediggi sáhttá vuoruhemiidis mielde addit doarjaga 
+    ## kvalitehtaloktendoaimmaide gielddain, fylkkagielddain ja oahppoásahusain.
+    
+
 
 
 # Plural locative as complement of quantifier
@@ -7686,7 +7708,7 @@ SELECT Com IF (*-1 ("váldit") BARRIER NPNH LINK -1 ("oktavuohta"));
 
 SELECT Com IF (*-1 ("malssidit") BARRIER VERB);
 	## Máhtte malssidii lávkkas Máreha lávkkain.
-
+	
 SELECT (Sg Com) IF (-1 (Pers Du1))(*1 V-DU1 BARRIER VERB OR CC OR CS OR CP);
 	## Moai áhčiin manaime dohko.
 
@@ -9622,16 +9644,25 @@ REMOVE (@SUBJ) IF (*-1 (@SUBJ) BARRIER CS)(0 Attr)(*1 N BARRIER NPNH);
 
 SELECT (@SUBJ) IF (*1C (@SPRED) BARRIER NPNH OR CC OR CLB);
 	## Dalle adno nannejuvvon dulkon gustojeaddji riektin.
-
+	
 REMOVE (@SUBJ) IF (-1 BOS)(*1 HNOUN BARRIER NPNH LINK 1 EOS);
-	## Stáhta ruđalaš ovddasvástádus.
+    ## Stáhta ruđalaš ovddasvástádus.
+	
+# Fragments
+# -------------------
 
+SELECT (@HNOUN) IF (NOT -2 (N Nom) OR (ACR Nom))(-1 ("nr") OR ("nummar") OR ("nummir"))(NOT *-1 VFIN OR ("leat" PrfPrc))(0 (Num Nom))(NOT *1 VFIN);
+    ## Dieđáhusa nummar okta.
+
+SELECT (@HNOUN) IF (NOT *-1 VFIN OR ("leat" PrfPrc) OR (N Nom) OR (ACR Nom))(0 (N Nom))(NOT *1 VFIN);
+    ## Oassi II.
 
 # Object and object predicate
 # ---------------------------
 
 SELECT (@OBJ) IF (NOT *-1 (@OBJ) BARRIER CS OR REALCLB)(0 ("hearrá"))
 	(1 ("ipmil" Acc));
+	
 SELECT (@OBJ) IF (-1 ("hearrá") LINK 0 (@OBJ))(0 ("ipmil" Acc));
 	## Don galggat ráhkistit Hearrá Ipmilat oppa váimmustat...
 
