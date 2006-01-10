@@ -2,7 +2,7 @@ SHELL = /bin/sh
 #!/usr/bin/make
 #
 # This is a makefile to automatise most of the testing.
-# It is language independent within the framework of the S�mi language
+# It is language independent within the framework of the Sámi language
 # technology project. See further user documentation (and technical as well)
 # in $CVSROOT/gt/doc/docu-testing.html
 
@@ -439,6 +439,17 @@ twol-test: ../bin/twol-sme.bin twol-extract
 	quit \n" > $(TEMP)/twol-test-script
 	$(TWOLC) < $(TEMP)/twol-test-script
 	@rm -f $(TEMP)/twol-test-script
+
+twol: ../src/twol-sme.txt
+	@echo
+	@echo "*** Building twol-sme.bin ***" ;
+	@echo
+	@printf "read-grammar $< \n\
+	compile \n\
+	save-binary $@ \n\
+	quit \n" > twol-script
+	$(TWOLC) < twol-script
+	@rm -f twol-script
 
 twol-pos: TYPE=pos
 twol-pos: FILE=$(FILEPOS)
