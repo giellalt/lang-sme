@@ -656,7 +656,7 @@ LIST GUOVLU = "ássan#guovlu" "sámi#guovlu" "báiki" "gávpot" "guovlu" "sádji
 LIST ROUTE = "fávli" "geaidnu" "guorra" "luodda" "miila"; # and others!
 
 LIST MEASURE = "miila" "kilo#mehtar" "mehtar" "mehter" "centi#mehtar" "sente"
-	"cm" "milli#mehtar" "tumá" "állan" "salla" "lihtter" "gilo" ;
+	"cm" "milli#mehtar" "tumá" "állan" "salla" "lihtter" "gilo" ;	
 
 LIST PL-NOUN = "beassaš" "čalbme#láse" "gálssot" "headja" "sabet" "sisttet" 
 	"skárri"; 
@@ -7745,6 +7745,7 @@ SELECT Ill IF (1 CC OR COMMA)(*2C Ill BARRIER NPNH);
     # NP-internal disambiguation of Loc
     # Disambiguation based upon type of NP
     # Disambiguation based upon verb valency
+    # Disambiguation based upon idiosyncratic verb NP combinations
     # Other locative rules
 
 # NP-internal disambiguation of Loc
@@ -7805,6 +7806,45 @@ SELECT Loc IF (NOT 0 ("dat"))(NOT *1C Com BARRIER NPNH)
 SELECT Loc IF (*-1 ACC-LOC-VERB BARRIER NOT-NP);
 	## Sáhttá viežžat dieđuid divššohasa oapmahaččain.
 	
+# Disambiguation based upon idiosyncratic verb NP combinations
+# --------------------------------------------------------------
+
+# beastit
+# - - - -
+
+REMOVE Com IF (*-1 ("beastit") BARRIER CP OR CS)(0 ("suddu"));
+    ## Son beastá álbmogis sin suttuin.
+
+REMOVE Com IF (0 ("suddu"))(*1 ("beastit") BARRIER CP OR CS);
+    ## Son riegádahttá bártni, ja don galggat gohčodit su Jesusin, dasgo
+    ## Olbmot son lea sin suttuin beastán.
+    ## Dieđán, ahte son lea álbmogis sin suttuin beastán.
+    
+REMOVE Loc IF (-1 COM-VERB)(0 (Sg Com));
+    ## Son barggai suttuin, vaikko Jesus beastá su.
+
+    
+# buoridit
+# - - - - -
+
+REMOVE Com IF (*-1 ("buoridit") BARRIER CP OR CS)(0 ("buozalvas") OR ("vihki"));
+    ## son oahpahii sin synagogain, sárdnidii evangeliuma riikka birra ja
+    ## buoridii olbmuid buot buozalvasain ja vigiin. 
+    
+# morihit
+# - - - -
+
+REMOVE Com IF (*-1 ("morihit") BARRIER CP OR CS)(0 ("nagir"));
+   ## Go Jovsset morihii nahkáriinnis, de son dagai nugo Hearrá eŋgel lei
+   ## gohččon, ja válddii Márjjá lusas áhkkán.
+    
+# gullat
+# - - - -
+
+REMOVE Com IF (*-1 ("gullat") BARRIER CP OR CS)(0 ("viisis"));
+    ## Go Herodes árvidii ahte viisát ledje beahttán su, de moaráhuvai.
+    
+    	
 # Atnit deastta
 # - - - - - - - 
 	
@@ -7812,6 +7852,10 @@ REMOVE Com IF (*-2 ("atnit") LINK 1 ("deastta") BARRIER NPNH);
     ## Nubbi lea ahte válbmasit hábmejuvvon gáhttenráđđenvugiin ferte atnit
     ## deastta sámi luondduárvvuin ja vieruiduvvamiin.
     # Should also allow for illative
+    
+# Demo example
+REMOVE (Com) IF (@1 BOS LINK *1 ("orrot")) (0 (Pl Loc));
+    ## Amsterdamas sii orrot fatnasiin.
 
 
 # Other locative rules
@@ -7987,8 +8031,8 @@ REMOVE Loc IF (*1 TOGETHER-VERB)(*2 ("oktii") BARRIER CS OR CP)(NOT *3 Com BARRI
     ## álgoálbmotoahpu birra, mat dán rádjái leat leamašan birrasiin man 
     ## gaskkas lea leamaš unnán oktavuohta.
     
-# Disambiguation based upon verb+NP combination
-# ---------------------------------------------
+# Disambiguation based upon idiosyncratic verb+NP combinations
+# -------------------------------------------------------------
 
 # čállit
 # - - - -
@@ -7996,12 +8040,18 @@ REMOVE Loc IF (*1 TOGETHER-VERB)(*2 ("oktii") BARRIER CS OR CP)(NOT *3 Com BARRI
 REMOVE Loc IF (*-1 ("čállit") BARRIER CP OR CS)(0 ("bleahkka"));
     ## Mun čálán bleahkain.
     
-# vuodjit
+# dahkat
 # - - - -
 
-REMOVE Loc IF (*-1 ("vuodjit") BARRIER CP OR CS)(0 ("biila") OR ("vancca") OR ("fanas") OR ("vanas"));
-    ## Máhte vujii biillain.
-    # There could be an accusative in this position too.
+REMOVE Loc IF (*-1 ("dahkat") BARRIER CP OR CS)(0 ("rábmon"));
+    ## Go don attát attáldagaid gefiide, de ale daga dan rábmomiin nugo
+    ## guoktilaččat dahket synagogain ja šiljuin, vai olbmot 
+    ## gudnejahtášedje sin.
+    
+# dearvvahit
+# - - - - - -
+
+REMOVE Loc IF (*-1 ("dearvvahit") BARRIER CP OR CS)(0 ("ráfi"));    
     
 # luddet
 # - - - -
@@ -8009,12 +8059,40 @@ REMOVE Loc IF (*-1 ("vuodjit") BARRIER CP OR CS)(0 ("biila") OR ("vancca") OR ("
 REMOVE Loc IF (*-1 ("luddet") BARRIER CP OR CS)(0 ("ákšu"));
     ## Máret luddii galdda ákšuin.
     
+# mihtidit
+# - - - - -
+
+REMOVE Loc IF (*-1 ("mihtidit") BARRIER CP OR CS)(0 ("mihttu"));
     
+# oahpat
+# - - - -
+
+REMOVE (Loc Pl) IF (*-1 ("oahpat") BARRIER CP OR CS)(0 ("isitvuohta"));
+    ## Go Jesus lei heaitán sárdnideames, de olbmot hirpmástuvve su
+    ## oahpaheamis, dasgo son oahpahii sin isitvuođain ii ge nugo sin
+    ## čálaoahppavaččat.
+    # Loc Sg might be possible though
+
+   
 # oastit
 # - - - -
 
 REMOVE Loc IF (*-1 ("oastit") BARRIER CP OR CS)(0 ("ruvdno") OR ("ruvdnu") OR ("ruhta"));
     ## Dainna čuđiin ruvnnuin áiggun bierggu oastit.
+    
+# soabadit
+# - - - - -
+
+REMOVE Loc IF (*-1 ("soabadit") BARRIER CP OR CS)(0 ("vuostebelle") OR ("vuostebealli"));
+    
+    
+# vuodjit
+# - - - -
+
+REMOVE Loc IF (*-1 ("vuodjit") BARRIER CP OR CS)(0 ("biila") OR ("vancca") OR ("fanas") OR ("vanas"));
+    ## Máhte vujii biillain.
+    # There could be an accusative in this position too.
+
 
 # Coordination
 # ------------
