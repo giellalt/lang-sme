@@ -416,6 +416,7 @@ savefile:
 # make twol-pos  (tests for the positive test pairs, prints output to twol-pos.out)
 # make twol-neg  (tests for the positive test pairs, prints output to twol-neg.out)
 # make twol-test FILE=filename.txt (test for pairs in filename.txt)
+# make twol      (when the rules themselves are changed, will recompile the binary)
 
 TWOLC = twolc -utf8
 TYPE = pos
@@ -440,6 +441,8 @@ twol-test: ../bin/twol-sme.bin twol-extract
 	$(TWOLC) < $(TEMP)/twol-test-script
 	@rm -f $(TEMP)/twol-test-script
 
+# convenience target: if one needs to recompile the twol (e.g. after rule changes),
+# just write make twol
 twol: ../src/twol-sme.txt
 	@echo
 	@echo "*** Building twol-sme.bin ***" ;
