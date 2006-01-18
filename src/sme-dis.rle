@@ -497,7 +497,7 @@ SET V-MAIN = V - COPULAS - Neg - MOD-ASP | ("orrut") ;  # The set of verbs that 
 SET V-DER-PASS = V + V-DER + Pass;    # + is intersection, this should work
 				      # The set is used in one rule with no hits.
 	
-SET V-PASS = (V Pass);
+SET V-PASS = (V TV Pass);
 
 SET V-NOT-AUX-PASS = V - AUX - V-PASS ; # No longer in use.
 
@@ -505,8 +505,10 @@ SET V-ACT = V - Pass; # No longer in use.
 
 SET ACT-PRFP = PrfPrc - V-PASS; # Appears in one rule.
 
-SET V-TRANS-ACT = TV - V-PASS ; 
+SET V-TRANS-ACT = TV - Pass ; 
  # All active verbs with a TV tag, including AUX-OR-MAIN.
+ 
+SET V-TRANS-ACT-NOT-AUX  = TV - V-PASS - AUX ;
 
 
 
@@ -1695,14 +1697,18 @@ MAP (@OBJ) TARGET ("ollu" Indef) IF (*-1 V-TRANS-ACT BARRIER NPNH
 	LINK *-1 NP-HEAD-NOM BARRIER CS OR CP);
 	## Meardebuođđobivdu gal ii mearkkaš ollu álbmoga ealáhussii.
 
-MAP (@OBJ) TARGET Indef IF (*-1 V-TRANS-ACT BARRIER CS)(NOT 0 ADVLCASE)
-	(NOT *1 (N Acc) BARRIER NOT-ADJ);
+MAP (@OBJ) TARGET Indef IF (*-1 V-TRANS-ACT BARRIER CS LINK NOT *1 Inf)(NOT 0 ADVLCASE)
+	(NOT *1 (N Acc) BARRIER NOT-ADJ)(NOT *1 Inf);
 	## Mun anán buot vahágin.
+	
+MAP (@OBJ) TARGET Indef IF (*1 V-TRANS-ACT BARRIER CS LINK NOT 0 (Imprt Prs Pl1))
+    (NOT 0 ADVLCASE)(NOT *1 (N Acc) BARRIER NOT-ADJ);
+	## Buot maid dii čatnabehtet eatnama alde, lea čadnojuvvon almmis.
 
 MAP (@OBJ) TARGET ("buot") IF (*-1 (@SUBJ) BARRIER CC OR CS OR CP)
 	(*1 V-TRANS-ACT BARRIER NOT-ADV-PCLE);
 	## It don galgga buot čuohpadit.
-
+	
 MAP (@SPRED) TARGET (N Ess) IF (*-1 BOS OR CS OR CP BARRIER NOT-NP)
 	(*1 COPULAS BARRIER NOT-ADV-PCLE LINK 1 Inf);
 	## ...man ulbmilin lei lohkat ja juogustit bohccuid. 
