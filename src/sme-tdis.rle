@@ -1,0 +1,700 @@
+# ==================================================================== #
+# ==================================================================== #
+#  N O R T H E R N   S Á M I   T E X T   D I S A M B I G U A T O R     #
+# ==================================================================== #
+# ==================================================================== #
+
+#    Sámi language technology project 2003-2006, University of Tromsø  #
+
+
+            # =========================================== #
+            #            Short table of contents          #
+            # =========================================== #
+
+
+# Usage:
+# First run through sme-dis.rle, then run through sme-tdis.rle:
+
+# preprocess text | lookup -flags mbTT -utf8 bin/sme.fst | lookup2cg |
+# vislcg --grammar=src/sme-dis.rle | 
+# vislcg --grammar=src/sme-tdis.rle --minimal | less
+
+
+# ========== #
+# Delimiters #
+# ========== #
+
+
+DELIMITERS =  "<¶>";
+
+
+
+# ============= #
+# Tags and sets #
+# ============= #
+
+
+SETS # (Remove all lines that start with SETS if you want to use mdis.)
+
+# I define end of clause and beginning of clause in a way so that the file
+# may be read both by the CG-2 and the vislcg formalisms.
+
+LIST BOS = (>>>) (<s>); LIST EOS = (<<<) (</s>); # vislcg and CG-2 together.
+#LIST BOS = (>>>); LIST EOS = (<<<); # end and beg. of sentence. for vislcg.
+
+
+# Tags declared as single-membered LISTs 
+# ======================================
+
+# Parts of speech
+# ---------------
+
+LIST N = N ; LIST A = A ; LIST Adv = Adv ; LIST V = V ; LIST Pron = Pron ;
+LIST CS = CS ; LIST CC = CC ; LIST Po = Po ; LIST Pr = Pr ;
+LIST Pcle = Pcle ; LIST Num = Num ; LIST Prop = Prop ;
+
+# POS sub-categories
+# ------------------
+
+LIST Pers = Pers ; LIST Dem = Dem ; LIST Interr = Interr ;
+LIST Indef = Indef ;
+LIST Recipr = Recipr ; LIST Refl = Refl ;     # LIST Rel = Rel ; 
+LIST Interj = Interj ; LIST Adp = Adp ; 
+
+# Morphosyntactic properties
+# --------------------------
+
+LIST Nom = Nom ; LIST Acc = Acc ;
+LIST Gen = Gen ; LIST Ill = Ill ;
+LIST Loc = Loc ; LIST Com = Com ;
+LIST Ess = Ess ;
+
+LIST Sg = Sg ; LIST Pl = Pl ; LIST Du = Du ;
+
+LIST Cmpnd = Cmpnd ;
+
+LIST PxSg1 = PxSg1 ; LIST PxSg2 = PxSg2 ; LIST PxSg3 = PxSg3 ; 
+LIST PxDu1 = PxDu1 ; LIST PxDu2 = PxDu2 ; LIST PxDu3 = PxDu3 ; 
+LIST PxPl1 = PxPl1 ; LIST PxPl2 = PxPl2 ; LIST PxPl3 = PxPl3 ;
+
+LIST Comp = Comp ; LIST Superl = Superl ;
+
+LIST Attr = Attr ; LIST Card = Card ; LIST Ord = Ord ; 
+LIST Date = Date ; LIST Range = Range ;
+LIST Qst = Qst ; LIST Foc = Foc ;
+
+LIST IV = IV ; LIST TV = TV ;
+LIST Pass = Pass ;
+LIST Prt = Prt; LIST Prs = Prs ; 
+
+LIST Ind = Ind ; LIST Pot = Pot ; LIST Cond = Cond ;
+LIST Imprt = Imprt ; LIST ImprtII = ImprtII ;
+
+LIST Sg1 = Sg1 ;  LIST Sg2 = Sg2 ; LIST Sg3 = Sg3 ;
+LIST Du1 = Du1 ;  LIST Du2 = Du2 ; LIST Du3 = Du3 ;
+LIST Pl1 = Pl1 ;  LIST Pl2 = Pl2 ; LIST Pl3 = Pl3 ;
+
+LIST Inf = Inf ; LIST ConNeg = ConNeg ;  LIST Neg = Neg ;
+LIST PrfPrc = PrfPrc ; LIST VGen = VGen ;
+LIST PrsPrc = PrsPrc ; 
+
+LIST Ger = Ger ; LIST Sup = Sup ; LIST Actio = Actio ;
+LIST Actor = Actor ; LIST VAbess = VAbess ;
+
+# Derivation
+# ----------
+
+LIST aš = "aš" ;
+
+
+
+# Syntactic tags
+
+LIST @+FAUXV = @+FAUXV ; LIST @+FMAINV = @+FMAINV ; LIST @-FAUXV = @-FAUXV ; 
+LIST @-FMAINV = @-FMAINV ; LIST @-FSUBJ = @-FSUBJ ; 
+
+LIST @ADV-A = @ADV-A ; LIST @ADV-ADV = @ADV-ADV ; LIST @ADVL = @ADVL ; 
+
+LIST @AN> = @AN> ; LIST @ActioN> = @ActioN> ; LIST @CC = @CC ; LIST @CMPND = @CMPND ; LIST @CS = @CS ; 
+LIST @DN> = @DN> ; LIST @GA> = @GA> ; LIST @GN> = @GN> ; LIST @GP< = @GP< ; LIST @GP> = @GP> ; 
+LIST @HNOUN = @HNOUN ; LIST @INTERJ = @INTERJ ; LIST @MEASURE = @MEASURE ; 
+LIST @NNum> = @NNum>; LIST @NumN< = @NumN<;
+LIST @NPron< = @NPron< ;
+LIST @NQ< = @NQ< ;  LIST @NUM-PRON = @NUM-PRON ; #LIST @NUMBER = @NUMBER ;
+LIST @OBJ = @OBJ ; 
+LIST @OPRED = @OPRED ; LIST @PCLE = @PCLE ; LIST @PCLE-COMPL = @PCLE-COMPL ; LIST @PROP> = @PROP> ; 
+LIST @PrcN> = @PrcN> ; LIST @PronN< = @PronN< ; LIST @PronN> = @PronN> ;  LIST @QN< = @QN< ; 
+LIST @QN> = @QN> ; LIST @SPRED = @SPRED ; LIST @SUBJ = @SUBJ ; LIST @SUBJ-QH = @SUBJ-QH ; 
+
+#LIST @TIME = @TIME ; 
+LIST @TITLE = @TITLE ; LIST @VOC = @VOC ; LIST @X = @X ;
+
+# Semantic tags
+# -------------
+
+LIST Ani = Ani ; LIST Fem = Fem ; LIST Mal = Mal ;
+LIST Obj = Obj ; List Org = Org ; LIST Plc = Plc ;
+LIST Sur = Sur ; LIST Tit = Tit ;
+
+
+# Other tags
+# ----------
+
+LIST ABBR = ABBR ; LIST ACR = ACR ; LIST CLB = CLB ;
+LIST PUNCT = PUNCT ;
+
+
+# Single-word sets
+# ----------------
+ 
+LIST COMMA = "," ; LIST ¶ = ¶;
+
+LIST OKTA = "okta"; LIST go = "go" ; 
+
+# Initials
+# --------
+
+LIST INITIAL =  "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m"
+                "n" "o" "p" "q" "r" "s" "t" "u" "v" "w" "x" "y" "z"
+                "á" "æ" "ø" "å" "ö" "ä" ;
+
+
+
+
+# Tag sets
+# ========
+   SETS
+# ========
+
+LIST WORD = N A Adv V Pron CS CC Po Pr Interj Pcle Num ABBR ACR Date Range 
+; # any word
+
+
+# Derivational affixes
+# --------------------
+
+LIST V-DER = adda alla d g h asti hudda huhtti huvva j l ahtti st
+              stuvva goahti ;
+LIST N-DER = eaddji eamoš eapmi heapmi š muš upmi us vuohta Actor Actio;
+LIST A-DER = geahtes keahtes heapmi lágan laš meahttun ;
+
+#SET DER = V-DER | N-DER | A-DER ;
+
+
+# Case sets
+# ---------
+
+LIST ADVLCASE = Ill Loc Com Ess ;
+
+LIST CASE = Nom Acc Gen Ill Loc Com Ess ;
+
+SET NOT-NOM = CASE - Nom ;
+SET NOT-GEN = CASE - Gen ;
+SET NOT-ACC = CASE - Acc ;
+
+
+# Noun sets
+# ---------
+
+LIST N-SG-NOM = (N Sg Nom); LIST N-PL-NOM = (N Pl Nom);
+LIST N-NOM = (N Nom) ; LIST N-GEN = (N Gen);
+
+SET LEX-N = N - N-DER;
+
+LIST PROP = (N Prop);
+SET CNOUN = N - Prop;
+SET CNOUN-PL-NOM = (N Pl Nom) - Prop ;
+SET HNOUN = N - Cmpnd ;
+SET HNOUN-NOM = (N Nom) - Cmpnd ;
+SET N-NOT-GEN = N - (N Gen) ;
+
+
+# Verb sets
+# ---------
+
+# Finiteness and mood
+# - - - - - - - - - -
+
+SET V-IND-FIN = Prs | Prt ; # Problem: "In boahtán" is an invisible indicative
+
+SET V-MOOD = Ind | Pot | Imprt | ImprtII | Cond ;
+
+SET VFIN = V-MOOD - ConNeg | ("gč");
+
+SET VFIN-POS = V-MOOD - ConNeg - Neg ;
+
+#SET VFIN-NOT-IMP =  Ind | Pot | Cond ;
+SET VFIN-NOT-IMP = VFIN - Imprt ;
+
+
+# Person
+# - - - - 
+
+LIST V-SG1 = (V  Ind Prs Sg1) (V Ind Prt Sg1) (V Cond Prs Sg1) 
+             (V Cond Prt Sg1) (V Pot Prs Sg1) (V  Neg Ind Sg1); 
+LIST V-SG2 = (V  Ind Prs Sg2) (V Ind Prt Sg2) (V Cond Prs Sg2) 
+             (V Cond Prt Sg2) (V Pot Prs Sg2) (V  Neg Ind Sg2); 
+LIST V-SG3 = (V  Ind Prs Sg3) (V Ind Prt Sg3) (V Cond Prs Sg3) 
+             (V Cond Prt Sg3) (V Pot Prs Sg3) (V  Neg Ind Sg3); 
+LIST V-DU1 = (V  Ind Prs Du1) (V Ind Prt Du1) (V Cond Prs Du1) 
+	     (V Cond Prt Du1) (V Pot Prs Du1) (V  Neg Ind Du1); 
+LIST V-DU2 = (V  Ind Prs Du2) (V Ind Prt Du2) (V Cond Prs Du2) 
+	     (V Cond Prt Du2) (V Pot Prs Du2) (V  Neg Ind Du2); 
+LIST V-DU3 = (V  Ind Prs Du3) (V Ind Prt Du3) (V Cond Prs Du3) 
+	     (V Cond Prt Du3) (V Pot Prs Du3) (V  Neg Ind Du3); 
+LIST V-PL1 = (V  Ind Prs Pl1) (V Ind Prt Pl1) (V Cond Prs Pl1) 
+             (V Cond Prt Pl1) (V Pot Prs Pl1) (V  Neg Ind Pl1); 
+LIST V-PL2 = (V  Ind Prs Pl2) (V Ind Prt Pl2) (V Cond Prs Pl2) 
+             (V Cond Prt Pl2) (V Pot Prs Pl2) (V  Neg Ind Pl2); 
+LIST V-PL3 = (V  Ind Prs Pl3) (V Ind Prt Pl3) (V Cond Prs Pl3) 
+             (V Cond Prt Pl3) (V Pot Prs Pl3) (V  Neg Ind Pl3); 
+
+ # Note that imperative verbs are not included in these sets!
+
+
+# Some subsets of the VFIN sets
+# - - - - - - - - - - - - - - -
+
+SET V-DU = V-DU1 | V-DU2 | V-DU3 ;
+SET V-PL = V-PL1 | V-PL2 | V-PL3 ;
+
+SET V-DU-PL = V-DU1 | V-DU2 | V-DU3 | V-PL1 | V-PL2 | V-PL3 ;
+
+SET V-NOT-SG1 = VFIN-NOT-IMP - V-SG1 ;
+
+SET V-NOT-SG3 = V-SG1 | V-SG2 | V-DU1 | V-DU2 | V-DU3 |
+                V-PL1 | V-PL2 | V-PL3 ;
+
+SET V-1-2 = V-SG1 | V-SG2 | V-DU1 | V-DU2 | V-PL1 | V-PL2 ;
+SET V-3   = V-SG3 | V-DU3 | V-PL3 ;
+
+
+# Sets consisting of forms of "leat" (these ones need to be rewritten)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+SET LEAN = ("leat" V Ind Prs Sg1)|("leat" V PrfPrc);
+SET LEAI = ("leat" V Ind Prt Sg3)|("leat" V Imprt Prs Sg3);
+SET LEAT = ("leat" V Ind Prs Pl1)|("leat" V Ind Prs Pl3)|
+           ("leat" V Ind Prs Sg2)|("leat" V Inf)|("leat" V Ind Prs ConNeg);
+
+SET LEAT-DU-PL = ("leat" V Du1)|("leat" V Du2)|("leat" V Du3)|
+                 ("leat" V Pl1)|("leat" V Pl2)|("leat" V Pl3);
+
+SET LEAT-DU3-PL3 = ("leat" V Du3) | ("leat" V Pl3); # Not referred to by any rule.
+
+LIST LEAT-FIN-NOT-IMP = ("leat" V Ind) ("leat" V Cond) ("leat" V Pot); 
+
+LIST LEAN-PRC = ("leat" V PrfPrc); # Not referred to by any rule.
+
+LIST LEAN-SG1 = ("leat" V Ind Prs Sg1);
+
+
+# Pronoun sets
+# ------------
+SETS
+
+SET MUN = (Pron Pers Sg1 Nom);
+SET DON = (Pron Pers Sg2 Nom);
+SET SON = ("son" Pron Pers Sg3 Nom);
+SET MOAI = (Pron Pers Du1 Nom);
+SET DOAI = (Pron Pers Du2 Nom);
+SET SOAI = (Pron Pers Du3 Nom);
+SET MII-PERS = (Pron Pers Pl1 Nom);
+SET DII = (Pron Pers Pl2 Nom);
+SET SII = ("son" Pron Pers Pl3 Nom);
+
+SET PPRON-DU-PL = MOAI | DOAI | SOAI | MII-PERS | DII | SII ;
+
+SET PPRON-NOT-SII = MUN | DON | SON | MOAI | DOAI | SOAI | MII-PERS | DII ;
+
+LIST PPRON-GEN = (Sg1 Gen) (Sg2 Gen) (Sg3 Gen) (Du1 Gen) (Du2 Gen) (Du3 Gen) 
+	(Pl1 Gen) (Pl2 Gen) (Pl3 Gen);
+
+SET PPRON-NOT-GEN = (Pron Pers) - PPRON-GEN ;
+
+SET DEM-SG = (Pron Dem Sg Nom);
+SET DEM-PL = (Pron Dem Pl Nom);
+SET NOT-DEM = WORD - Dem ;
+
+
+# Adjectival sets and their complements
+# -------------------------------------
+
+SET A-ATTR = (A Attr) ; # Used in one rule. Not needed? 
+
+SET LEX-A = A - A-DER ;
+
+SET A-CASE = A - Attr - Adv ;
+
+LIST A-CC = A CC ;
+
+SET NOT-ADJ = WORD - A ;
+SET NOT-Attr = WORD - Attr ;
+SET NOT-ADJ-PCLE = WORD - A - Pcle ;
+SET NOT-ADJ-CC = WORD - A-CC ;
+
+SET NOT-AA = WORD - A - Adv ;
+
+LIST NOMINAL-ADJ = "guoktilaš" "lámis" "oasálaš" ("suddu" laš) "viissis"; 
+ # and many others
+
+ 
+# Adverbial sets and their complements
+# ------------------------------------
+
+SET LEX-ADV = Adv - (A*) ;
+# LIST LEX-ADV = "gusto";
+
+SET ADVERBIAL = Adv | Ill | Loc | Com | Ess ;
+
+SET NOT-ADV = WORD - Adv;
+SET NOT-ADV-PCLE = WORD - Adv - Pcle ;
+SET NOT-ADV-INDEF = WORD - Adv - Indef ;
+SET NOT-ADV-PCLE-ILL = WORD - Adv - Pcle - Ill ;
+SET NOT-ADV-PCLE-INDEF = WORD - Adv - Pcle - Indef ;
+SET NOT-ADV-PCLE-NEG = WORD - Adv - Pcle - Neg ;
+SET NOT-ADVL-PCLE-NEG = WORD - @ADVL - @GP< - Pcle - Neg ; #Ask Eckhardt.
+
+LIST IKTE = "ikte" "dolin" "dovle" ;
+
+LIST MO = "goas" "gokko" "gos" "gosa" "makkár" "manne" "mo" "mot" "movt" 
+	"nugo" (V Qst); 
+ # Introduce finite clauses.
+
+
+# Sets for adverbs that have lookalikes
+# - - - - - - - - - - - - - - - - - - -
+ # Here come some adverbs that have identical twins in other POS. 
+ # If these are found in Adv contexts, we treat them as adverbs.
+
+LIST ADV-NOT-VERB = "dušše" ;
+
+LIST ADV-NOT-NOUN = "easka" "várra" ;
+
+LIST ADV-NOT-NAMES = "Ain" "Anne" "Diego" "Dieppe" "Enge" "Galle" "Haga"
+                      "Joba" "Johan" "Liikka" "Mai" "Mannes" "Mo" "Mot" "Naba"
+                      "Nan" "Oktan" "Sierra" "Sokka" "Villa" ;
+
+SET ADV-NOT-OTHER-POS = ADV-NOT-VERB | ADV-NOT-NOUN | ADV-NOT-NAMES ;
+
+
+
+# Sets of elements with common syntactic behaviour
+# ================================================
+
+SETS
+
+# VERBS
+# -----
+
+SET VERB = V - (V N);   # V is all readings with a V tag in them, VERB should
+                        # be the ones without an N tag following the V
+
+SET LEX-V = VERB - V-DER;             # VERB but not V-DER
+
+SET V-NOT-CMPND = V - Cmpnd; # Not in use.
+
+
+LIST COPULAS = "dáidit" "bissut" "gártat" "leahkit" "leat" "orrut" "šaddat" ;
+ # 'Dáidit' can appear without 'leat'.
+
+SET V-NOT-COP = V - COPULAS ;
+
+LIST MOD-ASP = "berret" "dáidit" "fertet" "galgat" "gillet" "lávet" "sáhttit" 
+		"seahtit" "soaitit" "viggat" ;
+ # Verbs that never have arguments of their own - so we leave out "áigut", for ex.
+
+LIST AUX-OR-MAIN = "áigut" "beassat" "hálidit" "háliidit" "máhttit" "nagodit" 
+			"orrut" "sihtat" "veadjit";
+ # These verbs can take arguments, so they do not belong in the AUX group, 
+ # but they are nevertheless mapped to (@+FAUXV). 
+
+SET AUX = COPULAS | Neg | MOD-ASP | AUX-OR-MAIN ; 
+
+SET V-NOT-AUX = V - AUX ;  # The set of verbs that cannot be auxiliaries. 
+			   # Does not include AUX-OR-MAIN.
+
+SET VFIN-NOT-AUX = VFIN - AUX ;
+
+SET V-MAIN = V - COPULAS - Neg - MOD-ASP | ("orrut") ;  # The set of verbs that can be 
+							# main verbs. Includes 
+							# AUX-OR-MAIN.
+
+SET V-DER-PASS = V + V-DER + Pass;    # + is intersection, this should work
+				      # The set is used in one rule with no hits.
+	
+SET V-PASS = (V TV Pass);
+
+SET V-NOT-AUX-PASS = V - AUX - V-PASS ; # No longer in use.
+
+SET V-ACT = V - Pass; # No longer in use.
+
+SET ACT-PRFP = PrfPrc - V-PASS; # Appears in one rule.
+
+SET V-TRANS-ACT = TV - Pass ; 
+ # All active verbs with a TV tag, including AUX-OR-MAIN.
+ 
+SET V-TRANS-ACT-NOT-AUX  = TV - V-PASS - AUX ;
+
+
+
+# Sets for verbs choosing oblique objects or adverbials
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+LIST LOC-VERB = "ballat" "beassat" "beroštit" "biehttalit" "bihtit" "boahtit" 
+		"ceavzit" "čuoččut" "čuovvut" "dolkat" "fuollat" "geargat" 
+		"heaitit" "ilbmat" "jearrat" "nohkkot" "váruhit" "veallát";
+
+LIST COM-VERB = "árvalit" "árvvohuššat" "bargat" "bártašuvvat" 
+		"háladit" "hilbošit" "humadit" "meannudit" "náitalit" "riidalit" 
+		"ságastaddat" "ságastallat" "šiehtadit" ;
+
+LIST ILL-VERB = "áibbašit" "álgit" "báitit" "beassat" "čohkkedit" "čujuhit" "čuohcit" 
+		"deaivat" "doaškut" "dorvvastit" "došket" "duhtat" "geahččat" 
+		"gullat" "guoskat" "gustot" "heivet" "irggástallat" "jáhkkit" 
+		"liikot" "luohttit" "mannat" "ollet" "oskut" "riepmat" "ráhkkanit" 
+		"soahpat" "suhttat" "vuolgit";
+
+
+LIST ACC-LOC-VERB = "biehttalit" "earuhit" "gieldit" "jearrat" "viežžat" ;
+
+LIST ACC-ILL-VERB = "addit" "bidjat" "mearkkašit";
+
+
+# Other verb sets
+# - - - - - - - -
+
+LIST INF-VERB = "adnot" "astat" "ádjánit" "áigut" "álgit" "ásahit" "bágget" 
+		"bávččagit" "beassat" "berret" "bivdit" "bivvat" "bistit" 
+		"boahtit" "bovdet" "čohkkát" "čohkkedit" "čohkkánit" "čuoččahit" 
+		"čuoččastit" "čuorvut" "čurggodit" ("dadjat" Pass) "dagahit" 
+		"dáhttut" "dáidit" "dárbbašit" "diktit" "doaivut" "doapmat" 
+		"duostat" "fertet" "fuobmát" "fuolahit" "galgat" "gáibidit" 
+		"gárrut" "gártat" "geahččalit" "geatnegahttit" "gierdat" "gillet" 
+		"gohččut" "háhppehit" "hálidit" "háliidit" "hárjánit" "heivet" 
+		"lávet" "mannat" "máhttit" "máššat" "movttiidahttit" "muitit" 
+		"nagodit" "navdit" "oahpahit" "oahppat" "oažžut" "ollet" "ribahit" 
+		"riepmat" "sáhttit" "seahtit" "sihtat" "soaitit" "suovvat" "šaddat" 
+		"stađđat" "veadjit" "viggat" "viššat" "vuogáiduvvat" "vuolgit" 
+		"vuollánit" "vuordit";
+
+LIST ACC-INF-VERB = "bivdit" "čuorvut" "dagahit" "diktit" "gohččut" "movttiidahttit" 
+		"sihtat" "suovvat" ;
+
+ # These are verbs taking accusative objects and infinitives; 
+ # a subset of INF-VERB.
+	## Ii suova nieiddas náitalit.
+
+
+LIST OPRED-VERB = "atnit" "dadjat" "dahkat" "dulkot" "geavahit" "gohčodit" "gohččut" 
+	"válljet";
+ # Verbs that occur with objects that have secondary predicates.
+
+LIST MOVEMENT-VERB = "mannat";
+ # These verbs typically combine with place adverbials in the genitive case 
+ # (i.e. not accusative).
+
+LIST TOGETHER-VERB = "goallostuvvot" "beaškkehat" "bidjat" "čatnit" "suddat" 
+          "heivet" "biddjojuvvot" "časkit" "geassit" "gullat" "rehkenastit" "ordnet"
+          "soahpat" "gávnnadit" "heivehit" "čatnat" "doaibmat" "iskat" "laktit" "seaguhit";
+ # Danger: This list could be to long, in certain respects. 
+ # TODO: Think of counter examples, i.e. sentences where we have these verbs, but
+ # where oktii is not an adverbial.
+
+
+# NOUNS
+# -----
+
+# NP sets defined according to their morphosyntactic features
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+SET NP-HEAD = Pron | HNOUN ;
+SET NP-HEAD-SG = (Pron Sg) | (Pron Sg3) | (N Sg) - Cmpnd;
+SET NP-HEAD-PL = (Pron Pl) | (Pron Pl3) | (N Pl) - Cmpnd;
+SET NP-HEAD-SG-NOM = (Pron Sg Nom) | (Pron Sg3 Nom) | (N Sg Nom) - Cmpnd;
+SET NP-HEAD-PL-NOM = (Pron Pl Nom) | (Pron Pl3 Nom) | (N Pl Nom) - Cmpnd;
+SET NP-HEAD-NOM = NP-HEAD-SG-NOM | NP-HEAD-PL-NOM; 
+SET NP-HEAD-ACC = (Pron Acc) | (N Acc) - Cmpnd;
+SET NP-HEAD-GEN = (Pron Gen) | (N Gen) - Cmpnd;
+
+
+# The PRE-NP-HEAD family of sets
+# - - - - - - - - - - - - - - - -
+
+SET PRE-NP-HEAD = (Prop Attr) | A | (Pron Pers Gen) | (N Gen) | Num | Cmpnd | CC |
+                  (Pron Dem)  | (Pron Refl Gen) | (Pron Indef) | PrfPrc | PrsPrc ;
+
+# There must be a sensible naming convention for these sets...
+SET NPNH = WORD - PRE-NP-HEAD | ABBR ;     # NPNH = "NOT-PRE-NP-HEAD". 
+SET NPNHA = WORD - PRE-NP-HEAD - Adv ;     # NPNHA = "NOT (PRE-NP-HEAD-OR-ADV)"
+SET NPNHAI = WORD - PRE-NP-HEAD - Adv - Indef ; # NPNHAI " "...-OR-INDEF"
+SET NPNHAII = WORD - PRE-NP-HEAD - Adv - Indef - Ill ; # Illative indir.obj.
+SET NPNHAIIP = WORD - PRE-NP-HEAD - Adv - Indef - Ill - Pcle ;
+SET NPNHC = WORD - PRE-NP-HEAD - Com ; # "njaŋggofirpmiiguin bivdin"
+
+
+# Other negatively defined sets
+# - - - - - - - - - - - - - - -
+
+SET NOT-N =  WORD - N ;
+SET NOT-NA = WORD - N - A ;
+SET NOT-NP = VFIN | ConNeg | Inf | Pcle | Interj | CS ; # The set NP-BORDER is bigger. 
+
+
+# Nominal sets defined according to their lexical properties
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+LIST MANNU = "ođđa#jage#mánnu" "ođđa#jagi#mánnu" 
+             "guovva#mánnu" 
+             "njukča#mánnu" "njuvčča#mánnu" "márs#mánnu" 
+             "cuoŋo#mánnu" "cuoŋos#mánnu" "gáranas#mánnu" 
+             "miesse#mánnu" "mái#mánnu" 
+             "geasse#mánnu" 
+             "suoidne#mánnu" 
+             "borge#mánnu" "šnjilča#mánnu" "šnjilža#mánnu" 
+             "čakča#mánnu" 
+             "golggot#mánnu" 
+             "skábma#mánnu" "november#mánnu" "ritne#mánnu" 
+             "juovla#mánnu" ;
+LIST AIGODAT = "áigodat" "stuoradigge#áigodat" "sámedigge#áigodat" 
+              "guođohan#áigodat" "doaibma#áigodat" ;             
+
+LIST VAHKKU = "áigi" "beaivi" "jándor" "bodda" "čakča" "čakča#geassi" "čuohte#jahki" 
+		"dálvi"	"diibmu" "dbm" "geardi" "geassi" "giđđa" "hávvi" "idja" "jahki" 
+		"jahke#čuohti" "mánnu" "riegádan#beaivi" "tiibmu" "vahkku" jahki 
+		"stuorradigge#áigodat" ;
+ # The quoteless jahki here is since the preprocessor is not fine-tuned
+ # yet, it still gives '"1870-" # jahki N Sg Com'.
+ # lets see if "dbm" works
+
+ 
+LIST BEAIVI =	"mánnodat" "vuoss#árga" "disdat" "maŋŋeb#árga" "gaska#vahkku"
+		"duorastat" "bearjadat" "lávvardat" "lávvordat" "sotna#beaivi" 
+		"duopmo#beaivi" "sábbát";
+
+SET TIME = MANNU | VAHKKU | BEAIVI | AIGODAT ;
+
+SET NOTIME = N - TIME ;
+
+LIST GEASSET = "dálvet" "dálvit" "giđđat" "geasset" "geassit" "čakčat" ; # What is special here?
+
+LIST GUOVLU = "ássan#guovlu" "sámi#guovlu" "báiki" "gávpot" "guovlu" "sádji" 
+	"viessu" ;
+
+LIST ROUTE = "fávli" "geaidnu" "guorra" "luodda" "miila"; # and others!
+
+LIST MEASURE = "miila" "kilo#mehtar" "mehtar" "mehter" "centi#mehtar" "sente"
+	"cm" "milli#mehtar" "tumá" "állan" "salla" "lihtter" "gilo" ;	
+
+LIST PL-NOUN = "beassaš" "čalbme#láse" "gálssot" "headja" "sabet" "sisttet" 
+	"skárri"; 
+ # Nominals that appear with plural numerals.
+
+LIST PREGEN = ("álgogeahčen")("bealli" N Sg Loc)("gaskavuohta" N Sg Loc)("guoskevaš")
+	("loahpageahčen")("miella" N Sg Loc)("oktavuohta" N Sg Loc);
+ # Nouns and adjectives that take a preceding genitive.
+
+LIST N-NOPX = "lohku";
+ # Nominals that probably do not have a Px ('1600-logus').
+
+LIST N-PX = "áhčči" "bárdni" "eadni" "nieida" "viellja" "oabbá";
+ # Nominals that well may have a Px.
+
+LIST ALU = ("allu" Gen)("assu" Gen)("čiekŋu" Gen)("gassu" Gen)("govdu" Gen)
+	   ("guhkku" Gen)("lossu" Gen)("stuorru" Gen)("viidu" Gen);
+
+LIST TITLE = "ámta#mánni" "direktevra" "eanan#hearrá" ("gásttašit" eaddji) "gonagas" 
+	"justitiarius" "korefereanta" "ossodat#direktevra" 
+	"profehta" "professor" "prof" "ráđđe#addi" "stipendiáhta" "sundi" 
+	"universitehtalektor" "vuosttas#konsuleanta" "cand.mag" "cand.oecon"
+    "cand.philol" "cand.real" "cand.scient" "cand.theol" "cand" "dr.art" 
+    "eksp.hoavd" "eksp.sj" "fenr" "fig" "fil.tri" "gen.lt" "genr" 
+    "genr.lt" "h.r.adv" "hr" "kapt" "korp" "lekt" "lic" "ltn" "mag.art"
+    "mag" "merc" "odont" "oecon" "ordf" "ossod.dir" "stud.phil."
+    "res.kap" "stud.philol" "vit.ass" "dr" "dr.med" "dr.philos" "dr.theol" ;
+
+LIST COUNTABLE = "oassi" "kapihttal" "paragráfa" ;
+
+
+# Miscellaneous sets
+# ------------------
+
+LIST Clt = Qst Foc ; 
+
+LIST Px = PxSg1 PxSg2 PxSg3 PxDu1 PxDu2 PxDu3 PxPl1 PxPl2 PxPl3 ;
+
+#SET PPOS = Po | Pr ;
+
+LIST POST-A = "rájes" ;   
+LIST POST-B = "rádjái" ;
+
+#LIST WACKERNAGEL = "go" "ba" "bat" "be" "bahan" "son" ;
+
+LIST GASKAL = "gaskal" "gaskkal" "gaskii" "gaskka" "gaskkas" ; 
+ # p-positions that like coordination
+
+SET NUMERALS = Num - OKTA ;
+
+SET NOT-NUMERALS = WORD - Num ;
+
+LIST MANGA = "máŋga" "galle" ; # Not referred to by any rule.
+
+SET CARDINALS = Num - Ord - MANGA ;
+
+SET NOT-CC = WORD - CC ;
+
+SET NOT-PCLE = WORD - Pcle ;
+
+LIST COMPAR = "dávjjit" "eanet" "earalágan" "eará" "earret" "seammás" 
+		"seammalágan" "seammalágán" "seammaláhkai"; 
+ # These combine with "go" Pcle, but COMPAR stands for 'comparison' rather than
+ # 'comparative'.
+
+LIST CONTRA = "muhto" ; # In lean muitalan, muhto dál muitalan.
+
+LIST PROSEANTA = "proseanta" "%" ;
+
+SET REALCLB = CLB - COMMA ;
+
+
+# Border sets and their complements
+# ---------------------------------
+
+SET CP = (Pron Interr) | MO ;
+
+SET NP-BORDER = BOS | EOS | REALCLB | VFIN | Inf | (Actio Ess) | ConNeg | VGen | 
+	Sup | PPRON-NOT-GEN | Recipr | Po | Pr | Pcle | ("jed") | Interj | CS | CP ;
+
+ # CLB removed from set in order to allow for NP-internal commas.
+ # Refl is removed because of "sin iežaset vieruid" etc.
+
+
+
+# Syntactic sets
+# --------------
+
+
+LIST ALLSYNTAG = (@+FAUXV) (@+FMAINV) (@-FAUXV) (@-FMAINV) (@-FSUBJ)
+                 (@ADV-A) (@ADV-ADV) (@ADVL) (@AN>) (@ActioN>) (@CC)
+                 (@CMPND) (@CS) (@DN>) (@GA>) (@GN>) (@GP<) (@GP>)
+                 (@HNOUN) (@INTERJ) (@MEASURE) (@NPron<) (@NQ<) 
+                 (@NUM-PRON) (@OBJ) (@OPRED) (@PCLE) 
+                 (@PCLE-COMPL) (@PROP>) (@PrcN>) (@PronN<) (@PronN>) 
+                 (@QN<) (@QN>) (@SPRED)
+                 (@SUBJ) (@SUBJ-QH) (@TITLE) (@VOC) (@X); # (@TIME)(@NUMBER) 
+
+# SET ASSIGNEDSYN = ALLSYNTAG - @X ;
+# funzt nicht.
+
+CONSTRAINTS
+
+SELECT Pl1 IF (*-1 MII-PERS)(0 ("leat"));
+    ## Amma mii eat leat máksán? De leat máksán.
+
+REMOVE Pl1 IF (*-1 SII)(0 ("leat"));
+
+END
+
+
+
+
