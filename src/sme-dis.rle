@@ -602,7 +602,8 @@ SET PRE-NP-HEAD = (Prop Attr) | A | (Pron Pers Gen) | (N Gen) | Num | Cmpnd | CC
                   (Pron Dem)  | (Pron Refl Gen) | (Pron Indef) | PrfPrc | PrsPrc ;
 
 # There must be a sensible naming convention for these sets...
-SET NPNH = WORD - PRE-NP-HEAD | ABBR ;     # NPNH = "NOT-PRE-NP-HEAD". 
+SET NPNH
+ = WORD - PRE-NP-HEAD | ABBR ;     # NPNH = "NOT-PRE-NP-HEAD". 
 SET NPNHA = WORD - PRE-NP-HEAD - Adv ;     # NPNHA = "NOT (PRE-NP-HEAD-OR-ADV)"
 SET NPNHAI = WORD - PRE-NP-HEAD - Adv - Indef ; # NPNHAI " "...-OR-INDEF"
 SET NPNHAII = WORD - PRE-NP-HEAD - Adv - Indef - Ill ; # Illative indir.obj.
@@ -896,12 +897,12 @@ MAP (@PronN>) TARGET (Refl Pl Nom) IF (*1 PPRON-DU-PL OR (N Pl)
 	BARRIER NOT-ADV-PCLE LINK 0 Nom)(NOT *1 VFIN OR Inf BARRIER NOT-ADV-PCLE);
 	## ...muhto ieža dii ehpet guoskkat daid suorpmain ge.
 
-MAP (@PronN>) TARGET Indef IF (1 N)(NOT 0 Nom LINK 1 Acc)(NOT 0 ADVLCASE)
-	(NOT 1 (N Sg Gen) LINK *1 N BARRIER NPNH OR CC)
+MAP (@PronN>) TARGET Indef IF (*1 N BARRIER NPNH)(NOT 0 Nom LINK 1 Acc)
+	(NOT 0 ADVLCASE)(NOT 1 (N Sg Gen) LINK *1 N BARRIER NPNH OR CC)
 	(NOT 1 VFIN OR Ess OR ("veara"));
 	## Son galgá beassat buktit oaivilis buot gažaldagaide.
 
-MAP (@PronN>) TARGET Indef IF (0 Nom)(*1 (N Nom) BARRIER NOT-ADJ)
+MAP (@PronN>) TARGET Indef IF (0 Nom)(*1 (N Nom) BARRIER NPNH)
 	(NOT 0 Pl LINK 1 Inf);
 	## Goabbáge báddi galgá leahkit 60 alen guhku.
 
@@ -914,6 +915,9 @@ MAP (@PronN>) TARGET Indef IF (NOT 0 ("iešguhtet") OR ADVLCASE)(1 Num);
 MAP (@PronN>) TARGET ("buot") IF (1 Dem OR Indef);
 	## Buot dáid mun attán dutnje.
 	## Sii ledje eanet sivalaččat go buot earát Jerusalemis.
+
+MAP (@PronN>) TARGET ("buot" Pron) IF (*1 N BARRIER NPNH);
+	## Dát máksá ahte dat lea lávdan buot servodaga surggiide.
 
 MAP (@PronN>) TARGET Indef IF (*1 N BARRIER NP-BORDER OR REALCLB)
 	(NOT *-1 ("leat") BARRIER NOT-ADV-PCLE LINK *1 Indef LINK *1 PrfPrc
@@ -1716,7 +1720,7 @@ MAP (@OBJ) TARGET Indef IF (*1 V-TRANS-ACT BARRIER CS LINK NOT 0 (Imprt Prs Pl1)
     (NOT 0 ADVLCASE)(NOT *1 (N Acc) BARRIER NOT-ADJ);
 	## Buot maid dii čatnabehtet eatnama alde, lea čadnojuvvon almmis.
 
-MAP (@OBJ) TARGET ("buot") IF (*-1 (@SUBJ) BARRIER CC OR CS OR CP)
+MAP (@OBJ) TARGET ("buot" Pron) IF (*-1 (@SUBJ) BARRIER CC OR CS OR CP)
 	(*1 V-TRANS-ACT BARRIER NOT-ADV-PCLE);
 	## It don galgga buot čuohpadit.
 	
@@ -4104,7 +4108,7 @@ SELECT Adv IF (*-1 TOGETHER-VERB OR COM-VERB) (0 ("oktii"));
     #  Here we definitely need some barriers.
 
 
-SELECT Adv IF (*1 TIME)(*1 Ill OR Loc BARRIER NPNH);    
+SELECT Adv IF (*1 TIME BARRIER N OR V OR Pron)(*1 Ill OR Loc BARRIER NPNH);    
     ## Oktii  juohke  stuorradiggeáigodagas  ovddiduvvo  dieđáhus daid
     ## doaibmabijuid  birra  mat  galget sihkkarastit ja ovddidit sámi giela
 
@@ -4511,7 +4515,7 @@ SELECT Indef IF (-1 ("menddo"))(0 N);
 SELECT Indef IF (0 (Interr Foc))(NOT *1 VFIN);
 	## Dat oste guđege sabehiid.
 
-SELECT Indef IF (-1 BOS OR CS)(*1 N BARRIER NPNH);
+SELECT Indef IF (*-1 BOS OR CS BARRIER NOT-ADV)(*1 N BARRIER NPNH);
 	## Ollu amerihkálaččat doivot Oslo Ruoŧa oaivegávpogin.
 
 REMOVE Adv IF (*-1 ("leat") BARRIER VERB OR CC OR CLB OR CS OR CP)(0 Indef)
@@ -4534,9 +4538,24 @@ REMOVE Adv IF (1 Interr);
     ## Son lea njuoskan buot, mii lea fuones ášši.
     # could be counterexamples, but until now a comma is supposed to be inbetween.
 
+
+
 # Particular indefinite pronouns
 # ------------------------------
 
+# This is an important section. It should first be expanded
+# and then probably generalised according to classes of 
+# indefinite pronouns.
+
+# buot
+# - - -
+
+SELECT Adv IF (0 ("buot"))(1 (A Superl)) ;
+	##
+
+SELECT (Pron Indef) IF (0 ("buot"))(*1 (N Pl) BARRIER NPNH);
+	## 
+ 
 # eará
 # - - -
 SELECT (Indef Attr) IF (0 ("eará"))(1 PrfPrc)(2 N);
@@ -7851,6 +7870,9 @@ SELECT Ill IF (1 CC OR COMMA)(*2C Ill BARRIER NPNH);
 
 # NP-internal disambiguation of Loc
 # ---------------------------------
+SELECT Loc IF (*-1 ("buot") BARRIER NPNH)(0 (Pl Loc));
+	## Nu lea uot servodaga dásiin.
+
 SELECT Loc IF (*-1C (Dem Pl Loc) BARRIER NPNH);
 SELECT Loc IF (-2C (Dem Pl Loc))(-1 Adv);
 	## Ollu dáin doaibmabijuin sáhttá álggahit...
