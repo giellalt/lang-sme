@@ -664,6 +664,8 @@ LIST ROUTE = "fávli" "geaidnu" "guorra" "luodda" "miila"; # and others!
 LIST MEASURE = "miila" "kilo#mehtar" "mehtar" "mehter" "centi#mehtar" "sente"
 	"cm" "milli#mehtar" "tumá" "állan" "salla" "lihtter" "gilo" ;	
 
+LIST NUMUNIT = "čuohti" "duhát" "miljon" "millijovdna" "milliovdna" "miljarda" ;
+
 LIST PL-NOUN = "beassaš" "čalbme#láse" "gálssot" "headja" "sabet" "sisttet" 
 	"skárri"; 
  # Nominals that appear with plural numerals.
@@ -758,7 +760,7 @@ LIST ALLSYNTAG = (@+FAUXV) (@+FMAINV) (@-FAUXV) (@-FMAINV) (@-FSUBJ)
                  (@HNOUN) (@INTERJ) (@MEASURE) (@NPron<) (@NQ<) 
                  (@NUM-PRON) (@OBJ) (@OPRED) (@PCLE) 
                  (@PCLE-COMPL) (@PROP>) (@PrcN>) (@PronN<) (@PronN>) 
-                 (@QN<) (@QN>) (@SPRED)
+                 (@QN<) (@QN>) (@SPRED) (@NumNum<)
                  (@SUBJ) (@SUBJ-QH) (@TITLE) (@VOC) (@X); # (@TIME)(@NUMBER) 
 
 # SET ASSIGNEDSYN = ALLSYNTAG - @X ;
@@ -1142,6 +1144,8 @@ MAP (@GP<) TARGET (Pl Gen) IF (*-1 GASKAL BARRIER NOT-NP LINK NOT -1 (Pl Gen))
 	(1 NP-BORDER);
 	## Finnmárkkus ii goassige leat leamaš ságastallan gaskal muhtun muddui 
 	## seammadássásaš oasálaččaid.
+	
+# MAP (@GP<) TARGET (Pron Indef) IF (-1 ("earet")) (0 ("eará") OR ("eara"));
  
 MAP (@NQ<) TARGET Gen IF (*-1 NUMERALS BARRIER NP-BORDER OR N OR REALCLB OR PUNCT
 	LINK 0 Nom LINK NOT 0 Ord)(NOT 1 A OR N);
@@ -1225,6 +1229,9 @@ MAP (@NPron<) TARGET (N Pl Gen) IF (-1 ("mii" Interr) OR ("mihkkege") OR ("gii")
 # Quantifier mappings
 # -------------------
 
+MAP (@NumNum<) TARGET (Num) IF (-1 Num)(0 NUMUNIT);
+    ## Dat lea 4 miljovnna deajakohpa.
+    
 MAP (@AN>) TARGET (Ord);
         ## Dat lei 33. teakstaoassi.
 
@@ -2280,7 +2287,7 @@ SELECT Ill IF (0 ("dáidda"))(*1 ("bidjat") OR ("lasihit") BARRIER V-NOT-AUX);
 SELECT Pron IF (0 ("eanaš") OR ("eanas"))(1 (Dem Loc) OR (Pers Loc));
 	## Eanaš dáin gálduin leat hui unnán dieđuid.
 
-# An early rule for "eara"
+# An early rule for "eará"
 # ------------------------
 SELECT (@GP<) IF (-1 ("earet"))(0 ("eará") OR ("eara"));
     ## Doppe leaba earet eará Sondre Lerche ja Madrugada.
