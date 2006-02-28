@@ -94,7 +94,7 @@
 		          # Verbal functions
 		          # Other grammatical functions  
 		        # Cycle 5: Post-syntactic morphological disambiguation
-		          # (Cycle 5 is still EMPTY!!)  
+		          # (Cycle 5 is still EMPTY!! See src/sme-tdis.rle)  
 
 
 # ========== #
@@ -695,6 +695,10 @@ LIST TITLE = "ámta#mánni" "direktevra" "eanan#hearrá" ("gásttašit" eaddji) 
     "res.kap" "stud.philol" "vit.ass" "dr" "dr.med" "dr.philos" "dr.theol" ;
 
 LIST COUNTABLE = "oassi" "kapihttal" "paragráfa" ;
+
+LIST NUMMAR = "nr" "nummar" "nummir" ;
+
+LIST KLASS = "s" "siidu" "§" "§§" "pragráfa" "oassi" "kapihttal" "kapihtal";
 
 LIST LAHKA = "almennet#láhka" "almmolašvuođa#láhka" "apotehka#láhka" "arkiiva#láhka" "áhpenuohtástan#láhka" "álbmotoadjo#láhka" "bargiid#láhka" "bargobiras#láhka" "báikenamma#láhka" "bákte#láhka" "bátnedearvvašvuođabálvalus#láhka" "bivdo#láhka" "boazodoallo#láhka" "čázádat#láhka" "dásseárvo#láhka" "deanu#láhka" "dearvvašvuođabargiid#láhka" "dearvvašvuođaregisttar#láhka" "divššohasvuoigatvuođa#láhka" "eana#láhka" "eanasuodjalan#láhka" "eanavuovdin#láhka" "elliidsuodjalan#láhka" "energi#láhka" "fápmudusa#láhka" "fápmudus#láhka" "Finnmárko#láhka" "friddjasuohkan#láhka" "fuođđo#láhka" "gávpot#láhka" "geaidno#láhka" "gearggusvuođa#láhka" "gielddadearvvašvuođabálvalus#láhka" "gielda#láhka" "gilioppalašeana#láhka" "irko#láhka" "golle#láhka" "guladigge#láhka" "guollebiebman#láhka" "háhkankonsešuvdna#láhka" "hálddašan#láhka" "heaggadieđuid#láhka" "huksen#láhka"  "industrikonsešuvdna#láhka" "jávrebivdo#láhka" "joatkkaoahpahus#láhka" "johtolat#láhka" "konsešuvdna#láhka" "kulturmuito#láhka" "lavdnjeloggun#láhka" "láhka" "luodda#láhka" "luonddusuodjalus#láhka" "Luopmo#láhka" "luossa#láhka" "mánáidgárde#láhka" "mánáidsuodjalusbálvalus#láhka" "mearraguolástan#láhka" "mearraresursa#láhka" "minerálaláhka" "mohtorjohtolat#láhka" "mudden#láhka" "namma#láhka" "oahpahalli#láhka" "oahpahus#láhka" "oahpo#láhka" "olgunastin#láhka" "olmmošvuoigatvuođa#láhka" "oktasašsáme#láhka"  "pasientavuoigatvuođa#láhka" "ráŋggáštan#láhka" "riekteveahkke#láhka" "sáivabivdo#láhka" "sáme#láhka" "sámi#láhka" "searvan#láhka" "sierra#láhka" "spesialistadearvvašvuođabálvalus#láhka" "stáhtaborgárrievtti#láhka" "stáhtafitnodat#láhka" "tuollu#láhka" "varasguolle#láhka" "várre#láhka" "vearrodahko#láhka" "vearro#láhka" "vuođđo#láhka" "vuođđoskuvla#láhka" "vuovdedoallo#láhka" "vuovdegáhtten#láhka" "vuovde#láhka" "1842-#láhka" "1863-#láhka" "1888-#láhka" "1899-bivdo#láhka" "1899-#láhka" "1920-várre#láhka" "1933-#láhka" "1965-#láhka" "1975-#láhka" "1975-várre#láhka" "1978-#láhka" ;
 
@@ -3070,6 +3074,9 @@ SELECT Num IF (-1 COUNTABLE OR ("nr"))(0 ABBR OR ACR) ;
 	## Dieđáhusa oasis I ovdanbuktojuvvo Bb:a sámepolitihkalaš vuođđolávdi.
 	
 SELECT Num IF (-1 (@HNOUN))(0 (Num Nom) OR (Num Attr));
+
+REMOVE Range IF (0C Num)(NOT 1 VFIN)(NOT -1 NUMMAR OR KLASS OR LAHKA);
+  
 
 
 # ========================== #
@@ -8242,7 +8249,7 @@ SELECT Loc IF (*-1 NUMERALS BARRIER NPNH)(0 Pl or Pl3)(NOT 0 Num OR Ord) ;
         ## Mun dovdan vihtta dainna.
 	## Dat maid gohčodit normála giellaovdáneapmi dáhpáhuvvá mánáin geat
 	## bajásšaddet eanet go ovttain gielain go seamma jahkásaš ovttagielat mánáin.
-
+    # Popular rule, 435 times. This rule should be tested. In: zcorp/dis/sme/all/060227b.txt (8241).
 
 # Comitative
 # ==========
@@ -8293,8 +8300,8 @@ SELECT (Sg Com) IF (1 COMMA)(2 (Pron Interr Sg));
 	## Rávisolbmot hállet mánáin gii lea lahtigoahtán 2-3 sáni cealkkan.
 	
 SELECT (Sg Com) IF (-1  (N Sg Loc) LINK *-1 IV BARRIER TV)(0 N);
-    ## Soai leigga čohkkámin fatnasis áhčiineaskka ja čiktimin firpmiid.
-
+    ## Soai leigga čohkkámin fatnasis áhčiineaskka ja čiktimin firpmiid. 
+    # This rule should be tested. In: zcorp/dis/sme/all/060227b.txt (8295).
 # NP-internal disambiguation of Com
 # ---------------------------------
 SELECT Com IF (*-1C (Dem Sg Com) BARRIER NPNH);
@@ -8356,14 +8363,14 @@ REMOVE Loc IF (*-1 ("čállit") BARRIER CP OR CS)(0 ("bleahkka"));
 REMOVE Loc IF (*-1 ("čielggadit") BARRIER CP OR CS)(0 ("bargobearrái#geahčču") OR ("bargodearvvašvuođa#bálvalus"));
     ## Bargobearráigeahčuin ja bargodearvvašvuođabálvalusain mii ovttasráđiid
     ## čielggadeimmet dárbbašlaččamusaid ja nu vealttaimet bággosáhkkoheamis.
-    
+    # Does not hit these example sentences!
 # čohkkát
 # - - - - 
 
 REMOVE Loc IF (*-1 ("čohkkát") BARRIER CP OR CS)(0 ("áhčči"));
     ## Soai leigga čohkkámin fatnasis áhčiineaskka ja čiktimin firpmiid.
     # áhčči can be replaced by a set of people, maybe even a wider set
-    
+    # Does not hit these example sentences!
 # čuorvut
 # - - - - -
 
@@ -8410,7 +8417,7 @@ SELECT Com IF (*-1 ("láktadit") BARRIER CP OR CS)(0 ("viidni"));
 
 REMOVE Loc IF (*-1 ("luddet") BARRIER CP OR CS)(0 ("ákšu"));
     ## Máret luddii galdda ákšuin.
-    
+    # Not hit!
 # mihtidit
 # - - - - -
 
@@ -8431,7 +8438,7 @@ REMOVE (Pl Loc) IF (*-1 ("oahpahit") BARRIER CP OR CS)(0 ("isitvuohta"));
 
 REMOVE Loc IF (*-1 ("oastit") BARRIER CP OR CS)(0 ("ruvdno") OR ("ruvdnu") OR ("ruhta"));
     ## Dainna čuđiin ruvnnuin áiggun bierggu oastit.
-    
+    # No hit!
 REMOVE Loc IF (0 ("ruvdno") OR ("ruvdnu") OR ("ruhta"))(*1 ("oastit") BARRIER CP OR CS);
     ## Ruđain osttiimet liseanssaid Skrivebord 2000 ja web-rámmaide.
     
@@ -9986,7 +9993,13 @@ REMOVE Attr IF (1C V OR EOS OR ("nr"))(NOT 1 N OR PrfPrc);
 # =============================== #
 
 # This is the section for rules of more global scope.
+# True global rules, stretching across the clause boundaries, are found in another
+# file, sme-tdis.rle. Usage: The two cg files shall be applied one after the other:
+# preprocess --abbr=bin/abbr.txt | lookup -flags mbTT -utf8 bin/sme.fst
+# | vislcg --grammar=src/sme-dis.rle | vislcg --grammar/src/sme-tdis.rle --minimal
+# Note that only the final round can have the flag --minimal.
 
+# The rules found here are thus only late sentenceinternal rules.
 
 # Nouns
 # -----
