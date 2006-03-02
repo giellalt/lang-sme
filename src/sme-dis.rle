@@ -665,7 +665,7 @@ LIST ROUTE = "fávli" "geaidnu" "guorra" "luodda" "miila"; # and others!
 LIST MEASURE = "miila" "kilo#mehtar" "mehtar" "mehter" "centi#mehtar" "sente"
 	"cm" "milli#mehtar" "tumá" "állan" "salla" "lihtter" "gilo" ;	
 
-LIST NUMUNIT = "čuohti" "duhát" "miljon" "millijovdna" "milliovdna" "miljarda" ;
+LIST NUMUNIT = "čuohti" "duhát" "miljon" "millijovdna" "milliovdna" "mill" "milj" "miljo" "miljarda" "mrd";
 
 LIST PL-NOUN = "beassaš" "čalbme#láse" "gálssot" "headja" "sabet" "sisttet" 
 	"skárri"; 
@@ -704,6 +704,9 @@ LIST LAHKA = "almennet#láhka" "almmolašvuođa#láhka" "apotehka#láhka" "arkii
 
 SET NOT-LAHKA = N - LAHKA ;
 
+LIST FYLKA = "Finnmárkku" "Romsa" "Nordlánda" "Lulli-Trøndelag" "Davvi-Trøndelag"
+             "Hedmárkku" "Akershus" "Buskerud" "Vestfold" "Østfold" "Aust-Agder" "Vest-Agder"
+             "Rogalánda" "Hordalánda" "Opplánda" "Fjordane" "Romsdal" "Telemark" ;
 
 # Miscellaneous sets
 # ------------------
@@ -1869,6 +1872,7 @@ MAP (@X) TARGET WORD ;
     # Not noun
     # Temporal expressions with locative case
     # Singular not plural
+    # Plural not singular
     # Adposition + Px
     # Some verb rules
 
@@ -5944,8 +5948,15 @@ SELECT N IF (NOT 0 Po OR Adv OR VFIN OR Inf OR PrfPrc OR PrsPrc OR (Num Nom))
 
 SELECT Sg IF (*-1 BOS LINK *1 ("dáro#giella") OR ("sáme#giella") LINK NOT *1 ("goappašat") OR Ord OR Num OR ("earálágan") OR ("máŋgalágan"));
 
-SELECT Sg IF (-1 ("Finnmárku" @GN>))(0 ("fylkka#diggi"));
+SELECT Sg IF (-1 (FYLKA @GN>))(0 ("fylkka#diggi" Com))(NOT -3 FYLKA LINK -2 CC);
     ## Son deattuha sakka gulahallama sihke Sámedikkiin ja Finnmárkku fylkkadikkiin ášši gieđahaladettiin.
+    
+# Plural not singular
+# ------------------- 
+    
+SELECT Pl IF (-3 (FYLKA @GN>))(-2 CC)(-1 (FYLKA @GN>))(0 ("fylkka#diggi" Loc));
+    ## Son lea leamaš sihke Romssa ja Finnmárku fylkkadikkiin.
+
 
 # Plural not singular
 # ------------------- 
