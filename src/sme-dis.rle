@@ -602,6 +602,7 @@ SET NP-HEAD-GEN = (Pron Gen) | (N Gen) - Cmpnd;
 
 SET PRE-NP-HEAD = (Prop Attr) | A | (Pron Pers Gen) | (N Gen) | Num | Cmpnd | CC |
                   (Pron Dem)  | (Pron Refl Gen) | (Pron Indef) | PrfPrc | PrsPrc ;
+SET NP-MEMBER   = PRE-NP-HEAD | N ;
 
 # There must be a sensible naming convention for these sets...
 SET NPNH
@@ -1597,10 +1598,14 @@ MAP (@-FMAINV) TARGET Sup;
 # Complements of particles in comparison
 # --------------------------------------
 
-MAP (@PCLE-COMPL) TARGET Nom IF (*-1 ("go") BARRIER NOT-NP LINK NOT -1 VFIN)
+ADD (@PCLE-COMPL) TARGET Nom IF (*-1 ("go") BARRIER NOT-NP LINK NOT -1 VFIN)
 	(1 EOS);
 	## Dat galgá čuovvoluvvot nu guhkás go vejolaš.
 
+
+ADD (@PCLE-COMPL) TARGET Nom IF (*-2 ("nu") BARRIER NOT-NP LINK 1 A OR Adv)(-1 ("go"));
+	## Nu guhkás go vejolaš galgá dat čuovvoluvvot.
+   
 MAP (@PCLE-COMPL) TARGET Nom IF (*-1 ("go") BARRIER NOT-NP LINK NOT -1 VFIN)
 	(1 PUNCT)(2 EOS);
 	## Ovdabarggut állanit seamma beallái go "láhkateavstta lunddolaš lohkan".
@@ -4972,6 +4977,14 @@ REMOVE N IF (0 ("mearkkašan#veara") OR ("namuhan#veara"));
  # with "-veara", but since that is not possible yet we list some relevant 
  # words instead.
 
+# vejolaš
+# - - - -
+
+SELECT (@PCLE-COMPL) IF (*-2 A OR Adv LINK -1 ("nu"))(-1 ("go"));
+    ## Sámi boarrásat sápmelaččat galget nu guhkás go vejolaš beassat dovdat oktiigullevašvuođa.
+    ## Danne dárbbašuvvo nu buorre gulahallan go vejolaš Sámedikkiin.
+    # BARRIER?
+    
 # vuolit
 # - - - -
 SELECT Attr IF (0 ("vuolit"))(1 ("gráda") OR ("dássi"));
@@ -8325,9 +8338,10 @@ SELECT Loc IF (*-1 ("proseanta") OR ("%") OR ("oassi") OR ("bealli") BARRIER NPN
 
 SELECT Loc IF (-1 NUMERALS)(0 Pl or Pl3)(0 Pron)(1 EOS) ;
         ## Mun dovdan vihtta dainna.
-        ## This rule should be tested In: zcorp/dis/sme/all/1.429.txt (8278)
+         # This rule should be tested In: zcorp/dis/sme/all/1.429.txt (8278)
         
         
+
 # Comitative
 # ==========
 
@@ -8867,6 +8881,14 @@ REMOVE Imprt IF (*-1 VERB BARRIER NOT-ADV OR CLB LINK NOT 0 Neg);
 SELECT (Imprt Sg2) IF (*-1 BOS BARRIER NOT-CC)(NOT 0 ("manne"))(NOT 0 Gen LINK 1 N)
 	(NOT 1 EOS)(NOT *1 VFIN BARRIER CS);
 	## Várut beatnagis!
+	
+REMOVE Imprt IF (-1 ("go"));
+    ## Stáda gáibida eambbo ahte eambbo suohkaniin go regulere ja lágaid rievdada ja suohkanat galget ovttatládje ođasmahttojuvvot.
+    
+REMOVE Imprt IF (*-2 BOS LINK 1 NP-MEMBER) (NOT *1 ("^excl"));
+    ## Sápmelaččat, geain lea dementiija, masset dábálaččat vuosttamužžan dárogielmáhtu, ja dasto maid sámegiela.
+    # We assume that in order to avoid ambiguity there would have been an exclamationmark in a construction (with an NP in the first place), which is more likely to be a simple statement
+
 
 
 # Some imperatives according to person and number.
