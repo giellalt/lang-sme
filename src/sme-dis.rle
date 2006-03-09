@@ -600,7 +600,7 @@ SET NP-HEAD-GEN = (Pron Gen) | (N Gen) - Cmpnd;
 # The PRE-NP-HEAD family of sets
 # - - - - - - - - - - - - - - - -
 
-SET PRE-NP-HEAD = (Prop Attr) | A | (Pron Pers Gen) | (N Gen) | Num | Cmpnd | CC |
+SET PRE-NP-HEAD = (Prop Attr) | (Prop @PROP>) | A | (Pron Pers Gen) | (N Gen) | Num | Cmpnd | CC |
                   (Pron Dem)  | (Pron Refl Gen) | (Pron Indef) | PrfPrc | PrsPrc ;
 SET NP-MEMBER   = PRE-NP-HEAD | N ;
 
@@ -708,6 +708,8 @@ SET NOT-LAHKA = N - LAHKA ;
 LIST FYLKA = "Finnmárkku" "Romsa" "Nordlánda" "Lulli-Trøndelag" "Davvi-Trøndelag"
              "Hedmárkku" "Akershus" "Buskerud" "Vestfold" "Østfold" "Aust-Agder" "Vest-Agder"
              "Rogalánda" "Hordalánda" "Opplánda" "Fjordane" "Romsdal" "Telemark" ;
+             
+LIST INSTITUTION = "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "bargo#kantuvra" "báhpa#skuvla" "buohcce#stohpu" "buohcce#viessu" "giella#guovdaš" "girku" "guovllubuohcce#viessu" "dearvvašvuođa#guovddáš" "joatkka#skuvla" "mánáid#gárdi" "mánáid#skuvla" "meieriija" "musea" "nuoraid#skuvla" "psykiatriijabuohcce#viessu" "skuvla" "skuvla#kantuvra" "universiteahtta" "vuođđo#skuvla" ;             
 
 # Miscellaneous sets
 # ------------------
@@ -1704,9 +1706,13 @@ ADD (@ADVL) TARGET ("namuhan#veara");
 	##
 
 MAP (@SUBJ @SPRED) TARGET Nom IF (NOT 0 ("diibmu") OR ("dbm") LINK *1 Num BARRIER NP-BORDER)
-	(NOT 0 Num LINK *-1 ("diibmu") OR ("dbm") BARRIER NP-BORDER);
+	(NOT 0 Num LINK *-1 ("diibmu") OR ("dbm") BARRIER NP-BORDER)
+	(NOT 0 (Prop Nom) LINK 1 INSTITUTION);
 	## Manne ii leat áviisa boahtán?
 
+MAP (@PROP>) TARGET (Prop Plc Nom) IF (1 N); 
+    ## Beazedievvá mánáidgárdi.
+    
 MAP (@SPRED) TARGET PrfPrc IF (*-1 ("orrut") BARRIER NOT-ADV-PCLE)(1 NP-BORDER);
 	## Olbmot eai orron čadnon dušše iežaset mearragáddái.
 
@@ -5891,6 +5897,9 @@ SELECT Attr IF (0 Prop)(NOT 0 Loc)(1C (N Prop))
 	(NOT 0 (@OBJ) LINK *1 (@OPRED) BARRIER NOT-NP); 
 	## Áirras nr. 17 Randi S. Pedersen oaččui permišuvnna.
 	## Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna.
+
+SELECT (@PROP>) IF (0 (Prop Nom))(1 INSTITUTION);
+    ## Ođđajagimánus 2001 lei Beazedievvá mánáidgárdi doaimmas golmmain ossodagain.
 
 
 # Choosing between different proper nouns
@@ -10293,7 +10302,7 @@ SELECT (@SPRED) IF (*-1 (@SUBJ) BARRIER NPNHA OR CC OR CLB OR CS OR CP OR ("/")
 	## Dávjá lea riektevuogádat áidna mearridanvuogádat.
 
 SELECT (@SPRED) IF (*-1 (N Nom) BARRIER NOT-ADV-PCLE OR go OR ("nugo") OR CLB OR 
-	PUNCT OR CP LINK NOT 0 ("buorre") LINK *-1 COPULAS BARRIER NPNHA)
+	PUNCT OR CP LINK NOT 0 ("buorre") OR (@PROP>) LINK *-1 COPULAS BARRIER NPNHA)
 	(NOT 0 Interr OR Pers)(NOT 0 ("nr") LINK 1 @NumN<); 
 	#  After "NPHNA": LINK NOT *-1 Loc BARRIER NOT-ADV-PCLE
 	## Ledjego guolit divrasat?
