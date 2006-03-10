@@ -710,7 +710,9 @@ LIST FYLKA = "Finnmárkku" "Romsa" "Nordlánda" "Lulli-Trøndelag" "Davvi-Trønd
              "Hedmárkku" "Akershus" "Buskerud" "Vestfold" "Østfold" "Aust-Agder" "Vest-Agder"
              "Rogalánda" "Hordalánda" "Opplánda" "Fjordane" "Romsdal" "Telemark" ;
              
-LIST INSTITUTION = "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "bargo#kantuvra" "báhpa#skuvla" "buohcce#stohpu" "buohcce#viessu" "giella#guovdaš" "girku" "guovllubuohcce#viessu" "dearvvašvuođa#guovddáš" "joatkka#skuvla" "mánáid#gárdi" "mánáid#skuvla" "meieriija" "musea" "nuoraid#skuvla" "psykiatriijabuohcce#viessu" "skuvla" "skuvla#kantuvra" "universiteahtta" "vuođđo#skuvla" ;             
+LIST INSTITUTION = "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "bargo#kantuvra" "báhpa#skuvla" "buohcce#stohpu" "buohcce#viessu" "giella#guovdaš" "girku" "guovllubuohcce#viessu" "dearvvašvuođa#guovddáš" "joatkka#skuvla" "mánáid#gárdi" "mánáid#skuvla" "meieriija" "musea" "nuoraid#skuvla" "psykiatriijabuohcce#viessu" "skuvla" "skuvla#kantuvra" "universiteahtta" "vuođđo#skuvla" ; 
+
+LIST HUMAN = "bártni" "boaris" "gánda" "nieida" "olbmo" "olmmái" "váhnen";            
 
 # Miscellaneous sets
 # ------------------
@@ -4299,6 +4301,11 @@ SELECT Adv IF (0 ("viso"))(NOT 1 (N Pl));
 	## Ii leat vel visot čohkkejuvvon.
 	## Visot dan maid NRK sádde digitála fierpmis sáhttá maid gullat Nettradios.
  # This is not a particularly good rule for 'visot'.
+ 
+# viššal vs. viššalaš
+# - - - - - - - - - -
+REMOVE ("viššalaš") IF (*-1 HUMAN LINK 0 (@SUBJ) BARRIER CS OR CP);
+    ## Sihke Mázes ja Guovdageainnus leat boarrásat viššalit finadan doaibmaguovddážiin.
 
 # vuhtii
 # - - - - 
@@ -5985,6 +5992,12 @@ SELECT (N Nom) IF (0 (A Nom))(*1 COPULAS BARRIER (N Nom) OR (Pron Nom) OR CC
 SELECT N IF (NOT 0 Po OR Adv OR VFIN OR Inf OR PrfPrc OR PrsPrc OR (Num Nom))
 	(NOT 0 Attr LINK *1 N BARRIER NPNH)(1 PrfPrc LINK 0 V-NOT-AUX);
 	## Go joddu lea čáhcái boahtán,..
+	
+# Nouns vs. verbs
+# ======================
+
+REMOVE VFIN IF (-1C (Attr @AN>));
+    ## Eambbo doaimmat ruovttuin váikkuhit maiddái veahkkebálvalusossodaga.
 
 # Numerus disambiguation
 # ======================
@@ -7781,7 +7794,7 @@ REMOVE Nom IF (*-1 (@SUBJ) BARRIER CS OR CP)(NOT *-1 ("leat") BARRIER VERB)
 SELECT Acc IF (NOT *-1 ("leat") BARRIER VERB)(0 Num)(1 TIME)(NOT 2 N OR Po);
 	## Go fylkkadoavttir lea seailluhan journála 10 jagi,...
 
-SELECT Acc IF (-1C NP-BORDER)(NOT -1 Interr OR Indef OR Pr)(NOT 0 Loc)
+SELECT Acc IF (-1C NP-BORDER OR A)(NOT -1 Interr OR Indef OR Pr)(NOT 0 Loc)
 	(0 TIME)(NOT *1 TIME BARRIER NPNH);
 	## Máhtte duddjostalai beaivvi.
 	
@@ -8184,6 +8197,14 @@ REMOVE Com IF (0 ("šaddu"))(*1 ("dovdat") BARRIER CP OR CS);
     
 REMOVE Com IF (*-1 ("dovdat") BARRIER CP OR CS)(0 ("šaddu"));
     ## Muora dovdá dan šattuin.
+    
+# finadit
+# - - - - -
+
+REMOVE Com IF (*-1 ("finadit") BARRIER NPNH)(0 ("doaibma#guovddáš"));
+   ## Sihke Mázes ja Guovdageainnus leat boarrásat viššalit finadan doaibmaguovddážiin.
+   # I am not sure about the BARRIER but if we got another noun again the next word could be complement either to finadit or to the noun.
+   # REMOVE Com IF (*-1 ("finadit") BARRIER NPNH)(0 PLACE);
    
     
 # gáibidit
@@ -8774,7 +8795,7 @@ REMOVE VFIN IF (NOT *-1 Interr BARRIER VERB)
 REMOVE VFIN IF (*1 Neg BARRIER NOT-ADV-PCLE OR CLB LINK *1 PrfPrc OR ConNeg 
 	BARRIER VERB OR CLB OR CC OR CS OR CP);
 	## Lágas ii duššaduvvo oktage bustávaš dahje čuoggáš, ovdal go...
-
+	
 REMOVE VFIN IF (-1 ("nu"))(*1 ("go" Pcle) BARRIER NOT-NA); 
 	## No longer needed?
 
@@ -10832,6 +10853,9 @@ REMOVE (@OBJ) IF (-2 (A Attr) LINK NOT *-1 V-TRANS-ACT BARRIER CC OR CS OR CP)
 
 SELECT (@GN>) IF (NOT -1 NP-BORDER)(NOT -1 TIME)(0 TIME)(NOT 0 ("geardi"))(1 NOTIME);
 	## Nugo namuhuvvui, lea nannoseamos ágga dása guhkes áiggi geavahus. 
+	
+REMOVE (Gen @ADVL) IF (0 TIME OR ROUTE)(1 ("loahppa") OR ("álgu"));
+    ## Jagi loahpas álggiimet ođđa turnusiin, bargit ledje fárus dán barggus ovttasráđiid luohttámušolbmuiguin.
 
 
 # Attributes and quantifiers
