@@ -203,7 +203,7 @@ LIST @OPRED = @OPRED ; LIST @PCLE = @PCLE ; LIST @PCLE-COMPL = @PCLE-COMPL ; LIS
 LIST @PrcN> = @PrcN> ; LIST @PronN< = @PronN< ; LIST @PronN> = @PronN> ;  LIST @QN< = @QN< ; 
 LIST @QN> = @QN> ; LIST @SPRED = @SPRED ; LIST @SUBJ = @SUBJ ; LIST @SUBJ-QH = @SUBJ-QH ; 
 
-#LIST @TIME = @TIME ; 
+
 LIST @TITLE = @TITLE ; LIST @VOC = @VOC ; LIST @X = @X ;
 
 # Semantic tags
@@ -1405,7 +1405,9 @@ MAP (@QN<) TARGET Num IF (-1 ("diibmu" Nom) OR ("dbm" Nom));
 MAP (@ADVL) TARGET Num IF (-1 MANNU)(1 NP-BORDER);
 	## Dat hávdáduvvojedje Álahedjui skábmamánus 1997.
  
-
+MAP (@ADVL) TARGET Num IF (0 Acc)(*1 TIME OR ROUTE BARRIER NOT-A); 
+    ## Dat orui doppe vihtta guhkes jagi.
+    
 # Fragment mappings
 # -----------------
 
@@ -1738,7 +1740,9 @@ MAP (@OBJ @OPRED) TARGET Acc IF (0 NUMERALS)
     (NOT 1 CC)(NOT *1 ALU BARRIER NP-BORDER)(NOT -1 (@NNum>) LINK -2 (@OBJ));
     ## Mun oidnen 4 nieidda.
 
-MAP (@OBJ @OPRED) TARGET Acc IF (NOT 0 TIME OR ROUTE); # maybe: ADD
+MAP (@OBJ @OPRED) TARGET Acc IF (NOT 0 TIME OR ROUTE)
+    (NOT 0 Num LINK *1 TIME OR ROUTE BARRIER NOT-A);
+    ## Dat orui doppe vihtta guhkes jagi.
 	## Manaigo Biret-Elle viežžat boastta? 
 
 ADD (@OBJ) TARGET Acc IF (*-1 V-TRANS-ACT BARRIER VERB OR CC OR CLB OR CS OR CP)
@@ -5903,7 +5907,7 @@ SELECT Attr IF (0 Prop)(NOT 0 Loc)(1C (N Prop))
 SELECT (@PROP>) IF (0C Nom)(1 INSTITUTION);
     ## Ođđajagimánus 2001 lei Beazedievvá mánáidgárdi doaimmas golmmain ossodagain.
 
-SELECT (@GN>) IF (0 Gen)(1 INSTITUTION);
+SELECT (@GN>) IF (0 (Prop Gen))(1 INSTITUTION);
     ## Oslo universiteahta namas Oslo namma lea genitiivvas.
 
 # Choosing between different proper nouns
@@ -6345,7 +6349,7 @@ SELECT Acc IF (-1 ("ahkit"));
 REMOVE Acc IF (NOT *-1 V-TRANS-ACT BARRIER CS)
 	(NOT *-1 (Pass PrfPrc) BARRIER NPNH LINK *-1 V-TRANS-ACT BARRIER NPNHA)
 	(NOT -1 CC LINK -1 Acc LINK -1 ("ollu"))(NOT 0 TIME)
-	(NOT 0 NUMERALS LINK 1 TIME OR MEASURE)
+	(NOT 0 NUMERALS LINK *1 TIME OR MEASURE BARRIER NOT-A)
 	(NOT *1 V-TRANS-ACT BARRIER CS LINK 0 VFIN OR (@-FMAINV)) # Ignores PrcN>
 	(NOT *1 CLB BARRIER NOT-NP LINK *1 (Pron Acc) BARRIER NOT-ADV-PCLE);
 	## Leago doppe kafea?
@@ -6795,7 +6799,7 @@ REMOVE Nom IF (*-1 Acc BARRIER CS OR CP OR CONTRA OR VFIN LINK *-1 ACC-INF-VERB
 	## Hearrá, suova mu vuos mannat ruoktot hávdádit áhččán.
  
 REMOVE Acc IF (NOT *-1 V-TRANS-ACT BARRIER CS)(NOT 0 TIME)
-	(NOT 0 NUMERALS LINK 1 TIME OR MEASURE)
+	(NOT 0 NUMERALS LINK *1 TIME OR MEASURE BARRIER NOT-A)
 	(NOT *1 V-TRANS-ACT BARRIER CS);
 	## Sámedikkis lea leamaš čoahkkin 14.03.01.  
 
@@ -7777,10 +7781,13 @@ REMOVE Nom IF (*-1 (@SUBJ) BARRIER CS OR CP)(NOT *-1 ("leat") BARRIER VERB)
 SELECT Acc IF (NOT *-1 ("leat") BARRIER VERB)(0 Num)(1 TIME)(NOT 2 N OR Po);
 	## Go fylkkadoavttir lea seailluhan journála 10 jagi,...
 
-SELECT Acc IF (-1C NP-BORDER)(NOT -1 Interr OR Indef OR Pr)(0 TIME)(NOT 0 Loc)
-	(0 ("beaivi") OR ("idja") OR ("vahkku") OR ("mánnu") OR ("dálvi") OR 
-	("geassi") OR ("jahki"))(NOT *1 TIME BARRIER NPNH);
+SELECT Acc IF (-1C NP-BORDER)(NOT -1 Interr OR Indef OR Pr)(NOT 0 Loc)
+	(0 TIME)(NOT *1 TIME BARRIER NPNH);
 	## Máhtte duddjostalai beaivvi.
+	
+SELECT Acc IF (0 Num)(*1 TIME BARRIER NOT-A);
+    ## Dat orui doppe vihtta guhkes jagi.
+	
 
 SELECT Acc IF (0 ("bodda"));
 	## Mun finan gávppašeame dan botta.
@@ -7947,7 +7954,8 @@ REMOVE Acc IF (NOT *-2 Acc BARRIER NOT-NP)(-1 CC)(NOT 0 Interr)
 	## Buot borramuš ja siidda gálvvu, ja... 
 
 REMOVE Acc IF (NOT *-1 V-TRANS-ACT BARRIER V-NOT-AUX OR Inf OR CS)(NOT 0 TIME)
-	(NOT 0 Dem LINK *1 (N Acc) BARRIER NPNH)(NOT 0 NUMERALS LINK 1 TIME)  
+	(NOT 0 Dem LINK *1 (N Acc) BARRIER NPNH)
+	(NOT 0 NUMERALS LINK *1 TIME BARRIER NOT-A)  
 	(NOT *1 V-TRANS-ACT BARRIER CS OR CP);
         ## Sápmelaččaid historjá álbmogin lea duháhiid jagiid boaris, muhto
         ## dálá ássanguovlluin sápmelaččat eai leat ássan nu guhká.
@@ -10971,7 +10979,7 @@ REMOVE Acc IF (0 (ACR Nom));
     ## IT lea dehálaš.
 
 REMOVE Gen IF (0 (Num Nom));
-REMOVE Acc IF (0 (Num Nom));
+REMOVE Acc IF (0 (Num Nom))(NOT *1 TIME BARRIER NOT-A);
  # This in order to constrain the proliferation of case. If no context has hit, 
  # then be it a stray nominative.
 
