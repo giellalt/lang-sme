@@ -718,7 +718,7 @@ LIST INSTITUTION = "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "bargo#ka
 
 LIST ARRANGEMENT = "čakča#márkan" ;
 
-LIST HUMAN = "bártni" "boaris" "gánda" "nieida" "olbmo" "olmmái" "váhnen"; 
+LIST HUMAN = "bártni" "boaris" "gánda" "nieida" "olbmo" "olmmái" "váhnen" "suohkanfysio#terapeuta" "fysio#terapeuta" "oahppah#eaddji" "doavttir"; 
 
 LIST ANIMATE-NOT-HUMAN = "beana" ;
 
@@ -832,6 +832,9 @@ MAP (@INTERJ) TARGET ("beargalat") IF (*-1 Nom BARRIER CS OR CP LINK NOT 0 (Dem 
 
 MAP (@PCLE) TARGET Pcle ;
 	## Amma mii eat leat máksán?
+	
+MAP (@NNum<) TARGET ABBR IF (-1 Num)(0 INITIAL LINK NOT 1 NP-MEMBER);
+    ## 98 B.
 
 
 # Determiner mappings
@@ -1338,7 +1341,7 @@ MAP (@NUM-PRON) TARGET (N Num Nom) IF (-1 (Pers Nom))(NOT -1 Dem)
 MAP (@SUBJ @SPRED) TARGET (N Num Nom);
 	## Go sotnabeaivi šattai, de čuoigaledje máŋggas várrái.
 	
-MAP (@NumN<) TARGET (Num Nom) IF (-1 ("nr" Nom))(0 CARDINALS)(-2 N OR A OR ABBR OR ACR)(NOT -2 Gen);
+MAP (@NumN<) TARGET Nom IF (-1 ("nr" Nom))(0 (Num CARDINALS) OR INITIAL)(-2 N OR A OR ABBR OR ACR)(NOT -2 Gen);
 #MAP (@NumN<) TARGET (Num Nom) IF (-1 ("nr" Nom))(-2 N OR A OR ABBR OR ACR);
     ## Mun lean ilus go beasan ovdanbuktit St.dieđ. nr. 33.
     #Maybe it has to be (N @ADVL).
@@ -1366,16 +1369,16 @@ MAP (@SUBJ-QH) TARGET (Num Nom) IF (-1 CC)(1 Prop);
 
 
 MAP (@NumN<) TARGET Num IF (-1 N OR ACR)(0 CARDINALS)(1 EOS)
-    (NOT -1 ("nr") OR ("nummar") OR ("nummir"));
+    (NOT -1 NUMMAR);
     ## Dat lea dieđáhus 4.
 	## Viidváseappot mearrida dearvvašvuođabargiidlága § 10 vuosttas lađđasa...
  # Should hit numerals that only have to do with numbering, not with amount. 
  
-MAP (@NumN<) TARGET Num IF (-2 N)(-1 ("nr") OR ("nummar") OR ("nummir"))(0 CARDINALS)(1 EOS);
+MAP (@NumN<) TARGET Num IF (-2 N)(-1 NUMMAR)(0 CARDINALS)(1 EOS);
     ## Dat lea dieđáhus nr. 4.
  
 MAP (@NumN<) TARGET Num IF (-1 N OR A OR ACR)(0 CARDINALS)(NOT 0 ("oktii"))
-    (NOT 1 N OR A OR ACR)(NOT -1 ("nr") OR ("nummar") OR ("nummir"));
+    (NOT 1 N OR A OR ACR)(NOT -1 NUMMAR);
     ## Bearjadaga 21.03.1980.
     #This one is still too strict.
 
@@ -3151,6 +3154,9 @@ SELECT (A Nom) IF (-1 ("vuoi"));
 
 SELECT Nom IF (*-1 EOS LINK NOT *1 V)(0 (ABBR N))(1 Num);
     ## Sd.prp.nr. 63:s.
+    
+SELECT Nom IF (-1 Num OR NUMMAR)(0 INITIAL LINK NOT 1 NP-MEMBER);
+    ## 98 b.
     
 #SELECT Acc
 
@@ -8435,7 +8441,7 @@ SELECT Loc IF (*-1 BOS OR CS OR REALCLB BARRIER NPNHAI)(NOT 0 (A Nom))
         ## Lágas eai leat mearrádusat.
 	## Daningo sámiin lea iežaset giella.
 
-SELECT Loc IF (1 COPULAS)(*2 NP-HEAD-NOM BARRIER NPNHA LINK NOT *1 V-NOT-AUX
+SELECT Loc IF (1 COPULAS LINK 0 VFIN)(*2 NP-HEAD-NOM BARRIER NPNHA LINK NOT *1 V-NOT-AUX
 	BARRIER NOT-ADV-PCLE);
 	## ..gos čoavjevuliin leat geažit latnjalagaid. 
         ## 70 proseanttas guovllu dearvvašvuođaásahusain leat sámegielat bargit.
@@ -8791,6 +8797,13 @@ REMOVE Loc IF (0 ("ulbmil"))(1 ("ahte"));
 # - - - - - - - - - - 
 REMOVE Loc IF (*-1 ("ovttasbargo#čoahkkin") BARRIER CP OR CS)(0 ("mánáid#suodjalus") OR ("PP-#bálvalus"));
     ## Mis leat ovttasbargočoahkkimat PP-bálvalusain, skuvllain, mánáidsuodjalusain ja skulvadearvvašvuođabálvalusain.
+    
+# HUMAN
+# - - -
+
+SELECT Com IF (-1 HUMAN LINK 1 ("fásta#bálká") OR ("bálká"));
+    ## Bálvalusas lea nubbi suohkanfysioterapeuta fástabálkkáin ja nubbi priváhta dásis, gii oažžu 100 % doarjaga.
+    # Assuming that the noun directly following a noun from the set HUMAN will also be its complement.
 
 
 # =========== #
