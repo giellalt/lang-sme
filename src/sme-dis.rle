@@ -247,7 +247,7 @@ LIST INITIAL =  "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m"
 
 LIST WORD = N A Adv V Pron CS CC Po Pr Interj Pcle Num ABBR ACR Date Range 
 ; # any word
-
+SET REALWORD = WORD - Num ;
 
 # Derivational affixes
 # --------------------
@@ -644,7 +644,7 @@ LIST AIGODAT = "áigi" "áigodat" "stuoradigge#áigodat" "sámedigge#áigodat"
 
 LIST VAHKKU = "beaivi" "jándor" "bodda" "čakča" "čakča#geassi" "čuohte#jahki" 
 		"dálvi"	"diibmu" "dbm" "geardi" "geassi" "giđđa" "hávvi" "idja" "jahki" 
-		"jahke#čuohti" "mánnu" "riegádan#beaivi" "tiibmu" "vahkku" jahki 
+		"jahke#čuohti" "mánnu" "riegádan#beaivi" "tiibmu" "vahkku" jahki
 		"stuorradigge#áigodat" ;
  # The quoteless jahki here is since the preprocessor is not fine-tuned
  # yet, it still gives '"1870-" # jahki N Sg Com'.
@@ -716,11 +716,13 @@ LIST FYLKA = "Finnmárkku" "Romsa" "Nordlánda" "Lulli-Trøndelag" "Davvi-Trønd
              "Hedmárkku" "Akershus" "Buskerud" "Vestfold" "Østfold" "Aust-Agder" "Vest-Agder"
              "Rogalánda" "Hordalánda" "Opplánda" "Fjordane" "Romsdal" "Telemark" ;
              
-LIST INSTITUTION = "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "bargo#kantuvra" "báhpa#skuvla" "buohcce#stohpu" "buohcce#viessu" "giella#guovdaš" "girku" "guovllubuohcce#viessu" "dearvvašvuođa#guovddáš" "joatkka#skuvla" "mánáid#gárdi" "mánáid#skuvla" "meieriija" "musea" "nuoraid#skuvla" "psykiatriijabuohcce#viessu" "skuvla" "skuvla#kantuvra" "universiteahtta" "vuođđo#skuvla" ; 
+LIST INSTITUTION = "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "bargo#kantuvra" "báhpa#skuvla" "buohcce#stohpu" "buohcce#viessu" "giella#guovdaš" "giella#ráđđi" "girku" "guovllubuohcce#viessu" "dearvvašvuođa#guovddáš" "joatkka#skuvla" "klinihkka" "mánáid#gárdi" "mánáid#skuvla" "meieriija" "musea" "nuoraid#skuvla" "parlameantta" "psykiatriijabuohcce#viessu" "ráđđi" "searvodat" "skuvla" "skuvla#kantuvra" "universiteahtta" "vuođđo#skuvla" ; 
 
 LIST ARRANGEMENT = "čakča#márkan" ;
 
-LIST HUMAN = "bártni" "boaris" "gánda" "nieida" "olbmo" "olmmái" "váhnen" "suohkanfysio#terapeuta" "fysio#terapeuta" "oahppah#eaddji" "doavttir"; 
+LIST HUMAN = "bártni" "boaris" "gánda" "nieida" "olbmo" "olmmái" "váhnen";
+
+LIST PROFESSION = "logopeda" "suohkanfysio#terapeuta" "fysio#terapeuta" "fysio#terapevta" "oahppah#eaddji" "doavttir"; 
 
 LIST ANIMATE-NOT-HUMAN = "beana" ;
 
@@ -4405,7 +4407,7 @@ SELECT Adv IF (0 ("viso"))(NOT 1 (N Pl));
  
 # viššal vs. viššalaš
 # - - - - - - - - - -
-REMOVE ("viššalaš") IF (*-1 HUMAN LINK 0 (@SUBJ) BARRIER CS OR CP);
+REMOVE ("viššalaš") IF (*-1 HUMAN OR PROFESSION LINK 0 (@SUBJ) BARRIER CS OR CP);
     ## Sihke Mázes ja Guovdageainnus leat boarrásat viššalit finadan doaibmaguovddážiin.
 
 # vuhtii
@@ -5937,10 +5939,11 @@ SELECT Inf IF (*-1 COPULAS BARRIER NOT-ADV)(0 ("addit"))
 # ============
 
 # Prop or not
-# -----------
+# ----------- 
 
-SELECT Prop IF (NOT *-1 BOS OR (":") OR (""") BARRIER WORD); 
+SELECT Prop IF (NOT *-1 BOS OR (":") OR (""") OR (Num Nom) BARRIER REALWORD); 
 	## Áirras Egil Olli nammaduvvui Sámedikki ovddasteaddjin.
+	## 1.1. Sámi doaibmaplána darbu ja ulbmilat.
  # Capitalised nouns in the middle of a sentence are names.
 
 REMOVE (Prop Pl) IF (0 (Prop Sg))(NOT 0 ("Sámediggi") OR (laš));    
@@ -5959,6 +5962,9 @@ REMOVE (Prop Pl Acc) IF (-1 BOS)(0 CNOUN);
 SELECT Prop IF (-1 BOS)(0 Loc)(1 COMMA)(2 MANNU)(3 Num) ;
 SELECT Prop IF (-1 BOS)(0 Loc)(1 COMMA)(2 Num) ;
 	## Deanus, borgemánu 31. b. 2005.
+	
+SELECT Prop IF (-1 BOS)(0 ("Sápmi" Prop))(1 INSTITUTION);
+    ## Sámi allaskuvla láhčá diliid dulkoma joatkkaoahppofáldahkii, mii oaivvilduvvo olbmuide, geat dovdet dearvvašvuođa- ja sosiálasuorggi, ja maiddái MBD ovddasvástádussuorggi.
 
 # Removing proper nouns that are lookalikes
 # - - - - - - - - - - - - - - - - - - - - -
@@ -6026,6 +6032,12 @@ SELECT (@PROP>) IF (0C Nom)(1 INSTITUTION);
 
 SELECT (@GN>) IF (0 (Prop Gen))(1 INSTITUTION);
     ## Oslo universiteahta namas Oslo namma lea genitiivvas.
+    
+# Choosing between different nouns
+# --------------------------------
+
+SELECT ("virgi") IF (*-1 PROFESSION LINK 0 (@GN>) BARRIER NOT-ADJ)(0 ("viergi"));
+    ## Eai leat lahkage doarvái logopedat, geat dikšot geavaheaddjiid klinihkain, eaige sámiid ássanguovllus leat galle gieldda, mat leat ásahan logopeda virggiid.
 
 # Choosing between different proper nouns
 # ---------------------------------------
@@ -6124,9 +6136,9 @@ SELECT Sg IF (0 SG-WORD)(NOT *-1 Num OR Ord BARRIER NOT-ADJ)(*-1 BOS LINK NOT *1
 # Depending on the scope
 # - - - - - - - - - - - -
 
-SELECT Sg IF (-1 (FYLKA @GN>))(0 ("fylkka#diggi" Com))(NOT -3 FYLKA LINK -2 CC);
+SELECT Sg IF (-1 (FYLKA @GN>))(0 ("fylkka#diggi" Com) OR ("fylkka#gielda" Com) OR ("fylkka#mánni") OR ("fylkkas#gielda") OR ("fylkkarehket#dárkun"))
+(NOT -3 FYLKA LINK -2 CC);
     ## Son deattuha sakka gulahallama sihke Sámedikkiin ja Finnmárkku fylkkadikkiin ášši gieđahaladettiin.
-    
 
     
 # Plural not singular
@@ -6787,10 +6799,14 @@ REMOVE Acc IF (*-1 ("birra") BARRIER NPNHA LINK *-1 ("sárdnut") BARRIER VERB
 	
 SELECT Gen IF (0 MANNU LINK 1 Ord);
     ## Ráđđehus áigu gulaskuddancealkámušaid vuođul árvvoštallat nuppástuhttit lága levgema birra gielddaid almmolaš visttiin, ja evttohusa dahkat guovvamánu 6. birra virggálaš levgenbeaivin.
+
+    
+SELECT Gen IF (*-1 VFIN LINK NOT 0 Pass BARRIER VFIN LINK NOT 0 Pass)(0 (ACR Nom) LINK *1 N BARRIER NOT-ADJ);
+    ## Buollinveahka lea maiddái leamaš skuvllain ja mánáidgárddiin muitaleame buollingáhttema, ja oassálastán DBE jahkásaš buollingáhttenvahkus.
+
     
 SELECT Gen IF (*-1 (@SUBJ) LINK *1 VFIN LINK NOT 0 Pass BARRIER VFIN LINK NOT 0 Pass) (0 (ACR Nom) LINK *1 N BARRIER NOT-ADJ);
     ## Buollinveahka lea maiddái leamaš skuvllain ja mánáidgárddiin muitaleame buollingáhttema, ja oassálastán DBE jahkásaš buollingáhttenvahkus.
-
 
 # Genitive in coordination
 # ------------------------
@@ -8333,6 +8349,12 @@ REMOVE Com IF (0 ("šaddu"))(*1 ("dovdat") BARRIER CP OR CS);
     
 REMOVE Com IF (*-1 ("dovdat") BARRIER CP OR CS)(0 ("šaddu"));
     ## Muora dovdá dan šattuin.
+
+# dovdat
+# - - - -   
+
+SELECT Loc IF (*-1 ("dikšut") BARRIER CP OR CS)(0 GUOVLU OR INSTITUTION);
+    ## Eai leat lahkage doarvái logopedat, geat dikšot geavahedjiid klinihkain, eaige sámiid ássanguovllus leat galle gieldda, mat leat ásahan logopeda virggiid.
     
 # finadit
 # - - - - -
@@ -8817,7 +8839,7 @@ REMOVE Loc IF (*-1 ("ovttasbargo#čoahkkin") BARRIER CP OR CS)(0 ("mánáid#suod
 # HUMAN
 # - - -
 
-SELECT Com IF (-1 HUMAN LINK 1 ("fásta#bálká") OR ("bálká"));
+SELECT Com IF (-1 HUMAN OR PROFESSION LINK 1 ("fásta#bálká") OR ("bálká"));
     ## Bálvalusas lea nubbi suohkanfysioterapeuta fástabálkkáin ja nubbi priváhta dásis, gii oažžu 100 % doarjaga.
     # Assuming that the noun directly following a noun from the set HUMAN will also be its complement.
 
@@ -10244,6 +10266,14 @@ SELECT Gen IF (NOT *-1 V-TRANS-ACT BARRIER CC OR CLB OR CS OR CP)
 	## ..., ahte unnimus 135 jagi geavahus lea doarvái.
 
 
+# Going for the right dainna
+
+REMOVE (Pl Loc) IF (0 ("dieinna") OR ("dainna") OR ("dáinna"));
+    # While Nickel does not allow those forms to be locative at all, Nielsen does so.
+    
+REMOVE (Pl Loc) IF (*-1 ("dieinna" Sg Com) OR ("dainna" Sg Com) OR ("dáinna" Sg Com) BARRIER NPNH); 
+
+
 # Other rules for nouns and pronouns
 # ==================================
 
@@ -10313,6 +10343,8 @@ REMOVE Pl IF (0 DEM-SG)(NOT *1 V-PL3);
 
 SELECT Dem IF (1 ("bodda"));
 	## Mun finan gávppašeame dan botta.
+
+
 
 
 # Adverbs and adjectives
