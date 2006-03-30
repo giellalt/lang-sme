@@ -1,0 +1,44 @@
+! Hyphenation test
+
+echo <<defining Cns and Vow...>>
+
+define Vow       [ a | á | e | i | o | u | y | æ | ø | å | ä | ö | 
+                   A | Á | E | I | O | U | Y | Æ | Ø | Å | Ä | Ö | 
+é | ó | ú | í | à | è | ò | ù | ì | ë | ü | ï | â | ê | ô | û | î | ã | ý 
+É | Ó | Ú | Í | À | È | Ò | Ù | Ì | Ë | Ü | Ï | Â | Ê | Ô | Û | Î | Ã | Ý ] ;
+
+define Cns [ b | c | č | d | đ | f | g | h | j | k | l | m | n | ŋ | 
+             B | C | Č | D | Đ | F | G | H | J | K | L | M | N | Ŋ | 
+             p | r | s | š | t | ŧ | v | z | ž |   
+             P | R | S | Š | T | Ŧ | V | Z | Ž ] ; 
+
+!define Cns [ Cnssymb | Vow i ] ;
+
+echo << Rules>>
+
+define 4cns     [..] -> %- || Vow r _ d n j ;
+define unvoiced [..] -> %- || _ h [ n | m | l | j | r ] ;
+define palatal  [..] -> %- || d _ d j , l _ l j , n _ n j , d _ n j , t _ n j ;
+define dissnas  [..] -> %- || Vow [ đ | i | l | r | v ] _ [ b m | d n | g ŋ ] ;
+define 3cns     [..] -> %- || Vow [ Cns | i ] Cns _ Cns Vow ;
+define 2cns     [..] -> %- || Vow [Cns | i ] _ Cns Vow ;
+define 1cns     [..] -> %- || Vow  _ Cns Vow ;
+                     
+echo <<Combining...>>
+
+read regex [
+4cns 
+.o.
+unvoiced
+.o.
+palatal 
+.o.
+dissnas 
+.o.
+3cns
+.o.
+2cns
+.o.
+1cns ] ;
+
+invert net ;
