@@ -57,7 +57,6 @@
                 # Nouns, not verbs
                 # Not noun
                 # Temporal expressions with locative case
-                # Singular not plural
                 # Adposition + Px
                 # Some verb rules
                # Local disambiguation - cycles 1 and 2
@@ -676,6 +675,9 @@ LIST NUMUNIT = "čuohti" "duhát" "miljon" "millijovdna" "milliovdna" "mill" "mi
 LIST PL-NOUN = "beassaš" "čalbme#láse" "gálssot" "headja" "sabet" "sisttet" 
 	"skárri"; 
  # Nominals that appear with plural numerals.
+ 
+LIST SG-WORD = "ipmárdus" "doaivu" "dáro#giella" "sáme#giella" ;
+# Words that are used in singular unless their plurality is stressed by words such as "goappeš", "goappašat", "earálágan", "máŋgalágan" or Num or Ord.
 
 LIST PREGEN = ("álgogeahčen")("bealli" N Sg Loc)("gaskavuohta" N Sg Loc)("guoskevaš")
 	("loahpageahčen")("miella" N Sg Loc)("oktavuohta" N Sg Loc);
@@ -1259,13 +1261,24 @@ MAP (@GA>) TARGET Gen IF (1 ("veara"));
 MAP (@GA>) TARGET Gen IF (1 CC)(2 Gen)(3 ("veara"));
 	## ...buot dan mii leat ráhkistan ja gudnejahttin veara.
 
-MAP (@GN>) TARGET Gen IF (NOT -1 NUMERALS LINK 0 Nom)
+MAP (@GN>) TARGET Gen IF
+    (NOT -1 NUMERALS LINK 0 Nom)
 	(NOT 0 ALU OR Cmpnd OR Num)(*1 N BARRIER NOT-NP OR REALCLB)
 	(NOT 1 PUNCT LINK 1 CC)
 	(NOT 1 CC LINK *1 Gen BARRIER NOT-NP LINK 1 Po)
 	(NOT 1 COMMA LINK 1 Gen LINK 1 CC LINK 1 Gen LINK 1 Po)
 	(NOT 0 Actio LINK 1 ("dihte") OR ("dihtii"));
 	## Leatgo oaidnán Máreha misiid?
+
+MAP (@GN>) TARGET Gen IF
+    (NOT -1 NUMERALS LINK 0 Nom) 
+	(NOT 0 ALU OR Cmpnd OR Num)
+	(1 COMMA)(2 Rel LINK *1 COMMA LINK *1 N BARRIER NOT-NP OR REALCLB)
+	(NOT 1 PUNCT LINK 1 CC)
+	(NOT 1 CC LINK *1 Gen BARRIER NOT-NP LINK 1 Po)
+	(NOT 1 COMMA LINK 1 Gen LINK 1 CC LINK 1 Gen LINK 1 Po)
+	(NOT 0 Actio LINK 1 ("dihte") OR ("dihtii"));
+    ## Buoremus sámepolitihkka ožžojuvvo áigálii sámi veahkadaga, man ovddasta Sámediggi, ja ráđđehusa gaskaneas ipmárdusain.
 	
 MAP (@GN>) TARGET Gen IF (*-2 ("s") OR ("siidu") OR ("§") OR ("paragráfa") OR 
     ("kapihttal") OR ("kapihtal") OR ("oassi") OR ("jahki") OR GEASSET LINK 1 
@@ -1931,8 +1944,6 @@ MAP (@X) TARGET WORD ;
     # Nouns, not verbs
     # Not noun
     # Temporal expressions with locative case
-    # Singular not plural
-    # Plural not singular
     # Adposition + Px
     # Some verb rules
     # Compounds
@@ -2138,15 +2149,6 @@ REMOVE Num IF (NOT -1 ("§") OR ("paragráfa") OR ("kapihttal") OR ("kap"))(0 Da
     ## Dat lea § 12.2.12.
     
 	
-# Singular not plural
-# -------------------
-
-REMOVE (N Pl Loc) IF (0 ("doaivu"));
-    ## Go funet lea guolli goddomin, de fitná olmmoš buođu luhtte dušše
-    ## oktii jándoris, savdnjileamen joddu amas dat dierrut, suollemasat
-    ## dainna doaivvuin ahte nago de lea boađistan.
-
-
 # Adposition + Px
 # ---------------
 SELECT Adp IF (0 ("gaska" N Ess)); ## Sii árvališgohte gaskaneaset.
@@ -3312,6 +3314,7 @@ SELECT Po IF (-1 (PUNCT RIGHT))(*-2 (PUNCT LEFT) LINK -1 Gen);
 
 # Requiring Genitive
 
+#REMOVE Po IF (NOT -1 (N Gen) OR (A Gen) OR (Num Gen) OR (Pron Gen) OR (Actio Gen) OR N LINK -1 (Num Gen))(NOT -2 MANNU LINK 1 Ord);
 REMOVE Po IF (NOT -1 (N Gen) OR (A Gen) OR (Num Gen) OR (Pron Gen) OR (Actio Gen))(NOT -2 MANNU LINK 1 Ord);
 REMOVE Po IF (-1 N)(NOT -1 Gen);   
 REMOVE Pr IF (NOT *1 N OR A OR Num OR Pron BARRIER NPNH);
@@ -6112,7 +6115,14 @@ REMOVE VFIN IF (-1C (Attr @AN>));
 # Singular not plural
 # ------------------- 
 
-SELECT Sg IF (*-1 BOS LINK *1 ("dáro#giella") OR ("sáme#giella") LINK NOT *1 ("goappašat") OR Ord OR Num OR ("earálágan") OR ("máŋgalágan"));
+SELECT Sg IF (0 SG-WORD)(NOT *-1 Num OR Ord BARRIER NOT-ADJ)(*-1 BOS LINK NOT *1 ("goappeš") OR ("goappašat") OR ("earálágan") OR ("máŋgalágan"));
+    ## Go funet lea guolli goddomin, de fitná olmmoš buođu luhtte dušše
+    ## oktii jándoris, savdnjileamen joddu amas dat dierrut, suollemasat
+    ## dainna doaivvuin ahte nago de lea boađistan.
+    ## Buoremus sámepolitihkka ožžojuvvo áigálii sámi veahkadaga ja ráđđehusa gaskaneas ipmárdusain.
+
+# Depending on the scope
+# - - - - - - - - - - - -
 
 SELECT Sg IF (-1 (FYLKA @GN>))(0 ("fylkka#diggi" Com))(NOT -3 FYLKA LINK -2 CC);
     ## Son deattuha sakka gulahallama sihke Sámedikkiin ja Finnmárkku fylkkadikkiin ášši gieđahaladettiin.
@@ -6121,6 +6131,9 @@ SELECT Sg IF (-1 (FYLKA @GN>))(0 ("fylkka#diggi" Com))(NOT -3 FYLKA LINK -2 CC);
     
 # Plural not singular
 # ------------------- 
+
+# Depending on the scope
+# - - - - - - - - - - - -
     
 SELECT Pl IF (-3 (FYLKA @GN>))(-2 CC)(-1 (FYLKA @GN>))(0 ("fylkka#diggi" Loc));
     ## Son lea leamaš sihke Romssa ja Finnmárku fylkkadikkiin.
@@ -6774,6 +6787,9 @@ REMOVE Acc IF (*-1 ("birra") BARRIER NPNHA LINK *-1 ("sárdnut") BARRIER VERB
 	
 SELECT Gen IF (0 MANNU LINK 1 Ord);
     ## Ráđđehus áigu gulaskuddancealkámušaid vuođul árvvoštallat nuppástuhttit lága levgema birra gielddaid almmolaš visttiin, ja evttohusa dahkat guovvamánu 6. birra virggálaš levgenbeaivin.
+    
+SELECT Gen IF (*-1 (@SUBJ) LINK *1 VFIN LINK NOT 0 Pass BARRIER VFIN LINK NOT 0 Pass) (0 (ACR Nom) LINK *1 N BARRIER NOT-ADJ);
+    ## Buollinveahka lea maiddái leamaš skuvllain ja mánáidgárddiin muitaleame buollingáhttema, ja oassálastán DBE jahkásaš buollingáhttenvahkus.
 
 
 # Genitive in coordination
