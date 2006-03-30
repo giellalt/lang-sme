@@ -1,4 +1,6 @@
-! Hyphenation test
+! ========================= !
+! Hyphenator for North Sámi !
+! ========================= !
 
 echo <<defining Cns and Vow...>>
 
@@ -7,27 +9,43 @@ define Vow       [ a | á | e | i | o | u | y | æ | ø | å | ä | ö |
 é | ó | ú | í | à | è | ò | ù | ì | ë | ü | ï | â | ê | ô | û | î | ã | ý 
 É | Ó | Ú | Í | À | È | Ò | Ù | Ì | Ë | Ü | Ï | Â | Ê | Ô | Û | Î | Ã | Ý ] ;
 
-define VowNot2ndVow   [ á | u | y | æ | ø | å | ä | ö | 
-                   Á | U | Y | Æ | Ø | Å | Ä | Ö | 
-é | ó | ú | í | à | è | ò | ù | ì | ë | ü | ï | â | ê | ô | û | î | ã | ý 
-É | Ó | Ú | Í | À | È | Ò | Ù | Ì | Ë | Ü | Ï | Â | Ê | Ô | Û | Î | Ã | Ý ] ;
+define 2ndVow [ e | a | o | i | E | A | U | I ] ;
 
+define VowNot2ndVow   [ Vow - 2ndVow ] ;
+
+define U [ u | U ] ; define O [ o | O ]  ; define A [ a | A ]  ;
+define E [ e | E ] ; define I [ i | I ]  ;
+define EO [ e | E | o | O ] ;
+
+define VowNotU [ Vow - U ] ;
+define VowNotO [ Vow - O ] ;
+define VowNotA [ Vow - A ] ;
+define VowNotE [ Vow - E ] ;
+define VowNotI [ Vow - I ] ;
+define VowNotEO [ Vow - EO ] ;
 
 define Cns [ b | c | č | d | đ | f | g | h | j | k | l | m | n | ŋ | 
              B | C | Č | D | Đ | F | G | H | J | K | L | M | N | Ŋ | 
              p | r | s | š | t | ŧ | v | z | ž |   
              P | R | S | Š | T | Ŧ | V | Z | Ž ] ; 
 
+define S [ S | s ] ; define Cnss [ Cns - S ] ;
+define Sgm [ Cns | Vow ] ;
+
+
 !define Cns [ Cnssymb | Vow i ] ;
 
 echo << Rules>>
 
-define nodipht  [..] -> %-£%- || Cns Vow _ VowNot2ndVow ;
+define nodipht    [..] -> %- || Cns Vow _ VowNot2ndVow Sgm ;
+define NotUOdipht [..] -> %-#2 || [Cns|Vow %-] VowNotU _ O Sgm ;
+define NotOAdipht [..] -> %-#3 || [Cns|Vow %-] VowNotEO _ A Sgm ;
+define NotIEdipht [..] -> %-#4 || [Cns|Vow %-] VowNotI _ E Sgm ;
 define 4cns     [..] -> %- || Vow r _ d n j ;
 define unvoiced [..] -> %- || Vow _ h [ n | m | l | j | r ] ;
 define palatal  [..] -> %- || Vow d _ d j , Vow l _ l j , Vow n _ n j , Vow d _ n j , Vow t _ n j ;
 define dissnas  [..] -> %- || Vow [ đ | i | l | r | v ] _ [ b m | d n | g ŋ ] ;
-define s2cns     [..] -> %- || Vow [Cns | i ] _ s Cns Vow ; ! mái-stit (if commented out: máis-tit)
+define s2cns    [..] -> %- || Vow [Cns | i ] _ s Cnss Vow ; ! mái-stit (if commented out: máis-tit)
 define 3cns     [..] -> %- || Vow [ Cns | i ] Cns _ Cns Vow ;
 define 2cns     [..] -> %- || Vow [Cns | i ] _ Cns Vow ;
 define 1cns     [..] -> %- || Vow  _ Cns Vow ;
@@ -37,6 +55,12 @@ echo <<Combining...>>
 
 read regex [
 nodipht
+.o.
+NotUOdipht
+.o.
+NotOAdipht
+.o.
+NotIEdipht
 .o.
 4cns 
 .o.
