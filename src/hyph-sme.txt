@@ -17,12 +17,20 @@ define U [ u | U ] ; define O [ o | O ]  ; define A [ a | A ]  ;
 define E [ e | E ] ; define I [ i | I ]  ;
 define EO [ e | E | o | O ] ;
 
+define IEdipht [ i e | I e | I E ] ;
+define UOdipht [ u o | U o | U O ] ;
+define EAdipht [ e a | E a | E A ] ;
+define OAdipht [ o a | O a | O A ] ;
+
+define dipht [ IEdipht | UOdipht | EAdipht | OAdipht ] ;
+
 define VowNotU [ Vow - U ] ;
 define VowNotO [ Vow - O ] ;
 define VowNotA [ Vow - A ] ;
 define VowNotE [ Vow - E ] ;
 define VowNotI [ Vow - I ] ;
 define VowNotEO [ Vow - EO ] ;
+
 
 define Cns [ b | c | č | d | đ | f | g | h | j | k | l | m | n | ŋ | 
              B | C | Č | D | Đ | F | G | H | J | K | L | M | N | Ŋ | 
@@ -37,10 +45,11 @@ define Sgm [ Cns | Vow ] ;
 
 echo << Rules>>
 
+define beforedipht [..] -> %- || Vow _ dipht ;
 define nodipht    [..] -> %- || Cns Vow _ VowNot2ndVow Sgm ;
-define NotUOdipht [..] -> %-#2 || [Cns|Vow %-] VowNotU _ O Sgm ;
-define NotOAdipht [..] -> %-#3 || [Cns|Vow %-] VowNotEO _ A Sgm ;
-define NotIEdipht [..] -> %-#4 || [Cns|Vow %-] VowNotI _ E Sgm ;
+define NotUOdipht [..] -> %- || [Cns|Vow %-] VowNotU _ O Sgm ;
+define NotOAdipht [..] -> %- || [Cns|Vow %-] VowNotEO _ A Sgm ;
+define NotIEdipht [..] -> %- || [Cns|Vow %-] VowNotI _ E Sgm ;
 define 4cns     [..] -> %- || Vow r _ d n j ;
 define unvoiced [..] -> %- || Vow _ h [ n | m | l | j | r ] ;
 define palatal  [..] -> %- || Vow Cns _ d j , Vow Cns _ l j , Vow Cns _ n j , Vow Cns _ n j ; !, Vow t _ n j ;
@@ -54,6 +63,8 @@ define 1cns     [..] -> %- || Vow  _ Cns Vow ;
 echo <<Combining...>>
 
 read regex [
+beforedipht
+.o.
 nodipht
 .o.
 NotUOdipht
