@@ -131,6 +131,7 @@ LIST BOS = (>>>) (<s>); LIST EOS = (<<<) (</s>); # vislcg and CG-2 together.
 LIST N = N ; LIST A = A ; LIST Adv = Adv ; LIST V = V ; LIST Pron = Pron ;
 LIST CS = CS ; LIST CC = CC ; LIST Po = Po ; LIST Pr = Pr ;
 LIST Pcle = Pcle ; LIST Num = Num ; LIST Prop = Prop ;
+LIST LEFT = LEFT ; LIST RIGHT = RIGHT ;
 
 # POS sub-categories
 # ------------------
@@ -769,6 +770,7 @@ LIST PROSEANTA = "proseanta" "%" ;
 
 SET REALCLB = CLB - COMMA ;
 
+SET NOTCOMMA = WORD - COMMA ;
 
 # Border sets and their complements
 # ---------------------------------
@@ -3206,6 +3208,14 @@ REMOVE Qst IF (0 Adv)(NOT *1 ("?"));
 	## Nugo dieđát, de lean dál.
 
 
+# ============================================ #
+# Disambiguating symbols and punctuation marks #
+# ============================================ #
+
+SELECT (@ADVL) IF (-1 LEFT)(0 ("§") OR ("§§"))(*1 RIGHT BARRIER REALWORD);
+	## (§§ 1521)
+
+
 # ========================== #
 # Disambiguating numerals    #
 # ========================== #
@@ -3895,6 +3905,9 @@ SELECT Adv IF (0 ("dadjat"))(1 ("juo"));
 SELECT Adv IF (0 ("dainna"))(1 go);
 	## ...muhto sáhttá vuordit dainna go ferte vuoruhit dikšuma. 
  
+SELECT Adv IF (0 ("dainna"))(*1 CS BARRIER NOTCOMMA);
+	## Kvaliteahtta sihkkarasto dainna, ahte bargit dovdet kultuvrra.
+
 # danin
 # - - - 
 SELECT Adv IF (0 ("danin"))(NOT *1 (N Ess) BARRIER NPNH)
@@ -4345,6 +4358,10 @@ SELECT Adv IF (0 ("ollásit" Adv))(*1 NP-HEAD-GEN BARRIER NPNHA LINK 1 Po);
 	
 # ollu
 # - - 
+
+SELECT (Pron Indef @PronN>) IF (-1 Rel)(1 N);
+	## maid ollu dearvvašvuođaásahusat.
+SELECT (Pron Indef @PronN>) IF (*-1 TV BARRIER NOT-ADV)(1 (N Acc));
 
 SELECT Adv IF (*-1 V-TRANS-ACT LINK NOT 0 ILL-VERB OR COM-VERB OR LOC-VERB LINK *1 ADVLCASE)(NOT *1 CS)
               (-1 ("seammá") OR ("seamma"))(0 ("ollu"));
@@ -10167,6 +10184,16 @@ REMOVE ("duđđat") IF (0 ("duhtat"))(1 go)(*2 Ill BARRIER NPNHA);
 	## Duđat go mu čállimii?
 
 
+# diehtit vs. dihttot
+# -------------------
+# diehtit is TV and takes an animate subject.
+# dihttot (vise seg, forekomme) is Passive and intransitive
+
+SELECT ("dihttot") IF (*-1 ("sátni") OR ("vearba") OR ("substantiiva") LINK 0 (@SUBJ));
+	## Sátni dihtto buot oarjesámegielain.
+	# Needed here is a set of speach act and POS words.
+
+
 # eallit vs. eallát
 # -----------------
 # These verbs have 2 homonym forms: Ind Prs Sg3 eallá, PrfPrc eallán
@@ -10493,7 +10520,9 @@ REMOVE V-DER; # Removes only if there is another reading.
 # NP internal
 # -----------
 
-REMOVE (@NQ<) IF (NOT *-1 Num BARRIER NPNH);  
+REMOVE (@NQ<) IF (NOT *-1 Num BARRIER NPNH OR COMMA);
+
+REMOVE (@GN>) IF (NOT *1 N BARRIER (@NumN<) OR NPNH);  
     
 
 # Subject
@@ -11237,6 +11266,9 @@ SELECT (@GP<) IF (*-1 Pr BARRIER NPNH);
 SELECT (@HNOUN) IF (*-1 BOS BARRIER NPNH)(1 EOS);
 	## Riektejoavkku nammadeami duogáš.
 
+REMOVE (@ADVL) IF (0 TITLE)(1 Mal OR Fem OR Sur);
+	## maiddái professoriidda Asbjørn Kjønstad ja Kristian Andenæs.
+
 # ----------- #
   CONSTRAINTS
 # ----------- #
@@ -11274,6 +11306,12 @@ SELECT (Dem Sg Acc @DN>) IF (*1C (N Acc) BARRIER NOT-ADJ);
 
 SELECT (Dem Sg Gen @DN>) IF (*1C (N Gen) BARRIER NOT-ADJ);
 SELECT (Dem Sg Nom @DN>) IF (*1C (N Nom) BARRIER NOT-ADJ);
+
+# Adverbs
+
+SELECT Adv IF (0C (@ADVL));
+	## Dainna Máret lávlii čiŋadit.
+	# Philisophy: An adverbial is preferably an adverb.
 
 # ========================== #
 # Tidying up some loose ends #
