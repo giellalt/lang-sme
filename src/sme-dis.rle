@@ -714,8 +714,8 @@ LIST LAHKA = "almennet#láhka" "almmolašvuođa#láhka" "apotehka#láhka" "arkii
 
 SET NOT-LAHKA = N - LAHKA ;
 
-LIST FYLKA = "Finnmárkku" "Romsa" "Nordlánda" "Lulli-Trøndelag" "Davvi-Trøndelag"
-             "Hedmárkku" "Akershus" "Buskerud" "Vestfold" "Østfold" "Aust-Agder" "Vest-Agder"
+LIST FYLKA = "Finnmárku" "Finnmarku" "Romsa" "Nordlánda" "Lulli-Trøndelag" "Davvi-Trøndelag"
+             "Hedmárku" "Akershus" "Buskerud" "Vestfold" "Østfold" "Aust-Agder" "Vest-Agder"
              "Rogalánda" "Hordalánda" "Opplánda" "Fjordane" "Romsdal" "Telemark" ;
              
 LIST INSTITUTION = "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "bargo#kantuvra" "báhpa#skuvla" "buohcce#stohpu" "buohcce#viessu" "giella#guovdaš" "giella#ráđđi" "girku" "guovllubuohcce#viessu" "dearvvašvuođa#guovddáš" "joatkka#skuvla" "klinihkka" "mánáid#gárdi" "mánáid#skuvla" "meieriija" "musea" "nuoraid#skuvla" "parlameantta" "psykiatriijabuohcce#viessu" "ráđđi" "searvodat" "skuvla" "skuvla#kantuvra" "universiteahtta" "vuođđo#skuvla" ; 
@@ -1226,7 +1226,7 @@ MAP (@NQ<) TARGET (N Gen) IF (*-1 NUMERALS BARRIER NOT-ADJ LINK 0 Nom)(1 Prop);
 MAP (@GN>) TARGET Gen IF (0 MANNU)(1 Ord);
 	## ...ođđajagemánu 1. b. 2002.
 
-MAP (@GN>) TARGET Gen IF (0 TIME OR AIGODAT OR ROUTE)(NOT 1 CC)
+MAP (@GN>) TARGET Gen IF (0 TIME OR AIGODAT OR ROUTE)(NOT 1 CC)(NOT 0 VAHKKU LINK 1 CARDINALS)
 	(*1 N BARRIER NP-BORDER OR REALCLB OR Po OR Pr);
 	## Min áiggi boaresolbmot muitaladdet ahte...
 	
@@ -2206,15 +2206,27 @@ REMOVE Inf IF (0 Qst);
 REMOVE Foc IF (0 Actio OR PrfPrc OR VGen);
 	## Studeanttat geat leat čađahan váldofágaeksámena...
 	
+	
+# Particular verbs
+# ----------------
+
+REMOVE ("leahkit") IF (0 ("leat" V IV Imprt Prs Sg3));	
+	## lehkos!
+	
 # Compounds
 # ---------
-
-REMOVE ("allas#kuvlla") IF (0 ("alla#skuvla"));
-    ## 1. Čakčamárkaniid lágidemiin mii bargat ovttas Sámi allaskuvllain.
 
 REMOVE SgNomCmp IF (0 SgGenCmp);
 # The background here is that we don't know which one is used if 
 # morphology cannot tell, so we may as well remove one of them.
+
+
+REMOVE ("allas#kuvlla") IF (0 ("alla#skuvla"));
+    ## 1. Čakčamárkaniid lágidemiin mii bargat ovttas Sámi allaskuvllain.
+
+SELECT ("jienastus#lohku") IF  (0 ("jienastus#loahku"));
+    ## Go galgá beassat fárrui sámi jienastuslohkui, de ferte...
+
 
 # Proper nouns
 # ------------
@@ -3311,6 +3323,7 @@ SELECT Pr IF (-1 Gen)(0 ("bealde") OR ("beale") OR ("beallái") OR ("geahčai")
 # The case of GASKAL
 # ------------------
 
+	
 SELECT Pr IF (0 GASKAL)(1 (Pron Gen))(2 CC)(3 (Pron Gen));
 	## Dat lei gaskal min ja din.
 
@@ -3330,7 +3343,7 @@ SELECT Pr IF (0 GASKAL)(*1 NP-HEAD-GEN BARRIER VERB OR CS LINK 1 CC LINK
 	## dábálaččat dulkojit dáža siskkáldas rievtti nu ahte garvá vejolaš 
 	## vuostálasvuođa gaskal dákkár álbmotriektenorpma ja siskkáldas 
 	## norgga njuolggadusa.
- 
+
 SELECT Pr IF (0 GASKAL)(*1 (N Gen) BARRIER NPNH LINK *1 CC BARRIER NOT-NP 
 	LINK *1 (N Gen) BARRIER NPNH LINK 0 HNOUN);
 	## Lága mearrádusat galget váikkuhit luohttevašvuođa gaskal divššohasa
@@ -6230,7 +6243,7 @@ SELECT Sg IF (0 SG-WORD)(NOT *-1 Num OR Ord BARRIER NOT-ADJ)(*-1 BOS LINK NOT *1
 # Depending on the scope
 # - - - - - - - - - - - -
 
-SELECT Sg IF (-1 (FYLKA @GN>))(0 ("fylkka#diggi" Com) OR ("fylkka#gielda" Com) OR ("fylkka#mánni") OR ("fylkkas#gielda") OR ("fylkkarehket#dárkun"))
+SELECT Sg IF (-1 FYLKA LINK 0 (@GN>))(0 ("fylkka#diggi" Com) OR ("fylkka#gielda" Com) OR ("fylkka#mánni" Com) OR ("fylkkas#gielda" Com) OR ("fylkkarehket#dárkun" Com))
 (NOT -3 FYLKA LINK -2 CC);
     ## Son deattuha sakka gulahallama sihke Sámedikkiin ja Finnmárkku fylkkadikkiin ášši gieđahaladettiin.
 
@@ -6446,6 +6459,12 @@ SELECT (N Gen) IF (1 ("láhki" N Sg Ill));
 # Genitive with "dan mađe N"
 # - - - - - - - - - - - - -
 SELECT (Gen Sg) IF (0 ("dat"))(2 ("mađe"));
+
+# Genitive with "oktavuhtii"
+# - - - - - - - - - - - - - -
+SELECT Gen IF (0 N)(1 ("oktavuohta") LINK 0 Ill);
+    ## Váldosisdoallu sápmelaččaid ektui lea, ahte Kárášjoga MNP oktavuhtii ásahuvvo bearašossodat ja Leavnnja DPS oktavuhtii fáhkkaveahkkejoavku ja oanehis áiggi dikšuma seaŋgasajit.
+
 
 
 # Genitive with "veara"
@@ -6895,12 +6914,15 @@ SELECT Gen IF (0 MANNU LINK 1 Ord);
     ## Ráđđehus áigu gulaskuddancealkámušaid vuođul árvvoštallat nuppástuhttit lága levgema birra gielddaid almmolaš visttiin, ja evttohusa dahkat guovvamánu 6. birra virggálaš levgenbeaivin.
 
     
-SELECT Gen IF (*-1 VFIN LINK NOT 0 Pass BARRIER VFIN LINK NOT 0 Pass)(0 (ACR Nom) LINK *1 N BARRIER NOT-ADJ);
-    ## Buollinveahka lea maiddái leamaš skuvllain ja mánáidgárddiin muitaleame buollingáhttema, ja oassálastán DBE jahkásaš buollingáhttenvahkus.
+# Acronyms and other nouns where Nom=Gen/Acc
+# - - - - - - - - - - - - - - - - - - - - - -
+    # vahkku
+    # plana
 
-    
-SELECT Gen IF (*-1 (@SUBJ) LINK *1 VFIN LINK NOT 0 Pass BARRIER VFIN LINK NOT 0 Pass) (0 (ACR Nom) LINK *1 N BARRIER NOT-ADJ);
+REMOVE Nom IF (*-1 (@SUBJ) LINK *1 VFIN LINK NOT 0 Pass BARRIER VFIN LINK NOT 0 Pass)(0 (Sg Gen) LINK *1 N BARRIER NOT-ADJ);                                                        
     ## Buollinveahka lea maiddái leamaš skuvllain ja mánáidgárddiin muitaleame buollingáhttema, ja oassálastán DBE jahkásaš buollingáhttenvahkus.
+    ## Oasttán LSD gávpogis.
+
 
 # Genitive in coordination
 # ------------------------
@@ -11351,6 +11373,17 @@ SELECT (Dem Sg Nom @DN>) IF (*1C (N Nom) BARRIER NOT-ADJ);
 SELECT Adv IF (0C (@ADVL));
 	## Dainna Máret lávlii čiŋadit.
 	# Philisophy: An adverbial is preferably an adverb.
+	
+	
+# Verbs
+
+REMOVE Sg2 IF (0 Pl3)(*-1 (N Pl @SUBJ));
+    ## Girkonjárgga buohcceviessu, sámi hálddašanguovllu gielddat ja Finnmárkku lášmmodahttinguovddáš, mii lea Álttás, galget ovttasbargat dan hárrái.
+    
+REMOVE Sg2 IF (0 Pl3)(NOT *-1 @SUBJ)(*1 (Pl @SUBJ) BARRIER (V Pl3) LINK NOT *1 (V Pl3));
+    ## Ovddasvástádusa galget juohkit ieža sápmelaččat ja báikkálaš eiseválddit.
+     
+	
 
 # ========================== #
 # Tidying up some loose ends #
