@@ -288,6 +288,9 @@ SET HNOUN = N - Cmpnd ;
 SET HNOUN-NOM = (N Nom) - Cmpnd ;
 SET N-NOT-GEN = N - (N Gen) ;
 
+LIST XMEANTA = "departemeanta" "dokumeanta" ;
+LIST XMENTA   = "departementa" "dokumenta" ;
+
 
 # Verb sets
 # ---------
@@ -334,7 +337,7 @@ LIST V-PL3 = (V  Ind Prs Pl3) (V Ind Prt Pl3) (V Cond Prs Pl3)
 
 # Some subsets of the VFIN sets
 # - - - - - - - - - - - - - - -
-
+SET V-SG = V-SG1 | V-SG2 | V-SG3 ;
 SET V-DU = V-DU1 | V-DU2 | V-DU3 ;
 SET V-PL = V-PL1 | V-PL2 | V-PL3 ;
 
@@ -722,13 +725,16 @@ LIST INSTITUTION = "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "bargo#ka
 
 LIST ARRANGEMENT = "čakča#márkan" ;
 
-LIST HUMAN = "bártni" "boaris" "gánda" "nieida" "olbmo" "olmmái" "váhnen";
+LIST HUMAN = "áhčči" "áddjá" "áhkku" "bártni" "boaris" "čeahci" "eadni" "eahki" "eanu" "gánda" "goaski" "muoŧŧa" "nieida" "nisson" "oabba" "oambealli" "oarpmealli" "olbmo" "olmmái" "siessá" "váhnen" "viellja" "vilbealli" ;
 
-LIST PROFESSION = "logopeda" "suohkanfysio#terapeuta" "fysio#terapeuta" "fysio#terapevta" "oahppah#eaddji" "doavttir"; 
+LIST PROFESSION = "logopeda" "suohkanfysio#terapeuta" "fysio#terapeuta" "fysio#terapevta" "oahppah#eaddji" "doavttir" "politihkar" "politihkkár"; 
 
 LIST ANIMATE-NOT-HUMAN = "beana" ;
 
-SET ANIMATE = HUMAN | ANIMATE-NOT-HUMAN;           
+SET ANIMATE = HUMAN | ANIMATE-NOT-HUMAN; 
+
+LIST OASSI = "oassi", "váldo#oassi"; 
+	#Might be useful for partitive constructions.
 
 # Miscellaneous sets
 # ------------------
@@ -1954,6 +1960,7 @@ MAP (@X) TARGET WORD ;
     # Adposition + Px
     # Some verb rules
     # Compounds
+    # Proper nouns
 
 # Lexicalised names
 # -----------------
@@ -2002,7 +2009,12 @@ SELECT A IF (0 ("sivaheapmi"));
  # This rule removes the reading sivahit+V+eapmi+N+Actio.
  # A more general rule (SELECT A IF (0 (heapmi))(0 Actio) went wrong.
 
+# Particular adjectives
+# ---------------------
 
+REMOVE ("čáppis") IF (0 ("čáppat" Attr));
+	## čáppat nieidda.
+	
 # Adjectives or nouns, not adverbs
 # --------------------------------
  # Words that probably are not adverbs when they appear in the -aččat form.
@@ -2156,10 +2168,17 @@ SELECT (V Neg Ind Sg1) IF (*-1 BOS BARRIER REALWORD);
 	## In.
 
 
-# Lexical disambiguation of nouns
+# Particular nouns
 # -------------------------------
 
 REMOVE (mihttom#earri") IF (0 ("mihtto#mearri"));
+
+
+# Noun classes
+# ------------
+
+REMOVE XMENTA IF (0 XMEANTA);
+	## dokumentii.
 
 # Not noun
 # --------
@@ -2234,6 +2253,11 @@ SELECT ("jienastus#lohku") IF  (0 ("jienastus#loahku"));
 REMOVE (Prop @NQ<) IF (0 Prop);
 	## 3.2 Sámi mánáid ja nuoraid bajásšaddaneavttut.
 
+# This is a Lule Sámi form.
+REMOVE ("Sámedigge") IF (0 ("Sámediggi"));
+
+# The form "norga" is not in the dictionary...
+REMOVE ("norga") IF (0 ("Norga"));
 
 
 
@@ -7685,8 +7709,8 @@ SELECT Adv IF (NOT 0 Attr OR VFIN OR Inf OR VGen OR Indef OR N OR Loc OR Ill)
 	
 # One early locative rule
 # - - - - - - - - - - - -
-SELECT Loc IF (*-1 ("bealli") OR ("guhtemuš") OR ("goappašat") OR ("oassi") OR 
-	("ollu") OR ("ollut") BARRIER NPNH);
+SELECT Loc IF (*-1 ("bealli") OR ("guhtemuš") OR ("goappašat") OR OASSI OR 
+	("ollu") OR ("ollut") BARRIER NPNH OR COMMA);
 	## Guhtemuš dainna bivdovugiin guhkimus leaš gevahuvvon...
 	## Dat sáhttet leat oassin árvvoštallamiin.
 	#If this does not work: maybe: REMOVE Acc?
@@ -8348,8 +8372,8 @@ SELECT Loc IF (-2C (Dem Pl Loc))(-1 Adv);
 REMOVE (Dem Pl Loc) IF (1 (Num Sg));
 	## Dainna čuđiin ruvnnuin áiggun bierggu oastit.
 
-SELECT Loc IF (*-1 ("bealli") OR ("guhtemuš") OR ("goappašat") OR ("oassi") OR 
-	("ollu") OR ("ollut") BARRIER NPNH);
+SELECT Loc IF (*-1 ("bealli") OR ("guhtemuš") OR ("goappašat") OR OASSI OR 
+	("ollu") OR ("ollut") BARRIER NPNH OR COMMA);
 	## Guhtemuš dainna bivdovugiin guhkimus leaš gevahuvvon...
 	## Dat sáhttet leat oassin árvvoštallamiin.
 
@@ -8405,6 +8429,19 @@ SELECT Loc IF (*-1 ACC-LOC-VERB BARRIER NOT-NP);
 	
 SELECT Loc IF (*-1 ("fitnat") BARRIER NPNH)(0 N);
     ## Mii leat ášši ovddidan sihke go leat fitnan departemeanttain.
+
+
+# Disambiguation based upon NP coordination
+# -----------------------------------------
+#both directions
+
+SELECT Loc IF (*-1 ("nugo" Adv) BARRIER NPNH LINK *-1 Loc BARRIER NOTCOMMA)(0 (Acc PxSg3));
+	## Departemeantta bealis atnet dehálažžan , ahte ovdánahttin dievasmahttá ja doarju sámi gelbbolašvuođa fylkkagielddaid sullasaš bálvalusain nugo gárrenávnnassuodjalusas , mánáidsuodjalusas ja bearašsuodjalusas .
+
+SELECT Loc IF (0 (Sg Com))(*1 ("nugo" Adv) BARRIER NOTCOMMA LINK *1 Loc BARRIER NPNH);   
+	## Departemeantta bealis atnet dehálažžan , ahte ovdánahttin dievasmahttá ja doarju sámi gelbbolašvuođa fylkkagielddaid sullasaš bálvalusain nugo gárrenávnnassuodjalusas , mánáidsuodjalusas ja bearašsuodjalusas . 
+
+
 	
 # Disambiguation based upon idiosyncratic verb NP combinations
 # --------------------------------------------------------------
@@ -8657,7 +8694,7 @@ REMOVE Com IF (*-4 (@OBJ) BARRIER VFIN)(*-3 (N Ill) OR (ACR Ill))(-1 CC OR COMMA
 
 # Plural locative as complement of quantifier
 
-SELECT Loc IF (*-1 ("proseanta") OR ("%") OR ("oassi") OR ("bealli") BARRIER NPNH)(0 Pl or Pl3)(NOT 0 Num OR Ord) ;
+SELECT Loc IF (*-1 ("proseanta") OR ("%") OR ("oassi") OR ("bealli") BARRIER NPNH OR COMMA)(0 Pl or Pl3)(NOT 0 Num OR Ord) ;
         ## Mun dovdan vihtta proseantta dainna.
 	## Dat maid gohčodit normála giellaovdáneapmi dáhpáhuvvá mánáin geat
 	## bajásšaddet eanet go ovttain gielain go seamma jahkásaš ovttagielat mánáin.
@@ -8723,6 +8760,7 @@ SELECT (Sg Com) IF (1 COMMA)(2 (Pron Interr Sg));
 SELECT (Sg Com) IF (-1  (N Sg Loc) LINK *-1 IV BARRIER TV)(0 N);
     ## Soai leigga čohkkámin fatnasis áhčiineaskka ja čiktimin firpmiid. 
     # This rule should be tested. In: zcorp/dis/sme/all/060227b.txt (8295).
+    
 # NP-internal disambiguation of Com
 # ---------------------------------
 SELECT Com IF (*-1C (Dem Sg Com) BARRIER NPNH);
@@ -8741,6 +8779,15 @@ SELECT Com IF (*-1C Num BARRIER NOT-ADJ OR ("jahkásaš"));
 SELECT Com IF (0 Prop)(NOT 0 ("Sápmi") OR ("Sámediggi")); 
 	##
  # Person names are normally sg.
+ 
+# Disambiguation based on valency of adverbs and particles
+# --------------------------------------------------------
+
+SELECT Com IF (*-1 ("searválagaid") BARRIER NPNH)(0 (Pl Loc));
+	## Ráđđehus áigu searválagaid Sámedikkiin čuovvulit Sámedikki mánáid - ja nuoraidplána.
+	
+SELECT Com IF (0 (Pl Loc))(*1 Rel LINK 1 ("searválagaid"))(NOT *1 Com BARRIER NPNH);
+	## Dán barggus sávvá Sámediggi oažžut ovttasbarggu eará oasálaččaiguin, vuosttažettin gielddain ja fylkkagielddain, mas searválagaid sáhttit ovdamearkka dihtii váikkuhit konsešuvdnaeavttuid hábmema...
 	
 
 # Disambiguation based upon verb valency
@@ -8762,6 +8809,15 @@ REMOVE Loc IF (*1 TOGETHER-VERB)(*2 ("oktii") BARRIER CS OR CP)(NOT *3 Com BARRI
     ## Dáinna háliidan čatnat oktii digáštallamiid fidnopedagogihka ja
     ## álgoálbmotoahpu birra, mat dán rádjái leat leamašan birrasiin man 
     ## gaskkas lea leamaš unnán oktavuohta.
+
+SELECT (Sg Com) IF (*-1 ("ovttas#bargat") LINK 0 V-SG)(0 (Pl Loc))
+(NOT *-1 Com);    
+    ## SDD ovttasbargá Sámedikkiin , Helse Nordiin ja gelbbolaš dutkanbirrasiiguin , ja čađahit sámi pasientaiskkadeami.
+    
+    
+SELECT (Sg Com) IF (*-1 ("ovttas#bargat" Inf) LINK *-1 V-SG)
+(NOT *-1 Com);
+    ## SDD áigu ovttasbargat Sámedikkiin , Helse Nordiin ja gelbbolaš dutkanbirrasiiguin , ja čađahit sámi pasientaiskkadeami.
     
 # Disambiguation based upon idiosyncratic V NP combinations
 # ---------------------------------------------------------
@@ -8958,7 +9014,7 @@ REMOVE Loc IF (*-1 ("ovttasbargo#čoahkkin") BARRIER CP OR CS)(0 ("mánáid#suod
 SELECT Com IF (-1 HUMAN OR PROFESSION LINK 1 ("fásta#bálká") OR ("bálká"));
     ## Bálvalusas lea nubbi suohkanfysioterapeuta fástabálkkáin ja nubbi priváhta dásis, gii oažžu 100 % doarjaga.
     # Assuming that the noun directly following a noun from the set HUMAN will also be its complement.
-
+    
 
 # =========== #
   CONSTRAINTS
