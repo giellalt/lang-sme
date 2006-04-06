@@ -151,7 +151,9 @@ LIST Ess = Ess ;
 
 LIST Sg = Sg ; LIST Pl = Pl ; LIST Du = Du ;
 
-LIST Cmpnd = Cmpnd ; LIST SgNomCmp = SgNomCmp ; LIST SgGenCmp = SgGenCmp ;
+LIST Cmpnd = Cmpnd ; 
+LIST SgNomCmp = SgNomCmp ; 
+LIST SgGenCmp = SgGenCmp ;
 
 LIST PxSg1 = PxSg1 ; LIST PxSg2 = PxSg2 ; LIST PxSg3 = PxSg3 ; 
 LIST PxDu1 = PxDu1 ; LIST PxDu2 = PxDu2 ; LIST PxDu3 = PxDu3 ; 
@@ -1918,7 +1920,7 @@ MAP (@ADVL) TARGET Gen IF (1 NP-BORDER OR Num)(NOT 1 Adv);
 	## Áddjá lei soggái čalmmiid.
     ## Mun čálán dieđáhusa 4.
     
-MAP (@SUBJ @OBJ @ADVL @SPRED @OPRED) TARGET Date ;
+MAP (@SUBJ @OBJ @ADVL @SPRED @OPRED @GP>) TARGET Date ;
     ## Odne lea 27.01.2005.
     ## 21.03. lea mu riegádanbeaivvi.
     
@@ -2235,7 +2237,11 @@ REMOVE ("leahkit") IF (0 ("leat" V IV Imprt Prs Sg3));
 # Compounds
 # ---------
 
-REMOVE SgNomCmp IF (0 SgGenCmp);
+REMOVE (SgNomCmp Cmpnd) IF (0 (SgNomCmp Cmpnd)); #SELECT Cmpnd IF (0 Cmpnd); works as well
+SELECT SgGenCmp IF (0 SgNomCmp); 
+    ## Sosiála- ja dearvvašvuođadepartemeanta.
+# This is a mystery. The second rule is the one we want to work, but it only works
+# if 
 # The background here is that we don't know which one is used if 
 # morphology cannot tell, so we may as well remove one of them.
 
@@ -2258,6 +2264,9 @@ REMOVE ("Sámedigge") IF (0 ("Sámediggi"));
 
 # The form "norga" is not in the dictionary...
 REMOVE ("norga") IF (0 ("Norga"));
+
+REMOVE ("Sáme#giella") IF (0 ("sáme#giella"));
+    ## Sámegiela hállet áidna giellan mánát, geat eai leat vel á´lgán skuvlii, bázáhallan olbmot ja boarrásat.
 
 
 
@@ -8409,6 +8418,10 @@ SELECT Loc IF (0 PL-NOUN);
 
 SELECT (Pl Loc) IF (0 ("beassáš"));
 	## Dat bistá beassážiin hellodagaide.
+	
+REMOVE Com IF (0 ("lagus"));
+    ## Guovlluin, mat leat Ruoŧa ráji lahkosiin, ledje stuora erohusat dáin sisaboađuin jagis 1998 ja ledje gaskkal 81 000 kr ( Romssas ) ja 400 000 kr ( Davvi-Trøndelágas ).
+    # Hopefully, we can make a set for location substantives that cannot be comitative.
 
 
 # Disambiguation based upon verb valency
@@ -10645,6 +10658,10 @@ REMOVE V-DER; # Removes only if there is another reading.
 
 REMOVE (@NQ<) IF (NOT *-1 Num BARRIER NPNH OR COMMA);
 
+REMOVE (@NQ<) IF (-1 (@NumN<));
+    ##Finnmárkku fylkkagielda lea jagi 1988 rájes ovddidan doaimmaid sámi álbmoga várás spesialistadearvvašvuođabálvalusas, ja ráhkadii jagi 1991 fylkkagieldda sámi dearvvašvuođa- ja sosiálaplána (rievdaduvvon maŋimus jagi 1995).
+
+
 REMOVE (@GN>) IF (NOT *1 N BARRIER (@NumN<) OR NPNH);  
     
 
@@ -11239,6 +11256,10 @@ SELECT (@+FMAINV) IF (NOT *-2 VFIN BARRIER CS)(-1 (@ADVL))(NOT 0 Inf)
 # Genitive
 # - - - - -
 
+SELECT (@GP>) IF (0 Date)(1C Po);
+    ## 01.01.02 rájes stáhta váldá badjelasas spesialistadearvvašvuođabálvalusaid eaiggátvuođa.
+REMOVE (@GP>) IF (0 Date)(NOT 1C Po);
+   
 REMOVE (@GN>) IF (1 CC)(2 ("dat" Gen));
 	## Romssa universitehta sámi strategiijaplána ja dan ruhtadeami...
 
