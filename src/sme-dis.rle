@@ -577,7 +577,7 @@ LIST OPRED-VERB = "atnit" "dadjat" "dahkat" "dulkot" "geavahit" "gohčodit" "goh
 	"válljet";
  # Verbs that occur with objects that have secondary predicates.
 
-LIST MOVEMENT-VERB = "mannat";
+LIST MOVEMENT-VERB = "čuoigat" "mannat" "sihkkelastit" "viehkalit" "viehkat" "vuodjat" "vuodjit" "vuolgit" ;
  # These verbs typically combine with place adverbials in the genitive case 
  # (i.e. not accusative).
 
@@ -1190,6 +1190,12 @@ MAP (@GP>) TARGET Gen IF (NOT 0 Cmpnd)(1 CC)(*2 Gen BARRIER NPNHA LINK 1 Po)
 	(NOT 0 (V Actio) LINK 1 CC LINK 1 (V Actio) LINK 1 ("dihte") OR ("dihtii"));
 	## Divššohas galgá maiddái oažžut dieđuid vejolaš riskkaid ja 
 	## lassiváikkuhusaid birra.
+	
+MAP (@GP>) TARGET Gen IF (NOT 0 Cmpnd)(1 COMMA)
+    (*2 Gen BARRIER NPNHA LINK 1 CC LINK *1 Gen BARRIER NPNHA LINK 1 Po)
+	(NOT 0 (V Actio) LINK 1 CC LINK 1 (V Actio) LINK 1 ("dihte") OR ("dihtii"));
+	## Dat lohká stuorradiggedieđáhusas Sámedikki birra ja stuorradiggedieđáhusain ođđa 
+	## mielladearvvašvuođafuolahusa, ođđa fástadoavtterortnega ja ođđa veajuiduhttima birra.
 
 MAP (@GP>) TARGET Gen IF (1 (Neg Foc))(2 Gen)(3 Po);
 	## Ii leat váldojuvvon ovdan Ruoŧa iige Suoma bealde.
@@ -2202,6 +2208,18 @@ REMOVE ("duđđa" N Pl);
 SELECT (N Sg Loc) IF (0 MANNU) ; # To avoid "skábma#mánus" N Sg Nom.
 	## Dat hávdáduvvojedje Álahedjui skábmamánus 1997.
 
+
+
+# Southern Locative vs. Essive
+# ----------------------------
+
+SELECT Ess IF (0 (Sg Loc));
+	## girkun
+	# This is a rule that prevents southern dialectal forms to destroy the rest of hte
+	# parser. It should be commented out whenever analysing texts with Locative -n only.
+	# All words with Cg will avoid this rule, since e.g. várin is southern Loc only.
+	
+	
 
 # Dates vs. numerals
 # ------------------
@@ -8520,6 +8538,9 @@ REMOVE Loc IF (-1 COM-VERB)(0 (Sg Com));
 
 REMOVE Com IF (*-1 ("bivdit"))(0 GUOVLU BARRIER NPNH);
 	## Eará bivdovugiiguin bivdojuvvo dušše muhtun sajiin.
+	
+SELECT Loc IF (*-2 ("bivdit") LINK *1 ("árvvoštallan" Acc) BARRIER NPNH)(0 (Sg Com));
+    ## Guovlluid dearvvašvuođafitnodagaid plánat ovddiduvvojit SDD dohkkeheapmái, ja SDD bivdá árvvoštallamiid geahččoeiseválddiin.
     
 # buoridit
 # - - - - -
@@ -8551,11 +8572,12 @@ REMOVE Com IF (0 ("šaddu"))(*1 ("dovdat") BARRIER CP OR CS);
 REMOVE Com IF (*-1 ("dovdat") BARRIER CP OR CS)(0 ("šaddu"));
     ## Muora dovdá dan šattuin.
 
-# dovdat
+# dikšut
 # - - - -   
 
 SELECT Loc IF (*-1 ("dikšut") BARRIER CP OR CS)(0 GUOVLU OR INSTITUTION);
     ## Eai leat lahkage doarvái logopedat, geat dikšot geavahedjiid klinihkain, eaige sámiid ássanguovllus leat galle gieldda, mat leat ásahan logopeda virggiid.
+    
     
 # finadit
 # - - - - -
@@ -8645,6 +8667,12 @@ REMOVE (Com) IF (@1 BOS LINK *1 ("orrot")) (0 (Pl Loc));
     
 # Idiosyncratic NP NP combinations
 # --------------------------------
+
+# dikšu
+# - - -
+
+SELECT Loc IF (-1 ("dikšu"))(0 ("gárren#ávnnas"));
+	## Nuoraidjoavku fállá poliklinihkalaš dikšunfálaldaga erenoamážit nuoraide ja nuorra rávisolbmuide, geain leat rádjašuvvan gárrenávnnasváttisvuođat, geat dárbbašit divššu gárrenávdnasiin ja miellaváttisvuođain ovttastuvvan váttisvuođaid geažil, dahje geain lea iešsoardinproblematihkka .
 
 REMOVE Com IF (*-1 ("guolle#hivvodat") BARRIER NPNH)(0 ("jávri"));
     ## Vestfjellprošeakta, mas kártet guollehivvodagaid jávrriin davábealde eanu.
@@ -9001,6 +9029,7 @@ SELECT Com IF (*-1 ("láktadit") BARRIER CP OR CS)(0 ("viidni"));
 REMOVE Loc IF (*-1 ("luddet") BARRIER CP OR CS)(0 ("ákšu"));
     ## Máret luddii galdda ákšuin.
     # Not hit!
+    
 # mihtidit
 # - - - - -
 
@@ -9029,7 +9058,16 @@ REMOVE Loc IF (0 ("ruvdno") OR ("ruvdnu") OR ("ruhta"))(*1 ("oastit") BARRIER CP
 # - - - - -
 
 REMOVE Loc IF (*-1 ("soabadit") BARRIER CP OR CS)(0 ("vuoste#belle") OR ("vuoste#bealli"));
-    
+
+# viehkalit
+# - - - - -
+
+#SELECT Com IF (*-2 ("viehkalit") LINK 1 Ill BARRIER NPNH)(0 ("diehtu" Loc));
+#SELECT Com IF (*-2 MOVEMENT-VERB LINK 1 Ill BARRIER NPNH)(0 ("diehtu" Loc));
+SELECT (Sg Com) IF (0 N LINK *-1 Ill BARRIER NPNH LINK *-1 MOVEMENT-VERB BARRIER NPNH)
+    (NOT 0 GUOVLU OR INSTITUTION OR TIME OR ROUTE OR MEASURE);
+    ## Sáhttá viehkalit siidii dieđuin jus juo olmmoš skibáiduvvá.
+	#  Todo: Choose between the three.    
     
 # vuodjit
 # - - - -
