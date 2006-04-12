@@ -207,6 +207,7 @@ LIST @OBJ = @OBJ ;
 LIST @OPRED = @OPRED ; LIST @PCLE = @PCLE ; LIST @PCLE-COMPL = @PCLE-COMPL ; LIST @PROP> = @PROP> ; 
 LIST @PrcN> = @PrcN> ; LIST @PronN< = @PronN< ; LIST @PronN> = @PronN> ;  LIST @QN< = @QN< ; 
 LIST @QN> = @QN> ; LIST @SPRED = @SPRED ; LIST @SUBJ = @SUBJ ; LIST @SUBJ-QH = @SUBJ-QH ; 
+LIST @APP = @APP ;
 
 
 LIST @TITLE = @TITLE ; LIST @VOC = @VOC ; LIST @X = @X ;
@@ -1223,7 +1224,9 @@ MAP (@GP<) TARGET (Pl Gen) IF (*-1 GASKAL BARRIER NOT-NP LINK NOT -1 (Pl Gen))
 MAP (@NQ<) TARGET Gen IF (*-1 NUMERALS BARRIER NP-BORDER OR N OR REALCLB OR PUNCT
 	LINK 0 Nom LINK NOT 0 Ord)(NOT 0 Num)(NOT 1 A OR N)(NOT -1 COMMA);
 	## Mun máksen 100 ruvnno duvle.
-	
+#MAP (@NQ< @GN>) TARGET Gen IF (*-1 NUMERALS BARRIER N OR REALCLB OR PUNCT
+#	LINK 0 Nom LINK NOT 0 Ord)(NOT 0 Num)(NOT -1 Ord LINK -1 Num);
+		
 MAP (@NQ< @GN>) TARGET Gen IF (*-1 NUMERALS BARRIER N OR REALCLB OR PUNCT
 	LINK 0 Nom LINK NOT 0 Ord)(NOT 0 Num);
 	## Skuvlajagis 2001/2002 leat oktiibuot 469 oahppi suohkana vuođđoskuvllain.
@@ -2258,9 +2261,8 @@ REMOVE Foc IF (0 Actio OR PrfPrc OR VGen);
 # Particular verbs
 # ----------------
 
-REMOVE ("leahkit") IF (0 ("leat" V IV Imprt Prs Sg3));	
+REMOVE ("leahkit") IF (0 ("leat" V IV Imprt Prs Sg3) OR ("leat" Inf));	
 	## lehkos!
-
 
 
 # Compounds
@@ -2907,6 +2909,7 @@ REMOVE (PxSg3) IF (*-1 Interr BARRIER VFIN)(*1 VFIN LINK NOT 0 Sg3);
         # Demonstrative pronouns
             # DP-internal number concord
             # DP-internal case concord
+        # Personal pronouns
             # Some rules for personal pronouns again (will hit "dat", except the last one)
             # Disambiguating against other POS
     # Disambiguating adjectives
@@ -4572,6 +4575,7 @@ SELECT Adv IF (-1 ("váldit"))(0 ("vuhtii"));
        CONSTRAINTS        # 
 # ======================= #
 
+
 # Interrogative and relative pronouns
 # ===================================
 
@@ -5030,6 +5034,9 @@ SELECT (Dem Sg Nom) IF (0 ("dat"))(1 ("gal") OR Pcle)(2 (N Sg Nom));
 
 # More rules for Dem in front of NUMERALS must be added.
 
+
+# Nominative
+
 SELECT (Dem Sg Nom) IF (0 ("dat"))(*1 (N Sg Nom) BARRIER NOT-ADJ 
 	LINK 0 HNOUN LINK *1 V-SG3 BARRIER CC OR CS OR PUNCT);
 
@@ -5058,9 +5065,13 @@ SELECT (Dem Pl Nom) IF (0 ("dat"))(1 NUMERALS LINK 0 Nom);
 SELECT (Dem Pl Nom) IF (1 Nom)(2 (Pron Interr Pl));
 	## No examples in corpus? 
 
+# Accusative
+
 SELECT (Dem Acc) IF (0 ("dat"))(1C (Num Acc) OR (Indef Acc));
 	## Tabealla vuosttaš ceakkočuolddas oaidnit dan golbma bajitdási
 	## váldofáddajoavkku.
+
+# Genitive
 
 SELECT (Dem Gen) IF (0 ("dat"))(1C (Num Gen))(NOT 0 (Dem Pl) LINK 1 ("okta"));
 SELECT (Dem Gen) IF (NOT *-1 VERB OR CC BARRIER NOT-ADV-PCLE)(0 ("dat"))
@@ -6256,6 +6267,10 @@ REMOVE Plc (-1 (Prop Mal Attr) OR (Prop Fem Attr))(0 Sur);
 REMOVE Fem IF (-1 (Prop Attr))(0 Sur);
 	## Johan Mattis Eira ja Karen Marie Eira Buljo.
 
+REMOVE Sur IF (-1 (Prop Attr))(NOT -1 Mal OR Fem);
+	## Helse Nord.
+	
+	
 # Nouns versus adjectives
 # =======================
  # Note that although the following rules are single cohort rules, they could 
@@ -6405,9 +6420,12 @@ SELECT Loc IF (NOT *-1 Sg3)(0 PxSg3);
 
 # Genitive after quantifier
 # - - - - - - - - - - - - - 
-SELECT Gen IF (*-1C Num BARRIER NPNH OR Gen OR CC OR PUNCT OR REALCLB 
+SELECT Gen IF (*-1C Num BARRIER NPNH OR Gen OR CC OR PUNCT OR REALCLB OR Ord
 	LINK NOT 0 ("okta") OR Ord)(NOT 0 VERB OR ("nr") OR ("nummar") OR ("s"));
 	## Golbma čáppa, doaimmalaš nieidda livžo áhčiset riegádanbeaivve.
+	
+REMOVE Gen IF (*-1C Ord BARRIER NPNH OR Gen OR CC OR PUNCT OR REALCLB OR Ord
+	LINK NOT 0 ("okta"))(NOT 0 VERB OR ("nr") OR ("nummar") OR ("s"));
 
 SELECT Gen IF (*-1 Num BARRIER NPNH OR Gen OR PUNCT OR REALCLB LINK 
 	NOT 0 ("okta") OR Ord LINK *-1 ("leat") BARRIER NOT-ADV-PCLE)
@@ -10745,7 +10763,10 @@ REMOVE (@NQ<) IF (-2 ("nr") LINK 1 Num);
 	## Dearvvašvuođaregisttarláhka lea sierraláhka heaggadieđuidlága ektui (cuoŋománu 14. b. 2000 láhka nr 31 heaggadieđuid gieđahallama birra ).
 	
 REMOVE (@NQ<) IF (0 ("nr") OR ("§"));
-	## Máná iežas journála geahččanlobi ferte árvvoštallat divššohasvuoigatvuođalága § 5-1, § 4-4, § 3-4 ja § 3-5 ektui.    
+	## Máná iežas journála geahččanlobi ferte árvvoštallat divššohasvuoigatvuođalága § 5-1, § 4-4, § 3-4 ja § 3-5 ektui.
+	
+REMOVE (@NQ<) IF (-1 Ord);
+	## Geahča § 12 vuosttas lađđasa mávssu birra máŋgosa / nuppádasa ovddas.    
 
 # Subject
 # -------
@@ -11529,11 +11550,14 @@ REMOVE (@OPRED) ;
 
 # Demonstratives
 
-SELECT (Dem Sg Acc @DN>) IF (*1C (N Acc) BARRIER NOT-ADJ);
+SELECT (Dem Acc @DN>) IF (*1C (N Acc) BARRIER NOT-ADJ);
 	## , man šaddet dán ulbmila ollašuhttimis.
+    ## Berrejitgo sámi geavaheaddjit fgeavahit dáid fálaldagaid?
+    
+SELECT (Dem Gen @DN>) IF (*1C (N Gen) BARRIER NOT-ADJ);
+SELECT (Dem Sg Nom @DN>) IF (*1C (N Sg Nom) BARRIER NOT-ADJ);
+SELECT (Dem Pl Nom @DN>) IF (*1C (N Pl Nom) BARRIER NOT-ADJ);
 
-SELECT (Dem Sg Gen @DN>) IF (*1C (N Gen) BARRIER NOT-ADJ);
-SELECT (Dem Sg Nom @DN>) IF (*1C (N Nom) BARRIER NOT-ADJ);
 
 # Adverbs
 
@@ -11578,6 +11602,9 @@ REMOVE (@X) ; # Kein Spur...
 
 SUBSTITUTE (Plc) (Sur) TARGET (Prop) IF (-1C (Mal Attr) OR (Fem Attr));
 
+SUBSTITUTE (@OBJ) (@APP) TARGET (N) IF (-1 Ord LINK -1 Num LINK -1 KLASS);
+#SUBSTITUTE (@OBJ) (@APP) TARGET N IF (-1 Ord); #(-2 Num)(-3 N LINK 0 KLASS);
+	## Geahča $ 12 vuosttas lađđasa mávssu birra máŋgosa/nuppádasa ovddas.
 
 #=====#
   END #
