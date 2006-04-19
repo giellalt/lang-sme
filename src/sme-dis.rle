@@ -716,6 +716,10 @@ LIST NUMMAR = "nr" "nummar" "nummir" ;
 
 LIST KLASS = "s" "siidu" "§" "§§" "pragráfa" "oassi" "kapihttal" "kapihtal";
 
+LIST SPATIAL = "alu" "asa" "gasu" "govddu" "guhku" "viidu";
+    # Those are words that only appear in one form, which Nickel calls A/G.
+    # They are only in a predicative position.
+
 LIST LAHKA = "almennet#láhka" "almmolašvuođa#láhka" "apotehka#láhka" "arkiiva#láhka" "áhpenuohtástan#láhka" "álbmotoadjo#láhka" "bargiid#láhka" "bargobiras#láhka" "báikenamma#láhka" "bákte#láhka" "bátnedearvvašvuođabálvalus#láhka" "bivdo#láhka" "boazodoallo#láhka" "čázádat#láhka" "dálkkas#láhka" "dásseárvo#láhka" "deanu#láhka" "dearvvašvuođabargiid#láhka" "dearvvašvuođa#láhka" "dearvvašvuođaregisttar#láhka" "divššohasvuoigatvuođa#láhka" "eana#láhka" "eanasuodjalan#láhka" "eanavuovdin#láhka" "elliidsuodjalan#láhka" "energi#láhka" "fápmudusa#láhka" "fápmudus#láhka" "Finnmárko#láhka" "friddjasuohkan#láhka" "fuođđo#láhka" "gávpot#láhka" "geaidno#láhka" "gearggusvuođa#láhka" "gielddadearvvašvuođabálvalus#láhka" "gielda#láhka" "gilioppalašeana#láhka" "irko#láhka" "golle#láhka" "guladigge#láhka" "guollebiebman#láhka" "háhkankonsešuvdna#láhka" "hálddašan#láhka" "heaggadieđuid#láhka" "huksen#láhka"  "industrikonsešuvdna#láhka" "jávrebivdo#láhka" "joatkkaoahpahus#láhka" "johtolat#láhka" "konsešuvdna#láhka" "kulturmuito#láhka" "lavdnjeloggun#láhka" "láhka" "luodda#láhka" "luonddusuodjalus#láhka" "luopmo#láhka" "luossa#láhka" "mánáidgárde#láhka" "mánáidsuodjalusbálvalus#láhka" "mearraguolástan#láhka" "mearraresursa#láhka" "minerálaláhka" "mohtorjohtolat#láhka" "mudden#láhka" "namma#láhka" "oahpahalli#láhka" "oahpahus#láhka" "oahpo#láhka" "olgunastin#láhka" "olmmošvuoigatvuođa#láhka" "oktasašsáme#láhka"  "pasientavuoigatvuođa#láhka" "ráŋggáštan#láhka" "riekteveahkke#láhka" "sáivabivdo#láhka" "sáme#láhka" "sámi#láhka" "searvan#láhka" "sierra#láhka" "spesialistadearvvašvuođabálvalus#láhka" "stáhtaborgárrievtti#láhka" "stáhtafitnodat#láhka" "tuollu#láhka" "varasguolle#láhka" "várre#láhka" "vearrodahko#láhka" "vearro#láhka" "vuođđo#láhka" "vuođđoskuvla#láhka" "vuovdedoallo#láhka" "vuovdegáhtten#láhka" "vuovde#láhka" "1842-#láhka" "1863-#láhka" "1888-#láhka" "1899-bivdo#láhka" "1899-#láhka" "1920-várre#láhka" "1933-#láhka" "1965-#láhka" "1975-#láhka" "1975-várre#láhka" "1978-#láhka" ;
 
 LIST LAGA = "lága" "vuođđo#lága";
@@ -1320,6 +1324,20 @@ MAP (@GA>) TARGET Gen IF (1C A)(1 (Sg Loc))(2C NP-BORDER); #  (NOT 0 Interr OR A
 MAP (@NPron<) TARGET (N Pl Gen) IF (-1 ("mii" Interr) OR ("mihkkege") OR ("gii"));
 	## Maid ipmašiid doppe dagat?
 	## Ii šaddan mihkkege gávnnademiid.
+	
+# Appositions
+# -----------
+
+MAP (@APP) TARGET (A Ord) IF (-1 Prop LINK NOT 0 Plc);
+	## Heinrich IV. lea boaris.
+	## Heinrich njealját lea boaris.
+	
+	
+# Numeral adjective mappings
+# --------------------------
+
+MAP (@AN>) TARGET (A Ord) IF (*1 N BARRIER NOT-A);
+	## III kapihtal priváhta arkiivvaid birra máinnaša vuosttažettiin gáhttenárvosaš priváhta arkiivvaid.
 
  
 # Quantifier mappings
@@ -1328,7 +1346,7 @@ MAP (@NPron<) TARGET (N Pl Gen) IF (-1 ("mii" Interr) OR ("mihkkege") OR ("gii")
 MAP (@NumQ<) TARGET (Num) IF (-1 Num)(0 NUMUNIT);
     ## Dat lea 4 miljovnna deajakohpa.
     
-MAP (@AN>) TARGET (Num Ord)(*1 NP-MEMBER BARRIER NPNH);
+MAP (@AN>) TARGET (Num Ord)(*1 N BARRIER NOT-A);
         ## Dat lei 33. teakstaoassi.
         ## Arkiivaláhka III máinnaša vuosttažettiin gáhttenárvosaš priváhta arkiivvaid.
 
@@ -3066,7 +3084,7 @@ REMOVE A IF (NOT -1 ("mii" Sg Gen))(0 N)(NOT 0 Comp OR Ess OR ("veara") OR
 	("mearkkašan#veara") OR ("namuhan#veara"))(1C VFIN)
 	(NOT 1 ("leat") LINK *1 ("ahte") BARRIER NOT-ADV-PCLE)
 	(NOT 1 go LINK *1 COPULAS BARRIER V-NOT-AUX  LINK *1 (@SUBJ) BARRIER NOT-NP)
-	(NOT 0 Qst LINK *1 COPULAS BARRIER V-NOT-AUX  LINK *1 (@SUBJ) BARRIER NOT-NP); 
+	(NOT 0 Qst LINK *1 COPULAS BARRIER V-NOT-AUX  LINK *1 (@SUBJ) BARRIER NOT-NP)(NOT 0 (A Ord) LINK -1 Prop LINK NOT 0 Plc); 
 	## Dál go sápmelaččain leat bohccot.
 	## Man guhkki lea du biila? # NOT -1 "mii" Sg Gen!	 
 
@@ -3096,7 +3114,8 @@ REMOVE Adv IF (1C Po)(NOT 1 Px OR Adv OR ("mielde"));
 	## Mun vulgen dušše mielde.
  	## ... šattai Unjárga maid mielde... 
 
-REMOVE A-CASE IF (*-1 BOS OR CS OR (":" CLB) BARRIER NOT-DEM)(0 N)(NOT 0 ("buorre"))(1 N);
+REMOVE A-CASE IF (*-1 BOS OR CS OR (":" CLB) BARRIER NOT-DEM)(0 N)(NOT 0 ("buorre"))(1 N)
+(NOT 0 Ord LINK *1 N BARRIER NOT-A);
 	## Sápmelaččaid historjá lea boaris.
  # No adjective, except buorre, agrees with a head noun in case. The correct
  # reading for a case-inflected prenominal word must thus be N.
@@ -3329,14 +3348,18 @@ SELECT (@ADVL) IF (-1 LEFT)(0 ("§") OR ("§§"))(*1 RIGHT BARRIER REALWORD);
 # Disambiguating numerals    #
 # ========================== #
 
-SELECT Ord IF (NOT *-1 NP-MEMBER BARRIER NPNH)(0 ACR)(1 NP-MEMBER);
+SELECT Ord IF (NOT -1 N)(0 ACR)(*1 N BARRIER NOT-A);
     ## III kapihtal priváhta arkiivvaid birra máinnaša vuosttažettiin gáhttenárvosaš priváhta arkiivvaid.
     
-SELECT Ord IF (*-1 NP-MEMBER LINK 0 Gen BARRIER NPNH)(0 ACR)(1 NP-MEMBER);
+SELECT Ord IF (-1 N LINK 0 Gen)(0 ACR)(*1 N BARRIER NOT-A);
     ## Arkiivalága III kapihtal priváhta arkiivvaid birra máinnaša vuosttažettiin gáhttenárvosaš priváhta arkiivvaid.
+    ##  Arkiivalága III. kapihtal priváhta arkiivvaid birra máinnaša vuosttažettiin gáhttenárvosaš priváhta arkiivvaid.
 
-REMOVE (N Ord) IF (-1 NP-MEMBER)(NOT 1 NP-MEMBER);
     ## III. kapihtal priváhta arkiivvaid birra máinnaša vuosttažettiin gáhttenárvosaš priváhta arkiivvaid.
+    
+SELECT (A Ord) IF (-1 Prop LINK NOT 0 Plc);
+	## Heinrich IV. lea boaris.
+	## Heinrich njealját lea boaris.
     
 SELECT Num IF (-1 COUNTABLE OR ("nr"))(0 ABBR OR ACR) ;
 	## Dieđáhusa oasis I ovdanbuktojuvvo Bb:a sámepolitihkalaš vuođđolávdi.
@@ -6379,6 +6402,17 @@ SELECT (Pl Loc) IF (-1 ("suohkan" @GN>))(0 ("vuođđo#skuvlla") OR ("mánáid#g�
 
 # Special rules
 # =============
+
+# Accusative in measure adverbial expressions
+# -------------------------------------------
+ 
+# This is a very restricted context, we do away with these first.
+
+SELECT Acc IF (0 Num LINK *1 N BARRIER NOT-A LINK 1 SPATIAL);
+SELECT Acc IF (0 Num LINK 1 SPATIAL);
+SELECT Acc IF (0 Num LINK 1 Num LINK 1 SPATIAL);
+SELECT Acc IF (0 SPATIAL);
+
 
 # Accusative or genitive in front of ALU and in front of adjectives
 # -----------------------------------------------------------------
