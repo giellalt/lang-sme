@@ -415,6 +415,7 @@ SET A-CASE = A - Attr - Adv ;
 LIST A-CC = A CC ;
 
 SET NOT-ADJ = WORD - A ;
+SET NOT-ADJ-COMMA = WORD - A - COMMA ;
 SET NOT-Attr = WORD - Attr ;
 SET NOT-ADJ-PCLE = WORD - A - Pcle ;
 SET NOT-ADJ-CC = WORD - A-CC ;
@@ -676,7 +677,7 @@ LIST GUOVLU = "ássan#guovlu" "sámi#guovlu" "báiki" "biras" "gávpot" "guovlu"
 LIST ROUTE = "fávli" "geaidnu" "guorra" "luodda" "miila"; # and others!
 
 LIST MEASURE = "miila" "kilo#mehtar" "mehtar" "mehter" "centi#mehtar" "sente"
-	"cm" "milli#mehtar" "tumá" "állan" "salla" "lihtter" "gilo" ;	
+	"cm" "milli#mehtar" "tumá" "állan" "salla" "lihtter" "gilo" "čuolda#badji";	
 
 LIST NUMUNIT = "čuohti" "duhát" "miljon" "millijovdna" "milliovdna" "mill" "milj" "miljo" "miljarda" "mrd";
 
@@ -699,6 +700,8 @@ LIST N-PX = "áhčči" "bárdni" "eadni" "nieida" "viellja" "oabbá";
 
 LIST ALU = ("allu" Gen)("assu" Gen)("čiekŋu" Gen)("gassu" Gen)("govdu" Gen)
 	   ("guhkku" Gen)("lossu" Gen)("stuorru" Gen)("viidu" Gen);
+	   # Those are words that only appear in one form, which Nickel calls A/G.
+       # They are only in a predicative position.
 
 LIST TITLE = "ámta#mánni" "direktevra" "eanan#hearrá" ("gásttašit" eaddji) "gonagas" 
 	"justitiarius" "korefereanta" "ossodat#direktevra" 
@@ -1366,6 +1369,15 @@ MAP (@PCLE-COMPL) TARGET (Num Nom) IF (-1 ("dego"))(NOT *1 VFIN BARRIER CS);
 MAP (@ADVL) TARGET (Num Nom) IF (-1 ("b" ABBR) OR ("beaivi"))(-2 Ord);
 	## Artihkkal lea šaddan fas áigeguovdilin maŋŋá go heivehuvvui 
 	## norgalaš riektái miessemánu 21. b. 1999 nr 30 lága bokte.
+	
+MAP (@QN>) TARGET (Num Acc) IF (1 MEASURE LINK 1 ALU);
+	## Guokte golbma mehtera guhku, ja guhkitge, sáhttá vuojahat leat.
+	
+MAP (@QN>) TARGET (Num Acc) IF (1 (Num Acc) LINK 1 MEASURE LINK 1 ALU);
+	## Guokte golbma mehtera guhku, ja guhkitge, sáhttá vuojahat leat.
+	
+MAP (@QN>) TARGET (Num Acc) IF (1 (Num Acc))( (Num Acc) LINK 1 MEASURE LINK 1 ALU);
+	## Guokte golbma njeallje mehtera guhku, ja guhkitge, sáhttá vuojahat leat.
 
 MAP (@QN>) TARGET (Num Gen) IF (NOT 0 (Num Nom))(NOT -1 ("nr"))(*1 (N Gen) BARRIER NP-BORDER OR N);
 	## Galgá čájehit vuollegašvuođa juohke ovtta divššohasa eallimii.
@@ -5184,6 +5196,12 @@ REMOVE (Pron Pers Sg3 Gen) IF (NOT -1 Pr)(0 (Pron Dem Sg Gen))
 	## Dieđuid galgá heivehit dan sámi guvlui, gos mánát orrot.
 
 
+# Essive
+
+REMOVE Dem IF (0 Ess)(NOT * (N Ess) BARRIER NPNH);
+	## Doaibmaplánas deattuhuvvojit danin doaimmat bargiid hárrái.
+
+
 # Personal pronouns
 # =================
 
@@ -6423,6 +6441,11 @@ SELECT Acc IF (0 NUMERALS)(1 MEASURE)(2 ALU OR A);
 SELECT Acc IF (-1 (Num Acc))(0 MEASURE)(1 ALU OR A);
 	## Min viessu lea vihtta mehtara alu.
 	## Sus lea njeallje mehtara guhkkosaš biila.
+	
+SELECT Acc IF (0 NUMERALS)(1 (Num Acc))(2 MEASURE)(3 ALU OR A);
+	## Guokte golbma mehtera guhku, ja guhkitge, sáhttá vuojahat leat.
+	
+SELECT Acc IF (0 NUMERALS)(1 (Num Acc))(2 (Num Acc))(3 MEASURE)(4 ALU OR A);
 
 SELECT Acc IF (-1 (Num Acc))(0 MEASURE)(1 Pr);
 	## Ádjá viessu lea guokte miilla bajábeal márkana.
@@ -11487,6 +11510,8 @@ SELECT (@NQ<) IF (*-1 Num BARRIER NOT-ADJ)(0 (N Gen Sg));
 REMOVE (@NQ<) IF (0 ("nubbi" A Ord Sg Gen @NQ<));
 	## Artihkkal 13 vuosttaš ja nuppi lađđasa čuoggáin 14.
 
+REMOVE @SUBJ-QH IF (-1 N)(0 (@NumN<))(NOT *1 N BARRIER NOT-ADJ-COMMA);
+	## 
 
 
 # Adverbials
