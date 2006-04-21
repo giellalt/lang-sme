@@ -566,8 +566,10 @@ SET V-TRANS-ACT-NOT-AUX  = TV - V-PASS - AUX ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 LIST LOC-VERB = "ballat" "beassat" "beroštit" "biehttalit" "bihtit" "boahtit" 
-		"ceavzit" "čuoččut" "čuovvut" "dolkat" "fuollat" "geargat" 
+		"ceavzit" "čuoččut" "čuovvut" "dolkat" "fuolahit" "fuollat" "geargat" 
 		"heaitit" "ilbmat" "jearrat" "luohpat" "nohkkot" "váruhit" "veallát";
+		#Note that "fuolahit" obviously has two homonymous variants: 
+		#fuolahit1+Acc, fuolahit2+Loc
 
 LIST COM-VERB = "árvalit" "árvvohuššat" "ávkašuvvat" "bargat" "bártašuvvat" 
 		"háladit" "hilbošit" "humadit" "meannudit" "náitalit" "riidalit" 
@@ -9992,22 +9994,28 @@ SELECT V-PL3 IF (*-1 (N Num) BARRIER NP-HEAD-NOM OR VFIN OR ConNeg OR CS OR CP
 
  # Pl3 verbs that follow relative clauses:
 
-SELECT V-PL3 IF (*-2 VFIN BARRIER CS OR CP LINK *-1 (Pron Interr Pl) BARRIER CS OR 
+SELECT V-PL3 IF (*-2 VFIN BARRIER CS OR CP LINK *-1 (Pron Rel Pl) BARRIER CS OR 
 	CP)(-1 COMMA)(NOT 0 Inf LINK *-2 Inf BARRIER VFIN);
 	## Dieđut mat leat dárbbašlaččat, galget liikká addojuvvot.  
 
-SELECT V-PL3 IF (-1 CLB LINK *-1 (Pron Interr) OR MO BARRIER CS LINK *-1 (N Pl Nom) 
+SELECT V-PL3 IF (-1 CLB LINK *-1 (Pron Rel) OR MO BARRIER CS LINK *-1 (N Pl Nom) 
 	OR (Pron Pl3 Nom) BARRIER N OR VFIN LINK NOT *-1 V-PL3 BARRIER CS OR CP)
 	(NOT 0 Qst);
 	## Dát duovdagat gos jogat ja ádjagat, jávrrit ja eará čáhcečoahkut
 	## leat, gullet daid duovdagiid eaiggádiidda.
 
-SELECT V-PL3 IF (*-1 VFIN BARRIER Nom OR CS OR CP LINK *-1 (Pron Interr)
+SELECT V-PL3 IF (*-1 VFIN BARRIER Nom OR CS OR CP LINK *-1 (Pron Rel)
 	BARRIER CS LINK *-1 (N Pl Nom) OR (Pron Pl3 Nom) BARRIER N OR VFIN 
 	LINK NOT *-1 V-PL3 BARRIER CS OR CP)(NOT 0 Qst OR Adv);
 	## Olbmot, geat oassálastet kulturdoaimmaide vásihit sosiála oassá-
 	## lastima.
 
+ # Pl3 verbs that follow appositions:
+ 
+REMOVE (V Sg2) IF (*-1 NUMERALS LINK 0 (@SUBJ-QH) BARRIER VFIN LINK 1 (@NQ<) BARRIER ("don"));
+
+REMOVE (V Pl1) IF (*-1 NUMERALS LINK 0 (@SUBJ-QH) BARRIER VFIN LINK 1 (@NQ<) BARRIER ("mii"));
+    ## Guokte beroštumiorganisašuvnna, Kirkens Familievern (KF, Girku bearašsuodjalus) ja Offentlige Familievernkontorers Organisasjon (OFO, Almmolaš bearašsuodjaluskantuvrraid organisašuvdna) leat dán rádjai fuolahan doaimmain ja prošeavttain, maid ulbmil lea ovddidit fágalaš bearašsuodjalusa.
 
  # Coordinated subjects
 
@@ -11250,15 +11258,19 @@ SELECT (@SPRED) IF (*-1 CC BARRIER NPNH LINK -1C (@SPRED))
 SELECT (@SPRED) IF (*-1 COMMA BARRIER NPNH LINK -1C (@SPRED))(0 A)
 	(NOT *1 VFIN BARRIER CLB OR CS);
 	## Guokte golbma čuoldabaji guhku, ja guhkitge, sáhttá vuojahat leat.
-	
-SELECT (Sg @SPRED) IF (*-1 BOS LINK *1 V-SG);
-    ## Guokte golbma čuoldabaji guhku, ja guhkitge, sáhttá vuojahat leat.
-    
-SELECT (Sg @SPRED) IF (*1 V-SG BARRIER VFIN);
 
-SELECT (Pl @SPRED) IF (*-1 BOS LINK *1 V-PL OR V-DU BARRIER VFIN);
 
-SELECT (Pl @SPRED) IF (*1 V-PL OR V-DU BARRIER VFIN);
+# Topicalised @SPRED
+# - - - - - - - - - -
+	# Revise these rules:
+	# Make test sentences. Make rules who identify the subject in another position
+
+#SELECT (Sg @SPRED) IF (*-1 BOS LINK *1 V-SG LINK 1 (@SUBJ) LINK 1 Inf);
+    ## Guokte golbma čuoldabaji guhku, ja guhkitge, sáhttá vuojahat leat.    
+
+#SELECT (Sg @SPRED) IF (*1 V-SG BARRIER VFIN LINK 1C @SUBJ);
+#SELECT (Pl @SPRED) IF (*-1 BOS LINK *1 V-PL OR V-DU BARRIER VFIN LINK 1C @SUBJ);
+#SELECT (Pl @SPRED) IF (*1 V-PL OR V-DU BARRIER VFIN LINK 1C @SUBJ);
 
 
 # Subject or not
