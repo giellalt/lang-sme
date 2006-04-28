@@ -563,7 +563,7 @@ LIST ACC-INF-VERB = "bivdit" "čuorvut" "dagahit" "diktit" "gohččut" "movttiid
 	## Ii suova nieiddas náitalit.
 
 
-LIST OPRED-VERB = "atnit" "dadjat" "dahkat" "dulkot" "geavahit" "gohčodit" "gohččut" 
+LIST OPRED-VERB = "atnit" "dadjat" "dahkat" "dulkot" "geavahit" "gohčodit" "gohččut" "ráhkadit"
 	"válljet";
  # Verbs that occur with objects that have secondary predicates.
 
@@ -783,13 +783,17 @@ LIST INSTITUTION = "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "bargo#ka
 
 LIST ARRANGEMENT = "čakča#márkan" ;
 
-LIST HUMAN = "áhčči" "áddjá" "áhkku" "bártni" "boaris" "čeahci" "eadni" "eahki" "eami#álbmot" "eanu" "gánda" "goaski" "muoŧŧa" "nieida" "nisson" "oabba" "oambealli" "oarpmealli" "olbmo" "olmmái" "siessá" "váhnen" "viellja" "vilbealli" ;
+LIST HUMAN-INDIVIDUAL = "áhčči" "áddjá" "áhkku" "bártni" "boaris" "čeahci" "eadni" "eahki" "eanu" "gánda" "goaski" "muoŧŧa" "nieida" "nisson" "oabba" "oambealli" "oarpmealli" "olbmo" "olmmái" "siessá" "váhnen" "viellja" "vilbealli" ;
+
+LIST HUMAN-GROUP = "eami#álbmot" ;
+
 
 LIST PROFESSION = "logopeda" "suohkanfysio#terapeuta" "fysio#terapeuta" "fysio#terapevta" "oahppah#eaddji" "doavttir" "politihkar" "politihkkár"; 
 
-LIST ANIMATE-NOT-HUMAN = "beana" ;
+LIST ANIMAL = "áldu" "bálddis" "beana" "boazu" "bohkká" "ciiku" "čivga" "čuska" "dámmá" "dorski" "ealit" "gáhttu" "gáica" "gálbi" "gihcci" "gilot"  "guigu" "gussa" "hávga" "heasta" "juksu" "láppis" "loddi" "miessi"  "muortu" "njiŋŋálas" "ore" "sallit" "sarvvis" "sávza" spiinne#čivga "spiidni" "stábbasáidi" "stáinnir" "stuorasáidi" "rutnot" "vársi" "vielppis" "vierca" "vuoksá" "vuoncá#varis" "vuonccis" "vuonjal" ;
 
-SET ANIMATE = HUMAN | ANIMATE-NOT-HUMAN; 
+SET HUMAN = HUMAN-INDIVIDUAL | HUMAN-GROUP | PROFESSION ;
+SET ANIMATE = HUMAN | ANIMAL; 
 
 LIST OASSI = "oassi", "váldo#oassi"; 
 	#Might be useful for partitive constructions.	
@@ -4688,7 +4692,7 @@ SELECT Adv IF (0 ("viso"))(NOT 1 (N Pl));
  
 # viššal vs. viššalaš
 # - - - - - - - - - -
-REMOVE ("viššalaš") IF (*-1 HUMAN OR PROFESSION LINK 0 (@SUBJ) BARRIER CS OR CP);
+REMOVE ("viššalaš") IF (*-1 HUMAN LINK 0 (@SUBJ) BARRIER CS OR CP);
     ## Sihke Mázes ja Guovdageainnus leat boarrásat viššalit finadan doaibmaguovddážiin.
 
 # vuhtii
@@ -8509,7 +8513,7 @@ REMOVE (N Acc) IF (*-1C (N Acc) BARRIER Inf OR Actio OR CS OR CP OR CC OR CLB
 
 REMOVE Acc IF (NOT 0 Dem OR Num)(*1C (N Acc) BARRIER NPNH OR PrfPrc OR COMMA OR CC 
 	OR ("/") LINK NOT 0 TIME OR ROUTE)(NOT 0 (N Acc) LINK 1 (Prop Acc));
-	## Divššohasas lea vuoigatvuohta iežas journála geahččat. 
+	## Divššohasas lea vuoigatvuohta iežas journála geahččat.
 
 REMOVE Acc IF (NOT 0 Dem OR Pers OR Interr)(*1C (Pron Acc) BARRIER CC OR CP 
 	OR CS OR CLB OR Neg OR Actio OR go LINK NOT 0 Interr OR Refl)(NOT 1 Indef);
@@ -9243,8 +9247,7 @@ REMOVE Loc IF (0 ("bušeahtta"))(*1 ("investeret") BARRIER CP OR CS);
 # juogadit
 # - - - - -
 
-REMOVE Loc IF (*-2 ("juogadit") BARRIER CP OR CS)(*-1 @OBJ)(0 ("guovllušibit#doavttir")); 
-    ## Dat guhte geahččá nissonii anistumiin, lea juo rihkkon náittosdili váimmustis.
+REMOVE Loc IF (*-2 ("juogadit") BARRIER CP OR CS)(*-1 @OBJ)(0 HUMAN); 
     # REMOVE Loc IF (*-1 ("juogadit") BARRIER CP OR CS)(0 HUMAN);
     # Maybe it has to be the first comitative following the object
 
@@ -9312,7 +9315,7 @@ REMOVE Loc IF (*-1 ("soabadit") BARRIER CP OR CS)(0 ("vuoste#belle") OR ("vuoste
 # suokkardit
 # - - - - - -
 
-SELECT (Sg Com) IF (*-1 ("suokkardit") BARRIER NPNHA)(0 (Pl Loc) LINK 0 INSTITUTION OR HUMAN OR PROFESSION OR Org);
+SELECT (Sg Com) IF (*-1 ("suokkardit") BARRIER NPNHA)(0 (Pl Loc) LINK 0 INSTITUTION OR HUMAN OR Org);
     ## SDD áigu suokkardit Sámedikkiin, sáhttágo dán plána doaimmaid čađaheami delegeret Helse Nordii.
     
 # viehkalit
@@ -9358,7 +9361,7 @@ REMOVE Loc IF (*-1 ("ovttasbargo#čoahkkin") BARRIER CP OR CS)(0 ("mánáid#suod
 # Human
 # - - -
 
-SELECT Com IF (-1 HUMAN OR PROFESSION LINK 1 ("fásta#bálká") OR ("bálká"));
+SELECT Com IF (-1 HUMAN LINK 1 ("fásta#bálká") OR ("bálká"));
     ## Bálvalusas lea nubbi suohkanfysioterapeuta fástabálkkáin ja nubbi priváhta dásis, gii oažžu 100 % doarjaga.
     # Assuming that the noun directly following a noun from the set HUMAN will also be its complement.
     
