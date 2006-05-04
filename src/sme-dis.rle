@@ -620,6 +620,8 @@ SET NP-HEAD-GEN = (Pron Gen) | (N Gen) - Cmpnd;
 SET PRE-NP-HEAD = (Prop Attr) | (Prop @PROP>) | A | (Pron Pers Gen) | (N Gen) | Num | Cmpnd | CC |
                   (Pron Dem)  | (Pron Refl Gen) | (Pron Indef) | (PrfPrc @AN>) | PrsPrc ;
 SET NP-MEMBER   = PRE-NP-HEAD | N ;
+SET PRE-A-N     = (Pron Pers Gen) | (Pron Indef) | Num | (Pron Dem) | (Pron Refl Gen) ;
+SET NOT-PRE-A-N = WORD - PRE-A-N ;
 
 # There must be a sensible naming convention for these sets...
 SET NPNH
@@ -1115,7 +1117,11 @@ MAP (@AN>) TARGET (Pl Com) IF (0 ("buorre"))(*1 (N Pl Com) BARRIER NPNH);
 MAP (@AN>) TARGET Ess IF (0 ("buorre"))(1 (N Ess));
 	## Maŋemus son šattai buorrin oahpaheaddjin.
 
-MAP (@PrcN>) TARGET PrfPrc IF (-1 Dem OR Num OR Attr)(NOT -1 Pers)(0 Pass)(1 N);
+
+# Prenominal participles
+
+MAP (@PrcN>) TARGET PrfPrc IF (-1 Dem OR Num OR Attr OR Indef)(NOT -1 Pers)
+	(*1 N BARRIER NOT-A);
 	## ..maid almmolaš dohkkehuvvon dearvvašvuođabargit addet,..
 	## Galgá leat okta čohkkejuvvon divššohasjournála. 
 
@@ -1128,10 +1134,10 @@ MAP (@PrcN>) TARGET PrfPrc IF (NOT *-1 ("leat") BARRIER PrfPrc OR (Actio Ess))
 	NOT 0 ("leat"))(0 Pass)(*1C N BARRIER NPNH); 
 	## ...dan mii lei dáhpáhuvvan bosttahuvvon olbmuide.
 
-MAP (@PrcN>) TARGET PrfPrc (-1 CLB OR go)(1 TIME);
+MAP (@PrcN>) TARGET PrfPrc (*-1 CLB OR go BARRIER NOT-PRE-A-N)(1 TIME);
 	## Dalle šattašii liikka buorre dálki go mannan sotnabeaivve.
 
-MAP (@PrcN>) TARGET PrfPrc IF (*-1 BOS OR REALCLB BARRIER NOT-NP)(NOT 0 ("leat"))
+MAP (@PrcN>) TARGET PrfPrc IF (*-1 BOS OR REALCLB BARRIER NOT-PRE-A-N)(NOT 0 ("leat"))
 	(*1 N BARRIER NPNH LINK NOT 0 TIME LINK NOT 1 TIME);
 	## Ovdamearkan oaivvilduvvon fálaldahkii lea sámi kulturdieđu lohkanbaji.
 
@@ -4602,7 +4608,9 @@ SELECT Adv IF (0 ("ollásit" Adv))(*1 NP-HEAD-GEN BARRIER NPNHA LINK 1 Po);
 
 SELECT (Pron Indef @PronN>) IF (-1 Rel)(1 N);
 	## maid ollu dearvvašvuođaásahusat.
-SELECT (Pron Indef @PronN>) IF (*-1 TV BARRIER NOT-ADV)(1 (N Acc));
+
+SELECT (Pron Indef @PronN>) IF (*-1 V BARRIER NOT-ADV)(*1 (N Acc) OR (N Nom) BARRIER NOT-A);
+	## Gielddat, main orrot ollu sápmelaččat.
 
 SELECT Adv IF (*-1 V-TRANS-ACT LINK NOT 0 ILL-VERB OR COM-VERB OR LOC-VERB LINK *1 ADVLCASE)(NOT *1 CS)
               (-1 ("seammá") OR ("seamma"))(0 ("ollu"));
@@ -4613,6 +4621,9 @@ SELECT Adv IF (-1 ("seamma") OR ("seammá"))(0 ("ollu"))(NOT *1 N OR A BARRIER N
 
 #SELECT Pron IF (-1 ("seamma") OR ("seammá"))(0 ("ollu"))(*1 N BARRIER NPNH LINK 1 ("go"));	
     ## Bargiid guottut mearkkašit seammá ollu bálvaluskvalitehttii go fáktadieđut geavaheaddjiid giela ja kultuvrra birra.
+
+REMOVE Adv IF (NOT -1 ("seamma") OR ("seammá") OR ("mii" Pron));
+    # This is a kill-all-rule...
 
 
 
@@ -5085,6 +5096,9 @@ SELECT (Pron Indef) IF (0 ("buot"))(*1 N BARRIER NPNH);
  
 SELECT (Pron Indef) IF (0 ("buot"))(1 Num)(*2 N BARRIER NPNH);
 	## De fertejit buot vihtta miellahtu oassálastit.
+
+SELECT (Pron Indef) IF (0 ("buot"))(1 PrfPrc)(*2 N BARRIER NOT-A);
+	## ahte buot náitalan olbmuin galggai leat guolástanvuoigatvuohta.
 
 SELECT (Pron Indef) IF (0 ("buot"))(1 V-PL3);
 	## Vuollásaš ráđit buot heaittihuvvojedje oktasaš hálddahuslaš jođiheapmái.
@@ -6217,6 +6231,9 @@ SELECT PrfPrc IF (0 ("mannat"))(1 TIME);
 
 REMOVE (V Pass Sg1) IF (*1 (N Nom) BARRIER CS OR CP);
 	## Juolluduvvon permišuvnnat.
+
+REMOVE Actio IF (*-1 NP-BORDER BARRIER NOT-PRE-A-N) ;
+	## ahte buot náitalan olbmuin galggai leat guolástanvuoigatvuohta.
 
 
 # "Leamaš" without finite verb
