@@ -253,7 +253,8 @@ LIST INITIAL =  "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m"
 
 LIST WORD = N A Adv V Pron CS CC Po Pr Interj Pcle Num ABBR ACR Date Range 
 ; # any word
-SET REALWORD = WORD - Num ;
+
+SET REALWORD = WORD - Num - Ord ;
 
 # Derivational affixes
 # --------------------
@@ -620,7 +621,7 @@ SET NP-HEAD-GEN = (Pron Gen) | (N Gen) - Cmpnd;
 SET PRE-NP-HEAD = (Prop Attr) | (Prop @PROP>) | A | (Pron Pers Gen) | (N Gen) | Num | Cmpnd | CC |
                   (Pron Dem)  | (Pron Refl Gen) | (Pron Indef) | (PrfPrc @AN>) |  (PrfPrc @PrcN>) | PrsPrc ;
 SET NP-MEMBER   = PRE-NP-HEAD | N ;
-SET PRE-A-N     = (Pron Pers Gen) | (Pron Indef) | Num | (Pron Dem) | (Pron Refl Gen) ;
+SET PRE-A-N     = (Pron Pers Gen) | (Pron Indef) | Num | (A Ord) | (Pron Dem) | (Pron Refl Gen) ;
 SET NOT-PRE-A-N = WORD - PRE-A-N ;
 
 # There must be a sensible naming convention for these sets...
@@ -825,6 +826,7 @@ LIST GASKAL = "gaskal" "gaskkal" "gaskii" "gaskka" "gaskkas" ;
  # p-positions that like coordination
 
 SET NUMERALS = Num - OKTA ;
+# this set does not contain ordinals, I am not sure if that is necessary.
 
 SET NOT-NUMERALS = WORD - Num ;
 
@@ -1414,7 +1416,7 @@ MAP (@AN>) TARGET (A Ord) IF (*1 N BARRIER NOT-A);
 MAP (@NumQ<) TARGET (Num) IF (-1 Num)(0 NUMUNIT);
     ## Dat lea 4 miljovnna deajakohpa.
     
-MAP (@AN>) TARGET (Num Ord)(*1 N BARRIER NOT-A);
+MAP (@AN>) TARGET (A Ord)(*1 N BARRIER NOT-A);
         ## Dat lei 33. teakstaoassi.
         ## Arkiivaláhka III máinnaša vuosttažettiin gáhttenárvosaš priváhta arkiivvaid.
 
@@ -2053,6 +2055,29 @@ MAP (@X) TARGET WORD ;
 # ==================== #
 # ==================== #
 
+
+
+ 
+# ============================== #
+# Testing out a new section type #
+# ============================== #
+            CORRECTIONS          #
+# ============================== #
+
+#SUBSTITUTE (Plc) (Sur) TARGET (Prop) IF (-1C (Mal Attr) OR (Fem Attr));
+SUBSTITUTE (Plc) (Sur) TARGET Prop IF (-1C (Mal Attr) OR (Fem Attr));
+    ## Linda England.
+    # This rule does not work, it may be that the CORRECTIONS mechanism is not implemented.
+    # Todo: Discuss this with Eckhard.
+    
+#SUBSTITUTE (@OBJ) (@APP) TARGET N IF (-1 Ord LINK -1 Num LINK -1 KLASS);
+	## Geahča § 12 vuosttas lađđasa mávssu birra máŋgosa/nuppádasa ovddas.
+
+SUBSTITUTE (@OBJ) (@APP)  (N) IF (-1 Ord); #(-2 Num)(-3 N LINK 0 KLASS);
+	## Geahča § 12 vuosttas lađđasa mávssu birra máŋgosa/nuppádasa ovddas.
+# This is a stupid version of the previous rule, just to see whether it works.
+
+
 # =================================== #
 # One-cohort disambiguation - cycle 0 #
 # =================================== #
@@ -2673,7 +2698,7 @@ SELECT PxSg2 IF (-1 ("hearrá" Sg))(0 ("ipmil"));
 # PxSg3
 # - - -
 
-REMOVE PxSg3 IF (-2 MANNU LINK 0 Gen)(-1 (Num Ord))(0 ("beaivi" Loc));
+REMOVE PxSg3 IF (-2 MANNU LINK 0 Gen)(-1 (A Ord))(0 ("beaivi" Loc));
     ## Konvenšuvdna lea fámus miessemánu 1. beaivvis 2002 ja gusto 30 jagi dán beaivvi rájis.            
             
  #SELECT (PxSg3) IF (-1 (V TV Sg3) LINK NOT 0 Pass LINK *-1 ("son" Sg3 Nom) OR (N Sg Nom) BARRIER NOT-ADV-PCLE)
@@ -6991,7 +7016,7 @@ REMOVE Acc IF (*-1 ("oktan") OR ("ovttas") OR ("ovttasráđiid") BARRIER NPNH)
 # -------------------------------
  # A 'measure' time adverbial is Acc, others are Gen. 
 
-SELECT (@GN>) IF (0 MANNU)(1 (Num Ord));    
+SELECT (@GN>) IF (0 MANNU)(1 (A Ord));    
 	##  Dál lea miessemánu 1. beaivvi.
 
 SELECT Gen IF (-1 Ord)(0 ("beaivi") OR ("vahkku"));
@@ -8186,6 +8211,7 @@ SELECT Acc IF (*-1C V-TRANS-ACT BARRIER NPNHAIIP OR COMMA)
  # The (Num Nom) is not optimal, we need to consider the Num Ord and Num Card
  # tagging. Now, 22. is given Num Ord and 22.10. is given Num Nom, this gives
  # the correct result, but is not satisfying, linguistically.
+ # we just have A Ord now, instead of Num Ord
 
 SELECT Acc IF (*-1C Po BARRIER NPNHAIIP LINK -1 N OR Pron LINK *-1C V-TRANS-ACT 
 	BARRIER NPNHAIIP)(0 NP-HEAD)(NOT 0 Interr OR Refl OR VFIN OR PrfPrc or Adv 
@@ -11955,23 +11981,6 @@ REMOVE (@X) ; # Kein Spur...
  # @X is our "didn't find a syntactic tag -tag.
  # Here we remove it if we have any other suggestion.
  
- 
-# ============================== #
-# Testing out a new section type #
-# ============================== #
-            CORRECTIONS          #
-# ============================== #
-
-SUBSTITUTE (Plc) (Sur) TARGET (Prop) IF (-1C (Mal Attr) OR (Fem Attr));
-    ## Linda England.
-    # This rule does not work, it may be that the CORRECTIONS mechanism is not implemented.
-    # Todo: Discuss this with Eckhard.
-    
-SUBSTITUTE (@OBJ) (@APP) TARGET (N) IF (-1 Ord LINK -1 Num LINK -1 KLASS);
-	## Geahča § 12 vuosttas lađđasa mávssu birra máŋgosa/nuppádasa ovddas.
-
-#SUBSTITUTE (@OBJ) (@APP) TARGET N IF (-1 Ord); #(-2 Num)(-3 N LINK 0 KLASS);
-	## Geahča § 12 vuosttas lađđasa mávssu birra máŋgosa/nuppádasa ovddas.
 
 #=====#
   END #
