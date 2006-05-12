@@ -699,7 +699,7 @@ LIST MANNU = "ođđa#jage#mánnu" "ođđa#jagi#mánnu"
 LIST AIGODAT = "áigi" "áigodat" "stuoradigge#áigodat" "sámedigge#áigodat" 
               "guođohan#áigodat" "doaibma#áigodat" ;             
 
-LIST VAHKKU = "beaivi" "jándor" "bodda" "čakča" "čakča#geassi" "čuohte#jahki" 
+LIST VAHKKU = "beaivi" "b" "jándor" "bodda" "čakča" "čakča#geassi" "čuohte#jahki" 
 		"dálvi"	"diibmu" "dbm" "geardi" "geassi" "giđđa" "hávvi" "idja" "jahki" 
 		"jahke#čuohti" "mánnu" "riegádan#beaivi" "tiibmu" "vahkku" jahki
 		"stuorradigge#áigodat" ;
@@ -793,7 +793,7 @@ LIST HUMAN-INDIVIDUAL = "áhčči" "áddjá" "áhkku" "bártni" "boaris" "čeahc
 LIST HUMAN-GROUP = "eami#álbmot" ;
 
 
-LIST PROFESSION = "logopeda" "suohkanfysio#terapeuta" "fysio#terapeuta" "fysio#terapevta" "oahppah#eaddji" "doavttir" "politihkar" "politihkkár"; 
+LIST PROFESSION = "advokahta" "logopeda" "suohkanfysio#terapeuta" "fysio#terapeuta" "fysio#terapevta" "oahppah#eaddji" "doavttir" "politihkar" "politihkkár"; 
 
 LIST ANIMAL = "áldu" "bálddis" "beana" "boazu" "bohkká" "ciiku" "čivga" "čuska" "dámmá" "dorski" "ealit" "gáhttu" "gáica" "gálbi" "gihcci" "gilot"  "guigu" "gussa" "hávga" "heasta" "juksu" "láppis" "loddi" "miessi"  "muortu" "njiŋŋálas" "ore" "sallit" "sarvvis" "sávza" spiinne#čivga "spiidni" "stábbasáidi" "stáinnir" "stuorasáidi" "rutnot" "vársi" "vielppis" "vierca" "vuoksá" "vuoncá#varis" "vuonccis" "vuonjal" ;
 
@@ -869,7 +869,7 @@ SET NP-BORDER = BOS | EOS | REALCLB | VFIN | Inf | (Actio Ess) | ConNeg | VGen |
 
 
 LIST ALLSYNTAG = (@+FAUXV) (@+FMAINV) (@-FAUXV) (@-FMAINV) (@-FSUBJ)
-                 (@ADV-A) (@ADV-ADV) (@ADVL) (@AN>) (@ActioN>) (@CC)
+                 (@ADV-A) (@ADV-ADV) (@ADVL) (@AN>) (@ActioN>) (@APP) (@CC)
                  (@CMPND) (@CS) (@DN>) (@GA>) (@GN>) (@GP<) (@GP>)
                  (@HNOUN) (@INTERJ) (@NPron<) (@NQ<) 
                  (@NUM-PRON) (@OBJ) (@OPRED) (@PCLE) 
@@ -877,6 +877,7 @@ LIST ALLSYNTAG = (@+FAUXV) (@+FMAINV) (@-FAUXV) (@-FMAINV) (@-FSUBJ)
                  (@QN<) (@QN>) (@SPRED) (@NumQ<)
                  (@SUBJ) (@SUBJ-QH) (@TITLE) (@VOC) (@X); 
                  # (@TIME)(@NUMBER)  (@MEASURE)
+SET NON-APP = ALLSYNTAG - (@APP);
 
 # SET ASSIGNEDSYN = ALLSYNTAG - @X ;
 # funzt nicht.
@@ -1324,6 +1325,9 @@ MAP (@GN>) TARGET Gen IF (0 TIME OR AIGODAT OR ROUTE)(NOT 1 CC)(NOT 0 VAHKKU LIN
 	(*1 N BARRIER NP-BORDER OR REALCLB OR Po OR Pr);
 	## Min áiggi boaresolbmot muitaladdet ahte...
 	
+MAP (@ADVL @GN>) TARGET Gen IF (-2 Gen LINK 0 MANNU)(-1 Ord)(0 ("b") OR ("beaivi"));
+    ## Geassemánu 8.b. 2001 láhkaásahus nr 676 oktagaslaš plánaid birra dearvvašvuođalágaid vuođul lea addojuvvon láhkamearrádusaid láhkavuođuin.
+
 MAP (@ADVL) TARGET Gen IF (0 TIME OR ROUTE);
 	## Maid Biret-Elle áigu dán dálvve dahkat?
 	## ...ja geasset vel moatte háve dađi miel go dárbu lea.
@@ -1401,6 +1405,9 @@ MAP (@NPron<) TARGET (N Pl Gen) IF (-1 ("mii" Interr) OR ("mihkkege") OR ("gii")
 MAP (@APP) TARGET (A Ord) IF (-1 Prop LINK NOT 0 Plc);
 	## Heinrich IV. lea boaris.
 	## Heinrich njealját lea boaris.
+	
+MAP (@APP) TARGET Num IF (-3 MANNU)(-2 Ord)(-1 ("beaivi") OR ("b" ABBR));
+    ## Geassemánu 8.b. 2001 láhkaásahus nr 676 oktagaslaš plánaid birra dearvvašvuođalágaid vuođul lea addojuvvon láhkamearrádusaid láhkavuođuin.
 	
 	
 # Numeral adjective mappings
@@ -1481,7 +1488,7 @@ MAP (@NUM-PRON) TARGET (N Num Nom) IF (-1 (Pers Nom))(NOT -1 Dem)
 MAP (@SUBJ @SPRED) TARGET (N Num Nom);
 	## Go sotnabeaivi šattai, de čuoigaledje máŋggas várrái.
 	
-MAP (@NumN<) TARGET Nom IF (-1 ("nr" Nom))(0 (Num CARDINALS) OR INITIAL)(-2 N OR A OR ABBR OR ACR)(NOT -2 Gen);
+MAP (@NumN<) TARGET Nom IF (-1 ("nr"))(0 CARDINALS OR INITIAL)(-2 N OR A OR ABBR OR ACR)(NOT -2 Gen);
 #MAP (@NumN<) TARGET (Num Nom) IF (-1 ("nr" Nom))(-2 N OR A OR ABBR OR ACR);
     ## Mun lean ilus go beasan ovdanbuktit St.dieđ. nr. 33.
     #Maybe it has to be (N @ADVL).
@@ -1532,7 +1539,7 @@ MAP (@NumN<) TARGET Num IF (-3 ("s") OR ("siidu") OR ("§") OR ("pragráfa") OR
 	(-2 Num)(-1 CC)(0 CARDINALS);
 	## ...gč. dearvvašvuođabargiidlága kapihttal 6 ja 7.
 	
-MAP (@NNum>) TARGET ("nr" Attr) IF (1 WORD OR Num);
+MAP (@NNum>) TARGET ("nr") IF (1 WORD OR Num);
     ##Mun lean ilus go beasan ovdanbuktit St.dieđ. nr. 33.
     
 MAP (@NNum>) TARGET N IF (0 ("nummar") OR ("nummir"))(1 WORD OR Num);
@@ -6679,8 +6686,8 @@ SELECT Gen IF (*-1C Num BARRIER NPNH OR Gen OR CC OR PUNCT OR REALCLB OR Ord
 	## Golbma čáppa, doaimmalaš nieidda livžo áhčiset riegádanbeaivve.
 	
 REMOVE Gen IF (*-1C Ord BARRIER NPNH OR Gen OR CC OR PUNCT OR REALCLB OR Ord
-	LINK NOT 0 ("okta"))(NOT 0 VERB OR ("nr") OR ("nummar") OR ("s"));
-
+	LINK NOT 0 ("okta"))(NOT 0 VERB OR ("nr") OR ("nummar") OR ("s"))(NOT *1 N BARRIER NPNH);
+    
 SELECT Gen IF (*-1 Num BARRIER NPNH OR Gen OR PUNCT OR REALCLB LINK 
 	NOT 0 ("okta") OR Ord LINK *-1 ("leat") BARRIER NOT-ADV-PCLE)
 	(NOT *1 V-TRANS-ACT BARRIER CLB OR CC OR CS OR CP);
@@ -6710,7 +6717,7 @@ SELECT Gen IF (*-1 NUMERALS BARRIER NPNH OR CC OR CLB OR PUNCT OR ("ruvdnu") LIN
 # Genitive in front of postposition
 # - - - - - - - - - - - - - - - - - 
 SELECT Gen IF (NOT 0 Adv OR PrfPrc)(1C Po)(NOT 1 Px);    
-SELECT Gen IF (NOT -1 ("§"))(0 Num)(*1 (N Gen) BARRIER NPNH LINK 1 Po);
+SELECT Gen IF (NOT -1 ("§") OR ("nr"))(0 Num)(*1 (N Gen) BARRIER NPNH LINK 1 Po);
 	## Lávdegottiid čoahkkimat dollojit giddejuvvon uvssaid duohken.
 	## Divššohasas lea vuoigatvuohta oažžut dearvvašvuođadilis árvvo-
 	## štallojuvvot 30 bargobeaivvi sisa.
@@ -7040,6 +7047,9 @@ SELECT Gen IF (-1 BOS OR CS OR (":" CLB))(0 BEAIVI);
 SELECT Gen IF (-1 NP-BORDER)(0 BEAIVI);
 	## Mun boađán bearjadaga.
  # The idea here is that the BEAIVI should not be modified by e.g. 'olles'.
+
+SELECT Gen IF (-2 Gen LINK 0 MANNU)(-1 Ord)(0 ("b") OR ("beaivi"));
+    ## Geassemánu 8.b. 2001 láhkaásahus nr 676 oktagaslaš plánaid birra dearvvašvuođalágaid vuođul lea addojuvvon láhkamearrádusaid láhkavuođuin.
 
 SELECT Gen IF (0 Card)(1 (N Gen));
 	## Dat lea duháhiid jagiid boaris.
@@ -8411,10 +8421,11 @@ SELECT (Acc @ADVL) IF (NOT *-1 ("leat") BARRIER VERB)(0 Num)(1 TIME)(NOT 2 N OR 
 
 SELECT (Acc @ADVL) IF (-1C NP-BORDER OR A)(NOT -1 Interr OR Indef OR Pr)(NOT 0 Loc)
 	(0 TIME)(NOT *1 TIME BARRIER NPNH)(NOT 1 ("loahppa") OR ("álgu"))
-	(NOT -1 V-TRANS-ACT LINK NOT *-2C (@OBJ) BARRIER CS OR CP LINK NOT *1C (@OBJ) BARRIER V-TRANS-ACT OR CP OR CS);
+	(NOT -1 V-TRANS-ACT LINK NOT *-2C (@OBJ) BARRIER CS OR CP LINK NOT *1C (@OBJ) BARRIER V-TRANS-ACT OR CP OR CS)
+	(NOT 0 ("b") OR ("beaivi") LINK -1 Ord);
 	## Máhtte duddjostalai beaivvi.
-	## Helse Nord sáhttá dađi mielde ovdánit bargoneavvun guhkes áiggi áŋgiruššamis sápmelaččaid várás.	
-
+	## Helse Nord sáhttá dađi mielde ovdánit bargoneavvun guhkes áiggi áŋgiruššamis sápmelaččaid várás.
+	
 SELECT (Acc @ADVL) IF (0 Num)(*1 TIME BARRIER NOT-A);
     ## Dat orui doppe vihtta guhkes jagi.
 
@@ -11116,8 +11127,7 @@ REMOVE (@NQ<) IF (NOT *-1 Num BARRIER NPNH OR COMMA);
 REMOVE (@NQ<) IF (-1 (@NumN<));
     ##Finnmárkku fylkkagielda lea jagi 1988 rájes ovddidan doaimmaid sámi álbmoga várás spesialistadearvvašvuođabálvalusas, ja ráhkadii jagi 1991 fylkkagieldda sámi dearvvašvuođa- ja sosiálaplána (rievdaduvvon maŋimus jagi 1995).
 
-
-REMOVE (@GN>) IF (NOT *1 N BARRIER (@NumN<) OR NPNH);  
+REMOVE (@GN>) IF (NOT -1 ("nr"))(NOT *1 N BARRIER (@NumN<) OR NPNH);  
 REMOVE (@NQ<) IF (-2 ("nr") LINK 1 Num);
 	## Dearvvašvuođaregisttarláhka lea sierraláhka heaggadieđuidlága ektui (cuoŋománu 14. b. 2000 láhka nr 31 heaggadieđuid gieđahallama birra ).
 	
@@ -11126,6 +11136,14 @@ REMOVE (@NQ<) IF (0 ("nr") OR ("§"));
 	
 REMOVE (@NQ<) IF (-1 Ord);
 	## Geahča § 12 vuosttas lađđasa mávssu birra máŋgosa / nuppádasa ovddas.    
+	
+REMOVE (@ADVL) IF (0 ("b" @GN>) OR ("beaivi" @GN>))
+     (*1 N BARRIER NON-APP LINK NOT 0 HUMAN OR INSTITUTION);
+    ## Geassemánu 8.b. 2001 láhkaásahus nr 676 oktagaslaš plánaid birra dearvvašvuođalágaid vuođul lea addojuvvon láhkamearrádusaid láhkavuođuin.
+# todo: 1. make the set non-app
+#       2. restrict the number of N to the right
+# N ist etwas, dass man datieren kann
+
 
 # Subject
 # -------
