@@ -623,6 +623,8 @@ SET PRE-NP-HEAD = (Prop Attr) | (Prop @PROP>) | A | (Pron Pers Gen) | (N Gen) | 
 SET NP-MEMBER   = PRE-NP-HEAD | N ;
 SET PRE-A-N     = (Pron Pers Gen) | (Pron Indef) | Num | (A Ord) | (Pron Dem) | (Pron Refl Gen) ;
 SET NOT-PRE-A-N = WORD - PRE-A-N ;
+SET PRE-APP = COMMA | (PUNCT LEFT) | PRE-NP-HEAD ;
+# This set ist not only for what can stand in front of appositions but also postmodifiers
 
 # There must be a sensible naming convention for these sets...
 SET NPNH
@@ -633,6 +635,7 @@ SET NPNHAII = WORD - PRE-NP-HEAD - Adv - Indef - Ill ; # Illative indir.obj.
 SET NPNHAIIP = WORD - PRE-NP-HEAD - Adv - Indef - Ill - Pcle ;
 SET NPNHC = WORD - PRE-NP-HEAD - Com ; # "njaŋggofirpmiiguin bivdin"
 SET NPNHCCC = WORD - PRE-NP-HEAD - CC - COMMA ;
+SET NAPP = WORD - PRE-APP ;
 
 # Other negatively defined sets
 # - - - - - - - - - - - - - - -
@@ -776,7 +779,7 @@ LIST COUNTABLE = "oassi" "kapihttal" "paragráfa" ;
 
 LIST NUMMAR = "nr" "nummar" "nummir" ;
 
-LIST KLASS = "s" "siidu" "§" "§§" "pragráfa" "oassi" "kapihttal" "kapihtal";
+LIST KLASS = "s" "siidu" "§" "§§" "pragráfa" "oassi" "kap" "kapihttal" "kapihtal";
 
 LIST LAHKA = "almennet#láhka" "almmolašvuođa#láhka" "apotehka#láhka" "arkiiva#láhka" "áhpenuohtástan#láhka" "álbmotoadjo#láhka" "bargiid#láhka" "bargobiras#láhka" "báikenamma#láhka" "bákte#láhka" "bátnedearvvašvuođabálvalus#láhka" "bivdo#láhka" "boazodoallo#láhka" "čázádat#láhka" "dálkkas#láhka" "dásseárvo#láhka" "deanu#láhka" "dearvvašvuođabargiid#láhka" "dearvvašvuođabargii#láhka" "dearvvašvuođa#láhka" "dearvvašvuođaregisttar#láhka" "divššohasvuoigatvuođa#láhka" "eana#láhka" "eanasuodjalan#láhka" "eanavuovdin#láhka" "elliidsuodjalan#láhka" "energi#láhka" "fápmudusa#láhka" "fápmudus#láhka" "Finn^márko#láhka" "friddjasuohkan#láhka" "fuođđo#láhka" "gávpot#láhka" "geaidno#láhka" "gearggusvuođa#láhka" "gielddadearvvašvuođabálvalus#láhka" "gielda#láhka" "gilioppalašeana#láhka" "irko#láhka" "golle#láhka" "guladigge#láhka" "guollebiebman#láhka" "háhkankonsešuvdna#láhka" "hálddašan#láhka" "heaggadieđuid#láhka" "huksen#láhka"  "industrikonsešuvdna#láhka" "jávrebivdo#láhka" "joatkkaoahpahus#láhka" "johtolat#láhka" "konsešuvdna#láhka" "kulturmuito#láhka" "lavdnjeloggun#láhka" "láhka" "luodda#láhka" "luonddusuodjalus#láhka" "luopmo#láhka" "luossa#láhka" "mánáidgárde#láhka" "mánáidsuodjalusbálvalus#láhka" "mearraguolástan#láhka" "mearraresursa#láhka" "minerálaláhka" "mohtorjohtolat#láhka" "mudden#láhka" "namma#láhka" "oahpahalli#láhka" "oahpahus#láhka" "oahpo#láhka" "olgunastin#láhka" "olmmošvuoigatvuođa#láhka" "oktasašsáme#láhka"  "pasientavuoigatvuođa#láhka" "ráŋggáštan#láhka" "riekteveahkke#láhka" "sáivabivdo#láhka" "sáme#láhka" "sámi#láhka" "searvan#láhka" "sierra#láhka" "spesialistadearvvašvuođabálvalus#láhka" "stáhtaborgárrievtti#láhka" "stáhtafitnodat#láhka" "tuollu#láhka" "varasguolle#láhka" "várre#láhka" "vearrodahko#láhka" "vearro#láhka" "vuođđo#láhka" "vuođđoskuvla#láhka" "vuovdedoallo#láhka" "vuovdegáhtten#láhka" "vuovde#láhka" "1842-#láhka" "1863-#láhka" "1888-#láhka" "1899-bivdo#láhka" "1899-#láhka" "1920-várre#láhka" "1933-#láhka" "1965-#láhka" "1975-#láhka" "1975-várre#láhka" "1978-#láhka" ;
 
@@ -9549,6 +9552,10 @@ SELECT (Sg Com) IF (1 CC)(*2 Com BARRIER NPNH LINK NOT 0 Loc);
 
 SELECT Loc IF (NOT *-1 BOS LINK *1 COM-VERB BARRIER CP OR CS)(0 LOC-NOUN);
     ## Dakkár dilálašvuođain berre anonymiseret dahje krypteret dieđuid, mat eai leat nu hearkkit.
+    
+REMOVE Com IF (NOT *-1 COM-VERB BARRIER CP OR CS)(0 (Pl Loc) LINK *1 KLASS BARRIER NAPP LINK 1 Num)(NOT *1 COM-VERB BARRIER CP OR CS);
+    ## Sámediggi sáhttá maid buktit cealkámušaid guovlluid dearvvašvuođafitnodagaid jahkedieđáhusain ja plánaárvalusain (kap. 3.4).
+    # The point is, that if further paragraph-, page- or chapter- information is given, usually the location is meant.
 
 # Essive
 # ======
