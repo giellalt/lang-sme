@@ -752,7 +752,10 @@ LIST ROUTE = "fávli" "geaidnu" "guorra" "luodda" "miila"; # and others!
 
 LIST MEASURE = "miila" "kilo#mehtar" "mehtar" "mehter" "centi#mehtar" "sente"
 	"cm" "milli#mehtar" "tumá" "állan" "salla" "lihtter" "gilo" "čuolda#badji"
-	"fierbme#badji" ;	
+	"fierbme#badji" ;
+LIST CURRENCY = "kruvdnu" "kr" "ruvdnu" "¢" "€" "$";
+LIST CURRENCY-GEN = ("kruvdnu" Gen) ("kr" Gen) ("ruvdnu" Gen) ("¢" Gen) ("€" Gen) ("$" Gen);
+SET NOT-CURRENCY-GEN = N - CURRENCY-GEN ; 	
 
 LIST NUMUNIT = "čuohti" "duhát" "miljon" "millijovdna" "milliovdna" "mill" "milj" "miljo" "miljarda" "mrd";
 
@@ -769,6 +772,11 @@ LIST LOC-NOUN = "dilálašvuohta";
 LIST LOC-COMPL-NOUN = "ovda#mearka";
     # Nouns that take a locative
     # There is also an idiomatic use of "ovda#mearka" in the constructions "ovdamearkka dihte" and "ovdamearka" (Ess).
+    
+LIST COM-COMPL-NOUN = "ovttasbargu" ;
+
+SET LOC-HEAD = LOC-VERB | LOC-COMPL-NOUN ;
+SET COM-HEAD = COM-VERB | TOGETHER-VERB | COM-COMPL-NOUN ;
     
 LIST NOM-GEN-NOUN = "ákšu" "vahkku" "plana" "ulbmil" "lága" "journála" "stáhta" "jolá" ;
     # in singular, Nom=Gen=Acc
@@ -817,13 +825,13 @@ LIST FYLKA = "Finn^márku" "Finn^marku" "Romsa" "Nord^lánda" "Lulli-Trøndelag"
              
 LIST XDEPARTEMEANTA = "bearaš#departemeanta" "eanandoallo#departemeanta" "dearvvašvuođa#departemeanta" "kultur#departemeanta" "birasgáhtten#departemeanta" "dutkan#departemeanta";
              
-LIST INSTITUTION = "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "bargo#kantuvra" "báhpa#skuvla" "buohcce#stohpu" "buohcce#viessu" "departemeanta" "eanandoallo#departemeanta" "giella#guovdaš" "giella#ráđđi" "girku" "guovllubuohcce#viessu" "dearvvašvuođa#guovddáš" "joatkka#skuvla" "klinihkka" "mánáid#gárdi" "mánáid#skuvla" "meieriija" "musea" "nuoraid#skuvla" "parlameantta" "psykiatriijabuohcce#viessu" "ráđđi" "riika#searvi" "searvodat" "skuvla" "skuvla#kantuvra" "skuvlla" "suohkan" "synagoga" "universiteahtta" "vuođđo#skuvla" ; 
+LIST INSTITUTION = "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "bargo#kantuvra" "báhpa#skuvla" "buohcce#stohpu" "buohcce#viessu" "departemeanta" "eanandoallo#departemeanta" "giella#guovdaš" "giella#ráđđi" "girku" "guovllubuohcce#viessu" "dearvvašvuođa#guovddáš" "joatkka#skuvla" "klinihkka" "mánáid#gárdi" "mánáid#skuvla" "meieriija" "musea" "nuoraid#skuvla" "parlameantta" "psykiatriijabuohcce#viessu" "ráđđi" "riika#searvi" "searvodat" "skuvla" "skuvla#kantuvra" "skuvlla" "stáhta" "suohkan" "synagoga" "universiteahtta" "vuođđo#skuvla" ; 
 
 LIST ARRANGEMENT = "čakča#márkan" ;
 
 LIST HUMAN-INDIVIDUAL = "áhčči" "áddjá" "áhkku" "bártni" "boaris" "čeahci" "eadni" "eahki" "eanu" "gánda" "goaski" "guoibmi" "lagamuš" "muoŧŧa" "nieida" "nisson" "oabba" "oambealli" "oarpmealli" "olbmo" "olmmái" "siessá" "skibir" "skihpár" "váhnen" "viellja" "vilbealli" "viissis";
 
-LIST ROLE =  "vuoste#belle" "vuoste#bealli" ;
+LIST ROLE =  "čearda" "vuoste#belle" "vuoste#bealli" ;
 
 LIST HUMAN-GROUP = "eami#álbmot" ;
 
@@ -872,6 +880,8 @@ LIST TEXT = "aviisa" "bláđđi" "dieđáhus" "girji" "johtti#čálus" "johtu#č
 #LIST LIQUID = "čáhci" ;
 
 #LIST ACTOR-ROLE = HUMAN | INSTITUTION ; # Intiution: Restricting possible actor subjects.
+
+
 
 # Miscellaneous sets
 # ------------------
@@ -1346,10 +1356,12 @@ MAP (@GP>) TARGET Gen IF (0 TIME OR AIGODAT)(1 Num)(2 Po);
 
 MAP (@GP<) TARGET Gen IF (*-1 Pr BARRIER NOT-NP OR CLB)(NOT 1 (N Gen))
 	(NOT 0 TIME LINK *-1 Po BARRIER NP-BORDER LINK -1 Gen)
-	(NOT 0 Num LINK *1 (N Gen) BARRIER NP-BORDER)
-	(NOT -1 Gen OR CLB LINK 2 Po);
-	## Lága mearrádusat galget váikkuhit luohttevašvuođa gaskal 
+	#(NOT 0 Num LINK *1 NOT-CURRENCY-GEN BARRIER NP-BORDER)
+	(NOT -1 Gen OR CLB LINK 2 Po)
+	(NOT 0 CURRENCY LINK 0 Gen LINK -1 Num);
+    ## Lága mearrádusat galget váikkuhit luohttevašvuođa gaskal 
 	## divššohasa ja dearvvašvuođabálvalusa.
+	#(NOT 0 Num LINK *1 NOT-CURRENCY-GEN OR BARRIER NP-BORDER)
 
 MAP (@GP<) TARGET Gen IF (*-1 CC BARRIER CS LINK *-1 GASKAL BARRIER CS)
 	(1 NP-BORDER);
@@ -1448,7 +1460,7 @@ MAP (@GN>) TARGET Gen IF
 	(NOT 0 Actio LINK 1 ("dihte") OR ("dihtii"));
     ## Buoremus sámepolitihkka ožžojuvvo áigálii sámi veahkadaga, man ovddasta Sámediggi, ja ráđđehusa gaskaneas ipmárdusain.
 	
-MAP (@GN>) TARGET Gen IF (*-2 ("s") OR ("siidu") OR ("paragráfa") OR 
+MAP (@GN>) TARGET Gen IF (-2 ("s") OR ("siidu") OR ("paragráfa") OR 
     ("kapihttal") OR ("kapihtal") OR HEADOFPARTS OR ("jahki") OR GEASSET LINK 1 
     CARDINALS)(*1 N BARRIER NOT-A);
     ## 8 ođđa bargosaji ásahuvvojedje jagis 2001 ealáhusfoandda ruhtadoarjagiin.
@@ -9642,6 +9654,9 @@ SELECT Loc IF (NOT *-1 BOS LINK *1 COM-VERB BARRIER CP OR CS)(0 LOC-NOUN);
 REMOVE Com IF (NOT *-1 COM-VERB BARRIER CP OR CS)(0 (Pl Loc) LINK *1 KLASS BARRIER NAPP LINK 1 Num)(NOT *1 COM-VERB BARRIER CP OR CS);
     ## Sámediggi sáhttá maid buktit cealkámušaid guovlluid dearvvašvuođafitnodagaid jahkedieđáhusain ja plánaárvalusain (kap. 3.4).
     # The point is, that if further paragraph-, page- or chapter- information is given, usually the location is meant.
+    
+SELECT Loc IF (NOT *-1 COM-HEAD BARRIER CP OR CS)(0 INSTITUTION LINK *-1 HUMAN OR ROLE)(NOT *1 COM-HEAD BARRIER CP OR CS);
+    ## Konvenšuvdna eamiálbmogiid ja čearddaid birra iešbirgejeaddji stáhtain dohkkehuvvui Norggas jagis 1990, muhto dakkár dohkkeheapmi ii leat velá dahkkon Ruoŧas.
 
 # Essive
 # ======
@@ -10091,7 +10106,10 @@ SELECT (V Sg3) IF (*-1 BOS OR CS OR (":" CLB) BARRIER Nom)(NOT 0 Adv OR Attr)
 	(*1 (N Sg Nom) OR (A Sg Nom) BARRIER NPNHA);
 	## Dán guovtti báhkkoma alde orru oppa láhka ja profehtat.
 
+REMOVE VFIN IF (-1 COMMA OR CC LINK *-1 N BARRIER VFIN)(0 Comp)(1 (N Nom));
+
 SELECT V-SG3 IF (-1 CLB)(NOT 0 Adv)(*1 (N Sg Nom) BARRIER NPNH);
+
 	## Earáide fas, geat eai máhte sámegiela, orru vástádus eahpečielggas. 
 
 SELECT V-SG3 IF (*-1 (N Sg Nom) BARRIER NOT-ADV-PCLE)(0 (N Sg Ill))
