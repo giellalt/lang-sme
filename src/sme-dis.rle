@@ -585,7 +585,7 @@ LIST MOVEMENT-VERB = "čuoigat" "mannat" "sihkkelastit" "viehkalit" "viehkat" "v
  # These verbs typically combine with place adverbials in the genitive case 
  # (i.e. not accusative) I am not sure if the verbs in the second line do that too. They denote movement anyway.
  
-LIST ACTIVITY-VERB = "bivdit" "čállit" "goivet" "ráidnet" "duvdilit" "goddit" "luddet";
+LIST ACTIVITY-VERB = "bivdit" "čállit" "goddit" "goivet" "ráidnet" "duvdilit" "goddit" "luddet";
     # in contrast to abstract "activities" and static verbs.
     
 LIST INTELLECTUAL-ACTIVITY-VERB = "smiehtat" ;
@@ -874,7 +874,7 @@ LIST PLACE =  "buođđo#sadji" "sadji" ;
 
 LIST CIRCUMSTANCE = "váivi";
 
-LIST TEXT = "aviisa" "bláđđi" "dieđáhus" "divššohas#journála" "girji" "johtti#čálus" "johtu#čálus" "journála" "lasta" "láđđi" "mielddus" "stuorradigge#dieđáhus" "teaksta";
+LIST TEXT = "aviisa" "bláđđi" "dieđáhus" "divššohas#journála" "girji" "jahke#dieđáhus" "johtti#čálus" "johtu#čálus" "journála" "lasta" "láđđi" "mielddus" "stuorradigge#dieđáhus" "teaksta";
     # A potential place (locative?) for sth. written.
 
 #LIST LIQUID = "čáhci" ;
@@ -4742,7 +4742,7 @@ SELECT Adv IF (-1 ("seamma") OR ("seammá"))(0 ("ollu"))(NOT *1 N OR A BARRIER N
 #SELECT Pron IF (-1 ("seamma") OR ("seammá"))(0 ("ollu"))(*1 N BARRIER NPNH LINK 1 ("go"));	
     ## Bargiid guottut mearkkašit seammá ollu bálvaluskvalitehttii go fáktadieđut geavaheaddjiid giela ja kultuvrra birra.
 
-REMOVE Adv IF (NOT -1 ("seamma") OR ("seammá") OR ("mii" Pron));
+REMOVE Adv IF (NOT -1 ("seamma") OR ("seammá") OR ("mii" Pron))(NOT 1 V);
     # This is a kill-all-rule...
 
 
@@ -5734,8 +5734,8 @@ SELECT Attr IF (*-1 Num BARRIER NPNH)(*1 N BARRIER NPNH)(NOT 0 Prop LINK 1 CC)(N
 	## Dan dihte ohcat guokte lassi stipendiáhttavirggi sámi/eamiálbmot-
 	## guoskevaš dutkamiidda.
 
-SELECT (A Attr) IF (-1 Adv)(NOT 0 Inf)(*1 N BARRIER NPNH)(NOT 1 CLB LINK 1 N)
-	(NOt 1 Prop);
+SELECT (A Attr) IF (-1 Adv)(NOT 0 Inf)(*1C N BARRIER NPNH)(NOT 1 CLB LINK 1 N)
+	(NOT 1 Prop);
 	## Mánná viehkalii olggos álás julggiid.
 	## Universitehtas lea maiddái čielga nášunála ovddasvástádus...
 
@@ -6173,6 +6173,9 @@ SELECT Inf IF (*-1 NP-HEAD-SG-NOM BARRIER NOT-ADV-PCLE LINK *-1 CC BARRIER NPNHA
 	## Dearvvašvuođaveahkkedárbu galgá árvvoštallojuvvot ja diehto addo-
 	## juvvot.
  # This rule has to come before the ones below.
+ 
+SELECT Inf IF (*-1 INF-VERB)(NOT *1 Inf BARRIER VFIN OR CS OR CP);
+    ## Bissuin galgá heahkkahuhttit, ii nie váigadit goddit; sáhttá leat váiga.
  
 
 # Rules that prevent later selection of Inf for a finite verb in the frame 
@@ -8953,6 +8956,12 @@ REMOVE Com IF (0 ("suddu"))(*1 ("beastit") BARRIER CP OR CS);
 SELECT Loc IF (*-2 ("bivdit") LINK *1 ("árvvoštallan" Acc) BARRIER NPNH)(0 (Sg Com));
     ## Guovlluid dearvvašvuođafitnodagaid plánat ovddiduvvojit SDD dohkkeheapmái, ja SDD bivdá árvvoštallamiid geahččoeiseválddiin.
     
+# buktit
+# - - - -
+
+SELECT Loc IF (*-1 ("buktit") BARRIER CP OR CS)(0 TEXT);
+    ## Sámediggi sáhttá maid buktit cealkámušaid guovlluid dearvvašvuođafitnodagaid jahkedieđáhusain ja plánaárvalusain (kap. 3.4).
+    
 # buoridit
 # - - - - -
 
@@ -9393,6 +9402,8 @@ REMOVE Loc IF (0 TOOLS)(*1 ACTIVITY-VERB OR MOVEMENT-VERB BARRIER NOT-ADV);
     
 REMOVE Loc IF (0 TOOLS LINK 1 CC LINK *1 Loc BARRIER NPNHA)(*1 ACTIVITY-VERB OR MOVEMENT-VERB);
     ## Mon in leat dugo Sivvar - mii láve bissuin ja beatnagiin mannat dugo livččii dáčča.
+    
+
     
 # Disambiguation based upon idiosyncratic V NP combinations
 # ---------------------------------------------------------
@@ -11928,7 +11939,7 @@ SELECT (@-FAUXV) IF (*1 Inf OR PrfPrc OR (Actio Ess) BARRIER CS OR CP);
 REMOVE (@-FAUXV) IF (0 (@-FMAINV))(NOT *1 Inf BARRIER CS OR CLB);
 	## Sápmelaččat ledje orron dáin guovlluin 1600-logu birrasiin. 
 
-SELECT (@-FMAINV) IF (*-1 (@SUBJ) BARRIER CS OR CP LINK 0 Sg)(0 Inf);
+SELECT (@-FMAINV) IF (*-1C (@SUBJ) BARRIER CS OR CP LINK 0 Sg)(0 Inf);
 	## Vuoigatvuohta journála geahččat.
 
 SELECT (@+FMAINV) IF (*-1 (@OBJ) BARRIER NOT-ADV-PCLE LINK *-1 (@SUBJ) 
