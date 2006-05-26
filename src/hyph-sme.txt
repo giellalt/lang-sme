@@ -9,20 +9,31 @@ define Vow       [ a | á | e | i | o | u | y | æ | ø | å | ä | ö |
 é | ó | ú | í | à | è | ò | ù | ì | ë | ü | ï | â | ê | ô | û | î | ã | ý 
 É | Ó | Ú | Í | À | È | Ò | Ù | Ì | Ë | Ü | Ï | Â | Ê | Ô | Û | Î | Ã | Ý ] ;
 
-define 2ndVow [ e | a | o | i | E | A | U | I ] ;
+define 2ndVow [ e | a | u | o | i | y | E | A | U | O | I | Y ] ;
 
 define VowNot2ndVow   [ Vow - 2ndVow ] ;
 
-define U [ u | U ] ; define O [ o | O ]  ; define A [ a | A ]  ;
-define E [ e | E ] ; define I [ i | I ]  ;
+define U [ u | U ] ; define O [ o | O ]  ; define A [ a | A ]  ;
+define E [ e | E ] ; define I [ i | I ]  ; define Y [ y | Y ]  ;
 define EO [ e | E | o | O ] ;
+define EOA [ e | E | o | O | a | A ] ;
+define IA [ i | I | a | A ] ;
 
 define IEdipht [ i e | I e | I E ] ;
 define UOdipht [ u o | U o | U O ] ;
 define EAdipht [ e a | E a | E A ] ;
 define OAdipht [ o a | O a | O A ] ;
+define OUdipht [ o u | O u | O U ] ; ! jour-na-lis-sta
+define AUdipht [ a u | A u | A U ] ; ! fau-na
+define EUdipht [ e u | E u | E U ] ; ! leut-nán-ta
+define AEdipht [ a e | A e | A E ] ; ! lae-sta-dius
+define ØYdipht [ ø y | Ø y | Ø Y ] ; ! nøyt-rála
 
-define dipht [ IEdipht | UOdipht | EAdipht | OAdipht ] ;
+
+
+
+
+define dipht [ IEdipht | UOdipht | EAdipht | OAdipht | OUdipht | AUdipht | EUdipht | AEdipht | ØYdipht ] ;
 
 define VowNotU [ Vow - U ] ;
 define VowNotO [ Vow - O ] ;
@@ -30,6 +41,9 @@ define VowNotA [ Vow - A ] ;
 define VowNotE [ Vow - E ] ;
 define VowNotI [ Vow - I ] ;
 define VowNotEO [ Vow - EO ] ;
+define VowNotEOA [ Vow - EOA ] ;
+define VowNotIA [ Vow - IA ] ;
+define VowNotY [ Vow - Y ] ;
 
 
 define Cns [ b | c | č | d | đ | f | g | h | j | k | l | m | n | ŋ | 
@@ -37,7 +51,7 @@ define Cns [ b | c | č | d | đ | f | g | h | j | k | l | m | n | ŋ |
              p | r | s | š | t | ŧ | v | w | x | z | ž |   
              P | R | S | Š | T | Ŧ | V | W | X | Z | Ž ] ; 
 
-define S [ S | s ] ; define Cnss [ Cns - S ] ;
+define S [ S | s | Š | š ] ; define Cnss [ Cns - S | Cns - Š ] ;
 define Sgm [ Cns | Vow ] ;
 
 
@@ -45,17 +59,22 @@ define Sgm [ Cns | Vow ] ;
 
 echo << Rules>>
 
-define beforedipht [..] -> %- || Vow _ dipht ;
+define beforedipht [..] -> %- || Vow _ dipht ;                ! Any diphth.
 define nodipht    [..] -> %- || Cns Vow _ VowNot2ndVow Sgm ;
+define NotØYdipht [..] -> %- || [Cns|Vow %-] VowNotØ _ Y Sgm ;
+define NotXUdipht [..] -> %- || [Cns|Vow %-] VowNotEOA _ U Sgm ;
 define NotUOdipht [..] -> %- || [Cns|Vow %-] VowNotU _ O Sgm ;
 define NotOAdipht [..] -> %- || [Cns|Vow %-] VowNotEO _ A Sgm ;
-define NotIEdipht [..] -> %- || [Cns|Vow %-] VowNotI _ E Sgm ;
+define NotIEdipht [..] -> %- || [Cns|Vow %-] VowNotIA _ E Sgm ;
 define 4cns       [..] -> %- || Vow r _ d n j , Vow Cns _ s t r Vow , Vow k s _ p [ l | r | s | n ] Vow , Vow n [ k | g ] _ s j Vow ;
-define unvoiced   [..] -> %- || Vow _ h [ n | m | l | j | r ] Vow ;
-define palatal    [..] -> %- || Vow (Cns) Cns _ d j , Vow (Cns) Cns _ l j , Vow (Cns) Cns _ n j , Vow (Cns) Cns _ n j ; !, Vow t _ n j ;
-define dissnas    [..] -> %- || Vow [ đ | i | l | r | v ] _ [ b m | d n | g ŋ ] ;
-define s2cns      [..] -> %- || Vow [Cns | i ] _ s Cnss Vow ; ! mái-stit (if commented out: máis-tit)
+define unvoiced   [..] -> %- || Vow (Cns) _ h [ n | m | l | j | r ] Vow ;
+define unvoicedwg       [..] -> %- || Vow (Cns) h [ n | m | l | j | r ] _ [ n | m | l | j | r ] Vow ;
+define dissnas    [..] -> %- || Vow [ đ | i | l | r | v ] _ [ b m | d n (j) | g ŋ ] ;
+define palatal    [..] -> %- || Vow (Cns) Cns _ d j , Vow (Cns) Cns _ l j , Vow (Cns) Cns _ n j , Vow (Cns) Cns _ n j , Vow _ n j ; !, Vow t _ n j ;
+define s2cns      [..] -> %- || Vow [Cns | i ] _ [s|š] Cnss Vow ; ! mái-stit (if commented out: máis-tit)
+define s2cnswg    [..] -> %- || Vow [Cns | i ] [s|š] Cnss _ Cnss Vow ;
 define 3cns       [..] -> %- || Vow [ Cns | i ] Cns _ Cns Vow ;
+define xcns       [..] -> %- || x _ Vow ;
 define 2cns       [..] -> %- || Vow [Cns | i ] _ Cns Vow ;
 define 1cns       [..] -> %- || Vow  _ Cns Vow ;
 
@@ -67,6 +86,10 @@ beforedipht
 .o.
 nodipht
 .o.
+NotØYdipht
+.o.
+NotXUdipht
+.o.
 NotUOdipht
 .o.
 NotOAdipht
@@ -77,13 +100,19 @@ NotIEdipht
 .o.
 unvoiced
 .o.
-palatal 
+unvoicedwg
 .o.
 dissnas 
 .o.
+palatal 
+.o.
 s2cns
 .o.
+s2cnswg
+.o.
 3cns
+.o.
+xcns
 .o.
 2cns
 .o.
