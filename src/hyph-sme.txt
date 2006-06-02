@@ -11,7 +11,13 @@ define Vow       [ a | á | e | i | o | u | y | æ | ø | å | ä | ö |
 
 define 2ndVow [ e | a | u | o | i | y | E | A | U | O | I | Y ] ;
 
+!define 3dVow [ u | U ] ;
+
+
 define VowNot2ndVow   [ Vow - 2ndVow ] ;
+
+!define VowNot3dVow   [ Vow - 3dVow ] ;
+
 
 define U [ u | U ] ; define O [ o | O ]  ; define A [ a | A ]  ;
 define E [ e | E ] ; define I [ i | I ]  ; define Y [ y | Y ]  ;
@@ -19,21 +25,25 @@ define EO [ e | E | o | O ] ;
 define EOA [ e | E | o | O | a | A ] ;
 define IA [ i | I | a | A ] ;
 
+
 define IEdipht [ i e | I e | I E ] ;
 define UOdipht [ u o | U o | U O ] ;
 define EAdipht [ e a | E a | E A ] ;
 define OAdipht [ o a | O a | O A ] ;
 define OUdipht [ o u | O u | O U ] ; ! jour-na-lis-sta
-define AUdipht [ a u | A u | A U ] ; ! fau-na
+define AUdipht [ a u | A u | A U ] ; ! fau-na, Lauv-sjø-vo-la, Kår-ve-jau-re ok.
 define EUdipht [ e u | E u | E U ] ; ! leut-nán-ta
-define AEdipht [ a e | A e | A E ] ; ! lae-sta-dius
+define AEdipht [ a e | A e | A E ] ; ! lae-sta-dius, 
 define ØYdipht [ ø y | Ø y | Ø Y ] ; ! nøyt-rála
 
-
+!define EAUtripht [ e a u | E a u | E A U ] ; !Bor-deaux, Beau-fort
+!define IEUtripht [ i e u | I e u | I E U ] ; !Nieu-siedler
 
 
 
 define dipht [ IEdipht | UOdipht | EAdipht | OAdipht | OUdipht | AUdipht | EUdipht | AEdipht | ØYdipht ] ;
+
+!define tripht [ EAUtripht | IEUtripht ] ;
 
 define VowNotU [ Vow - U ] ;
 define VowNotO [ Vow - O ] ;
@@ -59,9 +69,11 @@ define Sgm [ Cns | Vow ] ;
 
 echo << Rules>>
 
-define beforedipht [..] -> %- || Vow _ dipht ;                ! Any diphth.
+define beforedipht [..] -> %- || Vow _ dipht ;  ! Any diphth, bled by savetripht later on.
 define nodipht    [..] -> %- || Cns Vow _ VowNot2ndVow Sgm ;
+!define notripht   [..] -> %- || Cns Vow VowNot2ndVow _ U Sgm ; ! Not needed?
 define NotØYdipht [..] -> %- || [Cns|Vow %-] VowNotØ _ Y Sgm ;
+define NotOAdipht [..] -> %- || [Cns|Vow %-] VowNotEO _ A Sgm ;
 define NotXUdipht [..] -> %- || [Cns|Vow %-] VowNotEOA _ U Sgm ;
 define NotUOdipht [..] -> %- || [Cns|Vow %-] VowNotU _ O Sgm ;
 define NotOAdipht [..] -> %- || [Cns|Vow %-] VowNotEO _ A Sgm ;
@@ -78,44 +90,45 @@ define xcns       [..] -> %- || x _ Vow ;
 define 2cns       [..] -> %- || Vow [Cns | i ] _ Cns Vow ;
 define 1cns       [..] -> %- || Vow  _ Cns Vow ;
 
+! The philosophy here is to remove some boundaries who, when seen also in a left
+! context, are parts of triphthongs, and thus should not be divided. We do it
+! via restoring, in order not to mess up our diphthong rules.
+
+define savetripht %- -> 0 || e _ a u ;  ! does  work...
+define savetripht2 %- -> 0 || i _ e u ;  ! does  work...
                      
 echo <<Combining...>>
 
 read regex [
+!notripht
+!.o. 
 beforedipht
-.o.
-nodipht
-.o.
-NotØYdipht
-.o.
-NotXUdipht
-.o.
-NotUOdipht
-.o.
-NotOAdipht
-.o.
-NotIEdipht
-.o.
-4cns 
-.o.
-unvoiced
-.o.
-unvoicedwg
-.o.
-dissnas 
-.o.
-palatal 
-.o.
-s2cns
-.o.
-s2cnswg
-.o.
-3cns
-.o.
-xcns
-.o.
-2cns
-.o.
-1cns ] ;
+.o. nodipht
+.o. NotØYdipht
+.o. NotOAdipht
+.o. NotXUdipht
+.o. NotUOdipht
+.o. NotIEdipht
+.o. 4cns 
+.o. unvoiced
+.o. unvoicedwg
+.o. dissnas 
+.o. palatal 
+.o. s2cns
+.o. s2cnswg
+.o. 3cns
+.o. xcns
+.o. 2cns
+.o. 1cns
+.o. savetripht
+.o. savetripht2
+ ] ;
 
 invert net ;
+
+! For quick compilation, comment the following line in:
+!save h.fst ;
+! Then, at the command line, give this command:
+! xfst -utf8 < src/hyph-sme.txt
+! As a result, a temporary h.fst file will be saved in sme/, it can be called
+! with e.g. "lookup -flags mbTT -utf8 h.fst", or in a pipe.
