@@ -577,6 +577,9 @@ LIST TOGETHER-VERB = "goallostuvvot" "beaškkehat" "bidjat" "čatnit" "suddat"
  # TODO: Think of counter examples, i.e. sentences where we have these verbs, but
  # where oktii is not an adverbial.
  
+LIST SOURCE-VERB = "gáibidit" ;
+# verbs that need a human locative argument as source
+ 
 # Semantic verb sets according to content
 # - - - - - - - - - - - - - - - - - - - -
 
@@ -835,7 +838,7 @@ LIST FYLKA = "Finn^márku" "Finn^marku" "Romsa" "Nord^lánda" "Lulli-Trøndelag"
              
 LIST XDEPARTEMEANTA = "bearaš#departemeanta" "eanandoallo#departemeanta" "dearvvašvuođa#departemeanta" "kultur#departemeanta" "birasgáhtten#departemeanta" "dutkan#departemeanta";
              
-LIST INSTITUTION = "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "ásahus" "bargo#kantuvra" "báhpa#skuvla" "buohcce#stohpu" "buohcce#viessu" "dearvvašvuođa#ásahus" "departemeanta" "eanandoallo#departemeanta" "giella#guovdaš" "giella#ráđđi" "girku" "guovllubuohcce#viessu" "dearvvašvuođa#guovddáš" "institušuvdna" "joatkka#skuvla" "klinihkka" "mánáid#gárdi" "mánáid#skuvla" "meieriija" "musea" "nuoraid#skuvla" "parlameantta" "psykiatriijabuohcce#viessu" "ráđđi" "riika#searvi" "searvodat" "skuvla" "skuvla#kantuvra" "skuvlla" "stáhta" "suohkan" "synagoga" "universiteahtta" "vuođđo#skuvla" ; 
+LIST INSTITUTION = "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "ásahus" "bargo#kantuvra" "báhpa#skuvla" "buohcce#stohpu" "buohcce#viessu" "dearvvašvuođa#ásahus" "dearvvašvuođa#fitnodat" "departemeanta" "eanandoallo#departemeanta" "fitnodat" "giella#guovdaš" "giella#ráđđi" "girku" "guovllubuohcce#viessu" "dearvvašvuođa#guovddáš" "institušuvdna" "joatkka#skuvla" "klinihkka" "mánáid#gárdi" "mánáid#skuvla" "meieriija" "musea" "nuoraid#skuvla" "parlameantta" "psykiatriijabuohcce#viessu" "ráđđi" "riika#searvi" "searvodat" "skuvla" "skuvla#kantuvra" "skuvlla" "stáhta" "suohkan" "synagoga" "universiteahtta" "vuođđo#skuvla" ; 
 
 LIST ARRANGEMENT = "čakča#márkan" "festivála" ;
 
@@ -6715,6 +6718,7 @@ SELECT Sg IF (0 SG-WORD)(NOT *-1 Num OR Ord BARRIER NOT-ADJ)(*-1 BOS LINK NOT *1
 
 # Depending on the scope
 # - - - - - - - - - - - -
+# the time dimension can cause problems here...
 
 SELECT Sg IF (-1 FYLKA LINK 0 (@GN>))(0 ("fylkka#diggi" Com) OR ("fylkka#gielda" Com) OR ("fylkka#mánni" Com) OR ("fylkkas#gielda" Com) OR ("fylkkarehket#dárkun" Com))
 (NOT -3 FYLKA LINK -2 CC);
@@ -8948,7 +8952,14 @@ SELECT Loc IF (*-1 ("fitnat") BARRIER NPNH)(0 N);
     
 SELECT Loc IF (*-1 (PLACE-VERB) BARRIER CP OR CS)(0 PLACE OR INSTITUTION);
     
+SELECT Loc IF (0 HUMAN OR INSTITUTION)(*1 SOURCE-VERB BARRIER CS OR CP OR VFIN LINK NOT 0 Adv)
+	(NOT *-1 CC BARRIER CS OR CP LINK -1 LOC-VERB);
+	## Guovlluid dearvvašvuođafitnodagain gáibiduvvojit dakkár rutiinnat.
 
+SELECT Loc IF (*-1 SOURCE-VERB BARRIER CS OR CP OR VFIN LINK NOT 0 Adv)
+	(NOT *-1 CC BARRIER CS OR CP LINK -1 LOC-VERB)
+	(0 HUMAN OR INSTITUTION);
+	
 
 
 # Disambiguation based upon NP coordination
