@@ -790,8 +790,9 @@ LIST COM-COMPL-NOUN = "ovttasbargu" "šiehtadus" ;
 SET LOC-HEAD = LOC-VERB | LOC-COMPL-NOUN ;
 SET COM-HEAD = COM-VERB | TOGETHER-VERB | COM-COMPL-NOUN ;
     
-LIST NOM-GEN-NOUN = "ákšu" "identitehta" "identitehtta" "jolá" "journála" "lága" "plana" "ulbmil" "stáhta" "vahkku" ;
-    # in singular, Nom=Gen=Acc
+LIST NOM-GEN-NOUN = "ákšu"  "ášši" "identitehta" "identitehtta" "jolá" "journála" "lága" 
+                    "plana" "ulbmil" "stáhta" "vahkku" ;
+                    # in singular, Nom=Gen=Acc
     
 LIST PREGEN = ("álgogeahčen")("bealli" N Sg Loc)("gaskavuohta" N Sg Loc)("guoskevaš")
 	("loahpageahčen")("miella" N Sg Loc)("oktavuohta" N Sg Loc);
@@ -2573,6 +2574,9 @@ REMOVE ("Sáme#giella") IF (0 ("sáme#giella"));
 REMOVE ("Sáme#politihkka") IF (0 ("sáme#politihkka"));
     ## Sámepolitihka birra.
 
+REMOVE Prop IF (0 CNOUN)(0 (Prop Pl));
+    ## Sápmelaččaide lea hui mávssolaš ahte sin dárbbut váldojit vuhtii. 
+
 # ===================================== #
 # Local disambiguation - cycles 1 and 2 #
 # ===================================== #
@@ -3855,17 +3859,6 @@ REMOVE V IF (-1 Gen)(0 Po)(NOT 1C Po);
 
  # Subjunctions are disambiguated in two subcycles. This is the first.
  
-# Some particular subjunctions
-# ----------------------------
-
-SELECT CS IF (-1 COMMA)(0 ("de") OR ("vaikko"))(NOT 1 CS);
-        ## Jos geahččá dearvvašvuođarievtti geahččanguovllus, de ii gáibádus
-        ## áddehantti dieđuid oažžumis čatnas giellalága ráddjehusaide.
-
-REMOVE CS IF (NOT *1 VFIN OR ("leapma" Dimin)); # The latter is "leamaš".
-	## Sii manne meahccái, vaikko lei issoras buolaš.
-	## Eai lean váldán go niestebohcco.
-
 # amas
 # - - -
 # A, or Neg Sup, or CS (if followed by (nominative) subject and (infinitival) verb).
@@ -4044,6 +4037,17 @@ SELECT CS IF (0 ("vai"));
 # -------------------------------------
 REMOVE CS IF (0 ("de"));
 	## De leat máksán.
+
+# Some particular subjunctions
+# ----------------------------
+
+SELECT CS IF (-1 COMMA)(0 ("de") OR ("vaikko"))(NOT 1 CS);
+        ## Jos geahččá dearvvašvuođarievtti geahččanguovllus, de ii gáibádus
+        ## áddehantti dieđuid oažžumis čatnas giellalága ráddjehusaide.
+
+REMOVE CS IF (NOT *1 VFIN OR ("leapma" Dimin)); # The latter is "leamaš".
+	## Sii manne meahccái, vaikko lei issoras buolaš.
+	## Eai lean váldán go niestebohcco.
 
 
 
@@ -7767,13 +7771,14 @@ SELECT (N Nom) IF (*-1 (Dem Nom) BARRIER NOT-ADJ)(NOT 0 ("leapma" Dimin));
 SELECT (Num Nom) IF (-1 (Dem Sg Nom));
 	## Dát guokte ášši Siviilaáittardeaddji geavadis leat váldon...
 
-SELECT Nom IF (*-1 CS OR BOS OR CC OR CP OR PUNCT OR (":") BARRIER NPNHA)(0 Sg)
+SELECT Nom IF (*-1 CS OR BOS OR CC OR CP OR PUNCT OR (":") BARRIER NPNHA OR (Dem Acc))(0 Sg)
 	(NOT 0 Adv OR Loc)(NOT 0 Ess LINK 0 (@ADVL))
 	(NOT 0 Attr LINK *1 N BARRIER NPNH)(*1C V-SG3 BARRIER NOT-ADV-PCLE);
 	## ...ahte doaimma jođihangoddi vejolaččat mearrida...
 
-SELECT (N Sg Nom) IF (1 V-SG3)(NOT 1 N)(NOT *2C Nom BARRIER CS);
+SELECT (N Sg Nom) IF (NOT 0 Acc)(1 V-SG3)(NOT 1 N)(NOT *2C Nom BARRIER CS);
 	## Doaibmaplána árvvoštallan čajeha maiddái ahte...
+	## Dan ášši ferte čilget nállevealaheami ektui sierra. # Topicalised object.
 
 SELECT (N Sg Nom) IF (NOT *-1 (N Sg Nom) BARRIER CS OR CP OR CC OR CLB)
 	(NOT 0 Loc)(1 (Neg Sg3));
@@ -8330,6 +8335,10 @@ SELECT Acc IF (*-1 BOS OR CS OR (":" CLB) BARRIER NPNH)(NOT 0 Nom)
 SELECT Acc IF (-1 BOS)(0 (Pron Dem))(*1C Acc BARRIER NPNH) ;
 	## Dán máŋggadáfotvuođa háliidit mii bisuhit.
 
+SELECT Acc IF (*-1 BOS BARRIER NPNHA OR Nom)(*1 V-SG3 BARRIER NOT-NOM)
+	(*2 TV BARRIER Acc LINK *1 EOS OR CS OR CLB BARRIER Acc) ;
+	## Dan ášši ferte čilget nállevealaheami ektui sierra.
+	# This rule is relevant for nouns where Nom=Acc=Gen.
  
 # Accusative between Aux and main verb
 # ------------------------------------
@@ -8807,7 +8816,7 @@ REMOVE Acc IF (*-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE)(0 Loc)(*1 ("ahte") BARRIER 
 	## Olmmoš galgá almmuhit skovis, ahte objektiivvalaš eaktu lea dievvan.
  # Same here.
 
-REMOVE Acc IF (0 (N Sg Nom))(1 V-SG3)(NOT *1C Nom BARRIER CS);
+REMOVE Acc IF (0 (N Sg Nom))(1 V-SG3)(NOT *1C Nom BARRIER CS)(NOT *1 TV LINK *1 EOS OR CS OR CLB BARRIER Acc);
 	## ...mii lea mearriduvvon lágas dahje maid láhka doarju.
 
 REMOVE Acc IF (NOT 0 TIME OR Dem)(*1C N BARRIER NPNH LINK 1C Inf);
