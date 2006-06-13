@@ -299,6 +299,9 @@ SET VFIN-POS = V-MOOD - ConNeg - Neg ;
 #SET VFIN-NOT-IMP =  Ind | Pot | Cond ;
 SET VFIN-NOT-IMP = VFIN - Imprt ;
 
+SET VFIN-NOT-NEG = VFIN - (Neg Foc) ;
+    ## this might be to strict, besides, "iige" can be written "ii ge"
+
 
 # Person
 # - - - - 
@@ -357,9 +360,13 @@ SET LEAT-DU3-PL3 = ("leat" V Du3) | ("leat" V Pl3); # Not referred to by any rul
 
 LIST LEAT-FIN-NOT-IMP = ("leat" V Ind) ("leat" V Cond) ("leat" V Pot); 
 
-LIST LEAN-PRC = ("leat" V PrfPrc); # Not referred to by any rule.
-
 LIST LEAN-SG1 = ("leat" V Ind Prs Sg1);
+
+LIST HABEO-SG3 = ("leat" Sg3) (V Neg Sg3) ("šaddat" Sg3) ;
+
+LIST HABEO-PL3 = ("leat" Pl3) (V Neg Pl3) ("šaddat" Pl3) ;
+
+SET HABEO-3 = HABEO-SG3 | HABEO-PL3 ;
 
 
 # Pronoun sets
@@ -678,7 +685,8 @@ SET NAPP     = WORD - PRE-APP ;
 SET NOT-N =  WORD - N ;
 SET NOT-A =  WORD - A ;
 SET NOT-NA = WORD - N - A ;
-SET NOT-NP = VFIN | ConNeg | Inf | Pcle | Interj | CS ; # The set NP-BORDER is bigger. 
+SET NOT-NP = VFIN-NOT-NEG | ConNeg | Inf | Pcle | Interj | CS ; # The set NP-BORDER is bigger. 
+
 
 
 
@@ -744,13 +752,16 @@ LIST VAHKKU = "beaivi" "b" "jándor" "bodda" "čakča" "čakča#geassi" "čakča
  # The quoteless jahki here is since the preprocessor is not fine-tuned
  # yet, it still gives '"1870-" # jahki N Sg Com'.
  # lets see if "dbm" works
+ 
+LIST AIGI = "áigi" "Beassaš-#áigi" "čakča#áigi" "dálve#áigi" "geasse#áigi" "juovla#áigi";
+    ## Maybe it could be added to VAHKKU?
 
  
 LIST BEAIVI = "mánnodat" "vuoss#árga" "disdat" "maŋŋeb#árga" "gaska#vahkku"
 		"duorastat" "bearjadat" "lávvardat" "lávvordat" "sotna#beaivi" 
 		"duopmo#beaivi" "sábbát";
 
-SET TIME = MANNU | VAHKKU | BEAIVI ;
+SET TIME = MANNU | VAHKKU | BEAIVI | AIGI ;
     # Do not add AIGODAT, it has some other characteristics in some cases.
 
 SET NOTIME = N - TIME ;
@@ -1588,7 +1599,7 @@ MAP (@PronN> @GP<) TARGET (Pron Attr) ;
 	## Leago guhkki eará dáluide?
 	## Doppe leaba earet eará Sondre Lerche ja Madrugada.
 	# It has to be checked if the @GP< needs to be removed in some cases.
-
+	
 MAP (@PronN<) TARGET ("eatnat") IF (-1 ("giittos"));
 	## Giittos eatnat luoikamis.
 
@@ -1619,6 +1630,29 @@ MAP (@PronN>) TARGET Indef IF (*1 N BARRIER NPNH)(NOT 0 Nom LINK 1 Acc)
     (NOT 1 VFIN OR Ess OR ("veara"));
     ## Son galgá beassat buktit oaivilis buot gažaldagaide.
     ## Eai leat šat nu ollu ohcamat priváhta ealáhusain.
+
+ADD (@PronN>) TARGET Indef IF (1 ("eará") OR Dem)(NOT 0 Nom LINK 1 Acc)
+	(NOT 0 ADVLCASE); 
+    ## Ollu earáidege go ovttagielagiidda lea váttis gulahallat....
+    ## ..muhto ii fal nu ollu earáin.
+    ## Ruoŧas bođii loahpas vástadusa Sámi Oahpahusguovddážis, Johkamohkis, muhto ii fal nu ollu earáin.
+    # The partitive construction would have been máŋggain earáin and ollu daid earáin
+    
+    
+MAP (@ADVL) TARGET Indef IF (0 ("ollu"))(1 ("eará" Pl Loc) OR (Dem Pl Loc))(*2 V-SG3 BARRIER NOT-ADJ-PCLE)
+    (NOT 0 Nom LINK 1 Acc)(NOT 0 ADVLCASE);
+MAP (@ADVL) TARGET Indef IF (*-1 V-SG3 BARRIER VFIN OR CP OR CS)(0 ("ollu"))(1 ("eará" Pl Loc) OR (Dem Pl Loc))
+    (NOT 0 Nom LINK 1 Acc)(NOT 0 ADVLCASE);
+	## Ollu earáin lea hávski.
+	#  for habeo-constructions where ollu modifies eará+Loc
+
+MAP (@PronN>) TARGET Indef IF (NOT *-1 V-SG3 BARRIER VFIN OR CP OR CS)(0 ("ollu"))(1 ("eará" Pl Loc) OR (Dem Pl Loc))
+    (NOT *2 V-SG3 BARRIER NOT-ADJ-PCLE)(NOT 0 Nom LINK 1 Acc)(NOT 0 ADVLCASE);
+	## Ollu earáin leat hávski.
+# Mange andre har det triveleg. Mange av dei andre er trivelege.
+# Ollu earáin leat hávskit
+# Mange andre kjøper mjølk. Mange av dei andre kjøper mjølk.
+# Ollu earát ostet mielkki. Ollusat earáin ostet mielkki.
 
 MAP (@PronN>) TARGET Indef IF (0 Nom)(*1 (N Nom) BARRIER NPNH)
 	(NOT 0 Pl LINK 1 Inf);
