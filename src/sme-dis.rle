@@ -1948,6 +1948,9 @@ MAP (@GN>) TARGET Gen IF (0 TIME OR AIGODAT OR ROUTE)(NOT 1 CC)(NOT 0 VAHKKU LIN
 	
 MAP (@ADVL @GN>) TARGET Gen IF (-2 Gen LINK 0 MANNU)(-1 Ord)(0 ("b") OR ("beaivi"));
     ## Geassemánu 8.b. 2001 láhkaásahus nr 676 oktagaslaš plánaid birra dearvvašvuođalágaid vuođul lea addojuvvon láhkamearrádusaid láhkavuođuin.
+    
+#MAP (@ADVL @GN>) TARGET Gen IF (NOT -1 Num)(0 MANNU)(1 CARDINALS);
+    ## Guovdageaidnu / Kautokeino, skábmamánnu 2002.
 
 MAP (@ADVL) TARGET Gen IF (0 TIME OR ROUTE);
 	## Maid Biret-Elle áigu dán dálvve dahkat?
@@ -2030,7 +2033,23 @@ MAP (@APP) TARGET (A Ord) IF (-1 Prop LINK NOT 0 Plc);
 	
 MAP (@APP) TARGET Num IF (-3 MANNU)(-2 Ord)(-1 ("beaivi") OR ("b" ABBR));
     ## Geassemánu 8.b. 2001 láhkaásahus nr 676 oktagaslaš plánaid birra dearvvašvuođalágaid vuođul lea addojuvvon láhkamearrádusaid láhkavuođuin.
-	
+    
+MAP (@APP) TARGET (Num Nom) IF (-1C Nom OR Acc OR Loc OR Com OR Ill OR Ess LINK 0 MANNU)(0 CARDINALS);
+    ## Guovdageaidnu / Kautokeino, skábmamánnu 2002.
+    ## Guovdageaidnu / Kautokeino, skábmamánus 2002.
+    
+MAP (@APP) TARGET (Num Nom) IF (-1 Gen LINK 0 MANNU)(0 CARDINALS LINK 0 Nom)(*1 Po OR N BARRIER NOT-NP);
+    ## Guovdageaidnu / Kautokeino, skábmamánu 2002 rádjai lei buorre.  
+
+
+# Numeral mappings
+# ----------------
+
+MAP (@APP @SUBJ @SPRED @HNOUN) TARGET (Num Nom) IF (-1C Gen LINK 0 MANNU)(0 CARDINALS);
+    ## Guovdageaidnu / Kautokeino, skábmamánu 2002 viesut ledje buorre.
+MAP (@ADVL @GP> @GN>) TARGET (Num Gen) IF (-1C Gen LINK 0 MANNU)(0 CARDINALS);
+    ## Guovdageaidnu / Kautokeino, skábmamánu 2002.	
+MAP (@OBJ @OPRED) TARGET (Num Acc) IF (-1C Gen LINK 0 MANNU)(0 CARDINALS);
 	
 # Numeral adjective mappings
 # --------------------------
@@ -2138,19 +2157,19 @@ MAP (@SUBJ-QH) TARGET (Num Nom) IF (-1 CC)(1 Prop);
 
 MAP (@OBJ) TARGET (Num Acc) IF (*-1 ("dahkat") OR ("váldit") BARRIER NOT-ADV)(0 CARDINALS)(1 TIME);
     ## Mun válddán 2 diimmu.
-
+    
 MAP (@NumN<) TARGET Num IF (-1 N OR ACR LINK NOT 0 (@NQ<))(0 CARDINALS)(1 EOS)
-    (NOT -1 NUMMAR);
+    (NOT -1 NUMMAR OR MANNU);
     ## Dat lea dieđáhus 4.
     ## Son dagai 1000 diimmu 2005:s.
 	## Viidváseappot mearrida dearvvašvuođabargiidlága § 10 vuosttas lađđasa...
  # Should hit numerals that only have to do with numbering, not with amount. 
  
-MAP (@NumN<) TARGET Num IF (-2 N)(-1 NUMMAR)(0 CARDINALS)(1 EOS);
+MAP (@NumN<) TARGET Num IF (-2 N)(-1 NUMMAR OR MANNU)(0 CARDINALS)(1 EOS);
     ## Dat lea dieđáhus nr. 4.
  
 MAP (@NumN<) TARGET Num IF (-1 N OR A OR ACR LINK NOT 0 (@NQ<))(0 CARDINALS)(NOT 0 ("oktii"))
-    (NOT 1 N OR A OR ACR)(NOT -1 NUMMAR);
+    (NOT 1 N OR A OR ACR)(NOT -1 NUMMAR OR MANNU);
     ## Bearjadaga 21.03.1980.
     #This one is still too strict.
     
@@ -2203,7 +2222,7 @@ MAP (@QN<) TARGET Num IF (-1 ("diibmu" Nom) OR ("dbm" Nom));
 #MAP (@QN<) TARGET Ord IF (-1 N)(NOT 1 N OR A OR ACR);
     ## Olav V.
 	
-MAP (@ADVL) TARGET Num IF (-1 MANNU)(1 NP-BORDER);
+#MAP (@ADVL) TARGET Num IF (-1 MANNU)(1 NP-BORDER);
 	## Dat hávdáduvvojedje Álahedjui skábmamánus 1997.
  
 MAP (@ADVL) TARGET Num IF (0 Acc)(*1 TIME OR ROUTE BARRIER NOT-A); 
@@ -4194,7 +4213,11 @@ REMOVE Px IF (-1 Prop) (0 ("guovttos"));
     ## Biera guovttos Márehiin leaba daid mánáid váhnemat. 
 
 SELECT Num IF (0 (N ACR));
-    ## Plána- ja huksenlaga II mielde.    
+    ## Plána- ja huksenlaga II mielde. 
+
+SELECT Nom IF (-1C Gen LINK 0 MANNU)(0 CARDINALS)(*1 Po OR N BARRIER NOT-NP);
+    ## Guovdageaidnu / Kautokeino, skábmamánu 2002 rádjai lei buorre.  
+
 
 # ========================== #
 # Disambiguating adpositions #
@@ -7400,9 +7423,12 @@ SELECT Loc IF (NOT *-1 Sg3)(0 PxSg3);
 
 # Genitive after quantifier
 # - - - - - - - - - - - - - 
+#REMOVE Gen IF (*-1C (@QN>) BARRIER NPNH)(NOT *1 N BARRIER NOT-NP);
 SELECT Gen IF (*-1C Num BARRIER NPNH OR Gen OR CC OR PUNCT OR REALCLB OR Ord
 	LINK NOT 0 ("okta") OR Ord)(NOT 0 VERB OR ("nr") OR ("nummar") OR ("s"));
+#(NOT -1C (@QN>) LINK NOT *1 N BARRIER NOT-NP);
 	## Golbma čáppa, doaimmalaš nieidda livžo áhčiset riegádanbeaivve.
+	## 
 	
 REMOVE Gen IF (*-1C Ord BARRIER NPNH OR Gen OR CC OR PUNCT OR REALCLB OR Ord
 	LINK NOT 0 ("okta"))(NOT 0 VERB OR ("nr") OR ("nummar") OR ("s"))(NOT *1 N BARRIER NPNH);
