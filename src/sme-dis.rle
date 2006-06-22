@@ -1416,6 +1416,21 @@ LIST TEXT = "aviisa" "bláđđi" "dieđáhus" "divššohas#journála" "girji" "j
 LIST Clt = Qst Foc ; 
 
 LIST Px = PxSg1 PxSg2 PxSg3 PxDu1 PxDu2 PxDu3 PxPl1 PxPl2 PxPl3 ;
+LIST PX1 = PxSg1 PxDu1 PxPl1 ;
+LIST PX2 = PxSg2 PxDu2 PxPl2 ;
+LIST PX3 = PxSg3 PxDu3 PxPl3 ;
+
+SET PXNOTSG1 = Px - PxSg1 ;
+SET PXNOTSG2 = Px - PxSg2 ;
+SET PXNOTSG3 = Px - PxSg3 ;
+SET PXNOTDU1 = Px - PxDu1 ;
+SET PXNOTDU2 = Px - PxDu2 ;
+SET PXNOTDU3 = Px - PxDu3 ;
+SET PXNOTPL1 = Px - PxPl1 ;
+SET PXNOTPL2 = Px - PxPl2 ;
+SET PXNOTPL3 = Px - PxPl3 ;
+
+
 
 #SET PPOS = Po | Pr ;
 
@@ -3404,6 +3419,11 @@ SELECT Pron IF (0 ("eanaš") OR ("eanas"))(1 (Dem Loc) OR (Pers Loc));
 # First select some clear Px cases, and remove some equally clear non-cases
 # Let these come directly after local disambiguation.
 
+#REMOVE PxSg3 IF (*-1 (PRON-12 Gen @GN>));
+    ## Dilli lea min mielas čuožžilan. 
+
+
+
 # PxSg1
 # - - -
 SELECT (Nom PxSg1) IF (-1 BOS)(NOT 0 VFIN)(1 EOS);
@@ -3416,6 +3436,9 @@ SELECT (PxSg1) IF (-2 MUN)(-1 V-SG1)(NOT -1 ("leat"))
 SELECT (Nom PxSg1) IF (-1 PUNCT OR CLB)(0 N-PX)(1 COMMA);
 	## Bárdnán, leage dorvvolaš.
 
+#REMOVE PxSg1 IF (*-1 (Pron Pers Gen @GN>) BARRIER NOT-ADJ LINK NOT ("mu");
+
+#REMOVE PxSg2 IF (*-1 (Pron Pers Gen @GN>) BARRIER NOT-ADJ LINK NOT ("du");
 
 # PxSg2
 # - - -
@@ -3494,7 +3517,13 @@ REMOVE Px IF (0 ("oktavuohta" Loc));
 REMOVE (Gen PxSg3) IF (NOT *-1 Pr BARRIER NPNH)(1C Prop);
 	## erret eará stuorradiggedieđáhusas Sámedikki doaimmaid birra.
 
+# All Px
 
+REMOVE Px IF (*-1 (Pron Pers Gen @GN>) BARRIER NOT-ADJ);
+    ## Dilli lea min mielas čuožžilan.
+    # Mu mielas dat lea hui dehálaš njuolggadus.
+    
+    
 
 # ------------------- #
      CONSTRAINTS      #
