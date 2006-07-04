@@ -446,7 +446,15 @@ LIST IKTE = "ikte" "dolin" "dovle" ;
 LIST MO = "goas" "gokko" "gos" "gosa" "makkár" "manne" "mo" "mot" "movt" 
 	"nugo" (V Qst); 
  # Introduce finite clauses.
+ 
 
+# Coordinators
+# - - - - - - -
+
+LIST XGO = "dego" "nugo" ("seamma#ládjego" Qst) ("seamma#láhkai" Qst) ;
+    # Compounds
+LIST SEAMMAX = "seamma#ládje" "seamma#láhkai" ;
+    # Those combine with go
 
 # Sets for adverbs that have lookalikes
 # - - - - - - - - - - - - - - - - - - -
@@ -695,6 +703,8 @@ SET NOT-A =  WORD - A ;
 SET NOT-NA = WORD - N - A ;
 SET NOT-NP = VFIN-NOT-NEG | ConNeg | Inf | Pcle | Interj | CS ; # The set NP-BORDER is bigger. 
 SET NPROP = N - PROP ;
+SET NOT-COMMA = CLB - COMMA | PUNCT-LEFT | PUNCT-RIGHT ;
+ 
 
 
 
@@ -10601,6 +10611,28 @@ SELECT (Sg Com) IF (*-1 CC OR (Neg Foc) BARRIER NPNH LINK -1 Com LINK NOT 0 Loc)
 SELECT (Sg Com) IF (1 CC OR (Neg Foc))(*2 Com BARRIER NPNH LINK NOT 0 Loc);
 	## Fága galgá ovddiidit ovttasbarggus Sámedikkiin ja sámi dearvvašvuođa-
 	## ja sosiálabargiiguin.
+	
+# Coordination with SEAMMAX OR XGO
+# --------------------------------
+# We always need rules for SEAMMAX LINK 1 ("go") OR ("dego") and for the compound coordinator XGO
+# Coordination to the right as well as to the left are needed
+# the comma to the left of XSEMMA/DEGO might be optional
+# that is the reason why BARRIER NOT-COMMA is used
+# the comma to the right of the coordinated element though is kept
+
+# Coordination to the left
+# - - - - - - - - - - - - -
+
+SELECT Loc IF (NOT *-1 (@GN>) BARRIER CP OR CS)(0 (Sg Com))(*1 SEAMMAX LINK NOT 0 Qst BARRIER NOT-COMMA LINK 1 ("go") OR ("dego") LINK *1 Loc BARRIER NPNH LINK 1 COMMA) ;
+    ## Sámediggeráđđi čujuha cealkámušastis áššái ahte sápmelaš rávisolbmuin seammaládje go sámi mánáin , ferte leat vejolašvuohta oažžut vuođđoskuvlaoahpahusaset O97 Sámi mielde.
+
+SELECT Loc IF (NOT *-1 (@GN>) BARRIER CP OR CS)(0 (Sg Com))(1 XGO BARRIER NOT-COMMA LINK *1 Loc BARRIER NPNH LINK 1 COMMA);
+# Those rules are locative specific. They choose a locative if no other coordination candidates are existent, which means no genitive modifiers, no other arguments or adjuncts. The (NOT *-1 (@GN>) constraints is supposed to exclude genitive modifier coordination.
+
+SELECT Com IF (NOT *-1 (@GN>) BARRIER CP OR CS)(0 (Pl Loc))(1 SEAMMAX LINK NOT 0 Qst BARRIER NOT-COMMA LINK 1 ("go") OR ("dego") LINK *1 Com BARRIER NPNH LINK 1 COMMA) ;
+
+SELECT Com IF (NOT *-1 (@GN>) BARRIER CP OR CS)(0 (Pl Loc))(1 XGO BARRIER NOT-COMMA LINK *1 Com BARRIER NPNH LINK 1 COMMA);
+
 
 # Another round of locative rules
 # ===============================
