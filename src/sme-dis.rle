@@ -1383,7 +1383,7 @@ LIST FYLKA = "Finn^márku" "Finn^marku" "Romsa" "Nord^lánda" "Lulli-Trøndelag"
              
 LIST XDEPARTEMEANTA = "bearaš#departemeanta" "eanandoallo#departemeanta" "dearvvašvuođa#departemeanta" "kultur#departemeanta" "birasgáhtten#departemeanta" "dutkan#departemeanta" "olgoriikka#departemeanta" ;
              
-LIST INSTITUTION = "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "ásahus" "bargo#kantuvra" "báhpa#skuvla" "bellodat" "birasgáhtten#departemeanta" "buohcce#stohpu" "buohcce#viessu" "dearvvašvuođa#ásahus" "dearvvašvuođa#fitnodat" "departemeanta" "departementa" "dutkan#departemeanta" "eanandoallo#departemeanta" "eanandoallo#departementa" "eise#váldi" "fitnodat" "geahččoeise#váldi" "gelbbolašvuođa#guovddáš" "gielda#departementa" "giella#guovdaš" "giella#ráđđi" "girku" "guovllu#stivra" "guovllubuohcce#viessu" "dearvvašvuođa#guovddáš" "institušuvdna" "joatkka#skuvla" "klinihkka" "kulturmuito#ráđđi" "Luonddu^hálddašan^direktoráhta" "luondduhálddašan#direktoráhta" "mánáid#gárdi" "mánáid#skuvla" "meieriija" "musea" "našunál#diggi" "nuoraid#skuvla" "oahpahus#ráđđi" "olgoriikka#departemeanta" "orgána" "parlameantta" "psykiatriijabuohcce#viessu" "ráđđi" "reguleren#ráđđi" "riika#searvi" "Sámedigge#ráđđi" "Sáme^digge^ráđđi" "searvodat" "skuvla" "skuvla#kantuvra" "skuvlla" "stáhta" "suohkan" "synagoga" "universiteahtta" "virgáibidjan#ráđđi" "vuođđo#skuvla" ; 
+LIST INSTITUTION = "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "ásahus" "bargo#kantuvra" "báhpa#skuvla" "bellodat" "birasgáhtten#departemeanta" "buohcce#stohpu" "buohcce#viessu" "dearvvašvuođa#ásahus" "dearvvašvuođa#fitnodat" "departemeanta" "departementa" "doaibma#guovddáš" "dutkan#departemeanta" "eanandoallo#departemeanta" "eanandoallo#departementa" "eise#váldi" "fitnodat" "geahččoeise#váldi" "gelbbolašvuođa#guovddáš" "gielda#departementa" "giella#guovdaš" "giella#ráđđi" "girku" "guovllu#stivra" "guovllubuohcce#viessu" "dearvvašvuođa#guovddáš" "institušuvdna" "joatkka#skuvla" "klinihkka" "kulturmuito#ráđđi" "Luonddu^hálddašan^direktoráhta" "luondduhálddašan#direktoráhta" "mánáid#gárdi" "mánáid#skuvla" "meieriija" "musea" "našunál#diggi" "nuoraid#skuvla" "oahpahus#ráđđi" "olgoriikka#departemeanta" "orgána" "parlameantta" "psykiatriijabuohcce#viessu" "ráđđi" "reguleren#ráđđi" "riika#searvi" "Sámedigge#ráđđi" "Sáme^digge^ráđđi" "searvodat" "skuvla" "skuvla#kantuvra" "skuvlla" "stáhta" "suohkan" "synagoga" "universiteahtta" "virgáibidjan#ráđđi" "vuođđo#skuvla" ; 
 
 LIST EVENT = "čakča#márkan" "čoahkkin" "dievas#čoahkkin" "festivála" "sámedigge#válga" "telefon#čoahkkin" "gulaskuddan#čoahkkin" ;
 
@@ -3225,7 +3225,13 @@ SELECT ("unnit#lohku") IF (0 ("unnit#logo"));
 # - - - - - -
 
 SELECT ("válga#málle") IF (0 ("válgam#álli"));
-    
+
+# virgi
+# - - -   
+
+SELECT ("virgi") IF (-1 ("luohpat"))(0 ("viergi" Loc));
+     ## Virgeloguid lea suohkan dássážii geahpedan dainna lágiin go olbmot luhpet virggiin.
+         
 # vuollebealli
 # - - - - - - -
 REMOVE ("Vuolle#bealli") IF (0 ("vuolle#bealli"));
@@ -9869,8 +9875,10 @@ SELECT Loc IF (*-1 ("dikšut") BARRIER CP OR CS)(0 GUOVLU OR INSTITUTION);
 # finadit
 # - - - - -
 
-REMOVE Com IF (*-1 ("finadit") BARRIER NPNH)(0 ("doaibma#guovddáš"));
+REMOVE Com IF (*-1 ("finadit") OR ("fitnat") BARRIER NPNH)(0 INSTITUTION);
    ## Sihke Mázes ja Guovdageainnus leat boarrásat viššalit finadan doaibmaguovddážiin.
+   ## Mii leat ášši ovddidan sihke go leat fitnan departemeanttain ja go ministarat ja stádačállit leat finadan min suohkanis.
+   
    # I am not sure about the BARRIER but if we got another noun again the next word could be complement either to finadit or to the noun.
    # REMOVE Com IF (*-1 ("finadit") BARRIER NPNH)(0 PLACE);
    
@@ -9922,6 +9930,12 @@ REMOVE Com IF (*-1 ("gullat") BARRIER CP OR CS)(0 HUMAN);
 SELECT Loc IF (*-1 ("leat") BARRIER CP OR CS OR (@SPRED) OR COM-HEAD LINK NOT *-1 Loc)(0 EVENT OR GUOVLU OR INSTITUTION BARRIER N);
     ## Beassášmárkaniin fitne sullii 9000 guossi ja 3500 guossi ledje čakčamárkaniin.
     ## Skuvlajagis 2001/2002 leat oktiibuot 469 oahppi suohkana vuođđoskuvllain.
+    
+# luohpat
+# - - - -
+
+SELECT Loc IF (-1 ("luohpat"))(0 ("virgi"));
+    ## Virgeloguid lea suohkan dássážii geahpedan dainna lágiin go olbmot luhpet virggiin.
 
 # morihit
 # - - - -
