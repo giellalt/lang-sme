@@ -75,12 +75,73 @@ Sets
   Hyph = %- ;
 
 
-!Definitions
+Definitions
 
 ! G3  = Vow Cns Cns Cns Vow ;
 ! G2  = Vow Cns Cns Vow ;
 ! G1  = Vow Cns Vow ;
 ! G12 = G1 | G2 ;
+
+! The G1 gang
+
+! The G2 gang
+
+! The G3 gang
+! đ'đ f'f l'l hl'l m'm n'n n'nj ŋ'ŋ r'r hr'r s's š'š ŧ'ŧ v'v 
+! bm dn dnj gŋ 
+! hcc hčč hpp hkk htt ddj
+! llj
+! bb dd gg zz žž 
+! r'bm r'dn r'dnj 'rgŋ
+!đ'b, đ'b, đ'j, đ'v, i'b, i'c, i'd, i'f, i'g, i'k, i'l, i'hl, i'hm, i'hn, i'p, i'r, i's, i't, i'v, i'z, l'b, l'c, l'č, l'd, l'f, l'g, l'j, l'k, l'p, l's, l'š, l't, l'v, l'ž, m'b, m'p, m's, m'š, n'c, n'č, n'd, n's, n't, n'z, n'ž, ŋ'g, ŋ'k, r'b, r'c, r'č, r'd, r'f, r'g, r'j, r'k, r'p, r's, r'š, r't, r'v, r'z, r'ž, s'k, s'm, s'p, s't, š'k, š'm, š't, š'v, t'k, t'm, v'd, v'g, v'j, v'k, v'l, v'hl, v'p, v'r, v't, v'z, v'ž
+!đ'bm d'gŋ i'bm i'dn i'gŋ l'bm l'dn l'gŋ v'dn v'dnj
+!i'sk i'st m'šk n'sk n'st r'sk r'st v'sk
+!k'c k'č k's k'st k'š k't
+
+! G3 = Cns: Cns: Cns (Cns) | b m | d n | g ŋ | b b | d d | g g | z z | ž ž | 
+
+! Intuition:
+! Have the => rule work in case of (upper or lower or both?) G3.
+! Have the <=> rule work in al
+
+! Define G12: Here we have <=>
+! Define G3 (or not): Here (i.e. elsewhere) we have =>.
+
+!Defining G1, G2, G3.
+!Auxiliary definitions
+G1  = Cns | h [l|r] | n j ;
+
+!UCns = Cns: ;
+!RLCns = :Cns;
+!RealCns = UCns:LCns - ':0 ;
+RealCns    = Cns - ':0 ;
+all2Cns    = Cns Cns ;
+real2CnsG3 =  b: m | d: n | g: ŋ | b: b: | d: d: | g: g: | z: z: | ž: ž: ; ! This could be the problem
+2CnsG2     = all2Cns - real2CnsG3 ;
+3CnsG2     = Cns RealCns Cns ; !!!!!!!!!!!!!!                        ! đ'b:đbb, đ'g:đgg, ... 
+fake2CnsG3 = Cns: ': Cns ;                                          ! đ'b:đ0b
+3CnsG3     = h [ c c | č č | p p | k k | t t ] | [ d d | l l ] j  ;
+
+!G2  = 2CnsG2 | 3CnsG2 ;
+! 2CnsG2 is well-defined, 3CnsG2 is not. :-(
+
+!G3  = fake2CnsG3 | real2CnsG3 | 3CnsG3 ;
+!G3  = fake2CnsG3 ; !err
+!G3  = real2CnsG3 ; !err
+!G3  = 3CnsG3 ;     !err
+! => All 3 parts of the G3 definition are flawed
+
+!G12 = G1 | G2 ;                        ! This is what we waht
+G12 = G1 | 2CnsG2 ; ! testing G2 parts  ! This we do while waiting for 3CnsG2.
+! The second part of the G2 definitions is flawed.
+
+! Pseudocode (see "Going for 2" below)
+! Diphthongsimpl <=> _ G12 i j: ;
+! OptDiphtsimpli  => _ G3  i j: ;
+
+
+
+
 
 
 
@@ -1186,11 +1247,55 @@ Cx:Cy <=> Vow: (( CntrCns:) Dummy:+) _ ( :0 - Y5: ) [ Hyph | #: ]  ;
 
 
 "Diphthong Simplification in i-Stems before Suffixes Beginning with j:"
-!  Vx:0 <=> Vow _ Cns:+ [ i: | e1: ] X5: ;
-  Vx:0 <=> Vow _ Cns:+ [ i | e1:e ] X5: ;
+  Vx:0 <=> Vow _ Cns:+ [ i | e1:e ] X5: ; 
 	where Vx in (e o a) ;          ! goah'tiX5jd:go0điid
+! Cf. alt 2 below...
 !€ goah'tiX5jd
 !€ go000đi0id
+
+
+! Two possible strategies for fixing bug 56, the oahpaheaddjiid bug:
+! ------------------------------------------------------------------
+! 1. lexical strategy: XX instead of X5, and marking in the lexicon
+! PrsPtc then do not go to GOAHTI, but to OAHPAHEADDJI, and point to 
+!  :XX GODII- ; ! weak gr dipth simpl
+!"Optional Diphthong Simplification in Strong-Grade i-Stems before Suffixes Beginning with j:"
+!  Vx:0 => Vow _ Cns:+ [ i | e1:e ] XX: ; !XX is just an example of how we might do it...
+!	where Vx in (e o a) ;          ! goah'tiX5jd:go0điid
+! pro: do not need to define G3. 
+! pro: Opens for lexical variation: moarsi, etc, PrsPtc, Comp must be marked XX or redirected
+! con: have to build a set of new lexica, identical to GOAHTI, except for the ref to GODII.
+! con: gives a lexical solution to a basically morphophonological problem
+
+! 2. morphophonological strategy, the smj way.
+! Define a G3 context, and integrate it into a further rule
+!"Optional Diphthong Simplification in Strong-Grade i-Stems before Suffixes Beginning with j:"
+!  Vx:0 => Vow _ G3 [ i | e1:e ] X5: ; !G3 to be defined...
+!	where Vx in (e o a) ;          ! goah'tiX5jd:go0điid
+! pro: linguistically the right approach, says intuition
+! pro: no need for confusing new lexica
+! con: defining G3 is a mess, at best
+! We have optional dipht. simpl. only in G3-nouns and no cons grad.
+
+! Going for 2:
+
+!"G12 Compulsatory Diphthong Simplification in i-Stems before Suffixes Beginning with j:"
+!  Vx:0 <=> Vow _ G12 [ i | e1:e ] X5: ; 
+!	where Vx in (e o a) ;          ! goah'tiX5jd:go0điid
+
+!"G3 Facultative Diphthong Simplification in i-Stems before Suffixes Beginning with j:"
+!  Vx:0 => Vow _ G3 [ i | e1:e ] X5: ; 
+!	where Vx in (e o a) ;          ! goah'tiX5jd:go0điid
+
+!Using this one while waiting for the G3 rule to be fixed.
+!"Diphthong Simplification in i-Stems before Suffixes Beginning with j:"
+!  Vx:0 => Vow _ Cns [':Cns|Cns] Cns:+ [ i | e1:e ] X5: ; 
+!	where Vx in (e o a) ;          ! goah'tiX5jd:go0điid
+
+
+
+!€ oah
+
 
 "Diphthong Simplification in Actor Nouns from i- and a-Stems"	
 ! vieh'ki > vihkkiin
