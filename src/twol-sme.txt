@@ -6,6 +6,27 @@
 ! The file contains the rule set for the non-segmental 
 ! North Sámi morphophonological rules
 
+! m4 rules for selecting parts of the file to a certain application.
+changequote(<<,>>)
+changecom(<<!>>,<<
+>>)
+define(<<FLAGINIT>>,
+<<ifdef(<<$1>>,<<define(<<$1>>,1)>>,<<define(<<$1>>,0)>>)>>)dnl
+dnl
+define(<<DIVNUM>>,0)dnl
+define(<<ENDOMIT>>,<<popdef(<<DIVNUM>>)divert(DIVNUM)dnl>>)dnl
+define(<<ENDKEEP>>,<<popdef(<<DIVNUM>>)divert(DIVNUM)dnl>>)dnl
+define(<<OMITIF>>,
+  <<pushdef(<<DIVNUM>>,ifelse(eval($1),0,0,-1))divert(DIVNUM)dnl>>)dnl
+define(<<KEEPIF>>,
+  <<pushdef(<<DIVNUM>>,ifelse(eval($1),0,-1,0))divert(DIVNUM)dnl>>)dnl
+define(<<ELSE>>,
+  <<define(<<DIVNUM>>,ifelse(DIVNUM,0,-1,0))divert(DIVNUM)dnl>>)dnl
+
+FLAGINIT(<<HYPHENATE>>)
+FLAGINIT(<<SHORTCOMP>>)
+FLAGINIT(<<DIPHSIMPL>>)
+
 Alphabet
  a b c d e f g h i j k l m n o p q   ! small
  r s t u v w x y z å ä ö ø æ %-
@@ -20,7 +41,14 @@ Alphabet
  č đ ŋ š ŧ ž          ! Sámi letters. In an UTF-8 version these will
  Č Đ Ŋ Š Ŧ Ž          ! be replaced by the real Sámi letters.
 
- ':0 %/ ¤:0 '1:' #:0 %^:0    ! ' for CnsGrad of the lg:lgg and l'l:ll type
+KEEPIF(HYPHENATE)
+ # %^ 
+ELSE
+ #:0 %^:0
+ENDKEEP
+
+ ':0 %/ ¤:0 '1:' 
+							 ! ' for CnsGrad of the lg:lgg and l'l:ll type
                             ! ¤:0 prevents ConsGrad in certain words
                             ! '1 is the real apostroph
                             ! # is used to mark both lexicalised and
