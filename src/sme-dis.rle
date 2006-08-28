@@ -624,7 +624,7 @@ LIST ACTIVITY-VERB = "bivdit" "čállit" "čoaggit" "goddit" "goivet" "hervet" "
 #LIST VERBAL-ACTIVITY = "hupmat" "sárdnut" ;
 #Under construction!   
 
-LIST ABSTRACT-ACTIVITY-VERB = "deattuhit" "nannet" "váikkuhit" ;
+LIST ABSTRACT-ACTIVITY-VERB = "deattuhit" "dieđihit" "nannet" "váikkuhit" ;
 
 LIST INTELLECTUAL-ACTIVITY-VERB = "jurddašit" "smiehttat" ;
 
@@ -1397,7 +1397,7 @@ LIST INSTITUTION = "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "ásahus"
 "dearvvašvuođa#stašuvdna" "gielda" "skuvladearvvašvuođa#bálvalus" ; 
 # the items in the last row might not be in the spirit of institutions with respect to all features.
 
-LIST EVENT = "čakča#márkan" "čoahkkin" "dievas#čoahkkin" "festivála" "sámedigge#válga" "telefon#čoahkkin" "gulaskuddan#čoahkkin" ;
+LIST EVENT = "bálvalus" "čakča#márkan" "čoahkkin" "dievas#čoahkkin" "festivála" "sámedigge#válga" "telefon#čoahkkin" "gulaskuddan#čoahkkin" ;
 
 LIST HUMAN-INDIVIDUAL = "áhčči" "áddjá" "áhkku" "bártni" "boaris" "čeahci" "eadni" "eahki" "eanu" "gánda" "goaski" "guoibmi" "lagamuš" "muoŧŧa" "nieida" "nisson" "nisson#olmmoš" "nisu" "oabba" "oambealli" "oarpmealli" "olbmo" "olmmái" "rávis#olmmoš" "siessá" "skibir" "skihpár" "váhnen" "viellja" "vilbealli" "viissis";
 
@@ -3209,6 +3209,11 @@ SELECT SgGenCmp IF (0 SgNomCmp);
 # The background here is that we don't know which one is used if 
 # morphology cannot tell, so we may as well remove one of them.
 
+# Compound verbs
+# - - - - - - - -
+
+REMOVE ("olggo#saddit") IF (0 ("olggos#addit"));
+
 # allaskuvla
 # - - - - - -
 REMOVE ("allas#kuvla") IF (0 ("alla#skuvla"));
@@ -4201,7 +4206,7 @@ REMOVE (V Ind) IF (-1 CS)(0 N)(NOT 0 (V Pl1)) (1 (Pron Interr) LINK *1 (V Ind));
 	## Dasgo mánná mii lea su siste... 
 
 REMOVE Adv IF (-1 BOS OR CS OR (":" CLB) OR PUNCT)(0 (N Sg Nom))
-	(NOT 0 Prop OR ("duo") OR ("várra"))(1 V-SG3);
+	(NOT 0 Prop OR ("du^o") OR ("várra"))(1 V-SG3);
 	## Áigi lea dievvan.
 
 REMOVE (N Ess) IF (NOT *-1 OPRED-VERB BARRIER VERB)(0 (V Actio Ess));
@@ -5186,7 +5191,7 @@ REMOVE (V Imprt Prs Sg2) IF (*-1 VFIN)(0 ("dákko"));
  
 # duo
 # - -
-SELECT Adv IF (NOT -1 Dem or (A Attr))(0 ("duo"));
+SELECT Adv IF (NOT -1 Dem or (A Attr))(0 ("du^o"));
 	## Áddjá go duo lea boahtime?
 
 # duođaid
@@ -7243,11 +7248,11 @@ SELECT PrfPrc IF (0 ("mannat"))(1 TIME);
 REMOVE (V Pass Sg1) IF (*1 (N Nom) BARRIER CS OR CP);
 	## Juolluduvvon permišuvnnat.
 
-#REMOVE Actio IF (-1 PRE-A-N)(0 PrfPrc)(1 N);
-REMOVE Actio IF (0 PrfPrc)(1 N);
+REMOVE Actio IF (-1 Dem OR (Pron Indef))(0 PrfPrc)(1 N);
+#REMOVE Actio IF (0 PrfPrc)(1 N);
 	## ahte buot náitalan olbmuin galggai leat guolástanvuoigatvuohta.
 	## Luossa-bivdin joddu-buođuin deanus. 
-
+    ## Gumppe goddin boazu. Du čoaggin muorjjit gopmánedje láhttái.
 
 # "Leamaš" without finite verb
 # - - - - - - - - - - - - - -
@@ -7272,9 +7277,11 @@ SELECT PrfPrc IF (*-2 PrfPrc BARRIER VERB OR CC OR CP OR CS)(-1 CC)
 
 # Actio
 # -----
-REMOVE PrfPrc IF (-1 NP-HEAD-GEN)(0 Actio)(1 N)(2 NP-BORDER OR Dem);
+#REMOVE PrfPrc IF (-1 NP-HEAD-GEN)(0 Actio)(1 N)(2 NP-BORDER OR Dem);
+SELECT Actio IF (-1 NP-HEAD-GEN)(0 Actio)(1 N)(2 NP-BORDER OR Dem);
 	## Háliidit go sii konvenšuvnna mearridan vuoigatvuođaid sirdo-
 	## juvvon earáide?
+	# XXX This is a strong rule -- do a follow up and check whether it hits too often.
 
 
 # Present participle
@@ -7887,7 +7894,7 @@ REMOVE Gen IF (*-1 CP OR CS)(0 TV)(1 Actio)(NOT 1 Ess OR Com)(NOT *1 VFIN BARRIE
     ## oažžu gieđahallamii máŋga ášši main lea stuorra mearkkašupmi sámiide.
     # Has to stand in front of the next rule (SELECT Gen)
 
-SELECT Gen IF (NOT *-1 ("leat") BARRIER CS)(NOT 0 Interr OR Dem)(1 Actio)
+SELECT Gen IF (NOT *-1 ("leat") BARRIER CS)(NOT 0 Interr OR Dem)(1C Actio)
 	(NOT 1 Ess OR Com)(NOT 1 (V Actio Loc))
 	(NOT 1 PrfPrc LINK *1 NP-HEAD-ACC BARRIER NPNH)(NOT 2 Po);
 	## Eatni dahkan láibi lei buorre.
@@ -8124,7 +8131,7 @@ REMOVE (Pron Pers Acc) IF (-1 NP-BORDER)(*1 N BARRIER NOT-Attr LINK *1 VFIN
 	## ...lea go sin doaibma vuoigaduvvon oažžut doarjaga.
 
 SELECT Gen IF (*-1 BOS OR CS OR (":" CLB) BARRIER NPNHA)(NOT 0 Adv OR ("mii" Interr) OR 
-	Dem OR Attr OR PrsPrc OR PrfPrc OR VFIN)(NOT 0 TITLE LINK 1 Prop)
+	Dem OR Attr OR PrsPrc OR PrfPrc OR VFIN OR Actio)(NOT 0 TITLE LINK 1 Prop)
 	(1C (N Nom) OR (N Acc));
 	## Sámi parlamentáralaš ráđi doaibmaáigi čuovvu Sámedikki
 	## válgaáigodaga.
@@ -8366,7 +8373,7 @@ SELECT Gen IF (-1 (Pl3 Gen) LINK *-1 (@OBJ) BARRIER NOT-ADV-PCLE)(1 CC)(2 Gen)
 SELECT Gen IF (1 ("/"))(2C Gen);
 	## ...mii ii čuoza nu garrasit viidodaga/čikŋodaga ja guhkkodaga dáfus.
 
-SELECT (Gen @GN>) IF (*-1 BOS LINK *1 (Gen @GN>) LINK 1 Nom LINK *1 TV)(0 N LINK 1 Nom LINK *1 TV LINK 0 VFIN);
+SELECT (Gen @GN>) IF (*-1 BOS LINK *1 (Gen @GN>) LINK 1 (N Nom) LINK *1 TV)(0 N LINK 1 Nom LINK *1 TV LINK 0 VFIN);
             ## Dearvvašvuođabargiilága § 10, mii gieđahallá dieđuid addima pasienttaide, ja pasientavuoigatvuođalága § 1-3, mii gieđahallá vuoigatvuođa informerejuvvon miehtamii, leat ovdamearkkat dakkár vuoigatvuođain.
             #Parallell constructions.
 
@@ -9236,8 +9243,15 @@ SELECT Acc IF (*-1 V-TRANS-ACT BARRIER VERB OR CC OR CLB OR CS OR (@OBJ)
 	(NOT 1 N)(NOT *1 (N Acc) BARRIER NPNH)
 	(NOT 0 (Acc PxSg3) LINK 0 Loc)
 	(NOT 0 Nom LINK NOT *-1 Nom BARRIER CC OR CLB OR CS OR CP);
-	## Ovttasbargu Ruošša dutkanásahusaiguin gáibida almmatge sihke ollu áiggi 
+    ## Ovttasbargu Ruošša dutkanásahusaiguin gáibida almmatge sihke ollu áiggi 
 	## ja resurssaid.
+	
+SELECT Acc IF (*-1 V-TRANS-ACT BARRIER VERB OR CC OR CLB OR CS OR (@OBJ) 
+	OR PUNCT OR ("dego") LINK NOT 0 AUX OR (@ADVL) OR PrsPrc)(0 ("duot"))(NOT 0 TIME)
+	(NOT 0 (Acc PxSg3) LINK 0 Loc)
+	(NOT 0 Nom LINK NOT *-1 Nom BARRIER CC OR CLB OR CS OR CP);
+	## Mun válddán duon girjji.
+	
 
 SELECT Acc IF (*-1C V-TRANS-ACT BARRIER NPNHA OR CC OR CLB OR ("nugo") OR ("dego")
 	LINK NOT 0 Gen)(NOT 0 (Sg Nom) LINK *-1 (V Sg3) BARRIER VFIN OR CS OR CP)
@@ -9334,6 +9348,7 @@ SELECT Acc IF (*-1 V-TRANS-ACT BARRIER NPNHA)(NOT 0 Adv)(1 Sup)(NOT 1 Neg);
 REMOVE Gen IF (*-1 V-TRANS-ACT BARRIER NPNHA)(NOT 0 TIME)(*1 CC BARRIER WORD 
 	LINK *1 Nom BARRIER NPNH LINK *1 VFIN BARRIER NOT-ADV-PCLE);
 	## Mun lohken girjji ja Niillas guldalii ođđasiid.
+
  
 
 # Accusative sentence-finally
@@ -9804,7 +9819,7 @@ SELECT Loc IF (*-1 LOC-VERB BARRIER CS OR CP OR VFIN LINK NOT 0 Adv)
 	## Juohke dáhpáhusas ferte áibbas boastut leat beroškeahttá sámiid
 	## riekteáddejumiin.
 
-SELECT Loc IF (NOT 0 ("dat"))(NOT *1C Com BARRIER NPNH)
+SELECT Loc IF (NOT 0 ("dat") OR Actio)(NOT *1C Com BARRIER NPNH)
 	(NOT 0 (N Num Nom) LINK 1 (Sg Com))(NOT 0 (Sg Com) LINK -1 (N Num Nom))
 	(*1 LOC-VERB BARRIER CS OR CP OR V-NOT-AUX);
 	## Maiddái sámi fágabirrasiin ja ásahusain sáhttá jearrat ráđiid.
@@ -9827,12 +9842,12 @@ SELECT Loc IF (*-1 SOURCE-VERB BARRIER CS OR CP OR VFIN LINK NOT 0 Adv)
 	(NOT *-1 CC BARRIER CS OR CP LINK -1 LOC-VERB)
 	(0 HUMAN OR INSTITUTION);
 	
-SELECT (Pl Loc) IF (*-1 (@SUBJ) LINK 0 HUMAN OR INSTITUTION OR (Pron Rel))(0 INSTITUTION OR HUMAN LINK 0 (Sg Com) LINK NOT -1 PRON-DU)(*1 ABSTRACT-ACTIVITY-VERB BARRIER CP OR CS OR COMMA);
+SELECT (Pl Loc) IF (*-1 (@SUBJ) LINK 0 HUMAN OR INSTITUTION OR (Pron Rel))(0 INSTITUTION OR HUMAN OR EVENT LINK 0 (Sg Com) LINK NOT -1 PRON-DU)(*1 ABSTRACT-ACTIVITY-VERB LINK NOT 0 Actio LINK NOT 1 N BARRIER CP OR CS OR COMMA);
     ## Gielddat berrejit dearvvašvuođastašuvnnain deattuhit mánáid ja nuoraid váttisvuođaid ovddalgihtii eastadeami ja psykososiálabarggu mánáid ja nuoraid váras.
-SELECT (Pl Loc) IF (*-1 ABSTRACT-ACTIVITY-VERB)(0 INSTITUTION OR HUMAN LINK 0 (Sg Com) BARRIER CP OR CS OR COMMA LINK NOT -1 PRON-DU);
+SELECT (Pl Loc) IF (*-1 ABSTRACT-ACTIVITY-VERB LINK NOT 0 Actio LINK NOT 1 N)(0 INSTITUTION OR HUMAN OR EVENT LINK 0 (Sg Com) BARRIER CP OR CS OR COMMA LINK NOT -1 PRON-DU);
     ## Departemeanta áigu ovttasbargat Sámedikkiin ja movttiidahttit gielddaid ovddidit doaimmaid, mat nannejit sámi mánáid ja nuoraid identitehta ja oktiigullevašvuođa sámi servodagain.
     # This rules assumes that abstract activities are performed with a tool but not with the help of others in comitative case. The set of abstract-activity verbs might have to be restricted to those verbs that do have these features.
-
+    
 
 # Disambiguation based upon NP coordination
 # -----------------------------------------
@@ -10391,7 +10406,7 @@ REMOVE Loc IF (0 TOOLS LINK 1 CC LINK *1 Loc BARRIER NPNHA)(*1 ACTIVITY-VERB OR 
     ## Mon in leat dugo Sivvar - mii láve bissuin ja beatnagiin mannat dugo livččii dáčča.
     
 REMOVE (Pl Loc) IF (*-1 (@SUBJ) LINK 0 HUMAN)(0 ABSTRACT-TOOLS BARRIER CS OR CC OR COMMA)(*1 ABSTRACT-ACTIVITY-VERB);
-	##Geahččoeiseválddit galget bearráigeahčuin váikkuhit dasa ahte dearvvašvuođa- ja sosiálabálvalusain váldet vuhtii geavaheaddjiid vuoigatvuođa oažžut áddehahtti informašuvnna ja vuoigatvuođa informerejuvvon miehtamii, ja fágalaččat dohkálaš doaimmaid giellagáibádusaid.
+	## Geahččoeiseválddit galget bearráigeahčuin váikkuhit dasa ahte dearvvašvuođa- ja sosiálabálvalusain váldet vuhtii geavaheaddjiid vuoigatvuođa oažžut áddehahtti informašuvnna ja vuoigatvuođa informerejuvvon miehtamii, ja fágalaččat dohkálaš doaimmaid giellagáibádusaid.
 
 
     
