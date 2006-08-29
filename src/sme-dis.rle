@@ -2550,10 +2550,6 @@ MAP (@-FMAINV) TARGET Sup;
 # Complements of particles in comparison
 # --------------------------------------
 
-ADD (@CS-COMPL) TARGET Nom IF (*-1 ("go") BARRIER NOT-NP LINK NOT -1 VFIN)
-	(1 EOS);
-	## Dat galgá čuovvoluvvot nu guhkás go vejolaš.
-
 
 ADD (@CS-COMPL) TARGET Nom IF (*-2 ("nu") BARRIER NOT-NP LINK 1 A OR Adv)(-1 ("go"));
 	## Nu guhkás go vejolaš galgá dat čuovvoluvvot.
@@ -2619,6 +2615,10 @@ MAP (@CS-COMPL) TARGET Nom IF (*-1 CC BARRIER NPNH LINK -1 (@CS-COMPL))
 
 MAP (@CS-COMPL) TARGET Acc IF (-2 Acc)(-1 ("dego"));
 	## Mun vuolggahan din dego sávzzaid gumppiid gaskii.
+
+ADD (@CS-COMPL) TARGET Nom IF (*-1 ("go") BARRIER NOT-NP LINK NOT -1 VFIN)
+	(1 EOS);
+	## Dat galgá čuovvoluvvot nu guhkás go vejolaš.
 
 
 # Other special nominative mappings
@@ -3612,6 +3612,9 @@ SELECT PxSg2 IF (-1 ("hearrá" Sg))(0 ("ipmil"));
 # PxSg3
 # - - -
 
+REMOVE PxSg3 IF (0 KLASS)(1 Num);
+    ## Suohkanstivra mearridii áššis 62/99 sirdit administrašuvnna Levdnjii.
+    
 REMOVE PxSg3 IF (-2 MANNU LINK 0 Gen)(-1 (A Ord))(0 ("beaivi" Loc));
     ## Konvenšuvdna lea fámus miessemánu 1. beaivvis 2002 ja gusto 30 jagi dán beaivvi rájis.            
             
@@ -3626,10 +3629,16 @@ SELECT (PxSg3) IF (*-2 (V Sg3) BARRIER V-NOT-AUX)
 	(-1 PrfPrc LINK 0 V-TRANS-ACT LINK NOT 0 LOC-VERB)(0 N-PX)(NOT 0 Nom);
 	## ...ovdal go Márjá lei riegádahttán bártnis.
 
-SELECT (PxSg3) IF (*-3 NP-HEAD-SG-NOM BARRIER V-NOT-AUX)(-2 A)(-1 go)
+
+SELECT (PxSg3) IF (*-3 (N Sg Nom) OR (Pron Pers Sg3 Nom) 
+    )
+#    BARRIER V-NOT-AUX LINK NOT -1 AUX)
+    (-2C A)(-1 go)
 	(NOT 0 Attr LINK *1 N BARRIER NPNH);
 	## Máhttájeaddji ii leat stuorit go oahpaheaddjis, ii ge bálvaleaddji
 	## stuorit go hearrás.
+	## Mávssut leat adnon eambbo go bušeahtas.
+
 
 SELECT (PxSg3) IF (*-1 (Sg Nom) OR (Sg3 Nom) BARRIER Pers OR CS OR CP OR LOC-VERB
 	LINK NOT 0 Attr)(NOT *-1 (Imprt Sg2) BARRIER VERB OR CS)
@@ -3657,6 +3666,7 @@ REMOVE Px IF (0 ("oktavuohta" Loc));
 
 REMOVE (Gen PxSg3) IF (NOT *-1 Pr BARRIER NPNH)(1C Prop);
 	## erret eará stuorradiggedieđáhusas Sámedikki doaimmaid birra.
+
 
 # All Px
 
@@ -6982,6 +6992,13 @@ SELECT Adv IF (0 A)(1 CC)(2C Adv);
 
 SELECT (Imprt ConNeg) IF (*-1 (Neg Imprt) BARRIER VFIN OR ConNeg OR CS OR CP);
 	## Ale ge jorggit selggiid sutnje gii bivdá dus loanas.
+
+REMOVE (Ind ConNeg) IF (-1 ConNeg)(*-2 (Neg Ind) 
+    BARRIER VFIN OR ConNeg OR PrfPrc OR CS OR CP)(0 A)(1 go);
+    ## Máhttájeaddji ii leat stuorit go oahpaheaddjis, ii ge bálvaleaddji
+    ## stuorit go hearrás.
+    ## Máhttájeaddji ii leat stuorit go oahpaheaddjis, ii ge bálvaleaddji
+    ## stuorit johtileabbot go hearrás.
 
 SELECT (Ind ConNeg) IF (*-1 (Neg Ind) BARRIER VFIN OR ConNeg OR PrfPrc OR CS OR CP)
 	(NOT 0 N LINK *1 ConNeg BARRIER NOT-ADV-PCLE)
@@ -12482,6 +12499,8 @@ REMOVE TV IF (0 IV)(NOT 0 Pass)(NOT *-1 Acc LINK *-1 TV)(NOT *-1 TV LINK *-1 Acc
                    (NOT  *1 Acc LINK  *1 TV)(NOT  *1 TV LINK  *1 Acc); 
     ## Mannan dálvvi hárjánin čuoigat.               
 
+
+
 # =============================== #
 # Disambiguating syntax - Cycle 4 #
 # =============================== #
@@ -12527,6 +12546,43 @@ REMOVE (@ADVL) IF (0 ("b" @GN>) OR ("beaivi" @GN>))
     ## Geassemánu 8.b. 2001 láhkaásahus nr 676 oktagaslaš plánaid birra dearvvašvuođalágaid vuođul lea addojuvvon láhkamearrádusaid láhkavuođuin.
 # todo: 1. make the set non-app
 #       2. restrict the number of N to the right
+
+
+
+
+
+# Verbal functions
+# ----------------
+
+# Moved in from the end.
+
+SELECT (@+FAUXV) IF (*1 Inf OR PrfPrc OR (Actio Ess) BARRIER CS OR CP OR VFIN);
+	## Máhtte áigu heaitit vuola juhkamis.
+
+SELECT (@+FAUXV) IF (*1 ConNeg BARRIER CS OR CP OR Neg);
+	## Allos dattege šatta nu go mun dáhtun, muhto nugo don dáhtut.
+
+REMOVE (@+FAUXV) IF (0 AUX-OR-MAIN)(NOT *1 Inf OR PrfPrc OR (Actio Ess) OR ConNeg 
+	BARRIER CS OR CP);
+	## Maid Máret áiggui goarrumis?
+
+SELECT (@-FAUXV) IF (*1 Inf OR PrfPrc OR (Actio Ess) BARRIER CS OR CP);
+	## In beassan dal deatnojohtima oaidnit.
+
+REMOVE (@-FAUXV) IF (0 (@-FMAINV))(NOT *1 Inf BARRIER CS OR CLB);
+	## Sápmelaččat ledje orron dáin guovlluin 1600-logu birrasiin. 
+
+SELECT (@-FMAINV) IF (*-1C (@SUBJ) BARRIER CS OR CP LINK 0 Sg)(0 Inf);
+	## Vuoigatvuohta journála geahččat.
+
+SELECT (@+FMAINV) IF (*-1 (@OBJ) BARRIER NOT-ADV-PCLE LINK *-1 (@SUBJ) 
+	BARRIER NOT-ADV-PCLE LINK 0 Sg)(0 Sg3);
+	## Juohke háve go olmmoš joddosaji molsu...
+
+SELECT (@+FMAINV) IF (NOT *-2 VFIN BARRIER CS)(-1 (@ADVL))(NOT 0 Inf)
+	(NOT *1 VFIN BARRIER CS);
+	## Dalle bidjet buođđogeaži.
+
 
 
 # Subject
@@ -13116,36 +13172,7 @@ SELECT (@OBJ) IF (*-4 V-TRANS-ACT LINK *1C (@OBJ) LINK 1 CC OR COMMA)(*-1 V-TRAN
     ## Dákkár máhtuin sáhttá geahpedit guovttekultuvralaš bearrašiid mánáid dili, ja nannet sámi mánáid identitehta.
 
 
-# Verbal functions
-# ----------------
-
-SELECT (@+FAUXV) IF (*1 Inf OR PrfPrc OR (Actio Ess) BARRIER CS OR CP OR VFIN);
-	## Máhtte áigu heaitit vuola juhkamis.
-
-SELECT (@+FAUXV) IF (*1 ConNeg BARRIER CS OR CP OR Neg);
-	## Allos dattege šatta nu go mun dáhtun, muhto nugo don dáhtut.
-
-REMOVE (@+FAUXV) IF (0 AUX-OR-MAIN)(NOT *1 Inf OR PrfPrc OR (Actio Ess) OR ConNeg 
-	BARRIER CS OR CP);
-	## Maid Máret áiggui goarrumis?
-
-SELECT (@-FAUXV) IF (*1 Inf OR PrfPrc OR (Actio Ess) BARRIER CS OR CP);
-	## In beassan dal deatnojohtima oaidnit.
-
-REMOVE (@-FAUXV) IF (0 (@-FMAINV))(NOT *1 Inf BARRIER CS OR CLB);
-	## Sápmelaččat ledje orron dáin guovlluin 1600-logu birrasiin. 
-
-SELECT (@-FMAINV) IF (*-1C (@SUBJ) BARRIER CS OR CP LINK 0 Sg)(0 Inf);
-	## Vuoigatvuohta journála geahččat.
-
-SELECT (@+FMAINV) IF (*-1 (@OBJ) BARRIER NOT-ADV-PCLE LINK *-1 (@SUBJ) 
-	BARRIER NOT-ADV-PCLE LINK 0 Sg)(0 Sg3);
-	## Juohke háve go olmmoš joddosaji molsu...
-
-SELECT (@+FMAINV) IF (NOT *-2 VFIN BARRIER CS)(-1 (@ADVL))(NOT 0 Inf)
-	(NOT *1 VFIN BARRIER CS);
-	## Dalle bidjet buođđogeaži.
-
+# Verbal functions were here, was moved to beginning.
 
 # Other grammatical functions
 # ---------------------------
