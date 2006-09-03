@@ -55,6 +55,7 @@
                 # Lexical N versus Actio
                 # Nouns, not adverbs or adjectives 
                 # Nouns, not verbs
+                # Nouns, verbs or numerals
                 # Not noun
                 # Temporal expressions with locative case
                 # Adposition + Px
@@ -603,14 +604,14 @@ LIST LOC-VERB = "ballat" "beassat" "beroštit" "biehttalit" "bihtit" "boahtit"
 		#fuolahit1+Acc, fuolahit2+Loc
 
 LIST COM-VERB = "árvalit" "árvvohuššat" "ávkašuvvat" "bargat" "bártašuvvat" "buohtastahttit" "deaivvadit"
-		"háladit" "hilbošit" "humadit" "leaikkastallat" "meannudit" "molssodit" "náitalit" "riidalit" 
+		"háladit" "hilbošit" "humadit" "joatkit" "leaikkastallat" "meannudit" "molssodit" "náitalit" "riidalit" 
 		"ságastaddat" "ságastallat" "šiehtadit" ;
 		#Note that "leaikkástallat" has two homonymous variants:
 		#leaikkástallat1 (IV), leaikkástallat2+Com
 
 LIST ILL-VERB = "áibbašit" "álgit" "báitit" "beassat" "čohkkedit" "čujuhit" "čuohcit" 
 		"deaivat" "doaškut" "dorvvastit" "došket" "duhtat" "geahččat" 
-		"gullat" "guoskat" "gustot" "heivet" "irggástallat" "jáhkkit" 
+		"gullat" "guoskat" "gustot" "hárjánit" "heivet" "irggástallat" "jáhkkit" 
 		"liikot" "luohttit" "mannat" "ollet" "oskut" "riepmat" "ráhkkanit" 
 		"soahpat" "suhttat" "vuolgit";
 
@@ -2933,7 +2934,7 @@ SUBSTITUTE (@QN>) (@APP) TARGET Num IF (-1 KLASS)(0 Num);
     # Lexical N versus Actio
     # Nouns, not adverbs or adjectives 
     # Nouns, not verbs
-    # Nouns, not numerals
+    # Nouns, verbs or numerals
     # Not noun
     # Temporal expressions with locative case
     # Adposition + Px
@@ -3134,7 +3135,7 @@ REMOVE PrsPrc IF (0 (N Sg));
 	## geavaheaddji
 
 
-# Nouns and verbs, not numerals
+# Nouns, verbs, or numerals
 # -------------------
 
 REMOVE (Num Ill) IF (0 ("mun")) ;
@@ -3151,6 +3152,10 @@ SELECT (V Neg Ind Sg2) IF (*-1 BOS BARRIER REALWORD);
 
 SELECT (V Neg Ind Sg1) IF (*-1 BOS BARRIER REALWORD);
 	## In.
+
+SELECT Inf IF (*-1 (Neg Sup) BARRIER CLB OR CS);
+
+
 
 
 # Particular nouns
@@ -3803,6 +3808,10 @@ REMOVE (V Sg3) IF (-1 (Pron Nom))(NOT -1 Sg OR Sg3);
 	## Sii manne vissui.
 	## Dii uhccán oskkolaččat. 
 
+REMOVE (V Pl3) IF (-1 (Pron Rel Sg))(0 (V Sg3));
+	## Kahihttalis mas čilge orrunlanjadagaid latnjačovdosa nannejuvvo ahte 
+	## lanjadat leat plánejuvvon orruide geat dárbbašit divššu guhkit.
+
 
 # Negative verb, not abbreviation or roman numeral Ii.
 
@@ -3904,6 +3913,14 @@ REMOVE (V Ind Pl3) IF (1C VFIN)(NOT 1 Pl3) ;
 REMOVE (Prt Sg2) IF (NOT *-1 (Pron Pers Sg2))(0 (Prs Pl3))(*1 Pass BARRIER NOT-ADV);
 	## Reivelonuhallan sámi institušuvnnaiguin galget dahkkot sáme- ja dárogillii.
 	#  Probably not prodrop if passivized Sg2.
+
+SELECT (V Pl3) IF (-1 (Pron Rel Pl) OR ("mo") OR ("mov") OR ("movt"))          (-2 (N Pl));
+SELECT (V Pl3) IF (-1 (Pron Rel Pl) OR ("mo") OR ("mov") OR ("movt"))(-2 COMMA)(-3 (N Pl));
+	## Njuolggadusat movt meannudit oanehisáigge vealgáibideami, beaivádan 25.04.00.
+	## Vai bálvalusas lea buohccedikšofágalaš dássi eaktuduvvo ahte leat fágabargit geat virgáividdjojit.
+
+SELECT (V Pl3) IF (-1 CS)(*-2 (V Pl3) BARRIER VFIN LINK -1 (N Pl Nom) OR (Pron Pers Pl3 Nom));
+	## Sii ožžot smiehttanáiggi jos háliidit muitalit dan birra.
 
 # PrsPrc
 # - - - -
@@ -4725,7 +4742,7 @@ SELECT Adv IF (-2 (Num Acc))(-1 (N Acc))(0 ("maŋŋil"));
 
 SELECT Po IF (-1 Gen)(NOT -1 VFIN OR ("leat" PrfPrc) OR Adv)(NOT -1 Acc LINK *-1 CC 
 	BARRIER NOT-NP LINK -1 Acc LINK *-1 V-TRANS-ACT BARRIER NPNHA)
-	(NOT 0 Attr OR ("guovddáš"))(NOT 1C Po)(NOT 1 Gen);
+	(NOT 0 Attr OR ("guovddáš") OR CS)(NOT 1C Po)(NOT 1 Gen);
 	## Daid ovddas gal in máksán maidege.
 
 SELECT Po IF (-1 Num)(0 ("rádjai")); # Make general rule!
@@ -5990,6 +6007,11 @@ REMOVE Recipr ;
  # These rules have to precede the rules for indefinite pronouns, or the Ord 
  # reading of "nubbi" will be removed where it should remain.
 
+# Numerals or not
+# ---------------
+
+REMOVE N IF (0 Num)(*1 (N Sg Gen) BARRIER NOT-A);
+
 
 # General rules
 # -------------
@@ -7139,7 +7161,7 @@ SELECT Imprt IF (-1 BOS OR PUNCT OR REALCLB)(0 ("leat"))(1 A);
 # Infinitive
 # ----------
 
-SELECT Inf IF (*-1 (Neg Sup) BARRIER CLB); 
+SELECT Inf IF (*-1 (Neg Sup) BARRIER CLB OR CS); 
 SELECT Inf IF (*-1 ("amas" CS) BARRIER VERB);
 	## ...amaset sin čalmmit oaidnit,... 
 	## ...amas lojes hearggit livvut. 
@@ -7150,7 +7172,7 @@ SELECT Inf IF (*-1 NP-HEAD-SG-NOM BARRIER NOT-ADV-PCLE LINK *-1 CC BARRIER NPNHA
 	## juvvot.
  # This rule has to come before the ones below.
  
-SELECT Inf IF (*-1 INF-VERB)(NOT *1 Inf BARRIER VFIN OR CS OR CP);
+SELECT Inf IF (*-1 INF-VERB BARRIER CS OR CLB OR CP OR Neg)(NOT *1 Inf BARRIER VFIN OR CS OR CP);
     ## Bissuin galgá heahkkahuhttit, ii nie váigadit goddit; sáhttá leat váiga.
  
 
@@ -7213,6 +7235,7 @@ SELECT Inf IF (*-1 ("leat" Sg3) BARRIER NOT-ADV)(*1 ("ahte") BARRIER WORD);
 
 SELECT Inf IF (-3 ("dat" Sg3 Gen))(-2 ("ala"))(-1 ("ahte"));
 	## Sámediggi áigu bargat dan ala ahte oččodit ruovttoluotta...
+
 
 
 # Verbgenitive
@@ -11100,6 +11123,30 @@ SELECT Inf IF (*-2 Inf BARRIER VFIN LINK -1 ("\;" CLB) OR ("," CLB) LINK *-1 Inf
 	(-1 ("\;" CLB) OR ("," CLB));
 	## Ulbmilat leat : eastadit soađi; nannet ráfi;   lohkat girjiid  , borrat márffi.
 	#           L-1 L-1 L*-1        L-1 *L-2     L-1   L* -1         -1   0
+
+
+# Infinitive in sentence fragments
+# - - - - - - - - - - - - - - - - 
+
+SELECT Inf IF (-1C Acc LINK *-1 BOS BARRIER NPNH)(1 EOS);
+	## Ruđa juogadit.
+
+SELECT Inf IF (-1C Ill LINK *-1 BOS BARRIER NPNH)(0 ILL-VERB)(1 EOS);
+	## Mánáidgåardåai hárjánit.
+
+SELECT Inf IF (-1 BOS)(*1C Acc BARRIER NPNH LINK 1 EOS);
+	## Ruđa juogadit.
+
+SELECT Inf IF (-1 BOS)(0 ILL-VERB)(*1C Ill BARRIER NPNH LINK 1 EOS);
+	## Hárjánit mánáidgárdái.
+
+SELECT Inf IF (-1C Ill LINK *-1 BOS BARRIER NPNH)(0 ILL-VERB)(1 EOS);
+	## Mánáidgåardåai hárjánit.
+
+SELECT Inf IF (-1 BOS)(0 LOC-VERB)(*1C Loc BARRIER NPNH LINK 1 EOS);
+
+SELECT Inf IF (-1C Loc LINK *-1 BOS BARRIER NPNH)(0 LOC-VERB)(1 EOS);
+
 
 
 
