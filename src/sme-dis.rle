@@ -620,6 +620,8 @@ LIST ACC-LOC-VERB = "biehttalit" "earuhit" "gieldit" "jearrat" "viežžat" ;
 
 LIST ACC-ILL-VERB = "addit" "bidjat" "mearkkašit";
 
+LIST MIELDE-VERB = "addit" "bidjat" "dáidit" "leat" "oastit" "oažžut" "váldit" ;
+
 
 # Other verb sets according to valency
 # - - - - - - - - - - - - - - - - - - -
@@ -4684,7 +4686,8 @@ SELECT Po IF (-1 (PUNCT RIGHT))(*-2 (PUNCT LEFT) LINK -1 Gen);
 
 #REMOVE Po IF (NOT -1 (N Gen) OR (A Gen) OR (Num Gen) OR (Pron Gen) OR (Actio Gen) OR N LINK -1 (Num Gen))(NOT -2 MANNU LINK 1 Ord);
 REMOVE Po IF (NOT -1 (N Gen) OR (A Gen) OR (Num Gen) OR (Pron Gen) OR (Actio Gen))(NOT -2 MANNU LINK 1 Ord);
-REMOVE Po IF (-1 N)(NOT -1 Gen);   
+REMOVE Po IF (-1 N)(NOT -1 Gen); 
+#REMOVE Po IF (0 ("mielde"))(-1 Acc)(-2 TV);
 REMOVE Pr IF (NOT *1 N OR A OR Num OR Pron OR Date BARRIER NPNH);
 	## Jus divššohas lea badjel 16 jagi boaris,... 
 	## Leansmánni lea kommišuvnnas fárus.
@@ -4742,7 +4745,7 @@ SELECT Adv IF (-2 (Num Acc))(-1 (N Acc))(0 ("maŋŋil"));
 
 SELECT Po IF (-1 Gen)(NOT -1 VFIN OR ("leat" PrfPrc) OR Adv)(NOT -1 Acc LINK *-1 CC 
 	BARRIER NOT-NP LINK -1 Acc LINK *-1 V-TRANS-ACT BARRIER NPNHA)
-	(NOT 0 Attr OR ("guovddáš") OR CS)(NOT 1C Po)(NOT 1 Gen);
+	(NOT 0 Attr OR ("mielde") OR ("guovddáš") OR CS)(NOT 1C Po)(NOT 1 Gen);
 	## Daid ovddas gal in máksán maidege.
 
 SELECT Po IF (-1 Num)(0 ("rádjai")); # Make general rule!
@@ -5009,11 +5012,24 @@ REMOVE Gen IF (0 Adv)(NOT 0 TIME)(NOT *-1 Pr BARRIER NPNH)
 	(NOT *1 Po BARRIER NP-BORDER)(NOT *1 N BARRIER NP-BORDER);  
 	## Dát dagut leat rasistalaččat.
   
-REMOVE Adv IF (-1 (N Gen) OR (Pron Gen))(NOT -1 Adv OR VFIN OR ("leat" PrfPrc))
-	(0 Po);
+#REMOVE Adv IF (-1 (N Gen) OR (Pron Gen))(NOT -1 Adv OR VFIN OR ("leat" PrfPrc))
+#	(0 Po);
  # Po if after Gen
  # but no hits in corpus?
 
+SELECT Adv IF (0 ("mielde"))(*-1 ("leat") OR ("dáidit") BARRIER VFIN LINK -1 (Pron Loc));
+    ## Mus lea dorski mielde.
+
+SELECT Adv IF (0 ("mielde"))(*-1 ("go" Pcle) LINK -1 ("leat") BARRIER VFIN);
+SELECT Adv IF (0 ("mielde"))(*-1 ("leat" Qst) BARRIER VFIN);
+    ## Leago dorski mielde?
+    ## Lea go dorski mielde?
+    
+REMOVE Adv IF (-1 (N Gen) OR (Pron Gen))(NOT -1 Adv OR VFIN OR ("leat" PrfPrc))
+	(0 Po)(NOT 0 ("mielde") LINK *-1 MIELDE-VERB BARRIER VFIN);
+    ## Válddán girjji mielde.
+    ## Válddán dorski mielde.
+ 
 REMOVE Adv IF (-1 ("leat"))(0 (A Attr))(NOT 0 ("eanaš") OR ("eanas"))
 	(NOT 0 (@ADV-A))(1 N)(NOT 2 VERB);  
 	## Bussás leat alit čalmmit.
