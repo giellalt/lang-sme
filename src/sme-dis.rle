@@ -345,6 +345,11 @@ SET NOT-ACC = CASE - Acc ;
 # Verb sets
 # ---------
 
+# Verbs and their complements
+# - - - - - - - - - - - - - -
+
+SET NOT-VERB = WORD - V ;
+
 # Finiteness and mood
 # - - - - - - - - - -
 
@@ -2945,6 +2950,7 @@ SUBSTITUTE (@QN>) (@APP) TARGET Num IF (-1 KLASS)(0 Num);
     # Table of Contents #
     # ----------------- #
 
+    # Abbreviations
     # Lexicalised names
     # Lexicalised derivations
     # Lexicalised adjectives
@@ -2967,6 +2973,12 @@ SUBSTITUTE (@QN>) (@APP) TARGET Num IF (-1 KLASS)(0 Num);
 
 SELECT ("s") IF (0 ("S"));
 	## s. 24.
+
+# Acronyms
+# --------
+
+REMOVE Num IF (0 ACR);
+	## TV2
 
 # Lexicalised names
 # -----------------
@@ -3696,6 +3708,9 @@ SELECT PxSg2 IF (-1 ("hearrá" Sg))(0 ("ipmil"));
 REMOVE PxSg2 IF (*-1 BOS OR (":" CLB) BARRIER NPNH)(0 (N Pl Nom))(1 (V Pl3) OR (Pron Rel Pl Nom) OR KLASS);
 	## Searvi divžžohasat ožžot maid dieđuid bohtasiid birra.
 
+REMOVE PxSg2 IF (*-1 BOS OR (":" CLB) BARRIER Sg2)(NOT 0 N-PX);
+	## Nystø mielas leaba soai Lene Hansenin rievttes olbmot ovddastit sámi álbmoga dáhtu Tromssa ohcamušas.
+	#  No antecedent, no reflexiven.
 
 
 # PxSg3
@@ -3712,7 +3727,8 @@ REMOVE PxSg3 IF (-2 MANNU LINK 0 Gen)(-1 (A Ord))(0 ("beaivi" Loc));
 REMOVE PxSg3 IF (-1 CC LINK -1 Loc)(0 (Sg Loc))(NOT 1 NP-MEMBER);
     # Remove possessive suffixes in locative coordination.
     ## Hukset orrun- ja doaibmaguovddáža Mázii ja fuollaásodagaid dakko lahkosii, lea vuoruhuvvon doaibma suohkana ekonomiplánas ja doaibmaprográmmas, nu maiddái suohkana boarrásiidplánas oktiibuot 6 mill kr jagi 2001 rádjái.    
-            
+
+
  #SELECT (PxSg3) IF (-1 (V TV Sg3) LINK NOT 0 Pass LINK *-1 ("son" Sg3 Nom) OR (N Sg Nom) BARRIER NOT-ADV-PCLE)
 	#(NOT 0 N-NOPX)(NOT 0 Attr LINK *1 N BARRIER NPNH);
 	## Son beastá álbmogis sin suttuin.
@@ -3792,7 +3808,7 @@ REMOVE Px IF (*-1 (Pron Pers Gen @GN>) BARRIER NOT-ADJ);
  # Note that all the following rules, except the rule for Sg2, also select 
  # imperatives.   
 
-# Sg1
+# Sg1 - early cycle, safe rules
 # - -
 
 SELECT (V Sg1) IF (*-1 MUN BARRIER Nom OR V-SG1 OR CS LINK NOT *-1 V-SG1 
@@ -3804,7 +3820,7 @@ SELECT (V Sg1) IF (*1 MUN BARRIER NOT-ADV-PCLE OR CLB);
 	## Man guhká ferten mun gierdat din?
 
 
-# Sg2
+# Sg2 - early cycle, safe rules
 # - - 
 
 SELECT V-SG2 IF (*-1 DON BARRIER V-SG2 OR ConNeg OR CS LINK NOT *-1 V-SG2 
@@ -3819,7 +3835,7 @@ REMOVE Inf IF (*-1 BOS BARRIER VFIN)(*1 ("ahte" CS) BARRIER NOT-ADV);
 	## Dainna lágiin fuobmát jođánit ahte sámi gielladilis lea árvu maid eará riikkain.
 
 
-# Sg3
+# Sg3 - early cycle, safe rules
 # - - 
 
 SELECT (V Sg3) IF (*-1 SON BARRIER Nom OR V-SG3 OR CS OR PUNCT LINK NOT *-1 V-SG3 
@@ -3844,7 +3860,7 @@ REMOVE (V Pl3) IF (-1 (Pron Rel Sg))(0 (V Sg3));
 SELECT (V IV Neg Ind Sg3) IF (0 ("ii"))(*1 Foc OR ConNeg BARRIER PUNCT OR COMMA);
 	## Ii oktage lea boahtán.
 
-# Du1
+# Du1 - early cycle, safe rules
 # - - 
 SELECT (V Du1) IF (*-1 MOAI BARRIER V-DU1 OR CS OR PUNCT LINK NOT *-1 V-DU1 
 	BARRIER NOT-ADV-PCLE);
@@ -3855,7 +3871,7 @@ SELECT (V Du1) IF (NOT 0 Adv LINK *-1 BOS OR PUNCT BARRIER NOT-CC)
 	##
 
 
-# Du2
+# Du2 - early cycle, safe rules
 # - - 
 SELECT (V Du2) IF (*-1 DOAI BARRIER V-DU2 OR CC OR CS OR PUNCT LINK NOT *-1 V-DU2 
 	BARRIER NOT-ADV-PCLE);
@@ -3865,7 +3881,7 @@ SELECT (V Du2) IF (*1 DOAI BARRIER NOT-ADV-PCLE OR CLB);
 	##
 
 
-# Du3
+# Du3 - early cycle, safe rules
 # - -
  # The competition is -ba Foc.
 
@@ -3898,7 +3914,7 @@ REMOVE (V Sg3) IF (*-1 (N Num Nom) BARRIER VERB OR CLB OR CC OR CS OR CP)
 	## Biera-guovttos Márehiin leaba daid mánáid váhnemat.
 
 
-# Pl1
+# Pl1 - early cycle, safe rules
 # - - 
 SELECT (V Pl1) IF (*-1 MII-PERS BARRIER VFIN OR PUNCT LINK NOT *-1 V-PL1 
 	BARRIER NOT-ADV-PCLE OR CLB);
@@ -3908,10 +3924,8 @@ SELECT (V Pl1) IF (*1 MII-PERS BARRIER NOT-ADV-PCLE OR CLB OR ("seamma")
 	LINK NOT *1 V-SG3 BARRIER NOT-AA OR CLB);
 	## Galgat go mii vuordit muhtun eará? 
 
-REMOVE Inf IF (-1 ("go" CS))(0 (V Pl1))(*1 ("de" Adv) BARRIER VFIN);
-	## ... , muhto go geahččát guovttegielalašvuođa máilmmi perspektiivvas, de ...
 
-# Pl2
+# Pl2 - early cycle, safe rules
 # - -
 SELECT (V Pl2) IF (*-1 DII BARRIER NOT-ADV-PCLE OR CLB);
 	##
@@ -3920,7 +3934,7 @@ SELECT (V Pl2) IF (*1 DII BARRIER NOT-ADV-PCLE OR MO OR CLB);
 	## Addet dii sidjiide borramuša!
 
 
-# Pl3
+# Pl3 - early cycle, safe rules
 # - -
 SELECT (V Pl3) IF (*-1 SII BARRIER V-PL3 OR CS OR PUNCT LINK NOT *-1 V-PL3 
 	BARRIER NOT-ADV-PCLE)(NOT 0 Adv LINK *1 V-PL3 BARRIER CC OR CS OR CP);
@@ -6391,6 +6405,12 @@ REMOVE (Dem Pl) IF (0 ("dat" Sg))(NOT *1 (N Pl) OR (Indef Pl) OR NUMERALS
 
 REMOVE Dem IF (0 Pers)(1 Dem);
 	## ...beroškeahttá das makkár geavahus leamaš dolin.
+
+
+# makkár (Negative polarity demonstratives)
+# - - - 
+
+SELECT Attr IF (*-1 Neg BARRIER NOT-VERB)(0 (Pron Dem Attr Foc))(1 N);
 
 
 # DP-internal number concord
@@ -11468,7 +11488,7 @@ SELECT (Neg Imprt Pl2) IF (*1 ConNeg BARRIER Neg);
 # Verbs according to person and number
 # ====================================
 
-# First person singular - Sg1
+# Sg1 - First person singular
 # ---------------------------
  # Prs Sg1 = PtcPrf (odd-syllables), and Prs Sg1 = V Actio (even-syllables)
  # Past Sg1 is unique.
@@ -11498,7 +11518,7 @@ REMOVE V-SG1 IF (0 PrfPrc OR Actio)(*1C VFIN BARRIER CC OR CLB OR CS OR CP);
 	## dán livččii galgan dahkat.
 
 
-# Second person singular - Sg2
+# Sg2 - Second person singular
 # ----------------------------
  # Sg2 = Inf (even syllables, copula)
  # Note the homonymy with derived verbs (jearat = jearadit + ...
@@ -11551,7 +11571,7 @@ REMOVE (V Sg2) IF (*-1 (Num Nom) BARRIER NPNH);
 	## Gitta guhtta hearggi sáhttet leat ovtta ráiddus.
 
 
-# Third person singular - Sg3
+# Sg3 - Third person singular
 # ---------------------------
  # Prs Sg3 = ConNeg (even)
  # Prs Sg3 = ConNeg = Imprt Sg2 (contracted)
@@ -11704,7 +11724,7 @@ REMOVE V-SG3 IF (*-1 VFIN BARRIER CS OR CP)(0 (Sg Ill))(NOT 1 ("go" Pcle));
 	## Sámekommišuvnna evttohus lei boaris ja báidnon dálá oidnui.
 
 
-# First person dual - Du1
+# Du1 - First person dual 
 # -----------------------
  # Prs Du1 = Prt Pl3 (even syllable verbs); also similar to Prs Sg3 of other verbs.
 
@@ -11716,7 +11736,7 @@ REMOVE (V Du1) IF (NOT *-1 MOAI)(NOT *1 MOAI);
 	## Nieiddat jerre.
 
 
-# Second person dual - Du2
+# Du2 - Second person dual
 # ------------------------
 
 # Rules for leahppi = ("leahppi" N Sg Nom)
@@ -11728,7 +11748,7 @@ SELECT Du2 IF (0 ("leat" V Ind Prs Du2))(*1 PrfPrc BARRIER NOT-ADV);
 	## Gean nammii leahppi dahkan dan?
 
 
-# Third person dual - Du3
+# Du3 - Third person dual
 # -----------------------
  # Du3 = PrsPrc Clt = Imprt Prs Du2 Clt
  # Du3 = Ind Prs Sg3 Clt "leaba, ferteba leat"
@@ -11750,7 +11770,7 @@ SELECT Du3 IF (*-3 Prop LINK 1 ("guovttos") LINK 1 Com BARRIER NOT-ADV)(0 VFIN);
     ## Biera guovttos Márehiin leaba daid mánáid váhnemat.
 
  
-# First person plural - Pl1
+# Pl1 - First person plural
 # -------------------------
  # Pl1 = Inf for all stem classes
  # Pl1 = Inf = Pl3 = Prt Sg2 for odd syll
@@ -11777,8 +11797,15 @@ SELECT V-PL1 IF (*-1 Nom BARRIER NOT-ADV-PCLE LINK *-1 CC BARRIER NPNH
 	## Mun ja Biera váhnemat leat boahtán.
  # Pl1 if a first person pronoun is coordinated with something else.
 
+REMOVE Inf IF (-1 ("go" CS))(0 (V Pl1))(*1 ("de" Adv) BARRIER VFIN);
+	## ... , muhto go geahččát guovttegielalašvuođa máilmmi perspektiivvas, de ...
 
-# Second person plural - Pl2
+
+REMOVE Inf IF (-2 (@SPRED) LINK NOT 0 Comp)(-1 ("go" CS))(0 VFIN);
+	## Sohkabealiskkadeapmi lea dehálaš gelbbolašvuohta go hállat dáseárvvu birra.
+
+
+# Pl2 - Second person plural
 # --------------------------
  # Imprt Pl2 = Ind Prt Sg2 (even syllable verbs)
  # Imprt Pl2 = Imprt Pl1 (verbs ending in -ut)
@@ -11795,7 +11822,7 @@ SELECT (V Pl2) IF (*-1 CC BARRIER NOT-ADV LINK *-1C (V Pl2) BARRIER VFIN OR CS);
 	## Váldet ja borret!
 
 
-# Third person plural - Pl3
+# Pl3 - Third person plural
 # -------------------------
  # Prs Pl3 = Prt Sg2 = Prs Pl1 = Inf (odd syll)   muitalit
  # Prs Pl3 = Prt Sg2 = Imprt Prs Pl2 (even syll)    vulget
@@ -13124,10 +13151,11 @@ SELECT (@SPRED) IF (-1 ("mii" Pron Interr Sg Gen))(0 A);
 	## Man guhkki lea skuvlii?
 	## In dieđe man buorit dat leat.
 
-SELECT (@SPRED) IF (*-1 COPULAS BARRIER COMMA OR NPNHA OR go OR ("nugo") 
+SELECT (@SPRED) IF (*-1 COPULAS BARRIER (@+FMAINV) OR COMMA OR NPNHA OR go OR ("nugo") 
 	LINK *-1 (Pers Nom) BARRIER V-NOT-AUX OR CS OR CP)(NOT 0 Interr)
 	(NOT 0 Ess LINK 1 OPRED-VERB LINK NOT 0 Pass);
 	## ...dan addejumis, man mielde dat leat eamiálbmotválljen orgánat ja ...
+	## 
 
 SELECT (@SPRED) IF (*-1 VFIN BARRIER Acc OR OPRED-VERB OR CS OR CP OR go OR ("dego") 
 	OR (@SPRED) LINK NOT 0 ("dahkat") LINK *-1 Nom BARRIER NOT-ADV-PCLE LINK 
