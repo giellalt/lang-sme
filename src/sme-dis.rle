@@ -616,6 +616,11 @@ SET V-TRANS-ACT-NOT-AUX  = TV - V-PASS - AUX ;
 # Sets for verbs choosing oblique objects or adverbials
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
+LIST ST-VERB = "dárbbahit" "dárbbašit" "duddjot" "luoikat" "luoikkahit" "oastit" "ráhkadit" "suoladit" "váldit" ;
+	# Strictly transitiv-verbs - a start. 
+	# There should also be "addit", "fidnet" and "oažžut" - but they can in special cases be without object: 
+	## Son oaččui sus.   
+
 LIST LOC-VERB = "ávkkástallat" "ballat" "beassat" "beroštit" "biehttalit" "bihtit" "boahtit" 
 		"ceavzit" "čuoččut" "čuovvut" "dolkat" "eastadallat" "eastadit" "fuolahit" "fuollat" "geargat" 
 		"heaitit" "ilbmat" "jearrat" "luohpat" "nohkkot" "spiehkastit" "váruhit" "veallát"
@@ -1499,7 +1504,7 @@ LIST EVENT =  "čakča#márkan" "čoahkkin" "dievas#čoahkkin" "festivála" "gul
 
 LIST INDUSTRY = "bivdu" "boazo#doallu" "eanan#doallu" "guolle#bivdu" "luossa#bivdu" ;
 
-LIST HUMAN-INDIVIDUAL = "áhčči" "áddjá" "áhkku" "bártni" "boaris" "čeahci" "eadni" "eahki" "eanu" "gánda" "goaski" "guoibmi" "lagamuš" "muoŧŧa" "nieida" "nisson" "nisson#olmmoš" "nisu" "oabba" "oambealli" "oarpmealli" "olbmo" "olmmái" "rávis#olmmoš" "siessá" "skibir" "skihpár" "váhnen" "viellja" "vilbealli" "viissis";
+LIST HUMAN-INDIVIDUAL = "áhčči" "áddjá" "áhkku" "bártni" "boaris" "čeahci" "eadni" "eahki" "eanu" "gánda" "goaski" "guoibmi" "lagamuš" "muoŧŧa" "nieida" "nisson" "nisson#olmmoš" "nisu" "oabbá" "oambealli" "oarpmealli" "olbmo" "olmmái" "rávis#olmmoš" "siessá" "skibir" "skihpár" "váhnen" "viellja" "vilbealli" "viissis";
 
 LIST ROLE =  "almmolašvuohta" "ássi" "čearda" "geavaheaddji" "stáhta#boargár" "virge#olmmoš" "vuoste#belle" "vuoste#bealli" ;
 
@@ -6582,6 +6587,9 @@ REMOVE (Dem Acc) IF (0 ("dat"))(1 ADVLCASE);
 
 REMOVE (Dem Acc) IF (NOT *-1 V-TRANS-ACT BARRIER CS OR CP)(1 N)(1 ADVLCASE);
 	## Mun vuolggán vel dán vahkus.
+	
+SELECT (Dem Sg Gen) IF (*1 VAHKKU BARRIER NOT-ADJ LINK 0 Gen OR Loc); 
+	## Olbmot juige dan galbma ijas. 	
 
 REMOVE (Dem Acc) IF (*-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE)(1 N)(1 ADVLCASE)
 	(*1 NP-HEAD-ACC BARRIER CS OR CP OR CLB OR CC);
@@ -9585,13 +9593,15 @@ SELECT Acc IF (1 ("jahki"))(2 ("deavdit"));
 # Accusative postverbally
 # -----------------------
 
-SELECT Acc IF (*-1 V-TRANS-ACT BARRIER VERB OR CC OR CLB OR CS OR (@OBJ) 
-	OR PUNCT OR ("dego") LINK NOT 0 AUX OR (@ADVL) OR PrsPrc)(NOT 0 TIME)
-	(NOT 1 N)(NOT *1 (N Acc) BARRIER NPNH)
-	(NOT 0 (Acc PxSg3) LINK 0 Loc)
-	(NOT 0 Nom LINK NOT *-1 Nom BARRIER CC OR CLB OR CS OR CP);
+#SELECT Acc IF (*-1 V-TRANS-ACT BARRIER VERB OR CC OR CLB OR CS OR (@OBJ) 
+#	OR PUNCT OR ("dego") LINK NOT 0 AUX OR (@ADVL) OR PrsPrc)(NOT 0 TIME)
+#	(NOT 1 N)(NOT *1 (N Acc) BARRIER NPNH)
+#	(NOT 0 (Acc PxSg3) LINK 0 Loc)
+#	(NOT 0 Nom LINK NOT *-1 Nom BARRIER CC OR CLB OR CS OR CP);
     ## Ovttasbargu Ruošša dutkanásahusaiguin gáibida almmatge sihke ollu áiggi 
 	## ja resurssaid.
+	# The rule doesn´t seem to function anymore, and it make troble for: 
+	## Olbmot njuikkodedje ja juige dan galbma ijas.
 	
 SELECT Acc IF (*-1 V-TRANS-ACT BARRIER VERB OR CC OR CLB OR CS OR (@OBJ) 
 	OR PUNCT OR ("dego") LINK NOT 0 AUX OR (@ADVL) OR PrsPrc)(0 ("duot"))(NOT 0 TIME)
@@ -13674,10 +13684,11 @@ REMOVE (@GN>) IF (1 (PUNCT LEFT) LINK *1 (PUNCT RIGHT) LINK 1 NOT-NP);
 	## dearvvašvuođadutkanguovddáš (goappašat fágabirrasat gullet Romssa 
 	## universitehta vuollái) berrejit sáhttit oassálastit dán bargui.
 	
-SELECT (@OBJ) IF (-1 TV)(0 TIME OR ROUTE)(NOT *-2C (@OBJ) BARRIER CS OR CP)(NOT *1C (@OBJ) BARRIER TV OR CP OR CS);
+SELECT (@OBJ) IF (-1 ST-VERB)(0 TIME OR ROUTE)(NOT *-2C (@OBJ) BARRIER CS OR CP)(NOT *1C (@OBJ) BARRIER TV OR CP OR CS);
     ## Lea leamaš liiggás oanehis áigodat oažžut bohtosiid oidnosii, čájehuvvo 
     ## ahte easttadeaddji buohcanjávkan dárbbaha áiggi vai váikkuha nu movt lea 
     ## sávaldat.
+    ## Olbmot juige ija. # It should not take this one.
 
 
 # Coordinated objects
@@ -13822,6 +13833,9 @@ SELECT (@ADVL) IF (*-1 (@OBJ) BARRIER NOT-ADV-PCLE OR go)(0 Num)(1 TIME);
 
 SELECT (@ADVL) IF (0 ("diibmu") OR ("dbm"))(1 Num);
 	## Mun boađán diibmu vihtta.
+	
+SELECT (Acc @ADVL) IF (0 Acc LINK 0 MANNU OR VAHKKU)(NOT -1 ST-VERB);
+	## Olbmot juige ija. 	
 
 SELECT (@ADVL) IF (NOT *-1 ("deavdit") BARRIER VERB OR CC OR CLB OR CS OR CP)
 	(-1 Num LINK NOT 0 (@GP<))(0 TIME LINK NOT 0 Nom)
