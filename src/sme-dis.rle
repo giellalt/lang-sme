@@ -939,7 +939,7 @@ LIST PL-NOUN = "beassaš" "čalbme#láse" "gálssot" "headja" "sabet" "sisttet"
 	"skárri"; 
  # Nominals that appear with plural numerals.
  
-LIST SG-WORD = "ipmárdus" "doaivu" "dáro#giella" "gelbbolašvuohta" "kultur#duogáš" "kultur#gelbbolašvuohta" "sáme#giella" ;
+LIST SG-WORD = "ipmárdus" "doaivu" "dáro#giella" "gelbbolašvuohta" "kultur#duogáš" "kultur#gelbbolašvuohta" "ovttas#bargu" "sáme#giella" ;
 # Words that are used in singular unless their plurality is stressed by words such as "goappeš", "goappašat", "earálágan", "máŋgalágan" or Num or Ord.
 
 LIST LOC-NOUN = "dáhpáhus" "dilálašvuohta" "ipmárdus" "oktavuohta" ;
@@ -7950,14 +7950,22 @@ REMOVE VFIN IF (-1C (Attr @AN>));
 # Numerus disambiguation
 # ======================
 
+# Early plural rule
+# -----------------
+
+SELECT Pl IF (0 SG-WORD)(-1 (Pron Gen) LINK -1 Num OR Ord BARRIER NPNH);
+     ## Dát lea okta min ovttasbargguin.
+     # This rule is necessary before the next one as it chooses plural even if the genitive pronoun modifier after the numeral and in front of the singular noun is not disambiguated yet (Acc-Gen disambiguation comes later).
+
 # Singular not plural
 # ------------------- 
 
-SELECT Sg IF (0 SG-WORD)(NOT *-1 Num OR Ord BARRIER NOT-ADJ)(*-1 BOS LINK NOT *1 ("goappeš") OR ("goappašat") OR ("earálágan") OR ("máŋgalágan"));
+SELECT Sg IF (0 SG-WORD)(NOT *-1 Num OR Ord BARRIER NPNH)(*-1 BOS LINK NOT *1 ("goappeš") OR ("goappašat") OR ("earálágan") OR ("máŋgalágan"));
     ## Go funet lea guolli goddomin, de fitná olmmoš buođu luhtte dušše
     ## oktii jándoris, savdnjileamen joddu amas dat dierrut, suollemasat
     ## dainna doaivvuin ahte nago de lea boađistan.
     ## Buoremus sámepolitihkka ožžojuvvo áigálii sámi veahkadaga ja ráđđehusa gaskaneas ipmárdusain.
+   
     
 # lahka-compound
 # - - - - - - - -
@@ -10284,9 +10292,9 @@ REMOVE Com IF (0 ("lagus"));
 # Disambiguation based upon verb valency
 # --------------------------------------
 
-SELECT Loc IF (*-1 LOC-VERB BARRIER CS OR CP OR VFIN LINK NOT 0 Adv)
+SELECT Loc IF (*-1 LOC-VERB BARRIER CS OR CP OR VFIN OR COM-HEAD LINK NOT 0 Adv)
 	(NOT *-1 CC BARRIER CS OR CP LINK -1 LOC-VERB)
-	(NOT 0 Num OR Pron LINK *1C (N Com) BARRIER NPNH);
+	(NOT 0 Num OR Pron LINK *1C (N Com) BARRIER NPNH)(0 Com);
 	## Juohke dáhpáhusas ferte áibbas boastut leat beroškeahttá sámiid
 	## riekteáddejumiin.
 
