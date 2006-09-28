@@ -354,9 +354,6 @@ SET NOT-GEN = CASE - Gen ;
 SET NOT-ACC = CASE - Acc ;
 
 
-
-
-
 # Verb sets
 # ---------
 
@@ -610,6 +607,8 @@ SET V-TRANS-ACT = TV - Pass ;#- (Actio Loc) - Actio ; #XXX Never acc-obj for a.l
 SET V-TRANS-ACT-SG3 = V-SG3 - Pass ; 
  
 SET V-TRANS-ACT-NOT-AUX  = TV - V-PASS - AUX ;
+
+SET V-TRANS-ACT-NOT-ACTIO = TV - V-PASS - Actio ;
 
 
 
@@ -920,10 +919,6 @@ SET TIME = MANNU | VAHKKU | BEAIVI | AIGI ;
 SET NOTIME = N - TIME ;
 
 LIST GEASSET = "dálvet" "dálvit" "giđđat" "geasset" ("geassit" Adv) "čakčat" ; # What is special here?
-
-LIST GUOVLU = "ássan#báiki" "ássan#guovlu" "boazodoallo#guovlu" "sámi#guovlu" "báiki" "biras" "čakča#báiki" "dálve#báiki" "duottar#guovlu" "gávpot" "geasse#báiki" "giđđa#báiki" "guovlu" "johtin#guovlu" "mátta#guovlu" "ravda#guovlu" "sadji" "sáme#eana" "Sáme#eana" "siseatnan#guovlu" "sohka#guovlu" "viesso#sadji" "viessu" "vuotna#guovlu" "vuovde#guovlu";
-
-LIST ROUTE = "bálggis" "fávli" "gaska" "geaidnu" "guorra" "johttin#geaidnu" "láhttu" "luodda" "luonddu#bálggis" "máđidja" "máđii" "miila" "ráidu" "spáiddar#ráidu"; # and others!
 
 LIST MEASURE = "miila" "kilo#mehtar" "kilo#mehter" "mehtar" "mehter" "centi#mehtar" "centi#mehter" "sente"
 	"cm" "milli#mehtar" "milli#mehter" "tumá" "állan" "salla" "lihtter" "gilo" "čuolda#badji"
@@ -1581,9 +1576,16 @@ LIST BUILDING = "áiti" "barta" "buvda" "buvri" "dállu" "fiervá#buvri" "gearde
 
 LIST VEHICLE = "biila" "boasta#biila" "borjjas#fanas" "borjjas#vanca" "bussa" "busse" "dámpa" "fanas" "fievru" "gálvo#biila" "geaksu" "girdi" "guorbme#biila" "heargi" "heasta" "helikopter" "johka#fanas" "láivi" "mini#bussa" "mini#busse" "mohtor#fanas" "mohtor#fievru" "mohtor#sihkkel" "mohtor#vanca" "mopeda" "njealjit" "njeallje#juvllat" "ruvtto#biila" "sihkkel" "skohter" "skuter" "skuvla#bussa" "skuvla#busse" "suhkki#vanca" "tráktor" "vanas" "vanca";
 
+LIST GUOVLU = "ássan#báiki" "ássan#guovlu" "boazodoallo#guovlu" "sámi#guovlu" "báiki" "biras" "čakča#báiki" "dálve#báiki" "duottar#guovlu" "gávpot" "geasse#báiki" "giđđa#báiki" "guovlu" "johtin#guovlu" "mátta#guovlu" "ravda#guovlu" "sadji" "sáme#eana" "Sáme#eana" "siseatnan#guovlu" "sohka#guovlu" "viesso#sadji" "viessu" "vuotna#guovlu" "vuovde#guovlu";
+
+LIST ROUTE = "bálggis" "fávli" "gaska" "geaidnu" "guorra" "johttin#geaidnu" "láhttu" "luodda" "luonddu#bálggis" "máđidja" "máđii" "miila" "ráidu" "spáiddar#ráidu"; # and others!
+
 LIST PLACE = "báike#goddi" "báiki" "buođđo#sadji" "čakča#orohat" "čoahkke#báiki" "dolla#gáddi" "gávpe#báiki" "gávpot" "gilli" "goahte#sadji" "guohton#eana" "guohton#eanan" "meahcce#gilli" "riika" "ruoktu" "sadji" "sallju" "siida" "šillju" ;
 
 LIST GEOGRAPHICAL-PLACE = "bákti" "beahce#vuovdi" "borri" "coagis" "čolpi" "dearbmi" "duottar" "eana" "eanan" "eatnan" "eatnu" "fielbmá" "fiervá" "gáddi" "gáisá" "gáisi" "gárggu" "gárgu" "gieddi" "gohpi" "gohppi" "gorži" "guolbban" "jávri" "jávre#gáddi" "johka" "johka#gáddi" "johka#njálbmi" "láddu" "láttu" "latnja" "lokta" "luohkká" "luokta" "luoppal" "meahcci" "mearra#gáddi" "mielli" "mohkki" "muotki" "njárga" "njunni" "oaivi" "oalge#johka" "oalgi" "orda" "orrit" "reašši" "riddu" "riidi" "soahke#vuovdi" "stealli" "suolu" "vággi" "várre#vielti" "várri" "vielti" "vuohppi" "vuotna" "vuotna#gáddi" "vuovdi" ;
+
+
+SET GEO-NOUN = GUOVLU | ROUTE | PLACE | GEOGRAPHICAL-PLACE | POLITICAL-PLACE  ;
 
 LIST POLITICAL-PLACE = "riika" "stáhta" ;
     ## can also function as an actor
@@ -2238,7 +2240,7 @@ MAP (@GA>) TARGET Gen IF (1 CC)(2 Gen)(3 ("veara"));
 MAP (@GN>) TARGET Gen IF
     (NOT -1 NUMERALS LINK 0 Nom)
 	(NOT 0C ALU OR Cmpnd OR Num)(*1 N OR Actio LINK NOT 0 (Actio Ess) BARRIER NOT-NP OR REALCLB)
-	(NOT 1 PUNCT LINK 1 CC)
+	(NOT 1 PUNCT LINK 1 CC)(NOT 1 Inf)
 	(NOT 1 CC LINK *1 Gen BARRIER NOT-NP LINK 1 Po)
 	(NOT 1 COMMA LINK 1 Gen LINK 1 CC LINK 1 Gen LINK 1 Po)
 	(NOT 0 Actio LINK 1 ("dihte") OR ("dihtii"));
@@ -2261,7 +2263,7 @@ MAP (@GN>) TARGET Gen IF (-2 ("s") OR ("siidu") OR ("paragráfa") OR
     ## 8 ođđa bargosaji ásahuvvojedje jagis 2001 ealáhusfoandda ruhtadoarjagiin.
 
 MAP (@GN>) TARGET Gen IF (NOT -1 NUMERALS LINK 0 Num)
-	(NOT 0 ALU OR Num OR Cmpnd)(*1 N BARRIER NOT-AA OR CLB);
+	(NOT 0 ALU OR Num OR Cmpnd)(*1 N BARRIER NOT-AA OR CLB)(NOT 1 Inf);
 	## Vuosttaš vuojahaga fávllimus čuolda lea goaratčuoldan.
 
 MAP (@GA>) TARGET Gen IF (1C A)(1 (Sg Loc))(2C NP-BORDER); #  (NOT 0 Interr OR ALU)
@@ -2963,8 +2965,9 @@ MAP (@SPRED @OPRED) TARGET Ess ;
 MAP (@ADVL) TARGET Acc IF (0 TIME OR ROUTE);
 	## Beaivvi mun čohkkájin doppe.
 
-MAP (@ADVL) TARGET Gen IF (1 NP-BORDER OR Num)(NOT 1 Adv);
+MAP (@ADVL) TARGET Gen IF (1 NP-BORDER OR Num)(NOT 1C Adv);
 	## Áddjá lei soggái čalmmiid.
+	## Leago dudno mielas suohtas go sáhttá rabas julggiid vázzit?
     ## Mun čálán dieđáhusa 4. # I don´t see a genitive here?
     # This is about an absolute genitive
     
@@ -8053,7 +8056,12 @@ SELECT (Pl Loc) IF (-1 ("suohkan" @GN>))(0 ("vuođđo#skuvlla") OR ("mánáid#g�
 # Here we put rules that we want to work before the main Genitive chapter.
 # Many of them use the strict transitive verb sets (they really want acc objects, so we give them that).
 
-# ...
+SELECT Acc IF (*-1 MOVEMENT-VERB BARRIER CS)(0 GEO-NOUN)(NOT 1 Po)(NOT -1 CC LINK *1 VFIN) ;
+SELECT Acc IF (0 GEO-NOUN)(NOT 1 Po)(*1 MOVEMENT-VERB BARRIER CS);
+SELECT Acc IF (*-1 ("vázzit") OR ("viehkat") BARRIER CS)(0 EDUCATION)(NOT 1 Po)(NOT -1 CC LINK *1 VFIN) ;
+SELECT Acc IF (0 EDUCATION)(NOT 1 Po)(*1 ("vázzit") OR ("viehkat") BARRIER CS) ;
+	## Mun váccán vákkiid, vuvddiid ja váriid.
+	## Sii vázzet skuvlla.
 
 
 # Accusative or genitive in front of ALU and in front of adjectives
@@ -8865,7 +8873,7 @@ REMOVE Gen IF (-1 BOS OR CS)(1 Adv)(NOT 1 N OR A);
 REMOVE Gen IF (NOT 0 TIME)(1 CLB)(2 CC)(3 NPNH);#(NOT 3 Gen LINK *1 Po BARRIER NPNH);
 	## Eará veahki sáhttá addojuvvot jus divššohas čájeha beroštumi, ja lea...
 
-REMOVE Gen IF (NOT *-1 Pr OR NUMERALS BARRIER NP-BORDER)(NOT -1 ("mii"))
+REMOVE Gen IF (*-1 V-TRANS-ACT BARRIER CS OR CC OR VERB)(NOT *-1 Pr OR NUMERALS BARRIER NP-BORDER)(NOT -1 ("mii"))
 	(NOT *-1 CC BARRIER NOT-NP LINK *-1 GASKAL BARRIER CS)(NOT 0 TIME OR ROUTE)(1 Ill OR Loc OR Com)(NOT *-1 HEADOFPARTS LINK 1 Gen LINK 1 Loc);
 REMOVE Gen IF (-2 V-TRANS-ACT)(-1 ("go"))(0 Acc)(1 REALCLB);	
 	## Eai lean váldán go niestebohcco.
@@ -8905,7 +8913,7 @@ REMOVE Gen IF (NOT *-1 Pr OR NUMERALS BARRIER NPNH)(NOT 0 TIME)(1 CLB)(2 CC);
 	## Dat váikkuha ollu dasa, mo olbmot vásihit bálválusaid, ja oažžu sin
 	## dovdat stuorát oadjebasvuođa.
 
-REMOVE Gen IF (NOT *-1 Pr OR NUMERALS BARRIER NPNH)(NOT 0 TIME)(1 Inf)(1C VERB);
+REMOVE Gen IF (NOT *-1 Pr OR NUMERALS BARRIER NPNH)(NOT 0 TIME)(1 Inf LINK 0 V-TRANS-ACT)(1C VERB);
 	## Vuoigatvuohta journála geahččat.
 
 REMOVE Gen IF (0 ("stáhtus"))(1 Ess)(*2 V-SG3 BARRIER NOT-ADV-PCLE);
@@ -8919,10 +8927,12 @@ REMOVE Nom IF (*-1 Acc BARRIER CS OR CP OR CONTRA OR VFIN LINK *-1 ACC-INF-VERB
 	(NOT *-1 COPULAS BARRIER NOT-ADV-PCLE)(NOT *-1 (Interr Acc) BARRIER Acc);
 	## Hearrá, suova mu vuos mannat ruoktot hávdádit áhččán.
  
-REMOVE Acc IF (NOT *-1 V-TRANS-ACT BARRIER CS)(NOT *-1 CS BARRIER V LINK 1 @CS-COMPL)(NOT 0 TIME)
+REMOVE Acc IF (NOT *-1 V-TRANS-ACT-NOT-ACTIO BARRIER CS LINK 0 (@-FMAINV))(NOT *-1 CS BARRIER V LINK 1 @CS-COMPL)(NOT 0 TIME OR Dem)
 	(NOT 0 NUMERALS LINK *1 TIME OR MEASURE BARRIER NOT-A)
 	(NOT *1 V-TRANS-ACT BARRIER CS);
-	## Sámedikkis lea leamaš čoahkkin 14.03.01.  
+	## Sámedikkis lea leamaš čoahkkin 14.03.01.
+	## Leago dudno mielas suohtas go sáhttá rabas julggiid vázzit?
+  
 
 
 # Predicates of accusative subjects
@@ -9698,7 +9708,7 @@ SELECT Acc IF (*-1 (V Neg) BARRIER CS OR CP)(NOT *-1 ConNeg BARRIER Neg
 # In front of an infinitive
 # - - - - - - - - - - - - - 
 SELECT Acc IF (*-1 VFIN BARRIER NPNHAI)(NOT 0 VERB)(NOT 0 Nom OR Loc OR Adv OR TIME)
-	(*1 Inf BARRIER NOT-ADV-PCLE OR CLB);
+	(*1 Inf BARRIER NOT-ADV-PCLE OR CLB LINK 0 V-TRANS-ACT);
 	## Dasgo Herodes lei bidjan olbmuid váldit Johanasa gitta.
 
 SELECT Acc IF (*-1 VFIN BARRIER CS OR CP OR PUNCT LINK *-1 Nom BARRIER CS OR CP)
@@ -9740,12 +9750,12 @@ SELECT Acc IF (*-1 V-TRANS-ACT BARRIER VERB OR CC OR CLB OR CS OR (@OBJ)
 	
 
 SELECT Acc IF (*-1C V-TRANS-ACT BARRIER NPNHA OR CC OR CLB OR ("nugo") OR ("dego")
-	LINK NOT 0 Gen)(NOT 0 (Sg Nom) LINK *-1 (V Sg3) BARRIER VFIN OR CS OR CP)
+	LINK 0 (@-FMAINV) LINK NOT 0 Gen)(NOT 0 (Sg Nom) LINK *-1 (V Sg3) BARRIER VFIN OR CS OR CP)
 	(NOT -1 PrfPrc LINK NOT *-1 ("leat") BARRIER CS OR CP)
 	(NOT 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME)(1C NP-BORDER);
 	## Sámegillii galbet universitehta lea šaddan realitehta.
 
-SELECT Acc IF (*-1C V-TRANS-ACT BARRIER NPNHAIIP OR COMMA)
+SELECT Acc IF (*-1C V-TRANS-ACT-NOT-ACTIO BARRIER NPNHAIIP OR COMMA LINK 0 (@-FMAINV))
 	(NOT -1 PrfPrc OR PrsPrc LINK -1 BOS OR CS OR (":" CLB))(0 NP-HEAD)
  	(NOT 0 PrfPrc or Adv or Dem or Nom OR Loc OR TIME) 
 	(NOT 0 V-PL3 LINK -1 CC LINK *-1 V-PL3 BARRIER NPNHAIIP OR COMMA)	
