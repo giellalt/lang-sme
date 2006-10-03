@@ -1043,20 +1043,30 @@ LIST BODY = "ámadadju" "bahta" "bahta#ráigi" "bállo#suotna" "beađbe#lađas" 
 
 # Animals
 
-LIST ANIMAL = "ábe#gáhttu" "áldu" "bálddis" "beana" "boazu" "bohkká" "ciiku" "čivga" "čuska" "dámmá" "dorski" "ealit" "gáhttu" "gáica" "gálbi" "gihcci" "gilot"  "guigu" "gussa" "hávga" "heasta" "juksu" "láppis" "loddi" "máhtu" "miessi"  "muortu" "njiŋŋálas" "ore" "sallit" "sarvvis" "sávza" spiinne#čivga "spiidni" "stábbasáidi" "stáinnir" "stuorasáidi" "rutnot" "vársi" "vielppis" "vierca" "vuoksá" "vuoncá#varis" "vuonccis" "vuonjal" ;
+LIST ANIMAL = "ábe#gáhttu" "beana" "bohkká" "ciiku" "čivga" "dámmá" "ealit" "gáhttu" "gáica" "gálbi" "gihcci"  "guigu" "gussa" "heasta" "láppis" "loddi" "máhtu" "njiŋŋálas" "ore" "sávza" "spiinne#čivga" "spiidni" "vársi" "vielppis" "vierca" "vuoksá" "vuoncá#varis" "vuonccis" ;
+
+LIST HUNT-ANIMAL = "ealga" "rievssat" ;
+
+LIST BOAZU = "áldu" "boazu" "čearpmat" "čora" "eallu" "heargi" "miessi" "sarvvis" "vuonjal" ;
+
+LIST FISH = "bálddis" "čuska" "diksu" "dorski" "gilot" "hávga" "juksu" "muortu" "sallit" "sáidi" "stábbasáidi" "stáinnir" "stuora#sáidi" "rutnot" ;
+
+SET ALL-ANIMALS = ANIMAL | HUNT-ANIMAL | BOAZU | FISH ;
 
 #LIST BIRD = "ákta" "báiski" "bovttáš" "cagan" "čearret" "gáiru" "skávli" "šuoršu" ;
 
-LIST PLANT = "ávža" "beahci" "bastilis#látnjá" "boallo#rássi" "cizaš#vuolpu" "duopma" "fiskes#rássi" "gáma#suoidni" "gáiski" "gáskálas" "golle#rássi" "guossa" "horbmá" "juopmu" "lageš" "leaibi" "reatká" "sállja" "sieđga" "skáhpi" "skierri" "soahki" "suhpi";
+LIST PLANT = "ávža" "beahci" "bastilis#látnjá" "boallo#rássi" "cizaš#vuolpu" "duopma" "fiskes#rássi" "gáma#suoidni" "gáiski" "gáskálas" "golle#rássi" "guossa" "horbmá" "juopmu" "lageš" "leaibi" "reatká" "sállja" "sieđga" "skáhpi" "skierri" "soahki" "suhpi" ;
 
 
-SET ANIMATE = HUMAN | ANIMAL; 
+SET ANIMATE = HUMAN | ALL-ANIMALS ; 
 
 
 
 
 
 # Things
+
+LIST SHOE = "gáma" "gumme#stevvel" "sáppat" "skuovva" "stevvel" ;
 
 LIST TOOLS = "áibmi" "ákšu" "baste" "bierggas" "bissu" "buođđu" "čuoibmi" "fierbmi" "goallun#stoahku" "golgadat" "HV-#bissu" "joddu" "joddu-#buođđu" "luovos#fierbmi" "mohtor#sahá" "muorra" "nálu" "nibi" "skárbban" "skierra" "soabbi" "vuogga";
     # Those could be further subdivided into: kitchen tools, working tools, hunting tools, fishing tools, writing tools...
@@ -5738,8 +5748,11 @@ REMOVE Acc IF (0 (Pron Interr) OR (Pron Rel))(*1 NP-HEAD-NOM BARRIER NPNH LINK *
 
 # Reflexive iežas
 # ----------------
-SELECT Gen IF (-1 Acc)(NOT -1 PrfPrc)(0 ("ieš" Gen))(1 HNOUN);
+SELECT Gen IF (-1 Acc)(0 ("ieš" Gen))(1 N);
 	## ... muhto it fuomáš hirssa iežat čalmmis?
+	
+#SELECT Gen IF (0 ("ieš" Gen))(1 N)(NOT *1 Po BARRIER VERB);
+	
 
 SELECT Acc IF (*-1 VFIN BARRIER NOT-ADV-PCLE)(0 Refl)
 	(1 (Actio Ess) OR PrfPrc) ;
@@ -7617,11 +7630,17 @@ SELECT (Pl Loc) IF (-1 ("suohkan" @GN>))(0 ("vuođđo#skuvlla") OR ("mánáid#g�
 # Many of them use the strict transitive verb sets (they really want acc objects, so we give them that).
 
 
+# Intransitive verbs can sometimes be transitive
+# ----------------------------------------------
+
 SELECT Acc IF (*-1 MOVEMENT-VERB BARRIER CS)(0 PLACE)(NOT 1 Po)(NOT -1 CC LINK *1 VFIN) ;
 SELECT Acc IF (0 PLACE)(NOT 1 Po)(*1 MOVEMENT-VERB BARRIER CS);
 SELECT Acc IF (*-1 ("vázzit") OR ("viehkat") BARRIER CS)(0 EDUCATION)(NOT 1 Po) (NOT 1 ROOM LINK 0 Loc)(NOT -1 CC LINK *1 VFIN) ;
-
 SELECT Acc IF (0 EDUCATION)(NOT 1 Po)(*1 ("vázzit") OR ("viehkat") BARRIER CS) ;
+SELECT Acc IF (*-1 ("viehkat") BARRIER CS OR CC)(0 ("spábba")) ;
+SELECT Acc IF (0 ("spábba"))(*1 ("viehkat") BARRIER CS OR CC) ;
+SELECT Acc IF (*-1 ("vázzit") BARRIER CS OR CC)(0 SHOE OR HUNT-ANIMAL OR BOAZU) ;
+SELECT Acc IF (0 SHOE OR HUNT-ANIMAL OR BOAZU)(*1 ("vázzit") BARRIER CS OR CC) ;
 	## Mun váccán vákkiid, vuvddiid ja váriid.
 	## Sii vázzet skuvlla.
 	## Mun váccán skuvlla gávpogis.
