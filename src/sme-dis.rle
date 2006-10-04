@@ -864,6 +864,17 @@ LIST LAGA = "bargo#lága" "lága" "spábbačiekčan#lága" ;
 
 SET NOT-LAHKA = N - LAHKA ;
 
+# Virgi-sets
+# - - - - - -
+LIST VIRGI = "dutkan#virgi" "fága#virgi" "hoavda#virgi" "hovden#virgi" ;
+
+LIST VIRGI-VERB = "almmuhit" "ásahit" "dagahit" "deavdit" "gilvalit" "heaittihit" "ohcat" ;
+
+LIST VIRGI-ADJ = "almmolaš" "dieđalaš" "rabas" ;
+
+# Verbs are in actio
+LIST VIRGI-NOUN = "ásahit" "deavdit" "gollu" "heaittihit" "virgái#bidjat" ;
+
 
 #  Other compounds
 # - - - - - - - - -
@@ -1143,9 +1154,7 @@ SET PLACE = GEOGRAPHICAL-PLACE | POLITICAL-PLACE | GENERAL-PLACE | ROUTE ;
 
 # Abstract
 
-
-             
-LIST ORGANIZATION = "alimus#riekti" "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "ásahus" "bargo#kantuvra" "báhpa#skuvla" "bellodat" "birasgáhtten#departemeanta" "buohcce#stohpu" "buohcce#viessu" "dearvvašvuođa#ásahus" "dearvvašvuođa#fitnodat" "departemeanta" "departementa" "dearvvašvuođadutkan#guovddáš" "doaibma#guovddáš" "dutkan#departemeanta" "dutkan#ráđđi" "eanandoallo#departemeanta" "eanandoallo#departementa" "eise#váldi" "fitnodat" "geahččo#doaibma" "geahččoeise#váldi" "gelbbolašvuođa#guovddáš" "giddagas" "gielda#departementa" "giella#guovdaš" "giella#ráđđi" "girku" "guovllu#stivra" "guovllubuohcce#viessu" "hálddašan#orgána" "dearvvašvuođa#guovddáš" "institušuvdna" "IT-#ovttadat" "joatkka#skuvla" "johttisámi#searvi" "klinihkka" "kulturmuito#ráđđi" "láhka#ásahus" "Luondduhálddašandirektoráhta" "luondduhálddašan#direktoráhta" "mánáid#gárdi" "mánáid#skuvla" "meieriija" "musea" "našunál#diggi" "nuoraid#skuvla" "oahpahus#ráđđi" "olgoriikka#departemeanta" "orgána" "parlameantta" "psykiatriijabuohcce#viessu" "ráđđehus" "ráđđi" "reguleren#ráđđi" "riika#searvi" "Sámedigge#ráđđi" "Sámediggeráđđi" "sámi#ráđđi" "sáme#siida" "servodat" "skuvla" "skuvla#kantuvra" "skuvlla" "stáhta" "suohkan" "suorgi" "synagoga" "universiteahtta" "virgáibidjan#ráđđi" "vuođđo#skuvla" 
+LIST ORGANIZATION = "alimus#riekti" "álbmot#allaskuvla" "alla#skuvla" "ámmát#skuvla" "ásahus" "bargo#kantuvra" "báhpa#skuvla" "bellodat" "birasgáhtten#departemeanta" "buohcce#stohpu" "buohcce#viessu" "dearvvašvuođa#ásahus" "dearvvašvuođa#fitnodat" "departemeanta" "departementa" "dearvvašvuođadutkan#guovddáš" "doaibma#guovddáš" "dutkan#departemeanta" "dutkan#ráđđi" "eanandoallo#departemeanta" "eanandoallo#departementa" "eise#váldi" "fitnodat" "geahččo#doaibma" "geahččoeise#váldi" "gelbbolašvuođa#guovddáš" "giddagas" "gielda#departementa" "giella#guovdaš" "giella#ráđđi" "girku" "guovllu#stivra" "guovllubuohcce#viessu" "hálddašan#orgána" "dearvvašvuođa#guovddáš" "institušuvdna" "IT-#ovttadat" "joatkka#skuvla" "johttisámi#searvi" "kantuvra" "klinihkka" "kulturmuito#ráđđi" "láhka#ásahus" "Luondduhálddašandirektoráhta" "luondduhálddašan#direktoráhta" "mánáid#gárdi" "mánáid#skuvla" "meieriija" "musea" "našunál#diggi" "nuoraid#skuvla" "oahpahus#ráđđi" "olgoriikka#departemeanta" "orgána" "parlameantta" "psykiatriijabuohcce#viessu" "ráđđehus" "ráđđi" "reguleren#ráđđi" "riika#searvi" "Sámedigge#ráđđi" "Sámediggeráđđi" "sámi#ráđđi" "sáme#siida" "servodat" "skuvla" "skuvla#kantuvra" "skuvlla" "stáhta" "suohkan" "suorgi" "synagoga" "universiteahtta" "virgáibidjan#ráđđi" "vuođđo#skuvla"
 "dearvvašvuođa#stašuvdna" "gielda" "riddo#gielda" "sáme#gielda" "Sáme#gielda" "vuotna#gielda" ; 
 # those can both be buildings and represent humans
 
@@ -7487,11 +7496,36 @@ SELECT (@GN>) IF (0 (Prop Gen))(1 ORGANIZATION);
 # Choosing between different nouns
 # --------------------------------
 
+# viergi vs. virgi
+# - - - - - - - -
+
+SELECT VIRGI IF (0 VIRGI) ;
+
+SELECT ("virgi") IF (-1 ORGANIZATION OR INSTITUTION LINK 0 Gen)(0 ("viergi"));
+	## Nuoraidskuvlla virggiin lea buorre bálká.
+	
 SELECT ("virgi") IF (*-1 PROFESSION LINK 0 (@GN>) BARRIER NOT-ADJ)(0 ("viergi"));
     ## Eai leat lahkage doarvái logopedat, geat dikšot geavaheaddjiid klinihkain, eaige sámiid ássanguovllus leat galle gieldda, mat leat ásahan logopeda virggiid.
+ 
+SELECT ("virgi") IF (-1 VIRGI-ADJ)(0 ("viergi")) ;
+	## ... almmolaš virggiid ..
+	
+SELECT ("virgi") IF (*-1 VIRGI-VERB BARRIER (@OBJ))(0 ("viergi" Acc)) ; 
+SELECT ("virgi") IF (*1 VIRGI-VERB BARRIER NOT-ADV)(0 ("viergi" Acc)) ;
+	## Olbmot eai oza diekkár virggiid.
+	
+SELECT ("virgi") IF (0 ("viergi" Gen))(1 VIRGI-NOUN BARRIER NOT-ADJ) ;
+	## Mii váldit Finnmárkku olggobeale virggiid goluid, maiguin ásahit dakkár gelbbolašvuođa...
     
-SELECT ("virgi") IF (-1 ("luohpat"))(0 ("viergi" Loc));
+SELECT ("virgi") IF (*-1 ("luohpat") OR ("bissut") OR ("bidjat") BARRIER NOT-ADV)(0 ("viergi" Loc));
+SELECT ("virgi") IF (0 ("viergi" Loc))(*1 ("luohpat") OR ("bissut") OR ("bidjat") BARRIER NPNH);
      ## Virgeloguid lea suohkan dássážii geahpedan dainna lágiin go olbmot luhpet virggiin.
+     ## Doavttir lea máŋgii biddjon eret virggiin miehtá Suoma.
+     
+SELECT ("virgi") IF (0 ("viergi" Loc))(1 COPULAS)(*2 HUMAN BARRIER (@SUBJ) LINK 0 Nom); 
+SELECT ("virgi") IF (*-1 HUMAN LINK 0 Nom BARRIER NPNH)(0 ("viergi" Loc));    
+	## Virggiin leat nu ollu sámegielat doaktárat go vejolaš.
+	
 
 # Choosing between different proper nouns
 # ---------------------------------------
