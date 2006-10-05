@@ -508,6 +508,7 @@ SET LEX-ADV = Adv - (A*) ;
 SET ADVERBIAL = Adv | Ill | Loc | Com | Ess ;
 
 SET NOT-ADV = WORD - Adv;
+SET NOT-ADV-N = WORD - Adv - N;
 SET NOT-ADV-PCLE = WORD - Adv - Pcle ;
 SET NOT-ADV-INDEF = WORD - Adv - Indef ;
 SET NOT-ADV-PCLE-ILL = WORD - Adv - Pcle - Ill ;
@@ -615,7 +616,7 @@ SET V-TRANS-ACT-NOT-ACTIO = TV - V-PASS - Actio ;
 # Sets for verbs choosing oblique objects or adverbials
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-LIST ST-VERB = "addit" "čuohppat" "dadjat" "dárbbahit" "dárbbašit" "deattuhit" "fidnet" "geavahit" "hábmet" "lágidit" "luoikat" "luoikkahit" "oaidnit" "oastit" "oažžut" "olahit" "ovddidit" "ráhkadit" "suoládit" "váidalit" "váldit" "vásihit" "váttásmahttit" "vuojuhit" ;
+LIST ST-VERB = "addit" "čuohppat" "dadjat" "dárbbahit" "dárbbašit" "deattuhit" "fidnet" "geavahit" "hábmet" "lágidit" "luoikat" "luoikkahit" "oaidnit" "oastit" "oažžut" "olahit" "ovddidit" "ráhkadit" "váldit" "vásihit" "váttásmahttit" "vuojuhit" ;
 	# Strictly transitiv-verbs - a start. Borrat should be there.
 	# These verbs: "addit", "fidnet" and "oažžut" can in special cases be without object: 
 	## Son oaččui sus.  
@@ -2424,7 +2425,7 @@ MAP (@OBJ @OPRED) TARGET Acc IF (0 NUMERALS)
     (NOT 1 CC)(NOT *1 ALU BARRIER NP-BORDER)(NOT -1 (@NNum>) LINK -2 (@OBJ));
     ## Mun oidnen 4 nieidda.
 
-MAP (@OBJ @OPRED) TARGET Acc IF (NOT 0 TIME OR ROUTE OR Adv)
+MAP (@OBJ @OPRED) TARGET Acc IF (NOT 0 TIME OR ROUTE)
     (NOT 0 Num LINK *1 TIME OR ROUTE BARRIER NOT-A);
     ## Dat orui doppe vihtta guhkes jagi.
 	## Manaigo Biret-Elle viežžat boastta? 
@@ -2650,21 +2651,6 @@ REMOVE ACR IF (0 Prop) ;
 # SELECT instead of REMOVE if one wants to investigate word structure.
 
 # m4 starts (derivations)
-REMOVE N-DER IF (0 LEX-N LINK NOT 0 Ess);
-       ## Dat lea oahpaheaddjin doppe.
- # Since Actio was included in the N-DER set, this rule now removes many Actios.
- # This may be unfortunate. If so, the remedy is to remove Actio from the N-DER set.
-
-REMOVE N-DER IF (0 N-DER LINK 0 Ess)(0 LEX-N LINK 0 Ess)(NOT 0 Actio);
-	## Boarrásis leai dat vel eanaš ealáhussan ge.
- # Removes N-DER if O is also a lexical noun, and both nouns are essive.
-
-REMOVE A-DER IF (0 LEX-A);
-	## Dábálaš mearrádusat.
-
-REMOVE V-DER IF (0 LEX-V)(NOT 0 (eaddji)); 
-	## Maid don doaivvut?
-
 # m4 ends
 
  # The negative condition is to avoid ending up with only a PrfPrc reading 
@@ -2779,6 +2765,9 @@ REMOVE (N* Dimin) IF (0 Adv OR A);
 REMOVE ("vuolli") IF (-1 ("čállit"))(0 ("vuollái"));
     ## Sii áigot bissehit rievssatbivdu čakčaorohagain, ja dasa lea Saari čállán vuollái.
 
+SELECT Adv IF (NOT *-1 ST-VERB BARRIER CS)(0 Acc)(NOT *1 ST-VERB BARRIER CS OR CC);
+SELECT Adv IF (NOT *-1 ST-VERB BARRIER Acc OR CS)(0 Acc)(*1 ST-VERB BARRIER CS OR CC LINK *1 Acc BARRIER V OR N);
+	## Lávdegoddi ádjána guhká áššiid meannudemiin. # Selecting "guhkás Adv" instead of Acc. 
 
 
 # Lexical N versus Actio
@@ -2792,6 +2781,7 @@ REMOVE (N Actio) IF (0 ("eallin") OR ("váldo#giella"));
 
 # Nouns, not adverbs or adjectives 
 # --------------------------------
+
  # Words of which both the singular (-laš) and the plural (-laččat)
  # are probably nouns:
 
@@ -2821,6 +2811,11 @@ SELECT (N Pl Nom) IF (0 ("egyptalaš") OR ("greikalaš") OR ("julev#sápmelaš")
 
 SELECT (N Pl Nom) IF (0 (eaddji));
 	## Dat geađgi man huksejeaddjit hilgo,...
+	
+SELECT (N Acc) IF (*-1 ST-VERB BARRIER CS OR VFIN)(NOT 1 Acc)(0 Adv)(NOT 0 Loc);
+SELECT (N Loc) IF (*-1 V-TRANS-ACT BARRIER VERB OR CS)(0 Adv)(*1 Acc OR COPULAS OR Neg BARRIER VFIN);
+	## Mun válden guhkás siepmana. # Selecting N instead or Adv (guhkás).
+
 
 
 # Nouns, not verbs
@@ -5277,6 +5272,17 @@ SELECT ("gosa" Foc) IF (*-1 Qst BARRIER CS OR CP);
 
 SELECT ("gosa" Foc) IF (*-1 ("go" Pcle) BARRIER CS OR CP);
 	## Leat go don vuolgime gosage?
+
+# guhká/guhkás vs guhkká
+# - - - - - - - - - - - 
+SELECT Adv IF (*-1 VERB BARRIER NOT-ADV-N)(0 ("guhkká") LINK 0 Loc OR Gen)(NOT 1 COPULAS OR Acc)(NOT 1 (V Neg) LINK 1 COPULAS) ;
+SELECT Adv IF (-2 VERB)(-1 (@SPRED))(0 ("guhkká") LINK 0 Loc OR Gen) ;
+SELECT Adv IF (-1 BOS OR CS OR CC)(0 ("guhkká") LINK 0 Loc OR Gen)(*1 VERB LINK -1 (@SUBJ)) ;
+	## Dilli joatkkašuvvá dákkárin guhkás boahtteáigái.
+	## Son bálkestii spáppa guhkás.
+	## Guhkás son bálkestii spáppa.
+  	
+
 
 # gusto
 # - - -
@@ -8245,7 +8251,7 @@ SELECT Gen IF (*-1 Num BARRIER NPNHA LINK *-1 BOS OR CS OR (":" CLB) BARRIER NOT
 	## Okta Sámedikki stuora hástalusain lea ain bargat buoridit... 
 	## Okta ášši mas lea stuora mearkkašupmi, lea ahte... #NOT 0 Interr!
 
-SELECT Gen IF (*-1 VFIN BARRIER N OR Pron OR CLB)(NOT 0 Num OR Dem OR VGen OR PrfPrc OR PrsPrc OR Indef OR Interr)
+SELECT Gen IF (*-1 VFIN BARRIER N OR Pron OR CLB)(NOT 0 Num OR Dem OR VGen OR PrfPrc OR PrsPrc OR Indef OR Interr OR Adv)
 	(NOT 1 CLB)(*1C (N Nom) OR (N Acc) BARRIER NPNH OR PrfPrc OR CC OR PUNCT LINK 
 	NOT 0 Prop OR TIME OR ROUTE);	
 	## Lávdegottiid doaibmaáigi čuovvu Sámedikki válgaáigodaga.
