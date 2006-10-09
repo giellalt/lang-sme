@@ -967,8 +967,11 @@ LIST NUMMAR = "nr" "nummar" "nummir" "tabealla#nummar" ;
 LIST KLASS = "ášši" "s" "siidu" "§" "§§" "pragráfa" "oassi" "kap" "kapihttal" "kapihtal";
 
 
-# Case-specific sets
-# ------------------
+# Nouns with morpho-syntactic preferences
+# ----------------------------------------
+
+# Numerus
+# -------
 
 LIST PL-NOUN = "beassaš" "čalbme#láse" "gálssot" "headja" "sabet" "sisttet" 
 	"skárri"; 
@@ -979,8 +982,8 @@ LIST SG-WORD = "ipmárdus" "doaivu" "dáro#giella" "gelbbolašvuohta" ("guovtte#
 
 
 
-# Nouns with syntactic preferences
-# --------------------------------
+# Case, possessive, etc.
+# ----------------------
 
 LIST LOC-NOUN = "dáhpáhus" "dilálašvuohta" "ipmárdus" "oktavuohta" ;
     # Those nouns appear in locative unless a head asks for comitative.
@@ -1188,8 +1191,16 @@ SET ACTOR = ANIMATE | INSTITUTION | ORGANIZATION ;
 
 LIST STATE = ("dearvvas" Der/vuohta) "váivi";
     
+LIST ABSTRACT-ENTITY = "bálká" ;
+    # can represent a concrete entity such as bálká can stand for a concrete money
+
+LIST CONCEPT =  "áigumuš" "boađus" "dárbu" "dássi" "doaibma" "duogaš" "fádda" "hástalus" "máhttu" ("máŋgga#bealat" Der/vuohta) "mihttomearri" "oktavuohta" "ovtta#dássásašvuohta" "perspektiiva" "rola" "sihkkarastin#strategiija" "strategiija" "šiehtadallan#fáddá" "ulbmil" "vuordámuš" ; 
+    # very abstract
     
-LIST ABSTRACT-ENTITY = "fádda" "šiehtadallan#fáddá" ;   
+LIST ACTITVITY = "čađaheapmi" "guorahallan" ;
+    # semantically comparable to Actio forms + lexicalized Actio forms.
+
+SET ABSTRACT = ABSTRACT-ENTITY | CONCEPT | ACTIVITY ;  
     
 LIST SITUATION = "areála#dilli" "bargo#dilli" "boazodoallo#dilli "dilli" doaibma#dilli" "duopmoválde#dilli" "eaiggát#dilli" "eallin##dilli" "eallin-#dilli" "eanadoallo#dilli" "eanaeaiggát#dilli" "fápmo#dilli" "gaska#dilli" "geavahan##dilli" "giella#dilli" "háldo#dilli" ""heahte#dilli"" "lonohallan#dilli" "miella#dilli" "monopol#dilli" "niestedábuhanheahte#dilli" "náittos##dilli" "oahpponeavvo#dilli" "riekte##dilli" "riido#dilli" "ruhta#dilli" "seaktedábuhan#dilli" "sierra#dilli" "skuvla#dilli" "valljivuohta#dilli" "vuoigatvuođa##dilli" "šaddadan#dilli" ;
     # Likely to be locative in most contexts
@@ -7412,7 +7423,7 @@ SELECT Prop IF (-1 BOS)(0 ("Sápmi" Prop))(1 ORGANIZATION OR Org);
     
 SELECT Gen IF (0 Acc LINK 0 NORGA)(1 POLITICAL-ABSTR-N OR ORGANIZATION OR INSTITUTION);
     ## ...čájeha, ahte Norgga sámipolitihkka lea duođas váikkuhišgoahtán..
-    ## DavviNorgga mánáidsuodjalusa ásahus- ja organisašuvdnaovddideames.
+    ## DavviNorgga mánáidsuodjalusa ásahus- ja organisašuvdnaovddideames.    
 
 # Removing proper nouns that are lookalikes
 # - - - - - - - - - - - - - - - - - - - - -
@@ -8035,7 +8046,16 @@ SELECT Gen IF (*-1 ("leat") BARRIER NPNHA)(1 (V Actio Loc));
 SELECT Gen IF (*-1 (@OBJ) BARRIER VERB LINK *-1 V-TRANS-ACT BARRIER NPNHA)
 	(1 Ger);
 	## Son muitalii dan buot olbmuid guladettiin.
+	
+# Genitive semantically
+# - - - - - - - - - - -
 
+SELECT Gen IF (0 Acc LINK 0 ORGANIZATION OR INSTITUTION)(1 HUMAN LINK NOT 0 HUMAN-GROUP);
+SELECT Gen IF (0 Acc LINK 0 ORGANIZATION OR INSTITUTION)(1 PROFESSION OR ROLE LINK NOT 0 Pl);
+    ## Dán gáibideigga foandda hoavda Per Edvard Klemetsen ja Norgga Sámiráđi ovdaolmmoš Aslak Nils Sara gielddaministaris Arne Rettedalas geainna soai maŋŋebárgga deaivvadeigga Oslos.
+    # Examples where it does not work:
+    # Son deattuhii Sámiráđi boazodolliid oktasaš barggu.
+    # We have to make constraints for this rule.
 
 # Accusative after actio (exceptions to next rule)
 # - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -10415,7 +10435,7 @@ SELECT Loc IF (*-1 BOS LINK NOT *1C V)(*-1 HUMAN LINK NOT -1 (@GN>))(0 ("stáhta
 # ABSTRACT-ENTITY
 # - - - - - - - -
 
-SELECT (Pl Loc) IF (*-1 ABSTRACT-ENTITY BARRIER NPNH)(0 EVENT OR TEXT);
+SELECT (Pl Loc) IF (*-1 ABSTRACT BARRIER NPNH)(0 EVENT OR TEXT); 
     ## Boazodoallu - ii namut maidege bággonjuovvamiid birra, vaikko dat lea ge okta dain guovddáš šiehtadallanfáttáin dán jagi boazodoallošiehtadallamiin.
     
 # Other locative rules
