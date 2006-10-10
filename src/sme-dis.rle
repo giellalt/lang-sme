@@ -368,6 +368,7 @@ LIST CASE = Nom Acc Gen Ill Loc Com Ess ;
 SET NOT-NOM = CASE - Nom ;
 SET NOT-GEN = CASE - Gen ;
 SET NOT-ACC = CASE - Acc ;
+SET NOT-ACC-GEN = CASE - Acc - Gen ;
 
 
 # Verb sets
@@ -642,6 +643,8 @@ LIST ST-VERB = "addit" "čuohppat" "čuovvulit" "dadjat" "dáhkidit" "dárbbahit
 	# Strictly transitiv-verbs - a start. Borrat should be there.
 	# These verbs: "addit", "fidnet" and "oažžut" can in special cases be without object: 
 	## Son oaččui sus.  
+	
+SET ST-VERB-NOT-ACT = ST-VERB - Actio - Actor ;	
 
 LIST LOC-VERB = "ávkkástallat" "ballat" "beassat" "beroštit" "biehttalit" "bihtit" "boahtit" "ceavzit" "čuoččut" "čuovvut" "dinet" "dolkat" "eastadallat" "eastadit" "fuolahit" "fuollat" "geargat" "heaitit" "ilbmat" "jearrat" "luohpat" "nohkkot" "spiehkastit" "váruhit" "veallát" "oassálastit" "válga#oassálastit";
 		#Note that "fuolahit" obviously has two homonymous variants: 
@@ -8160,7 +8163,7 @@ REMOVE (Gen @GN>) IF (*-1 BOS LINK *1 Acc)(0 Acc LINK 0 LOC-COMPL-NOUN)(*1 Loc B
 # a. that 
 # Genitive (or nominative) in clause without full verb
 # - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REMOVE Acc IF (NOT *-1 V-TRANS-ACT BARRIER PUNCT)(NOT *-1 CS LINK *1 V-TRANS-ACT BARRIER Acc)(NOT *-1 CS BARRIER V-TRANS-ACT LINK *1 CS BARRIER VFIN)(NOT *-1 CS BARRIER V LINK 1 @CS-COMPL)
+REMOVE Acc IF (NOT *-1 V-TRANS-ACT-NOT-ACT BARRIER PUNCT LINK NOT 0 N)(NOT *-1 CS LINK *1 V-TRANS-ACT BARRIER Acc)(NOT *-1 CS BARRIER V-TRANS-ACT LINK *1 CS BARRIER VFIN)(NOT *-1 CS BARRIER V LINK 1 @CS-COMPL)
 	(NOT *-1 (Pass PrfPrc) BARRIER NPNH LINK *-1 V-TRANS-ACT BARRIER NPNHA)
 	(NOT -1 CC LINK -1 Acc LINK -1 ("ollu"))(NOT 0 TIME)
 	(NOT 0 NUMERALS LINK *1 TIME OR MEASURE BARRIER NOT-A)
@@ -8625,7 +8628,7 @@ REMOVE Gen IF (NOT *-1 Pr OR NUMERALS BARRIER NPNH)(0 N)(1 Dem);
 REMOVE Gen IF (NOT *-1 Pr OR NUMERALS BARRIER NPNH)(1 BEAIVI);
 	## Sii bivdet luosa mánnodaga.
 
-REMOVE Gen IF (*-1 OPRED-VERB BARRIER NPNH LINK NOT *-1 NP-HEAD-ACC
+REMOVE Gen IF (*-1 OPRED-VERB BARRIER NPNH LINK NOT 0 N LINK NOT *-1 NP-HEAD-ACC
 	BARRIER V-NOT-AUX OR CC OR S-BOUNDARY)(1 Ess);
 	## Don galggat gohčodit su Jesusin.
 
@@ -9396,7 +9399,7 @@ REMOVE Gen IF (-1 (@GN>))(0 ("§"))(1 Num);
     ## Dearvvašvuođabargiidlága § 10, mii gieđahallá dieđuid addima pasienttaide, ja pasientavuoigatvuođalága § 3-1,...
 
 #REMOVE (N Gen) IF (1C Gen LINK *1 Po OR N BARRIER V); 
-REMOVE (N Gen) IF (-1 V-TRANS-ACT OR TIME)(NOT -1 PrfPrc LINK -1 (@OBJ))(1 Gen LINK *1 Po OR N BARRIER V OR CC OR COMMA); 
+REMOVE (N Gen) IF (*-1 V-TRANS-ACT-NOT-ACT OR TIME BARRIER NPNH)(NOT -1 PrfPrc LINK -1 (@OBJ))(1 Gen LINK *1 Po OR NOT-ACC-GEN BARRIER VFIN OR S-BOUNDARY); 
 	##  Ráđđehus láhčá dilálašvuođaid sámi kultuvrra máŋggadáfotvuođa seailluheapmái.
 	## Bargiidbellodaga sámediggejoavku divvu kritihkalaš gažaldagaid ráđi ruhtavuoruhemiid hárrái.
 	## Sii leat sivaid ožžon eatni alkoholageavaheami geažil.
@@ -9602,7 +9605,7 @@ REMOVE Gen IF (*-1 V-TRANS-ACT BARRIER NPNHA)(NOT 0 TIME)(*1 CC BARRIER WORD
 
 SELECT Acc IF (NOT *-1 Pr OR Num BARRIER NPNH)(0 NOTIME OR Pron)
 	(NOT 0 Nom OR Loc OR Adv OR VERB)
-	(*1 CLB BARRIER NOT-ADV-PCLE LINK NOT *1 Gen BARRIER NPNH);
+	(*1 CLB OR VFIN BARRIER NOT-ADV-PCLE LINK NOT *1 Gen BARRIER NPNH);
 	## Jus divššohas roasmmohuvvá dahje oažžu duođalaš váttisvuođaid,...
 	## Liggen dihtii viesuideaset, ferte ollusat muoraid boaldit.
 
@@ -9644,7 +9647,7 @@ SELECT (N Acc) IF (*-1C (Num Acc) BARRIER NPNH);
  # Note that a rule for accusative predicates following accusative subjects and 
  # copulas is found right before the nominative rule block.
 
-SELECT Acc IF (*-1 OPRED-VERB BARRIER NPNHA LINK NOT 0 Pass OR Actio LINK 
+SELECT Acc IF (*-1 OPRED-VERB BARRIER NPNHA LINK NOT 0 Pass OR N LINK 
 	NOT *-1 NP-HEAD-ACC BARRIER V-NOT-AUX OR S-BOUNDARY)(NOT 0 TIME)
 	(NOT *1 Acc BARRIER NPNH OR PUNCT OR CC OR ("/"));
 	## Dážat eai atnán sámiid buoret go beanan.
@@ -9664,7 +9667,7 @@ SELECT Acc IF (*-1 CC BARRIER NPNH LINK -1 Ess LINK -1 Acc)(NOT 0 PrsPrc)
 	(1 A OR Ess);
 	## ...dahkan doaimmaid vuoiggaleabbun ja sosiálabálvalusaid álkibut.
 
-SELECT Acc IF (*-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE OR CLB LINK NOT *-1 NP-HEAD-ACC
+SELECT Acc IF (*-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE OR CLB LINK NOT 0 N LINK NOT *-1 NP-HEAD-ACC
 	BARRIER V-NOT-AUX OR S-BOUNDARY)(1 Ess)(NOT 2 Inf);
 	## Mun oidnen Máreha mánnán.
 	## Mun oidnen Máreha boahtime.
@@ -13573,7 +13576,7 @@ SELECT (@OBJ) IF (*-1 Inf BARRIER NPNHA LINK 0 V-TRANS-ACT LINK NOT *-1 (@OBJ)
 	(1 (@OPRED) LINK 1 NP-BORDER);
 	## Divššohasbearráigeahčči galgá dahkat ortnega dovddusin.	
    
-SELECT (@OBJ) IF (*-1 ST-VERB BARRIER S-BOUNDARY  OR (@OBJ) 
+SELECT (@OBJ) IF (*-1 ST-VERB BARRIER S-BOUNDARY OR (@OBJ) LINK NOT 0 N
 	LINK NOT *-1 (@OBJ) BARRIER S-BOUNDARY)(NOT 0 Adv)
 	(NOT 0 Nom LINK *-1 (TV N Gen) BARRIER NPNH)(NOT 0 TIME)
 	(NOT 0 Dem LINK *1 N BARRIER NPNH)(NOT 0 Loc LINK *-1 (IV) BARRIER VERB)
@@ -13607,7 +13610,7 @@ REMOVE (@GN>) IF (*-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE LINK 0 VERB
 REMOVE (@GN>) IF (1 (@-FMAINV))(1 V-TRANS-ACT);
 	## Divššohas dahje su ovddasteaddji galgá leat váidalusa vuolláičállán.
 
-SELECT (@OBJ) IF (*-1 ST-VERB BARRIER S-BOUNDARY OR VERB OR go)
+SELECT (@OBJ) IF (*-1 ST-VERB-NOT-ACT BARRIER S-BOUNDARY OR VERB LINK NOT 0 N)
 	(NOT *-1 (@OBJ) BARRIER S-BOUNDARY)(NOT 0 Loc)(NOT 0 Dem LINK *1 N BARRIER NPNH)
 	(*1 ADVLCASE BARRIER NOT-ADV-PCLE LINK NOT *1 (@OBJ) BARRIER S-BOUNDARY);
 	## De olahit olbmot luosa buođđogežiin.
