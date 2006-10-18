@@ -1306,7 +1306,7 @@ LIST POLITICAL-ABSTR-N = "boazodoallo#politihkka" "boras#pirepolitihka" "kultur#
 #LIST OASSI = "oassi" "váldo#oassi"; 
 	#Might be useful for partitive constructions.	
 	
-LIST HEADOFPARTS = "nisson#oassi" "oassi" "váldo#oassi" "bealli" "guhtemuš" "goappašat" "ollu" "ollut" "proseanta" "%" ;
+LIST HEADOFPARTS = "nisson#oassi" "oassi" "váldo#oassi" "bealli" "guhtemuš" "goappašat" "proseanta" "%" ;
   # This may be a better partitive set.	
 
 
@@ -5247,7 +5247,7 @@ SELECT Adv IF (-1 ("seamma") OR ("seammá"))(0 ("ollu"))(NOT *1 N OR A BARRIER N
 	#SELECT Pron IF (-1 ("seamma") OR ("seammá"))(0 ("ollu"))(*1 N BARRIER NPNH LINK 1 ("go"));	
   	## Bargiid guottut mearkkašit seammá ollu bálvaluskvalitehttii go fáktadieđut geavaheaddjiid giela ja kultuvrra birra.
 
-REMOVE Adv IF (NOT -1 ("seamma") OR ("seammá") OR ("mii" Pron))(0 ("ollu"))(NOT 1 V);
+REMOVE Adv IF (NOT -1 ("seamma") OR ("seammá") OR ("mii" Pron))(NOT -1 V)(0 ("ollu"))(NOT 1 V);
   # This is a kill-all-rule...
 
 
@@ -8486,11 +8486,14 @@ REMOVE (Sg Nom) IF (*-1 VFIN BARRIER S-BOUNDARY OR CC OR go OR ("dego") LINK NOT
 SELECT Adv IF (NOT 0 Attr OR VFIN OR Inf OR VGen OR Indef OR N OR Loc OR Ill)
    (NOT 0 (Num Ess) LINK *1 Com OR Ess BARRIER NPNH) (*1 A OR N BARRIER NPNH)(NOT 1 CC OR CLB);
 	## Farisealaččat ja erenoamážit sin čáláoahppavaččat nimmoredje. 
+	
 	# One early locative rule / partitive construction
 	# - - - - - - - - - - - - - - - - - - - - - - - - -
+	
 SELECT Loc IF (*-1 HEADOFPARTS BARRIER NPNH OR COMMA);
 	## Guhtemuš dainna bivdovugiin guhkimus leaš gevahuvvon...
 	## Dat sáhttet leat oassin árvvoštallamiin. #If this does not work: maybe: REMOVE Acc?
+	
 SELECT Loc IF (*-1 HEADOFPARTS LINK 1 Gen BARRIER NPNH OR COMMA);
   # Just in case there is a genitive which still is an accusative as well and therefore NPNH and ruled out by the rule before.
 
@@ -8500,7 +8503,7 @@ SELECT Loc IF (-3 HEADOFPARTS LINK 1 Loc LINK 1 (PrfPrc @PrcN>));
 
 	# Accusative
 	# =============== #
- CONSTRAINTS #19 #
+      CONSTRAINTS #19 #
 	# =============== #
 
     # Miscellaneous rules related to accusative
@@ -9635,6 +9638,7 @@ SELECT (Sg Com) IF (0 (Pl Loc) LINK 0 VEHICLE)(*1 VEHICLE-TOOL-V BARRIER S-BOUND
 
 # Abstract-entity-com-verbs
 # - - - - - - - - - - - -
+
 SELECT (Sg Com) IF (*-1 ABSTRACT-ENTITY-COM-V BARRIER S-BOUNDARY)(0 (Pl Loc) LINK 0 ABSTRACT-ENTITY OR ACTOR);
 SELECT (Sg Com) IF (0 (Pl Loc) LINK 0 ABSTRACT-ENTITY OR ACTOR)(*1 ABSTRACT-ENTITY-COM-V BARRIER S-BOUNDARY);
     ## Muhto mii diehtit ahte fágagirjjit leat divrasat ja diibmá jagi bušeahtain ii sáhttán investeret.
@@ -9642,6 +9646,7 @@ SELECT (Sg Com) IF (0 (Pl Loc) LINK 0 ABSTRACT-ENTITY OR ACTOR)(*1 ABSTRACT-ENTI
 
 # Only-place-loc-verb 
 # - - - - - - - - - - 
+
 SELECT (Sg Com) IF (0 (Pl Loc) LINK NOT 0 PLACE OR ORGANIZATION OR HUMAN)(*1 ONLY-PLACE-LOC-V BARRIER S-BOUNDARY);
 SELECT (Sg Com) IF (*-1 ONLY-PLACE-LOC-V BARRIER S-BOUNDARY)(0 (Pl Loc) LINK NOT 0 PLACE OR ORGANIZATION OR HUMAN);
     ## Giellakantuvrras ii leat formála váldi álggahit gielladoaimmaid etáhtain, muhto veahkehit.
@@ -9649,6 +9654,7 @@ SELECT (Sg Com) IF (*-1 ONLY-PLACE-LOC-V BARRIER S-BOUNDARY)(0 (Pl Loc) LINK NOT
 
 # Only-loc-verb 
 # - - - - - - - 
+
 SELECT (Sg Com) IF (0 (Pl Loc) LINK 0 CONCEPT OR HUMAN OR ("sátni"))(*1 ONLY-LOC-V BARRIER S-BOUNDARY);
 SELECT (Sg Com) IF (*-1 ONLY-LOC-V BARRIER S-BOUNDARY)(0 (Pl Loc) LINK 0 CONCEPT OR HUMAN OR ("sátni"));
     ## Ollu ásahusat geavahit dan sin doaimmain.
@@ -9822,20 +9828,23 @@ SELECT Com IF (NOT *-1 (@GN>) BARRIER S-BOUNDARY)(0 (Pl Loc))(1 XGO BARRIER NOT-
 	# ===============================
 	# those apply if no comitative rule hits
 
-# All verbs (hopefully we´ve got the (Sg Com)s now
-#  - - - - - - - - - - - - - - - - - - - - - - - -
-SELECT (Pl Loc) IF (0 (Sg Com));
+# All verbs
+#  - - - - -
+   # hopefully we´ve got the (Sg Com)s now
+
+#SELECT (Pl Loc) IF (0 (Sg Com));
  
 # Dynamic-verbs
 # - - - - - - - 
 
-#SELECT (Pl Loc) IF (*-1 DYNAMIC-V BARRIER S-BOUNDARY)(0 (Sg Com) LINK NOT 0 TOOLS OR ABSTRACT-TOOLS OR WRITING-TOOLS OR CONCEPT OR HUMAN);
-#SELECT (Pl Loc) IF (0 (Sg Com) LINK NOT 0 TOOLS OR ABSTRACT-TOOLS OR WRITING-TOOLS OR CONCEPT OR HUMAN)(*1 DYNAMIC-V BARRIER S-BOUNDARY);
+SELECT (Pl Loc) IF (*-1 DYNAMIC-V BARRIER S-BOUNDARY)(0 (Sg Com) LINK NOT 0 TOOLS OR ABSTRACT-TOOLS OR WRITING-TOOLS OR CONCEPT OR HUMAN);
+SELECT (Pl Loc) IF (0 (Sg Com) LINK NOT 0 TOOLS OR ABSTRACT-TOOLS OR WRITING-TOOLS OR CONCEPT OR HUMAN)(*1 DYNAMIC-V BARRIER S-BOUNDARY);
 
-# From-human-verbs
+# HUMAN-SOURCE-V
 # - - - - - - - - 
-#SELECT (Pl Loc) IF (*-1 HUMAN-SOURCE-V BARRIER S-BOUNDARY)(0 (Sg Com) LINK NOT 0 TOOLS OR ABSTRACT-TOOLS OR WRITING-TOOLS OR CONCEPT);
-#SELECT (Pl Loc) IF (0 (Sg Com) LINK NOT 0 TOOLS OR ABSTRACT-TOOLS OR WRITING-TOOLS OR CONCEPT)(*1 HUMAN-SOURCE-V BARRIER S-BOUNDARY);
+
+SELECT (Pl Loc) IF (*-1 HUMAN-SOURCE-V BARRIER S-BOUNDARY)(0 (Sg Com) LINK NOT 0 TOOLS OR ABSTRACT-TOOLS OR WRITING-TOOLS OR CONCEPT);
+SELECT (Pl Loc) IF (0 (Sg Com) LINK NOT 0 TOOLS OR ABSTRACT-TOOLS OR WRITING-TOOLS OR CONCEPT)(*1 HUMAN-SOURCE-V BARRIER S-BOUNDARY);
 
 
 SELECT Loc IF (NOT *-1 BOS LINK *1 COM-HEAD BARRIER S-BOUNDARY)(0 LOC-NOUN);
@@ -9872,6 +9881,33 @@ SELECT (Pl Loc) IF (NOT *-1 BOS LINK *1 COM-HEAD OR ("dahkat") BARRIER S-BOUNDAR
   
 SELECT Loc IF (*-1 N BARRIER NPNHAII)(0 KIND)(NOT 1 NP-MEMBER);
   	## Dát lea mearkkašahtti vaikko geahččá dan olis ahte nissonoassi maiddái eará válga-šlájain vásihii muhtin " nuppástusaid " 90-logus .
+  	
+# ollu
+# - - -
+
+SELECT Loc IF (*-1 ("ollu") BARRIER NPNH OR COMMA);
+	## Ollu dainna bivdovugiin guhkimus leaš gevahuvvon...
+	
+SELECT Loc IF (*-1 ("ollu") LINK 1 Gen BARRIER NPNH OR COMMA);
+  # Just in case there is a genitive which still is an accusative as well and therefore NPNH and ruled out by the rule before.
+
+SELECT Loc IF (-3 ("ollu") LINK 1 Ill LINK 1 (PrfPrc @PrcN>));
+SELECT Loc IF (-3 ("ollu") LINK 1 Com LINK 1 (PrfPrc @PrcN>));
+SELECT Loc IF (-3 ("ollu") LINK 1 Loc LINK 1 (PrfPrc @PrcN>));
+
+# ollu - Adv or Pron?
+# - - - - - - - - - -
+
+# This has to stand after the partitive rules for ollu, so that ollu can be disambiguated:
+
+SELECT Adv IF (-1 V)(0 ("ollu"))(*1C Com BARRIER NPNH);
+    ## Lean vuodján ollu biillain.
+    ## Lean borran ollu gáffaliin.
+
+REMOVE Adv IF (-1 V)(0 ("ollu"))(*1C Loc BARRIER NPNH);
+    # The actual HEADOFPARTS ollu..
+    ## Lean borran ollu gáhkkuin.
+
   
 	# Passive constructions
 	# ---------------------
@@ -12256,7 +12292,7 @@ REMOVE (@ADVL) IF (0 TITLE OR PROFESSION)(1 Mal OR Fem OR Sur);
 
 
 	# ----------- #
- CONSTRAINTS #27
+    CONSTRAINTS #27
 	# ----------- #
 
 REMOVE (@+FAUXV) ;
