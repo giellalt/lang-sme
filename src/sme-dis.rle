@@ -611,37 +611,31 @@ SET V-NOT-AUX = V - AUX ; # The set of verbs that cannot be auxiliaries.
 
 SET VFIN-NOT-AUX = VFIN - AUX ;
 
-SET V-MAIN = V - COPULAS - Neg - MOD-ASP | ("orrut") ; # The set of verbs that can be 
-							# main verbs. Includes 
-							# AUX-OR-MAIN.
+SET V-MAIN = V - COPULAS - Neg - MOD-ASP | ("orrut") ; 
+# The set of verbs that can be  main verbs. Includes AUX-OR-MAIN.
 
 SET V-DER-PASS = V + V-DER + Pass;  # + is intersection, this should work
 				   # The set is used in one rule with no hits.
-	
-SET V-PASS = (V TV Pass);
 
-SET V-NOT-AUX-PASS = V - AUX - V-PASS ; # No longer in use.
+LIST V-TRANS = TV (IV Der/ahtti) (IV Der/h) ;
+# This is only a tool for making the following sets, bacause of that the symbols (|) and (-) in the set don´t function as one had expected.
 
-SET V-ACT = V - Pass; # No longer in use.
-
-SET ACT-PRFP = PrfPrc - V-PASS; # Appears in one rule.
-
-SET V-TRANS-ACT = TV - Pass | (IV Der/ahtti) ;#- (Actio Loc) - Actio ; #XXX Never acc-obj for a.l. or actor?
+SET V-TRANS-ACT = V-TRANS - Pass ;#- (Actio Loc) - Actio ; #XXX Never acc-obj for a.l. or actor?
  # All active verbs with a TV tag, including AUX-OR-MAIN.
 
-SET V-TRANS-ACT-SG3 = V-SG3 - Pass ; 
  
-SET V-TRANS-ACT-NOT-AUX = TV - V-PASS - AUX ;
+SET V-TRANS-ACT-NOT-AUX = V-TRANS -  Pass - AUX ;
 
-SET V-TRANS-ACT-NOT-ACT = TV - V-PASS - Actio - Actor - PrsPrc ;
+SET V-TRANS-ACT-NOT-ACT = V-TRANS - Pass - Actio - Actor - PrsPrc ;
 
-SET V-TRANS-ACT-NOT-ACT-NOT-AUX = TV - V-PASS - Actio - Actor - AUX;
+SET V-TRANS-ACT-NOT-ACT-NOT-AUX = V-TRANS -  Pass - Actio - Actor - AUX;
+
 
 
 # Sets for verbs choosing oblique objects or adverbials
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-LIST STV = (IV Der/ahtti) "addit" "čoaggit" "čuohppat" "čuovvulit" "dadjat" "dáhkidit" "dárbbahit" "dárbbašit" "deattuhit" "fidnet" "geavahit" "hábmet" "lágidit" "luoikat" "luoikkahit" "oaidnit" "oastit" "oažžut" "olahit" "ovddidit" "ráhkadit" "váldit" "vásihit" "váttásmahttit" "vuojuhit" ;
+LIST STV = (IV Der/ahtti) (IV Der/h) "addit" "čoaggit" "čuohppat" "čuovvulit" "dadjat" "dáhkidit" "dárbbahit" "dárbbašit" "deattuhit" "fidnet" "geavahit" "hábmet" "lágidit" "luoikat" "luoikkahit" "oaidnit" "oastit" "oažžut" "olahit" "ovddidit" "ráhkadit" "váldit" "vásihit" "váttásmahttit" "vuojuhit" ;
 	# Strictly transitiv-verbs - a start. This set is ment as a help choosin Acc or Gen. Example: "Mun borren eatni kafeás." - there is Gen, no Acc, even if the verb is transitive. That´s why "borrat" is not in this set.
 	# These verbs: "addit", "fidnet" and "oažžut" can, when it´s abuot sex, be without object: "Son oaččui gonagasa bártnis." 
 	
@@ -7711,7 +7705,7 @@ SELECT Gen IF (0 ("hávvi"))(*1C Acc BARRIER S-BOUNDARY);
 SELECT Gen IF (0 ("hávvi"))(NOT *-1 V-TRANS-ACT BARRIER SV-BOUNDARY) (NOT *1 V-TRANS-ACT BARRIER SV-BOUNDARY);
 	## Fágalaš sudjadeapmi daid háviid go doavttir lea dahkan biehttaleami.
 
-SELECT Gen IF (*-1 V-PASS BARRIER SV-BOUNDARY)(0 ("hávvi")) (NOT *1 V-NOT-AUX BARRIER S-BOUNDARY);
+#SELECT Gen IF (*1 V-PASS BARRIER SV-BOUNDARY)(0 ("hávvi")) (NOT *1 V-NOT-AUX BARRIER S-BOUNDARY);
 	## Muhtun háviid buhtaduvvo meassamiid ruđalaš vahát.
 
  # The time expression "hávvi" is not Acc, but the problem is the homonymous noun. 
@@ -7791,6 +7785,9 @@ SELECT Gen IF (*-1 ("dahkat") BARRIER SV-BOUNDARY)(*1 Com BARRIER NPNH);
 
 SELECT Gen IF (0 ("okta"))(1 (N Gen) LINK *1 N BARRIER NOT-ADJ);
 	## Dan eatnamis oažžu ovtta gusa fuođđara.
+	
+SELECT Gen IF (0 ("suddu" Acc))(1 ("ándagassii")); 	
+    ## Don oahpásmahtát su álbmogii bestojumi suttuid ándagassii addojumiin.
 
 SELECT Gen IF (-1 Acc OR Gen)(0 ("sápmi" Sg))(1 N); 
 	## Čálán girjji sámi áššiid birra. 
@@ -8244,7 +8241,7 @@ SELECT Nom IF (0 ("galle"))(*1 V-PL3 BARRIER Nom OR VFIN);
 SELECT Nom IF (0 (N Num))(*1 V-PL3 BARRIER NOT-ADV-PCLE);
 	## Dakkár doaimmat, main máŋggas čállet dieđuid journálaide,...
 
-SELECT Nom IF (0 NOTIME OR Pron)(NOT 0 ("leat") OR PrfPrc) (NOT 0 A LINK *1 N BARRIER NPNH)(NOT 0 Adv OR Attr OR VFIN) (NOT 1 CC LINK 1 VFIN) (*1C V-PASS BARRIER LEFT OR NP-HEAD OR Po OR SV-BOUNDARY LINK NOT 0 Inf OR (@PrcN>));
+SELECT Nom IF (0 NOTIME OR Pron)(NOT 0 ("leat") OR PrfPrc) (NOT 0 A LINK *1 N BARRIER NPNH)(NOT 0 Adv OR Attr OR VFIN) (NOT 1 CC LINK 1 VFIN) (*1C V BARRIER LEFT OR NP-HEAD OR Po OR SV-BOUNDARY LINK NOT 0 Inf OR (@PrcN>) OR V-TRANS-ACT);
 	## Váfistan dihte ođđa bargovugiid lea komitea viiddiduvvon.
 	## Bušeahtas lea sullii 650.000 ruvnno leamaš várrejuvvon dáidda.
 	## Dat guhte osku ja gásttašuvvo, bestojuvvo.
@@ -9069,11 +9066,11 @@ REMOVE Acc IF (NOT *-1 V-TRANS-ACT BARRIER SV-BOUNDARY)(NOT 1 Ger) (*1 V-TRANS-A
 REMOVE Acc IF (*-1C Acc BARRIER S-BOUNDARY)(NOT *-1 CC BARRIER NPNH LINK -1 Acc)(*1C A BARRIER NPNH LINK 1 NP-BOUNDARY)(NOT 1 CC);
 	## ...maid sáhttá geavahit eamiálbmotjoavkkuid miellahtuid buorrin.
 
-REMOVE Acc IF (NOT *-1 V-TRANS-ACT BARRIER SV-BOUNDARY)(NOT 0 TIME) (*1 V-PASS BARRIER SV-BOUNDARY);
+REMOVE Acc IF (NOT *-1 V-TRANS-ACT BARRIER SV-BOUNDARY)(NOT 0 TIME) (*1 V BARRIER SV-BOUNDARY LINK NOT 0 V-TRANS-ACT);
 	## ...ahte sámi nuoraide láhččojuvvo vejolašvuohta oassálastit... 
 
 
-REMOVE Acc IF (*-1C V-PASS BARRIER VFIN OR Inf LINK NOT 0 (@PrcN>))(NOT 0 TIME) (NOT *1 V-TRANS-ACT BARRIER SV-BOUNDARY);
+REMOVE Acc IF (*-1C V BARRIER VFIN OR Inf LINK NOT 0 (@PrcN>) OR V-TRANS-ACT)(NOT 0 TIME) (NOT *1 V-TRANS-ACT BARRIER SV-BOUNDARY);
  	## Dál nannejuvvui girku sámeguovlluin.
 
 REMOVE Acc IF (NOT 0 TIME)(*1 V-TRANS-ACT BARRIER SV-BOUNDARY LINK *1 ("ahte") BARRIER NOT-ADV-PCLE OR ("nu"));
@@ -10841,10 +10838,10 @@ REMOVE Inf IF (-1 Inf) ;
 REMOVE Pass IF (*1C Acc BARRIER SV-BOUNDARY LINK NOT 0 Interr);
 	## Son han ii rihkkon dušše sábbáha.
 
-REMOVE Pass IF (*-1 Neg BARRIER VERB)(0 ACT-PRFP)(NOT *1 N BARRIER NPNH);
-	## Olbmot eai orron čadnon dušše iežaset mearragáddái bivdit. 
+#REMOVE Pass IF (*-1 Neg BARRIER VERB)(0 ACT-PRFP)(NOT *1 N BARRIER NPNH);	
 REMOVE Pass IF (*-1 (@SUBJ) BARRIER S-BOUNDARY)(0 PrfPrc);
   	## Soai leigga orron doppe muhtun áiggi.	
+  	## Olbmot eai orron čadnon dušše iežaset mearragáddái bivdit. 
   
 REMOVE Pass IF (*1 (@SUBJ) BARRIER S-BOUNDARY)(0 PrfPrc);
   	## Doppe lea orron dušše okta álbmot.
