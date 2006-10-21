@@ -797,6 +797,8 @@ LIST COM-ADV = "oktan" "ovtta#mielas" "ovttas" "ovttas#ráđiid" "searválagaid"
     # here we have adjectives according to their semantic properties
     # in periphrastic constructions (together with "leat") they subcategorize for comitative, locative etc. depending on the noun's semantic properties
     
+LIST COM-ADJ = "olles" "oppa" ("ovtta#oaivil" Loc) ;
+
 LIST ACTIVITY-ADJ = "hilbat" "oskkáldas" ;
     # denote som kind of activity, might take HUMAN comitative?
     
@@ -5200,7 +5202,7 @@ SELECT Adv IF (*-1 Nom BARRIER S-BOUNDARY)(0 ("ođđasit")) (*1 V-NOT-AUX BARRIE
 
 	# oktan/ovttas
 	# - - - - - - -
-SELECT Adv IF (0 ("oktan") OR ("ovttas"))(*1 Com BARRIER NP-BOUNDARY);
+SELECT Adv IF (0 ("ovttas"))(*1 Com BARRIER NP-BOUNDARY);
 	## Divššohas lea vuoigatvuohta iežas journála geahččat oktan
 	## mildosiiguin. 
 
@@ -9163,8 +9165,9 @@ SELECT (Sg Com) IF (*-1 ("vrd") OR ("veardidit") BARRIER Com)(0 (Pl Loc));
   	## Sámediggi lea váldán badjelasas váldoovddasvástádusa sihkkarastimis doaibmadoarjaga Nuortasámi museai (vrd. čoahkkimiin Njávdámis 05.06.01).
     ## Sii čuvvot sámilága mearrádusaid, veardit siskkáldas goziheami geatnegasvuođain.
 
-SELECT (Sg Com) IF (0 (Pl Loc) LINK 0 ACTOR OR ACTOR-ROLE)(1 ("ovttas"));   
-
+SELECT (Sg Com) IF (0 (Pl Loc) LINK 0 ACTOR OR ACTOR-ROLE)(1 ("ovttas"));  
+SELECT (Sg Com) IF (-1 COM-ADV)(0 (Pl Loc) LINK 0 ACTOR OR ACTOR-ROLE); 
+ 
 REMOVE (Pl Loc) IF (*-1 ("boahtit") BARRIER SV-BOUNDARY)(0 ("riika" Sg));
 REMOVE (Pl Loc) IF (0 ("riika" Sg))(*1 ("boahtit") BARRIER SV-BOUNDARY);
 	## Muhtumat eai muosát jápmima ovdal go oidnet Olbmobártni boahtimin riikkainis.
@@ -9239,7 +9242,7 @@ SELECT Loc IF (NOT -1 Num)(0 VAHKKU OR AIGODAT);
 	## 1870-jagiin lea čielggas ahte láddelaččaide guske ortnegat.
 	## ...gal guhkui ruoššaid gávppašanriekti guvttiin vahkuin. NOT -1 Num!
 
-SELECT (Pl Loc) IF (NOT *-1 COM-HEAD BARRIER SV-BOUNDARY)(0 PLACE)(NOT -1 ("ovttas"))(NOT 1 ("ovttas"))(NOT *1 COM-HEAD BARRIER SV-BOUNDARY);
+SELECT (Pl Loc) IF (NOT *-1 COM-HEAD BARRIER SV-BOUNDARY)(0 PLACE)(NOT -1 COM-ADV)(NOT 1 ("ovttas"))(NOT *1 COM-HEAD BARRIER SV-BOUNDARY);
 	## Sápmelaččat leat unnitlogus earret muhtun unnit guovlluin.
 
 
@@ -9352,7 +9355,12 @@ SELECT Loc IF (1 COMMA)(2 ("gos"));
 	## Riikkain gos lea čearddalaš, oskkolaš dahje gielalaš minoritehtat,...
 	## Sajiin, gos ii leat oktage priváhta eanaeaiggát,...
 
+SELECT (Pl Loc) IF (-2 Num)(-1 (@GN>))(0 (Sg Com))(1 VERB LINK 0 VFIN OR PrfPrc OR ConNeg);
+#SELECT (Pl Loc) IF (-1 Num)(0 (Sg Com))(1 VERB LINK 0 VFIN OR PrfPrc OR ConNeg);
+    ## Ii oktage su dávttiin lean dodjon.
+
 SELECT Loc IF (*-1 BOS OR CS OR REALCLB OR Pr BARRIER NPNHAI)(NOT 0 (A Nom)) (NOT 0 (N Num Nom) LINK *1 (V Du3) BARRIER NOT-ADV-PCLE) (*1 ("leat") BARRIER (@SUBJ) OR (@OBJ) OR (@SPRED) OR (@OPRED) LINK NOT *1 PrfPrc BARRIER VERB);
+
 	#	(*1 ("leat") BARRIER NOT-ADV-PCLE-NEG ); # Check this rule with the positive barrier.
 	## Ádjásgo lea ođđa fanas?
     	## Suomas maid lei dilli váttis.
@@ -9464,10 +9472,14 @@ SELECT Com IF (-1 Gen)(0 ("láhka#vuođđu" Loc));
 SELECT (Sg Com) IF (*-1 HUMAN OR ORGANIZATION OR INSTITUTION LINK 0 (@SUBJ) LINK NOT 0 LOC-HEAD BARRIER NPNH)(0 (Pl Loc) LINK 0 HUMAN)(*1 VFIN BARRIER S-BOUNDARY);
   	## Norgga delegašuvdna, várrepresideanttain, doalai sártni dievasčoahkkimii čoahkkima loahpahettiin, mas doarjjui WHO boahtteáiggi barggu dearvvasvuođain.
 
+SELECT (Sg Com) IF (-1 COM-ADJ)(0 (Pl Loc));  
+    ## Ja sin illudii oppa joavkkuinis go lei oskugoahtán.
+  
   
 	# Idiomatic expressions
-	# ---------------------
-
+	# --------------------
+	
+	
 	# dáinna lágiin / dáinna vugiin
 	# - - - - - - - - - - - - - - - -
 SELECT Com IF (-1 ("dát") OR ("dat") OR ("diet"))(-1 Com)(0 ("láhki"))(0 Com);
@@ -9489,6 +9501,19 @@ SELECT Com IF (*-1C Num LINK 0 Com BARRIER NOT-ADJ OR ("jahkásaš"));
 
 SELECT (Sg Com) IF (0 (Pl Loc) LINK 0 (@AN>))(1C (Sg Com));
   	## Áššebealit galget juohke jagi šiehtadallat ekonomalaš doaimmaid, fágalaš sosiála áššiid ja eará gažaldagaid ja doaimmaid mat buriin vugiin ovdánahttet boazodoalu.
+  	
+    # ANIMATE + Noun
+    # - - - - - - - - - - - - - -
+SELECT (Sg Com) IF (*-1 ANIMATE BARRIER NOT-ADJ LINK 0 Nom OR Gen)(0 (Pl Loc) LINK NOT 0 ABSTR-TEXT OR TEXT OR PLACE OR INDUSTRY OR EDUCATION OR INSTITUTION)(1 CLB OR EOS);   
+    ## Sii vástidedje: Johanasa gásttain.  
+    # Does it really need (1 CLB OR EOS)?
+  	
+  	
+  	# atnit fuola
+  	# - - - - - -
+SELECT (Pl Loc) IF (*-1 ("atnit") BARRIER SV-BOUNDARY LINK *1 ("fuolla" Acc) BARRIER NOT-ADV)(0 (Sg Com)); 
+SELECT (Pl Loc) IF (0 (Sg Com))(*1 ("atnit") BARRIER SV-BOUNDARY LINK *1 ("fuolla" Acc) BARRIER NOT-ADV);  	
+    ## Son atná fuola dávviriin.
 
 	# Disambiguation based upon type of NP
 	# ------------------------------------ 
