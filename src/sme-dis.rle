@@ -834,7 +834,7 @@ SET HNOUN = N - Cmpnd ;
 SET HNOUN-NOM = (N Nom) - Cmpnd ;
 SET N-NOT-GEN = N - (N Gen) ;
 
-
+SET NP = N | A ; # anything that can take except numerals
 SET NP-HEAD = Pron | HNOUN ;
 SET NP-HEAD-SG = (Pron Sg) | (Pron Sg3) | (N Sg) - Cmpnd;
 SET NP-HEAD-PL = (Pron Pl) | (Pron Pl3) | (N Pl) - Cmpnd;
@@ -1986,7 +1986,7 @@ MAP (@NumQ<) TARGET (Num) IF (-1 Num)(0 NUMUNIT);
   	## Dat lea 4 miljovnna deajakohpa.
   
 MAP (@AN>) TARGET (A Ord)(*1 N BARRIER NOT-A);
-    	## Dat lei 33. teakstaoassi.
+    	## Dat lei 33. teakstaoassi. 
     	## Arkiivaláhka III máinnaša vuosttažettiin gáhttenárvosaš priváhta arkiivvaid.
 
 
@@ -2306,54 +2306,61 @@ MAP (@-FMAINV) TARGET Sup;
 ADD (@CS-COMPL) TARGET Nom IF (*-2 ("nu") BARRIER NOT-NP LINK 1 A OR Adv)(-1 ("go"));
 	## Nu guhkás go vejolaš galgá dat čuovvoluvvot.
   
-MAP (@CS-COMPL) TARGET Nom IF (*-1 ("go") BARRIER NOT-NP LINK NOT -1 VFIN) (1 PUNCT)(2 EOS);
+MAP (@CS-COMPL) TARGET NP-MEMBER IF (*-1 ("go") BARRIER NOT-NP OR Nom LINK NOT -1 VFIN)(0 Nom OR ADVLCASE)(1 PUNCT)(2 EOS);
 	## Ovdabarggut állanit seamma beallái go "láhkateavstta lunddolaš lohkan".
 
 MAP (@CS-COMPL) TARGET Nom IF (*-1 ("go") BARRIER NOT-NP LINK NOT -1 VFIN) (1 CC)(NOT *1 VFIN-NOT-IMP);
 	## Sin mearridanorgánain berre mearridanváldi leat nu viiddis go vejolaš 
 	## ja nu čadni go vejolaš.
 
-MAP (@CS-COMPL) TARGET Nom IF (*-1 ("go") BARRIER NOT-NP OR Nom LINK NOT -1 VFIN OR BOS)(1 CLB LINK NOT *1 VFIN BARRIER CC);
-	## Muhto buođđogeažit ja giđđabuođut ráhkaduvvojit muđui seammá 
-	## vugiid mielde go geassebuođut, ja danne heive buođđun birra 
-	## obbalohkái juo muitaluvvot.
+MAP (@CS-COMPL) TARGET NP IF (*-1 ("go") BARRIER NOT-NP OR Nom LINK NOT -1 VFIN OR BOS)(1 CLB LINK NOT *1 VFIN BARRIER CC);
+	## Muhto buođđogeažit ja giđđabuođut ráhkaduvvojit muđui seammá vugiid mielde go geassebuođut, ja danne heive buođđun birra obbalohkái juo muitaluvvot.
 
-MAP (@CS-COMPL) TARGET Nom IF (*-1 ("go") BARRIER NOT-NP OR Nom LINK *-1 Nom BARRIER S-BOUNDARY )(NOT *-1 go BARRIER NOT-NP LINK -1 VFIN LINK *-1 BOS OR CS BARRIER NOT-CC)(1 EOS OR CLB) (NOT 1 CLB LINK *1 VFIN BARRIER CC) (NOT 1 CLB LINK *1 NP-HEAD-NOM BARRIER NPNH) (NOT 2 Interr LINK *1 VFIN LINK *1 VFIN BARRIER S-BOUNDARY); 
+MAP (@CS-COMPL) TARGET NP IF (*-1 ("go") BARRIER NOT-NP OR Nom LINK *-1 Nom BARRIER S-BOUNDARY )(NOT *-1 go BARRIER NOT-NP LINK -1 VFIN LINK *-1 BOS OR CS BARRIER NOT-CC)(0 Nom OR ADVLCASE)(1 EOS OR CLB) (NOT 1 CLB LINK *1 VFIN BARRIER CC) (NOT 1 CLB LINK *1 NP-HEAD-NOM BARRIER NPNH) (NOT 2 Interr LINK *1 VFIN LINK *1 VFIN BARRIER S-BOUNDARY); 
 	## ...muhto galjebut dat lea go guv-čalmmit. 
 
-MAP (@CS-COMPL) TARGET Nom IF (-1 ("dego")) (NOT *1 VFIN-NOT-IMP BARRIER S-BOUNDARY);
+MAP (@CS-COMPL) TARGET NP IF (-1 ("dego"))(0 Nom OR ADVLCASE BARRIER Nom)(NOT *1 VFIN-NOT-IMP OR AUX BARRIER S-BOUNDARY); 
 	## Sii leat dego eŋgelat almmis.
 
-MAP (@CS-COMPL) TARGET Nom IF (*-1 ("dego") BARRIER NOT-NP)(1 EOS OR CLB);
+MAP (@CS-COMPL) TARGET NP IF (*-1 ("dego") BARRIER NOT-NP OR Nom)(0 Nom OR ADVLCASE)(1 EOS OR CLB);
 	## Son oahppaladdá min allagasas dego beaivváža badjáneapmi.
 
-MAP (@CS-COMPL) TARGET (N Nom) IF (*-1 ("go") BARRIER NPNH LINK -1 A) (NOT *1 VFIN BARRIER NOT-ADV-PCLE);
+MAP (@CS-COMPL) TARGET NP IF (*-1 ("go") BARRIER NPNH LINK -1 A)(0 Nom OR ADVLCASE BARRIER Nom)(NOT *1 VFIN BARRIER NOT-ADV-PCLE);
 	## Máhttájeaddji ii leat stuorit go oahpaheaddjis.
 
-MAP (@CS-COMPL) TARGET (Pron Nom) IF (*-1 ("go") BARRIER NPNH LINK -1 A) (NOT *1 VFIN BARRIER NOT-ADV-PCLE);
+MAP (@CS-COMPL) TARGET (Pron) IF (*-1 ("go") BARRIER NPNH LINK -1 A)(0 Nom OR ADVLCASE BARRIER Nom)(NOT *1 VFIN BARRIER NOT-ADV-PCLE);
 	## Dalle dat viežžá čieža eará vuoiŋŋa vel, bahábuid go son ieš. 
 
-MAP (@CS-COMPL) TARGET Nom IF (*-1 ("dego") BARRIER NOT-NP)(1 (Pron Interr)) (*2 VFIN LINK NOT *1 VFIN);
+MAP (@CS-COMPL) TARGET Nom IF (*-2 ("dego") LINK *1 NP BARRIER NPNH LINK 1 Rel)(*1 VFIN BARRIER S-BOUNDARY); 
 	## Dat lea dego olmmái gii manai olgoriikii.
 
-MAP (@CS-COMPL) TARGET Nom IF (*-1 ("dego") BARRIER NOT-NP) (NOT 0 Attr LINK *1 Nom BARRIER NPNH)(NOT *1 VFIN-NOT-IMP BARRIER S-BOUNDARY) (NOT 1 ("go") OR ("dego"));
+MAP (@CS-COMPL) TARGET NP IF (*-1 ("dego") BARRIER NOT-NP OR Nom) (NOT 0 Attr LINK *1 Nom BARRIER NPNH)(NOT *1 VFIN-NOT-IMP BARRIER S-BOUNDARY) (NOT 1 ("go") OR ("dego"));
 	## Dego njamaheaddji eadni dikšumin mánáidis...
+	
+# Coordination
+# - - - - - - -
 
 MAP (@CS-COMPL) TARGET Nom IF (*-1 ("dego") BARRIER NPNH)(0 Sg)(1 CC) (*2 (Sg Nom) OR (Sg3 Nom) BARRIER NPNH LINK *1 V-SG3 BARRIER NOT-ADV-PCLE);
 	## Dat guhte ii biso mu siste, bálkestuvvo olggos dego oaksi ja son goldná.
 
-MAP (@CS-COMPL) TARGET Nom IF (*-1 COMMA BARRIER NPNHAI LINK -1 (@CS-COMPL))(1 COMMA OR CC) (*2 Nom BARRIER NPNH);
+MAP (@CS-COMPL) TARGET Nom IF (*-1 CRD BARRIER NPNHAI LINK -1 (@CS-COMPL))(1 CRD) (*2 Nom BARRIER NPNH);
 	## Seamma gusto uhcit fuđđožiidda nu go neahti, čeavrris, mievri ja rieban.
 	## ledje beakkán ja dovddus olbmot nu go Diaz , Maria Hætta , Anne Gaup , Erik ja vel muhtin eará dovddus olbmot
+	
+MAP (@CS-COMPL) TARGET Loc IF (*-1 CRD BARRIER NPNHAI LINK -1 (@CS-COMPL))(1 CRD) (*2 Loc BARRIER NPNH OR Nom);
+MAP (@CS-COMPL) TARGET Ill IF (*-1 CRD BARRIER NPNHAI LINK -1 (@CS-COMPL))(1 CRD) (*2 Ill BARRIER NPNH OR Nom);
+MAP (@CS-COMPL) TARGET Com IF (*-1 CRD BARRIER NPNHAI LINK -1 (@CS-COMPL))(1 CRD) (*2 Com BARRIER NPNH OR Nom);
+MAP (@CS-COMPL) TARGET Ess IF (*-1 CRD BARRIER NPNHAI LINK -1 (@CS-COMPL))(1 CRD) (*2 Ess BARRIER NPNH OR Nom);
 
-MAP (@CS-COMPL) TARGET Nom IF (*-1 CC BARRIER NPNHAI LINK -1 (@CS-COMPL)) (NOT *1 VFIN OR go OR ("dego") BARRIER S-BOUNDARY);
+MAP (@CS-COMPL) TARGET Nom IF (*-1 CC BARRIER NOT-A LINK -1 (@CS-COMPL))(NOT *1 VFIN OR go OR ("dego") BARRIER S-BOUNDARY);
+MAP (@CS-COMPL) TARGET Nom IF (*-1 CC BARRIER NPNH LINK -1 (@CS-COMPL))(NOT *1 VFIN OR go OR ("dego"));
 	## Jesus lea gievrrat go Sáhtán ja bahá vuoiŋŋat. 
 
 MAP (@CS-COMPL) TARGET Acc IF (-2 Acc)(-1 ("dego"));
 	## Mun vuolggahan din dego sávzzaid gumppiid gaskii.
 
-ADD (@CS-COMPL) TARGET Nom IF (*-1 ("go") BARRIER NOT-NP LINK NOT -1 VFIN) (1 EOS);
-	## Dat galgá čuovvoluvvot nu guhkás go vejolaš.
+ADD (@CS-COMPL) TARGET Nom IF (*-1 ("go") BARRIER NOT-NP OR Nom LINK NOT -1 VFIN) (1 EOS);
+	## Dat galgá čuovvoluvvot nu guhkás go vejolaš. 
 
 
 	# Other special nominative mappings
@@ -2661,15 +2668,14 @@ REMOVE (A* Adv) IF (0 LEX-ADV) ;
 REMOVE Foc IF (0 ("dieđusge"));
 	## Romssa universitehta áigu dieđusge dán geahččalit áimmahuššat.
 
-SELECT Adv IF (0 ("eahpitkeahttá"));
-
 
 	# Adverbs, not nouns or adjectives
 	# --------------------------------
  # Words that probably are adverbs when they appear in the -aččat form.
  # Since only the -aččat form gets the Adv tag, the rule will hit this form.
 
-SELECT Adv IF (0 ("absoluhtalaš") OR ("agálaččat") OR ("aitosaččat") OR ("aktiiva" laš) OR ("aktiivva" laš) OR ("almmolaš") OR ("analogalaš") OR ("automáhtalaš") OR (álgoálgosaš) OR ("álgovuolggalaš") OR ("árbevirolaš") OR ("beaivválaččat") OR ("biologalaš") OR ("buhtten#riekti" laš) OR ("bustávva" laš) OR ("čálalaččat") OR ("čearddalaš") OR ("dábálaččat") OR ("duođalaččat") OR ("dutkan#politihkka" laš) OR ("eahpedábálaš") OR ("eahpeformálalaš") OR ("eahpekritihkalaš") OR ("eahpevirggálaš") OR ("eaktodáhtolaččat") OR ("ekologalaš") OR ("ekologálaš") OR ("ekonomálaš") OR ("eksplisihtalaš") OR ("elektrovdna" laš) OR ("etihkka" laš) OR ("etymologalaš") OR ("fágalaš") OR ("fonehtalaš") OR ("fonologalaš") OR ("fonotávttalaš") OR ("formálalaš") OR ("fysiologa" laš) OR ("gaskamearálaš") OR ("geavatlaččat") OR ("gealbu" laš) OR ("geografa" laš) OR ("geográfa" laš) OR ("giella" laš) OR ("girko#riekti" laš) OR ("globálalaččat") OR ("gorri" laš) OR ("govttolaš") OR ("hálddahuslaš") OR ("historjjálaš") OR ("ideologalaš") OR ("iešheanálaš") OR ("implisihtalaččat") OR ("jahkásaččat") OR ("jeavddalaččat") OR ("jietnadat#oahppa" laš) OR ("juridihkka" laš) OR ("konkrehtalaš") OR ("kritihkka" laš) OR ("kronologalaš") OR ("kultur#historjá" laš) OR ("kultur#politihkka" laš) OR ("kultuvra" laš) OR ("logihkalaš") OR ("luohtu" laš) OR ("máŋgga#fága" laš) OR ("mekánalaš") OR ("metoda" laš) OR ("moralalaš") OR ("morálalaš") OR ("morfologalaš") OR ("našuvnnalaš") OR ("negatiivalaš") OR ("negatiivvalaš") OR ("njálmmálaččat") OR ("njuolgguslaččat") OR ("oaive#ášši" laš) OR ("obbalaš") OR ("oktasaččat") OR ("oktilaš") OR ("ollislaččat") OR ("oppalaččat") OR ("optimalalaččat") OR ("ovttabealálaš") OR ("ovttajienalaš") OR ("ovttamielalaš") OR ("pedagogalaš") OR ("politihkka" laš) OR ("praktihkka" laš) OR ("prinsihppa" laš) OR ("priváhta#riekti" laš) OR ("profehtalaš") OR ("psykologalaš") OR ("ráfálaččat") OR ("reála#politihkka" laš) OR ("riekte#historjá" laš) OR ("riekti" laš) OR ("riikkaidgaskasaš") OR ("sámegielalaš") OR ("riikka#goddi" laš) OR ("ruhta" laš) OR ("rumašlaš") OR ("sámepolitihkalaš") OR ("sekundáralaččat") OR ("semantihkalaš") OR ("servodat#ávki" laš) OR ("siviila#riekti" laš) OR ("sosiálalaš") OR ("stáhta#politihkka" laš) OR ("strategalaš") OR ("suorge#politihkka" laš) OR ("teknihkka" laš) OR ("teorehtalaš") OR ("topografa" laš) OR ("váldo#ášši" laš) OR ("virgi" laš) OR ("vierru" laš));
+SELECT Adv IF (0 ("absoluhtalaš") OR ("agálaččat") OR ("aitosaččat") OR ("aktiiva" laš) OR ("aktiivva" laš) OR ("almmolaš") OR ("analogalaš") OR ("automáhtalaš") OR (álgoálgosaš) OR ("álgovuolggalaš") OR ("árbevirolaš") OR ("beaivválaččat") OR ("biologalaš") OR ("buhtten#riekti" laš) OR ("bustávva" laš) OR ("čálalaččat") OR ("čearddalaš") OR ("dábálaččat") OR ("duođalaččat") OR ("dutkan#politihkka" laš) OR ("eahpedábálaš") OR ("eahpeformálalaš") OR ("eahpekritihkalaš") OR ("eahpevirggálaš") OR ("eaktodáhtolaččat") OR ("ekologalaš") OR ("ekologálaš") OR ("ekonomálaš") OR ("eksplisihtalaš") OR ("elektrovdna" laš) OR ("eahpitkeahttá") OR ("etihkka" laš) OR ("etymologalaš") OR ("fágalaš") OR ("fonehtalaš") OR ("fonologalaš") OR ("fonotávttalaš") OR ("formálalaš") OR ("fysiologa" laš) OR ("gaskamearálaš") OR ("geavatlaččat") OR ("gealbu" laš) OR ("geografa" laš) OR ("geográfa" laš) OR ("giella" laš) OR ("girko#riekti" laš) OR ("globálalaččat") OR ("gorri" laš) OR ("govttolaš") OR ("hálddahuslaš") OR ("historjjálaš") OR ("ideologalaš") OR ("iešheanálaš") OR ("implisihtalaččat") OR ("jahkásaččat") OR ("jeavddalaččat") OR ("jietnadat#oahppa" laš) OR ("juridihkka" laš) OR ("konkrehtalaš") OR ("kritihkka" laš) OR ("kronologalaš") OR ("kultur#historjá" laš) OR ("kultur#politihkka" laš) OR ("kultuvra" laš) OR ("logihkalaš") OR ("luohtu" laš) OR ("máŋgga#fága" laš) OR ("mekánalaš") OR ("metoda" laš) OR ("moralalaš") OR ("morálalaš") OR ("morfologalaš") OR ("našuvnnalaš") OR ("negatiivalaš") OR ("negatiivvalaš") OR ("njálmmálaččat") OR ("njuolgguslaččat") OR ("oaive#ášši" laš) OR ("obbalaš") OR ("obba#lohkái") OR ("oktasaččat") OR ("oktilaš") OR ("ollislaččat") OR ("oppalaččat") OR ("optimalalaččat") OR ("ovttabealálaš") OR ("ovttajienalaš") OR ("ovttamielalaš") OR ("pedagogalaš") OR ("politihkka" laš) OR ("praktihkka" laš) OR ("prinsihppa" laš) OR ("priváhta#riekti" laš) OR ("profehtalaš") OR ("psykologalaš") OR ("ráfálaččat") OR ("reála#politihkka" laš) OR ("riekte#historjá" laš) OR ("riekti" laš) OR ("riikkaidgaskasaš") OR ("sámegielalaš") OR ("riikka#goddi" laš) OR ("ruhta" laš) OR ("rumašlaš") OR ("sámepolitihkalaš") OR ("sekundáralaččat") OR ("semantihkalaš") OR ("servodat#ávki" laš) OR ("siviila#riekti" laš) OR ("sosiálalaš") OR ("stáhta#politihkka" laš) OR ("strategalaš") OR ("suorge#politihkka" laš) OR ("teknihkka" laš) OR ("teorehtalaš") OR ("topografa" laš) OR ("váldo#ášši" laš) OR ("virgi" laš) OR ("vierru" laš));
+    ## Muhto buođđogeažit ja giđđabuođut ráhkaduvvojit muđui seammá vugiid mielde go geassebuođut, ja danne heive buođđun birra obbalohkái juo muitaluvvot.
 
 	## Oppalaččat daid gažaldagaid birra mat gieđáhallojuvvojit NAČ 1993:34,...
 
@@ -8434,7 +8440,7 @@ SELECT Nom IF (*-1 Loc BARRIER SV-BOUNDARY OR Nom LINK *-1 COPULAS BARRIER SV-BO
 REMOVE Acc IF (*-1 COPULAS BARRIER PrfPrc OR Inf OR (Actio Ess) OR SV-BOUNDARY)(NOT 0 TIME)(1 CS OR EOS);
 	## Dain áššiin lea Ruonáeatnama ruovttustivrras ráđđeaddi váldi. 
 
-REMOVE Nom IF (NOT 0 Dem)(1C Nom)(NOT 1 PUNCT OR Num OR Interr) (NOT *-1 COPULAS BARRIER SV-BOUNDARY)(NOT *1 COPULAS BARRIER SV-BOUNDARY LINK NOT *1 V-NOT-AUX BARRIER S-BOUNDARY) (NOT -1 Gen LINK 1 Actio LINK 1 N);
+REMOVE Nom IF (NOT 0 Dem)(1C Nom)(NOT 1 PUNCT OR Num OR Interr) (NOT *-1 COPULAS BARRIER SV-BOUNDARY)(NOT 0 ("son"))(NOT *1 COPULAS BARRIER SV-BOUNDARY LINK NOT *1 V-NOT-AUX BARRIER S-BOUNDARY) (NOT -1 Gen LINK 1 Actio LINK 1 N);
 	## Divššohasjournála láhkaásahus.
 	## ...maid buot journála gevaheaddji dearvvašvuođabargit áddejit.
 
