@@ -61,7 +61,7 @@ FLAGINIT([FLAG_NAME])
 
 
       # =========================================== #
-      #     Detailed table of contents     #
+      #     Detailed table of contents              #
       # =========================================== #
          
       # Delimiters
@@ -2315,6 +2315,12 @@ MAP (@CS-COMPL) TARGET Nom IF (*-1 ("go") BARRIER NOT-NP LINK NOT -1 VFIN) (1 CC
 
 MAP (@CS-COMPL) TARGET NP IF (*-1 ("go") BARRIER NOT-NP OR Nom LINK NOT -1 VFIN OR BOS)(1 CLB LINK NOT *1 VFIN BARRIER CC);
 	## Muhto buođđogeažit ja giđđabuođut ráhkaduvvojit muđui seammá vugiid mielde go geassebuođut, ja danne heive buođđun birra obbalohkái juo muitaluvvot.
+	
+MAP (@CS-COMPL) TARGET Loc IF (*-1 ("go") LINK 1 Indef BARRIER NOT-NP OR Nom LINK NOT -1 VFIN OR BOS LINK *-1 Loc BARRIER SV-BOUNDARY)(1 CLB LINK NOT *1 VFIN BARRIER CC);
+    ## 
+MAP (@CS-COMPL) TARGET Com IF (*-1 ("go") LINK 1 Indef BARRIER NOT-NP OR Nom LINK NOT -1 VFIN OR BOS LINK *-1 Com BARRIER SV-BOUNDARY)(1 CLB LINK NOT *1 VFIN BARRIER CC);
+MAP (@CS-COMPL) TARGET Ill IF (*-1 ("go") LINK 1 Indef BARRIER NOT-NP OR Nom LINK NOT -1 VFIN OR BOS LINK *-1 Ill BARRIER SV-BOUNDARY)(1 CLB LINK NOT *1 VFIN BARRIER CC);
+MAP (@CS-COMPL) TARGET Ess IF (*-1 ("go") LINK 1 Indef BARRIER NOT-NP OR Nom LINK NOT -1 VFIN OR BOS LINK *-1 Ess BARRIER SV-BOUNDARY)(1 CLB LINK NOT *1 VFIN BARRIER CC);
 
 MAP (@CS-COMPL) TARGET NP IF (*-1 ("go") BARRIER NOT-NP OR Nom LINK *-1 Nom BARRIER S-BOUNDARY )(NOT *-1 go BARRIER NOT-NP LINK -1 VFIN LINK *-1 BOS OR CS BARRIER NOT-CC)(0 Nom OR ADVLCASE)(1 EOS OR CLB) (NOT 1 CLB LINK *1 VFIN BARRIER CC) (NOT 1 CLB LINK *1 NP-HEAD-NOM BARRIER NPNH) (NOT 2 Interr LINK *1 VFIN LINK *1 VFIN BARRIER S-BOUNDARY); 
 	## ...muhto galjebut dat lea go guv-čalmmit. 
@@ -3367,7 +3373,7 @@ REMOVE Px IF (0 ("oktavuohta" Loc));
 REMOVE (Gen PxSg3) IF (NOT *-1 Pr BARRIER NPNH)(1C Prop);
 	## erret eará stuorradiggedieđáhusas Sámedikki doaimmaid birra.
 
-REMOVE PxSg3 IF (NOT *-1 (Sg Nom) OR (Sg3) OR (Sg Loc) BARRIER S-BOUNDARY)(NOT 0 N-PX);
+REMOVE PxSg3 IF (NOT *-1 (Sg Nom) OR (Sg3) OR (Sg Loc) BARRIER S-BOUNDARY)(NOT 0 N-PX)(NOT *-1 (Sg Nom) OR (Sg3) OR (Sg Loc) LINK *1 ("go") BARRIER S-BOUNDARY LINK *1 (@CS-COMPL) BARRIER S-BOUNDARY);
 	## Dássážii ii leat čađahuvvon dutkan mii čájeha mo sámi divššohasat vásihit dikšofálaldaga. # ??
 
 	# All Px
@@ -3545,7 +3551,7 @@ SELECT PrsPrc IF (NOT 0 LEX-N)(1 CC OR COMMA LINK 1 A);
 
  
 	# dušše A rule for "dušše"
-	# - - - - - - - - - -
+	# - - - - - - - - - - - - -
 REMOVE V IF (-1 CS)(0 ("dušše"))(*1 Acc BARRIER NPNHA); 
 	## Suhpodit daddjojuvvo dat go dušše nođiid váldá olmmoš eret.
 
@@ -3565,13 +3571,19 @@ SELECT CS IF (0 ("ahte")); # All other occurrences of "ahte" are CSs.
  # These rules have to precede all rules referring to CC, so I put 
  # them here, although they logically belong with the subjunction rules 
  # in a later block.
+ 
+    # son
+    # ---
+    
+REMOVE (Pcle) IF (0 @CS-COMPL);
+    ## Dalle dat viežžá čieža eará vuoiŋŋa vel, bahábuid go son ieš.
 
 
 
 	# ---------------------------------------------------------------- #
 	# Cycle 1b: removing the readings that were left from the 1a rules #
 	# ---------------------------------------------------------------- #
-               CONSTRAINTS #4            #
+               CONSTRAINTS #4                                          #
 	# ---------------------------------------------------------------- #
  
 
@@ -4470,7 +4482,7 @@ SELECT Pcle IF (*-3 ("go" Pcle) BARRIER S-BOUNDARY OR VFIN LINK -1 VFIN) (-2 CC)
 	## Addet go máŋga dearvvašvuođabargiidjoavkku veahki ja 
 	## fállojuvvo go divššohasaide birrajándororrun.
 
-SELECT Pcle IF (-2 Inf)(-1 VFIN)(NOT -1 PrfPrc)(0 go);
+SELECT Pcle IF (-2 Inf)(-1 VFIN)(NOT -1 PrfPrc)(0 go)(NOT *1 (@CS-COMPL) BARRIER S-BOUNDARY);
 	## Farisealaččat atne Jesusa čalmmis oaidnit áigu go buoridit sábbáhin.
 
 SELECT Pcle IF (-3 N OR Pron)(-2 ("ahte"))(-1 VFIN)(0 ("go"));
@@ -12185,9 +12197,15 @@ REMOVE (@SUBJ) IF (-1 BOS)(*1 HNOUN BARRIER NPNH LINK 1 EOS);
   
 REMOVE (@SUBJ) IF (NOT *-1 ("go") OR ("dego") LINK *1 VFIN)(0C (@CS-COMPL) OR (@SUBJ) LINK NOT *1 VFIN);
   	## Čuovvumuš sáhttá leat, ahte sápmelaččat eai oaččo seammá ávkki bálvalusain go eanaš dážat.
- 
+  	
+  	# Late nominative rule
+  	# --------------------
+
+SELECT Nom IF (*-1 ("go") BARRIER NPNH LINK -1 A LINK -1 ("leat") BARRIER SV-BOUNDARY LINK *-1C (@SUBJ) BARRIER SV-BOUNDARY)(0 (@CS-COMPL));
+    ## Máhttájeaddji ii leat stuorit go oahpaheaddjis.
+     
 	# Fragments
-	# -------------------
+	# ---------
 
 SELECT (@HNOUN) IF (NOT -2 (N Nom) OR (ACR Nom))(-1 ("nr") OR ("nummar") OR ("nummir"))(NOT *-1 VFIN OR ("leat" PrfPrc))(0 (Num Nom))(NOT *1 VFIN);
   	## Dieđáhusa nummar okta.
@@ -12576,7 +12594,7 @@ REMOVE (@X) ; # Kein Spur...
     ## 
 
 	#=====#
-          END #
+     END #
 	#=====#
 
 
