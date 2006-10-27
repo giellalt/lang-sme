@@ -288,8 +288,9 @@ SET FMAINV = @-FMAINV | @+FMAINV ;
 
 LIST @ADV-A = @ADV-A ; LIST @ADV-ADV = @ADV-ADV ; LIST @ADVL = @ADVL ; 
 
-LIST @AN> = @AN> ; LIST @ActioN> = @ActioN> ; LIST @CC = @CC ; LIST @CMPND = @CMPND ; LIST @CS = @CS ; LIST @CS-NP = @CS-NP ; LIST @CS-VP = @CS-VP ;
+LIST @AN> = @AN> ; LIST @ActioN> = @ActioN> ; LIST @CC = @CC ; LIST @CMPND = @CMPND ; LIST @CC-NP = @CC-NP ; LIST @CC-VP = @CC-VP ;
 LIST @DN> = @DN> ; LIST @GA> = @GA> ; LIST @GN> = @GN> ; LIST @GP< = @GP< ; LIST @GP> = @GP> ; 
+# LIST @CS = @CS ;
 LIST @HNOUN = @HNOUN ; LIST @INTERJ = @INTERJ ; 
 LIST @NNum> = @NNum>; LIST @NumN< = @NumN<;
 LIST @NPron< = @NPron< ;
@@ -871,16 +872,16 @@ SET PUNCT-RIGHT = (PUNCT RIGHT) ;
 
 # There must be a sensible naming convention for these sets...
 # Most strict BARRIERs...
-SET NPNH   = WORD - PRE-NP-HEAD | ABBR ;       # NPNH  = "NOT-PRE-NP-HEAD" 
-SET NPNHV = WORD - PRE-NP-HEAD - V-PRE-NP ;    # including possible verbal premodifiers 
-SET NPNHA  = WORD - PRE-NP-HEAD - Adv ;        # NPNHA = "NOT-PRE-NP-HEAD-OR-ADV"
-SET NPNHAV = WORD - PRE-NP-HEAD - Adv - V-PRE-NP ; # including possible verbal premodifiers
-SET NPNHAI  = WORD - PRE-NP-HEAD - Adv - Indef ;    # NPNHAI = "     ...-OR-INDEF"
-SET NPNHAII = WORD - PRE-NP-HEAD - Adv - Indef - Ill ; # Illative indir.obj.
+SET NPNH     = WORD - PRE-NP-HEAD | ABBR ;       # NPNH  = "NOT-PRE-NP-HEAD" 
+SET NPNHV    = WORD - PRE-NP-HEAD - V-PRE-NP ;    # including possible verbal premodifiers 
+SET NPNHA    = WORD - PRE-NP-HEAD - Adv ;        # NPNHA = "NOT-PRE-NP-HEAD-OR-ADV"
+SET NPNHAV   = WORD - PRE-NP-HEAD - Adv - V-PRE-NP ; # including possible verbal premodifiers
+SET NPNHAI   = WORD - PRE-NP-HEAD - Adv - Indef ;    # NPNHAI = "     ...-OR-INDEF"
+SET NPNHAII  = WORD - PRE-NP-HEAD - Adv - Indef - Ill ; # Illative indir.obj.
 SET NPNHAIIP = WORD - PRE-NP-HEAD - Adv - Indef - Ill - Pcle ; # <== is this our NPNH set?
-SET NPNHC  = WORD - PRE-NP-HEAD - Com ; # "njaŋggofirpmiiguin bivdin"
-SET NPNHCCC = WORD - PRE-NP-HEAD - COMMA ;
-SET NAPP   = WORD - PRE-APP ;
+SET NPNHC    = WORD - PRE-NP-HEAD - Com ; # "njaŋggofirpmiiguin bivdin"
+SET NPNHCCC  = WORD - PRE-NP-HEAD - COMMA ;
+SET NAPP     = WORD - PRE-APP ;
 # SET TOLERANT-PRENPP = V ; (everything non-NP-head!)
 # ... Most sloppy BARRIERs
 
@@ -1461,7 +1462,9 @@ SET INTR = Rel | MO | PUNCT-LEFT ;
 # --------------
 
 
-LIST ALLSYNTAG = (@+FAUXV) (@+FMAINV) (@-FAUXV) (@-FMAINV) (@-FSUBJ) (@ADV-A) (@ADV-ADV) (@ADVL) (@AN>) (@ActioN>) (@APP) (@CC) (@CMPND) (@CS) (@CS-NP) (@CS-VP) (@DN>) (@GA>) (@GN>) (@GP<) (@GP>) (@HNOUN) (@INTERJ) (@NPron<) (@NQ<) (@NUM-PRON) (@OBJ) (@OPRED) (@PCLE) (@CS-COMPL) (@PROP>) (@PrcN>) (@PronN<) (@PronN>) (@QN<) (@QN>) (@SPRED) (@NumQ<) (@SUBJ) (@SUBJ-QH) (@TITLE) (@VOC) (@X); 
+LIST ALLSYNTAG = (@+FAUXV) (@+FMAINV) (@-FAUXV) (@-FMAINV) (@-FSUBJ) (@ADV-A) (@ADV-ADV) (@ADVL) (@AN>) (@ActioN>) (@APP) 
+#(@CC)  
+(@CC-NP) (@CC-VP) (@CMPND) (@CS) (@DN>) (@GA>) (@GN>) (@GP<) (@GP>) (@HNOUN) (@INTERJ) (@NPron<) (@NQ<) (@NUM-PRON) (@OBJ) (@OPRED) (@PCLE) (@CS-COMPL) (@PROP>) (@PrcN>) (@PronN<) (@PronN>) (@QN<) (@QN>) (@SPRED) (@NumQ<) (@SUBJ) (@SUBJ-QH) (@TITLE) (@VOC) (@X); 
 
 SET NON-APP = ALLSYNTAG - (@APP);
 
@@ -1493,8 +1496,13 @@ MAP (@PronN>) TARGET ("ollu") IF (-1 ("seamma") OR ("seammá"))(0 Pron);
 	# Mappings of minor categories
 	# ----------------------------
 
-MAP (@CC) TARGET CC ;
+MAP (@CC-NP @CC-VP) TARGET CC ;
 	## Na muhto don it leat dasa nama čállán!
+# meaning: @CC-G @CC-L (global, local, i.e., inside and outside NP)
+# mun liikon vuojadit ja viehkat @CC-NP
+# mun lean bures ja johtilit vuodján. @CC-NP
+# [S [NP mun] [VP [V vuoján] [AdvP bures ja johtilit]]]. @CC-NP
+# @CC-NP, @CC-S
 
 MAP (@CS) TARGET CS ;
 	## Leago guhkes áigi dassá go Máreha oidnet?
@@ -5450,12 +5458,40 @@ REMOVE ("viššalaš") IF (*-1 HUMAN LINK 0 (@SUBJ) BARRIER S-BOUNDARY);
 SELECT Adv IF (-1 ("váldit"))(0 ("vuhtii"));
 	## ...muhto ferte váldit vuhtii máná agi ja láttasvuođa.
 
+# =================	
+# CC-Disambiguation
+# =================
+
+SELECT (@CC-VP) IF (1 CS);
+    ## Álbmotriekti gierdá dákkár doaimmaid duššefal heahtediliin ja go daidda lea dievaslaš ipmárdus dákkár álbmogiid ovddasvástideaddji eiseválddiid bealis.
+    # Does 1 have to be strict?
+SELECT (@CC-VP) IF (0 CC)(1C VFIN);
+    # A secure finite verb after it.
+    ## Bargiidbellodaga Per Nils Saari beasai suohkanstivrii ja válljii ovttasbargat olgešbellodagain, gurutbellodagain ja johttisámi listtuin vai ožžot eanetlogu suohkanstivrras.
+SELECT (@CC-VP) IF (-1 BOS)(0 CC)(*1 VFIN);
+    ## Ja de mun lean boahtán.
+SELECT (@CC-VP) IF (*1C (@SUBJ) BARRIER NPNH);
+    ## Konvenšuvdna eamiálbmogiid ja čearddaid birra iešbirgejeaddji stáhtain dohkkehuvvui Norggas jagis 1990, muhto dakkár dohkkeheapmi ii leat velá dahkkon Ruoŧas.
+SELECT (@CC-VP) IF (*1C AUX LINK 0 Pers);
+SELECT (@CC-VP) IF (*1 AUX LINK *1C (@-FAUX) OR (@-FMAIN));
+SELECT (@CC-VP) IF (*1 AUX LINK *1 Rel OR MO LINK *1 AUX LINK *1 (@-FAUX) LINK *1 (@-FAUX) OR (@-FMAIN));
+    # The relative sentence version
+SELECT (@CC-NP) IF (-1 Cmpnd);
+    ## Ulbmil seammádássásaš bohtosiid juksamis galgá gustot álo beroškeahttá makkár giella- dahje kulturduogáš veahki dárbbašeaddjis lea.
+SELECT (@CC-NP) IF (0 CC)(NOT *1 VFIN BARRIER S-BOUNDARY OR PUNCT-RIGHT OR CCCOMMA);
+    # No potential finite verb following
+    ## Eai galgga sii geat gullet dakkáraš minoritehtaide ovttas eará láhttuiguin mat gullet sin jovkui, manahit vuoigatvuođaideaset dikšut iežaset kultuvra, dovddastit ja geavahit iežaset oskku, dahje geavahit  iežaset giela.
+    # We get @NP-CC in the example above, do we want that? I think that's the right analysis, but maybe we should have more intuitive terms
+SELECT (@CC-NP) IF (NOT *-1 VFIN OR AUX BARRIER S-BOUNDARY)(*-1 V OR N OR Adv OR A OR Pron);
+    ## Sihke Mázes ja Guovdageainnus leat boarrásat viššalit finadan doaibmaguovddážiin.
+    # Not supposed to select "Ja de mun lean boahtán." 
+
 
 
 	# ======================= #
 	# Disambiguating pronouns #
 	# ======================= #
-    CONSTRAINTS #11  # 
+        CONSTRAINTS #11  # 
 	# ======================= #
 
 
@@ -6985,7 +7021,7 @@ REMOVE Loc IF (-1 ("orrut"))(0 (Actio Ess)) ;
 	# ==================== #
 	# Disambiguating nouns #
 	# ==================== #
-   CONSTRAINTS #15 #
+      CONSTRAINTS #15 #
 	# ==================== #
 
 
@@ -8165,7 +8201,7 @@ SELECT (Sg Acc) IF (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK 0 Inf LINK *-1 (Sg1 Ac
 
 
 	# ================ #
- CONSTRAINTS #18 #
+      CONSTRAINTS #18 #
 	# ================ #
 	# Nominative
 	# ==========
@@ -9235,7 +9271,7 @@ SELECT Ill IF (1 CC OR COMMA)(*2C Ill BARRIER NPNH);
 
 
 	# =================== #
-   CONSTRAINTS #20
+      CONSTRAINTS #20
 	# =================== #
 
 	# Early comitative rules
@@ -10035,8 +10071,7 @@ SELECT (Sg Loc) IF (1 CRD)(*2C Loc BARRIER NPNH)(NOT *1 VFIN OR AUX BARRIER SV-B
 	## Dan čuolddas dahje oar-juolggis ráhkadišgoahtá olmmoš doarrása.
 
 SELECT (Sg Loc) IF (*-1 CRD BARRIER NPNH LINK -1C Loc)(NOT *1 VFIN OR AUX BARRIER SV-BOUNDARY); 
-	## Go 110a:s lea sáhka sápmelaččaid "ealáhusaid" sihkkarastimis
-	## ja ovdánahttimis,...
+	## Go 110a:s lea sáhka sápmelaččaid "ealáhusaid" sihkkarastimis ja ovdánahttimis,...
 
 
 SELECT (Pl Loc) IF (*-1 CRD BARRIER NPNH LINK *-1 Loc LINK NOT 0 Com BARRIER NPNH)(NOT *1 VFIN OR AUX BARRIER SV-BOUNDARY);
@@ -10212,8 +10247,7 @@ REMOVE Gen IF (1 (Pers Gen));
 	## Dii huksebehtet hávdemuittuid profehtaide geaid din máddarat godde! 
 
 SELECT Gen IF (*-1 (Indef Acc) BARRIER NOT-ADV)(0 Pers);
-	## Oktan suinna sii russiinávlejedje guokte rievvára, nuppi su olgeš ja 
-	## nuppi fas su gurut beallái. 
+	## Oktan suinna sii russiinávlejedje guokte rievvára, nuppi su olgeš ja nuppi fas su gurut beallái. 
 SELECT Nom IF (0C ("ulbmil" Nom) OR ("ulbmil" @GN>))(*1C Loc BARRIER NPNH);
   	## Ulbmil seammádássásaš bohtosiid juksamis galgá gustot álo beroškeahttá makkár giella- dahje kulturduogáš veahki dárbbašeaddjis lea.
 
@@ -10308,10 +10342,7 @@ SELECT Inf IF (-1 COMMA LINK *-1 (Pron Interr) LINK *-1 INFV BARRIER VERB);
 	## duođalaččat galgá sáhttit kultuvrras dikšut, gullat dása.
 
 SELECT Inf IF (-1 COMMA LINK *-1 (Pron Interr) LINK *-1 (Pron Interr) LINK *-1 INFV BARRIER VERB);
-	## Eai galgga sii geat gullet dakkáraš minoritehtaide ovttas eará 
-	## láhttuiguin mat gullet sin jovkui, manahit vuoigatvuođaideaset dikšut 
-	## iežaset kultuvra, dovddastit ja geavahit iežaset oskku, dahje geavahit 
-	## iežaset giela.
+	## Eai galgga sii geat gullet dakkáraš minoritehtaide ovttas eará láhttuiguin mat gullet sin jovkui, manahit vuoigatvuođaideaset dikšut iežaset kultuvra, dovddastit ja geavahit iežaset oskku, dahje geavahit  iežaset giela.
 
 SELECT Inf IF (NOT *-1 (Pl Nom) BARRIER NOT-ADV-PCLE) (1 LEAT-FIN-NOT-IMP)(NOT 1 Qst);
 	## Dáidda heŋgejuvvojit gurpasat, ja maid dál de guottehit lea áigumin.
@@ -11122,7 +11153,7 @@ REMOVE PrsPrc IF (0 N)(1 Indef);
 SELECT (V Actio Gen) IF (1 ("veara"));
 	## Dát sátni lea vuostáiváldin veara.
 
-SELECT PrfPrc IF (*-1 BOS OR CS OR (":" CLB) BARRIER NPNH)(NOT 1 COMMA LINK 1 (@CC))(*1 N BARRIER NPNH LINK *1 VFIN BARRIER NOT-ADV-PCLE);
+SELECT PrfPrc IF (*-1 BOS OR CS OR (":" CLB) BARRIER NPNH)(NOT 1 COMMA LINK 1 (@CC-NP) OR (@CC-VP))(*1 N BARRIER NPNH LINK *1 VFIN BARRIER NOT-ADV-PCLE);
   	## Sajáiduvvan fágadoahpagiid sáhttá dieđusge geavahit.
 
 SELECT PrfPrc IF (*-1 PrfPrc BARRIER NOT-ADV-PCLE LINK NOT 0 Pass) (*1 N BARRIER NPNH OR Dem);
@@ -12575,7 +12606,7 @@ REMOVE (@SPRED) ; #IF (NOT 0 PrfPrc);
 REMOVE (@OPRED) ;
 
 	#REMOVE (@X) IF (0 FMAINV OR (@+FAUXV) OR (@-FAUXV) OR (@-FSUBJ) OR
-	#         (@ADV-A) OR (@ADV-ADV) OR (@ADVL) OR (@AN>) OR (@ActioN>) OR (@CC) OR
+	#         (@ADV-A) OR (@ADV-ADV) OR (@ADVL) OR (@AN>) OR (@ActioN>) OR (@CC) OR (@CC-NP) OR (@CC-VP)
 	#         (@CMPND) OR (@CS) OR (@DN>) OR (@GA>) OR (@GN>) OR (@GP<) OR (@GP>) OR
 	#         (@HNOUN) OR (@INTERJ) OR (@NPron<) OR (@NQ<) OR 
 	#         (@NUM-PRON) OR (@NumN<) OR (@OBJ) OR (@OPRED) OR (@PCLE) OR 
