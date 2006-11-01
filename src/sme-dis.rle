@@ -543,7 +543,7 @@ SET NOT-ADVL-PCLE-NEG = WORD - @ADVL - @GP< - Pcle - Neg ; #Ask Eckhardt.
 LIST IKTE = "ikte" "dolin" "dovle" ;
 
 LIST MO = "goas" "gokko" "gos" "gosa" "makkár" "manne" "mo" "mot" "movt" 
-	"nugo" (V Qst); 
+	(V Qst); 
  # Introduce finite clauses.
  
 
@@ -1263,7 +1263,7 @@ LIST TEXT = "aviisa" "ášše#bábir" "ášše#logahallan" "bargo#prográmma" "b
   # A potential place (locative?) for sth. written.
   # Maybe one should differentiate between written and spoken texts
 
-LIST ABSTR-TEXT = "dievasčoahkkin#mearrádus" "eaktu" "gažaldat" "giella#gažaldat" "giella#njuolggadus" "guovddáš#lihttu" "jearaldat" "láhka#mearrádus" "máinnas" "mearrádus" "muitalus" "plána#evttohus" "plána#mearrádus" "virgáibidjan#njuolggadus" ;
+LIST ABSTR-TEXT = "cuvccas" "dievasčoahkkin#mearrádus" "eaktu" "gažaldat" "giella#gažaldat" "giella#njuolggadus" "guovddáš#lihttu" "jearaldat" "láhka#mearrádus" "máinnas" "mearrádus" "muitalus" "plána#evttohus" "plána#mearrádus" "virgáibidjan#njuolggadus" ;
   # A potential place (locative?) for sth. written, spoken or abstract activity 
 
 SET OBJECT = PARTS | SHOE | FOOD | TEXT ;
@@ -1356,7 +1356,7 @@ LIST SITUATION = "areála#dilli" "bargo#dilli" "boazodoallo#dilli "dilli" doaibm
   # Likely to be locative in most contexts
 
 
-SET ACTOR-ROLE = HUMAN | ORGANIZATION | POLITICAL-PLACE ; # Intiution: Restricting possible actor subjects.
+SET ACTOR-ROLE = HUMAN | ORGANIZATION | POLITICAL-PLACE ; # Instiution: Restricting possible actor subjects.
 
 LIST EVENT-TOOL-ACTIO = (Actio) "addin" "dearvvašvuođa#iskkadeapmi" "goddin" "hárjehallan" "jápmin" "ráđđádallan" "šiehtadallan" "vázzin" ;
 
@@ -3783,7 +3783,6 @@ REMOVE (PxSg3) IF (*-1 Interr BARRIER VFIN)(*1 VFIN LINK NOT 0 Sg3);
     # Disambiguating the semantic tags
     # Nouns versus adjectives
     # Nouns vs. verbs
-    # Early plural rule
   # Case disambiguation
     # Secure rules for choosing Acc
     # Choosing Acc or Gen semantically
@@ -7441,12 +7440,12 @@ SELECT Acc IF (0 Num)(1 ("gitta"))(2 (Num Acc));
 SELECT Acc IF (-1 V-TRANS-ACT-NOT-ACT LINK 0 FMAINV)(0 Num)(NOT *1 Acc BARRIER SV-BOUNDARY2) ;
     ## Giliviessu geassá 200 olbmo.
     
-	# Accusative after actio (exceptions to next rule)
+	# Accusative after actio 
 	# - - - - - - - - - - - - - - - - - - - - - - - - 
 SELECT Acc IF (*-1 ("dihte") OR ("dihtii") BARRIER NPNH LINK -1 Actio) (1 NP-BOUNDARY);
 	## ... diehtin dihtii iežas dili ja veahki sisdoalu.
 
-SELECT Acc IF (*-1C Actio BARRIER HNOUN-NOM OR (Pron Nom) OR SV-BOUNDARY2 OR CC LINK NOT 0 Cmpnd OR Gen OR IV)(NOT -1 CC LINK -1 Actio LINK NOT 0 Cmpnd) (NOT 0 TIME OR ROUTE OR Loc)(NOT 0 Num LINK -1 ("§"))(1 NP-BOUNDARY)(NOT 1 N); 
+SELECT Acc IF (*-1C (Actio Loc) BARRIER HNOUN-NOM OR (Pron Nom) OR SV-BOUNDARY2 OR CC LINK NOT 0 Cmpnd OR Gen OR IV)(NOT -1 CC LINK -1 Actio LINK NOT 0 Cmpnd) (NOT 0 TIME OR ROUTE OR Loc)(NOT 0 Num LINK -1 ("§"))(1 NP-BOUNDARY)(NOT 1 N); 
 	## ...dahje biehttalit botkemis nealgudeami mii lea jođus. 
 
 
@@ -7515,20 +7514,30 @@ REMOVE Gen IF (NOT *-1 Pr OR CC OR (Num Nom) BARRIER NPNH)(-1 Gen)(0 NOTIME OR P
 
 # Choosing Acc or Gen semantically
 # ================================
+# These rules work without knowing for sure if the other nouns in the chain are Acc or Gen.
 
-SELECT Acc IF (0 Gen LINK NOT 0 NATION OR POLITICAL-PLACE)(1 HUMAN-GROUP LINK 0 Gen);	
+# Who can possess a human?
+SELECT Acc IF (0 Gen LINK NOT 0 HUMAN-INDIVIDUAL OR PROFESSION OR OFFICE OR ROLE OR ("bearaš"))(1 HUMAN-INDIVIDUAL LINK NOT 0 ("eadni") OR ("áhčči"));
+    ## Mun oainnán beatnaga oappá biilla duohken.
+    ## Mun oainnán beatnaga eatni biilla duohken. - Ambigious.
+    
+
+# Accusativ in front of a human group:
+SELECT Acc IF (0 Gen LINK NOT 0 GENERAL-PLACE OR GEOGRAPHICAL-PLACE OR POLITICAL-PLACE OR NATION OR ORGANIZATION OR EDUCATION)(1 HUMAN-GROUP);
 	## Ráđđehus deattuha sámi kulturáddejumi gelbbolašvuođa loktema sámiid buorrin.
 
+# "Oassi" is usually not in genitive:
 SELECT Acc IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER SV-BOUNDARY2)(0 OASSI LINK 0 Gen)(1 Gen LINK NOT 0 Actor);
     ## Son vuolggahii muhtun bálvaleaddji lusa vai son oččošii oasis viidnegárddi šattuin.     
     # Try to make a set of nouns which cannot be Gen in a AccGen string.
     # Possible Gen-construction: Nuppi oasi geavaheaddji ......
 
+# Writing a text:
 SELECT (Acc @OBJ) IF (*-1 WRITING-ACTIVITY-V BARRIER SV-BOUNDARY2)(0 TEXT OR ABSTR-TEXT)(NOT 1 CONCEPT OR TEXT OR ABSTR-TEXT);
-    ## Sámi geavaheaddjit galggašedje sáhttit váidalit njálmmálaččat , man vuođul fylkkadoavttir de čállá váidaga , dárbbu mielde dulkka vehkiin .
+    ## Sámi geavaheaddjit galggašedje sáhttit váidalit njálmmálaččat, man vuođul fylkkadoavttir de čállá váidaga, dárbbu mielde dulkka vehkiin .
     # CONCEPT should be a constraint, so that in "write a text's outline", "text" still gets Gen.
     
-
+# An organization´s representative:
 SELECT Gen IF (0 Acc LINK 0 ORGANIZATION OR INSTITUTION OR (Prop Org))(1 PROFESSION OR ROLE OR OFFICE LINK NOT 0 Pl);
   	## Dán gáibideigga foandda hoavda Per Edvard Klemetsen ja Norgga Sámiráđi ovdaolmmoš Aslak Nils Sara gielddaministaris Arne Rettedalas geainna soai maŋŋebárgga deaivvadeigga Oslos.
  
@@ -8809,7 +8818,7 @@ REMOVE Gen IF (-1 (@GN>))(0 ("§"))(1 Num);
   	## Dearvvašvuođabargiidlága § 10, mii gieđahallá dieđuid addima pasienttaide, ja pasientavuoigatvuođalága § 3-1,...
 
 	#REMOVE (N Gen) IF (1C Gen LINK *1 Po OR N BARRIER V); 
-REMOVE (N Gen) IF (*-1 V-TRANS-ACT-NOT-ACT OR TIME BARRIER NPNH)(NOT -1 PrfPrc LINK -1 (@OBJ))(1C Gen LINK *1 Po OR NOT-ACC-GEN BARRIER SV-BOUNDARY2); 
+REMOVE (N Gen) IF (*-1 V-TRANS-ACT-NOT-ACT OR TIME BARRIER NPNH)(NOT -1 PrfPrc LINK -1 (@OBJ))(1C Gen LINK *1 Po OR NOT-ACC-GEN BARRIER Acc OR SV-BOUNDARY2); 
 	## Ráđđehus láhčá dilálašvuođaid sámi kultuvrra máŋggadáfotvuođa seailluheapmái.
 	## Bargiidbellodaga sámediggejoavku divvu kritihkalaš gažaldagaid ráđi ruhtavuoruhemiid hárrái.
 	## Sii leat sivaid ožžon eatni alkoholageavaheami geažil.
@@ -9301,8 +9310,6 @@ SELECT Ill IF (1 CC OR COMMA)(*2C Ill BARRIER NPNH);
 SELECT Pl IF (0 SG-WORD)(-1 (Pron Gen) LINK -1 Num OR Ord BARRIER NPNH);
    	## Dát lea okta min ovttasbargguin.
     # This rule is necessary before the next one as it chooses plural even if the genitive pronoun modifier after the numeral and in front of the singular noun is not disambiguated yet (Acc-Gen disambiguation comes later).
-
-
 
 
 	# Singular not plural
