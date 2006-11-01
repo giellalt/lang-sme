@@ -637,7 +637,7 @@ SET V-TRANS-ACT-NOT-ACT-NOT-AUX = V-TRANS -  Pass - Actio - Actor - AUX;
 # Sets for verbs choosing oblique objects or adverbials
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-LIST STV = (IV Der/ahtti) (IV Der/h) "addit" "čoaggit" "čuohppat" "čuovvulit" "dadjat" "dáhkidit" "dárbbahit" "dárbbašit" "deattuhit" "fidnet" "geavahit" "hábmet" "lágidit" "luoikat" "luoikkahit" "oaidnit" "oastit" "oažžut" "olahit" "ovddidit" "ráhkadit" "váldit" "vásihit" "váttásmahttit" "vuojuhit" ;
+LIST STV = (IV Der/ahtti) (IV Der/h) "addit" "čoaggit" "čuohppat" "čuovvulit" "dadjat" "dáhkidit" "dárbbahit" "dárbbašit" "deattuhit" "fidnet" "geavahit" "hábmet" "juksat" "lágidit" "luoikat" "luoikkahit" "oaidnit" "oastit" "oažžut" "olahit" "ovddidit" "ráhkadit" "váldit" "vásihit" "váttásmahttit" "vuojuhit" ;
 	# Strictly transitiv-verbs - a start. This set is ment as a help choosin Acc or Gen. Example: "Mun borren eatni kafeás." - there is Gen, no Acc, even if the verb is transitive. That´s why "borrat" is not in this set.
 	# These verbs: "addit", "fidnet" and "oažžut" can, when it´s abuot sex, be without object: "Son oaččui gonagasa bártnis." 
 	
@@ -3375,7 +3375,6 @@ REMOVE PxSg2 IF (*-1 BOS OR (":" CLB) BARRIER Sg2)(NOT 0 N-PX);
 REMOVE PxSg3 IF (0 KLASS)(1 Num);
   	## Suohkanstivra mearridii áššis 62/99 sirdit administrašuvnna Levdnjii.
   
-  
 REMOVE PxSg3 IF (-2 MANNU LINK 0 Gen)(-1 (A Ord))(0 ("beaivi" Loc));
   	## Konvenšuvdna lea fámus miessemánu 1. beaivvis 2002 ja gusto 30 jagi dán beaivvi rájis.      
 REMOVE PxSg3 IF (-1 CC LINK -1 Loc)(0 (Sg Loc))(NOT 1 NP-MEMBER);
@@ -3780,15 +3779,18 @@ REMOVE (PxSg3) IF (*-1 Interr BARRIER VFIN)(*1 VFIN LINK NOT 0 Sg3);
     # Proper nouns
     # Disambiguating the semantic tags
     # Nouns versus adjectives
-    # Numerus disambiguation
-    # Case disambiguation
-    # Special rules
+    # Nouns vs. verbs
+    # Early plural rule
+  # Case disambiguation
+    # Secure rules for choosing Acc
+    # Choosing Acc or Gen semantically
     # Genitive
     # Nominative and accusative
     # Nominative
     # Accusative
     # Accusative Px or locative 
     # Illative
+    # Early comitative rules
     # Locative
     # Locative and comitative - Disambiguation based on verbsets
     # Comitative
@@ -7320,6 +7322,7 @@ SELECT (N Nom) IF (0 (A Nom))(*1 COPULAS BARRIER (N Nom) OR (Pron Nom) OR SV-BOU
 
 SELECT N IF (NOT 0 Po OR Adv OR VFIN OR Inf OR PrfPrc OR PrsPrc OR (Num Nom)) (NOT 0 Attr LINK *1 N BARRIER NPNH)(1 PrfPrc LINK 0 V-NOT-AUX);
 	## Go joddu lea čáhcái boahtán,.. 
+	
 	# Nouns vs. verbs
 	# ======================
 
@@ -7328,60 +7331,15 @@ REMOVE VFIN IF (-1C (Attr @AN>));
   
 SELECT (N Pl) IF (-1 ("buorre" Pl Nom))(0 (V Ind));  
 	## Mánáidgárdi sáhttá fállat: 25 beaivvi luomu, doarvái bargit, buorit lanjat čáppa guovllus.
+	
 
-	# Numerus disambiguation
-	# ======================
 
 	# Early plural rule
-	# -----------------
-
+	# =================
 SELECT Pl IF (0 SG-WORD)(-1 (Pron Gen) LINK -1 Num OR Ord BARRIER NPNH);
    	## Dát lea okta min ovttasbargguin.
-   # This rule is necessary before the next one as it chooses plural even if the genitive pronoun modifier after the numeral and in front of the singular noun is not disambiguated yet (Acc-Gen disambiguation comes later).
+    # This rule is necessary before the next one as it chooses plural even if the genitive pronoun modifier after the numeral and in front of the singular noun is not disambiguated yet (Acc-Gen disambiguation comes later).
 
-	# Singular not plural
-	# ------------------- 
-
-SELECT Sg IF (0 SG-WORD)(NOT *-1 Num OR Ord BARRIER NPNH)(*-1 BOS LINK NOT *1 ("goappeš") OR ("goappašat") OR ("earálágan") OR ("máŋgalágan"));
-  	## Go funet lea guolli goddomin, de fitná olmmoš buođu luhtte dušše
-  	## oktii jándoris, savdnjileamen joddu amas dat dierrut, suollemasat
-  	## dainna doaivvuin ahte nago de lea boađistan.
-  	## Buoremus sámepolitihkka ožžojuvvo áigálii sámi veahkadaga ja ráđđehusa gaskaneas ipmárdusain.
-  
-  
-	# lahka-compound
-	# - - - - - - - -
-
-SELECT Sg IF (-1 LAHKA-MOD)(0 LAHKA);
-  	## Ráđđehus háliida lágidit dearvvašvuođa- ja sosiálabálvalusaid oktagaslaš dárbbuid mielde, earret eará pasientavuoigatvuođaid lágain ja dearvvašvuođabargiid lágain.
-
-	# Depending on the scope
-	# - - - - - - - - - - - -
-	# the time dimension can cause problems here...
-
-SELECT Sg IF (-1 FYLKA LINK 0 (@GN>))(0 ("fylkka#diggi" Com) OR ("fylkka#gielda" Com) OR ("fylkka#mánni" Com) OR ("fylkkas#gielda" Com) OR ("fylkkarehket#dárkun" Com))(NOT -3 FYLKA LINK -2 CC);
-  	## Son deattuha sakka gulahallama sihke Sámedikkiin ja Finnmárkku fylkkadikkiin ášši gieđahaladettiin.
-  
-SELECT Sg IF (-1 ("stáhta" Sg) LINK 0 (@GN>))(0 XDEPARTEMEANTA LINK 0 Com)(NOT -3 ("stáhta") LINK -2 CC);
-  	## Dán váldošiehtadusa sohpe Stáhta Eanandoallodepartemeanttain nuppi bealis, ja dsto nubbin dásseárvosaš áššebeallin Norgga Boazosápmelaččaid riikasearvi (NBR).
-
-  
-	# Plural not singular
-	# ------------------- 
-
-	# Depending on the scope
-	# - - - - - - - - - - - -
-  
-SELECT Pl IF (-3 (FYLKA @GN>))(-2 CC)(-1 (FYLKA @GN>))(0 ("fylkka#diggi" Loc));
-  	## Son lea leamaš sihke Romssa ja Finnmárku fylkkadikkiin.
-
-SELECT (Pl Loc) IF (-1 ("Norga" @GN>))(0 N)(NOT 0 Prop OR ("oaivegávpot") OR ("stáhtaministtar") OR ("sámipolitihkka") OR ("dutkanráđi") OR ("riika#rádji") OR ("guolástusalla#skuvla"));
-  	## Vuostálasvuođat dán guovtti oahpaheaddjijoavku gaskkas lea dovdos
-  	## fenomena Norgga joatkkaskuvllain.
-  # This rule might be to open. One has to make a set of unique words and exclude them from this rule.
-  
-SELECT (Pl Loc) IF (-1 ("suohkan" @GN>))(0 ("vuođđo#skuvlla") OR ("mánáid#gárdi"));
-  	## Skuvlajagis 2001/2002 leat oktiibuot 469 oahppi suohkana vuođđoskuvllain.
 
 
 	# Case disambiguation
@@ -7391,12 +7349,9 @@ SELECT (Pl Loc) IF (-1 ("suohkan" @GN>))(0 ("vuođđo#skuvlla") OR ("mánáid#g�
       CONSTRAINTS #16 #
 	# ================ #
 
-	# Special rules
-	# =============
+	# Secure rules for choosing Acc 
+	# =============================
  
-	# Secure Accusative rules
-	# =======================
-
 	# Here we put rules that we want to work before the main Genitive chapter.
 	# Many of them use the strict transitive verb sets (they really want acc objects, so we give them that).
 
@@ -7426,22 +7381,6 @@ SELECT Acc IF (0 (Pron Pers) OR HUMAN LINK 0 Gen)(*1 ("sáhttit") BARRIER S-BOUN
 	## Gii sáhtii du dohko?
 	## Gii du nu johtilit sáhtii dohko?
 	
-# Accusative in a Acc/Gen string (semantically)
-# ---------------------------------------------
-
-SELECT Acc IF (0 Gen LINK NOT 0 NATION OR POLITICAL-PLACE)(1 HUMAN-GROUP LINK 0 Gen);	
-	## Ráđđehus deattuha sámi kulturáddejumi gelbbolašvuođa loktema sámiid buorrin.
-
-SELECT Acc IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER SV-BOUNDARY2)(0 OASSI LINK 0 Gen)(1 Gen LINK NOT 0 Actor);
-    ## Son vuolggahii muhtun bálvaleaddji lusa vai son oččošii oasis viidnegárddi šattuin.     
-    # Try to make a set of nouns which cannot be Gen in a AccGen string.
-    # Possible Gen-construction: Nuppi oasi geavaheaddji ......
-
-SELECT (Acc @OBJ) IF (*-1 WRITING-ACTIVITY-V BARRIER SV-BOUNDARY2)(0 TEXT OR ABSTR-TEXT)(NOT 1 CONCEPT OR TEXT OR ABSTR-TEXT);
-    ## Sámi geavaheaddjit galggašedje sáhttit váidalit njálmmálaččat , man vuođul fylkkadoavttir de čállá váidaga , dárbbu mielde dulkka vehkiin .
-    # CONCEPT should be a constraint, so that in "write a text's outline", "text" still gets Gen.
-    
-
 	# Accusative or genitive in front of ALU and in front of adjectives
 	# -----------------------------------------------------------------
 
@@ -7497,12 +7436,22 @@ SELECT Acc IF (0 Num)(1 ("gitta"))(2 (Num Acc));
 SELECT Acc IF (-1 V-TRANS-ACT-NOT-ACT LINK 0 FMAINV)(0 Num)(NOT *1 Acc BARRIER SV-BOUNDARY2) ;
     ## Giliviessu geassá 200 olbmo.
 
-	# Locative, not PxSg3
-	# -------------------
 
-#SELECT Loc IF (NOT *-1 Sg3)(0 PxSg3);
-REMOVE PxSg3 IF (NOT *-1 Sg3)(0 Loc);
-	## Mun borren áhkus luossaláibbi.
+# Choosing Acc or Gen semantically
+# ================================
+
+SELECT Acc IF (0 Gen LINK NOT 0 NATION OR POLITICAL-PLACE)(1 HUMAN-GROUP LINK 0 Gen);	
+	## Ráđđehus deattuha sámi kulturáddejumi gelbbolašvuođa loktema sámiid buorrin.
+
+SELECT Acc IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER SV-BOUNDARY2)(0 OASSI LINK 0 Gen)(1 Gen LINK NOT 0 Actor);
+    ## Son vuolggahii muhtun bálvaleaddji lusa vai son oččošii oasis viidnegárddi šattuin.     
+    # Try to make a set of nouns which cannot be Gen in a AccGen string.
+    # Possible Gen-construction: Nuppi oasi geavaheaddji ......
+
+SELECT (Acc @OBJ) IF (*-1 WRITING-ACTIVITY-V BARRIER SV-BOUNDARY2)(0 TEXT OR ABSTR-TEXT)(NOT 1 CONCEPT OR TEXT OR ABSTR-TEXT);
+    ## Sámi geavaheaddjit galggašedje sáhttit váidalit njálmmálaččat , man vuođul fylkkadoavttir de čállá váidaga , dárbbu mielde dulkka vehkiin .
+    # CONCEPT should be a constraint, so that in "write a text's outline", "text" still gets Gen.
+    
 
 
 	# Genitive
@@ -7939,7 +7888,7 @@ SELECT Gen IF (*-1 MOVEMENT-V BARRIER NPNHA)(0 ROUTE);
 	# Genitive specifiers
 	# -------------------
 
-REMOVE (N Acc) IF (*-1C NP-BOUNDARY BARRIER WORD)(NOT -1 V)(NOT 1 VFIN) (*1 N BARRIER NPNH OR CC LINK *1 VFIN BARRIER S-BOUNDARY2 OR CC) (NOT *1 (@SUBJ) BARRIER NOT-NP OR CC LINK *1 V-TRANS-ACT BARRIER SV-BOUNDARY2 OR CC LINK NOT *1 (OBJ) BARRIER S-BOUNDARY2 OR CC) (NOT 0 ("hearrá" Acc) LINK 1 ("ipmil" Acc)) (NOT 1 Ill LINK *1 VFIN BARRIER NOT-ADV-PCLE);
+REMOVE (N Acc) IF (*-1C NP-BOUNDARY BARRIER WORD)(NOT -1 V)(NOT 1 Gen LINK 1 Po)(NOT 1 VFIN) (*1 N BARRIER NPNH OR CC LINK *1 VFIN BARRIER S-BOUNDARY2 OR CC) (NOT *1 (@SUBJ) BARRIER NOT-NP OR CC LINK *1 V-TRANS-ACT BARRIER SV-BOUNDARY2 OR CC LINK NOT *1 (OBJ) BARRIER S-BOUNDARY2 OR CC) (NOT 0 ("hearrá" Acc) LINK 1 ("ipmil" Acc)) (NOT 1 Ill LINK *1 VFIN BARRIER NOT-ADV-PCLE);
 	## Ášši meannudeapmi loahpahuvvui guovvamánu 20. b. dii. 09.15. 
 
 REMOVE (N Nom) IF (*-1 NP-BOUNDARY BARRIER WORD)(NOT -1 COPULAS)(0 Gen)(NOT 0 TITLE)(NOT 1 COPULAS OR Inf)(*1 (N Nom) BARRIER NOT-ADJ OR CLB OR ("/") LINK *1 VFIN BARRIER S-BOUNDARY2 OR CC OR PUNCT)(NOT 1 VFIN BARRIER NOT-ADV-PCLE);
@@ -8160,7 +8109,7 @@ SELECT Gen IF (-2 Ess)(-1 CC)(NOT 1 CC)(*1 Ess BARRIER NPNH LINK NOT 0 Actio);
 	#SELECT Gen IF (NOT *-1 V-TRANS-ACT BARRIER SV-BOUNDARY2 OR PUNCT)
 	#	(NOT 0 Nom LINK *1 Gen BARRIER NPNH)(NOT 0 VFIN LINK 1 Adv)
 	#	(NOT 0 PrfPrc LINK 1 N)(*1 Po BARRIER NPNH OR REALCLB OR PUNCT OR (Pron Pers));
-SELECT Gen IF (NOT *-1 V-TRANS-ACT BARRIER SV-BOUNDARY2 OR PUNCT) (NOT 0 Nom LINK *1 Gen BARRIER NPNH)(NOT 0 VFIN LINK 1 Adv) (NOT 0 PrfPrc LINK 1 N)(*1 Po BARRIER NPNH OR REALCLB OR PUNCT OR (Pron Pers) LINK NOT 0 ("mielde"));	
+#SELECT Gen IF (NOT *-1 V-TRANS-ACT BARRIER SV-BOUNDARY2 OR PUNCT) (NOT 0 Nom LINK *1 Gen BARRIER NPNH)(NOT 0 VFIN LINK 1 Adv) (NOT 0 PrfPrc LINK 1 N)(*1 Po BARRIER NPNH OR REALCLB OR PUNCT OR (Pron Pers) LINK NOT 0 ("mielde"));	
 	## ...jus eai leačča dárbbašlaččat dearvvašvuođa vahátváikkuhusaid
 	## eastadeami dihtii.
 
@@ -8845,7 +8794,7 @@ REMOVE Gen IF (-1 (@GN>))(0 ("§"))(1 Num);
   	## Dearvvašvuođabargiidlága § 10, mii gieđahallá dieđuid addima pasienttaide, ja pasientavuoigatvuođalága § 3-1,...
 
 	#REMOVE (N Gen) IF (1C Gen LINK *1 Po OR N BARRIER V); 
-REMOVE (N Gen) IF (*-1 V-TRANS-ACT-NOT-ACT OR TIME BARRIER NPNH)(NOT -1 PrfPrc LINK -1 (@OBJ))(1C Gen LINK *1 Po OR NOT-ACC-GEN BARRIER Acc OR SV-BOUNDARY2); 
+REMOVE (N Gen) IF (*-1 V-TRANS-ACT-NOT-ACT OR TIME BARRIER NPNH)(NOT -1 PrfPrc LINK -1 (@OBJ))(1C Gen LINK *1 Po OR NOT-ACC-GEN BARRIER SV-BOUNDARY2); 
 	## Ráđđehus láhčá dilálašvuođaid sámi kultuvrra máŋggadáfotvuođa seailluheapmái.
 	## Bargiidbellodaga sámediggejoavku divvu kritihkalaš gažaldagaid ráđi ruhtavuoruhemiid hárrái.
 	## Sii leat sivaid ožžon eatni alkoholageavaheami geažil.
@@ -8859,6 +8808,7 @@ REMOVE (N Gen) IF (*-1 V-TRANS-ACT-NOT-ACT OR TIME BARRIER NPNH)(NOT -1 PrfPrc L
 
 	# Topicalised object
 	# ------------------
+ 
 
 SELECT Acc IF (-1 BOS OR CS)(0 ("mii"))(1 (N Pl Gen))(2 NP-BOUNDARY)(*1 V-TRANS-ACT); 
 	## Maid ipmašiid doppe dagat?
@@ -8994,11 +8944,8 @@ SELECT Acc IF (*-1 V-TRANS-ACT BARRIER NPNHA)(NOT 0 Adv)(1 Sup)(NOT 1 Neg);
 REMOVE Gen IF (*-1 V-TRANS-ACT BARRIER NPNHA)(NOT 0 TIME)(*1 CC BARRIER WORD LINK *1 Nom BARRIER NPNH LINK *1 VFIN BARRIER NOT-ADV-PCLE);
 	## Mun lohken girjji ja Niillas guldalii ođđasiid.
 
- 
-
 
 	
-
 	# Accusative numeral
 	# ------------------
 
@@ -9253,7 +9200,7 @@ REMOVE Acc IF (NOT *-1 V-TRANS-ACT BARRIER SV-BOUNDARY2)(NOT 1 Ger) (*1 V-TRANS-
 REMOVE Acc IF (*-1C Acc BARRIER S-BOUNDARY2)(NOT *-1 CC BARRIER NPNH LINK -1 Acc)(*1C A BARRIER NPNH LINK 1 NP-BOUNDARY)(NOT 1 CC);
 	## ...maid sáhttá geavahit eamiálbmotjoavkkuid miellahtuid buorrin.
 
-REMOVE Acc IF (NOT *-1 V-TRANS-ACT BARRIER SV-BOUNDARY2)(NOT 0 TIME) (*1 V BARRIER SV-BOUNDARY2 LINK NOT 0 V-TRANS-ACT);
+REMOVE Acc IF (NOT *-1 V-TRANS-ACT-NOT-ACT-NOT-AUX BARRIER SV-BOUNDARY2)(NOT 0 TIME)(NOT *1 V-TRANS-ACT-NOT-ACT-NOT-AUX BARRIER SV-BOUNDARY2);
 	## ...ahte sámi nuoraide láhččojuvvo vejolašvuohta oassálastit... 
 
 
@@ -9293,7 +9240,7 @@ REMOVE Acc IF (-1 ("mannat" @PrcN>) OR ("boahtte" Attr) OR (Dem @DN>))(0 Gen LIN
 	# Accusative Px or locative
 	# =========================
 
-SELECT Acc IF (*-1 STV BARRIER VERB)(NOT *-1 (@OBJ) BARRIER VFIN)(0 Loc LINK NOT 0 Actio OR BUILDING OR Prop)(NOT *1 (@OBJ) BARRIER V);
+SELECT Acc IF (*-1 STV BARRIER VERB)(NOT *-1 (@OBJ) BARRIER VFIN)(0 Loc LINK NOT 0 Actio OR BUILDING OR Prop)(NOT *1C (@OBJ) BARRIER V);
 	## Sámediggi ovddida rollas eavttuid buktin...
 
 SELECT Acc IF (-1 ("hupmat") OR ("hállat") OR ("hoallat") OR ("sárdnut"))(0 ("eatni#giella") LINK 0 Loc);
@@ -9333,6 +9280,55 @@ SELECT Ill IF (1 CC OR COMMA)(*2C Ill BARRIER NPNH);
 
 	# Early comitative rules
 	# ========================
+
+
+	# Singular not plural
+	# ------------------- 
+
+SELECT Sg IF (0 SG-WORD)(NOT *-1 Num OR Ord BARRIER NPNH)(*-1 BOS LINK NOT *1 ("goappeš") OR ("goappašat") OR ("earálágan") OR ("máŋgalágan"));
+  	## Go funet lea guolli goddomin, de fitná olmmoš buođu luhtte dušše
+  	## oktii jándoris, savdnjileamen joddu amas dat dierrut, suollemasat
+  	## dainna doaivvuin ahte nago de lea boađistan.
+  	## Buoremus sámepolitihkka ožžojuvvo áigálii sámi veahkadaga ja ráđđehusa gaskaneas ipmárdusain.
+  
+  
+	# lahka-compound
+	# - - - - - - - -
+
+SELECT Sg IF (-1 LAHKA-MOD)(0 LAHKA);
+  	## Ráđđehus háliida lágidit dearvvašvuođa- ja sosiálabálvalusaid oktagaslaš dárbbuid mielde, earret eará pasientavuoigatvuođaid lágain ja dearvvašvuođabargiid lágain.
+
+	# Depending on the scope
+	# - - - - - - - - - - - -
+	# the time dimension can cause problems here...
+
+SELECT Sg IF (-1 FYLKA LINK 0 (@GN>))(0 ("fylkka#diggi" Com) OR ("fylkka#gielda" Com) OR ("fylkka#mánni" Com) OR ("fylkkas#gielda" Com) OR ("fylkkarehket#dárkun" Com))(NOT -3 FYLKA LINK -2 CC);
+  	## Son deattuha sakka gulahallama sihke Sámedikkiin ja Finnmárkku fylkkadikkiin ášši gieđahaladettiin.
+  
+SELECT Sg IF (-1 ("stáhta" Sg) LINK 0 (@GN>))(0 XDEPARTEMEANTA LINK 0 Com)(NOT -3 ("stáhta") LINK -2 CC);
+  	## Dán váldošiehtadusa sohpe Stáhta Eanandoallodepartemeanttain nuppi bealis, ja dasto nubbin dásseárvosaš áššebeallin Norgga Boazosápmelaččaid riikasearvi (NBR).
+
+  
+	# Plural not singular
+	# ------------------- 
+
+	# Depending on the scope
+	# - - - - - - - - - - - -
+  
+SELECT Pl IF (-3 (FYLKA @GN>))(-2 CC)(-1 (FYLKA @GN>))(0 ("fylkka#diggi" Loc));
+  	## Son lea leamaš sihke Romssa ja Finnmárku fylkkadikkiin.
+
+SELECT (Pl Loc) IF (-1 ("Norga" @GN>))(0 N)(NOT 0 Prop OR ("oaivegávpot") OR ("stáhtaministtar") OR ("sámipolitihkka") OR ("dutkanráđi") OR ("riika#rádji") OR ("guolástusalla#skuvla"));
+  	## Vuostálasvuođat dán guovtti oahpaheaddjijoavku gaskkas lea dovdos
+  	## fenomena Norgga joatkkaskuvllain.
+  # This rule might be to open. One has to make a set of unique words and exclude them from this rule.
+  
+SELECT (Pl Loc) IF (-1 ("suohkan" @GN>))(0 ("vuođđo#skuvlla") OR ("mánáid#gárdi"));
+  	## Skuvlajagis 2001/2002 leat oktiibuot 469 oahppi suohkana vuođđoskuvllain.
+
+
+
+
 
 SELECT (Sg Com) IF (*-1 ("vrd") OR ("veardidit") BARRIER Com)(0 (Pl Loc));
   	## Sámediggi lea váldán badjelasas váldoovddasvástádusa sihkkarastimis doaibmadoarjaga Nuortasámi museai (vrd. čoahkkimiin Njávdámis 05.06.01).
@@ -9514,6 +9510,14 @@ SELECT Com IF (*-1 COM-COMPL-NOUN BARRIER NP-BOUNDARY)(0 HUMAN OR ORGANIZATION O
   # Disambiguation based upon verb valency
   # Locative and comitative in appositions
  
+ 
+ 	# Locative, not PxSg3
+	# -------------------
+
+#SELECT Loc IF (NOT *-1 Sg3)(0 PxSg3);
+REMOVE PxSg3 IF (NOT *-1 Sg3)(0 Loc);
+	## Mun borren áhkus luossaláibbi.
+	
 
 	# NP-internal disambiguation of Loc
 	# ---------------------------------
