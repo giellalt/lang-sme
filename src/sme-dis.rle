@@ -335,6 +335,9 @@ LIST INITIAL = "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m"
         "n" "o" "p" "q" "r" "s" "t" "u" "v" "w" "x" "y" "z"
         "á" "æ" "ø" "å" "ö" "ä" ;
 
+LIST CAP-INITIAL = "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M"
+        "N" "O" "P" "Q" "R" "S" "T" "U" "V" "W" "X" "Y" "Z"
+        "Á" "Æ" "Ø" "Å" "Ö" "Ä" ;
 
 
 
@@ -4729,8 +4732,11 @@ SELECT Adv IF (0 (Pron Indef))(1 CS);
 SELECT Adv IF (-1 BOS OR CC OR ("go") OR (PUNCT RIGHT))(0 ("seammás") OR ("seammas"));
 	## Dat mearridit seammás ahte stáhtaeiseválddit galget ovddidit 
 	## doaibmabijuid. # # There could be problems with PUNCT RIGHT. 
-SELECT (Indef Loc) IF (*-1 LOCV OR ("orrut") BARRIER NPNH)(0 (Pron Indef)) ;	
+#SELECT (Indef Loc) IF (*-1 LOCV OR ("orrut") BARRIER NPNH)(0 (Pron Indef)) ;	
   	## Moai orro seammás.
+  	
+SELECT Adv IF (0 ("seamma" Loc));
+    ## Maid vigihis eallin ovdal go šattai internáhttii lea okta ja dát sáhttá seammas maid govahallat sámiid dili ovdal dáruiduhttima.
 
 SELECT Adv IF (NOT -1 CC LINK -1 Indef)(0 (Pron Indef))(1 COMMA)(2 CS);
 	## Muhto geavadis ráddjejuvvui vuoigatvuohta veaháš, go ráfáiduhttima
@@ -6409,6 +6415,9 @@ REMOVE (A Attr) IF (1 CC)(2 N)(NOT 2 (A Attr)) (NOT 2 PrfPrc LINK *1 N BARRIER N
 SELECT (N Attr) IF (NOT 0 Prop)(1 N);
 	## Máttimus sápmelaččat eahpidedje dáža dutkiid eanet go davit sápme-
 	## laččat.
+	
+SELECT CAP-INITIAL IF (-1 (@PROP>))(0 INITIAL)(1 Sur);
+    ## Mikkel A. Eira.
 
 REMOVE Adv IF (NOT *-1 VERB BARRIER S-BOUNDARY2)(NOT 0 ("gosa") OR ("mielde"))(NOT 1C A)(NOT *1 VERB BARRIER S-BOUNDARY2);
 	## Diehtojuohkin divššohasa lagamuš oapmahažžii.
@@ -7191,13 +7200,14 @@ SELECT (Prop Attr) IF (-2 (V Sg3))(-1 Prop)(1 Prop)(2 CLB);
 SELECT (Prop Attr) IF (NOT -1 Prop)(1 CC)(2 (Prop Attr))(3 INITIAL OR (N Prop));
     	## Dá leaba Brita ja Ove Kåven.
 
-REMOVE (Prop Attr) IF (NOT 1 (Prop Mal) OR (Prop Fem) OR (Prop Sur) OR INITIAL); 
+REMOVE (Prop Attr) IF (NOT 1 (Prop Mal) OR (Prop Fem) OR (Prop Sur) OR CAP-INITIAL OR INITIAL); 
 	## Trond Trosterud lea dál.
     	## Olles doaibmaviessu lea sullii 2300 njealjehasmetera. 
 
 SELECT Attr IF (0 Prop)(1 INITIAL)(2 Prop);
 
 SELECT Attr IF (0 (Prop Mal) OR (Prop Fem))(NOT 0 Loc)(1C (N Prop Sur) OR (N Prop Fem) OR (N Prop Mal)) (NOT 0 (@OBJ) LINK *1 (@OPRED) BARRIER NOT-NP); 
+SELECT Attr IF (0 (Prop Mal) OR (Prop Fem))(NOT 0 Loc)(1 INITIAL OR CAP-INITIAL LINK 1C (Prop Sur))(NOT 0 (@OBJ) LINK *1 (@OPRED) BARRIER NOT-NP);
 SELECT Attr IF (0 (Prop Sur))(NOT 0 Loc)(1C (N Prop Sur)) (NOT 0 (@OBJ) LINK *1 (@OPRED) BARRIER NOT-NP);
 	## Áirras nr. 17 Randi S. Pedersen oaččui permišuvnna.
 	## Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna. # Two rules in order to avoid Sur Attr to Mal or Fem.
@@ -7285,9 +7295,12 @@ REMOVE Plc (-1 (Prop Mal Attr) OR (Prop Fem Attr))(0 Sur);
   	## Trond Trosterud lea dál.	 
 REMOVE Fem IF (-1 (Prop Attr))(0 Sur);
 	## Johan Mattis Eira ja Karen Marie Eira Buljo.
+REMOVE Fem IF (-2 (Prop Attr) LINK 1 (ABBR @PROP>))(0 Sur);
+    ## Mikkel A. Eira bargá.
 
 REMOVE Sur IF (-1 (Prop Attr))(NOT -1 Mal OR Fem);
-	## Helse Nord. 
+	## Helse Nord.
+	 
 	# Nouns versus adjectives
 	# =======================
  # Note that although the following rules are single cohort rules, they could 
