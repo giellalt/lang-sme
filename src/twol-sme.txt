@@ -27,6 +27,10 @@ FLAGINIT(<<HYPHENATE>>)
 FLAGINIT(<<SHORTCOMP>>)
 FLAGINIT(<<DIPHSIMPL>>)
 
+! HYPHENATE = To be used when making hyphenators - it allows surfacing of # and ^
+! SHORTCOMP = Allows/encloses subnorm short compounds
+! DIPHSIMPL = Allows/encloses subnorm diphthong simplification
+
 Alphabet
  a b c d e f g h i j k l m n o p q   ! small
  r s t u v w x y z å ä ö ø æ %-
@@ -289,11 +293,11 @@ Rules
 ! ---------------------------------
 
 
-!"Word Final Consonant Neutralization"  !smirezit : smires, Troandin-bisma
-!Cx:Cy <=> Vow: (( CntrCns:) Dummy:+) _ ( :0 - Y5: ) [ Hyph | #: ]  ;
-!			where Cx in (z ž m h p d g b)
-!			      Cy in (s š n t t t t t)
-!			matched ;
+"Word Final Consonant Neutralization 1"  !smirezit : smires, Troandin-bisma
+Cx:Cy <=> Vow: (( CntrCns:) Dummy:+) _ ( :0 - Y5: ) [ Hyph | #: ]  ;
+			where Cx in (z ž m h p g b d)
+			      Cy in (s š n t t t t t)
+			matched ;
 
 !Testcases for the above rule:
 !€ smirez#
@@ -301,12 +305,21 @@ Rules
    
 !€ Troandim#
 !€ Troandin0
+
+"Word Final Consonant Neutralization 2"
+Cx:Cy <=> #: Cns:* (Vow:) Vow: Cns:+ Vow: j: _ #: ; !háliid/háliit
+            where Cx in (d)
+			      Cy in (t) ;
+
+!€ hálijd0
+!€ háliit#
+
    
-"Stem Final Consonant Neutralization" !háliidit : háliit
- Cx:Cy <=> Vow: Cns* (Vow*) Vow: ( CntrCns:)  _  #: ; 
-			where Cx in (z ž m h p d g b)
-			      Cy in (s š n t t t t t)
-			matched ;
+!"Stem Final Consonant Neutralization" !háliidit : háliit
+! Cx:Cy <=> Vow: Cns* (Vow*) Vow: ( CntrCns:)  _  #: ; 
+!			where Cx in (z ž m h p d g b)
+!			      Cy in (s š n t t t t t)
+!			matched ;
 !
 ! Old version:
 ! Cx:Cy <=> Vow: (( CntrCns:) Dummy:+) _ ( :0 - Y5: ) [ Hyph | #: ]  ;
@@ -1038,10 +1051,6 @@ KEEPIF(SHORTCOMP)
 
 "Cluster dd in compounding 2"                                   
   d:t => Vow: d:0 _ Vow:0 W3: ;
-      #: Cns:* (Vow:) Vow: Cns:+ Vow: j: _ #: ; !háliid/háliit
-        
-!€ hálijd0
-!€ háliit#
   
 "Cluster gg in compounding 2"                                   
   g:k => Vow: g:0 _ Vow:0 W3: ;
@@ -1332,34 +1341,34 @@ ENDKEEP
 
 !€ oah
 
-!FOLLOWING RULE HAS TO BE COMMENTED IN FOR DIVVUN
-!"Diphthong Simplification in Actor Nouns from i- and a-Stems"	
-! vieh'ki > vihkkiin
-!  Vx:0 <=> Vow _ Cns:+ [ i: | a: ] ¤: X5: ;			! Western and norm
-!			where Vx in (e o a) ;
-
 KEEPIF(DIPHSIMPL)
 "Diphthong Simplification in Actor Nouns from i- and a-Stems (Optional)" ! vieh'ki > vihkkiin
   Vx:0 => Vow _ Cns:+ [ i: | a: ] ¤: X5: ;				  !	      viehkkiin
 			where Vx in (e o a) ;				  ! Eastern, substandard
+ELSE
+! Use this variant in normative contexts:
+"Diphthong Simplification in Actor Nouns from i- and a-Stems"	
+ vieh'ki > vihkkiin
+  Vx:0 <=> Vow _ Cns:+ [ i: | a: ] ¤: X5: ;			! Western and norm
+			where Vx in (e o a) ;
+ENDKEEP
+
 !€ vieh'ki¤X5jn
 !€ vi0hkki00in
-! Restored.
-ENDKEEP
 
 "Diphthong Simplification in Certain Forms from u-Stems"
   Vx:0 <=> Vow _ Cns:+ [ u: | o1: ] 
                          [ X2: | X3: | (DelCns:) X6: | Q8: | Y5: | Y6: ] ;
 			where Vx in (e o a) ;
 
-!FOLLOWING RULE HAS TO BE COMMENTED IN FOR DIVVUN			
-!"Diphthong Simplification in Actor Nouns from u-Verbs"
-!  Vx:0 <=> Vow _ Cns:+ u: ¤: [ X3: | X5: ] ;   ! Western and norm
-!			where Vx in (e o a) ;
-
 KEEPIF(DIPHSIMPL)
 "Diphthong Simplification in Actor Nouns from u-Verbs (Optional)"
   Vx:0 => Vow _ Cns:+ u: ¤: [ X3: | X5: ] ;   ! Eastern, substandard
+			where Vx in (e o a) ;
+ELSE
+! Use this variant in normative contexts:			
+"Diphthong Simplification in Actor Nouns from u-Verbs"
+  Vx:0 <=> Vow _ Cns:+ u: ¤: [ X3: | X5: ] ;   ! Western and norm
 			where Vx in (e o a) ;
 ENDKEEP
 
@@ -1400,7 +1409,7 @@ ENDKEEP
 ! ------------
 
 "Vowel Rising"
-  Vx:Vy <=> Vow: Cns:+ _ ( CntrCns:0 ) ( Dummy:+ - W9: ) j:i ;
+  Vx:Vy <=> Vow: Cns:+ _ ( CntrCns:0 ) ( Dummy:+ ) j:i ;
 			where Vx in (e o)
 			      Vy in (i u)
 			matched ;
