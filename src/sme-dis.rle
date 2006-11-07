@@ -622,8 +622,7 @@ LIST MOD-ASP = "berret" "dáidit" "fertet" "galgat" "gillet" "lávet" "sáhttit"
 		"seahtit" "soaitit" "viggat" ;
  # Verbs that never have arguments of their own - so we leave out "áigut", for ex.
 
-LIST AUX-OR-MAIN = "áigut" "beassat" "hálidit" "háliidit" "máhttit" "nagodit" 
-			"ollit" "orrut" "sihtat" "veadjit";
+LIST AUX-OR-MAIN = "áigut" "beassat" "hálidit" "háliidit" "máhttit" "nagodit" "ollit" "orrut" "sihtat" "veadjit";
  # These verbs can take arguments, so they do not belong in the AUX group, 
  # but they are nevertheless mapped to (@+FAUXV). 
 
@@ -2307,7 +2306,16 @@ MAP (@-FAUXV) TARGET Inf IF (*-1 INFV BARRIER VFIN OR S-BOUNDARY)(0 AUX);
 
 MAP (@-FAUXV) TARGET AUX IF (NOT 0 VFIN)(*1 Inf BARRIER NOT-ADV-PCLE) ;
 	## Mun in šaddan vuolgit.
-
+	
+MAP (@+FAUXV) TARGET AUX IF (0 VFIN)(*1 Inf BARRIER NOT-ADV-PCLE);
+	## Don šattat vel joksat Sirpmás gohcciid.  
+		
+MAP (@+FMAINV) TARGET COPULAS IF (0 VFIN)(NOT *1 Inf OR PrfPrc OR (Actio Ess) BARRIER NOT-ADV-PCLE);	
+    ## Mun lean Romssas. 
+    
+MAP (@+FAUXV) TARGET COPULAS IF (0 VFIN)(*1 Inf OR PrfPrc OR (Actio Ess) BARRIER NOT-ADV-PCLE);	
+    ## Mun ledjen borramin.    
+    
 MAP (@+FMAINV) TARGET VFIN-NOT-AUX ;
 	## Boađe boahtte vahku.
 
@@ -2370,9 +2378,6 @@ MAP (@-FMAINV) TARGET (V Actio Ess);
 
 MAP (@-FMAINV) TARGET Sup;
 	## Áddjá bázii mállása vuoššažit. 
-
-MAP (@+FAUXV) TARGET AUX IF (0 VFIN LINK *1 Inf BARRIER NOT-ADV-PCLE);
-	## Don šattat vel joksat Sirpmás gohcciid. # This one doesn´t work.. XXX
 
 
 	# Complements of particles in comparison
@@ -2473,7 +2478,7 @@ ADD (@ADVL) TARGET ("mearkkašan#veara");
 ADD (@ADVL) TARGET ("namuhan#veara");
 	##
 
-MAP (@SUBJ @SPRED) TARGET Nom IF (NOT 0 ("diibmu") OR ("dbm") OR Adv LINK *1 Num BARRIER NP-BOUNDARY OR COMMA LINK 1 Num LINK *1 MEASURE LINK 1 ALU) (NOT 0 Num LINK *-1 ("diibmu") OR ("dbm") BARRIER NP-BOUNDARY) (NOT 0 (Prop Nom) LINK 1 ORGANIZATION);
+MAP (@SUBJ @SPRED) TARGET Nom IF (NOT 0 ("diibmu") OR ("dbm") OR Adv LINK *1 Num BARRIER NP-BOUNDARY OR COMMA LINK 1 Num LINK *1 MEASURE LINK 1 ALU) (NOT 0 Num LINK *-1 ("diibmu") OR ("dbm") BARRIER NP-BOUNDARY) (NOT 0 (Prop Nom) LINK 1 ORGANIZATION)(NOT 0 (Actio Ess));
 	## Manne ii leat áviisa boahtán?
 
 MAP (@PROP>) TARGET (Prop Plc Nom) IF (1 N); 
@@ -2623,7 +2628,7 @@ MAP (@SUBJ @OBJ @ADVL @SPRED @OPRED @GP> @GP<) TARGET Date ;
 	# Default mapping
 	# ---------------
 
-#MAP (@X) TARGET WORD ;
+MAP (@X) TARGET WORD ;
 
 
 
@@ -8659,7 +8664,7 @@ SELECT (Pl Nom) IF (*-1 COPULAS BARRIER SV-BOUNDARY2 OR PUNCT OR NP-HEAD-NOM LIN
 SELECT (Pl Nom) IF (-1 (Indef Attr) LINK *-1 COPULAS BARRIER NOT-ADV-PCLE LINK 0 Pl3)(1 CLB)(2 NOT-NP OR CC);
 	## ...seammás go nuppe dáfus leat veháš várrugasat, ja dadjet ahte...
 
-SELECT Nom IF (*-1 COPULAS BARRIER NPNHA OR PrfPrc LINK *-1 MUN BARRIER NOT-ADV-PCLE)(*-1 V-SG1 BARRIER V-NOT-AUX)(NOT 0 PrfPrc) (NOT 0 Loc LINK *-1 Nom BARRIER S-BOUNDARY2 OR PUNCT) (NOT 1 N OR A)(NOT *1 PrfPrc BARRIER SV-BOUNDARY2);
+SELECT Nom IF (*-1 COPULAS BARRIER NPNHA OR PrfPrc LINK *-1 MUN BARRIER NOT-ADV-PCLE)(*-1 V-SG1 BARRIER V-NOT-AUX)(NOT 0 PrfPrc OR (Actio Ess)) (NOT 0 Loc LINK *-1 Nom BARRIER S-BOUNDARY2 OR PUNCT) (NOT 1 N OR A)(NOT *1 PrfPrc BARRIER SV-BOUNDARY2);
 	## Vaikko mun lean friddja in ge lean geange vuollásaš,...
 
 SELECT Nom IF (*-1 COPULAS BARRIER NPNHA OR PrfPrc LINK *-1 DON BARRIER NOT-ADV-PCLE)(*-1 V-SG2 BARRIER V-NOT-AUX)(NOT 0 PrfPrc) (NOT 0 Loc LINK *-1 Nom BARRIER S-BOUNDARY2 OR PUNCT)(NOT 1 N) (NOT *1 PrfPrc BARRIER SV-BOUNDARY2);
@@ -12206,7 +12211,7 @@ SELECT (@SPRED) IF (0 A)(1 go)(*2 COPULAS BARRIER V-NOT-AUX LINK *1 (@SUBJ) BARR
 SELECT (@SPRED) IF (0 (A Qst))(*1 COPULAS BARRIER V-NOT-AUX LINK *1 (@SUBJ) BARRIER NPNHA);
 	## Guhkkigo lea du biila?
 
-SELECT (@SPRED) IF (*-1 COPULAS BARRIER (@-FMAINV) OR Loc OR S-BOUNDARY2 LINK *-1 (@SUBJ) BARRIER (@OBJ) OR S-BOUNDARY2 LINK NOT 0 Ess)(NOT 0 Loc OR Pers OR Interr OR Prop)(1 NP-BOUNDARY) (NOT *-1 VFIN BARRIER S-BOUNDARY2 LINK *-1 VFIN BARRIER S-BOUNDARY2 LINK *-1 Interr BARRIER VERB);
+SELECT (@SPRED) IF (*-1 COPULAS BARRIER (@-FMAINV) OR Loc OR S-BOUNDARY2 LINK *-1 (@SUBJ) BARRIER (@OBJ) OR S-BOUNDARY2 LINK NOT 0 Ess)(NOT 0 Loc OR Pers OR Interr OR Prop OR (Actio Ess))(1 NP-BOUNDARY) (NOT *-1 VFIN BARRIER S-BOUNDARY2 LINK *-1 VFIN BARRIER S-BOUNDARY2 LINK *-1 Interr BARRIER VERB);
 	## Gustovaš riekteteoriija gaskavuođat sihke kultuvrralaš ja ekonomalaš 
 	## konteavstta dáfus leat eahpečielgasat.
 
@@ -12214,7 +12219,7 @@ SELECT (@SPRED) IF (*-1 COPULAS BARRIER (@-FMAINV) OR Loc OR S-BOUNDARY2 LINK *-
 	## Divššohasas, gii dárbbaša guhkit áiggi ja oktiiheivehuvvon dearvvašvuođa-
 	## bálvalusaid, lea vuoigatvuohta oažžut ráhkaduvvot oktagaslaš plána.
 
-SELECT (@SPRED) IF (*-1 COPULAS BARRIER (@SPRED) OR SV-BOUNDARY2  OR ("dego") OR (@OBJ) LINK *-1 (@SUBJ) OR (@SUBJ-QH) BARRIER SV-BOUNDARY2 LINK NOT 0 Ess LINK NOT *-1 (@SPRED) BARRIER S-BOUNDARY2) (NOT 0 Loc OR Prop OR Interr)(NOT 0 Actio OR Actor OR Attr LINK 1 N);	
+SELECT (@SPRED) IF (*-1 COPULAS BARRIER (@SPRED) OR SV-BOUNDARY2  OR ("dego") OR (@OBJ) LINK *-1 (@SUBJ) OR (@SUBJ-QH) BARRIER SV-BOUNDARY2 LINK NOT 0 Ess LINK NOT *-1 (@SPRED) BARRIER S-BOUNDARY2) (NOT 0 Loc OR Prop OR Interr OR (Actio Ess))(NOT 0 Actio OR Actor OR Attr LINK 1 N);	
 	## Soai leaba goappašagat nu jallat. 
 SELECT (@SPRED) IF (*-1 COPULAS BARRIER (@SPRED) OR SV-BOUNDARY2  OR ("dego") OR (@OBJ) LINK *-1C (@PrcN>) LINK *-1 (@SUBJ) OR (@SUBJ-QH) BARRIER SV-BOUNDARY2 LINK NOT 0 Ess LINK NOT *-1 (@SPRED) BARRIER S-BOUNDARY2) (NOT 0 Loc OR Prop OR Interr)(NOT 0 Actio OR Attr LINK 1 N);	
   	## Gávcci obbalaččat 12 válljejuvvon áirasiin leat leamaš nissonolbmot. 
@@ -12295,11 +12300,11 @@ SELECT (@SPRED) IF (-1 ("mii" Pron Interr Sg Gen))(0 A);
 	## Man guhkki lea skuvlii?
 	## In dieđe man buorit dat leat.
 
-SELECT (@SPRED) IF (*-1 COPULAS BARRIER (@+FMAINV) OR COMMA OR NPNHA OR go OR ("nugo") LINK *-1 (Pers Nom) BARRIER SV-BOUNDARY2)(NOT 0 Interr) (NOT 0 Ess LINK 1 OPREDV LINK NOT 0 Pass);
+SELECT (@SPRED) IF (*-1 COPULAS BARRIER (@+FMAINV) OR COMMA OR NPNHA OR go OR ("nugo") LINK *-1 (Pers Nom) BARRIER SV-BOUNDARY2)(NOT 0 Interr OR (Actio Ess)) (NOT 0 Ess LINK 1 OPREDV LINK NOT 0 Pass);
 	## ...dan addejumis, man mielde dat leat eamiálbmotválljen orgánat ja ...
 	## 
 
-SELECT (@SPRED) IF (*-1 VFIN BARRIER Acc OR S-BOUNDARY2 OR OPREDV OR ("dego") OR (@SPRED) LINK NOT 0 ("dahkat") LINK *-1 Nom BARRIER NOT-ADV-PCLE LINK NOT *-1 (@OBJ) BARRIER S-BOUNDARY2)(0 Ess)(NOT 1 Inf);
+SELECT (@SPRED) IF (*-1 VFIN BARRIER Acc OR S-BOUNDARY2 OR OPREDV OR ("dego") OR (@SPRED) LINK NOT 0 ("dahkat") LINK *-1 Nom BARRIER NOT-ADV-PCLE LINK NOT *-1 (@OBJ) BARRIER S-BOUNDARY2)(0 Ess LINK NOT 0 Actio)(NOT 1 Inf);
 	## Máhtte álggii reaŋgan.
 
 SELECT (@SPRED) IF (*-1 (@SUBJ) BARRIER NPNHA LINK *-1 VFIN BARRIER Nom OR S-BOUNDARY2)(0 Ess)(NOT *-1 (@OBJ) BARRIER S-BOUNDARY2)(NOT *1 (@OBJ) BARRIER NPNHA);
@@ -12379,7 +12384,7 @@ SELECT (@SPRED) IF (*-1 ("dahkat") BARRIER NOT-ADV-PCLE)(0 Ess)(NOT *-1 (@OBJ) B
 	## Ii dahkan gullin ge.
 	## Problem: Son guhte dahká bassin.
 
-SELECT (@SPRED) IF (*-1 ("leat" Sg1) BARRIER SV-BOUNDARY2 OR ("dego") OR (@OBJ))(NOT 0 MUN) ;
+SELECT (@SPRED) IF (*-1 ("leat" Sg1) BARRIER SV-BOUNDARY2 OR ("dego") OR (@OBJ))(NOT 0 MUN OR (Actio Ess)) ;
 SELECT (@SPRED) IF (*-1 ("leat" Sg2) BARRIER SV-BOUNDARY2 OR ("dego") OR (@OBJ))(NOT 0 DON) ;
 	## Mun lean Tarzan, don leat Jane.
  # This rule did not work with COPULAS, for some reason.
