@@ -302,7 +302,8 @@ LIST @DN> = @DN> ; LIST @GA> = @GA> ; LIST @GN> = @GN> ; LIST @GP< = @GP< ; LIST
 LIST @HNOUN = @HNOUN ; LIST @INTERJ = @INTERJ ; 
 LIST @NNum> = @NNum>; LIST @NumN< = @NumN<;
 LIST @NPron< = @NPron< ;
-LIST @NQ< = @NQ< ; LIST @NUM-PRON = @NUM-PRON ; #LIST @NUMBER = @NUMBER ;
+LIST @NQ< = @NQ< ; LIST @NumQ< = @NumQ< ;
+LIST @NUM-PRON = @NUM-PRON ; #LIST @NUMBER = @NUMBER ;
 LIST @OBJ = @OBJ ; 
 LIST @OPRED = @OPRED ; LIST @PCLE = @PCLE ; LIST @CS-COMPL = @CS-COMPL ; LIST @PROP> = @PROP> ; 
 LIST @PrcN> = @PrcN> ; LIST @PronN< = @PronN< ; LIST @PronN> = @PronN> ; LIST @QN< = @QN< ; 
@@ -1517,7 +1518,6 @@ SET INTR-END = COMMA | PUNCT-RIGHT ;
 
 
 LIST ALLSYNTAG = (@+FAUXV) (@+FMAINV) (@-FAUXV) (@-FMAINV) (@-FSUBJ) (@ADV-A) (@ADV-ADV) (@ADVL) (@AN>) (@ActioN>) (@APP) 
-#(@CC)  
 (@CC-NP) (@CC-VP) (@CMPND) (@CS) (@CS-NP) (@CS-VP) (@DN>) (@GA>) (@GN>) (@GP<) (@GP>) (@HNOUN) (@INTERJ) (@NPron<) (@NQ<) (@NUM-PRON) (@OBJ) (@OPRED) (@PCLE) (@CS-COMPL) (@PROP>) (@PrcN>) (@PronN<) (@PronN>) (@QN<) (@QN>) (@SPRED) (@NumQ<) (@SUBJ) (@SUBJ-QH) (@TITLE) (@VOC) (@X); 
 
 SET NON-APP = ALLSYNTAG - (@APP);
@@ -1555,11 +1555,10 @@ MAP (@ADVL) TARGET Ess IF (0 ESS-ADVL-N);
 
 MAP (@CC-NP @CC-VP) TARGET CC ;
 	## Na muhto don it leat dasa nama čállán!
-# meaning: @CC-G @CC-L (global, local, i.e., inside and outside NP)
+# meaning: CC-G CC-L (global, local, i.e., inside and outside NP)
 # mun liikon vuojadit ja viehkat @CC-NP
 # mun lean bures ja johtilit vuodján. @CC-NP
 # [S [NP mun] [VP [V vuoján] [AdvP bures ja johtilit]]]. @CC-NP
-# @CC-NP, @CC-S
 
 MAP (@CS-NP @CS-VP) TARGET CS IF (0 ("go") OR XGO);
     ##
@@ -1578,7 +1577,7 @@ MAP (@INTERJ) TARGET ("beargalat") IF (*-1 Nom BARRIER S-BOUNDARY LINK NOT 0 (De
 
 MAP (@PCLE) TARGET Pcle ;
 	## Amma mii eat leat máksán? 
-MAP (@NNum<) TARGET ABBR IF (-1 Num)(0 INITIAL LINK NOT 1 NP-MEMBER);
+MAP (@NQ<) TARGET ABBR IF (-1 Num)(0 INITIAL LINK NOT 1 NP-MEMBER);
   	## 98 B.
   	
 MAP (@PROP>) TARGET ABBR IF (-1 (Prop Mal) OR (Prop Fem))(1 (Prop Sur));
@@ -5648,11 +5647,11 @@ REMOVE LCRD IF (*-1C VFIN BARRIER S-BOUNDARY OR CCCOMMA)(*1C VFIN BARRIER S-BOUN
 	## Mi eat áiggo bivdit bargolávdegotti čoahkkimii ovdal borgemánus ja dán čoahkkimis mii mearridit maid riidduáššiin dahkat, lohka Norgga áviissaid searvvi ovdaolmmoš Kåre Westlund Sámi Áigái.
 	## Mun oainnán Máreha ja Elle ja don oainnát Klausa.
 
-REMOVE LCRD IF (*1 AUX LINK *1C (@-FAUX) OR (@-FMAIN));
-#SELECT (@CC-VP) IF (*1 AUX LINK *1C (@-FAUX) OR (@-FMAIN));
+REMOVE LCRD IF (*1 AUX LINK *1C (@-FAUXV) OR (@-FMAINV));
+#SELECT (@CC-VP) IF (*1 AUX LINK *1C (@-FAUXV) OR (@-FMAINV));
 
-REMOVE LCRD IF (*1 AUX LINK *1 Rel OR MO LINK *1 AUX LINK *1 (@-FAUX) LINK *1 (@-FAUX) OR (@-FMAIN));
-#SELECT (@CC-VP) IF (*1 AUX LINK *1 Rel OR MO LINK *1 AUX LINK *1 (@-FAUX) LINK *1 (@-FAUX) OR (@-FMAIN));
+REMOVE LCRD IF (*1 AUX LINK *1 Rel OR MO LINK *1 AUX LINK *1 (@-FAUXV) LINK *1 (@-FAUXV) OR (@-FMAINV));
+#SELECT (@CC-VP) IF (*1 AUX LINK *1 Rel OR MO LINK *1 AUX LINK *1 (@-FAUXV) LINK *1 (@-FAUXV) OR (@-FMAINV));
     # The relative sentence version
 # Comma CC without a comma list is a boundary:
 
@@ -12873,7 +12872,7 @@ REMOVE (@SPRED) ; #IF (NOT 0 PrfPrc);
 REMOVE (@OPRED) ;
 
 	#REMOVE (@X) IF (0 FMAINV OR (@+FAUXV) OR (@-FAUXV) OR (@-FSUBJ) OR
-	#         (@ADV-A) OR (@ADV-ADV) OR (@ADVL) OR (@AN>) OR (@ActioN>) OR (@CC) OR (@CC-NP) OR (@CC-VP)
+	#         (@ADV-A) OR (@ADV-ADV) OR (@ADVL) OR (@AN>) OR (@ActioN>) OR (@CC-NP) OR (@CC-VP)
 	#         (@CMPND) OR (@CS-NP) OR (@CS-VP) OR (@DN>) OR (@GA>) OR (@GN>) OR (@GP<) OR (@GP>) OR
 	#         (@HNOUN) OR (@INTERJ) OR (@NPron<) OR (@NQ<) OR 
 	#         (@NUM-PRON) OR (@NumN<) OR (@OBJ) OR (@OPRED) OR (@PCLE) OR 
