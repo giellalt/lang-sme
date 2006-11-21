@@ -359,6 +359,7 @@ LIST WORD = N A Adv V Pron CS CC Po Pr Interj Pcle Num ABBR ACR Date Range \?
 ; # any word
 
 SET REALWORD = WORD - Num - Ord ;
+SET REALWORD-NOTABBR = WORD - Num - Ord - ABBR ;
 
 # Derivational affixes
 # --------------------
@@ -654,7 +655,7 @@ SET V-TRANS-ACT-NOT-ACT-NOT-AUX = V-TRANS -  Pass - Actio - Actor - AUX;
 # Sets for verbs choosing oblique objects or adverbials
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-LIST STV = (IV Der/ahtti) (IV Der/h) "addit" "čoaggit" "čuohppat" "čuovvulit" "dadjat" "dáhkidit" "dárbbahit" "dárbbašit" "deattuhit" "fidnet" "geavahit" "hábmet" "juksat" "lágidit" "luoikat" "luoikkahit" "oaidnit" "oastit" "oažžut" "olahit" "ovddidit" "ráhkadit" "váldit" "vásihit" "váttásmahttit" "vuojuhit" ;
+LIST STV = (IV Der/ahtti) (IV Der/h) "addit" "čoaggit" "čuohppat" "čuovvulit" "dadjat" "dáhkidit" "dárbbahit" "dárbbašit" "deattuhit" "fidnet" "geavahit" "gieđahallat" "hábmet" "juksat" "lágidit" "luoikat" "luoikkahit" "oaidnit" "oastit" "oažžut" "olahit" "ovddidit" "ráhkadit" "váldit" "vásihit" "váttásmahttit" "vuojuhit" ;
 	# Strictly transitiv-verbs - a start. This set is ment as a help choosin Acc or Gen. Example: "Mun borren eatni kafeás." - there is Gen, no Acc, even if the verb is transitive. That´s why "borrat" is not in this set.
 	# These verbs: "addit", "fidnet" and "oažžut" can, when it´s about sex, be without object: "Son oaččui gonagasa bártnis." 
 	
@@ -1223,7 +1224,7 @@ LIST PROFESSION = "advokahta" "arkeologa" "artista" "assisteanta" "astoáigge#jo
 LIST OFFICE = "áirras" "bearaš#minister"  "birasgáhtten#ministtar" "dearvvašvuođa#ministtar" "dekana" "eanadoallo#minister" "fylkka#ráđđi" "gieldda#minister" "guolástus#minister" "kultur#minister" "ministtar" "nisson#áirras" "politihkar" "politihkkár" "sága#doalli" "Sámedigge#presideanta" "sátne#jođiheaddji" "sosiála#ministtar" "stáhta#ministtar" "stivra#lahttu" "suodjalus#minister" "ovda#olmmoš" "presideanta" "stáhta#ráđđi" "várre#presideanta" ; 
 
 
-LIST ROLE = (Actor N) "almmolašvuohta" "ássi" "gáktehas" "geavaheaddji" "guossi" "oktavuođa#olmmoš" "riikka#ássi" "stáhta#boargár" "turista" "virge#olmmoš" "vuoste#belle" "vuoste#bealli" ; #XXX bad name
+LIST ROLE = (Actor N) "almmolašvuohta" "ássi" "gáktehas" "geavaheaddji" "guossi" "oktavuođa#olmmoš" "pasienta" "riikka#ássi" "stáhta#boargár" "turista" "virge#olmmoš" "vuoste#belle" "vuoste#bealli" ; #XXX bad name
 
 
 SET HUMAN = HUMAN-INDIVIDUAL | HUMAN-GROUP | PROFESSION | ROLE | OFFICE ;
@@ -2008,7 +2009,7 @@ MAP (@GN>) TARGET Gen IF (NOT -1 NUMERALS LINK 0 Nom) (NOT 0 ALU OR Cmpnd OR Num
 MAP (@GN>) TARGET Gen IF (-1 Adv)(0 Gen)(1 (Pron Indef) LINK 1 N);
     ## Dás sáhtát lohkat eambbo prošeavtta eará ulbmiliid birra.
 
-MAP (@GN>) TARGET Gen IF (*-1 ("sihke") BARRIER VERB OR S-BOUNDARY)(1 ("ja") OR ("ahte") LINK *1 Gen BARRIER NOT-NAPrfCC LINK *1 Po BARRIER NOT-NAPrfCC);
+MAP (@GN>) TARGET Gen IF (*-1 ("sihke") BARRIER VFIN OR S-BOUNDARY)(1 ("ja") OR ("ahte") LINK *1 Gen BARRIER NOT-NAPrfCC LINK *1 Po BARRIER NOT-NAPrfCC);
      ## Dás sáhtát lohkat eambbo sihke prošeavtta eará ulbmiliid ja prošeavtta vuođđoteknologiija ja lingvisttalaš filosofiija birra.        
 
 MAP (@GN>) TARGET Gen IF (-2 ("s") OR ("siidu") OR ("paragráfa") OR ("kapihttal") OR ("kapihtal") OR HEADOFPARTS OR ("jahki") OR GEASSET LINK 1 CARDINALS)(*1 N BARRIER NOT-A);
@@ -7655,6 +7656,9 @@ REMOVE Gen IF (0 (N Acc) LINK NOT 0 HUMAN-INDIVIDUAL OR PROFESSION OR OFFICE OR 
     ## Mun oainnán beatnaga oappá biilla duohken.
     ## Mun oainnán beatnaga eatni biilla duohken. - Ambigious.
  
+REMOVE Gen IF (0 (Actio Acc))(*1 HUMAN-INDIVIDUAL OR PROFESSION OR OFFICE OR ROLE OR ("bearaš") OR NATION BARRIER NOT-ADJ LINK NOT 0 ("eadni") OR ("áhčči"));
+    ## Dearvvašvuođabargiilága § 10, mii gieđahallá dieđuid addima pasienttaide, ja pasientavuoigatvuođalága § 1-3, mii gieđahallá vuoigatvuođa informerejuvvon miehtamii, leat ovdamearkkat dakkár vuoigatvuođain.
+ 
 # Nobody can possess a Proper name? Except from pers.pron.
 REMOVE Gen IF (0 (N Acc) LINK NOT 0 NATION)(1 Prop);
 	## ...go čielggadii oamastanvuoigatvuođa Finnmárkku eatnamiid hárrái.
@@ -7932,7 +7936,7 @@ REMOVE Gen IF (*-1 S-BOUNDARY2)(0 TV)(1 Actio)(NOT 1 Ess OR Com)(NOT *1 VFIN BAR
   	## oažžu gieđahallamii máŋga ášši main lea stuorra mearkkašupmi sámiide.
   # Has to stand in front of the next rule (SELECT Gen)
 
-SELECT Gen IF (NOT *-1 ("leat") BARRIER S-BOUNDARY2)(NOT 0 Interr OR Dem)(1C Actio) (NOT 1 Ess OR Com)(NOT 1 (V Actio Loc)) (NOT 1 PrfPrc LINK *1 NP-HEAD-ACC BARRIER NPNH)(NOT 2 Po);
+SELECT Gen IF (NOT *-1 ("leat") BARRIER S-BOUNDARY2)(NOT 0 Interr OR Dem OR (Pass Actio))(1C Actio) (NOT 1 Ess OR Com)(NOT 1 (V Actio Loc)) (NOT 1 PrfPrc LINK *1 NP-HEAD-ACC BARRIER NPNH)(NOT 2 Po);
 	## Eatni dahkan láibi lei buorre.
 
 SELECT Gen IF (0 Interr)(1 (Actio Gen))(2 N);
@@ -8248,7 +8252,7 @@ SELECT Gen IF (*-1 V-TRANS-ACT)(-2 Acc)(-1 CC)(0 HUMAN-INDIVIDUAL)(1 Acc OR Gen)
 SELECT Gen IF (NOT 0 Nom LINK *-1 VFIN BARRIER NPNHA)(1 CC) (*2 Po OR PREGEN BARRIER NPNH OR Nom LINK NOT *1 Interr OR VFIN OR Inf BARRIER WORD);
 	## Divššohas galgá maiddái oažžut dieđuid vejolaš riskkaid ja lassiváikkuhusaid birra.
 
-SELECT Gen IF (*-1 ("sihke") BARRIER VERB OR S-BOUNDARY2)(0 Acc)(1 ("ja") OR ("ahte") LINK *1 Gen BARRIER NOT-NAPrfCC LINK *1 Po BARRIER NOT-NAPrfCC);
+SELECT Gen IF (*-1 ("sihke") BARRIER VFIN OR S-BOUNDARY2)(0 Acc)(1 ("ja") OR ("ahte") LINK *1 Gen BARRIER NOT-NAPrfCC LINK *1 Po BARRIER NOT-NAPrfCC);
     ## Dás sáhtát lohkat eambbo sihke prošeavtta eará ulbmiliid ja prošeavtta vuođđoteknologiija birra.
     ## Dás sáhtát lohkat eambbo sihke prošeavtta eará ulbmiliid ja prošeavtta vuođđoteknologiija ja lingvisttalaš filosofiija birra.
 
@@ -8312,8 +8316,8 @@ SELECT Gen IF (-1 (Pl3 Gen) LINK *-1 (@OBJ) BARRIER NOT-ADV-PCLE)(1 CC)(2 Gen) (
 SELECT Gen IF (1 ("/"))(2C Gen);
 	## ...mii ii čuoza nu garrasit viidodaga/čikŋodaga ja guhkkodaga dáfus.
 
-SELECT (Gen @GN>) IF (*-1 BOS LINK *1 (Gen @GN>) LINK 1 (N Nom) LINK *1 TV LINK *1 (N Gen @GN>) LINK 1 Nom LINK *1 TV LINK 0 VFIN);
-      	## Dearvvašvuođabargiilága § 10, mii gieđahallá dieđuid addima pasienttaide, ja pasientavuoigatvuođalága § 1-3, mii gieđahallá vuoigatvuođa informerejuvvon miehtamii, leat ovdamearkkat dakkár vuoigatvuođain.
+SELECT (Gen @GN>) IF (-1 (@CC-NP) LINK *-1 (Num Nom) BARRIER (N Nom) LINK *-1 (N Gen @GN>) BARRIER REALWORD-NOTABBR)(0 (N Acc) LINK *1 (Num Nom) BARRIER REALWORD-NOTABBR LINK *1 VFIN) ;
+    ## Dearvvašvuođabargiilága § 10, mii gieđahallá dieđuid addima pasienttaide, ja pasientavuoigatvuođalága § 1-3, mii gieđahallá vuoigatvuođa informerejuvvon miehtamii, leat ovdamearkkat dakkár vuoigatvuođain.
       #Parallell constructions.
 
 	# Nominative and accusative
@@ -8347,7 +8351,7 @@ REMOVE Gen IF (NOT *-1 Pr OR NUMERALS BARRIER NPNH)(1 BEAIVI);
 REMOVE Gen IF (*-1 OPREDV BARRIER NPNH LINK NOT 0 N LINK NOT *-1 NP-HEAD-ACC BARRIER SV-BOUNDARY2)(1 Ess);
 	## Don galggat gohčodit su Jesusin.
 
-REMOVE Gen IF (*-1 V-NOT-AUX BARRIER S-BOUNDARY2)(1 ("§"));
+REMOVE Gen IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER S-BOUNDARY2 OR Acc)(1 ("§"));
 	## Vuoigatvuohta oažžut dearvvašvuođaveahki § 2-2.
  # This rule would work fine if we could make an earlier rule select Gen 
  # for all occurrences of compounds in -lága in front of§. 
@@ -11936,7 +11940,7 @@ SELECT Acc IF (*-1 (V Actio Loc) BARRIER NPNHA)(NOT *1 N BARRIER NPNH);
 SELECT Gen IF (0C Dem)(1 TIME)(1C Gen);
 	## Maid Biret-Elle áigu dán dálvve dahkat? 
 
-SELECT Gen IF (-1C NP-HEAD-ACC)(0 NP-HEAD-GEN)(*1 N BARRIER NPNH OR PUNCT LINK 0 ADVLCASE);
+SELECT Gen IF (-1C NP-HEAD-ACC)(0 NP-HEAD-GEN)(NOT 0 (Pass Actio))(*1 N BARRIER NPNH OR PUNCT LINK 0 ADVLCASE);
 	## Mii leat gullan dan su iežas njálmmis.
 
 SELECT Gen IF (-1 Po)(*1 N BARRIER NPNH LINK 0 ADVLCASE)(NOT 0 N LINK 1 Indef);
