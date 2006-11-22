@@ -1213,16 +1213,33 @@ LIST PREGEN = ("álgogeahčen")("bealli" N Sg Loc)("gaskavuohta" N Sg Loc)("guos
 # Living beings
 # Humans
 
+# Possible possessors   PERSONAL    PERSONAL-AND-NON    NON-PERSONAL
+# -------------------   --------    -----------------   ------------
+# Prop Plc                                  x               x
+# HUMAN-INDIVIDUAL          x               x               x
+# HUMAN-GROUP               x               x               x
+# PROFESSION                x               x               x
+# OFFICE                    x               x               x
+# ROLE                      x               x               x
+# ABSTR-TEXT                x               x               x
+# PLACE (not NATURE-PLACE)                  x               x
+# NATION                                    x               x
+# ALL-ANIMALS                               x
+# EDUCATION                                 x               x
+# ORGANIZATION                              x               x     
+# INSTITUTION                               x               x
+# INDUSTRY                                                  x
+
 
 LIST PERSONAL = (Prop Mal) (Prop Fem) (Prop Sur) "áddjut" "áhkká" "áhkkut" "boadnji" "čeahci" "čeahcit" "eahki" "eamit" "eammi" "eanu" "goaski" "guoibmi" "isit" "mánáid#mánná" "mannji" "máttar#áddjá" "máttar#áhkku" "muoŧŧa" "muoŧŧal" "neahpi" "oabbá" "oabbá#bealli" "oambealli" "oarpmealli" "siessal" "siessá" "viellja" "viellja#bealli" "vilbealli" "vuohppa" "vuon#áhkku" "vuoni" ;
 # These can only be possessed by HUMAN-INDIVIDUAL, HUMAN-GROUP, PROFESSION, OFFICE, ROLE, ABSTR-TEXT
 
 LIST PERSONAL-AND-NON = "áhčči" "áddjá" "áhkku" "eadni" "váhnen" ;
-# These can be possessed by HUMAN-INDIVIDUAL, HUMAN-GROUP, PROFESSION, OFFICE, ROLE, ABSTR-TEXT, EDUCATION, PLACE, Prop Plc, NATION, ALL-ANIMALS, ORGANIZATION, INSTITUTION
+# These can be possessed by HUMAN-INDIVIDUAL, HUMAN-GROUP, PROFESSION, OFFICE, ROLE, ABSTR-TEXT, PLACE (minus NATURE-PLACE), Prop Plc, NATION, ALL-ANIMALS, EDUCATION, ORGANIZATION and INSTITUTION. Can also be used as metaphors.
 
 
 LIST NON-PERSONAL = "almmái#olmmoš" "bárdni" "boaris" "gánda" "lagamuš" "mánná" "nieida" "nisson" "nisson#olmmoš" "nisu" "nuorra" "olmmái" "olmmoš" "rávis#olmmoš" "skibir" "skihpár" "ustit" "viissis" ;
-# These can be possessed by HUMAN-INDIVIDUAL, HUMAN-GROUP, PROFESSION, OFFICE, ROLE,   ABSTR-TEXT, EDUCATION, PLACE, Prop Plc, NATION, ORGANIZATION, INSTITUTION, INDUSTRY
+# These can be possessed by HUMAN-INDIVIDUAL, HUMAN-GROUP, PROFESSION, OFFICE, ROLE,   ABSTR-TEXT, EDUCATION, PLACE (minus NATURE-PLACE), Prop Plc, NATION, EDUCATION,  ORGANIZATION, INSTITUTION and INDUSTRY.
 
 SET HUMAN-INDIVIDUAL = PERSONAL | NON-PERSONAL | PERSONAL-AND-NON ;
 
@@ -1331,9 +1348,9 @@ LIST GENERAL-PLACE = "ássan#báiki" "ássan#guovlu" "báike#goddi" "báiki" "bi
 
 LIST NATURE-PLACE = "bákti" "beahce#vuovdi" "borri" "coagis" "čolpi" "dearbmi" "eatnu" "fielbmá" "fiervá" "gáisá" "gáisi" "gárggu" "gárgu" "gieddi" "gohpi" "gohppi" "gorži" "guolbban" "jávri" "jávre#gáddi" "jeaggi" "johka" "johka#gáddi" "johka#njálbmi" "láddu" "láttu" "latnja" "lokta" "luohkká" "luokta" "luoppal" "mielli" "mohkki" "muotki" "njunni" "oaivi" "oalge#johka" "oalgi" "orda" "orrit" "reašši" "riddu" "riidi" "soahke#vuovdi" "stealli" "várre#vielti" "várri" "vielti" "vuohppi" "vuotna#gáddi" ;
 
-LIST LIVING-PLACE = "duottar" "eana" "eanan" "eatnan" "gáddi" "meahcci" "mearra#gáddi" "njárga" "suolu" "vággi" "vuotna" "vuovdi" ;
+LIST SETTLEMENT-PLACE = "duottar" "eana" "eanan" "eatnan" "gáddi" "meahcci" "mearra#gáddi" "njárga" "suolu" "vággi" "vuotna" "vuovdi" ;
 
-SET GEOGRAPHICAL-PLACE = NATURE-PLACE | LIVING-PLACE ;
+SET GEOGRAPHICAL-PLACE = NATURE-PLACE | SETTLEMENT-PLACE ;
 
 LIST POLITICAL-PLACE =  "rádji" "riika" "riika#rádji" "sáme#eana" "Sáme#eana" "stáhta" ;
   ## can also function as an actor
@@ -7671,8 +7688,13 @@ REMOVE Gen IF (NOT *-1 Pr OR CC OR (Num Nom) BARRIER NPNH)(-1 Gen)(0 NOTIME OR P
     ## Mun oainnán beatnaga oappá biilla duohken.
     ## Mun oainnán beatnaga eatni biilla duohken. - Ambigious.
 
-REMOVE Gen IF (0 (N Acc) LINK NOT 0 HUMAN-INDIVIDUAL OR PROFESSION OR OFFICE OR ROLE OR ("bearaš") OR NATION)(*1 HUMAN-INDIVIDUAL BARRIER NOT-ADJ LINK NOT 0 ("eadni") OR ("áhčči"));
+REMOVE Gen IF (0 (N Acc) LINK NOT 0 HUMAN-INDIVIDUAL OR HUMAN-GROUP OR PROFESSION OR OFFICE OR ROLE OR ABSTR-TEXT)(*1 PERSONAL BARRIER NOT-ADJ);
 
+REMOVE Gen IF (0 (N Acc) LINK NOT 0 (Prop Plc) OR HUMAN-INDIVIDUAL OR HUMAN-GROUP OR PROFESSION OR OFFICE OR ROLE OR ABSTR-TEXT OR PLACE OR NATION OR ALL-ANIMALS OR EDUCATION OR ORGANIZATION OR INSTITUTION)(*1 PERSONAL-AND-NON BARRIER NOT-ADJ);
+
+REMOVE Gen IF (0 (N Acc) LINK 0 NATURE-PLACE)(*1 PERSONAL-AND-NON OR NON-PERSONAL BARRIER NOT-ADJ);
+
+REMOVE Gen IF (0 (N Acc) LINK NOT 0 (Prop Plc) OR HUMAN-INDIVIDUAL OR HUMAN-GROUP OR PROFESSION OR OFFICE OR ROLE OR ABSTR-TEXT OR PLACE OR NATION OR EDUCATION OR ORGANIZATION OR INSTITUTION OR INDUSTRY)(*1 NON-PERSONAL BARRIER NOT-ADJ);
  
 REMOVE Gen IF (0 (Actio Acc))(*1 HUMAN-INDIVIDUAL OR PROFESSION OR OFFICE OR ROLE OR ("bearaš") OR NATION BARRIER NOT-ADJ LINK NOT 0 ("eadni") OR ("áhčči"));
     ## Dearvvašvuođabargiilága § 10, mii gieđahallá dieđuid addima pasienttaide, ja pasientavuoigatvuođalága § 1-3, mii gieđahallá vuoigatvuođa informerejuvvon miehtamii, leat ovdamearkkat dakkár vuoigatvuođain.
