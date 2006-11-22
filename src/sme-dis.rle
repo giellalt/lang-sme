@@ -640,15 +640,15 @@ SET V-DER-PASS = V + V-DER + Pass;  # + is intersection, this should work
 LIST V-TRANS = TV (IV Der/ahtti) (IV Der/h) ;
 # This is only a tool for making the following sets, bacause of that the symbols (|) and (-) in the set don´t function as one had expected.
 
-SET V-TRANS-ACT = V-TRANS - Pass ;#- (Actio Loc) - Actio ; #XXX Never acc-obj for a.l. or actor?
+SET V-TRANS-ACT = V-TRANS - (V TV Pass) ;#- (Actio Loc) - Actio ; #XXX Never acc-obj for a.l. or actor?
  # All active verbs with a TV tag, including AUX-OR-MAIN.
 
  
-SET V-TRANS-ACT-NOT-AUX = V-TRANS -  Pass - AUX ;
+SET V-TRANS-ACT-NOT-AUX = V-TRANS - (V TV Pass) - AUX ;
 
-SET V-TRANS-ACT-NOT-ACT = V-TRANS - Pass - Actio - Actor - PrsPrc ;
+SET V-TRANS-ACT-NOT-ACT = V-TRANS - (V TV Pass) - Actio - Actor - PrsPrc ;
 
-SET V-TRANS-ACT-NOT-ACT-NOT-AUX = V-TRANS -  Pass - Actio - Actor - AUX;
+SET V-TRANS-ACT-NOT-ACT-NOT-AUX = V-TRANS - (V TV Pass) - Actio - Actor - AUX;
 
 
 
@@ -997,7 +997,7 @@ LIST BOHTAT-NOUN = "áite#uksa" "bunci" "dáigi" "fanas" "lássa" "láse" "luŋk
 # Set for "guovddáš"
 # - - - - - - - - - - 
 
-LIST GUOVDDAS = "álgoálbmot#guovddáš" "bajásšaddan#guovddáš" "bargo#guovddáš" "bearašsuodjalan#guovddáš" "dáidda#guovddáš" "dásseárvo#guovddáš" "dokumentašuvdna#guovddáš" "dutkan#guovddáš" "duođaštan#guovddáš" "eamiálbmot#guovddáš" "eamiálbmotdutkan#guovddáš" "gávpe#guovddáš" "gávpot#guovddáš" "gelbbolašvuođa#guovddáš" "gealbo#guovddáš" "giella#guovddáš" "hálddáhus#guovddáš" "heahte#guovddáš" "julevsáme#guovddáš" "kultur#guovddáš" "kunddar#guovddáš" "meahcce#guovddáš" "nuoraid#guovddáš" "oahpahus#guovddáš" "opmodat#guovddáš" "ressursa#guovddáš" "resursa#guovddáš" "vuovde#guovddáš" ;
+LIST GUOVDDAS = "álgoálbmot#guovddáš" "bajásšaddan#guovddáš" "bargo#guovddáš" "bearašsuodjalan#guovddáš" "dáidda#guovddáš" "dásseárvo#guovddáš" "dokumentašuvdna#guovddáš" "dutkan#guovddáš" "duođaštan#guovddáš" "eamiálbmot#guovddáš" "eamiálbmotdutkan#guovddáš" "gávpe#guovddáš" "gávpot#guovddáš" "gelbbolašvuođa#guovddáš" "gealbo#guovddáš" "giella#guovddáš" "hálddáhus#guovddáš" "heahte#guovddáš" "julevsáme#guovddáš" "kultur#guovddáš" "kunddar#guovddáš" "meahcce#guovddáš" "nuoraid#guovddáš" "oahpahus#guovddáš" "opmodat#guovddáš" "ressursa#guovddáš" "resursa#guovddáš" "spesialistadoavtter#guovddáš" "vuovde#guovddáš" ;
 
 # The LAHKA set family
 # - - - - - - - - - - 
@@ -7660,7 +7660,7 @@ REMOVE Gen IF (0 (Actio Acc))(*1 HUMAN-INDIVIDUAL OR PROFESSION OR OFFICE OR ROL
     ## Dearvvašvuođabargiilága § 10, mii gieđahallá dieđuid addima pasienttaide, ja pasientavuoigatvuođalága § 1-3, mii gieđahallá vuoigatvuođa informerejuvvon miehtamii, leat ovdamearkkat dakkár vuoigatvuođain.
  
 # Nobody can possess a Proper name? Except from pers.pron.
-REMOVE Gen IF (0 (N Acc) LINK NOT 0 NATION)(1 Prop);
+REMOVE Gen IF (0 (N Acc) LINK NOT 0 NATION)(1 Prop LINK NOT 0 NATION);
 	## ...go čielggadii oamastanvuoigatvuođa Finnmárkku eatnamiid hárrái.
     
 # Accusativ in front of a human group:
@@ -7668,7 +7668,7 @@ REMOVE Gen IF (0 (N Acc) LINK NOT 0 GENERAL-PLACE OR GEOGRAPHICAL-PLACE OR POLIT
 	## Ráđđehus deattuha sámi kulturáddejumi gelbbolašvuođa loktema sámiid buorrin.
 	
 # Accusativ in front of a nation or "sápmi":
-REMOVE Gen IF (0 Acc LINK NOT 0 NATION OR GENERAL-PLACE)(1 NATION OR POLITICAL-PLACE OR ("sápmi"));
+REMOVE Gen IF (0 Acc LINK NOT 0 NATION OR GENERAL-PLACE OR ORGANIZATION OR EDUCATION)(1 NATION OR POLITICAL-PLACE);
     ## Ráđđehus láhčá dilálašvuođaid sámi kultuvrra máŋggadáfotvuođa seailluheapmái.	
     
 # Accusativ in front of an organization:
@@ -8092,6 +8092,10 @@ SELECT Gen IF (*-1 MOVEMENT-V BARRIER NPNHA)(0 ROUTE);
 
 	# Genitive specifiers
 	# -------------------
+
+REMOVE Nom IF (-1 Gen)(NOT 0 ABBR)(*1 (N Nom) BARRIER NP-BOUNDARY OR VERB OR Adv OR CC OR ADVLCASE OR PUNCT OR CLB LINK NOT 1 N); 
+    ## Romssa universitehta Sámi dearvvašvuođadutkama guovddáš (sajuštuvvo Kárášjohkii) ásahuvvo jagis 2001 sosiála- ja dearvvašvuođadepartemeantta ruhtademiin.
+
 
 REMOVE (N Acc) IF (-1 Adv)(0 Gen)(1 (Pron Indef) LINK 1 N);
     ## Dás sáhtát lohkat eambbo sihke prošeavtta eará ulbmiliid birra.
@@ -8525,9 +8529,8 @@ SELECT Nom IF (-1 ("§") OR ("kapihtal") OR ("kapihttal"))(0 Num)(1 EOS);
 	## Vuoigatvuohta oažžut dárbbašlaš dearvvašvuođaveahki § 2-2.
 
 	# A Gen series is broken by an intermediate Prop
-REMOVE Gen IF (0 Nom)(1 (Prop Gen))(*2 N OR Po BARRIER NPNH);
-	## Ráđđehusa dearvvašvuođa- ja sosiálabálvalusaid doaibmaplána Norgga
-	## sápmelaččaid várás .
+REMOVE Gen IF (0 Nom LINK NOT 0 NATION OR GENERAL-PLACE OR ORGANIZATION OR EDUCATION)(1 (Prop Gen))(*2 N OR Po BARRIER NPNH);
+	## Ráđđehusa dearvvašvuođa- ja sosiálabálvalusaid doaibmaplána Norgga sápmelaččaid várás .
 
 
 	# Nominative after "go", "dego" and "nugo"
@@ -8999,7 +9002,7 @@ REMOVE Gen IF (-1 (@GN>))(0 ("§"))(1 Num);
   	## Dearvvašvuođabargiidlága § 10, mii gieđahallá dieđuid addima pasienttaide, ja pasientavuoigatvuođalága § 3-1,...
 
 	#REMOVE (N Gen) IF (1C Gen LINK *1 Po OR N BARRIER V); 
-REMOVE (N Gen) IF (*-1 V-TRANS-ACT-NOT-ACT OR TIME BARRIER NPNH)(NOT -1 PrfPrc LINK -1 (@OBJ))(1C Gen LINK *1 Po OR NOT-ACC-GEN BARRIER Acc OR SV-BOUNDARY2); 
+REMOVE (N Gen) IF (*-1 V-TRANS-ACT-NOT-ACT OR TIME BARRIER NPNH OR SV-BOUNDARY2)(NOT -1 PrfPrc LINK -1 (@OBJ))(1C Gen LINK *1 Po OR NOT-ACC-GEN BARRIER Acc OR SV-BOUNDARY2); 
 	## Ráđđehus láhčá dilálašvuođaid sámi kultuvrra máŋggadáfotvuođa seailluheapmái.
 	## Bargiidbellodaga sámediggejoavku divvu kritihkalaš gažaldagaid ráđi ruhtavuoruhemiid hárrái.
 	## Sii leat sivaid ožžon eatni alkoholageavaheami geažil.
@@ -12117,6 +12120,9 @@ REMOVE TV IF (0 IV)(NOT 0 Pass)(NOT *-1 Acc LINK *-1 TV)(NOT *-1 TV LINK *-1 Acc
 
 REMOVE Inf IF (*-1 BOS BARRIER VFIN)(0 VFIN)(*1 EOS BARRIER VFIN);
 	## Muhto baice geahččat ovddas guvlui.
+	
+REMOVE (V TV Pass) IF (0 PrfPrc)(1 Acc)(NOT 2 N);
+    ## Dan olis leat dorjon oahppodoaimmaid mat ovddidit sámi kulturáddejumi. 	
 
 	# Genitive after preposition -- round 2
 	# - - - - - - - - - - - - - - - - - - - 
@@ -12644,8 +12650,7 @@ SELECT (@OBJ) IF (*-1 STV BARRIER SV-BOUNDARY2 OR (@OBJ) LINK NOT 0 N LINK NOT *
 	## Mun oidnen guovžža golbma kilomehtara dábbelis.
 	## Mun oidnen guovžža, beatnaga ja riebana golbma kilomehtara dábbelis. 
 
-SELECT (@OBJ) IF (-2 V-TRANS-ACT LINK 1 CS LINK 1 @CS-COMPL);	 
-SELECT (@OBJ) IF (*1 V-TRANS-ACT-NOT-ACT LINK NOT *1 (@OBJ) BARRIER S-BOUNDARY2)(NOT 0 Adv) (NOT 0 Nom LINK *-1 (TV N Gen) BARRIER NPNH)(NOT 0 TIME) (NOT 0 Dem LINK *1 N BARRIER NPNH)(NOT 0 Loc LINK *-1 (IV) BARRIER VERB) (NOT 0 (Acc PxSg3) LINK 0 Loc)(NOT *1 (@OBJ) BARRIER S-BOUNDARY2)(NOT 0 ("nr") LINK -1 N OR A OR ACR OR ABBR);
+SELECT (@OBJ) IF (-2 V-TRANS-ACT LINK 1 CS LINK 1 @CS-COMPL);	 SELECT (@OBJ) IF (*1 V-TRANS-ACT-NOT-ACT LINK NOT *1 (@OBJ) BARRIER S-BOUNDARY2)(NOT 0 Adv) (NOT 0 Nom LINK *-1 (TV N Gen) BARRIER NPNH)(NOT 0 TIME) (NOT 0 Dem LINK *1 N BARRIER NPNH)(NOT 0 Loc LINK *-1 (IV) BARRIER VERB) (NOT 0 (Acc PxSg3) LINK 0 Loc)(NOT *1 (@OBJ) BARRIER S-BOUNDARY2)(NOT 0 ("nr") LINK -1 N OR A OR ACR OR ABBR);
 	## SDD lea nammadan guovlluid dearvvašvuođafitnodagaid stivrraid, mat vástidit doaimmaineaset dušše stáhtii, mii daid eaiggáduššá.
 	## ...juos sin livčče dikšumin bargit... # Removed BARRIER NOT-ADV from the first part. Perhaps there should be another barrier? 
 
