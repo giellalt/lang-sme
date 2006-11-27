@@ -784,7 +784,11 @@ LIST EVENT-V = "dáhpáhuvvat" ;
 LIST STATE-V = "eallit" ;
   
 LIST REM-WITH-PARTS = "gaikkihit" ;
-    # Belongs to the DYNAMIC-V. They also take PARTS in comitative case.    
+    # Belongs to the DYNAMIC-V. They also take PARTS in comitative case. 
+    
+LIST N-AGENT-V = "heivet" "hevvet" "hiehpat" "sistisdoallat" "soahpat" "šiehtat";
+    # Verbs uten agent som subject
+
   
 #LIST EMOTION-V =
 #LIST PERCEPTION-V = 
@@ -1210,7 +1214,7 @@ LIST PREGEN = ("álgogeahčen")("bealli" N Sg Loc)("gaskavuohta" N Sg Loc)("guos
 # We start with CONCRETE, anyway we have to start at the bottom, so that the individual lists (containing items from the lexicon) are defined before we use them in sets (containing list names)
 
 
-# First-order enti
+# First-order entities
 # Concrete entitites
 
 # Living beings
@@ -2996,6 +3000,9 @@ REMOVE Imprt IF (0 ("berret") OR ("dáidit") OR ("fertet") OR ("galgat") OR ("l�
 	## Báldáhan ferte diŋgot.
 	## Lága mearrádusat galget váikkuhit luohttevašvuođa.
  # And more verbs, but not the whole AUX set (not "leat", for example).
+ 
+REMOVE Imprt IF (0 N-AGENT-V);
+    # Passive verbs cannot probably just be imperative if they are in the 3rd person.
 
 REMOVE Inf IF (0 Qst);
 	## Leatgo addojuvvon neavvagat ja dieđut divššohassii,...
@@ -7712,15 +7719,16 @@ REMOVE Gen IF (0 (Actio Acc))(*1 HUMAN-INDIVIDUAL OR PROFESSION OR OFFICE OR ROL
 REMOVE Gen IF (0 (N Acc) LINK NOT 0 NATION)(1 Prop LINK NOT 0 NATION);
 	## ...go čielggadii oamastanvuoigatvuođa Finnmárkku eatnamiid hárrái.
     
-# Accusativ in front of a human group:
+# Accusative in front of a human group:
 REMOVE Gen IF (0 (N Acc) LINK NOT 0 GENERAL-PLACE OR GEOGRAPHICAL-PLACE OR POLITICAL-PLACE OR NATION OR ORGANIZATION OR EDUCATION)(1 HUMAN-GROUP);
 	## Ráđđehus deattuha sámi kulturáddejumi gelbbolašvuođa loktema sámiid buorrin.
 	
-# Accusativ in front of a nation or "sápmi":
+
+# Accusative in front of a nation or "sápmi":
 REMOVE Gen IF (0 Acc LINK NOT 0 NATION OR GENERAL-PLACE OR ORGANIZATION OR EDUCATION)(1 NATION OR POLITICAL-PLACE);
     ## Ráđđehus láhčá dilálašvuođaid sámi kultuvrra máŋggadáfotvuođa seailluheapmái.	
     
-# Accusativ in front of an organization:
+# Accusative in front of an organization:
 REMOVE Gen IF (0 Acc LINK 0 TEXT OR ABSTR-TEXT OR ABSTRACT)(1 ORGANIZATION);  
     # We could do it the other way: IF (O Acc LINK NOT HUMAN OR NATION or POLITICAL-PLACE OR GENERAL-PLACE).
     # Or we could concider to wider the other part: (NOT 1 HUMAN-INDIVIDUL OR ROLE OR ALL-ANIMALS OR ABSTRACT)
@@ -11683,10 +11691,12 @@ REMOVE (V*) IF (0C (N Sg Loc) OR (TV Actio Loc));
 	# Selecting some more finite verbs
 	# ================================
 
-SELECT VFIN IF (NOT *-1 VFIN BARRIER S-BOUNDARY2)(NOT -1 BOS LINK 2 EOS) (NOT -1 ("mo"))(NOT 0 (Der/Pass PrfPrc) OR N)(NOT 0 (A Attr) LINK 1 N) (NOT 0 Inf LINK *-1 BOS BARRIER NOT-NP)(NOT 1 ("§")) (NOT *1 VFIN BARRIER S-BOUNDARY2);
+SELECT VFIN IF (NOT *-1 PUNCT-RIGHT LINK *-1 PUNCT-LEFT LINK *-1 VFIN BARRIER S-BOUNDARY2)(NOT -1 BOS LINK 2 EOS) (NOT -1 ("mo"))(NOT 0 (Der/Pass PrfPrc) OR N)(NOT 0 (A Attr) LINK 1 N) (NOT 0 Inf LINK *-1 BOS BARRIER NOT-NP)(NOT 1 ("§")) (NOT *1 VFIN BARRIER S-BOUNDARY2);
 	## Dát máksá ahte buot universitehta oktavuođat sámegillii mannet Sámi 
 	## dutkamiid guovddáža giellakonsuleantta bokte.
 	## Gos don dál boađát? Siiddas.
+	# The first constraint is supposed to avoid constructions where the finite verb is before an interupter
+	## Doppe lei "Hoop", dahje Skeavvonjárga (Romssas) áibbas ávdimin.
 
  # BOS/EOS is there to allow for fragments like the "Siiddas" example.
 
