@@ -606,6 +606,8 @@ SET VERB = V - (V N); # - (TV N) - (Actio Ill) - (Actio Nom) - (Actio Gen) - (Ac
   # V is all readings with a V tag in them, VERB should
             # be the ones without an N tag following the V
 
+SET VERB-NOT-ACTIO = V - (V N) - Actio ;            
+
 SET LEX-V = VERB - V-DER;       # VERB but not V-DER
 
 
@@ -655,7 +657,7 @@ SET V-TRANS-ACT-NOT-ACT-NOT-AUX = V-TRANS - (V TV Der/Pass) - Actio - Actor - AU
 # Sets for verbs choosing oblique objects or adverbials
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-LIST STV = (IV Der/ahtti) (IV Der/h) "addit" "čoaggit" "čuohppat" "čuovvulit" "dadjat" "dáhkidit" "dárbbahit" "dárbbašit" "deattuhit" "fidnet" "fuolahit" "geavahit" "gieđahallat" "hábmet" "juksat" "lágidit" "luoikat" "luoikkahit" "oaidnit" "oastit" "oažžut" "olahit" "ovddastit" "ovddidit" "ráhkadit" "sisttis#doallat" "váldit" "vásihit" "váttásmahttit" "vuojuhit" ;
+LIST STV = (IV Der/ahtti) (IV Der/h) "addit" "amašit" "čoaggit" "čuohppat" "čuovvulit" "dadjat" "dáhkidit" "dárbbahit" "dárbbašit" "deattuhit" "fidnet" "fuolahit" "geavahit" "gieđahallat" "hábmet" "juksat" "lágidit" "luoikat" "luoikkahit" "oaidnit" "oastit" "oažžut" "olahit" "ovddastit" "ovddidit" "ráhkadit" "sisttis#doallat" "váldit" "vásihit" "váttásmahttit" "vuojuhit" ;
 	# Strictly transitiv-verbs - a start. This set is ment as a help choosin Acc or Gen. Example: "Mun borren eatni kafeás." - there is Gen, no Acc, even if the verb is transitive. That´s why "borrat" is not in this set.
 	# These verbs: "addit", "fidnet" and "oažžut" can, when it´s about sex, be without object: "Son oaččui gonagasa bártnis." 
 	
@@ -1360,7 +1362,7 @@ LIST FYLKA = "Finnmárku" "Finnmarku" "Romsa" "Nordlánda" "Lulli-Trøndelag" "D
        "Hedmárku" "Akershus" "Buskerud" "Vestfold" "Østfold" "Aust-Agder" "Vest-Agder"
        "Rogalánda" "Hordalánda" "Opplánda" "Fjordane" "Romsdal" "Telemark" ;
 
-LIST NORGA = "davvi#Norga" "Davvi-Norga" "gaska-#Norga" "Norga" "norgga#bealli" "Norgga-#ruoŧŧa" ;
+LIST NORGA = "davvi#Norga" "Davvi-Norga" "gaska-#Norga" "Norga" "norga" "norgga#bealli" "Norgga-#ruoŧŧa" ;
 
 LIST NATION-NOT-NORGA = "Duiska" "náššuvdna" "riika" "Ruošša" "Ruoŧŧa" "Sápmi" "sápmi" "stáhta" "Suopma" ;
     
@@ -2368,7 +2370,7 @@ MAP (@-FAUXV) TARGET AUX IF (*-1 Neg BARRIER S-BOUNDARY)(0 ConNeg OR PrfPrc)(*1 
 MAP (@+FAUXV) TARGET COPULAS IF (*-1 Inf OR PrfPrc OR (Actio Ess) BARRIER NOT-ADV-PCLE)(0 VFIN);
     ## Ja boahtán ledje su gudnejahttit.
 	
-MAP (@+FAUXV) TARGET AUX IF (0 VFIN)(*1 Inf OR ConNeg OR PrfPrc BARRIER S-BOUNDARY OR VFIN);
+MAP (@+FAUXV) TARGET AUX IF (NOT *-1 AUX BARRIER NOT-AA)(0 VFIN)(*1 Inf OR ConNeg OR PrfPrc BARRIER S-BOUNDARY OR VFIN);
 	## Don šattat vel joksat Sirpmás gohcciid.  
 	## In sáhte olles gáhku borrat.
 	
@@ -7667,10 +7669,13 @@ REMOVE (Gen @GN>) IF (*-1 BOS LINK *1 Acc)(0 Acc LINK 0 LOC-COMPL-NOUN)(*1 Loc B
  # CC in the preceding rule because of coordination after Pr. The following rule 
  # compensates for it.
 
-SELECT Acc IF (NOT *-1 Pr OR Num BARRIER NPNH)(0 NOTIME OR Pron) (NOT 0 Nom OR Loc OR Adv OR VERB) (1 CC LINK 1 Acc LINK *1 CLB OR VFIN BARRIER NOT-ADV-PCLE LINK NOT *1 Gen BARRIER NPNH);
-    ## ## Ráđđehus áigu ruhtadit dehálaš oktasašdoaimmaid, nugo dulkaoahpu ja diehtojuohkinbálvalusa.	
+SELECT Acc IF (NOT *-1 Pr OR Num BARRIER NPNH)(0 NOTIME OR Pron) (NOT 0 Nom OR Loc OR Adv OR VERB-NOT-ACTIO) (1 CC LINK *1 Acc BARRIER NPNH LINK *1 CLB OR VFIN BARRIER NOT-ADV-PCLE LINK NOT *1 Gen BARRIER NPNH);
+    ## ## Ráđđehus áigu ruhtadit dehálaš oktasašdoaimmaid, nugo dulkaoahpu ja diehtojuohkinbálvalusa.
+    
+SELECT Acc IF (NOT *-1 Pr OR Num BARRIER NPNH)(0 NOTIME OR Pron) (NOT 0 Nom OR Loc OR Adv OR VERB-NOT-ACTIO) (1 CC LINK 1 Gen LINK 1 Acc LINK *1 CLB OR VFIN BARRIER NOT-ADV-PCLE LINK NOT *1 Gen BARRIER NPNH);      
+    ## Sámit soitet erenoamážit amašit norpmaid nugo guhkes váccahagaid ja oktasašvuođa váiluma. 
  
-SELECT Acc IF (NOT *-1 Pr OR Num BARRIER NPNH)(0 NOTIME OR Pron) (NOT 0 Nom OR Loc OR Adv OR VERB) (*1C CLB OR VFIN BARRIER NOT-ADV-PCLE LINK NOT *1 Gen BARRIER NPNH);
+SELECT Acc IF (NOT *-1 Pr OR Num BARRIER NPNH)(0 NOTIME OR Pron) (NOT 0 Nom OR Loc OR Adv OR VERB-NOT-ACTIO) (*1C CLB OR VFIN BARRIER NOT-ADV-PCLE LINK NOT *1 Gen BARRIER NPNH)(NOT 2 ("ii") LINK 1 Gen LINK 1 N);
 	## Jus divššohas roasmmohuvvá dahje oažžu duođalaš váttisvuođaid,...
 	## Liggen dihtii viesuideaset, ferte ollusat muoraid boaldit.
 
