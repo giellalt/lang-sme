@@ -38,7 +38,6 @@ define([ENDKEEP],[popdef([DIVNUM])divert(DIVNUM)dnl])dnl
 define([OMITIF], [pushdef([DIVNUM],ifelse(eval($1),0,0,-1))divert(DIVNUM)dnl])dnl
 define([KEEPIF], [pushdef([DIVNUM],ifelse(eval($1),0,-1,0))divert(DIVNUM)dnl])dnl
 define([ELSE], [define([DIVNUM],ifelse(DIVNUM,0,-1,0))divert(DIVNUM)dnl])dnl
-
 # Add the flag name that you are using here:
 FLAGINIT([der])
 FLAGINIT([lex])
@@ -779,7 +778,7 @@ LIST VERBAL-ACTIVITY-V = "cealkit" "čilget" "čuorvut" "čurvet" "dadjat" "dái
 #Under construction! (as most of the other LISTs) 
     # According to the rules choosing Loc or Com, the these verbs select TOOL, ABSTR-TOOL, CONCEPT or HUMAN in (Pl Loc).
 
-LIST ABSTR-ACTIVITY-V = "áŋgiruššat" "ásahit" "beahttit" "buoridit" "čielggadit" "čuovvulit" "deattuhit" "dieđihit" "dievvat" "duođaštit" "eallit" "geahpedit" "geahpidit" "gudnejahttit" "guorahallat" "illudit" "lassánit" "loahpahit" "luohpat" "moivašuhttit" "nannet" "oassálastit" "suokkardit" "unnidit" "váikkuhit" ;
+LIST ABSTR-ACTIVITY-V = "áŋgiruššat" "ásahit" "beahttit" "buoridit" "čielggadit" "čuovvulit" "deattuhit" "dieđihit" "dievvat" "duođaštit" "geahpedit" "geahpidit" "gudnejahttit" "guorahallat" "illudit" "lassánit" "loahpahit" "luohpat" "moivašuhttit" "nannet" "oassálastit" "suokkardit" "unnidit" "váikkuhit" ;
     # According to the rules choosing Loc or Com, the these verbs do not select TOOL, ABSTR-TOOL, CONCEPT or HUMAN in (Pl Loc).
 
 #LIST ABSTR-EVENT-V = "lassánit" ;
@@ -10490,9 +10489,11 @@ SELECT (N Pl) IF (0 (Sg Com))(1C (Pron Rel Pl));
   	
     # STATE-V
     # -------
-SELECT (Pl Loc) IF (*-1 STATE-V BARRIER SV-BOUNDARY2)(0 (Sg Com) LINK 0 STATE);
-    ## Olbmot geat ellet náitoslágan dahje guimmešvuođalágan gaskavuođain.
-SELECT (Pl Loc) IF (0 (Sg Com) LINK 0 STATE)(*1 STATE-V BARRIER SV-BOUNDARY2);
+SELECT (Pl Loc) IF (*-1 STATE-V BARRIER SV-BOUNDARY2)(0 (Sg Com) LINK 0 STATE OR OTHER-INDUSTRY);
+SELECT (Pl Loc) IF (0 (Sg Com) LINK 0 STATE OR OTHER-INDUSTRY)(*1 STATE-V BARRIER SV-BOUNDARY2);
+	## Olbmot geat ellet náitoslágan dahje guimmešvuođalágan gaskavuođain.
+	## Buolvvaid gaskkas leat stuora erohusat, vuorrasat let eallán vuođđoealáhusain ja dujiin.
+
 
   	
     # Periphrastic constructions
@@ -12233,17 +12234,18 @@ REMOVE ("guđđat") IF (0 ("guođđit"))(*1 Acc BARRIER VFIN) ;
 	# gullat vs. gullát vs. gullet
 	# ----------------------------
 	# gullat = 'hear; belong', gullát 'begin to hear', gullet 'fish'
+   
+SELECT ("gullat") IF (0 ("gullát") LINK *1 SOUND BARRIER NPNH);    
+    ## Mánná hárve gullá eatnigielas.
 
- # Two rules that pick out 'gullat' in the 'belong' sense:
-
-SELECT ("gullat") IF (0 ("gullát") OR ("gullet"))(*1 Ill BARRIER VERB);
+SELECT ("gullat") IF (0 ("gullát") OR ("gullet"))(*1 Ill BARRIER SV-BOUNDARY2 LINK NOT 0 SOUND);
 	## Dat gullá lunddolaččat dakkár áššiide go Sámedikkiid válganjuolggadusaide.
 
-SELECT ("gullat") IF (*-1 Ill BARRIER NOT-ADV-PCLE)(0 ("gullát") OR ("gullet"));
+SELECT ("gullat") IF (*-1 Ill BARRIER NOT-ADV-PCLE LINK NOT 0 SOUND)(0 ("gullát") OR ("gullet"));
 	## Doaimma divššohasjournálaide gullá persovdnaregisttar.
 	## Eanetlohku, masa gulle Riektejoavkku 6 eará lahtu,...
 
-REMOVE ("gullet") IF (*1 ("ahte") BARRIER NOT-ADV-PCLE);
+SELECT ("gullat") IF (*1 ("ahte") BARRIER NOT-ADV-PCLE);
 	## Mun gullen, ahte vulget ikte.
 
 
@@ -12253,16 +12255,6 @@ REMOVE ("gullet") IF (*1 ("ahte") BARRIER NOT-ADV-PCLE);
 
 REMOVE ("gárrat") IF (0 ("gárrut"))(*1 Inf BARRIER NOT-ADV-PCLE-NEG) ;
     	## Mii lávlluimet morašlávlagiid, ehpet ge dii gárron luoibmat.
-
-    # gullat vs. gullát
-    # -----------------
-SELECT ("gullat") IF (0 ("gullát) LINK *1 Ill BARRIER NPNH); 
-SELECT ("gullat") IF (0 ("gullát) LINK *-1 Ill BARRIER SV-BOUNDARY2);
-    ## .. masa mánná gullá.
-    ## Mánná gullá dasa.   
-    
-SELECT ("gullat") IF (0 ("gullát") LINK *1 SOUND BARRIER NPNH);    
-    ## Mánná hárve gullá eatnigielas.
 
 	# máhccat vs. máhccut 
 	# ------------------- #
@@ -12307,7 +12299,19 @@ SELECT ("rihkkut") IF (0 ("rihkkut" Der/Pass))(*-1 BOS LINK *1C LAHKA OR LAHKA-N
 	# sihtat = 'want +Acc/+Inf', sihtit = 'luoda karvansa, puhdistua (oravan-
 	# nahasta syystalvella'
 	# This will in almost all cases mean 'sihtat'.
-
+	 
+	# sirdit vs. sirdát
+	# -----------------
+REMOVE ("sirdát") IF (0 ("sirdit") LINK *1 Ill OR ("dohko") OR ("deike") OR ABSTR-ROUTE BARRIER SV-BOUNDARY2); 
+REMOVE ("sirdát") IF (0 ("sirdit") LINK *-1 Ill OR ("dohko") OR ("deike") OR ABSTR-ROUTE BARRIER SV-BOUNDARY2);
+	## Son sirdá gitta Billavutnii. 
+	 
+	# vázzit vs. vázzát
+	# -----------------
+REMOVE ("vázzát") IF (0 ("vázzit") LINK *1 Ill OR ("dohko") OR ("deike") OR ABSTR-ROUTE BARRIER SV-BOUNDARY2); 
+REMOVE ("vázzát") IF (0 ("vázzit") LINK *-1 Ill OR ("dohko") OR ("deike") OR ABSTR-ROUTE BARRIER SV-BOUNDARY2);
+	## Son vázzá gávpogii. 
+	 
 	# vuodjat vs. vuodjit
 	# ------------------
 
