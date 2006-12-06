@@ -1068,7 +1068,7 @@ LIST LAHKA-NOUN = "§" "almmolašvuohta" "eana#girji" "eanan#girji" "eatnan#girj
 # This one does it more likely to be "láhka" in combination with f.i. LAHKA-V:
 LIST LAHKA-NOUN-SUBJ = "eise#váldi" "guovddášeise#váldi" "stáhta" ;
 
-LIST LAHKAGEN-NOUN = "ráhkkanan#bargu" "ulbmil#paragráfa";
+LIST LAHKAGEN-NOUN = "hápmi" "ráhkkanan#bargu" "ulbmil#paragráfa" "vuođđu";
 LIST LAHKA-ASAHUS = "alimus#riekti" "Odeldiggi" "Stuoradiggi" "Stuorradiggi" "stuora#diggi" "stuorra#diggi";
 
 LIST LAHKA-POST = "bokte" "olis" "mielde" "vuođul" ;
@@ -1139,7 +1139,7 @@ LIST GIELDDA = "gieldda" ;
 LIST SAPMI-PROP-HEAD = "alla#skuvla" "giella#láhka" "giella#ráđđi" "guovddáš" "ossodat" "ovdanahttin#foanda" "válga#lihttu" "vuoigatvuođalávde#goddi" ;
   # Those combine with the propernoun Sápmi instead of sápmi
   
-LIST SAPMI-N-HEAD = "árbe#vierru" ("guovlu" Pl) "plána" "doaibma#plána" "geavaheaddji" "perspektiiva" "mánná" "álbmot" "bargi" "geavaheaddji" "kultuvra" "searvi" "servodat" "strategiija#plána" ;
+LIST SAPMI-N-HEAD = "árbe#vierru" ("guovlu" Pl) "plána" "doaibma#plána" "geavaheaddji" "perspektiiva" "mánná" "álbmot" "bargi" "geavaheaddji" "kultuvra" "searvi" "servodat" "strategiija#plána" "vuoigatvuođa#bargu" ;
   # Default
   
 
@@ -3228,6 +3228,7 @@ REMOVE LEMMA-ADJ2 IF (0 LEMMA-ADJ1);
 	# eana
 	# - - - 
 REMOVE Sg IF (*-1 ("stáhta") OR ("priváhta") OR ("matrikuleret"))(0 ("eana" Pl Loc));
+
 	## Stáhta eatnamiin.
 
 	# bealle
@@ -4537,7 +4538,7 @@ SELECT ("láhka") IF (0 ("lága"))(-1 ("čuovvut") OR ("čuovvulit")) ;
   # If it´s "lága", then one should expect a Gen., like "sin lága, gávpoga lága".   
   	## Olbmot eai čuovo lága.  
 
-SELECT ("láhka") IF (0 ("lága" Gen))(1 LAHKAGEN-NOUN) ; 
+SELECT ("láhka") IF (0 ("lága" Gen))(*1 LAHKAGEN-NOUN BARRIER NOT-ADJ) ; 
   	## Dan oaidná lága ráhkkananbarggus.
 
 SELECT ("láhka") IF (0 ("lága"))(1 LAHKA-POST)(2 ("lohpi") OR LAHKA-NOUN) ; 
@@ -4571,7 +4572,8 @@ SELECT ("láhka") IF (0 ("lága"))(-1 CC OR COMMA LINK -1 ("konvenšuvdna") OR (
   	## Sámi perspektiiva lea mielde dehálaš dearvvašvuođa- ja sosiálpolitihkalaš guorahallamiin 
   	## ja mearrádusdokumeanttain, nugo lágain, láhkaásahusain ja bagadusmateriálain.
   
-SELECT ("láhka") IF (*-1 CC BARRIER NPNH LINK -1C LAHKA)(0 ("lága"));
+SELECT ("láhka") IF (*-1 CC BARRIER NPNH LINK -1C LAHKA OR TEXT)(0 ("lága"));
+SELECT ("láhka") IF (*1 CC LINK *1C LAHKA OR TEXT BARRIER NPNH)(0 ("lága"));
   	## Máŋggabealatvuohta ja ovttadássásašvuohta čuovvula maiddái ođđa pasientavuoigatvuođalágaid ja lága dearvvašvuođabargiid birra.
        
 
@@ -5950,7 +5952,7 @@ SELECT Adv IF (0 ("ollásit" Adv))(*1 NP-HEAD-GEN BARRIER NPNHA LINK 1 Po);
 SELECT (Pron Indef @PronN>) IF (-1 Rel)(1 N);
 	## maid ollu dearvvašvuođaásahusat.
 
-SELECT (Pron Indef @PronN>) IF (*-1 V BARRIER NOT-ADV)(*1 (N Acc) OR (N Nom) BARRIER NOT-A);
+SELECT (Pron Indef @PronN>) IF (*-1 V BARRIER NOT-ADV)(0 ("ollu") OR ("olu"))(*1 (N Acc) OR (N Nom) BARRIER NOT-A);
 	## Gielddat, main orrot ollu sápmelaččat.
 		
 SELECT (Pron Indef @PronN>) IF (0 ("buot"))(*1 (N Pl) OR (A Pl) BARRIER NOT-A);
@@ -6405,7 +6407,52 @@ SELECT Num IF (NOT -1 Neg)(0 ("galle"))(*1 N BARRIER NPNH);
 
 
 	# nubbi
+	# Remove the nominal reading of "nubbi"
+	# - - - - - - - - - - - - - - - - - - -
+
+ # The idea is that "nubbi" is a noun only when it is not followed by
+ # a noun with which it agrees in case. Some of the case combinations may
+ # still hide a noun "nubbi", but no errouneous hits were found in the corpus.
+
+REMOVE N IF (0 ("nubbi" Nom))(*1 (N Nom) BARRIER NOT-ADJ);
+REMOVE N IF (0 ("nubbi" Gen))(*1 (N Gen) BARRIER NOT-ADJ);
+    	## 22. b. 1902 lága nuppi lađđasa a bustávas. 
+
+REMOVE N IF (0 ("nubbi" Acc))(*1 (N Acc) BARRIER NOT-ADJ);
+REMOVE N IF (0 ("nubbi" Gen))(*1 (N Ill) BARRIER NOT-ADJ);
+    	## Vuosttas ja nuppi lađđasii:
+
+REMOVE N IF (0 ("nubbi" Gen))(*1 (N Loc) BARRIER NOT-ADJ);
+    	## ... ja nuppi teakstaoasis lea válddálas
+
+REMOVE N IF (0 ("nubbi" Com))(*1 (N Com) BARRIER NOT-ADJ);
+    	## Nuppiin sániiguin daddjon lea sáhka oasis gáddevuoigatvuođas.
+
+REMOVE N IF (0 ("nubbi" Ess))(*1 (N Ess) BARRIER NOT-ADJ);
+    	## Rávdná lea leamaš SÁNSa jođiheaddjin ja NSRa nubbin jođiheaddjin.
+
+	#REMOVE N IF (-1 Gen OR Dem)(0 ("nubbi" Ess))(*1 N BARRIER NOT-ADJ);
+    	## Rávdná lea leamaš SÁNSa jođiheaddjin ja NSRa nubbin jođiheaddjin.
+ # I tried CASE instead of Ess, but then the rule did not fire.
+
+
+	# nubbi
 	# - - -
+# Pron Indef or A Ord
+
+SELECT (Pron Indef Gen) IF (0 ("nubbi")) (1 ("dáfus" Po) OR ("beali" Po) OR ("hávvi") OR ("beallái" Po) OR ("bealli") OR ("sohka#bealli") OR ("bealde") OR ("beales") OR ("láhkai") OR ("riika"));
+	## Nuppe dáfus deattuha suohkan, ahte...
+
+SELECT Pron IF (*-1 ("nubbi") OR ("guokte"))(0 ("nubbi"));
+SELECT Pron IF (0 ("nubbi"))(*1 ("nubbi"));
+
+SELECT (Pron Com) IF (0 ("nubbi"))(1 ("sátni" Com));
+
+SELECT (Indef Loc) IF (-1 COMMA OR CC LINK -1 (N Nom) LINK *-1 COPULAS BARRIER VERB LINK -1 (N Pl Loc));
+	## Muhtun siiddain leat moanat goađit, nuppiin unnánat, dan duohken leago rájá siskkobealde stuorra dahje unna eanaguvlloš. 
+	
+SELECT Indef IF (0 ("nubbi" Pl))(-1 ("go"));	
+
 SELECT Ord IF (*-2 ("vuosttas") OR ("vuosttaš"))(*-1 CC OR (@ADVL) BARRIER WORD)(0 ("nubbi"));
 SELECT Ord IF (0 ("nubbi"))(*1 CC OR COMMA LINK 1 ("goalmmát")); 
 	## Vuosttaš vuojahaga fávllimus čuolda lea goaratčuoldan ja nubbi čuolda fas gáddeoal-čuoldan.
@@ -6416,18 +6463,18 @@ SELECT Ord IF (0 ("nubbi"))(*1 CC OR COMMA LINK 1 ("goalmmát"));
 SELECT Ord IF (-1 MANNU LINK 0 Gen)(0 ("nubbi"))(1 ("beaivi") OR ("b") OR ("vahkku"));
 	## Son lei doppe Ohcejogas golggotmánu nuppi beaivvi.
 
-SELECT Ord IF (0 ("nubbi"))(1 A LINK 0 Superl OR Loc);
+SELECT Ord IF (0 ("nubbi"))(1 A LINK 0 Superl OR Loc OR ("maŋimuš"));
 	## Listu lea gieldda nubbi stuorámus bellodat.
 	## Nubbin vuolemusas lea Guovdageaidnu Finnmárkku listtus.
 
 SELECT Indef IF (-1 (N Sg Loc))(0 ("nubbi" Ill));
 	## Son lea viehkan čoahkkimis nubbái maŋŋebárgga rájes.
 
-SELECT Indef IF (0 ("nubbi"))(1 ("bealde"));
-
-SELECT Ord IF (0 ("nubbi"))(1 ("geardi") OR ("buolva" Loc) OR ("giella"));
+SELECT Ord IF (0 ("nubbi"))(1 ("geardi") OR ("buolva" Loc) OR ("giella") OR ("máilbme#soahti") OR ("lađas") OR ("čuokkis"));
 	## Henrik oaččui buot gussiid dearvan nuppi gearddi čađa, gos ii buollán.
 	## Soai leigga fulkkežat nuppi buolvvas.
+	
+SELECT Ord IF (-1 ("vuoigatvuođalávde#goddi"))(0 ("nubbi"))(1 ("árvalus"));	
 	
 SELECT Ord IF (-1 ("okta") OR ("akta"))(0 ("nubbi"));
 	## Okta nubbi vuodjá tráktor máđiiráigge.
@@ -6464,34 +6511,6 @@ REMOVE Attr IF (0 ("nubbi"))(1 Dem OR Adv);
 	## ... ja nubbi dán suorggi siskkabeale hálddahusortnegiid birra.
 	## ...nubbi fas rávesolbmuid psykiatriijas.
 
-
-	# Remove the nominal reading of "nubbi"
-	# - - - - - - - - - - - - - - - - - - -
-
- # The idea is that "nubbi" is a noun only when it is not followed by
- # a noun with which it agrees in case. Some of the case combinations may
- # still hide a noun "nubbi", but no errouneous hits were found in the corpus.
-
-REMOVE N IF (0 ("nubbi" Nom))(*1 (N Nom) BARRIER NOT-ADJ);
-REMOVE N IF (0 ("nubbi" Gen))(*1 (N Gen) BARRIER NOT-ADJ);
-    	## 22. b. 1902 lága nuppi lađđasa a bustávas. 
-
-REMOVE N IF (0 ("nubbi" Acc))(*1 (N Acc) BARRIER NOT-ADJ);
-REMOVE N IF (0 ("nubbi" Gen))(*1 (N Ill) BARRIER NOT-ADJ);
-    	## Vuosttas ja nuppi lađđasii:
-
-REMOVE N IF (0 ("nubbi" Gen))(*1 (N Loc) BARRIER NOT-ADJ);
-    	## ... ja nuppi teakstaoasis lea válddálas
-
-REMOVE N IF (0 ("nubbi" Com))(*1 (N Com) BARRIER NOT-ADJ);
-    	## Nuppiin sániiguin daddjon lea sáhka oasis gáddevuoigatvuođas.
-
-REMOVE N IF (0 ("nubbi" Ess))(*1 (N Ess) BARRIER NOT-ADJ);
-    	## Rávdná lea leamaš SÁNSa jođiheaddjin ja NSRa nubbin jođiheaddjin.
-
-	#REMOVE N IF (-1 Gen OR Dem)(0 ("nubbi" Ess))(*1 N BARRIER NOT-ADJ);
-    	## Rávdná lea leamaš SÁNSa jođiheaddjin ja NSRa nubbin jođiheaddjin.
- # I tried CASE instead of Ess, but then the rule did not fire.
 
 	# okta
 	# - - -
@@ -6603,16 +6622,6 @@ REMOVE ("earri" N Sg Acc PxSg2) IF (1 (Pron Rel Pl));
 # - - -
 SELECT (Indef Nom) IF (-1 CLB)(0 ("juoga"))(1 Interr);
 	## ..., juoga mii boahtá ovdan Romssa universitehta plánain.
-
-# nubbi
-# - - -
-# Pron Indef or A Ord
-
-SELECT (Pron Indef Gen) IF (0 ("nubbi")) (1 ("dáfus" Po) OR ("beali" Po) OR ("hávvi") OR ("beallái" Po) OR ("bealli") OR ("sohka#bealli"));
-	## Nuppe dáfus deattuha suohkan, ahte...
-
-SELECT (Pron) IF (*-1 ("nubbi"))(0 ("nubbi"));
-SELECT (Pron) IF (0 ("nubbi"))(*1 ("nubbi"));
 
 
 # ollu
@@ -8673,8 +8682,7 @@ SELECT Gen IF (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1C Nom BARRIER S-BOUNDARY
 	## Don it leat guhkkin eret Ipmila riikkas.
 
 SELECT Gen IF (*-1 ACC-ILLV BARRIER NOT-ADV-PCLE) (*1 Ill BARRIER NPNH LINK *1 Acc BARRIER NPNH OR CC LINK NOT 0 Interr) (NOT *1 Ill BARRIER NPNH LINK *1 Acc BARRIER NPNH LINK 1 Po) (NOT 0 (Dem Pl) LINK *1 (Sg Ill) BARRIER NPNH);
-	## Láhkaásahus ii bija doaimma guđege oassái ovddasvástádusa ásahit
-	## journálavuogádaga.
+	## Láhkaásahus ii bija doaimma guđege oassái ovddasvástádusa ásahit journálavuogádaga.
 
 SELECT Gen IF (*-1 ("dahkat") BARRIER SV-BOUNDARY2)(*1 Com BARRIER NPNH);
 	## Ii go mus leat lohpi dahkat iežan opmodagain mo ieš dáhtun?
@@ -8729,6 +8737,11 @@ SELECT Gen IF (*-1 CC OR COMMA BARRIER NPNH LINK -1 Loc)(NOT 0 VERB) (*1 Loc BAR
 
 SELECT Gen IF (0 ("láhka") OR ("mánáidsuodjalus#láhka") OR ("ávžžuhus")) (1 ("§") OR ("mearrádus")); 
 	## ...gč. dearvvašvuođabargiid lága§ 45.
+
+SELECT Gen IF (0 Nom)(1 ("biras"));
+	## Mihtilmas dáža birrasiin ii leat álo nu.  	
+	
+SELECT Gen IF (0 ("stáhta"))(1 ("eana") OR ("eatnan") OR ("eanan"));	
 
 SELECT Gen IF (-1 CC)(0 (N Prop))(*1 (N Nom) BARRIER NPNH OR COMMA OR CC);
 	## ...ja Romssa universitehta lea doaibmaplána bokte...
@@ -9974,6 +9987,8 @@ SELECT Gen IF (*-1 ("dihte") OR ("dihtii") BARRIER NPNH LINK -1 Actio) (NOT 0 De
 REMOVE Acc IF (-1 ("mannat" @PrcN>) OR ("boahtte" Attr) OR (Dem @DN>))(0 Gen LINK 0 TIME);
   	## Mannan dálvvi hárjánin čuoigat.
   	## Dán jagi ii lean áivevátnu juo árradit.
+  	
+
   	
 	# Accusative Px or locative
 	# =========================
