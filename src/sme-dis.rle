@@ -4692,6 +4692,19 @@ SELECT Nom IF (-1 Num OR NUMMAR)(0 INITIAL LINK NOT 1 NP-MEMBER);
 
 
 	# ========================== #
+	# Disambiguating particles   #
+	# ========================== #
+
+SELECT Pcle IF (-2 BOS)(NOT -1 PUNCT)(0 ("son"))(1 (@SUBJ));
+	## Mo son Duommá lea dahkan?
+SELECT Pcle IF (-1 N LINK *-1 BOS BARRIER NPNH)(0 ("son"))(1 (@SUBJ));
+	## Dat viesu son mun dovddan.
+
+REMOVE Pcle IF (0 ("son")); # Remove the rest
+	## Son lea Deanus eret.
+
+
+	# ========================== #
 	# Disambiguating clitics   #
 	# ========================== #
 
@@ -5108,12 +5121,14 @@ SELECT Pron IF (0 ("vaikko"))(1 ("mii") OR ("gii") OR ("guhte") OR ("goabbá") O
 SELECT CS IF (0 go);    # All other go's are CS. (differ from Pcle sect 2?)
 
 # mo
-SELECT Adv IF (*-1 BOS OR (":") OR PUNCT BARRIER NOT-PCLE)(0 ("mo"))(*1 ("?"));
+SELECT Adv IF (*-1 BOS OR (":") OR PUNCT BARRIER NOT-PCLE)(0 ("mo") OR ("movt"))(*1 ("?"));
 	## Mo dagai stáhta iežas Finnmárkku eatnamiid eaiggádin?
 
-SELECT CS IF (-1 V)(0 ("mo"))(1 Nom OR (@ADVL));
+#Try a more radical approach:
+SELECT CS IF (NOT *-1 BOS OR (":") OR PUNCT BARRIER NOT-PCLE)(0 ("mo") OR ("movt"))(NOT *1 ("?"));
+#SELECT CS IF (-1 V)(0 ("mo") OR ("movt"))(1 Nom OR (@ADVL));
 	## Farga boahtá ođđa govat mat čájehit mo ieš johtin manai.
-SELECT CS IF (-1 COMMA)(0 ("mo"))(1 Nom OR (@ADVL) OR VFIN);
+#SELECT CS IF (-1 COMMA)(0 ("mo") OR ("movt"))(1 Nom OR (@ADVL) OR VFIN);
 
 # vai
 SELECT CS IF (0 ("vai"));
@@ -6532,14 +6547,15 @@ SELECT (Pron Indef) IF (0 ("buot"))(1 PrfPrc)(*2 N BARRIER NOT-A);
 
 SELECT (Pron Indef) IF (0 ("buot"))(1 V-PL3);
 	## Vuollásaš ráđit buot heaittihuvvojedje oktasaš hálddahuslaš jođiheapmái. 
-	# eará
-	# - - -
+
+# eará
+# - - -
 
 SELECT (Indef Attr) IF (0 ("eará"))(1 PrfPrc)(2 N);
 	## ...ja eará vuostáiváldojuvvon dokumeanttaid...
 
-	# earri
-	# - - -
+# earri
+# - - -
 
 REMOVE ("earri" N Sg Acc PxSg2) IF (-2 (V Pl3))(-1 COMMA)(0 ("eará"))(1 (V Pl3));
 	## Muhtamat čállet, earát ožžot jorgalan ja bagadallanveahki dán bargui.
@@ -6553,14 +6569,14 @@ REMOVE ("earri" N Sg Acc PxSg2) IF (NOT *-1 Sg2)(*1 (V Pl3));
 REMOVE ("earri" N Sg Acc PxSg2) IF (1 (Pron Rel Pl));
 	## ... ja earát geat háliidit ...
 
-	# juoga
-	# - - -
+# juoga
+# - - -
 SELECT (Indef Nom) IF (-1 CLB)(0 ("juoga"))(1 Interr);
 	## ..., juoga mii boahtá ovdan Romssa universitehta plánain.
 
-	# nubbi
-	# - - -
-	# Pron Indef or A Ord
+# nubbi
+# - - -
+# Pron Indef or A Ord
 
 SELECT (Pron Indef Gen) IF (0 ("nubbi")) (1 ("dáfus" Po) OR ("beali" Po) OR ("hávvi") OR ("beallái" Po) OR ("bealli") OR ("sohka#bealli"));
 	## Nuppe dáfus deattuha suohkan, ahte...
@@ -6569,16 +6585,16 @@ SELECT (Pron) IF (*-1 ("nubbi"))(0 ("nubbi"));
 SELECT (Pron) IF (0 ("nubbi"))(*1 ("nubbi"));
 
 
-	# ollu
-	# - - -
+# ollu
+# - - -
 SELECT Pron IF (-2 Pron)(-1 CC)(0 ("ollu"));
 	## Váilos unnán dahje ollu.
 
 SELECT Pron IF (-1 ("seamma"))(0 ("ollu"))(*1 N BARRIER NPNH);
 	## Jus eanebut leat ožžon seamma ollu jienaid, de mearriduvvo boađus vuorbádemiin.
 
-	# seamma/seammá
-	# - - - - - - - 
+# seamma/seammá
+# - - - - - - - 
 
 	#SELECT Attr IF (-1 Num)(0 ("seamma") OR ("seammá"))(1 A OR N ); # Old version.
 SELECT Attr IF (0 ("seamma") OR ("seammá"))(*1 A OR N BARRIER NOT-NUMERALS );
@@ -6597,8 +6613,8 @@ SELECT Attr IF (0 ("seamma") OR ("seammá"))(1 Adv OR ("ollu" Pron))(NOT 1 VERB 
 	## Seammá gusto poliklinihkalaš divššus. 
   	## Seamma gusto poliklinihkalaš divššus. 
 
-	# unnán
-	# - - -
+# unnán
+# - - -
 SELECT Indef IF (*-1 COPULAS BARRIER V-NOT-AUX)(0 ("unnán")) (NOT 1 PrfPrc LINK *1 NP-HEAD-ACC BARRIER NPNH);
 	## Dat gal lei beare unnán.
 	## Sii leat hui unnán dahkan guorahallat "sámi vieruid ja riekteáddejumiid".
@@ -6628,10 +6644,10 @@ REMOVE Dem IF (0 Pers)(1 Dem);
 	## ...beroškeahttá das makkár geavahus leamaš dolin.
 
 
-	# makkár (Negative polarity demonstratives)
-	# - - - 
+# makkár (Negative polarity demonstratives)
+# - - - 
 
-SELECT Attr IF (*-1 Neg BARRIER NOT-VERB)(0 (Pron Dem Attr Foc))(*1 N BARRIER NPNH);
+SELECT Attr IF (*-1 Neg OR Qst OR ("go" Plce))(0 (Pron Dem Attr Foc/ge))(*1 N BARRIER NPNH);
 
 
 	# DP-internal number concord
@@ -6954,10 +6970,11 @@ REMOVE Adv IF (*-1 ("go" Pcle) BARRIER NPNH OR CC)(*1 N BARRIER NOT-ADJ-CC);
 	# Only Attr if something to lean on
 	# ---------------------------------
 
-#REMOVE Attr IF (NOT *1 N BARRIER NPNHCCC)(NOT 1 PUNCT-LEFT LINK *1 PUNCT-RIGHT LINK *1 N BARRIER NPNHCCC);
+REMOVE Attr IF (NOT *1 N BARRIER NPNHCCC)(NOT 1 PUNCT-LEFT LINK *1 PUNCT-RIGHT LINK *1 N BARRIER NPNHCCC);
   	## Dalle sáhttá beaktilit háhkat guovtte ja maiddái golmmagielat (maiddái suomagielat) gelbbolašvuođa .
-  
-
+	## Seamma guoská geassemánu.
+# XXX This rule was removed, and I restored it. It probably was removed for a reason, so have a look?  
+# For the first (original)example sentence it is irrelevant, but for the second, it is useful.
 
 
 	# Rules for Attr between Dem and N
@@ -7741,8 +7758,10 @@ SELECT Gen IF (0 Acc LINK 0 NORGA)(1 POLITICAL-INDUSTRY OR ORGANIZATION OR INSTI
 	# Removing proper nouns that are lookalikes
 	# - - - - - - - - - - - - - - - - - - - - -
 
+SELECT ("Dan") IF (NOT -1 BOS OR (":") OR PUNCT)(1 (Prop Sur) OR (Prop Mal));
+SELECT ("dan") IF (-1 BOS OR (":") OR PUNCT);
 REMOVE ("Dan" Attr) IF (NOT 1 Prop);
-REMOVE ("Dan" Prop) IF (1 CNOUN); # Dan is Nom or Attr.
+#REMOVE ("Dan" Prop) IF (1 CNOUN); # Dan is Nom or Attr.
 
 REMOVE ("Hu" Ill) IF (1 A or Adv);
 
