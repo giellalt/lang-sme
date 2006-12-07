@@ -573,7 +573,7 @@ LIST XGO = "dego" "nugo" "seammaládjego" "seammaláhkaigo" ;
 LIST SEAMMAX = "seamma#ládje" "seamma#láhkai" ;
   # Those combine with go
   
-SET CRD = COMMA | CC | NEGFOC | XGO | ("/") ; 
+SET CRD = COMMA | CC | NEGFOC | XGO | ("/") | ("-") ; 
 	# coordinators
 	
 SET LCRD = (@CS-NP) | (@CC-NP) ;
@@ -1177,6 +1177,10 @@ SET NOTIME = N - TIME ;
 
 LIST GEASSET = "dálvet" "dálvit" "giđđat" "geasset" ("geassit" Adv) "čakčat" ; # What is special here?
 
+LIST PAST-MARKER = ("mánná" Ess) "dolin" "dološ" "ikte" "ovdal" ("ovddit#beaivi" Gen) ("vássán#áigi" Loc);
+
+LIST PRESENT-MARKER = "dál" "odne" ;
+
 
 # Amount sets
 # - - - - - -
@@ -1746,7 +1750,7 @@ SET S-BOUNDARY = (Pron Interr) | (Pron Rel) | ("muhto") | MO | CS | ("\;") | (":
 	# includes CP
 	# remember that (",") and CC are potential sentence boundaries, too
 	
-SET S-BOUNDARY2 = (Pron Interr) | (Pron Rel) | ("muhto") | MO | CS | ("\;") | (":") | (@CC-VP) ;
+SET S-BOUNDARY2 = (Pron Interr) | (Pron Rel) | ("muhto") | MO | (@CS-VP) | ("\;") | (":") | (@CC-VP) ;
 	# includes CP
 	# this one includes @CC-VP, the conjunction, which actually connects two sentences (each with a finite verb) to each other, and not @CC-NP, which coordinates internal NP-/AdvP-/AP ... coordination
 	# To be used only AFTER the disambiguation of @CC-VP and @CC-NP taking place in the chapter right before "Disambiguatig pronouns"
@@ -6101,6 +6105,10 @@ REMOVE LCRD IF (NOT -2 Gen)(-1 ("ovdal") LINK NOT *-1 VFIN BARRIER SV-BOUNDARY O
 
 REMOVE LCRD IF (-1 ("dihte") LINK -1 (Dem Gen))(0 ("go"));
     ## 
+REMOVE LCRD IF (*-2 TV LINK 0 VFIN BARRIER S-BOUNDARY)(-1C (@OBJ))(*1C (@OBJ) BARRIER NPNHA LINK *1 TV LINK 0 VFIN BARRIER S-BOUNDARY);
+    # Has to come before the GCRD rules
+    # Two transitive verbs each asking for its own object before and after the CC/CS
+    ## Erenoamážit muitá borramušaid ja bohccobierggu hája ja dávttiid ruoškima go ađđamiid čiske.
 
 REMOVE GCRD IF (-1 Cmpnd);
 #SELECT (@CC-NP) IF (-1 Cmpnd);
@@ -7509,9 +7517,9 @@ SELECT Inf IF (-1 BOS)(*1 ("ii" V IV Neg Ind Sg3) BARRIER V);
 	
 
 
-	# Rules that prevent later selection of Inf for a finite verb in the frame 
-	# INFV...CC... ____							  
+	# Rules that prevent later selection of Inf for a finite verb in the frame 						  
 	# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+	# INFV...CC... ____	
  
 REMOVE Inf IF (*-1 NP-HEAD-PL-NOM BARRIER NPNHA LINK -1 CC) (NOT *-1 A BARRIER NOT-ADV-PCLE)(NOT *-1 INFV BARRIER VERB);
 REMOVE Inf IF (*-1 (Num Nom) BARRIER NOT-NA LINK -1 CC LINK NOT *-1 Inf OR INFV BARRIER VFIN);
@@ -8506,7 +8514,7 @@ SELECT Gen IF (*-1 (@OBJ) BARRIER VERB LINK *-1 V-TRANS-ACT BARRIER NPNHA) (1 Ge
 	
 	# Genitive (or nominative) in clause without full verb
 	# - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REMOVE Acc IF (NOT *-1 V-TRANS-ACT-NOT-ACT BARRIER PUNCT)(NOT *-1 CS LINK *1 V-TRANS-ACT BARRIER Acc)(NOT *-1 CS BARRIER V-TRANS-ACT LINK *1 CS BARRIER VFIN)(NOT *-1 CS BARRIER V LINK 1 @CS-COMPL) (NOT *-1 (Der/Pass PrfPrc) BARRIER NPNH LINK *-1 V-TRANS-ACT BARRIER NPNHA) (NOT -1 CC LINK -1 Acc LINK -1 ("ollu"))(NOT 0 TIME) (NOT 0 NUMERALS LINK *1 TIME OR MEASURE BARRIER NOT-A) (NOT *1 V-TRANS-ACT BARRIER SV-BOUNDARY2 LINK 0 VFIN OR (@-FMAINV)) (NOT *1 CLB BARRIER NOT-NP); # LINK *1 (Pron Acc) BARRIER NOT-ADV-PCLE);
+REMOVE Acc IF (NOT *-1 V-TRANS-ACT-NOT-ACT BARRIER PUNCT)(NOT *-1 (@CS-VP) LINK *1 V-TRANS-ACT BARRIER Acc)(NOT *-1 (@CS-VP) BARRIER V-TRANS-ACT LINK *1 (@CS-VP) BARRIER VFIN)(NOT *-1 (@CS-VP) BARRIER V LINK 1 @CS-COMPL) (NOT *-1 (Der/Pass PrfPrc) BARRIER NPNH LINK *-1 V-TRANS-ACT BARRIER NPNHA) (NOT -1 CC LINK -1 Acc LINK -1 ("ollu"))(NOT 0 TIME) (NOT 0 NUMERALS LINK *1 TIME OR MEASURE BARRIER NOT-A) (NOT *1 V-TRANS-ACT BARRIER SV-BOUNDARY2 LINK 0 VFIN OR (@-FMAINV)) (NOT *1 CLB BARRIER NOT-NP); # LINK *1 (Pron Acc) BARRIER NOT-ADV-PCLE);
 	## Leago doppe kafea?
 	## Amma duot lei Niillasa guollebiila?
 	## Láhka divššohasvuoigatvuođaid birra.
@@ -9905,6 +9913,8 @@ SELECT Acc IF (*-1 CC OR COMMA BARRIER NPNH LINK -1 NP-HEAD-ACC)(1 COMMA OR CC) 
 
 SELECT Acc IF (*-1 COMMA OR CC BARRIER NPNH LINK -1C Acc LINK *-1 V-TRANS-ACT BARRIER NPNHAII)(1 CC OR COMMA);
     	## Jos juohká dážaid, sámiid ja láddelaččaid ieš guđet sadjái, ...
+    	
+#SELECT Acc IF (*-1 CRD OR CC BARRIER NPNH LINK -1C Acc LINK *-1 V-TRANS-ACT BARRIER NPNHAII)(1 CC OR COMMA); 
 
 SELECT Acc IF (-2C Acc)(-1 ("/"));
 	## Dát sáhttá dáhpáhuvvat go atná konkrehtalaš daguid/hilgumiid 
@@ -11121,7 +11131,7 @@ SELECT Nom IF (0C ("ulbmil" Nom) OR ("ulbmil" @GN>))(*1C Loc BARRIER NPNH);
 
 	# Finite forms #
 	# ================ #
-  CONSTRAINTS #22 #
+       CONSTRAINTS #22 #
 	# ================ #
 
 	# Finite or not
@@ -11171,6 +11181,9 @@ REMOVE Inf IF (-1 ("nu"))(*1 ("go" Pcle) BARRIER NOT-NA);
 
 REMOVE ConNeg IF (*-1 PrfPrc BARRIER NOT-ADV-PCLE);
 	## Go geavahus ii duođaštuvvon leat álggahuvvon ovdal go... 
+	
+SELECT (@+FMAINV) IF (*-1 CS BARRIER S-BOUNDARY)(0C (@ActioN>) OR (@PrcN>) OR (@GN>) OR (@+FMAINV))(*1 (@OBJ))(NOT *1 VFIN BARRIER S-BOUNDARY);
+    ## Go gulan olbmuid sámásteame, de lea dego doložii máhccat, go mánnán gullen áhči,  eagi ja Ristiinna-imi humadeame.
 
 
 	# Indicative Negative
@@ -11910,7 +11923,7 @@ SELECT (Der/Pass) IF (*-1 ("leat" Sg3) BARRIER V)(*-1 (@ADVL))(NOT *-1 (@SUBJ) B
 	# ===================== #
 
 	# ================== #
-  CONSTRAINTS #23 #
+         CONSTRAINTS #23 #
 	# ================== #
 
 
@@ -12237,14 +12250,22 @@ SELECT VFIN IF (0 INFV)(1 ("go" Pcle))(*2 Inf BARRIER VERB);
 	# ---------------
 
 	# Tense congruence within the same clause:
+	# Except for if there are past-signal words
+
+REMOVE (Prs Sg1) IF (-1 PAST-MARKER)(0C (Prt Sg1) OR (Prs Sg1));
+    ## Go gulan olbmuid sámásteame, de lea dego doložii máhccat, go mánnán gullen áhči,  eagi ja Ristiinna-imi humadeame.
+    
+REMOVE (Prt Sg1) IF (-1 PRESENT-MARKER)(0C (Prt Sg1) OR (Prs Sg1));
+    ## 
 
 	# Present tense in subordinate clause if present in matrix clause
-REMOVE Prt IF (*-1 CS BARRIER Prt OR (N Sg Nom) LINK *-1C Prs BARRIER Prt);
+REMOVE Prt IF (*-1 CS BARRIER Prt OR (N Sg Nom) LINK *-1C Prs BARRIER Prt)(NOT -1 PAST-MARKER);
 	## Mánáidgárdi lea dehálaš báiki gos sáhttet kártet mánáid giellaovdáneami.
 
 	# Past tense in subordinate clause if past in matrix clause
-REMOVE Prs IF (*-1 CS BARRIER Prs OR (N Sg Nom) LINK *-1C Prt BARRIER Prs);
+REMOVE Prs IF (*-1 CS BARRIER Prs OR (N Sg Nom) LINK *-1C Prt BARRIER Prs)(NOT -1 PRESENT-MARKER);
 	## Mánáidgárdi lei dehálaš báiki gos sáhttet kártet mánáid giellaovdáneami.
+
 
 	# ------------------------------- # 
 	# Lexical disambiguation of verbs #
@@ -13589,7 +13610,7 @@ REMOVE Acc IF (0 (Num Nom))(NOT *1 TIME BARRIER NOT-A);
  # This in order to constrain the proliferation of case. If no context has hit, 
  # then be it a stray nominative.
 
-#REMOVE (@X) ; # Kein Spur...
+#REMOVE (@X) ; # Keine Spur...
  # @X is our "didn't find a syntactic tag -tag.
  # Here we remove it if we have any other suggestion.
  
