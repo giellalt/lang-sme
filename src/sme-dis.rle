@@ -1143,6 +1143,9 @@ LIST LEMMA-ADJ1 = "eahpe#sihkar" "guorus" "geafi" "sihkar" ;
 
 LIST LEMMA-ADJ2 = "eahpe#sihkkar" "guoros" "geaffi" "sihkkar" ;
    
+LIST PROP-OR-NOT1 = "borge#mánnu" "dat" "Deatnu" "justis#departemeanta"  "mobil#telefovdna" "sáme#álbmot" "sáme#giel" "sáme#giella" "sáme#guovlu" "sáme#namma" "Skánit" ;
+
+LIST PROP-OR-NOT2 = "Borge#mánnu" "Dan" "deatnu" "Justis#departemeanta" "Mobil#telefovdna" "Sáme#álbmot" "Sáme#giel" "Sáme#giella" "sáme#guovlu" "Sáme#namma" "Skánik" ;
 
 
 LIST GIELDA = "fylkka#gielda" "hálddašan#gielda" "riddo#gielda" "ruovttu#gielda" "sáme#gielda" "Sáme#gielda" "vuotna#gielda" ; 
@@ -2870,13 +2873,20 @@ MAP (@SPRED) TARGET PrfPrc IF (*-1 ("orrut") BARRIER NOT-ADV-PCLE)(1 NP-BOUNDARY
 	## Olbmot eai orron čadnon dušše iežaset mearragáddái.
 
 MAP (@SPRED @OPRED) TARGET PrsPrc IF (-1 ("nu"))(1 ("go" Pcle));
-	## Mearridanváldi berre leat nu čadni go vejolaš.
+	## Mearridanváldi berre leat nu čadni go vejolaš.	
 
 MAP (@SUBJ) TARGET Indef IF (NOT *-1 Nom BARRIER NOT-ADV-PCLE) (NOT -1 ("mii" Interr Sg Gen))(NOT 0 Acc OR ADVLCASE)(1 V-SG3) (NOT *2 Nom BARRIER S-BOUNDARY LINK NOT 0 PrfPrc) (NOT *-1 V-TRANS-ACT BARRIER S-BOUNDARY)(NOT *1 V-TRANS-ACT BARRIER S-BOUNDARY);
 	## ...ovdal go buot lea dáhpáhuvvan.
 
-MAP (@SUBJ) TARGET ("buot") OR ("gait") IF (*1 V-SG3 BARRIER NOT-ADV-PCLE) (NOT *1 V-TRANS-ACT BARRIER S-BOUNDARY)(NOT 1 ("buohkanassii"));
+MAP (@SUBJ) TARGET ("buot") OR ("gait") IF (*1 V-SG3 BARRIER NOT-ADV-PCLE) (NOT *1 V-TRANS-ACT-NOT-ACT BARRIER S-BOUNDARY)(NOT 1 ("buohkanassii"));
 	## Buot lei varran.
+
+MAP (@SUBJ) TARGET ("buot") OR ("gait") IF (1 V-SG3 LINK 0 COPULAS LINK *1 PrfPrc BARRIER NOT-ADV LINK 0 IV OR Der/Pass);
+MAP (@SUBJ) TARGET ("buot") OR ("gait") IF (*-1 V-SG3 BARRIER NOT-ADV-PCLE LINK 0 COPULAS)(*1 PrfPrc BARRIER NOT-ADV LINK 0 IV OR Der/Pass);
+MAP (@SUBJ) TARGET ("buot") OR ("gait") IF (-1 COMMA)(1 PrfPrc BARRIER NOT-ADV LINK 0 IV OR Der/Pass);
+	## Buot lea vuođđuduvvon dan áddejumis.
+	## Nu leige buot vuođđuduvvon dan áddejumis.  
+	## Sii siskkildit dán 78 riektemearrádusa, buot vuođđuduvvon dan áddejumis, almmá ovttage vuosteákka haga.
 
 MAP (@SUBJ) TARGET ("buot") OR ("gait") IF (-1 COPULAS);
 	## Danin lea buot nu olu álkit inuihtaide.
@@ -6799,7 +6809,7 @@ SELECT (Pron Indef) IF (0 ("buot") OR ("gait"))(1 V-PL3);
 SELECT Adv IF (0 ("buot") OR ("gait"))(1 (A Superl)) ;
 	## Buot buoremus lea ieš vuolgit.	
 	
-SELECT Adv IF (0 ("buot") OR ("gait"))(1 VFIN LINK 1 Nom LINK *1 Acc BARRIER VFIN OR S-BOUNDARY2);
+SELECT Adv IF (0 ("buot") OR ("gait"))(1 VFIN LINK 1 Nom LINK NOT 0 Der/Pass LINK *1 Acc BARRIER VFIN OR S-BOUNDARY2);
 	## Buot lea beaivváš boaldán gittiid.
 
 SELECT Adv IF (0 ("buot") OR ("gait") LINK -1 VFIN LINK 0 IV LINK -1 Nom)(NOT 1 Pr);	
@@ -7997,11 +8007,10 @@ REMOVE (Prop Pl) IF (0 (Prop Sg))(NOT 0 ("Sámediggi") OR (laš));
 REMOVE (Prop Pl) IF (-1 BOS)(0 CNOUN-PL-NOM);    
 	## Sámit leat álgoálbmot.
 	
-REMOVE Prop IF (0 ("dat" Pron));
+#REMOVE Prop IF (0 ("dat" Pron));
 	## Dan	
 	
-SELECT ("Deatnu" N Prop) IF (0 ("deatnu"));
-	
+SELECT PROP-OR-NOT1 IF (0 PROP-OR-NOT2);	
 
 REMOVE (Prop Pl Nom) IF (-1 BOS)(NOT *1 V-PL3 BARRIER SV-BOUNDARY2);	   
 	## Unnit nuppástusaiguin.	
