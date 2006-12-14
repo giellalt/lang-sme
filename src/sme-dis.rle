@@ -570,7 +570,7 @@ LIST MO = "goas" "gokko" "gos" "gosa" "makkár" "manne" "mo" "mot" "movt" ("nugo
 SET Foc = Foc/ge  | Foc/gen  | Foc/ges  | Foc/gis  | Foc/naj | Foc/ba  | Foc/be  | Foc/hal  | Foc/han  | Foc/bat | Foc/son ;
 
 
-LIST NEGFOC = (Neg Foc) ;
+LIST NEGFOC = (Neg Foc/ge) ;
 
 LIST XGO = "dego" "nugo" "seammaládjego" "seammaláhkaigo" ;
   # Compounds
@@ -584,6 +584,9 @@ SET LCRD = (@CS-NP) | (@CC-NP) ;
     # local coordinator
 SET GCRD = (@CS-VP) | (@CC-VP) ;
     # global coordinator
+    
+SET CRD2 = (@CS-NP) | (@CC-NP) | COMMA | NEGFOC | XGO | ("/") | ("-") ;
+    # AFTER LCRD vs. GCRD disambiguation
 
 # Sets for adverbs that have lookalikes
 # - - - - - - - - - - - - - - - - - - -
@@ -832,7 +835,7 @@ LIST CONTRAST-V = "rátkit" ;
     # two arguments, the second of which is locative
 
   
-#LIST EMOTION-V =
+LIST EMOTION-V = "heahpanaddat" "heahpanit" "ráhkistit" ;
 #LIST PERCEPTION-V = 
 #LIST SENSATION-V =
 
@@ -1399,7 +1402,7 @@ LIST PROFESSION = "advokahta" "arkeologa" "artista" "assisteanta" "astoáigge#jo
 LIST OFFICE = "áirras" "ámta#mánni" "bearaš#minister"  "biebmo#ministtar"  "birasgáhtten#ministtar" "boazodoallo#hoavda" "dearvvašvuođa#ministtar" "dekana" "eanadoallo#minister" "farao" "fylkka#ráđđi" "gieldda#minister" "guolástus#minister" "justis#ministtar" "kultur#minister" "leans#mánni" "ministtar" "nisson#áirras" "politihkar" "politihkkár" "sága#doalli" "sámedikke#áirras" "Sámedigge#presideanta" "sámedigge#presideanta" "sátne#jođiheaddji" "sosiála#ministtar" "stáhta#ministtar" "stivra#lahttu" "suodjalus#minister" "ovda#olmmoš" "presideanta" "stáhta#ráđđi" "várre#presideanta" ; 
 
 
-LIST ROLE = (Actor N) "almmolašvuohta" "ássi" "bálvalan#guoibmi" "boazo#eaiggát" "eanan#eaiggát" "eatnigiel#hálli" "fásta#ássi" "gáktehas" "geavaheaddji" "guossi" "informánta" "kandidáhtta" "kandidáhta" "muitaleaddji" "oktavuođa#olmmoš" "olbmo#bárdni" "olles#olmmoš" osku#guoibmi" "pasienta" "riikka#ássi" "soahte#olmmái" "stáhta#boargár" "turista" "virge#olmmoš" "vuoras#olmmoš" "vuoste#belle" "vuoste#bealli" "vuotna#ássi" ; #XXX bad name
+LIST ROLE = (Actor N) "almmolašvuohta" "ássi" "bálvalan#guoibmi" "boazo#eaiggát"  "divššohas" "eanan#eaiggát" "eatnigiel#hálli" "fásta#ássi" "gáktehas" "geavaheaddji" "guossi" "informánta" "kandidáhtta" "kandidáhta" "muitaleaddji" "oktavuođa#olmmoš" "olbmo#bárdni" "olles#olmmoš" osku#guoibmi" "pasienta" "riikka#ássi" "soahte#olmmái" "stáhta#boargár" "turista" "virge#olmmoš" "vuoras#olmmoš" "vuoste#belle" "vuoste#bealli" "vuotna#ássi" ; #XXX bad name
 
 LIST NATIONAL-IDENTITY = "dáčča" "dánskalaš" "duiskkalaš" "Enodat#sápmelaš" "hollándalaš" "julev#sápmelaš" "lulli#sápmelaš" "nuortalaš" "oarje#sápmelaš" "olgo#riikkalaš" "palestinalaš" "ruota#suopmelaš" "Ruošša-#Sápmelaš" "Suonjil#sápmelaš" ;
     # Also regional identity
@@ -6405,7 +6408,7 @@ REMOVE LCRD IF (1 (@SUBJ) LINK 1C VFIN);
 #REMOVE LCRD IF (*-1C VFIN BARRIER S-BOUNDARY)(*1C (@SUBJ) OR (@SUBJ-QH) BARRIER NPNHA);
 SELECT (@CC-VP) IF (*-1C VFIN BARRIER S-BOUNDARY)(*1C (@SUBJ) OR (@SUBJ-QH) BARRIER NPNHA);
     ## Konvenšuvdna eamiálbmogiid ja čearddaid birra iešbirgejeaddji stáhtain dohkkehuvvui Norggas jagis 1990, muhto dakkár dohkkeheapmi ii leat velá dahkkon Ruoŧas.
-    ## Bealatjogas leat dološ rájes leamaš balvossajit ja dát golbm sieiddi ledje dovddus gitta olgoriikii.
+    ## Bealatjogas leat dološ rájes leamaš balvossajit ja dát golbma sieiddi ledje dovddus gitta olgoriikii.
     ## Son lea stuorat nugo mun.
     
 REMOVE LCRD IF (*-1C VFIN BARRIER S-BOUNDARY)(*1C AUX LINK 0 Prs BARRIER S-BOUNDARY); #???
@@ -10687,9 +10690,10 @@ SELECT (Pl Loc) IF (NOT -1 Num OR ("lihkku"))(0 VAHKKU OR AIGODAT LINK 0 (Sg Com
 	## 1870-jagiin lea čielggas ahte láddelaččaide guske ortnegat.
 	## ...gal guhkui ruoššaid gávppašanriekti guvttiin vahkuin. NOT -1 Num!
 
-SELECT (Pl Loc) IF (NOT *-1 COM-HEAD BARRIER SV-BOUNDARY2)(0 PLACE OR EVENT-TOOL-ACTIVITY)(NOT -1 COM-ADV)(NOT 1 ("ovttas"))(NOT *1 COM-HEAD BARRIER SV-BOUNDARY2);
+SELECT (Pl Loc) IF (NOT *-1 CRD2 LINK -1C Com)(NOT *-1 COM-HEAD BARRIER SV-BOUNDARY2)(0 PLACE OR EVENT-TOOL-ACTIVITY)(NOT -1 COM-ADV)(NOT 1 ("ovttas"))(NOT *1 COM-HEAD BARRIER SV-BOUNDARY2);
 	## Sápmelaččat leat unnitlogus earret muhtun unnit guovlluin.
 	## Perspektiiva lea mielde dehálaš dearvvašvuođa- ja sosiálapolitihkalaš guorahallamiin, bušeahttajuolludemiin ja láhkaásahemiin.
+	# The first constraint ist to for coordination
 
 
 SELECT Loc IF (-1 ("máilbmi" @GN>))(0 ("nuortta#oassi" Com))(NOT *-1 COM-HEAD)(NOT 1 COM-HEAD);
@@ -10853,9 +10857,17 @@ SELECT (Prop Loc) IF (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK NOT *-1 ("namma") OR
 
 SELECT (Pl Loc) IF (1 LEAT-FIN-NOT-IMP)(*2 NP-HEAD-NOM OR (Num Nom) BARRIER V-NOT-AUX OR CS);
 	## Badjel 16 jahkásaš mánáin lea iešheanalis vuoigatvuohta...
+
+# HUMAN in habeo-constructions
+# - - - - - - - - - - - - - - -
 	
 SELECT (Pl Loc) IF (*-1 (Pron Rel) BARRIER NPNH LINK -1 (@SUBJ))(0 (Sg Com) LINK 0 HUMAN)(*1 LEAT-FIN-NOT-IMP BARRIER SV-BOUNDARY2 LINK NOT *1 PRC-NOT-LEAT);
     ## Orru čielga vuohki: Dat friddjavuohta mii guođoheddjiin dássážii lei leamaš, gáržžiduvvui dađistaga.
+    
+SELECT (Pl Loc) IF (0 (Sg Com) LINK 0 HUMAN LINK 1 COMMA LINK 1 (Pron Rel) LINK *1 COMMA BARRIER COMMA LINK 1 LEAT-FIN-NOT-IMP LINK NOT *1 PRC-NOT-LEAT LINK  *1 (@SUBJ) BARRIER SV-BOUNDARY);
+    ## Divššohasain, geat ollašuhttet 2. § eavttuid, lea vuoigatvuohta dearvvašvuođaveahkkái dan áigodagas. 
+
+
     
 
 SELECT Loc IF (0 ("láhka"))(1 ("§")); 
@@ -11297,32 +11309,30 @@ SELECT Com IF (*-1 CRD BARRIER NPNH LINK *-1C Com BARRIER WORD);
  # coordination follow suit.
 
 
-SELECT (Sg Loc) IF (1 CRD)(*2C Loc BARRIER NPNH)(NOT *1 VFIN OR AUX BARRIER SV-BOUNDARY2);
+SELECT (Sg Loc) IF (1 CRD2)(*2C Loc BARRIER NPNH);
 	## Dan čuolddas dahje oar-juolggis ráhkadišgoahtá olmmoš doarrása.
 
-SELECT (Sg Loc) IF (*-1 CRD BARRIER NPNH LINK -1C Loc)(NOT *1 VFIN OR AUX BARRIER SV-BOUNDARY2); 
+SELECT (Sg Loc) IF (*-1 CRD2 BARRIER NPNH LINK -1C Loc); 
 	## Go 110a:s lea sáhka sápmelaččaid "ealáhusaid" sihkkarastimis ja ovdánahttimis,...
+	## Don heahpanaddat viesus ja sániin dán oskkáldasmeahttun ja suttolaš sohkagottis, sus heahpana Olbmobárdni ge.
 
-
-SELECT (Pl Loc) IF (*-1 CRD BARRIER NPNH LINK *-1 Loc LINK NOT 0 Com BARRIER NPNH)(NOT *1 VFIN OR AUX BARRIER SV-BOUNDARY2);
-	## Seamma olmmoš áimmuhuššá máŋga dáin doaimmain dahje rollain.
+SELECT (Pl Loc) IF (*-1 CRD2 BARRIER NPNH LINK *-1 Loc LINK NOT 0 Com BARRIER NPNH);
 	## Sámi oahpahussuorgi stivrejuvvo daid rámmaid mielde maid lágat ja njuolggadusat bidjet, ja daid ulbmiliid ja višuvnnaid mielde mat ovdanbohtet Sámediggeplánas ja eará oahpahus- ja oahppoplánain ja strategiijain.
 	## Mii maid muđui fuomášuhttit ahte ollu lohkoávdnasiin mat fátmmastit dahje čilgejit sámediggeválgga , dain lea sáhka smávva loguin / vuollegis lohkoárvvuin.
 
 
-SELECT (Pl Loc) IF (1 CRD)(*2 Loc BARRIER NPNH LINK NOT 0 Com)(NOT *1 VFIN OR AUX BARRIER SV-BOUNDARY2);
+SELECT (Pl Loc) IF (1 CRD2)(*2 Loc BARRIER NPNH LINK NOT 0 Com);
 	## Son lea ođđa mediain ja skuvllas.
 	## Vuđolaš váttisvuohta lea dattege ahte sámi bustávat eai doaimma dohkálaččat ovttaskas dihtoriin eaige interneahtas. 	
-SELECT Loc IF (*-1C Loc LINK 1 CRD)(0 (Sg Com) BARRIER NPNH)(1 CRD LINK *1C Loc BARRIER NPNH)(NOT *1 VFIN OR AUX BARRIER SV-BOUNDARY2);
+SELECT Loc IF (*-1C Loc LINK 1 CRD2)(0 (Sg Com) BARRIER NPNH)(1 CRD2 LINK *1C Loc BARRIER NPNH);
 	## Dearvvašvuođaásahusain, doaktáriin, bátnedoaktáriin ja sealgeetniin lea leamaš geatnegasvuohta čállit journálaid maiddái ovddeš lágaid mielde. 
-SELECT Loc IF (*-1C Loc LINK *1 Rel BARRIER Com OR S-BOUNDARY2)(0 Com LINK *-1 CRD BARRIER NPNH)(NOT *1 VFIN OR AUX BARRIER SV-BOUNDARY2);
-  	## 
+SELECT Loc IF (*-1C Loc LINK *1 Rel BARRIER Com OR S-BOUNDARY2)(0 Com LINK *-1 CRD2 BARRIER NPNH);
 
 
-SELECT (Sg Com) IF (*-1 CRD BARRIER NPNH LINK -1 Com LINK NOT 0 Loc)(NOT *1 VFIN OR AUX BARRIER SV-BOUNDARY2);
+SELECT (Sg Com) IF (*-1 CRD2 BARRIER NPNH LINK -1 Com LINK NOT 0 Loc);
 	## Ii lean dárbu dábálaš eanavuovdimii, oktan opmodatregistreremiin ja čuoldimiin.
 
-SELECT (Sg Com) IF (1 CRD)(*2 Com BARRIER NPNH LINK NOT 0 Loc);
+SELECT (Sg Com) IF (1 CRD2)(*2 Com BARRIER NPNH LINK NOT 0 Loc);
 	## Fága galgá ovddiidit ovttasbarggus Sámedikkiin ja sámi dearvvašvuođa-
 	## ja sosiálabargiiguin. 
 	
@@ -11395,7 +11405,7 @@ REMOVE Com IF (NOT *-1 COM-HEAD BARRIER S-BOUNDARY2)(0 (Pl Loc) LINK *1 KLASS BA
   	## Sámediggi sáhttá maid buktit cealkámušaid guovlluid dearvvašvuođafitnodagaid jahkedieđáhusain ja plánaárvalusain (kap. 3.4).
   # The point is, that if further paragraph-, page- or chapter- information is given, usually the location is meant.
   
-SELECT Loc IF (NOT *-1 COM-HEAD BARRIER S-BOUNDARY2)(0 ORGANIZATION LINK *-1 HUMAN OR ROLE BARRIER SV-BOUNDARY2 OR COMMA)(NOT *1 COM-HEAD BARRIER SV-BOUNDARY2);
+SELECT Loc IF (NOT *-1 COM-HEAD BARRIER S-BOUNDARY2)(0 ORGANIZATION LINK *-1 HUMAN BARRIER SV-BOUNDARY2 OR COMMA)(NOT *1 COM-HEAD BARRIER SV-BOUNDARY2);
   	## Konvenšuvdna eamiálbmogiid ja čearddaid birra iešbirgejeaddji stáhtain dohkkehuvvui Norggas jagis 1990, muhto dakkár dohkkeheapmi ii leat velá dahkkon Ruoŧas.
   
 SELECT (Pl Loc) IF (NOT *-1 BOS LINK *1 COM-HEAD OR ("dahkat") BARRIER SV-BOUNDARY2)(0 SITUATION)(NOT *1 COM-HEAD OR ("dahkat") BARRIER SV-BOUNDARY2) ;
