@@ -522,8 +522,6 @@ SET NOT-DEM = WORD - Dem ;
 # Adjectival sets and their complements
 # -------------------------------------
 
-SET A-ATTR = (A Attr) ; # Used in one rule. Not needed? 
-
 SET LEX-A = A - A-DER ;
 
 SET A-CASE = A - Attr - Adv ;
@@ -2459,6 +2457,7 @@ MAP (@GP>) TARGET Gen IF (1 COMMA)(*2 Gen LINK 1 CC LINK 1 Gen LINK 1 Po);
 
 MAP (@GP>) TARGET Gen IF (1 CC LINK *1 Gen BARRIER NPNH LINK 1 COMMA LINK *1 Gen BARRIER NPNH LINK 1 CC LINK 1 Gen LINK 1 Po);
 
+
 # @GN>
 
 MAP (@GN>) TARGET Gen IF (*-1 S-BOUNDARY OR BOS BARRIER Pr)(NOT 0 TIME)(*1 N BARRIER NPNHA);
@@ -2800,6 +2799,11 @@ MAP (@-FAUXV) TARGET ConNeg IF (*-1 Neg BARRIER VERB)(0 COPULAS)(*1 EOS BARRIER 
 	# Wrong result for SPRED SUBJ ii leat.
 
 
+# Default bottom rule, at the end of this chapter: 
+# Finite auxiliary is @+FAUXV
+MAP (@+FAUXV) TARGET VFIN if (0 AUX);
+MAP (@+FMAINV) TARGET VFIN;
+
 	# Complements of particles in comparison
 	# --------------------------------------
 
@@ -3073,7 +3077,7 @@ MAP (@X) TARGET WORD ;
 	# ============================== #
 	# Testing out a new section type #
 	# ============================== #
-      CORRECTIONS     #
+                 CORRECTIONS             #
 	# ============================== #
 
 	#SUBSTITUTE (Plc) (Sur) TARGET (Prop) IF (-1C (Mal Attr) OR (Fem Attr));
@@ -3094,7 +3098,7 @@ SUBSTITUTE (@QN>) (@APP) TARGET Num IF (-1 KLASS)(0 Num);
 	# =================================== #
 	# One-cohort disambiguation - cycle 0 #
 	# =================================== #
-                  CONSTRAINTS #1          #
+                      CONSTRAINTS #1          #
 	# =================================== #
 
   # ----------------- #
@@ -5428,7 +5432,7 @@ REMOVE CS IF (NOT *1 VFIN OR ("leapma" Dimin)); # The latter is "leamaš".
 SELECT Adv IF (-2 VFIN)(-1 ("nu"))(1 COMMA)(2 ("ahte"));
 	## Lohku lassánii nu johtilit, ahte ...
 
-SELECT Adv IF (*-1C VFIN-NOT-AUX BARRIER NOT-ADV OR PUNCT)(0 A-ATTR) (NOT 0 Inf OR N)(NOT 0 ("eanaš") OR ("eanas"))(NOT 1 N) (NOT 1 CC LINK 1 (A Attr) LINK *1 N BARRIER NOT-ADJ);   
+SELECT Adv IF (*-1C VFIN-NOT-AUX BARRIER NOT-ADV OR PUNCT)(0 (A Attr)) (NOT 0 Inf OR N)(NOT 0 ("eanaš") OR ("eanas"))(NOT 1 N) (NOT 1 CC LINK 1 (A Attr) LINK *1 N BARRIER NOT-ADJ);   
 	## Mannet ja guorahallet dárkilit dán máná hárrái!
  # Adv if postverbally
 
@@ -6291,10 +6295,15 @@ SELECT Adv IF (-1 ("vehážiid"))(0 ("vehážiid"));
 
 	# visot
 	# - - -
-SELECT Adv IF (0 ("viso"))(NOT 1 (N Pl));
+SELECT ("visot" A Attr) IF (0 ("visot"))(1 (A Attr));
+	## Jus ulbmilat politihkain galget šaddat duohtan fertejit visot náššuvnnalaš unnitálbmogiid dárbbut ja beroštumit váldojuvvot vuhtii juohke oasis riikkas ja buot servodaga dásiin.
+SELECT ("visot" A Attr) IF (0 ("visot"))(*1 (N Pl Gen) BARRIER NOT-PRE-A-N);
+	## Visot dat stuora mánát leat boahtán.
+SELECT ("visot" A Attr) IF (0 ("visot"))(*1 (N Pl) BARRIER NPNH);
+	## Visot mánát leat boahtán.
 	## Ii leat vel visot čohkkejuvvon.
 	## Visot dan maid NRK sádde digitála fierpmis sáhttá maid gullat Nettradios.
- # This is not a particularly good rule for 'visot'.
+
  
 	# viššal vs. viššalaš
 	# - - - - - - - - - -
@@ -7828,6 +7837,16 @@ SELECT Inf IF (*-1 INFV BARRIER SV-BOUNDARY OR Inf LINK *1 CC BARRIER SV-BOUNDAR
 
 	# Verbgenitive
 	# ------------
+	
+# Background: 	
+# VGen is a bad lookalike for various finite forms. It is rare, and occurs in
+# special contexts.
+# Philosophy:
+# 1. We make rules selecting VGen where we feel safe to say we have found it.
+# 2. We remove all remaining VGen readings.
+
+# 1. Looking for VGen.
+
 SELECT VGen IF (-1 ("gaskan"));
 	## Gaskan viessobasa bohte guossit.
 
@@ -7835,32 +7854,35 @@ SELECT (VGen) IF (*-2 VFIN BARRIER S-BOUNDARY2)(NOT -1 CC)(-1 ("nu") OR ("hui"))
  # Probably also after other modifiers.
 	## Dat hálai nu huikki.
 
-REMOVE VGen IF (0 N)(NOT 0 V-TRANS-ACT LINK *1 Acc BARRIER NOT-NP);
-	## Dakko ii leat menddo fávlái buođu bissehit.
+# REMOVE VGen IF (0 N)(NOT 0 V-TRANS-ACT LINK *1 Acc BARRIER NOT-NP);
+# 	## Dakko ii leat menddo fávlái buođu bissehit.
+# 
+# REMOVE VGen IF (0 Inf);
+# 	## Ja dalle lea dušše rohttet spahkagežiid vuolil.
+# 
+# REMOVE VGen IF (-1 BOS)(0 Imprt);
+# 	## Várut beatnagis!
+# 
+# REMOVE VGen IF (NOT *-1 V-IND-FIN BARRIER SV-BOUNDARY2) (NOT *1 V-IND-FIN BARRIER SV-BOUNDARY2);
+# 	## Vuoigatvuohta beassat válljet buohcceviesu.
+# 
+# REMOVE (Der/Pass VGen);
+# 	## Didjiide mihtiduvvo seammá mihtuin.
+# 
+# REMOVE VGen IF (0 ("ovttas"));
+# 	## Lea heivvolaš gieđahallat daid ovttas.
+# 
+# REMOVE VGen IF (0 ("hárve"));
+# 	## Seammás jođálmahttá passivitehta dementiija ovdáneami, eandalii 
+# 	## juos hárve gullá eatnigielas.
+# 
+# REMOVE VGen IF (0 ("njuolgga"));
+# 	## Nubbi gažaldat lea, sáhttágo konvenšuvnna mearrádusaid iskat 
+# 	## njuolgga Norgga duopmostuolus.
 
-REMOVE VGen IF (0 Inf);
-	## Ja dalle lea dušše rohttet spahkagežiid vuolil.
+# 2. Done that, now we remove whatever VGen was left.
 
-REMOVE VGen IF (-1 BOS)(0 Imprt);
-	## Várut beatnagis!
-
-REMOVE VGen IF (NOT *-1 V-IND-FIN BARRIER SV-BOUNDARY2) (NOT *1 V-IND-FIN BARRIER SV-BOUNDARY2);
-	## Vuoigatvuohta beassat válljet buohcceviesu.
-
-REMOVE (Der/Pass VGen);
-	## Didjiide mihtiduvvo seammá mihtuin.
-
-REMOVE VGen IF (0 ("ovttas"));
-	## Lea heivvolaš gieđahallat daid ovttas.
-
-REMOVE VGen IF (0 ("hárve"));
-	## Seammás jođálmahttá passivitehta dementiija ovdáneami, eandalii 
-	## juos hárve gullá eatnigielas.
-
-REMOVE VGen IF (0 ("njuolgga"));
-	## Nubbi gažaldat lea, sáhttágo konvenšuvnna mearrádusaid iskat 
-	## njuolgga Norgga duopmostuolus.
-
+# REMOVE VGen ; 
 
 	# Perfect Participle
 	# -------------------
@@ -13300,6 +13322,9 @@ SELECT (@SUBJ) IF (0 ("guovttis" Nom))(*1 Du3 BARRIER SV-BOUNDARY2);
 SELECT (@SUBJ) IF (NOT *-1 (@SUBJ) BARRIER S-BOUNDARY2)(*-1 ("leat") BARRIER SV-BOUNDARY2) (0 Actio)(*1 PrfPrc BARRIER SV-BOUNDARY2);
 	## Leago miehtan vižžojuvvon divššohasas dahje sus geas lea...
 
+# Coordinated subject
+
+SELECT (@SUBJ) IF (*-1 (@CC-NP) BARRIER NPNH LINK -1 (@SUBJ));
 
 	# Subject predicate
 	# -----------------
