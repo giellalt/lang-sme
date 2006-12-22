@@ -1473,7 +1473,7 @@ LIST HUMAN-GROUP = "ahke#joavku" "almennet" "álbmot" "álgo#álbmot" "álgo#ál
 
 LIST PROFESSION = "advokahta" "alimus#riekte#duopmár" "arkeologa" "artista" "assisteanta" "astoáigge#jođiheaddji" "áittardeaddji" "ákšo#álmmái" "ámmáhis#bargi" "ámmát#olmmái" "ámmát#olmmoš" "ásahus#hoavda" "ášše#jođiheaddji" "ášše#meannudeaddji" 
 "badjelii#geahčči" "bagadalli" "bagadeaddji" "bajimusbearrái#geahčči" "bargiid#hoavda" "bargi" "bargiid#konsuleanta" "bargo#veahka" "bassaleaddji" "bassi" "báhkkár" "báhppa" "bálvaleaddji" "báŋko#hoavda" "bátne#dikšu" "bátne#doavttir" "beaivválaš#jođiheaddji" "bearašmánáidgárde#jođiheaddji" "bearrái#geahčči" "beavdegirje#čálli" ("bearre#mánnat" Actor) "bibliotekára" "biigá" "biila#divvu" "bileahta#vuovdi" "biras#bargi" "birasgáhtten#jođiheaddji" "birasgáhttenráđđe#addi" "biras#terapevta" "bisma" "bismá" "bispa" "bivdi" "bivttas#hábmejeaddji" "boanda" "boazo#doalli" "boazo#sápmelaš" "boazo#sápmi" "buohcce#dikšu" "buohcce#divššár" "boles#meašttir" "busse#vuoddji" "buvttadeaddji" 
-"čalbme#áhkku" "čalbme#doavttir" "čalbme#eadni" "čálli" "čorgejeaddji" "čuojaheaddji" 
+"čalbme#áhkku" "čalbme#doavttir" "čalbme#eadni" "čála#oahppavaš" "čálli" "čorgejeaddji" "čuojaheaddji" 
 "dáidár" "dáiddár" "dálon" "dálu#eamit" "dálu#isit" "dárkkisteaddji" "davvi#sápmi" "dearvvašvuođabuohcce#dikšu" "dearvvašvuođabuohcce#divššár" "diggeriekte#duopmár" "dikšu" "dikta#čálli" "dirigeanta" "divššár" "doaimmahat#hoavda" "doaimmaheaddji" "doavttir" "dulka" "duodje#bagadalli" "duodje#konsuleanta" "duojár" "duopmar" "dutkan#assisteanta" "dutki" 
 "ealáhus#konsuleanta" "ealáhus#bagadeaddji" "ealáhus#doalli" "ealáhus#hoavda" "ealáhus#jođiheaddji" "ealga#bivdi" "eallo#doalli" "eanan#doalli" "eanandoalli#sadjásaš" "eatnan#doalli" "eatnandoalli#sadjásaš" "eanandoallo#hoavda" "eatnandoallo#hoavda" 
 "fáldi" "festivála#jođiheaddji" "fitnodat#bargi" "fitnodat#doaibmi" "fitnodat#jođiheaddji" "fitnodat#oamasteaddji" "fylkka#mánni" "fysio#terapeuta" "fysio#terapevta" 
@@ -3427,7 +3427,7 @@ REMOVE Mal IF (0 Fem);
 
  REMOVE V-DER IF (0 LEX-V)(NOT 0 (eaddji)); 
 
- REMOVE V-ACT IF (0 Pass);
+ REMOVE V-ACT IF (0 IV LINK 0 Pass);
  	
  
 # ENDOMIT
@@ -5523,7 +5523,7 @@ SELECT Pr IF (NOT -1 Gen LINK *-1 BOS BARRIER (V-TRANS-ACT) OR Pr) (NOT -1 TIME)
 	## Sáhttá dahttege vurket journála olggobealde doaimma. 
 
 	#SELECT Po IF (-1 (@GP>)); # more careful with -1C than with -1.
-SELECT Po IF (-1C (@GP>))(NOT 0 NOUN-PO);
+SELECT Po IF (-1C (@GP>))(NOT 0 NOUN-PO OR ("mielde") OR ("fárrui"));
 
 SELECT Pr IF (1 (Num Gen));
 	## Vuollel 12 jahkásaš mánáin ii leat iešheanalis geahččanvuoigatvuohta.
@@ -9413,7 +9413,6 @@ SELECT Gen IF (*-1 MOVEMENT-V BARRIER NPNHA)(0 ROUTE);
 REMOVE Nom IF (-1 Gen LINK NOT 0 TITLE)(NOT 0 ABBR)(*1 (N Nom) BARRIER NP-BOUNDARY OR VERB OR Adv OR CC OR ADVLCASE OR PUNCT OR CLB LINK NOT 1 N); 
     ## Romssa universitehta Sámi dearvvašvuođadutkama guovddáš (sajuštuvvo Kárášjohkii) ásahuvvo jagis 2001 sosiála- ja dearvvašvuođadepartemeantta ruhtademiin.
 
-
 REMOVE (N Acc) IF (-1 Adv)(0 Gen)(1 (Pron Indef) LINK 1 N);
     ## Dás sáhtát lohkat eambbo sihke prošeavtta eará ulbmiliid birra.
 
@@ -10344,6 +10343,9 @@ REMOVE (N Gen) IF (NOT *-1 Pr OR Num BARRIER NPNH)(1 (Pron Pers Gen));
 	## Gonagas sáhttá addit láhkaásahusaid dán birra. 
 REMOVE Gen IF (-1 (@GN>))(0 ("§"))(1 Num);
   	## Dearvvašvuođabargiidlága § 10, mii gieđahallá dieđuid addima pasienttaide, ja pasientavuoigatvuođalága § 3-1,...
+  	
+REMOVE Acc IF (-1 CC LINK -1 Acc LINK *-1 V-TRANS-ACT-NOT-ACT BARRIER NPNHAI)(0 Gen)(1 (N Acc)); 
+	## Son gohčui čoahkkái buot bajitbáhpaid ja álbmoga čálaoahppavaččaid ja jearai sis.   	
 
 	#REMOVE (N Gen) IF (1C Gen LINK *1 Po OR N BARRIER V); 
 # This rule doesn´t function well, and there are other rules hitting the examples.	
@@ -10427,6 +10429,7 @@ SELECT Acc IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER SV-BOUNDARY2 OR (@OBJ) LINK NOT 0
     
 SELECT Acc IF (*-1 STV-NOT-ACT BARRIER W-NOT-ACC-GEN LINK 0 FMAINV LINK NOT *-1 (@OBJ) BARRIER S-BOUNDARY2)( 1 VFIN);
 	## Politihkalaš sávaldat dáhkidit sámi geavaheddjiid bálvalusaid dási lea maid čuovvuluvvon iešguđet stuorradiggedieđáhusain.
+
  
 # Bisetning foran hovedsetning: 
 SELECT Acc IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER SV-BOUNDARY2 OR (@OBJ) LINK -1 COMMA LINK *-1 BOS BARRIER (@CC-VP) LINK 1 CS)(NOT 0 Adv)(NOT 0 TIME)(NOT 0 Dem LINK *1 N BARRIER NPNH)(NOT 0 Loc LINK *-1 (IV) BARRIER VERB) (NOT 0 (Acc PxSg3) LINK 0 Loc)(NOT 1 V-TRANS-ACT-NOT-ACT)(NOT *1 (@OBJ) BARRIER S-BOUNDARY2 OR CC OR COMMA) (NOT 0 ("nr") LINK -1 N OR A OR ACR OR ABBR);
@@ -10561,7 +10564,7 @@ SELECT Acc IF (*-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE OR CLB LINK NOT 0 N LINK NOT
 	## Mun oidnen Máreha boahtime.
  # The rule also hits objects in front of Actio Ess, which seems OK.
 
-REMOVE Acc IF (*-1 Acc BARRIER NOT-NP OR Inf OR CLB LINK *-1 OPREDV BARRIER NPNH)(NOT -1 ("/") OR CC LINK -1 Acc);
+REMOVE Acc IF (*-1 Acc BARRIER NOT-NP OR Inf OR CLB LINK *-1 OPREDV BARRIER NPNH)(NOT *-1 ("/") OR CC BARRIER NPNH LINK -1 Acc);
 	## ...go doavttir lea dahkan biehttaleami apotehka vuoigatvuođa vuostá.
 
 REMOVE Acc IF (*-1 Acc BARRIER NOT-NP LINK NOT 0 Pers LINK *-1 OPREDV BARRIER NOT-NP) (NOT *-1 COMMA OR ("/") OR (PUNCT LEFT) OR CC BARRIER NPNH LINK -1 Acc) (NOT 0 Interr);
