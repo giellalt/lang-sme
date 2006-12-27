@@ -690,7 +690,7 @@ SET STV = STVLIST - Der/Pass ;
 	
 SET STV-NOT-ACT = STV - (Actio Nom) - (Actio Gen) - (Actio Acc) - (Actio Loc) - (Actio Ill) - (Actio  Com) - Actor ;	
 
-LIST LOCV = "ávkkástallat" "ballat" "beassat" "beroštit" "biehttalit" "bihtit" "ceavzit" "dinet" "dolkat" "eastadallat" "eastadit" "fuolahit" "fuollat" "geargat" "heaitit" "ilbmat" "jearrat" "luohpat" "nohkkot" "spiehkastit" "váruhit" "oassálastit" ;
+LIST LOCV = "ávkkástallat" "ballat" "beassat" "beroštit" "biehttalit" "bihtit" "ceavzit" "dinet" "dolkat" "eastadallat" "eastadit" "fuolahit" "fuollat" "geargat" "heaitit" "ilbmat" "jearrat" "luohpat" "máinnašit" "nohkkot" "spiehkastit" "váruhit" "oassálastit" ;
 		#Note that "fuolahit" obviously has two homonymous variants: 
 		#fuolahit1+Acc, fuolahit2+Loc
 
@@ -1122,7 +1122,7 @@ LIST LAHKA-NOUN-SUBJ = "eise#váldi" "guovddášeise#váldi" "stáhta" ;
 LIST LAHKAGEN-NOUN = "§" "buohkaid#vuoigatvuohta" "cealkka" ("fápmu" Ill)"hápmi" "johtolat#vuoigatvuohta" "kapihtal" "láhka#vuođđu" "ovda#bargu" "rámma" "ráhkkanan#bargu" "ráidu" "sátne#mearkkašupmi" "ulbmil#paragráfa" "vuođđu" "vuođđo#eaktu" "vuolit" "V";
 # "vuolit" is an adj. but suit pragmatically to the set.
 
-LIST LAHKA-ASAHUS = "alimus#riekti" "Odeldiggi" "Stuoradiggi" "Stuorradiggi" "stuora#diggi" "stuorra#diggi";
+LIST LAHKA-ASAHUS = "alimus#riekti" "Odeldiggi" "Stuoradiggi" "Stuorradiggi" "stuora#diggi" "stuorra#diggi" "vuolle#riekti" ;
 
 LIST LAHKA-POST = "bokte" "olis" "mielde" "vuođul" ;
 
@@ -1249,6 +1249,11 @@ LIST SAPMI-N-HEAD =  "álbmot" "álbmot#beaivi" "álbmot#dálkkodeapmi" "álbmot
 
 
 # Here we will write what sets we have and how we divide them.
+
+# Spatial nouns. These nouns behave like postpositions
+LIST SPATIALNOUN = "guovlu" "oskku" "sadji" "vuođđu" ; 
+
+
 
 # These nouns in essiv get @ADVL:
 LIST ESS-ADVL-N = "arvi" "arve#dálki" "báhkka" "baján#dálki" "beaivvádat" "biegga" "bievla" "buolaš" "čuoika" "čuovga" "dálki" "dulvi" "njáhcu" "seavdnjat"; 
@@ -2324,6 +2329,8 @@ MAP (@AN>) TARGET (Pl Com) IF (0 ("buorre"))(*1 (N Pl Com) BARRIER NPNH);
 
 MAP (@AN>) TARGET Ess IF (0 ("buorre"))(1 (N Ess));
 	## Maŋemus son šattai buorrin oahpaheaddjin.
+
+
 
 
 	# Prenominal participles
@@ -3493,11 +3500,20 @@ SELECT A IF (0 ("sivaheapmi"));
 	# Particular adjectives
 	# ---------------------
 
+# čáppát
+
 REMOVE ("čáppis") IF (0 ("čáppat" Attr));
 	## čáppat nieidda. 
+
+# ollis
 	
 SELECT (A Attr) IF (0 ("ollis" A Attr))(1 Num OR N);
 	## olles 33%.
+
+# oppa
+
+REMOVE Adv IF (0 ("oppa" A Attr))(1 N);
+	## ... ja oppa sámi álbmogii.
 
 	# Adjectives or nouns, not adverbs
 	# --------------------------------
@@ -4189,6 +4205,10 @@ SELECT (Pron Ess) IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(0 ("danin"))(1 EOS OR CL
 
 	# dat ( Pron Pers, Pron Dem, Pcle)
 	# - - - - - - - - - - - - - - - -
+
+SELECT Sg3 IF (NOT *-1 V-PL)(0 ("dat" Sg3 Nom))(*1 V-SG BARRIER V-PL);
+	## Dat movt sámi oahpahus lea doaibman...
+
 SELECT Dem IF (*1 (Pl Loc) BARRIER NPNHA)(0 (Pl Loc));
 SELECT Dem IF (*1 (Sg Loc) BARRIER NPNHA LINK 1 CS LINK 1 Loc)(0 (Pl Loc));
   	## Dain hirbmat váriin ja mehciin sin guovllus lei earenoamáš vallji sihke elliid ja eará dáfus.
@@ -5342,7 +5362,7 @@ REMOVE Pcle IF (0 ("son")); # Remove the rest
 
 
 	# ========================== #
-	# Disambiguating clitics   #
+	#   Disambiguating clitics   #
 	# ========================== #
 
 REMOVE Qst IF (0 ("dego"));
@@ -5361,7 +5381,7 @@ SELECT (@ADVL) IF (-1 LEFT)(0 ("§") OR ("§§"))(*1 RIGHT BARRIER REALWORD);
 
 
 	# ========================== #
-	# Disambiguating numerals  #
+	#   Disambiguating numerals  #
 	# ========================== #
 
 SELECT Ord IF (NOT -1 N)(0 ACR)(*1 N BARRIER NOT-A);
@@ -5404,8 +5424,11 @@ SELECT Nom IF (-1C Gen LINK 0 MANNU)(0 CARDINALS)(*1 Po OR N BARRIER NOT-NP);
 	# ========================== #
 	# Disambiguating adpositions #
 	# ========================== #
-               CONSTRAINTS #6    #
+                  CONSTRAINTS #6     #
 	# ========================== #
+
+
+
 
 	# Rules relating to particular adpositions
 	# ----------------------------------------
@@ -5414,6 +5437,13 @@ SELECT Nom IF (-1C Gen LINK 0 MANNU)(0 CARDINALS)(*1 Po OR N BARRIER NOT-NP);
 	# - - - -
 SELECT Pr IF (0 ("gaskan"))(1 VGen);
 	## Gaskan bora viehkalin olggos.
+
+	# mađe
+	# - - -
+
+SELECT Po IF (-1 (Num Gen))(0 ("mađe"));
+SELECT Num IF (1 ("mađe"));
+	## 
 
 	# miehtá
 	# - - - -
@@ -5498,7 +5528,7 @@ SELECT Po IF (-3 Inf)(-2 ("ja"))(-1 Inf)(0 GASKAL);
 
 
 	# =============== #
- CONSTRAINTS #7 #
+           CONSTRAINTS #7 #
 	# =============== #
 
 	# Po or Pr?
@@ -5589,8 +5619,10 @@ REMOVE Po IF (NOT -1 Gen OR Num)(NOT 0 ("gaskan"));
 	## ... paragráfaide 3-18 rájes 3-21 rádjái.
 	## Jus divššohas dasa miehtá,... 
 
-# Diambiguation NOUN-PO:
-# - - - - - - - - - - - 
+
+
+# Diambiguation N - Po, Noun vs. Po:
+# - - - - - - - - - - - - - - - - - 
 
 SELECT Po IF (-1 ("guovttá"))(0 ("gaskan"));
 	## Mun áiggošin duinna guovttá gaskan hupmat.
@@ -5603,19 +5635,22 @@ SELECT Po IF (-1 Acc OR Gen LINK 0 TIME)(0 ("áigi"));
 
 
 
-	# Removing some readings that compete with Po
-	# - - - - - - - - - - - - - - - - - - - - - -
+# Removing some readings that compete with Po
+# - - - - - - - - - - - - - - - - - - - - - -
 REMOVE N IF (-1 Gen)(0 Po)(NOT 0 NOUN-PO)(NOT 1C Po);
 REMOVE V IF (-1 Gen)(0 Po)(NOT 1C Po);
 	## ...maid ektui sáhtii leat buori oskkus.
 	## Gávpot mii lea vári alde, ii sáhte leat čihkosis.
 
 
+
+	
+
  
 	# =========================== #
 	# Disambiguating subjunctions #
 	# =========================== #
-                CONSTRAINTS #8    #
+                  CONSTRAINTS #8      #
 	# =========================== #
 
  # Subjunctions are disambiguated in two subcycles. This is the first.
@@ -5947,7 +5982,7 @@ SELECT Adv IF (-1 BOS OR CS OR (":" CLB))(0 (A Nom))(NOT *1 (N Loc) BARRIER NPNH
 REMOVE Comp IF (-1 ("hui") OR ("nu") OR ("seammá"))(0 Adv);
 	## Dat lea hui čielgasit.
 
-REMOVE Comp IF (-1 VFIN)(0 Adv)(NOT 0 PxPl3)(1 Inf);
+REMOVE (Comp Attr) IF (-1 VFIN)(0 Adv)(NOT 0 PxPl3)(NOT *1 N OR A);
 	## Ráđđehus áigu erenomázit giddet fuopmášumi sámegillii.
 
 	
@@ -7409,6 +7444,8 @@ REMOVE (Dem Pl) IF (0 ("dat" Sg))(NOT *1 (N Pl) OR (Indef Pl) OR NUMERALS BARRIE
 REMOVE Dem IF (0 Pers)(1 Dem);
 	## ...beroškeahttá das makkár geavahus leamaš dolin.
 
+REMOVE Pers IF (0 (Dem Gen))(1 SPATIALNOUN OR AIGODAT);
+	## Dan vuođđu.
 
 # makkár (Negative polarity demonstratives)
 # - - - 
@@ -8209,6 +8246,9 @@ SELECT Imprt IF (-1 BOS OR PUNCT OR REALCLB)(1 ("dál"))(2 COMMA)(3 Rel OR Adv);
 
 	# Infinitive
 	# ----------
+
+REMOVE Pl1 IF (-1 VFIN)(0 Inf);
+	## Bargu lei arvostallat dan.
 
 SELECT Inf IF (*-1 (Neg Sup) BARRIER S-BOUNDARY2); 
 SELECT Inf IF (*-1 ("amas" CS) BARRIER VERB);
@@ -10918,7 +10958,7 @@ SELECT Ill IF (*-1 CC BARRIER NPNH LINK -1 Ill LINK *-1 COMMA BARRIER S-BOUNDARY
     ## Doalut gullet golmma vieljažahkii Martin, Gustav ja Ole Kantii, Sigvart Renanderii ja su niidii Majabritt Renanderii.
 
 	# =================== #
-      CONSTRAINTS #20
+            CONSTRAINTS #20   #
 	# =================== #
 
 	# Early comitative rules
@@ -11191,6 +11231,11 @@ REMOVE PxSg3 IF (NOT *-1 Sg3)(0 Loc);
 	
 SELECT Loc IF (-1 COPULAS LINK 0 FMAINV)(0 ("fápmu"));
 	## Láhka lea fámus čakčamánu 1.b. 2003 res. vuođul.
+
+REMOVE (Gen PxSg3) IF (0 Loc)(1 EOS);
+	## Dán háve dubmehalai áššáskuhtton suolavuhtii vuollerievttisge.
+
+REMOVE (Gen PxSg3) IF (NOT *-1 Pr BARRIER NPNH)(0 Loc)(NOT 0 TIME)(NOT *1 N BARRIER NPNH);
 
 
 	# NP-internal disambiguation of Loc
@@ -11875,9 +11920,9 @@ SELECT Com IF (*-1 CRD BARRIER NPNH LINK *-1C Com BARRIER WORD);
 	## Bargiidbellodaga Per Nils Saari beasai suohkanstivrii ja válljii ovttasbargat olgešbellodagain, gurutbellodagain ja johttisámi listtuin vai ožžot eanetlogu suohkanstivrras.
 	 
 
-	# =========== #
-      CONSTRAINTS #21
-	# =========== #
+	# =============== #
+          CONSTRAINTS #21 #
+	# =============== #
 
 	# Locative and comitative - Disambiguation based upon coordination
 	# ================================================================
@@ -12078,7 +12123,7 @@ SELECT Nom IF (0C ("ulbmil" Nom) OR ("ulbmil" @GN>))(*1C Loc BARRIER NPNH);
 
 	# Finite forms #
 	# ================ #
-       CONSTRAINTS #22 #
+           CONSTRAINTS #22 #
 	# ================ #
 
 	# Finite or not
@@ -13560,9 +13605,9 @@ REMOVE ("vuordát") IF (0 ("vuordit"))(1 Num)(2 Po);
 
 
 	# ===================== #
-	#  Residual cases
+	#      Residual cases   #
 	# ===================== #
-    CONSTRAINTS #24 #
+              CONSTRAINTS #24   #
 	# ===================== #
 
 
@@ -13709,11 +13754,24 @@ REMOVE (A Attr) IF (1C V OR EOS OR ("nr"))(NOT 1 N OR PrfPrc);
 
 
 
+# Po or Adv
+# - - - - -
+
+REMOVE Adv IF (-1C Gen)(0 Po);
+
+
+# Pr or Adv
+# - - - - -
+
+SELECT Pr IF (*1C (@GP<) BARRIER NPNH);
+	## Skuvlla lágidemiid dulkomat ja čálalaš gulahallan gaskal skuvlla/ruovttu mávssii 213 ruvnno.
+
+
 
 	# =============================== #
 	# Global disambiguation - cycle 3 #
 	# =============================== #
-       CONSTRAINTS #25   #
+                   CONSTRAINTS #25        #
 	# =============================== #
 
 	# This is the section for rules of more global scope.
@@ -14564,9 +14622,9 @@ REMOVE (@ADVL) IF (0 TITLE OR PROFESSION)(1 Mal OR Fem OR Sur);
 SELECT (@PronN>) IF (0 ("seamma") OR ("seammá"))(1 ("ollu" Indef));
 SELECT (@ADV-ADV) IF (0 ("seamma") OR ("seammá"))(1 ("ollu" Adv));
 
-	# ----------- #
-      CONSTRAINTS #27
-	# ----------- #
+	# ---------------- #
+           CONSTRAINTS #27 #
+	# ---------------- #
 
 REMOVE (@+FAUXV) ;
 
