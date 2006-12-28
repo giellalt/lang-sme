@@ -532,6 +532,9 @@ LIST PLPRON = (Pron Pl1) (Pron Pl2) (Pron Pl3) (Pron Pl) (Pron PxPl1) (Pron PxPl
 
 SET PRON-NOT-SG = DUPRON | PLPRON ;
 
+LIST DAT-PRON = ("dat") ("dát") ("diet") ("duot") ("dot") ;
+
+
 # Adjectival sets and their complements
 # -------------------------------------
 
@@ -3577,6 +3580,10 @@ REMOVE Adv IF (0 (A Attr))(1 (SPATIALNOUNS));
 	## fásta saji
 	# This should be expanded if it works.
 
+
+Remove Adv IF (-1 Gen)(0 (A Attr))(1 N);
+	## Finnmárkku fásta ássi.
+
 	# Lexicalised adverbs
 	# -------------------
 REMOVE (A* Adv) IF (0 LEX-ADV) ;
@@ -4309,7 +4316,7 @@ SELECT Pcle IF (-1 Nom)(NOT -1 A OR Interr OR PrfPrc)(0 ("dat" Nom))(NOT *1 N BA
 SELECT Pcle IF (NOT *-1 (V Sg3) OR (V Du3) OR (V Pl3) BARRIER SV-BOUNDARY)(NOT -1 BOS OR CS OR (":" CLB))(0 ("dat" Nom))(NOT *1 N BARRIER NOT-NP)(NOT *1 (V Sg3) OR (V Du3) OR (V Pl3) BARRIER SV-BOUNDARY);
 	## Na vuolggán dat gal mun ge.
 
-REMOVE Dem IF (0 ("dat"))(NOT 0 ("dasgo") OR ("danin") OR ("dainna"))(NOT 1 A OR Num OR N OR Indef OR Attr)(NOT 1 PrfPrc LINK *1 N BARRIER NPNH)(NOT 0 Nom LINK 1 ("gal") OR Pcle LINK 1 (N Nom))(NOT 1 NP-HEAD-GEN LINK 1 (Actio Gen) LINK 1 N);
+REMOVE Dem IF (0 DAT-PRON)(NOT 0 ("dasgo") OR ("danin") OR ("dainna"))(NOT 1 A OR Num OR N OR Indef OR Attr)(NOT 1 PrfPrc LINK *1 N BARRIER NPNH)(NOT 0 Nom LINK 1 ("gal") OR Pcle LINK 1 (N Nom))(NOT 1 NP-HEAD-GEN LINK 1 (Actio Gen) LINK 1 N);
 	## Dá dat leat.
 	## Moai soabaime dasa.
  
@@ -4319,6 +4326,10 @@ REMOVE Dem IF (0 (Pron Pers))(NOT *1 N BARRIER NPNHAII)(NOT 1 ("nubbi" Gen));
 
 SELECT Dem IF (-2 (N Pl Nom))(-1 CC)(0 (Pron Pers Pl3 Gen))(*1 N BARRIER NPNH);
 	## Skovit ja daid rávačállagat galget leat sámegillii.
+
+	# This is a general rule. The problem is that we have no counter examples.
+SELECT Dem IF (0 (Pron Pers Sg3 Gen @GN>));
+	## dan suorggis.
 
 
 	# dasa ( = forms of the verb "dassat")
@@ -4331,11 +4342,11 @@ REMOVE VGen IF (0 Pron);
 
 	#SELECT Dem IF (0 ("dat" Pron Dem Sg Ill))(1 VFIN); 	## Dasa lea guhkes historjá.
 	#SELECT Dem IF (0 ("dat" Pron Dem Sg Ill))(1 ("lassi" N Ess)); 	## Dasa lassin.
-	#SELECT Ill IF (-1 ("sivva"))(0 ("dat")); 	## Sivva dasa lea, ahte ...
-	#SELECT Ill IF (-1 PrfPrc)(0 ("dat")); 	## Sii leat čujuhan dasa vuosttas jagi.
+	#SELECT Ill IF (-1 ("sivva"))(0 DAT-PRON); 	## Sivva dasa lea, ahte ...
+	#SELECT Ill IF (-1 PrfPrc)(0 DAT-PRON); 	## Sii leat čujuhan dasa vuosttas jagi.
 
 
-SELECT Ill IF (0 ("dat"))(1 ("lassi" Ess));
+SELECT Ill IF (0 DAT-PRON)(1 ("lassi" Ess));
 	## Dasa lassin buvttán dás lasseargumenttaid. 
 
 
@@ -5644,7 +5655,7 @@ SELECT Po IF (-1 Gen)(NOT -1 VERB OR Adv)(1 TIME);
 	## Jos sáddo deavdá buođu vuollái dahje jos sáddo hávddarda buođu vuolde... 
 	## Sámi guovlluin ožžo Sámeparlameantta Suoma beallái jagi 1976.
 
-SELECT Po IF (-1 LAHKA-NOUN OR LAHKA OR ("sávaldat") OR ("ovttas#bargo#vuoigŋa") OR ("dárbu") OR ("oaivil") OR ("dat") LINK 0 Gen)(0 ("mielde"));
+SELECT Po IF (-1 LAHKA-NOUN OR LAHKA OR ("sávaldat") OR ("ovttas#bargo#vuoigŋa") OR ("dárbu") OR ("oaivil") OR DAT-PRON LINK 0 Gen)(0 ("mielde"));
 	## Dat ii leat Olgoriikadepartemeantta njuolggadusaid mielde.
 	# Can be removed if the next rule functions well.
 
@@ -5983,7 +5994,7 @@ SELECT Adv IF (0 ("mielde"))(*-1 ("leat" Qst) BARRIER VFIN);
   	## Leago dorski mielde?
   	## Lea go dorski mielde?
   	
-SELECT Adv IF (*-1 V-TRANS-ACT-NOT-ACT OR COPULAS BARRIER NPNH)(-1 Pers OR HUMAN LINK 0 Gen LINK NOT 0 ("dat"))(0 ("mielde"));
+SELECT Adv IF (*-1 V-TRANS-ACT-NOT-ACT OR COPULAS BARRIER NPNH)(-1 Pers OR HUMAN LINK 0 Gen LINK NOT 0 DAT-PRON)(0 ("mielde"));
 	## Dat ii leat mu mielde. # Can be ambiguos.	
   
 REMOVE Adv IF (-1 (N Gen) OR (Pron Gen))(NOT -1 Adv OR VFIN OR ("leat" PrfPrc))(0 Po)(NOT 0 ("mielde") OR ("fárrui") LINK *-1 MIELDE-V BARRIER VFIN);
@@ -6643,8 +6654,9 @@ SELECT Adv IF (-1 VFIN LINK -1 N LINK -1 CC LINK -1 N)(0 ("oktii"));
 
 SELECT Num IF (-1 ("dušše") LINK *-1 BOS BARRIER VFIN)(0 ("oktii"))(*1 VFIN BARRIER S-BOUNDARY)(*1 ILLV);
 
-REMOVE V IF (*-1 VFIN BARRIER S-BOUNDARY OR CC)(0 ("oktii"));
+REMOVE V IF (*-1 V BARRIER S-BOUNDARY OR CC)(0 ("oktii"));
 	## Vuoigatvuohta gusto dušše oktii seammá dilálašvuođa ovddas.
+	## Dat ledje baicca čuldon oktii.
 
 SELECT Adv IF (-1 BOS OR CS OR (":" CLB))(0 ("oktii"))(1 go OR (N Pl));
 	## Oktii go leimmet mannamin rohkadallanbáikái, bođii min ovddal 
@@ -6858,7 +6870,7 @@ REMOVE LCRD IF (NOT -2 Gen)(-1 ("ovdal") LINK NOT *-1 VFIN BARRIER SV-BOUNDARY O
     ## 
 
     
-REMOVE LCRD IF (-1 ("rájes") LINK -1 ("dat") OR ("dát"))(0 ("go"));
+REMOVE LCRD IF (-1 ("rájes") LINK -1 DAT-PRON)(0 ("go"));
     ## Rievtti ovdaolmmoš navdá dán leat riekta go čállui, ja ahte vuoigatvuođadilálašvuohta mii mearkkašii ahte stáhta lei dohkkehuvvon stáhtaalmenneha eaiggádin dalle juo lei cieggan, ja riekti oaivvilda dán vuoigatvuođadilálašvuođa dál sáhttit lea ain eanet cieggan - almmá vuostálastima haga nu go leamaš vássán áiggis gitta das rájes go advokáhta Schiefloe almmuhii girjjiidis jagiin 1952 ja 1955.
      # taking the global coordinator after time adverbials
 
@@ -7173,7 +7185,7 @@ REMOVE Pl IF (-1 (Recipr Du))(0 Recipr);
 
 
 	# ================ #
- CONSTRAINTS #12 #
+           CONSTRAINTS #12 #
 	# ================ #
 
 REMOVE Recipr ;
@@ -7525,7 +7537,7 @@ SELECT Indef IF (*-1 COPULAS BARRIER V-NOT-AUX)(0 ("unnán"))(NOT 1 PrfPrc LINK 
 	# Demonstrative pronouns
 	# ======================
 
-REMOVE Pcle IF (-1 Interr OR CC)(0 ("dat"));
+REMOVE Pcle IF (-1 Interr OR CC)(0 DAT-PRON);
 	## Maid dat Kárášjogas bargá?
 	## Dahje dat gávccenuppelogis geat sorbmašuvve...
 
@@ -7544,6 +7556,13 @@ REMOVE Dem IF (0 Pers)(1 Dem);
 REMOVE Pers IF (0 (Dem Gen))(1 SPATIALNOUN OR AIGODAT);
 	## Dan vuođđu.
 
+REMOVE Pers IF (0 (Dem Gen))(1 N)(*2 Rel BARRIER NOT-COMMA);
+
+REMOVE Pers IF (0 Dem LINK *1 N BARRIER NPNH LINK *1 (CS @CS-VP));
+	## Smith lea čuoččuhan dán oaivila guhkes áiggi , sihke riektepolitihkalaš gažaldahkan, namalassii ahte čoavddus berre leat dakkár ja gustojeaddji vuoigatvuođa gažaldahkan.
+
+
+
 # makkár (Negative polarity demonstratives)
 # - - - 
 
@@ -7561,7 +7580,7 @@ SELECT (Dem Sg) IF (*-1 BOS OR CS OR (":" CLB) BARRIER NOT-ADV-PCLE)(*1 (N Sg) B
 SELECT Pl IF (0C (Pron Dem))(*1C (N Pl) BARRIER NOT-ADJ LINK 0 HNOUN);
 	## Naba daid stuora dorskiid, gosa daid bidjet? 
 
-SELECT (Dem Sg Nom) IF (0 ("dat"))(1 ("gal") OR Pcle)(2 (N Sg Nom))(NOT 2 PrfPrc);
+SELECT (Dem Sg Nom) IF (0 DAT-PRON)(1 ("gal") OR Pcle)(2 (N Sg Nom))(NOT 2 PrfPrc);
 	## Láve dat gal njiŋŋelas boazu ge muhtomin adnojuvvot noađi guoddit.
 	## Ii lean gal eambbo go 11 liekkasceahki, muhto ii dat gal orron hehttemin su vuojadeamis. # This rule should not take the latter one.
 
@@ -7574,8 +7593,8 @@ SELECT (Dem Sg Nom) IF (0 ("dat"))(1 ("gal") OR Pcle)(2 (N Sg Nom))(NOT 2 PrfPrc
 
 	# Nominative
 
-SELECT (Dem Sg Nom) IF (0 ("dat"))(*1 (N Sg Nom) BARRIER NOT-ADJ LINK 0 HNOUN LINK *1 V-SG3 BARRIER SV-BOUNDARY2 OR PUNCT);
-SELECT (Dem Sg Nom) IF (0 ("dat"))(*1C HNOUN BARRIER NOT-ADJ LINK 0 (Sg Nom) LINK *-1 V-SG3 BARRIER SV-BOUNDARY2);
+SELECT (Dem Sg Nom) IF (0 DAT-PRON)(*1 (N Sg Nom) BARRIER NOT-ADJ LINK 0 HNOUN LINK *1 V-SG3 BARRIER SV-BOUNDARY2 OR PUNCT);
+SELECT (Dem Sg Nom) IF (0 DAT-PRON)(*1C HNOUN BARRIER NOT-ADJ LINK 0 (Sg Nom) LINK *-1 V-SG3 BARRIER SV-BOUNDARY2);
 	## Dalle dat geahppaset gurppas daddjojuvvo veajan. 
 	## Ii han ovttasge du sogas leat dat namma. 
 
@@ -7589,7 +7608,7 @@ SELECT (Dem Pl Nom) IF (*1 (N Pl Nom) BARRIER NOT-ADJ LINK 0 HNOUN LINK *-1 V-DU
 	## Go dat geažit mat geaigut leaba bajás, gohčoduvvoba spahká-oaivin.
 	## No hits in corpus for the last rule, but it looks OK!
 
-SELECT (Dem Pl Nom) IF (0 ("dat"))(1 NUMERALS LINK 0 Nom);
+SELECT (Dem Pl Nom) IF (0 DAT-PRON)(1 NUMERALS LINK 0 Nom);
 	## ...ožžo dat 50 vuotnaguolásteaddji Gáivuonas buhtadasa.
 
 SELECT (Dem Pl Nom) IF (1 Nom)(2 (Pron Interr Pl));
@@ -7601,34 +7620,39 @@ REMOVE Nom IF (*-1C (Gen @DN>) OR (Acc @DN>) BARRIER NOT-ADJ);
 
 	# Accusative
 
-SELECT (Dem Acc) IF (0 ("dat"))(1C (Num Acc) OR (Indef Acc));
+SELECT (Dem Acc) IF (0 DAT-PRON)(1C (Num Acc) OR (Indef Acc));
 	## Tabealla vuosttaš ceakkočuolddas oaidnit dan golbma bajitdási
 	## váldofáddajoavkku.
 
+SELECT (Dem Acc) IF (0C (@DN>))(1C Acc);
+	## dáid buriid.
+
+
+
 	# Genitive
 
-SELECT (Dem Gen) IF (0 ("dat"))(1C (Num Gen))(NOT 0 (Dem Pl) LINK 1 ("okta"));
-SELECT (Dem Gen) IF (NOT *-1 VERB OR CC BARRIER NOT-ADV-PCLE)(0 ("dat"))(*1C (N Gen) BARRIER NOT-ADJ LINK 0 HNOUN);
+SELECT (Dem Gen) IF (0 DAT-PRON)(1C (Num Gen))(NOT 0 (Dem Pl) LINK 1 ("okta"));
+SELECT (Dem Gen) IF (NOT *-1 VERB OR CC BARRIER NOT-ADV-PCLE)(0 DAT-PRON)(*1C (N Gen) BARRIER NOT-ADJ LINK 0 HNOUN);
 	## Davimus guovllut ledje dálá Ruošša ja daid guovtti davvi-
 	## ovttastumiid oktasaš vearroeanan.
 	## ...de lei stáhta dan eatnama oamasteaddji maid. 
 
-SELECT (Dem Sg Gen) IF (NOT *-1 VERB BARRIER NOT-ADV-PCLE)(0 ("dat"))(*1C (N Sg Ill) BARRIER NPNH);
+SELECT (Dem Sg Gen) IF (NOT *-1 VERB BARRIER NOT-ADV-PCLE)(0 DAT-PRON)(*1C (N Sg Ill) BARRIER NPNH);
 	## Nubbi noađđeheargi goallostuvvo giehtahearggi lávžái ja goalmmát
 	## fas dan nuppi lávžái. 
 SELECT (Dem Sg Gen) IF (1 ("láhki" Sg Ill));	
 	## Lean smiehttan dan láhkái. 
-SELECT (Dem Pl Ill) IF (0 ("dat"))(*1C (N Pl Ill) BARRIER NOT-NP);
+SELECT (Dem Pl Ill) IF (0 DAT-PRON)(*1C (N Pl Ill) BARRIER NOT-NP);
 	## Láhka gusto daidda dearvvašvuođahálddahusa dearvvašvuođa-
 	## dieđuid gieđahallamiidda.
 
  # Disambiguating (Pl Ill) is only a question of distinguishing between 
  # Pers and Dem. Accordingly, the barrier can be less strict.
 
-SELECT (Dem Sg Gen) IF (NOT *-1 V-TRANS-ACT BARRIER (@OBJ) LINK NOT *-1 (@OBJ) BARRIER S-BOUNDARY2)(0 ("dat"))(*1C (N Sg Loc) BARRIER NPNH);
+SELECT (Dem Sg Gen) IF (NOT *-1 V-TRANS-ACT BARRIER (@OBJ) LINK NOT *-1 (@OBJ) BARRIER S-BOUNDARY2)(0 DAT-PRON)(*1C (N Sg Loc) BARRIER NPNH);
 	## Ja dan báhkka cizas lea fierpmit dassá go dat čoasku.
 
-SELECT Dem IF (0 ("dat"))(0C Loc)(*1 (N Pl Loc) BARRIER NPNH); 
+SELECT Dem IF (0 DAT-PRON)(0C Loc)(*1 (N Pl Loc) BARRIER NPNH); 
 	## Seamma olmmoš áimmahuššá máŋga dain doaimmain dahje rollain. 
 
 SELECT Dem IF (0 ("dainna"))(*1 (N Sg Com) OR (N Pl Loc) BARRIER NPNH);
@@ -7643,7 +7667,7 @@ SELECT Dem IF (0 ("dainna"))(*1 (N Sg Com) OR (N Pl Loc) BARRIER NPNH);
 REMOVE Dem IF (0 ("dainna"))(NOT *1 (Sg Com) OR (Pl Loc) BARRIER NPNH);
 	## Dainna Máret lávii čiŋadit.
 
-SELECT (Dem Pl Gen) IF (0 ("dat"))(*1C (N Pl Com) BARRIER NPNH);
+SELECT (Dem Pl Gen) IF (0 DAT-PRON)(*1C (N Pl Com) BARRIER NPNH);
 	## ...ja daid lunddolaš rájáiguin ássanguovlluid siiddaid gaska. 
 
 SELECT (Dem Pl Com) IF (*1C (N Pl Com) BARRIER NPNH);
@@ -7652,7 +7676,7 @@ SELECT (Dem Pl Com) IF (*1C (N Pl Com) BARRIER NPNH);
 REMOVE Acc IF (*-1 BOS OR CS OR (":" CLB) BARRIER NOT-ADV-PCLE)(0 Dem)(*1 (N Loc) OR (N Com) BARRIER NPNH);
 	## Dán mearrádusas ii leat lagabuidda definerejuvvon...
 
-REMOVE (Dem Acc) IF (0 ("dat"))(1 ADVLCASE);
+REMOVE (Dem Acc) IF (0 DAT-PRON)(1 ADVLCASE);
 	## De našunálastáhtat válde daid háldoseaset.
 
 REMOVE (Dem Acc) IF (NOT *-1 V-TRANS-ACT BARRIER SV-BOUNDARY2)(1 N)(1 ADVLCASE);
@@ -7664,9 +7688,9 @@ REMOVE (Dem Acc) IF (*-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE)(1 N)(1 ADVLCASE)(*1 N
 	## ...geas lea ovddasvástádus ollašuhttit dán suorggis giellalága 
 	## gáibadusaid.
 
-REMOVE (Dem Nom) IF (0 ("dat"))(NOT *1 (N Nom) BARRIER NPNH);
-REMOVE (Dem Sg Loc) IF (0 ("dat"));
-REMOVE (Dem Sg Ill) IF (0 ("dat"));
+REMOVE (Dem Nom) IF (0 DAT-PRON)(NOT *1 (N Nom) BARRIER NPNH);
+REMOVE (Dem Sg Loc) IF (0 DAT-PRON);
+REMOVE (Dem Sg Ill) IF (0 DAT-PRON);
 	## Maid dat Kárášjogas bargá?
 	## ...ja lea vuoigatvuohta oažžut das máŋgosa sierranas jearrama
 	## vuođul.
@@ -7731,8 +7755,8 @@ REMOVE Acc IF (0 Pers OR Refl)(*1C (N Acc) BARRIER S-BOUNDARY2 OR Po OR (Actio L
 	# Dem or Pers
 	# -----------
 
-SELECT Dem IF (0 ("dat"))(*1 N BARRIER NOT-ADJ LINK 1 CS OR Interr);
-SELECT Dem IF (0 ("dat"))(*1 N BARRIER NOT-ADJ LINK 1 COMMA LINK 1 CS OR Interr);
+SELECT Dem IF (0 DAT-PRON)(*1 N BARRIER NOT-ADJ LINK 1 CS OR Interr);
+SELECT Dem IF (0 DAT-PRON)(*1 N BARRIER NOT-ADJ LINK 1 COMMA LINK 1 CS OR Interr);
 	## dan teoriija maid
 	## dan teoriija, go 
 	# Number
@@ -8648,6 +8672,13 @@ REMOVE Loc IF (*-1 ("leat") OR ("fitnat") OR ("orrut") BARRIER NOT-ADV-PCLE)(0 (
   	## Ii dat gal orron hehttemin su vuojadeamis. 
   	## Fina viežžamin ealus munnje guokte gihci. 	
 
+	# Actio Gen = Actio Ess
+	# ---------------------
+	# This is for the -eami forms
+
+REMOVE Ess IF (NOT *-1 VFIN)(0 (Actio Gen))(*1 N BARRIER NPNH);
+	## lágat ja eará njuolggadusat mat leat hálddašeami vuođđun.
+	## Son dovddai máná lihkadeami čoavddas.
 
 
 	# ==================== #
@@ -9414,7 +9445,7 @@ SELECT (N Gen) IF (1 ("láhki" N Sg Ill));
 
 	# Genitive with "dan mađe N"
 	# - - - - - - - - - - - - -
-SELECT (Gen Sg) IF (0 ("dat"))(2 ("mađe"));
+SELECT (Gen Sg) IF (0 DAT-PRON)(2 ("mađe"));
 
 	# Genitive with "oktavuohta" - it´s included in PREGEN-rule
 	# - - - - - - - - - - - - - -
@@ -11256,7 +11287,7 @@ SELECT (Sg Com) IF (-1 COM-ADJ)(0 (Pl Loc));
 	
 	# dáinna lágiin / dáinna vugiin
 	# - - - - - - - - - - - - - - - -
-SELECT Com IF (-1 ("dát") OR ("dat") OR ("diet"))(-1 Com)(0 ("láhki"))(0 Com);
+SELECT Com IF (-1 DAT-PRON OR ("diet"))(-1 Com)(0 ("láhki"))(0 Com);
 
 SELECT Com IF (-1C (@AN>) OR (@GN>) OR (@DN>) OR (@QN>))(0 ("vuohki" Pl Loc))(NOT *-1 REALCOPULAS BARRIER S-BOUNDARY2)(NOT *1 REALCOPULAS BARRIER S-BOUNDARY2);
   	## Eiseválddit galget doaibmevaš vugiin doarjut dán barggu. 
@@ -11733,7 +11764,7 @@ SELECT Loc IF (*-1 LOCV BARRIER SV-BOUNDARY2 OR COM-HEAD LINK NOT 0 Adv)(NOT *-1
 	## Juohke dáhpáhusas ferte áibbas boastut leat beroškeahttá sámiid riekteáddejumiin.
 	## Rakel čierru mánáidis dihtii ii ge beroš jeđđehusas.
 
-SELECT Loc IF (NOT 0 ("dat") OR Actio)(NOT *1C Com BARRIER NPNH)(NOT 0 (N Num Nom) LINK 1 (Sg Com))(NOT 0 (Sg Com) LINK -1 (N Num Nom))(*1 LOCV BARRIER SV-BOUNDARY2);
+SELECT Loc IF (NOT 0 DAT-PRON OR Actio)(NOT *1C Com BARRIER NPNH)(NOT 0 (N Num Nom) LINK 1 (Sg Com))(NOT 0 (Sg Com) LINK -1 (N Num Nom))(*1 LOCV BARRIER SV-BOUNDARY2);
 	## Maiddái sámi fágabirrasiin ja ásahusain sáhttá jearrat ráđiid.
 
 SELECT Loc IF (*-1 ACC-LOCV BARRIER NOT-NP);
@@ -12245,7 +12276,7 @@ SELECT Ess IF (1 CC)(*2C Ess BARRIER NOT-NP);
 SELECT (Num Nom) IF (*-1 CC BARRIER NOT-ADV-PCLE LINK *-1 (Num Nom) BARRIER NPNH);
 	## Čieža, ja vel moatte uhca guoláža.
 
-REMOVE (Dem Gen) IF (0 ("dat"))(*1C (N Acc) BARRIER NPNH);
+REMOVE (Dem Gen) IF (0 DAT-PRON)(*1C (N Acc) BARRIER NPNH);
 	## Naba daid stuora dorskiid, gosa daid bidjet?
 
 SELECT Nom IF (*1 Loc BARRIER NPNH LINK 1 COPULAS LINK *1 (A Nom) BARRIER NOT-ADV-PCLE);
@@ -13914,7 +13945,7 @@ REMOVE Adv IF (NOT -2 Pr)(-1C Gen LINK NOT 0 TIME)(0 Po);
 # Pr or Adv
 # - - - - -
 
-SELECT Po IF (-1 (@GP>))(0 Pr)(NOT *1C (@GP) BARRIER NPNH);
+SELECT Po IF (-1 (@GP>))(0 Pr OR Adv)(NOT *1C (@GP) BARRIER NPNH);
 SELECT Pr IF (*1C (@GP<) BARRIER NPNH);
 	## Skuvlla lágidemiid dulkomat ja čálalaš gulahallan gaskal skuvlla/ruovttu mávssii 213 ruvnno.
 
@@ -13951,6 +13982,15 @@ REMOVE Actio IF (0 N)(NOT 0 Ess OR PrfPrc OR VFIN OR A);
 
 	# Verbs
 	# -----
+
+	# This rule is for bureaucratic prose. We need a sme-tdis.rle BEFORE the sme-dis.rle, looking at the preceeding sentence.
+REMOVE (Prs Sg2) IF (0 (Prs Pl1));
+	## Dasa siskkilduvvo maid vuoigatvuohta rievttálaččat háldet , ovdamearkka dihte go sirdá eaiggáduššanvuoigatvuođa earáide dahje go ásaha erenoamáš vuoigatvuođaid ja gildosiid. 
+	## Vuohččan leat hui unnán alimusriektemearrádusat mat njuolga gustojit giddodagaid vuoigatvuođadiliide Finnmárkkus. Danne fertet doalahit vuođđooainnuide mat muđui dihttojit Alimusrievtti geavadis.     
+	## Dás namuhat oanehaččat muhtun eará suodjalanvugiid dahje njuolggadusaid mat ee. uhcit eanet gáhttejit dihto geavaheami .    
+	## Dás sáhttá konkretiseren dušše leat muhtun oppalaš oainnut ja dihto njuolggadusaid albmadeapmi mo mearrádusa dulkot .    
+	## Sániid dáfus mihttet ahte eaŋgals sátni " denied " várra iešalddes lea eahpečielgas.
+
 
 REMOVE V-DER; # Removes only if there is another reading. 
 	## Mánáin lea vuoigatvuohta oažžut dearvvašvuođaiskkadeami.
@@ -13994,7 +14034,7 @@ SELECT Gen IF (-1C Pr)(0 Num);
 	# =============================== #
 	# Disambiguating syntax - Cycle 4 #
 	# =============================== #
-                CONSTRAINTS #26   #
+                    CONSTRAINTS #26       #
 	# =============================== #
 
   # ----------------- #
@@ -14816,6 +14856,15 @@ SELECT (Dem Acc @DN>) IF (*1C (N Acc) BARRIER NOT-ADJ);
 SELECT (Dem Gen @DN>) IF (*1C (N Gen) BARRIER NOT-ADJ);
 SELECT (Dem Sg Nom @DN>) IF (*1C (N Sg Nom) BARRIER NOT-ADJ);
 SELECT (Dem Pl Nom @DN>) IF (*1C (N Pl Nom) BARRIER NOT-ADJ);
+SELECT (Dem Gen @DN>) IF (*1C (N Ill) BARRIER NOT-ADJ);
+SELECT (Dem Gen @DN>) IF (*1C (N Sg Loc) BARRIER NOT-ADJ);
+
+# And the same for indef?
+SELECT (Indef Gen @PronN>) IF (*1C (N Gen) BARRIER NOT-ADJ);
+SELECT (Indef Sg Nom @PronN>) IF (*1C (N Sg Nom) BARRIER NOT-ADJ);
+SELECT (Indef Pl Nom @PronN>) IF (*1C (N Pl Nom) BARRIER NOT-ADJ);
+SELECT (Indef Gen @PronN>) IF (*1C (N Ill) BARRIER NOT-ADJ);
+SELECT (Indef Gen @PronN>) IF (*1C (N Sg Loc) BARRIER NOT-ADJ);
 
 
 	# Case
@@ -14865,7 +14914,7 @@ REMOVE (@X) ; # Keine Spur...
     ## 
 
 	#=====#
-      END #
+          END #
 	#=====#
 
 
