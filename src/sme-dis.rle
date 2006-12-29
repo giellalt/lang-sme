@@ -720,6 +720,12 @@ LIST ACC-ILLV = "addit" "bidjat" "mearkkašit";
 LIST MIELDE-V = "addit" "bidjat" "dáidit" "leat" "oastit" "oažžut" "váldit" ;
 # Son attii girjji mielde.
 
+LIST TIMEADVERBIAL-V = "eallit" "guohtut" "oahpahit" "ođasmahttit" ;
+    # Do not take members of the time set as an object
+    
+LIST TIMEOBJECT-V = "geavahit" "hábmet" "lasihit" ;
+    # might take time as an object
+
 # Valency sets
 # - - - - - - -
 
@@ -1277,7 +1283,7 @@ LIST ESS-ADVL-N = "arvi" "arve#dálki" "báhkka" "baján#dálki" "beaivvádat" "
 
 LIST MANNU = "ođđa#jage#mánnu" "ođđa#jagi#mánnu" "guovva#mánnu" "njukča#mánnu" "njuvčča#mánnu" "márs#mánnu" "cuoŋo#mánnu" "cuoŋos#mánnu" "cuoŋu#mánnu" "gáranas#mánnu" "geassem" "miesse#mánnu" "mái#mánnu" "geasse#mánnu" "suoidne#mánnu" "borge#mánnu" "šnjilča#mánnu" "šnjilža#mánnu" "čakča#mánnu" "golggot#mánnu" "skábma#mánnu" "november#mánnu" "ritne#mánnu" "juovla#mánnu" ;
 
-LIST AIGODAT = "ahtanuššan#áigodat" "áigi" "áigodat" "álgo#áigi" "geassin#áigodat" "stuoradigge#áigodat" "sámedigge#áigodat" "soahte#áigi" "soahte#gaska#áigi" "guođohan#áigodat" "doaibma#áigodat" ;       
+LIST AIGODAT = "ahtanuššan#áigodat" "áigi" "áigodat" "álgo#áigi" "bargo#áigi" "geassin#áigodat" "stuoradigge#áigodat" "sámedigge#áigodat" "soahte#áigi" "soahte#gaska#áigi" "guođohan#áigodat" "doaibma#áigodat" ;       
 
 LIST VAHKKU = "almmustus#beaivi" "ávvu#beaivi" "beaivi" "b" "bievla#jahki" "bivdo#áigi" "jándor" "bodda" "čakča" "čakča#geassi" "čakča#seavdnjat" "čuohte#jahki" "dálvi"	"D-#beaivi" "dienas#jahki" "diibmu" "dbm" "doaibma#jahki" "eahket" "eamiálbmot#jahki" "earre#jahki" "gaska#idja" "geardi" "geassi" "giđđa" "hávvi" "idja" "jahki" "jahke#bealle" "jahke#čuohti" "kaleanddar#jahki" "loahppa#jahki" "luome#jahki" "luopmo#jahki" "mánnu" "mihcamárra" "muorje#jahki" "nisson#jahki" "njealjádas#jahki" "ráhkkanan#beaivi"  "riegádan#beaivi" "skuvla#jahki" "tiibmu" "vahkku" "vuoito#jahki" "stuorradigge#áigodat" "12-1300-#lohku" "1700-#lohku" "1800-#lohku" "1950#-lohku" "1980#-lohku" ;
  # The quoteless jahki here is since the preprocessor is not fine-tuned
@@ -1287,7 +1293,7 @@ LIST AIGI = "áigi" "álgo#áigi" "bargo#áigi" "biškun#áigi" "bivdo#áigi" "B
   # Maybe it could be added to VAHKKU?
 
  
-LIST BEAIVI = "álbmot#beaivi" "bargočoahkkin#beaivi" "mánnodat" "vuoss#árga" "disdat" "maŋŋeb#árga" "gaska#vahkku" "duorastat" "bearjadat" "lávvardat" "lávvordat" "sotna#beaivi" "duopmo#beaivi" "sábbát" "skille#duorastat" ;
+LIST BEAIVI = "álbmot#beaivi" "albmái#mannan#beaivi" "árga#beaivi" "bargočoahkkin#beaivi" "beassáš#beaivi" "mánnodat" "vuoss#árga" "disdat" "maŋŋeb#árga" "gaska#vahkku" "duorastat" "bearjadat" "juovla#beaivi" "lávvardat" "lávvordat" "sotna#beaivi" "duopmo#beaivi" "sábbát" "skille#duorastat" ;
 
 SET TIME = MANNU | VAHKKU | BEAIVI | AIGI ;
   # Do not add AIGODAT, it has some other characteristics in some cases.
@@ -6951,6 +6957,10 @@ REMOVE LCRD IF (*-2 TV LINK 0 VFIN BARRIER S-BOUNDARY)(-1C (@OBJ))(*1C (@OBJ) BA
     # Has to come before the GCRD rules
     # Two transitive verbs each asking for its own object before and after the CC/CS
     ## Erenoamážit muitá borramušaid ja bohccobierggu hája ja dávttiid ruoškima go ađđamiid čiske.
+    
+REMOVE GCRD IF (-1 A)(0 ("go"))(1 (@ADVL) OR NP-MEMBER LINK *1 COMMA LINK 1 VFIN BARRIER NPNH);
+    ## Dán njuolggadusa deaŧalaš eaktu lea ahte ođđa siidaosiid ásaheapmi ii galgga dagahit ahte boazolohku šaddá alit go siidii mearriduvvon lohku, geahča dás maŋŋelis.
+    # specifically for comparative go-constructions
 
 REMOVE GCRD IF (-1 Cmpnd);
 #SELECT (@CC-NP) IF (-1 Cmpnd);
@@ -14809,9 +14819,27 @@ SELECT (@OBJ) IF (-2C (@OBJ))(-1 CC)(1 Gen)(2C Po);
 	## giellageavaheame hárrái. 
 SELECT (@OBJ) IF (*-4 V-TRANS-ACT LINK *1C (@OBJ) LINK 1 CC OR COMMA)(*-1 V-TRANS-ACT BARRIER NPNHA)(0 Nom);
   	## Dákkár máhtuin sáhttá geahpedit guovttekultuvralaš bearrašiid mánáid dili, ja nannet sámi mánáid identitehta.
-
-
+  	
+    # Adverbials or Objects (TIME)
+    # - - - - - - - - - - - - - - -
+SELECT (@OBJ) IF (0 TIME LINK 0 (@ADVL))(NOT *1 (@OBJ) BARRIER SV-BOUNDARY2 LINK *1 TIMEOBJECT-V LINK 0 VFIN BARRIER SV-BOUNDARY2 LINK NOT *-1 (@OBJ) BARRIER SV-BOUNDARY2);
+SELECT (@OBJ) IF (-1 ("vejolašvuohta") LINK -1 ("leat"))(0 TIME LINK 0 (@ADVL))(*1 TIMEOBJECT-V LINK 0 VFIN BARRIER SV-BOUNDARY2 LINK NOT *-1 (@OBJ) BARRIER SV-BOUNDARY2);
+    ## Mis ii leat, nu movt skuvllas, lohkanmearri, mas gáibiduvvo máhttit alfabehta giđđii, muhto mis lea vejolašvuohta beaivvi geavahit nu movt heive.
 	# Verbal functions were here, was moved to beginning.
+	
+SELECT (@OBJ) IF (*-1 ("viididit") BARRIER SV-BOUNDARY2)(0 AIGI LINK 0 (@ADVL));
+    ## ...dat guoská maiddái dasa ahte árvvoštallat vejolašvuođa viiddidit fleksibel bargoáiggi.
+
+SELECT (@OBJ) IF (*-1 ("lágidit") BARRIER SV-BOUNDARY2)(0 ("álbmot#beaivi") LINK 0 (@ADVL));
+    ## ...muhto mii evttohit suohkanii ahte 9. luohkát besset lágidit Norgga álbmotbeaivvi.
+
+
+REMOVE (@OBJ) IF (*-1 TIMEADVERBIAL-V OR IV LINK 0 VFIN BARRIER SV-BOUNDARY2)(0 TIME LINK 0 (@ADVL));
+    ## Dasto ferte nugo čuoččuhuvvon bajábealde, bidjat vuođđun ahte oamit ledje guhton badjel guokte čuohte jagi ovdal 1775 cealkámuša, ja ahte ...
+    
+REMOVE (@OBJ) IF (*-1 TIMEADVERBIAL-V OR IV LINK 0 PrfPrc BARRIER SV-BOUNDARY2 LINK *-1 ("leat") LINK 0 VFIN)(0 TIME LINK 0 (@ADVL)); 
+    ## Visot dát joavkkut lea eallán Ruoŧas guhkes áiggi ja leat danin oassi ruoŧa kulturárbbis.
+    
 
 	# Other grammatical functions
 	# ---------------------------
