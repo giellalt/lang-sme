@@ -1370,9 +1370,11 @@ LIST WEIGHT = "mg" "kg" "kilo" "gilo" ;
 
 LIST LENGTH = "čuolda#badji" "dumá" "fierbme#badji" "miila" "kilo#mehtar" "kilo#mehter" "mehtar" "mehter" "centi#mehtar" "centi#mehter" "sente" "cm" "milli#mehtar" "milli#mehter" "njealjádas#mehter" "tumá" "állan" "salla" ;
 
+LIST TEMPERATURE = "buolaš#gráda" "liegga#gráda" ;
+
 LIST AMOUNT =  "uhcánaš" "unnánaš" ;
 
-SET MEASURE = VOLUME | WEIGHT | LENGTH | AMOUNT ;
+SET MEASURE = VOLUME | WEIGHT | LENGTH | AMOUNT | TEMPERATURE ;
 
 LIST CURRENCY = "denara" "euro" "kruvdnu" "kr" "ru" "rubel" "ruvdnu" "¢" "€" "$";
 LIST CURRENCY-GEN = ("kruvdnu" Gen) ("kr" Gen) ("ruvdnu" Gen) ("¢" Gen) ("€" Gen) ("$" Gen);
@@ -2601,6 +2603,9 @@ MAP (@AN>) TARGET Num IF (-1 MANNU)(1 ("b"));
 	
 MAP (@HNOUN) TARGET Nom IF (-1 BOS)(0 INITIAL OR Num)(1 ("\)"));
     ## b) Go ovddit sátni lea adjektiiva ja ráhkada substantiivvain fásta, tearpmalágan sáni, man mearkkašupmi lea eará go guovtti sierra.
+    
+MAP (@APP) TARGET Num IF (-2 Ord)(-1 MANNU)(NOT 0 Range);
+    ## "23. cuoŋománu 1728 dovddus geaskkus lea ee. celkon ahte mearraguollebivdu lea luđolaš earret"
 
 MAP (@APP @SUBJ @SPRED @HNOUN) TARGET (Num Nom) IF (-1 MANNU LINK NOT 0 Nom)(0 CARDINALS);
   	## Guovdageaidnu / Kautokeino, skábmamánu 2002 viesut ledje buorre.
@@ -2923,6 +2928,9 @@ MAP (@NQ<) TARGET (N Gen) IF (*-1 NUMERALS BARRIER NOT-ADJ LINK 0 Nom)(1 Prop);
 
 MAP (@GN>) TARGET Gen IF (0 MANNU)(1 Ord);
 	## ...ođđajagemánu 1. b. 2002.
+	
+MAP (@GN>) TARGET Gen IF (-1 Ord)(0 MANNU)(1 Num);
+	## "23. cuoŋománu 1728 dovddus geaskkus lea ee. celkon ahte mearraguollebivdu lea luđolaš earret"
 
 MAP (@GN>) TARGET Gen IF (0 MANNU)(1 Num LINK 1 ("b") LINK 1 Num);
 	## ...ja maiddái borgemánu 1 b. 1891 čuovvu njuolggadusain
@@ -3029,7 +3037,6 @@ MAP (@APP) TARGET (Num Nom) IF (-1 Loc LINK 0 MANNU)(0 CARDINALS);
   
 	#MAP (@APP) TARGET (Num Nom) IF (-1 Gen LINK 0 MANNU)(0 CARDINALS LINK 0 Nom)(*1 Po OR N BARRIER NOT-NP);
   	## Guovdageaidnu / Kautokeino, skábmamánu 2002 rádjai lei buorre. 
-
 
   
 	# Fragment mappings
@@ -5726,6 +5733,8 @@ REMOVE Loc IF (0 ("b"));
 SELECT Loc IF (-1 (@NQ<) LINK -1 CARDINALS)(0 TIME);
     ## Nu studeanta ii ožžon 8 diimmu vahkus?
     
+
+    
     
 	#SELECT Acc
 
@@ -7495,7 +7504,7 @@ REMOVE Pl IF (-1 (Recipr Du))(0 Recipr);
 
 
 	# ================ #
-           CONSTRAINTS #12 #
+       CONSTRAINTS #12 #
 	# ================ #
 
 REMOVE Recipr ;
