@@ -60,6 +60,7 @@ all: n-g.summary \
 	 n-a.summary \
 	 v-g.summary \
 	 v-a.summary \
+	 num-a.summary \
 #	 a-g.summary \
 #	 a-a.summary
 
@@ -74,6 +75,11 @@ all-v: v-g.summary v-a.summary
 # If you only want to test adjectives:
 .PHONY: all-a
 all-a: a-g.summary a-a.summary
+
+# If you only want to test numerals:
+.PHONY: all-a
+all-a: a-g.summary a-a.summary
+
 
 # If you only want to test verbal generation, use v-g.summary
 # as target. Etc. for the other cases. And do you only want to
@@ -292,6 +298,64 @@ a-paradigm: a-para.ptest savefile
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 	@less $(WORD).paradigm
+
+
+# NUMERALS
+# ========
+
+# Create all the noun test file bases:
+num-%.testbase: num-%.txt num-codes.txt
+	@echo
+	@echo "*** Creating the test base for num-$*.txt ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNforms.pl num-codes.txt $< > $@
+	@chmod 660 $@
+
+# Finally, we concatenate all *.greports
+num-g.summary: $(NGenFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All noun word form generation testing is done.      ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# Finally, we concatenate all *.areports:
+num-a.summary: $(NAnaFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All noun word form analysis testing is done.        ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# Create noun paradigm generation input file:
+num-para.ptest: num-codes.txt
+	@echo
+	@echo "*** Creating the noun paradigm input file for '$(WORD)' ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNword.pl $< $(WORD) > $@
+	@chmod 660 $@
+
+# Paradigm generation:
+.PHONY: num-paradigm
+num-paradigm: num-para.ptest savefile
+	@echo
+	@echo "*** Running the paradigm generator for '$(WORD)' ***"
+	@echo
+	@printf "load $(SAVEFILE) \n\
+	apply down <$< \n\
+	quit \n" > $(TEMP)/$@-gtest-script
+	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
+	@rm -f $(TEMP)/$@-gtest-script
+	@rm -f $<
+	@less $(WORD).paradigm
+
+
 
 
 # POS-independent parts:
