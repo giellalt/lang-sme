@@ -80,6 +80,9 @@ all-a: a-g.summary a-a.summary
 .PHONY: all-a
 all-a: a-g.summary a-a.summary
 
+# If you only want to test numerals:
+.PHONY: all-num
+all-num: num-g.summary num-a.summary
 
 # If you only want to test verbal generation, use v-g.summary
 # as target. Etc. for the other cases. And do you only want to
