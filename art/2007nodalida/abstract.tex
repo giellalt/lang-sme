@@ -5,7 +5,6 @@
 \usepackage[T1]{fontenc}
 \usepackage{psfrag} % ??? needed?
 \usepackage{a4wide}
-
 \usepackage{hyperref}
 \usepackage{graphics}
 \usepackage{url} % representing urls
@@ -18,7 +17,7 @@
 
 \title{Two-dimensionality in a one-dimensional framework}
 
-\author{Lene Antonsen and Trond Trosterud\\ 
+\author{Trond Trosterud and Lene Antonsen \\ 
 Faculty of the humanities,  University of Tromsø}
 
 
@@ -30,9 +29,7 @@ Faculty of the humanities,  University of Tromsø}
 
 Basically, constraint grammar is a one-dimensional framework, where ambiguous readings of individual wordforms are disambiguated on the basis of the right and left context of the word string. Bearing in mind the important fact that actual sentences indeed do consist of such strings, we may claim CG a psycholinguistic reality: Like actual listeners, it deduces ambiguity based on context.
 
-From a syntactic view, the string does not consist of words, but of phrases,
-
-The standard way of coping with this discrepancy in the CG community is faithful to the bottom-up character of the whole framework: Start with the simple cases, and gradually build rules for more complicated ones.
+From a syntactic view, the string does not consist of words, but of phrases, The standard way of coping with this discrepancy in the CG community is faithful to the bottom-up character of the whole framework: Start with the simple cases, and gradually build rules for more complicated ones. The problem is that the rules coping with the more complicated cases will supersede the simple ones, or that the contitions of the simple rules do not work for the complex sentences.
 
 While sensible enough as a procedural device, we would in principle opt for a different approach: Taking the phrasal nature of sentence structure as a starting point, and build modular sets simulating the behaviour of phrases. Relevant here are complementary sets and barriers.
 
@@ -48,20 +45,69 @@ We build the complementary sets in a nested fashion, first defining the set of p
 
 
 \begin{example}\label{PRE-NP-HEAD}
-SET PRE-NP-HEAD = (Prop Attr) | (Prop @PROP>) | (A Attr) | (Pron Pers Gen) | (N Gen) | Num | Cmpnd | CC | (Pron Dem) | (Pron Refl Gen) | (Pron Indef) | (PrfPrc @AN>) | (PrfPrc @PrcN>) | PrsPrc | (A Ord) ; \\
+SET PRE-NP-HEAD = (Prop Attr) | (A Attr) | (Pron Pers Gen) | (N Gen) | Num | Cmpnd | CC | (Pron Dem) | (Pron Refl Gen) | (Pron Indef) | PrfPrc | PrsPrc | (A Ord) ; \\
 \end{example}
 \begin{example}\label{NPNH}
 SET NPNH = WORD - PRE-NP-HEAD | ABBR ; \\                 
 \end{example}
 
+In scanning for arguments we then extend the complementary set to include particles, adverbs and nouns in adverbial cases. When we wrote our Sámi disambiguator we wrote successive rules from simple to complex cases, but in hindsight we would have liked to start out with the complex cases, and let the simple ones come out as special instances of the complicated ones.
+
+
+
 \section{Barriers}
 
-About our barriers.
+When scanning domains, a central issue is where to stop scanning. The CG formalism facilitates domain hedging via the BARRIER function, telling the program to stop searching at certain points. Also for barriers, we want to build a modular system, predefining a fixed set of barriers to be used across the whole rule set. 
+
+In the case \ref{barriers}, Y a barrier, X can access W but not Z. 
+
+\begin{example}\label{barriers}
+... X ... W ... Y ... Z 
+\end{example}
+
+We want to distinguish between different types of barriers, relative to different types of dependencies. Especially in a language with a relative free word order, as Sámi, this is important. We operate with two main barrier types, The larger one corresponds to the boundaries of the clause, i.e. the S node projected from the V in classical generative grammar. The smaller one contains the main verb as well. In the former case we thus scan within the clause of the main verb, and in the latter we scan between this verb and the closest clause barrier.
+
+With S representing the wider boundary and V the main verb, X and Y are in the same domain wrt. the larger boundary but not wrt. the smaller, cf. \ref{barrex}.
+
+\begin{example}\label{barrex}
+... S ... X ... V ... Y ... S ... 
+\end{example}
+
+Since there is no tree structure in the string, we have to detect the S-boundary indirectly, via words signalling the start of a new domain. In addition to textual clues such as colon, we include subjunctions and interrogative pronouns in this set.
+
+\begin{example}\label{s}
+SET S-BOUNDARY  = (Pron Interr) | (Pron Rel) | ("muhto") | MO | ("\;") | (":") | ("-") | ("–") | CS ;
+	
+\end{example}
+
+In order to scan a smaller area, we use SV-BOUNDARY, a boundary including the main verb in addition to the above set.
+
+\begin{example}\label{sv}
+SET SV-BOUNDARY = S-BOUNDARY | @-FMAINV | @+FMAINV ;
+\end{example}
+
+We use these uniform boundary definitions in order to be able to change rules globally. 
+
+We use two different levels in order to distinguish between clause-internal constituents on the one hand, and pre- and postverbal on the other. The wider domain is the clause itself, and the narrower one is the domain between the clause boundary and the closest main verb, or between main verbs.
+
+So, for a given constituent X, we may give it a certain analysis given there is some special verb, say V', inm without there being intervening competing verbs. Then we use the narrower SV-boundary.
+
+\begin{example}\label{svx}
+... S ... X ... V ... V' ... S ...
+\end{example}
 
 
-\bibliography{pstbib}
 
-\bibliographystyle{alpha}
+\section{Conclusion}
+
+Building the grammar modulary rather than incrementally has several advantages. It makes it possible to adjust the rules for errors globally, rather than ad hoc on a rule-to-rule basis. It also makes our rule components portable to other languages with similar syntactic properties.
+
+In our talk we will present some of our rule components, and also some of the problems we have been facing when working incrementally rather than in the modular way sketched here.
+
+       
+
+%\bibliography{pstbib}
+%\bibliographystyle{alpha}
 
 
 \end{document}
