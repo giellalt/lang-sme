@@ -498,7 +498,7 @@ twol-extract: ../src/twol-sme.txt
 	@grep '^!€' $< > $(FILEPOS)
 	@grep '^!\$$' $< > $(FILENEG)
 
-twol-test: ../bin/twol-sme.bin twol-extract
+twol-test: ../bin/twol-sme-descriptive.bin twol-extract
 	@echo
 	@echo "*** Testing twolc rules ***"
 	@echo
