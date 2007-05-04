@@ -484,12 +484,16 @@ savefile:
 # make twol-neg  (tests for the positive test pairs, prints output to twol-neg.out)
 # make twol-test FILE=filename.txt (test for pairs in filename.txt)
 # make twol      (when the rules themselves are changed, will recompile the binary)
+#                (note that "make twol" will compile the descriptive twol transducer)
 
 TWOLC = twolc -utf8
 TYPE = pos
 FILEPOS = twol-pos.in
 FILENEG = twol-neg.in
 FILE = $(FILEPOS)
+M4 = m4
+M4FLAGS = 
+
 
 twol-extract: ../src/twol-sme.txt
 	@echo
@@ -510,16 +514,20 @@ twol-test: ../bin/twol-sme-descriptive.bin twol-extract
 
 # convenience target: if one needs to recompile the twol (e.g. after rule changes),
 # just write make twol
-twol: ../src/twol-sme.txt
+
+twol: ../bin/twol-sme-descriptive.bin
+../bin/twol-sme-descriptive.bin: ../src/twol-sme.txt
 	@echo
-	@echo "*** Building twol-sme.bin ***" ;
+	@echo "*** Building twol-sme-descriptive.bin ***" ;
 	@echo
-	@printf "read-grammar $< \n\
+	$(M4) $(M4FLAGS) -DDIPHSIMPL $< > $(TEMP)/twol-sme-tmp.txt
+	@printf "read-grammar $(TEMP)/twol-sme-tmp.txt \n\
 	compile \n\
 	save-binary $@ \n\
-	quit \n" > twol-script
-	$(TWOLC) < twol-script
-	@rm -f twol-script
+	quit \n" > $(TEMP)/twol-script
+	$(TWOLC) < $(TEMP)/twol-script
+	@rm -f $(TEMP)/twol-script
+
 
 twol-pos: TYPE=pos
 twol-pos: FILE=$(FILEPOS)
