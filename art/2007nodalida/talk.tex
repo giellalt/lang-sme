@@ -58,6 +58,176 @@ As we have heard earlier today, Eckhard Bick and Tino Diderichsen have approache
 
 The examples will mainly be drawn from my work on North Sámi, The work was conducted in cooperation with Lene Antonsen, Linda Wiechetek, on an earlier stage also Marit Julien delivered valuable input. We are also dependent upon and grateful to the participants of the Sámi Parliament proofing tool project for a fruitful cooperation.%%%
 
+
+
+%&\newslide
+\section{Barriers}
+
+Being raised as a GB syntactician, my fascination for \textit{barriers} should come as no surprise.%%%
+
+When scanning domains, a central issue is where to stop scanning. The CG formalism facilitates domain hedging via the BARRIER function, telling the program to stop searching at certain points.%%%
+
+Note that the function $BARRIER$ was not part of the original CG-1 formalism, in order to express a condition relative to some constituent $C$ to the right, provided there were no intervening barrier $B$, you had to scan to the right for $C$, and then scan back to see whether there was a $C$ there or not.%%%
+
+Just as for the complementary phrase-simulating sets, we want also for barriers to build a modular system, predefining a fixed set of barriers to be used across the whole rule set.%%%
+
+In the case \ref{barriers}, B a barrier, X can access W but not Z.%%%
+
+%&\newslide
+\begin{example}\label{barriers}
+... X ... W ... B ... Z 
+\end{example}
+
+
+%&\newslide
+\begin{example}\label{posi-barriers}
+Positive barrier
+\item[] ... IF (*1 TARGET BARRIER B)
+\end{example}
+
+\begin{example}\label{nega-barriers}
+Negative barrier
+\item[(a)] ... IF (NOT *1 TARGET BARRIER B)
+\item[(b)] ... IF (*1 DOMAINLIMIT BARRIER TARGET)
+\end{example}
+
+
+%&\newslide
+\subsection{Types of barriers}
+
+Looking at the barriers from a typological viewpoint, one can distinguish between barriers hedging the clause, barriers representing argument-takers (V and Pr/Po), and barriers referring to argument heads or argument dependants. Cf. table \ref{btypol}.%%%
+
+%&\newslide
+\begin{table}[htdp]
+\caption{Barrier types, and what they block}
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|c|}
+%\begin{tabular}{|l|p{5cm}|p{5cm}|}
+\hline
+Example &  notAdv  & NPNH & N/Pron & notArg & SB\&Infi & SB  \\ \hline
+CLB     &  yes     & yes  & no     & yes    & yes     & yes \\
+Subjunc &  yes     & yes  & no     & yes    & yes     & yes \\ 
+\hline
+InfinV  &  yes     & yes  & no     & yes    & yes     & no  \\
+Verb    &  yes     & yes  & no     & yes    & no      & no  \\
+Pr/Po   &  yes     & yes  & no     & yes    & no      & no  \\
+\hline
+Arghead &  yes     & yes   & no     & no     & no      & no  \\
+Argmod  &  yes     & no    & yes    & no     & no      & no  \\ 
+\hline
+\end{tabular}
+\end{center}
+\label{btypol}
+\end{table}%
+
+
+In addition, we may identify barriers for special contexts.%%%
+
+So, for a given target, we may select or discard a certain reading based upon the presence or absence of the licenser of just this target.%%%
+
+%&\newslide
+%&\textbf{Barriers for special contexts}
+\begin{example}
+REMOVE (V PrfPtc) IF (*-1 S-BOUNDARY BARRIER BE/HAVE)(0 Ambiguous-PrfPtc);
+\end{example}
+
+
+A further type is the one we may dub \textit{the uniqueness barrier}, chosing for a target $T$ the label $A$, if there, withina certain domain $D$, is no other $A$.%%%
+
+
+\begin{example}
+<T> SELECT A IF (*-1 DOM-BOUNDARY BARRIER A)(*1 DOM-BOUNDARY BARRIER A)
+\end{example}
+
+We may also mix the uniqueness barrier and the special barrier. In \ref{mix}, for example, INF is the uniqness barrier, securing that the target is the sole infinitive within the left domain. The special barrier is again represented with the inverse notation, stating that there must be a licencer for this specific target (here: a modal verb), within the relevant domain (here: S-BOUNDARY). %%%
+
+%&\newslide
+%&\textbf{Combining the uniqueness and the domain barrier}
+\begin{example}\label{mix}
+SELECT Inf IF (*-1 modal-verb BARRIER S-BOUNDARY OR INF);
+\end{example}
+
+
+%&\newslide
+\subsection{Barriers in the Sámi and Norwegian taggers}
+
+\begin{example}
+Number of barriers
+\item[(a)] OBT: 71 distinct barriers (49 non-unique, 1064 total)
+\item[(b)] SME: 293 distinct barriers (111 non-unique, 1956 total)
+\end{ example}
+
+The use of the barriers show the usual curve, a handful is used very often, and then there is a long tail of hapax barriers being used only once (this is also the case in the OBT parser, the smaller number of hapaxes there is due to the rule format being automatically converted from CG-1 to CG-2).%%%
+
+In the Sámi parser, the main barrier is the NPNH family of barriers, thereafter come the NotAdv family, and the sentence boundaries.%%%
+
+In the Sámi disambiguation project, we want to distinguish between different types of barriers, relative to different types of dependencies. Especially in a language with a relative free word order, as Sámi, this is important. %%%
+
+We operate with two main barrier types, in addition to the CG-imposed DELIMITER symbols. The larger one corresponds to the boundaries of the clause, i.e. the S node projected from the V in classical generative grammar. The smaller one contains the main verb as well. In the former case we thus scan within the clause of the main verb, and in the latter we scan between this verb and the closest clause barrier.%%%
+
+With S representing the wider boundary and V the main verb (and hence narrower boundary), X and Y are in the same domain wrt. the wider boundary but not wrt. the narrower one, cf. (\ref{barrex}). %%%
+
+%&\newslide
+\begin{example}\label{barrex}
+... S ... X ... V ... Y ... S ... 
+\end{example}
+
+
+Since there is no tree structure in the string, we have to detect the S-boundary indirectly, via words signalling the start of a new domain. In addition to textual clues such as colon, we include subjunctions and interrogative pronouns in this set (here, the set $MO$ refers to a set of question adverbials).%%%
+
+%&\newslide
+\begin{example}\label{s}
+SET S-BOUNDARY  = (Pron Interr) | (Pron Rel) | ("muhto") | MO | (";") | (":") | ("-") | ("–") | CS ;	
+\end{example}
+
+As long as we do not build trees we do not hit the boundary directly. Also, with this word-based method we do not find orthographic clues like comma, rather, we hit the word signaling it. The problem is that the BARRIER must refer to sets, and not to expressions, like e.g. \textit{COMMA LINK 1 (Pron Rel)}.%%%
+
+The union of S-BOUNDARY and the boundary symbols >>> and <<< we call BOC and EOC, respectively. When used as a barrier, we use S-BOUNDARY, and when used as a target, we use BOC, the intersection of S-BOUNDARY and BOS:%%%
+
+%&\newslide
+\begin{example}
+MAP (@GN>) TARGET Gen IF (*-1 BOC BARRIER Pr)(NOT 0 TIME)(*1 N BARRIER NPNHA LINK NOT 0 Prop);
+\end{example}
+\begin{example}
+SELECT Adv IF (*-1 VFIN BARRIER S-BOUNDARY LINK NOT 0 Neg)(0 ("hárve"));
+\end{example}
+
+In order to scan a smaller area than S-BOUNDARY, we use SV-BOUNDARY, a boundary including the main verb in addition to the above set.%%%
+
+%&\newslide
+\begin{example}\label{sv}
+SET SV-BOUNDARY = S-BOUNDARY | @-FMAINV | @+FMAINV ;
+\end{example}
+
+We use these uniform boundary definitions in order to be able to change rules globally.%%%
+
+We use two different levels in order to distinguish between clause-internal constituents on the one hand, and pre- and postverbal on the other. The wider domain is the clause itself, and the narrower one is the domain between the clause boundary and the closest main verb, or between main verbs.%%%
+
+So, for a given constituent X, we may give it a certain analysis given there is some special verb, say V', without there being intervening competing verbs. Then we use the narrower SV-boundary.%%%
+
+%&\newslide
+\begin{example}\label{svx}
+... S ... X ... V ... V' ... S ...
+\end{example}
+
+%&\newslide
+\begin{example}\label{ped}
+\begin{itemize}
+\item[(a)] SELECT A IF *-1 B ;
+\item[(b)] SELECT A IF *-1 B BARRIER C ;
+\item[(c)] SELECT V-PL IF *-1 (N Nom) LINK *-1 CC LINK -1 (N Nom)) ;
+\end{itemize}
+\end{example}
+
+
+
+
+%&\newslide
+\subsection{Not complex barriers}
+
+One weakness with the vislcg barrier concept is that barriers are sets, and not context-sensitive elements. Thus, I can define a barrier as the set of all subjunctions and relative pronouns, but I cannot include context-sensitiveness into the barrier definitions, and ask for subjunctions, relative pronouns, and contrafactual conjunctions preceeded by comma. This is a weakness resembling the old restriction on barriers in CG-1, and I am glad that there is work underway to allow for defining not only sets, but also expressions, as barriers.  %%%
+
+
 %&\newslide
 \section{Simulating the NP}
 
@@ -141,166 +311,7 @@ In scanning for arguments we then extend the complementary set to include partic
 
 For languages with gender agreement, the same system may be set up in a more fine-grained fashion, requiring the pre-N elements to agree with the N in case and number.%%%
 
-
 %&\newslide
-\section{Barriers}
-
-Being raised as a GB syntactician, my fascination for \textit{barriers} should come as no surprise.%%%
-
-When scanning domains, a central issue is where to stop scanning. The CG formalism facilitates domain hedging via the BARRIER function, telling the program to stop searching at certain points.%%%
-
-Note that the function $BARRIER$ was not part of the original CG-1 formalism, in order to express a condition relative to some constituent $C$ to the right, provided there were no intervening barrier $B$, you had to scan to the right for $C$, and then scan back to see whether there was a $C$ there or not.%%%
-
-Just as for the complementary phrase-simulating sets, we want also for barriers to build a modular system, predefining a fixed set of barriers to be used across the whole rule set.%%%
-
-In the case \ref{barriers}, B a barrier, X can access W but not Z.%%%
-
-%&\newslide
-\begin{example}\label{barriers}
-... X ... W ... B ... Z 
-\end{example}
-
-
-%&\newslide
-\begin{example}\label{posi-barriers}
-Positive barrier
-\item[] ... IF (*1 TARGET BARRIER B)
-\end{example}
-
-\begin{example}\label{nega-barriers}
-Negative barrier
-\item[(a)] ... IF (NOT *1 TARGET BARRIER B)
-\item[(b)] ... IF (*1 DOMAINLIMIT BARRIER TARGET)
-\end{example}
-
-
-%&\newslide
-\subsection{Types of barriers}
-
-Looking at the barriers from a typological viewpoint, one can distinguish between barriers hedging the clause, barriers representing argument-takers (V and Pr/Po), and barriers referring to argument heads or argument dependants. Cf. table \ref{btypol}.%%%
-
-%&\newslide
-\begin{table}[htdp]
-\caption{Barrier types, and what they block}
-\begin{center}
-\begin{tabular}{|l|c|c|c|c|c|c|}
-%\begin{tabular}{|l|p{5cm}|p{5cm}|}
-\hline
-Example &  notAdv  & NPNH & N/Pron & notArg & SB\&Infi & SB  \\ \hline
-CLB     &  yes     & yes  & no     & yes    & yes     & yes \\
-Subjunc &  yes     & yes  & no     & yes    & yes     & yes \\ 
-\hline
-InfinV  &  yes     & yes  & no     & yes    & yes     & no  \\
-Verb    &  yes     & yes  & no     & yes    & no      & no  \\
-Pr/Po   &  yes     & yes  & no     & yes    & no      & no  \\
-\hline
-Arghead &  yes     & no   & yes    & no     & no      & no  \\
-Argmod  &  yes     & yes  & no     & no     & no      & no  \\ 
-\hline
-\end{tabular}
-\end{center}
-\label{btypol}
-\end{table}%
-
-
-In addition, we may identify barriers for special contexts.%%%
-
-So, for a given target, we may select or discard a certain reading based upon the presence or absence of the licenser of just this target.%%%
-
-%&\newslide
-%&\textbf{Barriers for special contexts}
-\begin{example}
-REMOVE (V PrfPtc) IF (*-1 S-BOUNDARY BARRIER BE/HAVE)(0 Ambiguous-PrfPtc);
-\end{example}
-
-
-A further type is the one we may dub \textit{the uniqueness barrier}, chosing for a target $T$ the label $A$, if there, withina certain domain $D$, is no other $A$.%%%
-
-
-\begin{example}
-<T> SELECT A IF (*-1 DOM-BOUNDARY BARRIER A)(*1 DOM-BOUNDARY BARRIER A)
-\end{example}
-
-We may also mix the uniqueness barrier and the special barrier. In \ref{mix}, for example, INF is the uniqness barrier, securing that the target is the sole infinitive within the left domain. The special barrier is again represented with the inverse notation, stating that there must be a licencer for this specific target (here: a modal verb), within the relevant domain (here: S-BOUNDARY). %%%
-
-%&\newslide
-%&\textbf{Combining the uniqueness and the domain barrier}
-\begin{example}\label{mix}
-SELECT Inf IF (*-1 modal-verb BARRIER S-BOUNDARY OR INF);
-\end{example}
-
-
-%&\newslide
-\subsection{Barriers in the Sámi and Norwegian taggers}
-
-\begin{example}
-Number of barriers
-\item[(a)] OBT: 71 distinct barriers (49 non-unique, 1064 total)
-\item[(b)] SME: 293 distinct barriers (111 non-unique, 1956 total)
-\end{ example}
-
-
-In the Sámi disambiguation project, we want to distinguish between different types of barriers, relative to different types of dependencies. Especially in a language with a relative free word order, as Sámi, this is important. We operate with two main barrier types, in addition to the CG-imposed DELIMITER symbols. The larger one corresponds to the boundaries of the clause, i.e. the S node projected from the V in classical generative grammar. The smaller one contains the main verb as well. In the former case we thus scan within the clause of the main verb, and in the latter we scan between this verb and the closest clause barrier.%%%
-
-With S representing the wider boundary and V the main verb (and hence narrower boundary), X and Y are in the same domain wrt. the wider boundary but not wrt. the narrower one, cf. (\ref{barrex}). %%%
-
-%&\newslide
-\begin{example}\label{barrex}
-... S ... X ... V ... Y ... S ... 
-\end{example}
-
-
-Since there is no tree structure in the string, we have to detect the S-boundary indirectly, via words signalling the start of a new domain. In addition to textual clues such as colon, we include subjunctions and interrogative pronouns in this set (here, the set $MO$ refers to a set of question adverbials).%%%
-
-%&\newslide
-\begin{example}\label{s}
-SET S-BOUNDARY  = (Pron Interr) | (Pron Rel) | ("muhto") | MO | (";") | (":") | ("-") | ("–") | CS ;	
-\end{example}
-
-As long as we do not build trees we do not hit the boundary directly. Also, with this word-based method we do not find orthographic clues like comma, rather, we hit the word signaling it. The problem is that the BARRIER must refer to sets, and not to expressions, like e.g. \textit{COMMA LINK 1 (Pron Rel)}.%%%
-
-The union of S-BOUNDARY and the boundary symbols >>> and <<< we call BOC and EOC, respectively. When used as a barrier, we use S-BOUNDARY, and when used as a target, we use BOC, the intersection of S-BOUNDARY and BOS:%%%
-
-%&\newslide
-\begin{example}
-MAP (@GN>) TARGET Gen IF (*-1 BOC BARRIER Pr)(NOT 0 TIME)(*1 N BARRIER NPNHA LINK NOT 0 Prop);
-\end{example}
-\begin{example}
-SELECT Adv IF (*-1 VFIN BARRIER S-BOUNDARY LINK NOT 0 Neg)(0 ("hárve"));
-\end{example}
-
-In order to scan a smaller area than S-BOUNDARY, we use SV-BOUNDARY, a boundary including the main verb in addition to the above set.%%%
-
-%&\newslide
-\begin{example}\label{sv}
-SET SV-BOUNDARY = S-BOUNDARY | @-FMAINV | @+FMAINV ;
-\end{example}
-
-We use these uniform boundary definitions in order to be able to change rules globally.%%%
-
-We use two different levels in order to distinguish between clause-internal constituents on the one hand, and pre- and postverbal on the other. The wider domain is the clause itself, and the narrower one is the domain between the clause boundary and the closest main verb, or between main verbs.%%%
-
-So, for a given constituent X, we may give it a certain analysis given there is some special verb, say V', without there being intervening competing verbs. Then we use the narrower SV-boundary.%%%
-
-%&\newslide
-\begin{example}\label{svx}
-... S ... X ... V ... V' ... S ...
-\end{example}
-
-%&\newslide
-\begin{example}\label{ped}
-\begin{itemize}
-\item[(a)] SELECT A IF *-1 B ;
-\item[(b)] SELECT A IF *-1 B BARRIER C ;
-\item[(c)] SELECT V-PL IF *-1 (N Nom) LINK *-1 CC LINK -1 (N Nom)) ;
-\end{itemize}
-\end{example}
-
-%&\newslide
-\subsection{Not complex barriers}
-
-One weakness with the vislcg barrier concept is that barriers are sets, and not context-sensitive elements. Thus, I can define a barrier as the set of all subjunctions and relative pronouns, but I cannot include context-sensitiveness into the barrier definitions, and ask for subjunctions, relative pronouns, and contrafactual conjunctions preceeded by comma. This is a weakness resembling the old restriction on barriers in CG-1, and I am glad that there is work underway to allow for defining not only sets, but also expressions, as barriers.  %%%
-
 \section{Conclusion}
 
 Building the grammar modulary rather than incrementally has several advantages. It makes it possible to adjust the rules for errors globally, rather than ad hoc on a rule-to-rule basis. It also makes our rule components portable to other languages with similar syntactic properties.%%%
