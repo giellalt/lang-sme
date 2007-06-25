@@ -1344,10 +1344,10 @@ SET W-NOT-ACC-GEN = WORD - Acc - Gen ;
 # ---------------------------------------------------------------------
 
 
-LIST XMEANTA = "dokumeanta" "bargo#departemeanta" "birasgáhtten#departemeanta" "boles#departemeanta" "departemeanta" "dutkan#departemeanta" "eana#doallo#departemeanta" "eanandoallo#departemeanta" "energi#departemeanta" "finans#departemeanta" "gielda#departemeanta" "girko#departemeanta" "guolástan#departemeanta" "guolástus#departemeanta" "guovlo#departemeanta" "guovlu#departemeanta" "hálddahus#departemeanta" "industri#departemeanta" "johtolat#departemeanta" "justiisa#departemeanta" "justis#departemeanta" "kultur#departemeanta" "olgo#riika#departeamenta" "politi#departemeanta" "sis#departemeanta" ;
+LIST XMEANTA = "dokumeanta" "bargo#departemeanta" "birasgáhtten#departemeanta" "boles#departemeanta" "departemeanta" "dutkan#departemeanta" "eana#doallo#departemeanta" "eanandoallo#departemeanta" "energi#departemeanta" "finans#departemeanta" "gielda#departemeanta" "girko#departemeanta" "guolástan#departemeanta" "guolástus#departemeanta" "guovlo#departemeanta" "guovlu#departemeanta" "hálddahus#departemeanta" "industri#departemeanta" "johtolat#departemeanta" "justiisa#departemeanta" "justis#departemeanta" "kultur#departemeanta" "olgo#riika#departeamenta" "politi#departemeanta" "sis#departemeanta" "testameanta" ;
  
 
-LIST XMENTA = "dokumenta" "bargo#departementa" "birasgáhtten#departementa" "boles#departementa" "departementa" "dutkan#departementa"  "eana#doallo#departementa" "eanandoallo#departementa" "energi#departementa" "finans#departementa" "gielda#departementa" "girko#departementa" "guolástan#departementa" "guolástus#departementa" "guovlo#departementa" "guovlu#departementa" "hálddahus#departementa" "industri#departementa" "johtolat#departementa" "justiisa#departementa" "justis#departementa" "kultur#departementa" "olgo#riika#departementa" "politi#departementa" "sis#departementa" ;
+LIST XMENTA = "dokumenta" "bargo#departementa" "birasgáhtten#departementa" "boles#departementa" "departementa" "dutkan#departementa"  "eana#doallo#departementa" "eanandoallo#departementa" "energi#departementa" "finans#departementa" "gielda#departementa" "girko#departementa" "guolástan#departementa" "guolástus#departementa" "guovlo#departementa" "guovlu#departementa" "hálddahus#departementa" "industri#departementa" "johtolat#departementa" "justiisa#departementa" "justis#departementa" "kultur#departementa" "olgo#riika#departementa" "politi#departementa" "sis#departementa" "testamenta" ;
  
 
 #NOCGTWIN
@@ -4890,6 +4890,10 @@ SELECT ("áittardan#suorgi") IF (0 ("áittardan#suorggis"));
     # - - - - - - - - - -
 
 SELECT ("varra#teasta") IF (0 ("varr#ateasta"));
+
+	# testameanta vs. testamentet
+	# - - - - - - - - - -
+REMOVE V IF (-1 ("ođđa"))(0 ("testameanta"));	
 
     # verdde vs. veardi
     # - - - - - - - - -
@@ -9779,7 +9783,7 @@ REMOVE Ess IF (NOT *-1 VFIN)(0 (Actio Gen))(*1 N BARRIER NPNH);
 SELECT Prop IF (NOT *-1 BOS OR (":") OR (PUNCT LEFT) OR (Num Nom) BARRIER REALWORD); 
 	## Áirras Egil Olli nammaduvvui Sámedikki ovddasteaddjin.
 	## 1.1. Sámi doaibmaplána darbu ja ulbmilat.
- # Capitalised nouns in the middle of a sentence are names.
+ # Capitalised nouns in the middle of a sentence are names - (not always).
 
 REMOVE (Prop Pl) IF (0 (Prop Sg))(NOT 0 ("Sámediggi") OR (laš));  
 	## Marit lea dál.
@@ -10115,6 +10119,12 @@ SELECT Acc IF (-1 V-TRANS-ACT-NOT-ACT LINK 0 FMAINV)(0 Num)(NOT *1 Acc BARRIER S
     # - - - - - - - - - - - - - - - - - - - - - - - -  
 REMOVE Gen IF (0 Acc)(NOT 0 ("b") OR ("beaivi"))(1 Num OR MANGA LINK 1 TIME)(NOT 0 MANNU LINK 1 Num OR Ord LINK 1 ("b") OR ("beaivi"));    
     # Dutkin Annika jođihii giellaealáskahttima dutkan- ja ovddidanprošeavtta máŋga jagi.
+    
+    # Not genitive in front of number + ADVL if there is a STV
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REMOVE Gen IF (0 Acc)(*-1 STV-NOT-ACT BARRIER SV-BOUNDARY2 OR (@OBJ))(1 Num OR MANGA LINK 1 ADVLCASE);  
+	## Oktiibuot viđas ožžo sáhkkocelkosa 45 biillas go lei menddo alla leahttu.      
+     
     
 	# Accusative after actio 
 	# - - - - - - - - - - - - - - - - - - - - - - - - 
