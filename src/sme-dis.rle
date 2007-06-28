@@ -541,6 +541,10 @@ LIST N-DER = Der/eaddji Der/Dimin Der/eamoš Der/eapmi Der/heapmi Der/š Der/mu�
 
 LIST A-DER = Der/diibmosaš Der/eaddji Der/geahtes Der/keahtes Der/heapmi Der/lágan Der/laš Der/meahttun ;
 
+LIST A-V = (V* A) ;
+
+SET A-NOT-V = A - A-V ;
+
 #SET DER = V-DER | N-DER | A-DER ;
 
 #LIST Pass = Der/Pass ;
@@ -2839,7 +2843,7 @@ MAP (@CC-NP @CC-VP) TARGET CC ;
 MAP (@CS-NP @CS-VP) TARGET CS IF (0 ("go") OR ("vai") OR XGO);
     ##
 
-MAP (@CS-VP) TARGET CS ;
+MAP (@CS-VP) TARGET CS IF (NOT 0 Indef) ;
 	## Leago guhkes áigi dassá go Máreha oidnet?
 
 MAP (@INTERJ) TARGET Interj ;
@@ -4023,7 +4027,7 @@ MAP (@OBJ @OPRED) TARGET Acc IF (0 NUMERALS)
   (NOT 1 CC)(NOT *1 ALU BARRIER NP-BOUNDARY)(NOT -1 (@NNum>) LINK -2 (@OBJ));
   	## Mun oidnen 4 nieidda.
 
-MAP (@OBJ @OPRED) TARGET Acc IF (NOT 0 TIME OR ROUTE OR Adv)(NOT 0 Num LINK *1 TIME OR ROUTE BARRIER NOT-A)(NOT 0 TITLE LINK 1 Prop LINK 0 Fem OR Mal OR Sur);
+MAP (@OBJ @OPRED) TARGET Acc IF (NOT 0 TIME OR ROUTE OR Adv)(NOT 0 Num LINK *1 TIME OR ROUTE BARRIER NOT-A)(NOT 0 TITLE LINK 1 Prop LINK 0 Fem OR Mal OR Sur)(NOT 1 ("seammás"));
   	## Dat orui doppe vihtta guhkes jagi.
 	## Manaigo Biret-Elle viežžat boastta? 
 
@@ -4339,6 +4343,8 @@ REMOVE VGen IF (0 A);
 
 REMOVE PrsPrc IF (0 A);
 	## Áššis biddjui mearrideaddji deaddu dasa ahte... 
+
+REMOVE (V*) IF (0 A-NOT-V) ;
 
 REMOVE (V* Actor) IF (0 LEX-A);
 #REMOVE (V* A) IF (0 LEX-A);
@@ -6750,7 +6756,7 @@ SELECT Pr IF (NOT -1 Gen LINK *-1 BOS BARRIER (V-TRANS-ACT) OR Pr)(NOT -1 TIME)
 	## Sáhttá dahttege vurket journála olggobealde doaimma. 
 
 	#SELECT Po IF (-1 (@GP>)); # more careful with -1C than with -1.
-SELECT Po IF (-1C (@GP>))(NOT 0 NOUN-PO OR ("mielde") OR ("fárrui"));
+SELECT Po IF (-1C (@GP>))(NOT 0 NOUN-PO OR ("mielde") OR ("fárrui") OR ("mađe"));
 
 SELECT Pr IF (1 (Num Gen));
 	## Vuollel 12 jahkásaš mánáin ii leat iešheanalis geahččanvuoigatvuohta.
@@ -6766,7 +6772,7 @@ SELECT Pr IF (*-1 MOVEMENT-V BARRIER NOT-ADV)(0 ("guovddáš"))(1 PLACE)(NOT 2 P
 SELECT Adv IF (-2 (Num Acc))(-1 (N Acc))(0 ("maŋŋil"));
 	## Dat dáhpáhuvai golbma jagi maŋŋil.
 
-SELECT Po IF (-1 Gen)(NOT -1 VFIN OR ("leat" PrfPrc) OR Adv)(NOT -1 Acc LINK *-1 CC BARRIER NOT-NP LINK -1 Acc LINK *-1 V-TRANS-ACT BARRIER NPNHA)(NOT 0 Attr OR ("mielde") OR ("fárrui") OR NOUN-PO OR CS)(NOT 1C Po)(NOT 1 Gen);
+SELECT Po IF (-1 Gen)(NOT -1 VFIN OR ("leat" PrfPrc) OR Adv)(NOT -1 Acc LINK *-1 CC BARRIER NOT-NP LINK -1 Acc LINK *-1 V-TRANS-ACT BARRIER NPNHA)(NOT 0 Attr OR ("mielde") OR ("fárrui") OR ("mađe") OR NOUN-PO OR CS)(NOT 1C Po)(NOT 1 Gen);
 	## Daid ovddas gal in máksán maidege.
 
 SELECT Po IF (-1 Num)(0 ("rádjai")); # Make general rule!
@@ -7068,6 +7074,13 @@ SELECT Adv IF (0 ("mielde"))(*-1 REALCOPULAS BARRIER SV-BOUNDARY LINK -1 (Pron L
 SELECT Adv IF (-2 ("váldit"))(-1 Acc)(0 ("mielde") OR ("fárrui"));  
 	## Sámediggi lea bivdán ráđđehusa váldit Sámedikki mielde árvoháhkanprográmmabargui.
 	
+SELECT Adv IF (-1 Dem OR N OR A OR Pron LINK 0 Gen)(0 ("mađe"));
+	## Mun bohten dan mađe árrat.
+	
+SELECT Adv IF (0 ("mađe") LINK *1 ("dađe"));
+	## Mađe mielde oaivi, dađe mielde ságat.
+		
+	
 SELECT Adv IF (0 ("mielde"))(*-1 ("go" Pcle) LINK -1 REALCOPULAS BARRIER VFIN);
 SELECT Adv IF (0 ("mielde"))(*-1 ("leat" Qst) BARRIER VFIN);
   	## Leago dorski mielde?
@@ -7076,7 +7089,7 @@ SELECT Adv IF (0 ("mielde"))(*-1 ("leat" Qst) BARRIER VFIN);
 SELECT Adv IF (*-1 V-TRANS-ACT-NOT-ACT OR COPULAS BARRIER NPNH)(-1 Pers OR HUMAN LINK 0 Gen LINK NOT 0 DAT-PRON)(0 ("mielde"));
 	## Dat ii leat mu mielde. # Can be ambiguos.	
   
-REMOVE Adv IF (-1 (N Gen) OR (Pron Gen))(NOT -1 Adv OR VFIN OR ("leat" PrfPrc))(0 Po)(NOT 0 ("mielde") OR ("fárrui") LINK *-1 MIELDE-V BARRIER VFIN);
+REMOVE Adv IF (-1 (N Gen) OR (Pron Gen))(NOT -1 Adv OR VFIN OR ("leat" PrfPrc))(0 Po)(NOT 0 ("mielde") OR ("fárrui") OR ("mađe") LINK *-1 MIELDE-V BARRIER VFIN);
   	## Válddán girjji mielde.
   	## Válddán dorski mielde.  	
   
@@ -15216,13 +15229,13 @@ REMOVE A IF (0 Adv)(1C Gen LINK 1 EOC);
 # Po or Adv
 # - - - - -
 
-REMOVE Adv IF (NOT -2 Pr)(-1C Gen LINK NOT 0 TIME)(0 Po);
+REMOVE Adv IF (NOT -2 Pr)(-1C Gen LINK NOT 0 TIME)(0 Po)(NOT 0 ("mađe"));
 
 
 # Pr or Adv
 # - - - - -
 
-SELECT Po IF (-1 (@GP>))(0 Pr OR Adv)(NOT *1C (@GP) BARRIER NPNH);
+SELECT Po IF (-1 (@GP>))(0 Pr OR Adv)(NOT 0 ("mađe"))(NOT *1C (@GP) BARRIER NPNH);
 SELECT Pr IF (*1C (@GP<) BARRIER NPNH);
 	## Skuvlla lágidemiid dulkomat ja čálalaš gulahallan gaskal skuvlla/ruovttu mávssii 213 ruvnno.
 
