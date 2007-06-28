@@ -28,7 +28,7 @@ TEMP = ../../tmp
 # This variable is holding the filename of the save file:
 # (makes the Makefile truly language independent for
 # the Sami languages)
-SAVEFILE = $(wildcard $(FSTDIR)/sm?.save)
+SAVEFILE = $(wildcard $(FSTDIR)/ism?.fst)
 
 # Copied from old LS makefile:
 # Bond, James Bond
@@ -185,7 +185,7 @@ n-paradigm: n-para.ptest savefile
 	@echo "*** Running the paradigm generator for '$(WORD)' ***"
 	@echo
 	@printf "load $(SAVEFILE) \n\
-	apply down <$< \n\
+	apply up <$< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
 	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
@@ -240,7 +240,7 @@ v-paradigm: v-para.ptest savefile
 	@echo "*** Running the paradigm generator for '$(WORD)' ***"
 	@echo
 	@printf "load $(SAVEFILE) \n\
-	apply down <$< \n\
+	apply up <$< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
 	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
@@ -295,7 +295,7 @@ a-paradigm: a-para.ptest savefile
 	@echo "*** Running the paradigm generator for '$(WORD)' ***"
 	@echo
 	@printf "load $(SAVEFILE) \n\
-	apply down <$< \n\
+	apply up <$< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
 	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
@@ -351,7 +351,7 @@ num-paradigm: num-para.ptest savefile
 	@echo "*** Running the paradigm generator for '$(WORD)' ***"
 	@echo
 	@printf "load $(SAVEFILE) \n\
-	apply down <$< \n\
+	apply up <$< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
 	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
@@ -366,7 +366,7 @@ num-paradigm: num-para.ptest savefile
 
 # Make sure there is an available smX.save in the parent directory:
 savefile:
-	@cd $(SRCDIR)/ && $(MAKE) save TARGET=sme
+	@cd $(SRCDIR)/ && $(MAKE) ifst TARGET=sme
 
 # Word form generation:
 # ---------------------
@@ -399,7 +399,7 @@ savefile:
 	@echo "*** Running the word form generator test for $*.txt ***"
 	@echo
 	@printf "load $(SAVEFILE) \n\
-	apply down <$< \n\
+	apply up <$< \n\
 	quit \n" > $(TEMP)/$*-gtest-script
 	$(XFST) < $(TEMP)/$*-gtest-script > $@
 	@rm -f $(TEMP)/$*-gtest-script
@@ -455,10 +455,10 @@ savefile:
 # Here we run the actual analysis test:
 %.aresult: %.atest savefile
 	@echo
-	@echo "*** Running the word form analysis test for verbs ***"
+	@echo "*** Running the word form analysis test ***"
 	@echo
 	@printf "load $(SAVEFILE) \n\
-	apply up <$< \n\
+	apply down <$< \n\
 	quit \n" > $(TEMP)/$*-atest-script
 	$(XFST) < $(TEMP)/$*-atest-script > $@
 	@rm -f $(TEMP)/$*-atest-script
