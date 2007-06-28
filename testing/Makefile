@@ -366,7 +366,7 @@ num-paradigm: num-para.ptest savefile
 
 # Make sure there is an available smX.save in the parent directory:
 savefile:
-	@cd $(SRCDIR)/ && $(MAKE) TARGET=sme
+	@cd $(SRCDIR)/ && $(MAKE) save TARGET=sme
 
 # Word form generation:
 # ---------------------
