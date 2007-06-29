@@ -18,7 +18,7 @@ BINDIR = ../../script/testing
 # Directory where all the compiled fst's are:
 FSTDIR = ../bin
 
-# Directory for the source files (which compile into fst's)
+# Directory for the source files (which compile into fst's):
 # Changed this to point into the directory where the common makefile is:
 SRCDIR = ../../
 
@@ -61,6 +61,7 @@ all: n-g.summary \
 	 v-g.summary \
 	 v-a.summary \
 	 num-a.summary \
+	 num-g.summary
 #	 a-g.summary \
 #	 a-a.summary
 
@@ -73,10 +74,6 @@ all-n: n-g.summary n-a.summary
 all-v: v-g.summary v-a.summary
 
 # If you only want to test adjectives:
-.PHONY: all-a
-all-a: a-g.summary a-a.summary
-
-# If you only want to test numerals:
 .PHONY: all-a
 all-a: a-g.summary a-a.summary
 
@@ -112,6 +109,8 @@ clean:
 		  *paradigm \
 		  *.tgz	\
 		  *~ \
+		  *.in \
+		  *.out \
 		  $(TEMP)/*test-script
 
 .PHONY: almost-clean
@@ -131,6 +130,8 @@ almost-clean:
 		  *.ptest \
 		  *.tgz	\
 		  *~ \
+		  *.in \
+		  *.out \
 		  $(TEMP)/*test-script
 
 
@@ -501,6 +502,8 @@ twol-extract: ../src/twol-sme.txt
 	@echo
 	@grep '^!€' $< > $(FILEPOS)
 	@grep '^!\$$' $< > $(FILENEG)
+	@touch twol-pos.out
+	@touch twol-neg.out
 
 twol-test: ../bin/twol-sme-descriptive.bin twol-extract
 	@echo
