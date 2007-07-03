@@ -480,12 +480,12 @@ savefile:
 # ==============
 
 # Usage:
-# make twol-test (extracts the test words from src/twol-sme.txt)
-# make twol-pos  (tests for the positive test pairs, prints output to twol-pos.out)
-# make twol-neg  (tests for the positive test pairs, prints output to twol-neg.out)
+# make twol-test (extracts the test words from src/twol-sme.txt, and runs them
+#                 through both the normative and descriptive twols)
+# make twol-pos  (tests for the positive test pairs, output to twol-pos.out)
+# make twol-neg  (tests for the positive test pairs, output to twol-neg.out)
 # make twol-test FILE=filename.txt (test for pairs in filename.txt)
-# make twol      (when the rules themselves are changed, will recompile the binary)
-#                (note that "make twol" will compile the descriptive twol transducer)
+# make twol      (recompiles the twol binaries when the twol rules are changed)
 
 TWOLC = twolc -utf8
 TYPE = pos
@@ -501,35 +501,40 @@ twol-extract: ../src/twol-sme.txt
 	@echo "*** Extracting twol tests ***"
 	@echo
 	@grep '^!€' $< > $(FILEPOS)
-	@grep '^!\$$' $< > $(FILENEG)
+	@grep '^!$$' $< > $(FILENEG)
 	@touch twol-pos.out
 	@touch twol-neg.out
 
-twol-test: ../bin/twol-sme-descriptive.bin twol-extract
-	@echo
-	@echo "*** Testing twolc rules ***"
-	@echo
-	@printf "install-binary $< \n\
-	pair-test-file $(FILE) twol-$(TYPE).out \n\
-	quit \n" > $(TEMP)/twol-test-script
-	$(TWOLC) < $(TEMP)/twol-test-script
-	@rm -f $(TEMP)/twol-test-script
+twol-test: twol-test-desc twol-test-norm
+	diff -s twol-$(TYPE)-desc.out twol-$(TYPE)-norm.out
 
-# convenience target: if one needs to recompile the twol (e.g. after rule changes),
-# just write make twol
+twol-test-desc: twol-desc twol-extract
+	@echo
+	@echo "*** Testing descriptive twolc rules ***"
+	@echo
+	@printf "install-binary ../bin/twol-sme-descriptive.bin \n\
+	pair-test-file $(FILE) twol-$(TYPE)-desc.out \n\
+	quit \n" > $(TEMP)/twol-test-desc-script
+	$(TWOLC) < $(TEMP)/twol-test-desc-script
+	@rm -f     $(TEMP)/twol-test-desc-script
 
-twol: ../bin/twol-sme-descriptive.bin
-../bin/twol-sme-descriptive.bin: ../src/twol-sme.txt
+twol-test-norm: twol-norm twol-extract
 	@echo
-	@echo "*** Building twol-sme-descriptive.bin ***" ;
+	@echo "*** Testing normative twolc rules ***"
 	@echo
-	$(M4) $(M4FLAGS) -DDIPHSIMPL $< > $(TEMP)/twol-sme-tmp.txt
-	@printf "read-grammar $(TEMP)/twol-sme-tmp.txt \n\
-	compile \n\
-	save-binary $@ \n\
-	quit \n" > $(TEMP)/twol-script
-	$(TWOLC) < $(TEMP)/twol-script
-	@rm -f $(TEMP)/twol-script
+	@printf "install-binary ../bin/twol-sme.bin \n\
+	pair-test-file $(FILE) twol-$(TYPE)-norm.out \n\
+	quit \n" > $(TEMP)/twol-test-norm-script
+	$(TWOLC) < $(TEMP)/twol-test-norm-script
+	@rm -f     $(TEMP)/twol-test-norm-script
+
+
+# Make sure there are up-to-date twol binaries:
+twol: twol-desc twol-norm
+twol-desc:
+	@cd $(SRCDIR)/ && $(MAKE) TARGET=sme twol-descriptive
+twol-norm:
+	@cd $(SRCDIR)/ && $(MAKE) TARGET=sme twol
 
 
 twol-pos: TYPE=pos
