@@ -4800,6 +4800,8 @@ SELECT ("spábba#čiekčan#jahki") IF (0 ("spábba#čiekča#njahki"));
 SELECT ("fylkka#juogus") IF (0 ("fylkka#jugus"));
 SELECT ("Finnmárkku#juogus") IF (0 ("Finnmárkku#jugus"));
 SELECT ("nisson#juogus") IF (0 ("nisson#jugus"));
+SELECT ("nuoraid#juogus") IF (0 ("nuoraid#jugus"));
+
 
 SELECT ("juogus") IF (-1 NATION OR SUOPMA OR SAPMI LINK 0 Gen)(0 ("jugus"));
 
@@ -5610,7 +5612,7 @@ REMOVE VGen IF (0 Der/Pass OR Der/goahti OR Der/st OR Der/l);
 
 	# All imperatives
 
-REMOVE Imprt IF (*-1C Rel BARRIER S-BOUNDARY2);
+REMOVE Imprt IF (*-1C Rel BARRIER S-BOUNDARY);
 
 
 	# Sg1 - early cycle, safe rules
@@ -7109,7 +7111,7 @@ REMOVE Adv IF (-1 (Num Nom @NumN<))(-2 (N Gen) OR (Pron Gen))(NOT -2 Adv OR VFIN
 REMOVE Adv IF (-1 ("leat"))(0 (A Attr))(NOT 0 ("eanaš") OR ("eanas"))(NOT 0 (@ADV-A))(1 N)(NOT 2 VERB); 
 	## Bussás leat alit čalmmit.
 
-SELECT Adv IF (0 (Pron Indef) LINK NOT 0 ("buot") OR ("gait"))(1 S-BOUNDARY2);
+SELECT Adv IF (0 (Pron Indef) LINK NOT 0 ("buot") OR ("gait"))(1 S-BOUNDARY);
 	## Dat mearridit seammás ahte stáhtaeiseválddit galget ovddidit doaibmabijuid. 
 
 	#REMOVE Indef IF (-1 BOS OR CC OR ("go"))(0 (Pron Indef));
@@ -8006,13 +8008,13 @@ REMOVE GCRD IF (-1 (A Attr) OR (@GN>) LINK -1 CC OR CS)(0 CC)(1 (A Attr) OR (@GN
     ## Olbmuin geain leat lihkadanváttut leat váttisvuođat go boares ruovdemáđiijá vovnnáid oláheapmi ii leat nu buorre, ja ođđa ja stuorit stášuvnnain ges lea heajos čalmmálaš.
     # Must stand before the other round of LCRD rules
 
-REMOVE LCRD IF (*-1C VFIN BARRIER S-BOUNDARY)(*1C VFIN OR Inf BARRIER S-BOUNDARY2);
+REMOVE LCRD IF (*-1C VFIN BARRIER S-BOUNDARY)(*1C VFIN OR Inf BARRIER S-BOUNDARY);
     # Same as the previous rule just with a potential infinitive to the right
     ## Sámi dáiddárat galget oažžut seammalágan eavttuid go eará dáiddáriin leat go sin barggut almmolaččat almmustuvvojit.
      
 #REMOVE GCRD IF (-1C (@ADVL))(1C (@ADVL));
-REMOVE GCRD IF (-1C (@ADVL))(1C (@ADVL) LINK NOT *1 VFIN BARRIER S-BOUNDARY2);
-REMOVE GCRD IF (-1C (@ADVL) LINK NOT *-1 VFIN BARRIER S-BOUNDARY2)(1C (@ADVL));
+REMOVE GCRD IF (-1C (@ADVL))(1C (@ADVL) LINK NOT *1 VFIN BARRIER S-BOUNDARY);
+REMOVE GCRD IF (-1C (@ADVL) LINK NOT *-1 VFIN BARRIER S-BOUNDARY)(1C (@ADVL));
     # Should not hit sentences like this:  
     ## Lávdegoddi lea dasa lassin guorahallan báikkálaš riekteáddejumiid Finnmárkkus ja vuordimis áigu dán ilbmadit iežas boahtte čielggadeami mielddusin.
 
@@ -8071,8 +8073,8 @@ REMOVE LCRD IF (-2 BOS)(-1 PUNCT)(0 CC);
 #SELECT (@CC-VP) IF (-2 BOS)(-1 PUNCT)(0 CC); 
     ## - Ja de mun lean boahtán.
 
-REMOVE LCRD IF (*-1C VFIN OR Inf BARRIER S-BOUNDARY)(*1C VFIN BARRIER S-BOUNDARY2);
-#SELECT (@CC-VP) IF (*-1C VFIN BARRIER S-BOUNDARY OR CCCOMMA)(*1C VFIN BARRIER S-BOUNDARY2);
+REMOVE LCRD IF (*-1C VFIN OR Inf BARRIER S-BOUNDARY)(*1C VFIN BARRIER S-BOUNDARY);
+#SELECT (@CC-VP) IF (*-1C VFIN BARRIER S-BOUNDARY OR CCCOMMA)(*1C VFIN BARRIER S-BOUNDARY);
 	## Mi eat áiggo bivdit bargolávdegotti čoahkkimii ovdal borgemánus ja dán čoahkkimis mii mearridit maid riidduáššiin dahkat, lohka Norgga áviissaid searvvi ovdaolmmoš Kåre Westlund Sámi Áigái.
 	## Mun oainnán Máreha ja Elle ja don oainnát Klausa.
 	## Eanáš ásahusain leat sámegiela gelbbolašvuohta dál nu go dalle ge lei.
@@ -8148,7 +8150,7 @@ SELECT (Pron Rel Pl) IF (-1 NP-HEAD-PL)(NOT -1 NP-HEAD-SG);
 REMOVE (Rel Sg) IF (*-1 (N Sg) BARRIER NOT-COMMA LINK *-1 CC BARRIER NPNH LINK -1 N);
 	## Mun oastán peanna ja bliánta, maid mun dárbbašan skuvllas.
 
-REMOVE (Rel Pl) IF (NOT *-1 (N Pl) OR PRON-NOT-SG BARRIER N OR Pron)(0 (Rel Sg));
+REMOVE (Rel Pl) IF (NOT *-1 (N Pl) OR PRON-NOT-SG BARRIER N OR Pron)(NOT *-1 N LINK *-1 Num BARRIER NPNH)(0 (Rel Sg));
 	##
 
 
@@ -8325,7 +8327,7 @@ REMOVE N IF (0 Num)(*1 (N Sg Gen) BARRIER NOT-A);
 REMOVE Acc IF (-1 ABBR OR ACR OR ("§") OR ("paragráfa") OR ("kapihttal") OR ("kapihtal") OR HEADOFPARTS OR GEASSET OR TEXT OR LAHKA)(NOT -1 ("nr"))(0 Num);
 	## 
 	## Mun logan nr. 4. Mun logan nr. ovtta. 
-REMOVE Acc IF (-1 NUM-JAHKI LINK NOT -1 (@PrcN>) OR (@AN>))(0 Num);
+REMOVE Acc IF (-1 NUM-JAHKI LINK NOT -1 (@PrcN>) OR (@AN>) OR (@DN>))(0 Num);
 	## Son mávssii mannan jagi 43 ruvnnu kilos.
 
 REMOVE Gen IF (-1 ABBR OR ACR OR ("§") OR ("paragráfa") OR ("kapihttal") OR ("kapihtal") OR HEADOFPARTS OR NUM-JAHKI OR GEASSET OR TEXT OR LAHKA)(NOT -1 ("b" ABBR))(NOT -1 ("nr"))(0 Num);
@@ -10152,6 +10154,9 @@ SELECT Acc IF (-1 Num)(1 ("velggolaš"));
 SELECT Gen IF (0 ("okta"))(1 ALU);
 	## Dábálaččat leat joddut sullii ovtta guhku.
 
+REMOVE Gen IF (0 Num)(1 ("ruvdnu"));
+	## 1500 ruvnno
+
 SELECT Acc IF (0 Num)(1 ("gitta"))(2 (Num Acc));
 	## Dát ledje gáddenuohtit mat ledje 180 gitta 200 sala guhku, ja 15 gitta 20 sala čieŋu.
 
@@ -10621,7 +10626,7 @@ SELECT Gen IF (*-1C Num BARRIER NPNH OR Gen OR CC OR PUNCT OR REALCLB OR Ord LIN
 	#(NOT -1C (@QN>) LINK NOT *1 N BARRIER NOT-NP);
 	## Golbma čáppa, doaimmalaš nieidda livžo áhčiset riegádanbeaivve.
 	 
-SELECT Gen IF (*-1C Num BARRIER NPNH OR Gen OR CC OR PUNCT OR REALCLB OR Ord LINK NOT 0 ("okta") OR Ord OR (Num A) LINK -1 ("jahki") LINK -1 (@PrcN>) OR (@AN>))(0 (@NQ<))(NOT 0 VERB OR ("nr") OR ("nummar") OR ("s"));
+SELECT Gen IF (*-1C Num BARRIER NPNH OR Gen OR CC OR PUNCT OR REALCLB OR Ord LINK NOT 0 ("okta") OR Ord OR (Num A) LINK -1 ("jahki") LINK -1 (@PrcN>) OR (@AN>) OR (@DN>))(0 (@NQ<))(NOT 0 VERB OR ("nr") OR ("nummar") OR ("s"));
 	## Son mávssii mannan jagi 43 ruvnnu kilos.
 	 
 REMOVE Gen IF (*-1C Ord BARRIER NPNH OR Gen OR CC OR PUNCT OR REALCLB OR Ord LINK NOT 0 ("okta"))(NOT 0 VERB OR ("nr") OR ("nummar") OR ("s") OR TIME)(NOT 1C Po)(NOT *1 N BARRIER NPNH);
@@ -15390,7 +15395,7 @@ REMOVE (@NQ<) IF (0 ("nr") OR ("§"));
 REMOVE (@NQ<) IF (-1 Ord);
 	## Geahča § 12 vuosttas lađđasa mávssu birra máŋgosa / nuppádasa ovddas.   
 
-REMOVE (@NQ<) IF (*-1 Num BARRIER Num OR NPNH LINK -1 ("jahki") LINK NOT -1 (@PrcN>) OR (@AN>));
+REMOVE (@NQ<) IF (*-1 Num BARRIER Num OR NPNH LINK -1 ("jahki") LINK NOT -1 (@PrcN>) OR (@AN>) OR (@DN>));
     ## Romssa universitehta Sámi dearvvašvuođadutkama guovddáš (sajuštuvvo Kárášjohkii) ásahuvvo jagis 2001 sosiála- ja dearvvašvuođadepartemeantta ruhtademiin.
     
 REMOVE (@NQ<) IF (-1 Num LINK -1 ("b" @GN>) OR ("beaivi" @GN>) LINK -1 Ord);
