@@ -954,7 +954,7 @@ LIST ACC-INFV = "bivdit" "čuorvut" "dagahit" "diktit" "gohččut" "movttiidahtt
  # a subset of INFV.
 	## Ii suova nieiddas náitalit.
 
-LIST OPREDV = "atnit" "dadjat" "dahkat" "dulkot" "geavahit" "gohčodit" "gohččut" "váldit" "válljet";
+LIST OPREDV = "atnit" "dadjat" "dahkat" "dulkot" "geavahit" "gohčodit" "gohččut" "navdit" "váldit" "válljet";
 
 
 
@@ -1208,7 +1208,7 @@ LIST DER-ADJ-N = "addi" "buoidi" "čeahppi" "headju" "heittot" "jalla" "lávlu" 
 
 LIST NON-GRADE-ADJ = "sápmelaš" "alternatiiva" ;
 
-    # gradable under certain circumstances, for example if we write "nu" "hirbmát" "hui" "oalle" "oppa" "vehaš" 
+    # gradable under certain circumstances, for example if we write "nu" "hirbmat" "hui" "oalle" "oppa" "vehaš" 
     ## mon dagahallan NU sápmelažžan = jeg later som jeg er SÅÅ same/samisk?
     ## mon anán du VIEHKA sápmelažžan 
     
@@ -1695,6 +1695,10 @@ LIST SPATIALNOUN = "guovlu" "osku" "sadji" "vuođđu" ;
 
 # These nouns in essiv get @ADVL:
 LIST ESS-ADVL-N = "arvi" "árga" "arve#dálki" "baika" "bassi" "báhkka" "baján#dálki" "beaivvádat" "biegga" "bievla" "buolaš" "čuoika" "čuovga" "dálki" "dulvi" "muohta" "njáhcu" "seavdnjat" "varra" "veaigi";
+
+# These nouns in essiv can get @ADVL:
+LIST ESS-PROB-ADVL-N = "nuorra" "boaris" ;
+
  
 
 
@@ -4127,8 +4131,12 @@ MAP (@SPRED @OPRED) TARGET (A Ess) IF (0 ("bassi"));
 	## Son gohčoduvvo bassin ja Ipmila Bárdnin.
  # "Bassin" can be predicative or adverbial. Therefore it is treated separately.
 
-MAP (@SPRED @OPRED) TARGET Ess ;
+	
+MAP (@ADVL)	TARGET Ess IF (0 ESS-PROB-ADVL-N)(NOT *-1 OPREDV BARRIER SV-BOUNDARY)(NOT *1 OPREDV BARRIER SV-BOUNDARY);
+
+MAP (@SPRED @OPRED) TARGET Ess;
 	## Dat lea oahpaheaddjin doppe.
+
 	
 MAP (@ADVL) TARGET Actio IF (NOT 0 Ess)(NOT 1 Po);
     ## Son heittii suhkamis.
@@ -8965,6 +8973,13 @@ SELECT Attr IF (NOT *-1 V-SG3)(0 ("garas" A Attr))(1 A OR N)(NOT *1 V-SG3);
 
 SELECT A IF (-1 ("hui"))(0 ("nanus"));
 	## hui nanus. 
+	
+	# nuorra (vs. nuorrat V)
+REMOVE V IF (0 ("nuorra") LINK *-1 V-NOT-COP BARRIER SV-BOUNDARY2);
+REMOVE V IF (0 ("nuorra") LINK *1 V-NOT-COP BARRIER SV-BOUNDARY2);
+	## Son bođii dohko nuorran.
+	
+	
 	# sierra
 	# - - - -
 SELECT (A Attr) IF (0 ("sierra"))(*1 N BARRIER NPNH);
@@ -9262,8 +9277,12 @@ REMOVE Acc IF (0 Comp)(*1 HNOUN BARRIER NPNH LINK 0 NOT-ACC);
 	## Oppalaččat daid gažaldagaid birra mat gieđahallojuvvojit... 
 	## ...oktiibuot 3.000.000 ruvnno jahkásaččat 5 jagi badjel.
 
-REMOVE Nom IF (0 Comp)(*1 HNOUN BARRIER NPNH OR PUNCT LINK 0 NOT-NOM LINK NOT 0 Inf)(NOT 1 COMMA OR CC)(NOT 0 (Pl Nom) LINK *-1 (V Pl3) BARRIER NPNHA)(NOT 0 (Sg Nom) LINK *-1 V-SG3 BARRIER NPNHA)(NOT 1 Gen LINK *1 Po OR PREGEN BARRIER NP-BOUNDARY);
+REMOVE Nom IF (0 Comp)(*1 HNOUN BARRIER NPNH OR PUNCT LINK 0 NOT-NOM LINK NOT 0 Inf)(NOT 1 COMMA OR CC)(NOT 0 (Pl Nom) LINK *-1 (V Pl3) BARRIER NPNHA)(NOT 0 (Pl Nom) LINK *1 (V Pl3) BARRIER NPNHA)(NOT 0 (Sg Nom) LINK *-1 V-SG3 BARRIER NPNHA)(NOT 1 Gen LINK *1 Po OR PREGEN BARRIER NP-BOUNDARY)(NOT 1 Dem);
 	## Álggahit eará doaibmabijuid gáibida baicca lassi árjja...
+
+SELECT (Pl Nom) IF (0 Comp LINK *1 (V Pl3) BARRIER VFIN OR S-BOUNDARY2);	
+	## Lea buoret borramuš go daid maid nuorat dán áigge njillet.
+	
 
 # alit vs. allat Comp Attr
 # - - - - - - - - - - - - 
@@ -11298,7 +11317,8 @@ SELECT (Sg Acc) IF (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK 0 Inf LINK *-1 (Sg1 Ac
 	# Miscellaneous rules
 	# --------------------
 
-REMOVE Nom IF (*-1 Nom BARRIER S-BOUNDARY2 OR NPNHA LINK NOT 0 Dem)(0 (A Attr))(1 N);
+# This rule is not very good because it hits i.g.: Subj + lea + A + ja + A + placeADVL. The example sentence works without it.
+#REMOVE Nom IF (*-1 Nom BARRIER S-BOUNDARY2 OR NPNHA LINK NOT 0 Dem)(0 (A Attr))(1 N);
 	## Sápmelaččat leat oadjebasat olggut birasáitagiid ektui.
 
 REMOVE Nom IF (*-1 Nom BARRIER S-BOUNDARY2 OR NPNHA LINK NOT 0 Dem)(0 (Prop Sur Attr))(1 (N Sur));
@@ -11491,7 +11511,7 @@ SELECT Nom IF (0 ("galle"))(*1 V-PL3 BARRIER Nom OR VFIN);
 SELECT Nom IF (0 (N Num))(*1 V-PL3 BARRIER NOT-ADV-PCLE);
 	## Dakkár doaimmat, main máŋggas čállet dieđuid journálaide,...
 
-SELECT Nom IF (0 NOTIME OR Pron)(NOT 0 REALCOPULAS OR PrfPrc)(NOT 0 A LINK *1 N BARRIER NPNH)(NOT 0 Adv OR Attr OR VFIN OR Loc OR Po)(NOT 1 CC LINK 1 VFIN)(*1C V BARRIER LEFT OR NP-HEAD OR Po OR SV-BOUNDARY2 LINK NOT 0 Inf OR (@PrcN>) OR V-TRANS-ACT);
+SELECT Nom IF (0 NOTIME OR Pron)(NOT 0 REALCOPULAS OR PrfPrc OR Inf)(NOT 0 A LINK *1 N BARRIER NPNH)(NOT 0 Adv OR Attr OR VFIN OR Loc OR Po)(NOT 1 CC LINK 1 VFIN)(*1C V BARRIER LEFT OR NP-HEAD OR Po OR SV-BOUNDARY2 LINK NOT 0 Inf OR (@PrcN>) OR V-TRANS-ACT);
 	## Váfistan dihte ođđa bargovugiid lea komitea viiddiduvvon.
 	## Bušeahtas lea sullii 650.000 ruvnno leamaš várrejuvvon dáidda.
 	## Dat guhte osku ja gásttašuvvo, bestojuvvo.
