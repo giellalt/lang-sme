@@ -2232,7 +2232,7 @@ LIST SUOPMA = "Davvi-Ruoŧŧa" "Davvi-Suopma" "Lulli-Ruoŧŧa" "Lulli-Suopma" "M
      
 # This set is used in Gen/Acc-rules.
      
-LIST SAPMI = "davvi#sápmi" "julev#sápmi" "lulli#sápmi" "mátta#sápmi" "mearra#sápmi" "nuorta#sápmi" "sápmi" "Sápmi" ;
+LIST SAPMI = "davvi#sápmi" "julev#sápmi" "lulli#sápmi" "mátta#sápmi" "mearra#sápmi" "nuorta#sápmi" "oarje#sápmi" "sápmi" "Sápmi" ;
       
 # This set is used in Gen/Acc-rules.
  # Duomma:lea
@@ -3957,7 +3957,9 @@ MAP (@-FMAINV) TARGET Inf IF (*-1 AUX BARRIER V LINK NOT 0 ("leat"))(NOT 0 AUX L
 MAP (@SUBJ) TARGET Inf IF (-2 COPULAS)(-1 A);
 MAP (@SUBJ) TARGET Inf IF (1 COPULAS)(2 A);
 
-MAP (@OBJ) TARGET Inf IF (-1 V-NOT-AUX LINK NOT *-1 Rel OR CS OR ("gosa"));
+MAP (@OBJ) TARGET Inf IF (-1 V-NOT-AUX LINK NOT 0 Imprt LINK NOT *-1 Rel OR CS OR ("gosa"));
+MAP (@OBJ) TARGET Inf IF (-1 V-NOT-AUX LINK 0 Imprt LINK *-1 BOC BARRIER WORD);
+
 	## Mun hálidan oahppat goarrut gávtti.
 MAP (@-FMAINV) TARGET Inf;
 
@@ -4472,8 +4474,8 @@ SELECT Interj IF (*-1 BOS BARRIER REALWORD)(0 ("aa") LINK 0 ACR);
 SELECT V IF (*-1 BOS BARRIER REALWORD)(0 ("mannat") LINK 0 ACR);         
 REMOVE ACR IF (*-1 BOS BARRIER REALWORD)(0 Pron);
 
-	# Lexicalised names
-	# -----------------
+	# Lexicalised names. See also # Disambiguating the semantic tags 
+	# -------------------
 
 REMOVE ACR IF (0 Prop) ;
   	## NRK lea čujuhan iežas áigut leat dehálaš seailluhit sámi servodaga.
@@ -4481,24 +4483,7 @@ REMOVE ACR IF (0 Prop) ;
 SELECT Prop IF (NOT -1 BOS)(0 Adv);
     ## Dovddan Anne Olsena.  
     
-SELECT ("Johanas") IF (-1 ("gásttašit" Actor));    
 
-REMOVE Mal IF (0 Fem);
-	# Kari
-	
-REMOVE Org IF (0 ("Ulla"));	
-
-REMOVE (Fem @SUBJ) IF (0 (Sur @SUBJ)); 	
-REMOVE (Mal @SUBJ) IF (0 (Sur @SUBJ)); 	
-REMOVE (Fem @OBJ) IF (0 (Sur @OBJ)); 	
-REMOVE (Mal @OBJ) IF (0 (Sur @OBJ)); 	
-REMOVE (Fem @SPRED) IF (0 (Sur @SPRED)); 	
-REMOVE (Mal @SPRED) IF (0 (Sur @SPRED)); 	
-REMOVE (Fem @OPRED) IF (0 (Sur @OPRED)); 	
-REMOVE (Mal @OPRED) IF (0 (Sur @OPRED)); 	
-
-
-REMOVE Sur IF (-1 Attr)(NOT -1 Sur OR Fem OR Mal)(0 Org);
 
 
 	# Lexicalised derivations
@@ -4596,6 +4581,8 @@ REMOVE ("čáppis") IF (0 ("čáppat" Attr));
 	
 SELECT ("lihkku") IF (0 ("liehkku" Der/laš));	
     ## lihkkolaš
+    
+SELECT ("jođán" Attr) IF (0 ("jođánis"));    
 
 # lágan A, not lága N Ess
 
@@ -4952,6 +4939,9 @@ SELECT ("Vuorká-Dávvirat") IF (0 ("Vuorká-Dávvir"));
 	# - - - - - - - - - - - - - - - - - 
 SELECT ("dološ" Loc) IF (0 ("doallu" Der/Dimin Loc));	
 
+	# e-#boasta
+SELECT ("e-#boasta") IF (0 ("E-#boasta"));	
+
 	# eallinahki
 	# - - - - - 
 SELECT ("eallin#ahki") IF (0 ("eallinag#itna"));
@@ -5056,10 +5046,6 @@ SELECT ("nuoraid#juogus") IF (0 ("nuoraid#jugus"));
 SELECT ("juogus") IF (-1 NATION OR SUOPMA OR SAPMI LINK 0 Gen)(0 ("jugus"));
 SELECT ("ráhkesvuođa#jugus") IF (0 ("ráhkesvuođa#juogus"));
 SELECT ("sohkar#jugus") IF (0 ("sohkar#juogus"));
-
-    # latnja vs. latnji
-    # - - - - - - - - -
-SELECT ("molssodan#latnja") IF (0 ("molssodan#latnji"));      
 
 
 	# lága vs láhka
@@ -6639,7 +6625,7 @@ REMOVE (A Comp) IF (-1 BOS OR CLB)(0 Adv)(1 EOS OR CLB);
 REMOVE (A Comp) IF (-1 V)(0 Adv)(1 (N Ess));
   	## Son lea válljejuvvon ovttajienalaččat ovddideaddjin.
   	
-REMOVE Adv IF (-1 V)(0 ("eanas" A))(1 N);
+REMOVE Adv IF (-1 V OR (@OBJ))(0 ("eanas" A) OR ("eanaš" A))(1 N);
     ## Ná sáhttá geavvat eanas geasi.
     
 REMOVE A IF (*-1 IV BARRIER SV-BOUNDARY LINK NOT 0 COPULAS)(0 Adv)(1 EOC);  
@@ -9078,7 +9064,7 @@ SELECT (Pron Sg3 Nom) IF (*1 ("ahte") BARRIER WORD);
 	## sáhttá čuovvut máŋgga áššis.
 
 
-REMOVE Acc IF (0 Pers OR Refl)(*1C (N Acc) BARRIER S-BOUNDARY2 OR Po OR (Actio Loc) OR ("dego") OR ("dugo") OR COMMA LINK NOT 0 TIME);
+REMOVE Acc IF (0 Pers OR Refl LINK NOT 0 Dem)(*1C (N Acc) BARRIER S-BOUNDARY2 OR Po OR (Actio Loc) OR ("dego") OR ("dugo") OR COMMA LINK NOT 0 TIME);
 	## De lea sihke divššohas ja su lagamus oapmahaččas vuoigatvuohta oažžut dieđuid.
 	## Min áiggi lea dat gildojuvvon.
 	## Go ii oktage vuosttildan dan vuoigatvuođadili...
@@ -10136,6 +10122,7 @@ REMOVE Prop IF (0 ("Sápmi"))(NOT *1 SAPMI-PROP-HEAD BARRIER NPNH);
 	# We remove the last Prop-analysis.
 
 
+
 	# Prop as Attr or not
 	# -------------------
 
@@ -10185,6 +10172,9 @@ SELECT ("Johanas" Nom) IF (1 V-SG3)(*1 VFIN-NOT-AUX);
 
 SELECT ("Johanas" Nom) IF (*-1 COPULAS BARRIER NOT-NP)(NOT *1 V-TRANS-ACT BARRIER SV-BOUNDARY2);
 	## Su namma galgá leat Johanas.
+	
+SELECT ("Johanas") IF (-1 ("gásttašit" Actor));    
+	
 
 	# Nilse vs. Nilsen
 	# - - - - - - - - -
@@ -10198,6 +10188,22 @@ REMOVE ("Norge") IF (0 ("Norga"));
 	
 	# Disambiguating the semantic tags
 	# ================================
+
+REMOVE Mal IF (0 Fem);
+	# Kari
+	
+REMOVE Org IF (0 ("Ulla"));	
+
+REMOVE (Fem @SUBJ) IF (0 (Sur @SUBJ)); 	
+REMOVE (Mal @SUBJ) IF (0 (Sur @SUBJ)); 	
+REMOVE (Fem @OBJ) IF (0 (Sur @OBJ)); 	
+REMOVE (Mal @OBJ) IF (0 (Sur @OBJ)); 	
+REMOVE (Fem @SPRED) IF (0 (Sur @SPRED)); 	
+REMOVE (Mal @SPRED) IF (0 (Sur @SPRED)); 	
+REMOVE (Fem @OPRED) IF (0 (Sur @OPRED)); 	
+REMOVE (Mal @OPRED) IF (0 (Sur @OPRED)); 	
+
+REMOVE Sur IF (-1 Attr)(NOT -1 Sur OR Fem OR Mal)(0 Org);
 
 REMOVE Plc (-1 (Prop Mal Attr) OR (Prop Fem Attr))(0 Sur);
   	## Trond Trosterud lea dál.	 
@@ -10217,6 +10223,9 @@ SELECT Sur IF (*-1 TV BARRIER SV-BOUNDARY2 LINK *-1 AUX LINK 0 VFIN BARRIER SV-B
 
 REMOVE Plc IF (0 (@SUBJ) LINK 0 Mal OR Fem OR Sur)(*1 DYNAMIC-V BARRIER S-BOUNDARY2 LINK 0 FMAINV);
 	## Áilu vujii skohteriin.
+
+SELECT Plc IF (0 Obj LINK 0 Loc LINK 1 COPULAS);
+	## Jávregáttis leat golbma olbmo.	
 	 
 	# Nouns vs. adjectives
 	# =======================
@@ -10610,7 +10619,7 @@ REMOVE Gen IF (0 (N Acc) LINK NOT 0 (Prop Plc) OR HUMAN-INDIVIDUAL OR PROFESSION
 
 REMOVE Gen IF (0 (N Acc) LINK 0 NATURE-PLACE)(*1 FAMILY-ABSTRACT OR NON-FAMILY BARRIER NOT-ADJ);
 
-REMOVE Gen IF (0 (N Acc) LINK NOT 0 (Prop Plc) OR HUMAN-INDIVIDUAL OR HUMAN-GROUP OR PROFESSION OR OFFICE OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ABSTR-TEXT OR PLACE OR NATION OR EDUCATION OR ORGANIZATION OR INSTITUTION OR INDUSTRY OR TIME)(NOT -1 Num)(*1 NON-FAMILY BARRIER NOT-ADJ);
+REMOVE Gen IF (0 (N Acc) LINK NOT 0 (Prop Plc) OR HUMAN-INDIVIDUAL OR HUMAN-GROUP OR PROFESSION OR OFFICE OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ABSTR-TEXT OR PLACE OR NATION OR EDUCATION OR ORGANIZATION OR INSTITUTION OR INDUSTRY OR TIME)(NOT -1 Num OR Pr)(*1 NON-FAMILY BARRIER NOT-ADJ);
  
 REMOVE Gen IF (0 (Actio Acc))(*1 HUMAN-INDIVIDUAL OR PROFESSION OR OFFICE OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ("bearaš") OR NATION BARRIER NOT-ADJ LINK NOT 0 ("eadni") OR ("áhčči"));
     ## Dearvvašvuođabargiilága § 10, mii gieđahallá dieđuid addima pasienttaide, ja pasientavuoigatvuođalága § 1-3, mii gieđahallá vuoigatvuođa informerejuvvon miehtamii, leat ovdamearkkat dakkár vuoigatvuođain.
@@ -11437,11 +11446,16 @@ SELECT Nom IF (0 (N Acc))(NOT *-1 Nom BARRIER CC)(1 COMMA LINK *1 Nom BARRIER NP
 SELECT Nom IF (-1 BOC)(0 N)(1 Rel)(2 VFIN LINK *1 COMMA BARRIER S-BOUNDARY2 LINK 1 VFIN LINK *1 (@OBJ) BARRIER NPNH);
 	## Ja Ipmil guhte suokkarda váimmuid, diehtá maid Vuoigŋa hálida, dasgo Vuoigŋa rohkadallá bassi olbmuid ovddas Ipmila dáhtu mielde.
 
-REMOVE Gen IF (-1 BOC)(NOT 0 TIME)(1 (Pron Pers))(*1 VFIN); 
+REMOVE Gen IF (*-1 BOC BARRIER NPNH OR Pl)(0 NP-HEAD-SG LINK 0 Gen)(NOT 0 TIME OR ROUTE)(1 (Pron Pers))(*1 VFIN); 
+REMOVE Gen IF (*-1 BOC BARRIER NPNH OR Sg)(0 NP-HEAD-PL LINK 0 Gen)(NOT 0 TIME OR ROUTE)(1 (Pron Pers))(*1 VFIN); 
 	## Daid mun sáltejin. 
 	## ...man mii dan áigge dovdat gonagasriika Norgan.
+#REMOVE Gen IF (-2 BOC)(-1 (Dem Pl Acc))(0 NP-HEAD-PL LINK 0 Gen LINK NOT 0 TIME OR ROUTE)(1 (Pron Pers))(*1 VFIN); 
+#REMOVE Gen IF (-2 BOC)(-1 (Dem Sg Acc))(0 NP-HEAD-SG LINK 0 Gen LINK NOT 0 TIME OR ROUTE)(1 (Pron Pers))(*1 VFIN); 
+	## Daid heasttaid son lohká heivet buoremusat deike galbma guovlluide.
+	
 
-REMOVE Gen IF (-1 BOS OR CS)(1 Adv)(NOT 1 N OR A); 
+REMOVE Gen IF (-1 BOC)(1 Adv)(NOT 1 N OR A); 
     	## Dieđuid maiddái ii dárbbaš addit go...
 
 REMOVE Gen IF (NOT 0 TIME)(1 CLB)(2 CC)(3 NPNH);#(NOT 3 Gen LINK *1 Po BARRIER NPNH);
@@ -12594,7 +12608,7 @@ REMOVE Acc IF (*-1C Acc BARRIER S-BOUNDARY2)(NOT *-1 CC BARRIER NPNH LINK -1 Acc
 REMOVE Acc IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER Acc OR S-BOUNDARY2 LINK *-1C Acc BARRIER NPNH LINK NOT *-1 V-TRANS-ACT-NOT-ACT BARRIER S-BOUNDARY2 LINK 0 FMAINV);
     ## Lávdegoddi lea dasa lassin guorahallan báikkálaš riekteáddejumiid Finnmárkkus ja vuordimis áigu dán ilbmadit iežas boahtte čielggadeami mielddusin.
 
-REMOVE Acc IF (NOT *-1 V-TRANS-ACT-NOT-ACT BARRIER SV-BOUNDARY2 LINK 0 FMAINV)(NOT *-1 (":") BARRIER V-TRANS-ACT-NOT-ACT)(NOT 0 TIME)(NOT 0 ("dat") LINK 1 CS)(NOT *1 V-TRANS-ACT-NOT-ACT-NOT-AUX BARRIER S-BOUNDARY2);
+REMOVE Acc IF (NOT *-1 V-TRANS-ACT-NOT-ACT BARRIER SV-BOUNDARY2 LINK 0 FMAINV OR Inf)(NOT *-1 (":") BARRIER V-TRANS-ACT-NOT-ACT)(NOT 0 TIME)(NOT 0 ("dat") LINK 1 CS)(NOT *1 V-TRANS-ACT-NOT-ACT-NOT-AUX BARRIER S-BOUNDARY2);
 	## ...ahte sámi nuoraide láhččojuvvo vejolašvuohta oassálastit... 
 
 
