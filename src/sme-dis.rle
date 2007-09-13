@@ -555,9 +555,9 @@ LIST @-FSUBJ = @-FSUBJ ;
  
 SET FMAINV = @-FMAINV | @+FMAINV ;
 
-LIST @ADV> = @ADV> ;
+LIST @ADVL> = @ADVL> ;
 
-LIST @ADV< = @ADV< ;
+LIST @ADVL< = @ADVL< ;
 
 LIST @ADVL = @ADVL ;
  
@@ -2698,8 +2698,8 @@ SET INTR-END = COMMA | PUNCT-RIGHT ;
 # Syntactic sets
 # --------------
 
-LIST ALLSYNTAG = (@+FAUXV) (@+FMAINV) (@-FAUXV) (@-FMAINV) (@SUBJ) (@A>) (@ADV>) (@ADV<) (@ADVL) (@N>) (@N>) (@APP) 
-(@CNP) (@CVP) (@N>) (@CNP) (@CVP) (@N>) (@A>) (@N>) (@P<) (@P>) (@HNOUN) (@INTERJ) (@Pron<) (@Pron<) (@OBJ) (@OPRED) (@PCLE) (@COMP-CS<) (@N>) (@N>) (@N<) (@N>) (@N<) (@N>) (@SPRED) (@Num<) (@SUBJ) (@SUBJ) (@N>) (@APP) (@X);
+LIST ALLSYNTAG = (@+FAUXV) (@+FMAINV) (@-FAUXV) (@-FMAINV) (@-FSUBJ) (@A>) (@ADVL>) (@ADVL<) (@ADVL) (@N>) (@APP) 
+(@CNP) (@CVP) (@P<) (@P>) (@HNOUN) (@INTERJ) (@Pron<) (@OBJ) (@OPRED) (@PCLE) (@COMP-CS<) (@N<) (@SPRED) (@Num<) (@SUBJ) (@APP) (@X);
  
 
 SET NON-APP = ALLSYNTAG - (@APP);
@@ -2718,7 +2718,7 @@ SET NON-APP = ALLSYNTAG - (@APP);
 	# -----------------------------
 
 MAP (@N>) TARGET Pron IF (0 ("seamma") OR ("seammá"))(1 ("ollu"))(*1 N);
-MAP (@ADV>) TARGET Adv IF (0 ("seamma") OR ("seammá"))(1 ("ollu"));
+MAP (@ADVL>) TARGET Adv IF (0 ("seamma") OR ("seammá"))(1 ("ollu"));
 
 	#MAP (@ADVL @N>) TARGET ("ollu") IF (-1 ("seamma") OR ("seammá"));
 MAP (@ADVL) TARGET ("ollu") IF (-1 ("seamma") OR ("seammá"))(0 Adv)(NOT 1 Pl);
@@ -2819,15 +2819,15 @@ MAP (@A>) TARGET ("buot") OR ("gait") IF (1 Superl);
 MAP (@A>) TARGET ("mii" Sg Gen) IF (1 (Pron Pers Nom)) (*1 (A Sg Nom) BARRIER V-NOT-AUX);
 	## Leatgo don fuomášan dan máilmmi, man dat lea váralaš?
 
-MAP (@ADV>) TARGET ("eanet" Adv) OR ("erenoamáš") OR ("earenoamáš") OR ("hirbmat") OR ("hui") OR ("menddo") OR ("mii" Sg Gen) OR ("nu") OR ("oba") OR ("oppa") IF (1 Adv)(NOT 1 ("fal") OR ("maiddái") OR ("mo") OR ("mot") OR ("mov") OR ("movt") OR ("govt")) (NOT 0 ("mii" Sg Gen) LINK 1 Po)(NOT 0 ("eanet") LINK 1 ("uhcit") OR ("unnit"));
+MAP (@ADVL>) TARGET ("eanet" Adv) OR ("erenoamáš") OR ("earenoamáš") OR ("hirbmat") OR ("hui") OR ("menddo") OR ("mii" Sg Gen) OR ("nu") OR ("oba") OR ("oppa") IF (1 Adv)(NOT 1 ("fal") OR ("maiddái") OR ("mo") OR ("mot") OR ("mov") OR ("movt") OR ("govt")) (NOT 0 ("mii" Sg Gen) LINK 1 Po)(NOT 0 ("eanet") LINK 1 ("uhcit") OR ("unnit"));
 	## Man dávjá mun livččen dáhtton čohkket du mánáid.
 
-MAP (@ADV>) TARGET Adv IF (0 Indef)(1 VGen LINK NOT 0 N)(NOT 1 Sg3);
+MAP (@ADVL>) TARGET Adv IF (0 Indef)(1 VGen LINK NOT 0 N)(NOT 1 Sg3);
 	## Dát ađa lea uhccán vuošša.
 
-MAP (@ADV<) TARGET Date IF (-1 SP-BEAIVI);
+MAP (@ADVL<) TARGET Date IF (-1 SP-BEAIVI);
 
-MAP (@ADV>) TARGET ("mearri" Gen) IF (-1 (Pron Dem Sg Gen))(1 Adv);
+MAP (@ADVL>) TARGET ("mearri" Gen) IF (-1 (Pron Dem Sg Gen))(1 Adv);
 	## Lihkkus fuomášuvvui dát dan meare árrat ja ahte dálkkoduvvo árrat. # A controversial tag. Mearri is not an adverb, but functions as one in this case. # On the other hand, should "mearri" in front of an adjective get the tag @A>? Right now it gets @A>
 
 MAP (@ADVL) TARGET ("ihkinassii") IF (-1 ("gosa"));
@@ -3492,16 +3492,16 @@ MAP (@ADVL) TARGET Gen IF (0 TIME OR ROUTE);
 	## Maid Biret-Elle áigu dán dálvve dahkat?
 	## ...ja geasset vel moatte háve dađi miel go dárbu lea.
 
-MAP (@SUBJ) TARGET Gen IF (1 (Actio Gen))(NOT 1 N)(2 N) ;
+MAP (@-FSUBJ) TARGET Gen IF (1 (Actio Gen))(NOT 1 N)(2 N) ;
 	## Gean ráhkadan fanas dat lea?
 
-MAP (@SUBJ) TARGET Gen IF (1 Ger);
+MAP (@-FSUBJ) TARGET Gen IF (1 Ger);
 	## Máhte lihkai Máreha boađedettiin.
 
-MAP (@SUBJ) TARGET Gen IF (1 VAbess);
+MAP (@-FSUBJ) TARGET Gen IF (1 VAbess);
 	## Diet dáhpáhuvai mu dieđikeahttá.
 
-MAP (@SUBJ) TARGET Gen IF (*-1 REALCOPULAS BARRIER NPNHA)(1 (V Actio Loc));
+MAP (@-FSUBJ) TARGET Gen IF (*-1 REALCOPULAS BARRIER NPNHA)(1 (V Actio Loc));
 	## Dat ii leat geafes olbmo nagodeames. 
 
 MAP (@A>) TARGET Gen IF (*-1 COPULAS BARRIER VERB OR S-BOUNDARY)(1 (A Comp)) (NOT 1 N);
@@ -15386,7 +15386,7 @@ SELECT (@SPRED) IF (*-1C (@SUBJ) BARRIER go OR ("dego") OR ("dugo") OR CC OR (Ne
 REMOVE (@SUBJ) IF (0 Ess)(*1C (@SUBJ) BARRIER S-BOUNDARY2 LINK NOT 0 Interr);
 	## Sámi vuoigatvuođalávdegotti čállin leat čuovvovaččat maid doaibman.
  
-SELECT (@SUBJ) IF (NOT *-1 V-TRANS-ACT BARRIER SV-BOUNDARY2)(1 VAbess);
+SELECT (@-FSUBJ) IF (NOT *-1 V-TRANS-ACT BARRIER SV-BOUNDARY2)(1 VAbess);
 	## Diet dáhpáhuvai mu dieđikeahttá. 
 SELECT (@SPRED) IF (-2 N)(-1 (":"))(0 CARDINALS)(1 CLB);
   	## Fáksa: 22242786.
@@ -15862,7 +15862,7 @@ REMOVE (@ADVL) IF (0 TITLE OR PROFESSION)(1 Mal OR Fem OR Sur);
 	## maiddái professoriidda Asbjørn Kjønstad ja Kristian Andenæs.
 
 SELECT (@N>) IF (0 ("seamma") OR ("seammá"))(1 ("ollu" Indef));
-SELECT (@ADV>) IF (0 ("seamma") OR ("seammá"))(1 ("ollu" Adv));
+SELECT (@ADVL>) IF (0 ("seamma") OR ("seammá"))(1 ("ollu" Adv));
 
 	# ---------------- #
        CONSTRAINTS #27 #
@@ -15874,14 +15874,12 @@ REMOVE (@SPRED) ; #IF (NOT 0 PrfPrc);
 
 REMOVE (@OPRED) ;
 
-	#REMOVE (@X) IF (0 FMAINV OR (@+FAUXV) OR (@-FAUXV) OR (@SUBJ) OR
-	#         (@A>) OR (@ADV>) OR (@ADVL) OR (@N>) OR (@N>) OR (@CNP) OR (@CVP)
-	#         (@N>) OR (@CNP) OR (@CVP) OR (@N>) OR (@A>) OR (@N>) OR (@P<) OR (@P>) OR
-	#         (@HNOUN) OR (@INTERJ) OR (@Pron<) OR (@Q<) OR 
-	#         (@Pron<) OR (@N<) OR (@OBJ) OR (@OPRED) OR (@PCLE) OR 
-	#         (@COMP-CS<) OR (@N>) OR (@N<) OR (@N>) OR 
-	#         (@N<) OR (@N>) OR (@SPRED) OR
-	#         (@SUBJ) OR (@SUBJ) OR (@N>) OR (@APP)) ;
+	#REMOVE (@X) IF (0 FMAINV OR (@+FAUXV) OR (@-FAUXV) OR (@-FSUBJ) OR
+	#         (@A>) OR (@ADVL>) OR (@ADVL) OR (@N>) OR
+	#         (@CNP) OR (@CVP) OR (@P<) OR (@P>) OR
+	#         (@HNOUN) OR (@INTERJ) OR (@Pron<) OR (@Q<) OR (@N<) OR (@OBJ) OR (@OPRED) OR (@PCLE) OR 
+	#         (@COMP-CS<) OR (@SPRED) OR
+	#         (@SUBJ) OR (@APP)) ;
 
 	# ===================================================== #
 	# Post-syntactic morphological disambiguation - Cycle 5 #
