@@ -835,6 +835,7 @@ SET NOT-DEM = WORD - Dem ;
 LIST SGPRON = (Pron Sg1) (Pron Sg2) (Pron Sg3) (Pron Sg) (Pron PxSg1) (Pron PxSg2) (Pron PxSg3);
 LIST DUPRON = (Pron Du1) (Pron Du2) (Pron Du3)  (Pron PxDu1) (Pron PxDu2) (Pron PxDu3);
 LIST PLPRON = (Pron Pl1) (Pron Pl2) (Pron Pl3) (Pron Pl) (Pron PxPl1) (Pron PxPl2) (Pron PxPl3);
+LIST DUPRON-NOTPX = (Pron Du1) (Pron Du2) (Pron Du3) ;
 
 SET PRON-NOT-SG = DUPRON | PLPRON ;
 
@@ -2836,10 +2837,11 @@ MAP (@ADVL) TARGET ("ihkinassii") IF (-1 ("gosa"));
 MAP (@N>) TARGET ("juohke");
 	## Galgá gávdnot divššohasbearráigeahčči juohke fylkkas. 
 
-MAP (@N> @P<) TARGET (Pron Attr) ;
+MAP (@N> @P<) TARGET (Pron Attr) IF (*-1 Pr) ;
+MAP (@N>) TARGET (Pron Attr) ;
 	## Leago guhkki eará dáluide?
 	## Doppe leaba earet eará Sondre Lerche ja Madrugada. # It has to be checked if the @P< needs to be removed in some cases. 
-MAP (@N<) TARGET ("eatnat") IF (-1 ("giittos"));
+MAP (@N<) TARGET ("eatnat" Indef) IF (-1 ("giittos"));
 	## Giittos eatnat luoikamis.
 
 MAP (@N<) TARGET (Indef Pl Nom) IF (*-1 PPRON-DU-PL OR (N Pl) LINK 0 Nom BARRIER S-BOUNDARY)(NOT -1 CC OR CLB)(NOT 1 Rel);
@@ -3056,6 +3058,8 @@ ADD (@N>) TARGET OFFICE IF (1 Prop LINK 0 Fem OR Mal OR Sur);
 	#MAP (@N<) TARGET MEASURE IF (-1 Num)(0 Gen);
   	## 5 kr.
 
+# Postnominal
+# - - - - - -
 MAP (@N<) TARGET MEASURE IF (-1 Num)(1 ALU OR A);
 	## Min viessu lea vihtta mehtara alu.
 	## Sus lea njellje mehtara guhkkosaš biila.
@@ -3081,6 +3085,10 @@ MAP (@N<) TARGET N IF (-1 Num)(1 ("velggolaš"));
 
 MAP (@N<) TARGET (N Sg Acc) IF (-1 (Num Acc))(0 MEASURE)(1 (N Acc));
 	##
+	
+MAP (@N<) TARGET (N Sg Com) IF (-1 DUPRON-NOTPX OR ("Ándde-#guovttos") OR ("Ándde-#guovttis"))(0 HUMAN-INDIVIDUAL)(1 VFIN);	
+	## Moai Birehiin barge mánáidgárddis.
+	# "Ándde-#guovttos" and "Ándde-#guovttis" should be replaced with som kind of tag.
 
 	# Numeral adjective mappings
 	# - - - - - - - - - - - - - 
@@ -7079,6 +7087,11 @@ SELECT Adv IF (*-1 ("geahččat") BARRIER NOT-ADV)(0 ("bearrái"));
 	# - - - -
  # The Po/Pr seems to be taken care of by the general rules in an earlier block.
  # But rules are needed that distinguish between N and Adv readings.
+ 
+ 	# bures boahtin
+ 	# - - - - - - -
+SELECT Adv IF (0 ("bures") LINK 1 ("boahtin"));
+	# Instead of Interj.
 
 	# čađat
 	# - - -
@@ -8256,7 +8269,7 @@ REMOVE Adv IF (1 Interr);
 
 SELECT Indef IF (-1 Neg)(0 ("goabbáge"));
 	## Ii goabbáge njuolggadus čujut man láhkavuođuin daid leat cealkán.
-
+	
 	# Particular indefinite pronouns
 	# ------------------------------
 
@@ -8330,6 +8343,10 @@ REMOVE ("earri" N Sg Acc PxSg2) IF (NOT *-1 Sg2)(*1 (V Pl3));
 
 REMOVE ("earri" N Sg Acc PxSg2) IF (1 (Pron Rel Pl));
 	## ... ja earát geat háliidit ...
+
+# eatnat
+# - - - 
+SELECT Indef IF (-1 ("giittos"))(0 ("eatnat"));
 
 # juoga
 # - - -
@@ -8799,7 +8816,7 @@ SELECT (N Attr) IF (NOT 0 Prop)(1 N);
 SELECT CAP-INITIAL IF (-1 (Prop @N>))(0 INITIAL)(1 Sur);
     ## Mikkel A. Eira.
 
-REMOVE Adv IF (NOT *-1 VERB BARRIER S-BOUNDARY2)(NOT 0 ("gosa") OR ("mielde"))(NOT 1C A)(NOT *1 VERB BARRIER S-BOUNDARY2);
+REMOVE Adv IF (NOT *-1 VERB BARRIER S-BOUNDARY2)(NOT 0 ("gosa") OR ("mielde"))(NOT 0 ("bures") LINK 1 ("boahtin"))(NOT 1C A)(NOT *1 VERB BARRIER S-BOUNDARY2);
 	## Diehtojuohkin divššohasa lagamuš oapmahažžii.
 	## Stuorát guolit mat eai bisán čalmmiide, mannet čađa.
  
@@ -10542,9 +10559,9 @@ REMOVE Acc IF (*-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE)(0 Prop)(*1 (N Acc) BARRIER 
 	#REMOVE Acc IF (*-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE)(0 Prop)(1 Gen LINK 1 Po BARRIER N);
 	## Mun oainnán Máhte beatnaga Máreha biilla duohken.
 
-	# Genitive after "mii" and "mihkkege"
+	# Accusative after "mii" and "mihkkege"
 	# - - - - - - - - - - - - - - - - - -
-SELECT (N Pl Gen) IF (-1 ("mii") OR ("gii"))(1 NP-BOUNDARY)(*1 ("?")); 
+SELECT (N Pl Acc) IF (-1 ("mii") OR ("gii"))(1 NP-BOUNDARY)(*1 ("?")); 
 	## Maid ipmašiid doppe dagat?
  # Embedded questions are also possible, but harder to formulate a rule. 
 
