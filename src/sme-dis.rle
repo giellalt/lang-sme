@@ -821,6 +821,8 @@ SET SII = ("son" Pron Pers Pl3 Nom);
 
 SET PPRON-NOM-NOT-DAT = MUN | DON | SON | MOAI | DOAI | SOAI | MII-PERS | DII | SII ;
 
+SET PPRON-NOT-DAT = (Pron Pers) - ("dat") ;
+
 SET PPRON-DU-PL = MOAI | DOAI | SOAI | MII-PERS | DII | SII ;
 
 SET PRON-DU = MOAI | DOAI | SOAI ;
@@ -1916,7 +1918,7 @@ LIST PREGEN = "álgogeahčen" "bealle#muttus" "bealle#muddu" ("bealli" N Sg Loc)
 #                        explicit reference/family     through role
 #                             /                       /    \       \
 #
-#                HUMAN-INDIVIDUAL          PROFESSION     ROLE     OFFICE
+#                HUMAN-INDIVIDUAL          PROFESSION     HUM-FUNCTION     OFFICE
 #        /           /           \
 #
 #FAMILY FAMILY-ABSTRACT       NON-FAMILY
@@ -1964,7 +1966,7 @@ LIST PREGEN = "álgogeahčen" "bealle#muttus" "bealle#muddu" ("bealli" N Sg Loc)
 # HUMAN-GROUP              |                                      x		    |
 # PROFESSION               |      x               x               x		    |
 # OFFICE                   |      x               x               x		    |
-# ROLE                     |      x               x               x		    |
+# HUM-FUNCTION                     |      x               x               x		    |
 # ABSTR-TEXT               |      x               x               x		    |
 # PLACE (not NATURE-PLACE) |                      x               x		    |
 # NATION                   |                      x               x		    |
@@ -1976,15 +1978,15 @@ LIST PREGEN = "álgogeahčen" "bealle#muttus" "bealle#muddu" ("bealli" N Sg Loc)
 
 LIST FAMILY = (Prop Mal) (Prop Fem) (Prop Sur) "áddjut" "áhkká" "áhkkut" "bárdne#mánná" "boadnji" "čeahci" "čeahcit" "dálu#eamit" "eahki" "eamit" "eammi" "eanu" "goaski" "guoibmi" "isit" "lunta" "mánáid#mánná" "mannji" "máttar#áddjá" "máttar#áhkku" "muoŧŧa" "muoŧŧal" "náittos#guoibmi" "neahpi" "oabbá" "oabbá#bealli" "oambealli" "oarpmealli" "osku#guoibmi" "rist#vánhen" "siessal" "siessá" "viellja" "viellja#bealli" "vilbealli" "vuohppa" "vuon#áhkku" "vuoni" ;
 
-# These can only be possessed by HUMAN-INDIVIDUAL, HUMAN-GROUP, PROFESSION, OFFICE, ROLE, ABSTR-TEXT
+# These can only be possessed by HUMAN-INDIVIDUAL, HUMAN-GROUP, PROFESSION, OFFICE, HUM-FUNCTION, ABSTR-TEXT
 
 LIST FAMILY-ABSTRACT = "áhčči" "áddjá" "áhkku" "bearaš" "eadni" "sohka" "sohka#goddi" "váhnen" "veahka" ;
 
-# These can be possessed by HUMAN-INDIVIDUAL, HUMAN-GROUP, PROFESSION, OFFICE, ROLE, ABSTR-TEXT, PLACE (minus NATURE-PLACE), Prop Plc, NATION, ANIMAL, EDUCATION, ORGANIZATION and INSTITUTION. Can also be used as metaphors.
+# These can be possessed by HUMAN-INDIVIDUAL, HUMAN-GROUP, PROFESSION, OFFICE, HUM-FUNCTION, ABSTR-TEXT, PLACE (minus NATURE-PLACE), Prop Plc, NATION, ANIMAL, EDUCATION, ORGANIZATION and INSTITUTION. Can also be used as metaphors.
 
 LIST NON-FAMILY = "almmái#olmmoš" "álbmot#guoibmi" "ámmát#olmmoš" "bálvalan#guoibmi" "bárdni" "dievdo#olmmoš" "eaŋkil#olmmoš" "gánda" "guossi" "lagamuš" "mánná" "nieida" "nisson" "nisson#olmmoš" "nisu" "Norgga#-ustit" "nuorra" "olles#olmmoš" "osku#guoibmi" "osku#viellja" "olmmái" "olmmoš" "rávis#olmmoš" "sáme#mánná" "sáme#nisson" "sáme#nisu" "sáme#nuorra" "siida#guoibmi" "siida#guoibme#nisu" "skibir" "skihpár" "ustit" "verdde" "viissis" ;
 
-# These can be possessed by HUMAN-INDIVIDUAL, HUMAN-GROUP, PROFESSION, OFFICE, ROLE,   ABSTR-TEXT, EDUCATION, PLACE (minus NATURE-PLACE), Prop Plc, NATION, EDUCATION,  ORGANIZATION, INSTITUTION and INDUSTRY.
+# These can be possessed by HUMAN-INDIVIDUAL, HUMAN-GROUP, PROFESSION, OFFICE, HUM-FUNCTION,   ABSTR-TEXT, EDUCATION, PLACE (minus NATURE-PLACE), Prop Plc, NATION, EDUCATION,  ORGANIZATION, INSTITUTION and INDUSTRY.
 
 LIST HUMAN-LIKE = "beahtu" "beargalat" "eŋgel" "háldi" "hearrá" "ipmil" "stállu" "suodjalus#eŋgel" "ulda" ;
 
@@ -3547,6 +3549,10 @@ MAP (@-FSUBJ) TARGET Gen IF (1 Ger);
 
 MAP (@-FSUBJ) TARGET Gen IF (1 VAbess);
 	## Diet dáhpáhuvai mu dieđikeahttá.
+	
+MAP (@-FSUBJ) TARGET Gen IF (0 HUMAN OR PPRON-NOT-DAT)(1 Acc LINK NOT 0 HUMAN)(2 VAbess);
+	## Divššohasaid sáhttá dálkkodit dálkasiiguin sin dan dieđekeahttá.
+	
 
 MAP (@-FSUBJ) TARGET Gen IF (*-1 REALCOPULAS BARRIER NPNHA)(1 (V Actio Loc));
 	## Dat ii leat geafes olbmo nagodeames. 
@@ -3747,7 +3753,7 @@ MAP (@-FOBJ) TARGET Acc IF (*-1 Inf BARRIER VERB LINK -1 ADVLCASE LINK *-1 V-NOT
 	## Muhtun turisttat vulget badjesámi gođiide borrat sámi biepmu.
 	# This example needs the ADVLCASE-step because of that "gođiide" also have VFIN-reading.
 
-MAP (@-FOBJ) TARGET Acc IF (1 (TV VAbess));	
+MAP (@-FOBJ) TARGET Acc IF (NOT -1 HUMAN OR PPRON-NOT-DAT LINK 1 Acc LINK 0 NOT-HUMAN OR ("dat"))(1 (TV VAbess));	
 	## Goappaš joavkkut manne moala bážikeahttá molssodanlatnjii maŋŋel vuosttaš vuoru.
 
 	
@@ -13420,7 +13426,7 @@ SELECT Gen IF (NOT *-1 V-TRANS-ACT BARRIER NOT-ADV-PCLE)(0 Dem)(*1C (N Gen) OR (
 SELECT Acc IF (0 Indef)(1 (A Acc))(NOT 2 (N Acc));
 	## Dasgo mun in leat goassege borran maidege eahpebasiid.
 
-REMOVE Gen IF (1 (Pers Gen));
+#REMOVE Gen IF (1 (Pers Gen));
 	## Dii huksebehtet hávdemuittuid profehtaide geaid din máddarat godde! 
 
 SELECT Gen IF (*-1 (Indef Acc) BARRIER NOT-ADV)(0 Pers);
@@ -15599,12 +15605,12 @@ SELECT (@-FSUBJ) IF (NOT *-1 V-TRANS-ACT BARRIER SV-BOUNDARY2)(1 VAbess LINK 0 I
 SELECT (@-FOBJ) IF (0 NOT-HUMAN OR ("dat") LINK 1 VAbess);
 	## Mánná sáhttá álgit skuvlii dárogiela áddekeahttá doppe ge.
 
-SELECT (@-FSUBJ) IF (0 HUMAN OR Pers LINK NOT 0 ("dat"))(1 ("diehtit" VAbess));
-SELECT (@-FOBJ) IF (0 ("dat"))(1 ("diehtit" VAbess));
+SELECT (@-FSUBJ) IF (0 HUMAN OR PPRON-NOT-DAT)(1 Acc LINK 0 NOT-HUMAN OR ("dat"))(2 VAbess);
+		# De galgá almmuhit gozihanlávdegoddái sin dan dáhtokeahttá. # On Finnish side.
 
-
-#SELECT (@-FSUBJ) IF (NOT *-1 V-TRANS-ACT BARRIER SV-BOUNDARY2)(1 VAbess);
+SELECT (@-FSUBJ) IF (0 HUMAN OR PPRON-NOT-DAT)(1 VAbess));
 	## Diet dáhpáhuvai mu dieđikeahttá. 
+
 SELECT (@SPRED) IF (-2 N)(-1 (":"))(0 CARDINALS)(1 CLB);
   	## Fáksa: 22242786.
 
@@ -15764,7 +15770,7 @@ SELECT (@OBJ) IF (*-1 STV BARRIER SV-BOUNDARY2 OR (@OBJ) LINK NOT 0 N LINK NOT *
 	## Mun oidnen guovžža, beatnaga ja riebana golbma kilomehtara dábbelis. 
 
 SELECT (@OBJ) IF (-2 V-TRANS-ACT LINK 1 CS LINK 1 @COMP-CS<);	
-SELECT (@OBJ) IF (NOT *-1 (@OBJ) BARRIER NPNH)(*1 V-TRANS-ACT-NOT-ACT BARRIER S-BOUNDARY2 LINK NOT *1 (@OBJ) BARRIER S-BOUNDARY2)(NOT 0 Adv)(NOT 0 Nom LINK -1 Po LINK -1 (Rel Gen))(NOT 0 Nom LINK *-1 (TV N Gen) BARRIER NPNH)(NOT 0 TIME)(NOT 0 Dem LINK *1 N BARRIER NPNH)(NOT 0 Loc LINK *-1 (IV) BARRIER VERB)(NOT 0 (Acc PxSg3) LINK 0 Loc)(NOT 0 ("nr") LINK -1 N OR A OR ACR OR ABBR);
+SELECT (@OBJ) IF (NOT *-1 (@OBJ) BARRIER NPNH)(*1 V-TRANS-ACT-NOT-ACT BARRIER S-BOUNDARY2 LINK NOT *1 (@OBJ) BARRIER S-BOUNDARY2)(NOT 0 Adv)(NOT 0 Nom LINK -1 Po LINK -1 (Rel Gen))(NOT 0 Nom LINK *-1 (TV N Gen) BARRIER NPNH)(NOT 0 TIME)(NOT 0 Dem LINK *1 N BARRIER NPNH)(NOT 0 Loc LINK *-1 (IV) BARRIER VERB)(NOT 0 (Acc PxSg3) LINK 0 Loc)(NOT 0 ("nr") LINK -1 N OR A OR ACR OR ABBR)(NOT 0 HUMAN OR PPRON-NOT-DAT LINK 1 Acc LINK 0 NOT-HUMAN OR ("dat") LINK 1 VAbess);
 	## SDD lea nammadan guovlluid dearvvašvuođafitnodagaid stivrraid, mat vástidit doaimmaineaset dušše stáhtii, mii daid eaiggáduššá.
 	## ...juos sin livčče dikšumin bargit... # Removed BARRIER NOT-ADV from the first part. Perhaps there should be another barrier? 	
 	
