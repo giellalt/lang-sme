@@ -907,7 +907,10 @@ LIST XGO = "dego" "dugo" "nugo" "seammaládjego" "seammaláhkaigo" ;
 LIST SEAMMAX = "seamma#ládje" "seamma#láhkai" ;
   # Those combine with go
   
-SET CRD = COMMA | CC | NEGFOC | XGO | ("/") | ("-") ;
+LIST MADE = "mađe" "mađi" ;
+LIST DADE = "dađe" "dađi" ; 
+  
+SET CRD = COMMA | CC | NEGFOC | XGO | ("/") | ("-") | DADE ;
  
 	# coordinators
 	
@@ -916,7 +919,7 @@ SET LCRD = (@CNP) ;
 SET GCRD = (@CVP) ;
     # global coordinator
     
-SET CRD2 = (@CNP) | COMMA | NEGFOC | XGO | ("/") | ("-") ;
+SET CRD2 = (@CNP) | COMMA | NEGFOC | XGO | ("/") | ("-") | DADE ;
     # AFTER LCRD vs. GCRD disambiguation
     
 # Sets for adverbs that have lookalikes
@@ -2751,7 +2754,7 @@ MAP (@CNP @CVP) TARGET CC ;
 # mun lean bures ja johtilit vuodján. @CNP
 # [S [NP mun] [VP [V vuoján] [AdvP bures ja johtilit]]]. @CNP
 
-MAP (@CNP @CVP) TARGET CS IF (0 ("go") OR ("vai") OR XGO);
+MAP (@CNP @CVP) TARGET CS IF (0 ("go") OR ("vai") OR XGO OR DADE);
     ##
 
 MAP (@CVP) TARGET CS IF (NOT 0 Indef) ;
@@ -6923,6 +6926,16 @@ REMOVE CS IF (0 ("de"));
 	# Some more particular subjunctions
 	# ----------------------------
 
+	# mađe/mađi and dađe/dađi
+SELECT CS IF (0 MADE)(*1 DADE) ;
+	## Mađe mielde oaivi, dađe mielde ságat.
+REMOVE CS IF (0 MADE)(NOT *1 DADE) ;
+
+
+SELECT CS IF (*-1 MADE BARRIER S-BOUNDARY)(0 DADE);
+	## Mađe stuorit RAM-muitu du dihtoris lea, dađe eanet dihtorprográmmaid sáhtát geavahit oktanaga.	
+REMOVE CS IF (NOT *-1 MADE BARRIER S-BOUNDARY)(0 DADE);	
+
 SELECT CS IF (-1 COMMA)(0 ("de") OR ("vaikko"))(NOT 1 CS);
     	## Jos geahččá dearvvašvuođarievtti geahččanguovllus, de ii gáibádus
     	## áddehantti dieđuid oažžumis čatnas giellalága ráddjehusaide.
@@ -6986,12 +6999,8 @@ SELECT Adv IF (0 ("mielde"))(*-1 REALCOPULAS BARRIER SV-BOUNDARY LINK -1 (Pron L
 SELECT Adv IF (-2 ("váldit"))(-1 Acc)(0 ("mielde") OR ("fárrui"));  
 	## Sámediggi lea bivdán ráđđehusa váldit Sámedikki mielde árvoháhkanprográmmabargui.
 	
-SELECT Adv IF (-1 Dem OR N OR A OR Pron LINK 0 Gen)(0 ("mađe"));
-	## Mun bohten dan mađe árrat.
-	
-SELECT Adv IF (0 ("mađe") LINK *1 ("dađe"));
-	## Mađe mielde oaivi, dađe mielde ságat.
-		
+SELECT Adv IF (-1 Dem OR N OR A OR Pron LINK 0 Gen)(0 ("mađe"))(NOT *1 DADE BARRIER S-BOUNDARY);
+	## Mun bohten dan mađe árrat.		
 	
 SELECT Adv IF (0 ("mielde"))(*-1 ("go" Pcle) LINK -1 REALCOPULAS BARRIER VFIN);
 SELECT Adv IF (0 ("mielde"))(*-1 ("leat" Qst) BARRIER VFIN);
@@ -7253,6 +7262,7 @@ SELECT Adv IF (-1 COMMA)(0 ("dadjat"));
 
 SELECT Adv IF (0 ("dadjat"))(1 ("juo"));
 	## Háhkan lea šaddan dadjat juo cieggan riektedilli.
+	
 
 	# dainna
 	# - - - -
@@ -7508,7 +7518,12 @@ SELECT N IF (-1 Dem OR Attr OR (Interr Gen))(0 ("láhkai"));
 	## Seammá láhkai go váldojournála ja lassijournála geavaheami oktavuođas...
 	## Dán barggus lea erenoamáš deaŧalaš bures gulahallat Sámedikkiin guđe
 	## láhkai galgá návccaid atnit.
-
+	
+	# mađe/mađi vs mađđi
+	# - - - - - - - - - -
+REMOVE N IF (0 MADE)(1 (A Comp))(*2 DADE);	
+	## Mađe nuorat váhnemat, dađe deaŧaleabbo lea mánáid sámegielmáhttu.
+	
 	# maid
 	# - - -
 SELECT Adv IF (-1 (Pron Rel))(0 ("maid"))(NOT -1 (Pron Rel Pl Acc));
@@ -7853,6 +7868,8 @@ REMOVE N IF (-1 (@P>))(0 ("vuostái"));
 
 # IMPORTANT! - Not all rules might be suitable for both CC- and CS-disambiguation. If rules refer to LCRD/GCRD one should make sure they really refer to both CC- and CS-disambiguation.
 
+REMOVE LCRD IF (0 DADE) ;    
+
 REMOVE LCRD IF (-1 COMMA)(0 ("ja" CC))(*1 VFIN BARRIER S-BOUNDARY);
     ## 
 REMOVE LCRD IF (-1 BOS);
@@ -8005,7 +8022,7 @@ REMOVE LCRD IF (-1 Num)(0 CC)(1 Num LINK 1 ("gaskal"));
     
 REMOVE LCRD IF (-1 Inf LINK NOT *-1 V)(0 CS)(1 Inf);
     ## Dan maiddái oaidnit go leat viehka uhccán gaskategoriain «muhtun muddui dahje uhccán».
-
+    
 	# ======================= #
 	# Disambiguating pronouns #
 	# ======================= #
@@ -9262,9 +9279,8 @@ SELECT Adv IF (0 A)(NOT 0 Inf)(1C A)(NOT *1 N BARRIER NPNH);
 	## ...ahte váikkuhusat divššohasa lagamuččaide leat mearkka-
 	## šahtti stuorrát. 
 
-SELECT Adv IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(1 A);
-	## Sámi riekteáddejupmi ii lean doarvái miellagiddevaš 
-	## suokkarduvvot ovttas dainna gažaldagain.
+SELECT Adv IF (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK NOT *-1 MADE BARRIER S-BOUNDARY)(1 A);
+	## Sámi riekteáddejupmi ii lean doarvái miellagiddevaš suokkarduvvot ovttas dainna gažaldagain.
 
 SELECT Adv IF (-2C Adv)(-1 CC)(0 A);
 	## Maŋŋá soađi lea sámi álbmot rahčan ollu vai dat adnojuvvošii
@@ -12207,7 +12223,7 @@ REMOVE Acc IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER Acc OR S-BOUNDARY2 LINK *-1C Acc 
 REMOVE Acc IF (NOT *-1 V-TRANS-ACT-NOT-ACT BARRIER SV-BOUNDARY2 LINK 0 FMAINV OR Inf)(NOT *-1 (":") BARRIER V-TRANS-ACT-NOT-ACT)(NOT 0 TIME)(NOT 0 ("dat") LINK 1 CS)(NOT *1 V-TRANS-ACT-NOT-ACT-NOT-AUX BARRIER S-BOUNDARY2);
 	## ...ahte sámi nuoraide láhččojuvvo vejolašvuohta oassálastit... 
 
-REMOVE Acc IF (*-1C V BARRIER VFIN OR Inf LINK NOT 0 (PrfPrc @N>) OR V-TRANS-ACT OR NEGFOC)(NOT 0 TIME)(NOT *1 V-TRANS-ACT BARRIER SV-BOUNDARY2);
+REMOVE Acc IF (*-1C V BARRIER VFIN OR Inf OR S-BOUNDARY2 LINK NOT 0 (PrfPrc @N>) OR V-TRANS-ACT OR NEGFOC)(NOT 0 TIME)(NOT *1 V-TRANS-ACT BARRIER SV-BOUNDARY2);
  	## Dál nannejuvvui girku sámeguovlluin.
 
 REMOVE Acc IF (NOT 0 TIME)(*1 V-TRANS-ACT BARRIER SV-BOUNDARY2 LINK *1 ("ahte") BARRIER NOT-ADV-PCLE OR ("nu"));
