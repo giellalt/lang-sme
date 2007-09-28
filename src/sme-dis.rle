@@ -847,6 +847,9 @@ SET PRON-NOT-SG = DUPRON | PLPRON ;
 
 LIST DAT-PRON = ("dat") ("dát") ("diet") ("duot") ("dot") ;
 
+LIST QUANT-PRON = "ollu" "olu" "unnán" "váháš" "veaháš" "veháš" ;
+# This set is for choosing between Adv and Pron Indef.
+
 # Adjectival sets and their complements
 # -------------------------------------
 SET LEX-A = A - A-DER ;
@@ -894,6 +897,9 @@ LIST PLACE-ADV =  "davá#bealde" "mátta#bealde" "nuortta#bealde" "oarje#bealde"
 
 LIST DOPPE = "dakko" "dákko" "dáppe" "diekko" "dieppe" "dokko" "doppe" "duokko" "duoppe" ;
 # Adverbs with a locativic form, but don´t get Loc as a tag. 
+
+LIST DOHKO = "deike" "diehke" "dohko" "duohko" ;
+# Adverbs with a illativic form, but they don´t get Ill as a tag.
  
 
 # Coordinators
@@ -4481,7 +4487,7 @@ REMOVE (N* Dimin) IF (0 Adv OR A);
 REMOVE ("vuolli") IF (-1 ("čállit"))(0 ("vuollái"));
   	## Sii áigot bissehit rievssatbivdu čakčaorohagain, ja dasa lea Saari čállán vuollái.
 
-SELECT Adv IF (*-1 FMAINV BARRIER SV-BOUNDARY)(NOT -1 ("vel") OR ("ain"))(0 (N Acc))(0 N LINK NOT 0 Loc)(1 Acc)(NOT 2 ("go"));
+SELECT Adv IF (*-1 FMAINV BARRIER SV-BOUNDARY)(NOT -1 ("vel") OR ("ain"))(0 (N Acc) LINK NOT 0 Loc OR QUANT-PRON)(1 Acc)(NOT 2 ("go"));
     ## Lávdegoddi ádjána guhká áššiid meannudemiin. 
     
 SELECT ("easkka" Adv) IF (0 ("easka"))(1 ("dalle"));   
@@ -6387,8 +6393,10 @@ REMOVE (A Comp) IF (-1 V)(0 Adv)(1 (N Ess));
 REMOVE Adv IF (-1 V OR (@OBJ))(0 ("eanas" A) OR ("eanaš" A))(1 N);
     ## Ná sáhttá geavvat eanas geasi.
     
-REMOVE A IF (*-1 IV BARRIER SV-BOUNDARY LINK NOT 0 COPULAS)(0 Adv)(1 EOC);  
+REMOVE A IF (*-1 IV BARRIER SV-BOUNDARY LINK NOT 0 COPULAS)(0 Adv)(1 EOC);
+REMOVE A IF (*-1 IV BARRIER SV-BOUNDARY LINK NOT 0 COPULAS)(0 ("maŋŋit" Adv))(1 Ill OR DOHKO)(2 EOC);    
     ## Boađán maŋŋeleappos.
+    ## Eatnandoallu bođii maŋŋit Sápmái.
 
 	# ======================================= #
 	# Disambiguating abbreviations      #
@@ -7337,6 +7345,9 @@ SELECT Adv IF (NOT -1 Dem or (A Attr))(0 ("duo"));
 	# - - - -
 SELECT Adv IF (-1 BOS OR PUNCT OR CLB)(0 ("duođaid"))(1 COMMA);
 	## Duođaid, mun cealkkán didjiide:...
+SELECT Adv IF (-1 COPULAS)(0 ("duođaid"))(1 Ess);
+	## Eatnandoallu šattai duođaid buressivdnádussan sámiide, nugo dat lei iežáge álbmogiidda.
+
 
 	# dušše
 	# - - - -
@@ -7757,7 +7768,7 @@ SELECT Adv IF (-1 VERB)(0 ("ollu") OR ("olu"))(1 (Pron Pers));
 SELECT (Pron Indef @N>) IF (-1 Rel)(1 N);
 	## maid ollu dearvvašvuođaásahusat.
 
-SELECT (Pron Indef @N>) IF (*-1 V BARRIER NOT-ADV)(0 ("ollu") OR ("olu"))(*1 (N Acc) OR (N Nom) BARRIER NOT-AA);
+SELECT (Pron Indef @N>) IF (*-1 V BARRIER NOT-ADV)(0 QUANT-PRON)(*1 (N Acc) OR (N Nom) BARRIER NOT-AA);
 	## Gielddat, main orrot ollu sápmelaččat.
 	## Sii geavahit ollu ee. giellabálvalusaid.
 		
