@@ -642,6 +642,7 @@ LIST PUNCT = PUNCT ;
 # ----------------
  
 LIST COMMA = "," ;
+LIST QMARK = """ ;
 LIST ¶ = ¶;
 
 LIST OKTA = "okta";
@@ -663,6 +664,7 @@ LIST CAP-INITIAL = "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M"
 # ========
   SETS
 # ========
+
 
 # Word or not
 # -----------
@@ -1285,7 +1287,7 @@ LIST COM-ADV = "oktan" "oktanaga" "ovtta#mielas" "ovttas" "ovttas#ráđiid" "sea
 # Other adverb sets
 # - - - - - - - - - 
 
-LIST GRADE-ADV =  "áibbas" "beare" ("eanet" Adv) "erenoamáš" "earenoamáš" "hirbmat" "hui" "ila" "issoras" "menddo" ("mii" Sg Gen) "nu" "oalle" "oba" ("oppa" Adv) ("veaháš" Adv) "veháš" ;
+LIST GRADE-ADV =  "áibbas" "beare" ("eanet" Adv) "erenoamáš" "earenoamáš" "hirbmat" "hui" "ila" "issoras" "menddo" ("mii" Sg Gen) "nu" "oalle" "oba" ("oppa" Adv) ("veaháš" Adv) "vehá" "veháš" "veahá" "veaháš" ;
 
 LIST PLURALIZER = "buot" "buotlágan" "buotlágán" "buotlágáš" "earálágan" "iežálágan" "iežálágán" "gait" "gaitlágan" "gaitlágán" "goappeš" "goappašat"  "máŋggalágan" "máŋggalágán" "moattelágan" "moattelágán" "moattilágan" "moattilágán" ;
     # Singular nouns can have a plural form combined with those
@@ -1445,9 +1447,10 @@ SET NPROP = N - PROP ;
 
 SET NOT-COMMA = CLB - COMMA | PUNCT-LEFT | PUNCT-RIGHT ;
 
+SET NOT-QMARK = WORD | CLB | PUNCT - QMARK ; 
+
 SET W-NOT-ACC-GEN = WORD - Acc - Gen ;
 
- 
 
 # Nouns
 # ------
@@ -3848,7 +3851,7 @@ MAP (@ADVL) TARGET Inf IF (*-1 MOVEMENT-V BARRIER S-BOUNDARY OR VFIN OR Nom);
 	## Stálus bođii baikahoahppu, ja son guđii seahka ja vulggii baikit. 
 	## Boađe mu lusa geahččat ođđa govaid!
 
-MAP (@ADVL) TARGET Inf IF (-1 ADVLCASE LINK NOT 0 NP-HEAD-NOM LINK NOT *-1 V-TRANS-ACT-NOT-ACT OR AUX BARRIER S-BOUNDARY OR VFIN OR Nom);
+MAP (@ADVL) TARGET Inf IF (-1 ADVLCASE LINK NOT 0 NP-HEAD-NOM LINK NOT *-1 V-TRANS-ACT-NOT-ACT OR AUX BARRIER VFIN OR Nom);
 	## Muhtun turisttat vulget badjesámi gođiide borrat sámi biepmu.
 	
 MAP (@-FOBJ) TARGET Inf IF (-1 V-TRANS-ACT-NOT-ACT LINK 0 Inf LINK NOT 0 AUX LINK -1 ("leat"));
@@ -3964,7 +3967,7 @@ MAP (@-FAUXV) TARGET PrfPrc IF (*-1 Neg BARRIER S-BOUNDARY)(0 AUX)(*1 Inf BARRIE
 MAP (@+FAUXV) TARGET VFIN IF (*-1 Inf OR PrfPrc OR (Actio Ess) BARRIER NOT-ADV-PCLE)(0 COPULAS);
     ## Ja boahtán ledje su gudnejahttit.
 	
-MAP (@+FAUXV) TARGET VFIN IF (NOT *-1 AUX BARRIER NOT-AA)(0 AUX)(*1 Inf OR ConNeg OR PrfPrc BARRIER VFIN OR S-BOUNDARY);
+MAP (@+FAUXV) TARGET VFIN IF (NOT *-1 AUX BARRIER NOT-AA)(0 AUX)(*1 Inf OR ConNeg OR PrfPrc BARRIER VFIN OR S-BOUNDARY)(NOT 0 ("leat") LINK *1 VGen BARRIER NOT-ADV-PCLE);
     ## Don šattat vel joksat Sirpmás gohcciid.  
 	## In sáhte olles gáhku borrat.
 	
@@ -5623,7 +5626,7 @@ SELECT Pers IF (-1 Nom)(NOT -1 Pers)(0 ("dat" Nom))(*1 REALCOPULAS BARRIER NOT-A
 	## Hei, soiddas dat lea, máistte don dan gáfe!
 	## Gean mearkka bohccot dat ledje?
 
-SELECT Pcle IF (-1 Nom)(NOT -1 A OR Interr OR PrfPrc)(0 ("dat" Nom))(NOT *1 N BARRIER NP-BOUNDARY);
+SELECT Pcle IF (-1 Nom)(NOT -1 A OR Interr OR PrfPrc)(0 ("dat" Nom))(1 VFIN); #(NOT *1 N BARRIER NP-BOUNDARY);
 	## Máret dat boahtá.
 	## Mun dat lean.
 
