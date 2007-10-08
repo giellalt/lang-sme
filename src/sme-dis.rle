@@ -636,13 +636,15 @@ LIST ABBR = ABBR ;
 LIST ACR = ACR ;
 LIST CLB = CLB ;
 
-LIST PUNCT = PUNCT ;
+LIST QMARK = """ ;
+LIST PPUNCT = PUNCT ;
+SET PUNCT = PPUNCT - QMARK ;
+
 
 # Single-word sets
 # ----------------
  
 LIST COMMA = "," ;
-LIST QMARK = """ ;
 LIST ¶ = ¶;
 
 LIST OKTA = "okta";
@@ -2758,17 +2760,17 @@ SET NON-APP = ALLSYNTAG - (@APP);
 	# Lexically determined mappings
 	# -----------------------------
 
-MAP (@N>) TARGET Pron IF (0 ("seamma") OR ("seammá"))(1 ("ollu") OR ("olu"))(*1 N);
-MAP (@ADVL>) TARGET Adv IF (0 ("seamma") OR ("seammá"))(1 ("ollu") OR ("olu"));
+MAP (@N>) TARGET Pron IF (0 ("seamma") OR ("seammá"))(*1 ("ollu") OR ("olu")  BARRIER NOT-QMARK)(*1 N);
+MAP (@ADVL>) TARGET Adv IF (0 ("seamma") OR ("seammá"))(*1 ("ollu") OR ("olu")  BARRIER NOT-QMARK);
 
-MAP (@ADVL>) TARGET Adv IF (0 DOPPE)(1 ("eret"));
-MAP (@ADVL>) TARGET N IF (0 (N Loc))(1 ("eret"));
+MAP (@ADVL>) TARGET Adv IF (0 DOPPE)(*1 ("eret") BARRIER NOT-QMARK);
+MAP (@ADVL>) TARGET N IF (0 (N Loc))(*1 ("eret") BARRIER NOT-QMARK);
 
 	#MAP (@ADVL @N>) TARGET ("ollu") IF (-1 ("seamma") OR ("seammá"));
-MAP (@ADVL) TARGET ("ollu") IF (-1 ("seamma") OR ("seammá"))(0 Adv)(NOT 1 Pl);
-MAP (@N>) TARGET ("ollu") IF (-1 ("seamma") OR ("seammá"))(0 Pron);
-MAP (@ADVL) TARGET ("olu") IF (-1 ("seamma") OR ("seammá"))(0 Adv)(NOT 1 Pl);
-MAP (@N>) TARGET ("olu") IF (-1 ("seamma") OR ("seammá"))(0 Pron);
+MAP (@ADVL) TARGET ("ollu") IF (*-1 ("seamma") OR ("seammá") BARRIER NOT-QMARK)(0 Adv)(NOT *1 Pl BARRIER NOT-QMARK);
+MAP (@N>) TARGET ("ollu") IF (*-1 ("seamma") OR ("seammá") BARRIER NOT-QMARK)(0 Pron);
+MAP (@ADVL) TARGET ("olu") IF (*-1 ("seamma") OR ("seammá") BARRIER NOT-QMARK)(0 Adv)(NOT *1 Pl  BARRIER NOT-QMARK);
+MAP (@N>) TARGET ("olu") IF (*-1 ("seamma") OR ("seammá") BARRIER NOT-QMARK)(0 Pron);
   	## Soabadanráđis galget leat golbma miellahttu ja seamma ollu várrelahttut.
 
 MAP (@ADVL) TARGET Ess IF (0 ESS-ADVL-N);
@@ -2793,7 +2795,7 @@ MAP (@CVP) TARGET CS IF (NOT 0 Indef) ;
 MAP (@INTERJ) TARGET Interj ;
 	## Maid, iigo leat boahtán?
 
-MAP (@INTERJ) TARGET ("surgat") IF (-1 ("vuoi") OR ("hei"));
+MAP (@INTERJ) TARGET ("surgat") IF (*-1 ("vuoi") OR ("hei") BARRIER NOT-QMARK);
 	## Vuoi surgat dan gándda!
 
 MAP (@INTERJ) TARGET ("beargalat") IF (*-1 Nom BARRIER S-BOUNDARY LINK NOT 0 (Dem Nom));
@@ -2801,12 +2803,12 @@ MAP (@INTERJ) TARGET ("beargalat") IF (*-1 Nom BARRIER S-BOUNDARY LINK NOT 0 (De
 
 MAP (@PCLE) TARGET Pcle ;
 	## Amma mii eat leat máksán? 
-#MAP (@Q<) TARGET ABBR IF (-1 Num)(0 INITIAL LINK NOT 1 NP-MEMBER);
+#MAP (@Q<) TARGET ABBR IF (*-1 Num BARRIER NOT-QMARK)(0 INITIAL LINK NOT *1 NP-MEMBER BARRIER NOT-QMARK);
   	## 98 B.
-MAP (@APP-Num<) TARGET ABBR IF (-1 Num)(0 INITIAL LINK NOT 1 NP-MEMBER);
+MAP (@APP-Num<) TARGET ABBR IF (*-1 Num BARRIER NOT-QMARK)(0 INITIAL LINK NOT *1 NP-MEMBER BARRIER NOT-QMARK);
   	## 98 B.
   	
-MAP (@N>) TARGET ABBR IF (-1 (Prop Mal) OR (Prop Fem))(1 (Prop Sur));
+MAP (@N>) TARGET ABBR IF (*-1 (Prop Mal) OR (Prop Fem) BARRIER NOT-QMARK)(*1 (Prop Sur) BARRIER NOT-QMARK);
 	## Aslak A. Guttorm.  	
 
 	# Determiner mappings
@@ -2815,7 +2817,7 @@ MAP (@N>) TARGET ABBR IF (-1 (Prop Mal) OR (Prop Fem))(1 (Prop Sur));
 MAP (@N>) TARGET (Dem Sg Nom) IF (*1C (N Sg Nom) BARRIER NP-BOUNDARY);
 	## Váidalusas galgá leat namahuvvon dat dilálašvuohta.
 
-MAP (@N>) TARGET (Dem Nom) IF (*1 Num OR A OR N BARRIER NP-BOUNDARY LINK 0 Nom) (NOT 1 Interr OR COMMA OR Dem);
+MAP (@N>) TARGET (Dem Nom) IF (*1 Num OR A OR N BARRIER NP-BOUNDARY LINK 0 Nom) (NOT *1 Interr OR COMMA OR Dem BARRIER NOT-QMARK);
 	## Jogo gikse dat guolit?
 
 MAP (@N>) TARGET (Dem Acc) IF (*1 Num OR A BARRIER NP-BOUNDARY OR (N Acc) LINK 0 Acc)(NOT *1 CC BARRIER WORD);
@@ -2824,7 +2826,7 @@ MAP (@N>) TARGET (Dem Acc) IF (*1 Num OR A BARRIER NP-BOUNDARY OR (N Acc) LINK 0
 MAP (@N>) TARGET (Dem Acc) IF (*1 (N Acc) BARRIER ADVLCASE OR VFIN);
 	## Naba daid stuora dorskiid, gosa daid bidjet?
 
-MAP (@N>) TARGET (Dem Gen) IF (*1 Num OR A OR N BARRIER NP-BOUNDARY LINK 0 Gen OR ADVLCASE)(NOT 1 Po);
+MAP (@N>) TARGET (Dem Gen) IF (*1 Num OR A OR N BARRIER NP-BOUNDARY LINK 0 Gen OR ADVLCASE)(NOT *1 Po BARRIER NOT-QMARK);
 	## Mun bessen dan bargui.
 
 MAP (@N>) TARGET (Dem Attr) IF (*1 N BARRIER NP-BOUNDARY);
@@ -2846,44 +2848,44 @@ MAP (@N>) TARGET (Dem Pl Com) IF (*1 (N Pl Com) BARRIER NP-BOUNDARY);
 MAP (@N>) TARGET (Dem Pl Com) IF (*1 (N Pl Com) BARRIER NOT-AA);
 	## Ain ferte joatkit daiguin sierra doaibmabijuiguin.
 	
-MAP (@N>) TARGET (Dem Sg Gen) IF (1 ("seammás"));
+MAP (@N>) TARGET (Dem Sg Gen) IF (*1 ("seammás") BARRIER NOT-QMARK);
 	## Mun bohten dan seammás.	
 
 	# Attribute mappings
 	# ------------------
 
-MAP (@A>) TARGET GRADE-ADV IF (1 A LINK NOT 0 Po OR Inf) (NOT 0 ("eanet") LINK 1 ("uhcit") OR ("unnit"));
+MAP (@A>) TARGET GRADE-ADV IF (*1 A LINK NOT 0 Po OR Inf BARRIER NOT-QMARK) (NOT 0 ("eanet") LINK *1 ("uhcit") OR ("unnit") BARRIER NOT-QMARK);
 	## Soai leaba goappašagat nu jallat.
 	## In dieđe man buorit dat leat.
 	
-MAP (@A>) TARGET GRADE-ADV IF (1 ("árvu" Loc)) ;	
+MAP (@A>) TARGET GRADE-ADV IF (*1 ("árvu" Loc) BARRIER NOT-QMARK) ;	
 
-MAP (@A>) TARGET ("mihá") OR ("ollu" Adv) IF (1 Comp OR COMPAR);
+MAP (@A>) TARGET ("mihá") OR ("ollu" Adv) IF (*1 Comp OR COMPAR BARRIER NOT-QMARK);
 	## Dakkár almmuhemiid leat mihá divraseabbo ráhkadit.
 
-MAP (@A>) TARGET ("buot") OR ("gait") IF (1 Superl);
+MAP (@A>) TARGET ("buot") OR ("gait") IF (*1 Superl BARRIER NOT-QMARK);
 	## Guhtemuš báhkkon lea buot mávssolaččamus?
 
-MAP (@A>) TARGET ("mii" Sg Gen) IF (1 (Pron Pers Nom)) (*1 (A Sg Nom) BARRIER V-NOT-AUX);
+MAP (@A>) TARGET ("mii" Sg Gen) IF (*1 (Pron Pers Nom) BARRIER NOT-QMARK) (*1 (A Sg Nom) BARRIER V-NOT-AUX);
 	## Leatgo don fuomášan dan máilmmi, man dat lea váralaš?
 
-MAP (@ADVL>) TARGET ("áibbas" Adv) OR ("eanet" Adv) OR ("erenoamáš") OR ("earenoamáš") OR ("hirbmat") OR ("hui") OR ("menddo") OR ("mii" Sg Gen) OR ("nu") OR ("oba") OR ("oppa") IF (1 Adv)(NOT 1 ("fal") OR ("maiddái") OR ("mo") OR ("mot") OR ("mov") OR ("movt") OR ("govt")) (NOT 0 ("mii" Sg Gen) LINK 1 Po)(NOT 0 ("eanet") LINK 1 ("uhcit") OR ("unnit"));
+MAP (@ADVL>) TARGET ("áibbas" Adv) OR ("eanet" Adv) OR ("erenoamáš") OR ("earenoamáš") OR ("hirbmat") OR ("hui") OR ("menddo") OR ("mii" Sg Gen) OR ("nu") OR ("oba") OR ("oppa") IF (1 Adv)(NOT *1 ("fal") OR ("maiddái") OR ("mo") OR ("mot") OR ("mov") OR ("movt") OR ("govt") BARRIER NOT-QMARK) (NOT 0 ("mii" Sg Gen) LINK *1 Po BARRIER NOT-QMARK)(NOT 0 ("eanet") LINK 1 ("uhcit") OR ("unnit"));
 	## Man dávjá mun livččen dáhtton čohkket du mánáid.
 
-MAP (@ADVL>) TARGET Adv IF (0 Indef)(1 VGen LINK NOT 0 N)(NOT 1 Sg3);
+MAP (@ADVL>) TARGET Adv IF (0 Indef)(*1 VGen BARRIER NOT-QMARK LINK NOT 0 N)(NOT *1 Sg3 BARRIER NOT-QMARK);
 	## Dát ađa lea uhccán vuošša.
 
-MAP (@ADVL<) TARGET Date IF (-1 SP-BEAIVI);
+MAP (@ADVL<) TARGET Date IF (*-1 SP-BEAIVI BARRIER NOT-QMARK);
 
-MAP (@ADVL<) TARGET (N Sg Loc) IF (-1 ("oktii") OR ("guktii") OR ("golbmii") OR ("njelljii") OR ("vihtii") OR ("geardde"))(0 TIME);
+MAP (@ADVL<) TARGET (N Sg Loc) IF (*-1 ("oktii") OR ("guktii") OR ("golbmii") OR ("njelljii") OR ("vihtii") OR ("geardde") BARRIER NOT-QMARK)(0 TIME);
 	## Mun ferten málestit guktii vahkus.
  
-MAP (@ADVL>) TARGET ("mearri" Gen) IF (-1 (Pron Dem Sg Gen))(1 Adv);
+MAP (@ADVL>) TARGET ("mearri" Gen) IF (*-1 (Pron Dem Sg Gen) BARRIER NOT-QMARK)(*1 Adv BARRIER NOT-QMARK);
 	## Lihkkus fuomášuvvui dát dan meare árrat ja ahte dálkkoduvvo árrat. # A controversial tag. Mearri is not an adverb, but functions as one in this case. # On the other hand, should "mearri" in front of an adjective get the tag @A>? Right now it gets @A>
 
 MAP (@ADVL) TARGET ("sihke") ;
 
-MAP (@ADVL) TARGET ("ihkinassii") IF (-1 ("gosa"));
+MAP (@ADVL) TARGET ("ihkinassii") IF (*-1 ("gosa") BARRIER NOT-QMARK);
 	## Mun áiigun čuovvut du gosa ihkinassii manažat.
 
 MAP (@N>) TARGET ("juohke");
@@ -2893,13 +2895,13 @@ MAP (@N> @P<) TARGET (Pron Attr) IF (*-1 Pr)(0 ("eará")) ;
 MAP (@N>) TARGET (Pron Attr) ;
 	## Leago guhkki eará dáluide?
 	## Doppe leaba earet eará Sondre Lerche ja Madrugada. # It has to be checked if the @P< needs to be removed in some cases. 
-MAP (@N<) TARGET ("eatnat" Indef) IF (-1 ("giittos"));
+MAP (@N<) TARGET ("eatnat" Indef) IF (*-1 ("giittos") BARRIER NOT-QMARK);
 	## Giittos eatnat luoikamis.
 
-MAP (@PRON<) TARGET ("goappašagat" Nom) IF (*-1 PPRON-DU-PL LINK 0 Nom BARRIER S-BOUNDARY)(NOT -1 CC OR CLB)(NOT 1 Rel);
+MAP (@PRON<) TARGET ("goappašagat" Nom) IF (*-1 PPRON-DU-PL LINK 0 Nom BARRIER S-BOUNDARY)(NOT *-1 CC OR CLB BARRIER NOT-QMARK)(NOT *1 Rel BARRIER NOT-QMARK);
 	## Soai leaba goappašagat nu jallat.
 
-MAP (@N<) TARGET ("goappašagat" Nom) IF (*-1 (N Pl) LINK 0 Nom BARRIER S-BOUNDARY)(NOT -1 CC OR CLB)(NOT 1 Rel);
+MAP (@N<) TARGET ("goappašagat" Nom) IF (*-1 (N Pl) LINK 0 Nom BARRIER S-BOUNDARY)(NOT *-1 CC OR CLB BARRIER NOT-QMARK)(NOT *1 Rel BARRIER NOT-QMARK);
 
 
 MAP (@PRON<) TARGET (Refl Sg Nom) IF (*-1 MUN OR DON OR (Pron Sg3 Nom) OR (Pron Sg Nom) OR (N Sg Nom) BARRIER S-BOUNDARY);
@@ -2926,48 +2928,48 @@ MAP (@PRON>) TARGET (Refl Pl Nom) IF (*1 PPRON-DU-PL BARRIER NOT-ADV-PCLE LINK 0
 MAP (@N>) TARGET (Refl Pl Nom) IF (*1 (N Pl) BARRIER NOT-ADV-PCLE LINK 0 Nom)(NOT *1 VFIN OR Inf BARRIER NOT-ADV-PCLE);
 	
 
-MAP (@PRON>) TARGET Recipr IF (1 Recipr);
+MAP (@PRON>) TARGET Recipr IF (*1 Recipr BARRIER NOT-QMARK);
 	## 
 
-MAP (@N> @SUBJ @SPRED) TARGET Indef IF (*1 N BARRIER NPNH)(NOT 0 Nom LINK 1 Acc)(NOT -1 STV-NOT-ACT LINK 1 ("ollu") OR ("olu") LINK NOT 1 Acc) (NOT 0 ADVLCASE)(0 ("muhtun") OR ("soames") OR ("soamis"))(NOT 1 (N Sg Gen) LINK NOT 0 Px LINK *1 N BARRIER NPNH OR CC)(NOT 1 (N Sg Gen PxSg2) LINK *-1 (V-SG2) LINK *1 N BARRIER NPNH OR CC)(NOT 1 VFIN OR Ess OR ("veara"))(*1 (N Pl Loc) BARRIER NOT-A);
+MAP (@N> @SUBJ @SPRED) TARGET Indef IF (*1 N BARRIER NPNH)(NOT 0 Nom LINK *1 Acc BARRIER NOT-QMARK)(NOT *-1 STV-NOT-ACT BARRIER NOT-QMARK LINK *1 ("ollu") OR ("olu") BARRIER NOT-QMARK LINK NOT *1 Acc BARRIER NOT-QMARK) (NOT 0 ADVLCASE)(0 ("muhtun") OR ("soames") OR ("soamis"))(NOT *1 (N Sg Gen) BARRIER NOT-QMARK LINK NOT 0 Px LINK *1 N BARRIER NPNH OR CC)(NOT *1 (N Sg Gen PxSg2) BARRIER NOT-QMARK LINK *-1 (V-SG2) LINK *1 N BARRIER NPNH OR CC)(NOT *1 VFIN OR Ess OR ("veara") BARRIER NOT-QMARK)(*1 (N Pl Loc) BARRIER NOT-A);
     ## Son lea profehta, aiddo dego muhtun boares profehtain.
     # An exception of the next one
 
-MAP (@N>) TARGET Indef IF (*1 N BARRIER NPNH)(NOT 0 Nom LINK 1 Acc)(NOT -1 STV-NOT-ACT LINK 1 ("ollu") OR ("olu") LINK NOT 1 Acc) (NOT 0 ADVLCASE) (NOT 1 (N Sg Gen) LINK NOT 0 Px LINK *1 N BARRIER NPNH OR CC)(NOT 1 (N Sg Gen PxSg2) LINK *-1 (V-SG2) LINK *1 N BARRIER NPNH OR CC)(NOT 1 VFIN OR Ess OR ("veara"));
+MAP (@N>) TARGET Indef IF (*1 N BARRIER NPNH)(NOT 0 Nom LINK *1 Acc BARRIER NOT-QMARK)(NOT *-1 STV-NOT-ACT BARRIER NOT-QMARK LINK *1 ("ollu") OR ("olu") BARRIER NOT-QMARK LINK NOT *1 Acc BARRIER NOT-QMARK)(NOT 0 ADVLCASE) (NOT *1 (N Sg Gen) BARRIER NOT-QMARK LINK NOT 0 Px LINK *1 N BARRIER NPNH OR CC)(NOT *1 (N Sg Gen PxSg2) BARRIER NOT-QMARK LINK *-1 (V-SG2) LINK *1 N BARRIER NPNH OR CC)(NOT *1 VFIN OR Ess OR ("veara") BARRIER NOT-QMARK);
   	## Son galgá beassat buktit oaivilis buot gažaldagaide.
   	## Eai leat šat nu ollu ohcamat priváhta ealáhusain.
   	
-MAP (@N>) TARGET Indef IF (*-1 IV BARRIER NOT-ADV-PCLE)(0 ("buot") OR ("ollu") OR ("olu"))(1 ("vai"))(2 Indef OR Num LINK 1 N); 
-MAP (@N>) TARGET Indef IF (*-1 IV BARRIER NOT-ADV-PCLE)(0 ("buot") OR ("ollu") OR ("olu"))(1 ("vai"))(2 Adv)(3 Indef OR Num LINK 1 N); 
+MAP (@N>) TARGET Indef IF (*-1 IV BARRIER NOT-ADV-PCLE)(0 ("buot") OR ("ollu") OR ("olu"))(*1 ("vai") BARRIER NOT-QMARK)(*2 Indef OR Num BARRIER NOT-QMARK LINK *1 N BARRIER NOT-QMARK); 
+MAP (@N>) TARGET Indef IF (*-1 IV BARRIER NOT-ADV-PCLE)(0 ("buot") OR ("ollu") OR ("olu"))(*1 ("vai") BARRIER NOT-QMARK)(*2 Adv BARRIER NOT-QMARK)(*3 Indef OR Num BARRIER NOT-QMARK LINK *1 N BARRIER NOT-QMARK); 
 	## Galgágo gustot buot vai dušše muhtun jogaide Finnmárkkus? 	
 
-MAP (@N>) TARGET Indef IF (1 Gen OR Adv)(2 (N Pl))(NOT 0 Nom LINK 1 Acc)(NOT 0 ADVLCASE)(NOT 1 (N Sg Gen PxSg2) LINK *-1 (V-SG2) LINK *1 N BARRIER NPNH OR CC)(NOT 1 VFIN OR Ess OR ("veara"));
+MAP (@N>) TARGET Indef IF (*1 Gen OR Adv BARRIER NOT-QMARK)(*2 (N Pl) BARRIER NOT-QMARK)(NOT 0 Nom LINK 1 Acc)(NOT 0 ADVLCASE)(NOT *1 (N Sg Gen PxSg2) BARRIER NOT-QMARK LINK *-1 (V-SG2) LINK *1 N BARRIER NPNH OR CC)(NOT *1 VFIN OR Ess OR ("veara") BARRIER NOT-QMARK);
 	## Sii geavahit ollu ee. giellabálvalusaid.
 
-ADD (@N>) TARGET Indef IF (1 ("eará") OR Dem)(NOT 0 Nom LINK 1 Acc) (NOT 0 ADVLCASE); 
+ADD (@N>) TARGET Indef IF (*1 ("eará") OR Dem BARRIER NOT-QMARK)(NOT 0 Nom LINK *1 Acc BARRIER NOT-QMARK) (NOT 0 ADVLCASE); 
   	## Ollu earáidege go ovttagielagiidda lea váttis gulahallat....
   	## ..muhto ii fal nu ollu earáin.
   	## Ruoŧas bođii loahpas vástadusa Sámi Oahpahusguovddážis, Johkamohkis, muhto ii fal nu ollu earáin.
   # The partitive construction would have been máŋggain earáin and ollu daid earáin
   
-MAP (@ADVL) TARGET Indef IF (0 ("ollu") OR ("olu"))(1 ("eará" Pl Loc) OR (Dem Pl Loc))(*2 V-SG3 BARRIER NOT-ADJ-PCLE)(NOT 0 Nom LINK 1 Acc)(NOT 0 ADVLCASE);
-MAP (@ADVL) TARGET Indef IF (*-1 V-SG3 BARRIER VFIN OR S-BOUNDARY)(0 ("ollu") OR ("olu"))(1 ("eará" Pl Loc) OR (Dem Pl Loc))(NOT 0 Nom LINK 1 Acc)(NOT 0 ADVLCASE);
+MAP (@ADVL) TARGET Indef IF (0 ("ollu") OR ("olu"))(*1 ("eará" Pl Loc) OR (Dem Pl Loc) BARRIER NOT-QMARK)(*2 V-SG3 BARRIER NOT-ADJ-PCLE)(NOT 0 Nom LINK *1 Acc BARRIER NOT-QMARK)(NOT 0 ADVLCASE);
+MAP (@ADVL) TARGET Indef IF (*-1 V-SG3 BARRIER VFIN OR S-BOUNDARY)(0 ("ollu") OR ("olu"))(*1 ("eará" Pl Loc) OR (Dem Pl Loc) BARRIER NOT-QMARK)(NOT 0 Nom LINK *1 Acc BARRIER NOT-QMARK)(NOT 0 ADVLCASE);
 	## Ollu earáin lea hávski. # for habeo-constructions where ollu modifies eará+Loc
 
-MAP (@N>) TARGET Indef IF (NOT *-1 V-SG3 BARRIER VFIN OR S-BOUNDARY)(0 ("ollu") OR ("olu"))(1 ("eará" Pl Loc) OR (Dem Pl Loc))(NOT *2 V-SG3 BARRIER NOT-ADJ-PCLE)(NOT 0 Nom LINK 1 Acc)(NOT 0 ADVLCASE);
+MAP (@N>) TARGET Indef IF (NOT *-1 V-SG3 BARRIER VFIN OR S-BOUNDARY)(0 ("ollu") OR ("olu"))(*1 ("eará" Pl Loc) OR (Dem Pl Loc) BARRIER NOT-QMARK)(NOT *2 V-SG3 BARRIER NOT-ADJ-PCLE)(NOT 0 Nom LINK *1 Acc BARRIER NOT-QMARK)(NOT 0 ADVLCASE);
 	## Ollu earáin leat hávski.
 	# Mange andre har det triveleg. Mange av dei andre er trivelege.
 	# Ollu earáin leat hávskit
 	# Mange andre kjøper mjølk. Mange av dei andre kjøper mjølk.
 	# Ollu earát ostet mielkki. Ollusat earáin ostet mielkki.
 
-MAP (@N>) TARGET Indef IF (0 Nom)(*1 (N Nom) BARRIER NPNH) (NOT 0 Pl LINK 1 Inf);
+MAP (@N>) TARGET Indef IF (0 Nom)(*1 (N Nom) BARRIER NPNH) (NOT 0 Pl LINK *1 Inf BARRIER NOT-QMARK);
 	## Goabbáge báddi galgá leahkit 60 alen guhku.
 
-MAP (@A>) TARGET Indef IF (1 A-CASE)(NOT 1 ("veara"));
+MAP (@A>) TARGET Indef IF (*1 A-CASE BARRIER NOT-QMARK)(NOT *1 ("veara") BARRIER NOT-QMARK);
 	## Sáhttáge ollu buriid dadjat bohtosiid birra.
 
-MAP (@N>) TARGET Indef IF (NOT 0 ("iešguhtet") OR ADVLCASE)(1 Num);
+MAP (@N>) TARGET Indef IF (NOT 0 ("iešguhtet") OR ADVLCASE)(*1 Num BARRIER NOT-QMARK);
 	## Buot oktanuppelohkái máhttájeaddji vulge Galileai.
 
 #MAP (@N>) TARGET ("buot" Pron) IF (1 Dem OR Indef); #cf.  
@@ -2979,15 +2981,15 @@ MAP (@N>) TARGET Indef IF (NOT 0 ("iešguhtet") OR ADVLCASE)(1 Num);
 MAP (@N>) TARGET ("buot" Pron) IF (*1 N BARRIER NPNH);
 	## Dát máksá ahte dat lea lávdan buot servodaga surggiide.
 
-MAP (@N>) TARGET Indef IF (*1 N BARRIER NP-BOUNDARY OR REALCLB)(NOT -1 STV-NOT-ACT LINK 1 ("ollu") OR ("olu") LINK NOT 1 Acc) (NOT *-1 REALCOPULAS BARRIER NOT-ADV-PCLE LINK *1 Indef LINK *1 PrfPrc BARRIER VERB) (NOT *-1 INFV BARRIER NOT-ADV-PCLE LINK *1 Indef LINK *1 Inf BARRIER VERB)(NOT 0 ADVLCASE)(NOT 0 ("mihkkege"))(NOT 1 (Pers Gen) LINK *1 N BARRIER NOT-NP OR CLB LINK NOT 0 Loc)(NOT 1 Adv LINK 1 N) (NOT 1 (N Sg Gen) LINK *1 N BARRIER NPNH)(NOT 1 VFIN OR Ess OR ("veara"));
+MAP (@N>) TARGET Indef IF (*1 N BARRIER NP-BOUNDARY OR REALCLB)(NOT *-1 STV-NOT-ACT BARRIER NOT-QMARK LINK *1 ("ollu") OR ("olu") BARRIER NOT-QMARK LINK NOT *1 Acc BARRIER NOT-QMARK) (NOT *-1 REALCOPULAS BARRIER NOT-ADV-PCLE LINK *1 Indef LINK *1 PrfPrc BARRIER VERB) (NOT *-1 INFV BARRIER NOT-ADV-PCLE LINK *1 Indef LINK *1 Inf BARRIER VERB)(NOT 0 ADVLCASE)(NOT 0 ("mihkkege"))(NOT *1 (Pers Gen) BARRIER NOT-QMARK LINK *1 N BARRIER NOT-NP OR CLB LINK NOT 0 Loc)(NOT *1 Adv BARRIER NOT-QMARK LINK *1 N BARRIER NOT-QMARK) (NOT *1 (N Sg Gen) BARRIER NOT-QMARK LINK *1 N BARRIER NPNH)(NOT *1 VFIN OR Ess OR ("veara") BARRIER NOT-QMARK);
 	## Ollu dáin doaibmabijuin sáhttá álggahit dálá rámmaid siskkobealde.
 
 MAP (@N>) TARGET ("mii" Interr Pl Nom) IF (*1C (N Pl Nom) BARRIER NP-BOUNDARY);
 MAP (@N>) TARGET ("mii" Rel  Pl Nom) IF (*1C (N Pl Nom) BARRIER NP-BOUNDARY);
 	## ...dan hárrái, mat riektegáldut leat, mo daid berre dulkot, ja ...
 
-MAP (@N>) TARGET Interr IF (NOT 0 ("gii") OR ("mii"))(1 N) (NOT 0 ("mihkkege") LINK 1 (Pl Acc))(NOT 0 (Sg Nom) LINK 1 V-SG3) (NOT 1 Gen LINK *1 N BARRIER NPNH);
-MAP (@N>) TARGET Rel  IF (NOT 0 ("gii") OR ("mii"))(1 N) (NOT 0 ("mihkkege") LINK 1 (Pl Acc))(NOT 0 (Sg Nom) LINK 1 V-SG3) (NOT 1 Gen LINK *1 N BARRIER NPNH);
+MAP (@N>) TARGET Interr IF (NOT 0 ("gii") OR ("mii"))(*1 N BARRIER NOT-QMARK) (NOT 0 ("mihkkege") LINK *1 (Pl Acc) BARRIER NOT-QMARK)(NOT 0 (Sg Nom) LINK *1 V-SG3 BARRIER NOT-QMARK) (NOT *1 Gen BARRIER NOT-QMARK LINK *1 N BARRIER NPNH);
+MAP (@N>) TARGET Rel  IF (NOT 0 ("gii") OR ("mii"))(*1 N BARRIER NOT-QMARK) (NOT 0 ("mihkkege") LINK *1 (Pl Acc) BARRIER NOT-QMARK)(NOT 0 (Sg Nom) LINK *1 V-SG3 BARRIER NOT-QMARK) (NOT *1 Gen BARRIER NOT-QMARK LINK *1 N BARRIER NPNH);
 	## Guđe sihkarvuođanjuolggadusat ledje biddjon...
 
 MAP (@N>) TARGET Interr IF (0 ("guhtemuš"))(*1 (Pers Loc) BARRIER NOT-PCLE);
@@ -3029,17 +3031,17 @@ MAP (@N>) TARGET (Pl Loc) IF (0 ("buorre"))(*1 (N Pl Loc) BARRIER NPNH);
 MAP (@N>) TARGET (Pl Com) IF (0 ("buorre"))(*1 (N Pl Com) BARRIER NPNH);
 	##
 
-MAP (@N>) TARGET Ess IF (0 ("buorre"))(1 (N Ess));
+MAP (@N>) TARGET Ess IF (0 ("buorre"))(*1 (N Ess) BARRIER NOT-QMARK);
 	## Maŋemus son šattai buorrin oahpaheaddjin.
 
 	# Prenominal participles
 	# - - - - - - - - - - - -
 
-ADD (@OPRED) TARGET PrfPrc IF (-1 Acc LINK *-1 STV BARRIER NPNH)(NOT 0 ("mannat") LINK 1 TIME);
+ADD (@OPRED) TARGET PrfPrc IF (*-1 Acc BARRIER NOT-QMARK LINK *-1 STV BARRIER NPNH)(NOT 0 ("mannat") LINK *1 TIME BARRIER NOT-QMARK);
 	## Seammás orru Alimusriekti Skjerstad-áššis dovdan iežas čadnojuvvon dupmui.
 	
 
-MAP (@N>) TARGET PrfPrc IF (-1C Dem OR Num OR Attr OR Indef)(NOT -1 Pers) (*1 N BARRIER NOT-A);
+MAP (@N>) TARGET PrfPrc IF (*-1C Dem OR Num OR Attr OR Indef BARRIER NOT-QMARK)(NOT *-1 Pers BARRIER NOT-QMARK) (*1 N BARRIER NOT-A);
 	## ..maid almmolaš dohkkehuvvon dearvvašvuođabargit addet,..
 	## Galgá leat okta čohkkejuvvon divššohasjournála. 
 
@@ -3049,21 +3051,20 @@ ADD (@N>) TARGET PrfPrc IF (*-1 PrfPrc BARRIER NPNHA LINK 0 V-NOT-AUX LINK NOT 0
 MAP (@N>) TARGET PrfPrc IF (NOT *-1 REALCOPULAS BARRIER PrfPrc OR (Actio Ess)) (NOT *-1 PrfPrc LINK 0 (Actio Nom) LINK NOT *-1 Nom BARRIER S-BOUNDARY LINK NOT 0 ("leat"))(0 Der/Pass)(*1C N BARRIER NPNH); 
 	## ...dan mii lei dáhpáhuvvan bosttahuvvon olbmuide.
 
-MAP (@N>) TARGET PrfPrc (*-1 CLB OR go BARRIER NOT-PRE-A-N)(1 TIME);
+MAP (@N>) TARGET PrfPrc (*-1 CLB OR go BARRIER NOT-PRE-A-N)(*1 TIME BARRIER NOT-QMARK);
 	## Dalle šattašii liikka buorre dálki go mannan sotnabeaivve.
 
-MAP (@N>) TARGET PrfPrc IF (*-1 BOS OR REALCLB BARRIER NOT-PRE-A-N)(NOT 0 ("leat")) (*1 N BARRIER NPNH LINK NOT 0 TIME LINK NOT 1 TIME);
+MAP (@N>) TARGET PrfPrc IF (*-1 BOS OR REALCLB BARRIER NOT-PRE-A-N)(NOT 0 ("leat")) (*1 N BARRIER NPNH LINK NOT 0 TIME LINK NOT *1 TIME BARRIER NOT-QMARK);
 	## Ovdamearkan oaivvilduvvon fálaldahkii lea sámi kulturdieđu lohkanbaji. 
 
-MAP (@N>) TARGET PrfPrc IF (*-2 BOS OR REALCLB BARRIER ("leat"))(-1 Com OR Loc)(NOT 0 ("leat")) (*1 N BARRIER NPNH LINK NOT 0 TIME LINK NOT 1 TIME);
+MAP (@N>) TARGET PrfPrc IF (*-2 BOS OR REALCLB BARRIER ("leat"))(*-1 Com OR Loc BARRIER NOT-QMARK)(NOT 0 ("leat")) (*1 N BARRIER NPNH LINK NOT 0 TIME LINK NOT *1 TIME BARRIER NOT-QMARK);
   	## Sieiddi bálvalemiin sturron eallu gohčoduvvui bálvvoseallun, mi sáhtii jávkat, go oamasteaddji jámii dahje go sieidi ii bálvaluvvon.
 
-MAP (@N>) TARGET PrfPrc IF (*-1 Po BARRIER NOT-NP LINK *-1 BOS OR REALCLB BARRIER NOT-NP)(NOT 0 ("leat"))(*1 N BARRIER NPNH LINK NOT 0 TIME LINK NOT 1 TIME);
+MAP (@N>) TARGET PrfPrc IF (*-1 Po BARRIER NOT-NP LINK *-1 BOS OR REALCLB BARRIER NOT-NP)(NOT 0 ("leat"))(*1 N BARRIER NPNH LINK NOT 0 TIME LINK NOT *1 TIME BARRIER NOT-QMARK);
 	## Sámiid várás oaivvilduvvon doaimmaid hárrái galggašii...
- # For those cases where the Po is homonymous with verb, and therefore a barrier
- # in the preceding rule.
+ # For those cases where the Po is homonymous with verb, and therefore a barrier in the preceding rule.
 
-MAP (@N>) TARGET PrfPrc IF (*-1 Pr BARRIER NOT-NP LINK -1 NP-BOUNDARY LINK NOT 0 ("leat"))(*1 (N Gen) BARRIER NOT-NP);
+MAP (@N>) TARGET PrfPrc IF (*-1 Pr BARRIER NOT-NP LINK *-1 NP-BOUNDARY BARRIER NOT-QMARK LINK NOT 0 ("leat"))(*1 (N Gen) BARRIER NOT-NP);
 	## 1978 láhka balansere gaskal sámi vuoigatvuođaid boarásmuvvan oainnu,...
 
 	#MAP (@N>) TARGET PrfPrc IF (*-1 V-NOT-AUX BARRIER S-BOUNDARY OR AUX 
@@ -3071,48 +3072,47 @@ MAP (@N>) TARGET PrfPrc IF (*-1 Pr BARRIER NOT-NP LINK -1 NP-BOUNDARY LINK NOT 0
 	## Vuoigatvuohta dearvvašvuođaveahkkái gusto riikka almmolaš ruhtaduvvon 
 	## spesialistadearvvašvuođabálvalussii. 
 
-MAP (@N>) TARGET PrfPrc IF (*-1 V-NOT-AUX LINK NOT 0 PrfPrc BARRIER S-BOUNDARY OR AUX LINK NOT 0 A OR N)(NOT -1 COPULAS)(0 Der/Pass)(1 N)(NOT 1 TIME); 
+MAP (@N>) TARGET PrfPrc IF (*-1 V-NOT-AUX LINK NOT 0 PrfPrc BARRIER S-BOUNDARY OR AUX LINK NOT 0 A OR N)(NOT *-1 COPULAS BARRIER NOT-QMARK)(0 Der/Pass)(*1 N BARRIER NOT-QMARK)(NOT *1 TIME BARRIER NOT-QMARK); 
 MAP (@N>) TARGET PrfPrc IF (*-1 S-BOUNDARY BARRIER NPNHA LINK NOT 0 A OR N)(0 Der/Pass)(*1 N LINK NOT 0 TIME BARRIER NPNHA);
   	## Ráđđehus háliida lágidit dearvvašvuođa- ja sosiálabálvalusaid oktagaslaš dárbbuid mielde , earret eará pasientavuoigatvuođaid lágain ja dearvvašvuođabargiid lágain.
 
-MAP (@N>) TARGET PrfPrc IF (-1 Adv LINK *-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 Nom BARRIER V-NOT-AUX OR S-BOUNDARY) (*1C Nom BARRIER NPNHA LINK 1 NP-BOUNDARY);
+MAP (@N>) TARGET PrfPrc IF (*-1 Adv BARRIER NOT-QMARK LINK *-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 Nom BARRIER V-NOT-AUX OR S-BOUNDARY) (*1C Nom BARRIER NPNHA LINK *1 NP-BOUNDARY BARRIER NOT-QMARK);
 	## Ruonáeana lea čielgasit ráddjejuvvon geográfalaš guovlu.
 
-MAP (@N>) TARGET PrfPrc IF (NOT *-1 Neg BARRIER VERB)(NOT -1 COPULAS LINK *-1 Ill BARRIER NOT-A)(NOT 0 AUX)(1C (N Nom));
+MAP (@N>) TARGET PrfPrc IF (NOT *-1 Neg BARRIER VERB)(NOT *-1 COPULAS BARRIER NOT-QMARK LINK *-1 Ill BARRIER NOT-A)(NOT 0 AUX)(*1C (N Nom) BARRIER NOT-QMARK);
 	## Son lea oahppan olmmoš.
 
-MAP (@N>) TARGET PrfPrc IF (*-1 COPULAS BARRIER NPNH LINK -1 Loc)(1 (N Nom));	
+MAP (@N>) TARGET PrfPrc IF (*-1 COPULAS BARRIER NPNH LINK *-1 Loc BARRIER NOT-QMARK)(*1 (N Nom) BARRIER NOT-QMARK);	
 	## Sus leat hervejuvvon gálssohat main heaŋgájit čáppa diehpit. 
 
-MAP (@N>) TARGET PrfPrc IF (*-1 Nom BARRIER VERB LINK *-1 COPULAS BARRIER NPNH LINK -1 Loc)(1 N);		
+MAP (@N>) TARGET PrfPrc IF (*-1 Nom BARRIER VERB LINK *-1 COPULAS BARRIER NPNH LINK *-1 Loc BARRIER NOT-QMARK)(*1 N BARRIER NOT-QMARK);		
 	## Sus lea ovddasvástádus gárrenávnnasfuolaheami spesialiserejuvvon osiin.
 
-MAP (@N>) TARGET PrfPrc IF (0 ("mannat"))(1 TIME);
+MAP (@N>) TARGET PrfPrc IF (0 ("mannat"))(*1 TIME BARRIER NOT-QMARK);
 	## Ii leat boahtán mannan váhkus.
 
-MAP (@N>) TARGET PrfPrc IF (-1 ("nu"))(0 ("gohčodit" Der/PassL));
-	## Dáin áššiin sáhttet Sámedikkit várra nu gohčoduvvon friija 
-	## árvvoštallama mielde mearridit.
+MAP (@N>) TARGET PrfPrc IF (*-1 ("nu") BARRIER NOT-QMARK)(0 ("gohčodit" Der/PassL));
+	## Dáin áššiin sáhttet Sámedikkit várra nu gohčoduvvon friija árvvoštallama mielde mearridit.
 
-MAP (@N>) TARGET PrfPrc IF (NOT *-1 COPULAS OR Neg BARRIER S-BOUNDARY OR ConNeg OR PrfPrc)(NOT -1 GRADE-ADV)(1 N)(NOT *1 COPULAS BARRIER VERB OR S-BOUNDARY);
+MAP (@N>) TARGET PrfPrc IF (NOT *-1 COPULAS OR Neg BARRIER S-BOUNDARY OR ConNeg OR PrfPrc)(NOT *-1 GRADE-ADV BARRIER NOT-QMARK)(*1 N BARRIER NOT-QMARK)(NOT *1 COPULAS BARRIER VERB OR S-BOUNDARY);
     ## Son hálidii náitalan nissona.
 
-MAP (@N>) TARGET PrfPrc IF (NOT *-1 COPULAS BARRIER S-BOUNDARY)(*1 (N Loc) BARRIER NOT-AA LINK 1 COPULAS LINK 0 VFIN LINK *1 Nom BARRIER V-NOT-COP);
+MAP (@N>) TARGET PrfPrc IF (NOT *-1 COPULAS BARRIER S-BOUNDARY)(*1 (N Loc) BARRIER NOT-AA LINK *1 COPULAS BARRIER NOT-QMARK LINK 0 VFIN LINK *1 Nom BARRIER V-NOT-COP);
     ## Seammago ovdalis namahuvvon riektehistorjjálaš ovdanbuktimis leat dán barggus maid muhtun buhtes historjjálaš dilit, ja almmuhuvvo danne joavkku čielggadeami mielddusin (2. mielddus). 
     
-MAP (@N>) TARGET PrfPrc IF (*-1 COPULAS OR Neg BARRIER S-BOUNDARY LINK 0 VFIN LINK NOT *-1 Ill BARRIER NOT-A)(0 V-NOT-COP)(1 (N Nom) LINK NOT 0 Acc OR Inf LINK 1 EOS); 
+MAP (@N>) TARGET PrfPrc IF (*-1 COPULAS OR Neg BARRIER S-BOUNDARY LINK 0 VFIN LINK NOT *-1 Ill BARRIER NOT-A)(0 V-NOT-COP)(*1 (N Nom) BARRIER NOT-QMARK LINK NOT 0 Acc OR Inf LINK *1 EOS BARRIER NOT-QMARK); 
     ## Buorre sápmelaš lea jápmán sápmelaš.  
     
-MAP (@N>) TARGET PrfPrc IF (*-1 CC BARRIER NPNH LINK -1 Acc LINK NOT 0 PrfPrc) (1 (N Acc));
+MAP (@N>) TARGET PrfPrc IF (*-1 CC BARRIER NPNH LINK *-1 Acc BARRIER NOT-QMARK LINK NOT 0 PrfPrc(*1 (N Acc) BARRIER NOT-QMARK);
 	## Divššohasas, gii dárbbaša guhkit áiggi ja oktiiheivehuvvon dearvvašvuođabálvalusaid,...
 
-MAP (@N>) TARGET PrsPrc IF (NOT -1 COPULAS)(*1 N BARRIER NOT-ADJ);
+MAP (@N>) TARGET PrsPrc IF (NOT *-1 COPULAS BARRIER NOT-QMARK)(*1 N BARRIER NOT-ADJ);
 	## Boađe boahtti vahku.
 
-MAP (@N>) TARGET PrsPrc IF (1 CC)(2 Attr)(3 N);
+MAP (@N>) TARGET PrsPrc IF (*1 CC BARRIER NOT-QMARK)(*2 Attr BARRIER NOT-QMARK)(*3 N BARRIER NOT-QMARK);
 	## Guoski dahje lagas eatnamat.
 
-MAP (@N>) TARGET (Actio Nom) IF (-1 Gen)(1 N)(NOT 1 PrfPrc);
+MAP (@N>) TARGET (Actio Nom) IF (*-1 Gen BARRIER NOT-QMARK)(*1 N BARRIER NOT-QMARK)(NOT *1 PrfPrc BARRIER NOT-QMARK);
 	## Sii orro sin iežaset dahkan darfegođiid siste.
 	## Sámegiela geavaheapmi journálain lea lassánan.
 	## Bálvalusaid ovdánahttin riikkarájáid rastá.
@@ -3124,9 +3124,9 @@ MAP (@N>) TARGET (Actio Nom) IF (-1 Gen)(1 N)(NOT 1 PrfPrc);
  # Problem: At present (051106), the rule hits neither, which also makes it hard
  # to document the tag. It hits the third sentence, though, together with @N>.
 
-ADD (@N>) TARGET TITLE IF (1 Prop LINK 0 Fem OR Mal OR Sur);
-ADD (@N>) TARGET PROFESSION IF (1 Prop LINK 0 Fem OR Mal OR Sur);
-ADD (@N>) TARGET OFFICE IF (1 Prop LINK 0 Fem OR Mal OR Sur);
+ADD (@N>) TARGET TITLE IF (*1 Prop BARRIER NOT-QMARK LINK 0 Fem OR Mal OR Sur);
+ADD (@N>) TARGET PROFESSION IF (*1 Prop BARRIER NOT-QMARK LINK 0 Fem OR Mal OR Sur);
+ADD (@N>) TARGET OFFICE IF (*1 Prop BARRIER NOT-QMARK LINK 0 Fem OR Mal OR Sur);
 	## Stuorra giitu maiddái professor Birger Stuevold Lassenii.
  # ADD so that argument mappings can apply later.
 
@@ -3135,35 +3135,36 @@ ADD (@N>) TARGET OFFICE IF (1 Prop LINK 0 Fem OR Mal OR Sur);
 
 # Postnominal
 # - - - - - -
-MAP (@N<) TARGET MEASURE IF (-1 Num)(1 ALU OR A);
+MAP (@N<) TARGET MEASURE IF (*-1 Num BARRIER NOT-QMARK)(*1 ALU OR A BARRIER NOT-QMARK);
 	## Min viessu lea vihtta mehtara alu.
 	## Sus lea njellje mehtara guhkkosaš biila.
 
-MAP (@N<) TARGET MEASURE IF (-1 Num)(1 Adv OR Pr);
+MAP (@N<) TARGET MEASURE IF (*-1 Num BARRIER NOT-QMARK)(*1 Adv OR Pr BARRIER NOT-QMARK);
 	## Ádjá viessu lea guokte miilla bajábeal márkana.
 	
-MAP (@N<) TARGET VOLUME IF (-1 Num)(1 LIQUID);
+MAP (@N<) TARGET VOLUME IF (*-1 Num BARRIER NOT-QMARK)(*1 LIQUID BARRIER NOT-QMARK);
 	## 
 	
-MAP (@N<) TARGET WEIGHT IF (-1 Num)(1 FISH OR FOOD);
+MAP (@N<) TARGET WEIGHT IF (*-1 Num BARRIER NOT-QMARK)(*1 FISH OR FOOD BARRIER NOT-QMARK);
 	## 1765 ja 1788 gaskal ges vuvde olgoriikii dušše 433 000 kg goikeguoli (Juel 1892: 9).
 	## Sápmelaš guhte mearragáttis ásai, galggai bivdit 857 kg dorski.
 
-MAP (@N<) TARGET TIME IF (-1 Num)(1 ("boaris") OR ("nuorra"));
+MAP (@N<) TARGET TIME IF (*-1 Num BARRIER NOT-QMARK)(*1 ("boaris") OR ("nuorra") BARRIER NOT-QMARK);
 	## Mánná lea golbma jagi boaris.
 
-MAP (@N<) TARGET TIME IF (-1 Num)(1 ("maŋŋil"));
+MAP (@N<) TARGET TIME IF (*-1 Num BARRIER NOT-QMARK)(*1 ("maŋŋil") BARRIER NOT-QMARK);
 	## Dat dáhpáhuvai golbma jagi maŋŋil.
 
-MAP (@N<) TARGET N IF (-1 Num)(1 ("velggolaš"));
+MAP (@N<) TARGET N IF (*-1 Num BARRIER NOT-QMARK)(*1 ("velggolaš") BARRIER NOT-QMARK);
 	## Ánde lea minnje vihttalot ruvnno velggolaš.
 
-MAP (@N<) TARGET (N Sg Acc) IF (-1 (Num Acc))(0 MEASURE)(1 (N Acc));
+MAP (@N<) TARGET (N Sg Acc) IF (*-1 (Num Acc) BARRIER NOT-QMARK)(0 MEASURE)(*1 (N Acc) BARRIER NOT-QMARK);
 	##
 	
-MAP (@PRON<) TARGET (N Sg Com) IF (-1 DUPRON-NOTPX)(0 HUMAN-INDIVIDUAL)(1 VFIN);		## Moai Birehiin barge mánáidgárddis.	
+MAP (@PRON<) TARGET (N Sg Com) IF (*-1 DUPRON-NOTPX BARRIER NOT-QMARK)(0 HUMAN-INDIVIDUAL)(*1 VFIN BARRIER NOT-QMARK);		
+	## Moai Birehiin barge mánáidgárddis.	
 	
-MAP (@N<) TARGET (N Sg Com) IF (-1 HUMAN-PAIR)(0 HUMAN-INDIVIDUAL)(1 VFIN);	
+MAP (@N<) TARGET (N Sg Com) IF (*-1 HUMAN-PAIR BARRIER NOT-QMARK)(0 HUMAN-INDIVIDUAL)(*1 VFIN BARRIER NOT-QMARK);	
 	# "Ándde-#guovttos" and "Ándde-#guovttis" should be replaced with som kind of tag.
 
 	# Numeral adjective mappings
@@ -3172,105 +3173,105 @@ MAP (@N<) TARGET (N Sg Com) IF (-1 HUMAN-PAIR)(0 HUMAN-INDIVIDUAL)(1 VFIN);
 MAP (@N>) TARGET (A Ord) IF (*1 N BARRIER NOT-A);
 	## III kapihtal priváhta arkiivvaid birra máinnaša vuosttažettiin gáhttenárvosaš priváhta arkiivvaid.
 
-MAP (@N>) TARGET (A Ord) IF (1 ("b"));
+MAP (@N>) TARGET (A Ord) IF (*1 ("b") BARRIER NOT-QMARK);
 	## Guovdageaidnu, skábmamánu 3. b. 2002.
 	
-MAP (@N>) TARGET Num IF (-1 MANNU)(1 ("b"));
+MAP (@N>) TARGET Num IF (*-1 MANNU BARRIER NOT-QMARK)(*1 ("b") BARRIER NOT-QMARK);
     ## ja maiddái borgemánu 1 b. 1891 čuovvu njuolggadusain..
 
-MAP (@NNum<) TARGET (A Ord) IF (-1 N)(1 CLB);
+MAP (@NNum<) TARGET (A Ord) IF (*-1 N BARRIER NOT-QMARK)(*1 CLB BARRIER NOT-QMARK);
 	## Nummar 1.
 	
-#MAP (@MEASURE) TARGET (A Ord) IF (-1 BOS)(1 CLB);
+#MAP (@MEASURE) TARGET (A Ord) IF (*-1 BOS BARRIER NOT-QMARK)(*1 CLB BARRIER NOT-QMARK);
 	## 1. Sisdoallu
 
 	# Numeral mappings
 	# ----------------
 	
-MAP (@HNOUN) TARGET Nom IF (-1 BOS)(0 INITIAL OR Num)(1 ("\)"));
+MAP (@HNOUN) TARGET Nom IF (*-1 BOS BARRIER NOT-QMARK)(0 INITIAL OR Num)(*1 ("\)") BARRIER NOT-QMARK);
     ## b) Go ovddit sátni lea adjektiiva ja ráhkada substantiivvain fásta, tearpmalágan sáni, man mearkkašupmi lea eará go guovtti sierra.
     
-MAP (@NNum<) TARGET (Num Nom) IF (-1 (Prop Sur Nom) LINK -1 ("\("))(1 (":") LINK 1 CARDINALS LINK 1 ("\)"));
+MAP (@NNum<) TARGET (Num Nom) IF (*-1 (Prop Sur Nom) BARRIER NOT-QMARK LINK *-1 ("\(") BARRIER NOT-QMARK)(*1 (":") BARRIER NOT-QMARK LINK *1 CARDINALS BARRIER NOT-QMARK LINK *1 ("\)") BARRIER NOT-QMARK);
     ## Gávpotroggamat Várggain eai čájet o.m.d. siviila ássama ovdal 1400-jagiid (Simonsen 1959: 45).
-MAP (@APP-N<) TARGET (Num Nom) IF (-1 (Prop Sur Nom) LINK -1 ("\("))(1 COMMA LINK 1 ("s") LINK 1 CARDINALS LINK 1 ("\)"));
+MAP (@APP-N<) TARGET (Num Nom) IF (*-1 (Prop Sur Nom) BARRIER NOT-QMARK LINK *-1 ("\(") BARRIER NOT-QMARK)(*1 COMMA BARRIER NOT-QMARK LINK *1 ("s") BARRIER NOT-QMARK LINK *1 CARDINALS BARRIER NOT-QMARK LINK *1 ("\)") BARRIER NOT-QMARK);
     ## (Simonsen 1959, s. 45)
     
-MAP (@APP-N<) TARGET Num IF (-2 Ord)(-1 MANNU)(NOT 0 Range);
+MAP (@APP-N<) TARGET Num IF (*-2 Ord BARRIER NOT-QMARK)(*-1 MANNU BARRIER NOT-QMARK)(NOT 0 Range);
     ## "23. cuoŋománu 1728 dovddus geaskkus lea ee. celkon ahte mearraguollebivdu lea luđolaš earret"
 
-MAP (@APP-N<) TARGET (Num Nom) IF (-1 Nom LINK 0 MANNU)(0 CARDINALS);
-MAP (@APP-N<) TARGET (Num Nom) IF (-1 Loc LINK 0 MANNU)(0 CARDINALS);
+MAP (@APP-N<) TARGET (Num Nom) IF (*-1 Nom BARRIER NOT-QMARK LINK 0 MANNU)(0 CARDINALS);
+MAP (@APP-N<) TARGET (Num Nom) IF (*-1 Loc BARRIER NOT-QMARK LINK 0 MANNU)(0 CARDINALS);
   	## Guovdageaidnu / Kautokeino, skábmamánnu 2002.
   	## Guovdageaidnu / Kautokeino, skábmamánus 2002.
   	 ##  Bargojoavkku čoahkkima árvalus ovddiduvvo konvenšuvnna oktasaščoahkkimis guovvamánus 2004.
-MAP (@APP-N<) TARGET (Num Nom) IF (-1 Gen LINK 0 MANNU)(0 CARDINALS)(1 Po);
+MAP (@APP-N<) TARGET (Num Nom) IF (*-1 Gen BARRIER NOT-QMARK LINK 0 MANNU)(0 CARDINALS)(*1 Po BARRIER NOT-QMARK);
     ## Mun oaivvildan leat liiggás oanehis áiggi árvvoštallat klieantalávdegotti ođđajagimánus čakčamánu 1999 rádjái, (9 mánu).
     
-MAP (@APP-N< @SUBJ @SPRED @HNOUN) TARGET (Num Nom) IF (-1 MANNU LINK NOT 0 Nom)(0 CARDINALS);
+MAP (@APP-N< @SUBJ @SPRED @HNOUN) TARGET (Num Nom) IF (*-1 MANNU BARRIER NOT-QMARK LINK NOT 0 Nom)(0 CARDINALS);
   	## Guovdageaidnu / Kautokeino, skábmamánu 2002 viesut ledje buorre.
-MAP (@ADVL @P> @N>) TARGET (Num Gen) IF (-1 MANNU LINK NOT 0 Nom)(0 CARDINALS);
+MAP (@ADVL @P> @N>) TARGET (Num Gen) IF (*-1 MANNU LINK NOT 0 Nom)(0 CARDINALS);
   	## Guovdageaidnu / Kautokeino, skábmamánu 2002.	
-MAP (@OBJ @OPRED) TARGET (Num Acc) IF (-1 MANNU LINK NOT 0 Nom)(0 CARDINALS); 
+MAP (@OBJ @OPRED) TARGET (Num Acc) IF (*-1 MANNU BARRIER NOT-QMARK LINK NOT 0 Nom)(0 CARDINALS); 
 	
-MAP (@NNum<) TARGET Num IF (-1 ABBR); #XXX Eventually restrict to VALUTA or something.
+MAP (@NNum<) TARGET Num IF (*-1 ABBR BARRIER NOT-QMARK); #XXX Eventually restrict to VALUTA or something.
 	## kr. 23,-.
 
 # Here we map them all:	
-MAP (@SUBJ @SPRED @HNOUN) TARGET (Num Nom) IF (1 NUMUNIT)(2 CURRENCY-GEN);
-MAP (@N>) TARGET (Num Gen) IF (1 NUMUNIT)(2 CURRENCY-GEN);
-MAP (@P>) TARGET (Num Gen) IF (1 NUMUNIT)(2 CURRENCY-GEN)(3 Po);
-MAP (@OBJ @OPRED) TARGET (Num Acc) IF (1 NUMUNIT)(2 CURRENCY-GEN);
+MAP (@SUBJ @SPRED @HNOUN) TARGET (Num Nom) IF (*1 NUMUNIT BARRIER NOT-QMARK)(*2 CURRENCY-GEN BARRIER NOT-QMARK);
+MAP (@N>) TARGET (Num Gen) IF (*1 NUMUNIT BARRIER NOT-QMARK)(*2 CURRENCY-GEN BARRIER NOT-QMARK);
+MAP (@P>) TARGET (Num Gen) IF (*1 NUMUNIT BARRIER NOT-QMARK)(*2 CURRENCY-GEN BARRIER NOT-QMARK)(*3 Po BARRIER NOT-QMARK);
+MAP (@OBJ @OPRED) TARGET (Num Acc) IF (*1 NUMUNIT BARRIER NOT-QMARK)(*2 CURRENCY-GEN BARRIER NOT-QMARK);
     ## 2006 stáhtabušeahtas lea ráđđehus liigudan 10 milj. kr álggahanmearreruhtan ođđa dieđavistái. 
 
 	 
 	# Coordination
 	# - - - - - - - 
-MAP (@N>) TARGET (A Ord) IF (1 CC LINK *1 N BARRIER NOT-A);
+MAP (@N>) TARGET (A Ord) IF (*1 CC BARRIER NOT-QMARK LINK *1 N BARRIER NOT-A);
   	## Dát lea ođđa ordnet, ja jienasteapmi dáhpáhuvvá dušše čakčamánu 28. beaivve, iige 28. ja 29. beaivvi nie go mii čáliimet maŋimuš áviisas.
 
-MAP (@N>) TARGET (A Ord) IF (1 COMMA OR CC LINK 1 (A Ord) OR (A Attr) LINK 1 CC LINK *1 N BARRIER NOT-A);
+MAP (@N>) TARGET (A Ord) IF (*1 COMMA OR CC BARRIER NOT-QMARK LINK *1 (A Ord) OR (A Attr) BARRIER NOT-QMARK LINK *1 CC BARRIER NOT-QMARK LINK *1 N BARRIER NOT-A);
  
 	# Quantifier mappings
 	# -------------------
 
-MAP (@Num<) TARGET (Num Gen) IF (-1 Num)(0 NUMUNIT);
+MAP (@Num<) TARGET (Num Gen) IF (*-1 Num BARRIER NOT-QMARK)(0 NUMUNIT);
   	## Dat lea 4 miljovnna teadjakohpa.
   	## 2006 stáhtabušeahtas lea ráđđehus liigudan 10 milj. kr álggahanmearreruhtan ođđa dieđavistái. 
 
-MAP (@Q<) TARGET CURRENCY-GEN IF (-2 Num)(-1 Gen);
+MAP (@Q<) TARGET CURRENCY-GEN IF (*-2 Num BARRIER NOT-QMARK)(*-1 Gen BARRIER NOT-QMARK);
     ## 10 miljovnna ruvnnu.
   
 MAP (@N>) TARGET (A Ord)(*1 N BARRIER NOT-A);
     	## Dat lei 33. teakstaoassi. 
     	## Arkiivaláhka III máinnaša vuosttažettiin gáhttenárvosaš priváhta arkiivvaid.
 
-MAP (@COMP-CS<) TARGET (Num Nom) IF (*-2 V-TRANS-ACT BARRIER VERB LINK NOT 0 ("eanet"))(-1 ("go"))(NOT 1 N LINK 0 ADVLCASE) (NOT *1 VFIN BARRIER S-BOUNDARY);
+MAP (@COMP-CS<) TARGET (Num Nom) IF (*-2 V-TRANS-ACT BARRIER VERB LINK NOT 0 ("eanet"))(*-1 ("go") BARRIER NOT-QMARK)(NOT *1 N BARRIER NOT-QMARK LINK 0 ADVLCASE) (NOT *1 VFIN BARRIER S-BOUNDARY);
 	## Ii heargi gal nagot guoddit eambbo go guokte diekkára. 
 
-MAP (@COMP-CS<) TARGET (Num Nom) IF (-1 ("dego") OR ("dugo"))(NOT *1 VFIN BARRIER S-BOUNDARY);
+MAP (@COMP-CS<) TARGET (Num Nom) IF (*-1 ("dego") OR ("dugo") BARRIER NOT-QMARK)(NOT *1 VFIN BARRIER S-BOUNDARY);
 	## Ráhkkásiiddán, allet vajáldahte ahte Hearrái lea okta beaivi dego duhát jagi ja duhát jagi dego okta beaivi.
 
-	# MAP (@N>) TARGET (Num Acc) IF (*1 (N Acc) BARRIER NP-BOUNDARY OR N)(NOT 1 ("dbm") OR ("diibmu"))(NOT 2 (Num));
+	# MAP (@N>) TARGET (Num Acc) IF (*1 (N Acc) BARRIER NP-BOUNDARY OR N)(NOT *1 ("dbm") OR ("diibmu") BARRIER NOT-QMARK)(NOT *2 (Num) BARRIER NOT-QMARK);
 	## Mun máksen 100 ruvnno duvle.
 
-MAP (@ADVL) TARGET (Num Nom) IF (-1 ("b" ABBR) OR ("beaivi"))(-2 Ord);
+MAP (@ADVL) TARGET (Num Nom) IF (*-1 ("b" ABBR) OR ("beaivi") BARRIER NOT-QMARK)(*-2 Ord BARRIER NOT-QMARK);
 	## Artihkkal lea šaddan fas áigeguovdilin maŋŋá go heivehuvvui norgalaš riektái miessemánu 21. b. 1999 nr 30 lága bokte.
 
-MAP (@ADVL) TARGET (Num Nom) IF (-1 ("b" ABBR) OR ("beaivi"))(-2 CARDINALS);
+MAP (@ADVL) TARGET (Num Nom) IF (*-1 ("b" ABBR) OR ("beaivi") BARRIER NOT-QMARK)(*-2 CARDINALS BARRIER NOT-QMARK);
 	## ...ja maiddái borgemánu 1 b. 1891 čuovvu njuolggadusain
  
-MAP (@N>) TARGET (Num Acc) IF (1 MEASURE LINK 1 ALU);
+MAP (@N>) TARGET (Num Acc) IF (*1 MEASURE BARRIER NOT-QMARK LINK *1 ALU BARRIER NOT-QMARK);
 	## Guokte golbma mehtera guhku, ja guhkitge, sáhttá vuojahat leat. 
-MAP (@N>) TARGET (Num Acc) IF (0 Num BARRIER NOTCOMMA)(*1 (Num Acc) LINK 1 MEASURE LINK 1 ALU);
+MAP (@N>) TARGET (Num Acc) IF (0 Num BARRIER NOTCOMMA)(*1 (Num Acc) LINK *1 MEASURE BARRIER NOT-QMARK LINK *1 ALU BARRIER NOT-QMARK);
 	## Guokte golbma mehtera guhku, ja guhkitge, sáhttá vuojahat leat. 
-MAP (@N>) TARGET (Num Acc) IF (1 (Num Acc) LINK 1 (Num Acc) LINK 1 MEASURE LINK 1 ALU);
+MAP (@N>) TARGET (Num Acc) IF (*1 (Num Acc) BARRIER NOT-QMARK LINK *1 (Num Acc) BARRIER NOT-QMARK LINK *1 MEASURE BARRIER NOT-QMARK LINK *1 ALU BARRIER NOT-QMARK);
 	## Guokte golbma njeallje mehtera guhku, ja guhkitge, sáhttá vuojahat leat.
 
-MAP (@N>) TARGET (Num Acc) IF (1 COMMA LINK 1 (Num Acc) LINK 1 COMMA LINK 1 (Num Acc) LINK 1 MEASURE LINK 1 ALU);
+MAP (@N>) TARGET (Num Acc) IF (*1 COMMA BARRIER NOT-QMARK LINK *1 (Num Acc) BARRIER NOT-QMARK LINK *1 COMMA BARRIER NOT-QMARK LINK *1 (Num Acc) BARRIER NOT-QMARK LINK *1 MEASURE BARRIER NOT-QMARK LINK *1 ALU BARRIER NOT-QMARK);
   	## Čuollun sáhttá leat dušše okta fierbmi gurgaluvvon, muhto dábálaččat lea čuollu guhkit, golbma, njeallja fierbmebaji guhku.
 
 	#MAP (@N>) TARGET (Num Gen) IF (NOT 0 (Num Nom))(NOT -1 ("nr"))(*1 (N Gen) BARRIER NP-BOUNDARY OR N);
-MAP (@N>) TARGET (Num Gen) IF (NOT -1 ("nr"))(*1 (N Gen) OR (N Acc) OR (N Ill) OR (N Loc) BARRIER NP-BOUNDARY OR N); #XXXTEST
+MAP (@N>) TARGET (Num Gen) IF (NOT *-1 ("nr") BARRIER NOT-QMARK)(*1 (N Gen) OR (N Acc) OR (N Ill) OR (N Loc) BARRIER NP-BOUNDARY OR N); #XXXTEST
 	## Galgá čájehit vuollegašvuođa juohke ovtta divššohasa eallimii.
 	## Diibmá lei Davvi Nuorra sturron 268 mielláhttui.
 
@@ -3281,94 +3282,94 @@ MAP (@N>) TARGET (Num Com) IF (*1 (N Com) BARRIER NP-BOUNDARY OR N);
 MAP (@N>) TARGET (Num Acc) IF (*1 ALU BARRIER NP-BOUNDARY OR N);
 	## Noađđespagáin leat dat geažit guokte golbma tumá guhku.
 
-MAP (@ADVL>) TARGET (Num Acc) IF (1 MEASURE OR TIME)(2 Adv OR Po);
-MAP (@A>) TARGET (Num Acc) IF (1 MEASURE OR TIME)(2 A LINK NOT 1 N LINK NOT 0 ADVLCASE);
+MAP (@ADVL>) TARGET (Num Acc) IF (*1 MEASURE OR TIME BARRIER NOT-QMARK)(*2 Adv OR Po BARRIER NOT-QMARK);
+MAP (@A>) TARGET (Num Acc) IF (*1 MEASURE OR TIME BARRIER NOT-QMARK)(*2 A LINK BARRIER NOT-QMARK NOT *1 N BARRIER NOT-QMARK LINK NOT 0 ADVLCASE);
 	## Suorpmas lea guokte millimehtara govdat.
 	# This rule should not apply if the adjective following premodifies another item
 	## Dan oktavuođas go adoptere máná gii lea vuollel 15 jagi, sáhttá oažžut pearmišuvnna gitta 39 vahku olles bálkkáin dahje gitta 49 vahku 80% bálkkáin.
 	
 
-MAP (@A>) TARGET (Num Acc) IF (1 (N Sg Gen))(2 (A Comp));
+MAP (@A>) TARGET (Num Acc) IF (*1 (N Sg Gen) BARRIER NOT-QMARK)(*2 (A Comp) BARRIER NOT-QMARK);
 	## Son vuvddii daid biergguid vihtta ruvnno hálbbibui.
 
-MAP (@A>) TARGET (Num Gen) IF (1 TIME)(2 ("boaris"));
+MAP (@A>) TARGET (Num Gen) IF (*1 TIME BARRIER NOT-QMARK)(*2 ("boaris") BARRIER NOT-QMARK);
 	## Son lea viđa jagi boaris.
 
-MAP (@A>) TARGET (Num Gen) IF (1 ("jahkásaš"));
+MAP (@A>) TARGET (Num Gen) IF (*1 ("jahkásaš") BARRIER NOT-QMARK);
 	## Golmma - njealje jahkásaš mánná biddjojuvvo giissá sisa čohkkut.
 	## 3-4 jahkásaš mánná biddjojuvvo giissá sisa čohkkut.
 
-MAP (@N>) TARGET (Num Gen) IF (1 MEASURE)(2 ALU OR A);
+MAP (@N>) TARGET (Num Gen) IF (*1 MEASURE BARRIER NOT-QMARK)(*2 ALU OR A BARRIER NOT-QMARK);
 	## Min viessu lea viđa mehtara alu.
 
-MAP (@Pron<) TARGET (N Num Nom) IF (-1 (Pers Nom))(NOT -1 Dem) (-1 Pl1 OR Pl2 OR Pl3);
+MAP (@Pron<) TARGET (N Num Nom) IF (*-1 (Pers Nom) BARRIER NOT-QMARK)(NOT *-1 Dem BARRIER NOT-QMARK) (*-1 Pl1 OR Pl2 OR Pl3 BARRIER NOT-QMARK);
 	## Mii golmmas oktan du vieljain finaimet Niillas-čeazi geahčen.
 
 MAP (@SUBJ @SPRED) TARGET (N Num Nom);
 	## Go sotnabeaivi šattai, de čuoigaledje máŋggas várrái. 
-MAP (@N<) TARGET Nom IF (-1 ("nr"))(0 CARDINALS OR INITIAL)(-2 N OR A OR ABBR OR ACR)(NOT -2 Gen);
+MAP (@N<) TARGET Nom IF (*-1 ("nr") BARRIER NOT-QMARK)(0 CARDINALS OR INITIAL)(*-2 N OR A OR ABBR OR ACR BARRIER NOT-QMARK)(NOT *-2 Gen BARRIER NOT-QMARK);
 	#MAP (@N<) TARGET (Num Nom) IF (-1 ("nr" Nom))(-2 N OR A OR ABBR OR ACR);
   	## Mun lean ilus go beasan ovdanbuktit St.dieđ. nr. 33.
   #Maybe it has to be (N @ADVL).
 
-MAP (@SUBJ @SPRED) TARGET (Num Nom) IF (0 NUMERALS) (*1 Gen BARRIER NP-BOUNDARY LINK NOT 0 ROUTE OR TIME OR Loc OR Num OR Adv) (NOT 1 CC)(NOT *1 ALU BARRIER NP-BOUNDARY)(NOT -1 (@Num>) LINK -2 (@OBJ)) (NOT -1 ("s") OR ("siidu") OR ("paragráfa") OR ("kapihttal") OR ("kapihtal") OR HEADOFPARTS OR ("jahki") OR GEASSET OR TEXT OR LAHKA);
+MAP (@SUBJ @SPRED) TARGET (Num Nom) IF (0 NUMERALS) (*1 Gen BARRIER NP-BOUNDARY LINK NOT 0 ROUTE OR TIME OR Loc OR Num OR Adv)(NOT *1 CC BARRIER NOT-QMARK)(NOT *1 ALU BARRIER NP-BOUNDARY)(NOT *-1 (@Num>) BARRIER NOT-QMARK LINK *-2 (@OBJ) BARRIER NOT-QMARK) (NOT *-1 ("s") OR ("siidu") OR ("paragráfa") OR ("kapihttal") OR ("kapihtal") OR HEADOFPARTS OR ("jahki") OR GEASSET OR TEXT OR LAHKA BARRIER NOT-QMARK);
 	## Dá dat leat, 350 ruvnno. # Maybe "OR (N @ADVL)" has to be added.
 
-MAP (@SUBJ @SPRED) TARGET (Num Nom) IF (1 (Dem Pl Loc));
+MAP (@SUBJ @SPRED) TARGET (Num Nom) IF (1* (Dem Pl Loc) BARRIER NOT-QMARK);
 	## Okta dain doaimmain lea redigeret ja čorget journála.
 	## ...ahte eamiálbmotriekti sáhttá leat okta dain speadjaliin...
 
-MAP (@SUBJ) TARGET (Num Nom) IF (1 TIME)(*2 ("vássit") BARRIER V-NOT-AUX);
+MAP (@SUBJ) TARGET (Num Nom) IF (*1 TIME BARRIER NOT-QMARK)(*2 ("vássit") BARRIER V-NOT-AUX);
 	## ...ovdalgo 10 jagi leat vássán...
 
-MAP (@SUBJ) TARGET (Num Nom) IF (*-1 ("vássit") BARRIER VERB OR CLB)(1 TIME);
+MAP (@SUBJ) TARGET (Num Nom) IF (*-1 ("vássit") BARRIER VERB OR CLB)(*1 TIME BARRIER NOT-QMARK);
 	## Muhto dál leat juo vássán golbma beaivvi dan rájes go dát dáhpáhuvai.
 
-MAP (@SUBJ) TARGET (Num Nom) IF (-1 CC)(1 Prop);
+MAP (@SUBJ) TARGET (Num Nom) IF (*-1 CC BARRIER NOT-QMARK)(*1 Prop BARRIER NOT-QMARK);
 	##
 
-MAP (@OBJ) TARGET (Num Acc) IF (*-1 ("dahkat") OR ("váldit") BARRIER NOT-ADV)(0 CARDINALS)(1 TIME);
+MAP (@OBJ) TARGET (Num Acc) IF (*-1 ("dahkat") OR ("váldit") BARRIER NOT-ADV)(0 CARDINALS)(*1 TIME BARRIER NOT-QMARK);
   	## Mun válddán 2 diimmu.
   
-MAP (@N<) TARGET (Num Nom) IF (-1 N OR ACR LINK NOT 0 ("boađus"))(0 CARDINALS)(1 EOS)(NOT -1 NUMMAR OR MANNU);
+MAP (@N<) TARGET (Num Nom) IF (*-1 N OR ACR BARRIER NOT-QMARK LINK NOT 0 ("boađus"))(0 CARDINALS)(*1 EOS BARRIER NOT-QMARK)(NOT *-1 NUMMAR OR MANNU BARRIER NOT-QMARK);
   	## Dat lea dieđáhus 4.
   	## Son dagai 1000 diimmu 2005:s.
 	## Viidváseappot mearrida dearvvašvuođabargiidlága § 10 vuosttas lađđasa...
  # Should hit numerals that only have to do with numbering, not with amount. 
  
-MAP (@N<) TARGET Num IF (-2 N)(-1 MANNU)(0 CARDINALS)(1 EOS);
+MAP (@N<) TARGET Num IF (*-2 N BARRIER NOT-QMARK)(*-1 MANNU BARRIER NOT-QMARK)(0 CARDINALS)(*1 EOS BARRIER NOT-QMARK);
 
-MAP (@N<) TARGET Num IF (-2 N OR Date)(-1 NUMMAR)(0 CARDINALS);
+MAP (@N<) TARGET Num IF (*-2 N OR Date BARRIER NOT-QMARK)(*-1 NUMMAR BARRIER NOT-QMARK)(0 CARDINALS);
   	## Dat lea dieđáhus nr. 4.
  
-MAP (@N<) TARGET (Num Nom) IF (-1 N OR A OR ACR LINK NOT 0 ("boađus"))(0 CARDINALS)(NOT 0 ("oktii"))(NOT 1 NPROP OR A OR ACR)(NOT -1 NUMMAR OR MANNU);
+MAP (@N<) TARGET (Num Nom) IF (*-1 N OR A OR ACR BARRIER NOT-QMARK LINK NOT 0 ("boađus"))(0 CARDINALS)(NOT 0 ("oktii"))(NOT *1 NPROP OR A OR ACR BARRIER NOT-QMARK)(NOT *-1 NUMMAR OR MANNU BARRIER NOT-QMARK);
   	## Girji 4 lei hui buorre girji.
   #This one is still too strict. It's getting better..
 
-MAP (@N<) TARGET (A Ord) IF (-1 (ABBR N))(1 EOS);
+MAP (@N<) TARGET (A Ord) IF (*-1 (ABBR N) BARRIER NOT-QMARK)(*1 EOS BARRIER NOT-QMARK);
   
-MAP (@N<) TARGET (Num Nom) IF (-1 N OR A OR ACR LINK NOT 0 (@Q<))(0 CARDINALS LINK NOT 0 ADVLCASE)(NOT 0 ("oktii") OR ("okta") OR ("1"))(1 Nom)(NOT -1 NUMMAR OR MANNU);
+MAP (@N<) TARGET (Num Nom) IF (*-1 N OR A OR ACR BARRIER NOT-QMARK LINK NOT 0 (@Q<))(0 CARDINALS LINK NOT 0 ADVLCASE)(NOT 0 ("oktii") OR ("okta") OR ("1"))(*1 Nom BARRIER NOT-QMARK)(NOT *-1 NUMMAR OR MANNU BARRIER NOT-QMARK);
   
-MAP (@N<) TARGET (Num Nom) IF (0 CARDINALS) (-1 ("s") OR ("siidu") OR ("§") OR ("paragráfa") OR ("kapihttal") OR ("kapihtal") OR HEADOFPARTS OR ("jahki") OR GEASSET LINK NOT 0 (@Q<));
+MAP (@N<) TARGET (Num Nom) IF (0 CARDINALS) (*-1 ("s") OR ("siidu") OR ("§") OR ("paragráfa") OR ("kapihttal") OR ("kapihtal") OR HEADOFPARTS OR ("jahki") OR GEASSET BARRIER NOT-QMARK LINK NOT 0 (@Q<));
 	## Dat lea s. 240. # evtl. LAHKA 
 	
 ADD (@N<) TARGET (Num Nom) IF (0 CARDINALS)(-1 ("láhka") OR LAHKA OR TEXT);
     ##  Láhka 102 103 Čuvvosat : kárttat 1-19 Giittán Suoma Kulturruhtaráju dán barggu váras ustitlaččat juolludan stipendas
 
-MAP (@N<) TARGET (Num Nom) IF (-3 ("s") OR ("siidu") OR ("§") OR ("paragráfa") OR ("kapihttal") OR HEADOFPARTS OR GEASSET LINK NOT 0 (@Q<)) (-2 Num)(-1 CC)(0 CARDINALS);
+MAP (@N<) TARGET (Num Nom) IF (*-3 ("s") OR ("siidu") OR ("§") OR ("paragráfa") OR ("kapihttal") OR HEADOFPARTS OR GEASSET BARRIER NOT-QMARK LINK NOT 0 (@Q<)) (*-2 Num BARRIER NOT-QMARK)(*-1 CC BARRIER NOT-QMARK)(0 CARDINALS);
 	## ...gč. dearvvašvuođabargiidlága kapihttal 6 ja 7. 
 	
-ADD (@N<) TARGET (Num Nom) IF (-3 LAHKA OR TEXT) (-2 Num)(-1 CC)(0 CARDINALS);
-ADD (@N<) TARGET (Num Nom) IF (*-2 LAHKA OR TEXT BARRIER VFIN OR CS)(-1 NUMMAR)(0 Num)(NOT *1 Gen BARRIER NPNH);
+ADD (@N<) TARGET (Num Nom) IF (*-3 LAHKA OR TEXT BARRIER NOT-QMARK) (*-2 Num BARRIER NOT-QMARK)(*-1 CC BARRIER NOT-QMARK)(0 CARDINALS);
+ADD (@N<) TARGET (Num Nom) IF (*-2 LAHKA OR TEXT BARRIER VFIN OR CS)(*-1 NUMMAR BARRIER NOT-QMARK)(0 Num)(NOT *1 Gen BARRIER NPNH);
 
-ADD (@N<) TARGET (Num Nom) IF (-1 NUMMAR LINK -1 ADVLCASE OR Date OR TIME LINK -1 COMMA LINK *-1 LAHKA OR TEXT BARRIER SV-BOUNDARY);
+ADD (@N<) TARGET (Num Nom) IF (*-1 NUMMAR BARRIER NOT-QMARK LINK *-1 ADVLCASE OR Date OR TIME BARRIER NOT-QMARK LINK *-1 COMMA BARRIER NOT-QMARK LINK *-1 LAHKA OR TEXT BARRIER SV-BOUNDARY);
 
-MAP (@Num>) TARGET ("nr") IF (1 WORD OR Num);
-  	##Mun lean ilus go beasan ovdanbuktit St.dieđ. nr. 33.
+MAP (@Num>) TARGET ("nr") IF (*1 WORD OR Num BARRIER NOT-QMARK);
+  	## Mun lean ilus go beasan ovdanbuktit St.dieđ. nr. 33.
   
-MAP (@Num>) TARGET N IF (0 ("nummar") OR ("nummir"))(1 WORD OR Num);
+MAP (@Num>) TARGET N IF (0 ("nummar") OR ("nummir"))(*1 WORD OR Num BARRIER NOT-QMARK);
 
-MAP (@Num>) TARGET Gen IF (0 N OR A OR ACR LINK NOT 0 (@Q<))(1 CARDINALS LINK 0 ADVLCASE LINK NOT 0 ("oktii") OR ("okta") OR ("1"))(NOT -1 Pr LINK NOT -1 Gen);
+MAP (@Num>) TARGET Gen IF (0 N OR A OR ACR LINK NOT 0 (@Q<))(*1 CARDINALS BARRIER NOT-QMARK LINK 0 ADVLCASE LINK NOT 0 ("oktii") OR ("okta") OR ("1"))(NOT *-1 Pr BARRIER NOT-QMARK LINK NOT *-1 Gen BARRIER NOT-QMARK);
     ## Dokumeanta čilge oppalaččat, mo čuovvulit NOU 1995:6:s evttohuvvon doaimmaid.
 
 	#MAP (@N>) TARGET Num IF (NOT -1 Num OR ("nr"))(NOT 0 ADVLCASE)(*1 Gen OR Ill OR Loc OR Com
@@ -3389,16 +3390,16 @@ MAP (@N>) TARGET (Num Attr) IF (*1 (N Nom) BARRIER NPNH);
 	## Sus lea logi gussa.	
 	## Sus lea vihttanuppelot gussa.	
 
-MAP (@N>) TARGET ("okta" Nom) IF (*1 (N Nom) BARRIER NPNH)(NOT 1 Prop OR Dem);
+MAP (@N>) TARGET ("okta" Nom) IF (*1 (N Nom) BARRIER NPNH)(NOT *1 Prop OR Dem BARRIER NOT-QMARK);
 	## Sámegiela doaibmaplánas lei okta doaibmabidju sámegillii jorgalit
 	## dieđalaš artihkkaliid.
 
-MAP (@N>) TARGET ("okta" Gen) IF (*1 (N Gen) OR (N Acc) OR (N Ill) OR (N Loc) BARRIER NPNH)(NOT 1 Prop OR Dem);
+MAP (@N>) TARGET ("okta" Gen) IF (*1 (N Gen) OR (N Acc) OR (N Ill) OR (N Loc) BARRIER NPNH)(NOT *1 Prop OR Dem BARRIER NOT-QMARK);
 
-MAP (@N>) TARGET ("okta" Com) IF (*1 (N Com) BARRIER NPNH)(NOT 1 Prop OR Dem);
+MAP (@N>) TARGET ("okta" Com) IF (*1 (N Com) BARRIER NPNH)(NOT *1 Prop OR Dem BARRIER NOT-QMARK);
   	## Dát lea faskkon maid geavaha dušše ovttain gieđain.
   
-MAP (@N>) TARGET ("okta" Ess) IF (*1 (N Ess) BARRIER NPNH)(NOT 1 Prop OR Dem);
+MAP (@N>) TARGET ("okta" Ess) IF (*1 (N Ess) BARRIER NPNH)(NOT *1 Prop OR Dem BARRIER NOT-QMARK);
   # # No example yet.
 
 	# To be evaluated against the previous 4 rules.
@@ -3406,7 +3407,7 @@ MAP (@N>) TARGET ("okta" Ess) IF (*1 (N Ess) BARRIER NPNH)(NOT 1 Prop OR Dem);
 	#	## Sámegiela doaibmaplánas lei okta doaibmabidju sámegillii jorgalit
 	#	## dieđalaš artihkkaliid.
 
-MAP (@N<) TARGET (Num Nom) IF (-1 ("diibmu") OR ("biellu") OR ("dbm") OR ("dii") OR ("bie") LINK 0 Nom);
+MAP (@N<) TARGET (Num Nom) IF (*-1 ("diibmu") OR ("biellu") OR ("dbm") OR ("dii") OR ("bie") BARRIER NOT-QMARK LINK 0 Nom);
 	## Mun boađán diibmu vihtta/viđas. 
 	#MAP (@N<) TARGET Ord IF (-1 N)(NOT 1 N OR A OR ACR);
   	## Olav V. 
@@ -3430,143 +3431,140 @@ MAP (@ADVL) TARGET Range ;
 
 # @P>
 
-MAP (@P>) TARGET Gen IF (NOT 0 Num LINK 1 Ill)(1 Po)(NOT 0 Pers OR VEHICLE OR ORGANIZATION OR HUMAN LINK 1 ("mielde") OR ("fárrui") LINK *-1 V-TRANS-ACT-NOT-ACT OR COPULAS BARRIER NPNH);
+MAP (@P>) TARGET Gen IF (NOT 0 Num LINK *1 Ill BARRIER NOT-QMARK)(*1 Po BARRIER NOT-QMARK)(NOT 0 Pers OR VEHICLE OR ORGANIZATION OR HUMAN LINK *1 ("mielde") OR ("fárrui") BARRIER NOT-QMARK LINK *-1 V-TRANS-ACT-NOT-ACT OR COPULAS BARRIER NPNH);
 	## Na mun gal hupmen dan birra.
 
 	
-MAP (@P>) TARGET Gen IF (NOT 0 Num LINK 1 Ill) (NOT 0 (V Actio) LINK 1 ("dihte") OR ("dihtii"))(1 PUNCT-LEFT LINK *1 PUNCT-RIGHT LINK 1 Po);
+MAP (@P>) TARGET Gen IF (NOT 0 Num LINK *1 Ill BARRIER NOT-QMARK) (NOT 0 (V Actio) LINK *1 ("dihte") OR ("dihtii") BARRIER NOT-QMARK)(1 PUNCT-LEFT LINK *1 PUNCT-RIGHT LINK 1 Po);
     ## Lasáhus nr. 6 ( 1999-2000 ) mielde leat riikkaoassái ásahan / leat ásaheamen ee. čuovvovaš doaimmaid.
 
-MAP (@P>) TARGET Gen IF (NOT 0 Cmpnd)(1 CC)(*2 Gen BARRIER NPNHA LINK 1 Po) (NOT 0 (V Actio) LINK 1 CC LINK 1 (V Actio) LINK 1 ("dihte") OR ("dihtii"));
+MAP (@P>) TARGET Gen IF (NOT 0 Cmpnd)(*1 CC BARRIER NOT-QMARK)(*2 Gen BARRIER NPNHA LINK *1 Po BARRIER NOT-QMARK) (NOT 0 (V Actio) LINK *1 CC BARRIER NOT-QMARK LINK *1 (V Actio) BARRIER NOT-QMARK LINK *1 ("dihte") OR ("dihtii") BARRIER NOT-QMARK);
 	## Divššohas galgá maiddái oažžut dieđuid vejolaš riskkaid ja 
 	## lassiváikkuhusaid birra. 
-MAP (@P>) TARGET Gen IF (NOT 0 Cmpnd)(1 COMMA)(*2 Gen BARRIER NPNHA LINK 1 CC LINK *1 Gen BARRIER NPNHA LINK 1 Po) (NOT 0 (V Actio) LINK 1 CC LINK 1 (V Actio) LINK 1 ("dihte") OR ("dihtii"));
-	## Dat lohká stuorradiggedieđáhusas Sámedikki birra ja stuorradiggedieđáhusain ođđa 
-	## mielladearvvašvuođafuolahusa, ođđa fástadoavtterortnega ja ođđa veajuiduhttima birra.
+MAP (@P>) TARGET Gen IF (NOT 0 Cmpnd)(*1 COMMA BARRIER NOT-QMARK)(*2 Gen BARRIER NPNHA LINK *1 CC BARRIER NOT-QMARK LINK *1 Gen BARRIER NPNHA LINK *1 Po BARRIER NOT-QMARK) (NOT 0 (V Actio) LINK *1 CC BARRIER NOT-QMARK LINK *1 (V Actio) BARRIER NOT-QMARK LINK *1 ("dihte") OR ("dihtii") BARRIER NOT-QMARK);
+	## Dat lohká stuorradiggedieđáhusas Sámedikki birra ja stuorradiggedieđáhusain ođđa mielladearvvašvuođafuolahusa, ođđa fástadoavtterortnega ja ođđa veajuiduhttima birra.
 
-MAP (@P>) TARGET Gen IF (1 (NEGFOC))(2 Gen)(3 Po);
+MAP (@P>) TARGET Gen IF (*1 (NEGFOC) BARRIER NOT-QMARK)(*2 Gen BARRIER NOT-QMARK)(*3 Po BARRIER NOT-QMARK);
 	## Ii leat váldojuvvon ovdan Ruoŧa iige Suoma bealde.
 	
-MAP (@P>) TARGET Gen IF (-1 (Indef Nom))(1 (A Loc))(2 VFIN);
+MAP (@P>) TARGET Gen IF (*-1 (Indef Nom) BARRIER NOT-QMARK)(*1 (A Loc) BARRIER NOT-QMARK)(*2 VFIN BARRIER NOT-QMARK);
 	## Ollugat sámi boarrásiin guđđet dávjá stuorra riskkain.	
 
-MAP (@P>) TARGET Gen IF (0 TIME OR AIGODAT)(1 Num)(2 Po);
-MAP (@P>) TARGET Gen IF (0 TIME OR AIGODAT)(1 Num)(2 Gen)(3 ("mielde" Po));
+MAP (@P>) TARGET Gen IF (0 TIME OR AIGODAT)(*1 Num BARRIER NOT-QMARK)(*2 Po BARRIER NOT-QMARK);
+MAP (@P>) TARGET Gen IF (0 TIME OR AIGODAT)(*1 Num BARRIER NOT-QMARK)(*2 Gen BARRIER NOT-QMARK)(*3 ("mielde" Po) BARRIER NOT-QMARK);
 	## Finnmárkku fylkkagielda lea jagi 1988 rájes ovddidan doaimmaid... 
 	## Dat lea dahkkon skábmamánu 28.b. 1898 lága mielde. 
 	
-MAP (@N>) TARGET Gen IF (-1 Ord OR Num)(0 ("b") OR ("beaivi"))(1 Num);#(*2 LAHKA OR ABSTR-TEXT OR TEXT BARRIER VERB);
+MAP (@N>) TARGET Gen IF (*-1 Ord OR Num BARRIER NOT-QMARK)(0 ("b") OR ("beaivi"))(*1 Num BARRIER NOT-QMARK);#(*2 LAHKA OR ABSTR-TEXT OR TEXT BARRIER VERB);
 	## Geahča 29. b. 1968 vieris opmodagaid erenoamáš ráđđenvuoigatvuođaid lága njuolggadusaid.
 
-MAP (@P>) TARGET Gen IF (1 CC)(*2 (N Gen) BARRIER NPNHA LINK 1 Po);
+MAP (@P>) TARGET Gen IF (*1 CC BARRIER NOT-QMARK)(*2 (N Gen) BARRIER NPNHA LINK *1 Po BARRIER NOT-QMARK);
 	## Dán politihkasuorggi ja eará politihkasurggiid gaskkas.
 
-MAP (@P<) TARGET Gen IF (*-1 Pr BARRIER NOT-NP OR CLB OR (Num Nom) LINK NOT -1 Gen)(NOT 1 (N Gen) LINK NOT 0 Nom OR VFIN)(NOT 0 Pron)(NOT 0 TIME LINK *-1 Po BARRIER NP-BOUNDARY LINK -1 Gen); 
-MAP (@P<) TARGET Gen IF (-1 A LINK -1 Pr LINK NOT -1 Gen)(1 VFIN)(NOT 0 Pron)(NOT 0 TIME LINK *-1 Po BARRIER NP-BOUNDARY LINK -1 Gen);
-MAP (@P<) TARGET Gen IF (*-1 Pr BARRIER NOT-NP OR CLB LINK 0 ("bealde") OR ("beale") LINK -1 Gen)(NOT 1 (N Gen) LINK NOT 0 Nom OR VFIN)(NOT 0 TIME LINK *-1 Po BARRIER NP-BOUNDARY LINK -1 Gen); 
+MAP (@P<) TARGET Gen IF (*-1 Pr BARRIER NOT-NP OR CLB OR (Num Nom) LINK NOT *-1 Gen BARRIER NOT-QMARK)(NOT *1 (N Gen) BARRIER NOT-QMARK LINK NOT 0 Nom OR VFIN)(NOT 0 Pron)(NOT 0 TIME LINK *-1 Po BARRIER NP-BOUNDARY LINK *-1 Gen BARRIER NOT-QMARK); 
+MAP (@P<) TARGET Gen IF (*-1 A BARRIER NOT-QMARK LINK *-1 Pr BARRIER NOT-QMARK LINK NOT *-1 Gen BARRIER NOT-QMARK)(*1 VFIN BARRIER NOT-QMARK)(NOT 0 Pron)(NOT 0 TIME LINK *-1 Po BARRIER NP-BOUNDARY LINK *-1 Gen BARRIER NOT-QMARK);
+MAP (@P<) TARGET Gen IF (*-1 Pr BARRIER NOT-NP OR CLB LINK 0 ("bealde") OR ("beale") LINK *-1 Gen BARRIER NOT-QMARK)(NOT *1 (N Gen) BARRIER NOT-QMARK LINK NOT 0 Nom OR VFIN)(NOT 0 TIME LINK *-1 Po BARRIER NP-BOUNDARY LINK *-1 Gen BARRIER NOT-QMARK); 
 	## Sápmelaččat guđet orrot Norgga bealde Deanu, geavahit seammá gávtti go sápmelaččat Suoma bealde Deanu.
 
-MAP (@P<) TARGET Gen IF (*-1 Pr BARRIER NPNH LINK -1 Acc LINK -1 STV-NOT-ACT)(NOT 1 (N Gen) LINK NOT 0 Nom OR VFIN)(NOT 0 Pron)(NOT 0 TIME LINK *-1 Po BARRIER NP-BOUNDARY LINK -1 Gen); 
+MAP (@P<) TARGET Gen IF (*-1 Pr BARRIER NPNH LINK *-1 Acc BARRIER NOT-QMARK LINK *-1 STV-NOT-ACT BARRIER NOT-QMARK)(NOT *1 (N Gen) BARRIER NOT-QMARK LINK NOT 0 Nom OR VFIN)(NOT 0 Pron)(NOT 0 TIME LINK *-1 Po BARRIER NP-BOUNDARY LINK *-1 Gen BARRIER NOT-QMARK); 
 	## E-boasta lea hui álkes ja jođánis vuohki sáddet reivviid birra máilmmi.
 
 
 #(NOT 0 Num LINK *1 NOT-CURRENCY-GEN BARRIER NP-BOUNDARY) (NOT -1 Gen OR CLB LINK 2 Po) (NOT 0 CURRENCY LINK 0 Gen LINK -1 Num);
-  	## Lága mearrádusat galget váikkuhit luohttevašvuođa gaskal 
-	## divššohasa ja dearvvašvuođabálvalusa. #(NOT 0 Num LINK *1 NOT-CURRENCY-GEN OR BARRIER NP-BOUNDARY)
+  	## Lága mearrádusat galget váikkuhit luohttevašvuođa gaskal divššohasa ja dearvvašvuođabálvalusa. #(NOT 0 Num LINK *1 NOT-CURRENCY-GEN OR BARRIER NP-BOUNDARY)
 	
-MAP (@P<) TARGET Gen IF (*-1 TIME-PREP BARRIER NOT-NP OR CLB)(0 Date OR TIME LINK NOT 1 Po)(NOT 0 Pron)(NOT 1 (N Gen));
+MAP (@P<) TARGET Gen IF (*-1 TIME-PREP BARRIER NOT-NP OR CLB)(0 Date OR TIME LINK NOT *1 Po BARRIER NOT-QMARK)(NOT 0 Pron)(NOT *1 (N Gen) BARRIER NOT-QMARK);
    ## Gávpotroggamat Várggain eai čájet o.m.d. siviila ássama ovdal 1400-jagiid (Simonsen 1959: 45).
 	
-MAP (@P<) TARGET Gen IF (*-1 CC BARRIER S-BOUNDARY LINK *-1 GASKAL BARRIER S-BOUNDARY)(1 NP-BOUNDARY);
-	## Dábálaččat earuha váldolaččat gaskal dábálaš (totala) geavahan-
-	## vuoigatvuođaid ja sierranas (partiála) geavahanvuoigatvuođaid.
+MAP (@P<) TARGET Gen IF (*-1 CC BARRIER S-BOUNDARY LINK *-1 GASKAL BARRIER S-BOUNDARY)(*1 NP-BOUNDARY BARRIER NOT-QMARK);
+	## Dábálaččat earuha váldolaččat gaskal dábálaš (totala) geavahanvuoigatvuođaid ja sierranas (partiála) geavahanvuoigatvuođaid.
 
-MAP (@P<) TARGET (Pl Gen) IF (*-1 GASKAL BARRIER NOT-NP LINK NOT -1 (Pl Gen)) (1 NP-BOUNDARY);
+MAP (@P<) TARGET (Pl Gen) IF (*-1 GASKAL BARRIER NOT-NP LINK NOT *-1 (Pl Gen) BARRIER NOT-QMARK) (*1 NP-BOUNDARY BARRIER NOT-QMARK);
 	## Finnmárkkus ii goassige leat leamaš ságastallan gaskal muhtun muddui seammadássásaš oasálaččaid.
  
-MAP (@P>) TARGET Gen IF (1 COMMA)(*2 Gen LINK 1 CC LINK 1 Gen LINK 1 Po);
+MAP (@P>) TARGET Gen IF (*1 COMMA BARRIER NOT-QMARK)(*2 Gen LINK *1 CC BARRIER NOT-QMARK LINK *1 Gen BARRIER NOT-QMARK LINK *1 Po BARRIER NOT-QMARK);
 	## oskku dahje eará jáhku, seksuálalaš eallinvuogi ja doaibmahehttejumi vuođul 
 
-MAP (@P>) TARGET Gen IF (1 CC LINK *1 Gen BARRIER NPNH LINK 1 COMMA LINK *1 Gen BARRIER NPNH LINK 1 CC LINK 1 Gen LINK 1 Po);
+MAP (@P>) TARGET Gen IF (*1 CC BARRIER NOT-QMARK LINK *1 Gen BARRIER NPNH LINK *1 COMMA BARRIER NOT-QMARK LINK *1 Gen BARRIER NPNH LINK *1 CC BARRIER NOT-QMARK LINK *1 Gen BARRIER NOT-QMARK LINK *1 Po BARRIER NOT-QMARK);
 
 # @N>
 
-MAP (@N>) TARGET ("beaivváš") IF (1 ("Sápmi" Gen) LINK 1 ("teáhter"));
+MAP (@N>) TARGET ("beaivváš") IF (*1 ("Sápmi" Gen) BARRIER NOT-QMARK LINK *1 ("teáhter") BARRIER NOT-QMARK);
 	## Departemeanta lea evttohan 10 244 000 kruvdnosaš juolludusa Beaivváš Sámi Teáhterii 2001:s.
 
-MAP (@N>) TARGET Gen IF (*-1 BOC BARRIER Pr)(NOT -1 Num)(NOT 0 TIME OR ROUTE OR Num)(*1 N BARRIER NPNHA LINK NOT 0 Prop);
+MAP (@N>) TARGET Gen IF (*-1 BOC BARRIER Pr)(NOT *-1 Num BARRIER NOT-QMARK)(NOT 0 TIME OR ROUTE OR Num)(*1 N BARRIER NPNHA LINK NOT 0 Prop);
 	## Biilla ođđa uksa.
 	
-MAP (@N>) TARGET Gen IF (*-1 BOC BARRIER Pr)(NOT -1 Num)(0 TIME OR AIGODAT)(1 PREGEN);
+MAP (@N>) TARGET Gen IF (*-1 BOC BARRIER Pr)(NOT *-1 Num BARRIER NOT-QMARK)(0 TIME OR AIGODAT)(*1 PREGEN BARRIER NOT-QMARK);
 	## Gursa bistá miessemánu beallemuddui.	
 	
-MAP (@N>) TARGET Gen IF (*-1 BOC BARRIER Pr)(NOT 0 TIME OR ("ovttas#ráđđi"))(1 A LINK *1 N BARRIER NPNHA LINK NOT 0 Prop);
+MAP (@N>) TARGET Gen IF (*-1 BOC BARRIER Pr)(NOT 0 TIME OR ("ovttas#ráđđi"))(*1 A BARRIER NOT-QMARK LINK *1 N BARRIER NPNHA LINK NOT 0 Prop);
 	## Mun čujuhan iežan ovddit meassamiid suokkardallamii.	
 
 MAP (@N>) TARGET Gen IF (*-1 BOC BARRIER Pr)(NOT 0 TIME)(*1 LEFT BARRIER NPNH LINK *1 RIGHT LINK *1 N BARRIER NPNH);
 	## Biilla (dahje bussa) ođđa uksa lea rukses.
 
-MAP (@N>) TARGET (Pron Sg1 Gen) IF (1 (Refl PxSg1));
+MAP (@N>) TARGET (Pron Sg1 Gen) IF (*1 (Refl PxSg1) BARRIER NOT-QMARK);
 	## Orru lossat geardduhit mu iežan ávžžuhusa.
 
-MAP (@N>) TARGET (Pron Sg2 Gen) IF (1 (Refl PxSg2));
+MAP (@N>) TARGET (Pron Sg2 Gen) IF (*1 (Refl PxSg2) BARRIER NOT-QMARK);
 	## Diet lea du iežat ášši.
 
-MAP (@N>) TARGET (Pron Sg3 Gen) IF (1 (Refl PxSg3));
+MAP (@N>) TARGET (Pron Sg3 Gen) IF (*1 (Refl PxSg3) BARRIER NOT-QMARK);
 	## Mii han leat gullan dan su iežas njálmmis. 
 
-MAP (@N>) TARGET (N Sg Gen) IF (1 (Refl PxSg3));
+MAP (@N>) TARGET (N Sg Gen) IF (*1 (Refl PxSg3) BARRIER NOT-QMARK);
 	## Dát lea Hearrá iežas dahku.
 
-MAP (@N>) TARGET (Pron Du1 Gen) IF (1 (Refl PxDu1));
+MAP (@N>) TARGET (Pron Du1 Gen) IF (*1 (Refl PxDu1) BARRIER NOT-QMARK);
 	##
 
-MAP (@N>) TARGET (Pron Du2 Gen) IF (1 (Refl PxDu2));
+MAP (@N>) TARGET (Pron Du2 Gen) IF (*1 (Refl PxDu2) BARRIER NOT-QMARK);
 	##
 
-MAP (@N>) TARGET (Pron Du3 Gen) IF (1 (Refl PxDu3));
+MAP (@N>) TARGET (Pron Du3 Gen) IF (*1 (Refl PxDu3) BARRIER NOT-QMARK);
 	##
 
-MAP (@N>) TARGET (Pron Pl1 Gen) IF (1 (Refl PxPl1));
+MAP (@N>) TARGET (Pron Pl1 Gen) IF (*1 (Refl PxPl1) BARRIER NOT-QMARK);
 	## Min iežamet posišuvdna lea nu ahte...
 
-MAP (@N>) TARGET (Pron Pl2 Gen) IF (1 (Refl PxPl2));
+MAP (@N>) TARGET (Pron Pl2 Gen) IF (*1 (Refl PxPl2) BARRIER NOT-QMARK);
 	## Bestojupmi ii leat din iežadet dahku.
 
-MAP (@N>) TARGET (Pron Pl3 Gen) IF (1 (Refl PxPl3));
+MAP (@N>) TARGET (Pron Pl3 Gen) IF (*1 (Refl PxPl3) BARRIER NOT-QMARK);
 	## Sii orro sin iežaset dahkan darfegođiid siste.
 
 # Coordinated @N>
  
-MAP (@N>) TARGET Gen IF (NOT *-1 Pr BARRIER NPNH)(1 CC)(*2 Gen BARRIER NOT-A LINK *1 N BARRIER Po OR VERB);
+MAP (@N>) TARGET Gen IF (NOT *-1 Pr BARRIER NPNH)(*1 CC BARRIER NOT-QMARK)(*2 Gen BARRIER NOT-A LINK *1 N BARRIER Po OR VERB);
 	## Mu ja du girji.
 
-MAP (@N>) TARGET Gen  IF (NOT *-1 Pr BARRIER NPNH)(*1 CC BARRIER NPNHA LINK 1 Gen LINK *1 N BARRIER NPNHA);
+MAP (@N>) TARGET Gen  IF (NOT *-1 Pr BARRIER NPNH)(*1 CC BARRIER NPNHA LINK *1 Gen BARRIER NOT-QMARK LINK *1 N BARRIER NPNHA);
     ## Olbmuid guhkes ja garra mánnávuohta.
 
-MAP (@APP-Num<) TARGET Acc IF (-1 MEASURE LINK -1 Num LINK *-1 V-TRANS-ACT-NOT-ACT BARRIER S-BOUNDARY OR VERB) ;
+MAP (@APP-Num<) TARGET Acc IF (*-1 MEASURE BARRIER NOT-QMARK LINK *-1 Num BARRIER NOT-QMARK LINK *-1 V-TRANS-ACT-NOT-ACT BARRIER S-BOUNDARY OR VERB) ;
 	## Juohke heasta borrá sullii 6 kilu suinniid beaivái.
 
-MAP (@APP-ADVL<) TARGET (N Loc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR ADVLCASE LINK -1 DOPPE)(1 EOS) ;	
-MAP (@APP-ADVL<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 DOHKO LINK *-1 BOS BARRIER APP-BOUNDARY)(1 COMMA) ;
-MAP (@APP-Pron<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 DOHKO)(*1 EOC OR CC BARRIER WORD) ;			
+MAP (@APP-ADVL<) TARGET (N Loc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR ADVLCASE LINK *-1 DOPPE BARRIER NOT-QMARK)(*1 EOS BARRIER NOT-QMARK) ;	
+MAP (@APP-ADVL<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK *-1 DOHKO BARRIER NOT-QMARK LINK *-1 BOS BARRIER APP-BOUNDARY)(*1 COMMA BARRIER NOT-QMARK) ;
+MAP (@APP-Pron<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK *-1 DOHKO BARRIER NOT-QMARK)(*1 EOC OR CC BARRIER WORD) ;			
 			
-MAP (@APP-ADVL<) TARGET (N Gen) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 TIME-MARKER OR TIME-ADV OR BEAIVI)(0 TIME LINK 0 Gen)(1 EOS); 	
+MAP (@APP-ADVL<) TARGET (N Gen) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK *-1 TIME-MARKER OR TIME-ADV OR BEAIVI BARRIER NOT-QMARK)(0 TIME LINK 0 Gen)(*1 EOS BARRIER NOT-QMARK); 	
 	## Mun vuolggán ihttin, bearjadaga.
 	## Doppe son orui guhká, vihtta jagi.
 	
-MAP (@APP-ADVL<) TARGET (Pr) IF (*-1 COMMA BARRIER NOT-ADV LINK -1 TIME-ADV OR TIME-MARKER OR TIME)(*1 (N Gen) OR (Pers Gen) BARRIER NPNH LINK 1 EOS);	
-MAP (@APP-ADVL<) TARGET (Pr) IF (*-1 COMMA BARRIER NOT-ADV LINK -1 TIME-ADV OR TIME-MARKER OR TIME LINK -1 BOS)(*1 (N Gen) OR (Pers Gen) BARRIER APP-BOUNDARY OR CC LINK 1 COMMA);	
+MAP (@APP-ADVL<) TARGET (Pr) IF (*-1 COMMA BARRIER NOT-ADV LINK *-1 TIME-ADV OR TIME-MARKER OR TIME BARRIER NOT-QMARK)(*1 (N Gen) OR (Pers Gen) BARRIER NPNH LINK *1 EOS BARRIER NOT-QMARK);	
+MAP (@APP-ADVL<) TARGET (Pr) IF (*-1 COMMA BARRIER NOT-ADV LINK *-1 TIME-ADV OR TIME-MARKER OR TIME BARRIER NOT-QMARK LINK *-1 BOS BARRIER NOT-QMARK)(*1 (N Gen) OR (Pers Gen) BARRIER APP-BOUNDARY OR CC LINK *1 COMMA BARRIER NOT-QMARK);	
 	## Dolin, ovdal soađi, olbmot lávejedje vuovdit joŋaid. 
 	
-MAP (@APP-ADVL<) TARGET (Po) IF (-1 Gen LINK *-1 COMMA BARRIER NOT-ADV LINK -1 TIME-ADV OR TIME-MARKER OR TIME LINK -1 BOS)(1 COMMA);	
-MAP (@APP-ADVL<) TARGET (Po) IF (-1 Gen LINK *-1 COMMA BARRIER NOT-ADV LINK -1 TIME-ADV OR TIME-MARKER OR TIME)(1 EOS);	
+MAP (@APP-ADVL<) TARGET (Po) IF (*-1 Gen BARRIER NOT-QMARK LINK *-1 COMMA BARRIER NOT-ADV LINK *-1 TIME-ADV OR TIME-MARKER OR TIME BARRIER NOT-QMARK LINK *-1 BOS BARRIER NOT-QMARK)(*1 COMMA BARRIER NOT-QMARK);	
+MAP (@APP-ADVL<) TARGET (Po) IF (*-1 Gen BARRIER NOT-QMARK LINK *-1 COMMA BARRIER NOT-ADV LINK *-1 TIME-ADV OR TIME-MARKER OR TIME BARRIER NOT-QMARK)(*1 EOS BARRIER NOT-QMARK);	
 	## Daid sii geavahedje guhkit, gitta 1960-logu rádjai.		
 
 
 # @Q<
 
-MAP (@Q<) TARGET Gen IF (*-1 NUMERALS BARRIER NP-BOUNDARY OR N OR REALCLB OR PUNCT LINK 0 Nom LINK NOT 0 Ord)(NOT 0 Num)(NOT 1 A OR N)(NOT -1 COMMA);
+MAP (@Q<) TARGET Gen IF (*-1 NUMERALS BARRIER NP-BOUNDARY OR N OR REALCLB OR PUNCT LINK 0 Nom LINK NOT 0 Ord)(NOT 0 Num)(NOT *1 A OR N BARRIER NOT-QMARK)(NOT *-1 COMMA BARRIER NOT-QMARK);
 	## Mun máksen 100 ruvnno duvle.
 	#MAP (@Q< @N>) TARGET Gen IF (*-1 NUMERALS BARRIER N OR REALCLB OR PUNCT
 	#	LINK 0 Nom LINK NOT 0 Ord)(NOT 0 Num)(NOT -1 Ord LINK -1 Num); 	
@@ -3574,79 +3572,79 @@ MAP (@Q<) TARGET Gen IF (*-1 NUMERALS BARRIER NP-BOUNDARY OR N OR REALCLB OR PUN
 MAP (@Q< @N>) TARGET Gen IF (*-1 NUMERALS BARRIER N OR REALCLB OR PUNCT LINK 0 Nom LINK NOT 0 Ord OR ADVLCASE)(NOT 0 Num);
 	## Skuvlajagis 2001/2002 leat oktiibuot 469 oahppi suohkana vuođđoskuvllain.
 
-MAP (@Q<) TARGET (N Gen) IF (-1 NUMERALS LINK 0 Nom LINK NOT 0 Ord LINK *-1 go BARRIER NOT-ADV-PCLE LINK -1 V-TRANS-ACT) (1 Acc LINK 1 CC OR CLB);
+MAP (@Q<) TARGET (N Gen) IF (*-1 NUMERALS LINK 0 Nom LINK NOT 0 Ord BARRIER NOT-QMARK LINK *-1 go BARRIER NOT-ADV-PCLE LINK *-1 V-TRANS-ACT BARRIER NOT-QMARK) (*1 Acc BARRIER NOT-QMARK LINK *1 CC OR CLB BARRIER NOT-QMARK);
 	## ...addet go máŋga dearvvašvuođabargiidjoavkku veahki ja fállojuvvo go...
 
-MAP (@Q<) TARGET Gen IF (-1 CC LINK -1 (N Gen) LINK *-1 NUMERALS BARRIER NP-BOUNDARY OR N OR REALCLB OR PUNCT LINK 0 Nom LINK NOT 0 Ord)(NOT 0 Num LINK NOT 0 Ord);
+MAP (@Q<) TARGET Gen IF (*-1 CC BARRIER NOT-QMARK LINK *-1 (N Gen) BARRIER NOT-QMARK LINK *-1 NUMERALS BARRIER NP-BOUNDARY OR N OR REALCLB OR PUNCT LINK 0 Nom LINK NOT 0 Ord)(NOT 0 Num LINK NOT 0 Ord);
 	## Mus leat čieža vielja ja oappá.
 
-MAP (@Q<) TARGET (N Gen) IF (*-1 NUMERALS BARRIER NOT-ADJ LINK 0 Nom)(1 Prop);
+MAP (@Q<) TARGET (N Gen) IF (*-1 NUMERALS BARRIER NOT-ADJ LINK 0 Nom)(*1 Prop BARRIER NOT-QMARK);
 	## Joavkkus leat vihtta oahppi Kárášjogas.
 
-MAP (@N>) TARGET Gen IF (0 MANNU)(1 Ord);
+MAP (@N>) TARGET Gen IF (0 MANNU)(*1 Ord BARRIER NOT-QMARK);
 	## ...ođđajagemánu 1. b. 2002.
 	
-MAP (@N>) TARGET Gen IF (-1 Ord)(0 MANNU)(1 Num);
+MAP (@N>) TARGET Gen IF (*-1 Ord BARRIER NOT-QMARK)(0 MANNU)(*1 Num BARRIER NOT-QMARK);
 	## "23. cuoŋománu 1728 dovddus geaskkus lea ee. celkon ahte mearraguollebivdu lea luđolaš earret"
 
-MAP (@N>) TARGET Gen IF (0 MANNU)(1 Num LINK 1 ("b") LINK 1 Num);
+MAP (@N>) TARGET Gen IF (0 MANNU)(*1 Num BARRIER NOT-QMARK LINK *1 ("b") BARRIER NOT-QMARK LINK *1 Num BARRIER NOT-QMARK);
 	## ...ja maiddái borgemánu 1 b. 1891 čuovvu njuolggadusain
 
-MAP (@N>) TARGET Gen IF (*-1 (Pron Gen) OR (N Gen) BARRIER NPNH)(0 TIME OR AIGODAT)(NOT 1 CC)(NOT 0 VAHKKU LINK 1 CARDINALS)(NOT 0 ("b") OR ("beaivi"))(*1 N BARRIER NP-BOUNDARY OR REALCLB OR Po OR Pr LINK NOT 0 PLACE LINK 0 Loc Or Ill);
+MAP (@N>) TARGET Gen IF (*-1 (Pron Gen) OR (N Gen) BARRIER NPNH)(0 TIME OR AIGODAT)(NOT *1 CC BARRIER NOT-QMARK)(NOT 0 VAHKKU LINK *1 CARDINALS BARRIER NOT-QMARK)(NOT 0 ("b") OR ("beaivi"))(*1 N BARRIER NP-BOUNDARY OR REALCLB OR Po OR Pr LINK NOT 0 PLACE LINK 0 Loc Or Ill);
 	## Min áiggi boaresolbmot muitaladdet ahte... 
-MAP (@ADVL @N>) TARGET Gen IF (-2 Gen LINK 0 MANNU)(-1 Ord OR Num)(0 ("b") OR ("beaivi"));
+MAP (@ADVL @N>) TARGET Gen IF (*-2 Gen BARRIER NOT-QMARK LINK 0 MANNU)(*-1 Ord OR Num BARRIER NOT-QMARK)(0 ("b") OR ("beaivi"));
   	## Geassemánu 8.b. 2001 láhkaásahus nr 676 oktagaslaš plánaid birra dearvvašvuođalágaid vuođul lea addojuvvon láhkamearrádusaid láhkavuođuin.
   
 	#MAP (@ADVL @N>) TARGET Gen IF (NOT -1 Num)(0 MANNU)(1 CARDINALS);
   	## Guovdageaidnu / Kautokeino, skábmamánnu 2002
 
 
-MAP (@ADVL) TARGET Gen IF (0 TIME OR ROUTE)(NOT 1 N LINK 0 ADVLCASE);
+MAP (@ADVL) TARGET Gen IF (0 TIME OR ROUTE)(NOT *1 N BARRIER NOT-QMARK LINK 0 ADVLCASE);
 	## Maid Biret-Elle áigu dán dálvve dahkat?
 	## ...ja geasset vel moatte háve dađi miel go dárbu lea.
 
-MAP (@-FSUBJ) TARGET Gen IF (1 (Actio Gen))(NOT 1 N)(2 N) ;
+MAP (@-FSUBJ) TARGET Gen IF (*1 (Actio Gen) BARRIER NOT-QMARK)(NOT *1 N BARRIER NOT-QMARK)(2* N BARRIER NOT-QMARK) ;
 	## Gean ráhkadan fanas dat lea?
 
-MAP (@-FSUBJ) TARGET Gen IF (1 Ger);
+MAP (@-FSUBJ) TARGET Gen IF (*1 Ger BARRIER NOT-QMARK);
 	## Máhte lihkai Máreha boađedettiin.
 
-MAP (@-FSUBJ) TARGET Gen IF (1 VAbess);
+MAP (@-FSUBJ) TARGET Gen IF (*1 VAbess BARRIER NOT-QMARK);
 	## Diet dáhpáhuvai mu dieđikeahttá.
 	
-MAP (@-FSUBJ) TARGET Gen IF (0 HUMAN OR PPRON-NOT-DAT)(1 Acc LINK NOT 0 HUMAN)(2 VAbess);
+MAP (@-FSUBJ) TARGET Gen IF (0 HUMAN OR PPRON-NOT-DAT)(*1 Acc BARRIER NOT-QMARK LINK NOT 0 HUMAN)(2* VAbess BARRIER NOT-QMARK);
 	## Divššohasaid sáhttá dálkkodit dálkasiiguin sin dan dieđekeahttá.
 	
 
-MAP (@-FSUBJ) TARGET Gen IF (*-1 REALCOPULAS BARRIER NPNHA)(1 (V Actio Loc));
+MAP (@-FSUBJ) TARGET Gen IF (*-1 REALCOPULAS BARRIER NPNHA)(1* (V Actio Loc) BARRIER NOT-QMARK);
 	## Dat ii leat geafes olbmo nagodeames. 
 
-MAP (@A>) TARGET Gen IF (*-1 COPULAS BARRIER VERB OR S-BOUNDARY)(1 (A Comp)) (NOT 1 N);
+MAP (@A>) TARGET Gen IF (*-1 COPULAS BARRIER VERB OR S-BOUNDARY)(*1 (A Comp) BARRIER NOT-QMARK) (NOT *1 N BARRIER NOT-QMARK);
 	## Máret lea vieljaidis boarráset.
 
-MAP (@A>) TARGET Gen IF (1 (A Comp))(*2 COPULAS BARRIER VERB OR S-BOUNDARY OR CC LINK NOT *1 V-NOT-AUX BARRIER S-BOUNDARY);
+MAP (@A>) TARGET Gen IF (*1 (A Comp) BARRIER NOT-QMARK)(*2 COPULAS BARRIER VERB OR S-BOUNDARY OR CC LINK NOT *1 V-NOT-AUX BARRIER S-BOUNDARY);
 	## Duon guovtti girjji buoret dat gal lea.
 
-MAP (@A>) TARGET Gen IF (1 (A Comp))(NOT 1 VERB OR Adv)(NOT *2 N BARRIER NP-BOUNDARY);
+MAP (@A>) TARGET Gen IF (*1 (A Comp) BARRIER NOT-QMARK)(NOT *1 VERB OR Adv BARRIER NOT-QMARK)(NOT *2 N BARRIER NP-BOUNDARY);
 	## Mun jáhkán du iežan falibun.
 
-MAP (@A>) TARGET Gen IF (0 MEASURE)(1 A);
+MAP (@A>) TARGET Gen IF (0 MEASURE)(*1 A BARRIER NOT-QMARK);
 	## Suorpmas lea guokte millimehtara govdat.
 
-MAP (@A>) TARGET ("mearri" Gen) IF (-1 (Pron Dem Sg Gen))(1 A);
+MAP (@A>) TARGET ("mearri" Gen) IF (*-1 (Pron Dem Sg Gen) BARRIER NOT-QMARK)(*1 A BARRIER NOT-QMARK);
 	## Dan meare stuora viessu.
 	## Suolu lea dan meare unni ahte guođohit ii sáhte dárbbašan.
 
-MAP (@A>) TARGET Gen IF (1 ("veara"));
+MAP (@A>) TARGET Gen IF (*1 ("veara") BARRIER NOT-QMARK);
 	## Dasgo bargi lea bálkkás veara.
 
-MAP (@A>) TARGET Gen IF (1 CC)(2 Gen)(3 ("veara"));
+MAP (@A>) TARGET Gen IF (*1 CC BARRIER NOT-QMARK)(*2 Gen BARRIER NOT-QMARK)(*3 ("veara") BARRIER NOT-QMARK);
 	## ...buot dan mii leat ráhkistan ja gudnejahttin veara.
 
-MAP (@N>) TARGET Gen IF (NOT -1 NUMERALS LINK 0 Nom) (NOT 0 ALU OR Cmpnd OR Num) (1 COMMA)(2 Rel LINK *1 COMMA LINK *1 N BARRIER NOT-NP OR REALCLB) (NOT 1 PUNCT LINK 1 CC) (NOT 1 CC LINK *1 Gen BARRIER NOT-NP LINK 1 Po) (NOT 1 COMMA LINK 1 Gen LINK 1 CC LINK 1 Gen LINK 1 Po) (NOT 0 Actio LINK 1 ("dihte") OR ("dihtii"));
+MAP (@N>) TARGET Gen IF (NOT *-1 NUMERALS BARRIER NOT-QMARK LINK 0 Nom) (NOT 0 ALU OR Cmpnd OR Num) (*1 COMMA BARRIER NOT-QMARK)(2 Rel LINK *1 COMMA LINK *1 N BARRIER NOT-NP OR REALCLB) (NOT *1 PUNCT BARRIER NOT-QMARK LINK *1 CC BARRIER NOT-QMARK) (NOT *1 CC BARRIER NOT-QMARK LINK *1 Gen BARRIER NOT-NP LINK *1 Po BARRIER NOT-QMARK) (NOT *1 COMMA BARRIER NOT-QMARK LINK *1 Gen BARRIER NOT-QMARK LINK *1 CC BARRIER NOT-QMARK LINK *1 Gen BARRIER NOT-QMARK LINK *1 Po BARRIER NOT-QMARK) (NOT 0 Actio LINK *1 ("dihte") OR ("dihtii") BARRIER NOT-QMARK);
   	## Buoremus sámepolitihkka ožžojuvvo áigálii sámi veahkadaga, man ovddasta Sámediggi, ja ráđđehusa gaskaneas ipmárdusain. 
   	
-MAP (@N>) TARGET Gen IF (-1 Adv)(0 Gen)(1 (Pron Indef) LINK 1 N);
+MAP (@N>) TARGET Gen IF (*-1 Adv BARRIER NOT-QMARK)(0 Gen)(*1 (Pron Indef) BARRIER NOT-QMARK LINK *1 N BARRIER NOT-QMARK);
     ## Dás sáhtát lohkat eambbo prošeavtta eará ulbmiliid birra.
 
 MAP (@N>) TARGET Gen IF (*-1 ("sihke") BARRIER VFIN OR S-BOUNDARY)(1 ("ja") OR ("ahte") LINK *1 Gen BARRIER NOT-NAPrfCC LINK *1 Po BARRIER NOT-NAPrfCC);
