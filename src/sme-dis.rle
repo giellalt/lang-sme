@@ -1818,7 +1818,7 @@ LIST TIME-ADV = "guhká" ("guhkit" Adv) ;
 
  # Duomma:lea
  
-LIST VOLUME = "cl" "lihtar" "desi#lihtter" "dl""lihtter" "hekto#lihtter" "mille#lihtter" "ml" "sente#lihtter ;
+LIST VOLUME = "cl" "lihtar" "desi#lihtter" "dl" "lihtter" "hekto#lihtter" "mille#lihtter" "ml" "sente#lihtter ;
 
 LIST WEIGHT = "mg" "kg" "kilo" "kilu" "gilo" "tonna" ;
 
@@ -1827,6 +1827,9 @@ LIST LENGTH = "čuolda#badji" "dumá" "fierbme#badji" "miila" "kilo#mehtar" "kil
 LIST TEMPERATURE = "buolaš#ceahkki" "buolaš#gráda" "liegga#ceahkki" "liegga#gráda" ;
 
 LIST AMOUNT = "uhcánaš" "unnánaš" ;
+
+LIST TIME-UNIT = "jahki" "minukta" "sekunda" ;
+	# For use for rules hitting "maŋŋel" as Adv instead of Po.
 
 SET MEASURE = VOLUME | WEIGHT | LENGTH | AMOUNT | TEMPERATURE ;
 
@@ -3239,8 +3242,11 @@ MAP (@Num<) TARGET (Num Gen) IF (*-1 Num BARRIER NOT-QMARK)(0 NUMUNIT);
   	## 2006 stáhtabušeahtas lea ráđđehus liigudan 10 milj. kr álggahanmearreruhtan ođđa dieđavistái. 
 
 MAP (@Q<) TARGET CURRENCY-GEN IF (*-2 Num BARRIER NOT-QMARK)(*-1 Gen BARRIER NOT-QMARK);
-    ## 10 miljovnna ruvnnu.
-  
+    ## 10 miljovnna ruvnnu.    
+    
+MAP (@Q<) TARGET Gen IF (0 TIME-UNIT LINK NOT -1 (Dem Gen))(1 ("maŋŋel") OR ("maŋŋil"))(NOT 2 Gen) ;
+	## Nu dáhpáhuvai 22 minuvtta maŋŋel go čiekčamat ledje álgán.
+	  
 MAP (@N>) TARGET (A Ord)(*1 N BARRIER NOT-A);
     	## Dat lei 33. teakstaoassi. 
     	## Arkiivaláhka III máinnaša vuosttažettiin gáhttenárvosaš priváhta arkiivvaid.
@@ -3547,8 +3553,9 @@ MAP (@APP-Num<) TARGET Acc IF (*-1 MEASURE BARRIER NOT-QMARK LINK *-1 Num BARRIE
 
 MAP (@APP-ADVL<) TARGET (N Loc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR ADVLCASE LINK *-1 DOPPE BARRIER NOT-QMARK)(*1 EOS BARRIER NOT-QMARK) ;	
 MAP (@APP-ADVL<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK *-1 DOHKO BARRIER NOT-QMARK LINK *-1 BOS BARRIER APP-BOUNDARY)(*1 COMMA BARRIER NOT-QMARK) ;
-MAP (@APP-Pron<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK *-1 DOHKO BARRIER NOT-QMARK)(*1 EOC OR CC BARRIER WORD) ;			
-			
+MAP (@APP-Pron<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK *-1 DOHKO BARRIER NOT-QMARK)(*1 EOS BARRIER NOT-QMARK) ;
+MAP (@APP-Pron<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK *-1 DOHKO BARRIER NOT-QMARK)(*1 COMMA BARRIER NOT-QMARK LINK *1 S-BOUNDARY OR CC BARRIER NOT-QMARK) ;
+
 MAP (@APP-ADVL<) TARGET (N Gen) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK *-1 TIME-MARKER OR TIME-ADV OR BEAIVI BARRIER NOT-QMARK)(0 TIME LINK 0 Gen)(*1 EOS BARRIER NOT-QMARK); 	
 	## Mun vuolggán ihttin, bearjadaga.
 	## Doppe son orui guhká, vihtta jagi.
@@ -3677,30 +3684,47 @@ MAP (@Pron<) TARGET (N Pl Acc) IF (-1 ("mii" Interr) OR ("mihkkege") OR ("gii"))
 	# Appositions
 	# -----------
 	
-MAP (@APP-N<) TARGET (N Nom) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (N Nom))(*1 EOC OR CC BARRIER WORD) ;
-MAP (@APP-Pron<) TARGET (N Nom) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (Pron Nom))(*1 EOC OR CC BARRIER WORD) ;
+MAP (@APP-N<) TARGET (N Nom) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (N Nom))(*1 EOS BARRIER NOT-QMARK) ;
+MAP (@APP-N<) TARGET (N Nom) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (N Nom))(*1 COMMA BARRIER NOT-QMARK LINK *1 S-BOUNDARY OR CC BARRIER NOT-QMARK)  ;
+MAP (@APP-Pron<) TARGET (N Nom) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (Pron Nom))(*1 EOS BARRIER NOT-QMARK) ;
+MAP (@APP-Pron<) TARGET (N Nom) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (Pron Nom))(*1 COMMA BARRIER NOT-QMARK LINK *1 S-BOUNDARY OR CC BARRIER NOT-QMARK) ;
+
 		## Mon lean Will Turner, Sáppatbátti Turnera bárdni!
 		
-MAP (@APP-N<) TARGET (N Acc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR (N Nom) LINK -1 (N Acc) LINK NOT *-1 COMMA BARRIER APP-BOUNDARY OR CC)(*1 EOC OR CC BARRIER WORD) ;	
-MAP (@APP-Pron<) TARGET (N Acc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR (N Nom) LINK -1 (Pron Acc) LINK NOT *-1 COMMA BARRIER APP-BOUNDARY OR CC)(*1 EOC OR CC BARRIER WORD) ;	
+MAP (@APP-N<) TARGET (N Acc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR (N Nom) LINK -1 (N Acc) LINK NOT *-1 COMMA BARRIER APP-BOUNDARY OR CC)(*1 EOS BARRIER NOT-QMARK) ;	
+MAP (@APP-N<) TARGET (N Acc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR (N Nom) LINK -1 (N Acc) LINK NOT *-1 COMMA BARRIER APP-BOUNDARY OR CC)(*1 COMMA BARRIER NOT-QMARK LINK *1 S-BOUNDARY OR CC BARRIER NOT-QMARK) ;	
+
+MAP (@APP-Pron<) TARGET (N Acc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR (N Nom) LINK -1 (Pron Acc) LINK NOT *-1 COMMA BARRIER APP-BOUNDARY OR CC)(*1 EOS BARRIER NOT-QMARK) ;
+MAP (@APP-Pron<) TARGET (N Acc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR (N Nom) LINK -1 (Pron Acc) LINK NOT *-1 COMMA BARRIER APP-BOUNDARY OR CC)(*1 COMMA BARRIER NOT-QMARK LINK *1 S-BOUNDARY OR CC BARRIER NOT-QMARK) ;	
+	
 		## Oidnet go Mihkkala, min nuoramus bártni?
 		## Mon oainnán fierpmi, su mearkka, ja dieđán ahte Spider-Man lea leamaš das.	
 		
 
-MAP (@APP-N<) TARGET (N Loc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR ADVLCASE LINK -1 (N Loc))(*1 EOC OR CC BARRIER WORD) ;	
-MAP (@APP-Pron<) TARGET (N Loc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR ADVLCASE LINK -1 (Pron Loc))(*1 EOC OR CC BARRIER WORD) ;	
+MAP (@APP-N<) TARGET (N Loc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR ADVLCASE LINK -1 (N Loc))(*1 EOS BARRIER NOT-QMARK) ;	
+MAP (@APP-N<) TARGET (N Loc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR ADVLCASE LINK -1 (N Loc))(*1 COMMA BARRIER NOT-QMARK LINK *1 S-BOUNDARY OR CC BARRIER NOT-QMARK) ;	
+
+MAP (@APP-Pron<) TARGET (N Loc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR ADVLCASE LINK -1 (Pron Loc))(*1 EOS BARRIER NOT-QMARK) ;	
+MAP (@APP-Pron<) TARGET (N Loc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR ADVLCASE LINK -1 (Pron Loc))(*1 COMMA BARRIER NOT-QMARK LINK *1 S-BOUNDARY OR CC BARRIER NOT-QMARK) ;	
+
 		## Ánde orru Oslos, Norgga oaivegávpogis.	
 
-MAP (@APP-N<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (N Ill))(*1 EOC OR CC BARRIER WORD) ;	
-MAP (@APP-Pron<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (Pers Ill))(*1 EOC OR CC BARRIER WORD) ;			
+MAP (@APP-N<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (N Ill))(*1 EOS BARRIER NOT-QMARK) ;
+MAP (@APP-N<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (N Ill))(*1 COMMA BARRIER NOT-QMARK LINK *1 S-BOUNDARY OR CC BARRIER NOT-QMARK) ;	
+	
+MAP (@APP-Pron<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (Pers Ill))(*1 EOS BARRIER NOT-QMARK) ;		
+MAP (@APP-Pron<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (Pers Ill))(*1 COMMA BARRIER NOT-QMARK LINK *1 S-BOUNDARY OR CC BARRIER NOT-QMARK) ;			
 			## Dan mun muitalan dušše dutnje, mu buoremus olbmái.
 
 MAP (@APP-N<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (N Ill) LINK *-1 BOS BARRIER APP-BOUNDARY)(1 COMMA) ;	
 MAP (@APP-Pron<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (Pron Ill) LINK *-1 BOS BARRIER APP-BOUNDARY)(1 COMMA) ;	
 	## Dutnje, mu buori ustibii, mun muitalan buot.
 	
-MAP (@APP-N<) TARGET (N Com) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (N Com))(*1 EOC OR CC BARRIER WORD) ;	
-MAP (@APP-Pron<) TARGET (N Com) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (Pron Com))(*1 EOC OR CC BARRIER WORD) ;							
+MAP (@APP-N<) TARGET (N Com) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (N Com))(*1 EOS BARRIER NOT-QMARK) ;	
+MAP (@APP-N<) TARGET (N Com) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (N Com))(*1 COMMA BARRIER NOT-QMARK LINK *1 S-BOUNDARY OR CC BARRIER NOT-QMARK) ;	
+
+MAP (@APP-Pron<) TARGET (N Com) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (Pron Com))(*1 EOS BARRIER NOT-QMARK) ;				
+MAP (@APP-Pron<) TARGET (N Com) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (Pron Com))(*1 COMMA BARRIER NOT-QMARK LINK *1 S-BOUNDARY OR CC BARRIER NOT-QMARK) ;									
 	## Mun hupmen Máhte-Iŋggáin, Niillas-Máhte eamidiin.
 
 MAP (@APP-N<) TARGET (N Nom) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (N Nom) LINK *-1 BOS BARRIER APP-BOUNDARY)(1 COMMA LINK 1 VFIN) ;
@@ -3711,8 +3735,11 @@ MAP (@APP-N<) TARGET (N Loc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (N
 MAP (@APP-Pron<) TARGET (N Loc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (Pron Loc) LINK *-1 BOS BARRIER APP-BOUNDARY)(1 COMMA LINK 1 VFIN) ;		
 	## Romssas, Davvi-Norgga stuorimus gávpogis, leat vaikko man ollu studeanttat.
 
-MAP (@APP-N<) TARGET (N Nom) IF (-1 (N Gen) OR (Pers Gen) LINK *-1 CC BARRIER APP-BOUNDARY LINK -1 (N Gen) OR (Pers Gen) LINK *-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (N Nom))(*1 EOC OR CC BARRIER WORD) ;
-MAP (@APP-Pron<) TARGET (N Nom) IF (-1 (N Gen) OR (Pers Gen) LINK *-1 CC BARRIER APP-BOUNDARY LINK -1 (N Gen) OR (Pers Gen) LINK *-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (Pron Nom))(*1 EOC OR CC BARRIER WORD) ;
+MAP (@APP-N<) TARGET (N Nom) IF (-1 (N Gen) OR (Pers Gen) LINK *-1 CC BARRIER APP-BOUNDARY LINK -1 (N Gen) OR (Pers Gen) LINK *-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (N Nom))(*1 EOS BARRIER NOT-QMARK) ;
+MAP (@APP-N<) TARGET (N Nom) IF (-1 (N Gen) OR (Pers Gen) LINK *-1 CC BARRIER APP-BOUNDARY LINK -1 (N Gen) OR (Pers Gen) LINK *-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (N Nom))(*1 COMMA BARRIER NOT-QMARK LINK *1 S-BOUNDARY OR CC BARRIER NOT-QMARK) ;
+
+MAP (@APP-Pron<) TARGET (N Nom) IF (-1 (N Gen) OR (Pers Gen) LINK *-1 CC BARRIER APP-BOUNDARY LINK -1 (N Gen) OR (Pers Gen) LINK *-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (Pron Nom))(*1 EOS BARRIER NOT-QMARK) ;
+MAP (@APP-Pron<) TARGET (N Nom) IF (-1 (N Gen) OR (Pers Gen) LINK *-1 CC BARRIER APP-BOUNDARY LINK -1 (N Gen) OR (Pers Gen) LINK *-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 (Pron Nom))(*1 COMMA BARRIER NOT-QMARK LINK *1 S-BOUNDARY OR CC BARRIER NOT-QMARK) ;
 
 
 MAP (@APP-N<) TARGET (N Nom) IF (*-1 ("nugo") OR ("sihke") BARRIER APP-BOUNDARY LINK -1 COMMA LINK -1 (N Nom))(*1 EOS BARRIER APP-BOUNDARY) ;
@@ -3845,7 +3872,7 @@ MAP (@SUBJ) TARGET Inf IF (1 COPULAS)(*2 A BARRIER NOT-ADV);
 MAP (@SPRED) TARGET Inf IF (*-1 ("leat") BARRIER NOT-ADV-PCLE LINK -1 NP-HEAD-NOM) ;
 	## Gurssa ulbmil lea oahppat goarrut Ivgu gávtti.
 
-MAP (@ADVL) TARGET Inf IF (*-1 MOVEMENT-V BARRIER S-BOUNDARY OR VFIN OR Nom); 
+MAP (@ADVL) TARGET Inf IF (*-1 MOVEMENT-V BARRIER S-BOUNDARY OR VFIN OR Nom OR CC); 
 	## Stálus bođii baikahoahppu, ja son guđii seahka ja vulggii baikit. 
 	## Boađe mu lusa geahččat ođđa govaid!
 
@@ -3905,14 +3932,15 @@ MAP (@-FADVL) TARGET Po IF (-1 NP-HEAD-GEN LINK *-1 Inf LINK 0 V-TRANS-ACT-NOT-A
 
 MAP (@-FADVL) TARGET Po IF (-1 NP-HEAD-GEN LINK *-1 Acc BARRIER NPNH LINK *-1 Inf LINK 0 V-TRANS-ACT-NOT-AUX BARRIER NPNH LINK -1 NP-HEAD-NOM LINK *-1 ("leat") BARRIER VERB LINK *-1 NP-HEAD-NOM OR PRESENT-MARKER OR PAST-MARKER OR Loc BARRIER VFIN-NOT-AUX OR S-BOUNDARY)(1 Gen) ;
 
+MAP (@-FADVL) TARGET Inf IF (*-1 ("liikot") BARRIER NOT-ADV) ; 
+MAP (@-FADVL) TARGET Inf IF (-1 CC LINK *-1 Inf BARRIER VERB LINK *-1 ("liikot") BARRIER NOT-ADV LINK *-1 Nom BARRIER S-BOUNDARY);
+	## Go beassážiid leat čáppa dálkkit ja beaivvádat, de olbmot liikojit čuoigat meahcis dahje vuodjit mohtorgielkkáin. 
 
-
-MAP (@OBJ) TARGET Inf IF (*-1 V-TRANS-ACT-NOT-AUX BARRIER NOT-ADV LINK NOT 0 Imprt OR VAbess) ; # LINK NOT *-1 Rel OR CS OR ("gosa"));
+MAP (@OBJ) TARGET Inf IF (*-1 V-TRANS-ACT-NOT-AUX BARRIER NOT-ADV LINK NOT 0 Imprt OR VAbess) ; 
 MAP (@OBJ) TARGET Inf IF (*-1 V-TRANS-ACT-NOT-AUX BARRIER NOT-ADV LINK 0 Imprt LINK *-1 BOC BARRIER WORD);
 	## Mun hálidan oahppat goarrut gávtti.
 
 # Coordination
-#MAP (@OBJ) TARGET Inf IF (-1 CC LINK *-1 Inf BARRIER VERB LINK *-1 V-NOT-AUX BARRIER NOT-ADV LINK NOT 0 Imprt LINK NOT *-1 Rel OR CS OR ("gosa"));
 MAP (@OBJ) TARGET Inf IF (-1 CC LINK *-1 Inf BARRIER VERB LINK *-1 V-NOT-AUX BARRIER NOT-ADV LINK NOT 0 Imprt LINK *-1 Nom BARRIER S-BOUNDARY);
 	## Son boahtá stálljii ja veahkeha čorget ja biebmat heasttaid.
 	## Mun hálidan oahppat goarrut gávtti ja gođđit ránu.
@@ -6638,11 +6666,14 @@ SELECT Pr IF (0 ("gaskan"))(1 VGen);
 	## Gaskan bora viehkalin olggos.
 
 	# mađe
-	# - - -
-
+	# - - -	
 SELECT Po IF (-1 (Num Gen))(0 ("mađe"));
 SELECT Num IF (1 ("mađe"));
-	## 
+	
+	# maŋŋel / maŋŋil
+	# - - - - - - - -
+SELECT Adv IF (-1 TIME-UNIT LINK 0 Acc OR Gen LINK NOT -1 (Dem Gen))(0 ("maŋŋel") OR ("maŋŋil"))(NOT 1 Gen);	
+	## Nu dáhpáhuvai 22 minuvtta maŋŋel go čiekčamat ledje álgán.	
 
 	# miehtá
 	# - - - -
@@ -6665,6 +6696,12 @@ SELECT VFIN IF (NOT *-1 VFIN BARRIER S-BOUNDARY)(NOT -1 Gen LINK NOT 0 Nom)(0 ("
 	## Jus divššohas dasa miehtá, dahje dilálašvuohta lea nu,...
 	## Áldu mii dálvvi miehtá njamaha miesi gohčoduvvo čearpmateadni.
 	## Dat sáhttet leat ovttasbargošiehtadusat oanahis áigái, dahje oktasašdoallu muhtin áiggiid jagis, dahje vaikko miehtá jagi.
+	
+	# ovdal
+	# - - - 
+SELECT Adv IF (1 TIME-UNIT + Acc)(2 ("maŋŋel") OR ("maŋŋil"));	
+SELECT Adv IF (1 Num)(2 TIME-UNIT + Acc)(3 ("maŋŋel") OR ("maŋŋil"));		
+	
  
  	# ovddas
  	# - - - -
@@ -7141,7 +7178,7 @@ SELECT Adv IF (0 ("mielde"))(*-1 ("leat" Qst) BARRIER VFIN);
 SELECT Adv IF (*-1 V-TRANS-ACT-NOT-ACT OR COPULAS BARRIER NPNH)(-1 Pers OR HUMAN LINK 0 Gen LINK NOT 0 DAT-PRON)(0 ("mielde"));
 	## Dat ii leat mu mielde. # Can be ambiguos.	
   
-REMOVE Adv IF (-1 (N Gen) OR (Pron Gen))(NOT -1 Adv OR VFIN OR ("leat" PrfPrc))(0 Po)(NOT 0 ("bajil") LINK *-1 ("oahppat") BARRIER SV-BOUNDARY)(NOT 0 ("mielde") OR ("fárrui") OR ("mađe") LINK *-1 MIELDE-V BARRIER VFIN);
+REMOVE Adv IF (-1 (N Gen) OR (Pron Gen))(NOT -1 Adv OR VFIN OR ("leat" PrfPrc))(0 Po)(NOT 0 ("bajil") LINK *-1 ("oahppat") BARRIER SV-BOUNDARY)(NOT 0 ("mielde") OR ("fárrui") OR ("mađe") LINK *-1 MIELDE-V BARRIER VFIN) ;
   	## Válddán girjji mielde.
   	## Válddán dorski mielde.  	
   
@@ -7882,7 +7919,7 @@ SELECT (Indef @OBJ) IF (*-1 STV-NOT-ACT BARRIER NOT-ADV)(0 ("ollu") OR ("olu"))(
 	## Máret diehtá ollu.
 	## Meardebuođđobivdu gal ii mearkkaš ollu álbmoga ealáhussii.
 
-SELECT Adv IF (NOT *-1 STV-NOT-ACT OR COPULAS BARRIER NOT-AA LINK 0 FMAINV)(0 ("ollu") OR ("olu"))(NOT 1 Acc LINK NOT 1 ADVLCASE)(NOT 1 (Pl Nom));
+SELECT Adv IF (NOT *-1 STV-NOT-ACT OR COPULAS BARRIER NOT-AA LINK 0 FMAINV)(0 ("ollu") OR ("olu"))(NOT 1 Acc LINK NOT 1 ADVLCASE)(NOT 1 Nom);
 
 SELECT (Indef @OBJ) IF (*-2 STV-NOT-ACT BARRIER NOT-ADV)(-1 ("seammá") OR ("seamma"))(0 ("ollu") OR ("olu"))(NOT 1 Acc LINK NOT 1 ADVLCASE)(NOT 1 (Pl Nom));
 SELECT Adv IF (NOT *-2 STV-NOT-ACT BARRIER NOT-ADV)(-1 ("seammá") OR ("seamma"))(0 ("ollu") OR ("olu"))(NOT 1 Acc LINK NOT 1 ADVLCASE)(NOT 1 (Pl Nom));
@@ -15678,7 +15715,7 @@ SELECT (@SPRED) IF (*-1 VFIN BARRIER Acc OR S-BOUNDARY2 OR OPREDV OR ("dego") OR
 SELECT (@SPRED) IF (*-1 (@SUBJ) BARRIER NPNHA LINK *-1 VFIN BARRIER Nom OR S-BOUNDARY2)(0 Ess)(NOT *-1 (@OBJ) BARRIER S-BOUNDARY2)(NOT *1 (@OBJ) BARRIER NPNHA);
 	## ...mii muitala, doaibmago našunálastáhta siviliserejuvvon kulturservodahkan.
 
-SELECT (@SPRED) IF (*-1 BOS OR CLB OR PUNCT BARRIER NOT-CC)(0 A)(1 (Pers Nom));
+SELECT (@SPRED) IF (*-1 BOS OR CLB OR PUNCT BARRIER NOT-CC)(0 A LINK NOT 0 Indef)(1 (Pers Nom));
 	## Heittogat dat leat maiddái.
 	## Ávdugasat sii geat moraštit.
 
