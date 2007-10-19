@@ -610,6 +610,7 @@ LIST @APP-Pron< = @APP-Pron< ;
 LIST @APP>Pron = @APP>Pron ;
 LIST @APP-Num< = @APP-Num< ;
 LIST @APP-ADVL< = @APP-ADVL< ;
+LIST @VOC = @VOC ;
 
 # LIST @MEASURE = @MEASURE ;
  #Not in use anymore. We use @N<.
@@ -2745,7 +2746,7 @@ SET INTR-END = COMMA | PUNCT-RIGHT ;
 # Syntactic sets
 # --------------
 
-LIST ALLSYNTAG = (@+FAUXV) (@+FMAINV) (@-FAUXV) (@-FMAINV) (@-FSUBJ)(@-FOBJ)(@-FADVL)(@>A) (@>ADVL) (@ADVL<) (@ADVL) (@HAB) (@>N) (@APP) (@APP-N<) (@APP-Pron<) (@APP>Pron) (@APP-Num<) (@APP-ADVL<)
+LIST ALLSYNTAG = (@+FAUXV) (@+FMAINV) (@-FAUXV) (@-FMAINV) (@-FSUBJ)(@-FOBJ)(@-FADVL)(@>A) (@>ADVL) (@ADVL<) (@ADVL) (@HAB) (@>N) (@APP) (@APP-N<) (@APP-Pron<) (@APP>Pron) (@APP-Num<) (@APP-ADVL<) (@VOC)
 (@CNP) (@CVP) (@P<) (@>P) (@HNOUN) (@INTERJ) (@Pron<) (@OBJ) (@OPRED) (@PCLE) (@COMP-CS<) (@N<) (@SPRED) (@PPRED) (@Num<) (@SUBJ) (@X);
  
 
@@ -3804,36 +3805,39 @@ MAP (@HNOUN) TARGET (N Sg Nom) IF (*-1 CC BARRIER NOT-NP LINK -1 Nom LINK *-1 BO
 MAP (@HNOUN) TARGET (Prop Sur Nom) IF (-1 ("\("))(1 CARDINALS LINK 1 (":") LINK 1 CARDINALS LINK 1 ("\)"));
     ## Gávpotroggamat Várggain eai čájet o.m.d. siviila ássama ovdal 1400-jagiid (Simonsen 1959: 45).
 
-MAP (@APP) TARGET Nom IF (-1 BOS OR REALCLB)(1 COMMA)(2 Nom)(NOT 2 Interr) (NOT 3 COMMA OR CC LINK *1 Nom BARRIER NPNH);
+MAP (@VOC) TARGET Nom IF (-1 BOS OR REALCLB)(1 COMMA)(2 Nom)(NOT 2 Interr) (NOT 3 COMMA OR CC LINK *1 Nom BARRIER NPNH);
 	## Hearrá, mun lean gullan olusiid muitaleamen dán. 
 
-MAP (@APP) TARGET (N Sg Nom) IF (-1 BOS OR REALCLB)(1 COMMA) (*2 (Pron Sg2))(NOT 2 Interr);
+MAP (@VOC) TARGET (N Sg Nom) IF (-1 BOS OR REALCLB)(1 COMMA) (*2 (Pron Sg2))(NOT 2 Interr);
 	## Hearrá, du ráhkis ustit lea buohcci.
 	## Ustiban, in mun daga dutnje vearrut.
 	
 MAP (@APP>Pron) TARGET (N Sg Nom) IF (*-1 BOS BARRIER APP-BOUNDARY)(1 COMMA)(0 HUMAN-INDIVIDUAL)(2 Pers LINK NOT 1 CC OR COMMA)(NOT 2 Interr);
 	##  Muhto diet Will Turner, son nai lea fiinna olmmái.
 	
-MAP (@APP) TARGET Nom IF (-1 BOS OR REALCLB)(1 COMMA)(2 VFIN);
+MAP (@VOC) TARGET Nom IF (-1 BOS OR REALCLB)(1 COMMA)(2 VFIN);
 	## Ustiban, in mun daga dutnje vearrut.
-
-MAP (@APP) TARGET Nom IF (*-1 COMMA BARRIER NOT-NP OR CC LINK *-1 (V Sg2) OR (V Du2) OR (V Pl2) OR (Pron Sg2) OR (Pron Du2) OR (Pron Pl2) LINK NOT 0 ("leat"))(1 EOS)(0 ANIMATE)(NOT 0 Sg LINK *-1 V-SG3 BARRIER VERB);
+	
+MAP (@APP-Pron<) TARGET Nom IF (*-1 Pron LINK 0 Sg2 OR Du2 Or Pl2 BARRIER NPNH LINK -1 COMMA LINK *-1 (V Sg2) OR (V Du2) OR (V Pl2) OR (Pron Sg2) OR (Pron Du2) OR (Pron Pl2) LINK NOT 0 ("leat"))(1 EOS)(0 ANIMATE)(NOT 0 Sg LINK *-1 V-SG3 BARRIER VERB);
+	## Gáidet eret mu luhtte, dii verrošeaddjit! 
+	
+MAP (@VOC) TARGET Nom IF (*-1 COMMA BARRIER NOT-NP OR CC LINK *-1 (V Sg2) OR (V Du2) OR (V Pl2) OR (Pron Sg2) OR (Pron Du2) OR (Pron Pl2) LINK NOT 0 ("leat"))(1 EOS)(0 ANIMATE)(NOT 0 Sg LINK *-1 V-SG3 BARRIER VERB);
 	## Vuoi du, Betsaida!
 	
-MAP (@APP) TARGET (N Nom) IF (*-1 COMMA BARRIER NPNH LINK *-1 ("boahtin" Nom) BARRIER VERB OR S-BOUNDARY LINK -1 ("bures"))(1 EOC);
+MAP (@VOC) TARGET (N Nom) IF (*-1 COMMA BARRIER NPNH LINK *-1 ("boahtin" Nom) BARRIER VERB OR S-BOUNDARY LINK -1 ("bures"))(1 EOC);
 MAP (@APP) TARGET (N Nom) IF (-1 TITLE OR Mal OR Fem LINK -1 COMMA BARRIER NPNH LINK *-1 ("boahtin" Nom) BARRIER VERB OR S-BOUNDARY LINK -1 ("bures"))(1 EOC);
 	## Bures boahtin Čáhppes Bearralii, Miss Turner! 	
 
-MAP (@APP) TARGET Nom IF (-1 COMMA)(0 Pers)(0 Sg2 OR Du2 Or Pl2) (*1 Nom BARRIER NPNH LINK 1 EOS);
+MAP (@VOC) TARGET Nom IF (-1 COMMA)(0 Pers)(0 Sg2 OR Du2 Or Pl2) (*1 Nom BARRIER NPNH LINK 1 EOS);
 	## Gáidet eret mu luhtte, dii verrošeaddjit! 
 
-MAP (@APP) TARGET (N Nom) IF (-2 BOS)(-1 (Imprt Sg2))(NOT -1 Adv OR Qst)(1 EOS);
+MAP (@VOC) TARGET (N Nom) IF (-2 BOS)(-1 (Imprt Sg2))(NOT -1 Adv OR Qst)(1 EOS);
 	## Gula eadni!
 
-MAP (@APP) TARGET (N Nom) IF (-3 BOS)(-2 (Imprt Sg2) OR (Sg2 Qst))(NOT -2 Nom) (-1 COMMA)(1 COMMA);
+MAP (@VOC) TARGET (N Nom) IF (-3 BOS)(-2 (Imprt Sg2) OR (Sg2 Qst))(NOT -2 Nom) (-1 COMMA)(1 COMMA);
 	## Buvttes, Máhtte, goikemuoraid!
 
-MAP (@APP) TARGET (N Nom) IF (-4 BOS)(-3 (V Sg2))(-2 go)(-1 COMMA)(1 COMMA);
+MAP (@VOC) TARGET (N Nom) IF (-4 BOS)(-3 (V Sg2))(-2 go)(-1 COMMA)(1 COMMA);
 	## It go, bártnážan, boađáše fargga ruoktot?
 
 MAP (@>N) TARGET Cmpnd;
