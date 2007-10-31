@@ -1081,6 +1081,9 @@ LIST ROUTEADVERBIAL-V = "boahtit" "čuoigat" ;
     # bevegelse langsmed noe, innafor et bestemt område   
 LIST ROUTEOBJECT-V = "ásahit" "bidjat" "botnjat" "basuhit" "buoridit" "čielggadit" "čuovvulit" "čilget" "čuorvut" "čurvet" "dieđihit" "duođaštit" "duorggastit" "geavahit" "geahpedit" "geahpidit" "gudnejahttit" "guorahallat" "gieđahallat" "guođđit" "gilljut" "heahtit" "huikit" "huikkádit" "juoigat" "lávlut" "lohkat" "loahpahit" "mearridit" "máidnut" "nannet" "njulget" "oahpahit" "ráhkadit" "sivdnidit" "suokkardit" "unnidit" "válmmaštit" "vurket" ;
 
+LIST HAB-VERB = "goallut" "jápmit" ;
+	# To be used in habitative-sentences.
+
 # Valency sets
 # - - - - - - -
 
@@ -2499,6 +2502,11 @@ LIST SAMEDIGGI-GEN = "autoritehta" "áirras" "árvo#kommišuvdna#lahttu" ("ásah
 SET ACTOR = ANIMATE | INSTITUTION | ORGANIZATION ;
 
   # Should EVENT be part of this set?
+
+# To be used in habitative-sentences:
+SET HAB-ACTOR = ACTOR | INDUSTRY | EDUCATION | Pers | ("gii");
+SET HAB-ACTOR-NOT-HUMAN =  INSTITUTION | ORGANIZATION | INDUSTRY | EDUCATION ;
+
 
 LIST STATE = "bahávuohta" ("dearvvas" Der/vuohta) "gaskavuohta" "miella#dearvvašvuohta" "ráfi" "váivi" "veahkki";
 
@@ -4331,7 +4339,13 @@ MAP (@SPRED) TARGET (PrfPrc) IF (-1 BOS OR REALCLB)(0 Der/Pass)(1 ("leat")) (*2 
 
 	# Habitative mappings
 	# -------------------
-#MAP (@HAB) TARGET Loc IF (0 ACTOR OR Pers LINK NOT 0 ("dat"));	
+MAP (@HAB) TARGET Loc IF (0 HAB-ACTOR)(NOT 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(1 AUX LINK *1 ("leat") BARRIER NOT-ADV-PCLE);
+MAP (@HAB) TARGET Loc IF (0 HAB-ACTOR)(NOT 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(*1 ("leat") BARRIER NOT-ADV-PCLE);
+MAP (@HAB) TARGET Loc IF (0 HAB-ACTOR)(NOT 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(1 CC LINK *1 HAB-ACTOR BARRIER NPNH LINK *1 ("leat") BARRIER NOT-ADV-PCLE);
+MAP (@HAB) TARGET Loc IF (0 HAB-ACTOR)(NOT 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(*1 HAB-VERB BARRIER NOT-ADV-PCLE LINK *1 Nom BARRIER VFIN);
+
+MAP (@HAB) TARGET Loc IF (0 HAB-ACTOR)(*-1 ("leat") BARRIER NOT-PCLE LINK NOT *-1 (@SUBJ) BARRIER S-BOUNDARY2);
+MAP (@HAB) TARGET Ill IF (0 HAB-ACTOR)(*1 COPULAS BARRIER NOT-ADV-PCLE LINK *1 A BARRIER NOT-ADV-PCLE);
 
 	# Adverbial mappings
 	# ------------------
@@ -15658,8 +15672,8 @@ SELECT (@SUBJ) IF (*-1 (@CNP) BARRIER NPNH LINK -1 (@SUBJ));
 
 SELECT (@ADVL) IF (0 Ess)(*1 (@SPRED) BARRIER NOT-AA) ;
 SELECT (@ADVL) IF (*-1 (@SPRED) BARRIER S-BOUNDARY2 OR CC LINK *-1 (@SUBJ) BARRIER S-BOUNDARY2)(0 Ess);
-SELECT (@ADVL) IF (*-1 (@SUBJ) BARRIER S-BOUNDARY2  LINK NOT 0 HUMAN LINK *-1 ("leat") BARRIER NPNH LINK -1 Loc LINK 0 HUMAN OR Pers)(0 HUMAN + Ess);
-SELECT (@ADVL) IF (*-1 ("leat") BARRIER NPNH LINK -1 Loc LINK 0 HUMAN OR Pers LINK -1 (@SUBJ) BARRIER S-BOUNDARY2 LINK NOT 0 HUMAN)(0 HUMAN + Ess);
+SELECT (@ADVL) IF (*-1 (@SPRED) BARRIER S-BOUNDARY2  LINK NOT 0 HUMAN LINK *-1 ("leat") BARRIER NPNH LINK -1 Loc LINK 0 HUMAN OR Pers)(0 HUMAN + Ess);
+SELECT (@ADVL) IF (*-1 ("leat") BARRIER NPNH LINK -1 Loc LINK 0 HUMAN OR Pers LINK -1 (@SPRED) BARRIER S-BOUNDARY2 LINK NOT 0 HUMAN)(0 HUMAN + Ess);
 	## Son lea oahpaheaddjin hui čeahppi.
 	## Sis leat dakkár vuoigatvuođat Norgga riikavuložin. 
 	## Son lea hui čeahppi oahpheaddjin.
@@ -15991,6 +16005,16 @@ REMOVE (@SUBJ) IF (0 (Attr @>N));
 
 SELECT Nom IF (*-1 ("go") BARRIER NPNH LINK -1 A LINK -1 REALCOPULAS BARRIER SV-BOUNDARY2 LINK *-1C (@SUBJ) BARRIER SV-BOUNDARY2)(0 (@COMP-CS<));
     ## Máhttájeaddji ii leat stuorit go oahpaheaddjis.
+    
+        # Subjectpredicative when habitative
+    # ------------------------------------
+SELECT (@SPRED) IF (*-1 COPULAS BARRIER VERB OR Nom LINK -1 AUX LINK *-1 (@HAB) BARRIER NOT-ADV) ;     
+SELECT (@SPRED) IF (*-1 COPULAS OR HAB-VERB BARRIER VERB OR Nom LINK *-1 (@HAB) BARRIER NOT-ADV) ;     
+SELECT (@SPRED) IF (*-1 (@HAB) BARRIER NPNHAI LINK *-1 ("leat") BARRIER NOT-PCLE) ;  
+SELECT (@SPRED) IF (1 (@HAB) LINK *1 ("leat") BARRIER NOT-ADV) ;    
+SELECT (@SPRED) IF (*-1 CC BARRIER NPNH LINK -1C (@SPRED))(NOT *1 VFIN BARRIER S-BOUNDARY2);
+	## Mus leat fuolkkit ja buorit ustibat Londonis.
+     
      
 	# Fragments
 	# ---------
