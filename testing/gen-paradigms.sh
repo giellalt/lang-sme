@@ -5,4 +5,4 @@
 
 rm -f paradigm-sme.txt
 rm -f *.paradigm
-perl generate-paradigm.pl parawlist.txt
+perl gen-paradigms.pl parawlist.txt
