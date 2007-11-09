@@ -1,6 +1,7 @@
 #!/bin/perl
-# Litt pseudo aktig, filnavn og target må være utskiftbar
-#rm -f paradigm-sme.txt
+# Perl script that parses a list of word+POS lines, and for each
+# such line, calls make to generate the corresponding paradigm.
+
 while ( <> ) {
     chop;
     my $word, $pos;
