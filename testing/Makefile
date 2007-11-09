@@ -4,7 +4,7 @@ SHELL = /bin/sh
 # This is a makefile to automatise most of the testing.
 # It is language independent within the framework of the Sámi language
 # technology project. See further user documentation (and technical as well)
-# in $CVSROOT/gt/doc/docu-testing.html
+# in $CVSROOT/gt/doc/ling/docu-testing.html
 
 # VARIABLE DEFINITIONS
 # ====================
