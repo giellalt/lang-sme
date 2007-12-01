@@ -2,9 +2,18 @@
 # or any later version.
 
 # ==================================================================== #
-#    N O R T H E R N  S Á M I  D I S A M B I G U A T O R               
+#    N O R T H E R N  S Á M I  D E P E N D E N C Y   G R A M M A R     #               
 # ==================================================================== #
-# ==================================================================== 
+# ==================================================================== #
+
+# Note! this file consists of two parts:
+# The first part is the set definitions from sme-3dis.rle (will be sme-dis.rle later)
+# The second part is the dependency rules proper.
+# The first part SHALL NOT BE EDITED INDEPENDENTLY IN THIS FILE, 
+# but copied over from sme-dis.rle
+
+# ///////////////////////////////////////////////////////////////////////////////////
+# START OF SME-3DIS.RLE COPY
 
 #  Sámi language technology project 2003-2006, University of Tromsø #
 
@@ -2775,6 +2784,9 @@ SET NON-APP = ALLSYNTAG - (@APP);
 
 # funzt nicht.
 
+# END OF SME-3DIS.RLE COPY
+# \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
 
 
 # ================== #
@@ -2792,7 +2804,7 @@ LIST @-FARG = @-FOBJ @-FSUBJ ;
 LIST @ADVL = @ADVL @-FADVL ;
 LIST @-FADVL = @-FADVL ;
 
-SET @ARG/ADVL = @ARG OR @ADVL ;
+SET @ARG/ADVL = @ARG OR @ADVL - (CC @ADVL) ;
 SET @-FARG/ADVL = @-FARG OR @-FADVL ;
 
 SET @CLAUSE = @ARG/ADVL OR @-FARG/ADVL OR VFIN OR NONVFIN ;
@@ -2841,6 +2853,11 @@ SUBSTITUTE (@-FAUXV) (@V) TARGET V ;
 
 MAPPINGS
 
+### hab
+
+SETPARENT @HAB TO (0* V-3);
+
+
 ### pop
 
 SETPARENT @>P + Gen TO (1 (Po @ADVL));
@@ -2848,7 +2865,7 @@ SETPARENT @>P + Gen TO (1 (Po @ADVL));
 ### np
 
 SETPARENT @>N TO (*1 N BARRIER @CLAUSE) ;
-SETPARENT @N< OR @APP-N< TO (*-1 N BARRIER @CLAUSE) ;
+SETPARENT @N< OR @APP-N< TO (*-1 N BARRIER @CLAUSE OR @CNP) ;
 SETPARENT @APP->Pron TO (*1 Pron BARRIER @CLAUSE) ;
 SETPARENT @APP-Pron< TO (*-1 Pron BARRIER @CLAUSE) ;
 
@@ -2896,7 +2913,16 @@ SETPARENT CS + @CVP TO (*1 VFIN OR NONVFIN) ;
 SETPARENT @CNP TO (*-1 N OR Pron) ;
 SETPARENT CC + @CVP TO (*-1 VFIN OR NONVFIN) ;
 
+SETPARENT (CC @ADVL) TO (*1 WORD LINK 1 CC) ;
 
+
+
+SETPARENT @SUBJ TO (*-1 @SUBJ BARRIER NPNH LINK 1 CC);
+SETPARENT @APP-N< TO (*-1 @APP-N< BARRIER NPNH LINK 1 CC);
+SETPARENT @OBJ TO (*-1 @OBJ BARRIER NPNH LINK 1 CC);
+SETPARENT @ADVL TO (*-1 @ADVL BARRIER NPNH LINK 1 CC);
+SETPARENT @+FMAINV TO (-2 @+FMAINV LINK 1 CC);
+SETPARENT @-FMAINV TO (-2 @-FMAINV LINK 1 CC);
 
 
 
