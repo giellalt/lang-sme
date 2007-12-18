@@ -192,7 +192,7 @@ n-paradigm: n-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-	@less $(WORD).paradigm
+#	@less $(WORD).paradigm
 
 
 # VERBS
@@ -247,7 +247,7 @@ v-paradigm: v-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-	@less $(WORD).paradigm
+#	@less $(WORD).paradigm
 
 
 # ADJECTIVES
@@ -302,7 +302,7 @@ a-paradigm: a-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-	@less $(WORD).paradigm
+#	@less $(WORD).paradigm
 
 
 # NUMERALS
@@ -358,7 +358,7 @@ num-paradigm: num-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-	@less $(WORD).paradigm
+#	@less $(WORD).paradigm
 
 
 # PROPER NOUNS
@@ -414,7 +414,7 @@ prop-paradigm: prop-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-	@less $(WORD).paradigm
+#	@less $(WORD).paradigm
 
 
 

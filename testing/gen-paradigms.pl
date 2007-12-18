@@ -8,7 +8,7 @@ while ( <> ) {
     ($word, $pos) = split;
 #    print "word is $word\n" ;
 #    print "pos is $pos\n" ;
-    my $command = "make $pos-paradigm WORD\=$word >> paradigm-sme.txt" ;
+    my $command = "make $pos-paradigm WORD\=$word" ;
 #    print "$command\n";
     system($command);
 }
