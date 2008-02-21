@@ -1,4 +1,4 @@
-#Distributed under the terms of the GNU General Public License version 2 
+s#Distributed under the terms of the GNU General Public License version 2 
 # or any later version.
 
 # ==================================================================== #
@@ -318,6 +318,10 @@
 # ========== #
 
 DELIMITERS = "<.>" "<!>" "<?>" "<...>" "<¶>";
+
+                    SECTION #1            #
+        # =================================== #
+
 
 # ============= #
 # Tags and sets #
@@ -727,12 +731,13 @@ SET NOT-VERB = WORD - V ;
 # Finiteness and mood
 # - - - - - - - - - -
 
-SET V-IND-FIN = Prs + Prt ;
+LIST V-IND-FIN = Prs + Prt ;
  # Problem: "In boahtán" is an invisible indicative
 
-SET V-MOOD = Ind + Pot + Imprt + ImprtII + Cond ;
+LIST V-MOOD = Ind + Pot + Imprt + ImprtII + Cond ;
+LIST V-MOOD-GC = Ind + Pot + Imprt + ImprtII + Cond + ("gč") ;
 
-SET VFIN = V-MOOD - ConNeg + ("gč");
+SET VFIN = V-MOOD-GC - ConNeg ;
 
 SET VFIN-POS = V-MOOD - ConNeg - Neg ;
 
@@ -817,7 +822,12 @@ LIST LEAN-SG1 = ("leat" V Ind Prs Sg1);
 
 LIST LEAT-PRC = ("leat" PrfPrc) ;
 
-SET PRC-NOT-LEAT = (V PrfPrc) - ("leat" PrfPrc) ;
+# I am not sure will this set work in  CG3, so I have made a new solution:
+#SET PRC-NOT-LEAT = (V PrfPrc) - ("leat" PrfPrc) ;
+
+LIST VPRFPRC = (V PrfPrc) ;
+LIST LEATPRFPRC = ("leat PrfPrc) ;
+SET PRC-NOT-LEAT = VPRFPRC - LEATPRFPRC ;
     # In order to distinguish between real leat-constructions and participles of other verbs
 LIST HABEO-SG3 = ("leat" Sg3) (V Neg Sg3) ("šaddat" Sg3) ;
 
@@ -840,6 +850,7 @@ LIST SII = ("son" Pron Pers Pl3 Nom);
 
 SET PPRON-NOM-NOT-DAT = MUN + DON + SON + MOAI + DOAI + SOAI + MII-PERS + DII + SII ;
 
+# Hmm... CG3?
 SET PPRON-NOT-DAT = (Pron Pers) - ("dat") ;
 
 SET PPRON-DU-PL = MOAI + DOAI + SOAI + MII-PERS + DII + SII ;
@@ -894,7 +905,8 @@ LIST NOMINAL-ADJ = "guoktilaš" "lámis" "oasálaš" ("suddu" Der/laš) "viissis
 SET LEX-ADV = Adv - (A*) ;
 # LIST LEX-ADV = "gusto";
 
-SET ADVERBIAL = Adv + Ill + Loc + Com + Ess ;
+# Not in use
+#LIST ADVERBIAL = Adv + Ill + Loc + Com + Ess ;
 
 SET NOT-ADV            = WORD - Adv;
 SET NOT-ADV-N          = WORD - Adv - N;
@@ -906,6 +918,7 @@ SET NOT-ADV-PCLE-INDEF = WORD - Adv - Pcle - Indef ;
 SET NOT-ADV-PCLE-NEG   = WORD - Adv - Pcle - Neg ;
 SET NOT-ADVL-PCLE-NEG  = WORD - @ADVL - @P< - Pcle - Neg ;
  #Ask Eckhardt.
+
 
 LIST MO = "goas" "gokko" "gos" "gosa" "govt" "makkár" "manne" "mo" "mot" "mov" "movt" ("nugo" @CVP)
 	(V Qst);
@@ -973,8 +986,10 @@ SETS
 
 # Verbs
 # -----
+
+# Hmm... Will there be any VN or will there be a V* N?
 SET VERB = V - (V N);
- # - (TV N) - (Actio Ill) - (Actio Nom) - (Actio Gen) - (Actio Acc) - (Actio Loc) - (Actio Com) ;
+ #  (TV N) - (Actio Ill) - (Actio Nom) - (Actio Gen) - (Actio Acc) - (Actio Loc) - (Actio Com) ;
   # V is all readings with a V tag in them, VERB should
             # be the ones without an N tag following the V
 SET VERB-NOT-ACTIO = V - (V N) - Actio ;
@@ -1011,6 +1026,7 @@ SET V-NOT-AUX = V - AUX ;
 			  # Does not include AUX-OR-MAIN.
 SET VFIN-NOT-AUX = VFIN - AUX ;
 
+# Hmm CG3
 SET V-MAIN = V - COPULAS - Neg - MOD-ASP + ("orrut") ;
  
 # The set of verbs that can be  main verbs. Includes AUX-OR-MAIN.
@@ -1380,7 +1396,8 @@ LIST PROP = (N Prop);
 
 SET CNOUN = N - Prop;
 
-SET CNOUN-PL-NOM = (N Pl Nom) - Prop ;
+# Hmm... Not in use.
+#SET CNOUN-PL-NOM = (N Pl Nom) - Prop ;
 
 SET HNOUN = N - Cmpnd ;
 
@@ -1388,6 +1405,7 @@ SET HNOUN-NOM = (N Nom) - Cmpnd ;
 
 SET N-NOT-GEN = N - (N Gen) ;
 
+# Hmm..
 SET NP = N + A ;                      # anything that can take except numerals
 SET NP-HEAD        = Pron + HNOUN ;
 SET NP-HEAD-SG     = (Pron Sg) + (Pron Sg3) + (N Sg) + (A Sg) - Cmpnd;
@@ -1407,7 +1425,7 @@ SET PRE-NP-HEAD = (Prop Attr) + (Prop @>N) + (A Attr) + (ABBR Attr) + ("buorre")
          # + (Ill LINK 1 (PrfPrc @>N)) + (Com LINK 1 (PrfPrc @>N)) + (Loc LINK 1 (PrfPrc @>N))
          # The strict version of items that can only be premodifiers, not parts of the predicate
          
-SET V-PRE-NP = PrfPrc + PrsPrc + Actor +  Actio + (V A) + (Ind Prs Sg3) + (Ind Prs Sg1) + (Imprt Prs Du2) ;
+SET V-PRE-NP = PrfPrc + PrsPrc + Actor + Actio + (V A) + (Ind Prs Sg3) + (Ind Prs Sg1) + (Imprt Prs Du2) ;
     # to be used together with PRE-NP-HEAD before @>N is disambiguated
          
 SET NP-MEMBER   = PRE-NP-HEAD + N ;
@@ -4056,7 +4074,7 @@ MAP (@-FAUXV @-FMAINV) TARGET Inf IF (*-1 INFV BARRIER VFIN) (0 AUX-OR-MAIN);
 MAP (@-FAUXV @-FMAINV) TARGET Inf IF (-1 Acc LINK 0 HUMAN OR PPRON-NOT-DAT OR Refl)(0 AUX-OR-MAIN);
 	## Muhto son logai iežas áigut ášši duvdit departemeantta ovdii.
 
-MAP (@+FAUXV @+FMAINV) TARGET VFIN IF (NEGATE *-1C VFIN BARRIER S-BOUNDARY) (0 AUX);
+MAP (@+FAUXV @+FMAINV) TARGET VFIN IF (NEGATE *-1C VFIN BARRIER S-BOUNDARY)(0 AUX);
 	## Maid Máret áiggui goarrumis?
 	## Mun galggan ruoktot.
 MAP (@-FAUXV) TARGET ConNeg IF (*-1 Neg BARRIER VERB)(0 COPULAS) (*1 PrfPrc BARRIER VERB OR S-BOUNDARY);
@@ -4276,7 +4294,7 @@ MAP (@ADVL) TARGET ("čalbme#bealle" Gen);
 
 #ADD (@SUBJ @SPRED) TARGET Nom IF (NEGATE 0 ("diibmu") OR ("biellu") OR ("dbm") OR ("dii") OR ("bie") OR Adv LINK *1 Num BARRIER NP-BOUNDARY OR COMMA LINK 1 Num LINK *1 MEASURE LINK 1 ALU) (NEGATE 0 Num LINK *-1 ("diibmu") OR ("dbm") BARRIER NP-BOUNDARY) (NEGATE 0 (Prop Nom) LINK 1 ORGANIZATION)(NEGATE 0 (Actio Ess) OR (ESS-ADVL-N Ess));
 
-ADD (@SUBJ @SPRED @PPRED) TARGET Nom IF (NEGATE 0 ("diibmu") OR ("biellu") OR ("dbm") OR ("dii") OR ("bie") OR Adv LINK *1 Num BARRIER NP-BOUNDARY OR COMMA LINK 1 Num LINK *1 MEASURE LINK 1 ALU) (NEGATE 0 Num LINK *-1 ("diibmu") OR ("dbm") BARRIER NP-BOUNDARY) (NEGATE 0 (Prop Nom) LINK 1 ORGANIZATION)(NEGATE 0 (Actio Ess) OR (ESS-ADVL-N Ess));
+MAP (@SUBJ @SPRED @PPRED) TARGET Nom IF (NEGATE 0 ("diibmu") OR ("biellu") OR ("dbm") OR ("dii") OR ("bie") OR Adv LINK *1 Num BARRIER NP-BOUNDARY OR COMMA LINK 1 Num LINK *1 MEASURE LINK 1 ALU) (NEGATE 0 Num LINK *-1 ("diibmu") OR ("dbm") BARRIER NP-BOUNDARY) (NEGATE 0 (Prop Nom) LINK 1 ORGANIZATION)(NEGATE 0 (Actio Ess) OR (ESS-ADVL-N Ess));
 	## Manne ii leat áviisa boahtán?
 
 MAP (@>N) TARGET (Prop Plc Nom) IF (1 N); 
@@ -4508,7 +4526,7 @@ SUBSTITUTE (@>N) (@APP) TARGET Num IF (-1 KLASS)(0 Num);
 	# =================================== #
 	# One-cohort disambiguation - cycle 0 #
 	# =================================== #
-                    CONSTRAINTS #1            #
+                    SECTION #1            #
 	# =================================== #
 
   # ----------------- #
@@ -4536,8 +4554,8 @@ SUBSTITUTE (@>N) (@APP) TARGET Num IF (-1 KLASS)(0 Num);
 
 	# The inassigned syntactic functions
 	# ----------------------------------
-CONSTRAINTS
-REMOVE (@X) ; # Keine Spur...
+
+#REMOVE (@X) ; # Keine Spur...
  # @X is our "didn't find a syntactic tag -tag.
  # Here we remove it if we have any other suggestion.
 
@@ -4607,7 +4625,7 @@ SELECT Prop IF (NEGATE -1 BOS)(0 Adv LINK NOT 0 (Plc Der/t));
 # # Default is to keep these rules  (counting: 16 lines) 
 # OMITIF(der)
 # 
-# REMOVE N-DER IF (0 LEX-N LINK NOT 0 Ess);
+REMOVE N-DER IF (0 LEX-N LINK NOT 0 Ess);
 	## Dat lea oahpaheaddjin doppe.	
  # Since Actio was included in the N-DER set, this rule now removes
  # many Actios. This may be unfortunate. If so, the remedy is to remove
@@ -4981,6 +4999,7 @@ SELECT ("šiehtadus#boahtu") IF (0 ("šiehtadus#boađđu"));
 SELECT ("šiehtadallan#boahtu") IF (0 ("šiehtadallan#boađđu"));
 SELECT ("válga#boahtu") IF (0 ("válga#boađđu"));
 SELECT ("vearro#boahtu") IF (0 ("vearro#boađđu"));
+SELECT ("vil#bealli") (0 ("vilb#.*"r));
 SELECT ("vuovdin#boahtu") IF (0 ("vuovdin#boađđu"));
 
 SELECT ("boađus") IF (-1 COPULAS)(0 ("boahtu"))(1 Num);
@@ -5652,7 +5671,7 @@ REMOVE Prop IF (0 ("unni" Attr))(1 Der/Dimin OR ("mánáš"));
 	# --------------------------------------------------------- #
 	# Cycle 1a: cases that will be needed in careful mode later #
 	# --------------------------------------------------------- #
-                            CONSTRAINTS #2                      #
+                            SECTION #2                      #
 	# --------------------------------------------------------- #
 	# The idea with cycle 1a is to disambiguate cases that are judged as easier and
 	# more secure than later cases, and that at the same may be used as context
@@ -6011,7 +6030,7 @@ REMOVE Px IF (*-1 (Pron Pers Gen @>N) BARRIER NOT-ADJ);
   # Note: This rule is too general to accept a hypothetical "Mu áhččán"
 
 	# ------------------- #
-         CONSTRAINTS #3   #
+         SECTION #3   #
 	# ------------------- #
 
 	# Certain verb readings
@@ -6216,7 +6235,7 @@ REMOVE (Pcle) IF (0 @COMP-CS<);
 	# ---------------------------------------------------------------- #
 	# Cycle 1b: removing the readings that were left from the 1a rules #
 	# ---------------------------------------------------------------- #
-               CONSTRAINTS #4                                          #
+               SECTION #4                                          #
 	# ---------------------------------------------------------------- #
  
 
@@ -6263,9 +6282,9 @@ REMOVE (PxSg3) IF (*-1 Interr BARRIER VFIN)(*1 VFIN LINK NOT 0 Sg3);
 	# -------------------------------------------- #
 	# Cycle 2: Other cases of local disambiguation #
 	# -------------------------------------------- #
-          CONSTRAINTS #5       #
+          SECTION #5       #
 	# -------------------------------------------- #
-	# Note: Is it clearer to introduce a "CONSTRAINTS" boundary in front of Cycle 2?
+	# Note: Is it clearer to introduce a "SECTION" boundary in front of Cycle 2?
 
 	# This is the main part of the local disambiguation.
 	# Here we go through the grammar in a systematic way.
@@ -6799,7 +6818,7 @@ SELECT Nom IF (-1 (":") LINK -1 CARDINALS LINK -1 (Prop Sur Nom) LINK -1 ("\("))
 	# ========================== #
 	# Disambiguating adpositions #
 	# ========================== #
-              CONSTRAINTS #6     #
+              SECTION #6     #
 	# ========================== #
 
 	# Rules relating to particular adpositions
@@ -6912,7 +6931,7 @@ SELECT Po IF (-3 Inf)(-2 ("ja"))(-1 Inf)(0 GASKAL);
 	## Sániid oamastit ja eaiggáduššat gaskkas geavahuvvo "ja".
 
 	# =============== #
-           CONSTRAINTS #7 #
+           SECTION #7 #
 	# =============== #
 
 	# Po or Pr?
@@ -7040,7 +7059,7 @@ REMOVE V IF (-1 Gen)(0 Po)(NEGATE 1C Po);
 	# =========================== #
 	# Disambiguating subjunctions #
 	# =========================== #
-                  CONSTRAINTS #8      #
+                  SECTION #8      #
 	# =========================== #
 
  # Subjunctions are disambiguated in two subcycles. This is the first.
@@ -7205,7 +7224,7 @@ SELECT Pron IF (0 ("vaikko"))(1 ("mii") OR ("gii") OR ("guhte") OR ("goabbá") O
  # Subjunctions are disambiguated in two subcycles. This is the second.
 
 	# ============== #
-          CONSTRAINTS #9 # 
+          SECTION #9 # 
 	# ============== #
 
 	# CS selection for specific CS candidates
@@ -7260,7 +7279,7 @@ REMOVE CS IF (NEGATE *1 VFIN OR ("leapma" Dimin)); # The latter is "leamaš".
 	# ====================== #
 	# Disambiguating adverbs #
 	# ====================== #
-              CONSTRAINTS #10    #
+              SECTION #10    #
 	# ====================== #
 
 	# General adverb rules
@@ -8353,7 +8372,7 @@ REMOVE LCRD IF (-1 Inf LINK NOT *-1 V)(0 CS)(1 Inf);
 	# ======================= #
 	# Disambiguating pronouns #
 	# ======================= #
-               CONSTRAINTS #11    # 
+               SECTION #11    # 
 	# ======================= #
 
 	# Interrogative and relative pronouns
@@ -8533,7 +8552,7 @@ REMOVE Pl IF (-1 (Recipr Du))(0 Recipr);
 	## nuppiin.
 
 	# ================ #
-       CONSTRAINTS #12 #
+       SECTION #12 #
 	# ================ #
 
 REMOVE Recipr ;
@@ -9159,7 +9178,7 @@ REMOVE ("Lea" Prop Sg Nom) IF (-1 BOS)(NEGATE *1 Sg3 BARRIER S-BOUNDARY2);
 	# ========================= #
 	# Disambiguating adjectives #
 	# ========================= #
-                CONSTRAINTS #13     #
+                SECTION #13     #
 	# ========================= #
 
 	# Rules related to specific adjectives
@@ -9647,7 +9666,7 @@ SELECT Adv IF (0 A)(1 CC)(2C Adv);
 	# ============================= #
 	# Disambiguating verbs - part 1 #
 	# ============================= #
-                  CONSTRAINTS #14       #
+                  SECTION #14       #
 	# ============================= #
 
 	# In this cycle we apply some safe verb rules.
@@ -10038,7 +10057,7 @@ REMOVE Ess IF (NEGATE *-1 VFIN)(0 (Actio Gen))(*1 N BARRIER NPNH);
 	# ==================== #
 	# Disambiguating nouns #
 	# ==================== #
-              CONSTRAINTS  #15 #
+              SECTION  #15 #
 	# ==================== #
 
 	# Proper nouns
@@ -10056,7 +10075,8 @@ REMOVE (Prop Pl) IF (0 (Prop Sg))(NEGATE 0 ("Sámediggi") OR (laš));
 	## Marit lea dál.
  # Marit N Sg, not Mari+t Pl Nom
 
-REMOVE (Prop Pl) IF (-1 BOS)(0 CNOUN-PL-NOM);    
+# Not in use
+#REMOVE (Prop Pl) IF (-1 BOS)(0 CNOUN-PL-NOM);    
 	## Sámit leat álgoálbmot.
 		
 SELECT PROP-OR-NOT1 IF (0 PROP-OR-NOT2);	
@@ -10328,7 +10348,7 @@ SELECT (N Pl) IF (-1 ("buorre" Pl Nom))(0 (V Ind));
 	# ===================
 
 	# ================ #
-          CONSTRAINTS  #16 #
+          SECTION  #16 #
 	# ================ #
 	
 	# Secure rules for choosing Acc 
@@ -11327,7 +11347,7 @@ REMOVE Acc IF (*-1 ILLV BARRIER NOT-ADV-PCLE OR go LINK NOT 0 ACC-ILLV LINK *-1 
 	## ...masa gullet Kárášjoga, Guovdageainnu, ...ja Gáivuona gielddat. 
 SELECT (Attr) IF (0 ("nr"));
 
-CONSTRAINTS # 17
+SECTION # 17
 
 	#SELECT Gen IF (*-1 Ill BARRIER NPNH LINK NOT 0 Px) #(*1 Po BARRIER NPNH LINK NOT 0 Px);
 	## Son bijai su alimussii tempela geađgemuvrra ala. #Might have to be checked.
@@ -11578,7 +11598,7 @@ SELECT (Sg Acc) IF (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK 0 Inf LINK *-1 (Sg1 Ac
  # this rule needs to come earlier since copulas are involved.
 
 	# ================ #
-           CONSTRAINTS #18 #
+           SECTION #18 #
 	# ================ #
 	# Nominative
 	# ==========
@@ -12129,7 +12149,7 @@ SELECT Loc IF (-3 HEADOFPARTS LINK 1 Loc LINK 1 (PrfPrc @>N));
 
 	# Accusative
 	# =============== #
-      CONSTRAINTS #19 #
+      SECTION #19 #
 	# =============== #
 
     # Miscellaneous rules related to accusative
@@ -12694,7 +12714,7 @@ SELECT Ill IF (*-1 CC BARRIER NPNH LINK -1 Ill LINK *-1 COMMA BARRIER S-BOUNDARY
     ## Doalut gullet golmma vieljažahkii Martin, Gustav ja Ole Kantii, Sigvart Renanderii ja su niidii Majabritt Renanderii.
 
 	# =================== #
-            CONSTRAINTS #20   #
+            SECTION #20   #
 	# =================== #
 
 	# Early comitative rules
@@ -13653,7 +13673,7 @@ SELECT Com IF (*-1 CRD BARRIER NPNH LINK *-1C Com BARRIER WORD);
 	 
 
 	# =============== #
-          CONSTRAINTS #21 #
+          SECTION #21 #
 	# =============== #
 
 	# Locative and comitative - Disambiguation based upon coordination
@@ -13848,7 +13868,7 @@ SELECT Nom IF (0C ("ulbmil" Nom) OR ("ulbmil" @>N))(*1C Loc BARRIER NPNH);
 
 	# Finite forms #
 	# ================ #
-           CONSTRAINTS #22 #
+           SECTION #22 #
 	# ================ #
 
 	# Finite or not
@@ -14645,7 +14665,7 @@ SELECT (Der/PassS) IF (*-1 ("leat" Sg3) BARRIER V)(*-1 (@ADVL))(NEGATE *-1 (@SUB
 	# ===================== #
 
 	# ================== #
-            CONSTRAINTS  #23 #
+            SECTION  #23 #
 	# ================== #
 
 	# Infinitive
@@ -15373,7 +15393,7 @@ REMOVE ("vuordát") IF (0 ("vuordit"));
 	# ===================== #
 	#      Residual cases   #
 	# ===================== #
-              CONSTRAINTS #24   #
+              SECTION #24   #
 	# ===================== #
 
 	# Case rules
@@ -15531,7 +15551,7 @@ SELECT Pr IF (*1C (@P<) BARRIER NPNH);
 	# =============================== #
 	# Global disambiguation - cycle 3 #
 	# =============================== #
-                   CONSTRAINTS #25        #
+                   SECTION #25        #
 	# =============================== #
 
 	# This is the section for rules of more global scope.
@@ -15611,7 +15631,7 @@ SELECT Gen IF (-1C Pr)(0 Num);
 	# =============================== #
 	# Disambiguating syntax - Cycle 4 #
 	# =============================== #
-                    CONSTRAINTS #26       #
+                    SECTION #26       #
 	# =============================== #
 
   # ----------------- #
@@ -15931,6 +15951,7 @@ SELECT (@SPRED) IF (*-1 BOS OR CLB OR PUNCT BARRIER NOT-CC)(0 A LINK NOT 0 Indef
 	## Heittogat dat leat maiddái.
 	## Ávdugasat sii geat moraštit.
 
+# Hmm..
 SELECT (@SPRED) IF (NEGATE 0 Loc)(*1 (Dem Nom) OR (Pers Nom) BARRIER NOT-ADV-PCLE OR COMMA OR CC OR CP OR PUNCT LINK *1 COPULAS BARRIER SV-BOUNDARY2 LINK NOT *1 VERB BARRIER S-BOUNDARY2);	
 	## Gean ráhkadan beaskanáhkit dát leat?
 	
@@ -16069,6 +16090,8 @@ SELECT (@-FSUBJ) IF (0 HUMAN OR PPRON-NOT-DAT)(1 VAbess);
 SELECT (@SPRED) IF (-2 N)(-1 (":"))(0 CARDINALS)(1 CLB);
   	## Fáksa: 22242786.
 
+
+
 	# Coordinated SPRED
 	# - - - - - - - - -
 
@@ -16093,6 +16116,8 @@ SELECT (@SPRED) IF (*-1 COMMA BARRIER NPNH LINK -1C (@SPRED))(0 A OR N)(NEGATE *
 	#SELECT (Sg @SPRED) IF (*1 V-SG BARRIER VFIN LINK 1C @SUBJ);
 	#SELECT (Pl @SPRED) IF (*-1 BOS LINK *1 V-PL OR V-DU BARRIER VFIN LINK 1C @SUBJ);
 	#SELECT (Pl @SPRED) IF (*1 V-PL OR V-DU BARRIER VFIN LINK 1C @SUBJ);
+
+
 
 	# Subject or not
 	# --------------
@@ -16119,7 +16144,8 @@ REMOVE (@SUBJ) IF (*-1 (@SUBJ) BARRIER S-BOUNDARY2)(0 Attr)(*1 N BARRIER NPNH);
 SELECT (@SUBJ) IF (*1C (@SPRED) BARRIER S-BOUNDARY2 OR COMMA OR NPNH);
 	## Dalle adno nannejuvvon dulkon gustojeaddji riektin.
 	
-REMOVE (@SUBJ) IF (-1 BOS)(*1 HNOUN BARRIER NPNH LINK 1 EOS);
+
+REMOVE (@SUBJ) IF (-1 BOS)(*1 @HNOUN BARRIER NPNH LINK 1 EOS);
   	## Stáhta ruđalaš ovddasvástádus.
   
 REMOVE (@SUBJ) IF (NEGATE *-1 ("go") OR ("dego") OR ("dugo") LINK *1 VFIN)(0C (@COMP-CS<) OR (@SUBJ) LINK NOT *1 VFIN);
@@ -16127,6 +16153,8 @@ REMOVE (@SUBJ) IF (NEGATE *-1 ("go") OR ("dego") OR ("dugo") LINK *1 VFIN)(0C (@
   	
 REMOVE (@SUBJ) IF (0 (Attr @>N));  	
   	## Guovdageaidnulaš Jostein Biti šattai Eurohpameašttirin skohtergilvvus.
+
+
 
   	# Late nominative rule
   	# --------------------
@@ -16583,7 +16611,7 @@ SELECT (@>N) IF (0 ("seamma") OR ("seammá"))(1 ("ollu" Indef));
 SELECT (@>ADVL) IF (0 ("seamma") OR ("seammá"))(1 ("ollu" Adv));
 
 	# ---------------- #
-       CONSTRAINTS #27 #
+       SECTION #27 #
 	# ---------------- #
 
 # (@APP-N<) ;
@@ -16604,7 +16632,7 @@ REMOVE (@OPRED) ;
 	# ===================================================== #
 	# Post-syntactic morphological disambiguation - Cycle 5 #
 	# ===================================================== #
-                                CONSTRAINTS #28                 #
+                                SECTION #28                 #
 	# ===================================================== #
 
 	# Demonstratives
