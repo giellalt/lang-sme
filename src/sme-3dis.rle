@@ -319,8 +319,6 @@
 
 DELIMITERS = "<.>" "<!>" "<?>" "<...>" "<¶>";
 
-                    SECTION #1            #
-        # =================================== #
 
 
 # ============= #
@@ -2797,11 +2795,11 @@ SET NON-APP = ALLSYNTAG - (@APP);
 
 # funzt nicht.
 
-	# ============= #
-	# Mapping rules #
-	# ============= #
-	    MAPPINGS    #
-	# ============= #
+	# =============== #
+	#  Mapping rules  #
+	# =============== #
+	  BEFORE-SECTIONS #
+	# =============== #
 
 	# Lexically determined mappings
 	# -----------------------------
@@ -2825,12 +2823,6 @@ MAP (@ADVL) TARGET Ess IF (0 ESS-ADVL-N);
 	# Mappings of minor categories
 	# ----------------------------
 
-MAP (@CNP @CVP) TARGET CC ;
-	## Na muhto don it leat dasa nama čállán!
-# meaning: CC-G CC-L (global, local, i.e., inside and outside NP)
-# mun liikon vuojadit ja viehkat @CNP
-# mun lean bures ja johtilit vuodján. @CNP
-# [S [NP mun] [VP [V vuoján] [AdvP bures ja johtilit]]]. @CNP
 
 MAP (@CNP @CVP) TARGET CS IF (0 ("go") OR ("vai") OR XGO OR DADE);
     ##
@@ -2838,14 +2830,22 @@ MAP (@CNP @CVP) TARGET CS IF (0 ("go") OR ("vai") OR XGO OR DADE);
 MAP (@CVP) TARGET CS IF (NEGATE 0 Indef) ;
 	## Leago guhkes áigi dassá go Máreha oidnet?
 
-MAP (@INTERJ) TARGET Interj ;
-	## Maid, iigo leat boahtán?
+MAP (@CNP @CVP) TARGET CC ;
+	## Na muhto don it leat dasa nama čállán!
+# meaning: CC-G CC-L (global, local, i.e., inside and outside NP)
+# mun liikon vuojadit ja viehkat @CNP
+# mun lean bures ja johtilit vuodján. @CNP
+# [S [NP mun] [VP [V vuoján] [AdvP bures ja johtilit]]]. @CNP
 
 MAP (@INTERJ) TARGET ("surgat") IF (*-1 ("vuoi") OR ("hei") BARRIER NOT-QMARK);
 	## Vuoi surgat dan gándda!
 
 MAP (@INTERJ) TARGET ("beargalat") IF (*-1 Nom BARRIER S-BOUNDARY LINK NOT 0 (Dem Nom));
 	## Gosa don leat beargalat mu reaga dahkan?
+
+MAP (@INTERJ) TARGET Interj ;
+	## Maid, iigo leat boahtán?
+
 
 MAP (@PCLE) TARGET Pcle ;
 	## Amma mii eat leat máksán? 
@@ -4553,7 +4553,7 @@ SUBSTITUTE (@>N) (@APP) TARGET Num IF (-1 KLASS)(0 Num);
   # Compounds
   # Proper nouns
 
-	# The inassigned syntactic functions
+	# The unassigned syntactic functions
 	# ----------------------------------
 
 REMOVE (@X) ; # Keine Spur...
@@ -6051,7 +6051,7 @@ REMOVE Px IF (*-1 (Pron Pers Gen @>N) BARRIER NOT-ADJ);
   # Note: This rule is too general to accept a hypothetical "Mu áhččán"
 
 	# ------------------- #
-         SECTION #3   #
+#SEC#         SECTION #3   #
 	# ------------------- #
 
 	# Certain verb readings
@@ -6952,7 +6952,7 @@ SELECT Po IF (-3 Inf)(-2 ("ja"))(-1 Inf)(0 GASKAL);
 	## Sániid oamastit ja eaiggáduššat gaskkas geavahuvvo "ja".
 
 	# =============== #
-           SECTION #7 #
+#SEC#           SECTION #7 #
 	# =============== #
 
 	# Po or Pr?
@@ -9695,38 +9695,38 @@ SELECT Adv IF (0 A)(1 CC)(2C Adv);
 	# ConNeg forms
 	# ------------
 
-SELECT (Imprt ConNeg) IF (*-1 (Neg Imprt) BARRIER ConNeg OR SV-BOUNDARY2);
+SELECT:ConNegImp (Imprt ConNeg) IF (*-1 (Neg Imprt) BARRIER ConNeg OR SV-BOUNDARY2);
 	## Ale ge jorggit selggiid sutnje gii bivdá dus loanas.
 
-REMOVE (Ind ConNeg) IF (-1 ConNeg)(*-2 (Neg Ind) BARRIER ConNeg OR PrfPrc OR SV-BOUNDARY2)(0 A)(1 go);
+REMOVE:NotConNegInd (Ind ConNeg) IF (-1 ConNeg)(*-2 (Neg Ind) BARRIER ConNeg OR PrfPrc OR SV-BOUNDARY2)(0 A)(1 go);
   	## Máhttájeaddji ii leat stuorit go oahpaheaddjis, ii ge bálvaleaddji
   	## stuorit go hearrás.
   	## Máhttájeaddji ii leat stuorit go oahpaheaddjis, ii ge bálvaleaddji
   	## stuorit johtileabbot go hearrás.
 
-SELECT (Ind ConNeg) IF (*-1 (Neg Ind) BARRIER ConNeg OR PrfPrc OR SV-BOUNDARY2)(NEGATE 0 N LINK *1 ConNeg BARRIER NOT-ADV-PCLE)(NEGATE 0 Loc LINK -1 NEGFOC LINK -1 Loc);
+SELECT:ConNegIfNeg (Ind ConNeg) IF (*-1 (Neg Ind) BARRIER ConNeg OR PrfPrc OR SV-BOUNDARY2)(NEGATE 0 N LINK *1 ConNeg BARRIER NOT-ADV-PCLE)(NEGATE 0 Loc LINK -1 NEGFOC LINK -1 Loc);
 	## Eai dat dohkke šat maninge.
 
-SELECT (Cond ConNeg) IF (*-1 (Neg Ind) BARRIER ConNeg OR SV-BOUNDARY2);
+SELECT:ConNegCondIfNeg (Cond ConNeg) IF (*-1 (Neg Ind) BARRIER ConNeg OR SV-BOUNDARY2);
 	## Ii go son ollu eanet gárvvohivčče din?
 
-REMOVE ConNeg IF (NEGATE *-1 Neg BARRIER SV-BOUNDARY2 OR go)(NEGATE -1 Rel LINK -1 Neg)(NEGATE -2 Rel LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-AA LINK *-1 ConNeg BARRIER VFIN);
-REMOVE (ConNegII) IF (NEGATE *-1 (Neg Imprt) BARRIER SV-BOUNDARY2);
+REMOVE:NotConNegNotNeg ConNeg IF (NEGATE *-1 Neg BARRIER SV-BOUNDARY2 OR go)(NEGATE -1 Rel LINK -1 Neg)(NEGATE -2 Rel LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-AA LINK *-1 ConNeg BARRIER VFIN);
+REMOVE:NotConNegII (ConNegII) IF (NEGATE *-1 (Neg Imprt) BARRIER SV-BOUNDARY2);
 	## Dasgo mii oinniimet su nástti badjáneamen ja leat boahtán...
 	## Stáhta galgá fuolahit ahte gávdno divššohasbearráigeahčči 
 	## juohke fylkkas.
 
-SELECT (Imprt ConNeg) IF (*-1 CC BARRIER NOT-ADV LINK *-1 (Imprt ConNeg) BARRIER VERB);
-SELECT (Ind ConNeg) IF (*-1 CC BARRIER NOT-ADV LINK *-1 (Ind ConNeg) BARRIER VERB);
+SELECT:ConNegImpCC (Imprt ConNeg) IF (*-1 CC BARRIER NOT-ADV LINK *-1 (Imprt ConNeg) BARRIER VERB);
+SELECT:ConNegIndCC (Ind ConNeg) IF (*-1 CC BARRIER NOT-ADV LINK *-1 (Ind ConNeg) BARRIER VERB);
 	## Allet nappo moraš ja cealkke...
 	##
 
-SELECT ConNeg IF (*-1 PrfPrc BARRIER NOT-ADV-PCLE LINK *-1 Neg BARRIER SV-BOUNDARY2)(0 ("leat"))(NEGATE *1 PrfPrc BARRIER NOT-ADV-PCLE);
+SELECT:ConNegPrfPrc ConNeg IF (*-1 PrfPrc BARRIER NOT-ADV-PCLE LINK *-1 Neg BARRIER SV-BOUNDARY2)(0 ("leat"))(NEGATE *1 PrfPrc BARRIER NOT-ADV-PCLE);
 	## Ii dál láhppán gal leat.
 	# Need more advanced rule to select ConNeg when there is more
 	# material between Neg and ConNeg.
 
-REMOVE ConNeg IF (NEGATE *-1 (Neg) BARRIER CLB OR V-IND-FIN)(NEGATE *-1 Nom LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-AA LINK *-1 ConNeg BARRIER VFIN); 
+REMOVE:NotConNegIfNotNeg ConNeg IF (NEGATE *-1 (Neg) BARRIER CLB OR V-IND-FIN)(NEGATE *-1 Nom LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-AA LINK *-1 ConNeg BARRIER VFIN); 
 	## Juohke muorra mii ii šaddat buriid šattuid, čullojuvvo ja 
 	## bálkestuvvo dollii.
 	## Gávpot mii lea vári alde, ii sáhte leat čihkosis.
@@ -9734,30 +9734,30 @@ REMOVE ConNeg IF (NEGATE *-1 (Neg) BARRIER CLB OR V-IND-FIN)(NEGATE *-1 Nom LINK
 	# Imperative
 	# ----------
 
-REMOVE Imprt IF (1 ("go" Pcle));
-REMOVE Imprt IF (*-1 (Neg Ind) BARRIER CLB OR V-IND-FIN);
-REMOVE Imprt IF (*-1 ConNeg BARRIER COMMA OR SV-BOUNDARY2);
+REMOVE:NotImprtGo Imprt IF (1 ("go" Pcle));
+REMOVE:NotImprtInd Imprt IF (*-1 (Neg Ind) BARRIER CLB OR V-IND-FIN);
+REMOVE:NotImprtConNeg Imprt IF (*-1 ConNeg BARRIER COMMA OR SV-BOUNDARY2);
 	## Go bohciida soahpameahttunvuohta das ahte galget go journála... 
 	## Mánát eai gillen dálu čorget.
 	## Na muhto don it leat dasa nama čállán!
 
-REMOVE Imprt IF (-1 A LINK NOT 0 Ess);
-REMOVE Imprt IF (-1 N OR Po);
+REMOVE:NotImprtA Imprt IF (-1 A LINK NOT 0 Ess);
+REMOVE:NotImprtN Imprt IF (-1 N OR Po);
 	## Čuorvvas gullo Ramas. 
 	## Boarrásis leai dat vel eanaš ealáhussan ge.
  # This will work fine when headings no longer interfere.
 
-REMOVE Imprt IF (*1C VFIN BARRIER NOT-ADV-PCLE OR CLB);
+REMOVE:NotImprtVFIN Imprt IF (*1C VFIN BARRIER NOT-ADV-PCLE OR CLB);
 	## Lágas ii duššaduvvo oktage bustávaš dahje čuoggáš, ovdal go...
 
-REMOVE Imprt IF (*-1 ("\(") BARRIER ("\)"))(0 N);
+REMOVE:NotImprtSlash Imprt IF (*-1 ("\(") BARRIER ("\)"))(0 N);
 	## Láigolihtus eai čuovo makkárge sierravuoigatvuođat gáddái (buo.
 	## riehkit, stárat).
 
-SELECT Imprt IF (-1 BOS OR PUNCT OR REALCLB)(0 ("leat"))(1 A);
+SELECT:ImprtLeat Imprt IF (-1 BOS OR PUNCT OR REALCLB)(0 ("leat"))(1 A);
 	## Leage buorre!
 	
-SELECT Imprt IF (-1 BOS OR PUNCT OR REALCLB)(1 ("dál"))(2 COMMA)(3 Rel OR Adv);
+SELECT:ImprtDál Imprt IF (-1 BOS OR PUNCT OR REALCLB)(1 ("dál"))(2 COMMA)(3 Rel OR Adv);
 	## Gullet dál, maid veardádus gilvi birra mearkkaša...
 	
 
