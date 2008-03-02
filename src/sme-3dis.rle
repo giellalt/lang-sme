@@ -719,6 +719,16 @@ SET V-ACT = V - Der/Pass ;
 
 LIST ADVLCASE = Ill Loc Com Ess ;
 
+# Sg Nom - Sg Nom | Pl Nom - Pl Nom
+# Sg Acc - Sg Acc | Pl Acc - Pl Acc
+# Sg Gen - Sg Gen | Pl Gen - Pl Gen
+# Sg Gen - Sg Ill | Pl Gen/Ill - Pl Ill 
+# Sg Gen - Sg Loc | Pl Loc - Pl Loc
+# Sg Com - Sg Com | Pl Gen/Com - Pl Com
+# Ess - Ess
+#LIST CASE-HALFAGREEMENT = Ill (Sg Loc) (Pl Com) Ess ;
+
+LIST CASE-AGREEMENT = Nom Acc Gen (Pl Ill) Loc Com Ess ;
 LIST CASE = Nom Acc Gen Ill Loc Com Ess ;
 
 SET NOT-NOM = CASE - Nom ;
@@ -3072,34 +3082,37 @@ MAP (@>N) TARGET (A Attr)(NEGATE *1 Num BARRIER NOT-A) ;
 	## Dalle gusto vuosttas, nubbi ja goalmmát teakstaoassi seammaláhkái.
 
 	# buorre
-MAP (@>N) TARGET Nom IF (0 ("buorre"))(*1 (N Nom) BARRIER NPNH);
-	## Leatgo buorit guolit?
 
-MAP (@>N) TARGET Acc IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER NPNH)(0 ("buorre"))(*1 (N Acc) BARRIER NPNH);
-	## Doaivvutgo oažžut buriid guliid?
+MAP:CaseAgrBuorre (@>N) TARGET ("buorre") (0 $$CASE-AGREEMENT) (*1 $$CASE-AGREEMENT BARRIER NPNH LINK 0 N) ;
 
-MAP (@>N) TARGET (Sg Gen) IF (0 ("buorre")) (*1 (N Sg Gen) OR (N Sg Ill) OR (N Sg Loc) BARRIER NPNH);
-	## Dearvvašvuođabargiidlága § 40 vuosttas lađđasa mielde galgá 
-	## journála čállojuvvot buori fidnodábi mielde.
-
-MAP (@>N) TARGET (Pl Gen) IF (0 ("buorre")) (*1 (N Pl Gen) OR (N Pl Ill) OR (N Pl Com) BARRIER NPNH);
-	## Giittán maiddái universitehtalektora Fredrik Harhoff 
-	## buriid ságastallamiid ovddas.
-
-MAP (@>N) TARGET (Sg Com) IF (0 ("buorre"))(*1 (N Sg Com) BARRIER NPNH);
-	## Jos mii addet buriin dáhtuin...
-
-MAP (@>N) TARGET (Pl Ill) IF (0 ("buorre"))(*1 (N Pl Ill) BARRIER NPNH);
-	## Son lea sivdnidan min Kristus Jesusis buriide daguide.
-
-MAP (@>N) TARGET (Pl Loc) IF (0 ("buorre"))(*1 (N Pl Loc) BARRIER NPNH);
-	## Son ferte leat dovddus buriin daguin. 
-
-MAP (@>N) TARGET (Pl Com) IF (0 ("buorre"))(*1 (N Pl Com) BARRIER NPNH);
-	##
-
-MAP (@>N) TARGET Ess IF (0 ("buorre"))(*1 (N Ess) BARRIER NOT-QMARK);
-	## Maŋemus son šattai buorrin oahpaheaddjin.
+#MAP (@>N) TARGET Nom IF (0 ("buorre"))(*1 (N Nom) BARRIER NPNH);
+#	## Leatgo buorit guolit?
+#
+#MAP (@>N) TARGET Acc IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER NPNH)(0 ("buorre"))(*1 (N Acc) BARRIER NPNH);
+#	## Doaivvutgo oažžut buriid guliid?
+#
+#MAP (@>N) TARGET (Sg Gen) IF (0 ("buorre")) (*1 (N Sg Gen) OR (N Sg Ill) OR (N Sg Loc) BARRIER NPNH);
+#	## Dearvvašvuođabargiidlága § 40 vuosttas lađđasa mielde galgá 
+#	## journála čállojuvvot buori fidnodábi mielde.
+#
+#MAP (@>N) TARGET (Pl Gen) IF (0 ("buorre")) (*1 (N Pl Gen) OR (N Pl Ill) OR (N Pl Com) BARRIER NPNH);
+#	## Giittán maiddái universitehtalektora Fredrik Harhoff 
+#	## buriid ságastallamiid ovddas.
+#
+#MAP (@>N) TARGET (Sg Com) IF (0 ("buorre"))(*1 (N Sg Com) BARRIER NPNH);
+#	## Jos mii addet buriin dáhtuin...
+#
+#MAP (@>N) TARGET (Pl Ill) IF (0 ("buorre"))(*1 (N Pl Ill) BARRIER NPNH);
+#	## Son lea sivdnidan min Kristus Jesusis buriide daguide.
+#
+#MAP (@>N) TARGET (Pl Loc) IF (0 ("buorre"))(*1 (N Pl Loc) BARRIER NPNH);
+#	## Son ferte leat dovddus buriin daguin. 
+#
+#MAP (@>N) TARGET (Pl Com) IF (0 ("buorre"))(*1 (N Pl Com) BARRIER NPNH);
+#	##
+#
+#MAP (@>N) TARGET Ess IF (0 ("buorre"))(*1 (N Ess) BARRIER NOT-QMARK);
+#	## Maŋemus son šattai buorrin oahpaheaddjin.
 
 	# Prenominal participles
 	# - - - - - - - - - - - -
@@ -6570,7 +6583,7 @@ REMOVE A-CASE IF (*-1 BOS OR CS OR (":" CLB) BARRIER NOT-DEM)(0 N)(NEGATE 0 ("bu
  # reading for a case-inflected prenominal word must thus be N.
  # (Problem: we have not considered a string predicative adj + other NP)
 
-REMOVE (A Gen) IF (0 N)(NEGATE 0 Ord OR NOUN-PO OR ("dološ"))(*1 N BARRIER NOT-ADJ);
+REMOVE (A Gen) IF (0 N LINK NOT 0 ("buorre"))(NEGATE 0 Ord OR NOUN-PO OR ("dološ"))(*1 N BARRIER NOT-ADJ);
 	## Sámi dutkamiid guovddáža ásaheapmi.
 
 	# Preverbal subject
@@ -6600,7 +6613,7 @@ REMOVE Adv IF (NEGATE *-1 (Pl Nom) BARRIER S-BOUNDARY)(0 (N Pl Nom))(*1C V-PL3 B
 REMOVE V IF (-1C Dem)(1 V-IND-FIN);	
 	## Dán báhkis šaddá čáppa gohppu.
 
-REMOVE V IF (-1 BOS OR CS OR (":" CLB))(0 N)(1 ("go"))(2 VFIN LINK NOT 0 Adv);	
+REMOVE V IF (-1 BOS OR CS OR (":" CLB))(0 N)(1 ("go"))(2 VFIN LINK NOT 0 Adv OR Imprt);	
 	## Ádjás go lea ođđa fanas?
 
 REMOVE (V Ind) IF (-1 Dem)(0 N)(1C (V Ind));
@@ -7046,7 +7059,7 @@ SELECT Pr IF (*-1 MOVEMENT-V BARRIER NOT-ADV)(0 ("guovddáš"))(1 PLACE)(NEGATE 
 SELECT Adv IF (-2 (Num Acc))(-1 (N Acc))(0 ("maŋŋil"));
 	## Dat dáhpáhuvai golbma jagi maŋŋil.
 
-SELECT Po IF (-1 Gen LINK NOT 0 Num)(NEGATE -1 VFIN OR ("leat" PrfPrc) OR Adv)(NEGATE -1 Acc LINK *-1 CC BARRIER NOT-NP LINK -1 Acc LINK *-1 V-TRANS-ACT BARRIER NPNHA)(NEGATE 0 Attr OR ("mielde") OR ("fárrui") OR ("mađe") OR NOUN-PO OR CS)(NEGATE 0 ("bajil") LINK *-1 ("oahppat") BARRIER SV-BOUNDARY)(NEGATE 1C Po)(NEGATE 1 Gen);
+SELECT Po IF (-1 Gen LINK NOT 0 Num)(NEGATE -1 VFIN OR ("leat" PrfPrc) OR Adv)(NEGATE -1 Acc LINK *-1 CC BARRIER NOT-NP LINK -1 Acc LINK *-1 V-TRANS-ACT BARRIER NPNHA)(NEGATE 0 Attr OR ("mielde") OR ("fárrui") OR ("mađe") OR ("buorre") OR NOUN-PO OR CS)(NEGATE 0 ("bajil") LINK *-1 ("oahppat") BARRIER SV-BOUNDARY)(NEGATE 1C Po)(NEGATE 1 Gen);
 	## Daid ovddas gal in máksán maidege.
 
 SELECT Po IF (-1 Num)(0 ("rádjai")); # Make general rule!
@@ -9512,14 +9525,17 @@ SELECT (A Attr) IF (*-1 Neg BARRIER S-BOUNDARY2 OR VFIN)(*1 CONTRA BARRIER WORD 
 
 	# Special rules for 'buorre' (the only adjective showing case agreement)
 	# ----------------------------------------------------------------------
-SELECT (Pl Nom) IF (0 ("buorre"))(*1 (N Pl Nom) BARRIER NOT-ADJ-CC);
+SELECT (A Ess) IF (0 ("buorre"))(*1 (N Ess) BARRIER NOT-ADJ-CC);
+	## Son šaddá buorrin oahpaheaddjin.
+
+SELECT (A Pl Nom) IF (0 ("buorre"))(*1 (N Pl Nom) BARRIER NOT-ADJ-CC);
 	## Leatgo buorit guolit?
 
-SELECT (N Acc) IF (0 ("buorre"))(NEGATE 0 Comp OR Superl)(*1C (N Acc) BARRIER NOT-ADJ-CC);
+SELECT (A Acc) IF (0 ("buorre"))(NEGATE 0 Comp OR Superl)(*1C (N Acc) BARRIER NOT-ADJ-CC);
 	## Doaibmaplána lea bidjan buori vuođu.
 	## Doaivvutgo oažžut buriid guliid?
 
-SELECT Gen IF (0 ("buorre"))(NEGATE 0 Comp OR Superl)(*1C (N Gen) BARRIER NOT-ADJ-CC LINK 0 HNOUN);
+SELECT (A Gen) IF (0 ("buorre"))(NEGATE 0 Comp OR Superl)(*1C (N Gen) BARRIER NOT-ADJ-CC LINK 0 HNOUN);
 	## ...galgá journála čállojuvvot buore fidnodábi mielde.
 
 	# Comparatives
@@ -10328,8 +10344,8 @@ REMOVE N IF (NEGATE *-1 (@OBJ) LINK 0 ANIMATE OR (Pron Pers))(0 A)(0 (@OPRED) LI
 SELECT (A Nom) IF (-1 ("man") OR ("oalle"))(0 N);
     ## 1700-logu vuosttaš oasis eahpitkeahttá Thomas von Westen čielgasepmosit válddahallan man heittot sápmelaččaid ja dáččaid ja dáččaid gaskavuohta duođai sáhtii leahkit.
 
-REMOVE (A Sg Acc) IF (NEGATE *-1 COPULAS BARRIER NOT-ADV-PCLE)(0 (N Sg Acc));
-REMOVE (A Sg Gen) IF (0 (N Sg Gen))(NEGATE 0 Ord OR ("dološ"));
+REMOVE (A Sg Acc) IF (NEGATE *-1 COPULAS BARRIER NOT-ADV-PCLE)(0 (N Sg Acc))(NEGATE 0 ("buorre"));
+REMOVE (A Sg Gen) IF (0 (N Sg Gen))(NEGATE 0 Ord OR ("dološ") OR ("buorre"));
 	## Beaivváš addá eatnamii lieggasa. 
 	## Muhtomin ferte guokte gurpasa bidjat oktan noađđebeallin.
 
