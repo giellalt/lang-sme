@@ -726,8 +726,8 @@ LIST ADVLCASE = Ill Loc Com Ess ;
 # Sg Gen - Sg Loc | Pl Loc - Pl Loc
 # Sg Com - Sg Com | Pl Gen/Com - Pl Com
 # Ess - Ess
-#LIST CASE-HALFAGREEMENT = Ill (Sg Loc) (Pl Com) Ess ;
 
+LIST CASE-HALFAGREEMENT = Ill (Sg Loc) (Pl Com) Ess ;
 LIST CASE-AGREEMENT = Nom Acc Gen (Pl Ill) Loc Com Ess ;
 LIST CASE = Nom Acc Gen Ill Loc Com Ess ;
 
@@ -1200,7 +1200,7 @@ LIST SOURCE-V = "gáibidit" ;
 # The idea is that the superset DYNAMIC-V does not select (Pl Loc) if the noun is a member of the set TOOL, ABSTR-TOOL or CONCEPT. This is the "minste felles multiplum". The sub-sets are different, e.g. many of them (but not all) are not connected to HUMAN in (Pl Loc), one is not connected to ABSTR-ENTITY and ACTOR in (Pl Loc). We work with negation so the rules don´t destroy analysis because of insufficent sets.
 
      
-LIST MOVEMENT-V = "ádjit" "boahtit" "čuoigat" "čuoiggadit" "čuovvut" "fárret" "finadit" "finihit" "fitnat" "gálašit" "gállit" "girdit" "johtit" "mannat" "mátkkoštit" "njoammut" "ollit" "riidet" "ruohttat" "sáhtostit" "sihkkelastit" "suobbulit" "soabbut" "šloahtat" "váccašit" "vádjolit" "vájaldit" "vájuldit" "vánddardit" "vázzit" "viehkalit" "viehkat" "viežžat" "vuodjalit" "vuodjat" "vuodjit" "vuojadit" "vuojašit" "vuolgit" ;
+LIST MOVEMENT-V = "ádjit" "beassat" "boahtit" "čuoigat" "čuoiggadit" "čuovvut" "fárret" "finadit" "finihit" "fitnat" "gálašit" "gállit" "girdit" "johtit" "mannat" "mátkkoštit" "njoammut" "ollit" "riidet" "ruohttat" "sáhtostit" "sihkkelastit" "suobbulit" "soabbut" "šloahtat" "váccašit" "vádjolit" "vájaldit" "vájuldit" "vánddardit" "vázzit" "viehkalit" "viehkat" "viežžat" "vuodjalit" "vuodjat" "vuodjit" "vuojadit" "vuojašit" "vuolgit" ;
 
  # These verbs typically combine with place adverbials in the genitive case @ADVL
  # (i.e. not accusative) I am not sure if the verbs in the second line do that too. They denote movement anyway.
@@ -3083,7 +3083,12 @@ MAP (@>N) TARGET (A Attr)(NEGATE *1 Num BARRIER NOT-A) ;
 
 	# buorre
 
-MAP:CaseAgrBuorre (@>N) TARGET ("buorre") (0 $$CASE-AGREEMENT) (*1 $$CASE-AGREEMENT BARRIER NPNH LINK 0 N) ;
+MAP:CaseAgrBuorre (@>N) TARGET ("buorre" A) (0 $$CASE-AGREEMENT) (*1 $$CASE-AGREEMENT BARRIER NPNH LINK 0 N) ;
+
+MAP:CaseHalfagrBuorre (@>N) TARGET (A Gen) IF (0 ("buorre")) (*1 CASE-HALFAGREEMENT BARRIER NPNH LINK 0 N);
+
+	## Giittán maiddái universitehtalektora Fredrik Harhoff buriid ságastallamiid ovddas.
+
 
 #MAP (@>N) TARGET Nom IF (0 ("buorre"))(*1 (N Nom) BARRIER NPNH);
 #	## Leatgo buorit guolit?
@@ -3095,9 +3100,6 @@ MAP:CaseAgrBuorre (@>N) TARGET ("buorre") (0 $$CASE-AGREEMENT) (*1 $$CASE-AGREEM
 #	## Dearvvašvuođabargiidlága § 40 vuosttas lađđasa mielde galgá 
 #	## journála čállojuvvot buori fidnodábi mielde.
 #
-#MAP (@>N) TARGET (Pl Gen) IF (0 ("buorre")) (*1 (N Pl Gen) OR (N Pl Ill) OR (N Pl Com) BARRIER NPNH);
-#	## Giittán maiddái universitehtalektora Fredrik Harhoff 
-#	## buriid ságastallamiid ovddas.
 #
 #MAP (@>N) TARGET (Sg Com) IF (0 ("buorre"))(*1 (N Sg Com) BARRIER NPNH);
 #	## Jos mii addet buriin dáhtuin...
@@ -9525,19 +9527,27 @@ SELECT (A Attr) IF (*-1 Neg BARRIER S-BOUNDARY2 OR VFIN)(*1 CONTRA BARRIER WORD 
 
 	# Special rules for 'buorre' (the only adjective showing case agreement)
 	# ----------------------------------------------------------------------
-SELECT (A Ess) IF (0 ("buorre"))(*1 (N Ess) BARRIER NOT-ADJ-CC);
-	## Son šaddá buorrin oahpaheaddjin.
+SELECT:SeCaseAgrBuorre $$CASE-AGREEMENT + A (0 ("buorre")) (*1 $$CASE-AGREEMENT BARRIER NPNH LINK 0 N) ;
+SELECT:SeComAgrBuorre Com (0 ("buorre")) (*1 Com BARRIER NPNH LINK 0 N) ;
+SELECT:SeLocAgrBuorre (Pl Loc) (0 ("buorre")) (*1 (Pl Loc) BARRIER NPNH LINK 0 N) ;
 
-SELECT (A Pl Nom) IF (0 ("buorre"))(*1 (N Pl Nom) BARRIER NOT-ADJ-CC);
-	## Leatgo buorit guolit?
 
-SELECT (A Acc) IF (0 ("buorre"))(NEGATE 0 Comp OR Superl)(*1C (N Acc) BARRIER NOT-ADJ-CC);
-	## Doaibmaplána lea bidjan buori vuođu.
-	## Doaivvutgo oažžut buriid guliid?
+SELECT:SeCaseHalfagrBuorre (A Gen) IF (0 ("buorre")) (*1 CASE-HALFAGREEMENT BARRIER NPNH LINK 0 N);
 
-SELECT (A Gen) IF (0 ("buorre"))(NEGATE 0 Comp OR Superl)(*1C (N Gen) BARRIER NOT-ADJ-CC LINK 0 HNOUN);
-	## ...galgá journála čállojuvvot buore fidnodábi mielde.
 
+#SELECT (A Ess) IF (0 ("buorre"))(*1 (N Ess) BARRIER NOT-ADJ-CC);
+#	## Son šaddá buorrin oahpaheaddjin.
+#
+#SELECT (A Pl Nom) IF (0 ("buorre"))(*1 (N Pl Nom) BARRIER NOT-ADJ-CC);
+#	## Leatgo buorit guolit?
+#
+#SELECT (A Acc) IF (0 ("buorre"))(NEGATE 0 Comp OR Superl)(*1C (N Acc) BARRIER NOT-ADJ-CC);
+#	## Doaibmaplána lea bidjan buori vuođu.
+#	## Doaivvutgo oažžut buriid guliid?
+#
+#SELECT (A Gen) IF (0 ("buorre"))(NEGATE 0 Comp OR Superl)(*1C (N Gen) BARRIER NOT-ADJ-CC LINK 0 HNOUN);
+#	## ...galgá journála čállojuvvot buore fidnodábi mielde.
+#
 	# Comparatives
 	# ------------
  # This block of rules is there to ensure case agreement for attributive
@@ -10351,7 +10361,7 @@ REMOVE (A Sg Gen) IF (0 (N Sg Gen))(NEGATE 0 Ord OR ("dološ") OR ("buorre"));
 
 REMOVE (A Sg Loc) IF (0 (N Sg Loc));
 REMOVE (A Sg Ill) IF (0 (N Sg Ill));
-REMOVE (A Sg Com) IF (0 (N Sg Com));
+REMOVE (A Sg Com) IF (0 (N Sg Com) LINK NEGATE 0 ("buorre"));
 	## Ovtta ovddasteaddjis divššohasa ovttas lea vuoigatvuohta...
 	## Juohke gurpasii biddjojuvvo guottahat.
 	## Lean mun gal oaidnán čakčaseavdjadiin dola rievdamiin čázi alde.
@@ -12936,7 +12946,7 @@ SELECT (Sg Com) IF (0 (Pl Loc) LINK 0 (@>N))(1C Com);
 # Dynamic-verbs
 # - - - - - - - 
  
-SELECT (Pl Loc) IF (*-1 DYNAMIC-V BARRIER SV-BOUNDARY2 OR CRD LINK 0 FMAINV OR Inf)(0 (Sg Com) LINK NOT 0 TOOL OR ABSTR-TOOL OR WRITING-TOOL OR CONCEPT OR HUMAN OR VEHICLE);
+SELECT (Pl Loc) IF (*-1 DYNAMIC-V BARRIER SV-BOUNDARY2 OR CRD LINK 0 FMAINV OR Inf)(0 (Sg Com) LINK NOT 0 TOOL OR ABSTR-TOOL OR WRITING-TOOL OR CONCEPT OR HUMAN OR VEHICLE LINK NOT 0 ("buorre"));
 SELECT (Pl Loc) IF (0 (Sg Com) LINK NOT 0 TOOL OR ABSTR-TOOL OR WRITING-TOOL OR CONCEPT OR HUMAN OR VEHICLE)(*1 DYNAMIC-V BARRIER SV-BOUNDARY2 OR CRD LINK 0 FMAINV OR Inf);
   	
     # ANIMATE + Noun
@@ -13380,7 +13390,7 @@ SELECT Loc IF (*-1 LOCV BARRIER SV-BOUNDARY2 OR COM-HEAD LINK NOT 0 Adv)(NEGATE 
 	## Juohke dáhpáhusas ferte áibbas boastut leat beroškeahttá sámiid riekteáddejumiin.
 	## Rakel čierru mánáidis dihtii ii ge beroš jeđđehusas.
 
-SELECT Loc IF (NEGATE 0 DAT-PRON OR Actio)(NEGATE *1C Com BARRIER NPNH)(NEGATE 0 (N Num Nom) LINK 1 (Sg Com))(NEGATE 0 (Sg Com) LINK -1 (N Num Nom))(*1 LOCV BARRIER SV-BOUNDARY2);
+SELECT Loc IF (NEGATE 0 DAT-PRON OR Actio)(NEGATE *1C Com BARRIER NPNH)(NEGATE 0 (N Num Nom) LINK 1 (Sg Com))(NEGATE 0 (Sg Com) LINK -1 (N Num Nom) OR ("buorre" Com))(*1 LOCV BARRIER SV-BOUNDARY2);
 	## Maiddái sámi fágabirrasiin ja ásahusain sáhttá jearrat ráđiid.
 
 SELECT Loc IF (*-1 ACC-LOCV BARRIER NOT-NP);
