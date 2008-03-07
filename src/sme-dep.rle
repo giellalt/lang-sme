@@ -12,10 +12,10 @@
 # The first part SHALL NOT BE EDITED INDEPENDENTLY IN THIS FILE, 
 # but copied over from sme-dis.rle
 
-# ///////////////////////////////////////////////////////////////////////////////////
-# START OF SME-3DIS.RLE COPY
-
-
+# ================================================================= #
+# ================================================================= #
+# ================================================================= #
+# XXX Copy to sme-dep.rle starts here.
 
 
 # ========== #
@@ -276,8 +276,9 @@ LIST @HAB = @HAB ;
  
 
 LIST @CNP = @CNP ;
-
+    # local coordinator
 LIST @CVP = @CVP ;
+    # global coordinator
 
 LIST @>N = @>N ;
 
@@ -418,6 +419,16 @@ SET V-ACT = V - Der/Pass ;
 
 LIST ADVLCASE = Ill Loc Com Ess ;
 
+# Sg Nom - Sg Nom | Pl Nom - Pl Nom
+# Sg Acc - Sg Acc | Pl Acc - Pl Acc
+# Sg Gen - Sg Gen | Pl Gen - Pl Gen
+# Sg Gen - Sg Ill | Pl Gen/Ill - Pl Ill 
+# Sg Gen - Sg Loc | Pl Loc - Pl Loc
+# Sg Com - Sg Com | Pl Gen/Com - Pl Com
+# Ess - Ess
+
+LIST CASE-HALFAGREEMENT = Ill (Sg Loc) (Pl Com) Ess ;
+LIST CASE-AGREEMENT = Nom Acc Gen (Pl Ill) Loc Com Ess ;
 LIST CASE = Nom Acc Gen Ill Loc Com Ess ;
 
 SET NOT-NOM = CASE - Nom ;
@@ -659,13 +670,9 @@ SET CRD = COMMA OR CC OR NEGFOC OR XGO OR ("/") OR ("-") OR DADE ;
  
 	# coordinators
 	
-LIST LCRD = (@CNP) ;
-    # local coordinator
-LIST GCRD = (@CVP) ;
-    # global coordinator
     
 SET CRD2 = (@CNP) OR COMMA OR NEGFOC OR XGO OR ("/") OR ("-") OR DADE ;
-    # AFTER LCRD vs. GCRD disambiguation
+    # AFTER @CNP vs. @CVP disambiguation
     
 # Sets for adverbs that have lookalikes
 # -------------------------------------
@@ -889,7 +896,7 @@ LIST SOURCE-V = "gáibidit" ;
 # The idea is that the superset DYNAMIC-V does not select (Pl Loc) if the noun is a member of the set TOOL, ABSTR-TOOL or CONCEPT. This is the "minste felles multiplum". The sub-sets are different, e.g. many of them (but not all) are not connected to HUMAN in (Pl Loc), one is not connected to ABSTR-ENTITY and ACTOR in (Pl Loc). We work with negation so the rules don´t destroy analysis because of insufficent sets.
 
      
-LIST MOVEMENT-V = "ádjit" "boahtit" "čuoigat" "čuoiggadit" "čuovvut" "fárret" "finadit" "finihit" "fitnat" "gálašit" "gállit" "girdit" "johtit" "mannat" "mátkkoštit" "njoammut" "ollit" "riidet" "ruohttat" "sáhtostit" "sihkkelastit" "suobbulit" "soabbut" "šloahtat" "váccašit" "vádjolit" "vájaldit" "vájuldit" "vánddardit" "vázzit" "viehkalit" "viehkat" "viežžat" "vuodjalit" "vuodjat" "vuodjit" "vuojadit" "vuojašit" "vuolgit" ;
+LIST MOVEMENT-V = "ádjit" "beassat" "boahtit" "čuoigat" "čuoiggadit" "čuovvut" "fárret" "finadit" "finihit" "fitnat" "gálašit" "gállit" "girdit" "johtit" "mannat" "mátkkoštit" "njoammut" "ollit" "riidet" "ruohttat" "sáhtostit" "sihkkelastit" "suobbulit" "soabbut" "šloahtat" "váccašit" "vádjolit" "vájaldit" "vájuldit" "vánddardit" "vázzit" "viehkalit" "viehkat" "viežžat" "vuodjalit" "vuodjat" "vuodjit" "vuojadit" "vuojašit" "vuolgit" ;
 
  # These verbs typically combine with place adverbials in the genitive case @ADVL
  # (i.e. not accusative) I am not sure if the verbs in the second line do that too. They denote movement anyway.
@@ -1141,12 +1148,13 @@ SET PRE-A-N     = (Pron Pers Gen) OR (Pron Indef) OR Num OR (A Ord) OR (Pron Dem
 
 SET NOT-PRE-A-N = WORD - PRE-A-N ;
 
-SET PRE-APP   = COMMA OR (PUNCT LEFT) OR PRE-NP-HEAD ;
+LIST PUNCT-LEFT = (PUNCT LEFT) ;
+LIST PUNCT-RIGHT = (PUNCT RIGHT) ;
+
+SET PRE-APP   = COMMA OR PUNCT-LEFT OR PRE-NP-HEAD ;
  # This set ist not only for what can
                             # stand in front of appositions but also
                             # postmodifiers.
-LIST PUNCT-LEFT = (PUNCT LEFT) ;
-LIST PUNCT-RIGHT = (PUNCT RIGHT) ;
 
 # V NPNHAIIP... N
 # BOS ... N V
@@ -1162,7 +1170,7 @@ SET NPNHAII  = WORD - PRE-NP-HEAD - Adv - Indef - Ill ;        # Illative indir.
 SET NPNHAIIP = WORD - PRE-NP-HEAD - Adv - Indef - Ill - Pcle ; # <== is this our NPNH set?
 SET NPNHC    = WORD - PRE-NP-HEAD - Com ;                      # "njaŋggofirpmiiguin bivdin"
 SET NPNHCCC  = WORD - PRE-NP-HEAD - COMMA ;
-SET NPNHCC   = WORD - PRE-NP-HEAD - COMMA - LCRD ;
+SET NPNHCC   = WORD - PRE-NP-HEAD - COMMA - @CNP ;
 SET NAPP     = WORD - PRE-APP ;
 
 # SET TOLERANT-PRENPP = V ; (everything non-NP-head!)
@@ -1177,7 +1185,7 @@ SET NAPP     = WORD - PRE-APP ;
 
 SET NOT-N = WORD - N ;
 
-SET NOT-A = WORD - A ;
+#SET NOT-A = WORD - A ;
 
 SET NOT-NA = WORD - N - A ;
 
@@ -2496,13 +2504,16 @@ LIST ALLSYNTAG = (@+FAUXV) (@+FMAINV) (@-FAUXV) (@-FMAINV) (@-FSUBJ)(@-FOBJ)(@-F
 
 SET NON-APP = ALLSYNTAG - (@APP);
 
+# SET ASSIGNEDSYN = ALLSYNTAG - @X ;
+
+# funzt nicht.
 
 
+# Copy to sme-dep.rle stops here.
+# ================================================================= #
+# ================================================================= #
+# ================================================================= #
 
-
-
-# END OF SME-3DIS.RLE COPY
-# \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 
 # ================== #
@@ -2523,29 +2534,17 @@ LIST @ARG = @SUBJ @OBJ @SPRED @OPRED ;
 LIST @-FARG = @-FOBJ @-FSUBJ ;
 
 LIST @XADVL = @ADVL @-FADVL ;
-LIST @-FADVL = @-FADVL ;
+
 
 SET @ARG/ADVL = @ARG OR @XADVL - (CC @XADVL) ;
 SET @-FARG/ADVL = @-FARG OR @-FADVL ;
 
 SET @CLAUSE = @ARG/ADVL OR @-FARG/ADVL OR VFIN OR NONVFIN ;
 
-LIST @>N = @>N ;
-LIST @N< = @N< ;
-LIST @>A = @>A ;
 LIST @A< = @A< ;
-LIST @>ADVL = @>ADVL ;
 LIST @XADVL< = @XADVL< ;
-LIST @>Num = @>Num ;
-LIST @Num< = @Num< ;
-LIST @APP-N< = @APP-N< ;
-LIST @APP-Pron< = @APP-Pron< ;
 LIST @APP->Pron = @APP->Pron ;
-LIST @APP-ADVL< = @APP-ADVL< ;
-LIST @APP-Num< = @APP-Num< ;
 
-LIST @CNP = @CNP ;
-LIST @CVP = @CVP ;
 
 LIST @COMPL-CS< = @COMPL-CS< ;
 LIST @FS-OBJ = @FS-OBJ ;
