@@ -10,6 +10,7 @@
 
 # From 22.02.08 this is the only up-to-date dis file. (Lene)  
 
+# Newest rule is r3588.
 
 # Quasicode for m4 addition
 # =========================
@@ -1929,7 +1930,7 @@ LIST ALU = ("allu" Gen)("assu" Gen)("čiekŋu" Gen)("gassu" Gen)("govdu" Gen)
 	  # Those are words that only appear in one form, which Nickel calls A/G.
     # They are only in a predicative position.
 
-LIST TITLE = ("gásttašit" Der/eaddji) "justitiarius" "majestehta" "prof" "cand.mag" "cand.oecon" "cand.philol" "cand.real" "cand.scient" "cand.theol" "cand"  "dr.art" "eksp.hoavd" "eksp.sj" "fenr" "fig" "fil.tri" "gen.lt" "genr" "genr.lt" "h.r.adv" "hr" "kapt" "korp" "lekt" "lic" "ltn" "mag.art" "mag" "majestehta" "merc" "miss" "Miss" "Mr" "Mrs" "odont" "oecon" "ordf" "ossod.dir" "professor" "rektor" "stud.phil." "res.kap" "stud.philol" "vit.ass" "dr" "dr.med" "dr.philos" "dr.theol" ;
+LIST TITLE = ("gásttašit" Der/eaddji) "justitiarius" "majestehta" "prof" "cand.mag" "cand.oecon" "cand.philol" "cand.real" "cand.scient" "cand.theol" "cand"  "dr.art" "eksp.hoavd" "eksp.sj" "fenr" "fig" "fil.tri" "gen.lt" "genr" "genr.lt" "h.r.adv" "hr" "kapt" "korp" "lekt" "lic" "ltn" "mag.art" "mag" "majestehta" "merc" "miss" "Miss" "Mr" "Mrs" "odont" "oecon" "ordf" "ossod.dir" "stud.phil." "res.kap" "stud.philol" "vit.ass" "dr" "dr.med" "dr.philos" "dr.theol" ;
  
 
 # Nouns as predicates
@@ -3197,9 +3198,9 @@ MAP:r110 (@>N) TARGET (Actio Nom) IF (*-1 Gen BARRIER NOT-QMARK)(*1 N BARRIER NO
  # Problem: At present (051106), the rule hits neither, which also makes it hard
  # to document the tag. It hits the third sentence, though, together with @>N.
 
-ADD:r111 (@>N) TARGET TITLE IF (*1 Prop BARRIER NOT-QMARK LINK 0 Fem OR Mal OR Sur);
-ADD:r112 (@>N) TARGET PROFESSION IF (*1 Prop BARRIER NOT-QMARK LINK 0 Fem OR Mal OR Sur);
-ADD:r113 (@>N) TARGET OFFICE IF (*1 Prop BARRIER NOT-QMARK LINK 0 Fem OR Mal OR Sur);
+ADD:r111 (@>N) TARGET TITLE OR PROFESSION OR OFFICE IF (0 Nom)(*1 Prop BARRIER NOT-QMARK LINK 0 Fem OR Mal OR Sur);
+#ADD:r112 (@>N) TARGET PROFESSION + Nom IF (*1 Prop BARRIER NOT-QMARK LINK 0 Fem OR Mal OR Sur);
+#ADD:r113 (@>N) TARGET OFFICE + Nom IF (*1 Prop BARRIER NOT-QMARK LINK 0 Fem OR Mal OR Sur);
 	## Stuorra giitu maiddái professor Birger Stuevold Lassenii.
  # ADD so that argument mappings can apply later.
 
@@ -3239,6 +3240,9 @@ MAP:r122 (@PRON<) TARGET (N Sg Com) IF (*-1 DUPRON-NOTPX BARRIER NOT-QMARK)(0 HU
 	
 MAP:r123 (@N<) TARGET (N Sg Com) IF (*-1 (".*#guovttos"r) OR (".*#guovttis"r) BARRIER NOT-QMARK)(0 HUMAN-INDIVIDUAL); #(*1 VFIN BARRIER NOT-QMARK);	
 	# "Ándde-#guovttos" and "Ándde-#guovttis" should be replaced with som kind of tag.
+	
+MAP:r112 (@N<) TARGET Prop + Nom IF (*-1 TITLE OR PROFESSION OR OFFICE BARRIER S-BOUNDARY LINK 0 ADVLCASE) ;
+	## Son logai dan maiddái professoriidda Asbjørn Kjønstad ja Kristian Andenæs.	
 
 	# Numeral adjective mappings
 	# - - - - - - - - - - - - - 
@@ -16749,8 +16753,7 @@ SELECT:r3533 (@ADVL) IF (0 TIME)(1 TIME);
 	## Galggat golmma geardde beaivvis borrat ovtta tableahta.
 
 SELECT:r3534 (@ADVL) IF (*-1 VERB BARRIER NOT-ADV-PCLE)(0 ("jahki"))(1 Num);
-	## ...ja ráhkadii jagi 1991 fylkkagieldda sámi dearvvašvuođa- ja 
-	## sosiálaplána.
+	## ...ja ráhkadii jagi 1991 fylkkagieldda sámi dearvvašvuođa- ja sosiálaplána.
 
 REMOVE:r3535 (@SUBJ) IF (0 (@ADVL))(*1C (@SUBJ) BARRIER S-BOUNDARY2 LINK NOT 0 Rel);
 	## Mo dal juo dilli leašge,... 
@@ -16783,12 +16786,9 @@ SELECT:r3542 (@HNOUN) IF (*-1 BOS BARRIER NPNH)(1 EOS LINK NOT 0 ("excl"));
 	
 SELECT:r3543 Imprt IF (*-1 BOS BARRIER NPNH)(1 ("excl"));
 
-
-REMOVE:r3544 (@ADVL) IF (0 TITLE OR PROFESSION)(1 Mal OR Fem OR Sur);
-	## Son lagai dan maiddái professoriidda Asbjørn Kjønstad ja Kristian Andenæs.
-
-SELECT:r3545 (@>N) IF (0 ("seamma") OR ("seammá"))(1 ("ollu" Indef));
-SELECT:r3546 (@>ADVL) IF (0 ("seamma") OR ("seammá"))(1 ("ollu" Adv));
+#Not in use
+#SELECT:r3545 (@>N) IF (0 ("seamma") OR ("seammá"))(1 ("ollu" Indef));
+#SELECT:r3546 (@>ADVL) IF (0 ("seamma") OR ("seammá"))(1 ("ollu" Adv));
 
 	# ---------------- #
        SECTION #27 #
@@ -16896,6 +16896,6 @@ REMOVE:r3571 (@>N) IF (0 TITLE);
       END #
 	#=====#
 
-# Newest rule is r3588.
+
 
 
