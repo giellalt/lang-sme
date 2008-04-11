@@ -2898,10 +2898,12 @@ MAP:r27 (@>N) TARGET (Dem Pl Loc) IF (*1 (N Pl Loc) OR (Pron Indef Pl Loc) BARRI
 
 MAP:r28 (@>N) TARGET (Dem Pl Com) IF (*1 (N Pl Com) BARRIER NP-BOUNDARY);
 	## ...de offiseara bijai muhtun ustibiid Jesusa lusa dáiguin sániiguin...
+  	## Ain ferte joatkit daiguin sierra doaibmabijuiguin.
 
-MAP:r29 (@>N) TARGET (Dem Pl Com) IF (*1 (N Pl Com) BARRIER NOT-AA);
-	## Ain ferte joatkit daiguin sierra doaibmabijuiguin.
-	
+# MAP:r29 (@>N) TARGET (Dem Pl Com) IF (*1 (N Pl Com) BARRIER NOT-AA);jess
+# 	## Ain ferte joatkit daiguin sierra doaibmabijuiguin.
+#		"dat" Pron Dem Pl Com @>N MAP:2899:r28 SELECT:5858:r892 
+
 MAP:r30 (@>N) TARGET (Dem Sg Gen) IF (*1 ("seammás") BARRIER NOT-QMARK);
 	## Mun bohten dan seammás.	
 
@@ -4598,53 +4600,78 @@ SUBSTITUTE (Plc) (Sur) TARGET Prop IF (-1C (Mal Attr) OR (Fem Attr));
 REMOVE:r529 (@X) ; # Keine Spur...
  # @X is our "didn't find a syntactic tag -tag.
  # Here we remove it if we have any other suggestion.
-
-#REMOVE (@PPRED) IF (0 (@PPRED)) ;
-# until we have included habitative.	
-
-
-	# Abbreviations
-	# -------------
-
-#SELECT ("s") IF (0 ("S"));
-	## s. 24.
-	## Per S. Berg.
-
-	
-	# Acronyms
-	# --------
-
-REMOVE:r530 Num IF (0 ACR);
-	## TV2
-
-#SELECT CC IF (*-1 BOS OR (":") BARRIER REALWORD)(0 ("ja") LINK 0 ACR); 
-	## Ja son bođii.
-
-REMOVE:r531 ACR IF (0 ("ja") OR ("ba") OR ("na") LINK 0 CC OR Pcle); 
-REMOVE:r532 ACR IF (0 Pron OR Pcle) ;
-	## dan
-	
-SELECT:r533 Pcle IF (*-1 BOS OR (":") BARRIER REALWORD)(0 ("na") LINK 0 ACR);
-SELECT:r534 Adv IF (*-1 BOS OR (":") BARRIER REALWORD)(0 ("áin") LINK 0 ACR);
+ 
+ 
+    # The section for popular rules
+    # -----------------------------
     
-SELECT:r535 Interj IF (*-1 BOS OR (":") BARRIER REALWORD)(0 ("aa") LINK 0 ACR);  
-SELECT:r536 V IF (*-1 BOS OR (":") BARRIER REALWORD)(0 ("mannat") LINK 0 ACR);         
-REMOVE:r537 ACR IF (*-1 BOS OR (":") BARRIER REALWORD)(0 Pron OR Adv);
-REMOVE:r538 ACR IF (0 ("don" Pers Gen))(1 ("gonagaslaš"));
-	## .... Din Gonagaslaš ...
-SELECT:r539 ("Fs") IF (0 ACR)(1 ("ášši"));
-	## Fs ášši ...
+# These are the most common rules.    
 
-
-	# Lexicalised names. See also # Disambiguating the semantic tags 
+	# Predicate predicate - removed - instead we use @ADVL - but we will need is when we include habitative.
 	# -------------------
+SELECT:r3323 (@PPRED) IF (*-1 (Ess @SPRED) BARRIER NOT-ADV) ;
+REMOVE:allPpred (@PPRED) IF (0 (@PPRED)) ;	
 
-REMOVE:r540 ACR IF (0 Prop) ;
-  	## NRK lea čujuhan iežas áigut leat dehálaš seailluhit sámi servodaga.
 
-SELECT:r541 Prop IF (NEGATE -1 BOS)(0 Adv LINK NOT 0 (Plc Der/t));
-    ## Dovddan Anne Olsena.  
-    
+    # giella vs. gielas vs. giellat
+    # - - - - - - - - - - - - - - -
+SELECT:r683 LANGUAGE IF (0 LANGUAGE) ;
+# LINK 0 Ess OR Loc);
+
+
+ 	# Proper nouns
+	# ------------
+
+REMOVE:r852 (Prop @Num<) IF (0 Prop);
+	## 3.2 Sámi mánáid ja nuoraid bajásšaddaneavttut.
+
+	# This is a Lule Sámi form.
+REMOVE:r853 ("Sámedigge") IF (0 ("Sámediggi"));
+REMOVE:r854 ("sáme#digge") IF (0 ("sáme#diggi"));
+
+ #Common rule 60000.
+SELECT:r855 Prop IF (NEGATE *-1 BOS OR (":") BARRIER WORD)(0 N);
+	## Son riegádii jagi 1943 Suoma bealde.
+
+	# The form "norga" is not in the dictionary...
+REMOVE:r856 ("norga") IF (0 ("Norga"));
+
+SELECT:r857 Prop IF (0 NATION LINK 0 ADVLCASE LINK NOT 0 ("sápmi"));
+	## Ruoŧas lea guhkes árbevierru nano iešmearrideaddji gielddain.
+	
+REMOVE:r858 Prop IF (*-1 BOS OR (":") BARRIER WORD)(0 Loc LINK NOT 0 Plc)(1 NP-HEAD-NOM LINK 1 VFIN LINK 1 NP-HEAD-ACC) ;
+	## Sokkis sii seailluhit diŋggaid.	
+
+REMOVE:r859 ("Sáme#giella") IF (0 ("sáme#giella"));
+  	## Sámegiela hállet áidna giellan mánát, geat eai leat vel á´lgán skuvlii, bázáhallan olbmot ja boarrásat.
+
+REMOVE:r860 ("sáme#politihkka") IF (0 ("Sáme#politihkka"));
+  	## Sámepolitihka birra.
+
+REMOVE:r861 ("sámi#ráđđi") IF (0 ("Sámi#ráđđi"));
+  	## Dán gáibideigga foandda hoavda Per Edvard Klemetsen ja Norgga Sámiráđi ovdaolmmoš Aslak Nils Sara gielddaministaris Arne Rettedalas geainna soai maŋŋebárgga deaivvadeigga Oslos. 
+  
+REMOVE:r862 ("Norgga#bealli") IF (0 ("norgga#bealli"));
+  	## Norggabeali áirasat ledje Olav Mathis Eira..
+
+REMOVE:r863 Prop IF (0 CNOUN)(0 (Prop Pl))(NEGATE 0 VGen);
+  	## Sápmelaččaide lea hui mávssolaš ahte sin dárbbut váldojit vuhtii. 
+  
+REMOVE:r864 Prop IF (NEGATE -1 (Prop Attr))(0 ("jávri") OR ("guhkki") OR ("kap") OR ("klubbu") OR ("arena") OR ("arvat") OR ("bassi")) ;
+  # Philosophy is that these are nouns rather than names.
+  	## Jávri lea stuoris.
+  
+SELECT:r865 Prop IF (-1 ("Min" Prop))(0 ("Áigi" Prop));
+SELECT:r866 Prop IF (0 ("Min" Prop))(1 ("Áigi" Prop));
+  	## Mun lean dan lohkan Min Áiggis.
+  
+REMOVE:r867 Prop IF (0 ("sieidi")) (1 ("bálvaleapmi"));
+SELECT:r868 (Gen @>N) IF (0 ("sieidi") LINK 1 ("bálvaleapmi"));
+  	## Sieiddi bálvalemiin sturron eallu gohčoduvvui bálvvoseallun, mi sáhtii jávkat, go oamasteaddji jámii dahje go sieidi ii bálvaluvvon.
+
+REMOVE:r869 Prop IF (0 ("unni" Attr))(1 Der/Dimin OR ("mánáš"));
+
+
 
 	# Lexicalised derivations
 	# -----------------------
@@ -4705,6 +4732,53 @@ REMOVE:r548 V-DER IF (0 LEX-V)(NEGATE 0 (eaddji));
  # e.g. for "registrerejeaddji" in 
  # "… dan láhkai ahte dieđuid registrerejeaddji, journálaovddasvástideaddji ja
  # bearráigeahččoeiseválddit sáhttet viežžat dieđuid dárbbu mield".
+
+
+
+
+	# Abbreviations
+	# -------------
+
+#SELECT ("s") IF (0 ("S"));
+	## s. 24.
+	## Per S. Berg.
+
+	
+	# Acronyms
+	# --------
+
+REMOVE:r530 Num IF (0 ACR);
+	## TV2
+
+#SELECT CC IF (*-1 BOS OR (":") BARRIER REALWORD)(0 ("ja") LINK 0 ACR); 
+	## Ja son bođii.
+
+REMOVE:r531 ACR IF (0 ("ja") OR ("ba") OR ("na") LINK 0 CC OR Pcle); 
+REMOVE:r532 ACR IF (0 Pron OR Pcle) ;
+	## dan
+	
+SELECT:r533 Pcle IF (*-1 BOS OR (":") BARRIER REALWORD)(0 ("na") LINK 0 ACR);
+SELECT:r534 Adv IF (*-1 BOS OR (":") BARRIER REALWORD)(0 ("áin") LINK 0 ACR);
+    
+SELECT:r535 Interj IF (*-1 BOS OR (":") BARRIER REALWORD)(0 ("aa") LINK 0 ACR);  
+SELECT:r536 V IF (*-1 BOS OR (":") BARRIER REALWORD)(0 ("mannat") LINK 0 ACR);         
+REMOVE:r537 ACR IF (*-1 BOS OR (":") BARRIER REALWORD)(0 Pron OR Adv);
+REMOVE:r538 ACR IF (0 ("don" Pers Gen))(1 ("gonagaslaš"));
+	## .... Din Gonagaslaš ...
+SELECT:r539 ("Fs") IF (0 ACR)(1 ("ášši"));
+	## Fs ášši ...
+
+
+	# Lexicalised names. See also # Disambiguating the semantic tags 
+	# -------------------
+
+REMOVE:r540 ACR IF (0 Prop) ;
+  	## NRK lea čujuhan iežas áigut leat dehálaš seailluhit sámi servodaga.
+
+SELECT:r541 Prop IF (NEGATE -1 BOS)(0 Adv LINK NOT 0 (Plc Der/t));
+    ## Dovddan Anne Olsena.  
+    
+
  
 
 	# Lexicalised adjectives
@@ -4797,7 +4871,8 @@ REMOVE:r568 Foc IF (0 ("dieđusge") OR ("gostege"));
 	# --------------------------------
  # Words that probably are adverbs when they appear in the -aččat form.
  # Since only the -aččat form gets the Adv tag, the rule will hit this form.
-
+ # r569 is very common (16000 hits)
+ 
 SELECT:r569 Adv IF (NEGATE *-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 (N Pl) OR PPRON-DU-PL BARRIER Nom LINK 0 Nom)(NEGATE 0 (Comp Sg) LINK *-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 (N Sg) OR SGPRON BARRIER Nom LINK 0 Nom)(0 ADV-LACCAT) ;
 SELECT:r570 Adv IF (0 ADV-LACCAT)(1 A OR N LINK NOT 1 go) ;    
 
@@ -5154,10 +5229,7 @@ SELECT:r681 GIELDA IF (NEGATE 0 GIELDDA);
 SELECT:r682 ("gielda") IF (-1 FYLKA LINK 0 (@>N));
 
   
-    # giella vs. gielas vs. giellat
-    # - - - - - - - - - - - - - - -
-SELECT:r683 LANGUAGE IF (0 LANGUAGE) ;
-# LINK 0 Ess OR Loc);
+
      
 # gilvu vs. gilvvu Adv
 # - - - - - - - - - - 
@@ -5588,6 +5660,7 @@ REMOVE:r825 Num IF (NEGATE -1 ("§") OR ("paragráfa") OR ("kapihttal") OR ("kap
   	# Px
   	# ---
 
+ # This has 45000 hits, but must come after the SELECT Px rules. Still, it might come earlier than this.
 REMOVE:r826 Px IF (0 N-NOPX OR Num OR Der/n);
     ##  
 REMOVE:r827 Px IF (0 MANNU OR WEATHER-SITUATION);	
@@ -5683,56 +5756,6 @@ REMOVE:r851 ("bar#goaddat") IF (0 ("bargo#addit") OR ("bargo#addi"));
 	# Compound nouns  are under # Particular nouns
 	# - - - - - - -
  
- 	# Proper nouns
-	# ------------
-
-REMOVE:r852 (Prop @Num<) IF (0 Prop);
-	## 3.2 Sámi mánáid ja nuoraid bajásšaddaneavttut.
-
-	# This is a Lule Sámi form.
-REMOVE:r853 ("Sámedigge") IF (0 ("Sámediggi"));
-REMOVE:r854 ("sáme#digge") IF (0 ("sáme#diggi"));
-
-SELECT:r855 Prop IF (NEGATE *-1 BOS OR (":") BARRIER WORD)(0 N);
-	## Son riegádii jagi 1943 Suoma bealde.
-
-	# The form "norga" is not in the dictionary...
-REMOVE:r856 ("norga") IF (0 ("Norga"));
-
-SELECT:r857 Prop IF (0 NATION LINK 0 ADVLCASE LINK NOT 0 ("sápmi"));
-	## Ruoŧas lea guhkes árbevierru nano iešmearrideaddji gielddain.
-	
-REMOVE:r858 Prop IF (*-1 BOS OR (":") BARRIER WORD)(0 Loc LINK NOT 0 Plc)(1 NP-HEAD-NOM LINK 1 VFIN LINK 1 NP-HEAD-ACC) ;
-	## Sokkis sii seailluhit diŋggaid.	
-
-REMOVE:r859 ("Sáme#giella") IF (0 ("sáme#giella"));
-  	## Sámegiela hállet áidna giellan mánát, geat eai leat vel á´lgán skuvlii, bázáhallan olbmot ja boarrásat.
-
-REMOVE:r860 ("sáme#politihkka") IF (0 ("Sáme#politihkka"));
-  	## Sámepolitihka birra.
-
-REMOVE:r861 ("sámi#ráđđi") IF (0 ("Sámi#ráđđi"));
-  	## Dán gáibideigga foandda hoavda Per Edvard Klemetsen ja Norgga Sámiráđi ovdaolmmoš Aslak Nils Sara gielddaministaris Arne Rettedalas geainna soai maŋŋebárgga deaivvadeigga Oslos. 
-  
-REMOVE:r862 ("Norgga#bealli") IF (0 ("norgga#bealli"));
-  	## Norggabeali áirasat ledje Olav Mathis Eira..
-
-REMOVE:r863 Prop IF (0 CNOUN)(0 (Prop Pl))(NEGATE 0 VGen);
-  	## Sápmelaččaide lea hui mávssolaš ahte sin dárbbut váldojit vuhtii. 
-  
-REMOVE:r864 Prop IF (NEGATE -1 (Prop Attr))(0 ("jávri") OR ("guhkki") OR ("kap") OR ("klubbu") OR ("arena") OR ("arvat") OR ("bassi")) ;
-  # Philosophy is that these are nouns rather than names.
-  	## Jávri lea stuoris.
-  
-SELECT:r865 Prop IF (-1 ("Min" Prop))(0 ("Áigi" Prop));
-SELECT:r866 Prop IF (0 ("Min" Prop))(1 ("Áigi" Prop));
-  	## Mun lean dan lohkan Min Áiggis.
-  
-REMOVE:r867 Prop IF (0 ("sieidi")) (1 ("bálvaleapmi"));
-SELECT:r868 (Gen @>N) IF (0 ("sieidi") LINK 1 ("bálvaleapmi"));
-  	## Sieiddi bálvalemiin sturron eallu gohčoduvvui bálvvoseallun, mi sáhtii jávkat, go oamasteaddji jámii dahje go sieidi ii bálvaluvvon.
-
-REMOVE:r869 Prop IF (0 ("unni" Attr))(1 Der/Dimin OR ("mánáš"));
 
 	# ===================================== #
 	# Local disambiguation - cycles 1 and 2 #
@@ -6250,7 +6273,8 @@ REMOVE:r984 (V Ind Pl3) IF (1C VFIN)(NEGATE 1 Pl3) ;
 	## Vihtta bivdovuogi mun gal dušše namahin. 
 
 REMOVE:r985 (Prt Sg2) IF (NEGATE *-1 (Pron Pers Sg2))(0 (Prs Pl3))(*1 Der/Pass BARRIER NOT-ADV);
-	## Reivelonuhallan sámi institušuvnnaiguin galget dahkkot sáme- ja dárogillii. # Probably not prodrop if passivized Sg2.
+	## Reivelonuhallan sámi institušuvnnaiguin galget dahkkot sáme- ja dárogillii. 
+	# Probably not prodrop if passivized Sg2.
 
 	# PrsPrc
 	# - - - -
@@ -15950,10 +15974,10 @@ SELECT:r3321 (@SUBJ) IF (NEGATE *-1 (@SUBJ) BARRIER S-BOUNDARY2)(*-1 REALCOPULAS
 SELECT:r3322 (@SUBJ) IF (*-1 (@CNP) BARRIER NPNH LINK -1 (@SUBJ) LINK NOT 0 @SPRED);
 
 	
-	# Predicate predicate - removed - instead we use @ADVL - but we will need is when we include habitative.
-	# -------------------
-SELECT:r3323 (@PPRED) IF (*-1 (Ess @SPRED) BARRIER NOT-ADV) ;
-REMOVE:allPpred (@PPRED) IF (0 (@PPRED)) ;	
+# 	# Predicate predicate - removed - instead we use @ADVL - but we will need is when we include habitative.
+# 	# -------------------
+# SELECT:r3323 (@PPRED) IF (*-1 (Ess @SPRED) BARRIER NOT-ADV) ;
+# REMOVE:allPpred (@PPRED) IF (0 (@PPRED)) ;	
 
 
 	# Essiv as Adverbial
@@ -16575,6 +16599,7 @@ SELECT:r3489 (@OBJ) IF (*-1 ROUTEOBJECT-V BARRIER SV-BOUNDARY2)(0 ROUTE LINK 0 (
     
 SELECT:r3490 (@OBJ) IF (-1 ("vejolašvuohta") LINK -1 ("leat"))(0 ROUTE LINK 0 (@ADVL))(*1 ROUTEOBJECT-V LINK 0 VFIN BARRIER SV-BOUNDARY2 LINK NOT *-1 (@OBJ) BARRIER SV-BOUNDARY2);
     ## 
+    # No hits 800409
 
 REMOVE:r3491 (@OBJ) IF (*-1 ROUTEADVERBIAL-V OR IV OR MOVEMENT-V LINK 0 VFIN BARRIER SV-BOUNDARY2)(0 ROUTE LINK 0 (@ADVL)); 
     ## 
@@ -16757,10 +16782,10 @@ SELECT:r3542 (@HNOUN) IF (*-1 BOS BARRIER NPNH)(1 EOS LINK NOT 0 ("excl"));
 	## Riektejoavkku nammadeami duogáš.
 	
 SELECT:r3543 Imprt IF (*-1 BOS BARRIER NPNH)(1 ("excl"));
-	
+
 
 REMOVE:r3544 (@ADVL) IF (0 TITLE OR PROFESSION)(1 Mal OR Fem OR Sur);
-	## maiddái professoriidda Asbjørn Kjønstad ja Kristian Andenæs.
+	## Son lagai dan maiddái professoriidda Asbjørn Kjønstad ja Kristian Andenæs.
 
 SELECT:r3545 (@>N) IF (0 ("seamma") OR ("seammá"))(1 ("ollu" Indef));
 SELECT:r3546 (@>ADVL) IF (0 ("seamma") OR ("seammá"))(1 ("ollu" Adv));
@@ -16871,5 +16896,6 @@ REMOVE:r3571 (@>N) IF (0 TITLE);
       END #
 	#=====#
 
+# Newest rule is r3588.
 
 
