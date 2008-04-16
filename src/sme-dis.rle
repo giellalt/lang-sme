@@ -737,7 +737,7 @@ SET VFIN-POS = V-MOOD - ConNeg - Neg ;
 
 SET VFIN-NOT-IMP = VFIN - Imprt ;
 
-SET VFIN-NOT-NEG = VFIN - (Neg Foc/ge) ;
+SET VFIN-NOT-NEG = VFIN - Neg ;
   # this might be to strict, besides, "iige" can be written "ii ge"
 
 # Person
@@ -3647,30 +3647,6 @@ MAP:r369 (@N<) TARGET Inf IF (-1 (N Nom) LINK NOT 0 PrfPrc LINK *-1 ("leat") BAR
 	
 MAP:r370 (@N<) TARGET Inf IF (-1 NP-HEAD-ACC LINK -1 (N Nom) LINK NOT 0 VERB LINK *-1 ("leat") BARRIER VERB LINK *-1 NP-HEAD-NOM OR PRESENT-MARKER OR PAST-MARKER OR Loc BARRIER VFIN-NOT-AUX OR S-BOUNDARY);	
 	## Dus ii leat lohpi dan dahkat!	
-
-MAP:r371 (@-FADVL) TARGET N IF (0 ADVLCASE LINK -1 Inf LINK -1 NP-HEAD-NOM LINK *-1 ("leat") BARRIER VERB OR S-BOUNDARY OR COMMA OR CC LINK *-1 NP-HEAD-NOM OR PRESENT-MARKER OR PAST-MARKER OR Loc OR S-BOUNDARY BARRIER VFIN-NOT-AUX OR S-BOUNDARY) ;
-	## Mus livččii miella mannat teáhteris.
-	
-MAP:r372 (@-FADVL) TARGET N IF (0 ADVLCASE LINK *-1 Inf BARRIER VERB OR Nom LINK -1 Inf LINK *-1 NP-HEAD-NOM LINK *-1 COPULAS BARRIER VERB LINK *-1 NP-HEAD-NOM OR PRESENT-MARKER OR PAST-MARKER OR Loc BARRIER VFIN-NOT-AUX OR S-BOUNDARY) ;	
-	## Mu mielas lea suohtas beassat johtit riikkas riikii ja báikkis báikái. 
-
-MAP:r373 (@-FADVL) TARGET N IF (0 ADVLCASE LINK -1 Ger);
-	## Lea dehálaš beassat geavahit eatnigielas ságastaladettiin doaktáriin.
-
-MAP:r374 (@-FADVL) TARGET Pr IF (-1 Acc LINK *-1 Inf LINK 0 V-TRANS-ACT-NOT-AUX BARRIER NPNH LINK -1 NP-HEAD-NOM LINK *-1 ("leat") BARRIER VERB LINK *-1 NP-HEAD-NOM OR PRESENT-MARKER OR PAST-MARKER OR Loc BARRIER VFIN-NOT-AUX OR S-BOUNDARY)(1 Gen) ;
-	## E-boasta lea hui álkes ja jođánis vuohki sáddet reivviid birra máilmmi.
-
-MAP:r375 (@-FADVL) TARGET Pr IF (*-1 Inf LINK 0 V-TRANS-ACT-NOT-AUX BARRIER NPNH LINK -1 NP-HEAD-NOM LINK *-1 ("leat") BARRIER VERB LINK *-1 NP-HEAD-NOM OR PRESENT-MARKER OR PAST-MARKER OR Loc BARRIER VFIN-NOT-AUX OR S-BOUNDARY)(1 Gen) ;
-
-MAP:r376 (@-FADVL) TARGET Po IF (-1 NP-HEAD-GEN LINK *-1 Inf LINK 0 V-TRANS-ACT-NOT-AUX BARRIER NPNH LINK -1 NP-HEAD-NOM LINK *-1 ("leat") BARRIER VERB LINK *-1 NP-HEAD-NOM OR PRESENT-MARKER OR PAST-MARKER OR Loc BARRIER VFIN-NOT-AUX OR S-BOUNDARY)(1 Gen) ;
-
-MAP:r377 (@-FADVL) TARGET Po IF (-1 NP-HEAD-GEN LINK *-1 Acc BARRIER NPNH LINK *-1 Inf LINK 0 V-TRANS-ACT-NOT-AUX BARRIER NPNH LINK -1 NP-HEAD-NOM LINK *-1 ("leat") BARRIER VERB LINK *-1 NP-HEAD-NOM OR PRESENT-MARKER OR PAST-MARKER OR Loc BARRIER VFIN-NOT-AUX OR S-BOUNDARY)(1 Gen) ;
-
-MAP:r378 (@-FADVL) TARGET Adv IF (-1 Inf LINK -1 NP-HEAD-ACC OR (Pers Acc) LINK *-1 VFIN BARRIER VERB OR S-BOUNDARY OR COMMA OR CC LINK 0 V-TRANS-ACT LINK *-1 NP-HEAD-NOM OR PRESENT-MARKER OR PAST-MARKER OR Loc BARRIER VFIN-NOT-AUX OR S-BOUNDARY) ;
-	## Dihkkádeaddji rávve skohtervuddjiid mátkkoštit várrugasat, go dán jagi lea erenoamán heajos jiekŋa jogain.
-
-MAP:r379 (@-FADVL) TARGET Adv IF (-1 NP-HEAD-ACC OR (Pers Acc) LINK *-1 VFIN BARRIER VERB OR S-BOUNDARY OR COMMA OR CC LINK 0 V-TRANS-ACT LINK *-1 NP-HEAD-NOM OR (Actor Nom) OR PRESENT-MARKER OR PAST-MARKER OR Loc BARRIER VFIN-NOT-AUX OR S-BOUNDARY)(1 Inf) ;
-	## Dihkkádeaddji rávve skohtervuddjiid várrugasat mátkkoštit, go dán jagi lea erenoamán heajos jiekŋa jogain.
 
 MAP:r380 (@ADVL) TARGET Inf IF (*-1 REKSV BARRIER NOT-ADV) ; 
 MAP:r381 (@ADVL) TARGET Inf IF (-1 CC LINK *-1 Inf BARRIER VERB LINK *-1 REKSV BARRIER NOT-ADV LINK *-1 Nom BARRIER S-BOUNDARY);
@@ -15252,7 +15228,24 @@ REMOVE:r3570 Acc IF (0 (Num Nom))(NEGATE *1 TIME BARRIER NOT-ADJ);
  
 REMOVE:r3571 (@>N) IF (0 TITLE);
 
- 
+	# ================================ #
+	# Substituting some syntactic tags #
+	# ================================ #
+
+# In infinitiv clauses - not ready yet.
+
+SET INF-ADVL = Adv OR ADVLCASE + N OR Pr ;
+
+SUBSTITUTE (@ADVL) (@-FADVL) INF-ADVL (*-1 Inf BARRIER VERB OR Nom OR Acc LINK *-1 NP-HEAD-ACC BARRIER NOT-VERB LINK *-1 V-TRANS-ACT BARRIER NOT-ADV LINK NOT 0 AUX);
+
+SUBSTITUTE (@ADVL) (@-FADVL) INF-ADVL (*-1 NP-HEAD-NOM OR NP-HEAD-ACC BARRIER NOT-VERB LINK *-1 V-TRANS-ACT BARRIER NOT-ADV LINK NOT 0 AUX)(1 Inf);
+ 	## 	Dihkkádeaddji sáhttá rávvet skohtervuddjiid mátkkoštit várrugasat, go dán jagi lea erenoamán heajos jiekŋa jogain.
+	## Dihkkádeaddji rávve skohtervuddjiid várrugasat mátkkoštit, go dán jagi lea erenoamán heajos jiekŋa jogain.
+
+
+SUBSTITUTE (@ADVL) (@-FADVL) INF-ADVL (*-1 Inf BARRIER VERB OR Nom LINK *-1 NP-HEAD-NOM BARRIER NOT-VERB LINK *-1 ("leat") BARRIER VERB OR S-BOUNDARY2) ;
+	## Mus livččii miella mannat teáhteris.
+
 
 	#=====#
       END #
