@@ -74,19 +74,25 @@ ENDKEEP
                             ! The x9 ones are consonants that never alternate.
                             ! The capital J9 etc. do not work.
 
-! Added to be able to easily see if there are bugs in the twolc rules
-
+OMITIF(HUNSPELL)
  X1:0 X2:0 X3:0 X4:0 X5:0 X6:0 X7:0 X8:0 X9:0   ! diacritics
  Q1:0 Q2:0 Q3:0 Q4:0 Q5:0 Q6:0 Q7:0 Q8:0 Q9:0   ! They trigger morphophono-
  Y1:0 Y2:0 Y3:0 Y4:0 Y5:0 Y6:0 Y7:0 Y8:0 Y9:0   ! logical rules
  W1:0 W2:0 W3:0 W4:0 W5:0 W6:0 W7:0 W8:0 W9:0
-
-! Make stem borders visible when using the M4FLAGS=-DHUNSPELL when invoking make
-OMITIF(HUNSPELL)
- %>:0 %>7:%> »:0		! stem-suffix border mark
+ %>:0 %>7:%>											! stem-suffix border mark
 ELSE
- %> 	! stem-suffix border mark, only visible in Hunspell
+ X1 X2 X3 X4 X5 X6 X7 X8 X9   ! diacritics
+ Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9   ! They trigger morphophono-
+ Y1 Y2 Y3 Y4 Y5 Y6 Y7 Y8 Y9   ! logical rules
+ W1 W2 W3 W4 W5 W6 W7 W8 W9
+ %>                           ! stem-suffix border mark, only visible in Hunspell
 ENDOMIT
+
+KEEPIF(ASPELL)
+ !Aspell tag deletion
+ %/A:0 %/B:0 %/C:0 %/D:0 %/E:0 %/F:0 %/G:0 %/H:0 %/I:0 %/J:0 %/K:0 %/L:0 %/M:0
+ %/N:0 %/O:0 %/P:0 %/Q:0 %/R:0 %/S:0 %/T:0 %/U:0 %/V:0 %/W:0 %/X:0 %/Y:0 %/Z:0
+ENDKEEP
 
  ;
 
@@ -281,7 +287,7 @@ Rules
 ! ------
 
 "Postvocalic j Surfacing"
-  j:i <=> Vow: ( :0 ) ( %>: ) ( Dummy: ) _ [ Cns | ': | ( :0 - Y5: - Y6:)+ (Hyph) [# | #:] ] ; !more and more dummies...
+  j:i <=> Vow: (%>:) ( :0 ) ( Dummy: ) _ [ Cns | ': | ( :0 - Y5: - Y6:)+ (Hyph) [# | #:] ] ; !more and more dummies...
 
 
 
@@ -319,7 +325,7 @@ Rules
 ! Only alveolar consonants word-finally:
 
 "Word Final Consonant Neutralization 1"  !smirezit : smires, Troandin-bisma
-  Cx:Cy <=> Vow: (( CntrCns:) Dummy:+) _ (':0 k:0) ( :0 - Y5: - Y6: )( :0 - Y5: - Y6: ) ( %>: ) [ Hyph | [ # | #: ] ]  ;
+  Cx:Cy <=> Vow: (( CntrCns:) Dummy:+) _ (':0 k:0) ( %>: ) ( :0 - Y5: - Y6: )( :0 - Y5: - Y6: ) [ Hyph | [ # | #: ] ]  ;
 			where Cx in (z ž m h p g b d)
 			      Cy in (s š n t t t t t)
 			matched ;
@@ -427,7 +433,7 @@ Cx:0 <=> Vow _ ( %>: ) [ Y5: | Y6: j: ] ; !1.138
 !$ vuordild0
 
 "Word Final Cluster Simplification 2"                 ! attestit : attes
-  Cx:0 <=> Vow (W4:) s _ ( %>: ) (Hyph) [ # | #: ]  ;
+  Cx:0 <=> Vow  ( %>: ) (W4:) s _ ( %>: ) (Hyph) [ # | #: ]  ;
 			where Cx in (t k m) ;
 !€ attest#
 !€ attes00
@@ -583,7 +589,7 @@ Cx:0 <=> Vow _ ( %>: ) [ Y5: | Y6: j: ] ; !1.138
 !€ á0djá0
 
 "Gradation: Cluster Non-nasal Sonorant + Non-sonorant"      ! láj'bi:láibbi
-  ':Cx <=> Vow: [ g | l | r | đ | v | j: ] _ Cz Vow ( StemCns:) (:StemCns) ( %>: ) WeG: ;
+  ':Cx <=> Vow: [ l | r | đ | v | j: ] _ Cz Vow ( StemCns:) (:StemCns) ( %>: ) WeG: ;
 			where Cx in (f g d b k p t z ž c č s š)
 			      Cz in (f g d b k p t z ž c č s š)
 			matched ;
@@ -1384,7 +1390,7 @@ ENDKEEP
                         ! W1 for WeG Attr, W2 for non-CG Attr form.
 
 "Vowel Shortening in Attributive Forms, s-final Adjectives" ! váttisW1:váttes W2??
-   Vx:Vy <=> Cns:+ _  s ( %>: ) W1:  [ Hyph |  [ # | #: ] ] ; ! trying to get heajos-biila as well as heajosbiila
+   Vx:Vy <=> Cns:+ _  ( %>: ) s W1:  [ Hyph |  [ # | #: ] ] ; ! trying to get heajos-biila as well as heajosbiila
 	    where Vx in (u i)
 		      Vy in (o e)
 		matched ;
@@ -1422,7 +1428,7 @@ ENDKEEP
 
 "Diphthong Simplification in i-Stems before Suffixes Beginning with j:"
 !  Vx:0 <=> Vow _ Cns:+ [ i | e7:i ] X5: ; ! Cannot see why e7:1 here. Thj
-  Vx:0 <=> Vow _ Cns:+ i ( %>: ) X5: ;
+  Vx:0 <=> Vow _ Cns:+  i  ( %>: ) X5: ;
 	where Vx in (e o a) ;          ! goah'tiX5jd:go0điid
 ! Cf. alt 2 below...
 
@@ -1474,12 +1480,12 @@ ENDKEEP
 
 KEEPIF(DIPHSIMPL)
 "Diphthong Simplification in Actor Nouns from i- and a-Stems (Optional)" ! vieh'ki > vihkkiin
-  Vx:0 => Vow _ Cns:+ [ i: | a: ] ¤: ( %>: ) X5: ;				                 ! viehkkiin
+  Vx:0 => Vow _ Cns:+ [ i: | a: ] ( %>: ) ¤: X5: ;				                 ! viehkkiin
 			where Vx in (e o a) ;				                         ! Eastern, substandard
 ELSE
 ! Use this variant in normative contexts:
 "Diphthong Simplification in Actor Nouns from i- and a-Stems"	! vieh'ki > vihkkiin
-  Vx:0 <=> Vow _ Cns:+ [ i: | a: ] ¤: ( %>: ) X5: ;			            ! Western and norm
+  Vx:0 <=> Vow _ Cns:+ [ i: | a: ] ( %>: ) ¤: X5: ;			            ! Western and norm
 			where Vx in (e o a) ;
 ENDKEEP
 
@@ -1493,12 +1499,12 @@ ENDKEEP
 
 KEEPIF(DIPHSIMPL)
 "Diphthong Simplification in Actor Nouns from u-Verbs (Optional)"
-  Vx:0 => Vow _ Cns:+ u: ¤: ( %>: ) [ X3: | X5: ] ;             ! Eastern, substandard
+  Vx:0 => Vow _ Cns:+ u: ( %>: ) ¤: [ X3: | X5: ] ;             ! Eastern, substandard
 			where Vx in (e o a) ;
 ELSE
 ! Use this variant in normative contexts:
 "Diphthong Simplification in Actor Nouns from u-Verbs"
-  Vx:0 <=> Vow _ Cns:+ u: ¤: ( %>: ) X3: ;            ! Western and norm
+  Vx:0 <=> Vow _ Cns:+ u: ( %>: ) ¤: X3: ;            ! Western and norm
 			where Vx in (e o a) ;
 ENDKEEP
 
@@ -1539,7 +1545,7 @@ ENDKEEP
 ! ------------
 
 "Vowel Rising"
-  Vx:Vy <=> Vow: (Cns:*) ( %^: ) Cns:+ _ ( CntrCns:0 ) ( %>: ) ( Dummy:+ - W9: ) j:i ;
+  Vx:Vy <=> Vow: (Cns:*) (%^:) Cns:+ _ ( CntrCns:0 ) ( %>: ) ( Dummy:+ - W9: ) j:i ;
 			where Vx in (e o)
 			      Vy in (i u)
 			matched ;
@@ -1618,19 +1624,19 @@ ENDKEEP
 !€ Sijte0i
 
 "Metaphony in Px Contexts of Actor Nouns of i-, a-, and u-Verbs"
-Vx:Vy <=> Cns _ ¤: ( %>: ) [ X2: | X6: ] ;
+Vx:Vy <=> Cns _ ( %>: ) ¤: [ X2: | X6: ] ;
 			where Vx in (i a u)
 			      Vy in (á á o)
 			matched ;
 
 "Metaphony in Illative of Actor Nouns of i-, a-, and u-Verbs"
-Vx:Vy <=> Cns _ ¤: ( %>: ) X3: ;
+Vx:Vy <=> Cns _ ( %>: ) ¤: X3: ;
 		       where Vx in (i a )
 			     Vy in (á á )
 		       matched ;
 
 !"Metaphony in Actor Nouns of i-, a-, and u-Verbs"
-!  Vx:Vy <=> Cns _ ¤: ( %>: ) [ X2: | X3: | X6: ] ;
+!  Vx:Vy <=> Cns _ ( %>: ) ¤: [ X2: | X3: | X6: ] ;
 !			where Vx in (i a ) !u)
 !			      Vy in (á á ) !o)
 !			matched ;
@@ -1639,7 +1645,7 @@ Vx:Vy <=> Cns _ ¤: ( %>: ) X3: ;
   i:á => Cns _ ( %>: ) m: u: š: š: ;
 
 "Potential Marker Metaphony"
-  Vx:Vy <=> Cns _ ( %>: ) Q7: ;
+  Vx:Vy <=> Cns _ Q7: ;
 			where Vx in (i u)
 			      Vy in (e o)
 			matched ;
@@ -1682,7 +1688,7 @@ Vx:Vy <=> Cns _ ¤: ( %>: ) X3: ;
 ! This rule is not implemented, there is no Y8 in the sme-lex.txt file (yet).
 
 "Indicative Present Singular 3rd Final Vowel"      ! jearraQ1:jearrá
-  Vx:á <=> Cns _ ( %>: ) Q1: ;                             ! boahtiQ1:boahtá
+  Vx:á <=> Cns _ Q1: ;                             ! boahtiQ1:boahtá
 			where Vx in (a i) ;
 !€ jearraQ1
 !€ jearrá0
@@ -1692,7 +1698,7 @@ Vx:Vy <=> Cns _ ¤: ( %>: ) X3: ;
 
 
 "Imperative Present 1st/3rd Person and Connegative Final Vowel"
-  Vx:o <=> Cns _ ( %>: ) Q3: ;                             ! jearraQ3n:jerron
+  Vx:o <=> Cns _ Q3: ;                             ! jearraQ3n:jerron
 			where Vx in (a i u) ;                  ! boahtiQ3n:bohton
                                                    ! čuorvuQ3n:čurvon
 !€ jearraQ3n
@@ -1709,7 +1715,7 @@ Vx:Vy <=> Cns _ ¤: ( %>: ) X3: ;
 
 
 "Stem Vowel Shift a:e, i:e, u:o"                   ! jearra:jerre
-  Vx:Vy <=> Cns _ ( %>: ) Q2: ;                            ! boahtit:bohtet
+  Vx:Vy <=> Cns _ Q2: ;                            ! boahtit:bohtet
 			where Vx in (a i u)                    ! čuorvu:čurvo
 			      Vy in (e e o)
 			matched ;
@@ -1725,7 +1731,7 @@ Vx:Vy <=> Cns _ ¤: ( %>: ) X3: ;
 
 
 "Stem Vowel shift i:á"
-  i:á <=> Cns _ ( %>: ) [ Q4: | Q5: ] ; !1st and 2nd Person Singular Present/before Conditional Marker
+  i:á <=> Cns _ [ Q4: | Q5: ] ; !1st and 2nd Person Singular Present/before Conditional Marker
          Cns:+ _ ( %>: ) W5: ; !Dim-freq verbs
          Cns:+ _ ( %>: ) W6: ; !Sub-freq verbs
 !€ boah'tiQ4n
@@ -1752,20 +1758,20 @@ Vx:Vy <=> Cns _ ¤: ( %>: ) X3: ;
 
 
 "Stem Vowel in Dual 2nd Person Imperative"          ! jearra:jearri
-  a:i <=> Cns _ ( %>: ) Y1: ;
+  a:i <=> Cns _ Y1: ;
 !€ jearraY1
 !€ jearri0
 
 
 "Stem Vowel in Present Participials from i-Verbs"
- a:i <=> Cns _ ¤: ( %>: ) [ X1: | X4: | X5: | X7: | X8: | (Hyph) [ # | #: ] | Hyph | s | n ] ;
-! a:i <=> Cns _ ¤: ( %>: ) [ X1: | X4: | X5: | X7: | X8: | (Hyph) #:  ] ;
+ a:i <=> Cns _ ( %>: ) ¤: [ X1: | X4: | X5: | X7: | X8: | (Hyph) [ # | #: ] | Hyph | s | n ] ;
+! a:i <=> Cns _ ( %>: ) ¤: [ X1: | X4: | X5: | X7: | X8: | (Hyph) #:  ] ;
 ! The problem with the old one was that it didn't trigger for Essive and for
 ! the Px forms of the nominative.
 ! The new one isn't perfect, the s and n are rather quasi for Ess and Px.
 
 "Stem Vowel in Dual and Pl 1st Person Imperative"             ! jearra:jearru
-  Vx:u <=> Cns _ ( %>: ) Y2: ;                                 ! boah'ti:boahttu
+  Vx:u <=> Cns _ Y2: ;                                 ! boah'ti:boahttu
 			where Vx in (a i) ;
 !€ jearraY2
 !€ jearru0
@@ -1775,8 +1781,8 @@ Vx:Vy <=> Cns _ ¤: ( %>: ) X3: ;
 
 
 "Stem Vowel in Plural 2nd Person Imperative"
-!  Vx:Vy <=> Cns _ ( %>: ) Q2: ;                               ! boah'ti:bohtet
-   Vx:Vy <=> Cns _ ( %>: ) Y3: ;                               ! čuor'vu:čurvot
+!  Vx:Vy <=> Cns _ Q2: ;                               ! boah'ti:bohtet
+   Vx:Vy <=> Cns _ Y3: ;                               ! čuor'vu:čurvot
 			where Vx in (a i u)
 			      Vy in (e e o)
 			matched ;
@@ -1911,7 +1917,7 @@ Vx:Vy <=> Cns _ ¤: ( %>: ) X3: ;
 
 
 !"Postvocalic j Surfacing"
-!  j:i <=> Vow: ( :0 ) ( %>: ) ( Dummy: ) _ [ Cns | ': | ( :0 - Y5: - Y6:)+ (Hyph) [# | #:] ] ; !more and more dummies...
+!  j:i <=> Vow: ( :0 ) (%>:) ( Dummy: ) _ [ Cns | ': | ( :0 - Y5: - Y6:)+ (Hyph) [# | #:] ] ; !more and more dummies...
 !! j:i <=> Vow: ( :0 ) ( Dummy: ) _ [ Cns | ': | ( :0 - Y5: )+ (Hyph) #: ] ; !more dummies...
 !!  j:i <=> Vow: ( :0 ) ( Dummy: ) _ [ Cns | ': | ( :0 - Y5: ) (Hyph) #: ] ; !1.138
 !!  j:i <=> Vow: (:0) (Dummy:) _ [(Dummy:* - Y5: -Y6: ) [ (Hyph) #: | Cns: ((Hyph) #:) ]]; ! bad bec. Ess almmájin *almmáiin almmájX4in
