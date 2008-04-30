@@ -9,7 +9,11 @@ else
     WORDLIST=parawlist.txt
 fi
 
+echo "<paradigm>" > pstart.xml
+echo "</paradigm>" > pend.xml
+
 rm -f paradigm-sme.txt
 rm -f *.paradigm
 perl gen-paradigms.pl $WORDLIST
 cat *.paradigm > paradigm-sme.txt
+rm -f pstart.xml pend.xml
