@@ -106,13 +106,58 @@ clean:
 		  *.aresult \
 		  *.summary \
 		  *.ptest \
-		  *paradigm \
 		  paradigm* \
 		  *.tgz	\
 		  *~ \
 		  *.in \
 		  *.out \
 		  $(TEMP)/*test-script
+	@rm -f a*.xml
+	@rm -f b*.xml
+	@rm -f c*.xml
+	@rm -f č*.xml
+	@rm -f d*.xml
+	@rm -f e*.xml
+	@rm -f f*.xml
+	@rm -f g*.xml
+	@rm -f h*.xml
+	@rm -f i*.xml
+	@rm -f j*.xml
+	@rm -f k*.xml
+	@rm -f l*.xml
+	@rm -f m*.xml
+	@rm -f n*.xml
+	@rm -f o*.xml
+	@rm -f p*.xml
+	@rm -f r*.xml
+	@rm -f s*.xml
+	@rm -f t*.xml
+	@rm -f u*.xml
+	@rm -f v*.xml
+	@rm -f *.xml
+	@rm -f a*.paradigm
+	@rm -f b*.paradigm
+	@rm -f c*.paradigm
+	@rm -f č*.paradigm
+	@rm -f d*.paradigm
+	@rm -f e*.paradigm
+	@rm -f f*.paradigm
+	@rm -f g*.paradigm
+	@rm -f h*.paradigm
+	@rm -f i*.paradigm
+	@rm -f j*.paradigm
+	@rm -f k*.paradigm
+	@rm -f l*.paradigm
+	@rm -f m*.paradigm
+	@rm -f n*.paradigm
+	@rm -f o*.paradigm
+	@rm -f p*.paradigm
+	@rm -f r*.paradigm
+	@rm -f s*.paradigm
+	@rm -f t*.paradigm
+	@rm -f u*.paradigm
+	@rm -f v*.paradigm
+	@rm -f *.paradigm
 
 .PHONY: almost-clean
 almost-clean:
