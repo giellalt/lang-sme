@@ -2571,13 +2571,6 @@ SET NON-APP = ALLSYNTAG - (@APP);
 	  BEFORE-SECTIONS #
 	# =============== #
 
-	# Rules to get rid of some readings before mappings
-	# -------------------------------------------------
-	
-# Some adverbs have verb-readings:	
-
-REMOVE ("viibmat") IF (0 ("viimmat" Adv) LINK NOT 1 Inf);
-REMOVE ("duššat") IF (0 ("dušše" Adv) LINK -1 VFIN LINK NOT *-1 CS);
 
     # The section for popular rules
     # -----------------------------
@@ -2588,6 +2581,46 @@ REMOVE ("duššat") IF (0 ("dušše" Adv) LINK -1 VFIN LINK NOT *-1 CS);
     # - - - - - - - - - - - - - - -
 SELECT:r683 LANGUAGE IF (0 LANGUAGE LINK NOT 0 A) ;
 	# Should hit "giellat" V and "gielas" N but not "gielat" A.
+
+REMOVE PrfPrc IF (NEGATE *-1 COPULAS OR Neg)(NEGATE -1 Acc)(1 EOS);
+	## Dál mun ferten gaikkodit visson.
+
+
+	# Rules for "dušše", viimmat 
+
+REMOVE ("viibmat") IF (0 ("viimmat" Adv) LINK NOT 1 Inf);
+REMOVE ("duššat") IF (0 ("dušše" Adv) LINK -1 VFIN LINK NOT *-1 CS);
+
+
+REMOVE:r987 V IF (-1 CS)(0 ("dušše"))(*1 Acc BARRIER NPNHA); 
+	## Suhpodit daddjojuvvo dat go dušše nođiid váldá olmmoš eret.
+
+REMOVE:r1297 N IF (0 ("dušše")); 
+REMOVE:r1298 A IF (0 ("dušše"));
+	## Vihtta bivdovuogi mun gal dušše namahin,...
+	## Oar-julggiid atnet olbmot dušše dalle go bodni lea nu garas... 
+ # Brutal, but the noun and the adjective are almost always "dušši".
+
+REMOVE:r1299 VFIN IF (*-1 VFIN BARRIER S-BOUNDARY)(0 ("dušše"));
+REMOVE:r1300 VFIN IF (0 ("dušše"))(*1 VFIN BARRIER S-BOUNDARY);
+	## Nu eai dieđus dárbbaš skáhppot birra buot gal, dušše lasi 
+	## dan sadjái mii mieská.
+	## ...go dušše áibbas moatti sajis heive meardebuođđu adnojuvvot.
+
+REMOVE:r1301 VFIN IF (-1 ("leat"))(0 ("dušše"));
+	## Leamaš dušše vihtta dorski nuhtiin.
+
+REMOVE:r1302 Actor IF (0 ("duššat")); 	# Make a set for non-agentive verbs?
+	## Oktagaslaš olbmo lonuheami dohkálašvuohta lea stáhtii geavadis duššin.
+
+SELECT:r1303 Adv IF (*-1 BOC BARRIER NOT-PCLE)(0 ADV-NOT-VERB);
+	## Dušše daid dieđuid, mat gusket konkrehta várraárvvoštallamii, sáhttá čuoldit geahččanlobis.
+
+
+
+ # This rule has to precede particle rules, so that the verb reading of 
+ # "dušše" will not force the CS reading of a preceding particle.
+
 
  	# Proper nouns
 	# ------------
@@ -2740,6 +2773,10 @@ REMOVE:r551 (V*) IF (0 A-NOT-V) ;
 	# Particular adjectives
 	# - - - - - - - - - - -
 	
+REMOVE Inf IF (-1 GRADE-ADV)(0 (A Pl)) ;
+	## Soai leaba goappašagat nu jallat.
+
+
 SELECT:r3572 (Der/oaivvat) IF (0 (".*#oaivvadit"r));
 	## Oaččut beare boahtit, bonjuoaivvat horti.
 
@@ -3602,6 +3639,547 @@ REMOVE:r850 ("olggo#saddit") IF (0 ("olggos#addit"));
 
 	# Compound nouns  are under # Particular nouns
 	# - - - - - - -
+
+
+
+	# --------------------------------------------------------- #
+	# Cycle 1a: cases that will be needed in careful mode later #
+	# --------------------------------------------------------- #
+                            SECTION #2                      #
+	# --------------------------------------------------------- #
+	# The idea with cycle 1a is to disambiguate cases that are judged as easier and
+	# more secure than later cases, and that at the same may be used as context
+	# for other rules in later cycles.
+
+  # ----------------- #
+  # Table of Contents #
+  # ----------------- #
+  
+  # FAMILY pronouns
+  # An early rule for "eanaš"/"eanas"
+  # Px constraints
+  # Certain verb readings
+  # A rule for "dušše"
+  # ahte
+  
+
+	# FAMILY pronouns
+	# -----------------
+
+	# Mon ( = Mo N Prop Ess)
+	# - - - - - - - - - - -
+
+	# Moai ( = Moa N Prop Ill)
+	# - - - - - - - - - - - - 
+SELECT:r870 MOAI IF ( *1 V-DU1);   	## Moai čilge dan ášši.
+
+	# mii ( = Interr)
+	# - - - - - - - -
+
+	# Left conditions
+SELECT:r872 Pers IF (-3 BOC)(-2 V-PL1)(-1 go)(0 MII-PERS); 
+SELECT:r873 Pers IF (-1 (V Ind Prs Pl1 Qst))(0 MII-PERS);
+	## Eat go mii leat profehtastallan du nammii?
+
+SELECT:r874 Pers IF (-1 (V Neg Pl1))(0 MII-PERS);   
+SELECT:r875 Pers IF (*-1 V-PL1 BARRIER NOT-ADV OR ("seamma"))(0 MII-PERS)(NEGATE 1 V-SG3);
+	## Eat mii sáhte vuolgit.
+	## Goas oinniimet mii du nelgon dahje goikan?
+
+ # The last condition added because of the example below. Attempts to formulate 
+ # a negative condition on V-PL1 instead (e.g. LINK NOT 0 A) did not work.
+	## Dat geaidnu lea govdat mii doalvu gáđohussii. 
+
+	# Right conditions
+SELECT:r876 Pers IF (0 MII-PERS)(1C Rel);
+SELECT:r877 Pers IF (0 MII-PERS)(1 COMMA)(2C Rel);
+SELECT:r878 Pers IF (0 MII-PERS)(*1 V-PL1 BARRIER S-BOUNDARY OR VFIN LINK NOT 0 Adv);
+	## .. de mii, guđet leat eatnagat, leat okta rumaš.
+	## Dasgo mii oinniimet su násti badjáneamen.
+
+SELECT:r879 Pers IF (0 MII-PERS)(1 CC)(2 (N Nom));
+	## Mii ja farisealaččat atnit borakeahttáivuođa.
+
+	# mis and sis
+	# - - - - - -
+ # mun Pron Pers Pl1 Loc = mis Adv, corr. for son Pron Pers Pl3 Nom = sis Adv
+ # This one is hard to resolve, as they have the same distribution.
+
+	# don ( = Pron Dem Sg Acc/Gen)
+	# - - - - - - - - - - - - - -
+SELECT:r880 Pers IF (*-1 (V Sg2) BARRIER SV-BOUNDARY-NO-SYNT LINK NOT 0 Adv)(0 DON); 
+SELECT:r881 Pers IF (0 DON)(*1 V-SG2 BARRIER PUNCT); 
+	## Liikotgo don Abbai?
+	## Don it leat nama čállán.
+
+	# son ( = Pcle) 
+	# - - - - - - -
+SELECT:r882 Pers IF (*-1 V-SG3 BARRIER SV-BOUNDARY-NO-SYNT)(NEGATE -1 Qst or ("go"))(0 ("son" Pron Pers Sg3 Nom)); 
+	## Ii son liikon dohko.
+
+SELECT:r883 Pers IF (0 ("son" Pron Pers Sg3 Nom))(1 (Pron Rel Sg));
+	## Son gii addá veahki galgá mearridit.
+
+SELECT:r884 Pcle IF (NEGATE -2 CLB)(-1 Qst or ("go"))(0 ("son"))(1 Nom)(NEGATE 1 Refl OR Inf OR Cmpnd);
+	## Lea go son Máret boahtán?
+
+SELECT:r885 (Pron Pers Sg3 Nom) IF (0 ("son"))(*1 V-SG3 BARRIER N); 
+	## Son fertii vuolgit. 
+ 
+	# sutnje ( = forms of the verb "suotnjat")
+	# - - - - - - - - - - - - - - - - - - - -
+SELECT:r886 (Pron Ill) IF (0 ("son"))(1 (Pron Rel Sg)); 
+SELECT:r887 (Pron Ill) IF (*-1 (V Ind))(0 ("son")); # Barrier?
+	## Dearvvašvuođabálvalus galgá addit sutnje gii ohca...
+	## Son galgá addit sutnje dárbbašlaš dieđuid.
+
+	# danin (Pron Ess OR Adv)
+	# - - - - - - - - - - - -
+
+SELECT:r888 (Pron Ess) IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(0 ("danin"))(1 EOS OR CLB);
+	## ...jos oapmi fierpmit leat danin,...
+ 
+	# dáidda (N Sg Nom or Pron Dem Pl Ill)
+	# - - - - - - - - - - - - - - - - - - -
+SELECT:r903 Ill IF (0 ("dáidda"))(*1 (N Pl Ill) BARRIER NPNH);
+	## ...ja dáidda gielaide sáhttá čállit journálaid. 
+
+SELECT:r904 Ill IF (*-1 ILLV BARRIER NOT-ADV-PCLE)(0 ("dáidda"));
+	## ...mat gullet dáidda 1972-konvenšuvnna mielde.
+
+REMOVE:r905 Nom IF (-1 NP-HEAD-NOM)(0 ("dáidda"));
+	## Sus lea álgovuorus dušše guohtunvuoigatvuohta dáidda. 
+
+REMOVE:r906 Nom IF (*-1 V-TRANS-ACT BARRIER SV-BOUNDARY-NO-SYNT)(0 ("dáidda"));
+	## ...lea čađahan iskamiid muhtun orohagain ja ávžžuhan boazologu dáidda.
+
+SELECT:r907 Ill IF (-1 ("lassi"))(0 ("dáidda"));
+	## Lassin dáidda lea Sámi vuoigatvuođalávdegotti ovdaolmmoš...
+
+SELECT:r908 Ill IF (0 ("dáidda"))(*1 ("bidjat") OR ("lasihit") BARRIER V-NOT-AUX); 
+	## Ferte mearridit makkár deattu dáidda galgá bidjat.
+
+	# dat (Pron Pers, Pron Dem, Pcle)
+	# - - - - - - - - - - - - - - - -
+
+SELECT:r889 Sg3 IF (NEGATE *-1 V-PL)(0 ("dat" Sg3 Nom))(NEGATE 1 N)(*1 V-SG3 BARRIER V-PL);
+	## Dat movt sámi oahpahus lea doaibman...
+
+SELECT:r890 Dem IF (*1 (Pl Loc) BARRIER NPNHA)(0 (Pl Loc));
+  	## Dain hirbmat váriin ja mehciin sin guovllus lei earenoamáš vallji sihke elliid ja eará dáfus.
+
+SELECT:r892 Dem IF (*1 (Pl Com) BARRIER NPNHA)(0 (Pl Com));
+
+SELECT:r894 Pers IF (-1 Nom)(NEGATE -1 Pers)(0 ("dat" Nom))(*1 REALCOPULAS BARRIER NOT-ADV-PCLE LINK 1 CLB OR EOS);
+	## Hei, soiddas dat lea, máistte don dan gáfe!
+	## Gean mearkka bohccot dat ledje?
+
+SELECT:r895 Pcle IF (-1 Nom)(NEGATE -1 A OR Interr OR PrfPrc)(0 ("dat" Nom))(*1 VFIN BARRIER NOT-ADV); #(NEGATE *1 N BARRIER NP-BOUNDARY);
+	## Máret dat boahtá.
+	## Mun dat lean.
+
+SELECT:r896 Pcle IF (NEGATE *-1 (V Sg3) OR (V Du3) OR (V Pl3) BARRIER SV-BOUNDARY-NO-SYNT)(NEGATE -1 BOC)(0 ("dat" Nom))(NEGATE *1 N BARRIER NOT-NP)(NEGATE *1 (V Sg3) OR (V Du3) OR (V Pl3) BARRIER SV-BOUNDARY-NO-SYNT);
+	## Na vuolggán dat gal mun ge.
+
+REMOVE:r897 Dem IF (0 DAT-PRON)(NEGATE 0 ("dasgo") OR ("danin") OR ("dainna"))(NEGATE 1 A OR Num OR N OR Indef OR Attr)(NEGATE 1 PrfPrc LINK *1 N BARRIER NPNH)(NEGATE 0 Nom LINK 1 ("gal") OR Pcle LINK 1 (N Nom))(NEGATE 1 NP-HEAD-GEN LINK 1 (Actio Gen) LINK 1 N)(NEGATE 1 ("seammás"))(NEGATE 0 Acc LINK *1 STV-NOT-ACT BARRIER S-BOUNDARY LINK NOT *1 Acc BARRIER NPNH);
+	## Dá dat leat.
+	## Moai soabaime dasa.
+ 
+REMOVE:r898 Dem IF (0 (Pron Pers))(NEGATE *1 N BARRIER NPNHAII)(NEGATE 1 ("nubbi" Gen) OR ("seammás"));
+	## Aiddo sii movttidahttojuvvojit daid buot smiehttat sámegillii.
+	## Nubbi noađđeheargi goallostuvvo giehtahearggi lávžái ja goalmmát fas dan nuppi lávžái. # It shouldn´t take this one.
+
+SELECT:r899 Dem IF (-2 (N Pl Nom))(-1 CC)(0 (Pron Pers Pl3 Gen))(*1 N BARRIER NPNH);
+	## Skovit ja daid rávačállagat galget leat sámegillii.
+
+	# This is a general rule. The problem is that we have no counter examples.
+	#SE Dem IF (0 (Pron Pers Sg3 Gen @>N));
+	## dan suorggis.
+
+
+# Here´s a better one:    
+SELECT:r900 Dem IF (NEGATE *-1 STV-NOT-ACT LINK NOT *2C Acc BARRIER N)(0 (Pron Pers Sg3 Gen))(NEGATE 1 Po)(NEGATE *1 Pl OR Ess OR Com BARRIER N)(NEGATE -1 BOS LINK 2 Prop) ;
+    # It shouldn´t hit: Mun gohčodan dan eadnin. Sii čurvot dan dáhkiid alde. De dearvvahehket dan ráfiin. Son dasto attii dan eadnásis.
+  
+
+	# dasa ( = forms of the verb "dassat")
+	# - - - - - - - - - - - - - - - - - - 
+REMOVE:r901 VGen IF (0 Pron);
+	## Na muhto don it leat dasa nama čállán! 
+	## Dat gal lei beare unnán.
+
+	# Earlier specific rules, to be reactivated if the previous one is too strong.
+
+	#SELECT Dem IF (0 ("dat" Pron Dem Sg Ill))(1 VFIN); 	## Dasa lea guhkes historjá.
+	#SELECT Dem IF (0 ("dat" Pron Dem Sg Ill))(1 ("lassi" N Ess)); 	## Dasa lassin.
+	#SELECT Ill IF (-1 ("sivva"))(0 DAT-PRON); 	## Sivva dasa lea, ahte ...
+	#SELECT Ill IF (-1 PrfPrc)(0 DAT-PRON); 	## Sii leat čujuhan dasa vuosttas jagi.
+
+SELECT:r902 Ill IF (0 DAT-PRON)(1 ("lassi" Ess));
+	## Dasa lassin buvttán dás lasseargumenttaid. 
+
+
+	# dii ("D" Num Ill) or (Pron Pers Pl2 Nom)
+	# - - - - - - - - - - - - - - - - - - - - -
+
+
+	# Other homonymies linked to FAMILY pronouns, with non-obvious answers.
+ # Munin = Pron Pers Sg1 Ess = Ess of N Prop Muni (!)
+ # dudnon = Pron Per Du2 Ess = dudnu N Sg ... PxSg1 (covered by Px rule)
+ # Sunin = Pron Pers Sg3 Ess = Ess of N Prop Sun 
+ 
+	# FAMILY pronoun, not numeral
+	# - - - - - - - - - - - - - - -
+
+
+	# An early rule for "eanaš"/"eanas"
+	# ----------------------------------
+SELECT:r911 Pron IF (0 ("eanaš") OR ("eanas"))(1 (Dem Loc) OR (Pers Loc));
+	## Eanaš dáin gálduin leat hui unnán dieđuid.
+
+	# Px constraints
+	# --------------
+
+	# First select some clear Px cases, and remove some equally clear non-cases
+	# Let these come directly after local disambiguation.
+
+
+	# PxSg1
+	# - - -
+SELECT:r912 (Nom PxSg1) IF (-1 BOS)(NEGATE 0 VFIN)(1 EOS);
+	## Ustibažžan!
+
+SELECT:r913 (PxSg1) IF (-1 PrfPrc LINK *-1 V-SG1 BARRIER NOT-ADV LINK 0 ("leat"))(NEGATE 0 Dem)(NEGATE *1 Acc BARRIER VFIN LINK NOT 1 Po)(NEGATE *1 ("ahte") BARRIER WORD);
+SELECT:r914 (PxSg1) IF (-1 PrfPrc LINK *-1 V-SG1 + Neg)(NEGATE 0 Dem)(NEGATE *1 Acc BARRIER VFIN LINK NOT 1 Po)(NEGATE *1 ("ahte") BARRIER WORD);
+	## Mun lean oaidnán vielljan.
+	## Mun in oaidnán vielljan jahkái.
+
+SELECT:r915 (PxSg1) IF (-1 V-SG1 LINK NOT 0 PrfPrc)(NEGATE -1 Neg LINK 1 PrfPrc)(NEGATE 0 Dem)(NEGATE -1 ("leat"))(NEGATE *1 Acc BARRIER VFIN LINK NOT 1 Po)(NEGATE *1 ("ahte") BARRIER WORD);
+SELECT:r916 (PxSg1) IF (*-1 V-SG1 LINK NOT 0 ("leat"))(NEGATE 0 Dem)(1 CC OR COMMA LINK 1 PxSg1) ;
+SELECT:r917 (PxSg1) IF (-1 Inf LINK *-1 V-SG1 BARRIER NOT-ADV-PCLE LINK NOT 0 ("leat"))(NEGATE 0 Dem OR PrfPrc) ;
+SELECT:r918 (PxSg1) IF (*-3 V-SG1 LINK NOT 0 ("leat"))(-1 CC LINK -1 PxSg1)(NEGATE 0 Dem);
+	## Mun attán heaggan sávzzaid ovddas.
+	## Mun attán heaggan, áhkkán ja ruhtan sávzzaid ovddas.
+  	## Mun válddán ovdamearkan Buolbmága. # It shouldn`t take this example.
+
+SELECT:r919 (Nom PxSg1) IF (-1 PUNCT OR CLB)(0 N-PX)(1 COMMA);
+SELECT:r920 (Nom PxSg1) IF (-1 BOS)(0 N-PX)(1 VFIN);
+	## Bárdnán, leage dorvvolaš.
+
+SELECT:r3580 (Loc PxSg1) IF (-1 V-SG1 LINK 0 V-TRANS-ACT)(1 Acc); 	
+	## Mun roggen ozastan njálgáid mánáide.
+	
+
+	# PxSg2
+	# - - -
+SELECT:r921 (PxSg2) IF (-1 V-SG2)(NEGATE -1 ("leat"))(-2 DON);
+	## Don attát heakkat mu ovddas?
+
+SELECT:r922 (PxSg2) IF (*-1C (Imprt Sg2) BARRIER NPNHA LINK 0 V-TRANS-ACT LINK NOT 0 ("dassat") OR Der/Pass LINK -1 S-BOUNDARY OR CC OR BOS)(NEGATE 0 Adv)(NEGATE 0 (N Pl Nom) LINK *-1 CC OR CLB BARRIER NPNH LINK -1 Nom)(NEGATE 0 (N Pl Nom) LINK -1 Attr LINK 0 Imprt)(NEGATE 0 (N Pl Nom) LINK *1 V-PL3 BARRIER NOT-ADV-PCLE);
+	## Buvtte dasto oaffarskeaŋkkat!
+	## Lihka bajás, váldde seaŋggat ja vázzil!
+
+	#	(NEGATE 0 Prop OR (V Sg2))
+	#	(NEGATE 0 Inf LINK *-1 INFV BARRIER VERB)
+
+SELECT:r923 (PxSg2) IF (0 (N Pl Nom))(*1C (V Sg2) BARRIER NOT-ADV-PCLE OR CLB);
+	## Hearrá Ipmilat galggat gudnejahttit.
+
+SELECT:r924 (PxSg2) IF (0 (N Pl Nom))(*-1 V-TRANS-ACT-NOT-ACT + Sg2 BARRIER SV-BOUNDARY-NO-SYNT OR Acc LINK NOT 0 A OR Imprt OR Inf);
+	## Leat go oaidnán oappát?
+
+REMOVE:r925 (Gen PxSg2) IF (*-1 REALCOPULAS BARRIER SV-BOUNDARY-NO-SYNT)(NEGATE *-1 (Pron Sg2 Loc)BARRIER S-BOUNDARY)(0 (N Pl Nom))(*1 ("mielde"));
+
+SELECT:r926 (Gen PxSg2) IF (*-1 Sg2 BARRIER S-BOUNDARY)(0 (N Pl Nom))(1 Po)(NEGATE 1 N)(NEGATE *2 NP-HEAD-GEN BARRIER NPNH);
+	## Go don rohkadalat, de mana gámmárat sisa.
+
+SELECT:r927 PxSg2 IF (-1 ("hearrá" Sg))(0 ("ipmil"));
+	## It galgga geahččalit Hearrá Ipmilat.
+
+REMOVE:r928 PxSg2 IF (*-1 BOC BARRIER NPNH)(0 (N Pl Nom))(1 (V Pl3) OR (Pron Rel Pl Nom) OR KLASS);
+	## Searvi divžžohasat ožžot maid dieđuid bohtasiid birra.
+
+REMOVE:r929 PxSg2 IF (*-1 BOS BARRIER Sg2)(NEGATE 0 N-PX)(NEGATE *1 (V Sg2) BARRIER SV-BOUNDARY-NO-SYNT);
+	## Nystø mielas leaba soai Lene Hanseniin rievttes olbmot ovddastit sámi álbmoga dáhtu Tromssa ohcamušas. # No antecedent, no reflexiven.
+
+	# PxSg3
+	# - - -
+
+	# Special nouns
+
+REMOVE:r930 PxSg3 IF (0 KLASS)(1 Num);
+  	## Suohkanstivra mearridii áššis 62/99 sirdit administrašuvnna Levdnjii.
+  
+REMOVE:r932 PxSg3 IF (-1 CC LINK -1 Loc)(0 (Sg Loc))(NEGATE 1 NP-MEMBER);
+  # Remove possessive suffixes in locative coordination.
+  	## Hukset orrun- ja doaibmaguovddáža Mázii ja fuollaásodagaid dakko lahkosii, lea vuoruhuvvon doaibma suohkana ekonomiplánas ja doaibmaprográmmas, nu maiddái suohkana boarrásiidplánas oktiibuot 6 mill kr jagi 2001 rádjái.  
+
+REMOVE:r933 PxSg3 IF (0 (N Sg Loc))(1 ("nubbi" Ill));
+	## Son lea viehkan čoahkkimis nubbái maŋŋebárgga rájes.
+
+SELECT:r934 (PxSg3) IF (*-1 (V TV Sg3) BARRIER NOT-ADV-PCLE LINK NOT 0 Der/Pass OR LOCV LINK *-1 ("son" Sg3 Nom) OR (N Sg Nom) BARRIER NOT-ADV-PCLE LINK NOT *-1 Acc BARRIER S-BOUNDARY OR VERB)(0 Loc)(NEGATE 0 N-NOPX OR PLACE)(NEGATE 0 ("árvu") LINK *-1 ("atnit") BARRIER NOT-ADV)(NEGATE 0 Attr LINK *1 N BARRIER NPNH);
+	## Son beastá álbmogis sin suttuin.
+	## Son hárve gullá eatnigielas.
+	## Jesus leai sullii golbmalotjahkasaš go álggahii doaimmas.
+
+SELECT:r935 (PxSg3) IF (*-2 (V Sg3) BARRIER V-NOT-AUX)(-1 PrfPrc LINK 0 V-TRANS-ACT LINK NOT 0 LOCV)(0 N-PX)(NEGATE 0 Nom);
+	## ...ovdal go Márjá lei riegádahttán bártnis.
+
+SELECT:r936 (PxSg3) IF (*-3 (N Sg Nom) OR (Pron Pers Sg3 Nom))(-2C A)(-1 go)(NEGATE 0 Attr LINK *1 N BARRIER NPNH);
+	## Máhttájeaddji ii leat stuorit go oahpaheaddjis, ii ge bálvaleaddji stuorit go hearrás.
+	## Mávssut leat adnon eambbo go bušeahtas.
+
+
+SELECT:r937 (PxSg3) IF (*-1 (Sg Nom) OR (Sg3 Nom) BARRIER Pers OR S-BOUNDARY OR LOCV LINK NOT 0 Attr)(NEGATE *-1 (Imprt Sg2) BARRIER SV-BOUNDARY-NO-SYNT)(NEGATE -1 (N Nom) OR (N Acc))(0 N-PX)(NEGATE 0 Loc LINK 1 Ill);
+
+	## Dat guhte ráhkista bártnis dahje nieiddas eanebut go mu...
+  	## Son galgá boahtit álo beroškeahttá makkár duogáš eatnis lea.
+  # It might be problematic using Acc as a constraint, since Acc=Gen. But we cannot think of a Gen+NounPx construction that works.
+
+SELECT:r938 PxSg3 IF (*-1 (V Sg3) BARRIER SV-BOUNDARY-NO-SYNT)(0 Gen)(1 Po LINK NOT 0 N OR ("eret"))(NEGATE 1 Pr LINK *1 Gen BARRIER NPNH);
+	## Dahje maid sáhttá olmmoš addit máksun heakkas ovddas?
+
+SELECT:r939 (Gen PxSg3) IF (*-1 S-BOUNDARY1 OR BOS OR CLB BARRIER NPNH)(1 Po)(*2 V-SG3 BARRIER NOT-ADV-PCLE LINK NOT 0 A LINK *1 N BARRIER NPNH);
+	## Raporttas bokte dáhttu bargojoavku čalmmustahttit Sámedikki.
+
+SELECT:r940 (PxSg3) IF (-2 N-PX)(-1 CC);
+	## Mun lean boahtán bidjat soahpameahttunvuođa bártni ja áhčis gaskii.
+	
+SELECT:r943 Loc IF (-1 VFIN)(0 PLACE LINK 0 Px)(NEGATE 0 Po OR Pr)(NEGATE 1 Po OR ("mielde") OR ("fárrui")) ;	
+
+REMOVE:r944 (Gen PxSg3) IF (NEGATE *-1 Pr BARRIER NPNH)(1C Prop);
+	## erret eará stuorradiggedieđáhusas Sámedikki doaimmaid birra.
+
+
+	# All Px
+
+REMOVE:r945 Loc IF (0 ("ieš#dovdu") LINK 0 Px) ;
+	## Son rahčá iešdovdduinis.
+
+REMOVE:r946 Px IF (*-1 (Pron Pers Gen) BARRIER NOT-ADJ)(0 ("miella" Loc));
+  	## Dilli lea min mielas čuožžilan.
+  	## Mu mielas dat lea hui dehálaš njuolggadus.
+  # Note: This rule is too general to accept a hypothetical "Mu áhččán"
+
+	# ------------------- #
+#SEC#         SECTION #3   #
+	# ------------------- #
+
+	# Certain verb readings
+	# ---------------------
+
+REMOVE:r947 VGen IF (0 Der/Pass OR Der/goahti OR Der/st OR Der/l);
+
+ # Here we pick out finite verbs that follow FAMILY pronouns. 
+ # This selection is quite safe at this point, and we get rid of several 
+ # ambiguities that would otherwise be disturbing in the following cycles. 
+ # Note that all the following rules, except the rule for Sg2, also select 
+ # imperatives.  
+
+	# All imperatives
+
+REMOVE:r948 Imprt IF (*-1C Rel BARRIER S-BOUNDARY OR CC OR COMMA);
+
+	# Sg1 - early cycle, safe rules
+	# - -
+
+SELECT:r949 (V Sg1) IF (*-1 MUN BARRIER Nom OR V-SG1 OR S-BOUNDARY LINK NOT *-1 V-SG1 BARRIER NOT-ADV-PCLE)(NEGATE 0 PrfPrc LINK *-1 REALCOPULAS BARRIER S-BOUNDARY OR CLB)(NEGATE 0 PrfPrc LINK *-1 V-SG1 BARRIER NOT-ADV-PCLE);
+	## Dego mun dás vuollelis mottiin ovdamearkkain čájehan,...
+
+SELECT:r950 (V Sg1) IF (*1 MUN BARRIER NOT-ADV-PCLE OR CLB);
+	## Man guhká ferten mun gierdat din?
+
+	# Sg2 - early cycle, safe rules
+	# - - 
+
+SELECT:r951 V-SG2 IF (*-1 DON BARRIER V-SG2 OR ConNeg OR S-BOUNDARY LINK NOT *-1 V-SG2 BARRIER S-BOUNDARY);
+	## ...jos don fal luoitádat ja gudnejahtát mu.
+	## Rohkadallet dasto ná: Áhččámet, don guhte leat almmis.
+
+SELECT:r952 V-SG2 IF (*1 DON BARRIER S-BOUNDARY);
+	## Leat go don dat guhte galgá boahtit? 
+
+REMOVE:r953 Inf IF (*-1 BOS BARRIER VFIN)(*1 ("ahte" CS) BARRIER NOT-ADV);
+	## Dainna lágiin fuobmát jođánit ahte sámi gielladilis lea árvu maid eará riikkain.
+
+	# Sg3 - early cycle, safe rules
+	# - - 
+
+SELECT:r954 (V Sg3) IF (*-1 SON BARRIER Nom OR V-SG3 OR CS OR PUNCT LINK NOT *-1 V-SG3 BARRIER NOT-ADV-PCLE)(NEGATE 0 Adv LINK *1 V-SG3);
+	## Geas ležžet bealjit, son gullos!
+
+SELECT:r955 (V Sg3) IF (*1 SON BARRIER NOT-ADV-PCLE OR go OR CLB)(NEGATE 0 CS)(NEGATE 0 Adv LINK *1 (V Sg3) BARRIER SV-BOUNDARY-NO-SYNT);
+	## ...oažžu son atnit dušše dan čázis mii sutnje lea mearriduvvon.
+
+REMOVE:r956 (V Sg3) IF (-1 (Pron Nom))(NEGATE -1 Sg OR Sg3);
+	## Sii manne vissui.
+	## Dii uhccán oskkolaččat. 
+	
+REMOVE:r957 (V Sg3) IF (-1 (Sg Com) LINK -1 (N Nom))(0 Du3);	
+	## Biret-guovttos Juffáin leaba čeahpit duddjot.
+
+REMOVE:r958 (V Pl3) IF (-1 (Pron Rel Sg))(0 (V Sg3));
+	## Kahihttalis mas čilge orrunlanjadagaid latnjačovdosa nannejuvvo ahte 
+	## lanjadat leat plánejuvvon orruide geat dárbbašit divššu guhkit.
+
+	# Negative verb, not abbreviation or roman numeral Ii.
+
+SELECT:r959 (V IV Neg Ind Sg3) IF (0 ("ii"))(*1 Foc/ge OR ConNeg BARRIER COMMA OR PUNCT);
+	## Ii oktage lea boahtán.
+
+	# Du1 - early cycle, safe rules
+	# - - 
+SELECT:r960 (V Du1) IF (*-1 MOAI BARRIER V-DU1 OR S-BOUNDARY OR PUNCT LINK NOT *-1 V-DU1 BARRIER NOT-ADV-PCLE);
+	## Moai dihte ahte dát lea munno bárdni.
+
+SELECT:r961 (V Du1) IF (NEGATE 0 Adv LINK *-1 BOS OR PUNCT BARRIER NOT-CC)(NEGATE 0 Adv LINK *-1 (V Du1))(*1 MOAI BARRIER S-BOUNDARY);
+	##
+
+	# Du2 - early cycle, safe rules
+	# - - 
+SELECT:r962 (V Du2) IF (*-1 DOAI BARRIER V-DU2 OR SV-BOUNDARY-NO-SYNT OR PUNCT LINK NOT *-1 V-DU2 BARRIER NOT-ADV-PCLE);
+	## Manne doai ozaide mu?
+
+SELECT:r963 (V Du2) IF (*1 DOAI BARRIER NOT-ADV-PCLE OR CLB);
+	##
+
+	# Du3 - early cycle, safe rules
+	# - -
+ # The competition is -ba Foc.
+
+SELECT:r964 (V Du3) IF (*-1 SOAI BARRIER V-DU3 OR SV-BOUNDARY-NO-SYNT OR PUNCT LINK NOT *-1 V-DU3 BARRIER NOT-ADV-PCLE);
+	## Soai leaba dahkan čielga oavdudagu.
+	## Soai ferteba mannat. 
+
+SELECT:r965 (V Du3) IF (*1 SOAI BARRIER NOT-ADV-PCLE OR CLB);
+	## Fertebago soai mannat? 
+
+SELECT:r966 (V Du3) IF (*-1 ("guokte" Nom) BARRIER SV-BOUNDARY-NO-SYNT) ; 
+	## Guokte nissona ferdneba milluin.
+
+REMOVE:r967 (V Sg3) IF (0 Du3)(*1 ("guokte" Nom) BARRIER NPNHA);
+	## Mus leaba dušše dát guokte oappá geaid don dás oainnát.
+
+SELECT:r968 (V Du3) IF (-1 (N Nom))(*-2 CC BARRIER NPNH LINK -1 (N Nom));
+	## Per Berg ja Rolf Olsen leaba doppe.
+	## Deanu Searat ja Sámi Siida leaba ovttas ordnen dáid gilvvohallamiid.
+    	## Stuorra nieida ja unna gánda ferteba leat doppe.
+ # Note that 'Searat' is Pl, hence no number requirement in this rule.
+
+SELECT:r969 (V Du3) IF (*1 (Sg Nom) BARRIER NPNHA LINK 1 CC LINK *1 (Sg Nom) BARRIER NPNH);
+	## Dá leaba Brita ja Ole Kåven.
+
+REMOVE:r970 (V Sg3) IF (*-1 (N Num Nom) BARRIER SV-BOUNDARY-NO-SYNT)(0 (V Du3));
+	## Biera-guovttos Márehiin leaba daid mánáid váhnemat.
+
+	# Pl1 - early cycle, safe rules
+	# - - 
+SELECT:r971 (V Pl1) IF (*-1 MII-PERS BARRIER VFIN OR PUNCT LINK NOT *-1 V-PL1 BARRIER NOT-ADV-PCLE OR CLB);
+	## Mii sápmelaččat gal leat vásihan dán...
+
+SELECT:r972 (V Pl1) IF (*1 MII-PERS BARRIER NOT-ADV-PCLE OR CLB OR ("seamma") LINK NOT *1 V-SG3 BARRIER NOT-AA OR CLB);
+	## Galgat go mii vuordit muhtun eará? 
+
+REMOVE:r973 Imprt IF (-1 MII-PERS OR (N Pl Nom))(0 (V Prs Pl1));
+	## Mii áigut maiddái leat aktiivvalaččat mielde juohke dásis.
+
+	# Pl2 - early cycle, safe rules
+	# - -
+SELECT:r974 (V Pl2) IF (*-1 DII BARRIER NOT-ADV-PCLE OR CLB);
+	##
+
+SELECT:r975 (V Pl2) IF (*1 DII BARRIER NOT-ADV-PCLE OR MO OR CLB);
+	## Addet dii sidjiide borramuša!
+
+# Pl3 - early cycle, safe rules
+# - -
+
+# Select...
+
+SELECT:r976 (V Pl3) IF (*-1 SII BARRIER V-PL3 OR S-BOUNDARY OR PUNCT LINK NOT *-1 V-PL3 BARRIER NOT-ADV-PCLE)(NEGATE 0 Adv LINK *1 V-PL3 BARRIER S-BOUNDARY);
+	## ...vai sii áiggi mielde oččoše doarvái gelbbolašvuođa.
+
+SELECT:r977 (V Pl3) IF (*1 SII BARRIER NOT-ADV-PCLE OR CLB)(NEGATE 0 Adv OR Po LINK *1 V-PL3 BARRIER S-BOUNDARY);	
+	## Máhttego sii čilget áššiset dárogillii?
+
+SELECT:r978 (Prt Pl3) IF (*-2C (Prt Pl3) BARRIER VFIN)(-1 CC);
+	## Ja buot olbmot imaštalle sakka ja jerre. 
+
+SELECT:r979 (V Pl3) IF (-1 (Pron Rel Pl) OR ("mo") OR ("mov") OR ("movt") OR ("govt"))     (-2 (N Pl));
+SELECT:r980 (V Pl3) IF (-1 (Pron Rel Pl) OR ("mo") OR ("mov") OR ("movt") OR ("govt"))(-2 COMMA)(-3 (N Pl));
+	## Njuolggadusat movt meannudit oanehisáigge vealgáibideami, beaivádan 25.04.00.
+	## Vai bálvalusas lea buohccedikšofágalaš dássi eaktuduvvo ahte leat fágabargit geat virgáividdjojit.
+
+SELECT:r981 (V Pl3) IF (-1 CS)(*-2 (V Pl3) BARRIER VFIN LINK -1 (N Pl Nom) OR (Pron Pers Pl3 Nom));
+	## Sii ožžot smiehttanáiggi jos háliidit muitalit dan birra.
+
+REMOVE:r982 (V Prt Sg2) IF (*-1 NP-HEAD-PL-NOM BARRIER VFIN OR S-BOUNDARY)(0 (V Pl3));
+	## Daid gažaldagaide, mat dán čielggadeamis galget gieđahallot, ...
+
+REMOVE:r983 (V Prt Sg2) IF (-1 CS LINK *-1 NP-HEAD-PL-NOM)(0 (V Pl3));
+	## Hálddašanásahusat maid várra fertejit dákkár deasttaid atnit rievttálaš árvvoštallamis go galget mearridit mii dan sisdoallu berrešii leat.
+
+# Remove...
+
+REMOVE:r984 (V Ind Pl3) IF (1C VFIN)(NEGATE 1 Pl3) ;
+	## Manne ii leat áviisa boahtán?
+	## Máhtte manai čuoigga skuvlii.
+	## Vihtta bivdovuogi mun gal dušše namahin. 
+
+REMOVE:r985 (Prt Sg2) IF (NEGATE *-1 (Pron Pers Sg2))(0 (Prs Pl3))(*1 Der/Pass BARRIER NOT-ADV);
+	## Reivelonuhallan sámi institušuvnnaiguin galget dahkkot sáme- ja dárogillii. 
+	# Probably not prodrop if passivized Sg2.
+
+	# PrsPrc
+	# - - - -
+SELECT:r986 PrsPrc IF (NEGATE 0 LEX-N)(1 CC OR COMMA LINK 1 A);
+	## Soahpamušas váilu njuolggadusat smávit vahágahtti ja geavatlaččat
+	## bággolonistemiide.
+ # Early rule since many PrsPrc readings are removed later.
+
+ 
+	# ---------------------------------------------------------------- #
+	# Cycle 1b: removing the readings that were left from the 1a rules #
+	# ---------------------------------------------------------------- #
+               SECTION #4                                          #
+	# ---------------------------------------------------------------- #
+ 
+
+	# Removing (nearly) all remaining Px readings
+	# -------------------------------------------
+ # The remaining Px readings will be taken care of later.
+
+REMOVE:r992 (PxSg1) ; # IF (0 Ess); # yes, kill'em all
+	## Ale bala váldimis Márjjá ruktosat áhkkán. 
+
+REMOVE:r993 (Nom PxSg2);
+	## Su lusa bohte olbmot Jerusalemis.
+	## Na dát ledje buorit mállásat. 
+
+REMOVE:r994 (PxSg2) IF (*-1 (Sg Gen) OR (Sg3 Gen) BARRIER NPNH LINK -1 CC);
+	## ...eará čuovvoleapmi mii johtui biddjo ja dan bohtosat.
+
+REMOVE:r995 (PxSg3) IF (-1 Indef)(0 Loc); # Possessed nouns do not go with Indef?
+    	## Olmmoš ii eale dušše láibbis, muhto juohke sánis mii boahtá
+    	## Ipmila njálmmis.
+    	## Alimusriekti lea dattege muhtun duomus cealkán ahte...
+
+REMOVE:r996 (PxSg3) IF (NEGATE *-1 (V Sg3) BARRIER S-BOUNDARY)(NEGATE -1 go)(NEGATE *1 (V Sg3) BARRIER SV-BOUNDARY-NO-SYNT) ;
+	## Maid don áiggut márkanis?
+	## Divššohasas galget leat dat dieđut, ...
+	## Nu guhkás go Gonagas mearrida...
+
+REMOVE:r997 (PxSg3) IF (*-1 NP-HEAD-NOM BARRIER S-BOUNDARY OR Inf LINK NOT 0 Sg OR Sg3 OR V-MAIN OR Inf LINK NOT 0 ("visot"))(NEGATE -1 Inf LINK 0 V-TRANS-ACT LINK *-1 V-SG3 BARRIER SV-BOUNDARY-NO-SYNT);
+	## Láhka gusto olbmuide norgga skiippaid alde mat johtet olggoriikkas.
+	## Son oastá dáid váldolinjáid hárrái Stuorradikkis. # The last sentence is problematic, tells us that (Sg3 TV) 
+
+REMOVE:r998 (PxSg3) IF (*-1 VFIN BARRIER S-BOUNDARY LINK NOT 0 Sg3 OR Inf OR PrfPrc)(NEGATE *-1 ConNeg BARRIER S-BOUNDARY LINK *-1 (Neg Sg3) BARRIER VERB)(NEGATE 1 ("fárrui") OR ("mielde"))(NEGATE *1 VFIN);	
+	## ...geat eai oro bissovaččat riikkas.
+  # Removed this rule. It removed the Px in
+  	## Máhtte ii váidalan geafivuođas."
+
+REMOVE:r999 (PxSg3) IF (*-1 Rel BARRIER VFIN)(*1 VFIN LINK NOT 0 Sg3);
+	## ...man oaivilis sii leat dakkár áššiid hárrái.
  
 
 	# Lexically determined mappings
@@ -3685,10 +4263,11 @@ MAP:r30 (@>N) TARGET (Dem Sg Gen) IF (*1 ("seammás") BARRIER NOT-QMARK);
 
 	# Attribute mappings
 	# ------------------
+MAP:r31 (@>A @>ADVL @>Pron @>N) TARGET GRADE-ADV IF (*1 A BARRIER NOT-QMARK LINK NOT 0 Po OR Inf OR PrfPrc) (NEGATE 0 ("eanet") LINK *1 ("u\
+hcit") OR ("unnit") BARRIER NOT-QMARK);
+        ## Soai leaba goappašagat nu jallat.
+        ## In dieđe man buorit dat leat.
 
-MAP:r31 (@>A @>ADVL @>Pron @>N) TARGET GRADE-ADV IF (*1 A BARRIER NOT-QMARK LINK NOT 0 Po OR Inf OR PrfPrc) (NEGATE 0 ("eanet") LINK *1 ("uhcit") OR ("unnit") BARRIER NOT-QMARK);
-	## Soai leaba goappašagat nu jallat.
-	## In dieđe man buorit dat leat.
 	
 MAP:r32 (@>N) TARGET GRADE-ADV IF (*1 ("árvu" Loc) BARRIER NOT-QMARK) ;	
 
@@ -3706,7 +4285,7 @@ MAP:r34 (@>A) TARGET ("buot") OR ("gait") IF (*1 Superl BARRIER NOT-QMARK);
 MAP:r35 (@>A) TARGET ("mii" Sg Gen) IF (*1 (Pron Pers Nom) BARRIER NOT-QMARK) (*1 (A Sg Nom) BARRIER V-NOT-AUX);
 	## Leatgo don fuomášan dan máilmmi, man dat lea váralaš?
 
-MAP:r36 (@>ADVL) TARGET ("áibbas" Adv) OR ("eanet" Adv) OR ("erenoamáš") OR ("earenoamáš") OR ("hirbmat") OR ("hui") OR ("menddo") OR ("mii" Sg Gen) OR ("nu") OR ("oba") OR ("oppa") IF (1 Adv)(NEGATE *1 ("fal") OR ("maiddái") OR ("mo") OR ("mot") OR ("mov") OR ("movt") OR ("govt") BARRIER NOT-QMARK) (NEGATE 0 ("mii" Sg Gen) LINK *1 Po BARRIER NOT-QMARK)(NEGATE 0 ("eanet") LINK 1 ("uhcit") OR ("unnit"));
+MAP:r36 (@>ADVL) TARGET ("áibbas" Adv) OR ("eanet" Adv) OR ("erenoamáš") OR ("earenoamáš") OR ("hirbmat") OR ("hui") OR ("menddo") OR ("mii" Sg Gen) OR ("nu") OR ("oba") OR ("oppa") IF (1 Adv LINK NOT 0 A)(NEGATE *1 ("fal") OR ("maiddái") OR ("mo") OR ("mot") OR ("mov") OR ("movt") OR ("govt") BARRIER NOT-QMARK) (NEGATE 0 ("mii" Sg Gen) LINK *1 Po BARRIER NOT-QMARK)(NEGATE 0 ("eanet") LINK 1 ("uhcit") OR ("unnit"));
 	## Man dávjá mun livččen dáhtton čohkket du mánáid.
 
 MAP:r37 (@>ADVL) TARGET Adv IF (0 Indef)(*1 VGen BARRIER NOT-QMARK LINK NOT 0 N OR Inf)(NEGATE *1 Sg3 BARRIER NOT-QMARK);
@@ -5214,509 +5793,6 @@ REMOVE:r529 (@X) ; # Keine Spur...
 	# Local disambiguation - cycles 1 and 2 #
 	# ===================================== #
 
-	# --------------------------------------------------------- #
-	# Cycle 1a: cases that will be needed in careful mode later #
-	# --------------------------------------------------------- #
-                            SECTION #2                      #
-	# --------------------------------------------------------- #
-	# The idea with cycle 1a is to disambiguate cases that are judged as easier and
-	# more secure than later cases, and that at the same may be used as context
-	# for other rules in later cycles.
-
-  # ----------------- #
-  # Table of Contents #
-  # ----------------- #
-  
-  # FAMILY pronouns
-  # An early rule for "eanaš"/"eanas"
-  # Px constraints
-  # Certain verb readings
-  # A rule for "dušše"
-  # ahte
-  
-
-	# FAMILY pronouns
-	# -----------------
-
-	# Mon ( = Mo N Prop Ess)
-	# - - - - - - - - - - -
-
-	# Moai ( = Moa N Prop Ill)
-	# - - - - - - - - - - - - 
-SELECT:r870 MOAI IF ( *1 V-DU1);   	## Moai čilge dan ášši.
-
-	# mii ( = Interr)
-	# - - - - - - - -
-
-	# Left conditions
-SELECT:r872 Pers IF (-3 BOC)(-2 V-PL1)(-1 go)(0 MII-PERS); 
-SELECT:r873 Pers IF (-1 (V Ind Prs Pl1 Qst))(0 MII-PERS);
-	## Eat go mii leat profehtastallan du nammii?
-
-SELECT:r874 Pers IF (-1 (V Neg Pl1))(0 MII-PERS);   
-SELECT:r875 Pers IF (*-1 V-PL1 BARRIER NOT-ADV OR ("seamma"))(0 MII-PERS)(NEGATE 1 V-SG3);
-	## Eat mii sáhte vuolgit.
-	## Goas oinniimet mii du nelgon dahje goikan?
-
- # The last condition added because of the example below. Attempts to formulate 
- # a negative condition on V-PL1 instead (e.g. LINK NOT 0 A) did not work.
-	## Dat geaidnu lea govdat mii doalvu gáđohussii. 
-
-	# Right conditions
-SELECT:r876 Pers IF (0 MII-PERS)(1C Rel);
-SELECT:r877 Pers IF (0 MII-PERS)(1 COMMA)(2C Rel);
-SELECT:r878 Pers IF (0 MII-PERS)(*1 V-PL1 BARRIER SV-BOUNDARY LINK NOT 0 Adv);
-	## .. de mii, guđet leat eatnagat, leat okta rumaš.
-	## Dasgo mii oinniimet su násti badjáneamen.
-
-SELECT:r879 Pers IF (0 MII-PERS)(1 CC)(2 (N Nom));
-	## Mii ja farisealaččat atnit borakeahttáivuođa.
-
-	# mis and sis
-	# - - - - - -
- # mun Pron Pers Pl1 Loc = mis Adv, corr. for son Pron Pers Pl3 Nom = sis Adv
- # This one is hard to resolve, as they have the same distribution.
-
-	# don ( = Pron Dem Sg Acc/Gen)
-	# - - - - - - - - - - - - - -
-SELECT:r880 Pers IF (*-1 (V Sg2) BARRIER SV-BOUNDARY LINK NOT 0 Adv)(0 DON); 
-SELECT:r881 Pers IF (0 DON)(*1 V-SG2 BARRIER PUNCT); 
-	## Liikotgo don Abbai?
-	## Don it leat nama čállán.
-
-	# son ( = Pcle) 
-	# - - - - - - -
-SELECT:r882 Pers IF (*-1 V-SG3 BARRIER SV-BOUNDARY)(NEGATE -1 Qst or ("go"))(0 ("son" Pron Pers Sg3 Nom)); 
-	## Ii son liikon dohko.
-
-SELECT:r883 Pers IF (0 ("son" Pron Pers Sg3 Nom))(1 (Pron Rel Sg));
-	## Son gii addá veahki galgá mearridit.
-
-SELECT:r884 Pcle IF (NEGATE -2 CLB)(-1 Qst or ("go"))(0 ("son"))(1 Nom)(NEGATE 1 Refl OR Inf OR Cmpnd);
-	## Lea go son Máret boahtán?
-
-SELECT:r885 (Pron Pers Sg3 Nom) IF (0 ("son"))(*1 V-SG3 BARRIER N); 
-	## Son fertii vuolgit. 
- 
-	# sutnje ( = forms of the verb "suotnjat")
-	# - - - - - - - - - - - - - - - - - - - -
-SELECT:r886 (Pron Ill) IF (0 ("son"))(1 (Pron Rel Sg)); 
-SELECT:r887 (Pron Ill) IF (*-1 (V Ind))(0 ("son")); # Barrier?
-	## Dearvvašvuođabálvalus galgá addit sutnje gii ohca...
-	## Son galgá addit sutnje dárbbašlaš dieđuid.
-
-	# danin (Pron Ess OR Adv)
-	# - - - - - - - - - - - -
-
-SELECT:r888 (Pron Ess) IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(0 ("danin"))(1 EOS OR CLB);
-	## ...jos oapmi fierpmit leat danin,...
- 
-	# dáidda (N Sg Nom or Pron Dem Pl Ill)
-	# - - - - - - - - - - - - - - - - - - -
-SELECT:r903 Ill IF (0 ("dáidda"))(*1 (N Pl Ill) BARRIER NPNH);
-	## ...ja dáidda gielaide sáhttá čállit journálaid. 
-
-SELECT:r904 Ill IF (*-1 ILLV BARRIER NOT-ADV-PCLE)(0 ("dáidda"));
-	## ...mat gullet dáidda 1972-konvenšuvnna mielde.
-
-REMOVE:r905 Nom IF (-1 NP-HEAD-NOM)(0 ("dáidda"));
-	## Sus lea álgovuorus dušše guohtunvuoigatvuohta dáidda. 
-
-REMOVE:r906 Nom IF (*-1 V-TRANS-ACT BARRIER SV-BOUNDARY)(0 ("dáidda"));
-	## ...lea čađahan iskamiid muhtun orohagain ja ávžžuhan boazologu dáidda.
-
-SELECT:r907 Ill IF (-1 ("lassi"))(0 ("dáidda"));
-	## Lassin dáidda lea Sámi vuoigatvuođalávdegotti ovdaolmmoš...
-
-SELECT:r908 Ill IF (0 ("dáidda"))(*1 ("bidjat") OR ("lasihit") BARRIER V-NOT-AUX); 
-	## Ferte mearridit makkár deattu dáidda galgá bidjat.
-
-	# dat (Pron Pers, Pron Dem, Pcle)
-	# - - - - - - - - - - - - - - - -
-
-SELECT:r889 Sg3 IF (NEGATE *-1 V-PL)(0 ("dat" Sg3 Nom))(NEGATE 1 N)(*1 V-SG3 BARRIER V-PL);
-	## Dat movt sámi oahpahus lea doaibman...
-
-SELECT:r890 Dem IF (*1 (Pl Loc) BARRIER NPNHA)(0 (Pl Loc));
-  	## Dain hirbmat váriin ja mehciin sin guovllus lei earenoamáš vallji sihke elliid ja eará dáfus.
-
-SELECT:r892 Dem IF (*1 (Pl Com) BARRIER NPNHA)(0 (Pl Com));
-
-SELECT:r894 Pers IF (-1 Nom)(NEGATE -1 Pers)(0 ("dat" Nom))(*1 REALCOPULAS BARRIER NOT-ADV-PCLE LINK 1 CLB OR EOS);
-	## Hei, soiddas dat lea, máistte don dan gáfe!
-	## Gean mearkka bohccot dat ledje?
-
-SELECT:r895 Pcle IF (-1 Nom)(NEGATE -1 A OR Interr OR PrfPrc)(0 ("dat" Nom))(*1 VFIN BARRIER NOT-ADV); #(NEGATE *1 N BARRIER NP-BOUNDARY);
-	## Máret dat boahtá.
-	## Mun dat lean.
-
-SELECT:r896 Pcle IF (NEGATE *-1 (V Sg3) OR (V Du3) OR (V Pl3) BARRIER SV-BOUNDARY)(NEGATE -1 BOC)(0 ("dat" Nom))(NEGATE *1 N BARRIER NOT-NP)(NEGATE *1 (V Sg3) OR (V Du3) OR (V Pl3) BARRIER SV-BOUNDARY);
-	## Na vuolggán dat gal mun ge.
-
-REMOVE:r897 Dem IF (0 DAT-PRON)(NEGATE 0 ("dasgo") OR ("danin") OR ("dainna"))(NEGATE 1 A OR Num OR N OR Indef OR Attr)(NEGATE 1 PrfPrc LINK *1 N BARRIER NPNH)(NEGATE 0 Nom LINK 1 ("gal") OR Pcle LINK 1 (N Nom))(NEGATE 1 NP-HEAD-GEN LINK 1 (Actio Gen) LINK 1 N)(NEGATE 1 ("seammás"))(NEGATE 0 Acc LINK *1 STV-NOT-ACT BARRIER S-BOUNDARY LINK NOT *1 Acc BARRIER NPNH);
-	## Dá dat leat.
-	## Moai soabaime dasa.
- 
-REMOVE:r898 Dem IF (0 (Pron Pers))(NEGATE *1 N BARRIER NPNHAII)(NEGATE 1 ("nubbi" Gen) OR ("seammás"));
-	## Aiddo sii movttidahttojuvvojit daid buot smiehttat sámegillii.
-	## Nubbi noađđeheargi goallostuvvo giehtahearggi lávžái ja goalmmát fas dan nuppi lávžái. # It shouldn´t take this one.
-
-SELECT:r899 Dem IF (-2 (N Pl Nom))(-1 CC)(0 (Pron Pers Pl3 Gen))(*1 N BARRIER NPNH);
-	## Skovit ja daid rávačállagat galget leat sámegillii.
-
-	# This is a general rule. The problem is that we have no counter examples.
-	#SE Dem IF (0 (Pron Pers Sg3 Gen @>N));
-	## dan suorggis.
-
-
-# Here´s a better one:    
-SELECT:r900 Dem IF (NEGATE *-1 STV-NOT-ACT LINK NOT *2C Acc BARRIER N)(0 (Pron Pers Sg3 Gen))(NEGATE *1 Pl OR Ess OR Com BARRIER N)(NEGATE -1 BOS LINK 2 Prop) ;
-    # It shouldn´t hit: Mun gohčodan dan eadnin. Sii čurvot dan dáhkiid alde. De dearvvahehket dan ráfiin. Son dasto attii dan eadnásis.
-  
-
-	# dasa ( = forms of the verb "dassat")
-	# - - - - - - - - - - - - - - - - - - 
-REMOVE:r901 VGen IF (0 Pron);
-	## Na muhto don it leat dasa nama čállán! 
-	## Dat gal lei beare unnán.
-
-	# Earlier specific rules, to be reactivated if the previous one is too strong.
-
-	#SELECT Dem IF (0 ("dat" Pron Dem Sg Ill))(1 VFIN); 	## Dasa lea guhkes historjá.
-	#SELECT Dem IF (0 ("dat" Pron Dem Sg Ill))(1 ("lassi" N Ess)); 	## Dasa lassin.
-	#SELECT Ill IF (-1 ("sivva"))(0 DAT-PRON); 	## Sivva dasa lea, ahte ...
-	#SELECT Ill IF (-1 PrfPrc)(0 DAT-PRON); 	## Sii leat čujuhan dasa vuosttas jagi.
-
-SELECT:r902 Ill IF (0 DAT-PRON)(1 ("lassi" Ess));
-	## Dasa lassin buvttán dás lasseargumenttaid. 
-
-
-	# dii ("D" Num Ill) or (Pron Pers Pl2 Nom)
-	# - - - - - - - - - - - - - - - - - - - - -
-
-
-	# Other homonymies linked to FAMILY pronouns, with non-obvious answers.
- # Munin = Pron Pers Sg1 Ess = Ess of N Prop Muni (!)
- # dudnon = Pron Per Du2 Ess = dudnu N Sg ... PxSg1 (covered by Px rule)
- # Sunin = Pron Pers Sg3 Ess = Ess of N Prop Sun 
- 
-	# FAMILY pronoun, not numeral
-	# - - - - - - - - - - - - - - -
-
-
-	# An early rule for "eanaš"/"eanas"
-	# ----------------------------------
-SELECT:r911 Pron IF (0 ("eanaš") OR ("eanas"))(1 (Dem Loc) OR (Pers Loc));
-	## Eanaš dáin gálduin leat hui unnán dieđuid.
-
-	# Px constraints
-	# --------------
-
-	# First select some clear Px cases, and remove some equally clear non-cases
-	# Let these come directly after local disambiguation.
-
-
-	# PxSg1
-	# - - -
-SELECT:r912 (Nom PxSg1) IF (-1 BOS)(NEGATE 0 VFIN)(1 EOS);
-	## Ustibažžan!
-
-SELECT:r913 (PxSg1) IF (-1 PrfPrc LINK *-1 V-SG1 BARRIER NOT-ADV LINK 0 ("leat"))(NEGATE 0 Dem)(NEGATE *1 Acc BARRIER VFIN LINK NOT 1 Po)(NEGATE *1 ("ahte") BARRIER WORD);
-SELECT:r914 (PxSg1) IF (-1 PrfPrc LINK *-1 V-SG1 + Neg)(NEGATE 0 Dem)(NEGATE *1 Acc BARRIER VFIN LINK NOT 1 Po)(NEGATE *1 ("ahte") BARRIER WORD);
-	## Mun lean oaidnán vielljan.
-	## Mun in oaidnán vielljan jahkái.
-
-SELECT:r915 (PxSg1) IF (-1 V-SG1 LINK NOT 0 PrfPrc)(NEGATE -1 Neg LINK 1 PrfPrc)(NEGATE 0 Dem)(NEGATE -1 ("leat"))(NEGATE *1 Acc BARRIER VFIN LINK NOT 1 Po)(NEGATE *1 ("ahte") BARRIER WORD);
-SELECT:r916 (PxSg1) IF (*-1 V-SG1 LINK NOT 0 ("leat"))(NEGATE 0 Dem)(1 CC OR COMMA LINK 1 PxSg1) ;
-SELECT:r917 (PxSg1) IF (-1 Inf LINK *-1 V-SG1 BARRIER NOT-ADV-PCLE LINK NOT 0 ("leat"))(NEGATE 0 Dem OR PrfPrc) ;
-SELECT:r918 (PxSg1) IF (*-3 V-SG1 LINK NOT 0 ("leat"))(-1 CC LINK -1 PxSg1)(NEGATE 0 Dem);
-	## Mun attán heaggan sávzzaid ovddas.
-	## Mun attán heaggan, áhkkán ja ruhtan sávzzaid ovddas.
-  	## Mun válddán ovdamearkan Buolbmága. # It shouldn`t take this example.
-
-SELECT:r919 (Nom PxSg1) IF (-1 PUNCT OR CLB)(0 N-PX)(1 COMMA);
-SELECT:r920 (Nom PxSg1) IF (-1 BOS)(0 N-PX)(1 VFIN);
-	## Bárdnán, leage dorvvolaš.
-
-SELECT:r3580 (Loc PxSg1) IF (-1 V-SG1 LINK 0 V-TRANS-ACT)(1 Acc); 	
-	## Mun roggen ozastan njálgáid mánáide.
-	
-
-	# PxSg2
-	# - - -
-SELECT:r921 (PxSg2) IF (-1 V-SG2)(NEGATE -1 ("leat"))(-2 DON);
-	## Don attát heakkat mu ovddas?
-
-SELECT:r922 (PxSg2) IF (*-1C (Imprt Sg2) BARRIER NPNHA LINK 0 V-TRANS-ACT LINK NOT 0 ("dassat") OR Der/Pass LINK -1 S-BOUNDARY OR CC OR BOS)(NEGATE 0 Adv)(NEGATE 0 (N Pl Nom) LINK *-1 CC OR CLB BARRIER NPNH LINK -1 Nom)(NEGATE 0 (N Pl Nom) LINK -1 Attr LINK 0 Imprt)(NEGATE 0 (N Pl Nom) LINK *1 V-PL3 BARRIER NOT-ADV-PCLE);
-	## Buvtte dasto oaffarskeaŋkkat!
-	## Lihka bajás, váldde seaŋggat ja vázzil!
-
-	#	(NEGATE 0 Prop OR (V Sg2))
-	#	(NEGATE 0 Inf LINK *-1 INFV BARRIER VERB)
-
-SELECT:r923 (PxSg2) IF (0 (N Pl Nom))(*1C (V Sg2) BARRIER NOT-ADV-PCLE OR CLB);
-	## Hearrá Ipmilat galggat gudnejahttit.
-
-SELECT:r924 (PxSg2) IF (0 (N Pl Nom))(*-1 V-TRANS-ACT-NOT-ACT + Sg2 BARRIER SV-BOUNDARY OR Acc LINK NOT 0 A OR Imprt OR Inf);
-	## Leat go oaidnán oappát?
-
-REMOVE:r925 (Gen PxSg2) IF (*-1 REALCOPULAS BARRIER SV-BOUNDARY)(NEGATE *-1 (Pron Sg2 Loc)BARRIER S-BOUNDARY)(0 (N Pl Nom))(*1 ("mielde"));
-
-SELECT:r926 (Gen PxSg2) IF (*-1 Sg2 BARRIER S-BOUNDARY)(0 (N Pl Nom))(1 Po)(NEGATE 1 N)(NEGATE *2 NP-HEAD-GEN BARRIER NPNH);
-	## Go don rohkadalat, de mana gámmárat sisa.
-
-SELECT:r927 PxSg2 IF (-1 ("hearrá" Sg))(0 ("ipmil"));
-	## It galgga geahččalit Hearrá Ipmilat.
-
-REMOVE:r928 PxSg2 IF (*-1 BOC BARRIER NPNH)(0 (N Pl Nom))(1 (V Pl3) OR (Pron Rel Pl Nom) OR KLASS);
-	## Searvi divžžohasat ožžot maid dieđuid bohtasiid birra.
-
-REMOVE:r929 PxSg2 IF (*-1 BOS BARRIER Sg2)(NEGATE 0 N-PX)(NEGATE *1 (V Sg2) BARRIER SV-BOUNDARY);
-	## Nystø mielas leaba soai Lene Hanseniin rievttes olbmot ovddastit sámi álbmoga dáhtu Tromssa ohcamušas. # No antecedent, no reflexiven.
-
-	# PxSg3
-	# - - -
-
-	# Special nouns
-
-REMOVE:r930 PxSg3 IF (0 KLASS)(1 Num);
-  	## Suohkanstivra mearridii áššis 62/99 sirdit administrašuvnna Levdnjii.
-  
-REMOVE:r932 PxSg3 IF (-1 CC LINK -1 Loc)(0 (Sg Loc))(NEGATE 1 NP-MEMBER);
-  # Remove possessive suffixes in locative coordination.
-  	## Hukset orrun- ja doaibmaguovddáža Mázii ja fuollaásodagaid dakko lahkosii, lea vuoruhuvvon doaibma suohkana ekonomiplánas ja doaibmaprográmmas, nu maiddái suohkana boarrásiidplánas oktiibuot 6 mill kr jagi 2001 rádjái.  
-
-REMOVE:r933 PxSg3 IF (0 (N Sg Loc))(1 ("nubbi" Ill));
-	## Son lea viehkan čoahkkimis nubbái maŋŋebárgga rájes.
-
-SELECT:r934 (PxSg3) IF (*-1 (V TV Sg3) BARRIER NOT-ADV-PCLE LINK NOT 0 Der/Pass OR LOCV LINK *-1 ("son" Sg3 Nom) OR (N Sg Nom) BARRIER NOT-ADV-PCLE LINK NOT *-1 Acc BARRIER S-BOUNDARY OR VERB)(0 Loc)(NEGATE 0 N-NOPX OR PLACE)(NEGATE 0 ("árvu") LINK *-1 ("atnit") BARRIER NOT-ADV)(NEGATE 0 Attr LINK *1 N BARRIER NPNH);
-	## Son beastá álbmogis sin suttuin.
-	## Son hárve gullá eatnigielas.
-	## Jesus leai sullii golbmalotjahkasaš go álggahii doaimmas.
-
-SELECT:r935 (PxSg3) IF (*-2 (V Sg3) BARRIER V-NOT-AUX)(-1 PrfPrc LINK 0 V-TRANS-ACT LINK NOT 0 LOCV)(0 N-PX)(NEGATE 0 Nom);
-	## ...ovdal go Márjá lei riegádahttán bártnis.
-
-SELECT:r936 (PxSg3) IF (*-3 (N Sg Nom) OR (Pron Pers Sg3 Nom))(-2C A)(-1 go)(NEGATE 0 Attr LINK *1 N BARRIER NPNH);
-	## Máhttájeaddji ii leat stuorit go oahpaheaddjis, ii ge bálvaleaddji stuorit go hearrás.
-	## Mávssut leat adnon eambbo go bušeahtas.
-
-
-SELECT:r937 (PxSg3) IF (*-1 (Sg Nom) OR (Sg3 Nom) BARRIER Pers OR S-BOUNDARY OR LOCV LINK NOT 0 Attr)(NEGATE *-1 (Imprt Sg2) BARRIER SV-BOUNDARY)(NEGATE -1 (N Nom) OR (N Acc))(0 N-PX)(NEGATE 0 Loc LINK 1 Ill);
-
-	## Dat guhte ráhkista bártnis dahje nieiddas eanebut go mu...
-  	## Son galgá boahtit álo beroškeahttá makkár duogáš eatnis lea.
-  # It might be problematic using Acc as a constraint, since Acc=Gen. But we cannot think of a Gen+NounPx construction that works.
-
-SELECT:r938 PxSg3 IF (*-1 (V Sg3) BARRIER SV-BOUNDARY)(0 Gen)(1 Po LINK NOT 0 N OR ("eret"))(NEGATE 1 Pr LINK *1 Gen BARRIER NPNH);
-	## Dahje maid sáhttá olmmoš addit máksun heakkas ovddas?
-
-SELECT:r939 (Gen PxSg3) IF (*-1 S-BOUNDARY1 OR BOS OR CLB BARRIER NPNH)(1 Po)(*2 V-SG3 BARRIER NOT-ADV-PCLE LINK NOT 0 A LINK *1 N BARRIER NPNH);
-	## Raporttas bokte dáhttu bargojoavku čalmmustahttit Sámedikki.
-
-SELECT:r940 (PxSg3) IF (-2 N-PX)(-1 CC);
-	## Mun lean boahtán bidjat soahpameahttunvuođa bártni ja áhčis gaskii.
-	
-SELECT:r943 Loc IF (-1 VFIN)(0 PLACE LINK 0 Px)(NEGATE 0 Po OR Pr)(NEGATE 1 Po OR ("mielde") OR ("fárrui")) ;	
-
-REMOVE:r944 (Gen PxSg3) IF (NEGATE *-1 Pr BARRIER NPNH)(1C Prop);
-	## erret eará stuorradiggedieđáhusas Sámedikki doaimmaid birra.
-
-
-	# All Px
-
-REMOVE:r945 Loc IF (0 ("ieš#dovdu") LINK 0 Px) ;
-	## Son rahčá iešdovdduinis.
-
-REMOVE:r946 Px IF (*-1 (Pron Pers Gen) BARRIER NOT-ADJ)(0 ("miella" Loc));
-  	## Dilli lea min mielas čuožžilan.
-  	## Mu mielas dat lea hui dehálaš njuolggadus.
-  # Note: This rule is too general to accept a hypothetical "Mu áhččán"
-
-	# ------------------- #
-#SEC#         SECTION #3   #
-	# ------------------- #
-
-	# Certain verb readings
-	# ---------------------
-
-REMOVE:r947 VGen IF (0 Der/Pass OR Der/goahti OR Der/st OR Der/l);
-
- # Here we pick out finite verbs that follow FAMILY pronouns. 
- # This selection is quite safe at this point, and we get rid of several 
- # ambiguities that would otherwise be disturbing in the following cycles. 
- # Note that all the following rules, except the rule for Sg2, also select 
- # imperatives.  
-
-	# All imperatives
-
-REMOVE:r948 Imprt IF (*-1C Rel BARRIER S-BOUNDARY OR CC OR COMMA);
-
-	# Sg1 - early cycle, safe rules
-	# - -
-
-SELECT:r949 (V Sg1) IF (*-1 MUN BARRIER Nom OR V-SG1 OR S-BOUNDARY LINK NOT *-1 V-SG1 BARRIER NOT-ADV-PCLE)(NEGATE 0 PrfPrc LINK *-1 REALCOPULAS BARRIER S-BOUNDARY OR CLB)(NEGATE 0 PrfPrc LINK *-1 V-SG1 BARRIER NOT-ADV-PCLE);
-	## Dego mun dás vuollelis mottiin ovdamearkkain čájehan,...
-
-SELECT:r950 (V Sg1) IF (*1 MUN BARRIER NOT-ADV-PCLE OR CLB);
-	## Man guhká ferten mun gierdat din?
-
-	# Sg2 - early cycle, safe rules
-	# - - 
-
-SELECT:r951 V-SG2 IF (*-1 DON BARRIER V-SG2 OR ConNeg OR S-BOUNDARY LINK NOT *-1 V-SG2 BARRIER S-BOUNDARY);
-	## ...jos don fal luoitádat ja gudnejahtát mu.
-	## Rohkadallet dasto ná: Áhččámet, don guhte leat almmis.
-
-SELECT:r952 V-SG2 IF (*1 DON BARRIER S-BOUNDARY);
-	## Leat go don dat guhte galgá boahtit? 
-
-REMOVE:r953 Inf IF (*-1 BOS BARRIER VFIN)(*1 ("ahte" CS) BARRIER NOT-ADV);
-	## Dainna lágiin fuobmát jođánit ahte sámi gielladilis lea árvu maid eará riikkain.
-
-	# Sg3 - early cycle, safe rules
-	# - - 
-
-SELECT:r954 (V Sg3) IF (*-1 SON BARRIER Nom OR V-SG3 OR CS OR PUNCT LINK NOT *-1 V-SG3 BARRIER NOT-ADV-PCLE)(NEGATE 0 Adv LINK *1 V-SG3);
-	## Geas ležžet bealjit, son gullos!
-
-SELECT:r955 (V Sg3) IF (*1 SON BARRIER NOT-ADV-PCLE OR go OR CLB)(NEGATE 0 CS)(NEGATE 0 Adv LINK *1 (V Sg3) BARRIER SV-BOUNDARY);
-	## ...oažžu son atnit dušše dan čázis mii sutnje lea mearriduvvon.
-
-REMOVE:r956 (V Sg3) IF (-1 (Pron Nom))(NEGATE -1 Sg OR Sg3);
-	## Sii manne vissui.
-	## Dii uhccán oskkolaččat. 
-	
-REMOVE:r957 (V Sg3) IF (-1 (Sg Com) LINK -1 (N Nom))(0 Du3);	
-	## Biret-guovttos Juffáin leaba čeahpit duddjot.
-
-REMOVE:r958 (V Pl3) IF (-1 (Pron Rel Sg))(0 (V Sg3));
-	## Kahihttalis mas čilge orrunlanjadagaid latnjačovdosa nannejuvvo ahte 
-	## lanjadat leat plánejuvvon orruide geat dárbbašit divššu guhkit.
-
-	# Negative verb, not abbreviation or roman numeral Ii.
-
-SELECT:r959 (V IV Neg Ind Sg3) IF (0 ("ii"))(*1 Foc/ge OR ConNeg BARRIER COMMA OR PUNCT);
-	## Ii oktage lea boahtán.
-
-	# Du1 - early cycle, safe rules
-	# - - 
-SELECT:r960 (V Du1) IF (*-1 MOAI BARRIER V-DU1 OR S-BOUNDARY OR PUNCT LINK NOT *-1 V-DU1 BARRIER NOT-ADV-PCLE);
-	## Moai dihte ahte dát lea munno bárdni.
-
-SELECT:r961 (V Du1) IF (NEGATE 0 Adv LINK *-1 BOS OR PUNCT BARRIER NOT-CC)(NEGATE 0 Adv LINK *-1 (V Du1))(*1 MOAI BARRIER S-BOUNDARY);
-	##
-
-	# Du2 - early cycle, safe rules
-	# - - 
-SELECT:r962 (V Du2) IF (*-1 DOAI BARRIER V-DU2 OR SV-BOUNDARY OR PUNCT LINK NOT *-1 V-DU2 BARRIER NOT-ADV-PCLE);
-	## Manne doai ozaide mu?
-
-SELECT:r963 (V Du2) IF (*1 DOAI BARRIER NOT-ADV-PCLE OR CLB);
-	##
-
-	# Du3 - early cycle, safe rules
-	# - -
- # The competition is -ba Foc.
-
-SELECT:r964 (V Du3) IF (*-1 SOAI BARRIER V-DU3 OR SV-BOUNDARY OR PUNCT LINK NOT *-1 V-DU3 BARRIER NOT-ADV-PCLE);
-	## Soai leaba dahkan čielga oavdudagu.
-	## Soai ferteba mannat. 
-
-SELECT:r965 (V Du3) IF (*1 SOAI BARRIER NOT-ADV-PCLE OR CLB);
-	## Fertebago soai mannat? 
-
-SELECT:r966 (V Du3) IF (*-1 ("guokte" Nom) BARRIER SV-BOUNDARY) ; 
-	## Guokte nissona ferdneba milluin.
-
-REMOVE:r967 (V Sg3) IF (0 Du3)(*1 ("guokte" Nom) BARRIER NPNHA);
-	## Mus leaba dušše dát guokte oappá geaid don dás oainnát.
-
-SELECT:r968 (V Du3) IF (-1 (N Nom))(*-2 CC BARRIER NPNH LINK -1 (N Nom));
-	## Per Berg ja Rolf Olsen leaba doppe.
-	## Deanu Searat ja Sámi Siida leaba ovttas ordnen dáid gilvvohallamiid.
-    	## Stuorra nieida ja unna gánda ferteba leat doppe.
- # Note that 'Searat' is Pl, hence no number requirement in this rule.
-
-SELECT:r969 (V Du3) IF (*1 (Sg Nom) BARRIER NPNHA LINK 1 CC LINK *1 (Sg Nom) BARRIER NPNH);
-	## Dá leaba Brita ja Ole Kåven.
-
-REMOVE:r970 (V Sg3) IF (*-1 (N Num Nom) BARRIER SV-BOUNDARY)(0 (V Du3));
-	## Biera-guovttos Márehiin leaba daid mánáid váhnemat.
-
-	# Pl1 - early cycle, safe rules
-	# - - 
-SELECT:r971 (V Pl1) IF (*-1 MII-PERS BARRIER VFIN OR PUNCT LINK NOT *-1 V-PL1 BARRIER NOT-ADV-PCLE OR CLB);
-	## Mii sápmelaččat gal leat vásihan dán...
-
-SELECT:r972 (V Pl1) IF (*1 MII-PERS BARRIER NOT-ADV-PCLE OR CLB OR ("seamma") LINK NOT *1 V-SG3 BARRIER NOT-AA OR CLB);
-	## Galgat go mii vuordit muhtun eará? 
-
-REMOVE:r973 Imprt IF (-1 MII-PERS OR (N Pl Nom))(0 (V Prs Pl1));
-	## Mii áigut maiddái leat aktiivvalaččat mielde juohke dásis.
-
-	# Pl2 - early cycle, safe rules
-	# - -
-SELECT:r974 (V Pl2) IF (*-1 DII BARRIER NOT-ADV-PCLE OR CLB);
-	##
-
-SELECT:r975 (V Pl2) IF (*1 DII BARRIER NOT-ADV-PCLE OR MO OR CLB);
-	## Addet dii sidjiide borramuša!
-
-# Pl3 - early cycle, safe rules
-# - -
-
-# Select...
-
-SELECT:r976 (V Pl3) IF (*-1 SII BARRIER V-PL3 OR S-BOUNDARY OR PUNCT LINK NOT *-1 V-PL3 BARRIER NOT-ADV-PCLE)(NEGATE 0 Adv LINK *1 V-PL3 BARRIER S-BOUNDARY);
-	## ...vai sii áiggi mielde oččoše doarvái gelbbolašvuođa.
-
-SELECT:r977 (V Pl3) IF (*1 SII BARRIER NOT-ADV-PCLE OR CLB)(NEGATE 0 Adv OR Po LINK *1 V-PL3 BARRIER S-BOUNDARY);	
-	## Máhttego sii čilget áššiset dárogillii?
-
-SELECT:r978 (Prt Pl3) IF (*-2C (Prt Pl3) BARRIER VFIN)(-1 CC);
-	## Ja buot olbmot imaštalle sakka ja jerre. 
-
-SELECT:r979 (V Pl3) IF (-1 (Pron Rel Pl) OR ("mo") OR ("mov") OR ("movt") OR ("govt"))     (-2 (N Pl));
-SELECT:r980 (V Pl3) IF (-1 (Pron Rel Pl) OR ("mo") OR ("mov") OR ("movt") OR ("govt"))(-2 COMMA)(-3 (N Pl));
-	## Njuolggadusat movt meannudit oanehisáigge vealgáibideami, beaivádan 25.04.00.
-	## Vai bálvalusas lea buohccedikšofágalaš dássi eaktuduvvo ahte leat fágabargit geat virgáividdjojit.
-
-SELECT:r981 (V Pl3) IF (-1 CS)(*-2 (V Pl3) BARRIER VFIN LINK -1 (N Pl Nom) OR (Pron Pers Pl3 Nom));
-	## Sii ožžot smiehttanáiggi jos háliidit muitalit dan birra.
-
-REMOVE:r982 (V Prt Sg2) IF (*-1 (Pl Nom @SUBJ) BARRIER VFIN OR S-BOUNDARY)(0 (V Pl3));
-	## Daid gažaldagaide, mat dán čielggadeamis galget gieđahallot, ...
-
-REMOVE:r983 (V Prt Sg2) IF (-1 CS LINK *-1 (Pl Nom @SUBJ))(0 (V Pl3));
-	## Hálddašanásahusat maid várra fertejit dákkár deasttaid atnit rievttálaš árvvoštallamis go galget mearridit mii dan sisdoallu berrešii leat.
-
-# Remove...
-
-REMOVE:r984 (V Ind Pl3) IF (1C VFIN)(NEGATE 1 Pl3) ;
-	## Manne ii leat áviisa boahtán?
-	## Máhtte manai čuoigga skuvlii.
-	## Vihtta bivdovuogi mun gal dušše namahin. 
-
-REMOVE:r985 (Prt Sg2) IF (NEGATE *-1 (Pron Pers Sg2))(0 (Prs Pl3))(*1 Der/Pass BARRIER NOT-ADV);
-	## Reivelonuhallan sámi institušuvnnaiguin galget dahkkot sáme- ja dárogillii. 
-	# Probably not prodrop if passivized Sg2.
-
-	# PrsPrc
-	# - - - -
-SELECT:r986 PrsPrc IF (NEGATE 0 LEX-N)(1 CC OR COMMA LINK 1 A);
-	## Soahpamušas váilu njuolggadusat smávit vahágahtti ja geavatlaččat
-	## bággolonistemiide.
- # Early rule since many PrsPrc readings are removed later.
-
- 
-	# A rule for "dušše"
-	# ------------------------
-REMOVE:r987 V IF (-1 CS)(0 ("dušše"))(*1 Acc BARRIER NPNHA); 
-	## Suhpodit daddjojuvvo dat go dušše nođiid váldá olmmoš eret.
-
- # This rule has to precede particle rules, so that the verb reading of 
- # "dušše" will not force the CS reading of a preceding particle.
 
 	# ahte
 	# ----
@@ -5737,48 +5813,7 @@ SELECT:r990 CS IF (0 ("ahte")); # All other occurrences of "ahte" are CSs.
 REMOVE:r991 (Pcle) IF (0 @COMP-CS<);
     ## Dalle dat viežžá čieža eará vuoiŋŋa vel, bahábuid go son ieš.
 
-	# ---------------------------------------------------------------- #
-	# Cycle 1b: removing the readings that were left from the 1a rules #
-	# ---------------------------------------------------------------- #
-               SECTION #4                                          #
-	# ---------------------------------------------------------------- #
- 
 
-	# Removing (nearly) all remaining Px readings
-	# -------------------------------------------
- # The remaining Px readings will be taken care of later.
-
-REMOVE:r992 (PxSg1) ; # IF (0 Ess); # yes, kill'em all
-	## Ale bala váldimis Márjjá ruktosat áhkkán. 
-
-REMOVE:r993 (Nom PxSg2);
-	## Su lusa bohte olbmot Jerusalemis.
-	## Na dát ledje buorit mállásat. 
-
-REMOVE:r994 (PxSg2) IF (*-1 (Sg Gen) OR (Sg3 Gen) BARRIER NPNH LINK -1 CC);
-	## ...eará čuovvoleapmi mii johtui biddjo ja dan bohtosat.
-
-REMOVE:r995 (PxSg3) IF (-1 Indef)(0 Loc); # Possessed nouns do not go with Indef?
-    	## Olmmoš ii eale dušše láibbis, muhto juohke sánis mii boahtá
-    	## Ipmila njálmmis.
-    	## Alimusriekti lea dattege muhtun duomus cealkán ahte...
-
-REMOVE:r996 (PxSg3) IF (NEGATE *-1 (V Sg3) BARRIER S-BOUNDARY)(NEGATE -1 go)(NEGATE *1 (V Sg3) BARRIER SV-BOUNDARY) ;
-	## Maid don áiggut márkanis?
-	## Divššohasas galget leat dat dieđut, ...
-	## Nu guhkás go Gonagas mearrida...
-
-REMOVE:r997 (PxSg3) IF (*-1 (@SUBJ) BARRIER S-BOUNDARY OR Inf LINK NOT 0 Sg OR Sg3 OR FMAINV OR Inf LINK NOT 0 ("visot"))(NEGATE -1 Inf LINK 0 V-TRANS-ACT LINK *-1 V-SG3 BARRIER SV-BOUNDARY);
-	## Láhka gusto olbmuide norgga skiippaid alde mat johtet olggoriikkas.
-	## Son oastá dáid váldolinjáid hárrái Stuorradikkis. # The last sentence is problematic, tells us that (Sg3 TV) 
-
-REMOVE:r998 (PxSg3) IF (*-1 VFIN BARRIER S-BOUNDARY LINK NOT 0 Sg3 OR Inf OR PrfPrc)(NEGATE *-1 ConNeg BARRIER S-BOUNDARY LINK *-1 (Neg Sg3) BARRIER VERB)(NEGATE 1 ("fárrui") OR ("mielde"))(NEGATE *1 VFIN);	
-	## ...geat eai oro bissovaččat riikkas.
-  # Removed this rule. It removed the Px in
-  	## Máhtte ii váidalan geafivuođas."
-
-REMOVE:r999 (PxSg3) IF (*-1 Rel BARRIER VFIN)(*1 VFIN LINK NOT 0 Sg3);
-	## ...man oaivilis sii leat dakkár áššiid hárrái.
 
 	# -------------------------------------------- #
 	# Cycle 2: Other cases of local disambiguation #
@@ -10737,6 +10772,10 @@ SELECT:r2263 (Gen @>N) IF (-1 (@CNP) LINK *-1 (Num Nom) BARRIER (N Nom) LINK *-1
 	# Nominative and accusative
 	# =========================
 
+REMOVE Gen IF (*-1 COPULAS BARRIER NP-HEAD-NOM LINK NEGATE *-1 NP-HEAD-NOM)(0 NP-HEAD-NOM)(*1 NP-HEAD-NOM OR (A Nom) BARRIER NPNHA);   
+	## Lea go dihtor dušše ođđaáigásaš čállinmášiidna?
+
+
 REMOVE:r2264 Acc IF (-1 ("bahkket"))(0 (Pers Gen))(*1 Ill BARRIER NPNH);
 	## Dat bahkkejit min jurdagiidda. 
 
@@ -10777,8 +10816,7 @@ REMOVE:r2275 Gen IF (*-1 V-TRANS-ACT BARRIER SV-BOUNDARY2)(*-1 Acc BARRIER V-TRA
 	## Mun vuovddán gusa ja áhči beatnaga oahpaheaddjái. 
 
 REMOVE:r2276 Gen IF (NEGATE *-1 Pr OR NUMERALS BARRIER NPNH)(0 N)(1 Dem);
-	## Jahkásaš bušeahttarámma dán prošeavtta doaimmaide gártá oktiibuot
-	## 70.000 ruvnno. 
+	## Jahkásaš bušeahttarámma dán prošeavtta doaimmaide gártá oktiibuot 70.000 ruvnno. 
 
 REMOVE:r2277 Gen IF (NEGATE *-1 Pr OR NUMERALS BARRIER NPNH)(1 SP-BEAIVI);
 	## Sii bivdet luosa mánnodaga.
@@ -10801,12 +10839,10 @@ REMOVE:r2282 (Interr Gen) IF (1 Dem);
 	## Viiddodatrámmaid geažil, maid dát ovdanbuktit ferte doallat,...
 
 REMOVE:r2283 Gen IF (NEGATE 0 Dem)(*1 ("hávvi" N Sg Gen) BARRIER NPNH);
-	## ..geasa dearvvaávuođabálvalus addá dahje fallá veahki juohke
-	## áidna háve...
+	## ..geasa dearvvaávuođabálvalus addá dahje fallá veahki juohke áidna háve...
 
 REMOVE:r2284 Gen IF (NEGATE *-1 Pr OR NUMERALS BARRIER NPNH)(NEGATE 0 TIME OR Num)(1 CLB)(2 CC);
-	## Dat váikkuha ollu dasa, mo olbmot vásihit bálválusaid, ja oažžu sin
-	## dovdat stuorát oadjebasvuođa.
+	## Dat váikkuha ollu dasa, mo olbmot vásihit bálválusaid, ja oažžu sin dovdat stuorát oadjebasvuođa.
 
 REMOVE:r2285 Gen IF (NEGATE *-1 Pr OR NUMERALS BARRIER NPNH)(NEGATE 0 TIME)(1 Inf LINK 0 V-TRANS-ACT)(1C VERB);
 	## Vuoigatvuohta journála geahččat.
