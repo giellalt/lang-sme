@@ -573,14 +573,20 @@ LIST @OBJ = @OBJ ;
 LIST @<OBJ = @<OBJ ;
 LIST @OBJ> = @OBJ> ;
 LIST @OPRED = @OPRED ;
+LIST @<OPRED = @<OPRED ;
+LIST @OPRED> = @OPRED> ;
 LIST @PCLE = @PCLE ;
 LIST @COMP-CS< = @COMP-CS< ;
  
 LIST @SPRED = @SPRED ;
+LIST @<SPRED = @<SPRED ;
+LIST @SPRED> = @SPRED> ;
 LIST @SUBJ = @SUBJ ;
 LIST @<SUBJ = @<SUBJ ;
 LIST @SUBJ> = @SUBJ> ;
 SET SUBJ = @<SUBJ OR @SUBJ> OR @SUBJ ;
+SET SPRED = @<SPRED OR @SPRED> OR @SPRED ;
+SET OPRED = @<OPRED OR @OPRED> OR @OPRED ;
 
 LIST @PPRED = @PPRED ;
  
@@ -738,6 +744,8 @@ SET VFIN-NOT-IMP = VFIN - Imprt ;
 
 SET VFIN-NOT-NEG = VFIN - Neg ;
   # this might be to strict, besides, "iige" can be written "ii ge"
+
+SET NOT-PRFPRC = WORD - PrfPrc ;
 
 # Person
 # - - - - 
@@ -1810,7 +1818,7 @@ LIST PREGEN = "álgogeahčen" "bealle#muttus" "bealle#muddu" ("bealli" N Sg Loc)
 # INSTITUTION              +                      x               x		    |
 # INDUSTRY                 +                                      x		    |
 
-LIST FAMILY = (Prop Mal) (Prop Fem) (Prop Sur) "áddjut" "áhkká" "áhkkut" "bárdne#mánná" "boadnji" "čeahci" "čeahcit" "dálu#eamit" "eahki" "eamit" "eammi" "eanu" "goaski" "guoibmi" "isit" "lunta" "mánáid#mánná" "mannji" "máttar#áddjá" "máttar#áhkku" "muoŧŧa" "muoŧŧal" "náittos#guoibmi" "neahpi" "oabbá" "oabbá#bealli" "oambealli" "oappáš" "oarpmealli" "osku#guoibmi" "rist#vánhen" "siessal" "siessá" "vieljaš" "viellja" "viellja#bealli" "vilbealli" "vuohppa" "vuon#áhkku" "vuoni" ;
+LIST FAMILY = (Prop Mal) (Prop Fem) (Prop Sur) "áddjut" "áhčči" "áhkká" "áhkkut" "bárdne#mánná" "boadnji" "čeahci" "čeahcit" "dálu#eamit" "eahki" "eamit" "eammi" "eanu" "eatni" "goaski" "guoibmi" "isit" "lunta" "mánáid#mánná" "mannji" "máttar#áddjá" "máttar#áhkku" "muoŧŧa" "muoŧŧal" "náittos#guoibmi" "neahpi" "oabbá" "oabbá#bealli" "oambealli" "oappáš" "oarpmealli" "osku#guoibmi" "rist#vánhen" "siessal" "siessá" "vieljaš" "viellja" "viellja#bealli" "vilbealli" "vuohppa" "vuon#áhkku" "vuoni" ;
 
 # These can only be possessed by HUMAN-INDIVIDUAL, HUMAN-GROUP, PROFESSION, OFFICE, HUM-FUNCTION, ABSTR-TEXT
 
@@ -8214,7 +8222,7 @@ MAP:r356 (@<SUBJ) TARGET Inf IF (*-1 ("leat") BARRIER AUX LINK -1 (N Pl Acc) LIN
 
 MAP:r357 (@SUBJ>) TARGET Inf IF (1 COPULAS)(*2 A BARRIER NOT-ADV);
 
-MAP:r358 (@SPRED) TARGET Inf IF (*-1 ("leat") BARRIER NOT-ADV-PCLE LINK -1 (N Nom)) ;
+MAP:r358 (@<SPRED) TARGET Inf IF (*-1 ("leat") BARRIER NOT-ADV-PCLE LINK -1 (N Nom)) ;
 	## Gurssa ulbmil lea oahppat goarrut Ivgu gávtti.
 
 MAP:r359 (@ADVL) TARGET Inf IF (*-1 MOVEMENT-V BARRIER S-BOUNDARY2 OR V-MAIN OR Nom LINK NOT 0 ("ollu") OR AUX)(NEGATE -1 CC)(NEGATE 0 ("leat"))(NEGATE 0 AUX OR SENSATION-V LINK *-1 ("boahtit") BARRIER NOT-ADV-PCLE); 
@@ -8849,7 +8857,10 @@ MAP:r127 (@Num<) TARGET (A Ord) IF (*-1 N BARRIER NOT-QMARK)(*1 CLB BARRIER NOT-
 	
 	# Numeral mappings
 	# ----------------
-	
+
+MAP:TEST (@<SPRED) TARGET (Num Nom) IF (-2 Loc)(-1 Pl3)(*1 (N Sg Gen) BARRIER NOT-ADJ);
+
+
 MAP:r128 (@HNOUN) TARGET Nom IF (*-1 BOS BARRIER NOT-QMARK)(0 INITIAL OR Num)(*1 ("\)") BARRIER NOT-QMARK);
     ## b) Go ovddit sátni lea adjektiiva ja ráhkada substantiivvain fásta, tearpmalágan sáni, man mearkkašupmi lea eará go guovtti sierra.
     
@@ -8880,6 +8891,20 @@ MAP:r138 (@OBJ @OPRED) TARGET (Num Acc) IF (*-1 MANNU BARRIER NOT-QMARK LINK NOT
 	
 MAP:r139 (@N<) TARGET Num IF (*-1 CURRENCY BARRIER NOT-QMARK); #XXX Eventually restrict to VALUTA or something.
 	## kr. 23,-.
+
+#MAP:TEST (@<SUBJ) TARGET (N Sg Nom) IF (*-1 Sg3 BARRIER NOT-PRFPRC LINK NOT -1 Loc OR Nom OR BOS)(NOT 0 TIME)(*1 S-BOUNDARY OR EOS BARRIER VFIN);
+	 ## Ikte lei duorastat.
+	 ## Lei soahti.
+	 ## Doppe lea Ánde.
+	 # Alkternative: Only Prop as SUBJ: Doppe lea gánda.
+	 # So, perhaps this is the case:
+	 # XVE, where E is subject when it is definite (Doppe lea Ánde/áhčči/son), but SPRED when it is indefinite:
+	 # (Doppe/Fargga) lea soahti / gánda.
+ 	 # In that case, the rule should be:
+MAP:TEST (@<SUBJ) TARGET (N Sg Nom) IF (*-1 Sg3 BARRIER NOT-PRFPRC LINK NOT -1 Loc OR Nom OR BOS)(0 FAMILY OR ("son"))(*1 S-BOUNDARY OR EOS BARRIER VFIN);
+
+MAP (@<SUBJ) TARGET (N Sg Nom) IF (*-1 Du3 BARRIER NPNH)(1 CC)(*2 (N Sg Nom) BARRIER NPNH);
+    ## Doppe boahtiba Niillas ja Ánde.
 
 # Here we map them all:	
 MAP:r140 (@SUBJ @SPRED @HNOUN) TARGET (Num Nom) IF (*1 NUMUNIT BARRIER NOT-QMARK)(*2 CURRENCY-GEN BARRIER NOT-QMARK);
@@ -8986,7 +9011,7 @@ MAP:r173 (@SUBJ>) TARGET (Num Nom) IF (1 TIME + Gen BARRIER NOT-ADJ LINK *1 ("le
 MAP:r322 (@APP-N<) TARGET (Num Nom) IF (-2 BOS OR (PUNCT LEFT))(-1 KLASS LINK 0 Nom);
 	## Ášši 07/00 Sámedikki 1999 jahkedieđáhus.
 	
-MAP:r175 (@<SUBJ @SUBJ> @SPRED) TARGET (Num Nom Sg) IF (0 NUMERALS) (*1 Gen BARRIER NP-BOUNDARY LINK NOT 0 ROUTE OR TIME OR Loc OR Num OR Adv)(NEGATE *1 CC BARRIER NOT-QMARK)(NEGATE *1 ALU BARRIER NP-BOUNDARY)(NEGATE *-1 (@>Num) BARRIER NOT-QMARK LINK *-2 OBJ BARRIER NOT-QMARK) (NEGATE *-1 ("s") OR ("siidu") OR ("paragráfa") OR ("kapihttal") OR ("kapihtal") OR HEADOFPARTS OR ("jahki") OR GEASSET OR TEXT OR LAHKA BARRIER NOT-QMARK);
+MAP:r175 (@<SUBJ @SUBJ> @<SPRED @SPRED>) TARGET (Num Nom Sg) IF (0 NUMERALS) (*1 Gen BARRIER NP-BOUNDARY LINK NOT 0 ROUTE OR TIME OR Loc OR Num OR Adv)(NEGATE *1 CC BARRIER NOT-QMARK)(NEGATE *1 ALU BARRIER NP-BOUNDARY)(NEGATE *-1 (@>Num) BARRIER NOT-QMARK LINK *-2 OBJ BARRIER NOT-QMARK) (NEGATE *-1 ("s") OR ("siidu") OR ("paragráfa") OR ("kapihttal") OR ("kapihtal") OR HEADOFPARTS OR ("jahki") OR GEASSET OR TEXT OR LAHKA BARRIER NOT-QMARK);
 	## Dá dat leat, 350 ruvnno. # Maybe "OR (N @ADVL)" has to be added.
 
 MAP:r176 (@<SUBJ @SUBJ> @SPRED) TARGET (Num Nom) IF (*1 (Dem Pl Loc) BARRIER NOT-QMARK);
@@ -9621,31 +9646,31 @@ MAP:r484 (@OBJ>) TARGET (Pron Indef) IF (*1 V-TRANS-ACT BARRIER S-BOUNDARY2 LINK
 	## It don galgga buot čuohpadit. 
 MAP:r486 (@<OBJ @OBJ>) TARGET (Pron Rel Acc) ;
   	## 	 
-MAP:r487 (@SPRED) TARGET (N Ess) IF (*-1 BOC BARRIER NOT-NP) (*1 COPULAS BARRIER NOT-ADV-PCLE LINK 1 Inf);
+MAP:r487 (@SPRED>) TARGET (N Ess) IF (*-1 BOC BARRIER NOT-NP) (*1 COPULAS BARRIER NOT-ADV-PCLE LINK 1 Inf);
 	## ...man ulbmilin lei lohkat ja juogustit bohccuid. 
 
-MAP:r488 (@SPRED) TARGET (N Ess) IF (*-1 BOC BARRIER NOT-NP) (*1 COPULAS BARRIER NOT-ADV-PCLE LINK *1 (N Nom) BARRIER NOT-NP);
+MAP:r488 (@SPRED>) TARGET (N Ess) IF (*-1 BOC BARRIER NOT-NP) (*1 COPULAS BARRIER NOT-ADV-PCLE LINK *1 (N Nom) BARRIER NOT-NP);
 	## Riektemetoda vuođđun lea našunálastáhtalaš riekteárbevieruid áddejupmi.
 
 MAP:r489 (@SPRED) TARGET ALU ;
 	## Dábálaččat leat joddut sullii ovtta guhku.
 
-MAP:r490 (@SPRED) TARGET Gen IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(NEGATE 0 TIME OR ROUTE)(1 EOS OR CS);
+MAP:r490 (@<SPRED) TARGET Gen IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(NEGATE 0 TIME OR ROUTE)(1 EOS OR CS);
 	## Dat lea mu.
 
-MAP:r491 (@SPRED) TARGET Gen IF (*-1 CC BARRIER NPNH LINK *-1 (@SPRED) BARRIER WORD) (1 EOS OR CS);
+MAP:r491 (@<SPRED) TARGET Gen IF (*-1 CC BARRIER NPNH LINK *-1 (@SPRED) BARRIER WORD) (1 EOS OR CS);
 	## Áhká rumaš ii leat su iežas oapmi, muhto boatnjá.
 
-MAP:r492 (@SPRED) TARGET (Interr Gen) IF (NEGATE 0 ("mii"))(NEGATE *1 A OR N BARRIER NPNH) (NEGATE *1 V-NOT-AUX BARRIER S-BOUNDARY2);
+MAP:r492 (@SPRED>) TARGET (Interr Gen) IF (NEGATE 0 ("mii"))(NEGATE *1 A OR N BARRIER NPNH) (NEGATE *1 V-NOT-AUX BARRIER S-BOUNDARY2);
 	## Gean dat lea?
 
-MAP:r493 (@SPRED) TARGET Gen IF (NEGATE 0 TIME)(1 Pers)(2 COPULAS) (NEGATE *3 V-NOT-AUX BARRIER S-BOUNDARY2);
+MAP:r493 (@SPRED>) TARGET Gen IF (NEGATE 0 TIME)(1 Pers)(2 COPULAS) (NEGATE *3 V-NOT-AUX BARRIER S-BOUNDARY2);
 	## Dan guovttos dat leat.
 
-MAP:r494 (@SPRED) TARGET (PrfPrc) IF (-1 BOC)(0 Der/Pass)(1 ("leat")) (*2 NP-HEAD-NOM BARRIER NOT-NP);
+MAP:r494 (@SPRED>) TARGET (PrfPrc) IF (-1 BOC)(0 Der/Pass)(1 ("leat")) (*2 NP-HEAD-NOM BARRIER NOT-NP);
 	## Buressivdniduvvon lehkos son guhte boahtá Hearránammii.
 	
-MAP:IfMaterial (@SPRED)	(N Loc) IF (*-1 ("leat") BARRIER NPNH LINK *-1 NP-HEAD-NOM BARRIER NOT-ADV)(0 MATERIAL) ;
+MAP:IfMaterial (@<SPRED)	(N Loc) IF (*-1 ("leat") BARRIER NPNH LINK *-1 NP-HEAD-NOM BARRIER NOT-ADV)(0 MATERIAL) ;
 	## Niibi lea stális.
 
 	# Habitative mappings
@@ -14838,7 +14863,9 @@ SELECT:r3326 (@PPRED) IF (*-1 ("leat") BARRIER NPNH LINK -1 Loc LINK 0 HUMAN OR 
 
 # 	# Predicate predicate 
 SELECT:r3323 (@PPRED) IF (*-1 (@SPRED) BARRIER NOT-ADV OR COMMA LINK NOT 0 Attr LINK *-1 COPULAS BARRIER NPNH LINK -1 SUBJ OR (@HAB) OR (@ADVL) LINK NOT 0 TIME-MARKER OR GEASSET OR ADV-NOT-ARG)(NEGATE 0 Rel) ;
+
 REMOVE:allPpred (@PPRED) IF (0 (@PPRED)) ;	
+
 
 
 REMOVE:r3327 (@ADVL) IF (0 Ess) ;
