@@ -7672,6 +7672,13 @@ REMOVE:r1911 Prop IF (0 ("Sápmi"))(NEGATE *1 SAPMI-PROP-HEAD BARRIER NPNH);
 
 	# In this cycle we apply some safe verb rules.
 
+	# Verbal contains a pare of finite verbs
+	# ---------------------------------------
+LIST VFIN-TAG = (V Ind Prs Sg1) (V Ind Prs Sg2) (V Ind Prs Sg3) (V Ind Prs Du1) (V Ind Prs Du2) (V Ind Prs Du3) (V Ind Prs Pl1) (V Ind Prs Pl2) (V Ind Prs Pl3) (V Ind Prt Sg1) (V Ind Prt Sg2) (V Ind Prt Sg3) (V Ind Prt Du1) (V Ind Prt Du2) (V Ind Prt Du3) (V Ind Prt Pl1) (V Ind Prt Pl2) (V Ind Prt Pl3) ;  
+
+SELECT $$VFIN-TAG (NEGATE *-2 VFIN BARRIER S-BOUNDARY)(-1 $$VFIN-TAG LINK NOT 0 AUX OR N)(NOT 0 N) ;	
+	## Mii borrat hapmat.	
+
 	# Neg
 	# ----
 #SELECT (Neg Imprt) IF (*-1 BOS BARRIER NOT-ADV)(*-1 ConNeg BARRIER NOT-ADV);	
@@ -8309,7 +8316,7 @@ MAP:r382 (@ADVL) TARGET Inf IF (-1 Acc LINK *-1 REKSV BARRIER NPNH) ;
 MAP:TEST (@<OBJ) TARGET Inf IF (*-1 VFIN LINK 0 FMAINV) ; 
 	## Duosttan go dahkat dan?
 
-MAP:r383 (@<OBJ) TARGET Inf IF (*-1 HAB-ACTOR BARRIER NOT-AA LINK 0 Acc LINK *-1 V-TRANS-ACT-NOT-ACT BARRIER NPNH LINK NOT 0 (A Attr) LINK *-1 Nom)(NEGATE *-1 CC BARRIER VFIN LINK *-1 Inf BARRIER VFIN LINK *-1 AUX BARRIER NOT-ADV-PCLE LINK 0 VFIN);
+MAP:r383 (@<OBJ) TARGET Inf IF (*-1 HAB-ACTOR BARRIER NOT-AA LINK 0 Acc LINK *-1 V-TRANS-ACT-NOT-ACT BARRIER NPNH LINK NOT 0 (A Attr) OR AUX LINK *-1 Nom)(NEGATE *-1 CC BARRIER VFIN LINK *-1 Inf BARRIER VFIN LINK *-1 AUX BARRIER NOT-ADV-PCLE LINK 0 VFIN);
 	## Mánnávuođas son vásihii dulvademiid ja eará luonddubillistemiid mat leat ožžon su čállit divttaid. 
 	## Mun háliidan mánnán boahtit ruoktot!
 
@@ -8342,7 +8349,7 @@ MAP:r387 (@<OBJ) TARGET Inf IF (-1 CC LINK *-1 Inf BARRIER VERB LINK *-1 V-NOT-A
 MAP (@<OBJ) TARGET PrfPrc IF (*-1 Acc BARRIER NOT-ADV LINK -1 Acc LINK *-1 VERBAL-ACTIVITY-V BARRIER NPNH)(0 V-TRANS-ACT);
 	## Son logai oappás dan bargan. 
 
-MAP (@+FMAINV) TARGET VFIN IF (0 AUX-OR-MAIN + TV LINK *1 HAB-ACTOR + Acc BARRIER NP-BOUNDARY LINK 1 Inf) ;
+MAP (@+FMAINV) TARGET VFIN IF (0 AUX-OR-MAIN + TV LINK NOT 0 ("áigut") LINK *1 HAB-ACTOR + Acc BARRIER NP-BOUNDARY LINK 1 Inf) ;
 	## Mun háliidan mánnán boahtit ruoktot!
 
 MAP:r388 (@-FAUXV) TARGET Inf IF (-1 NP-HEAD-NOM LINK *-1 COPULAS BARRIER NOT-ADV-PCLE)(0 AUX)(1 Inf) ;
@@ -14169,7 +14176,7 @@ MAP:r264 (@ADVL) TARGET Gen IF (0 TIME OR ROUTE)(*1 PLACE BARRIER NOT-QMARK LINK
 MAP:r268 (@-FSUBJ>) TARGET Gen IF (0 HUMAN OR PPRON-NOT-DAT)(*1 Acc BARRIER NOT-QMARK LINK NOT 0 HUMAN)(*2 VAbess BARRIER NOT-QMARK);
 	## Divššohasaid sáhttá dálkkodit dálkasiiguin sin dan dieđekeahttá.
 	
-MAP:r269 (@-FSUBJ>) TARGET Acc IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER NOT-ADV-PCLE LINK NEGATE 0 Imprt LINK -1 BOS)(0 HAB-ACTOR OR Refl LINK NOT 0 ("dat"))(*1 Inf BARRIER NOT-AA);
+MAP:r269 (@-FSUBJ>) TARGET Acc IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER NOT-ADV-PCLE LINK NEGATE 0 Imprt LINK -1 BOS)(0 HAB-ACTOR OR Refl LINK NOT 0 ("dat"))(*1 Inf BARRIER NOT-AA LINK NOT *-1 FAUXV BARRIER VERB);
 	## Son rávve olbmuid čuovvut skohtermáđii dárkilit go sáhttá leat suddi goappašiid beale luotta.
 	## Mun háliidan mánnán boahtit ruoktot!
 	
@@ -15776,6 +15783,10 @@ SUBSTITUTE:FOBJ>OBJ (@-F<OBJ) (@<OBJ) (N Acc) (*-1 ("boahtit" @+FAUXV) BARRIER V
 
 SUBSTITUTE:<SUBJ (@COMP-CS<) (@<SUBJ) NP-HEAD-NOM (*1 Acc BARRIER NPNH LINK NEGATE *1 VFIN BARRIER S-BOUNDARY2) ;
 	## Ovdal buorida son dálkkiidis go neavrres olmmoš dábiidis.
+
+
+SUBSTITUTE:FMAINV>OBJ (@-FMAINV) (@<OBJ) Inf (*-1 HAB-ACTOR BARRIER NOT-AA LINK 0 Acc LINK *-1 FMAINV BARRIER VERB LINK *-1 Nom)(NEGATE *-1 CC BARRIER VFIN LINK *-1 Inf BARRIER VFIN LINK *-1 AUX BARRIER NOT-ADV-PCLE LINK 0 VFIN);
+	## Mun háliidan mánnán boahtit ruoktot!
 
 
 #SUBSTITUTE:OBJ>ICL-OBJ (@OBJ) (@ICL-OBJ) Inf (-1 @-FSUBJ> OR @-FOBJ) ;
