@@ -6,13 +6,7 @@
 ! ===================================== !
 
 ! To eventual curious readers
-! This file is empty. It is modeled upon the Greenlandic
-! parallel. Finally, this is not how we should do it.
-! What we need is access to the stem in sme-lex.txt.
-! This is set up as a string-to-string conversion.
-! The first part of this file is the sme hyphenator, 
-! and the second is the smesmj converter.
-! This should be fewritten, but here I sit without see.
+! This file tries out conversion from Sámi to IPA in a VERY rudimentary fashion
 
 
 echo <<defining Cns and Vow...>>
@@ -22,65 +16,13 @@ define Vow       [ a | á | e | i | o | u | y | æ | ø | å | ä | ö |
 é | ó | ú | í | à | è | ò | ù | ì | ë | ü | ï | â | ê | ô | û | î | ã | ý 
 É | Ó | Ú | Í | À | È | Ò | Ù | Ì | Ë | Ü | Ï | Â | Ê | Ô | Û | Î | Ã | Ý ] ;
 
-define 2ndVow [ e | a | u | o | i | y | ø | E | A | U | O | I | Y | Ø ] ;
-
-!define 3dVow [ u | U ] ;
-
-
-define VowNot2ndVow   [ Vow - 2ndVow ] ;
-
-!define VowNot3dVow   [ Vow - 3dVow ] ;
-
-
-define U   [ u | U ] ;
-define O   [ o | O ] ;
-define A   [ a | A ] ;
-define E   [ e | E ] ;
-define I   [ i | I ] ;
-define Y   [ y | Y ]  ;
-define EO  [ e | E | o | O ] ;
-define EOA [ e | E | o | O | a | A ] ;
-define IAO [ i | I | a | A | o | O ] ;
-define Oslash   [ ø | Ø ] ; ! Renamed from Ø to avoid non-ASCII chars
-define UI  [ u | U | i | I ] ;
-
-
-define IEdipht [ i e | I e | I E ] ;
-define UOdipht [ u o | U o | U O ] ;
-define EAdipht [ e a | E a | E A ] ;
-define OAdipht [ o a | O a | O A ] ;
-define OUdipht [ o u | O u | O U ] ;      ! jour-na-lis-sta
-define AUdipht [ a u | A u | A U ] ;      ! fau-na, Lauv-sjø-vo-la, Kår-ve-jau-re ok.
-define EUdipht [ e u | E u | E U ] ;      ! leut-nán-ta
-define AEdipht [ a e | A e | A E ] ;      ! lae-sta-di-us, 
-define OslashYdipht [ ø y | Ø y | Ø Y ] ; ! nøyt-rála  ! Renamed from ØYdipht to avoid non-ASCII chars
-define OEdipht [ o e | O e | O E ] ; ! goe-the
-define IOslashdipht [ i ø | I ø | I Ø ] ; ! skiøld     ! Renamed from IØdipht to avoid non-ASCII chars
-define IOdipht [ i o | I o | I O ] ; ! skiold, nation
-
-define dipht [ IEdipht | UOdipht | EAdipht | OAdipht | OUdipht | AUdipht |
-               EUdipht | AEdipht | OslashYdipht | OEdipht | IOslashdipht | IOdipht] ;
-
-define VowNotU      [ Vow - U   ] ;
-define VowNotO      [ Vow - O   ] ;
-define VowNotA      [ Vow - A   ] ;
-define VowNotE      [ Vow - E   ] ;
-define VowNotI      [ Vow - I   ] ;
-define VowNotEO     [ Vow - EO  ] ;
-define VowNotEOA    [ Vow - EOA ] ;
-define VowNotIAO    [ Vow - IAO ] ;
-define VowNotY      [ Vow - Y   ] ;
-define VowNotOslash [ Vow - Oslash   ] ;  ! Renamed from VowNotØ to avoid non-ASCII chars
-define VowNotUI     [ Vow - UI  ] ;
-
-
 define Cns [ b | c | č | d | đ | f | g | h | j | k | l | m | n | ŋ | 
              B | C | Č | D | Đ | F | G | H | J | K | L | M | N | Ŋ | 
              p | q | r | s | š | t | ŧ | v | w | x | z | ž |   
              P | Q | R | S | Š | T | Ŧ | V | W | X | Z | Ž ] ; 
 
-define S    [ S | s | Š | š ] ;
-define Cnss [ Cns - S ] ;
+define Ses    [ S | s | Š | š ] ;
+define Cnss [ Cns - Ses ] ;
 define Sgm  [ Cns | Vow ] ;
 
 
@@ -94,184 +36,28 @@ define Syll Cns* Vow+ Cns* ;
 
 echo << Rules >>
 
-! Defining this rule in the beginning, it is so long...
-
-! This rule must be changed in see, what we would like to do is to 
-! introduce a schwaa vowel instead of the left-hand side.
-
-# define rd  m b -> m ə b ,   m b b -> m b ,
-#            m p -> m ə p ,   m p p -> m p ,
-#            m s -> m ə s ,   m s s -> m s ,
-#            m š -> m ə ʃ ,   m š š -> m ʃ ,
-# 
-#            n c -> n ə t s , n c c -> n c ,
-#            n d -> n ə d ,   n d d -> n d ,
-#            ŋ g -> ŋ ə g ,   ŋ g g -> ŋ g ,
-#            ŋ k -> ŋ ə k ,   ŋ k k -> ŋ k ,
-#            n s -> n ə s ,   n s s -> n s ,
-#            n t -> n ə t ,   n t t -> n t ,
-#            n v -> n ə v ,   n v v -> n v ,
-#            n s -> n ə s ,   n s s -> n s ,
-#            n z -> n ə t s , n z z -> n t s ,
-#            n ž -> n ə t j , n ž ž -> n t j ,
-# 
-#            v d -> v d d ,   v d d -> v d ,
-#            v g -> v g g ,   v g g -> v g ,
-#            v j -> v j j ,   v j j -> v j ,
-#            v k -> v k k ,   v k k -> v k ,
-#            v l -> v l l ,   v l l -> v l ,
-#            v p -> v p p ,   v p p -> v p ,
-#            v r -> v r r ,   v r r -> v r ,
-#            v s -> v s s ,   v s s -> v s ,
-#            v t -> v t t ,   v t t -> v t ,
-#            v č -> v t t j , v č č -> v t j ,
-#            v š -> v s s j , v š š -> v s j ,
-#            v z -> v t t s , v z z -> v t s ,
-#            v ž -> v t t j , v ž ž -> v t j ,
-# 
-#            j b -> j b b ,   j b b -> j b ,
-#            j c -> j c c ,   j c c -> j c ,
-#            j d -> j d d ,   j d d -> j d ,
-#            j f -> j f f ,   j f f -> j f ,
-#            j g -> j g g ,   j g g -> j g ,
-#            j k -> j k k ,   j k k -> j k ,
-#            j p -> j p p ,   j p p -> j p ,
-#            j s -> j s s ,   j s s -> j s ,
-#            j t -> j t t ,   j t t -> j t ,
-#            j v -> j v v ,   j v v -> j v ,
-#            j z -> j t t s , j z z -> j t s ,
-#            j ž -> j t t j , j ž ž -> j t j ,
-#            
-#            l b -> l b b ,   l b b -> l b ,
-#            l c -> l c c ,   l c c -> l c ,
-#            l d -> l l d ,   l d d -> l d ,
-#            l f -> l f f ,   l f f -> l f ,
-#            l g -> l g g ,   l g g -> l g ,
-#            l j -> l j j ,   l j j -> l j ,
-#            l k -> l k k ,   l k k -> l k ,
-#            l p -> l p p ,   l p p -> l p ,
-#            l s -> l s s ,   l s s -> l s ,
-#            l t -> l l t ,   l t t -> l t ,
-#            l v -> l v v ,   l v v -> l v ,
-#            l č -> l t t j , l č č -> l t j ,
-#            l š -> l s s j , l š š -> l s j ,
-#            l z -> l l t s , l z z -> l t s ,
-#            l ž -> l l t j , l ž ž -> l t j ,
-# 
-#            r b -> r b b , r b b -> r b ,
-#            r c -> r c c , r c c -> r c ,
-#            r d -> r d d , r d d -> r d ,
-#            r f -> r f f , r f f -> r f ,
-#            r g -> r g g , r g g -> r g ,
-#            r j -> r j j , r j j -> r j ,
-#            r k -> r k k , r k k -> r k ,
-#            r p -> r p p , r p p -> r p ,
-#            r s -> r s s , r s s -> r s ,
-#            r t -> r t t , r t t -> r t ,
-#            r v -> r v v , r v v -> r v ,
-#            r č -> r t t j , r č č -> r t j ,
-#            r š -> r s s j , r š š -> r s j ,
-#            r z -> r t t s , r z z -> r t s ,
-#            r ž -> r t t j , r ž ž -> r t j , 
-# 
-#                             s s k -> s k ,
-#                             s s t -> s t ,
-#                             s s m -> s m ,
-#                             s s p -> s p ,
-# 
-#            š k -> s s j k , š š k -> s j k ,
-#            š t -> s s j t , š š t -> s j t ,
-#            š m -> s s j m , š š m -> s j m ,
-#            š v -> s s j v , š š v -> s j v ,
-# 
-#            đ b -> r b b , đ b b -> r b ,
-#            đ g -> r g g , đ g g -> r g ,
-#            đ j -> r j j , đ j j -> r j ,
-#            đ v -> r v v , đ v v -> r v ,
-# 
-#            j h l -> j h l l , j h l l -> j h l ,
-#            j h m -> j h m m , j h m m -> j h m ,
-#            j h n -> j h n n , j h n n -> j h n ,
-#            v h l -> v h l l , v h l l -> v h l ,
-# 
-#            đ b -> r b b , đ b b -> r b ,
-#            đ b -> r b b , đ b b -> r b ,
-#            đ b -> r b b , đ b b -> r b ,
-#            đ b -> r b b , đ b b -> r b ,
-#            đ b -> r b b , đ b b -> r b ,
-#            đ b -> r b b , đ b b -> r b ,
-#            đ b -> r b b , đ b b -> r b ,
-#            đ b -> r b b , đ b b -> r b ,
-#            
-#            d n   -> d d n ,   t n   -> d n ,
-#            b m   -> b b m ,   p m   -> b m ,
-#            g ŋ   -> g g ŋ ,   k ŋ   -> g ŋ ,
-#            d n j -> d d n j , t n j -> d n j   || [.#.|%#|%-] Cns* Vow+ _ Vow ;
-
 
 ! Here comes the other rules
 
 define FinalE i -> e || Syll Cns _ .#. ;
 
-define ij i -> j || Vow _ ;
-define dtj ž ž -> d t j || Vow _ Vow ; 
-define ttj č č -> t t j || Vow _ Vow ;
-define ssj š š -> s s j || Vow _ Vow ;
+define ijRule i -> j || Vow _ ;
+define dtjRule ž ž -> d ʒ ː || Vow _ Vow ; 
+define ttjRule č č -> t š ː || Vow _ Vow ;
+define ssjRule š š -> š ː   || Vow _ Vow ;
 
-# define LN   đ m m -> r m ,     đ b m -> r m m ,
-#             đ ŋ ŋ -> r ŋ ,     đ g ŋ -> r ŋ ŋ ,
-#             j m m -> j m ,     j b m -> j m m ,
-#             j n n -> j n ,     j d n -> j n n ,
-#             j ŋ ŋ -> j ŋ ,     j g ŋ -> j ŋ ŋ ,
-#             l m m -> l m ,     l b m -> l m m ,
-#             l n n -> l n ,     l d n -> l n n ,
-#             l ŋ ŋ -> l ŋ ,     l g ŋ -> l ŋ ŋ ,
-#             r p m -> r m ,     r b m -> r m m ,
-#             r t n -> r n ,     r d n -> r n n ,
-#             r k ŋ -> r ŋ ,     r g ŋ -> r ŋ ŋ ,
-#             v n n -> v n ,     v d n -> v n n ,
-#           l n n j -> l n j , l d n j -> l n n j ,
-#           r t n j -> r n j , r d n j -> r n n j ,
-#           v n n j -> v n j , v d n j -> v n n j || Vow _ Vow ;
-# 
-# define jNN b m -> m m , d n -> n n || Vow j _ ;
-# 
-# define SK2SSK s p -> s s p   ,
-#               s t -> s s t   ,
-#               s k -> s s k   ,
-#               s m -> s s m   ,
-#               š t -> s s j t ,
-#               š k -> s s j k ,
-#               š m -> s s j m || [.#.|%#|%-]  Cns* Vow+ ([j|m|n|r|v]) _ Vow ;
-# define SKK2SK s t t -> s t ,               
-#               s k k -> s k ,               
-#               s m m -> s m ,               
-#               š t t -> š t ,               
-#               š k k -> š k ,               
-#               š m m -> š m ||  Vow  ([j|m|n|r|v]) _ Vow ; 
 
-define sl š -> s || [.#.|%#|%-] _ l ;
-define zz z z -> d t s ;
-define z    z -> t s ;
-define cc   c c -> t t s , č č -> t t j || Vow ([j|l|h|k|n|r|v]) _ Vow ;
-define c    c -> t s , č -> t j || [.#.|%#|%-|Vow|j|l|h|k|n|r|v] _ Vow ;
-define RevDipht u -> u o || _ Cns+ e ;
-define oCns u -> o || Syll _ Cns .#. ;
+define slRule š -> š || [.#.|%#|%-] _ l ;
+define zzRule z z -> d t s ;
+define zRule    z -> t s ;
+define ccRule   c c -> t ː s , č č -> t š ː|| Vow ([j|l|h|k|n|r|v]) _ Vow ;
+define cRule    c -> t s , č -> t š || [.#.|%#|%-|Vow|j|l|h|k|n|r|v] _ Vow ;
 
-define eCns i -> e ||          Syll     _ [ Cns - j ] .#. ,
-                      [.#.|%#|%-] Syll Cns _ [Cns - j] ,,
-            e -> i || [.#.|%#|%-] Syll Cns _  Cns ;
-define it   e -> i || Syll _ t .#. ; ! Loan word rule!!
-!define H2M u -> o , e -> i , o -> u || [.#.|%#|%-] Syll Cns _ Cns ;
-define H2M  u -> o , o -> u          || [.#.|%#|%-] Syll Cns _ Cns ;
-define hit2dit h -> d || _ i t .#. ; ! Odd-syll verbs only
-define longain2ndsyll a -> á || [.#.|%#|%-] Cns* Vow [Cns|[n|s|t]j|t s] _ [ Cns - š ] ;
-define tjfromšafter2syll š -> t j || [.#.|%#|%-] Syll Syll _ Vow ;
-define SamiLetters č -> t j , đ -> d , š -> s j , ŧ -> t , ž -> t j  ;
-define 1stysllæ e a -> æ || [.#.|%#|%-] (Cns+) _ Cns+ á ;
-define 1stsylldiphthong o -> å , e a -> i e || [.#.|%#|%-] (Cns+) _ Cns ;
-define labialharmony [a|á] -> å || å Cns+ _ ;
-define oa2åG1 o a -> å || [.#.|%#|%-] (Cns+) _  [Cns|[n|s|t]j|t s]  a ;
+define SamiLetters č -> t š , đ -> ð , š -> š , ŧ -> ɵ , ž -> d ʒ  , á -> a ː ;
+
+define eaRule e -> ɛ || _ a ;
+
+define FinalLightT t -> h || Syll Vow _ .#. ;
 
 echo << and the cleaning rules at the end >>
 
@@ -293,55 +79,32 @@ define down [ A -> a, Á -> á, B -> b, C -> c, D -> d, E -> e, F -> f, G -> g, 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 echo <<Combining...>>
 
 read regex [ 
 #    rd
  FinalE
-.o. ij
-.o. dtj
-.o. ttj
-.o. ssj
+.o. down 
+.o. ijRule
+.o. dtjRule
+.o. ttjRule
+.o. ssjRule
 #.o. LN
 #.o. jNN
 #.o. SK2SSK
 #.o. SKK2SK
-.o. sl
-.o. zz
-.o. z
-.o. cc
-.o. c
-.o. RevDipht
-.o. oCns
-.o. eCns
-.o. it
-.o. H2M
-.o. H2M
-.o. hit2dit
-.o. longain2ndsyll
-.o. tjfromšafter2syll
+.o. slRule
+.o. zzRule
+.o. zRule
+.o. ccRule
+.o. cRule
+.o. eaRule
+.o. FinalLightT
 .o. SamiLetters
-.o. 1stysllæ
-.o. 1stsylldiphthong
-.o. labialharmony
-.o. oa2åG1
+
 .o. phones
 .o. technical
 .o. clean
-.o. down
 
 ] ;
 
