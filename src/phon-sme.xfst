@@ -6,15 +6,45 @@
 ! ===================================== !
 
 ! To eventual curious readers
-! This file tries out conversion from Sámi to IPA in a VERY rudimentary fashion
+! This file tries out conversion from Sámi orthography to a phonetic
+! translation based upon the ordinary Finnish alphabet. This is due to our
+! web demo, http://www.bitlips.fi/tts/demo.cgi
 
+! Usage: Compile sme as usual:
+! make TARGET=sme
+! Pipe text through the analyser:
+! cat text | preprocess | lookup -flags mbTT bin/phon-sme.fst | ..
+
+!We may also add POS tagging:
+! cat text | preprocess | lookup -flags mbTT -utf8 bin/pos-sme.fst | cut -f2 | 
+! cut -d"+" -f1,2 | lookup -flags mbTT -utf8 bin/phon-sme.fst | l
+
+! In order to make this better we should uniq the closed POS before giving them
+! to the phonological analyser (TODO: Check whether output is ok).
 
 echo <<defining Cns and Vow...>>
 
+define POSTAG %+N -> %+N,
+              %+A -> %+A, 
+              %+V -> %+V,
+              %+Adv -> %+X, 
+              %+Pron -> %+X,
+              %+CS -> %+X,
+              %+CC -> %+X,
+              %+Adp -> %+X,
+              %+Po -> %+X,
+              %+Pr -> %+X,
+              %+Interj -> %+X,
+              %+Pcle -> %+X,
+              %+Num -> %+X, 
+              %+CLB -> %+CLB ;
+
 define Vow       [ a | á | e | i | o | u | y | æ | ø | å | ä | ö | 
                    A | Á | E | I | O | U | Y | Æ | Ø | Å | Ä | Ö | 
-é | ó | ú | í | à | è | ò | ù | ì | ë | ü | ï | â | ê | ô | û | î | ã | ý 
-É | Ó | Ú | Í | À | È | Ò | Ù | Ì | Ë | Ü | Ï | Â | Ê | Ô | Û | Î | Ã | Ý ] ;
+                   é | ó | ú | í | à | è | ò | ù | ì | ë | ü | ï | 
+                   â | ê | ô | û | î | ã | ý |
+                   É | Ó | Ú | Í | À | È | Ò | Ù | Ì | Ë | Ü | Ï | 
+                   Â | Ê | Ô | Û | Î | Ã | Ý ] ;
 
 define Cns [ b | c | č | d | đ | f | g | h | j | k | l | m | n | ŋ | 
              B | C | Č | D | Đ | F | G | H | J | K | L | M | N | Ŋ | 
@@ -51,21 +81,10 @@ define ijRule  i -> j || Vow _ ;
 define slRule s -> š || [.#.|%#|%-] _ l ;
 
 
-define Schwa  m b -> m ə b ,   
-              m p -> m ə p ,   
-              m s -> m ə s ,   
+define Schwa  m s -> m ə s ,   
               m š -> m ə š , 
    
-              n c -> n ə c ,   
-              n d -> n ə d ,   
-              ŋ g -> ŋ ə g ,   
-              ŋ k -> ŋ ə k ,   
-              n s -> n ə s ,   
-              n t -> n ə t ,   
               n v -> n ə v ,   
-              n s -> n ə s ,   
-              n z -> n ə d s , 
-              n ž -> n ə d š , 
    
               v d -> v ə d ,   
               v g -> v ə g ,   
@@ -95,33 +114,24 @@ define Schwa  m b -> m ə b ,
               j ž -> j ə d j , 
    
               l b -> l ə b ,   
-   !          l c -> l ə c ,   
-              l d -> l ə d ,   
               l f -> l ə f ,   
               l g -> l ə g ,   
               l j -> l ə j ,   
-   !          l k -> l ə k ,   
               l p -> l ə p ,   
               l s -> l ə s ,   
-   !          l t -> l ə t ,   
               l v -> l ə v ,   
-   !          l č -> l ə d š , 
-              l š -> l ə š  , 
+              l š -> l ə š , 
               l z -> l ə d s , 
               l ž -> l ə d š , 
    
               r b -> r ə b ,
-   !          r c -> r ə c ,
               r d -> r ə d ,
               r f -> r ə f ,
               r g -> r ə g ,
               r j -> r ə j ,
-   !          r k -> r ə k ,
               r p -> r ə p ,
               r s -> r ə s ,
-   !          r t -> r ə t ,
               r v -> r ə v ,
-   !          r č -> r ə t š ,
               r š -> r ə š ,
               r z -> r ə d s ,
               r ž -> r ə d š ,
@@ -170,8 +180,9 @@ define 3rdSylld d -> đ || .#. Syll Vow _ Vow ;
 
 define PlosiveDevoicing d -> t , g -> k , b -> p || _ Vow ;
 
-define AlveolarSchwa r -> r ə h , đ -> đ ə h , l -> l ə h || Vow _ Stops ;
-
+define rSchwa r -> r ə h || Vow _ [ Cns - r | b m | d n | d n j | g ŋ ] Vow ;
+define dSchwa đ -> đ ə h || Vow _ [ Cns - đ | b m | d n | d n j | g ŋ ] Vow ;
+define lSchwa l -> l ə h || Vow _ [ Cns - l | b m | d n | d n j | g ŋ ] Vow ;
 
 define Preaspiration c -> h || h _ c ,, 
                      č -> h || h _ č ,,
@@ -208,16 +219,15 @@ define aaRule á -> a a ;
 define nngRule ŋ ŋ -> n n g ;
 define ngRule  ŋ   -> n g ;
 
-define PronounLenghtening u -> u u || .#. [m|d|s] _ .#. ;
+define PronounLenghtening u -> u u || .#. [m|t|s] _ .#. ;
 
-define SchwaNormalisation ə -> ä ; ! Awaiting a good solution
+define SchwaNormalisation ə -> e ; ! Awaiting a good solution
 
 
 echo <<Combining...>>
 
 read regex [ 
-#    rd
-
+    POSTAG .o. 
     down 
 
 .o. ijRule
@@ -234,7 +244,9 @@ read regex [
 
 .o. 3rdSylld
 .o. PlosiveDevoicing
-.o. AlveolarSchwa
+.o. rSchwa
+.o. dSchwa
+.o. lSchwa
 
 .o. Preaspiration
 .o. dtjRule
@@ -249,6 +261,7 @@ read regex [
 
 .o. dhRule 
 .o. thRule 
+.o. shRule 
 
 .o. eaRule
 .o. aaRule
