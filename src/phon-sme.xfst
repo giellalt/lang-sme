@@ -16,7 +16,7 @@
 ! cat text | preprocess | lookup -flags mbTT bin/phon-sme.fst | ..
 
 !We may also add POS tagging:
-! cat corp/pedkorpus.txt | preprocess | lookup -flags mbTT -utf8 bin/pos-sme.fst | tr '       ' '+' | cut -d"+" -f1,3 | uniq | lookup -flags mbTT -utf8 bin/phon-sme.fst | cut -f2 | l
+! cat corp/pedkorpus.txt | preprocess | lookup -flags mbTT -utf8 bin/pos-sme.fst | tr '\t' '+' | cut -d"+" -f1,3 | uniq | lookup -flags mbTT -utf8 bin/phon-sme.fst | cut -f2 | l
 
 ! In order to make this better we should uniq the closed POS before giving them
 ! to the phonological analyser (TODO: Check whether output is ok).
@@ -52,6 +52,9 @@ define Cns [ b | c | č | d | đ | f | g | h | j | k | l | m | n | ŋ |
 
 define Stops [ c ( c ) | č ( č ) | t ( t ) | k ( k ) ] ;
 
+define Alv [ t | T | d | D | ŧ | Ŧ | đ | Đ | s | S | l | L | r | R | n | N ] ;
+
+define Nas [ m | M | n | N | ŋ | Ŋ ] ;
 
 define down [ A -> a, Á -> á, B -> b, C -> c, Č -> č, D -> d, E -> e, F -> f, 
               G -> g, H -> h, I -> i, J -> j, K -> k, L -> l, M -> m, N -> n, 
@@ -111,6 +114,8 @@ define Schwa  m s -> m ə s ,
               j v -> j ə v ,   
               j z -> j ə d s , 
               j ž -> j ə d j , 
+              j l -> j ə l ,
+              l r -> j ə r ,
    
               l b -> l ə b ,   
               l f -> l ə f ,   
@@ -150,18 +155,12 @@ define Schwa  m s -> m ə s ,
               j h n -> j ə h n  , 
               v h l -> v ə h l  , 
    
-              đ b -> đ ə b , 
-              đ b -> đ ə b , 
-              đ b -> đ ə b , 
-              đ b -> đ ə b , 
-              đ b -> đ ə b , 
-              đ b -> đ ə b , 
-              đ b -> đ ə b , 
-              đ b -> đ ə b , 
+              đ b -> đ ə b  
               
-              d n   -> d ə n , 
-              b m   -> b ə m , 
-              g ŋ   -> g ə ŋ || Cns* Vow+ _ Vow ;
+!              d n   -> d ə n , 
+!              b m   -> b ə m , 
+!              g ŋ   -> g ə ŋ 
+                              || Cns* Vow+ _ Vow ;
 
 
 define FinalLightT t -> h || Syll Vow _ .#. ;
@@ -177,11 +176,12 @@ define tmRule  t m -> t h m   || Vow _ Vow ;
 
 define 3rdSylld d -> đ || .#. Syll Vow _ Vow ;
 
-define PlosiveDevoicing d -> t , g -> k , b -> p || _ Vow ;
+define PlosiveDevoicing d -> t , g -> k , b -> p ||     _ Vow ,,
+                        d -> t , g -> k , b -> p || Vow _ Nas ;
 
-define rSchwa r -> r ə h || Vow _ [ Cns - r | b m | d n | d n j | g ŋ ] Vow ;
-define dSchwa đ -> đ ə h || Vow _ [ Cns - đ | b m | d n | d n j | g ŋ ] Vow ;
-define lSchwa l -> l ə h || Vow _ [ Cns - l | b m | d n | d n j | g ŋ ] Vow ;
+define rSchwa r -> r ə || Vow _ [ Cns - Alv | b m | d n | d n j | g ŋ ] Vow ;
+define dSchwa đ -> đ ə || Vow _ [ Cns - Alv | b m | d n | d n j | g ŋ ] Vow ; !??
+define lSchwa l -> l ə || Vow _ [ Cns - Alv | b m | d n | d n j | g ŋ ] Vow ;
 
 define Preaspiration c -> h || h _ c ,, 
                      č -> h || h _ č ,,
