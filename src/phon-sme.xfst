@@ -7,8 +7,7 @@
 
 ! To eventual curious readers
 ! This file tries out conversion from Sámi orthography to a phonetic
-! translation based upon the ordinary Finnish alphabet. This is due to our
-! web demo, http://www.bitlips.fi/tts/demo.cgi
+! translation based upon SAMPA. There is a switch at the end to get IPA instead.
 
 ! Usage: Compile sme as usual:
 ! make TARGET=sme
@@ -20,6 +19,11 @@
 
 ! In order to make this better we should uniq the closed POS before giving them
 ! to the phonological analyser (TODO: Check whether output is ok).
+
+! We might also add syllable boundaries. Here the simple version:
+!cat corp/pedkorpus.txt | preprocess | lookup -flags mbTT -utf8 bin/hyphrules-sme.fst | cut -f2 | lookup -flags mbTT -utf8 bin/phon-sme.fst | cut -f2 | tr '\n' ' '  | see
+
+
 
 echo <<defining Cns and Vow...>>
 
@@ -157,9 +161,6 @@ define Schwa  m s -> m ə s ,
    
               đ b -> đ ə b  
               
-!              d n   -> d ə n , 
-!              b m   -> b ə m , 
-!              g ŋ   -> g ə ŋ 
                               || Cns* Vow+ _ Vow ;
 
 
@@ -190,17 +191,17 @@ define Preaspiration c -> h || h _ c ,,
                      k -> h || h _ k ;
 
 
-define dtjRule ž ž -> d t š ; 
-define ttjRule č č -> t t š ;
-define zzRule  z z -> d t s ;
-define ccRule  c c -> t t s ;
+define dtjRule ž %^ ž -> d %^ t š , ž ž -> d t š ; 
+define ttjRule č %^ č -> t %^ t š , č č -> t t š ;
+define zzRule  z %^ z -> d %^ t s , z z -> d t s ;
+define ccRule  c %^ c -> t %^ t s , c c -> t t s ;
 define cRule   c   -> t s ;
 define tjRule  č   -> t š ;
 define zRule   z   -> d s ;
 define djRule  ž   -> d š ;
 
-define LongPalatalAffricate  d d j -> d t j || Vow _ Vow ;
-define ShortPalatalAffricate   d j ->   t j || Vow _ Vow ;
+define LongPalatalAffricate  d %^ d j -> d %^ t j , d d j -> d t j || Vow _ Vow ;
+define ShortPalatalAffricate d %^ j   -> t %^ j   ,   d j ->   t j || Vow _ Vow ;
 
 define VowelLengthening e -> e e , i -> i i , o -> o o , u -> u u || .#. (Cns*) _ (h) Cns Vow [Cns | .#. ] ;
 
@@ -209,19 +210,20 @@ echo << Dialectal rules >>
 
 define dhRule đ -> r ;
 define thRule ŧ -> s ;
-define shRule š -> S ;
 
 define eaRule a -> ä || e _ ;
 
 define aaRule á -> a a ;
 
-define nngRule ŋ ŋ -> n n g ;
-define ngRule  ŋ   -> n g ;
+echo << And now we go for SAMPA >>
 
 define PronounLenghtening u -> u u || .#. [m|t|s] _ .#. ;
 
-define SchwaNormalisation ə -> e ; ! Awaiting a good solution
+!define SAMPA ə -> %@ , ä -> %{ , æ -> %{ , ö -> 2 , ø -> 2 , a -> A , 
+!             n j -> J , ŋ -> N , š -> S , đ -> D ,  ŧ -> T ;
 
+! ... or eventually for IPA:              
+ define SAMPA ä -> æ , ö -> ø , n j -> ɲ , š -> ʃ , đ -> ð, ŧ -> θ ; ! IPA
 
 echo <<Combining...>>
 
@@ -260,16 +262,83 @@ read regex [
 
 .o. dhRule 
 .o. thRule 
-.o. shRule 
 
 .o. eaRule
 .o. aaRule
-.o. nngRule
-.o. ngRule
 .o. PronounLenghtening
-.o. SchwaNormalisation
+.o. SAMPA
 
 ] ;
 
 
 invert net ;
+
+
+!  For reference: The SAMPA - IPA correspondence
+
+!  SAMPA   IPA  Description
+!  p       p    voiceless bilabial stop
+!  b       b    voiced bilabial stop
+!  t       t    voiceless alveolar or dental stop
+!  d       d    voiced alveolar or dental stop
+!  ts      ʦ    voiceless alveolar affricate
+!  dz      ʣ    voiced alveolar affricate
+!  tS      ʧ    voiceless postalveolar affricate
+!  dZ      ʤ    voiced postalveolar affricate
+!  c       c    voiceless palatal stop
+!  J\      J    (overstroked j)    voiced palatal stop
+!  k       k    voiceless velar stop
+!  g       g    voiced velar stop
+!  q       q    voiceless uvular stop
+!  p\      ɸ    (Greek phi)    voiceless bilabial fricative
+!  B       β    (Greek beta)    voiced bilabial fricative
+!          ϐ    (Greek beta alt)    voiced bilabial approximant
+!  f       f    voiceless labiodental fricative
+!  v       v    voiced labiodental fricative
+!  T       θ    (Greek theta)    voiceless dental fricative
+!          ϑ    (Greek theta alt)    voiceless dental approximant
+!  D       ð    (Icelandic eth)    voiced dental fricative
+!          δ    (Greek delta)    voiced dental approximant
+!  s       s    voiceless alveolar fricative
+!  z       z    voiced alveolar fricative
+!  S       ʃ    voiceless postalveolar fricative
+!  Z       ʒ    voiced postalveolar fricative
+!  C       ç    (cedilla)    voiceless palatal fricative
+!  j\ (jj) ʝ    (j with crossed tail)    voiced palatal fricative
+!  x       x    voiceless velar fricative
+!  G       γ    (Greek gamma)    voiced velar fricative
+!          ɰ    voiced velar approximant
+!  X\      ħ    (overstroked h)    voiceless pharyngeal fricative
+!  ?\      ʕ    (Inverted ?)    voiced pharyngeal fricative
+!  h       h    voiceless glottal approximant
+!  h\      ɦ    (h with upper tail to the right)    voiced glottal approximant
+!  m       m    bilabial nasal
+!  F       ɱ    (m with downward right tail)    labiodental nasal
+!  n       n    alveolar or dental nasal
+!  J       ɲ    (n with downward left tail)    palatal nasal
+!  N       ŋ    (n with downward right tail)    velar nasal
+!  l       l    alveolar lateral
+!  L       ʎ    turned down y, alt. λ (Greek lambda)    palatal lateral
+!  5       ɫ    (l with middle tilde)    velarized dental lateral
+!  4 (r)   ɾ    (r without upper-left serif)    alveolar flap
+!  r (rr)  r    alveolar trill
+!  r\      ɹ    (r rotated 180°)    retroflexed alveolar approximant
+!  R       ʀ    (small capital R)    uvular trill
+!  P       ʋ    labiodental approximant
+!  w       w    velo-labial approximant
+!  H       ɥ    (turned down h)    palato-labial approximant
+!  j       j    palatal approximant
+!  
+!  Vowels
+!                front   near-front    central   near-back   back
+!  close          i • y               1 • }                 M • u
+!  near-close              I • Y                    U
+!  close-mid      e • 2              @\ • 8                 7 • o
+!  mid                                  @            
+!  open-mid       E • 9               3 • 3\                V • O
+!  near-open        {                    6           
+!  open           a • &                                     A • Q
+
+
+
+
