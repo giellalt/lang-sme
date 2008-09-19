@@ -200,36 +200,53 @@ define PrimaryLenghtening  Stop  ->  h h || Son _ Stop [ i [.#.|Cns] | u | á | 
 ! Cns1 Cns2 Cns2 -> Cns1 Cns2 Cns2 Cns2 || _ i;
 ! Cns1 Cns2 Cns2 -> Cns1 Cns2 Cns2 Cns2 || _ u;
 ! Cns1 Cns2 Cns2 -> Cns1 Cns2 Cns2 Cns2 || _ á;
+
+! vi må liste konsonantpar
+!define TripleLength Cns2 Cns2 -> Cns2 Cns2 Cns2 || Cns1 _  [ i [.#.|Cns] | u | á | a a] ;
 ! + lignende regler for <pp tt cc kk> osv.
 ! Vi kan ikje ha variablar i uttrykka til venstre, dei kan berre vere i
 ! konteksten. Altså må vi skrive om.
 
 
 ! Sekundær forlenging (her må vi liste konsonantpara)
-define SecondaryLengthening l -> l l || Vow _ %^ Cns [ i [.#.|Cns] | u | á | a a] ;
+define SecondaryLengthening l %^ k -> l l %^ k ,
+                            
+                                                || Vow _  [ i [.#.|Cns] | u | á | a a] ;
 !ál^kit -> áll^kit
+! Planen her er å legge til alle xy -> xxy -strengane.
 ! Cns1 Cns2 -> Cns1 Cns1 Cns2 || _ i;
 ! Cns1 Cns2 -> Cns1 Cns1 Cns2 || _ u;
 ! Cns1 Cns2 -> Cns1 Cns1 Cns2 || _ á;
-! 
+
+
+
 ! Her må vi bygge inn en betingelse om at svakt trinn er én konsonant (altså
 ! <pallu> -> [pallluu], men <kolli> i akk forblir [kollii]
+! Det ser ut til at dette er avhengig av leksikon.
+
 
 ! Foran <ii> /ij/ skjer ikke primær eller sekundær forlenging, altså vi må
 ! reversere effekten av de forangående regelsettene.
-! (evt. bör vi bygge inn at i-en må vere kort:
+! (evt. bör vi bygge inn at i-en må vere kort, slik eg har prøvd over.
+! I tilfelle klarer vi oss uten denne reanalysa:
 ! Cns1 Cns2 Cns2 Cns2 -> Cns1 Cns2 Cns2 || _ ii;
 ! Cns1 Cns1 Cns2 -> Cns1 Cns2 || _ ii;
-! 
+
+
 ! Så må /h/ assimilere til en forangående sonorant
 ! IPA symbols...
+define SonorantDevoicing h h -> M M || m _ %^ ,,
+                         h h -> N N || n _ %^ ,,
+                         h n -> Ŋ Ŋ || ŋ _ %^ ; 
 ! [laamhh.paa] -> [laamMM.paa]
-! 
+
+!  Er dette berre ei formalisering av det over? Det ser sånn ut.
 ! h -> Sonh || Son _ ;
 ! h -> Sonh || Sonh _ ;
 ! 
 ! Diftongforkorting foran Cns Cns ^%
-! 
+! Dette er eit problem, eg veit ikkje korleis vi skal representere korte diftongar
+
 ! Allegro former... Hva gjør vi med dem?
 ! Viss det er former som berre er allegro i visse delar av setninga, men ikkje
 ! elles, må vi ta dei som del av syntaksen på noko vis.
@@ -245,15 +262,31 @@ define eaRule a -> ä || e _ ;
 
 define aaRule á -> a a ;
 
-echo << And now we go for SAMPA >>
-
 define PronounLenghtening u -> u u || .#. [m|t|s] _ .#. ;
 
-!define SAMPA ə -> %@ , ä -> %{ , æ -> %{ , ö -> 2 , ø -> 2 , a -> A , 
+
+echo << And now we go for some OUTPUTFORMAT or another >>
+
+! The rules above are somewhat oriented towards the orthography, and rearrange
+! based upon that. Now, we might want to have output in different formats for 
+! different reasons:
+! SAMPA   = for the Helsinki tts engine
+! IPA     = so that we may read it during development
+! FINNISH = to target the fallback Bitlips demo if we are not able to meet the
+!           October deadline with the generated Sámi voice.
+
+!The idea is to comment out two of the following three rules and keep the one intended.
+
+! ... here outputformat is SAMPA:              
+!define OUTPUTFORMAT ə -> %@ , ä -> %{ , æ -> %{ , ö -> 2 , ø -> 2 , a -> A , 
 !             n j -> J , ŋ -> N , š -> S , đ -> D ,  ŧ -> T ;
 
-! ... or eventually for IPA:              
- define SAMPA ä -> æ , ö -> ø , n j -> ɲ , š -> ʃ , đ -> ð, ŧ -> θ ; ! IPA
+! ... here outputformat is IPA:              
+ define OUTPUTFORMAT ä -> æ , ö -> ø , n j -> ɲ , š -> ʃ , đ -> ð, ŧ -> θ ; 
+
+! ... here outputformat is Finnish orthography:              
+! define OUTPUTFORMAT ŋ -> n g , ŧ -> s , đ -> r , š -> s  ;
+! This rule is incomplete!
 
 echo <<Combining...>>
 
@@ -293,6 +326,7 @@ read regex [
 .o. PrimaryLenghtening
 .o. SecondaryLengthening
 .o. PlosiveDevoicing
+.o. SonorantDevoicing
 
 !.o. dhRule 
 !.o. thRule 
@@ -300,7 +334,7 @@ read regex [
 .o. eaRule
 .o. aaRule
 .o. PronounLenghtening
-.o. SAMPA
+.o. OUTPUTFORMAT
 
 ] ;
 
