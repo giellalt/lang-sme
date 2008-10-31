@@ -106,7 +106,7 @@ clean:
 		  *.aresult \
 		  *.summary \
 		  *.ptest \
-		  paradigm* \
+#		  paradigm* \
 		  *.tgz	\
 		  *~ \
 		  *.in \
