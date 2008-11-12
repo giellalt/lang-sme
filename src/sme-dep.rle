@@ -252,6 +252,7 @@ SET NPNHCCC  = WORD - PRE-NP-HEAD - COMMA ;
 SET NPNHCC   = WORD - PRE-NP-HEAD - COMMA - LCRD ;
 SET NAPP     = WORD - PRE-APP ;
 
+SET NOT-ADV            = WORD - Adv;
 
 
 # Boundary sets
@@ -286,6 +287,8 @@ LIST @-FAUXV = @-FAUXV ; 	         # infinite auxiliary verb
 LIST @-FMAINV = @-FMAINV ; 	         # infinite main verb
 LIST @-FOBJ = @-FOBJ ; 		         # object of infinite verb outside of the verbal
 LIST @-FSUBJ = @-FSUBJ ; 	         # subject of infinite verb outside of the verbal
+LIST @-FSUBJ> = @-FSUBJ> ;
+LIST @<-FSUBJ = @<-FSUBJ ;
 LIST @>A = @>A ; 			 # modifier of adj
 LIST @>ADVL = @>ADVL ; 		         # modifier of advl
 LIST @>N = @>N ; 			 # modifier of N
@@ -317,6 +320,7 @@ LIST @<OBJ = @<OBJ ; 			 # object
 LIST @OBJ> = @OBJ> ; 			 # object
 LIST @P< = @P< ; 			 # complement of P
 LIST @PCLE = @PCLE ; 		         # particle
+LIST @>Pron = @>Pron ;                   # Adverb to pron
 LIST @<SUBJ = @<SUBJ ; 		         # subject
 LIST @SUBJ> = @SUBJ> ; 		         # subject
 LIST @V = @V ; 				 # verbal
@@ -331,6 +335,8 @@ LIST @OBJ = @<OBJ @>OBJ ;
 
 LIST @-FARG = @-FOBJ @-FSUBJ ;
 LIST @ARG = @SUBJ @OBJ @SPRED @OPRED ;
+LIST @<ARG = @<SUBJ @<OBJ @<SPRED @<OPRED ;
+LIST @ARG> = @SUBJ> @OBJ> @SPRED> @OPRED> ;
 LIST @AUX = @-FAUXV @+FAUXV <aux> ;
 LIST @MV = @-FMAINV @+FMAINV <mv> ;
 LIST @XADVL = @ADVL @-FADVL ;
@@ -431,6 +437,11 @@ SETPARENT:SetAuxToAux (<aux> V) TO (*-1 (<aux>)) ;
 
 SETPARENT:SetPcleToWord @PCLE TO (-1 WORD);
 
+### local advls
+
+SETPARENT:ToPron @>Pron TO (*1 Pron BARRIER NOT-ADV);
+
+
 ### clause level
 
 SETCHILD:SetSubjWithRel V TO (-*1 @SUBJ) (-1 COMMA LINK *-1 Rel Link -1 COMMA LINK -1 @SUBJ) ;
@@ -444,8 +455,11 @@ SETPARENT: @-FADVL TO (*-1 Inf BARRIER S-BOUNDARY2 OR @SUBJ OR @-FSUBJ LINK 0 @O
 
 SETPARENT:SetArgToRightMv @ADVL TO (*1 @MV BARRIER S-BOUNDARY2 OR @SUBJ OR @-FSUBJ) ;
 
-SETPARENT:SetSubjToRightVfin @SUBJ TO (*1 VFIN BARRIER S-BOUNDARY2) ;
-SETPARENT:SetSubjToLeftVfin @SUBJ TO (*-1 VFIN BARRIER S-BOUNDARY2 LINK NOT -1 @SUBJ) ;
+SETPARENT:SetSubjToRightVfin @SUBJ> TO (*1 VFIN BARRIER S-BOUNDARY2) ;
+SETPARENT:SetSubjToLeftVfin @<SUBJ TO (*-1 VFIN BARRIER S-BOUNDARY2 LINK NOT -1 @SUBJ) ;
+
+SETPARENT:RightArg @<ARG TO (*-1 @MV BARRIER S-BOUNDARY2);
+SETPARENT:LeftArg @ARG> TO (*1 @MV BARRIER S-BOUNDARY2);
 
 ### the finite verb in a relative clause gets as parent the correlative(?) to the left
 SETPARENT:SetRelclVfinToKorrelat @FS-N< TO (**-1 N OR Pron LINK 1 Rel);
@@ -525,8 +539,12 @@ SETPARENT:IclAdvlToV @ICL-ADVL TO (*-1 @V) ;
 SETPARENT @-F<OBJ TO (*-1 TV);
 	## Mun gergen borramis láibbi.
 
+######### @-FSUBJ>
+SETPARENT:InfinSubj @-FSUBJ> TO (*1 Actio);
+
 ######## @ADVL
 SETPARENT:AdvlToV @ADVL TO (*-1 @MV BARRIER V OR S-BOUNDARY2);
+SETPARENT:AdvlToR @ADVL TO (*1 @MV BARRIER S-BOUNDARY2);
 SETPARENT:AdvlToV @-FADVL TO (*-1 @ICL-STA OR @ICL-OBJ BARRIER V OR S-BOUNDARY2);
 	## Máhtte logai sin vuolgit dál juo.
 
