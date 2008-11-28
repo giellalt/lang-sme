@@ -18,6 +18,8 @@ BINDIR = ../../script/testing
 # Directory where all the compiled fst's are:
 FSTDIR = ../bin
 
+DIALOGUE = GG
+
 # Directory for the source files (which compile into fst's):
 # Changed this to point into the directory where the common makefile is:
 SRCDIR = ../../
@@ -28,8 +30,8 @@ TEMP = ../../tmp
 # This variable is holding the filename of the save file:
 # (makes the Makefile truly language independent for
 # the Sami languages)
-SAVEFILE = $(wildcard $(FSTDIR)/ism?-norm.fst)
-#SAVEFILE = $(wildcard $(FSTDIR)/ism?-restr.fst)
+#SAVEFILE = $(wildcard $(FSTDIR)/ism?-norm.fst)
+SAVEFILE = $(wildcard $(FSTDIR)/ism?-$(DIALOGUE).restr.fst)
 # Copied from old LS makefile:
 # Bond, James Bond
 UMASK=@umask 007
