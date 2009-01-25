@@ -27,6 +27,10 @@ SRCDIR = ../../
 # The temp directory:
 TEMP = ../../tmp
 
+# The temp directories for the generated paradigms:
+GEN_TMP = . 
+PARA_TMP = .
+
 # This variable is holding the filename of the save file:
 # (makes the Makefile truly language independent for
 # the Sami languages)
@@ -236,7 +240,7 @@ n-paradigm: n-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply up < $< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 #	@less $(WORD).paradigm
@@ -291,7 +295,7 @@ v-paradigm: v-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply up < $< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 #	@less $(WORD).paradigm
@@ -346,7 +350,7 @@ a-paradigm: a-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply up < $< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 #	@less $(WORD).paradigm
@@ -402,7 +406,7 @@ num-paradigm: num-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply up < $< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 #	@less $(WORD).paradigm
@@ -458,7 +462,7 @@ prop-paradigm: prop-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply up < $< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	$(XFST) < $(TEMP)/$@-gtest-script > $(WORD).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 #	@less $(WORD).paradigm
