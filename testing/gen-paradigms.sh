@@ -5,15 +5,12 @@
 
 if [ $1 ]; then
     WORDLIST=$1
+    XSLTSHEET=$2
+    GEN_TMP=$3
 else
     WORDLIST=parawlist.txt
 fi
 
-echo "<paradigm>" > pstart.xml
-echo "</paradigm>" > pend.xml
+rm -rf  $GEN_TMP/*
+perl gen-paradigms.pl $WORDLIST $XSLTSHEET $GEN_TMP
 
-rm -f paradigm-sme.txt
-rm -f *.paradigm
-perl gen-paradigms.pl $WORDLIST
-cat *.paradigm > paradigm-sme.txt
-rm -f pstart.xml pend.xml
