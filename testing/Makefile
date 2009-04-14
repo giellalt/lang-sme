@@ -10,7 +10,7 @@ SHELL = /bin/sh
 # ====================
 
 # Tools used when compiling
-XFST = xfst -utf8
+XFST = xfst #-utf8
 
 # Where all the perl scripts are:
 BINDIR = ../../script/testing
@@ -28,8 +28,8 @@ SRCDIR = ../../
 TEMP = ../../tmp
 
 # The temp directories for the generated paradigms:
-GEN_TMP = . 
-PARA_TMP = .
+GEN_TMP = Gen_tmp
+PARA_TMP = Para_tmp
 
 # This variable is holding the filename of the save file:
 # (makes the Makefile truly language independent for
