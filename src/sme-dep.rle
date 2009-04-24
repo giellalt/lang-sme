@@ -59,6 +59,7 @@ LIST Indef = Indef ;
 LIST Ill = Ill ;
 LIST Com = Com ;
 LIST Gen = Gen ;
+LIST Ess = Ess ;
 
 
 # POS sub-categories
@@ -326,7 +327,13 @@ LIST @SUBJ> = @SUBJ> ; 		         # subject
 LIST @V = @V ; 				 # verbal
 LIST @XADVL< = @XADVL< ; 	         # 
 LIST @-F<OBJ = @-F<OBJ ;
+LIST  @<OPRED =  @<OPRED ;
+LIST  @<SPRED =  @<SPRED ;
+LIST  @OPRED> =  @OPRED> ;
+LIST  @SPRED> =  @SPRED> ;
 
+LIST @SPRED = @SPRED> @<SPRED ;
+LIST @OPRED = @OPRED> @<OPRED ;
 LIST @SUBJ = @<SUBJ @SUBJ> ;
 LIST @OBJ = @<OBJ @>OBJ ;
 
@@ -334,9 +341,9 @@ LIST @OBJ = @<OBJ @>OBJ ;
 # =========================
 
 LIST @-FARG = @-FOBJ @-FSUBJ ;
-LIST @ARG = @SUBJ @OBJ @SPRED @OPRED ;
-LIST @<ARG = @<SUBJ @<OBJ @<SPRED @<OPRED ;
-LIST @ARG> = @SUBJ> @OBJ> @SPRED> @OPRED> ;
+SET @ARG = @SUBJ OR @OBJ OR @SPRED OR @OPRED ;
+#LIST @<ARG = @<SUBJ @<OBJ @<SPRED @<OPRED ;
+#LIST @ARG> = @SUBJ> @OBJ> @SPRED> @OPRED> ;
 LIST @AUX = @-FAUXV @+FAUXV <aux> ;
 LIST @MV = @-FMAINV @+FMAINV <mv> ;
 LIST @XADVL = @ADVL @-FADVL ;
@@ -446,23 +453,35 @@ SETPARENT:ToPron @>Pron TO (*1 Pron BARRIER NOT-ADV);
 
 SETCHILD:SetSubjWithRel V TO (-*1 @SUBJ) (-1 COMMA LINK *-1 Rel Link -1 COMMA LINK -1 @SUBJ) ;
 
-SETPARENT:SetArgToLeftMv @ARG - @SUBJ TO (*-1 @MV BARRIER S-BOUNDARY2 OR @-FSUBJ) ;
+SETPARENT:SetArgToLeftMv @OBJ TO (*-1 @MV BARRIER S-BOUNDARY2 OR @-FSUBJ) ;
 #SETPARENT:SetArgToRightMv @ARG - @SUBJ TO (*1 @MV BARRIER S-BOUNDARY2) ;
 # This one kills the one before.
 
 SETPARENT:SetArgToLeftMv @ADVL TO (*-1 @MV BARRIER S-BOUNDARY2 OR @SUBJ OR @-FSUBJ) ;
 SETPARENT: @-FADVL TO (*-1 Inf BARRIER S-BOUNDARY2 OR @SUBJ OR @-FSUBJ LINK 0 @OBJ OR @N<) ;
 
-SETPARENT:SetArgToRightMv @ADVL TO (*1 @MV BARRIER S-BOUNDARY2 OR @SUBJ OR @-FSUBJ) ;
+#SETPARENT:SetArgToRightMv @ADVL TO (*1 @MV BARRIER S-BOUNDARY2 OR @SUBJ OR @-FSUBJ) ;
 
-SETPARENT:SetSubjToRightVfin @SUBJ> TO (*1 VFIN BARRIER S-BOUNDARY2) ;
-SETPARENT:SetSubjToLeftVfin @<SUBJ TO (*-1 VFIN BARRIER S-BOUNDARY2 LINK NOT -1 @SUBJ) ;
+SETPARENT:SetSubjToRightVfin @SUBJ> - Rel TO (*1 VFIN BARRIER S-BOUNDARY2) ;
+SETPARENT:SetSubjToLeftVfin @<SUBJ TO (*-1 VFIN BARRIER S-BOUNDARY2) ; 
+# LINK NOT -1 @SUBJ) ;
+SETPARENT:SetSubjToLeftVfin @<SPRED TO (*-1 @HAB BARRIER S-BOUNDARY2 LINK 1 VFIN) ; 
 
-SETPARENT:RightArg @<ARG TO (*-1 @MV BARRIER S-BOUNDARY2);
-SETPARENT:LeftArg @ARG> TO (*1 @MV BARRIER S-BOUNDARY2);
+
+SETPARENT:RightArg @<OBJ TO (*-1 @MV BARRIER S-BOUNDARY2) ;
+SETPARENT:LeftArg @OBJ> - Rel TO (*1 @MV BARRIER S-BOUNDARY2);
+
+SETPARENT @<OPRED TO (*-1 @OBJ BARRIER S-BOUNDARY2);
+SETPARENT @OPRED> TO (*1 @OBJ BARRIER S-BOUNDARY2);
+SETPARENT @<SPRED TO (*-1 @SUBJ BARRIER S-BOUNDARY2);
+SETPARENT @SPRED> TO (*1 @SUBJ BARRIER S-BOUNDARY2);
 
 ### the finite verb in a relative clause gets as parent the correlative(?) to the left
-SETPARENT:SetRelclVfinToKorrelat @FS-N< TO (**-1 N OR Pron LINK 1 Rel);
+#SETPARENT:SetRelclVfinToKorrelat @FS-N< TO (**-1 N OR Pron LINK 1 Rel);
+
+SETPARENT:SetRelclVfinToRel @FS-N< TO (*-1 Rel BARRIER VFIN);
+
+SETPARENT:SetRelToCorr Rel TO (*-1 @ARG BARRIER S-BOUNDARY2);
 
 
 ### the finite verb to the subject when there is a relative clause in between
@@ -484,8 +503,8 @@ SETPARENT:SetCsToV CS + @CVP TO (*1 VFIN OR NONVFIN) ;
 
 ### coordination
 
-SETPARENT:SetCnpToN @CNP TO (*-1 N OR Pron) ;
-SETPARENT:SetCcToV CC + @CVP TO (*-1 VFIN OR NONVFIN) ;
+SETPARENT:SetCnpToArg @CNP TO (*1 @ARG) ;
+SETPARENT:SetCcToV CC + @CVP TO (*1 VFIN OR NONVFIN) ;
 
 SETPARENT:SetCcxadvlToWord (CC @XADVL) TO (*1 WORD LINK 1 CC) ;
 
@@ -543,10 +562,26 @@ SETPARENT @-F<OBJ TO (*-1 TV);
 SETPARENT:InfinSubj @-FSUBJ> TO (*1 Actio);
 
 ######## @ADVL
+
 SETPARENT:AdvlToV @ADVL TO (*-1 @MV BARRIER V OR S-BOUNDARY2);
 SETPARENT:AdvlToR @ADVL TO (*1 @MV BARRIER S-BOUNDARY2);
 SETPARENT:AdvlToV @-FADVL TO (*-1 @ICL-STA OR @ICL-OBJ BARRIER V OR S-BOUNDARY2);
 	## Máhtte logai sin vuolgit dál juo.
+
+LIST VFIN-ADV = "ain" "juo" "vel" ;
+SETPARENT:vfinAdv VFIN-ADV TO (*-1 VFIN BARRIER S-BOUNDARY2);
+
+LIST WEATHER-SITUATION = "beaivvádat" "bievla" "buolaš" "dálki" "dálke#dilálašvuohta" "fiertu" "goalki" "siivu" "jođádat" "liekkas" "linádat" "oppas" "riđđu" "muohtti" "ilbmi" "balva" "čuoika" "čoaskin" "biegga" "nuorttadat" "davádat" "oarjjádat" "luládat" "orjješ#biegga" "nuorta#biegga" "obba#dálki" "balva#dálki" "balva#ilbmi" "arvi" "savda" "savdaarvi" "liehmu" "láfu#biegga" "baján" "johtti" "gállu" "jiella" "hieibma" "šlahtti" "seaŋáš" "borga" "guoldu" "dobadat" "dulvi" "moarri" "geardni" "cuoŋu" "jealahas" "jalahas" "geasádat" "dálvvádat" "jáldu" "lievhnu" "galmma" "guostta" "čođđolat" "čođđálat" "sealádat" "šearádat" "bálgu" "bálggádat" ;
+
+SETPARENT:weathersit WEATHER-SITUATION + Ess TO (*0 VFIN BARRIER S-BOUNDARY2);
+
+LIST ADV-NOT-ARG = "aiddo" "ain" "aivve" "albma" "aŋkke" "álggos" "beanta" "beare" "dušše" ;
+
+SETPARENT:advNotArg ADV-NOT-ARG + Adv TO (*1 (@>N) OR @ARG BARRIER S-BOUNDARY2);
+
+LIST VERB-ADV = "mielde" ;
+
+SETPARENT:advVerb VERB-ADV + Adv TO (-1 V BARRIER S-BOUNDARY2);
 
 
 ######## quotes
