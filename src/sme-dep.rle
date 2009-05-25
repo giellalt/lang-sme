@@ -82,45 +82,66 @@ LIST Adp = Adp ;
 # Other tags
 # ----------
 
-LIST ABBR = ABBR ;
-LIST ACR = ACR ;
-LIST CLB = CLB ;
-LIST QMARK = """ ; # ADD " FOR SYNTAX COLOURING.
-LIST PPUNCT = PUNCT ;
-SET PUNCT = PPUNCT - QMARK ;
-
-
-
-LIST LCRD = @CNP ;
-    # local coordinator
-LIST GCRD = @CVP ;
-    # global coordinator
     
 LIST WORD = N A Adv V Pron CS CC Po Pr Interj Pcle Num ABBR ACR  \? ;
 
 
 # Verb sets
+LIST REALCOPULAS = "dáidit" "leahkit" "leat" "soaitit" "veadjit" ;
+
+# The set COPULAS is for predicative constructions
+LIST COPULAS = "dáidit" "gártat" "leahkit" "leat" "orrut" "soaitit" "šaddat" "veadjit" ;
+ #  "bissut" ?
+ # 'Dáidit' can appear without 'leat'.
+
+SET V-NOT-COP = V - COPULAS ;
+
+LIST MOD-ASP = "bállet" "berret" "dáidit" "fertet" "galgat" "gillet" "lávet"  "sáhttit" "seahtit" "soaitit" "viggat" ;
+
+ # Verbs that never have arguments of their own - so we leave out "áigut", for ex.
+
+LIST AUX-OR-MAIN = "áigut" "álgit" "beassat" "galgat" "hálidit" "háliidit" "máhttit" "nagodit" "ollit" "orrut" "sihtat" "veadjit";
+
+ # These verbs can take arguments, so they do not belong in the AUX group, 
+ # but they are nevertheless mapped to (@+FAUXV). 
+ # Added "álgit" to the group (Lene) - Made rules for "boahtit" which  sometimes can be AUX
+ # Magga (1982: 120): áigut, dáidit, deaivat, fertet, galgat, lávet, máhttit, oažžut, sáhttit, soaitit, veadjit - in some of the meanings 
+ # Halvhjelpeverb: álgit, berret, dohkket, gártat, heivet, liigut, šaddat - in some of the meanings 
+ 
+SET AUX = COPULAS OR Neg OR MOD-ASP OR AUX-OR-MAIN ;
+ 
+
+SET V-NOT-AUX = V - AUX ;
+ # The set of verbs that cannot be auxiliaries. 
+			  # Does not include AUX-OR-MAIN.
+#SET VFIN-NOT-AUX = VFIN - AUX ;
+
+SET V-MAIN = V - COPULAS - Neg - MOD-ASP OR ("orrut") ;
 
 
-SET NOT-VERB = WORD - V ;
+
 
 SET V-IND-FIN = Prs OR Prt ;
+ # Problem: "In boahtán" is an invisible indicative
 
-SET V-MOOD = Ind OR Pot OR Imprt OR ImprtII OR Cond ;
+SET V-MOOD = Ind OR Pot OR Imprt OR ImprtII OR Cond OR Sup ;
 
 LIST GC = ("gč") ;
 
 SET VFIN = GC OR V-MOOD - ConNeg ;
 
-SET VFIN-NOT-IMP = VFIN - Imprt ;
-
 SET VFIN-POS = V-MOOD - ConNeg - Neg ;
 
 SET VFIN-NOT-IMP = VFIN - Imprt ;
 
-SET VFIN-NOT-NEG = VFIN - (Neg Foc/ge) ;
+SET VFIN-NOT-NEG = VFIN - Neg ;
+  # this might be to strict, besides, "iige" can be written "ii ge"
+
+SET NOT-PRFPRC = WORD - PrfPrc ;
 
 
+# Some subsets of the VFIN sets
+# - - - - - - - - - - - - - - -
 LIST V-SG1 = (V Ind Prs Sg1)  (V Ind Prt Sg1) (V Cond Prs Sg1) 
              (V Cond Prt Sg1) (V Pot Prs Sg1) (V Neg Ind Sg1);
  
@@ -151,8 +172,6 @@ LIST V-PL3 = (V Ind Prs Pl3)  (V Ind Prt Pl3) (V Cond Prs Pl3)
 
  # Note that imperative verbs are not included in these sets!
 
-# Some subsets of the VFIN sets
-# - - - - - - - - - - - - - - -
 SET V-SG = V-SG1 OR V-SG2 OR V-SG3 ;
 SET V-DU = V-DU1 OR V-DU2 OR V-DU3 ;
 SET V-PL = V-PL1 OR V-PL2 OR V-PL3 ;
@@ -172,108 +191,24 @@ SET V-NOT-PL3 = VFIN-NOT-IMP - V-PL3 ;
 
 SET V-1-2 = V-SG1 OR V-SG2 OR V-DU1 OR V-DU2 OR V-PL1 OR V-PL2 ;
 SET V-3  = V-SG3 OR V-DU3 OR V-PL3 ;
+ # Note that imperative verbs are not included in these sets!
 
-
-
-LIST NONVFIN-SUBJ = Inf VAbess (Actio LOC) VGen Ger ; 
 SET NONVFIN = V - VFIN ;
+LIST MO-MANge = "goas" "gokko" "gos" "gosa" "govt" "makkár" "man" "manne" "mo" "mot" "mov" "movt" ("nugo" @CVP) (V Qst);
+ 
+SET MO = MO-MANge - ("man" Foc/ge) ; 
 
-
-# NP sets
-
-# NP sets defined according to their morphosyntactic features
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-
-LIST N-SG-NOM = (N Sg Nom);
-LIST N-PL-NOM = (N Pl Nom);
-
-#SET LEX-N = N - N-DER;
-
-LIST PROP = (N Prop);
-
-SET CNOUN = N - Prop;
-
-SET HNOUN = N - Cmpnd ;
-
-SET HNOUN-NOM = (N Nom) - Cmpnd ;
-
-SET N-NOT-GEN = N - (N Gen) ;
-
-SET NP = N OR A ;                      # anything that can take except numerals
-SET NP-HEAD        = Pron OR HNOUN ;
-SET NP-HEAD-SG     = (Pron Sg) OR (Pron Sg3) OR (N Sg) OR (A Sg) - Cmpnd;
-SET NP-HEAD-PL     = (Pron Pl) OR (Pron Pl3) OR (N Pl) OR (A Pl) - Cmpnd;
-SET NP-HEAD-SG-NOM = (Pron Sg Nom) OR (Pron Sg3 Nom) OR (N Sg Nom) OR (A Sg Nom) - Cmpnd;
-SET NP-HEAD-PL-NOM = (Pron Pl Nom) OR (Pron Pl3 Nom) OR (N Pl Nom) OR (A Pl Nom) - Cmpnd;
-SET NP-HEAD-NOM    = NP-HEAD-SG-NOM OR NP-HEAD-PL-NOM;
-SET NP-HEAD-ACC    = (Pron Acc) OR (N Acc) OR (A Acc) - Cmpnd;
-SET NP-HEAD-GEN    = (Pron Gen) OR (N Gen) OR (A Gen) - Cmpnd;
-
-
-# The PRE-NP-HEAD family of sets
-# - - - - - - - - - - - - - - - -
-
-SET PRE-NP-HEAD = (Prop Attr) OR (Prop @>N) OR (A Attr) OR (ABBR Attr) OR ("buorre") OR (Pron Pers Gen) OR (N Gen) OR 
-         Num OR Cmpnd OR CC OR (Pron Dem) OR (Pron Refl Gen) OR (Pron Indef) OR 
-         (PrfPrc @>N) OR (PrfPrc @>N) OR PrsPrc OR (A Ord) ;
-         # OR (Ill LINK 1 (PrfPrc @>N)) OR (Com LINK 1 (PrfPrc @>N)) OR (Loc LINK 1 (PrfPrc @>N))
-         # The strict version of items that can only be premodifiers, not parts of the predicate
-         
-SET V-PRE-NP = PrfPrc OR PrsPrc OR Actor OR Actio OR (V A) OR (Ind Prs Sg3) OR (Ind Prs Sg1) OR (Imprt Prs Du2) ;
-    # to be used together with PRE-NP-HEAD before @>N is disambiguated
-         
-SET NP-MEMBER   = PRE-NP-HEAD OR N ;
-
-SET PRE-A-N     = (Pron Pers Gen) OR (Pron Indef) OR Num OR (A Ord) OR (Pron Dem) OR (Pron Refl Gen) ;
-
-SET NOT-PRE-A-N = WORD - PRE-A-N ;
-
-LIST PUNCT-LEFT = (PUNCT LEFT) ;
-LIST PUNCT-RIGHT = (PUNCT RIGHT) ;
-
-SET PRE-APP   = COMMA OR PUNCT-LEFT OR PRE-NP-HEAD ;
- # This set ist not only for what can
-                            # stand in front of appositions but also
-                            # postmodifiers.
-
-# V NPNHAIIP... N
-# BOS ... N V
-
-# There must be a sensible naming convention for these sets...
-# Most strict BARRIERs...
-SET NPNH     = WORD - PRE-NP-HEAD OR ABBR ;                     # NPNH  = "NOT-PRE-NP-HEAD" 
-SET NPNHV    = WORD - PRE-NP-HEAD - V-PRE-NP ;                 # including possible verbal premodifiers 
-SET NPNHA    = WORD - PRE-NP-HEAD - Adv ;                      # NPNHA = "NOT-PRE-NP-HEAD-OR-ADV"
-SET NPNHAV   = WORD - PRE-NP-HEAD - Adv - V-PRE-NP ;           # including possible verbal premodifiers
-SET NPNHAI   = WORD - PRE-NP-HEAD - Adv - Indef ;              # NPNHAI = "     ...-OR-INDEF"
-SET NPNHAII  = WORD - PRE-NP-HEAD - Adv - Indef - Ill ;        # Illative indir.obj.
-SET NPNHAIIP = WORD - PRE-NP-HEAD - Adv - Indef - Ill - Pcle ; # <== is this our NPNH set?
-SET NPNHC    = WORD - PRE-NP-HEAD - Com ;                      # "njaŋggofirpmiiguin bivdin"
-SET NPNHCCC  = WORD - PRE-NP-HEAD - COMMA ;
-SET NPNHCC   = WORD - PRE-NP-HEAD - COMMA - LCRD ;
-SET NAPP     = WORD - PRE-APP ;
-
-SET NOT-ADV            = WORD - Adv;
-
-
-# Boundary sets
-
-LIST MO = "goas" "gokko" "gos" "gosa" "govt" "makkár" "manne" "mo" "mot" "mov" "movt" ("nugo" @CVP) (V Qst);
-
-
-SET S-BOUNDARY  = (Pron Interr) OR (Pron Rel) OR ("muhto") OR MO OR ("\;") OR (":") OR ("-") OR ("–") OR CS ;
-	# includes CP. Remember that (",") and CC are potential sentence boundaries, too
-
-SET S-BOUNDARY1  = (Pron Interr) OR (Pron Rel) OR ("muhto") OR MO OR ("\;") OR (":") OR ("-") OR ("–") ;
-	# includes not CS because of "go" in questions, before it is disambugated.
 	
 SET S-BOUNDARY2 = (Pron Interr) OR (Pron Rel) OR ("muhto") OR MO OR ("\;") OR (":") OR ("-") OR ("–") OR (@CVP) ;
 
-
-
-SET NOT-COMMA = CLB - COMMA OR PUNCT-LEFT OR PUNCT-RIGHT ;
-
-SET NOT-QMARK = WORD OR CLB OR PUNCT - QMARK ; 
+SET NOT-ADV            = WORD - Adv;
+SET NOT-ADV-N          = WORD - Adv - N;
+SET NOT-ADV-PCLE       = WORD - Adv - Pcle ;
+SET NOT-ADV-INDEF      = WORD - Adv - Indef ;
+SET NOT-ADV-PCLE-ILL   = WORD - Adv - Pcle - Ill ;
+SET NOT-ADV-PCLE-Refl  = WORD - Adv - Pcle - Refl ;
+SET NOT-ADV-PCLE-INDEF = WORD - Adv - Pcle - Indef ;
+SET NOT-ADV-PCLE-NEG   = WORD - Adv - Pcle - Neg ;
 
 
 # Syntactic tags and sets
@@ -292,11 +227,14 @@ LIST @-FSUBJ> = @-FSUBJ> ;
 LIST @<-FSUBJ = @<-FSUBJ ;
 LIST @>A = @>A ; 			 # modifier of adj
 LIST @>ADVL = @>ADVL ; 		         # modifier of advl
+LIST @ADVL< = @ADVL< ; 		         # modifier of advl
 LIST @>N = @>N ; 			 # modifier of N
 LIST @>Num = @>Num ; 		         # attr of numeral
 LIST @>P = @>P ; 			 # complement of P
 LIST @A< = @A< ; 			 # complement of A
-LIST @ADVL = @ADVL ; 		         # adverbial
+LIST @ADVL = @<ADVL @ADVL> @ADVL @-FADVL ; 		         # adverbial
+LIST @<ADVL = @<ADVL ;
+LIST @ADVL> = @ADVL> ;
 LIST @APP>Pron = @APP>Pron ;             # apposition of pron
 LIST @APP-ADVL< = @APP-ADVL< ;           # apposition of advl 
 LIST @APP-N< = @APP-N< ; 	         # apposition of N
@@ -311,6 +249,7 @@ LIST @FS-N< = @FS-N< ;               	 # relative clause to N
 LIST @FS-OBJ = @FS-OBJ ; 	         # finite subclause functioning as object
 LIST @FS-STA = @FS-STA ; 	         # finite sentence, statement
 LIST @HAB = @HAB ; 			 # habitive (aka advl of possessiv constr)
+LIST @IMV = @IMV ;             # infinite main verb
 LIST @ICL-ADVL = @ICL-ADVL ;             # non-finite subclause ...
 LIST @ICL-AUX< = @ICL-AUX< ;             # "right" argument of auxiliary (?)
 LIST @ICL-OBJ = @ICL-OBJ ; 	         # non-finite subclause ...
@@ -324,13 +263,12 @@ LIST @PCLE = @PCLE ; 		         # particle
 LIST @>Pron = @>Pron ;                   # Adverb to pron
 LIST @<SUBJ = @<SUBJ ; 		         # subject
 LIST @SUBJ> = @SUBJ> ; 		         # subject
-LIST @V = @V ; 				 # verbal
-LIST @XADVL< = @XADVL< ; 	         # 
+#LIST @V = @V ; 				 # verbal
 LIST @-F<OBJ = @-F<OBJ ;
-LIST  @<OPRED =  @<OPRED ;
-LIST  @<SPRED =  @<SPRED ;
-LIST  @OPRED> =  @OPRED> ;
-LIST  @SPRED> =  @SPRED> ;
+LIST @<OPRED =  @<OPRED ;
+LIST @<SPRED =  @<SPRED ;
+LIST @OPRED> =  @OPRED> ;
+LIST @SPRED> =  @SPRED> ;
 
 LIST @SPRED = @SPRED> @<SPRED ;
 LIST @OPRED = @OPRED> @<OPRED ;
@@ -341,16 +279,19 @@ LIST @OBJ = @<OBJ @>OBJ ;
 # =========================
 
 LIST @-FARG = @-FOBJ @-FSUBJ ;
-SET @ARG = @SUBJ OR @OBJ OR @SPRED OR @OPRED ;
+SET @ARG = @SUBJ OR @OBJ OR @SPRED OR @OPRED OR @ADVL ;
 #LIST @<ARG = @<SUBJ @<OBJ @<SPRED @<OPRED ;
 #LIST @ARG> = @SUBJ> @OBJ> @SPRED> @OPRED> ;
-LIST @AUX = @-FAUXV @+FAUXV <aux> ;
-LIST @MV = @-FMAINV @+FMAINV <mv> ;
-LIST @XADVL = @ADVL @-FADVL ;
 SET @-FARG/ADVL = @-FARG OR @-FADVL ;
-SET @ARG/ADVL = @ARG OR @XADVL - (CC @XADVL) ;
+SET @ARG/ADVL = @ARG OR @ADVL - (@ADVL + CC) ;
 SET @CLAUSE = @ARG/ADVL OR @-FARG/ADVL OR VFIN OR NONVFIN ;
 
+LIST @IAUX = @IAUX ;
+
+LIST @V = @FMV @IMV @FAUX @IAUX ;
+LIST @FV = @FMV @FAUX ;
+LIST @AUX = @IAUX @FAUX <aux> ;
+LIST @MV = @IMV @FMV <mv> ;
 
 
 
@@ -378,19 +319,34 @@ SET @CLAUSE = @ARG/ADVL OR @-FARG/ADVL OR VFIN OR NONVFIN ;
 
 SECTION
 
+SUBSTITUTE:SubFmainv=V (@+FMAINV) (@FMV) TARGET V ;
+SUBSTITUTE:SubNfmainv=V (@-FMAINV) (@IMV) TARGET V ;
+SUBSTITUTE:SubFaux=V (@+FAUXV) (@FAUX) TARGET V ;
+SUBSTITUTE:SubNfaux=V (@-FAUXV) (@IAUX) TARGET V ;
+
+
+# <mv> and <aux>
+# --------------
 SUBSTITUTE:SubV=mv (V) (<mv> V) TARGET @MV ;
 SUBSTITUTE:SubV=aux (V) (<aux> V) TARGET @AUX ;
 
-SUBSTITUTE:SubVaux=FS-N (@+FAUXV) (@FS-N<) TARGET V (*-1 Rel BARRIER VFIN) ;
-SUBSTITUTE:SubVmain=FS-N (@+FMAINV) (@FS-N<) TARGET V (*-1 Rel BARRIER VFIN) ;
+# infinite clauses:
+SUBSTITUTE:SubV=mvICL (V) (<mv> V) TARGET NONVFIN (0 @<OBJ LINK NEGATE *1 @IMV BARRIER S-BOUNDARY2 OR V) ;
+SUBSTITUTE:SubV=auxICL (V) (<aux> V) TARGET NONVFIN (0 AUX LINK 0 @<OBJ LINK *1 @IMV BARRIER S-BOUNDARY2 OR V) ;
 
-SUBSTITUTE:SubV=iclaux (@-FMAINV) (@ICL-AUX<) TARGET NONVFIN (*-1 @AUX BARRIER S-BOUNDARY2) ;
-SUBSTITUTE:SubAux=iclaux (@+FAUXV) (@ICL-AUX<) TARGET VFIN (*-1 @AUX BARRIER S-BOUNDARY2) ;
+# the finite verb
+# ------------------
+# in relative clauses:
+SUBSTITUTE:SubV=FS-N (@FMV) (@FS-N<) TARGET V (*-1 Rel BARRIER VFIN) ;
+SUBSTITUTE:SubVmain=FS-N (@FAUX) (@FS-N<) TARGET V (*-1 Rel BARRIER VFIN) ;
 
-SUBSTITUTE:SubFmainv=V (@+FMAINV) (@V) TARGET V ;
-SUBSTITUTE:SubNfmainv=V (@-FMAINV) (@V) TARGET V ;
-SUBSTITUTE:SubFaux=V (@+FAUXV) (@V) TARGET V ;
-SUBSTITUTE:SubNfaux=V (@-FAUXV) (@V) TARGET V ;
+# in subclauses:
+SUBSTITUTE:SubV=FS-STA (@FMV)(@FS-STA) TARGET V ((*-1 CS BARRIER VFIN LINK NOT 0 ("de")) OR (*-1 MO BARRIER VFIN LINK NEGATE *1 ("?"))) ;
+SUBSTITUTE:SubVmain=FS-N (@FAUX) (@FS-STA) TARGET V ((*-1 CS BARRIER VFIN LINK NOT 0 ("de")) OR (*-1 MO BARRIER VFIN LINK NEGATE *1 ("?"))) ;
+
+# infinite clauses:
+SUBSTITUTE:SubV=iclaux (@<OBJ) (@ICL-OBJ) TARGET NONVFIN (*-1 @-FSUBJ> BARRIER @V) ;
+
 
 
 # Mapping rules
@@ -401,33 +357,29 @@ SECTION
 
 ### habitive
 
-SETPARENT:SetHab @HAB TO (0* V-3);
+SETPARENT:SetHab @HAB TO (0* V-3 BARRIER S-BOUNDARY2 OR V);
 
 
 ### postposition / preposition
 
-SETPARENT:ComplToPo @>P TO (*1 Po + @XADVL BARRIER @CLAUSE);
-SETPARENT:ComplToPr @P< TO (*-1 Pr + @XADVL BARRIER @CLAUSE);
+SETPARENT:ComplToPo @>P TO (*1 Po + @ADVL BARRIER @CLAUSE);
+SETPARENT:ComplToPr @P< TO (*-1 Pr + @ADVL BARRIER @CLAUSE);
 
 
 ### np
 
-SETPARENT:SetGenToN @>N TO (*1 N BARRIER NPNH);
-SETPARENT:SetAttrToN @>N TO (*1 N BARRIER @CLAUSE) ;
-SETPARENT:SetModToN @N< OR @APP-N< TO (*-1 N BARRIER @CLAUSE OR @CNP) ;
+SETPARENT:SetModToN @>N TO (*1 N BARRIER @CLAUSE) ;
+SETPARENT:SetCompToN @N< OR @APP-N< TO (*-1 N BARRIER @CLAUSE OR @CNP) ;
 SETPARENT:SetAppToRightPron @APP>Pron TO (*1 Pron BARRIER @CLAUSE) ;
 SETPARENT:SetAppToLeftPron @APP-Pron< TO (*-1 Pron BARRIER @CLAUSE) ;
 
-SETPARENT:SetVToRel @V TO (-3 N) (1 COMMA) (2 Rel) ;
-SETPARENT:SetVToRel @V TO (-2 N) (1 Rel) ;
-
 ### adjp
 
-SETPARENT:SetAttrToRightA @>A TO (*1 A OR Adv BARRIER @CLAUSE) ;
-SETPARENT:SetAttrToLeftA @A< TO (*-1 A OR Adv BARRIER @CLAUSE) ;
+SETPARENT:SetAttrToRightA @>A TO (*1 A BARRIER @CLAUSE) ;
+SETPARENT:SetAttrToLeftA @A< TO (*-1 A BARRIER @CLAUSE) ;
 
-SETPARENT:SetAttrToLeftAdvl @XADVL< OR @APP-ADVL< TO (*-1 Adv) ;
-SETPARENT:SetAttrToRightAdvl @>ADVL TO (*1 Adv) ;
+SETPARENT:SetAttrToLeftAdvl @ADVL< OR @APP-ADVL< TO (*-1 @ADVL BARRIER @CLAUSE) ;
+SETPARENT:SetAttrToRightAdvl @>ADVL TO (*1 @ADVL BARRIER @CLAUSE) ;
 
 ### nump
 
@@ -436,64 +388,62 @@ SETPARENT:SetAttrToLeftNum @Num< OR @APP-Num< TO (*-1 Num BARRIER @CLAUSE) ;
 
 ### vp
 
-#SETPARENT @-FMAINV OR @-FAUXV TO (*-1 @+FAUXV OR @-FAUXV) ;
-SETPARENT:SetIclToLeftAux @ICL-AUX< TO (*-1 @AUX) ;
-
-SETPARENT:SetVToAux @ICL-AUX< TO (*-1 (<aux>)) ;
-SETPARENT:SetAuxToAux (<aux> V) TO (*-1 (<aux>)) ;
+SETPARENT:SetFSSTAtoFV @FS-STA TO (*0 @FV OR @FS-STA) ;
+SETPARENT:SetFSSTAtoVFIN @FS-N< TO (*0 VFIN BARRIER CS OR MO) ;
+SETPARENT:SetFSSTAtoIMV @IAUX TO (*-1 (<aux>) BARRIER @V) ;
+SETPARENT:SetFSSTAtoIAUX (<mv>) TO (*-1 (<aux>) BARRIER @V) ;
 
 SETPARENT:SetPcleToWord @PCLE TO (-1 WORD);
 
 ### local advls
 
-SETPARENT:ToPron @>Pron TO (*1 Pron BARRIER NOT-ADV);
+SETPARENT:ToPron @>Pron TO (*1 Pron BARRIER @CLAUSE);
 
 
 ### clause level
 
-SETCHILD:SetSubjWithRel V TO (-*1 @SUBJ) (-1 COMMA LINK *-1 Rel Link -1 COMMA LINK -1 @SUBJ) ;
 
-SETPARENT:SetArgToLeftMv @OBJ TO (*-1 @MV BARRIER S-BOUNDARY2 OR @-FSUBJ) ;
-#SETPARENT:SetArgToRightMv @ARG - @SUBJ TO (*1 @MV BARRIER S-BOUNDARY2) ;
-# This one kills the one before.
+SETPARENT:SetObjToLeftMv @<OBJ TO (*-1 @MV BARRIER S-BOUNDARY2 OR @-FSUBJ) ;
+SETPARENT:SetObjToRightMv @OBJ> TO (*1 @MV BARRIER S-BOUNDARY2 OR @-FSUBJ) ;
+SETPARENT:SetAdvlToLeftMv @<ADVL TO (*-1 @MV BARRIER S-BOUNDARY2 OR @-FSUBJ) ;
+SETPARENT:SetAdvlToRightMv @ADVL> TO (*1 @MV BARRIER S-BOUNDARY2 OR @-FSUBJ) ;
 
-SETPARENT:SetArgToLeftMv @ADVL TO (*-1 @MV BARRIER S-BOUNDARY2 OR @SUBJ OR @-FSUBJ) ;
-SETPARENT: @-FADVL TO (*-1 Inf BARRIER S-BOUNDARY2 OR @SUBJ OR @-FSUBJ LINK 0 @OBJ OR @N<) ;
+SETPARENT: @-FADVL TO (*-1 @ARG + Inf BARRIER S-BOUNDARY2) ;
 
-#SETPARENT:SetArgToRightMv @ADVL TO (*1 @MV BARRIER S-BOUNDARY2 OR @SUBJ OR @-FSUBJ) ;
-
-SETPARENT:SetSubjToRightVfin @SUBJ> - Rel TO (*1 VFIN BARRIER S-BOUNDARY2) ;
+SETPARENT:SetSubjToRightVfin @SUBJ> TO (*1 VFIN BARRIER S-BOUNDARY2) ;
 SETPARENT:SetSubjToLeftVfin @<SUBJ TO (*-1 VFIN BARRIER S-BOUNDARY2) ; 
-# LINK NOT -1 @SUBJ) ;
+SETPARENT:SetRelSubjToRight @SUBJ> + Rel TO (*1 @FS-N< BARRIER S-BOUNDARY2) ;
+
+SETPARENT @<SPRED TO (*-1 @SUBJ BARRIER S-BOUNDARY2);
+SETPARENT @SPRED> TO (*1 @SUBJ BARRIER S-BOUNDARY2);
 SETPARENT:SetSubjToLeftVfin @<SPRED TO (*-1 @HAB BARRIER S-BOUNDARY2 LINK 1 VFIN) ; 
-
-
-SETPARENT:RightArg @<OBJ TO (*-1 @MV BARRIER S-BOUNDARY2) ;
-SETPARENT:LeftArg @OBJ> - Rel TO (*1 @MV BARRIER S-BOUNDARY2);
+SETPARENT:SetSubjToLeftVfin @<SPRED TO (*-1 VFIN BARRIER S-BOUNDARY2 OR @SUBJ) (NOT *-1 @SUBJ> BARRIER S-BOUNDARY2) ; 
 
 SETPARENT @<OPRED TO (*-1 @OBJ BARRIER S-BOUNDARY2);
 SETPARENT @OPRED> TO (*1 @OBJ BARRIER S-BOUNDARY2);
-SETPARENT @<SPRED TO (*-1 @SUBJ BARRIER S-BOUNDARY2);
-SETPARENT @SPRED> TO (*1 @SUBJ BARRIER S-BOUNDARY2);
 
 ### the finite verb in a relative clause gets as parent the correlative(?) to the left
 #SETPARENT:SetRelclVfinToKorrelat @FS-N< TO (**-1 N OR Pron LINK 1 Rel);
 
-SETPARENT:SetRelclVfinToRel @FS-N< TO (*-1 Rel BARRIER VFIN);
-
-SETPARENT:SetRelToCorr Rel TO (*-1 @ARG BARRIER S-BOUNDARY2);
+#SETPARENT:SetRelclVfinToLeft @FS-N< TO (*-1 Rel BARRIER VFIN LINK *-1 VFIN BARRIER S-BOUNDARY2);
+#SETPARENT:SetRelclVfinToRight @FS-N< TO (*1 VFIN BARRIER S-BOUNDARY2) ; #(*-1 Rel BARRIER VFIN LINK NOT *-1 VFIN BARRIER S-BOUNDARY2);
+#
+#LIST RelArg = (Rel @SUBJ>) (Rel @OBJ>) (Rel @ADVL>);
+#
+#SETPARENT:SetRelToVfin RelArg TO (*1 @FS-N< BARRIER S-BOUNDARY2);
+#SETPARENT:SetGenToPo @>P TO (1 Po);
 
 
 ### the finite verb to the subject when there is a relative clause in between
-SETPARENT:SetSubjVfinAfterRelCl @SUBJ TO (**1 VFIN BARRIER @CVP OR CS LINK NOT 0 @FS-N<) ;
+SETPARENT:SetSubjVfinAfterRelCl @SUBJ> TO (*1 Rel LINK *1 VFIN LINK *1 VFIN) ;
 	## Genadutkit geaid eamiálbmogat miehtá máilmmi leat vuosttaldan garrasit, leat dál jođus Sápmái, ja sii ohcet sámi dievdduid genadutkamii. 
 
 
-SETPARENT:SetnfsubjToRightVnfin @-FSUBJ TO (*1 NONVFIN BARRIER S-BOUNDARY2) ;
-SETPARENT:SetnfsubhToLeftVnfin @-FSUBJ TO (*-1 NONVFIN BARRIER S-BOUNDARY2) ;
-
-SETPARENT:SetnfobjToRightVnfin @-FOBJ TO (*1 NONVFIN BARRIER S-BOUNDARY2) ;
-SETPARENT:SetnfobjToLeftVnfin @-FOBJ TO (*-1 NONVFIN BARRIER S-BOUNDARY2) ;
+#SETPARENT:SetnfsubjToRightVnfin @-FSUBJ TO (*1 NONVFIN BARRIER S-BOUNDARY2) ;
+#SETPARENT:SetnfsubhToLeftVnfin @-FSUBJ TO (*-1 NONVFIN BARRIER S-BOUNDARY2) ;
+#
+#SETPARENT:SetnfobjToRightVnfin @-FOBJ TO (*1 NONVFIN BARRIER S-BOUNDARY2) ;
+#SETPARENT:SetnfobjToLeftVnfin @-FOBJ TO (*-1 NONVFIN BARRIER S-BOUNDARY2) ;
 
 
 ### subjunction
@@ -506,13 +456,13 @@ SETPARENT:SetCsToV CS + @CVP TO (*1 VFIN OR NONVFIN) ;
 SETPARENT:SetCnpToArg @CNP TO (*1 @ARG) ;
 SETPARENT:SetCcToV CC + @CVP TO (*1 VFIN OR NONVFIN) ;
 
-SETPARENT:SetCcxadvlToWord (CC @XADVL) TO (*1 WORD LINK 1 CC) ;
+SETPARENT:SetCcxadvlToWord (@ADVL + CC) TO (*1 WORD LINK 1 CC) ;
 
 
-SETPARENT:SetSubjToLeftCcSubj @SUBJ TO (*-1 @SUBJ BARRIER NPNH LINK 1 CC);
-SETPARENT:SetAppToLeftCcApp @APP-N< TO (*-1 @APP-N< BARRIER NPNH LINK 1 CC);
-SETPARENT:SetObjToLeftCcObj @OBJ TO (*-1 @OBJ BARRIER NPNH LINK 1 CC);
-SETPARENT:SetXadvlToLeftCcXadvl @XADVL TO (*-1 @XADVL BARRIER NPNH LINK 1 CC);
+SETPARENT:SetSubjToLeftCcSubj @SUBJ TO (*-1 @SUBJ LINK 1 CC);
+SETPARENT:SetAppToLeftCcApp @APP-N< TO (*-1 @APP-N< LINK 1 CC);
+SETPARENT:SetObjToLeftCcObj @OBJ TO (*-1 @OBJ LINK 1 CC);
+SETPARENT:SetXadvlToLeftCcXadvl @ADVL TO (*-1 @ADVL LINK 1 CC);
 SETPARENT:SetFmainToLeftCcFmain @+FMAINV TO (-2 @+FMAINV LINK 1 CC);
 SETPARENT:SetNfmainToLeftCcNfmain @-FMAINV TO (-2 @-FMAINV LINK 1 CC);
 
@@ -527,33 +477,33 @@ SETPARENT:SetNfmainToLeftCcNfmain @-FMAINV TO (-2 @-FMAINV LINK 1 CC);
 
 ### subclauses
 
-LIST CLB-ADVL = "go" ("goas" N) ("goas" Pron) "ovdal" "dassá_go" "dassážii_go" "dan_rájes_go" "dan_botta_go" "dalle_go" "ovdalgo" "maŋŋilgo" "jus,_jos,_juos,_joas" "nu_ahte" "nuvt_ahte" "dainna_go" "danne_go" "danin_go" "dan_dihte_go" "dan_dihtii_go" "dasgo" ("vai" CS @CVP) "mađe CS" "vaikko" "nugo" "dego" ;
-
-######## @CL-ADVL
-
-#SUBSTITUTE:SubV=fsadvlForVfinCclb (@V) (@FS-ADVL) TARGET VFIN (c CLB-ADVL) ; #XXX in again?
-#SUBSTITUTE:SubV=fsadvlForVfinNeg (@V) (@FS-ADVL) TARGET VFIN (0 (Neg) OR (Sup)) ;
-SUBSTITUTE:SubV=icladvlForNvfinCclb (@V) (@ICL-ADVL) TARGET NONVFIN (c CLB-ADVL) ;
-SUBSTITUTE:SubV=icladvlForNvfinNeg (@V) (@ICL-ADVL) TARGET NONVFIN (0 (Neg) OR (Sup)) ;
-
-SETPARENT:SetAdvlToMvR @FS-ADVL OR @ICL-ADVL TO (*1 @MV) ;
-
-SUBSTITUTE:SubV=FsadvForVfinGo (@V) (@FS-ADVL) TARGET VFIN (*-1 ("go" @CVP));
-SETPARENT:SetAdvlToMvL @FS-ADVL OR @ICL-ADVL TO (*-1 @MV) ;
-
-######## @CL-OBJ
-
-SUBSTITUTE:SubV=fsobjForvfinCahte (@V) (@FS-OBJ) TARGET VFIN (c ("ahte")) ;
-SUBSTITUTE:SubV=iclobjForMV (@V) (@ICL-OBJ) TARGET NONVFIN (c ("ahte")) ;
-
-SUBSTITUTE:Advl=@ICL-OBJ (@ADVL) (@ICL-OBJ) TARGET Inf (c (@-FSUBJ));
-	## Máhtte muitalii ádjá boahtit.
-
-SETPARENT @FS-OBJ OR @ICL-OBJ TO (*-1 @MV LINK 0 TV) ;
-
-
-SUBSTITUTE:Advl=@ICL-ADVL (@ADVL) (@ICL-ADVL) TARGET Ger (c (@-FSUBJ));
-SETPARENT:IclAdvlToV @ICL-ADVL TO (*-1 @V) ;
+#LIST CLB-ADVL = "go" ("goas" N) ("goas" Pron) "ovdal" "dassá_go" "dassážii_go" "dan_rájes_go" "dan_botta_go" "dalle_go" "ovdalgo" "maŋŋilgo" "jus,_jos,_juos,_joas" "nu_ahte" "nuvt_ahte" "dainna_go" "danne_go" "danin_go" "dan_dihte_go" "dan_dihtii_go" "dasgo" ("vai" CS @CVP) "mađe CS" "vaikko" "nugo" "dego" ;
+#
+######### @CL-ADVL
+#
+##SUBSTITUTE:SubV=fsadvlForVfinCclb (@V) (@FS-ADVL) TARGET VFIN (c CLB-ADVL) ; #XXX in again?
+##SUBSTITUTE:SubV=fsadvlForVfinNeg (@V) (@FS-ADVL) TARGET VFIN (0 (Neg) OR (Sup)) ;
+#SUBSTITUTE:SubV=icladvlForNvfinCclb (@V) (@ICL-ADVL) TARGET NONVFIN (c CLB-ADVL) ;
+#SUBSTITUTE:SubV=icladvlForNvfinNeg (@V) (@ICL-ADVL) TARGET NONVFIN (0 (Neg) OR (Sup)) ;
+#
+#SETPARENT:SetAdvlToMvR @FS-ADVL OR @ICL-ADVL TO (*1 @MV) ;
+#
+#SUBSTITUTE:SubV=FsadvForVfinGo (@V) (@FS-ADVL) TARGET VFIN (*-1 ("go" @CVP));
+#SETPARENT:SetAdvlToMvL @FS-ADVL OR @ICL-ADVL TO (*-1 @MV) ;
+#
+######### @CL-OBJ
+#
+#SUBSTITUTE:SubV=fsobjForvfinCahte (@V) (@FS-OBJ) TARGET VFIN (c ("ahte")) ;
+#SUBSTITUTE:SubV=iclobjForMV (@V) (@ICL-OBJ) TARGET NONVFIN (c ("ahte")) ;
+#
+#SUBSTITUTE:Advl=@ICL-OBJ (@ADVL) (@ICL-OBJ) TARGET Inf (c (@-FSUBJ));
+#	## Máhtte muitalii ádjá boahtit.
+#
+#SETPARENT @FS-OBJ OR @ICL-OBJ TO (*-1 @MV LINK 0 TV) ;
+#
+#
+#SUBSTITUTE:Advl=@ICL-ADVL (@ADVL) (@ICL-ADVL) TARGET Ger (c (@-FSUBJ));
+#SETPARENT:IclAdvlToV @ICL-ADVL TO (*-1 @V) ;
 
 SETPARENT @-F<OBJ TO (*-1 TV);
 	## Mun gergen borramis láibbi.
@@ -563,39 +513,39 @@ SETPARENT:InfinSubj @-FSUBJ> TO (*1 Actio);
 
 ######## @ADVL
 
-SETPARENT:AdvlToV @ADVL TO (*-1 @MV BARRIER V OR S-BOUNDARY2);
-SETPARENT:AdvlToR @ADVL TO (*1 @MV BARRIER S-BOUNDARY2);
-SETPARENT:AdvlToV @-FADVL TO (*-1 @ICL-STA OR @ICL-OBJ BARRIER V OR S-BOUNDARY2);
-	## Máhtte logai sin vuolgit dál juo.
+#SETPARENT:AdvlToV @<ADVL TO (*-1 @MV BARRIER V OR S-BOUNDARY2);
+#SETPARENT:AdvlToR @ADVL> TO (*1 @MV BARRIER S-BOUNDARY2);
+#SETPARENT:AdvlToV @-FADVL TO (*-1 @ICL-STA OR @ICL-OBJ BARRIER V OR S-BOUNDARY2);
+#	## Máhtte logai sin vuolgit dál juo.
+#
+#LIST VFIN-ADV = "ain" "juo" "vel" ;
+#SETPARENT:vfinAdv VFIN-ADV TO (*-1 VFIN BARRIER S-BOUNDARY2);
+#
+#LIST WEATHER-SITUATION = "beaivvádat" "bievla" "buolaš" "dálki" "dálke#dilálašvuohta" "fiertu" "goalki" "siivu" "jođádat" "liekkas" "linádat" "oppas" "riđđu" "muohtti" "ilbmi" "balva" "čuoika" "čoaskin" "biegga" "nuorttadat" "davádat" "oarjjádat" "luládat" "orjješ#biegga" "nuorta#biegga" "obba#dálki" "balva#dálki" "balva#ilbmi" "arvi" "savda" "savdaarvi" "liehmu" "láfu#biegga" "baján" "johtti" "gállu" "jiella" "hieibma" "šlahtti" "seaŋáš" "borga" "guoldu" "dobadat" "dulvi" "moarri" "geardni" "cuoŋu" "jealahas" "jalahas" "geasádat" "dálvvádat" "jáldu" "lievhnu" "galmma" "guostta" "čođđolat" "čođđálat" "sealádat" "šearádat" "bálgu" "bálggádat" ;
+#
+#SETPARENT:weathersit WEATHER-SITUATION + Ess TO (*0 VFIN BARRIER S-BOUNDARY2);
+#
+#LIST ADV-NOT-ARG = "aiddo" "ain" "aivve" "albma" "aŋkke" "álggos" "beanta" "beare" "dušše" ;
+#
+#SETPARENT:advNotArg ADV-NOT-ARG + Adv TO (*1 (@>N) OR @ARG BARRIER S-BOUNDARY2);
+#
+#LIST VERB-ADV = "mielde" ;
+#
+#SETPARENT:advVerb VERB-ADV + Adv TO (-1 V BARRIER S-BOUNDARY2);
+#
 
-LIST VFIN-ADV = "ain" "juo" "vel" ;
-SETPARENT:vfinAdv VFIN-ADV TO (*-1 VFIN BARRIER S-BOUNDARY2);
-
-LIST WEATHER-SITUATION = "beaivvádat" "bievla" "buolaš" "dálki" "dálke#dilálašvuohta" "fiertu" "goalki" "siivu" "jođádat" "liekkas" "linádat" "oppas" "riđđu" "muohtti" "ilbmi" "balva" "čuoika" "čoaskin" "biegga" "nuorttadat" "davádat" "oarjjádat" "luládat" "orjješ#biegga" "nuorta#biegga" "obba#dálki" "balva#dálki" "balva#ilbmi" "arvi" "savda" "savdaarvi" "liehmu" "láfu#biegga" "baján" "johtti" "gállu" "jiella" "hieibma" "šlahtti" "seaŋáš" "borga" "guoldu" "dobadat" "dulvi" "moarri" "geardni" "cuoŋu" "jealahas" "jalahas" "geasádat" "dálvvádat" "jáldu" "lievhnu" "galmma" "guostta" "čođđolat" "čođđálat" "sealádat" "šearádat" "bálgu" "bálggádat" ;
-
-SETPARENT:weathersit WEATHER-SITUATION + Ess TO (*0 VFIN BARRIER S-BOUNDARY2);
-
-LIST ADV-NOT-ARG = "aiddo" "ain" "aivve" "albma" "aŋkke" "álggos" "beanta" "beare" "dušše" ;
-
-SETPARENT:advNotArg ADV-NOT-ARG + Adv TO (*1 (@>N) OR @ARG BARRIER S-BOUNDARY2);
-
-LIST VERB-ADV = "mielde" ;
-
-SETPARENT:advVerb VERB-ADV + Adv TO (-1 V BARRIER S-BOUNDARY2);
-
-
-######## quotes
-
-LIST V-QUOTE = "basuhit" "cealkit" "cuoigut" "čilget" "čuorvut" "čurvet" "dadjat" "dáikit" "digaštit" "gielistit" "huikit" "huikkádit" "jearrat" "juoigat" "kommenteret" "lávlut" "lohkat" "máidnut" "máinnašit" "muitalit" "oaivvildit" "savkalit" "sárdnidit" "váruhit" "vástidit" ;
-
-SUBSTITUTE:SubV=fsacc (@V) (@FS-ACC>>) TARGET V (*1 V-QUOTE LINK -1 COMMA)(NEGATE *-1 @FS-ACC>>) ;  
-
-SETPARENT:SetFsaccToVquote (@FS-ACC>>) TO (*1 V-QUOTE LINK -1 COMMA) ;
-
-########
-
-SUBSTITUTE:SubV=fssta (@V) (@FS-STA) TARGET VFIN ;
-SUBSTITUTE:SubV=iclsta (@V) (@ICL-STA) TARGET NONVFIN ;
+######### quotes
+#
+#LIST V-QUOTE = "basuhit" "cealkit" "cuoigut" "čilget" "čuorvut" "čurvet" "dadjat" "dáikit" "digaštit" "gielistit" "huikit" "huikkádit" "jearrat" "juoigat" "kommenteret" "lávlut" "lohkat" "máidnut" "máinnašit" "muitalit" "oaivvildit" "savkalit" "sárdnidit" "váruhit" "vástidit" ;
+#
+#SUBSTITUTE:SubV=fsacc (@V) (@FS-ACC>>) TARGET V (*1 V-QUOTE LINK -1 COMMA)(NEGATE *-1 @FS-ACC>>) ;  
+#
+#SETPARENT:SetFsaccToVquote (@FS-ACC>>) TO (*1 V-QUOTE LINK -1 COMMA) ;
+#
+#########
+#
+#SUBSTITUTE:SubV=fssta (@V) (@FS-STA) TARGET VFIN ;
+#SUBSTITUTE:SubV=iclsta (@V) (@ICL-STA) TARGET NONVFIN ;
 
 
 ###############
