@@ -13,34 +13,36 @@ my $xml_tmp = "XML_tmp";
 my $mk_dir_cmd = "mkdir $gen_tmp/$para_tmp $gen_tmp/$xml_tmp";
 
     system($mk_dir_cmd);
-
+    print "$word_pos_list\n" ;
 
 open FILE, $word_pos_list or die $!;
 
 while ( <FILE> ) {
-  chop;
+  chomp;
   if (/^\s.*$/) {
     next;
   } else {
     my $word, $pos;
     ($word, $pos) = split;
-    $word_pos = $word . "_" . $pos;
-    #    print "word is $word\n" ;
-    #    print "pos is $pos\n" ;^
-    my $command = "make $pos-paradigm WORD\=$word GEN_TMP\=$gen_tmp PARA_TMP\=$para_tmp" ;
-    #    print "$command\n";
-    system($command);
-    my $xmlcommand = "perl paradigm2xml.pl $gen_tmp/$para_tmp/$word.paradigm > $gen_tmp/$xml_tmp/$word_pos.xml";
-    system($xmlcommand);
-    
-    $abs_path = File::Spec->rel2abs("$gen_tmp/$xml_tmp/$word_pos.xml");
-    
-    my $xslcommand = "$jc $xsl_script file=$abs_path path=$gen_tmp";
-    
-    #     print "$xslcommand\n";
-    
-    system($xslcommand);
-    
+    if (($word ne "") and ($pos ne "") ) {
+      $word_pos = $word . "_" . $pos;
+      print "word is $word\n" ;
+      print "pos is $pos\n" ;
+      my $command = "make $pos-paradigm WORD\=$word GEN_TMP\=$gen_tmp PARA_TMP\=$para_tmp" ;
+      #    print "$command\n";
+      system($command);
+      my $xmlcommand = "perl paradigm2xml.pl $gen_tmp/$para_tmp/$word.paradigm > $gen_tmp/$xml_tmp/$word_pos.xml";
+      system($xmlcommand);
+      
+      $abs_path = File::Spec->rel2abs("$gen_tmp/$xml_tmp/$word_pos.xml");
+      
+      my $xslcommand = "$jc $xsl_script file=$abs_path path=$gen_tmp";
+      
+      #     print "$xslcommand\n";
+      
+      system($xslcommand);
+
+    }    
   }
   
 }
