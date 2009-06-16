@@ -8,7 +8,7 @@ my $word_pos_list = @ARGV[0];
 my $xsl_script = @ARGV[1];
 my $gen_tmp = @ARGV[2];
 my $jc = "java net.sf.saxon.Transform -it main ";
-my $para_tmp = "PARA_tmp";
+my $para_tmp = "Para_tmp";
 my $xml_tmp = "XML_tmp";
 my $mk_dir_cmd = "mkdir $gen_tmp/$para_tmp $gen_tmp/$xml_tmp";
 
