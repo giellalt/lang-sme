@@ -230,6 +230,7 @@ LIST @>A = @>A ; 			 # modifier of adj
 LIST @>ADVL = @>ADVL ; 		         # modifier of advl
 LIST @ADVL< = @ADVL< ; 		         # modifier of advl
 LIST @>N = @>N ; 			 # modifier of N
+LIST @>CC = @>CC ; 			 # modifier of CC
 LIST @>Num = @>Num ; 		         # attr of numeral
 LIST @>P = @>P ; 			 # complement of P
 LIST @A< = @A< ; 			 # complement of A
@@ -304,7 +305,7 @@ LIST @FV = @FMV @FAUX ;
 LIST @AUX = @IAUX @FAUX ;
 LIST @MV = @IMV @FMV ;
 LIST @FMV = @FMV ;
-
+LIST KONJ = CS CC ;
 
 
 
@@ -415,7 +416,7 @@ SETPARENT:SetAUXtoAUX NONVFIN + <aux> TO (*-1 (<aux>) BARRIER V) ;
 
 SETPARENT:SetPcleToWord @PCLE TO (-1 WORD);
 SETPARENT:SetPcleToVfin ("amma" @PCLE) OR ("na" @PCLE) TO (*1 VFIN);
-
+SETPARENT:SetModToCC @>CC TO (*1 CC) ;
 ### local advls
 
 SETPARENT:ToLeftPron @>Pron TO (*1 Pron);
@@ -436,8 +437,10 @@ SETPARENT:Set-FObjToRightMv @-FOBJ> TO (*1 NONVFIN BARRIER S-BOUNDARY2 OR @-FSUB
 SETPARENT:SetAdvlToLeftMv @<ADVL TO (*-1 (<mv>) BARRIER S-BOUNDARY2 OR @-FSUBJ) ;
 SETPARENT:SetAdvlToRightMv @ADVL> TO (*1 (<mv>) BARRIER S-BOUNDARY2 OR @-FSUBJ) ;
 
-SETPARENT: @-FADVL TO (*1 @ARG + Inf BARRIER S-BOUNDARY2) ;
-SETPARENT: @-FADVL TO (*-1 @ARG + Inf BARRIER S-BOUNDARY2) ;
+#SETPARENT: @-FADVL TO (*1 @ARG + Inf BARRIER S-BOUNDARY2) ;
+#SETPARENT: @-FADVL TO (*-1 @ARG + Inf BARRIER S-BOUNDARY2) ;
+SETPARENT: @-FADVL TO (*1 Inf OR (Actio Ess) OR Ger BARRIER S-BOUNDARY2) ;
+SETPARENT: @-FADVL TO (*-1 Inf OR (Actio Ess) OR Ger BARRIER S-BOUNDARY2) ;
 
 SETPARENT:SetSubjToRightVfin @SUBJ> TO (*1 VFIN BARRIER S-BOUNDARY2) ;
 SETPARENT:SetSubjToLeftVfin @<SUBJ TO (*-1 VFIN BARRIER S-BOUNDARY2) ; 
@@ -463,14 +466,15 @@ SETPARENT:SetSubjVfinAfterRelCl @SUBJ> TO (*1 Rel BARRIER VFIN OR S-BOUNDARY2 LI
 	## Genadutkit geaid eamiálbmogat miehtá máilmmi leat vuosttaldan garrasit, leat dál jođus Sápmái, ja sii ohcet sámi dievdduid genadutkamii. 
 
 
-### subjunction
+### subjunction and coordination
 
 SETPARENT:SetCcsToCs @COMPL-CS< TO (*-1 CS) ;
-SETPARENT:SetCsToV CS + @CVP TO (*1 VFIN OR NONVFIN) ;
+SETPARENT:SetCCellipse KONJ + @CVP TO (*1 @<SUBJ BARRIER VFIN) ;
+SETPARENT:SetKonjToV KONJ + @CVP TO (*1 VFIN OR NONVFIN) ;
 
 ### coordination
 
-SETPARENT:SetCCToV CC + @CVP TO (*1 VFIN OR NONVFIN) ;
+#SETPARENT:SetCCToV CC + @CVP TO (*1 VFIN OR NONVFIN) ;
 SETPARENT:SetCNPToWord @CNP TO (*-1 WORD) ;
 SETPARENT:SetCNPToWord @CVP + CC TO (*-1 WORD) ;
 
