@@ -251,6 +251,7 @@ LIST @FS-N< = @FS-N< ;               	 # relative clause to N
 LIST @FS-OBJ = @FS-OBJ ; 	         # finite subclause functioning as object
 LIST @FS-STA = @FS-STA ; 	         # finite sentence, statement
 LIST @HAB = @HAB ; 			 # habitive (aka advl of possessiv constr)
+LIST @HNOUN = @HNOUN ;
 LIST @IMV = @IMV ;             # infinite main verb
 LIST @ICL-ADVL = @ICL-ADVL ;             # non-finite subclause ...
 LIST @ICL-AUX< = @ICL-AUX< ;             # "right" argument of auxiliary (?)
@@ -414,6 +415,7 @@ SETPARENT:SetAttrToLeftNum @Num< OR @APP-Num< TO (*-1 Num BARRIER @CLAUSE) ;
 
 SETPARENT:SetFSSTAtoMV @FS-STA TO (*-1 @MV OR @FS-STA) ;
 SETPARENT:SetFS-NtoMV @FS-N< TO (*-1 @MV OR @FS-STA BARRIER CS OR MO) ;
+SETPARENT:SetMVtoAUX NONVFIN + <mv> TO (*-1 V) ;
 SETPARENT:SetMVtoAUX NONVFIN + <mv> TO (*-1 (<aux>)) ;
 SETPARENT:SetAUXtoAUX NONVFIN + <aux> TO (*-1 (<aux>)) ;
 
@@ -456,8 +458,8 @@ SETPARENT:SetSubjToRightVfin @SUBJ> TO (*1 VFIN BARRIER S-BOUNDARY2) ;
 SETPARENT:SetSubjToLeftVfin @<SUBJ TO (*-1 VFIN BARRIER S-BOUNDARY2) ; 
 SETPARENT:SetRelSubjToRight @SUBJ> + Rel TO (*1 @FS-N< BARRIER S-BOUNDARY2) ;
 
-SETPARENT @<SPRED TO (*-1 @SUBJ BARRIER S-BOUNDARY2);
-SETPARENT @SPRED> TO (*1 @SUBJ BARRIER S-BOUNDARY2);
+SETPARENT @<SPRED TO (*-1 @SUBJ OR @HNOUN);
+SETPARENT @SPRED> TO (*1 @SUBJ OR @HNOUN);
 SETPARENT:SetSpredToLeftVfinHAB @<SPRED TO (*-1 @HAB BARRIER S-BOUNDARY2 LINK 1 VFIN) ; 
 SETPARENT:SetSpredToLeftVfinEx @<SPRED TO (*-1 VFIN BARRIER S-BOUNDARY2 OR @SUBJ) (NOT *-1 @SUBJ BARRIER S-BOUNDARY2) ; 
 SETPARENT:SetSpredToLeftVfinEx @SPRED> TO (*1 VFIN BARRIER S-BOUNDARY2 OR @SUBJ) (NOT *0 @SUBJ BARRIER S-BOUNDARY2) ; 
@@ -531,7 +533,7 @@ SETPARENT:InfinObj @ICL-OBJ TO (*-1 @MV);
 
 ###############
 SETPARENT:sentenceToSentence VFIN (NOT p (*)) TO (*-1 VFIN);
-
+SETPARENT @HNOUN (NOT p (*)) TO (@0 (*));
 SETPARENT VFIN (NOT p (*)) TO (@0 (*));
 
 ## div
