@@ -384,16 +384,16 @@ dis-tag.fst: ../int/dis-tag.fst
 # Here we include a preprocessor. This goal depends on tok.txt
 # Note! This preprocessor is obsolete, and replaced with preprocess. 
 # Do not use unless we decide to go back to tokenize!
-#tok.fst: ../int/tok.fst 
-#../int/tok.fst: tok.txt
-#	@echo
-#	@echo "*** Building the tokenizer tok.fst ***" ;
-#	@echo
-#	@printf "source tok.txt \n\
-#	save stack ../int/tok.fst \n\
-#	quit \n" > ../../tmp/tok-sme-script
-#	$(XFST) < ../../tmp/tok-sme-script
-#	@rm -f ../../tmp/tok-sme-script
+tok.fst: ../int/tok.fst 
+../int/tok.fst: tok.txt
+	@echo
+	@echo "*** Building the tokenizer tok.fst ***" ;
+	@echo
+	@printf "source tok.txt \n\
+	save stack ../int/tok.fst \n\
+	quit \n" > ../../tmp/tok-sme-script
+	$(XFST) < ../../tmp/tok-sme-script
+	@rm -f ../../tmp/tok-sme-script
 
 
 # Here we make the abbrevation file for our current preprocessor, 
