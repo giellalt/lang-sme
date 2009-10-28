@@ -23,6 +23,7 @@ LIST Adv = Adv ;
 LIST CC = CC ;
 LIST CS = CS ;
 LIST Inf = Inf ;
+LIST Sup = Sup ;
 LIST Neg = Neg ;
 LIST Num = Num ;
 LIST Po = Po ;
@@ -32,14 +33,13 @@ LIST Pcle = Pcle ;
 LIST Prop = Prop ;
 
 LIST Pron = Pron ;
-LIST Sup = Sup ;
 LIST IV = IV ;
 LIST TV = TV ;
 LIST COMMA = "," ;
 LIST Ind = Ind ;
 LIST Pot = Pot ;
 LIST Imprt = Imprt ;
-LIST ImprtII = Imprt II ;
+LIST ImprtII = ImprtII ;
 LIST Cond = Cond ;
 LIST ConNeg = ConNeg ;
 LIST Interj = Interj ;
@@ -123,7 +123,7 @@ SET V-MAIN = V - COPULAS - Neg - MOD-ASP OR ("orrut") ;
 SET V-IND-FIN = Prs OR Prt ;
  # Problem: "In boahtán" is an invisible indicative
 
-SET V-MOOD = Ind OR Pot OR Imprt OR ImprtII OR Cond OR Sup ;
+SET V-MOOD = Ind OR Pot OR Imprt OR ImprtII OR Cond OR (Neg Sup) ;
 
 LIST GC = ("gč") ;
 
@@ -225,6 +225,7 @@ LIST @-FSUBJ = @-FSUBJ ; 	         # subject of infinite verb outside of the ver
 LIST @-FSUBJ> = @-FSUBJ> ;
 LIST @<-FSUBJ = @<-FSUBJ ;
 LIST @COMP-CS< = @COMP-CS< ;
+LIST @CMPND = @CMPND ;
 LIST @ADVL>CS = @ADVL>CS ;
 LIST @>A = @>A ; 			 # modifier of adj
 LIST @>ADVL = @>ADVL ; 		         # modifier of advl
@@ -364,11 +365,11 @@ SUBSTITUTE (@FAUX) (@FS-STA) TARGET V (*-1 Neg BARRIER VFIN)(0 (Neg Foc/ge)) ;
 
 # in subclauses:
 SUBSTITUTE:SubV=FS-STAmv (@FMV)(@FS-STA) TARGET V ((*-1 CS BARRIER VFIN) OR (*-1 MO BARRIER VFIN LINK NEGATE *1 ("?"))) ;
-SUBSTITUTE:SubV=FS-STAmv (@FMV)(@FS-STA) TARGET V ((*-1 CC LINK NOT 0 ("de") BARRIER @V LINK *-1 (@FS-STA) BARRIER @V)) ;
+SUBSTITUTE:SubV=FS-STAmv (@FMV)(@FS-STA) TARGET V ((*-1 CC LINK NOT 0 ("de") BARRIER @V LINK *-1 (@FS-STA) OR (@FS-IMV) BARRIER @V)) ;
 SUBSTITUTE:SubV=FS-IMVcs (@IMV) (@FS-IMV) TARGET V (*-1 (<aux>) BARRIER @MV LINK NOT 0 (@FAUX) LINK *-1 CS BARRIER @MCLV) ;
 SUBSTITUTE:SubV=FS-IMVmo (@IMV) (@FS-IMV) TARGET V (*-1 (<aux>) BARRIER @MV LINK *-1 MO BARRIER @MV LINK NEGATE *1 ("?")) ;
 SUBSTITUTE:SubVmain=FS-STAaux (@FAUX) (@FS-STA) TARGET V ((*-1 CS BARRIER VFIN) OR (*-1 MO BARRIER VFIN LINK NEGATE *1 ("?"))) ;
-SUBSTITUTE:SubVmain=FS-STAaux (@FAUX) (@FS-STA) TARGET V (*-1 CC LINK NOT 0 ("de") BARRIER @V LINK *-1 (@FS-STA) BARRIER VFIN) ;
+SUBSTITUTE:SubVmain=FS-STAaux (@FAUX) (@FS-STA) TARGET V (*-1 CC LINK NOT 0 ("de") BARRIER @V LINK *-1 (@FS-STA) OR (@FS-IMV) BARRIER VFIN) ;
 SUBSTITUTE:SubV=FS-IAUXcs (@IAUX) (@FS-IAUX) TARGET V (*-1 (<aux>) BARRIER @MV LINK *-1 CS BARRIER @MV) ;
 SUBSTITUTE:SubV=FS-IAUXmo (@IAUX) (@FS-IAUX) TARGET V (*-1 (<aux>) BARRIER @MV LINK *-1 MO BARRIER VFIN LINK NEGATE *1 ("?")) ;
 SUBSTITUTE:SubV=FS-IMVcs (@IAUX) (@FS-IAUX) TARGET V (*-1 (<aux>) BARRIER @MV LINK 0 (@FS-STA)) ;
@@ -396,9 +397,14 @@ SUBSTITUTE:SubV=iclaux (@<OBJ) (@ICL-OBJ) TARGET NONVFIN (*-1 @-FSUBJ> BARRIER @
 
 SECTION
 
+### cmpnd
+
+SETPARENT:cmpnd @CMPND TO (1 CC LINK 1 WORD) ;
+
 ### habitive
 
 SETPARENT:SetHab @HAB TO (0* V-3 BARRIER S-BOUNDARY2 OR V);
+SETPARENT:SetHab @HAB TO (*-1 Neg BARRIER S-BOUNDARY2 OR V);
 
 
 ### postposition / preposition
@@ -473,11 +479,12 @@ SETPARENT:SetObjToRightMv @OBJ> TO (*1 (<mv>) BARRIER S-BOUNDARY2 OR @-FSUBJ) ;
 SETPARENT:Set-FObjToLeftMv @-F<OBJ TO (*-1 NONVFIN BARRIER S-BOUNDARY2 OR @-FSUBJ OR @OBJ) ;
 SETPARENT:Set-FObjToRightMv @-FOBJ> TO (*1 NONVFIN BARRIER S-BOUNDARY2 OR @-FSUBJ) ;
 SETPARENT:SetAdvlToLeftMv @<ADVL TO (*-1 (<mv>) BARRIER S-BOUNDARY2 OR @-FSUBJ) ;
-SETPARENT:SetAdvlToRightMv @ADVL> TO (*1 (<mv>) BARRIER S-BOUNDARY2 OR @-FSUBJ) ;
+SETPARENT:SetAdvlToRightMv @ADVL> TO (*1 (<mv>) BARRIER @-FSUBJ) ;
+SETPARENT:SetAdvlToCompCS @<ADVL TO (*-1 @COMP-CS< BARRIER S-BOUNDARY2 OR @V) ;
 SETPARENT:SetGostege GOSTEGE TO (*-1 Neg BARRIER @V) ;
 
-SETPARENT: @-FADVL TO (*1 Inf OR (Actio Ess) OR Ger BARRIER S-BOUNDARY2) ;
-SETPARENT: @-FADVL TO (*-1 Inf OR (Actio Ess) OR Ger BARRIER S-BOUNDARY2) ;
+SETPARENT: @-FADVL TO (*1 Inf OR Sup OR (Actio Ess) OR Ger BARRIER S-BOUNDARY2) ;
+SETPARENT: @-FADVL TO (*-1 Inf OR Sup OR (Actio Ess) OR Ger BARRIER S-BOUNDARY2) ;
 
 SETPARENT:SetSubjToRightVfin @SUBJ> TO (*1 VFIN BARRIER S-BOUNDARY2) ;
 SETPARENT:SetSubjToLeftVfin @<SUBJ TO (*-1 VFIN BARRIER S-BOUNDARY2) ; 
