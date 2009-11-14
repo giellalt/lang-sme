@@ -1,0 +1,30 @@
+SOURCEFILES = sme-lex.txt adj-sme-lex.txt \
+        adv-sme-lex.txt noun-sme-lex.txt verb-sme-lex.txt \
+        particle-sme-lex.txt conjunction-sme-lex.txt pp-sme-lex.txt acro-sme-lex.txt \
+        abbr-sme-lex.txt propernoun-sme-lex.txt punct-sme-lex.txt
+
+# closed-sme-lex.txt
+
+all: sme-gen.hfst sme-morph.hfst
+
+sme-lexc.bin: sme-all.lexc
+	hfst-lexc < sme-all.lexc > $@
+
+twol-sme.bin: twol-sme.txt.out
+	hfst-twolc < twol-sme.txt.out > $@
+
+twol-sme.txt.out: twol-sme.txt
+	m4 twol-sme.txt
+
+sme-all.lexc: $(SOURCEFILES)
+	cat $(SOURCEFILES) > $@
+
+sme-gen.hfst: twol-sme.bin sme-lexc.bin
+	hfst-compose-intersect -l sme-lexc.bin twol-sme.bin -o $@
+
+sme-morph.hfst: sme-gen.hfst
+	hfst-invert sme-gen.hfst -o $@
+
+
+clean:
+	rm sme-gen.hfst sme-morph.hfst  *.bin
