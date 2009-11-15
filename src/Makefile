@@ -18,6 +18,9 @@ SOURCEFILES = sme-lex.txt adj-sme-lex.txt \
 
 NONRECFILES := $(patsubst %.txt,../int/%.nonrec,$(SOURCEFILES))
 
+# Added for historical purposes
+all:
+	@echo "Don't use this Makefile, cd $$GTHOME/gt/ ; make hfst TARGET=sme"
 
 # =============================== #
 # Building the last file isme.fst # 
