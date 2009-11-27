@@ -113,12 +113,12 @@ clean:
 		  *.aresult \
 		  *.summary \
 		  *.ptest \
-#		  paradigm* \
 		  *.tgz	\
 		  *~ \
 		  *.in \
 		  *.out \
 		  $(TEMP)/*test-script
+#		  paradigm* \
 	@rm -f a*.xml
 	@rm -f b*.xml
 	@rm -f c*.xml
