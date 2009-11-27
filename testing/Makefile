@@ -18,7 +18,7 @@ BINDIR = ../../script/testing
 # Directory where all the compiled fst's are:
 FSTDIR = ../bin
 
-DIALOGUE = GG
+DIALECT = GG
 
 # Directory for the source files (which compile into fst's):
 # Changed this to point into the directory where the common makefile is:
@@ -34,8 +34,9 @@ PARA_TMP = Para_tmp
 # This variable is holding the filename of the save file:
 # (makes the Makefile truly language independent for
 # the Sami languages)
-#SAVEFILE = $(wildcard $(FSTDIR)/ism?-norm.fst)
-SAVEFILE = $(wildcard $(FSTDIR)/ism?-$(DIALOGUE).restr.fst)
+#SAVEFILE = $(wildcard $(FSTDIR)/ism?.fst)
+SAVEFILE = $(wildcard $(FSTDIR)/ism?-norm.fst)
+#SAVEFILE = $(wildcard $(FSTDIR)/ism?-$(DIALECT).restr.fst)
 # Copied from old LS makefile:
 # Bond, James Bond
 UMASK=@umask 007
@@ -243,7 +244,7 @@ n-paradigm: n-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-#	@less $(WORD).paradigm
+	@less $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 
 
 # VERBS
