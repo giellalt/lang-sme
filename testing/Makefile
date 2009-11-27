@@ -22,7 +22,7 @@ DIALECT = GG
 
 # Directory for the source files (which compile into fst's):
 # Changed this to point into the directory where the common makefile is:
-SRCDIR = ../../
+SRCDIR = ../..
 
 # The temp directory:
 TEMP = ../../tmp
@@ -34,9 +34,9 @@ PARA_TMP = Para_tmp
 # This variable is holding the filename of the save file:
 # (makes the Makefile truly language independent for
 # the Sami languages)
-#SAVEFILE = $(wildcard $(FSTDIR)/ism?.fst)
-SAVEFILE = $(wildcard $(FSTDIR)/ism?-norm.fst)
-#SAVEFILE = $(wildcard $(FSTDIR)/ism?-$(DIALECT).restr.fst)
+#SAVEFILE = $(FSTDIR)/isme.fst
+SAVEFILE = $(FSTDIR)/isme-norm.fst
+#SAVEFILE = $(FSTDIR)/isme-$(DIALECT).restr.fst
 # Copied from old LS makefile:
 # Bond, James Bond
 UMASK=@umask 007
@@ -299,7 +299,7 @@ v-paradigm: v-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-#	@less $(WORD).paradigm
+	@less $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 
 
 # ADJECTIVES
@@ -354,7 +354,7 @@ a-paradigm: a-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-#	@less $(WORD).paradigm
+	@less $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 
 
 # NUMERALS
@@ -410,7 +410,7 @@ num-paradigm: num-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-#	@less $(WORD).paradigm
+	@less $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 
 
 # PROPER NOUNS
@@ -466,7 +466,7 @@ prop-paradigm: prop-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-#	@less $(WORD).paradigm
+	@less $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 
 
 
@@ -475,7 +475,10 @@ prop-paradigm: prop-para.ptest savefile
 
 # Make sure there is an available smX.save in the parent directory:
 savefile:
-	@cd $(SRCDIR)/ && $(MAKE) $(notdir $(SAVEFILE)) TARGET=sme
+	@echo
+	@echo "*** Go to $$GTHOME and make the required transducer: ***"
+	@echo
+	cd $(SRCDIR)/ && $(MAKE) $(notdir $(SAVEFILE)) TARGET=sme
 
 # Word form generation:
 # ---------------------
