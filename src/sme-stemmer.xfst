@@ -1,0 +1,459 @@
+! ==================== !
+! A North Sámi stemmer !
+! ==================== ! 
+!
+! This stemmer was made in order to show that stemming of North Sámi
+! is a bad idea. Serious sme stemming should look at 
+! http://snowball.tartarus.org/
+
+! usage:
+
+! Compile:
+! xfst -e "source < sme-stemmer.xfst"
+! save sme-stemmer.fst
+! quit
+
+! Use:
+! cat words | lookup sme-stemmer.fst | ...
+
+
+define Vow       [ a | á | e | i | o | u | y | æ | ø | å | ä | ö | 
+                   A | Á | E | I | O | U | Y | Æ | Ø | Å | Ä | Ö | 
+é | ó | ú | í | à | è | ò | ù | ì | ë | ü | ï | â | ê | ô | û | î | ã | ý 
+É | Ó | Ú | Í | À | È | Ò | Ù | Ì | Ë | Ü | Ï | Â | Ê | Ô | Û | Î | Ã | Ý |
+e7 | o7 ] ;
+
+define Cns [ b | c | č | d | đ | f | g | h | j | k | l | m | n | ŋ | ñ | ń | 
+             B | C | Č | D | Đ | F | G | H | J | K | L | M | N | Ŋ | Ñ | Ń |
+             p | q | r | s | š | t | ŧ | v | w | x | z | ž |   
+             P | Q | R | S | Š | T | Ŧ | V | W | X | Z | Ž ] ; 
+
+
+! Here is the suffix list. It can (and should, actually) be extended.
+
+define Suf [ {a}
+| {aba}
+| {abeahtti}
+| {abehtet}
+| {aga}
+| {agiid}
+| {agiidda}
+| {agis}
+| {agiin}
+| {aidet}
+| {aide}
+| {aiga}
+| {aimet}
+| {aime}
+| {ai}
+| {an}
+| {asadet}
+| {asade}
+| {asamet}
+| {asame}
+| {asan}
+| {asaset}
+| {asaska}
+| {asas}
+| {asat}
+| {at}
+| {ba}
+| {beahtti}
+| {behtet}
+| {budet}
+| {bude}
+| {buidda}
+| {buiddisetguin}
+| {buiddiset}
+| {buiddisguin}
+| {buiddiskaguin}
+| {buiddiska}
+| {buiddis}
+| {buiddádeguin}
+| {buiddádetguin}
+| {buiddádet}
+| {buiddáde}
+| {buiddámeguin}
+| {buiddámetguin}
+| {buiddámet}
+| {buiddáme}
+| {buiddánguin}
+| {buiddán}
+| {buiddásan}
+| {buiddásat}
+| {buiddáseamet}
+| {buiddáseame}
+| {buiddáseaset}
+| {buiddáseaskka}
+| {buiddáseattet}
+| {buiddáseatte}
+| {buiddásis}
+| {buiddátguin}
+| {buiddát}
+| {buid}
+| {buiguin}
+| {buinniset}
+| {buinniska}
+| {buinnis}
+| {buinnádet}
+| {buinnáde}
+| {buinnámet}
+| {buinnáme}
+| {buinnán}
+| {buinnát}
+| {buin}
+| {bui}
+| {bumet}
+| {bume}
+| {bun}
+| {busadet}
+| {busade}
+| {busamet}
+| {busame}
+| {busan}
+| {busaset}
+| {busaska}
+| {busas}
+| {busat}
+| {buset}
+| {buska}
+| {busttiset}
+| {busttiska}
+| {busttis}
+| {busttádet}
+| {busttáde}
+| {busttámet}
+| {busttáme}
+| {busttán}
+| {busttát}
+| {bus}
+| {but}
+| {bu}
+| {det}
+| {de}
+| {eaba}
+| {eabbu}
+| {eadnu}
+| {eahkki}
+| {eahppi}
+| {eamet}
+| {eame}
+| {easet}
+| {easkka}
+| {eatnot}
+| {eattet}
+| {eatte}
+| {eažžaba}
+| {eažžabeahtti}
+| {eažžabehtet}
+| {eaččan}
+| {eaččat}
+| {eažžat}
+| {eažžá/boradeaš}
+| {edje}
+| {ehket}
+| {ehkon}
+| {ehkoset}
+| {ehkoska}
+| {ehkos}
+| {ehpet}
+| {eiddet}
+| {eidde}
+| {eigga}
+| {eimmet}
+| {eimme}
+| {en}
+| {etne}
+| {ettiin}
+| {et}
+| {e}
+| {eš}
+| {ežžet}
+| {ežže}
+| {idanguin}
+| {idan}
+| {idasadet}
+| {idasade}
+| {idasamet}
+| {idasame}
+| {idasan}
+| {idasaset}
+| {idasaska}
+| {idasas}
+| {idasat}
+| {idatguin}
+| {idat}
+| {ideameguin}
+| {ideametguin}
+| {ideamet}
+| {ideame}
+| {ideasetguin}
+| {ideaset}
+| {ideaskkaguin}
+| {ideaskka}
+| {ideatteguin}
+| {ideattetguin}
+| {ideattet}
+| {ideatte}
+| {idet}
+| {ide}
+| {idisguin}
+| {idis}
+| {id}
+| {iga}
+| {iguin}
+| {iidda}
+| {iiddisetguin}
+| {iiddiset}
+| {iiddisguin}
+| {iiddiskaguin}
+| {iiddiska}
+| {iiddis}
+| {iiddádeguin}
+| {iiddádetguin}
+| {iiddádet}
+| {iiddáde}
+| {iiddámeguin}
+| {iiddámetguin}
+| {iiddámet}
+| {iiddáme}
+| {iiddánguin}
+| {iiddán}
+| {iiddásan}
+| {iiddásat}
+| {iiddáseamet}
+| {iiddáseame}
+| {iiddáseaset}
+| {iiddáseaskka}
+| {iiddáseattet}
+| {iiddáseatte}
+| {iiddásis}
+| {iiddátguin}
+| {iiddát}
+| {iid}
+| {iiguin}
+| {iinniset}
+| {iinniska}
+| {iinnis}
+| {iinnádet}
+| {iinnáde}
+| {iinnámet}
+| {iinnáme}
+| {iinnán}
+| {iinnát}
+| {iin}
+| {ii}
+| {imet}
+| {ime}
+| {inan}
+| {inat}
+| {ineamet}
+| {ineame}
+| {ineaset}
+| {ineaskka}
+| {ineattet}
+| {ineatte}
+| {inis}
+| {in}
+| {isttiset}
+| {isttiska}
+| {isttis}
+| {isttádet}
+| {isttáde}
+| {isttámet}
+| {isttáme}
+| {isttán}
+| {isttát}
+| {is}
+| {it}
+| {ivččen}
+| {ivččet}
+| {ivčče}
+| {ivččiidet}
+| {ivččiide}
+| {ivččiiga}
+| {ivččiimet}
+| {ivččiime}
+| {ivččii}
+| {i}
+| {jedje}
+| {jetne}
+| {jin}
+| {jit}
+| {keahttájin}
+| {keahttá}
+| {met}
+| {me}
+| {musadet}
+| {musade}
+| {musaidanguin}
+| {musaidan}
+| {musaidasadet}
+| {musaidasade}
+| {musaidasamet}
+| {musaidasame}
+| {musaidasan}
+| {musaidasaset}
+| {musaidasaska}
+| {musaidasas}
+| {musaidasat}
+| {musaidatguin}
+| {musaidat}
+| {musaideameguin}
+| {musaideametguin}
+| {musaideamet}
+| {musaideame}
+| {musaideasetguin}
+| {musaideaset}
+| {musaideaskkaguin}
+| {musaideaskka}
+| {musaideatteguin}
+| {musaideattetguin}
+| {musaideattet}
+| {musaideatte}
+| {musaide}
+| {musaidisguin}
+| {musaidis}
+| {musaid}
+| {musaiguin}
+| {musainan}
+| {musainat}
+| {musaineamet}
+| {musaineame}
+| {musaineaset}
+| {musaineaskka}
+| {musaineattet}
+| {musaineatte}
+| {musainis}
+| {musain}
+| {musaset}
+| {musaska}
+| {musastan}
+| {musastat}
+| {musasteamet}
+| {musasteame}
+| {musasteaset}
+| {musasteaskka}
+| {musasteattet}
+| {musasteatte}
+| {musastis}
+| {musas}
+| {musat}
+| {musa}
+| {mussadet}
+| {mussade}
+| {mussamet}
+| {mussame}
+| {mussanan}
+| {mussanat}
+| {mussaneamet}
+| {mussaneame}
+| {mussaneaset}
+| {mussaneaskka}
+| {mussaneattet}
+| {mussaneatte}
+| {mussanis}
+| {mussan}
+| {mussasan}
+| {mussasat}
+| {mussaseamet}
+| {mussaseame}
+| {mussaseaset}
+| {mussaseaskka}
+| {mussaseattet}
+| {mussaseatte}
+| {mussaset}
+| {mussasis}
+| {mussaska}
+| {mussas}
+| {mussat}
+| {mussii}
+| {mus}
+| {nan}
+| {nat}
+| {neamet}
+| {neame}
+| {neaset}
+| {neaskka}
+| {neattet}
+| {neatte}
+| {nis}
+| {n}
+| {san}
+| {sat}
+| {seamet}
+| {seame}
+| {seaset}
+| {seaskka}
+| {seattet}
+| {seatte}
+| {set}
+| {sis}
+| {ska}
+| {stan}
+| {stat}
+| {steamet}
+| {steame}
+| {steaset}
+| {steaskka}
+| {steattet}
+| {steatte}
+| {stis}
+| {s}
+| {t}
+| {uvva}
+| {uvvo}
+| {visodet}
+| {visode}
+| {visot}
+| {á}
+| {žan}
+| {žat}
+| {ža}
+| {žeaba}
+| {žeahppi}
+| {šedje}
+| {žehpet}
+| {šeiddet}
+| {šeidde}
+| {šeigga}
+| {šeimmet}
+| {šeimme}
+| {žetne}
+| {še}
+| {šii}
+| {šin}
+| {šit}
+| {žit}
+| {š} ] ;
+
+! This syllable is not linguistically sound (no coda).
+! The reason for that is that we want the coda following the
+! last syllable to be a Suf candidate (e.g. nuora^t)
+
+define Syll Cns* Vow+  ;
+
+
+define Stem Syll Cns Syll ;
+
+
+
+
+define Border [..] -> %^ || Stem Syll* _ (Cns) Suf .#. ;
+
+define SufDeletion Suf -> 0 || Stem Syll* _ .#. ;
+
+
+! use one of the two following rules:
+
+!read regex Border ; ! this rule marks the suffixes
+read regex SufDeletion ; ! this rule removes the suffixes.
+
+invert net ;
+
+
+
+
+
+
+
