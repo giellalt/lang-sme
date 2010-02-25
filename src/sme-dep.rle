@@ -290,7 +290,8 @@ SET NOT-ADV-PCLE-NEG   = WORD - Adv - Pcle - Neg ;
 
 LIST @+FAUXV = @+FAUXV ; 	         # finite auxiliary
 LIST @+FMAINV = @+FMAINV ; 	         # finite main verb
-LIST @-FADVL = @-FADVL ; 	         # object of infinite verb outside of the verbal
+LIST @-FADVL> = @-FADVL> ; 	         # object of infinite verb outside of the verbal
+LIST @-F<ADVL = @-F<ADVL ; 	         # object of infinite verb outside of the verbal
 LIST @-FAUXV = @-FAUXV ; 	         # infinite auxiliary verb
 LIST @-FMAINV = @-FMAINV ; 	         # infinite main verb
 LIST @-FOBJ = @-FOBJ ; 		         # object of infinite verb outside of the verbal
@@ -308,7 +309,7 @@ LIST @>CC = @>CC ; 			 # modifier of CC
 LIST @>Num = @>Num ; 		         # attr of numeral
 LIST @>P = @>P ; 			 # complement of P
 LIST @A< = @A< ; 			 # complement of A
-LIST ADVL = @<ADVL @ADVL> @ADVL @-FADVL @APP-ADVL< ; 		         # adverbial
+LIST ADVL = @<ADVL @ADVL> @ADVL @-FADVL> @-F<ADVL @APP-ADVL< ; 		         # adverbial
 LIST @<ADVL = @<ADVL ;
 LIST @ADVL> = @ADVL> ;
 LIST @APP>Pron = @APP>Pron ;             # apposition of pron
@@ -362,7 +363,7 @@ LIST SPRED = @SPRED> @<SPRED @SPRED ;
 LIST OPRED = @OPRED> @<OPRED @OPRED ;
 LIST SUBJ = @<SUBJ @SUBJ> @SUBJ @-FSUBJ> @<-FSUBJ;
 LIST OBJ = @<OBJ @OBJ> @OBJ @SPRED<OBJ @SUBJ<OBJ @ADVL<OBJ @-FOBJ> @-F<OBJ ;
-SET @SUBOBJSPRED = @SUBJ> OR @OBJ> OR SPRED OR @<SUBJ OR @<OBJ ;
+SET @SUBOBJSPRED = SUBJ OR SPRED OR OBJ OR OPRED  ;
 LIST @VOC = @VOC ;
 LIST @INTERJ = @INTERJ ;
 
@@ -392,7 +393,7 @@ LIST KONJ = CS CC ;
 
 LIST @-FARG = @-FOBJ> @-FSUBJ @-F<OBJ @-FADVL> @-F<ADVL @-FADVL ;
 SET @ARG = SUBJ OR OBJ OR SPRED OR OPRED OR ADVL OR @ICL-OBJ OR @<PPRED OR @ADVL>SUBJ ;
-SET @-FARG/ADVL = @-FARG OR @-FADVL ;
+SET @-FARG/ADVL = @-FARG OR @-FADVL> OR @-F<ADVL ;
 SET @ARG/ADVL = @ARG OR ADVL - (ADVL + CC) ;
 SET @CLAUSE = @ARG/ADVL OR @-FARG/ADVL OR @V ;
 LIST @NOARROW = ADVL SUBJ OBJ ;
@@ -483,7 +484,7 @@ SUBSTITUTE:SubVmain=FS-ADVLaux (@FAUX) (@FS-ADVL) TARGET V (*-1 CC BARRIER @V OR
 SUBSTITUTE:SubV=FS-STAmv (@FMV)(@FS-STA) TARGET V (*-1 CS BARRIER VFIN OR Rel OR DELLIE OR @COMP-CS<) ;
 SUBSTITUTE:SubV=FS-STAmv (@FMV)(@FS-STA) TARGET V ((*-1 CC OR COMMA BARRIER @SUBJ> LINK NOT 0 DELLIE OR MUHTO BARRIER @V LINK *-1 (@FS-STA) OR (@FS-IMV) BARRIER @V))(NEGATE *1 (@<SUBJ)) ;
 SUBSTITUTE:SubV=FS-IMVcs (@IMV) (@FS-IMV) TARGET V (*-1 (<aux>) BARRIER @MV LINK NOT 0 (@FAUX) LINK *-1 CS BARRIER @MCLV) ;
-SUBSTITUTE:SubV=FS-IMVmo (@IMV) (@FS-IMV) TARGET V (*-1 (<aux>) BARRIER @MV LINK *-1 MO BARRIER @MV LINK NEGATE *1 ("?")) ;
+SUBSTITUTE:SubV=FS-IMVmo (@IMV) (@FS-IMV) TARGET V (*-1 (<aux>) BARRIER @MV LINK *-1 MO OR ("makkár" Pron) BARRIER @MV LINK NEGATE *1 ("?")) ;
 SUBSTITUTE:SubVmain=FS-STAaux (@FAUX) (@FS-STA) TARGET V (*-1 CS BARRIER VFIN OR Rel) ;
 SUBSTITUTE:SubVmain=FS-STAaux (@FAUX) (@FS-STA) TARGET V (*-1 CC BARRIER @V OR Rel LINK NOT 0 DELLIE LINK *-1 (@FS-STA) OR (@FS-IMV) BARRIER VFIN) ;
 SUBSTITUTE:SubV=FS-IAUXcs (@IAUX) (@FS-IAUX) TARGET V (*-1 (<aux>) BARRIER @MV LINK *-1 CS BARRIER @MV) ;
@@ -503,7 +504,7 @@ SUBSTITUTE:SubV=FSN-IAUX (@IAUX) (@FS-N<IAUX) TARGET V (*-1 (<aux>) BARRIER @MV 
 #SUBSTITUTE (@FAUX) (@FS-STA) TARGET (V Neg) (*-1 @SCLV BARRIER CC OR @V OR @SUBJ> LINK *-1 CS BARRIER @V) ;
 
 SUBSTITUTE:SubV=FS-STAmv (@FMV)(@FS-STA) TARGET V ((*-1 CS BARRIER @V LINK *-1 @V) OR (*-1 MO BARRIER @V LINK NEGATE *1 ("?") LINK *-1 @V)) ;
-SUBSTITUTE:SubV=FS-STAmv (@FMV)(@FS-STA) TARGET V ((*-1 CC OR COMMA BARRIER @SUBJ> OR @V LINK NOT -1 COMMA LINK *-1 @FS-N< BARRIER @V OR Rel LINK *-1 (Rel @SUBJ>))) ;
+SUBSTITUTE:SubV=FS-STAmv (@FMV)(@FS-STA) TARGET V (*-1 CC OR COMMA BARRIER @SUBJ> OR @V LINK NOT -1 COMMA LINK *-1 @FS-N< BARRIER @V OR Rel LINK *-1 (Rel @SUBJ>) LINK *-1 @MV) ;
 
 # infinite clauses:
 SUBSTITUTE:SubV=iclaux (@<OBJ) (@ICL-OBJ) TARGET NONVFIN (*-1 @-FSUBJ> BARRIER @V) ;
@@ -636,8 +637,8 @@ SETPARENT:SetAdvlToCompCS @<ADVL TO (*-1 @COMP-CS< BARRIER S-BOUNDARY2 OR @V) ;
 SETPARENT:SetAdvlToSubj @<ADVL TO (*-1 CC OR COMMA BARRIER @V LINK 1 @<SUBJ) ;
 SETPARENT:SetGostege GOSTEGE TO (*-1 Neg BARRIER @V) ;
 
-SETPARENT: @-FADVL TO (*-1 Inf OR Sup OR (Actio Ess) OR Ger BARRIER S-BOUNDARY2 LINK NOT 0 @MV) ;
-SETPARENT: @-FADVL TO (*1 Inf OR Sup OR (Actio Ess) OR Ger BARRIER S-BOUNDARY2 LINK NOT 0 @MV) ;
+SETPARENT: @-F<ADVL TO (*-1 Inf OR Sup OR (Actio Ess) OR Ger BARRIER S-BOUNDARY2 LINK NOT 0 @MV) ;
+SETPARENT: @-FADVL> TO (*1 Inf OR Sup OR (Actio Ess) OR Ger BARRIER S-BOUNDARY2 LINK NOT 0 @MV) ;
 
 SETPARENT:SetSubjToRightVfin @SUBJ> TO (*1 VFIN BARRIER S-BOUNDARY2) ;
 SETPARENT:SetSubjToLeftVfin @<SUBJ TO (*-1 VFIN BARRIER S-BOUNDARY2) ; 
@@ -771,10 +772,12 @@ SETPARENT WORD (NONE p (*)) TO (1 S-BOUNDARY2 LINK -2 S-BOUNDARY2 LINK @0 (*));
 SETPARENT:sentenceToSentence @FV (NONE p (*)) TO (*-1 @FV + <ctjHead>);
 SETPARENT:MVsentenceToMVSentence @FMV (NONE p (*)) TO (*-1 @FMV OR @FAUX);
 SETPARENT:MVsentenceToMVSentence @FAUX (NONE p (*)) TO (*-1 @FMV OR @FAUX);
-SETPARENT:sentenceToSentence VFIN (NONE p (*)) TO (*-1 VFIN);
 SETPARENT @HNOUN (NONE p (*)) TO (@0 (*));
-SETPARENT @SUBJ> OR @SPRED> (NONE p (*)) TO (@0 (*));
+SETPARENT SUBJ OR SPRED (NONE p (*)) TO (@0 (*));
 SETPARENT:sentenceToUttv @FV (NONE p (*)) TO (*1 @FMVutt);
+SETPARENT:MVsentenceToMVSentence @FMV (NONE p (*)) TO (@0 (*));
+SETPARENT:MVsentenceToMVSentence @FAUX (NONE p (*)) TO (@0 (*));
+SETPARENT:sentenceToSentence VFIN (NONE p (*)) TO (*-1 VFIN);
 
 # very elliptic mainclause
 SETPARENT:noarrow VFIN (NONE p (*)) TO (*-1 CS LINK *-1 @NOARROW BARRIER @V);
