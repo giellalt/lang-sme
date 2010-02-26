@@ -185,10 +185,15 @@ SET MO = MO-MANge - ("man" Foc/ge) ;
 
 LIST RELHUM = ("guhti" Rel) ("guhte" Rel) ("gii" Rel) ("gie" Rel); # To look for a human antecedent in stead of e.g. placenames 
 
-	
-SET S-BOUNDARY2 = (Pron Interr) OR (Pron Rel) OR ("muhto" CC) OR MO OR ("\;") OR (":") OR ("-") OR ("–") OR (@CVP) ;
+LIST GOSTEGE = ("gostege" Adv) ("ge" Pcle) ("mihkkege" Pron) ("mige" Pron) ;
+LIST AHTE = ("ahte" CS) ("at" CS) ("makkár" Pron) ; # these typically introduce a objectsubclause
+LIST DELLIE = ("de" CC) ("dellie" CC) ; # these typically introduce a main clause, not coordination 
+LIST MUHTO = ("muhto" CC) ("mohte" CC) ("men" CC) ("valla" CC) ; # these typically introduce a main clause, not coordination  
 
-SET NOT-ADJ            = WORD - A ;
+	
+SET S-BOUNDARY2 = (Pron Interr) OR (Pron Rel) OR MUHTO OR MO OR ("\;") OR (":") OR ("-") OR ("–") OR (@CVP) ;
+
+SET NOT-ADJ = WORD - A ;
 
 # Syntactic tags and sets
 # =======================
@@ -335,10 +340,6 @@ SECTION
 SUBSTITUTE:sum_id=Rel (CS) (<cs> Rel) TARGET ("sum" CS) OR ("ið" CS) ;
 SETPARENT:sum_id-verb (<cs> Rel) TO (*1 @V) ;
 
-LIST GOSTEGE = ("gostege" Adv) ("ge" Pcle) ("mihkkege" Pron) ("mige" Pron) ;
-LIST AHTE = ("ahte" CS) ("at" CS) ("makkár" Pron) ; # these typically introduce a objectsubclause
-LIST DELLIE = ("de" CC) ("dellie" CC) ; # these typically introduce a main clause, not coordination 
-LIST MUHTO = ("muhto" CC) ("mohte" CC) ("men" CC) ("valla" CC) ; # these typically introduce a main clause, not coordination  
 
 # Substitute the syn-verbtags to dep-verbtags: 
 SUBSTITUTE:SubFmainv=V (@+FMAINV) (@FMV) TARGET V ;
@@ -708,26 +709,32 @@ SETPARENT:MVsentenceToMVSentence @FAUX (NONE p (*)) TO (*-1 @FMV OR @FAUX);
 SETPARENT @HNOUN (NONE p (*)) TO (@0 (*));
 SETPARENT SUBJ OR SPRED (NONE p (*)) TO (@0 (*));
 SETPARENT:sentenceToUttv @FV (NONE p (*)) TO (*1 @FMVdic);
-SETPARENT:MVsentenceToMVSentence @FMV (NONE p (*)) TO (@0 (*));
-SETPARENT:MVsentenceToMVSentence @FAUX (NONE p (*)) TO (@0 (*));
-SETPARENT:sentenceToSentence VFIN (NONE p (*)) TO (*-1 VFIN);
+SETPARENT:FMVToRoot @FMV (NONE p (*)) TO (@0 (*));
+SETPARENT:FAUXToRoot @FAUX (NONE p (*)) TO (@0 (*));
+	## Reerenassenbielieh leah njielje jaepiej tjïrrh vuesiehtamme ahte ektesne maehtiejibie buerie tjoevtedimmieh gaavnedh. 
+SETPARENT:sentenceToSentence VFIN (NONE p (*)) TO (*-1 VFIN); # just in case...
 
 # very elliptic mainclause
-SETPARENT:noarrow VFIN (NONE p (*)) TO (*-1 CS LINK *-1 @NOARROW BARRIER @V);
+SETPARENT:noarrow VFIN (NONE p (*)) TO (*-1 CS LINK *-1 @NOARROW BARRIER @V);  
 
-SETPARENT @V (NONE p (*)) TO (@0 (*));
+SETPARENT @V (NONE p (*)) TO (@0 (*)); # the root
 
 ## div
-SETPARENT @VOC TO (*-1 VFIN);
-SETPARENT @VOC TO (*1 VFIN);
-SETPARENT @VOC TO (-1 CC LINK -1 @VOC);
-SETPARENT @INTERJ TO (*1 @MV);
-SETPARENT @INTERJ TO (-1 CC LINK -1 @INTERJ);
-SETPARENT @SPRED TO (*1 VFIN) ;
-SETPARENT @SPRED TO (*-1 VFIN) ;
-SETPARENT @SUBJ TO (*1 VFIN) ;
-SETPARENT @SUBJ TO (*-1 VFIN) ;
-SETPARENT @SUBJ (NONE p (*)) TO (@0 (*));
+SETPARENT:vocToLeft @VOC TO (*-1 VFIN);
+	## Ih onne-vielle datne maam guarkah. 
+SETPARENT:vocToRight @VOC TO (*1 VFIN);
+	## Karijuse, die lean heehkeme jih heehkeme.
+SETPARENT:vocCoord @VOC TO (-1 CC LINK -1 @VOC); # Per ja Kari, ......
+SETPARENT @INTERJ TO (*1 @MV); 
+	### Jaa jaa, nåå giehtelien vij.
+SETPARENT @SPRED TO (*1 VFIN) ; # @SPRED - there is no mainv for the spred
+	## Die maa onterligksh nommh, ih goh tuhtjh, men die ligan onterligksh nierretjh aaj. 
+SETPARENT @SPRED TO (*-1 VFIN) ; # @SPRED - there is no mainv for the spred
+	## Reerenasse bæjkohte ahte ektiebarkoereforme galka tjïrrehtovvedh, jïjnjebe sjïeremaahtoe skïemhtjegåetiesektovresne, nynnehkåbpoe tjïerveshåksoe, jïh jïjnjebh voeresgåetieh tseegkedh ...
+SETPARENT @SUBJ TO (*1 VFIN) ; # @SUBJ - there is no vfin for the subj - no cases in our gollecorpora
+SETPARENT @SUBJ TO (*-1 VFIN) ; # @SUBJ - there is no vfin for the subj
+	## Men Jensen aktene baenesne lij raejkie, jih desnie lin gøøkte nierretjh årroeminie maj nomme Karijuse jih Baktuse. 
+
 
 
     #=====#
