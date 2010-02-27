@@ -424,7 +424,7 @@ SUBSTITUTE:SubV=FS-ADVLmv (@FMV)(@FS-N<) TARGET V (-1 CC LINK -1 @FS-N<)(NEGATE 
 #SUBSTITUTE (@FAUX) (@FS-VFIN<) TARGET (V Neg) (*-1 @SCLV BARRIER CC OR @V OR @SUBJ> LINK *-1 CS BARRIER @V) ;
 
 # the vfin of the subclause will be coordinated to the vfin of the preceeding clause
-SUBSTITUTE:SubV=FS-STAmv (@FMV)(@FS-VFIN<) TARGET V ((*-1 CS BARRIER @V LINK *-1 @V) OR (*-1 MO BARRIER @V LINK NEGATE *1 ("?") LINK *-1 @V)) ;
+SUBSTITUTE:SubV=FS-STAmv (@FMV)(@FS-VFIN<) TARGET V ((*-1 CS BARRIER @V OR @COMP-CS< LINK *-1 @V) OR (*-1 MO BARRIER @V LINK NEGATE *1 ("?") LINK *-1 @V)) ;
 SUBSTITUTE:SubV=FS-STAmv (@FMV)(@FS-VFIN<) TARGET V (*-1 CC OR COMMA BARRIER @SUBJ> OR @V LINK *-1 VFIN BARRIER @V OR Rel OR COMMA LINK *-1 (Rel @SUBJ>) LINK *-1 @MV) ; # there should not be a subject
 
 # infinite clauses:
@@ -563,6 +563,7 @@ SETPARENT:SetObjToRightMv @OBJ> TO (*1 (<mv>) BARRIER S-BOUNDARY2 OR @-FSUBJ) ;
 SETPARENT:Set-FObjToLeftMv @-F<OBJ TO (*-1 NONVFIN BARRIER S-BOUNDARY2 OR @-FSUBJ OR OBJ) ;
 SETPARENT:Set-FObjToRightMv @-FOBJ> TO (*1 NONVFIN BARRIER S-BOUNDARY2 OR @-FSUBJ) ;
 SETPARENT:SetAdvlToSubj @<ADVL TO (*-1 SUBJ) ;
+	## Mov mænngan båata dihte gie manneste veaksahkåbpoe.
 SETPARENT:SetAdvlToLeftMv @<ADVL TO (*-1 (<mv>) BARRIER S-BOUNDARY2 OR @-FSUBJ) ;
 SETPARENT:SetAdvlToLeftNeg @<ADVL TO (*-1 Neg BARRIER S-BOUNDARY2 OR @-FSUBJ OR (<mv>)) ;
 SETPARENT:SetAdvlToRightMv @ADVL> TO (*1 (<mv>) BARRIER @-FSUBJ) ;
@@ -573,6 +574,7 @@ SETPARENT:SetGostege GOSTEGE TO (*-1 Neg BARRIER @V) ;
 SETPARENT: @-F<ADVL TO (*-1 Inf OR Sup OR (Actio Ess) OR Ger BARRIER S-BOUNDARY2 LINK NOT 0 @MV) ;
 SETPARENT: @-FADVL> TO (*1 Inf OR Sup OR (Actio Ess) OR Ger BARRIER S-BOUNDARY2 LINK NOT 0 @MV) ;
 
+SETPARENT:SetSubjToRightMv @SUBJ> TO (*1 (<mv>) BARRIER S-BOUNDARY2) ;
 SETPARENT:SetSubjToRightVfin @SUBJ> TO (*1 VFIN BARRIER S-BOUNDARY2) ;
 SETPARENT:SetSubjToLeftVfin @<SUBJ TO (*-1 VFIN BARRIER S-BOUNDARY2) ; 
 SETPARENT:SetRelSubjToRight @SUBJ> + Rel TO (*1 @FS-N< BARRIER S-BOUNDARY2) ;
@@ -580,7 +582,8 @@ SETPARENT:SetRelSubjToRight @SUBJ> + Rel TO (*1 @FS-N< BARRIER S-BOUNDARY2) ;
 SETPARENT @<SPRED TO (*-1 @SUBJ> BARRIER @V);
     ## Sápmelaččaid historjá álbmogin lea duháhiid jagiid boaris, muhto dálá ássanguovlluin sápmelaččat eai leat ássan nu guhká.
 SETPARENT @SPRED> TO (*1 @SUBJ> LINK NOT 0 Rel);
-SETPARENT @<SPRED TO (*-1 (<mv>) OR @HNOUN);
+SETPARENT @<SPRED TO (*-1 (<mv>) OR @HNOUN OR @SUBJ);
+	## Mov mænngan båata dihte gie manneste veaksahkåbpoe.
 SETPARENT @SPRED> TO (*1 (<mv>) OR @HNOUN BARRIER Rel OR S-BOUNDARY2);
 SETPARENT @-F<SPRED TO (*-1 NONVFIN LINK NOT 0 @MV) ;
 
@@ -591,24 +594,25 @@ SETPARENT @<OPRED TO (*-1 OBJ BARRIER S-BOUNDARY2);
 SETPARENT @OPRED> TO (*1 OBJ BARRIER S-BOUNDARY2);
 SETPARENT @<PPRED TO (*-1 SPRED OR OPRED) ;
 
-## @COMP-CS<
+# @COMP-CS<
 SETPARENT:CNPToMvwhenComp-cs @CNP TO (*1 @COMP-CS< BARRIER @CLAUSE LINK *-1 @CNP LINK *-1 <mv>) ;
 SETPARENT:Comp-cs @COMP-CS< TO (*-1 CS) ;
 SETPARENT @ADVL>CS TO (1 CS) ;
 
-### the finite verb to the subject when there is a relative clause in between
+# the finite verb to the subject when there is a relative clause in between
 SETPARENT:SetSubjVfinAfterRelCl @SUBJ> TO (*1 Rel BARRIER VFIN OR S-BOUNDARY2 LINK *1 @FAUX OR @FMV) ;
 	## Genadutkit geaid eamiálbmogat miehtá máilmmi leat vuosttaldan garrasit, leat dál jođus Sápmái, ja sii ohcet sámi dievdduid genadutkamii. 
 
+### coordination ###
 
-### subjunction and coordination
+### subjunction
 SETPARENT:SetCCellipse KONJ + @CVP TO (*1 @<SUBJ BARRIER VFIN) ;
 SETPARENT:SetCCellipse KONJ + @CVP TO (*1 KONJ + @CVP BARRIER @V LINK *-1 @SUBJ> BARRIER @CVP) ;
 SETPARENT:SetCCToCC (CC @CVP) TO (1 CS) ;
 SETPARENT:SetKonjToFMV KONJ + @CVP TO (*1 @FMV) ;
 SETPARENT:SetKonjToV KONJ + @CVP TO (*1 VFIN OR NONVFIN BARRIER S-BOUNDARY2) ;
 
-### coordination
+### coordinator
 SETPARENT:SetCNPToWord @CNP TO (*-1 WORD) ;
 SETPARENT:SetCNPToWord @CVP + CC TO (*-1 WORD) ;
 SETPARENT:SetCNPToWord @CVP + CC TO (-1 BOS LINK 3 CS LINK -1 WORD) ;
@@ -617,8 +621,8 @@ SETPARENT:SetCNPToWord @CVP + CC TO (-1 BOS LINK 3 CS LINK -1 WORD) ;
 LIST COORD = @SUBJ> @<SUBJ @<OBJ @OBJ> @<SPRED @SPRED> @<OPRED @OPRED> @APP-N< @ADVL<OBJ @SUBJ<ADVL @OBJ>SPRED @COMP-CS< @SPRED @>P @ADVL> @<ADVL ;
 LIST VERBCOORD = @FMV @FAUX @IAUX @FAUX @FS-IMV @FS-VFIN< @FS-ADVL @FS-OBJ @FS-N< @IMV @FS-N<IMV ;
 
+# the first part of a coordination is the head of all the coordinated parts and gets the tag <ctjHead>
 SUBSTITUTE:ctjHead (@>N) (<ctjHead> @>N) TARGET @>N (NEGATE *-1 @CNP OR COMMA BARRIER @V LINK -1 @>N)(1 COMMA OR @CNP LINK *1 @>N BARRIER @ARG OR @V LINK NEGATE *1 COMMA BARRIER @CLAUSE LINK 1 @CLAUSE) ;
-
 SUBSTITUTE:ctjHead (@SUBJ>) (<ctjHead> @SUBJ>) TARGET @SUBJ> (NEGATE *-1 @CNP OR COMMA BARRIER @V LINK -1 @SUBJ>)(1 COMMA OR @CNP LINK *1 @SUBJ> BARRIER @ARG OR @V OR S-BOUNDARY2 LINK NOT 0 Rel) ;
 SUBSTITUTE:ctjHead (@<SUBJ) (<ctjHead> @<SUBJ) TARGET @<SUBJ (NEGATE *-1 @CNP OR COMMA BARRIER @V OR @ARG LINK -1 @<SUBJ)(1 COMMA OR @CNP LINK *1 @<SUBJ BARRIER @ARG OR @V OR S-BOUNDARY2) ;
 SUBSTITUTE:ctjHead (@<OBJ) (<ctjHead> @<OBJ) TARGET @<OBJ (NEGATE *-1 @CNP OR COMMA BARRIER @ARG OR (<mv>) LINK -1 @<OBJ)(1 COMMA OR @CNP LINK *1 @<OBJ BARRIER @V OR @ARG OR S-BOUNDARY2) ;
@@ -635,13 +639,25 @@ SUBSTITUTE:ctjHead (@OPRED>) (<ctjHead> @OPRED>) TARGET @OPRED> (NEGATE *-1 @CNP
 SUBSTITUTE:ctjHead (@COMP-CS<) (<ctjHead> @COMP-CS<) TARGET @COMP-CS< (NEGATE *-1 @CNP OR COMMA BARRIER @ARG OR S-BOUNDARY2 LINK -1 @COMP-CS<)(1 COMMA OR KONJ + @CNP LINK *1 @COMP-CS< BARRIER @ARG OR CS) ;
 SUBSTITUTE:ctjHead (@>P) (<ctjHead> @>P) TARGET @>P (NEGATE *-1 @CNP OR COMMA BARRIER @ARG OR S-BOUNDARY2 LINK -1 @>P)(1 COMMA OR @CNP LINK *1 @>P BARRIER @ARG) ;
 
+# coordination - not verbs
+SETPARENT:Coord $$COORD TO (*-1 COMMA OR @CNP BARRIER @V OR S-BOUNDARY2 LINK *-1 $$COORD + <ctjHead>);
+	## Maahtoe jïh skuvle lea dellie mubpie vihkeles tsiehkiem daennie orre våaroemisnie. 
 
+# coordinatin of @>N
+SETPARENT:>NCoord @>N TO (*-1 COMMA OR CC BARRIER @CLAUSE LINK *-1 @>N + <ctjHead> BARRIER @CLAUSE);
+	## Dát leat luohtehahtti ja duohta sánit .
+SETPARENT:Not>NCoord @>N TO (1 (N @>N));
+    ## Dát lea Dávveda bártni ja Abrahama bártni sohka. 
 
+### verbcoordination
+
+# verbcoordination - mainclauses
 SUBSTITUTE:ctjHead (V) (<ctjHead> V) TARGET VFIN (NEGATE *-1 CC OR COMMA BARRIER CS OR MO LINK *-1 VFIN BARRIER CS OR MO)(0 @MCLV)(NEGATE 0 Neg LINK 1 ("ge"))(*1 COMMA OR CC BARRIER Rel OR CS LINK **1 VFIN LINK 0 @MCLV) ;
     ## Muhtun geasi nieida jávkkai, ja olbmot ohce su, muhto eai gávdnan su eai gostege, eaige diehtán gosa lei šaddan.
-SUBSTITUTE:ctjHead (V) (<ctjHead> V) TARGET VFIN (NEGATE *-1 CC OR COMMA BARRIER CS OR MO LINK *-1 VFIN BARRIER CS OR MO)(0 @MCLV)(NEGATE 0 Neg LINK 1 ("ge"))(*1 Rel BARRIER @V LINK *1 COMMA OR @CVP BARRIER Rel OR CS LINK *1 @SUBJ> BARRIER @V LINK **1 VFIN LINK 0 @MCLV) ;
+SUBSTITUTE:ctjHead (V) (<ctjHead> V) TARGET VFIN (NEGATE *-1 CC OR COMMA BARRIER CS OR MO LINK *-1 VFIN BARRIER CS OR MO)(0 @MCLV)(NEGATE 0 Neg LINK 1 ("ge"))(*1 Rel BARRIER @V LINK *1 COMMA OR @CVP BARRIER Rel OR CS LINK *1 @SUBJ> BARRIER @V LINK **1 VFIN LINK 0 @MCLV) ; # a relative clause in between
+	## Lea vuosttaš CD maid Sámi Jienat almmuha ja CD galgá leat válmmas geassemánu 10. beaivvi 2005.
 
-
+# verbcoordination - subclauses
 SUBSTITUTE:ctjHead (V) (<ctjHead> V) TARGET VFIN (NEGATE *-1 CC OR COMMA BARRIER CS OR MO OR Rel LINK *-1 VFIN BARRIER CS OR MO)(0 @SCLV)(NEGATE *-1 CS BARRIER @V OR MO LINK *1 @SCLV LINK *1 MO BARRIER @V) (NEGATE 0 Neg LINK 1 ("ge"))(*1 COMMA OR CC LINK *1 VFIN BARRIER MO OR CS OR Rel LINK 0 @SCLV) ;
     ## Go bassat lihtiid dahje málestit siiddas, de sáhttit seammás guldalit radio.
 
@@ -660,55 +676,92 @@ SUBSTITUTE:ctjHead (V) (<ctjHead> V) TARGET VFIN (NEGATE *-1 CC OR COMMA BARRIER
 SUBSTITUTE:ctjHead (V) (<ctjHead> V) TARGET VFIN (NEGATE *-1 CC OR COMMA BARRIER CS OR MO LINK *-1 VFIN BARRIER CS OR MO)(0 @SCLV)(NEGATE 0 Neg LINK 1 ("ge"))(*-1 MADE OR DADE BARRIER @V LINK *1 VFIN LINK *1 DADE BARRIER VFIN LINK *1 VFIN LINK 0 @SCLV) ;    
     ## Mađe stuorit RAM-muitu du dihtoris lea, dađe eanet dihtorprográmmaid sáhtát geavahit oktanaga.
 
+# two infinite verbs
 SUBSTITUTE:ctjHead (V) (<ctjHead> V) TARGET $$VERBCOORD (NOT 0 VFIN)(NEGATE *-1 CC OR COMMA BARRIER CS LINK *-1 $$VERBCOORD)(*1 COMMA OR CC BARRIER $$VERBCOORD LINK *1 $$VERBCOORD BARRIER CS OR @V) ;
+	## Tjirkedh voeresgåetien-sijjieh gaajhkeside 2015den åvtelen, jïh voeresalmetji reaktide nænnoestidh. 
 
-SETPARENT:GenCoord @>N TO (*-1 COMMA OR CC BARRIER @CLAUSE LINK *-1 @>N + <ctjHead> BARRIER @CLAUSE);
-SETPARENT:NotGenCoord @>N TO (1 (N @>N));
-    ## Dát lea Dávveda bártni ja Abrahama bártni sohka. 
-
+# subclause to mainclause
 SETPARENT:SetFSSTAtoMV @FS-VFIN< TO (*-1 @FAUX OR @FMV BARRIER CC OR @FS-VFIN<) ;
-SETPARENT:SetFSSTAtoRelOrAdvl @FS-VFIN< TO (*-1 @FS-N< OR @FS-ADVL BARRIER VFIN OR @SUBJ>) ;
-SETPARENT @FS-VFIN< TO (*-1 MO BARRIER @FS-VFIN< OR CS LINK *-1 VFIN) ;
-SETPARENT @FS-VFIN< TO (*-1 @FS-VFIN< BARRIER @MCLV OR Rel) ;
-SETPARENT @FS-VFIN< TO (*-1 @FS-IMV BARRIER VFIN OR @CVP) ;
-SETPARENT @FS-VFIN< TO (*-1 @FS-N< BARRIER @MV) ;
-SETPARENT @FS-VFIN< + Neg TO (1 ("ge") LINK *-1 GOSTEGE BARRIER CS OR CC LINK -1 Neg LINK *-1 Neg BARRIER VFIN) ;
-SETPARENT @FS-VFIN< + (Neg Foc/ge) TO (*-1 GOSTEGE BARRIER CS OR CC LINK -1 Neg LINK *-1 Neg BARRIER VFIN) ;
+	## Gávpoga poarttat eai goassege dahppojuvvo beaivet, ii ge idja šat leat .
 
+# subclause to another kind of subclause
+SETPARENT:SetFSSTAtoRelOrAdvl @FS-VFIN< TO (*-1 @FS-N< OR @FS-ADVL BARRIER VFIN OR @SUBJ>) ;
+	## Usjudallá jus ieddne le sunnuv åhtsåmin, ja de ij sunnuv gávna gå oademin libá, ja gåktu de jus soames ádjá rádna båhti.
+
+SETPARENT @FS-VFIN< TO (*-1 MO BARRIER @FS-VFIN< OR CS LINK *-1 VFIN) ; # not in use	
+
+# subclause to subclause
+SETPARENT @FS-VFIN< TO (*-1 @FS-VFIN< BARRIER @MCLV OR Rel) ;
+	## Laavloejigan jih tuhtjigan luste, jih gosse idtjigan åerieh jallh byøpmedh, die heehkigan jih beenghkigan dam baeniem guktie dihte gåetie edtja stoerre jih tjaekeds sjïdtedh.
+	
+# subclause to relative clause	
+SETPARENT @FS-VFIN< TO (*-1 @FS-N< BARRIER @MV) ;
+	## Gávpoga váldogeainnu ja eanu gaskkas lea eallima muorra mii šaddada šattuid guoktenuppelot geardde ja addá šattuidis juohke mánus .
+	
+SETPARENT @FS-VFIN< + Neg TO (1 ("ge") LINK *-1 GOSTEGE BARRIER CS OR CC LINK -1 Neg LINK *-1 Neg BARRIER VFIN) ; # not in use	
+	
+SETPARENT @FS-VFIN< + (Neg Foc/ge) TO (*-1 GOSTEGE BARRIER CS OR CC LINK -1 Neg LINK *-1 Neg BARRIER VFIN) ; # not in use
 
 SETPARENT:RelVtoVfin @FS-VFIN< (NONE p (*)) TO (*1 @FV) ; 
-SETPARENT:RelVtoVfin @FS-VFIN< (NONE p (*)) TO (*-1 @FV) ; 
-SETPARENT:RelVtoVfin @FS-VFIN< TO (*-1 @ADVL>SUBJ BARRIER VFIN LINK *1 SUBJ) ; 
+	## Gå de bivvám ja bårråm libá, de máná nav nagerduvvaba.
+SETPARENT:RelVtoVfin @FS-VFIN< (NONE p (*)) TO (*-1 @FV) ; # not in use
+SETPARENT:RelVtoVfin @FS-VFIN< TO (*-1 @ADVL>SUBJ BARRIER VFIN LINK *1 SUBJ) ;  # not in use
 
 
-######### nonfinite clauses
+### nonfinite clauses
 SETPARENT:InfinSubj @-FSUBJ> TO (*1 NONVFIN);
+	## Muhtinlágan Stállu cáhpá goikebierggu sudnuide ja dáhttu mánáid boradit. # mánáid
 SETPARENT:InfinObj @ICL-OBJ TO (*-1 (<mv>));
+	## Muhtinlágan Stállu cáhpá goikebierggu sudnuide ja dáhttu mánáid boradit. # boradit
 
-###############
+### direkte tale
 SETPARENT @FMVdic (NONE p (*)) TO (@0 (*));
+	## Ökonomihke tsiehkieh hov mieriedieh mejtie buektiehtibie daejtie ulmide illedh, Stoltenberge jeahta.
 
+# mv is preceeding aux - move this one?
+SETPARENT @FS-VFIN< TO (*-1 @FS-IMV BARRIER VFIN OR @CVP) ;
+	## Usjudallá jus ieddne le sunnuv åhtsåmin, ja de ij sunnuv gávna gå oademin libá, ...
+
+# obj-subclause to the nearest mv to the left
 SETPARENT:OBJsentenceToSentence @FS-OBJ TO (*-1 <mv> LINK NOT 0 IV);
+	## Mii fertet maiddái geahčadit makkár lassi guoimmuhemiid galgat fállat vai bohtet vel eanet olbmot boahtte jagi.
+
+# advl-subclause to the nearest mv to the left 
 SETPARENT:ADVLsentenceToSentence @FS-ADVL TO (*-1 MO OR CS LINK NOT 0 DELLIE LINK *-1 <mv> BARRIER @SUBJ> OR @V) ;
-SETPARENT:ADVLsentenceToSentence @FS-ADVL (NONE p (*)) TO (*-1 @FMV OR @IMV);
+	## Guktie vienhth jis dohte baenie-saehpie sååjhtoe båetedh! # no mainclause
+
+# advl-subclause to mainclause' mainverb
+SETPARENT:ADVLsentenceToSentence @FS-ADVL (NONE p (*)) TO (*-1 @IMV OR @FMV);
+	## Gávpot ii dárbbaš čuovgga beaivvážis ii ge mánus, dasgo Ipmila hearvásvuohta čuvge dan, ja Láppis lea dan čuovga. 
+
+# subclause to mainclause to the right
 SETPARENT:ADVLsentenceToSentence @FS-ADVL (NONE p (*)) TO (*1 @FMV OR @IMV);
+	## Goh Jeesuse ånnetji guhkiebasse båata, dellie Seebedevusen elkide, Jaahke gonnoeh Jååhannesem vuajnije. 
 
-SETPARENT:Coord $$COORD TO (*-1 COMMA OR @CNP BARRIER @V OR S-BOUNDARY2 LINK *-1 $$COORD + <ctjHead>);
 SETPARENT:VCoord $$VERBCOORD TO (*-1 COMMA OR CC LINK *-1 $$VERBCOORD + <ctjHead>);
-
+	## Karijuse, die lean heehkeme jih heehkeme.
 
 SETPARENT @HNOUN TO (*-1 N BARRIER @V);
 SETPARENT @HNOUN TO (1 (":") LINK *1 @V OR (@SUBJ) BARRIER S-BOUNDARY2);
 SETPARENT @HNOUN TO (-1 (":") LINK *-1 @V OR (@SUBJ) BARRIER S-BOUNDARY2);
+	## Karijuse: «Mij dellie?»
 
 SETPARENT WORD (NONE p (*)) TO (1 S-BOUNDARY2 LINK -2 S-BOUNDARY2 LINK @0 (*));
 
-SETPARENT:sentenceToSentence @FV (NONE p (*)) TO (*-1 @FV + <ctjHead>);
-SETPARENT:MVsentenceToMVSentence @FMV (NONE p (*)) TO (*-1 @FMV OR @FAUX);
-SETPARENT:MVsentenceToMVSentence @FAUX (NONE p (*)) TO (*-1 @FMV OR @FAUX);
+SETPARENT:sentenceToSentence @FV (NONE p (*)) TO (*-1 @FV + <ctjHead>); 
+	# Nordlysbearaš unnui dušše moatti olbmui ja maŋimuš vuorbi lei gesson. 
+SETPARENT:MVsentenceToMVSentence @FMV (NONE p (*)) TO (*-1 @FMV OR @FAUX); 
+	# Go leaba liegganan ja boradan, de máná-guovttos nu váibaba nu váibaba.
+SETPARENT:MVsentenceToMVSentence @FAUX (NONE p (*)) TO (*-1 @FMV OR @FAUX); 
+	# Valla hæhttuji liehket gárvvása duostotjit vuosstemielav gå iehtjáda ájttsi sij e ållida rájnasvuodarávkalvisáv ja gåvåv sáme kultuvra ja identitehta birra mij le moaddásijn.
+
 SETPARENT @HNOUN (NONE p (*)) TO (@0 (*));
-SETPARENT SUBJ OR SPRED (NONE p (*)) TO (@0 (*));
+
+# direkte tale
 SETPARENT:sentenceToUttv @FV (NONE p (*)) TO (*1 @FMVdic);
+	## Daennie aamhtesine byjjes Nöörje tjoevere åvtehkine årrodh, nov Kristin Halvorsene jeahta.
+
+# finite verb in mainclause to root
 SETPARENT:FMVToRoot @FMV (NONE p (*)) TO (@0 (*));
 SETPARENT:FAUXToRoot @FAUX (NONE p (*)) TO (@0 (*));
 	## Reerenassenbielieh leah njielje jaepiej tjïrrh vuesiehtamme ahte ektesne maehtiejibie buerie tjoevtedimmieh gaavnedh. 
@@ -734,7 +787,12 @@ SETPARENT @SPRED TO (*-1 VFIN) ; # @SPRED - there is no mainv for the spred
 SETPARENT @SUBJ TO (*1 VFIN) ; # @SUBJ - there is no vfin for the subj - no cases in our gollecorpora
 SETPARENT @SUBJ TO (*-1 VFIN) ; # @SUBJ - there is no vfin for the subj
 	## Men Jensen aktene baenesne lij raejkie, jih desnie lin gøøkte nierretjh årroeminie maj nomme Karijuse jih Baktuse. 
-
+SETPARENT (Rel @SUBJ) TO (*-1 N OR Pers OR Indef OR A) ; # @SUBJ - there is no vfin for the subj 
+	## Mov mænngan båata dihte gie manneste veaksahkåbpoe.
+SETPARENT SUBJ (NONE p (*)) TO (@0 (*));
+	## Dennie synnagovgesne jis akte ålma maam doenh-aajmoe doerelamme. 
+SETPARENT SPRED (NONE p (*)) TO (@0 (*));
+	## Sálugin guhti dán girje åvddålijsárnnoma bágojt vuorkki . 
 
 
     #=====#
