@@ -107,6 +107,8 @@ LIST 2Pl = 2Pl ;
 LIST 3Pl = 3Pl ;
 LIST 4Pl = 4Pl ;
 
+LIST 1234P =  1Sg  2Sg  3Sg  4Sg  1Pl  2Pl  3Pl  4Pl ;
+ 
 LIST 34IV = 3Sg 3Pl 4Sg 4Pl ;
 LIST 34Sg = 3Sg 4Sg ;
 LIST 34Pl = 3Pl 4Pl ;
@@ -294,7 +296,7 @@ LIST @CL->N = @CL->N ;       # Relativsætning stående til nominal til højre
 LIST @CL-ADVL> = @CL-ADVL> ; # neksusadverbial der modificerer t.h. 
 LIST @CL-CIT> = @CL-CIT> ;	 # predikat i oo der står til et matriseverb t.h. CL-OBJ (oo oratobl)
 LIST @CON = @CON ;	# erstatter de foelgende ved conditionalis - baade coref og non-coref
-LIST @CONJ = @CONJ ;
+LIST @CONJ = @CONJ ;      # MAP (@CONJ) TARGET KONJUNKTION IF (-1 BOS OR ("\,")) ;
 LIST @FOC = @FOC ;		# partikler, der erstatter et verballed
 LIST @HEADLINE = @HEADLINE ;	# loes partikel eller verbum i overskrifter
 LIST @INF->N = @INF->N ;	# tag forbeholdt de saerlige adnominale transitive infinitiver uden objekt (ilitsoqqussaralugu oqaatsit)
@@ -315,11 +317,13 @@ LIST @i->V = @i->V ; 	# NIQ ved ajor, saper, artor, nalu
 LIST @i-ADVL> = @i-ADVL> ;	 # adverbial der står til inkorporeret verbal t.h.
 LIST @i-MIK-OBJ> = @i-MIK-OBJ> ; #objekt ved inderiveret halvtransitiv 20091106
 LIST @i-N< = @i-N< ;		 # adled der står til inkorporeret nominal t.v.
-LIST @i-N> = @i-N> ;
+LIST @i-N> = @i-N> ;        
 LIST @i-OBJ_DOTR> = @i-OBJ_DOTR> ;     # tingsobjekt i Ins eller personobjekt i Trm ved dotr th
 LIST @i-SUBJ> = @i-SUBJ> ;   # "dativ-objektet" ved dotr verbal t.h. 'Beatrinep PERIMUT allagaq aaqquaa'
 LIST @FS-OBJ> = @FS-OBJ> ; 	         # finite subclause functioning as object
-LIST @<FS-OBJ = @<FS-OBJ ; 	         # finite subclause functioning as object
+LIST @FS-<OBJ = @FS-<OBJ ; 	         # finite subclause functioning as object
+LIST @FS-ADVL> = @FS-ADVL> ; 	         # finite subclause functioning as adverbial
+LIST @FS-<ADVL = @FS-<ADVL ; 	         # finite subclause functioning as adverbial
 
 
 
@@ -333,7 +337,7 @@ LIST @FS-IAUX = @FS-IAUX ;
 LIST @FS-N<IMV = @FS-N<IMV ;
 LIST <mv> = <mv> ;
 LIST <aux> = <aux> ;
-LIST @V = @FMV @IMV @FAUX @IAUX @FS-VFIN< @FS-ADVL @FS-OBJ @FS-IMV @FS-N<IMV @FS-N< @FS-IAUX @FS-N<IAUX @PRED @PRED2;
+LIST @V = @FMV @IMV @FAUX @IAUX @FS-VFIN< @FS-ADVL @FS-<ADVL @FS-ADVL> @FS-OBJ @FS-<OBJ @FS-OBJ> @FS-IMV @FS-N<IMV @FS-N< @FS-IAUX @FS-N<IAUX @PRED @PRED2;
 LIST @MCLV = @FMV @IMV @FAUX @IAUX ;
 LIST @SCLV = @FS-VFIN< @FS-IMV @FS-N<IMV @FS-N< @FS-IAUX @FS-N<IAUX @FS-ADVL @FS-OBJ;
 LIST @FV = @FMV @FAUX ;
@@ -382,17 +386,21 @@ SETPARENT:sum_id-verb (<cs> Rel) TO (*1 @V) ;
 # kal-rules
 SUBSTITUTE (@PRED) (@FMV) TARGET V ;
 # SUBSTITUTE (Rel) (Relc) TARGET N ;
-SUBSTITUTE (@<CL-CIT) (@FS-OBJ) TARGET V ;  # Should have been @<FS-OBJ, but for convenience...
+SUBSTITUTE (@<CL-CIT) (@FS-OBJ) TARGET V ;  # Should have been @FS-<OBJ, but for convenience...
 SUBSTITUTE (@CL-CIT>) (@FS-OBJ>) TARGET V ;
-SUBSTITUTE (@PRED2) (@FS-OBJ) TARGET V ;
+SUBSTITUTE (@CL-<CIT) (@FS-OBJ) TARGET V ;  # Should have been @FS-<OBJ, but for convenience...
 
+SUBSTITUTE (@PRED2) (@FS-OBJ) TARGET V ;
+SUBSTITUTE (@PROP>) (@>N) TARGET (N Prop Attr) ;
 # Substitute the syn-verbtags to dep-verbtags: 
 SUBSTITUTE:SubFmainv=V (@+FMAINV) (@FMV) TARGET V ;
 SUBSTITUTE:SubNfmainv=V (@-FMAINV) (@IMV) TARGET V ;
 SUBSTITUTE:SubFaux=V (@+FAUXV) (@FAUX) TARGET V ;
 SUBSTITUTE:SubNfaux=V (@-FAUXV) (@IAUX) TARGET V ;
+SUBSTITUTE (@<ADVL) (@FS-<ADVL) TARGET Inf ;
+SUBSTITUTE (@ADVL>) (@FS-ADVL>) TARGET Inf ;
 
-SET VFIN = @FMV OR @FMVdic OR @FAUX OR @FS-VFIN< OR @FS-N< OR @FS-ADVL OR @FS-OBJ ; 
+SET VFIN = @FMV OR @FMVdic OR @FAUX OR @FS-VFIN< OR @FS-N< OR @FS-ADVL OR @FS-<ADVL OR @FS-ADVL> OR @FS-OBJ ; 
 SET NONVFIN = V - VFIN ;
 
 # citations - the verb is marked so it will be handled differently from other verbs if it is in the end of the sentence
@@ -406,6 +414,9 @@ SUBSTITUTE:utt (@FMV)(@FMVdic) TARGET (<vdic>) (0 VFIN LINK -1 @SUBJ> LINK *-1 C
 # --------------------------------------------
 SUBSTITUTE:SubV=mv (V) (<mv> V) TARGET @MV ;
 SUBSTITUTE:SubV=aux (V) (<aux> V) TARGET @AUX ;
+
+# kal
+SUBSTITUTE:SubV=mvkal (V) (<mv> V) TARGET 1234P ;
 
 # infinite clauses:
 #SUBSTITUTE:SubV=mvICL (V) (<mv> V) TARGET NONVFIN (0 @<OBJ LINK NEGATE *1 @IMV BARRIER S-BOUNDARY OR V) ;
@@ -506,7 +517,7 @@ SETPARENT:faoRIOBJ @IOBJ> TO (*1 <mv>) ;   # For fao!
 
 ### kal
 
-SETPARENT (@POSS>) TO (1 POSSESSUM);
+SETPARENT (@POSS>) TO (*1 POSSESSUM BARRIER V);
 SETPARENT (@SUBJ>) TO (*1 (@PRED));
 
 
@@ -589,7 +600,7 @@ SETPARENT:SetFS-P<IMV @FS-P<IMV TO (*-1 Pr) ;
 
 # kal:
 
-SETPARENT:i-N @i->N TO (*1 (vn N)) ;
+SETPARENT:i-N @i->N TO (*1 (nv)) ;
 
 # ellipse - no VFIN:
 SETPARENT:SetFS-NtoMV @FS-N< TO (*-1 CS OR Rel OR ADVL-COMP BARRIER VFIN LINK *-1 NONVFIN BARRIER S-BOUNDARY OR VFIN LINK *-1 S-BOUNDARY BARRIER VFIN LINK *1 NONVFIN) ;
@@ -633,6 +644,11 @@ SETPARENT:Set-FObjToLeftMv @-F<OBJ TO (*-1 NONVFIN BARRIER S-BOUNDARY OR @-FSUBJ
 SETPARENT:Set-FObjToRightMv @-FOBJ> TO (*1 NONVFIN BARRIER S-BOUNDARY OR @-FSUBJ>) ;
 SETPARENT:Set-FObjToLeftMv @-F<IOBJ TO (*-1 NONVFIN BARRIER S-BOUNDARY OR @-FSUBJ>) ;
 SETPARENT:Set-FObjToRightMv @-FIOBJ> TO (*1 NONVFIN BARRIER S-BOUNDARY OR @-FSUBJ>) ;
+
+# kal
+SETPARENT:SetObjToRightMv @MIK-OBJ> TO (*1 (<mv>) BARRIER S-BOUNDARY OR @-FSUBJ>) ;
+
+### Advl
 SETPARENT:SetAdvlToSubj @<ADVL TO (*-1 SUBJ) ;
 	## Mov mænngan båata dihte gie manneste veaksahkåbpoe.
 SETPARENT:SetAdvlToLeftMv @<ADVL TO (*-1 (<mv>) BARRIER S-BOUNDARY OR @-FSUBJ>) ;
@@ -648,8 +664,8 @@ SETPARENT:SetGostege GOSTEGE TO (*-1 Neg BARRIER @V) ;
 
 SETPARENT:SetCS-AdvlToLeftMv @CL-<ADVL TO (*-1 (<mv>) BARRIER S-BOUNDARY OR @-FSUBJ>) ;		  # kal
 SETPARENT:SetCS-AdvlToRightMv @CL-ADVL> TO (*1 (<mv>) BARRIER @-FSUBJ>) ;						  # kal
-SETPARENT:SetCS-AdvlToLeftMv @i-<ADVL TO (*-1 (<mv>) BARRIER S-BOUNDARY OR @-FSUBJ>) ;		  # kal
-SETPARENT:SetCS-AdvlToRightMv @i-ADVL> TO (*1 (<mv>) BARRIER @-FSUBJ>) ;						  # kal
+SETPARENT:SetCS-AdvlToLeftMv @i-<ADVL TO (*-1 (vn) BARRIER S-BOUNDARY) ;		  # kal
+SETPARENT:SetCS-AdvlToRightMv @i-ADVL> TO (*1 (vn) BARRIER S-BOUNDARY) ;						  # kal
 
 
 
@@ -703,7 +719,7 @@ SETPARENT:SetCNPToWord @CVP + CC TO (-1 BOS LINK 3 CS LINK -1 WORD) ;
 
 
 LIST COORD = @SUBJ> @<SUBJ @<OBJ @OBJ> @<SPRED @SPRED> @<OPRED @OPRED> @APP-N< @ADVL<OBJ @SUBJ<ADVL @OBJ>SPRED @COMP-CS< @SPRED @>P @P< @ADVL> @<ADVL  @CL-ADVL> @CL-<ADVL  @i-ADVL> @i-<ADVL @i-ADVL ;
-LIST VERBCOORD = @FMV @FAUX @IAUX @FAUX @FS-IMV @FS-VFIN< @FS-ADVL @FS-OBJ @FS-N< @IMV @FS-N<IMV @FS-P<IMV @FS-OBJ> @<FS-OBJ;
+LIST VERBCOORD = @FMV @FAUX @IAUX @FAUX @FS-IMV @FS-VFIN< @FS-ADVL @FS-OBJ @FS-N< @IMV @FS-N<IMV @FS-P<IMV @FS-OBJ> @FS-<OBJ;
 
 # the first part of a coordination is the head of all the coordinated parts and gets the tag <ctjHead>
 SUBSTITUTE:ctjHead (@>N) (<ctjHead> @>N) TARGET @>N (NEGATE *-1 @CNP OR COMMA BARRIER @V LINK -1 @>N)(1 COMMA OR @CNP LINK *1 @>N BARRIER @ARG OR @V LINK NEGATE *1 COMMA BARRIER @CLAUSE LINK 1 @CLAUSE) ;
@@ -737,7 +753,8 @@ SETPARENT:Not>NCoord @>N TO (1 (N @>N));
 ### verbcoordination
 
 # verbcoordination - mainclauses
-SUBSTITUTE:ctjHead (V) (<ctjHead> V) TARGET VFIN (NEGATE *-1 CC OR COMMA BARRIER CS OR ADVL-COMP OR MCL-CONJ LINK *-1 VFIN BARRIER CS OR ADVL-COMP)(0 @MCLV)(NEGATE 0 Neg LINK 1 ("ge"))(*1 COMMA OR CC BARRIER Rel OR CS OR (":") LINK **1 VFIN LINK 0 @MCLV) ;
+#SUBSTITUTE:ctjHead (V) (<ctjHead> V) TARGET VFIN (NEGATE *-1 CC OR COMMA BARRIER CS OR ADVL-COMP OR MCL-CONJ LINK *-1 VFIN BARRIER CS OR ADVL-COMP)(0 @MCLV)(NEGATE 0 Neg LINK 1 ("ge"))(*1 COMMA OR CC BARRIER Rel OR CS OR (":") LINK **1 VFIN LINK 0 @MCLV) ; # Added (CS @CVP) barrier (next line) tt.
+SUBSTITUTE:ctjHead (V) (<ctjHead> V) TARGET VFIN (NEGATE *-1 CC OR COMMA BARRIER CS OR ADVL-COMP OR MCL-CONJ LINK *-1 VFIN BARRIER CS OR ADVL-COMP)(0 @MCLV)(NEGATE 0 Neg LINK 1 ("ge"))(*1 COMMA OR CC BARRIER Rel OR CS OR (":") LINK **1 VFIN BARRIER (CS @CVP) LINK 0 @MCLV ) ;
     ## Muhtun geasi nieida jávkkai, ja olbmot ohce su, muhto eai gávdnan su eai gostege, eaige diehtán gosa lei šaddan.
 SUBSTITUTE:ctjHead (V) (<ctjHead> V) TARGET VFIN (NEGATE *-1 CC OR COMMA BARRIER CS OR ADVL-COMP LINK *-1 VFIN BARRIER CS OR ADVL-COMP)(0 @MCLV)(NEGATE 0 Neg LINK 1 ("ge"))(*1 Rel BARRIER @V LINK *1 COMMA OR @CVP BARRIER Rel OR CS LINK *1 @SUBJ> BARRIER @V LINK **1 VFIN LINK 0 @MCLV) ; # a relative clause in between
 	## Lea vuosttaš CD maid Sámi Jienat almmuha ja CD galgá leat válmmas geassemánu 10. beaivvi 2005.
@@ -826,6 +843,17 @@ SETPARENT:ADVLsentenceToSentence @FS-IMV (NONE p (*)) TO (*-1 CS BARRIER @V LINK
 
 # kal
 SETPARENT:OBJsentenceToSentence @FS-OBJ> TO (*1 <mv> LINK NOT 0 IV);
+
+SETPARENT:ADVLsentenceToSentence @FS-ADVL> TO (*1 <mv> LINK NOT 0 IV);
+SETPARENT:ADVLsentenceToSentence @FS-<ADVL TO (*-1 <mv> LINK NOT 0 IV);
+
+
+SETPARENT:OBJsentenceToSentence @CAU TO (*-1 <mv>);
+SETPARENT:OBJsentenceToSentence @CAU TO (*1 <mv>);
+SETPARENT:OBJsentenceToSentence @CAU> TO (*1 <mv>);
+
+SETPARENT:OBJsentenceToSentence @CON TO (*-1 <mv>);
+SETPARENT:OBJsentenceToSentence @CON TO (*1 <mv>);
 
 
 
