@@ -42,6 +42,7 @@ LIST Imprt = Imprt ;
 LIST ImprtII = ImprtII ;
 LIST Cond = Cond ;
 LIST ConNeg = ConNeg ;
+LIST VGen = VGen ;
 LIST Interj = Interj ;
 LIST ABBR = ABBR ;
 LIST ACR = ACR ;
@@ -181,7 +182,7 @@ LIST MO-MANge-smj = ("gåktu" Adv) ("gåktus" Adv) ("gånnå" Adv) ("gåsstå" A
 SET MO-MANge = MO-MANge-sma OR MO-MANge-sme OR MO-MANge-smj ;
 SET ADVL-COMP = MO-MANge - ("man" Foc/ge) ; 
 
-LIST ADVL-COMPfao = ("ið" Adv) ("hagar" Adv) ("tá" Adv) ("hvussu" Adv) ("um" CS) ("áðrenn" CS) ("tí" CS) ; 
+LIST ADVL-COMPfao = ("ið" Adv) ("hvi" Adv) ("hagar" Adv) ("tá" Adv) ("hvussu" Adv) ("um" CS) ("áðrenn" CS) ("tí" CS) ; 
 
 #SET ADVL-COMP = ADVL-COMPsmi OR ADVL-COMPfao ;
 
@@ -465,6 +466,7 @@ SUBSTITUTE (@FAUX) (@FS-OBJ) TARGET V (0 (Neg Ind) LINK *-1 @FS-OBJ BARRIER VFIN
 
 # the finite verb of advl-subclauses gets @FS-ADVL:
 SUBSTITUTE:SubV=FS-ADVLmv (@FMV)(@FS-ADVL) TARGET V (*-1 @SUBJ> BARRIER @V OR S-BOUNDARY LINK *-1 ADVL-COMPfao BARRIER @V OR Rel OR @CVP OR @COMP-CS<) ;
+#SUBSTITUTE:SubV=FS-ADVLmv (@FMV)(@FS-ADVL) TARGET V (*1 @<SUBJ BARRIER @V OR S-BOUNDARY)(*-1 ADVL-COMPfao BARRIER @V OR Rel OR @CVP OR @COMP-CS<) ;
 SUBSTITUTE:SubV=FS-ADVLmv (@FMV)(@FS-ADVL) TARGET V (*-1 ADVL-COMP OR CS BARRIER @V OR Rel OR @CVP OR @COMP-CS<) ;
 SUBSTITUTE:SubV=FS-ADVLmv (@FMV)(@FS-ADVL) TARGET V (*-1 CC OR COMMA BARRIER @V OR Rel OR @CVP OR MCL-CONJ LINK NOT 0 MCL-CONJ LINK *-1 (@FS-ADVL) BARRIER @V OR MCL-CONJ)(NEGATE *1 (@<SUBJ)) ;  # coordination, if there is no subject in the new clause
 SUBSTITUTE:SubVmain=FS-ADVLaux (@FAUX)(@FS-ADVL) TARGET V (*-1 ADVL-COMP OR CS BARRIER @V OR Rel OR @CVP) ;
@@ -685,7 +687,8 @@ SETPARENT:SetAdvlToSubj @<ADVL TO (*-1 SUBJ) ;
 	## Mov mænngan båata dihte gie manneste veaksahkåbpoe.
 SETPARENT:SetAdvlToLeftMv @<ADVL TO (*-1 (<mv>) BARRIER S-BOUNDARY) ;
 SETPARENT:SetAdvlToLeftNeg @<ADVL TO (*-1 Neg BARRIER S-BOUNDARY OR @-FSUBJ> OR (<mv>)) ;
-SETPARENT:SetAdvlToRightMv @ADVL> TO (*1 (<mv>) BARRIER @-FSUBJ>) ;
+SETPARENT:SetAdvlToRightMv @ADVL> TO (*1 S-BOUNDARY BARRIER (<mv>) LINK *1 COMMA LINK *1 (<mv>)) ;
+SETPARENT:SetAdvlToRightMv @ADVL> TO (*1 (<mv>) BARRIER @-FSUBJ> OR S-BOUNDARY) ;
 SETPARENT:SetAdvlToRightSubj @ADVL> TO (*1 @SUBJ BARRIER @V) ;
 # a ralativeclause in between:
 SETPARENT:SetAdvlToMcMv @ADVL> TO (*1 Rel OR OBJ-COMP BARRIER @V LINK *1 COMMA OR MCL-CONJ LINK *1 (<mv>)) ;
@@ -704,6 +707,7 @@ SETPARENT:SetCS-AdvlToRightMv @i-ADVL> TO (*1 (vn) BARRIER S-BOUNDARY) ;						  
 #SETPARENT: @-F<ADVL TO (*-1 Inf OR Sup OR (Actio Ess) OR Ger OR (GerII) BARRIER S-BOUNDARY LINK NOT 0 @MV) ;
 #SETPARENT: @-FADVL> TO (*1 Inf OR Sup OR (Actio Ess) OR Ger OR (GerII) BARRIER S-BOUNDARY LINK NOT 0 @MV) ;
 SETPARENT: @-F<ADVL TO (*-1 NONVFIN BARRIER S-BOUNDARY LINK NOT 0 @MV) ;
+SETPARENT: @-F<ADVL TO (*-1 PrsPrc OR VGen BARRIER S-BOUNDARY OR @V LINK -1 NONVFIN LINK NOT 0 @MV) ;
 SETPARENT: @-FADVL> TO (*1 NONVFIN BARRIER S-BOUNDARY LINK NOT 0 @MV) ;
 
 SETPARENT:SetSubjToRightMv @SUBJ> TO (*1 (<mv>) BARRIER S-BOUNDARY) ;
