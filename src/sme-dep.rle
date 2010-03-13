@@ -264,10 +264,6 @@ LIST @SPRED =  @SPRED ;
 LIST @<PPRED = @<PPRED ;
 LIST @FS-IMV = @FS-IMV ;
 LIST @FS-N<IAUX = @FS-N<IAUX ;
-LIST SPRED = @SPRED> @<SPRED @SPRED ;
-LIST OPRED = @OPRED> @<OPRED ;
-LIST SUBJ = @<SUBJ @SUBJ> @SUBJ @-FSUBJ> ;
-LIST OBJ = @<OBJ @OBJ> @OBJ @-FOBJ> @-F<OBJ ;
 LIST @VOC = @VOC ;
 LIST @INTERJ = @INTERJ ;
 
@@ -287,7 +283,7 @@ LIST @FS-P<IMV = @FS-P<IMV ; 	    # the infinite verb of a subsentence functioni
 # kal syntags
 
 LIST @<SUBJ_COMP = @<SUBJ_COMP ;
-LIST @AGENS = @AGENS ;		# agens ved PASSIV
+LIST @AGENS> = @AGENS> ;		# agens ved PASSIV
 LIST @CAU = @CAU ;	# erstatter de foelgende ved causativ - baade coref og non-coref
 LIST @CAU> = @CAU> ;
 LIST @CL-<ADVL = @CL-<ADVL ; # neksusadverbial der modificerer t.v.
@@ -324,12 +320,20 @@ LIST @FS-OBJ> = @FS-OBJ> ; 	         # finite subclause functioning as object
 LIST @FS-<OBJ = @FS-<OBJ ; 	         # finite subclause functioning as object
 LIST @FS-ADVL> = @FS-ADVL> ; 	         # finite subclause functioning as adverbial
 LIST @FS-<ADVL = @FS-<ADVL ; 	         # finite subclause functioning as adverbial
-
+LIST @>V = @>V ; 
 
 
 # Syntactic set definitions 
 # =========================
-SET @<ARG =  @<SUBJ OR @<SPRED OR @<OBJ OR @<OPRED OR @-F<OBJ  ;
+
+LIST SPRED = @SPRED> @<SPRED @SPRED ;
+LIST OPRED = @OPRED> @<OPRED ;
+LIST SUBJ = @<SUBJ @SUBJ> @SUBJ @-FSUBJ> ;
+LIST OBJ = @<OBJ @OBJ> @OBJ @-FOBJ> @-F<OBJ ;
+LIST IOBJ = @<IOBJ @IOBJ> ;
+
+SET @<ARG = @<SUBJ OR @<SPRED OR @<OBJ OR @<OPRED OR @-F<OBJ OR @<IOBJ ;
+
 LIST ADVL = @<ADVL @ADVL> @ADVL @-FADVL> @-F<ADVL @APP-ADVL< @CL-<ADVL @CL-ADVL> @i-<ADVL @i-ADVL> ; 		         # adverbial
 
 LIST @IAUX = @IAUX ;
@@ -350,7 +354,7 @@ LIST @FMVdic = @FMVdic ;
 LIST KONJ = CS CC ;
 
 LIST @-FARG = @-FOBJ> @-F<OBJ @-FADVL> @-F<ADVL ;
-SET @ARG = SUBJ OR OBJ OR SPRED OR OPRED OR ADVL OR @ICL-OBJ OR @<PPRED ;
+SET @ARG = SUBJ OR OBJ OR SPRED OR OPRED OR ADVL OR @ICL-OBJ OR @<PPRED OR IOBJ OR @POSS> ;
 SET @CLAUSE = @ARG OR @-FARG OR @V - CC ;
 LIST @NOARROW = @ADVL @SUBJ @OBJ ;
 
@@ -380,26 +384,32 @@ SECTION
 
 
 # fao-rules
+
 SUBSTITUTE:sum_id=Rel (CS) (<cs> Rel) TARGET ("sum" CS) OR ("ið" CS) ;
 SETPARENT:sum_id-verb (<cs> Rel) TO (*1 @V) ;
 
 
 # kal-rules
+
 SUBSTITUTE (@PRED) (@FMV) TARGET V ;
-# SUBSTITUTE (Rel) (Relc) TARGET N ;
 SUBSTITUTE (@<CL-CIT) (@FS-OBJ) TARGET V ;  # Should have been @FS-<OBJ, but for convenience...
 SUBSTITUTE (@CL-CIT>) (@FS-OBJ>) TARGET V ;
 SUBSTITUTE (@CL-<CIT) (@FS-OBJ) TARGET V ;  # Should have been @FS-<OBJ, but for convenience...
 
 SUBSTITUTE (@PRED2) (@FS-OBJ) TARGET V ;
 SUBSTITUTE (@PROP>) (@>N) TARGET (N Prop Attr) ;
+SUBSTITUTE (@CONJ) (@CVP) TARGET (Part) ;
+
+
+
+### ===========
+
 # Substitute the syn-verbtags to dep-verbtags: 
 SUBSTITUTE:SubFmainv=V (@+FMAINV) (@FMV) TARGET V ;
 SUBSTITUTE:SubNfmainv=V (@-FMAINV) (@IMV) TARGET V ;
 SUBSTITUTE:SubFaux=V (@+FAUXV) (@FAUX) TARGET V ;
 SUBSTITUTE:SubNfaux=V (@-FAUXV) (@IAUX) TARGET V ;
-#SUBSTITUTE (@<ADVL) (@FS-<ADVL) TARGET Inf ; # these two rules are not working well for smi
-#SUBSTITUTE (@ADVL>) (@FS-ADVL>) TARGET Inf ;
+
 
 SET VFIN = @FMV OR @FMVdic OR @FAUX OR @FS-VFIN< OR @FS-N< OR @FS-ADVL OR @FS-<ADVL OR @FS-ADVL> OR @FS-OBJ ; 
 SET NONVFIN = V - VFIN ;
@@ -527,7 +537,10 @@ SETPARENT:faoRIOBJ @IOBJ> TO (*1 (<mv>)) ;   # For fao!
 ### kal
 
 SETPARENT (@POSS>) TO (*1 POSSESSUM BARRIER V);
-SETPARENT (@SUBJ>) TO (*1 (@PRED));
+#SETPARENT (@SUBJ>) TO (*1 (@MV));
+SETPARENT (@AGENS>) TO (*1 (@FMV));
+SETPARENT (@>V) TO (1 V); # Aeq complement of copula "ip" verb
+SETPARENT (@i->V) TO (1 V); 
 
 
 ### cmpnd - head is the word after CC
@@ -547,7 +560,7 @@ SETPARENT:ComplToPr @P< TO (*-1 Pr);
 ### np
 SETPARENT:SetModToN @>N TO (*1 N) ;
 SETPARENT:SetCompToN @N< TO (*-1 N) ;
-SETPARENT:SetCompToN (V @N<) TO (*-1 @<ARG) ;
+SETPARENT:SetCompToN (V @N<) TO (*-1 @<ARG ) ;
 SETPARENT:SetReflToN (Refl Nom @N<) TO (*-1 N) ;
 SETPARENT:SetAppToRightPron @APP>Pron TO (*1 COMMA LINK 1 Pron BARRIER @CLAUSE) ;
 SETPARENT:SetAppToLeftPron @APP-Pron< TO (*-1 COMMA LINK -1 Pron BARRIER @CLAUSE) ;
@@ -557,6 +570,10 @@ SETPARENT @>N TO (1 COMMA LINK *1 COMMA BARRIER @CLAUSE LINK *1 N) ;
 SETPARENT:SetAppToN @APP-N< TO (*-1 @CLAUSE + N) ;
 SETPARENT:SetAppToN @APP-N< TO (*-1 @P< + N BARRIER N) ;
 SETPARENT:SetAppToN @APP-N< TO (*-1 COMMA BARRIER @CLAUSE LINK -1 N) ;
+
+# kal-rules
+SETPARENT:SetModToN @INF->N TO (*1 N) ;
+
 
 ### adjp
 
@@ -610,6 +627,9 @@ SETPARENT:SetFS-P<IMV @FS-P<IMV TO (*-1 Pr) ;
 # kal:
 
 SETPARENT:i-N @i->N TO (*1 (nv)) ;
+
+
+
 
 # ellipse - no VFIN:
 SETPARENT:SetFS-NtoMV @FS-N< TO (*-1 CS OR Rel OR ADVL-COMP BARRIER VFIN LINK *-1 NONVFIN BARRIER S-BOUNDARY OR VFIN LINK *-1 S-BOUNDARY BARRIER VFIN LINK *1 NONVFIN) ;
@@ -926,6 +946,8 @@ SETPARENT SUBJ (NONE p (*)) TO (@0 (*));
 SETPARENT SPRED (NONE p (*)) TO (@0 (*));
 	## Sálugin guhti dán girje åvddålijsárnnoma bágojt vuorkki . 
 
+# kal-rules
+SETPARENT @VOKATIV TO (*1 @MV); 
 
     #=====#
       END #
