@@ -91,6 +91,9 @@ LIST Aeq = Aeq ;
 LIST Ins = Ins ;
 LIST Via = Via ;
 
+LIST Int = Int ;
+LIST Imp = Imp ;
+
 LIST Opt = Opt ;
 LIST Cau = Cau ;
 LIST Con = Con ;
@@ -338,8 +341,8 @@ LIST OBJ = @<OBJ @OBJ> @OBJ @-FOBJ> @-F<OBJ ;
 LIST IOBJ = @<IOBJ @IOBJ> ;
 
 LIST @<ARG = @<SUBJ @<SPRED @<OBJ @<OPRED @-F<OBJ @-F<OPRED @<IOBJ ;
-
-LIST ADVL = @<ADVL @ADVL> @ADVL @-FADVL> @-F<ADVL @APP-ADVL< @CL-<ADVL @CL-ADVL> @i-<ADVL @i-ADVL> ; 		         # adverbial
+ 
+LIST ADVL = @<ADVL @ADVL> @ADVL @-FADVL> @-F<ADVL @APP-ADVL< @CL-<ADVL @CL-ADVL> ; # @i-<ADVL @i-ADVL> ; 		         # adverbial
 
 LIST @IAUX = @IAUX ;
 LIST @FS-IAUX = @FS-IAUX ;
@@ -360,7 +363,7 @@ LIST KONJ = CS CC ;
 
 LIST @-FARG = @-FOBJ> @-F<OBJ @-FADVL> @-F<ADVL @-F<SPRED @-F<OPRED @-FSUBJ> @-FIOBJ> @-F<IOBJ ;
 SET @ARG = SUBJ OR OBJ OR SPRED OR OPRED OR ADVL OR @ICL-OBJ OR @<PPRED OR IOBJ OR @POSS> OR @APP-N< OR @P< ;
-SET @CLAUSE = @ARG OR @-FARG OR @V - CC ;
+SET @CLAUSE = @HNOUN OR @ARG OR @-FARG OR @V - CC ;
 LIST @NOARROW = @ADVL @SUBJ @OBJ ;
 
 
@@ -404,7 +407,9 @@ SUBSTITUTE (@CL-<CIT) (<mv> @FS-OBJ) TARGET V ;  # Should have been @FS-<OBJ, bu
 SUBSTITUTE (@PRED2) (<mv> @FS-OBJ) TARGET V ;
 SUBSTITUTE (@PROP>) (@>N) TARGET (N Prop Attr) ;
 SUBSTITUTE (@CONJ) (@CVP) TARGET (Part) ;
+SUBSTITUTE (@CONJ) (@CVP) TARGET (CS) ;
 
+SUBSTITUTE:kalAlwaysMainV (V) (V <mv>) TARGET V ;
 
 
 ### ===========
@@ -548,11 +553,12 @@ SETPARENT:faoRIOBJ @IOBJ> TO (*1 (<mv>)) ;   # For fao!
 #SETPARENT:faoRCVAUX @FS-VFIN< TO (*-1 ("ið" CS @VCP) LINK *-1 N OR Pron); # For fao!
 
 
+# Inf OR Cau OR Par OR Con
 ### kal
 
-SETPARENT (@POSS>) TO (*1 POSSESSUM BARRIER V);
+SETPARENT (@POSS>) TO (*1 POSSESSUM BARRIER Ind OR Int OR Opt OR Imp);
 #SETPARENT (@SUBJ>) TO (*1 (@MV));
-SETPARENT (@AGENS>) TO (*1 (@FMV));
+SETPARENT (@AGENS>) TO (*1 V);
 SETPARENT (@>V) TO (1 V); # Aeq complement of copula "ip" verb
 SETPARENT (@i->V) TO (1 V); 
 
@@ -586,8 +592,13 @@ SETPARENT:SetAppToN @APP-N< TO (*-1 @P< + N BARRIER N) ;
 SETPARENT:SetAppToN @APP-N< TO (*-1 COMMA BARRIER @CLAUSE LINK -1 N) ;
 
 # kal-rules
-SETPARENT:SetModToN @INF->N TO (*1 N) ;
-
+SETPARENT:kalSetModToN @INF->N TO (*1 N) ;
+SETPARENT:kalSubjComp (Sg @<SUBJ_COMP)  TO (*-1 3Sg);
+SETPARENT:kalSubjComp (Sg @<SUBJ_COMP) TO (*-1 3Pl);
+SETPARENT:kalSubjComp @<SUBJ_COMP TO (*-1 SUBJ);
+SETPARENT:kalSubjComp (Sg @SUBJ_COMP) TO (*1 3Sg);
+SETPARENT:kalSubjComp (Sg @SUBJ_COMP) TO (*1 3Pl);
+SETPARENT:kalSubjComp @SUBJ_COMP TO (*1 SUBJ);
 
 ### adjp
 
@@ -642,7 +653,8 @@ SETPARENT:faoSetFS-P<IMV @FS-P<IMV TO (*-1 Pr) ;
 
 # kal:
 
-SETPARENT:kal_i-N @i->N TO (*1 (nv)) ;
+SETPARENT:kal_i-N @i->N TO (*1 N OR Num) ; # if incorporated nv
+SETPARENT:kal_i-N @i->N TO (*1 (nv)) ; # if explicit nv
 
 
 
@@ -712,8 +724,10 @@ SETPARENT:SetGostege GOSTEGE TO (*-1 Neg BARRIER @V) ;
 
 SETPARENT:SetCS-AdvlToLeftMv @CL-<ADVL TO (*-1 (<mv>) BARRIER S-BOUNDARY OR @-FSUBJ>) ;		  # kal
 SETPARENT:SetCS-AdvlToRightMv @CL-ADVL> TO (*1 (<mv>) BARRIER @-FSUBJ>) ;						  # kal
-SETPARENT:SetCS-AdvlToLeftMv @i-<ADVL TO (*-1 (vn) BARRIER S-BOUNDARY) ;		  # kal
-SETPARENT:SetCS-AdvlToRightMv @i-ADVL> TO (*1 (vn) BARRIER S-BOUNDARY) ;						  # kal
+SETPARENT:SetCS-AdvlToLeftMv @i-<ADVL TO (**-1 N OR (vn) BARRIER S-BOUNDARY LINK NOT 0 (@i-<ADVL)) ;	  # kal
+SETPARENT:SetCS-AdvlToRightMv @i-ADVL> TO (**1 N OR (vn) BARRIER S-BOUNDARY LINK NOT 0 (@i-<ADVL)) ;	  # kal
+#SETPARENT:SetCS-AdvlToLeftMv @i-<ADVL TO (*-1 (vn) BARRIER S-BOUNDARY) ;		  # kal
+#SETPARENT:SetCS-AdvlToRightMv @i-ADVL> TO (*1 (vn) BARRIER S-BOUNDARY) ;						  # kal
 
 
 
@@ -981,7 +995,10 @@ SETPARENT SPRED (NONE p (*)) TO (@0 (*));
 	## Sálugin guhti dán girje åvddålijsárnnoma bágojt vuorkki . 
 
 # kal-rules
-SETPARENT @VOKATIV TO (*1 @MV); 
+SETPARENT:kalVokativ @VOKATIV TO (*1 @MV); 
+
+SUBSTITUTE:kalNeverMainV (V <mv>) (V) TARGET V ;
+
 
     #=====#
       END #
