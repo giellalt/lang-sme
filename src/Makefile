@@ -403,13 +403,13 @@ tok.fst: ../int/tok.fst
 # the perl-based preprocess (located in the script catalogue)
 
 abbr.txt: ../bin/abbr.txt
-../bin/abbr.txt: ../../script/abbr-extract abbr-sme-lex.txt \
+../bin/abbr.txt: ../../script/abbr-extract.pl abbr-sme-lex.txt \
 		propernoun-sme-lex.txt closed-sme-lex.txt adv-sme-lex.txt \
 		noun-sme-lex.txt sme-num.txt
 	@echo
 	@echo "*** Extracting abbreviations from abbr-sme-lex.txt to abbr.txt ***" ;
 	@echo
-	@perl ../../script/abbr-extract \
+	@perl ../../script/abbr-extract.pl \
 		--abbr_lex=abbr-sme-lex.txt \
 		--lex=propernoun-sme-lex.txt,closed-sme-lex.txt,adv-sme-lex.txt,noun-sme-lex.txt,sme-num.txt \
 		--output=../bin/abbr.txt
