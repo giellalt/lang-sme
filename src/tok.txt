@@ -52,14 +52,17 @@ a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|
 
 # =============================================================
 echo >>> numeric expressions
+
 define Digit [ %0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9];
 define NumOp [ %- | %+ | %* | %/ | %= | %: ];
 define NumSep [ %. | %, | %: ]; # %: added to original, for 1993:18 etc.
+
+define NUMSPAN [ Digit+ [(SP) [%-|%*] (SP)] Digit+ ] ;
 !define NUM [ Digit | NumOp | NumSep]+ & $[Digit] ;
-define NUM [ Digit | NumOp | NumSep]+ Digit+ ;
+define NUM ( [ Digit | NumOp | NumSep]+ (SP)) Digit+ (NumSep) (NumOp) ;
 define NUMOrd NUM %. ;
-define ROM [ I|V|X ]+ ; # does not work :-(
-define NUMROM [ NUM | ROM ] ;
+define ROM [ I|V|X|L|C|M ]+ ; # too permissive...
+define NUMROM [ NUM | ROM | NUMSPAN ] ;
 define NUMCASED [ NUM+ %: Small+ ] ;
 # Does this mean a string of at least one of Digit or NumOp or NumSep, 
 # followed by at least one Digit?
