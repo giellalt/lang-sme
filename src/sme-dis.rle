@@ -2318,7 +2318,7 @@ SET ACTOR = ANIMATE OR INSTITUTION OR ORGANIZATION ;
   # Should EVENT be part of this set?
 
 # To be used in habitative-sentences:
-SET HAB-ACTOR = ACTOR OR HUMAN-GROUP OR INDUSTRY OR EDUCATION OR PEOPLE-NUM OR ("gii") OR Pers OR ("eará") ;
+SET HAB-ACTOR = ACTOR OR HUMAN-GROUP OR INDUSTRY OR EDUCATION OR PEOPLE-NUM OR ("gii") OR Pers OR ("eará") OR ("buohkat") OR ("gaikkat") OR ("juohkehaš") OR ("goappašagat") OR ("soames") ;
 SET HAB-ACTOR-NOT-HUMAN =  INSTITUTION OR ORGANIZATION OR INDUSTRY OR EDUCATION ;
 
 
@@ -4024,7 +4024,7 @@ SELECT:r936 (PxSg3) IF (*-3 (N Sg Nom) OR (Pron Pers Sg3 Nom))(-2C A)(-1 go)(NEG
 	## Mávssut leat adnon eambbo go bušeahtas.
 
 
-SELECT:r937 (PxSg3) IF (*-1 (Sg Nom) OR (Sg3 Nom) BARRIER Pers OR S-BOUNDARY OR LOCV LINK NOT 0 Attr)(NEGATE *-1 (Imprt Sg2) BARRIER SV-BOUNDARY)(NEGATE -1 (N Nom) OR (N Acc))(0 N-PX)(NEGATE 0 Loc LINK 1 Ill);
+SELECT:r937 (PxSg3) IF (*-1 (Sg Nom) OR (Sg3 Nom) BARRIER Pers OR S-BOUNDARY OR LOCV OR Num OR Dem LINK NOT 0 Attr)(NEGATE *-1 (Imprt Sg2) BARRIER SV-BOUNDARY)(NEGATE -1 (N Nom) OR (N Acc))(0 N-PX)(NEGATE 0 Loc LINK 1 Ill);
 
 	## Dat guhte ráhkista bártnis dahje nieiddas eanebut go mu...
   	## Son galgá boahtit álo beroškeahttá makkár duogáš eatnis lea.
@@ -8824,7 +8824,7 @@ SELECT:r1405 Indef IF (*-1 STV-NOT-ACT BARRIER NOT-ADV)(0 OLLU)(NEGATE 1 Acc LIN
 SELECT:r1406 Indef IF (*1 V-TRANS-ACT-NOT-ACT BARRIER SV-BOUNDARY OR Acc LINK NOT *1 Acc BARRIER SV-BOUNDARY2)(0 OLLU LINK NOT 1 (N Acc));
 	## Nissonat duddjojedje dieđinge biktasiid, gávnniid ja biergasiid maid ieža atne, muhto ollu sii vuvde márkaniin, sihke Bossegohpis ja Ivgubađas.
 
-SELECT:r1407 Adv IF (NEGATE *-1 STV-NOT-ACT OR COPULAS BARRIER NOT-AA LINK 0 VFIN OR ConNeg OR PrfPrc OR Inf)(0 OLLU)(NEGATE 1 Acc LINK NOT 1 ADVLCASE)(NEGATE 1 Nom);
+SELECT:r1407 Adv IF (NEGATE *-1 STV-NOT-ACT OR COPULAS BARRIER NOT-AA LINK 0 VFIN OR ConNeg OR PrfPrc OR Inf)(0 OLLU)(NEGATE 1 Acc LINK NOT 1 ADVLCASE)(NEGATE 1 Nom OR (Pl Loc));
 
 SELECT:r1408 Indef IF (*-2 STV-NOT-ACT BARRIER NOT-ADV)(-1 ("seammá") OR ("seamma"))(0 OLLU)(NEGATE 1 Acc LINK NOT 1 ADVLCASE)(NEGATE 1 (Pl Nom));
 SELECT:r1409 Adv IF (NEGATE *-2 STV-NOT-ACT BARRIER NOT-ADV)(-1 ("seammá") OR ("seamma"))(0 OLLU)(NEGATE 1 Acc LINK NOT 1 ADVLCASE)(NEGATE 1 (Pl Nom));
@@ -13792,11 +13792,16 @@ MAP:r53 (@Pron<) TARGET SGPRON IF (*-1 SGPRON BARRIER S-BOUNDARY2 LINK 0 (Pron L
 MAP:r54 (@Pron<) TARGET DUPRON IF (*-1 DUPRON BARRIER S-BOUNDARY2 LINK 0 (Pron Loc))(0 (Refl Loc));
 MAP:r55 (@Pron<) TARGET PLPRON IF (*-1 PLPRON BARRIER S-BOUNDARY2 LINK 0 (Pron Loc))(0 (Refl Loc));
 
+LIST PART-PRON = "eatnasat" "goabbá" "goabbáge" "gallis" "juohkehaš" "muhtin" "moanat" "muhtun" "nubbi" "soames" "ollu" "ollugat" "olu" "olugat" "soamis" ;
+
 MAP (@Pron<) TARGET DUPRON + Loc (*-1 ("nubbi") OR ("goabbáge") OR ("goabbá") BARRIER NPNH);
-MAP (@Pron<) TARGET PLPRON + Loc (*-1 Indef BARRIER NPNH);
-MAP (@Pron<) TARGET (N Pl Loc) (*-1 Indef BARRIER NPNH);
+MAP (@Pron<) TARGET PLPRON + Loc (*-1 PART-PRON + Indef BARRIER NPNH);
+MAP (@Pron<) TARGET (N Pl Loc) (*-1 PART-PRON + Indef BARRIER NPNH)(NEGATE *1 COPULAS BARRIER SV-BOUNDARY2 LINK 0 FMAINV) ;
 	## Nubbi munnos vuolgá odne.
 	## Muhtun mu ustibiin jámii.
+MAP (@Pron<) TARGET (N Sg Loc) (*-1 NUMERALS + Gen BARRIER NPNH LINK *-1 PART-PRON + Indef BARRIER NPNH);	
+	## Muhtun dan golmma nieiddas dovddai bártni.
+	
 	
 MAP:r56 (@N<) TARGET (Refl Sg Nom) IF (*-1 (N Sg Nom) BARRIER S-BOUNDARY2);
 	
@@ -13823,14 +13828,14 @@ MAP:r63 (@<SUBJ @<SPRED) TARGET Indef IF (*1 N BARRIER NPNH)(NEGATE 0 Nom LINK 1
     ## Son lea profehta, aiddo dego muhtun boares profehtain.
     # An exception of the next one
 
-MAP:r64 (@>N) TARGET Indef IF (*1 N BARRIER NPNH OR Num LINK NOT 0 PrfPrc)(NOT 0 Acc)(NEGATE 0 Nom LINK *1 Acc BARRIER NOT-QMARK)(NEGATE *-1 STV-NOT-ACT BARRIER NOT-QMARK LINK *1 ("ollu") OR ("olu") BARRIER NOT-QMARK LINK NOT *1 Acc BARRIER NOT-QMARK)(NEGATE 0 ADVLCASE OR ("buohkat"))(NEGATE 0 Attr LINK 1 N OR A)(NEGATE *1 (N Sg Gen) BARRIER NOT-QMARK LINK NOT 0 Px LINK *1 N BARRIER NPNH OR CC)(NEGATE *1 (N Sg Gen PxSg2) BARRIER NOT-QMARK LINK *-1 (V-SG2) LINK *1 N BARRIER NPNH OR CC)(NEGATE *1 VFIN OR Ess OR ("veara") BARRIER NOT-QMARK);
+MAP:r64 (@>N) TARGET Indef IF (*1 N BARRIER NPNH OR Num OR DAT-PRON + Dem LINK NOT 0 PrfPrc)(NOT 0 Acc)(NEGATE 0 Nom LINK *1 Acc BARRIER NOT-QMARK)(NEGATE *-1 STV-NOT-ACT BARRIER NOT-QMARK LINK *1 ("ollu") OR ("olu") BARRIER NOT-QMARK LINK NOT *1 Acc BARRIER NOT-QMARK)(NEGATE 0 ADVLCASE OR ("buohkat"))(NEGATE 0 Attr LINK 1 N OR A)(NEGATE *1 (N Sg Gen) BARRIER NOT-QMARK LINK NOT 0 Px LINK *1 N BARRIER NPNH OR CC)(NEGATE *1 (N Sg Gen PxSg2) BARRIER NOT-QMARK LINK *-1 (V-SG2) LINK *1 N BARRIER NPNH OR CC)(NEGATE *1 VFIN OR Ess OR ("veara") BARRIER NOT-QMARK);
   	## Son galgá beassat buktit oaivilis buot gažaldagaide.
   	## Eai leat šat nu ollu ohcamat priváhta ealáhusain.
   	
 MAP:r67 (@>N) TARGET Indef IF (*1 Gen OR Adv BARRIER NOT-QMARK)(*2 (N Pl) BARRIER NOT-QMARK)(NEGATE 0 Nom LINK 1 Acc)(NEGATE 0 ADVLCASE)(NEGATE *1 (N Sg Gen PxSg2) BARRIER NOT-QMARK LINK *-1 (V-SG2) LINK *1 N BARRIER NPNH OR CC)(NEGATE *1 VFIN OR Ess OR ("veara") BARRIER NOT-QMARK);
 	## Sii geavahit ollu ee. giellabálvalusaid.
 
-ADD:r68 (@>N) TARGET Indef IF (*1 ("eará") OR Dem BARRIER NOT-QMARK)(NEGATE 0 Nom LINK *1 Acc BARRIER NOT-QMARK) (NEGATE 0 ADVLCASE); 
+ADD:r68 (@>N) TARGET Indef IF (*1 ("eará") OR ("iežá") BARRIER NPNH)(NEGATE 0 Nom LINK 1 Acc) (NEGATE 0 ADVLCASE); 
   	## Ollu earáidege go ovttagielagiidda lea váttis gulahallat....
   	## ..muhto ii fal nu ollu earáin.
   	## Ruoŧas bođii loahpas vástadusa Sámi Oahpahusguovddážis, Johkamohkis, muhto ii fal nu ollu earáin.
@@ -13843,10 +13848,10 @@ MAP:r69 (@>Pron) TARGET Adv IF (0 ("ollu") OR ("olu"))(*1 ("eará" Pl Loc) OR (D
 MAP:r70 (@>Pron) TARGET Adv IF (*-1 V-SG3 BARRIER VFIN OR S-BOUNDARY2)(0 ("ollu") OR ("olu"))(*1 ("eará" Pl Loc) OR (Dem Pl Loc) BARRIER NOT-QMARK)(NEGATE 0 Nom LINK *1 Acc BARRIER NOT-QMARK)(NEGATE 0 ADVLCASE);
 	## Ollu earáin lea hávski. # for habeo-constructions where ollu modifies eará+Loc
 
-MAP:r71 (@>N) TARGET Indef IF (NEGATE *-1 V-SG3 BARRIER VFIN OR S-BOUNDARY2)(0 ("ollu") OR ("olu"))(*1 ("eará" Pl Loc) OR (Dem Pl Loc) BARRIER NOT-QMARK)(NEGATE *2 V-SG3 BARRIER NOT-ADJ-PCLE)(NEGATE 0 Nom LINK *1 Acc BARRIER NOT-QMARK)(NEGATE 0 ADVLCASE);
-	## Ollu earáin leat hávski.
+#MAP:r71 (@>N) TARGET Indef IF (NEGATE *-1 V-SG3 BARRIER VFIN OR S-BOUNDARY2)(0 OLLU)(1 ("eará" Pl Loc) OR (Dem Pl Loc))(NEGATE *2 V-SG3 BARRIER NOT-ADJ-PCLE)(NEGATE 0 Nom LINK *1 Acc BARRIER NOT-QMARK)(NEGATE 0 ADVLCASE);
+	## Ollu earáin leat hávski. Nix
 	# Mange andre har det triveleg. Mange av dei andre er trivelege.
-	# Ollu earáin leat hávskit
+	# Ollu earáin leat hávskit  Nix
 	# Mange andre kjøper mjølk. Mange av dei andre kjøper mjølk.
 	# Ollu earát ostet mielkki. Ollusat earáin ostet mielkki.
 
@@ -13865,7 +13870,7 @@ MAP:r75 (@>N) TARGET ("buot" Pron) OR ("gait" Pron) IF (*1 N BARRIER NPNH LINK N
 MAP (@>Pron) TARGET ("buot" Pron) OR ("gait" Pron) IF (*1 Pron BARRIER NPNH LINK NOT 0 Rel);
     ## Son válddii buot dan mii leat ráhkistan ja gudnejahttin veara.
 
-MAP:r76 (@>N) TARGET Indef IF (*1 N BARRIER NP-BOUNDARY OR REALCLB  LINK NOT 0 PrfPrc)(NEGATE *-1 STV-NOT-ACT BARRIER NOT-QMARK LINK *1 ("ollu") OR ("olu") BARRIER NOT-QMARK LINK NOT *1 Acc BARRIER NOT-QMARK) (NEGATE *-1 REALCOPULAS BARRIER NOT-ADV-PCLE LINK *1 Indef LINK *1 PrfPrc BARRIER VERB) (NEGATE *-1 INFV BARRIER NOT-ADV-PCLE LINK *1 Indef LINK *1 Inf BARRIER VERB)(NEGATE 0 ADVLCASE OR ("buohkat"))(NEGATE 0 ("mihkkege"))(NEGATE *1 (Pers Gen) BARRIER NOT-QMARK LINK *1 N BARRIER NOT-NP OR CLB LINK NOT 0 Loc)(NEGATE *1 Adv BARRIER NOT-QMARK LINK *1 N BARRIER NOT-QMARK) (NEGATE *1 (N Sg Gen) BARRIER NOT-QMARK LINK *1 N BARRIER NPNH)(NEGATE *1 VFIN OR Ess OR ("veara") BARRIER NOT-QMARK)(NEGATE 0 Attr LINK 1 N OR A)(NEGATE 0 Acc LINK NOT 1 Acc);
+#MAP:r76 (@>N) TARGET Indef IF (*1 N BARRIER NP-BOUNDARY OR REALCLB LINK NOT 0 PrfPrc)(NEGATE *-1 STV-NOT-ACT BARRIER NOT-QMARK LINK *1 ("ollu") OR ("olu") BARRIER NOT-QMARK LINK NOT *1 Acc BARRIER NOT-QMARK) (NEGATE *-1 REALCOPULAS BARRIER NOT-ADV-PCLE LINK *1 Indef LINK *1 PrfPrc BARRIER VERB) (NEGATE *-1 INFV BARRIER NOT-ADV-PCLE LINK *1 Indef LINK *1 Inf BARRIER VERB)(NEGATE 0 ADVLCASE OR ("buohkat"))(NEGATE 0 ("mihkkege"))(NEGATE *1 (Pers Gen) BARRIER NOT-QMARK LINK *1 N BARRIER NOT-NP OR CLB LINK NOT 0 Loc)(NEGATE *1 Adv BARRIER NOT-QMARK LINK *1 N BARRIER NOT-QMARK) (NEGATE *1 (N Sg Gen) BARRIER NOT-QMARK LINK *1 N BARRIER NPNH)(NEGATE *1 VFIN OR Ess OR ("veara") BARRIER NOT-QMARK)(NEGATE 0 Attr LINK 1 N OR A)(NEGATE 0 Acc LINK NOT 1 Acc);
 	## Ollu dáin doaibmabijuin sáhttá álggahit dálá rámmaid siskkobealde.
 
 MAP:r77 (@>N) TARGET ("mii" Interr Pl Nom) IF (*1C (N Pl Nom) BARRIER NP-BOUNDARY);
@@ -14244,6 +14249,7 @@ MAP:r204 (@N<) TARGET (Num Nom) IF (*-1 ("diibmu") OR ("biellu") OR ("dbm") OR (
  
 MAP (@N<) TARGET (N Pl Loc)(*-1 Coll BARRIER NPNH) ; 
 MAP (@N<) TARGET PLPRON (*-1 Coll BARRIER NPNH) ; 
+MAP (@N<) TARGET (N Coll Loc) (*-1 Coll BARRIER NPNH) ; 
 	## Golmmas sis vulget odne.
 
  
@@ -14423,9 +14429,11 @@ MAP:r256 (@Num<) TARGET Gen IF (*-1 CC BARRIER NOT-QMARK LINK *-1 (N Gen) BARRIE
 MAP:r257 (@Num<) TARGET (N Gen) IF (*-1 NUMERALS BARRIER NOT-ADJ LINK 0 Nom)(*1 Prop BARRIER NOT-QMARK);
 	## Joavkkus leat vihtta oahppi Kárášjogas.
 
-MAP:r257 (@Num<) TARGET (N Pl Loc) (*-1 NUMERALS OR OKTA BARRIER NPNH LINK NOT 0 Loc);
-MAP:r257 (@Num<) TARGET PLPRON (*-1 NUMERALS OR OKTA BARRIER NPNH LINK NOT 0 Loc);
+MAP (@Num<) TARGET (N Pl Loc) (*-1 NUMERALS OR OKTA BARRIER NPNH LINK NOT 0 Loc);
+MAP (@Num<) TARGET PLPRON (*-1 NUMERALS OR OKTA BARRIER NPNH LINK NOT 0 Loc);
 	## Sámi allaskuvla lea okta dain allaskuvllain mii čavčča rájes addá dakkár fálaldaga.
+MAP (@Num<) TARGET (N Sg Loc) (*-1 NUMERALS + Gen BARRIER NPNH LINK *-1 NUMERALS OR OKTA BARRIER NPNH);	
+	## Okta golmma nieiddas dahká nu.
 
 REMOVE:r852 (Prop @Num<) IF (0 Prop);
 	## 3.2 Sámi mánáid ja nuoraid bajásšaddaneavttut.
@@ -14931,6 +14939,10 @@ MAP:r460 (@<SPRED) TARGET PrsPrc IF (-1 COPULAS LINK 0 FMAINV)(*1 Acc BARRIER NP
 
 MAP:r461 (@SUBJ>) TARGET Indef IF (NEGATE *-1 Nom BARRIER NOT-ADV-PCLE) (NEGATE -1 ("mii" Interr Sg Gen))(NEGATE 0 Acc OR ADVLCASE)(1 V-SG3) (NEGATE *2 Nom BARRIER S-BOUNDARY2 LINK NOT 0 PrfPrc) (NEGATE *-1 V-TRANS-ACT BARRIER S-BOUNDARY2)(NEGATE *1 V-TRANS-ACT BARRIER S-BOUNDARY2);
 	## ...ovdal go buot lea dáhpáhuvvan.
+	
+MAP (@SUBJ>) TARGET OLLU + Indef (1 (Dem Pl Loc) LINK *1 (N Pl Loc) BARRIER NPNH);
+	## Ollu dáin doaibmabijuin sáhttá álggahit dálá rámmaid siskkobealde.
+	
 
 MAP:r462 (@SUBJ>) TARGET ("buot") OR ("gait") IF (*1 V-SG3 BARRIER NOT-ADV-PCLE) (NEGATE *1 V-TRANS-ACT-NOT-ACT BARRIER S-BOUNDARY2)(NEGATE 1 ("buohkanassii"));
 	## Buot lei varran.
@@ -15263,7 +15275,6 @@ MAP (@SUBJ>) TARGET Nom IF (*-1 COMMA BARRIER VERB OR Nom LINK *-1 VFIN)(*1 VFIN
 	## Áibbas dolin nissonat botne láiggi snálduin, dál sii botnet dorttiin.
 	## Ánne lea nuorra, Biret lea nuorat ja Inger lea nuoramus.
 	## Ánne bargá skuvllas, Biret bargá girkus ja Inger lea studeanta.
-
 
 MAP (@<SUBJ) TARGET Nom IF (NEGATE *1 VFIN BARRIER SV-BOUNDARY2)(*-1 VFIN BARRIER S-BOUNDARY2 LINK NOT -1 NP-HEAD-NOM);
 
