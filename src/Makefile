@@ -20,7 +20,7 @@ NONRECFILES := $(patsubst %.txt,../int/%.nonrec,$(SOURCEFILES))
 
 # Added for historical purposes
 all:
-	@echo "Don't use this Makefile, cd $$GTHOME/gt/ ; make hfst TARGET=sme"
+	@echo "Don't use this Makefile, cd $$GTHOME/gt/ ; make hfst GTLANG=sme"
 
 # =============================== #
 # Building the last file isme.fst # 
