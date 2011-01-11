@@ -10,7 +10,7 @@ SHELL = /bin/sh
 # ====================
 
 # Tools used when compiling
-XFST = xfst #-utf8
+XFST = xfst -utf8
 
 # Where all the perl scripts are:
 BINDIR = ../../script/testing
@@ -18,11 +18,11 @@ BINDIR = ../../script/testing
 # Directory where all the compiled fst's are:
 FSTDIR = ../bin
 
-DIALECT = GG
+DIALOGUE = GG
 
 # Directory for the source files (which compile into fst's):
 # Changed this to point into the directory where the common makefile is:
-SRCDIR = ../..
+SRCDIR = ../../
 
 # The temp directory:
 TEMP = ../../tmp
@@ -34,9 +34,8 @@ PARA_TMP = Para_tmp
 # This variable is holding the filename of the save file:
 # (makes the Makefile truly language independent for
 # the Sami languages)
-#SAVEFILE = $(FSTDIR)/isme.fst
-SAVEFILE = $(FSTDIR)/isme-norm.fst
-#SAVEFILE = $(FSTDIR)/isme-$(DIALECT).restr.fst
+SAVEFILE = $(wildcard $(FSTDIR)/ism?-norm.fst)
+#SAVEFILE = $(wildcard $(FSTDIR)/ism?-$(DIALOGUE).restr.fst)
 # Copied from old LS makefile:
 # Bond, James Bond
 UMASK=@umask 007
@@ -113,12 +112,12 @@ clean:
 		  *.aresult \
 		  *.summary \
 		  *.ptest \
+#		  paradigm* \
 		  *.tgz	\
 		  *~ \
 		  *.in \
 		  *.out \
 		  $(TEMP)/*test-script
-#		  paradigm* \
 	@rm -f a*.xml
 	@rm -f b*.xml
 	@rm -f c*.xml
@@ -244,7 +243,7 @@ n-paradigm: n-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-	#@less $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+#	@less $(WORD).paradigm
 
 
 # VERBS
@@ -299,7 +298,7 @@ v-paradigm: v-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-	#@less $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+#	@less $(WORD).paradigm
 
 
 # ADJECTIVES
@@ -354,7 +353,7 @@ a-paradigm: a-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-	#@less $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+#	@less $(WORD).paradigm
 
 
 # NUMERALS
@@ -410,7 +409,7 @@ num-paradigm: num-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-	#@less $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+#	@less $(WORD).paradigm
 
 
 # PROPER NOUNS
@@ -466,7 +465,229 @@ prop-paradigm: prop-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-	#@less $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+#	@less $(WORD).paradigm
+
+
+# ACTOR NOUNS
+# ============
+
+# Create all the actor noun test file bases:
+actor-%.testbase: actor-%.txt actor-codes.txt
+	@echo
+	@echo "*** Creating the test base for actor-$*.txt ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNforms.pl actor-codes.txt $< > $@
+	@chmod 660 $@
+
+# Finally, we concatenate all *.greports
+actor-g.summary: $(NGenFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All noun word form generation testing is done.      ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# Finally, we concatenate all *.areports:
+actor-a.summary: $(NAnaFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All noun word form analysis testing is done.        ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# Create noun paradigm generation input file:
+actor-para.ptest: actor-codes.txt
+	@echo
+	@echo "*** Creating the noun paradigm input file for '$(WORD)' ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNword.pl $< $(WORD) > $@
+	@chmod 660 $@
+
+# Paradigm generation:
+.PHONY: actor-paradigm
+actor-paradigm: actor-para.ptest savefile
+	@echo
+	@echo "*** Running the paradigm generator for '$(WORD)' ***"
+	@echo
+	@printf "load $(SAVEFILE) \n\
+	apply up < $< \n\
+	quit \n" > $(TEMP)/$@-gtest-script
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+	@rm -f $(TEMP)/$@-gtest-script
+	@rm -f $<
+#	@less $(WORD).paradigm
+
+# G3 NOUNS
+# ============
+
+# Create all the G3 noun test file bases:
+g3-%.testbase: g3-%.txt g3-codes.txt
+	@echo
+	@echo "*** Creating the test base for g3-$*.txt ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNforms.pl g3-codes.txt $< > $@
+	@chmod 660 $@
+
+# Finally, we concatenate all *.greports
+g3-g.summary: $(NGenFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All noun word form generation testing is done.      ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# Finally, we concatenate all *.areports:
+g3-a.summary: $(NAnaFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All noun word form analysis testing is done.        ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# Create noun paradigm generation input file:
+g3-para.ptest: g3-codes.txt
+	@echo
+	@echo "*** Creating the noun paradigm input file for '$(WORD)' ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNword.pl $< $(WORD) > $@
+	@chmod 660 $@
+
+# Paradigm generation:
+.PHONY: g3-paradigm
+g3-paradigm: g3-para.ptest savefile
+	@echo
+	@echo "*** Running the paradigm generator for '$(WORD)' ***"
+	@echo
+	@printf "load $(SAVEFILE) \n\
+	apply up < $< \n\
+	quit \n" > $(TEMP)/$@-gtest-script
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+	@rm -f $(TEMP)/$@-gtest-script
+	@rm -f $<
+#	@less $(WORD).paradigm
+
+
+# pron indef
+# ============
+
+# Create all the pron test file bases:
+pron-%.testbase:pron-%.txt pronIndef-codes.txt
+	@echo
+	@echo "*** Creating the test base for pron-$*.txt ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNforms.pl pronIndef-codes.txt $< > $@
+	@chmod 660 $@
+
+# Finally, we concatenate all *.greports
+pron-g.summary: $(NGenFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All noun word form generation testing is done.      ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# Finally, we concatenate all *.areports:
+pron-a.summary: $(NAnaFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All noun word form analysis testing is done.        ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# Create noun paradigm generation input file:
+pron-para.ptest: pronIndef-codes.txt
+	@echo
+	@echo "*** Creating the noun paradigm input file for '$(WORD)' ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNword.pl $< $(WORD) > $@
+	@chmod 660 $@
+
+# Paradigm generation:
+.PHONY: pron-paradigm
+pron-paradigm: pron-para.ptest savefile
+	@echo
+	@echo "*** Running the paradigm generator for '$(WORD)' ***"
+	@echo
+	@printf "load $(SAVEFILE) \n\
+	apply up < $< \n\
+	quit \n" > $(TEMP)/$@-gtest-script
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+	@rm -f $(TEMP)/$@-gtest-script
+	@rm -f $<
+#	@less $(WORD).paradigm
+
+# npl NOUNS
+# ============
+
+# Create all the npl noun test file bases:
+npl-%.testbase: npl-%.txt npl-codes.txt
+	@echo
+	@echo "*** Creating the test base for npl-$*.txt ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNforms.pl npl-codes.txt $< > $@
+	@chmod 660 $@
+
+# Finally, we concatenate all *.greports
+npl-g.summary: $(NGenFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All noun word form generation testing is done.      ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# Finally, we concatenate all *.areports:
+npl-a.summary: $(NAnaFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All noun word form analysis testing is done.        ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# Create noun paradigm generation input file:
+npl-para.ptest: npl-codes.txt
+	@echo
+	@echo "*** Creating the noun paradigm input file for '$(WORD)' ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNword.pl $< $(WORD) > $@
+	@chmod 660 $@
+
+# Paradigm generation:
+.PHONY: npl-paradigm
+npl-paradigm: npl-para.ptest savefile
+	@echo
+	@echo "*** Running the paradigm generator for '$(WORD)' ***"
+	@echo
+	@printf "load $(SAVEFILE) \n\
+	apply up < $< \n\
+	quit \n" > $(TEMP)/$@-gtest-script
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+	@rm -f $(TEMP)/$@-gtest-script
+	@rm -f $<
+#	@less $(WORD).paradigm
 
 
 
@@ -475,10 +696,10 @@ prop-paradigm: prop-para.ptest savefile
 
 # Make sure there is an available smX.save in the parent directory:
 savefile:
-	@echo
-	@echo "*** Go to $$GTHOME and make the required transducer: ***"
-	@echo
-	cd $(SRCDIR)/ && $(MAKE) $(notdir $(SAVEFILE)) GTLANG=sme
+#	@cd $(SRCDIR)/ && $(MAKE) ifst-restr TARGET=sme
+	@cd $(SRCDIR)/ && $(MAKE) ifst-norm TARGET=sme
+#	@cd $(SRCDIR)/ && $(MAKE) ifst TARGET=sme
+# Harmonize the choice here with the choice of SAVEFILE at appr line 30
 
 # Word form generation:
 # ---------------------
@@ -643,9 +864,9 @@ twol-test-norm: twol-norm twol-extract
 # Make sure there are up-to-date twol binaries:
 twol: twol-desc twol-norm
 twol-desc:
-	@cd $(SRCDIR)/ && $(MAKE) GTLANG=sme twol-descriptive
+	@cd $(SRCDIR)/ && $(MAKE) TARGET=sme twol-descriptive
 twol-norm:
-	@cd $(SRCDIR)/ && $(MAKE) GTLANG=sme twol
+	@cd $(SRCDIR)/ && $(MAKE) TARGET=sme twol
 
 
 twol-pos: TYPE=pos
