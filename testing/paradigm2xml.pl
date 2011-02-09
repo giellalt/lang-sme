@@ -2,6 +2,10 @@
 use strict;
 
 # Script that transforms something into something else
+# Yess, Cip! Very informative comments!
+
+# This script transforms the output of the generation paradigm into an intermediate xml format.
+# It is used both for sma and for sme, the only difference being the use of dashedLemma: with sma but not with sme.
 
 my $newAnalysis = 1;
 my $hasLemma = 0;
@@ -10,7 +14,8 @@ my $pos = 1;
 my $wordForm = "";
 my $xmlOutput = "<paradigm>\n";
 my $firstClosing = 1;
-my $dashedLemma = 0;
+#no need of dashedLemma in sme
+#my $dashedLemma = 0;
 my $morph = "";
 
 while (<>) {
@@ -66,7 +71,9 @@ while (<>) {
       $xmlOutput = $xmlOutput."  <analysis ms=\"$morph\">\n";
       
       $hasLemma = 1;
-      $dashedLemma = ($lemma  =~ m/[^\-]+[\-].+/);
+      # no need of dashedLemma in sme
+      # $dashedLemma = ($lemma  =~ m/[^\-]+[\-].+/);
+
     } else {
       $xmlOutput = $xmlOutput."  </analysis>\n";
       if (($morph =~ /^Actor_(.+)/) || ($morph =~ /^Prop_(.+)/) || ($morph =~ /^N_(.+)/) || ($morph =~ /^Indef_(.+)/)) {
@@ -89,9 +96,10 @@ while (<>) {
       if ($newAnalysis) {
 	next;
       } else {
-	if (!$dashedLemma) {
-	  $wordForm =~ s/\-//g;
-	}
+	#no need of dashedLemma in sme
+	#if (!$dashedLemma) {
+	#  $wordForm =~ s/\-//g;
+	#}
 	$wordForm =~ s/\#//g;
 	$xmlOutput = $xmlOutput."  <wordform>$wordForm</wordform>\n";
       }
