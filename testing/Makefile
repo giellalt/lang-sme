@@ -819,7 +819,7 @@ savefile:
 # make twol-test FILE=filename.txt (test for pairs in filename.txt)
 # make twol      (recompiles the twol binaries when the twol rules are changed)
 
-TWOLC = twolc -utf8
+TWOLC = twolc
 TYPE = pos
 FILEPOS = twol-pos.in
 FILENEG = twol-neg.in
@@ -864,7 +864,7 @@ twol-test-norm: twol-norm twol-extract
 # Make sure there are up-to-date twol binaries:
 twol: twol-desc twol-norm
 twol-desc:
-	@cd $(SRCDIR)/ && $(MAKE) TARGET=sme twol-descriptive
+	@cd $(SRCDIR)/ && $(MAKE) TARGET=sme twol
 twol-norm:
 	@cd $(SRCDIR)/ && $(MAKE) TARGET=sme twol
 
