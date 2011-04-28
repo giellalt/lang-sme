@@ -1242,6 +1242,11 @@ LIST HUMAN-AGENT-V = "áŋgiruššat" "ásahit" "beahttit" "buoridit" "čielggad
 
     # According to the rules choosing Loc or Com, the these verbs do not select TOOL, ABSTR-TOOL, CONCEPT, SATNI or HUMAN in (Pl Loc).
 
+LIST NHUMAN-OBJECT-V = "bargat" "borrat" "čállit" "lohkat" "vuodjit" ;
+    # transitive verbs that typically do not have humans as their object and usually have an intransitive reading
+
+SET V-JUST-TRANS-ACT = V-TRANS-ACT - NHUMAN-OBJECT-V ;
+
 #LIST ABSTR-EVENT-V = "lassánit" ;
 
     # In contrast to the HUMAN-AGENT-V set, this one presupposes no human or human-like actor who initiates the action.
@@ -14568,9 +14573,14 @@ MAP:r264 (@<ADVL) TARGET Gen IF (0 TIME OR ROUTE)(*1 PLACE BARRIER NOT-QMARK LIN
 MAP:r268 (@-FSUBJ>) TARGET Gen IF (0 HUMAN OR PPRON-NOT-DAT)(*1 Acc BARRIER NOT-QMARK LINK NOT 0 HUMAN)(*2 VAbess BARRIER NOT-QMARK);
 	## Divššohasaid sáhttá dálkkodit dálkasiiguin sin dan dieđekeahttá.
 	
-MAP:r269 (@-FSUBJ>) TARGET Acc IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER NOT-ADV-PCLE LINK NEGATE 0 Imprt LINK -1 BOS)(0 HAB-ACTOR OR Refl LINK NOT 0 ("dat"))(*1 Inf OR PrfPrc BARRIER NOT-AA LINK NOT 0 V-TRANS-ACT LINK NOT *-1 FAUXV BARRIER VERB);
+MAP:r269 (@-FSUBJ>) TARGET Acc IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER NOT-ADV-PCLE LINK NEGATE 0 Imprt LINK -1 BOS)(0 HAB-ACTOR OR Refl LINK NOT 0 ("dat"))(*1 Inf OR PrfPrc BARRIER NOT-AA LINK NOT 0 V-JUST-TRANS-ACT LINK NOT *-1 FAUXV BARRIER VERB);
 	## Son rávve olbmuid čuovvut skohtermáđii dárkilit go sáhttá leat suddi goappašiid beale luotta.
 	## Mun háliidan mánnán boahtit ruoktot!
+	## Son divttii Liná bargat ráfis, ja lei viššal su veahkehit.
+	
+MAP (@-FSUBJ>) TARGET Acc IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER NOT-ADV-PCLE LINK NEGATE 0 Imprt LINK -1 BOS)(0 HAB-ACTOR OR Refl LINK NOT 0 ("dat"))(*1 Inf OR PrfPrc BARRIER NOT-AA LINK *1 Acc);
+    # This one resembles the previous rule, but is for the case where the place of the @-F<OBJ is already taken
+    ## Son rávve olbmuid čuovvut skohtermáđii dárkilit go sáhttá leat suddi goappašiid beale luotta.
 	
 MAP (@-FSUBJ>) TARGET Acc IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER NOT-ADV-PCLE LINK NOT 0 AUX LINK NEGATE 0 Imprt LINK -1 BOS)(0 HAB-ACTOR OR Refl)(*1 (Actio Ess) BARRIER NOT-AA);
 	## De oinnii olbmá čohkkámin tuolloviesus.
@@ -15446,8 +15456,10 @@ MAP:r362 (@-FOBJ>) TARGET Acc IF (NOT *-1 STV-NOT-ACT BARRIER VERB)(1 Ger);
 
 MAP:r363 (@-F<OBJ) TARGET Acc IF (0 NP-HEAD-ACC)(*-1 Inf BARRIER NP-BOUNDARY LINK NOT 0 @-FMAINV) ;
 
-MAP (@-FOBJ>) TARGET Acc IF (0 NP-HEAD-ACC)(*1 (V @<OBJ) BARRIER NOT-ADV) ;
+MAP (@-FOBJ>) TARGET Acc IF (0 NP-HEAD-ACC)(*1 (V @<OBJ) BARRIER NOT-ADV LINK NOT *1 (@-F<OBJ) BARRIER S-BOUNDARY) ;
 	## Son logai oappás dan bargan.
+	##$ Son divttii Liná bargat ráfis, ja lei viššal su veahkehit.
+	##$ Son rávve olbmuid čuovvut skohtermáđii dárkilit go sáhttá leat suddi goappašiid beale luotta.
 
 #MAP:r363 (@-F<OBJ) TARGET Acc IF (0 NP-HEAD-ACC)(*-1 Inf BARRIER NP-BOUNDARY LINK 0 V-TRANS-ACT-NOT-AUX LINK *-1 ("leat") BARRIER SV-BOUNDARY2 LINK NEGATE -1 Loc LINK 2 Inf) ;
 	## Gurssa ulbmil lea oahppat goarrut Ivgu gávtti.
