@@ -386,11 +386,10 @@ Multichar_Symbols
 
 LEXICON Root
  +Use/Circ: Prefixes ;				  	! 
- +LCmpnd++Use/Circ:%- Noun ;	    ! 
  @U.Cap.Obl@ ProperNoun ;   ! These flags are for
  @U.Cap.Opt@ ProperNoun ;   ! downcasing the propernouns
 ! AspellProp ;			    ! Only for aspell target !!
- Noun ;
+ NounRoot ;
 ! AspellAffix ;			    ! Only for aspell target !!
 ! ProperNounFirstPart ;	  ! Merged with ProperNoun, but kept as group
  Adjective ;
@@ -409,7 +408,7 @@ LEXICON Root
  Acronym ;
  Abbreviation ;
  Punctuation ;
- Rmiddle ; ! gaskbeaivi, this is the "new" R, not Rreal
+ MiddleNouns ; ! gaskbeaivi, this is the "new" R, not Rreal
 
 
 
@@ -446,19 +445,22 @@ LEXICON Prefixes	! ^C^
 
 LEXICON R    ! lexicalising the 3-part compounds, with the tag ShCmp
     Rreal ;  ! Business as usual: Normal compounds right on to Rreal
- #  Rmiddle ;
+ #  MiddleNouns ; ! These nouns should not return to themselves, to avoid -jotjotjot-
+                  ! They thus point directly to Rreal.
  
-LEXICON Rreal
- #+Use/Circ:# Noun ;                                    ! This is the normal case.		         
+LEXICON Rreal ! This is the former R lexicon, renamed to avoid the MiddleNouns loop
+                #+Use/Circ:# Noun ;                                    ! This is the normal case.		         
  #@P.NeedNoun.ON@+Use/Circ:#@P.NeedNoun.ON@ Verb ;      ! Flag diacr declares that the compound   
  #@P.NeedNoun.ON@+Use/Circ:#@P.NeedNoun.ON@ Adjective ; ! needs a N tag later in the derivation  
- +Hyph#+Use/Circ:%- Noun ;                        ! These 3 cases add a hyphen, so     
+           +Hyph#+Use/Circ:%- Noun ;                        ! These 3 cases add a hyphen, so     
  +Hyph#@P.NeedNoun.ON@+Use/Circ:%-@P.NeedNoun.ON@  Verb ;        ! Sem-julggaštus and maana-gåetie	      
  +Hyph#@P.NeedNoun.ON@+Use/Circ:%-@P.NeedNoun.ON@  Adjective ;   ! are allowed.			              
 
  %-#+Use/Circ:%-# Acronym ;    ! maana-tv, "lomme-cd-spelar"
  %-#+Use/Circ:%-# ProperNoun ; ! Proper nouns as the 2nd part of compounds for non-hyph.
                                ! words. viessu-London goes through here.
+
+ %-#+Use/Circ:%-# HyphNouns ; ! Go to words requiring hyphens, like -tv- and -cd-
 
  +Cmpnd:%- ENDLEX ;     ! This to take care of Oahpo- ja dutkandept - want this in speller
  R-LAGAN ;
@@ -476,109 +478,25 @@ LEXICON RHyph ! Recursive lexicon from all classes REQUIRING a hyphen to follow.
                                ! London-Hull is covered here, whereas Hull-viessu
                                ! is covered by RHyph + Noun.
 
+ %-#+Use/Circ:%-# HyphNouns ; ! Go to words requiring hyphens, like -tv- and -cd-
+
  +Cmpnd:%- ENDLEX ;      ! This to take care of Oahpo- ja dutkandept - want this in speller
 
 ! Proper noun compounds without hyphens are NOT presently covered - if they were
 ! to be added, they need to be marked +Use/Sub. Examples: LondonHull & viessuLondon.
 
 
-
-LEXICON Rmiddle
- al+ShCmp+Use/Sub:al           Rreal ; 
- beai+ShCmp:beai               Rreal ;
- beal+ShCmp:beal               Rreal ;
- báldd+ShCmp+Use/Sub:báldd     Rreal ; 
- gabb+ShCmp+Use/Sub:gabb	   Rreal ; 
- garr+ShCmp+Use/Sub:garr	   Rreal ; 
- gask+ShCmp+Use/Sub:gask	   Rreal ; 
- geai+ShCmp+Use/Sub:geaj       Rreal ; 
- geaš+ShCmp:geaš               Rreal ;
- gieh+ShCmp+Use/Sub:gieh       Rreal ; 
- giet+ShCmp+Use/Sub:giet       Rreal ; 
- guodd+ShCmp+Use/Sub:guodd     Rreal ; 
- guoih+ShCmp+Use/Sub:guoih     Rreal ; 
- guoikk+ShCmp+Use/Sub:guoikk   Rreal ; 
- oahpaheai+ShCmp:oahpaheai     Rreal ;
- jot+ShCmp+Use/Sub:jot         Rinter ;
- joh+ShCmp+Use/Sub:joh         Rreal ; 
- liig+ShCmp+Use/Sub:liig	   Rreal ; 
- miel+ShCmp:miel               Rreal ;
- mies+ShCmp+Use/Sub:mies	   Rreal ; 
- muorr+ShCmp+Use/Sub:muorr     Rreal ; 
- niib+ShCmp+Use/Sub:niib9	   Rreal ; 
- njun+ShCmp+Use/Sub:njun       Rreal ; 
- njár+ShCmp+Use/Sub:njár	   Rreal ; 
- námm+ShCmp+Use/Sub:námm	   Rreal ; 
- oaiv+ShCmp+Use/Sub:oaiv	   Rreal ; 
- oai+ShCmp+Use/Sub:oai 	       Rreal ; 
- ris+ShCmp+Use/Sub:ris	       Rreal ; 
- sai+ShCmp+Use/Sub:sai         Rreal ; 
- sis+ShCmp+Use/Sub:sis         Rreal ; 
- vuohpp+ShCmp+Use/Sub:vuohpp   Rreal ; 
- vuol+ShCmp:vuol               Rreal ;
- váh+ShCmp+Use/Sub:váh         Rreal ; 
- vár+ShCmp+Use/Sub:vár         Rreal ; 
- vát+ShCmp+Use/Sub:vát         Rreal ; 
- čip+ShCmp+Use/Sub:čip	       Rreal ; 
- čáz+ShCmp+Use/Sub:čáz	       Rreal ; 
- šlubb+ShCmp+Use/Sub:šlubb     Rreal ; 
- sáh+ShCmp+Use/Sub:sáh         Rreal ; 
- sát+ShCmp+Use/Sub:sát         Rreal ; 
-
 LEXICON Rnoun
- Rreal ;
- +N+Attr+Use/Sub: ENDLEX ;   !Kárášjot
-! Intermediate solution. Words pointing here come from
-! the upper part of the NounRoot lexicon. They differ
-! from inter in that they need a POS tag.
+ Rreal ;                   ! Going to the compound lexicon
+ +N+Attr+Use/Sub: ENDLEX ; ! Kárášjot, as independent (sub) word
 
-LEXICON Rinter
- Rreal ;
- +Use/Sub: ENDLEX ;  ! Kárášjot
-
-!LEXICON Rreal ! This is the former R lexicon
-! +Use/Circ: Rreal_nonhyph ;    
-! :%- Rreal_hyph ;
-
-!LEXICON Rreal_nonhyph   !^C^
-! #+Use/Circ:# NounRoot;           ! This is the normal case.
-! #+Use/Circ:# NounSecond;	      ! Testing some quasisuff, cf. noun file  
-! #@P.NeedNoun.ON@+Use/Circ:#@P.NeedNoun.ON@ VerbRoot;      ! Flag diacr = the compound  
-! #@P.NeedNoun.ON@+Use/Circ:#@P.NeedNoun.ON@ AdjectiveRoot; ! needs a N tag later in 
-                                                           ! the derivation 
-
-!LEXICON Rreal_hyph
-! #+Use/Circ:                 NounRoot ;      ! These 3 cases add a hyphen, so         
-! #@P.NeedNoun.ON@+Use/Circ:@P.NeedNoun.ON@  VerbRoot ;      ! Sem-julggaštus and the like
-! #@P.NeedNoun.ON@+Use/Circ:@P.NeedNoun.ON@  AdjectiveRoot ; ! is allowed.			                 
-! #+Use/Circ:                 ProperNoun ;    ! Thus: London-Hull are now ok.      
-! +LCmpnd++Use/NG:              ENDLEX ; ! This to take care of Oahpo- ja dutkandept.
-!                                 ! we want this in the speller
-! +Der1+Der/lágan+Use/Circ:»lágan LAGAN ; ! ! biilalágan, 
-!   ! noaidelágán noaiddilágán beatnagalágán beanalágán all these goes
-!  ! Nielsen:beatnatlágán, beatnatlágáš, beanalágáš, giđalágáš, áhččelágáš,
-! +Der1+Der/lágán+Use/Circ:»lágán LAGAN ; ! ! Oslolágán
-! +Der1+Der/lágaš+Use/Circ:»lágaž LAGAN ; ! ! etc.
-! +Der1+Der/lágáš+Use/Circ:»lágáž LAGAN ;
-
-
-
-!LEXICON RAbbr !From abbreviations and acronyms to avoid two hyphens: a-- and ...
-! #+Use/Circ:# NounRoot;            ! This is the normal case.
-! #+Use/Circ:# NounSecond;          ! Testing some quasisuff, cf. noun file  
-! #@P.NeedNoun.ON@+Use/Circ:#@P.NeedNoun.ON@ VerbRoot;      ! Flag diacr = the compound  
-! #@P.NeedNoun.ON@+Use/Circ:#@P.NeedNoun.ON@ AdjectiveRoot; ! needs a N tag later in derivation 
-! #%-+Use/Circ:%- NounRoot ;                      ! These 3 cases add a hyphen, so 
-! #%-@P.NeedNoun.ON@+Use/Circ:%-@P.NeedNoun.ON@  VerbRoot ;      ! Sem-julggaštus and the like
-! #%-@P.NeedNoun.ON@+Use/Circ:%-@P.NeedNoun.ON@  AdjectiveRoot ; ! is allowed.
-! #+Use/Circ:# ProperNoun;       ! Now, let us allow proper nouns as the 2nd part of com-   
-!! #%-:%- ProperNoun ; ! pounds. Thus: London-Hull, LondonHull, Hull-viessu      
- !                     ! and viessuLondon are now all ok. Some refinement could  
- !                     ! perhaps be done, but corpus research is needed.	        
-! +LCmpnd++Use/NG: ENDLEX ;   ! This to take care of Oahpo- ja dutkandept.
-                      !we want this in the speller
-
-
+LEXICON R-LAGAN
+ +Der1+Der/lágan+Use/Circ:»lágan LAGAN ; ! ! biilalágan, 
+   ! noaidelágán noaiddilágán beatnagalágán beanalágán all these goes
+  ! Nielsen:beatnatlágán, beatnatlágáš, beanalágáš, giđalágáš, áhččelágáš,
+ +Der1+Der/lágán+Use/Circ:»lágán LAGAN ; ! ! Oslolágán
+ +Der1+Der/lágaš+Use/Circ:»lágaž LAGAN ; ! ! etc.
+ +Der1+Der/lágáš+Use/Circ:»lágáž LAGAN ;
 
 
 ! Lexica for nominal declension classes
@@ -4987,15 +4905,6 @@ LEXICON HEAPMI
  +Sg+Nom+Use/Ped: PxV ;
  LASJOBL ;
  +Der2+Der/at+Adv:X8t K ;
-
-LEXICON R-LAGAN
- +Der1+Der/lágan+Use/Circ:»lágan LAGAN ; ! ! biilalágan, 
-   ! noaidelágán noaiddilágán beatnagalágán beanalágán all these goes
-  ! Nielsen:beatnatlágán, beatnatlágáš, beanalágáš, giđalágáš, áhččelágáš,
- +Der1+Der/lágán+Use/Circ:»lágán LAGAN ; ! ! Oslolágán
- +Der1+Der/lágaš+Use/Circ:»lágaž LAGAN ; ! ! etc.
- +Der1+Der/lágáš+Use/Circ:»lágáž LAGAN ;
-
 
 LEXICON LAGAN
  +A+Attr:%> K ;
