@@ -240,7 +240,7 @@ n-paradigm: n-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply up < $< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_n.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 #	@less $(WORD).paradigm
@@ -295,7 +295,7 @@ v-paradigm: v-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply up < $< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_v.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 #	@less $(WORD).paradigm
@@ -350,7 +350,7 @@ a-paradigm: a-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply up < $< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_a.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 #	@less $(WORD).paradigm
@@ -406,7 +406,7 @@ num-paradigm: num-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply up < $< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_num.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 #	@less $(WORD).paradigm
@@ -462,7 +462,7 @@ prop-paradigm: prop-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply up < $< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_prop.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 #	@less $(WORD).paradigm
@@ -518,7 +518,7 @@ actor-paradigm: actor-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply up < $< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_actor.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 #	@less $(WORD).paradigm
@@ -573,7 +573,7 @@ g3-paradigm: g3-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply up < $< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_g3.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 #	@less $(WORD).paradigm
@@ -629,7 +629,7 @@ pron-paradigm: pron-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply up < $< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_pron.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 #	@less $(WORD).paradigm
@@ -684,7 +684,7 @@ npl-paradigm: npl-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply up < $< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_npl.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 #	@less $(WORD).paradigm
