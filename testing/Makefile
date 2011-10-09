@@ -243,7 +243,7 @@ n-paradigm: n-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_n.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-#	@less $(WORD).paradigm
+#	@less $(GEN_TMP)/$(PARA_TMP)/$(WORD)_n.paradigm
 
 
 # VERBS
@@ -298,7 +298,7 @@ v-paradigm: v-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_v.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-#	@less $(WORD).paradigm
+#	@less $(GEN_TMP)/$(PARA_TMP)/$(WORD)_v.paradigm
 
 
 # ADJECTIVES
@@ -353,7 +353,7 @@ a-paradigm: a-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_a.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-#	@less $(WORD).paradigm
+#	@less $(GEN_TMP)/$(PARA_TMP)/$(WORD)_a.paradigm
 
 
 # NUMERALS
@@ -409,7 +409,7 @@ num-paradigm: num-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_num.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-#	@less $(WORD).paradigm
+#	@less $(GEN_TMP)/$(PARA_TMP)/$(WORD)_num.paradigm
 
 
 # PROPER NOUNS
@@ -465,7 +465,7 @@ prop-paradigm: prop-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_prop.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-#	@less $(WORD).paradigm
+#	@less $(GEN_TMP)/$(PARA_TMP)/$(WORD)_prop.paradigm
 
 
 # ACTOR NOUNS
@@ -521,7 +521,7 @@ actor-paradigm: actor-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_actor.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-#	@less $(WORD).paradigm
+#	@less $(GEN_TMP)/$(PARA_TMP)/$(WORD)_actor.paradigm
 
 # G3 NOUNS
 # ============
@@ -576,7 +576,7 @@ g3-paradigm: g3-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_g3.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-#	@less $(WORD).paradigm
+#	@less $(GEN_TMP)/$(PARA_TMP)/$(WORD)_g3.paradigm
 
 
 # pron indef
@@ -632,7 +632,7 @@ pron-paradigm: pron-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_pron.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-#	@less $(WORD).paradigm
+#	@less $(GEN_TMP)/$(PARA_TMP)/$(WORD)_pron.paradigm
 
 # npl NOUNS
 # ============
@@ -687,7 +687,7 @@ npl-paradigm: npl-para.ptest savefile
 	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_npl.paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
-#	@less $(WORD).paradigm
+#	@less $(GEN_TMP)/$(PARA_TMP)/$(WORD)_npl.paradigm
 
 
 
