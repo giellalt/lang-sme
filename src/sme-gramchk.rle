@@ -365,10 +365,15 @@ LIST Sur = Sur ;
 # ----------
 LIST &error = &error ;
 LIST &CORR = &CORR ;
-LIST &not-aidna = &not-aidna ;
-LIST &gen-before-postp = &gen-before-postp ;
-LIST &go-not-ahte = &go-not-ahte ;
-LIST &wrong-case = &wrong-case ;
+LIST &syn-not-aidna = &syn-not-aidna ;
+LIST &syn-gen-before-postp = &syn-gen-before-postp ;
+LIST &syn-go-not-ahte = &syn-go-not-ahte ;
+
+LIST &msyn-wrong-case = &msyn-wrong-case ;
+
+LIST &real-sahttit_not_sahtasit = &real-sahttit_not_sahtasit ;
+LIST &real-beassat = &real-beassat ;
+LIST &real-orrut = &real-orrut ;
 
 # &err-spellingerror    	spellingerror word is not in lexicon
 
@@ -2371,53 +2376,64 @@ SET NON-APP = ALLSYNTAG - (@APP);
 	# ====================== #1 Grammar checker starts here
 
 
-MAP:gen-before-postp (&gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 Po);
+MAP:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK *1 Po BARRIER NPNH);
     ## Mii leat dávjá ságastallan dan diŋga birra.
-MAP:gen-before-postp (&gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen Link *2 Po BARRIER NPNH);
+MAP:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK *2 Po BARRIER NPNH);
     # Kanskje vi burde bruke dependens i stedet for * i *2 Po?
     ## Mii leat dávjá ságastallan golbma diŋgga dehege sávcca birra.
     ## Mii leat dávjá ságastallan dát golbma alit, rukses, ruoná ja ihána stuorra diŋgga birra.
+    ## Sis lea čielga sosiálpolitihkalaš sidoallu lávlagiinniset, go lávlot ee. eiseválddiid vuolušteapmi, álgoálbmogiid bággofárrema, siskkáldas veahkaválddi, álbmotgoddima, olmmošvuoigatvuođaid ja álbmogaset árbevieruid seailluheami birra.
 
-MAP:wrong-case (&wrong-case) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS LINK *1 ILLV BARRIER S-BOUNDARY);
+MAP:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS LINK *1 ILLV BARRIER S-BOUNDARY);
     ## Mun liikon dus.
 
-MAP:aidna (&not-aidna) TARGET ("áidna") IF (1 Rel);
+MAP:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 HUMAN LINK 0 NOT-ACC)(*-1 BOS LINK *1 TV BARRIER S-BOUNDARY)     
+    ## Mun boagustan dus. Mun boagustan du.
+    
+
+MAP:aidna (&syn-not-aidna) TARGET ("áidna") IF (1 Rel);
     ## Áidna gii váilu dán govas lea bussevuoddji.	Ii váillo eará go bussevuoddji dán govas. Váilu dušše bussevuoddji dán govas.
     #$ Dat lea áidna vejolašvuohta, mii gávdno.
 
 # ahte vs. go 
 
-MAP:ahte_go (&go-not-ahte) TARGET ("ahte") IF (*-1 (A Nom) OR (@<SPRED) BARRIER NOT-COMMA)(*1 VFIN BARRIER S-BOUNDARY);
+MAP:ahte_go (&syn-go-not-ahte) TARGET ("ahte") IF (*-1 (A Nom) OR (@<SPRED) BARRIER NOT-COMMA)(*1 VFIN BARRIER S-BOUNDARY);
     ## Buorre ahte boađát. Buorre go boađát.
-MAP:ahte_go (&go-not-ahte) TARGET ("ahte") IF (*-1 (A Nom) OR (@<SPRED) OR Ess BARRIER VFIN)(*1 VFIN BARRIER S-BOUNDARY);
+MAP:ahte_go (&syn-go-not-ahte) TARGET ("ahte") IF (*-1 (A Nom) OR (@<SPRED) OR Ess BARRIER VFIN)(*1 VFIN BARRIER S-BOUNDARY);
     ## Dasa lei sivvan dat, ahte son čorbmagođii mu reaŋgabártnáža. Dasa lei sivvan dat, go son čorbmagođii mu reaŋgabártnáža.
     
-# sáhtašit (skysse) vs. sáhttit Cond
-#Con i negation/questions/conditional sentences
-# sáhtašit with human object
+    # Real Word Errors
+    # ================
+    
+    # sáhtašit (skysse) vs. sáhttit Cond
+    # condition: human object
 
-MAP:sahttit_not_sahtasit (&sahttit_not_sahtasit) TARGET ("sáhtašit") IF (NEGATE *-1 (@OBJ>) LINK 0 HUMAN OR (Pron Pers) BARRIER V OR S-BOUNDARY);
-MAP:sahttit_not_sahtasit (&sahttit_not_sahtasit) TARGET ("sáhtašit") IF (NEGATE *1 (@<OBJ) LINK 0 HUMAN OR (Pron Pers) BARRIER V OR S-BOUNDARY);
-
+MAP:sahttit_not_sahtasit (&real-sahttit_not_sahtasit) TARGET ("sáhtašit") IF (NEGATE *-1 (@OBJ>) LINK 0 HUMAN OR (Pron Pers) BARRIER V OR S-BOUNDARY);
+MAP:sahttit_not_sahtasit (&real-sahttit_not_sahtasit) TARGET ("sáhtašit") IF (NEGATE *1 (@<OBJ) LINK 0 HUMAN OR (Pron Pers) BARRIER V OR S-BOUNDARY);
     ## Juste dál sáhtašin baicca dego civnna girdilit biekka mielde ja girddašit gosa dal de dolvvošii, guhkas. Juste dál sáhtášin baicca dego civnna girdilit biekka mielde ja girddašit gosa dal de dolvvošii, guhkas.
-#
-# Loc vs. Ill/Acc 
-#Mun liikon dus. Mun liikon dutnje.
-#Mun boagustan dus. Mun boagustan du.
-#
-# Prt vs. Prs in subclause 
-#Mon jáhkken ahte don lohket iežat jallan. Mon jáhkken ahte don logat iežat jallan.
-# Son gulai go mánná bárggui. Son gulai go mánná bárgu. (Nickel)
+    
+    # beassát (beassi) vs. beassat (Inf)
+    # condition: subcategorizes for an infinitive
+    
+MAP:beassat (&real-beassat) TARGET ("beassi") OR ("beassat" Actor) IF (*1 Inf BARRIER S-BOUNDARY OR VFIN);
+    ## Sámi filbma lea deahálaš sámi álbmogii sámegiilli beassát muitalit sámi kultuvrra ja giela birra. Sámi filbma lea deahálaš sámi álbmogii sámegiilli beassat muitalit sámi kultuvrra ja giela birra.
+
+MAP:orrut (&real-orrut) TARGET ("orrot") IF (NEGATE -1 PLACE LINK 0 Loc) ;
+# (bosette seg) vs. orrut (seem like) =
+    ## Lávejit nu máilmmi fiidnat orrome diet doahpagat.  Lávejit nu máilmmi fiidnat orrut diet doahpagat.
+
+    # Tense
+    # =====
+
+    # Prt vs. Prs in subclause 
+## Mon jáhkken ahte don lohket iežat jallan. Mon jáhkken ahte don logat iežat jallan.
+
+## Son gulai go mánná bárggui. Son gulai go mánná bárgu. (Nickel)
+#$ Áhčči gorui go áhkku gođii.
+
 # mu vs. iežan 
-#Mun válddán mu girjji.
+## Mun válddán mu girjji.
 #
-# real word mistake 
-#
-#= beassát (beassi) vs. beassat (Inf) =
-#Sámi filbma lea deahálaš sámi álbmogii sámegiilli beassát muitalit sámi kultuvrra ja giela birra. Sámi filbma lea deahálaš sámi álbmogii sámegiilli beassat muitalit sámi kultuvrra ja giela birra.
-#
-#= orrot (bosette seg) vs. orrut (seem like) =
-#Lávejit nu máilmmi fiidnat orrome diet doahpagat.  Lávejit nu máilmmi fiidnat orrut diet doahpagat.
 #
 # congruence case/ number 
 #Boraspiret leat dehaleabbo go ahte oarjelsámi kultuvra galga seailut. Boraspiret leat dehaleappot go ahte oarjelsámi kultuvra galga seailut. / Boraspire lea dehaleabbo go ahte oarjelsámi kultuvra galga seailut.
