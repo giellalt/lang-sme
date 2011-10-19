@@ -368,6 +368,9 @@ LIST &CORR = &CORR ;
 LIST &syn-not-aidna = &syn-not-aidna ;
 LIST &syn-gen-before-postp = &syn-gen-before-postp ;
 LIST &syn-go-not-ahte = &syn-go-not-ahte ;
+LIST &syn-prs_not_prt_subclause = &syn-prs_not_prt_subclause ;
+LIST &synt-reflpron = &synt-reflpron ;
+
 
 LIST &msyn-wrong-case = &msyn-wrong-case ;
 
@@ -1095,7 +1098,7 @@ LIST CONTRAST-V = "rátkit" ;
 LIST EMOTION-V = "heahpanaddat" "heahpanit" "ráhkistit" ;
 
 LIST PERCEPTION-V = "áicat" "dovdat" "ealvit" "fuomášit" "fuobmát" "gullat" "háksit" "huobmát" "huomihit" "oaidnit" ;
-
+    
 LIST ILLNESS-V = "buohcat" "dearvvašmahttit" "dearvvašmuvvat" "dearvvašnuvvat" "dearvvaštuvvat" ;
 
   
@@ -2425,25 +2428,30 @@ MAP:orrut (&real-orrut) TARGET ("orrot") IF (NEGATE *-1 BOS LINK *1 Ill) ;
     # Tense
     # =====
 
-    # Prt vs. Prs in subclause 
-MAP:prs_not_prt_subclause (&synt-prs_not_prt_subclause) TARGET Prt IF (*-1 ("go") OR ("ahte")) ;
-    ## Mon jáhkken ahte don lohket iežat jallan. Mon jáhkken ahte don logat iežat jallan.
+LIST AHTE-V = "ballat" "dadjat" "čuorvut" "jáhkkit" "liikot" "muitalit" "oaivvildit" "savkalit" "árvalit" "cealkit" "čilget" "cuoigut" "čuorvut" "čurvet" "dadjat" "gielistit" "gilljut" "huikit" "huikkádit" "jearrat" "juoigat" "kommenteret" "lávlut" "lohkat" "váruhit" "vástidit";
 
-MAP:prs_not_prt_subclause (&synt-prs_not_prt_subclause) TARGET Prt IF (*-1 ("go") OR ("ahte")) ;
+    # Prt vs. Prs in subclause 
+MAP:prs_not_prt_subclause (&synt-prs_not_prt_subclause) TARGET Prt IF (*-1 ("ahte") BARRIER S-BOUNDARY OR VFIN LINK *-1 AHTE-V BARRIER NOT-COMMA) ;
+    ## Mon jáhkken ahte don lohket iežat jallan. Mon jáhkken ahte don logat iežat jallan.
+    ## Nieida vástidii, ahte son ii sáhte vuolgit.
+    ## Dat áhkku dajai, ahte gii son vuosttáid suoládii, ii gal bálle oađđit.
+
+MAP:prs_not_prt_subclause (&syn-prs_not_prt_subclause) TARGET Prt IF (*-1 ("go") BARRIER S-BOUNDARY OR VFIN LINK *-1 PERCEPTION-V BARRIER S-BOUNDARY OR VFIN) ;
     ## Son gulai go mánná bárggui. Son gulai go mánná bárgu. (Nickel)
     #$ Áhčči gorui go áhkku gođii.
 
-# mu vs. iežan 
-## Mun válddán mu girjji.
-#
-#
-# congruence case/ number 
-#Boraspiret leat dehaleabbo go ahte oarjelsámi kultuvra galga seailut. Boraspiret leat dehaleappot go ahte oarjelsámi kultuvra galga seailut. / Boraspire lea dehaleabbo go ahte oarjelsámi kultuvra galga seailut.
-#
-#Jus lea okta maid mii sápmelaččat leat máilmmi čeahpimussan, de lea vuoigatvuođaid gáibidit. Jus lea okta mas mii sápmelaččat leat máilmmi čeahpimussan, de lea vuoigatvuođaid gáibidit. 
-#
-# verb subcategorization Actio vs. Inf 
-#Lávejit nu máilmmi fiidnat orrome diet doahpagat.  Lávejit nu máilmmi fiidnat orrut diet doahpagat.
-#
-#
-#
+    # mu vs. iežan 
+LIST PRON = "mun" "don" "son" ;
+MAP:reflpron (&synt-reflpron) TARGET (Pron Pers Gen) IF (0 $$PRON LINK *-1 $$PRON BARRIER S-BOUNDARY LINK 0 (@SUBJ>)) ; 
+    ## Mun válddán mu girjji.
+    # problem about "son" is that both "iežas" and "su" is possible dependent on the referent
+
+
+    # congruence case/ number 
+#MAP:
+    ## Boraspiret leat dehaleabbo go ahte oarjelsámi kultuvra galga seailut. Boraspiret leat dehaleappot go ahte oarjelsámi kultuvra galga seailut. / Boraspire lea dehaleabbo go ahte oarjelsámi kultuvra galga seailut.
+
+    ## Jus lea okta maid mii sápmelaččat leat máilmmi čeahpimussan, de lea vuoigatvuođaid gáibidit. Jus lea okta mas mii sápmelaččat leat máilmmi čeahpimussan, de lea vuoigatvuođaid gáibidit. 
+
+    # verb subcategorization Actio vs. Inf 
+    ## Lávejit nu máilmmi fiidnat orrome diet doahpagat.  Lávejit nu máilmmi fiidnat orrut diet doahpagat.
