@@ -12,10 +12,14 @@
 # Other licensing options are available upon request, please contact
 # giellatekno@uit.no or divvun@samediggi.no
 
+# | preprocess --~/gtsvn/gt/sme/abbr=bin/abbr.txt | lookup -flags mbTT -utf8 ~/gtsvn/gt/sme/bin/sme.fst | lookup2cg | vislcg3 -g ~/gtsvn/gt/sme/src/sme-gramchk.rle 
+
 # ==================================================================== #
 #    N O R T H E R N  S Á M I  GRAMMAR CHECKER              
 # ==================================================================== #
-# ==================================================================== 
+# ==================================================================== #
+
+BEFORE-SECTIONS
 
 MAPPING-PREFIX = & ;
 
@@ -361,8 +365,66 @@ LIST Sur = Sur ;
 # ----------
 LIST &error = &error ;
 LIST &CORR = &CORR ;
+LIST &not-aidna = &not-aidna ;
 LIST &gen-before-postp = &gen-before-postp ;
+LIST &go-not-ahte = &go-not-ahte ;
 LIST &wrong-case = &wrong-case ;
+
+# &err-spellingerror    	spellingerror word is not in lexicon
+
+# &grm-NoEret			there should be "eret" 
+# &grm-falAdv           	"fal" can never be initial
+# &grm-naPcle           	"na" can only be initial
+# &grm-notInterj        	Interj can only be initial or final
+
+# &grm-missing-Acc      	there should be an accusative
+# &grm-missing-Com      	there should be a comitative
+# &grm-missing-Ess      	there should be an essive
+# &grm-missing-Gen      	there should be a genetive
+# &grm-missing-Ill      	there should be an illative
+# &grm-missing-Loc      	there should be a locative
+# &grm-missing-Nom      	there should be a nominative
+# &grm-missing-Loc-PP   	there should be a Loc or a PP
+# &grm-missing-Ill-PP   	there should be an Ill or a PP
+
+# &grm-should-LocPP     	you should answer with a LocPo
+# &grm-should-IllPP     	you should answer with an IllPo
+# &grm-missing-Gen-PP   	there should be a Gen in front of the Po
+
+# &grm-wrong-case       	wrong case
+# &grm-incorr-time-expr 	incorrect time expression 
+# &grm-incorr-tense
+# &grm-incorr-tense-future
+# &grm-incorr-tense-past
+# &grm-incorr-pers-nr   	you should answer with another Person-Number
+
+# &grm-missing-NumSg    	You should answer with Num Sg
+# &grm-missing-NumPl    	You should answer with Num Pl
+# &grm-missing-NNum     	You should answer with Coll
+# &grm-missing-Ord      	You should answer with A Ord
+	
+# &grm-non-agreement-Dem    should be agreement
+# &grm-non-agreement-Adj    should be agreement
+# &grm-non-agreement-Num    should be agreement
+# &grm-non-agreement-buorre should be agreement
+# &grm-non-agr-subj-v		should be agreement subj/verbal
+# &grm-shouldAttr       	this adjective should have Attr form
+# &grm-shouldNotAttr    	this adjective should be predicative form
+# &grm-should-be-Vfin   	your answer should always contain a finite verb
+# &grm-should-not-Vfin  	this verb should not be finite
+# &grm-should-negV		wrong verb-form after Neg
+# &grm-should-pers      	you shold answer with a pronoun
+# &grm-habitive			wrong habitiv-construction
+# &sem-answer-with-same-verb 	you should answer with the same verb
+# &grm-Px-shouldbe-Loc
+# &grm-not-verb-after-workverb
+# &grm-should-not-Nom
+# &grm-Vehicle-Com
+# &grm-Loc-leaving
+# &grm-numeral-wrong-case
+# &grm-soaitit
+# &orth-prop                    Proper nouns should begin with capital letter
+
 
 
 # Other tags
@@ -2310,15 +2372,60 @@ SET NON-APP = ALLSYNTAG - (@APP);
 
 
 MAP:gen-before-postp (&gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 Po);
-        ## Mii leat dávjá ságastallan dan diŋga birra.
+    ## Mii leat dávjá ságastallan dan diŋga birra.
 MAP:gen-before-postp (&gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen Link *2 Po BARRIER NPNH);
-        # Kanskje vi burde bruke dependens i stedet for * i *2 Po?
-        ## Mii leat dávjá ságastallan golbma diŋgga dehege sávcca birra.
-        ## Mii leat dávjá ságastallan dát golbma alit, rukses, ruoná ja ihána stuorra diŋgga birra.
+    # Kanskje vi burde bruke dependens i stedet for * i *2 Po?
+    ## Mii leat dávjá ságastallan golbma diŋgga dehege sávcca birra.
+    ## Mii leat dávjá ságastallan dát golbma alit, rukses, ruoná ja ihána stuorra diŋgga birra.
 
 MAP:wrong-case (&wrong-case) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS LINK *1 ILLV BARRIER S-BOUNDARY);
-## Mun liikon dus.
+    ## Mun liikon dus.
 
+MAP:aidna (&not-aidna) TARGET ("áidna") IF (1 Rel);
+    ## Áidna gii váilu dán govas lea bussevuoddji.	Ii váillo eará go bussevuoddji dán govas. Váilu dušše bussevuoddji dán govas.
+    #$ Dat lea áidna vejolašvuohta, mii gávdno.
 
+# ahte vs. go 
 
+MAP:ahte_go (&go-not-ahte) TARGET ("ahte") IF (*-1 (A Nom) OR (@<SPRED) BARRIER NOT-COMMA)(*1 VFIN BARRIER S-BOUNDARY);
+    ## Buorre ahte boađát. Buorre go boađát.
+MAP:ahte_go (&go-not-ahte) TARGET ("ahte") IF (*-1 (A Nom) OR (@<SPRED) OR Ess BARRIER VFIN)(*1 VFIN BARRIER S-BOUNDARY);
+    ## Dasa lei sivvan dat, ahte son čorbmagođii mu reaŋgabártnáža. Dasa lei sivvan dat, go son čorbmagođii mu reaŋgabártnáža.
+    
+# sáhtašit (skysse) vs. sáhttit Cond
+#Con i negation/questions/conditional sentences
+# sáhtašit with human object
 
+MAP:sahttit_not_sahtasit (&sahttit_not_sahtasit) TARGET ("sáhtašit") IF (NEGATE *-1 (@OBJ>) LINK 0 HUMAN OR (Pron Pers) BARRIER V OR S-BOUNDARY);
+MAP:sahttit_not_sahtasit (&sahttit_not_sahtasit) TARGET ("sáhtašit") IF (NEGATE *1 (@<OBJ) LINK 0 HUMAN OR (Pron Pers) BARRIER V OR S-BOUNDARY);
+
+    ## Juste dál sáhtašin baicca dego civnna girdilit biekka mielde ja girddašit gosa dal de dolvvošii, guhkas. Juste dál sáhtášin baicca dego civnna girdilit biekka mielde ja girddašit gosa dal de dolvvošii, guhkas.
+#
+# Loc vs. Ill/Acc 
+#Mun liikon dus. Mun liikon dutnje.
+#Mun boagustan dus. Mun boagustan du.
+#
+# Prt vs. Prs in subclause 
+#Mon jáhkken ahte don lohket iežat jallan. Mon jáhkken ahte don logat iežat jallan.
+# Son gulai go mánná bárggui. Son gulai go mánná bárgu. (Nickel)
+# mu vs. iežan 
+#Mun válddán mu girjji.
+#
+# real word mistake 
+#
+#= beassát (beassi) vs. beassat (Inf) =
+#Sámi filbma lea deahálaš sámi álbmogii sámegiilli beassát muitalit sámi kultuvrra ja giela birra. Sámi filbma lea deahálaš sámi álbmogii sámegiilli beassat muitalit sámi kultuvrra ja giela birra.
+#
+#= orrot (bosette seg) vs. orrut (seem like) =
+#Lávejit nu máilmmi fiidnat orrome diet doahpagat.  Lávejit nu máilmmi fiidnat orrut diet doahpagat.
+#
+# congruence case/ number 
+#Boraspiret leat dehaleabbo go ahte oarjelsámi kultuvra galga seailut. Boraspiret leat dehaleappot go ahte oarjelsámi kultuvra galga seailut. / Boraspire lea dehaleabbo go ahte oarjelsámi kultuvra galga seailut.
+#
+#Jus lea okta maid mii sápmelaččat leat máilmmi čeahpimussan, de lea vuoigatvuođaid gáibidit. Jus lea okta mas mii sápmelaččat leat máilmmi čeahpimussan, de lea vuoigatvuođaid gáibidit. 
+#
+# verb subcategorization Actio vs. Inf 
+#Lávejit nu máilmmi fiidnat orrome diet doahpagat.  Lávejit nu máilmmi fiidnat orrut diet doahpagat.
+#
+#
+#
