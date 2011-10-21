@@ -370,6 +370,8 @@ LIST &syn-gen-before-postp = &syn-gen-before-postp ;
 LIST &syn-go-not-ahte = &syn-go-not-ahte ;
 LIST &syn-prs_not_prt_subclause = &syn-prs_not_prt_subclause ;
 LIST &synt-reflpron = &synt-reflpron ;
+LIST &synt-not_actio = &synt-not_actio ;
+LIST &synt-case_congruence = &synt-case_congruence ;
 
 
 LIST &msyn-wrong-case = &msyn-wrong-case ;
@@ -936,6 +938,11 @@ LIST OKTII-V = ("boallu" Der/huvva) "goallostuvvot" "beaškkehat" "bidjat" "čat
  # TODO: Think of counter examples, i.e. sentences where we have these verbs, but where oktii is not an adverbial.
  
 LIST VGENV = "bassit" "bivdit" "boahtit" "čierrut" "čuoigat" "čuoiggadit" "čuovvut" "fárret" "fitnat" "garrudit" "gálašit" "gállit" "gilljut" "girdit" "johtit" "jorgut" "luoibmat" "mannat" "mátkkoštit" "njahkalit" "njoammut" "riidet" "ruohttat" "sihkkelastit" "soabbut" "šloahtat" "váccašit" "vádjolit" "vájaldit" "vájuldit" "vánddardit" "vázzit" "viehkat" "viežžat" "vuodjat" "vuodjit" "vuojadit" "vuojašit" "vuolgit" "čilget" "čuorvut" "čurvet" "dadjat" "dárostit" "sámástit" "suomastit" "digáštallat" "hállat" "hoallat" "huikit" "hupmat" "juoigat" "lávlut" "logaldallat" "máidnut" "máinnašit" "muitalit" "savkalit" "skierbmut" "vástidit" "njurgut" "veahkehit" "vuoitit" "vuoššat" ;
+
+LIST ACTIOESS-V = "fitnat" "mannat" "mannalit" "viehkat" "viehkalit" "vázzit" "vázzilit" "vuodjit" "vuojistit" "čuoigat" "áicat" "dovdat" "ealvit" "fuomášit" "fuobmát" "gullat" "háksit" "huobmát" "huomihit" "oaidnit" "gávdnat" "lohkat" "dadjat" "diehtit" "doaivut" "jáhkkit" "ballat" "geargat" "heaitit" ;
+    # verbs that can ask for an actio
+    # fitnat doppe oastime etc
+    # heaittán bargame
 
  
 LIST SOURCE-V = "gáibidit" ;
@@ -2376,6 +2383,9 @@ SET NON-APP = ALLSYNTAG - (@APP);
 	# ====================== #
 	         SECTION         #
 	# ====================== #1 Grammar checker starts here
+	
+	# Syntactical errors
+	# ==================
 
 
 MAP:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK *1 Po BARRIER NPNH);
@@ -2398,17 +2408,24 @@ MAP:aidna (&syn-not-aidna) TARGET ("áidna") IF (1 Rel);
     ## Áidna gii váilu dán govas lea bussevuoddji.	Ii váillo eará go bussevuoddji dán govas. Váilu dušše bussevuoddji dán govas.
     #$ Dat lea áidna vejolašvuohta, mii gávdno.
 
-# ahte vs. go 
+    # ahte vs. go 
+    # -----------
 
 MAP:ahte_go (&syn-go-not-ahte) TARGET ("ahte") IF (*-1 (A Nom) OR (@<SPRED) BARRIER NOT-COMMA)(*1 VFIN BARRIER S-BOUNDARY);
     ## Buorre ahte boađát. Buorre go boađát.
 MAP:ahte_go (&syn-go-not-ahte) TARGET ("ahte") IF (*-1 (A Nom) OR (@<SPRED) OR Ess BARRIER VFIN)(*1 VFIN BARRIER S-BOUNDARY);
     ## Dasa lei sivvan dat, ahte son čorbmagođii mu reaŋgabártnáža. Dasa lei sivvan dat, go son čorbmagođii mu reaŋgabártnáža.
     
+    # IV with an object
+    # -----------------
+    
+    ## Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta. Dasa lassin bargá suohkan dan ala ahte ovdánahttit iežas fálaldaga kvalitehta.
+    
     # Real Word Errors
     # ================
     
     # sáhtašit (skysse) vs. sáhttit Cond
+    # ----------------------------------
     # condition: human object
 
 MAP:sahttit_not_sahtasit (&real-sahttit_not_sahtasit) TARGET ("sáhtašit") IF (NEGATE *-1 (@OBJ>) LINK 0 HUMAN OR (Pron Pers) BARRIER V OR S-BOUNDARY);
@@ -2416,6 +2433,7 @@ MAP:sahttit_not_sahtasit (&real-sahttit_not_sahtasit) TARGET ("sáhtašit") IF (
     ## Juste dál sáhtašin baicca dego civnna girdilit biekka mielde ja girddašit gosa dal de dolvvošii, guhkas. Juste dál sáhtášin baicca dego civnna girdilit biekka mielde ja girddašit gosa dal de dolvvošii, guhkas.
     
     # beassát (beassi) vs. beassat (Inf)
+    # ----------------------------------
     # condition: subcategorizes for an infinitive
     
 MAP:beassat (&real-beassat) TARGET ("beassi") OR ("beassat" Actor) IF (*1 Inf BARRIER S-BOUNDARY OR VFIN);
@@ -2426,8 +2444,8 @@ MAP:orrut (&real-orrut) TARGET ("orrot") IF (NEGATE *-1 BOS LINK *1 Ill) ;
     ## Lávejit nu máilmmi fiidnat orrome diet doahpagat.  Lávejit nu máilmmi fiidnat orrut diet doahpagat.
     #$ Mon orron dohko.
 
-    # Tense
-    # =====
+    # Tense in subclauses
+    # ===================
 
 LIST AHTE-V = "ballat" "dadjat" "čuorvut" "jáhkkit" "liikot" "muitalit" "oaivvildit" "savkalit" "árvalit" "cealkit" "čilget" "cuoigut" "čuorvut" "čurvet" "dadjat" "gielistit" "gilljut" "huikit" "huikkádit" "jearrat" "juoigat" "kommenteret" "lávlut" "lohkat" "váruhit" "vástidit";
 
@@ -2436,12 +2454,16 @@ MAP:prs_not_prt_subclause (&synt-prs_not_prt_subclause) TARGET Prt IF (*-1 ("aht
     ## Mon jáhkken ahte don lohket iežat jallan. Mon jáhkken ahte don logat iežat jallan.
     ## Nieida vástidii, ahte son ii sáhte vuolgit.
     ## Dat áhkku dajai, ahte gii son vuosttáid suoládii, ii gal bálle oađđit.
+    ## Son vurddii, muhto de gullá, ahte olmmoš boahtá.
 
-MAP:prs_not_prt_subclause (&syn-prs_not_prt_subclause) TARGET Prt IF (*-1 ("go") BARRIER S-BOUNDARY OR VFIN LINK *-1 PERCEPTION-V BARRIER S-BOUNDARY OR VFIN) ;
+MAP:prs_not_prt_subclause (&syn-prs_not_prt_subclause) TARGET Prt IF (*-1 ("go") LINK 0 CS BARRIER S-BOUNDARY OR VFIN LINK *-1 PERCEPTION-V BARRIER S-BOUNDARY OR VFIN) ;
     ## Son gulai go mánná bárggui. Son gulai go mánná bárgu. (Nickel)
     #$ Áhčči gorui go áhkku gođii.
+    ## De gulaimet, go unna billoš gilkkaha.
+    ## Mun jerren dálo-isidis, olu go sihtá mávssu.
 
     # mu vs. iežan 
+    # ------------
 LIST PRON = "mun" "don" "son" ;
 MAP:reflpron (&synt-reflpron) TARGET (Pron Pers Gen) IF (0 $$PRON LINK *-1 $$PRON BARRIER S-BOUNDARY LINK 0 (@SUBJ>)) ; 
     ## Mun válddán mu girjji.
@@ -2449,10 +2471,25 @@ MAP:reflpron (&synt-reflpron) TARGET (Pron Pers Gen) IF (0 $$PRON LINK *-1 $$PRO
 
 
     # congruence case/ number 
-#MAP:
+    # -----------------------
+    
+    SET NUM = Sg OR Pl ;
+    
+MAP:number_congruence (&synt-number_congruence) TARGET (@<SPRED) + $$NUM IF (*-1 (@SUBJ>) LINK 0 NUM - $$NUM BARRIER S-BOUNDARY) ;
+    # assuming that the subject gets the correct number rather than the spred
     ## Boraspiret leat dehaleabbo go ahte oarjelsámi kultuvra galga seailut. Boraspiret leat dehaleappot go ahte oarjelsámi kultuvra galga seailut. / Boraspire lea dehaleabbo go ahte oarjelsámi kultuvra galga seailut.
 
+#MAP:case_congruence (&synt-case_congruence) TARGET ..child of čeahpimussan... not the case čeahpi asks for...
     ## Jus lea okta maid mii sápmelaččat leat máilmmi čeahpimussan, de lea vuoigatvuođaid gáibidit. Jus lea okta mas mii sápmelaččat leat máilmmi čeahpimussan, de lea vuoigatvuođaid gáibidit. 
 
+SECTION
+
     # verb subcategorization Actio vs. Inf 
+    # ------------------------------------
+ADD:not_actio (&synt-not_actio) TARGET (Actio Ess) IF (NEGATE *-1 ACTIOESS-V)(NEGATE *1 ACTIOESS-V) ;
     ## Lávejit nu máilmmi fiidnat orrome diet doahpagat.  Lávejit nu máilmmi fiidnat orrut diet doahpagat.
+    
+    # lexical error
+    # =============
+
+    ## Čále dearvvuođaidat ("guossegirjámet")! guossegirjáseamet Gen/Acc/Nom Ill
