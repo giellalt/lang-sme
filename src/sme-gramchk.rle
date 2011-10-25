@@ -1236,6 +1236,8 @@ SET NP-HEAD-NOM    = NP-HEAD-SG-NOM OR NP-HEAD-PL-NOM ;
 SET NP-HEAD-ACC    = (Pron Acc) OR (N Acc) OR (A Acc) - RCmpnd - Dem - ("buorre");
 SET NP-HEAD-GEN    = (Pron Gen) OR (N Gen) OR (A Gen) - RCmpnd - Dem - ("buorre");
 
+SET NOT-NP-HEAD-COMMA-CC = WORD - NP-HEAD - COMMA - CC ;
+
 # The PRE-NP-HEAD family of sets
 # - - - - - - - - - - - - - - - -
 
@@ -2388,10 +2390,12 @@ SET NON-APP = ALLSYNTAG - (@APP);
 	# ==================
 
 
-ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK *1 Po BARRIER NPNH);
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 Po);
     ## Mii leat dávjá ságastallan dan diŋga birra.
-ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK *2 Po BARRIER NPNH);
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK 2 Po);
     # Kanskje vi burde bruke dependens i stedet for * i *2 Po?
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 CC OR COMMA LINK *1 Po BARRIER NOT-NP-HEAD-COMMA-CC);
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK 2 CC OR COMMA LINK *1 Po BARRIER NOT-NP-HEAD-COMMA-CC);
     ## Mii leat dávjá ságastallan golbma diŋgga dehege sávcca birra.
     ## Mii leat dávjá ságastallan dát golbma alit, rukses, ruoná ja ihána stuorra diŋgga birra.
     
@@ -2408,7 +2412,7 @@ ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF
 ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS LINK *1 ILLV BARRIER S-BOUNDARY);
     ## Mun liikon dus.
 
-ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 HUMAN LINK 0 NOT-ACC)(*-1 BOS LINK *1 TV BARRIER S-BOUNDARY)     
+ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 HUMAN LINK 0 NOT-ACC)(*-1 BOS LINK *1 TV BARRIER S-BOUNDARY) ;    
     ## Mun boagustan dus. Mun boagustan du.
     
 #ADD:wrong-case (&msyn-wrong_case) TARGET IF (
@@ -2417,8 +2421,20 @@ ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 HUMAN LINK 0 NOT-ACC)(*-1
     # LIST ACC = acc ACC ;
     # ADD ... TARGET CASE IF (0 TEXT-S LINK 0 CASE - $$ACC)(*1 V LINK 0 TEXT + $$ACC) ;
     ## Čále dearvvuođaidat ("guossegirjámet")! Čále dearvvuođaidat guossegirjáseamet Gen/Acc/Nom Ill
+    ## guestbook
+    ## čállit + Acc (tekst) + Ill (human)
+    ## čállit + Acc (text - abstract text) + Ill (writing place - concrete text, place)
+    ## čállit + Acc + Ill ....
     
     ## Gasku dehálaš guovddášbáikkiide. Gasku dehálaš guovddášbáikkiid.
+    
+    # IV with an object
+    # -----------------
+
+ADD:wrong-transitivity (&syn-wrong-transitivity) TARGET IV IF (1 @<OBJ BARRIER S-BOUNDARY OR VFIN) ; 
+    ## Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta. Dasa lassin bargá suohkan dan ala ahte ovdánahttit iežas fálaldaga kvalitehta.
+    # should this rule be specific for ovdánit?
+
     
 
 ADD:aidna (&syn-not-aidna) TARGET ("áidna") IF (1 Rel);
@@ -2432,12 +2448,7 @@ ADD:ahte_go (&syn-go-not-ahte) TARGET ("ahte") IF (*-1 (A Nom) OR (@<SPRED) BARR
     ## Buorre ahte boađát. Buorre go boađát.
 ADD:ahte_go (&syn-go-not-ahte) TARGET ("ahte") IF (*-1 (A Nom) OR (@<SPRED) OR Ess BARRIER VFIN)(*1 VFIN BARRIER S-BOUNDARY);
     ## Dasa lei sivvan dat, ahte son čorbmagođii mu reaŋgabártnáža. Dasa lei sivvan dat, go son čorbmagođii mu reaŋgabártnáža.
-    
-    # IV with an object
-    # -----------------
-    
-    ## Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta. Dasa lassin bargá suohkan dan ala ahte ovdánahttit iežas fálaldaga kvalitehta.
-    
+        
     # Real Word Errors
     # ================
     
