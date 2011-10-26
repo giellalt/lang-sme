@@ -366,6 +366,8 @@ LIST Sur = Sur ;
 LIST &error = &error ;
 LIST &CORR = &CORR ;
 LIST &syn-not-aidna = &syn-not-aidna ;
+LIST &syn-not-dego = &syn-not-dego ;
+LIST &syn-not-maŋga = &syn-not-maŋga ;
 LIST &syn-gen-before-postp = &syn-gen-before-postp ;
 LIST &syn-go-not-ahte = &syn-go-not-ahte ;
 LIST &syn-prs_not_prt_subclause = &syn-prs_not_prt_subclause ;
@@ -379,6 +381,7 @@ LIST &msyn-wrong-case = &msyn-wrong-case ;
 LIST &real-sahttit_not_sahtasit = &real-sahttit_not_sahtasit ;
 LIST &real-beassat = &real-beassat ;
 LIST &real-orrut = &real-orrut ;
+LIST &real-sahkki = &real-sahkki ;
 
 # &err-spellingerror    	spellingerror word is not in lexicon
 
@@ -709,6 +712,7 @@ SET NOT-ADV-PCLE-Refl  = WORD - Adv - Pcle - Refl ;
 SET NOT-ADV-PCLE-INDEF = WORD - Adv - Pcle - Indef ;
 SET NOT-ADV-PCLE-NEG   = WORD - Adv - Pcle - Neg ;
 SET NOT-ADVL-PCLE-NEG  = WORD - @ADVL - @P< - Pcle - Neg ;
+SET NOT-ADVL-PCLE      = WORD - @ADVL - @P< - Pcle ;
 
 
 LIST MO-MANge = "goas" "gokko" "gos" "gosa" "govt" ("got" Adv) "makkár" "man" "manne" "mo" "mot" "mov" "movt" ("nugo" @CVP) (V Qst);
@@ -2459,6 +2463,12 @@ ADD:wrong-transitivity2 (&syn-wrong-transitivity) TARGET WRONG-TR-V IF (*-1 Gen 
 ADD:aidna (&syn-not-aidna) TARGET ("áidna") IF (1 Rel);
     ## Áidna gii váilu dán govas lea bussevuoddji.	Ii váillo eará go bussevuoddji dán govas. Váilu dušše bussevuoddji dán govas.
     #$ Dat lea áidna vejolašvuohta, mii gávdno.
+    
+ADD:dego (&syn-not-dego) TARGET ("dego") IF (*1 Ess BARRIER NPNH) ;
+    ## SNF doaibmá dál juo dego resursaguovddážin. SNF doaibmá dál juo resursaguovddážin.
+
+ADD:maŋga (&syn-not-maŋga) TARGET ("máŋga") IF (-1 ("man"))(*1 NP-HEAD BARRIER NPNH) ;
+    ## Man máŋga olbmo doppe ledje? Man ollu olbmot doppe ledje?
 
     # ahte vs. go 
     # -----------
@@ -2491,10 +2501,13 @@ ADD:orrut (&real-orrut) TARGET ("orrot") IF (NEGATE *-1 BOS LINK *1 Ill) ;
     ## Lávejit nu máilmmi fiidnat orrome diet doahpagat.  Lávejit nu máilmmi fiidnat orrut diet doahpagat.
     #$ Mon orron dohko.
 
+ADD:sahkki (&real-sahkki) TARGET ("sáhka" Ill) IF (*-1 ("leat") LINK 0 VFIN BARRIER NOT-ADV) ;
+    ## Leatgo sáhkii? Leatgo sáhkkii?
+
     # Tense in subclauses
     # ===================
 
-LIST AHTE-V = "ballat" "dadjat" "čuorvut" "jáhkkit" "liikot" "muitalit" "oaivvildit" "savkalit" "árvalit" "cealkit" "čilget" "cuoigut" "čuorvut" "čurvet" "dadjat" "gielistit" "gilljut" "huikit" "huikkádit" "jearrat" "juoigat" "kommenteret" "lávlut" "lohkat" "váruhit" "vástidit";
+LIST AHTE-V = "ballat" "dadjat" "čuorvut" "jáhkkit" "liikot" "muitalit" "oaivvildit" "savkalit" "árvalit" "cealkit" "čilget" "cuoigut" "čuorvut" "čurvet" "dadjat" "gielistit" "gilljut" "huikit" "huikkádit" "jearrat" "juoigat" "kommenteret" "lávlut" "lohkat" "váruhit" "vástidit" ;
 
     # Prt vs. Prs in subclause 
 ADD:prs_not_prt_subclause (&synt-prs_not_prt_subclause) TARGET Prt IF (*-1 ("ahte") BARRIER S-BOUNDARY OR VFIN LINK *-1 AHTE-V BARRIER NOT-COMMA) ;
@@ -2524,12 +2537,14 @@ ADD:reflpron (&synt-reflpron) TARGET (Pron Pers Gen) IF (0 $$PRON LINK *-1 $$PRO
     # case: subject - subject predicate
     # number: modifier (city) head (human) === be careful with this type
     # relative pronouns and their antecedents
+    # habitive and subject predicate
     
-    LIST NUM = Sg Pl ;
+    LIST SG = Sg Sg3 ;
+    LIST PL = Pl Pl3 ;
+    SET NUM = SG OR PL OR Sg1 OR Sg2 OR Du1 OR Du2 OR Pl1 OR Pl2 ;
 
-ADD:number_congruence (&synt-number_congruence) TARGET (Rel)  + $$NUM IF  (-1 Pron OR N + NUM - $$NUM) ;
+ADD:number_congruence (&synt-number_congruence) TARGET (Rel)  + $$NUM IF  (-1 Pron OR N LINK 0 NUM - $$NUM) ;
 #ADD:number_congruence_dep (&synt-number_congruence) TARGET (Rel)  + $$NUM IF  (*-1 p + NUM - $$NUM) ;
-
     ## Sis, geas leat biillat. Sii, geain leat biillat.
     # Here dependency would be very useful too
 
@@ -2545,6 +2560,22 @@ ADD:number_congruence (&synt-number_congruence) TARGET HNOUN OR A IF (0 HUMAN + 
 #ADD:case_congruence (&synt-case_congruence) TARGET ..child of čeahpimussan... not the case čeahpi asks for...
     ## Jus lea okta maid mii sápmelaččat leat máilmmi čeahpimussan, de lea vuoigatvuođaid gáibidit. Jus lea okta mas mii sápmelaččat leat máilmmi čeahpimussan, de lea vuoigatvuođaid gáibidit. 
 
+#ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + $$NUM IF (*1 NP-HEAD LINK 0 NUM - $$NUM BARRIER NPNHA) ;
+    # Tino - why doesn't it work
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3 IF (*1 NP-HEAD LINK 0 (Nom Pl) BARRIER NPNHA ) ;
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3 IF (*1 ("leat" PrfPrc) LINK *1 NP-HEAD LINK 0 (Nom Pl) BARRIER NPNHA ) ;
+#ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3 IF (*1 ("leat" PrfPrc) BARRIER NOT-ADVL-PCLE LINK *1 NP-HEAD LINK 0 (Nom Pl) BARRIER NPNHA ) ; - this one would work if the disambiguator worked
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3 IF (*1 NP-HEAD LINK 0 (Sg Nom) BARRIER NPNHA) ;
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3 IF (*1 ("leat" PrfPrc) LINK *1 NP-HEAD LINK 0 (Sg Nom) BARRIER NPNHA) ;
+
+    ## Sis lea erenoamáš lávlunárbevierut. 
+    ## Suohkanis leat rádji Omasvuona suohkanii oarjelulábealde, Ivgu suohkanii orjjábealde, Ráissa suohkanii davábealde, ja Enodaga suohkanii Suomas lulábealde.
+    ## Olggut Gáivuonas leat maid Čieŋalluovtta ja Dážaluovtta gilit, gos leat guolástanindustriija ja guollebiebmanrusttet.
+    ## Siskkit Gáivuonas lea ollu eanandoallu, ja dáppe leat bivttasgoarrunfitnodat, gođđinbádji ja ullogárrenfitnodat.
+    ## Dasa lassin lea fitnodat bargohehttejuvvon olbmuid várás ja das leat bassaladdanfitnodat, murren ja eará buđaldeamit.
+    ## Muđui lea ollu eanandoallu Olmmáivákkis, ja dáppe leat maid guollevuostáiváldin ja guollebiebmanrusttet.
+    ## Skearru almmuheami maŋŋá lea sis leamaš konsearttat sihke Romssas ja Guovdageainnus, dainna lágiin leage repertoára bures vuogáiduvvan.
+    
 SECTION
 
     # verb subcategorization Actio vs. Inf 
