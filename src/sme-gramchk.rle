@@ -1289,6 +1289,7 @@ SET NPNHC    = WORD - PRE-NP-HEAD - Com ;
 # "njaŋggofirpmiiguin bivdin"
 SET NPNHCCC  = WORD - PRE-NP-HEAD - COMMA ;
 SET NPNHCC   = WORD - PRE-NP-HEAD - COMMA - LCRD ;
+SET NPNHCCA  = WORD - PRE-NP-HEAD - COMMA - LCRD - Adv ;
 SET NAPP     = WORD - PRE-APP ;
 
 # SET TOLERANT-PRENPP = V ; (everything non-NP-head!)
@@ -2386,10 +2387,17 @@ SET NON-APP = ALLSYNTAG - (@APP);
 	         SECTION         #
 	# ====================== #1 Grammar checker starts here
 	
+    # Compound errors
+	# ===============
+
+LIST COMPOUND = (".*#.*"r) ;
+# compound or not:
+ADD:hyphen (&msyn-addhyphen) TARGET CNOUN IF (0 N LINK 0 Gen OR Nom LINK 1 (CC) LINK 1 N + COMPOUND);
+    ## Ossodagat addet maiddái doarjaga dutkamii, geahččalan ja ovdánahttinbargui, ja servet riikkaidgaskasaš ovttasbargguide sin fágasurggiineaset.
+
 	# Syntactical errors
 	# ==================
-
-
+	
 ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 Po);
     ## Mii leat dávjá ságastallan dan diŋga birra.
 ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK 2 Po);
@@ -2402,7 +2410,8 @@ ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF
     # Same case in coordination
     # --------------------------
 
-ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 $$CASE LINK -1 CC LINK -1 CASE - $$CASE)(NEGATE 1 NP-HEAD);    
+ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (NOT 0 COMPOUND LINK 0 $$CASE LINK -1 CC LINK -1 CASE - $$CASE)(NEGATE 1 NP-HEAD);  
+    # the not 0 compound condition is there because this rule shouldn't apply if there is a compound error already  
     ## Blackfire miellahtut leat Klee Benally, lávlun ja gitára, su viellja Klayson rumbbuin ja sudno oabbá Jeneda guhte čuojaha bássa. Blackfire miellahtut leat Klee Benally, lávlun ja gitárra, su viellja Klayson rumbbuin ja sudno oabbá Jeneda guhte čuojaha bássa.
     ## Sis lea čielga sosiálpolitihkalaš sidoallu lávlagiinniset, go lávlot ee. eiseválddiid vuolušteapmi, álgoálbmogiid bággofárrema, siskkáldas veahkaválddi, álbmotgoddima, olmmošvuoigatvuođaid ja álbmogaset árbevieruid seailluheami birra.
     ## Son lávlu narkotihka- ja alkoholageavaheami, oktovuođa, šlundivuođa ja iešsoardima birra
@@ -2410,10 +2419,10 @@ ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 $$CASE LINK -1 CC LINK -1
     # valency
     # -------
     
-ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS LINK *1 ILLV BARRIER S-BOUNDARY);
+ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS LINK *1 ILLV BARRIER S-BOUNDARY2 OR VFIN OR Ill);
     ## Mun liikon dus.
 
-ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 HUMAN LINK 0 NOT-ACC)(*-1 BOS LINK *1 TV BARRIER S-BOUNDARY) ;    
+ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 HUMAN LINK 0 NOT-ACC)(*-1 BOS LINK *1 TV BARRIER S-BOUNDARY2 OR VFIN OR Ill) ;    
     ## Mun boagustan dus. Mun boagustan du.
     
 #ADD:wrong-case (&msyn-wrong_case) TARGET IF (
@@ -2431,16 +2440,19 @@ ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 HUMAN LINK 0 NOT-ACC)(*-1
     
     # IV with an object
     # -----------------
-LIST WRONG-TR-V = "ovdánit" "rievdat"
-LIST CORRECT-TR-V = "ovdánahttit" "rievdadit" ;    
+LIST WRONG-TR-V = "ovdánit" "rievdat" "duhtat" "goikat" ;
+LIST CORRECT-TR-V = "ovdánahttit" "ovddidit" "rievdadit" "duhtadit" "goiket" ;    
 
-ADD:wrong-transitivity (&syn-wrong-transitivity) TARGET WRONG-TR-V IF (*1 Gen OR Acc BARRIER NPNH LINK NOT 0 TIME OR HUMAN OR (@SPRED)) ;
+ADD:wrong-transitivity (&syn-wrong-transitivity) TARGET WRONG-TR-V IF (*1 Gen OR Acc BARRIER NPNH LINK NOT 0 TIME OR ROUTE OR HUMAN OR (@SPRED) OR (@>N)) ;
     ## Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta. Dasa lassin bargá suohkan dan ala ahte ovdánahttit iežas fálaldaga kvalitehta.
+    
+ADD:wrong-transitivity2 (&syn-wrong-transitivity) TARGET WRONG-TR-V IF (*-1 Gen OR Acc BARRIER S-BOUNDARY1 LINK NOT 0 TIME OR ROUTE OR HUMAN OR (@SPRED) OR (@>N)) ;
+    ## Dasa lassin bargá suohkan dan ala ahte iežas fálaldaga mástoránddi nu bures go vejolaš ja vaikko man jođánit rievdat.
     ## rievdat - rievdadit
     ## duhtat - duhtadit
     ## goikat - goiket
     ## vuodjut - vuodjudit
-    # should this rule be specific for ovdánit?
+    # this rule works when not using the disambiguator but "jođánit" gets @SPRED> and that crashes everything
 
     
 
