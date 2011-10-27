@@ -378,6 +378,7 @@ LIST &synt-case_congruence = &synt-case_congruence ;
 
 
 LIST &msyn-wrong-case = &msyn-wrong-case ;
+LIST &msyn-adj_not_actio = &msyn-adj_not_actio ;
 
 LIST &real-sahttit_not_sahtasit = &real-sahttit_not_sahtasit ;
 LIST &real-beassat = &real-beassat ;
@@ -951,6 +952,10 @@ LIST ACTIOESS-V = "fitnat" "mannat" "mannalit" "viehkat" "viehkalit" "vázzit" "
     # verbs that can ask for an actio
     # fitnat doppe oastime etc
     # heaittán bargame
+    
+LIST LOC-ACTIO-ACC-V = "dadjat" "doaivut" "jáhkkit" "lohkat" "ballat" diehtit";
+    # e.g. in constructions like "Lucie Idlout lea inuihttaartista, geas lohket leamen hui dramáhtalaš lávdepersovnnalašvuođa."
+    # Loc Actio Acc
 
  
 LIST SOURCE-V = "gáibidit" ;
@@ -1146,7 +1151,7 @@ LIST COM-ADV = "fárrolaga" "oktan" "oktanaga" "ovtta#mielas" "ovttas" "ovttas#r
 # Other adverb sets
 # - - - - - - - - - 
 
-LIST GRADE-ADV =  "áibbas" "beare" "dušše" ("eanet" Adv) "erenoamán" "erenoamáš" "earenoamáš" "hirbmat" "hui" "ila" "issoras" ("man" Adv) "measta" "menddo" "muhtun_muddui" "nu" "oalle" "oba" ("oppa" Adv) "seamma" "seammá" ("veaháš" Adv) "vehá" "veháš" "veahá" "veaháš" ;
+LIST GRADE-ADV =  "áibbas" "beare" "dušše" ("eanet" Adv) "erenoamán" "erenoamáš" "earenoamáš" "hirbmat" "hui" "ihána" "ila" "issoras" ("man" Adv) "measta" "menddo" "muhtun_muddui" "nu" "oalle" "oba" ("oppa" Adv) "seamma" "seammá" ("veaháš" Adv) "vehá" "veháš" "veahá" "veaháš" ;
 
 LIST PLURALIZER = "buot" "buotlágan" "buotlágán" "buotlágáš" "earálágan" "iežálágan" "iežálágán" "gait" "gaitlágan" "gaitlágán" "goappeš" "goappašat"  "máŋggalágan" "máŋggalágán" "moattelágan" "moattelágán" "moattilágan" "moattilágán" ;
     # Singular nouns can have a plural form combined with those
@@ -2408,17 +2413,23 @@ ADD:hyphen (&msyn-addhyphen) TARGET CNOUN IF (0 N LINK 0 Gen OR Nom LINK 1 (CC) 
 	
 ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 Po);
     ## Mii leat dávjá ságastallan dan diŋga birra.
-ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK 2 Po);
+    # this rule works when not using the disambiguator
+
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK *2 Po BARRIER NPNH);
+    ## Mii leat dávjá ságastallan daid guokte diŋggaid birra.
     # Kanskje vi burde bruke dependens i stedet for * i *2 Po?
-ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 CC OR COMMA LINK *1 Po BARRIER NOT-NP-HEAD-COMMA-CC);
-ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK 2 CC OR COMMA LINK *1 Po BARRIER NOT-NP-HEAD-COMMA-CC);
-    ## Mii leat dávjá ságastallan golbma diŋgga dehege sávcca birra.
-    ## Mii leat dávjá ságastallan dát golbma alit, rukses, ruoná ja ihána stuorra diŋgga birra.
+
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 CC OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER NPNH);
+    ## Mii leat dávjá ságastallan sávza ja diŋggaid birra.
+
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK 2 CC OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER NPNH);
+    ## Mii leat dávjá ságastallan golbma diŋgga dehege sávzza birra.
+    ## Mii leat dávjá ságastallan dát golmma alit, rukses, ruoná ja ihána stuorra diŋgga birra.
     
     # Same case in coordination
     # --------------------------
 
-ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (NOT 0 COMPOUND LINK 0 $$CASE LINK -1 CC LINK -1 CASE - $$CASE)(NEGATE 1 NP-HEAD);  
+ADD:wrong-case (&msyn-wrong-case) TARGET $$NP-HEAD IF (NOT 0 COMPOUND LINK 0 NP-HEAD - $$NP-HEAD LINK 0 $$CASE LINK -1 CC LINK -1 CASE - $$CASE)(NEGATE 1 NP-HEAD);  
     # the not 0 compound condition is there because this rule shouldn't apply if there is a compound error already  
     ## Blackfire miellahtut leat Klee Benally, lávlun ja gitára, su viellja Klayson rumbbuin ja sudno oabbá Jeneda guhte čuojaha bássa. Blackfire miellahtut leat Klee Benally, lávlun ja gitárra, su viellja Klayson rumbbuin ja sudno oabbá Jeneda guhte čuojaha bássa.
     ## Sis lea čielga sosiálpolitihkalaš sidoallu lávlagiinniset, go lávlot ee. eiseválddiid vuolušteapmi, álgoálbmogiid bággofárrema, siskkáldas veahkaválddi, álbmotgoddima, olmmošvuoigatvuođaid ja álbmogaset árbevieruid seailluheami birra.
@@ -2465,39 +2476,11 @@ ADD:wrong-transitivity2 (&syn-wrong-transitivity) TARGET WRONG-TR-V IF (*-1 Gen 
 ADD:syn-ollis-not-miehtá (&syn-ollis-not-miehtá) TARGET ("miehtá") IF (0 Po) (*1 GEOGRAPHICAL-PLACE OR POLITICAL-PLACE OR GENERAL-PLACE OR Plc LINK 0 Loc BARRIER NOT-NP-HEAD-COMMA-CC) ;
     ## Mii háliidit ahte Guovdageaidnu ja Sámi allaskuvla dál maid galgá leat sámi nuoraid ja earáid deaivvadanbáiki, ja čohkket ollu sámi studeanttaid miehtá Sámis.
 
-ADD:syn-ollugat-not-máŋggas (&syn-ollugat-not-máŋggas) TARGET ("máŋggas" Sg) IF (0 (@<SPRED))(1 Rel) ;   
-    # is this rule too strict? "did you possibly mean Ollugat instead of"
-ADD:syn-ollugat-not-máŋggas (&syn-ollugat-not-máŋggas) TARGET ("máŋggas" Sg) IF (-1 BOS)(0 Nom) ;   
-    # is this rule too strict? "did you possibly mean Ollugat instead of"
-ADD:syn-ollugat-not-máŋggas (&syn-ollugat-not-máŋggas) TARGET ("máŋggas" Sg) IF (-1 GRADE-ADV) ;
-    ## Sin giella lea rock, ja dainna sii jokset máŋgasa iežaset jurdagiiguin. Sin giella lea rock, ja dainna sii jokset ollugiid iežaset jurdagiiguin.
-    # - abstrakt
-    #$ Mun oidnen máŋgasa doppe.
-    #$ Doppe ledje máŋggas. - konkret
-    ## Skábmačuovggas illudii máŋgasa.
+ADD:syn-ollugat-not-máŋggas (&syn-ollugat-not-máŋggas) TARGET ("máŋggas") IF (-1 GRADE-ADV) ;
     ## Earát eai bovde nu máŋgasa dahje eai heajastala ge. 
-    #$ Máŋgasa gehčče cakkasnjálmmiid, láite su hállanvuogi ja oaivvildedje ahte son lei olmmošmeahttun go Kjell Østmo buvttii iežas oainnu álbmotmeahci ektui ja doarjjui eiseválddiid.
-    ## Máŋgasa sis geat ledje boahtán almmuheapmái leat ge boahttevaš Divvun 2.0 geavaheaddjit, mas dál maid lea lullisámegiela čállinveahkki. 
     ## Ii aktage lean jáhkkán nu máŋgasa dovdat alddineasetge 13-jahkásaš Agnesa identitehtaváttisvuođa Sohppara sápmelaččaid searvvis.
-    ## Máŋggas girdet veahá mielkki.
-    ## Dat bohtet sihkkarit guoskkahit máŋgasa dovdduid, min iežamet maid.
-    #$ Dát hárddii máŋgasa, ee. Biras ja Kulturkomitea jođiheaddji Ulf ballo.
-    ## Máŋgasa mielas lea váttis válljet galgetgo leat dážat vai sápmelaččat.
-    ## Rávgoš nappo bargguiduhtii máŋgasa dieid jagiid áigge.
     ## Mii sihtat nu máŋgasa go vejolaš oassálastit gait buoremus festiváladáhpáhussii goassege, dadjá movttegis Riddu Nuoraid jođiheaddji Kine Anita Lyshaug.
-    #$ Aviissas buktit maid ovdan máŋgasa geat barget sámi boahtteáiggehábmemiin ja sihtet sámi oktiigullevašvuođa ja eamiálbmotgullevašvuođa sorjakeahttá riikkarájain. 
     ## Olles olmmošlogu ektui diehttelasat sápmelaš lesbat ja homofiillat eai leat beare stuora joavku, muhto lea dattege joavku mas leat oalle máŋgasat mielde.
-    #$ Máŋggas min muitaleaddjin lea dárbbašan psykologaveahki. 
-    #$ Máŋggas muitalit iežaset iešsoardinjurdagiid birra.
-    ## Leat maiddái máŋggas geain leat iešguđetlágan identitehtat dan ektui gos vánddardit ja leat.
-    #$ Dattege ohcaledje máŋgasa eanet diehtojuohkima, erenoamážit go ovdagáttut sámiid vuostá orrot leavvagoahtán.
-    ## Eat sáhte duhtameahttumat go sullii 900:is serve čuoigat vaikko lei oalle biegga, lohká Kolbjørn Johansen gii jáhkká máŋgasa jávkkehan fas deappen vuollái iđđes go oidne man biegga lei.
-    #$ Áillohačča ruoktu Lásságámmi geasuha máŋgasa dáiddalaš bargui.
-    #$ Kløfta-nammasaš báiki, mii lea gorsa Silisávžžis, lea máŋgasa mielas hui dramahtalaš ja issoras báiki eatnama dáfus ja mas dihto historjá váilu.
-    #$ Don leat suhttadan máŋgasa, earret dáinna pin-upain, ja go nuoladit masá álásin aviissain?
-    ## –Dan dihte leat máŋggas, erenoamážit nuorra olbmot geat ellet akto heahpada siste, lohká Risten Rávdná. 
-    # "jurdda" "dovdu" 
-    # "biila" "gáma" "skuovva"
     
 ADD:aidna (&syn-not-aidna) TARGET ("áidna") IF (1 Rel);
     ## Áidna gii váilu dán govas lea bussevuoddji.	Ii váillo eará go bussevuoddji dán govas. Váilu dušše bussevuoddji dán govas.
@@ -2630,11 +2613,26 @@ ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3 IF (*1 ("l
     ## Muđui lea ollu eanandoallu Olmmáivákkis, ja dáppe leat maid guollevuostáiváldin ja guollebiebmanrusttet.
     ## Skearru almmuheami maŋŋá lea sis leamaš konsearttat sihke Romssas ja Guovdageainnus, dainna lágiin leage repertoára bures vuogáiduvvan.
 
+    # attribute vs. predicative adjective 
+    # -----------------------------------
 
+ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr LINK *1 NP-HEAD BARRIER NOT-ADJ-CC);
+    ## Su musihkka lea poehtalaš ja das lea roavis harmoniija.
+
+ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr LINK *1 NP-HEAD BARRIER S-BOUNDARY);
+    ## Su musihkka lea poehtalaš ja das lea roavis ja ihána čáppa ja fiinna, alit ja dassá lassin oalle vealtameahttun báruhámat harmoniija.
+    
     # verb subcategorization Actio vs. Inf 
     # ------------------------------------
-ADD:not_actio (&synt-not_actio) (Actio Ess) (NEGATE *-1 ACTIOESS-V)(NEGATE *1 ACTIOESS-V) ;
+ADD:not_actio (&synt-not_actio) TARGET (Actio Ess) (NEGATE *-1 ACTIOESS-V)(NEGATE *1 ACTIOESS-V) ;
     ## Lávejit nu máilmmi fiidnat orrome diet doahpagat.  Lávejit nu máilmmi fiidnat orrut diet doahpagat.
     # for linda: how many occurrences are caught by this rule?
     
-
+ADD:not_inf (&synt-not_inf) TARGET ("leat") IF (*-1 LOC-ACTIO-ACC-V BARRIER NOT-ADV LINK *-1 (Rel Loc) BARRIER S-BOUNDARY) (*1 N LINK 0 Acc OR Gen BARRIER NPNH) ;
+    ## Lucie Idlout lea inuihttaartista, geas lohket leat hui dramáhtalaš lávdepersovnnalašvuođa.
+    ##   Mun lean buorre olmmoš geas eadni, áhčči ja beana ja visot iežá alit olbmot máilmmis lohket leat váivvi.
+ADD:not_inf (&synt-not_inf) TARGET ("leat") IF (*-1 LOC-ACTIO-ACC-V LINK *1 NP-HEAD + Loc)(*1 N LINK 0 Acc OR Gen BARRIER NPNH) ;
+    ## Eadni balai mánás leat golgodávdda.
+    ## Eadni balai golgodávdda mánás leat.
+    # this rule doesn't get applied because leat does not get Inf analysis
+    # adapt dis file
