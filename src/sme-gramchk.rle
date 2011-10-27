@@ -376,7 +376,7 @@ LIST &synt-reflpron = &synt-reflpron ;
 LIST &synt-not_actio = &synt-not_actio ;
 LIST &synt-case_congruence = &synt-case_congruence ;
 
-
+LIST &msyn-compound = &msyn-compound ;
 LIST &msyn-wrong-case = &msyn-wrong-case ;
 LIST &msyn-adj_not_actio = &msyn-adj_not_actio ;
 
@@ -2405,24 +2405,33 @@ SET NON-APP = ALLSYNTAG - (@APP);
 
 LIST COMPOUND = (".*#.*"r) ;
 # compound or not:
-ADD:hyphen (&msyn-addhyphen) TARGET CNOUN IF (0 N LINK 0 Gen OR Nom LINK 1 (CC) LINK 1 N + COMPOUND);
+ADD:hyphen (&msyn-addhyphen) TARGET CNOUN IF (0 N LINK 0 Gen OR Nom LINK 1 CC LINK NOT 0 (@CVP) LINK 1 N + COMPOUND);
     ## Ossodagat addet maiddái doarjaga dutkamii, geahččalan ja ovdánahttinbargui, ja servet riikkaidgaskasaš ovttasbargguide sin fágasurggiineaset.
+    #$ Buollánviinnis lea oalle johtu ja gávpotsápmi hal juhká visot maid nagoda.
+    # Here "johtu" gets error-tag because "ja" is disambiguated as CNP, not CVP    
+
+ADD:compound (&msyn-compound) TARGET CNOUN IF (0C (N Nom) LINK 1 N) ;
+    ## Kurssain leat ámmát bagadallit. Kurssain leat ámmátbagadallit.
+    ## Ná mii oažžut sámi ja álgoálbmot perspektiivva buot oahpahusas.
+    # it is important that we run the norm morphological analysis!!
+ADD:compound (&msyn-compound) TARGET (Actio Nom) IF (1 N) ;
+    ## bargan vuohki
 
 	# Syntactical errors
 	# ==================
 	
 ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 Po);
     ## Mii leat dávjá ságastallan dan diŋga birra.
-    # this rule works when not using the disambiguator
+    # this rule works when not using the disambiguator, with a unambigous Po like "vuolde" it works
 
-ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK *2 Po BARRIER NPNH);
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK 1 CC OR NP-HEAD OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER S-BOUNDARY);
     ## Mii leat dávjá ságastallan daid guokte diŋggaid birra.
     # Kanskje vi burde bruke dependens i stedet for * i *2 Po?
 
-ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 CC OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER NPNH);
-    ## Mii leat dávjá ságastallan sávza ja diŋggaid birra.
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 CC OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER S-BOUNDARY);
+    ## Mii leat dávjá ságastallan sávza ja golmma alit, rukses, ruoná ja ihána stuorra diŋgga birra.
 
-ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK 2 CC OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER NPNH);
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK 2 CC OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER S-BOUNDARY);
     ## Mii leat dávjá ságastallan golbma diŋgga dehege sávzza birra.
     ## Mii leat dávjá ságastallan dát golmma alit, rukses, ruoná ja ihána stuorra diŋgga birra.
     
@@ -2621,6 +2630,7 @@ ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr LINK *1 NP-HEA
 
 ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr LINK *1 NP-HEAD BARRIER S-BOUNDARY);
     ## Su musihkka lea poehtalaš ja das lea roavis ja ihána čáppa ja fiinna, alit ja dassá lassin oalle vealtameahttun báruhámat harmoniija.
+    ## Mii leat dávjá ságastallan dán golmma alit, rukses, ruoná ja ihána stuorra diŋgga birra.
     
     # verb subcategorization Actio vs. Inf 
     # ------------------------------------
