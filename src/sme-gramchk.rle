@@ -844,7 +844,7 @@ SET V-MAIN = V - COPULAS - Neg - MOD-ASP OR ("orrut") ;
  
 # The set of verbs that can be main verbs. Includes AUX-OR-MAIN.
 SET V-DER-PASS = V OR V-DER OR Der/Pass;
-  # OR is intersection, this should work
+  # OR is union, this should work
 				   # The set is used in one rule with no hits.
 LIST V-TRANS = TV (IV Der/ahtti) (IV Der/h) ;
 # This is only a tool for making the following sets, bacause of that the symbols (|) and (-) in the set don´t function as one had expected.
@@ -1250,6 +1250,8 @@ SET NP-HEAD-ACC    = (Pron Acc) OR (N Acc) OR (A Acc) - RCmpnd - Dem - ("buorre"
 SET NP-HEAD-GEN    = (Pron Gen) OR (N Gen) OR (A Gen) - RCmpnd - Dem - ("buorre");
 
 SET NOT-NP-HEAD-COMMA-CC = WORD - NP-HEAD - COMMA - CC ;
+SET NOT-NP-HEAD-COMMA-CC-Adv-Neg = WORD - NP-HEAD - COMMA - CC - Adv - Neg ;
+
 
 # The PRE-NP-HEAD family of sets
 # - - - - - - - - - - - - - - - -
@@ -2435,6 +2437,13 @@ ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF
     ## Mii leat dávjá ságastallan golbma diŋgga dehege sávzza birra.
     ## Mii leat dávjá ságastallan dát golmma alit, rukses, ruoná ja ihána stuorra diŋgga birra.
     
+
+    
+ADD:gen-after-prep (&gen-after-prep) TARGET NP-HEAD IF (NEGATE -2 Gen)(NOT 0 Gen LINK -1 Pr) ;
+    ## Ale diškkut čázi gasku gonagas.
+    ## Gasku dehálaš guovddášbáikkiide. Gasku dehálaš guovddášbáikkiid. 
+
+    
     # Same case in coordination
     # --------------------------
 
@@ -2452,6 +2461,7 @@ ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS L
 
 ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 HUMAN LINK 0 NOT-ACC)(*-1 BOS LINK *1 TV BARRIER S-BOUNDARY2 OR VFIN OR Ill) ;    
     ## Mun boagustan dus. Mun boagustan du.
+    
     
 #ADD:wrong-case (&msyn-wrong_case) TARGET IF (
     # čállit: text acc - writing-place ill, text acc recipient human
@@ -2548,12 +2558,21 @@ ADD:valljái (&real-valljái) TARGET ("vallji") IF (0 PxSg3) (*1 NP-HEAD BARRIER
 ADD:iežá (&real-iežá)  TARGET ("ieš" Nom)(*1 NP-HEAD BARRIER NPNH) ;
     ## Dán oktavuođas sihtat oktavuođaid Gáivuona nuoraiguin, maiddái singuin geat ásset ieža báikkiin man nu sivas. Dán oktavuođas sihtat oktavuođaid Gáivuona nuoraiguin, maiddái singuin geat ásset iežá báikkiin man nu sivas.
 
+ADD:real-guhká (&real-guhká) TARGET ("guhkká" N Nom) OR ("guhkkat" Prs Sg3) IF (-1 GRADE-ADV) ; 
+    ## Ráhkisvuohta gal ii bistán beare guhkká, muhto ráhkisvuohta musihkkii buolligođii fas gulul. Ráhkisvuohta gal ii bistán beare guhká, muhto ráhkisvuohta musihkkii buolligođii fas gulul.
+    
+ADD:syn-conneg (&syn-conneg) TARGET (Cond Prs Sg3) IF (-*1 Neg BARRIER NOT-NP-HEAD-COMMA-CC-Adv-Neg ) ;
+    ## Juos in máhtášii čállit ja lávlut, livččen eahpelihkostuvvan olmmoš. Juos in máhtáše čállit ja lávlut, livččen eahpelihkostuvvan olmmoš.
+    ## In mun nu bures ja inge nu čábbát máhtášii čállit ja lávlut, jos livččen eahpelihkostuvvan olmmoš.
+
+
+## Go luoikanáigi lea nohkan, galget girjjit/mediat buktot ruovttuluotta. Go luoikanáigi lea nohkan, galget girjjit/mediat buktot ruovttoluotta. 
 
 
     # Tense in subclauses
     # ===================
 
-LIST AHTE-V = "ballat" "dadjat" "čuorvut" "jáhkkit" "liikot" "muitalit" "oaivvildit" "savkalit" "árvalit" "cealkit" "čilget" "cuoigut" "čuorvut" "čurvet" "dadjat" "gielistit" "gilljut" "huikit" "huikkádit" "jearrat" "juoigat" "kommenteret" "lávlut" "lohkat" "váruhit" "vástidit" ;
+LIST AHTE-V = "atnit" "árvalit" "ballat" "čuorvut" "cealkit" "čilget" "cuoigut" "čuorvut" "čurvet" "dadjat" "dadjat" "gielistit" "gilljut" "huikit" "huikkádit" "jáhkkit" "jearrat" "juoigat" "kommenteret" "lávlut" "lohkat" "liikot" "muitalit" "oaivvildit" "savkalit" "váruhit" "vástidit" ;
 
     # Prt vs. Prs in subclause 
 ADD:prs_not_prt_subclause (&synt-prs_not_prt_subclause) TARGET Prt IF (*-1 ("ahte") BARRIER S-BOUNDARY OR VFIN LINK *-1 AHTE-V BARRIER NOT-COMMA) ;
@@ -2561,6 +2580,7 @@ ADD:prs_not_prt_subclause (&synt-prs_not_prt_subclause) TARGET Prt IF (*-1 ("aht
     ## Nieida vástidii, ahte son ii sáhte vuolgit.
     ## Dat áhkku dajai, ahte gii son vuosttáid suoládii, ii gal bálle oađđit.
     ## Son vurddii, muhto de gullá, ahte olmmoš boahtá.
+    ## Máŋgasat gehčče cakkasnjálmmiid, láite su hállanvuogi ja oaivvildedje ahte son lei olmmošmeahttun go Kjell Østmo buvttii iežas oainnu álbmotmeahci ektui ja doarjjui eiseválddiid..
 
 ADD:prs_not_prt_subclause (&syn-prs_not_prt_subclause) TARGET Prt IF (*-1 ("go") LINK 0 CS BARRIER S-BOUNDARY OR VFIN LINK *-1 PERCEPTION-V BARRIER S-BOUNDARY OR VFIN) ;
     ## Son gulai go mánná bárggui. Son gulai go mánná bárgu. (Nickel)
