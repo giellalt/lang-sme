@@ -376,6 +376,7 @@ LIST &synt-reflpron = &synt-reflpron ;
 LIST &synt-not_actio = &synt-not_actio ;
 LIST &synt-case_congruence = &synt-case_congruence ;
 LIST &syn-comp = &syn-comp ;
+LIST &syn-redundant_ahte = &syn-redundant_ahte ;
 
 LIST &msyn-compound = &msyn-compound ;
 LIST &msyn-wrong-case = &msyn-wrong-case ;
@@ -949,7 +950,7 @@ LIST OKTII-V = ("boallu" Der/huvva) "goallostuvvot" "beaškkehat" "bidjat" "čat
  
 LIST VGENV = "bassit" "bivdit" "boahtit" "čierrut" "čuoigat" "čuoiggadit" "čuovvut" "fárret" "fitnat" "garrudit" "gálašit" "gállit" "gilljut" "girdit" "johtit" "jorgut" "luoibmat" "mannat" "mátkkoštit" "njahkalit" "njoammut" "riidet" "ruohttat" "sihkkelastit" "soabbut" "šloahtat" "váccašit" "vádjolit" "vájaldit" "vájuldit" "vánddardit" "vázzit" "viehkat" "viežžat" "vuodjat" "vuodjit" "vuojadit" "vuojašit" "vuolgit" "čilget" "čuorvut" "čurvet" "dadjat" "dárostit" "sámástit" "suomastit" "digáštallat" "hállat" "hoallat" "huikit" "hupmat" "juoigat" "lávlut" "logaldallat" "máidnut" "máinnašit" "muitalit" "savkalit" "skierbmut" "vástidit" "njurgut" "veahkehit" "vuoitit" "vuoššat" ;
 
-LIST ACTIOESS-V = "fitnat" "mannat" "mannalit" "viehkat" "viehkalit" "vázzit" "vázzilit" "vuodjit" "vuojistit" "čuoigat" "áicat" "dovdat" "ealvit" "fuomášit" "fuobmát" "gullat" "háksit" "huobmát" "huomihit" "oaidnit" "gávdnat" "lohkat" "dadjat" "diehtit" "doaivut" "jáhkkit" "ballat" "geargat" "heaitit" ;
+LIST ACTIOESS-V = "oidnot" "gullot" "fitnat" "mannat" "mannalit" "viehkat" "viehkalit" "vázzit" "vázzilit" "vuodjit" "vuojistit" "čuoigat" "áicat" "dovdat" "ealvit" "fuomášit" "fuobmát" "gullat" "háksit" "huobmát" "huomihit" "oaidnit" "gávdnat" "lohkat" "dadjat" "diehtit" "doaivut" "jáhkkit" "ballat" "geargat" "heaitit" ;
     # verbs that can ask for an actio
     # fitnat doppe oastime etc
     # heaittán bargame
@@ -2419,16 +2420,26 @@ ADD:compound (&msyn-compound) TARGET CNOUN IF (0C (N Sg Nom) LINK 1 CNOUN)(NOT 0
     # it is important that we run the norm morphological analysis!!
 	#$ Guovdageainnus leat stuora vejolašvuođat meahcásteapmái, ja luonddu vánddardeamis, go olles Finnmárkku duottar lea juste viessouvssa olggobealde.
 	#$ Guovdageainnus lea vejolašvuohta meahcásteapmái, ja luonddu vánddardeamis, go olles Finnmárkku duottar lea juste viessouvssa olggobealde.
+	#$ Sámedikki dieđáhus doaimmas birra:
+	#$ Ráđđi bargan bures
+
+
 
 # compound or not:
-ADD:hyphen (&msyn-addhyphen) TARGET CNOUN IF (0 N LINK 0 Gen OR (Sg Nom) LINK 1 CC LINK NOT 0 (@CVP) LINK 1 N + COMPOUND) (NEGATE -1C (&msyn-compound)) ;
+
+LIST UNLIKELY-COMPOUNDS-1PART = "kultuvra" ;
+LIST UNLIKELY-COMPOUNDS-2PART = (".*#vierru"r) ;
+
+ADD:hyphen (&msyn-addhyphen) TARGET CNOUN IF (0 N LINK 0 Gen OR (Sg Nom) LINK 1 CC LINK NOT 0 (@CVP) LINK 1 N + COMPOUND) (NEGATE -1C (&msyn-compound))(NEGATE 0 UNLIKELY-COMPOUNDS-1PART LINK 1 CC LINK 1 UNLIKELY-COMPOUNDS-2PART) ;
     ## Ossodagat addet maiddái doarjaga dutkamii, geahččalan ja ovdánahttinbargui, ja servet riikkaidgaskasaš ovttasbargguide sin fágasurggiineaset.
     #$ Buollánviinnis lea oalle johtu ja gávpotsápmi hal juhká visot maid nagoda.
     # Here "johtu" gets error-tag because "ja" is disambiguated as CNP, not CVP    
 	## Guovdageainnus ja Diehtosiiddas leat maiddai eará guovddáš sámi ásahusat, nu go Sámedikki oahpahus-, giella ja kulturossodat, Sámi árkiiva, Gáldu- Álgoálbmotvuoigatvuođaid gelbbolašvuođaguovddáš ja Riikkaidgaskasaš boazodoalloguovddáš.
 	#$ E-boasta čujuhus ja čoavddagoarta.
 	#$ Guollegáhkut, márffit ja biergodáigi.
-	
+	#$ Dá lea su eallin, kultuvra ja árbevierru.
+
+
 ADD:compound (&msyn-compound) TARGET (Actio Sg Nom) IF (1 CNOUN) ;
     ## bargan vuohki
     #$ ČÁLUS:HÅKON ISAK VARS GOVAT: ISAK NILS SIRI
@@ -2438,24 +2449,26 @@ ADD:compound (&msyn-compound) TARGET (Actio Sg Nom) IF (1 CNOUN) ;
 	# Syntactical errors
 	# ==================
 	
-ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 Po);
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 Po)(NEGATE 0 ADVLCASE OR SUBJ);
     ## Mii leat dávjá ságastallan dan diŋga birra.
     # this rule works when not using the disambiguator, with a unambigous Po like "vuolde" it works
 
-ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK 1 CC OR NP-HEAD OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER S-BOUNDARY);
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK 1 CC OR NP-HEAD OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER S-BOUNDARY)(NEGATE 0 ADVLCASE OR SUBJ);
     ## Mii leat dávjá ságastallan daid guokte diŋggaid birra.
+    #$ Dattege ohcaledje máŋggas eanet diehtojuohkima, erenoamážit go ovdagáttut sámiid vuostá orrot leavvagoahtán.
     # Kanskje vi burde bruke dependens i stedet for * i *2 Po?
 
-ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 CC OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER S-BOUNDARY);
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 CC OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER S-BOUNDARY) (NEGATE 0 ADVLCASE OR SUBJ) ;
     ## Mii leat dávjá ságastallan sávza ja golmma alit, rukses, ruoná ja ihána stuorra diŋgga birra.
+    #$ Dalle lávejedje oidnot ádját lunttaiguin beaivvi ovddas čohkadeamen ja fearrame muoras čohkkánlottiid.
 
-ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK 2 CC OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER S-BOUNDARY);
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK 2 CC OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER S-BOUNDARY)(NEGATE 0 ADVLCASE OR SUBJ);
     ## Mii leat dávjá ságastallan golbma diŋgga dehege sávzza birra.
     ## Mii leat dávjá ságastallan dát golmma alit, rukses, ruoná ja ihána stuorra diŋgga birra.
     
 
     
-ADD:gen-after-prep (&gen-after-prep) TARGET NP-HEAD IF (NEGATE -2 Gen)(NOT 0 Gen LINK -1 Pr) ;
+ADD:gen-after-prep (&gen-after-prep) TARGET NP-HEAD IF (NEGATE -2 Gen)(NOT 0 Gen LINK -1 Pr)(NEGATE 0 ADVLCASE OR SUBJ) ;
     ## Ale diškkut čázi gasku gonagas.
     ## Gasku dehálaš guovddášbáikkiide. Gasku dehálaš guovddášbáikkiid. 
 
@@ -2480,9 +2493,11 @@ ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 HUMAN OR (Pers) LINK 0 NO
     #$ Beassášfestivála oktavuođas lágiduvvojit Sámi filbmafestivála, Sámi Grand Prix, konsearttat, máilmmimeašttirgilvvut heargegilvovuodjimis ja oaggungilvvut.
     #$ Muhtimat olggobeale olbmuin dadjet ahte ii leat dárbu loddet.
     #$ Dadjet olggobeale olbmot.
+    #$ Ragnhild Nystad oaivvildii váilevaš servodatdieđuid sivvan dasa ja dan maiddái vuhttot sis geat daid ovddidit.
     
-ADD:object_missing (&syn-object_missing) TARGET STV IF (*-1 BOS LINK *1 NP-HEAD LINK 0 NOT-ACC)(*-1 BOS LINK NEGATE *1 CS LINK *1 VFIN); 
+ADD:object_missing (&syn-object_missing) TARGET STV IF (NOT *0 NP-HEAD LINK 0 Acc)(NEGATE *0 CS LINK *1 VFIN); 
     ## Dadjet olggobeale olbmot.
+    #$ Dán skuvlajagi lea Johkamohki Sámeskuvla čađahan sámegiel ovddidan prošeavtta.
 
     
 #ADD:wrong-case (&msyn-wrong_case) TARGET IF (
@@ -2536,10 +2551,13 @@ ADD:maŋga (&syn-not-maŋga) TARGET ("máŋga") IF (-1 ("man"))(*1 NP-HEAD BARRI
     # ahte vs. go 
     # -----------
 
-ADD:ahte_go (&syn-go-not-ahte) TARGET ("ahte") IF (*-1 (A Nom) OR (@<SPRED) BARRIER NOT-COMMA)(*1 VFIN BARRIER S-BOUNDARY);
+ADD:ahte_go (&syn-go-not-ahte) TARGET ("ahte") IF (*-1 (A Nom) OR (@<SPRED) BARRIER NOT-COMMA)(*1 VFIN BARRIER S-BOUNDARY)(NOT -1 ("go"));
     ## Buorre ahte boađát. Buorre go boađát.
-ADD:ahte_go (&syn-go-not-ahte) TARGET ("ahte") IF (*-1 (A Nom) OR (@<SPRED) OR Ess BARRIER VFIN)(*1 VFIN BARRIER S-BOUNDARY);
+ADD:ahte_go (&syn-go-not-ahte) TARGET ("ahte") IF (*-1 (A Nom) OR (@<SPRED) OR Ess BARRIER VFIN)(*1 VFIN BARRIER S-BOUNDARY)(NOT -1 ("go"));
     ## Dasa lei sivvan dat, ahte son čorbmagođii mu reaŋgabártnáža. Dasa lei sivvan dat, go son čorbmagođii mu reaŋgabártnáža.
+    
+ADD:redundant_ahte (&syn-redundant_ahte) TARGET ("ahte") IF (-1 ("go"));
+    ## Dat lei seamma vearrái go ahte ii máhte dola dahkat.
         
     # Real Word Errors
     # ================
@@ -2606,8 +2624,14 @@ ADD:real-sádji (&real-sádji) TARGET N IF (0 ("sádjá" Sg Ill));
 ADD:real-dakko (&real-dakko) TARGET V IF (0 ("dahkat" Imprt ConNegII)) (1 ("bokte")) ;
     ## Dahko bokte bivdit ahte čađahuvvo guorahallan mo Unjárgga gielda hálddaša guovttegielat ruđaid maid gielda oažžu Sámedikkis.
     
+LIST TIME-ADV-NIGHTANDDAY = "eahkes" "ihkku" "beaivet" "árrat" "maŋŋit" ;
 
-SECTION #2
+ADD:real-eahkes (&real-eahkes) TARGET ("eahket" Nom) IF (*1 Adv LINK 0 TIME-ADV-NIGHTANDDAY);
+    ## Loddenáigi lea maŋŋi eahkes, ihkku ja iđđesija. Loddenáigi lea maŋŋit eahkes, ihkku ja iđđesija.
+    
+ADD:real-maŋŋit (&real-maŋŋit) TARGET  ("maŋŋi");
+    ## Loddenáigi lea maŋŋit eahket, ihkku ja iđđesija. Loddenáigi lea maŋŋit eahkes, ihkku ja iđđesija.
+
 
     # Tense in subclauses
     # ===================
@@ -2669,29 +2693,30 @@ ADD:number_congruence (&synt-number_congruence) TARGET HNOUN OR A IF (0 HUMAN + 
     
 
 
-ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3 OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (NOT 0 ("\&real-.*"r))(*1 NP-HEAD LINK 0 (Nom Pl) BARRIER NPNHA ) ;
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3 OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (NOT 0 ("\&real-.*"r))(*1 NP-HEAD OR A LINK 0 (Nom Pl) BARRIER NPNHA ) ;
+    #$Dohko eai mannan ovdal earát jearatkeahttá sus geasa gulai guovlu, dahje gean sohka lei árbevirolaččat bivdán juste dán jávrris dahje báikkis.
 
-ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3 OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (NOT 0 ("\&real-.*"r))(*1 PRE-NP-HEAD LINK *1 NP-HEAD LINK 0 (Nom Pl) BARRIER NPNHA ) ;
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3 OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (NOT 0 ("\&real-.*"r))(*1 PRE-NP-HEAD LINK *1 NP-HEAD OR A LINK 0 (Nom Pl) BARRIER NPNHA ) ;
 
-ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3  OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (*1 ("leat" PrfPrc) LINK *1 NP-HEAD LINK 0 (Nom Pl) BARRIER NPNHA ) ;
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3  OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (*1 ("leat" PrfPrc) LINK *1 NP-HEAD OR A LINK 0 (Nom Pl) BARRIER NPNHA ) ;
 
-ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3  OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (*1 PRE-NP-HEAD LINK *1 ("leat" PrfPrc) LINK *1 NP-HEAD LINK 0 (Nom Pl) BARRIER NPNHA ) ;
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3  OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (*1 PRE-NP-HEAD LINK *1 ("leat" PrfPrc) LINK *1 NP-HEAD OR A LINK 0 (Nom Pl) BARRIER NPNHA ) ;
 
-#ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3  OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (*1 ("leat" PrfPrc) BARRIER NOT-ADVL-PCLE LINK *1 NP-HEAD LINK 0 (Nom Pl) BARRIER NPNHA ) ; - this one would work if the disambiguator worked
+#ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3  OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (*1 ("leat" PrfPrc) BARRIER NOT-ADVL-PCLE LINK *1 NP-HEAD OR A LINK 0 (Nom Pl) BARRIER NPNHA ) ; - this one would work if the disambiguator worked
 
-#ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3  OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (*1 PRE-NP-HEAD LINK *1 ("leat" PrfPrc) BARRIER NOT-ADVL-PCLE LINK *1 NP-HEAD LINK 0 (Nom Pl) BARRIER NPNHA ) ; - this one would work if the disambiguator worked
+#ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3  OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (*1 PRE-NP-HEAD LINK *1 ("leat" PrfPrc) BARRIER NOT-ADVL-PCLE LINK *1 NP-HEAD OR A LINK 0 (Nom Pl) BARRIER NPNHA ) ; - this one would work if the disambiguator worked
 
-ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3  OR (šaddat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3 IF (*1 NP-HEAD LINK 0 (Sg Nom)BARRIER NPNHA) ;
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3  OR (šaddat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3 IF (*1 NP-HEAD OR A LINK 0 (Sg Nom)BARRIER NPNHA) ;
 
-ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3  OR (šaddat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3 IF (*1 PRE-NP-HEAD LINK *1 NP-HEAD LINK 0 (Sg Nom) BARRIER NPNHA) ;
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3  OR (šaddat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3 IF (*1 PRE-NP-HEAD LINK *1 NP-HEAD OR A LINK 0 (Sg Nom) BARRIER NPNHA) ;
 
-ADD:number_congruence (&synt-number_congruence) TARGET ("leat") OR (šaddat") OR Der/Pass OR BASSO IF (0 Pl3)(*1 PRE-NP-HEAD BARRIER NPNHA LINK 1 CC LINK *1 PRE-NP-HEAD BARRIER NPNHA LINK *1 NP-HEAD LINK 0 (Sg Nom) BARRIER NPNHA) ;
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") OR (šaddat") OR Der/Pass OR BASSO IF (0 Pl3)(*1 PRE-NP-HEAD BARRIER NPNHA LINK 1 CC LINK *1 PRE-NP-HEAD BARRIER NPNHA LINK *1 NP-HEAD OR A LINK 0 (Sg Nom) BARRIER NPNHA) ;
     ## Beassášfestivála oktavuođas lágiduvvojit Sámi ja duiskka dehe nieiddaid filbmafestivála.  XXX "filbma#festivála" N Sg Gen @<ADVL This is why it does not work
 
 
-ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3  OR (šaddat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3 IF (*1 ("leat" PrfPrc) LINK *1 NP-HEAD LINK 0 (Sg Nom) BARRIER NPNHA) ;
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3  OR (šaddat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3 IF (*1 ("leat" PrfPrc) LINK *1 NP-HEAD OR A LINK 0 (Sg Nom) BARRIER NPNHA) ;
 
-ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3  OR (šaddat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3 IF (*1 PRE-NP-HEAD LINK *1 ("leat" PrfPrc) LINK *1 NP-HEAD LINK 0 (Sg Nom) BARRIER NPNHA) ;
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3  OR (šaddat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3 IF (*1 PRE-NP-HEAD LINK *1 ("leat" PrfPrc) LINK *1 NP-HEAD OR A LINK 0 (Sg Nom) BARRIER NPNHA) ;
 
 
     ## Sis lea erenoamáš lávlunárbevierut. 
@@ -2724,21 +2749,27 @@ ADD:syn-comp (&syn-comp) TARGET A OR Adv IF (0 ("eanet") OR (eambbo") LINK 1 (A 
     # attribute vs. predicative adjective 
     # -----------------------------------
 
-ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr OR Gen OR @<SPRED LINK *1 HNOUN OR A BARRIER NOT-ADJ-CC)(NOT 1 Rel);
+ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr OR Gen OR @<SPRED LINK *1 HNOUN OR A BARRIER NOT-ADJ-CC)(NOT 1 Rel) (NEGATE 0 ("buorre") OR Ord - ("nubbi"));
     ## Su musihkka lea poehtalaš ja das lea roavis harmoniija.
     #$ Mas dovvdat erehusa goal lea Guovdageaidnulaš gii lea riegádan ja bajasšaddan Guovdageainnus ja goal lea sisafárrejeaddji.
-    #$Ođđa studeanttaide fáttarortnetveahkki ja doarjja go lea amas ja ođas báikái.    
-ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr OR Gen OR @<SPRED LINK *1 HNOUN BARRIER NPNH)(NOT 1 Rel);
+    #$Ođđa studeanttaide fáttarortnetveahkki ja doarjja go lea amas ja ođas báikái.  
+    #$ Go buot bivdoávdnasat leat gárvásat, ii leat go vuorddašit goas ja gokko buorre loddensuddi šadda.
+  
+ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr OR Gen OR @<SPRED LINK *1 HNOUN BARRIER NPNH)(NOT 1 Rel) (NEGATE 0 ("buorre") OR Ord - ("nubbi"));
     ## Su musihkka lea poehtalaš ja das lea roavis ja ihána čáppa ja fiinna, alit ja dassá lassin oalle vealtameahttun báruhámat harmoniija.
-	#$Seamma lea maiddai maŋemus maid dahkká ovddal manná fas sisa vissui.  
-ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr OR Gen OR @<SPRED LINK 1 COMMA OR CC LINK *1 HNOUN BARRIER NPNHA)(NOT 1 Rel); 
+	#$Seamma lea maiddai maŋemus maid dahkká ovddal manná fas sisa vissui.
+    #$ Go buot bivdoávdnasat leat gárvásat, ii leat go vuorddašit goas ja gokko buorre loddensuddi šadda.
+  
+ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr OR Gen OR @<SPRED LINK 1 COMMA OR CC LINK *1 HNOUN BARRIER NPNHA)(NOT 1 Rel)  (NEGATE 0 ("buorre") OR Ord - ("nubbi")); 
     ## Mii leat dávjá ságastallan dán golmma alit, rukses, ruoná ja ihána stuorra diŋgga birra. 
     #$ Go ealgá orrugođii Guovdageainnus, fuomašeddje dieđus maiddai dan bivddu.
+    #$ Duvle fitne Johkamohki Sámeskuvlla 1.-6. luohká oahppit min guossis.
     # verb subcategorization Actio vs. Inf 
     # ------------------------------------
-ADD:not_actio (&synt-not_actio) TARGET (Actio Ess) (NEGATE *-1 ACTIOESS-V OR ("leat"))(NEGATE *1 ACTIOESS-V) ;
+ADD:not_actio (&synt-not_actio) TARGET (Actio Ess) (NEGATE *-1  ACTIOESS-V OR ("leat")) (NEGATE *1 ACTIOESS-V ) ;
     ## Lávejit nu máilmmi fiidnat orrome diet doahpagat.  Lávejit nu máilmmi fiidnat orrut diet doahpagat.
     #$ Lodejeaddjis fertejit álot leat čalmmit čuovvumen juoke lihkkastaga, sihke guhkkin ja lahkkosis
+    #$ Dalle lávejedje oidnot ádját lunttaiguin beaivvi ovddas čohkadeamen ja fearrame muoras čohkkánlottiid.
     # for linda: how many occurrences are caught by this rule?
     
 ADD:not_inf (&synt-not_inf) TARGET ("leat") IF (*-1 LOC-ACTIO-ACC-V BARRIER NOT-ADV LINK *-1 (Rel Loc) BARRIER S-BOUNDARY) (*1 N LINK 0 Acc OR Gen BARRIER NPNH) ;
