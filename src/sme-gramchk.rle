@@ -2409,9 +2409,11 @@ SET NON-APP = ALLSYNTAG - (@APP);
 	
     # Compound errors
 	# ===============
+	
+
 
 LIST COMPOUND = (".*#.*"r) ;
-ADD:compound (&msyn-compound) TARGET CNOUN IF (0C (N Sg Nom) LINK 1 CNOUN)(NOT 0 ACR OR SUBJ) (NOT 0 SPRED LINK 1 @<ADVL) ;
+ADD:compound (&msyn-compound) TARGET CNOUN IF (0C (N Sg Nom) LINK 1 CNOUN)(NOT 0 ACR OR SUBJ) (NEGATE 0 SPRED LINK 1 @<ADVL) ;
     ## Kurssain leat ámmát bagadallit. Kurssain leat ámmátbagadallit.
     ## Ná mii oažžut sámi ja álgoálbmot perspektiivva buot oahpahusas.
     # it is important that we run the norm morphological analysis!!
@@ -2425,6 +2427,7 @@ ADD:hyphen (&msyn-addhyphen) TARGET CNOUN IF (0 N LINK 0 Gen OR (Sg Nom) LINK 1 
     # Here "johtu" gets error-tag because "ja" is disambiguated as CNP, not CVP    
 	## Guovdageainnus ja Diehtosiiddas leat maiddai eará guovddáš sámi ásahusat, nu go Sámedikki oahpahus-, giella ja kulturossodat, Sámi árkiiva, Gáldu- Álgoálbmotvuoigatvuođaid gelbbolašvuođaguovddáš ja Riikkaidgaskasaš boazodoalloguovddáš.
 	#$ E-boasta čujuhus ja čoavddagoarta.
+	#$ Guollegáhkut, márffit ja biergodáigi.
 	
 ADD:compound (&msyn-compound) TARGET (Actio Sg Nom) IF (1 CNOUN) ;
     ## bargan vuohki
@@ -2472,9 +2475,15 @@ ADD:wrong-case (&msyn-wrong-case) TARGET $$NP-HEAD IF (NOT 0 COMPOUND LINK 0 NP-
 ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS LINK *1 ILLV BARRIER S-BOUNDARY2 OR VFIN OR Ill);
     ## Mun liikon dus.
 
-ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 HUMAN LINK 0 NOT-ACC)(*-1 BOS LINK *1 TV - Der/Pass BARRIER S-BOUNDARY2 OR VFIN OR Ill) ;    
+ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 HUMAN OR (Pers) LINK 0 NOT-ACC)(NOT 0 SUBJ)(*-1 BOS LINK *1 TV - Der/Pass BARRIER S-BOUNDARY2 OR VFIN OR Ill)(*-1 BOS LINK NEGATE *1 CS LINK *1 VFIN);    
     ## Mun boagustan dus. Mun boagustan du.
-    #$ Beassášfestivála oktavuođas lágiduvvojit filbmafestivála, Sámi Grand Prix, konsearttat, máilmmimeašttirgilvvut heargegilvovuodjimis ja oaggungilvvut.
+    #$ Beassášfestivála oktavuođas lágiduvvojit Sámi filbmafestivála, Sámi Grand Prix, konsearttat, máilmmimeašttirgilvvut heargegilvovuodjimis ja oaggungilvvut.
+    #$ Muhtimat olggobeale olbmuin dadjet ahte ii leat dárbu loddet.
+    #$ Dadjet olggobeale olbmot.
+    
+ADD:object_missing (&syn-object_missing) TARGET STV IF (*-1 BOS LINK *1 NP-HEAD LINK 0 NOT-ACC)(*-1 BOS LINK NEGATE *1 CS LINK *1 VFIN); 
+    ## Dadjet olggobeale olbmot.
+
     
 #ADD:wrong-case (&msyn-wrong_case) TARGET IF (
     # čállit: text acc - writing-place ill, text acc recipient human
@@ -2643,8 +2652,9 @@ ADD:number_congruence (&synt-number_congruence) TARGET (Rel)  + $$NUM IF  (-1 Pr
     ## Sis, geas leat biillat. Sii, geain leat biillat.
     # Here dependency would be very useful too
 
-ADD:number_congruence (&synt-number_congruence) TARGET (@<SPRED) + $$NUM IF (*-1 (@SUBJ>) LINK 0 NUM - $$NUM BARRIER S-BOUNDARY) ; 
-#ADD:number_congruence (&synt-number_congruence) TARGET (@<SPRED) + Pl IF (*-1 (@SUBJ>) LINK 0 Sg BARRIER S-BOUNDARY) ;    
+ADD:number_congruence (&synt-number_congruence) TARGET (@<SPRED) + $$NUM IF (*-1 (@SUBJ>) BARRIER S-BOUNDARY LINK 0 NUM - $$NUM) ; 
+    #$ Muhtimat olggobeale olbmuigun dadjet ahte ii leat dárbu loddet.
+#ADD:number_congruence (&synt-number_congruence) TARGET (@<SPRED) + Pl IF (*-1 (@SUBJ>) BARRIER S-BOUNDARY LINK 0 Sg ) ;    
     # assuming that the subject gets the correct number rather than the spred
     ## Boraspiret leat dehaleabbo go ahte oarjelsámi kultuvra galga seailut. Boraspiret leat dehaleappot go ahte oarjelsámi kultuvra galga seailut. / Boraspire lea dehaleabbo go ahte oarjelsámi kultuvra galga seailut.
     #$ Dat lei guhkká doppe, son gal ii háliidan vuolgit.
@@ -2656,12 +2666,33 @@ ADD:number_congruence (&synt-number_congruence) TARGET HNOUN OR A IF (0 HUMAN + 
 
 #ADD:case_congruence (&synt-case_congruence) TARGET ..child of čeahpimussan... not the case čeahpi asks for...
     ## Jus lea okta maid mii sápmelaččat leat máilmmi čeahpimussan, de lea vuoigatvuođaid gáibidit. Jus lea okta mas mii sápmelaččat leat máilmmi čeahpimussan, de lea vuoigatvuođaid gáibidit. 
+    
+
 
 ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3 OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (NOT 0 ("\&real-.*"r))(*1 NP-HEAD LINK 0 (Nom Pl) BARRIER NPNHA ) ;
+
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3 OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (NOT 0 ("\&real-.*"r))(*1 PRE-NP-HEAD LINK *1 NP-HEAD LINK 0 (Nom Pl) BARRIER NPNHA ) ;
+
 ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3  OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (*1 ("leat" PrfPrc) LINK *1 NP-HEAD LINK 0 (Nom Pl) BARRIER NPNHA ) ;
+
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3  OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (*1 PRE-NP-HEAD LINK *1 ("leat" PrfPrc) LINK *1 NP-HEAD LINK 0 (Nom Pl) BARRIER NPNHA ) ;
+
 #ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3  OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (*1 ("leat" PrfPrc) BARRIER NOT-ADVL-PCLE LINK *1 NP-HEAD LINK 0 (Nom Pl) BARRIER NPNHA ) ; - this one would work if the disambiguator worked
-ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3  OR (šaddat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3 IF (*1 NP-HEAD LINK 0 (Sg Nom) BARRIER NPNHA) ;
+
+#ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3  OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (*1 PRE-NP-HEAD LINK *1 ("leat" PrfPrc) BARRIER NOT-ADVL-PCLE LINK *1 NP-HEAD LINK 0 (Nom Pl) BARRIER NPNHA ) ; - this one would work if the disambiguator worked
+
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3  OR (šaddat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3 IF (*1 NP-HEAD LINK 0 (Sg Nom)BARRIER NPNHA) ;
+
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3  OR (šaddat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3 IF (*1 PRE-NP-HEAD LINK *1 NP-HEAD LINK 0 (Sg Nom) BARRIER NPNHA) ;
+
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") OR (šaddat") OR Der/Pass OR BASSO IF (0 Pl3)(*1 PRE-NP-HEAD BARRIER NPNHA LINK 1 CC LINK *1 PRE-NP-HEAD BARRIER NPNHA LINK *1 NP-HEAD LINK 0 (Sg Nom) BARRIER NPNHA) ;
+    ## Beassášfestivála oktavuođas lágiduvvojit Sámi ja duiskka dehe nieiddaid filbmafestivála.  XXX "filbma#festivála" N Sg Gen @<ADVL This is why it does not work
+
+
 ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3  OR (šaddat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3 IF (*1 ("leat" PrfPrc) LINK *1 NP-HEAD LINK 0 (Sg Nom) BARRIER NPNHA) ;
+
+ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3  OR (šaddat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3 IF (*1 PRE-NP-HEAD LINK *1 ("leat" PrfPrc) LINK *1 NP-HEAD LINK 0 (Sg Nom) BARRIER NPNHA) ;
+
 
     ## Sis lea erenoamáš lávlunárbevierut. 
     ## Suohkanis leat rádji Omasvuona suohkanii oarjelulábealde, Ivgu suohkanii orjjábealde, Ráissa suohkanii davábealde, ja Enodaga suohkanii Suomas lulábealde.
@@ -2670,10 +2701,15 @@ ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3  OR (šadd
     ## Dasa lassin lea fitnodat bargohehttejuvvon olbmuid várás ja das leat bassaladdanfitnodat, murren ja eará buđaldeamit.
     ## Muđui lea ollu eanandoallu Olmmáivákkis, ja dáppe leat maid guollevuostáiváldin ja guollebiebmanrusttet.
     ## Skearru almmuheami maŋŋá lea sis leamaš konsearttat sihke Romssas ja Guovdageainnus, dainna lágiin leage repertoára bures vuogáiduvvan.
-	## Beassášfestivála oktavuođas lágiduvvojit Sámi filbmafestivála, Sámi Grand Prix, konsearttat, máilmmimeašttirgilvvut heargegilvovuodjimis ja oaggungilvvut. XXX does not function with Prop @>N
-	## Dohko biddjojuvvojit sámi gievdni ja gohppa. XXX does not function with N @>N
-	## Dohko biddjojuvvojit Duiskka gievdni ja gohppa. XXX does not function with Prop @>N
-	## Dohko biddjojuvvojit duiskka gievdni ja gohppa. XXX functions with adjectives (duiskka), but not with nouns
+	## Beassášfestivála oktavuođas lágiduvvojit Sámi filbmafestivála, Sámi Grand Prix, konsearttat, máilmmimeašttirgilvvut heargegilvovuodjimis ja oaggungilvvut.
+	## Beassášfestivála oktavuođas lágiduvvojit stuorra ja ihána somás dehe duiskka filbmafestivála.
+	## Dohko biddjojuvvojit sámi gievdni ja gohppa.
+	## Dohko biddjojuvvojit Duiskka gievdni ja gohppa.
+	## Dohko biddjojuvvojit duiskka gievdni ja gohppa.
+	## Doppe lea sámi doalut leamašan.
+
+
+
 	
 	
 ADD:syn-comp (&syn-comp) TARGET A OR Adv IF (0 ("eanet") OR (eambbo") LINK 1 (A Nom)) (NEGATE 2 CS LINK *1 (A Nom) BARRIER NOT-ADV) ;
@@ -2682,6 +2718,7 @@ ADD:syn-comp (&syn-comp) TARGET A OR Adv IF (0 ("eanet") OR (eambbo") LINK 1 (A 
     #$ Ramones váikkuhusas Blackfire musihkii ii leat eahpádus, vaikko Blackfire vuohki leage eanet aggressiiva go duođai lodji.
     ## Gáivuona suohkan lea ge eanemus geađgái suohkan Romssa fylkkas.
     ## Olbmot leat sajáiduvvan sihke ceaggumus vákkiide ja eanemus geađgái vuonaide, ja sáhttá juohkit suohkana 3 ássánguvlui. 
+    #$ Dát servvodat lea ain odne eambbo bivdoservvodat go eanas eará báikkiin oarjemáilmmis.
 
 
     # attribute vs. predicative adjective 
