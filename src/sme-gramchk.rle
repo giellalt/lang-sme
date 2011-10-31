@@ -2411,23 +2411,26 @@ SET NON-APP = ALLSYNTAG - (@APP);
 	# ===============
 
 LIST COMPOUND = (".*#.*"r) ;
+ADD:compound (&msyn-compound) TARGET CNOUN IF (0C (N Sg Nom) LINK 1 CNOUN)(NOT 0 ACR OR SUBJ) (NOT 0 SPRED LINK 1 @<ADVL) ;
+    ## Kurssain leat ámmát bagadallit. Kurssain leat ámmátbagadallit.
+    ## Ná mii oažžut sámi ja álgoálbmot perspektiivva buot oahpahusas.
+    # it is important that we run the norm morphological analysis!!
+	#$ Guovdageainnus leat stuora vejolašvuođat meahcásteapmái, ja luonddu vánddardeamis, go olles Finnmárkku duottar lea juste viessouvssa olggobealde.
+	#$ Guovdageainnus lea vejolašvuohta meahcásteapmái, ja luonddu vánddardeamis, go olles Finnmárkku duottar lea juste viessouvssa olggobealde.
+
 # compound or not:
-ADD:hyphen (&msyn-addhyphen) TARGET CNOUN IF (0 N LINK 0 Gen OR Nom LINK 1 CC LINK NOT 0 (@CVP) LINK 1 N + COMPOUND);
+ADD:hyphen (&msyn-addhyphen) TARGET CNOUN IF (0 N LINK 0 Gen OR (Sg Nom) LINK 1 CC LINK NOT 0 (@CVP) LINK 1 N + COMPOUND) (NEGATE -1C (&msyn-compound)) ;
     ## Ossodagat addet maiddái doarjaga dutkamii, geahččalan ja ovdánahttinbargui, ja servet riikkaidgaskasaš ovttasbargguide sin fágasurggiineaset.
     #$ Buollánviinnis lea oalle johtu ja gávpotsápmi hal juhká visot maid nagoda.
     # Here "johtu" gets error-tag because "ja" is disambiguated as CNP, not CVP    
 	## Guovdageainnus ja Diehtosiiddas leat maiddai eará guovddáš sámi ásahusat, nu go Sámedikki oahpahus-, giella ja kulturossodat, Sámi árkiiva, Gáldu- Álgoálbmotvuoigatvuođaid gelbbolašvuođaguovddáš ja Riikkaidgaskasaš boazodoalloguovddáš.
+	#$ E-boasta čujuhus ja čoavddagoarta.
 	
-ADD:compound (&msyn-compound) TARGET CNOUN IF (0C (N Nom) LINK 1 CNOUN)(NOT 0 ACR OR SUBJ) ;
-    ## Kurssain leat ámmát bagadallit. Kurssain leat ámmátbagadallit.
-    ## Ná mii oažžut sámi ja álgoálbmot perspektiivva buot oahpahusas.
-    # it is important that we run the norm morphological analysis!!
-ADD:compound (&msyn-compound) TARGET (Actio Nom) IF (1 CNOUN) ;
+ADD:compound (&msyn-compound) TARGET (Actio Sg Nom) IF (1 CNOUN) ;
     ## bargan vuohki
     #$ ČÁLUS:HÅKON ISAK VARS GOVAT: ISAK NILS SIRI
     #$ Dá leage ođđaseamos bivdu Guovdageainnus.
     #$ Áiggid čađa rievddai servvodat bivdoservvodagas otna ruhttaservvodahkki.
-	#$ Guovdageainnus leat stuora vejolašvuođat meahcásteapmái, ja luonddu vánddardeamis, go olles Finnmárkku duottar lea juste viessouvssa olggobealde. XXX
 	
 	# Syntactical errors
 	# ==================
@@ -2645,7 +2648,6 @@ ADD:number_congruence (&synt-number_congruence) TARGET (@<SPRED) + $$NUM IF (*-1
     # assuming that the subject gets the correct number rather than the spred
     ## Boraspiret leat dehaleabbo go ahte oarjelsámi kultuvra galga seailut. Boraspiret leat dehaleappot go ahte oarjelsámi kultuvra galga seailut. / Boraspire lea dehaleabbo go ahte oarjelsámi kultuvra galga seailut.
     #$ Dat lei guhkká doppe, son gal ii háliidan vuolgit.
-    ## Skábmamánus lágiduvvo Nilut Cup, mat lea spábbačiekčangilvu mii čohkke ollu olbmuid. XXX check
     
 ADD:number_congruence (&synt-number_congruence) TARGET HNOUN OR A IF (0 HUMAN + Sg)(-1 (N Gen) + PLACE LINK 0 Pl) ;
     # modifier is plural and head is singular (singular - plural would have worked)
@@ -2668,9 +2670,9 @@ ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3  OR (šadd
     ## Dasa lassin lea fitnodat bargohehttejuvvon olbmuid várás ja das leat bassaladdanfitnodat, murren ja eará buđaldeamit.
     ## Muđui lea ollu eanandoallu Olmmáivákkis, ja dáppe leat maid guollevuostáiváldin ja guollebiebmanrusttet.
     ## Skearru almmuheami maŋŋá lea sis leamaš konsearttat sihke Romssas ja Guovdageainnus, dainna lágiin leage repertoára bures vuogáiduvvan.
-	## Beassášfestivála oktavuođas lágiduvvojit Sámi filbmafestivála, Sámi Grand Prix, konsearttat, máilmmimeašttirgilvvut heargegilvovuodjimis ja oaggungilvvut. XXX not
-	## Dohko biddjojuvvojit sámi gievdni ja gohppa. XXX not
-	## Dohko biddjojuvvojit Duiskka gievdni ja gohppa. XXX not
+	## Beassášfestivála oktavuođas lágiduvvojit Sámi filbmafestivála, Sámi Grand Prix, konsearttat, máilmmimeašttirgilvvut heargegilvovuodjimis ja oaggungilvvut. XXX does not function with Prop @>N
+	## Dohko biddjojuvvojit sámi gievdni ja gohppa. XXX does not function with N @>N
+	## Dohko biddjojuvvojit Duiskka gievdni ja gohppa. XXX does not function with Prop @>N
 	## Dohko biddjojuvvojit duiskka gievdni ja gohppa. XXX functions with adjectives (duiskka), but not with nouns
 	
 	
@@ -2685,13 +2687,14 @@ ADD:syn-comp (&syn-comp) TARGET A OR Adv IF (0 ("eanet") OR (eambbo") LINK 1 (A 
     # attribute vs. predicative adjective 
     # -----------------------------------
 
-ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr OR Gen LINK *1 HNOUN OR A BARRIER NOT-ADJ-CC)(NOT 1 Rel);
+ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr OR Gen OR @<SPRED LINK *1 HNOUN OR A BARRIER NOT-ADJ-CC)(NOT 1 Rel);
     ## Su musihkka lea poehtalaš ja das lea roavis harmoniija.
-    #$ Mas dovvdat erehusa goal lea Guovdageaidnulaš gii lea riegádan ja bajasšaddan Guovdageainnus ja goal lea sisafárrejeaddji.    
-ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr OR Gen LINK *1 HNOUN BARRIER NPNH)(NOT 1 Rel);
+    #$ Mas dovvdat erehusa goal lea Guovdageaidnulaš gii lea riegádan ja bajasšaddan Guovdageainnus ja goal lea sisafárrejeaddji.
+    #$Ođđa studeanttaide fáttarortnetveahkki ja doarjja go lea amas ja ođas báikái.    
+ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr OR Gen OR @<SPRED LINK *1 HNOUN BARRIER NPNH)(NOT 1 Rel);
     ## Su musihkka lea poehtalaš ja das lea roavis ja ihána čáppa ja fiinna, alit ja dassá lassin oalle vealtameahttun báruhámat harmoniija.
 	#$Seamma lea maiddai maŋemus maid dahkká ovddal manná fas sisa vissui.  
-ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr OR Gen LINK 1 COMMA OR CC LINK *1 HNOUN BARRIER NPNHA)(NOT 1 Rel); 
+ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr OR Gen OR @<SPRED LINK 1 COMMA OR CC LINK *1 HNOUN BARRIER NPNHA)(NOT 1 Rel); 
     ## Mii leat dávjá ságastallan dán golmma alit, rukses, ruoná ja ihána stuorra diŋgga birra. 
     #$ Go ealgá orrugođii Guovdageainnus, fuomašeddje dieđus maiddai dan bivddu.
     # verb subcategorization Actio vs. Inf 
