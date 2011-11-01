@@ -66,9 +66,9 @@ Inga Lill Sigga Mikkelsen	WI
 Ilona Kivinen		WI
 Divvun	WI
 Davvisámi, version 2.2, 20111101--49229	WI
-CD:t	NI
-CD:id	NI
-CD--	NIO,NtBO,NBO,NePBO
+CD:t	NI,NePE
+CD:id	NI,NePE
+CD--	NIO,NtBO,NBO,NePBO,NtPABI
 CD	NtE,WE,NePE
 CD	NI
 Børre Gaup	WI
