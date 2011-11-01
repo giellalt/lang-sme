@@ -2408,20 +2408,30 @@ SET NON-APP = ALLSYNTAG - (@APP);
 	         SECTION         #
 	# ====================== #1 Grammar checker starts here
 	
+	# Is this a sentence
+	# ==================
+	
+LIST SENTENCE-MARKERS = \? \. \! ;
+	
+ADD:finitev_missing (&finitev_missing) TARGET CLB IF (0 SENTENCE-MARKERS)(NOT *-1 VFIN)(NEGATE *-1 BOS LINK 1 Interr OR MO-MANge) ;
+    #$ Gos?
+	
     # Compound errors
 	# ===============
 	
 
 
 LIST COMPOUND = (".*#.*"r) ;
-ADD:compound (&msyn-compound) TARGET CNOUN IF (0C (N Sg Nom) LINK 1 CNOUN)(NOT 0 ACR OR SUBJ) (NEGATE 0 SPRED LINK 1 @<ADVL) ;
+
+ADD:compound (&msyn-compound) TARGET CNOUN IF (0C (N Sg Nom) LINK 1 CNOUN)(NOT 0 ACR OR SUBJ) (NEGATE 0 SPRED LINK 1 @<ADVL) (NEGATE 0 SPRED LINK NOT *0 SPRED);
     ## Kurssain leat ámmát bagadallit. Kurssain leat ámmátbagadallit.
     ## Ná mii oažžut sámi ja álgoálbmot perspektiivva buot oahpahusas.
-    # it is important that we run the norm morphological analysis!!
+    # it is important that we run the norm morphological analysis!! "ámmát" N Sg Acc @<OBJ  "álgo#álbmot" N Sg Gen @>N
 	#$ Guovdageainnus leat stuora vejolašvuođat meahcásteapmái, ja luonddu vánddardeamis, go olles Finnmárkku duottar lea juste viessouvssa olggobealde.
 	#$ Guovdageainnus lea vejolašvuohta meahcásteapmái, ja luonddu vánddardeamis, go olles Finnmárkku duottar lea juste viessouvssa olggobealde.
 	#$ Sámedikki dieđáhus doaimmas birra:
 	#$ Ráđđi bargan bures
+	#$ Dain lea sámegiella siidagiellan.
 
 
 
@@ -2430,7 +2440,7 @@ ADD:compound (&msyn-compound) TARGET CNOUN IF (0C (N Sg Nom) LINK 1 CNOUN)(NOT 0
 LIST UNLIKELY-COMPOUNDS-1PART = "kultuvra" ;
 LIST UNLIKELY-COMPOUNDS-2PART = (".*#vierru"r) ;
 
-ADD:hyphen (&msyn-addhyphen) TARGET CNOUN IF (0 N LINK 0 Gen OR (Sg Nom) LINK 1 CC LINK NOT 0 (@CVP) LINK 1 N + COMPOUND) (NEGATE -1C (&msyn-compound))(NEGATE 0 UNLIKELY-COMPOUNDS-1PART LINK 1 CC LINK 1 UNLIKELY-COMPOUNDS-2PART) ;
+ADD:hyphen (&msyn-addhyphen) TARGET CNOUN IF (0 N LINK 0 Gen OR (Sg Nom) LINK 1 CC LINK NOT 0 (@CVP) LINK 1 N + COMPOUND) (NEGATE -1C (&msyn-compound))(NEGATE 0 UNLIKELY-COMPOUNDS-1PART LINK 1 CC LINK 1 UNLIKELY-COMPOUNDS-2PART)(NEGATE 0 $$WORD LINK 2 $$WORD OR (".*#$$WORD"r)) ;
     ## Ossodagat addet maiddái doarjaga dutkamii, geahččalan ja ovdánahttinbargui, ja servet riikkaidgaskasaš ovttasbargguide sin fágasurggiineaset.
     #$ Buollánviinnis lea oalle johtu ja gávpotsápmi hal juhká visot maid nagoda.
     # Here "johtu" gets error-tag because "ja" is disambiguated as CNP, not CVP    
@@ -2438,6 +2448,7 @@ ADD:hyphen (&msyn-addhyphen) TARGET CNOUN IF (0 N LINK 0 Gen OR (Sg Nom) LINK 1 
 	#$ E-boasta čujuhus ja čoavddagoarta.
 	#$ Guollegáhkut, márffit ja biergodáigi.
 	#$ Dá lea su eallin, kultuvra ja árbevierru.
+	#$ Davviriikkalaččat lea sámi valáštallan organiserejuvvon nu, ahte guđetge riikkas lea báikkálaš sámi valáštallan servviid ja sámeservviid oktasaš ásahus, mat fas leat čohkkejuvvon oktasaš davviriikkalaš lihtu (Sámi Valáštallan Lihttu) vuollái.
 
 
 ADD:compound (&msyn-compound) TARGET (Actio Sg Nom) IF (1 CNOUN) ;
@@ -2449,26 +2460,26 @@ ADD:compound (&msyn-compound) TARGET (Actio Sg Nom) IF (1 CNOUN) ;
 	# Syntactical errors
 	# ==================
 	
-ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 Po)(NEGATE 0 ADVLCASE OR SUBJ);
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 Po)(NEGATE 0 ADVLCASE);
     ## Mii leat dávjá ságastallan dan diŋga birra.
     # this rule works when not using the disambiguator, with a unambigous Po like "vuolde" it works
 
-ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK 1 CC OR NP-HEAD OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER S-BOUNDARY)(NEGATE 0 ADVLCASE OR SUBJ);
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") - Superl - Comp IF (NOT 0 Gen LINK 1 CC OR NP-HEAD OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER S-BOUNDARY  OR V - PrfPrc - PrsPrc)(NEGATE 0 ADVLCASE OR SUBJ);
     ## Mii leat dávjá ságastallan daid guokte diŋggaid birra.
     #$ Dattege ohcaledje máŋggas eanet diehtojuohkima, erenoamážit go ovdagáttut sámiid vuostá orrot leavvagoahtán.
     # Kanskje vi burde bruke dependens i stedet for * i *2 Po?
 
-ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 CC OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER S-BOUNDARY) (NEGATE 0 ADVLCASE OR SUBJ) ;
-    ## Mii leat dávjá ságastallan sávza ja golmma alit, rukses, ruoná ja ihána stuorra diŋgga birra.
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 CC OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER S-BOUNDARY OR V - PrfPrc - PrsPrc) (NEGATE 0 ADVLCASE OR SUBJ) ;
+    ## Mii leat dávjá ságastallan sávza ja golmma alit, rukses, ruoná ja ihána stuorra čohkkejuvvon diŋgga birra.
     #$ Dalle lávejedje oidnot ádját lunttaiguin beaivvi ovddas čohkadeamen ja fearrame muoras čohkkánlottiid.
 
-ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") IF (NOT 0 Gen LINK 2 CC OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER S-BOUNDARY)(NEGATE 0 ADVLCASE OR SUBJ);
+ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") - Superl - Comp IF (NOT 0 Gen LINK 2 CC OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER S-BOUNDARY OR V - PrfPrc - PrsPrc)(NEGATE 0 ADVLCASE OR SUBJ);
     ## Mii leat dávjá ságastallan golbma diŋgga dehege sávzza birra.
     ## Mii leat dávjá ságastallan dát golmma alit, rukses, ruoná ja ihána stuorra diŋgga birra.
     
 
     
-ADD:gen-after-prep (&gen-after-prep) TARGET NP-HEAD IF (NEGATE -2 Gen)(NOT 0 Gen LINK -1 Pr)(NEGATE 0 ADVLCASE OR SUBJ) ;
+ADD:gen-after-prep (&gen-after-prep) TARGET NP-HEAD IF (NEGATE -2 Gen)(NOT 0 Gen LINK -1 Pr)(NEGATE 0 ADVLCASE) ;
     ## Ale diškkut čázi gasku gonagas.
     ## Gasku dehálaš guovddášbáikkiide. Gasku dehálaš guovddášbáikkiid. 
 
@@ -2488,12 +2499,13 @@ ADD:wrong-case (&msyn-wrong-case) TARGET $$NP-HEAD IF (NOT 0 COMPOUND LINK 0 NP-
 ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS LINK *1 ILLV BARRIER S-BOUNDARY2 OR VFIN OR Ill);
     ## Mun liikon dus.
 
-ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 HUMAN OR (Pers) LINK 0 NOT-ACC)(NOT 0 SUBJ)(*-1 BOS LINK *1 TV - Der/Pass BARRIER S-BOUNDARY2 OR VFIN OR Ill)(*-1 BOS LINK NEGATE *1 CS LINK *1 VFIN);    
+ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 HUMAN OR (Pers) LINK 0 NOT-ACC)(NOT 0 SUBJ)(*-1 BOS LINK *1 TV - Der/Pass BARRIER S-BOUNDARY2 OR VFIN OR Ill LINK NEGATE *0 OBJ BARRIER S-BOUNDARY2)(*-1 BOS LINK NEGATE *1 CS LINK *1 VFIN);    
     ## Mun boagustan dus. Mun boagustan du.
     #$ Beassášfestivála oktavuođas lágiduvvojit Sámi filbmafestivála, Sámi Grand Prix, konsearttat, máilmmimeašttirgilvvut heargegilvovuodjimis ja oaggungilvvut.
     #$ Muhtimat olggobeale olbmuin dadjet ahte ii leat dárbu loddet.
     #$ Dadjet olggobeale olbmot.
     #$ Ragnhild Nystad oaivvildii váilevaš servodatdieđuid sivvan dasa ja dan maiddái vuhttot sis geat daid ovddidit.
+    #$ Ná mii oažžut sámi ja álgoálbmot perspektiivva buot oahpahusas.
     
 ADD:object_missing (&syn-object_missing) TARGET STV IF (NOT *0 NP-HEAD LINK 0 Acc)(NEGATE *0 CS LINK *1 VFIN); 
     ## Dadjet olggobeale olbmot.
@@ -2551,7 +2563,7 @@ ADD:maŋga (&syn-not-maŋga) TARGET ("máŋga") IF (-1 ("man"))(*1 NP-HEAD BARRI
     # ahte vs. go 
     # -----------
 
-ADD:ahte_go (&syn-go-not-ahte) TARGET ("ahte") IF (*-1 (A Nom) OR (@<SPRED) BARRIER NOT-COMMA)(*1 VFIN BARRIER S-BOUNDARY)(NOT -1 ("go"));
+ADD:ahte_go (&syn-go-not-ahte) TARGET ("ahte") IF (*-1 (A Nom) OR (@<SPRED) BARRIER NOT-COMMA)(*1 VFIN BARRIER S-BOUNDARY)(NOT -1 ("go")) (NEGATE -*1 ("nu") BARRIER NOTCOMMA OR NOT-ADV) ;
     ## Buorre ahte boađát. Buorre go boađát.
 ADD:ahte_go (&syn-go-not-ahte) TARGET ("ahte") IF (*-1 (A Nom) OR (@<SPRED) OR Ess BARRIER VFIN)(*1 VFIN BARRIER S-BOUNDARY)(NOT -1 ("go"));
     ## Dasa lei sivvan dat, ahte son čorbmagođii mu reaŋgabártnáža. Dasa lei sivvan dat, go son čorbmagođii mu reaŋgabártnáža.
