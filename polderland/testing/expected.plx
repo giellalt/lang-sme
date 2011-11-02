@@ -44,7 +44,7 @@ as:t	NI,NePE
 as:id	NI,NePE
 as--	NIO,NtBO,NBO,NePBO,NtPABI
 as	NtE,WE,NePE
-as	NI
+as	NI,NePE
 Trond Trosterud	WI
 Tomi Pieski	WI
 Thomas Omma	WI
@@ -57,7 +57,7 @@ NRK:t	NI,NePE
 NRK:id	NI,NePE
 NRK--	NIO,NtBO,NBO,NePBO,NtPABI
 NRK	NtE,WE,NePE
-NRK	NI
+NRK	NI,NePE
 Marit Julien		WI
 Maaren Palismaa	WI
 Linda Wiechetek	WI
@@ -70,5 +70,5 @@ CD:t	NI,NePE
 CD:id	NI,NePE
 CD--	NIO,NtBO,NBO,NePBO,NtPABI
 CD	NtE,WE,NePE
-CD	NI
+CD	NI,NePE
 Børre Gaup	WI
