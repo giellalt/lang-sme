@@ -2411,7 +2411,7 @@ SET NON-APP = ALLSYNTAG - (@APP);
 	# Is this a sentence
 	# ==================
 	
-LIST SENTENCE-MARKERS = \? \. \! ;
+LIST SENTENCE-MARKERS = \? \. \! \¶ ;
 	
 ADD:finitev_missing (&finitev_missing) TARGET CLB IF (0 SENTENCE-MARKERS)(NOT *-1 VFIN)(NEGATE *-1 BOS LINK 1 Interr OR MO-MANge) ;
     #$ Gos?
@@ -2420,11 +2420,11 @@ ADD:finitev_missing (&finitev_missing) TARGET CLB IF (0 SENTENCE-MARKERS)(NOT *-
 	# ===============
 	
 
-
 LIST COMPOUND = (".*#.*"r) ;
 
-ADD:compound (&msyn-compound) TARGET CNOUN IF (0C (N Sg Nom) LINK 1 CNOUN)(NOT 0 ACR OR SUBJ) (NEGATE 0 SPRED LINK 1 @<ADVL) (NEGATE 0 SPRED LINK NOT *0 SPRED);
+ADD:compound/wrong-case (&msyn-compound/&msyn-wrong-case) TARGET CNOUN IF (0C (N Sg Nom) LINK 1 CNOUN)(NOT 0 ACR)(NEGATE 0 SUBJ LINK NOT 1 SUBJ) (NEGATE 0 SPRED LINK 1 @<ADVL) (NEGATE 0 SPRED LINK NOT *0 SPRED)(NEGATE >*1 (&finitev_missing));
     ## Kurssain leat ámmát bagadallit. Kurssain leat ámmátbagadallit.
+    ## Mánáid- ja dásseárvodepartemeanta bargu lea:
     ## Ná mii oažžut sámi ja álgoálbmot perspektiivva buot oahpahusas.
     # it is important that we run the norm morphological analysis!! "ámmát" N Sg Acc @<OBJ  "álgo#álbmot" N Sg Gen @>N
 	#$ Guovdageainnus leat stuora vejolašvuođat meahcásteapmái, ja luonddu vánddardeamis, go olles Finnmárkku duottar lea juste viessouvssa olggobealde.
@@ -2467,7 +2467,7 @@ ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1
 
 ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") - Superl - Comp IF (NOT 0 Gen LINK 1 CC OR NP-HEAD OR COMMA OR PRE-NP-HEAD OR GRADE-ADV LINK *1 Po BARRIER S-BOUNDARY OR OBJ OR V - PrfPrc - PrsPrc)(NEGATE 0 ADVLCASE OR SUBJ OR SPRED OR OBJ);
 ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") - Superl - Comp IF (NOT 0 Gen)(p Po);
-    ## Mii leat dávjá ságastallan daid guokte diŋggaid birra.
+    ## Mii leat dávjá ságastallan daid guokte @>N diŋggaid @>P birra. Mii leat dávjá ságastallan dan guovtti diŋgga birra.
     # guokte" Num Sg Acc @<OBJ
     #$ Dattege ohcaledje máŋggas eanet diehtojuohkima, erenoamážit go ovdagáttut sámiid vuostá orrot leavvagoahtán.
     #$ Sámi Allaskuvllas lea ulbmil ahte gokčat buot servodaga dárbbuid oahpahusa ektui.
@@ -2486,6 +2486,7 @@ ADD:gen-before-postp (&syn-gen-before-postp) TARGET Pron OR Num OR ("buorre") - 
 ADD:gen-after-prep (&gen-after-prep) TARGET NP-HEAD IF (NEGATE -2 Gen)(NOT 0 Gen LINK -1 Pr)(NEGATE 0 ADVLCASE) ;
     ## Ale diškkut čázi gasku gonagas.
     ## Gasku dehálaš guovddášbáikkiide. Gasku dehálaš guovddášbáikkiid. 
+    #$ Jus muhtun girji ii leat bukton ruovttuluotta maŋŋil go golmma geardde lea gáibiduvvon, de sáddejuvvo reive dán birra ja das maŋŋil rehket.
 
     
     # Same case in coordination
@@ -2500,8 +2501,9 @@ ADD:wrong-case (&msyn-wrong-case) TARGET $$NP-HEAD IF (NOT 0 COMPOUND LINK 0 NP-
     # valency
     # -------
     
-ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS LINK *1 ILLV BARRIER S-BOUNDARY2 OR VFIN OR Ill);
+ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS LINK *1 ILLV BARRIER S-BOUNDARY2 OR VFIN OR Ill) (NEGATE *1 ("leat") + Pl3  OR (šaddat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3)  (NEGATE *1 ("leat") + Sg3  OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3);
     ## Mun liikon dus.
+    #$ Skábmamánus lágiduvvo Nilut Cup.
 
 ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 HUMAN OR (Pers) LINK 0 NOT-ACC)(NOT 0 SUBJ)(*-1 BOS LINK *1 TV - Der/Pass BARRIER S-BOUNDARY2 OR VFIN OR Ill LINK NEGATE *0 OBJ BARRIER S-BOUNDARY2)(*-1 BOS LINK NEGATE *1 CS LINK *1 VFIN);    
     ## Mun boagustan dus. Mun boagustan du.
@@ -2537,15 +2539,16 @@ LIST CORRECT-TR-V = "ovdánahttit" "ovddidit" "rievdadit" "duhtadit" "goiket" ;
 ADD:wrong-transitivity (&syn-wrong-transitivity) TARGET WRONG-TR-V IF (*1 Gen OR Acc BARRIER NPNH LINK NOT 0 TIME OR ROUTE OR HUMAN OR (@SPRED) OR (@>N)) ;
     ## Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta. Dasa lassin bargá suohkan dan ala ahte ovdánahttit iežas fálaldaga kvalitehta.
     
-ADD:wrong-transitivity2 (&syn-wrong-transitivity) TARGET WRONG-TR-V IF (*-1 Gen OR Acc BARRIER S-BOUNDARY1 LINK NOT 0 TIME OR ROUTE OR HUMAN OR (@SPRED) OR (@>N)) ;
+ADD:wrong-transitivity2 (&syn-wrong-transitivity) TARGET WRONG-TR-V IF (*-1 Gen OR Acc BARRIER S-BOUNDARY1 OR Po LINK NOT 0 TIME OR ROUTE OR HUMAN OR (@SPRED) OR (@>N)) ;
     ## Dasa lassin bargá suohkan dan ala ahte iežas fálaldaga mástoránddi nu bures go vejolaš ja vaikko man jođánit rievdat.
+    #$ Dan maŋŋá leat áššit ovdánan iežaset deattuin.
     ## rievdat - rievdadit
     ## duhtat - duhtadit
     ## goikat - goiket
     ## vuodjut - vuodjudit
     # this rule works when not using the disambiguator but "jođánit" gets @SPRED> and that crashes everything
 
-ADD:syn-ollis-not-miehtá (&syn-ollis-not-miehtá) TARGET ("miehtá") IF (0 Po) (*1 GEOGRAPHICAL-PLACE OR POLITICAL-PLACE OR GENERAL-PLACE OR Plc LINK 0 Loc BARRIER NOT-NP-HEAD-COMMA-CC) ;
+ADD:syn-ollis-not-miehtá (&syn-ollis-not-miehtá) TARGET ("miehtá") IF (0 Pr) (*1 GEOGRAPHICAL-PLACE OR POLITICAL-PLACE OR GENERAL-PLACE OR Plc LINK 0 Loc BARRIER NOT-NP-HEAD-COMMA-CC) ;
     ## Mii háliidit ahte Guovdageaidnu ja Sámi allaskuvla dál maid galgá leat sámi nuoraid ja earáid deaivvadanbáiki, ja čohkket ollu sámi studeanttaid miehtá Sámis.
 
 ADD:syn-ollugat-not-máŋggas (&syn-ollugat-not-máŋggas) TARGET ("máŋggas") IF (-1 GRADE-ADV) ;
@@ -2697,9 +2700,10 @@ ADD:number_congruence (&synt-number_congruence) TARGET (Rel)  + $$NUM IF  (-1 Pr
     ## Sis, geas leat biillat. Sii, geain leat biillat.
     # Here dependency would be very useful too
 
-ADD:number_congruence (&synt-number_congruence) TARGET (@<SPRED) + $$NUM IF (*-1 (@SUBJ>) BARRIER S-BOUNDARY LINK NOT 0 GROUP-WORDS BARRIER S-BOUNDARY LINK 0 NUM - $$NUM)(NOT 0 GROUP-WORDS) ; 
+ADD:number_congruence (&synt-number_congruence) TARGET (@<SPRED) + $$NUM IF (*-1 (@SUBJ>) BARRIER S-BOUNDARY OR @HAB LINK NOT 0 GROUP-WORDS BARRIER S-BOUNDARY LINK 0 NUM - $$NUM)(NOT 0 GROUP-WORDS) ; 
     #$ Muhtimat olggobeale olbmuigun dadjet ahte ii leat dárbu loddet.
     #$ Ulbmiljoavku lea davviguovllu nuorat 15 jagis 18 jagi rádjái, ja maiddái 10 nuoraide dáin riikain Suomas, Ruoŧas, Ruoššas ja Norggas.
+    #$ Skearru almmuheami maŋŋá lea sis leamaš konsearttat sihke Romssas ja Guovdageainnus, dainna lágiin leage repertoára bures vuogáiduvvan.
     #$ Guovdageainnu Leansmánni Nils Henriksen sihta olbmuid dieđihit sidjiide jus oidnet amas olbmuid vánddardeame mehciin gos sáhttet leat loddemonit.
 #ADD:number_congruence (&synt-number_congruence) TARGET (@<SPRED) + Pl IF (*-1 (@SUBJ>) BARRIER S-BOUNDARY LINK 0 Sg ) ;    
     # assuming that the subject gets the correct number rather than the spred
@@ -2718,7 +2722,8 @@ ADD:number_congruence (&synt-number_congruence) TARGET HNOUN OR A IF (0 HUMAN + 
 
 ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3 OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (NOT 0 ("\&real-.*"r))(*1 NP-HEAD OR A LINK 0 (Nom Pl) BARRIER NPNHA ) ;
     #$Dohko eai mannan ovdal earát jearatkeahttá sus geasa gulai guovlu, dahje gean sohka lei árbevirolaččat bivdán juste dán jávrris dahje báikkis.
-
+    #$ Go luoikanáigi lea nohkan, galget girjjit/mediat buktot ruovttuluotta.
+    
 ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3 OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (NOT 0 ("\&real-.*"r))(*1 PRE-NP-HEAD LINK *1 NP-HEAD OR A LINK 0 (Nom Pl) BARRIER NPNHA) (NEGATE *-1 SUBJ LINK 0 GROUP-WORDS BARRIER S-BOUNDARY OR VFIN) ;
     #$ Ulbmiljoavku lea davviguovllu nuorat 15 jagis 18 jagi rádjái, ja maiddái 10 nuoraide dáin riikain Suomas, Ruoŧas, Ruoššas ja Norggas.
 
@@ -2731,7 +2736,8 @@ ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3  OR (šadd
 #ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3  OR (šaddat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (*1 PRE-NP-HEAD LINK *1 ("leat" PrfPrc) BARRIER NOT-ADVL-PCLE LINK *1 NP-HEAD OR A LINK 0 (Nom Pl) BARRIER NPNHA ) ; - this one would work if the disambiguator worked
 
 ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3  OR (šaddat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3 IF (*1 NP-HEAD OR A LINK 0 (Sg Nom) LINK NOT 0 GROUP-WORDS BARRIER NPNHA) ;
-
+    #$ Leatgo sáhkkii?
+    
 ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Pl3  OR (šaddat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3 IF (*1 PRE-NP-HEAD LINK *1 NP-HEAD OR A LINK 0 (Sg Nom) LINK NOT 0 GROUP-WORDS BARRIER NPNHA) ;
 
 ADD:number_congruence (&synt-number_congruence) TARGET ("leat") OR (šaddat") OR Der/Pass OR BASSO IF (0 Pl3)(*1 PRE-NP-HEAD BARRIER NPNHA LINK 1 CC LINK *1 PRE-NP-HEAD BARRIER NPNHA LINK *1 NP-HEAD OR A LINK 0 (Sg Nom) LINK NOT 0 GROUP-WORDS BARRIER NPNHA) ;
