@@ -19,7 +19,7 @@
 # ==================================================================== #
 # ==================================================================== #
 
-#%soft error
+#%soft error vs. hard errors
 BEFORE-SECTIONS
 
 MAPPING-PREFIX = & ;
@@ -2563,8 +2563,8 @@ ADD:real-maŋŋit (&real-maŋŋit) TARGET  ("maŋŋi");
 	# Syntactical errors
 	# ==================
 	
-# word choice
-# -----------
+    # word choice
+    # -----------
 
 ADD:syn-ollis-not-miehtá (&syn-ollis-not-miehtá) TARGET ("miehtá") IF (0 Pr) (*1 GEOGRAPHICAL-PLACE OR POLITICAL-PLACE OR GENERAL-PLACE OR Plc LINK 0 Loc BARRIER NOT-NP-HEAD-COMMA-CC) ;
     ## Mii háliidit ahte Guovdageaidnu ja Sámi allaskuvla dál maid galgá leat sámi nuoraid ja earáid deaivvadanbáiki, ja čohkket ollu sámi studeanttaid miehtá Sámis.
@@ -2596,8 +2596,9 @@ ADD:maŋga (&syn-not-maŋga) TARGET ("máŋga") IF (-1 ("man"))(*1 NP-HEAD BARRI
 ADD:redundant_ahte (&syn-redundant_ahte) TARGET ("ahte") IF (-1 ("go"));
     ## Dat lei seamma vearrái go ahte ii máhte dola dahkat.
 
-# general syntactical errors
-# --------------------------
+    # general syntactical errors
+    # --------------------------
+SETPARENT Gen OR Nom TO (*1A Po OR Pr OR Adv LINK 1 EOS);
 	
 ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 Po)(NEGATE 0 ADVLCASE) (NEGATE 1 N) (NEGATE 1 (&syn-ollis-not-miehtá)) (NEGATE 1 Adv LINK 1 CS) ;
     ## Mii leat dávjá ságastallan dan diŋga birra.
@@ -2658,6 +2659,8 @@ ADD:wrong-case (&msyn-wrong-case) TARGET $$NP-HEAD IF (NOT 0 COMPOUND LINK 0 NP-
 
     # valency
     # -------
+
+SETPARENT Pron OR N TO (0 HUMAN OR Sg2 LINK *-1 ("liikot")) ;
     
 ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS LINK *1 ILLV BARRIER S-BOUNDARY2 OR VFIN OR Ill) (NEGATE *1 ("leat") + Pl3  OR ("šaddat") + Pl3 OR ("gullat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3)  (NEGATE *1 ("leat") + Sg3  OR ("šaddat") + Sg3 OR ("gullat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3);
     ## Mun liikon dus.
@@ -2700,10 +2703,10 @@ ADD:wrong-transitivity (&syn-wrong-transitivity) TARGET WRONG-TR-V IF (*1 Gen OR
 ADD:wrong-transitivity2 (&syn-wrong-transitivity) TARGET WRONG-TR-V IF (*-1 Gen OR Acc BARRIER S-BOUNDARY1 OR Po LINK NOT 0 TIME OR ROUTE OR HUMAN OR (@SPRED) OR (@>N)) ;
     ## Dasa lassin bargá suohkan dan ala ahte iežas fálaldaga mástoránddi nu bures go vejolaš ja vaikko man jođánit rievdat.
     #$ Dan maŋŋá leat áššit ovdánan iežaset deattuin.
-    ## rievdat - rievdadit
-    ## duhtat - duhtadit
-    ## goikat - goiket
-    ## vuodjut - vuodjudit
+    # rievdat - rievdadit
+    # duhtat - duhtadit
+    # goikat - goiket
+    # vuodjut - vuodjudit
     # this rule works when not using the disambiguator but "jođánit" gets @SPRED> and that crashes everything
         
 
@@ -2729,6 +2732,7 @@ ADD:prs_not_prt_subclause (&syn-prs_not_prt_subclause) TARGET Prt IF (*-1 ("go")
 
     # mu vs. iežan 
     # ------------
+    
 LIST PRON = "mun" "don" "son" ;
 ADD:reflpron (&synt-reflpron) TARGET (Pron Pers Gen) IF (0 $$PRON LINK *-1 $$PRON BARRIER S-BOUNDARY LINK 0 (@SUBJ>)) ; 
     ## Mun válddán mu girjji.
@@ -2782,7 +2786,7 @@ ADD:number_congruence (&synt-number_congruence) TARGET HNOUN OR A IF (0 HUMAN + 
 
 
 ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3 OR ("šaddat") + Sg3 OR ("gullat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (NOT 0 ("\&real-.*"r))(*1 NP-HEAD OR A LINK 0 (Nom Pl) BARRIER NPNHA - RCmpnd OR CC ) (NEGATE 0 ("leat") + Sg3 LINK 1 FMAINV) ;
-    #$Dohko eai mannan ovdal earát jearatkeahttá sus geasa gulai guovlu, dahje gean sohka lei árbevirolaččat bivdán juste dán jávrris dahje báikkis.
+    #$ Dohko eai mannan ovdal earát jearatkeahttá sus geasa gulai guovlu, dahje gean sohka lei árbevirolaččat bivdán juste dán jávrris dahje báikkis.
     #$ Go luoikanáigi lea nohkan, galget girjjit/mediat buktot ruovttuluotta.
     
 ADD:number_congruence (&synt-number_congruence) TARGET ("leat") + Sg3 OR ("šaddat") + Sg3 OR ("gullat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 IF (NOT 0 ("\&real-.*"r))(*1 PRE-NP-HEAD LINK *1 NP-HEAD OR A LINK 0 (Nom Pl) BARRIER NPNHA - RCmpnd OR CC ) (NEGATE *-1 SUBJ LINK 0 GROUP-WORDS BARRIER S-BOUNDARY OR VFIN) ;
@@ -2866,6 +2870,7 @@ ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr OR Gen OR @<SP
     ## Mii leat dávjá ságastallan dán golmma alit, rukses, ruoná ja ihána stuorra diŋgga birra. 
     #$ Go ealgá orrugođii Guovdageainnus, fuomašeddje dieđus maiddai dan bivddu.
     #$ Duvle fitne Johkamohki Sámeskuvlla 1.-6. luohká oahppit min guossis.
+    
     # verb subcategorization Actio vs. Inf 
     # ------------------------------------
 ADD:not_actio (&synt-not_actio) TARGET (Actio Ess) (NEGATE *-1  ACTIOESS-V OR ("leat")) (NEGATE *1 ACTIOESS-V ) ;
