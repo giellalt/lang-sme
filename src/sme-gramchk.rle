@@ -361,6 +361,10 @@ LIST Plc = Plc ;
 LIST Sur = Sur ;
 #LIST Tit = Tit ;
 
+# secondary tags
+# --------------
+LIST <Ill-Hum> = <Ill-Hum> ;
+
 
 # Error tags
 # ----------
@@ -2406,6 +2410,8 @@ SET NON-APP = ALLSYNTAG - (@APP);
 
 LIST ALL-LEMMA = ".*"r ;
     # this is a set inlcuding all lemmata
+    
+    SETPARENT Gen OR Nom TO (1 Po OR Pr OR Adv);
 
 	# ====================== #
 	         SECTION         # 1 Grammar checker starts here
@@ -2440,8 +2446,7 @@ ADD:finitev_missing (&finitev_missing) TARGET CLB IF (0 SENTENCE-MARKERS)(NOT *-
     #$ Gos?
 	
     # Compound errors
-	# ===============
-	
+	# ===============	
 
 LIST COMPOUND = (".*#.*"r) ;
 
@@ -2598,7 +2603,7 @@ ADD:redundant_ahte (&syn-redundant_ahte) TARGET ("ahte") IF (-1 ("go"));
 
     # general syntactical errors
     # --------------------------
-SETPARENT Gen OR Nom TO (*1A Po OR Pr OR Adv LINK 1 EOS);
+#SETPARENT Gen OR Nom TO (*1A Po OR Pr OR Adv LINK 1 EOS);      4->6
 	
 ADD:gen-before-postp (&syn-gen-before-postp) TARGET NP-HEAD IF (NOT 0 Gen LINK 1 Po)(NEGATE 0 ADVLCASE) (NEGATE 1 N) (NEGATE 1 (&syn-ollis-not-miehtá)) (NEGATE 1 Adv LINK 1 CS) ;
     ## Mii leat dávjá ságastallan dan diŋga birra.
@@ -2659,10 +2664,16 @@ ADD:wrong-case (&msyn-wrong-case) TARGET $$NP-HEAD IF (NOT 0 COMPOUND LINK 0 NP-
 
     # valency
     # -------
-
-SETPARENT Pron OR N TO (0 HUMAN OR Sg2 LINK *-1 ("liikot")) ;
     
-ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS LINK *1 ILLV BARRIER S-BOUNDARY2 OR VFIN OR Ill) (NEGATE *1 ("leat") + Pl3  OR ("šaddat") + Pl3 OR ("gullat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3)  (NEGATE *1 ("leat") + Sg3  OR ("šaddat") + Sg3 OR ("gullat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3);
+    # most valency cases are: main - maiguin
+    # nom - gen/acc
+    #
+SUBSTITUTE V (V <Ill-Hum>) TARGET ("liikot") ;
+
+SETPARENT Ill + HUMAN OR Pron + Sg2 TO (*-1 (V <Ill-Hum>)) ;
+#SETPARENT Pron OR N TO (0 HUMAN OR Sg2 LINK *-1 ("liikot")) ;
+    
+ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS LINK *1 ILLV LINK NONE c Ill BARRIER S-BOUNDARY2 OR VFIN OR Ill) (NEGATE *1 ("leat") + Pl3  OR ("šaddat") + Pl3 OR ("gullat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3)  (NEGATE *1 ("leat") + Sg3  OR ("šaddat") + Sg3 OR ("gullat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3);
     ## Mun liikon dus.
     #$ Skábmamánus lágiduvvo Nilut Cup.
 
