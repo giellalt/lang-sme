@@ -662,6 +662,12 @@ LIST Plc = Plc ;
 LIST Sur = Sur ;
 #LIST Tit = Tit ;
 
+# secondary tags
+# ---------------
+
+LIST <badjel-V> = <badjel-V> ;
+LIST <rastá-V> = <rastá-V> ;
+
 
 # Other tags
 # ----------
@@ -1641,7 +1647,6 @@ LIST VAHKKU-TIME = "b" "bievla#jahki" "bivdo#áigi" (".*#beaivi"r) "D-#beaivi" "
 
  # The quoteless jahki here is since the preprocessor is not fine-tuned
  # yet, it still gives '"1870-" # jahki N Sg Com'. # lets see if "dbm" works
- # Duomma:lea
  
 SET VAHKKU = VAHKKU-DUR OR VAHKKU-TIME ;
  
@@ -1660,8 +1665,6 @@ LIST GEN-BEAIVI = "álbmot#beaivi" "árga#beaivi" "bargo#beaivi" "beaivi" "duopm
 # General-beaivi can have Gen modifier, like "skuvlla árgabeaivi".
 
 SET BEAIVI = SP-BEAIVI OR GEN-BEAIVI ;
-
- # Duomma:lea
 
 SET TIME = MANNU OR VAHKKU OR BEAIVI OR AIGI ;
 
@@ -5453,6 +5456,27 @@ SELECT:GramPo (Adv) IF (0 ("sisa") LINK 1 BUILDING OR ORGANIZATION OR PLACE LINK
 
 REMOVE:r1226 (N Gen) IF (-1 VFIN)(0 Adv)(NEGATE 1 N or Po); 
 	## Diet lea beare unnán.
+	
+LIST PLACE-PO = "olggo#beale" ;
+	
+REMOVE:GramPo (Po) IF (0 PLACE-PO LINK -1 Pron LINK 0 Nom) ;
+    ## Muhtimat olggobeale olbmuiguin dadjet ahte ii leat dárbu loddet.    Muhtimat olggobeale olbmuin dadjet ahte ii leat dárbu loddet.
+
+LIST BADJEL-V = "girdit" "haskat" "haskadit" "njuoikut" "njuiket" "njuikkodit"  "beassat" "boahtit" "čuovvut" "mannat" "geahččat" ;
+
+LIST RASTA-V = "ádjit" "čierastit" "čuoigat" "čuoiggadit" "doarridit" "doarrádallat" "duvdit" "fárret"  "gálašit" "gállit" "johtit" "mátkkoštit" "meallut" "njoammut" "oaguhit" "ogohallat" "ollit" "ollet" "rievdat" "riidet" "ruohttat" "sáhtostit" "sihkkelastit" "suobbulit" "soabbut" "suhkat" "suvdit" "šloahtat" "váccašit" "vádjolit" "vájaldit" "vájuldit" "vánddardit" "vázzit" "viehkalit" "viehkat" "vuodjalit" "vuodjat" "vuodjelit" "vuodjit" "vuojadit" "vuojašit" "vuojehit" "vuolgit"  "beassat" "boahtit" "čuovvut" "mannat"  ;
+
+SUBSTITUTE V (V <badjel-V>) TARGET BADJEL-V ;
+SUBSTITUTE V (V <rastá-V>) TARGET RASTA-V ;
+
+LIST COUNT-TIME = "diibmu" "jahki" "vahkku" "beaivi" ;
+
+REMOVE:GramPo (Adv) IF (0 ("badjel") LINK NOT *0 <badjel-V> BARRIER S-BOUNDARY) ;
+    ## Ii leat riekta ahte váhnenkeahttás mánát galget orru seammát biebmoruovttuin badjel logenear jagiid.
+    ## Mun lean vuodján geainnu badjel 10 jagi.
+    ## Mun lean oaidnán geainnu badjel 10 jagi.
+    ## Mun lean geahččan geainnu badjel 10 jagi.
+SELECT:GramPo (Po) IF (0 ("badjel") LINK -1 Num OR ("logenear") OR COUNT-TIME OR MEASURE)(NEGATE -1 PLACE LINK *0 <badjel-V>) ; 
 
 
 	# Adverbs, not interjections
@@ -9356,7 +9380,8 @@ REMOVE:r2063 Gen IF (0 (N Acc) LINK NOT 0 (Prop Plc) OR HUMAN-INDIVIDUAL OR PROF
 
 REMOVE:r2064 Gen IF (0 (N Acc) LINK 0 NATURE-PLACE)(*1 FAMILY-ALSO-ABSTRACT OR NON-FAMILY BARRIER NOT-ADJ);
 
-REMOVE:r2065 Gen IF (0 (N Acc) LINK NOT 0 (Prop Plc) OR HUMAN-INDIVIDUAL OR HUMAN-GROUP OR PROFESSION OR OFFICE OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ABSTR-TEXT OR PLACE OR NATION OR EDUCATION OR ORGANIZATION OR INSTITUTION OR INDUSTRY OR TIME)(NEGATE -1 Num OR Pr)(*1 NON-FAMILY BARRIER NOT-ADJ);
+REMOVE:r2065 Gen IF (0 (N Acc) LINK NOT 0 (Prop Plc) OR HUMAN-INDIVIDUAL OR HUMAN-GROUP OR PROFESSION OR OFFICE OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ABSTR-TEXT OR PLACE OR NATION OR EDUCATION OR ORGANIZATION OR INSTITUTION OR INDUSTRY OR TIME)(NEGATE -1 Num OR Pr)(*1 NON-FAMILY BARRIER NOT-ADJ)(NOT 0 Pr OR Po);
+    #GRAM
  
 REMOVE:r2066 Gen IF (0 (Actio Acc))(*1 HUMAN-INDIVIDUAL OR PROFESSION OR OFFICE OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ("bearaš") OR NATION BARRIER NOT-ADJ LINK NOT 0 ("eadni") OR ("áhčči"));
     ## Dearvvašvuođabargiilága § 10, mii gieđahallá dieđuid addima pasienttaide, ja pasientavuoigatvuođalága § 1-3, mii gieđahallá vuoigatvuođa informerejuvvon miehtamii, leat ovdamearkkat dakkár vuoigatvuođain.
