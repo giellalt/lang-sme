@@ -5476,8 +5476,11 @@ REMOVE:GramPo (Adv) IF (0 ("badjel") LINK NOT *0 <badjel-V> BARRIER S-BOUNDARY) 
     ## Mun lean vuodján geainnu badjel 10 jagi.
     ## Mun lean oaidnán geainnu badjel 10 jagi.
     ## Mun lean geahččan geainnu badjel 10 jagi.
+    
 SELECT:GramPo (Po) IF (0 ("badjel") LINK -1 Num OR ("logenear") OR COUNT-TIME OR MEASURE)(NEGATE -1 PLACE LINK *0 <badjel-V>) ; 
 
+REMOVE:GramPo (Po) IF (0 ("buorrin") LINK NOT -1 Gen LINK *0 COPULAS) ;
+    ## dihte šattai dat buorrin, ja mis lei vel 20.000
 
 	# Adverbs, not interjections
 	# --------------------------
@@ -6819,11 +6822,12 @@ REMOVE:r1522 Acc IF (-1 ABBR OR ACR OR ("§") OR ("paragráfa") OR ("kapihttal")
 	## 
 	## Mun logan nr. 4. Mun logan nr. ovtta. 
 
-REMOVE:r1524 Gen IF (-1 ABBR OR ACR OR ("§") OR ("paragráfa") OR ("kapihttal") OR ("kapihtal") OR HEADOFPARTS OR NUM-JAHKI OR GEASSET OR TEXT OR LAHKA)(NEGATE -1 ("b" ABBR))(NEGATE -1 ("nr"))(0 Num)(NEGATE 1 Ill OR Loc)(NEGATE 1 (N Gen) LINK 1 Po);
+REMOVE:r1524 Gen IF (-1 ABBR OR ACR OR ("§") OR ("paragráfa") OR ("kapihttal") OR ("kapihtal") OR HEADOFPARTS OR NUM-JAHKI OR GEASSET OR TEXT OR LAHKA)(NEGATE -1 ("b" ABBR))(NEGATE -1 ("nr"))(0 Num)(NEGATE 1 Ill OR Loc)(NEGATE 1 (N Gen) LINK 1 Po)(NEGATE 1C Po);
 	## ...maid KITH gárvvistii ja almmuhii geasset 2001.
 	#$ Ulbmiljoavku lea davviguovllu nuorat 15 jagis 18 jagi rádjái, ja maiddái 10 nuoraide dáin riikain Suomas, Ruoŧas, Ruoššas ja Norggas.
  # These rules leave only the caseless Num reading. # Well, now we have case everywhere
  #SELECT Nom is much stronger than
+ #GRAM
 
 SELECT:r1526 (Num Acc) IF (-1 (Num Acc))(0 ("duhát"))(1 (N Acc));
 	## Dat máksá guokte duhát ruvnno.
@@ -10470,18 +10474,21 @@ SELECT:r2340 Nom IF (0 Actio)(NEGATE 0 VFIN)(*1 ILLV BARRIER SV-BOUNDARY2 OR Nom
  # The idea here is that 0 is not accusative, since there is an ILLV.
  # So we could alternativelyREMOVE Acc. But the present rule seems to work.
 
-SELECT:r2341 Nom IF (*-1 CS OR BOS OR CC OR CP BARRIER NP-HEAD OR VFIN)(0 NUMERALS)(*1 V-PL3 BARRIER SV-BOUNDARY2)(NEGATE *1 Nom BARRIER S-BOUNDARY2);
+SELECT:r2341 Nom IF (*-1 CS OR BOS OR CC OR CP BARRIER NP-HEAD OR VFIN)(0 NUMERALS)(*1 V-PL3 BARRIER SV-BOUNDARY2)(NEGATE *1 Nom BARRIER S-BOUNDARY2)(NEGATE 0 Gen LINK 1C Po);
 	## Guokte jahkásaš doavttergrádakurssa leat lágiduvvon.
-	## Go máŋggas galget čállit seamma journálii, de... 
+	## Go máŋggas galget čállit seamma journálii, de...
+	#GRAM 
  # In the last example, the reading N Sg Nom is chosen because of the reading 
  # Num Sg Loc.
 
-SELECT:r2342 Nom IF (*-1 CS OR BOS OR CC OR CP BARRIER NP-HEAD OR VFIN)(0 NUMERALS)(*1 COPULAS BARRIER SV-BOUNDARY2 LINK 0 (Pl3) LINK NOT *1 PrfPrc OR Inf BARRIER SV-BOUNDARY2);
+SELECT:r2342 Nom IF (*-1 CS OR BOS OR CC OR CP BARRIER NP-HEAD OR VFIN)(0 NUMERALS)(*1 COPULAS BARRIER SV-BOUNDARY2 LINK 0 (Pl3) LINK NOT *1 PrfPrc OR Inf BARRIER SV-BOUNDARY2)(NEGATE 0 Gen LINK 1C Po);
 	## Vihtta bivdovuogi leat Deanus luosa bivdidettiin. 
-
-SELECT:r2343 (Sg Nom) IF (*-1 CS OR BOS BARRIER NOT-ADV-PCLE)(NEGATE 0 Adv OR PrfPrc)(NEGATE 0 Qst)(*1 V-SG3 OR V-DU3 BARRIER NOT-NP OR Nom OR Ess OR SV-BOUNDARY2 LINK NOT *1 NP-HEAD-SG-NOM BARRIER NPNHA)(NEGATE 0 Gen LINK *1 N BARRIER NPNH)(NEGATE 0 Ess);
+    #GRAM
+    
+SELECT:r2343 (Sg Nom) IF (*-1 CS OR BOS BARRIER NOT-ADV-PCLE)(NEGATE 0 Adv OR PrfPrc)(NEGATE 0 Qst)(*1 V-SG3 OR V-DU3 BARRIER NOT-NP OR Nom OR Ess OR SV-BOUNDARY2 LINK NOT *1 NP-HEAD-SG-NOM BARRIER NPNHA)(NEGATE 0 Gen LINK *1 N BARRIER NPNH)(NEGATE 0 Ess)(NEGATE 0 Gen LINK 1C Po);
 	## Mii vuordit ahte stáhta sámi vuoigatvuođaid barggu oktavuođas čuovvu...
-
+    #GRAM
+    
 SELECT:r2345 Nom IF (0 ("galle"))(*1 V-PL3 BARRIER Nom OR VFIN);
 	## ... ja albmada galle "mearrasámi" ledje vearrováldit.
 
@@ -16331,7 +16338,8 @@ REMOVE:r3567 Gen IF (0 (ACR Nom))(NEGATE 1C Po);
 REMOVE:r3568 Acc IF (0 (ACR Nom));
   	## IT lea dehálaš.
 
-REMOVE:r3569 Gen IF (0 (Num Nom));
+REMOVE:r3569 Gen IF (0 (Num Nom))(NEGATE 1C Po);
+    # GRAM
 REMOVE:r3570 Acc IF (0 (Num Nom))(NEGATE *1 TIME BARRIER NOT-ADJ);
  # This in order to constrain the proliferation of case. If no context has hit, 
  # then be it a stray nominative.
