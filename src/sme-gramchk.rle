@@ -2449,51 +2449,6 @@ LIST SENTENCE-MARKERS = \? \. \! \¶ ;
 ADD:finitev_missing (&finitev_missing) TARGET CLB IF (0 SENTENCE-MARKERS)(NOT *-1 VFIN)(NEGATE *-1 BOS LINK 1 Interr OR MO-MANge) ;
     #$ Gos?
 	
-    # Compound errors
-	# ===============	
-
-LIST COMPOUND = (".*#.*"r) ;
-
-ADD:compound/wrong-case (&msyn-compound/&msyn-wrong-case) TARGET CNOUN IF (0C (N Sg Nom) LINK 1 CNOUN)(NOT 0 ACR)(NEGATE 0 SUBJ LINK NOT 1 SUBJ) (NEGATE 0 SPRED LINK 1 @<ADVL) (NEGATE 0 SPRED LINK NOT *0 SPRED)(NEGATE >*1 (&finitev_missing));
-    ## Kurssain leat ámmát bagadallit. Kurssain leat ámmátbagadallit.
-    ## Mánáid- ja dásseárvodepartemeanta bargu lea:
-    ## Ná mii oažžut sámi ja álgoálbmot perspektiivva buot oahpahusas.
-    # it is important that we run the norm morphological analysis!! "ámmát" N Sg Acc @<OBJ  "álgo#álbmot" N Sg Gen @>N
-	#$ Guovdageainnus leat stuora vejolašvuođat meahcásteapmái, ja luonddu vánddardeamis, go olles Finnmárkku duottar lea juste viessouvssa olggobealde.
-	#$ Guovdageainnus lea vejolašvuohta meahcásteapmái, ja luonddu vánddardeamis, go olles Finnmárkku duottar lea juste viessouvssa olggobealde.
-	#$ Sámedikki dieđáhus doaimmas birra:
-	#$ Ráđđi bargan bures
-	#$ Dain lea sámegiella siidagiellan.
-	#$ Divodandoarjja dálvevahágahtton gittiide
-	## Illudan dakkár eará studeanta hommáide.  Illudan dakkár eará studeantahommáide.
-
-
-
-# compound or not:
-
-LIST UNLIKELY-COMPOUNDS-1PART = "kultuvra" ;
-LIST UNLIKELY-COMPOUNDS-2PART = (".*#vierru"r) ;
-
-ADD:hyphen (&msyn-addhyphen) TARGET Actio IF (0 Nom LINK 1 CC LINK NOT 0 (@CVP) LINK 1 N + COMPOUND) (NEGATE -1C (&msyn-compound))(NEGATE 0 UNLIKELY-COMPOUNDS-1PART LINK 1 CC LINK 1 UNLIKELY-COMPOUNDS-2PART)(NEGATE 0 Gen LINK 3 Po)(NEGATE 0 $$WORD LINK 2 $$WORD OR (".*#$$WORD"r)) ;
-    ## Ossodagat addet maiddái doarjaga dutkamii, geahččalan ja ovdánahttinbargui, ja servet riikkaidgaskasaš ovttasbargguide sin fágasurggiineaset.
-    
-ADD:hyphen (&msyn-addhyphen) TARGET CNOUN IF (0 N LINK 0 Gen OR (Sg Nom) LINK 1 CC LINK NOT 0 (@CVP) LINK 1 N + COMPOUND) (NEGATE -1C (&msyn-compound))(NEGATE 0 UNLIKELY-COMPOUNDS-1PART LINK 1 CC LINK 1 UNLIKELY-COMPOUNDS-2PART)(NEGATE 0 Gen LINK 3 Po)(NEGATE 0 $$ALL-LEMMA LINK 2 $$ALL-LEMMA )(NEGATE 0 $$WORD LINK 2 $$WORD OR (".*#$$WORD"r)) ;
-	## Guovdageainnus ja Diehtosiiddas leat maiddai eará guovddáš sámi ásahusat, nu go Sámedikki oahpahus-, giella ja kulturossodat, Sámi árkiiva, Gáldu- Álgoálbmotvuoigatvuođaid gelbbolašvuođaguovddáš ja Riikkaidgaskasaš boazodoalloguovddáš.
-    #$ Guovdageainnus ja Diehtosiiddas leat maiddai eará guovddáš sámi ásahusat, nu go Sámedikki oahpahus-, giella ja kulturgiella, Sámi árkiiva, Gáldu- Álgoálbmotvuoigatvuođaid gelbbolašvuođaguovddáš ja Riikkaidgaskasaš boazodoalloguovddáš.
-    #$ Buollánviinnis lea oalle johtu ja gávpotsápmi hal juhká visot maid nagoda.
-    # Here "johtu" gets error-tag because "ja" is disambiguated as CNP, not CVP    
-	#$ E-boasta čujuhus ja čoavddagoarta.
-	#$ Guollegáhkut, márffit ja biergodáigi.
-	#$ Dá lea su eallin, kultuvra ja árbevierru.
-	#$ Davviriikkalaččat lea sámi valáštallan organiserejuvvon nu, ahte guđetge riikkas lea báikkálaš sámi valáštallan servviid ja sámeservviid oktasaš ásahus, mat fas leat čohkkejuvvon oktasaš davviriikkalaš lihtu (Sámi Valáštallan Lihttu) vuollái. #servviid
-
-
-ADD:compound (&msyn-compound) TARGET (Actio Sg Nom) IF (1 CNOUN) ;
-    ## bargan vuohki
-    #$ ČÁLUS:HÅKON ISAK VARS GOVAT: ISAK NILS SIRI
-    #$ Dá leage ođđaseamos bivdu Guovdageainnus.
-    #$ Áiggid čađa rievddai servvodat bivdoservvodagas otna ruhttaservvodahkki.
-    
     # Real Word Errors
     # ================
     
@@ -2519,11 +2474,11 @@ ADD:várra (&real-várra) TARGET ("varra" Nom) IF (*0 Nom LINK *0 Sg3 BARRIER S-
     #$ Beana galgá guorrat uhccimus 600 mehtera varraluotta masa lea golbma desilihttera varra geavahuvvon, dát galgá leat unnuimusat 12 diimmu boaris.XXXdoesn't work
     #$ Guovtti sajes galgá oasáš sullii logi mehtar gaska gosa ii leat biddjon varra.XXXdoesn't work
     
-    # vuosttáš N vs. vuosttaš Num
+    # vuosttáš N / vs. vuosttaš Num
     # ----------------------------------
     # condition: modifying a noun
 
-ADD:vuosttaš (&real-vuosttaš) TARGET ("vuostá" Der/Dimin) OR ("vuosti" Der/Dimin) IF (*1 N BARRIER NPNH)(NOT *-1 ("unni" Attr) BARRIER NPNHA) ;    
+ADD:vuosttaš (&real-vuosttaš) TARGET ("vuostá" Der/Dimin) OR ("vuosti" Der/Dimin) OR ("vuostá" N Sg Nom PxSg3) IF (*1 N BARRIER NPNH)(NOT *-1 ("unni" Attr) BARRIER NPNHA) ;    
     ## Hálbbes jietnagirji, vuosttáš jietnagirji. Hálbbes jietnagirji, vuosttaš jietnagirji.
     ## Otne lei mis vuosttáš logaldallan. Otne lei mis vuosttaš logaldallan.
     ## Ná, ja dalle mun lohken vel ex-phil go lei oassi vuosttáš jagi profešuvnna oahpus. Ná, ja dalle mun lohken vel ex-phil go lei oassi vuosttaš jagi profešuvnna oahpus.
@@ -2531,8 +2486,9 @@ ADD:vuosttaš (&real-vuosttaš) TARGET ("vuostá" Der/Dimin) OR ("vuosti" Der/Di
     ## Nu deahálaš lea ahte vuosttáš maid barga go iđđes árrat bohtá uksaraigge olggos, lea geahčestit albmái.
     ## Ná, ja dalle mun lohken vel ex-phil go lei oassi vuosttáš jagi profešuvnna oahpus. Ná, ja dalle mun lohken vel ex-phil go lei oassi vuosttaš jagi profešuvnna oahpus.   
    #$ Galbmaskáhpii ii lean báhcán eanet unna guohca ruoná vuosttáš.
+   ## Vuostás vahkku meaddel.. Vuosttas vahkku meaddel..
 
-ADD:vuosttaš (&real-vuosttaš) TARGET ("vuostá" Der/Dimin) OR ("vuosti" Der/Dimin) IF (0 Ess)(NOT *-1 ("unni" Attr) BARRIER NPNHA) ;   
+ADD:vuosttaš (&real-vuosttaš) TARGET ("vuostá" Der/Dimin) OR ("vuosti" Der/Dimin) OR ("vuostá" N Sg Nom PxSg3) IF (0 Ess)(NOT *-1 ("unni" Attr) BARRIER NPNHA) ;   
    ## Son boahtá vuosttážin. - He came as a little cheese
 
     # jamas (japmat or japma) vs. jámas (Adv)
@@ -2620,6 +2576,7 @@ ADD:sahkki (&real-sahkki) TARGET ("sáhka" Ill) IF (*-1 COPULAS LINK 0 VFIN BARR
     
 ADD:muhtin (&real-muhtin) TARGET ("muhttit") IF (0 Actio OR N)(*1 N BARRIER NPNH) ;    
     ## Juos muhttin áššit šaddet hui beakkánat, daidda vuođđuduvvo iežas digáštallanforum. Juos muhtin áššit šaddet hui beakkánat, daidda vuođđuduvvo iežas digáštallanforum.
+    ## Go galgen hárjehallamii smihtten ahte galggan muhttin beaiveruktui go galgen kindergardenii, muhto kindergarden lea skuvllain fárrolaga.
     # muhttit - forandre
     
     # vehkkii vs. veahkki (N)
@@ -2645,7 +2602,7 @@ ADD:valljái (&real-valljái) TARGET ("vallji") IF (0 PxSg3) (*1 NP-HEAD BARRIER
     #$ Lállá go giehka ieš iežas moniid?
     #$ Dat eai šat vuolgge ieža johkii. XXX this rule is hopeless beacuse of sentences like these
 
-    # guhkká vs. guhká
+    # guhkká/guhka vs. guhká
     # -----------------
     # condition:
     
@@ -2658,7 +2615,15 @@ ADD:real-guhká (&real-guhka) TARGET ("guhkká" N Nom) OR ("guhkkat" Prs Sg3) OR
     ## Dat guhkká boahtá bistit. 
 
 ADD:real-guhká (&real-guhka) TARGET ("guhkká" N Nom) OR ("guhkkat" Prs Sg3) IF (*-1 ("bistit") BARRIER S-BOUNDARY2 OR V) ; 
-    ## Ráhkisvuohta gal ii bistán guhkká, muhto ráhkisvuohta musihkkii buolligođii fas gulul.    
+    ## Ráhkisvuohta gal ii bistán guhkká, muhto ráhkisvuohta musihkkii buolligođii fas gulul.  
+    
+    ## Ii dát galgá ádjanit nu guhka.
+    
+    
+    # guhkkat+V+IV+Der/st+V+VGen,guhkkat+V+IV+Der/st+V+Imprt+Sg2 (guhkas) vs. guhkás Adv
+    # ---------------------
+    
+    ## Juste dál sáhtašin baicca dego civnna girdilit biekka mielde ja girddašit gosa dal de dolvvošii, guhkas.  
      
 ADD:syn-conneg (&syn-conneg) TARGET (Cond Prs Sg3) IF (-*1 Neg BARRIER NOT-NP-HEAD-COMMA-CC-Adv-Neg ) ;
     ## Juos in máhtášii čállit ja lávlut, livččen eahpelihkostuvvan olmmoš. Juos in máhtáše čállit ja lávlut, livččen eahpelihkostuvvan olmmoš.
@@ -2703,12 +2668,88 @@ ADD:real-eahkes (&real-eahkes) TARGET ("eahket" Nom) IF (*1 Adv LINK 0 TIME-ADV-
 ADD:real-maŋŋit (&real-maŋŋit) TARGET  ("maŋŋi");
     ## Loddenáigi lea maŋŋit eahket, ihkku ja iđđesija. Loddenáigi lea maŋŋit eahkes, ihkku ja iđđesija.
     
-    # erret vs. eará
+    # erret vs. earret
     # -----------------
     # condition:
         
 ADD:real-earret (&real-earret) TARGET  ("erret") IF (0 Inf OR (Prs Sg2) OR (Prs Pl1) OR (VGen) OR (Imprt) OR (ConNeg))(1 ("eará"));
     ## Eandalit čáhppes beana lea buot divraseamos borramuš, čállá Kitti erret eará dán nuppi mátkkereivves Thailánddas.
+    
+    # riekti N Sg Loc/ Sg Gen PxSg3 / Sg Acc PxSg3 vs. riekta A Attr
+    # ---------------------------------------------------------------
+    # condition:
+    
+    ## Muhtumin šadda váttis gávdnat rievttis sániid vai nágodit bures čilget dahje muitalit.
+
+    # vuolgga Ess vs. vuolgit Prs Sg1
+    # -----------------
+    # condition:
+    
+    ## Muhto ihttin lean fas sápmelaš, muhto juste dál melden olggos, vuolggan geahččat Greys Anatomy.
+    
+    # 
+    # -----------------
+    # condition:
+    
+    # 
+    # -----------------
+    # condition:
+
+    # 
+    # -----------------
+    # condition:
+    
+    # 
+    # -----------------
+    # condition:
+            
+    # Compound errors
+	# ===============	
+
+LIST COMPOUND = (".*#.*"r) ;
+
+ADD:compound/wrong-case (&msyn-compound/&msyn-wrong-case) TARGET CNOUN IF (0C (N Sg Nom) LINK 1 CNOUN)(NOT 0 ACR)(NEGATE 0 SUBJ LINK NOT 1 SUBJ) (NEGATE 0 SPRED LINK 1 @<ADVL) (NEGATE 0 SPRED LINK NOT *0 SPRED)(NEGATE >*1 (&finitev_missing))(NOT 0 ("&real-.*"r));
+	# Tino: the last condition does not work
+    ## Kurssain leat ámmát bagadallit. Kurssain leat ámmátbagadallit.
+    ## Mánáid- ja dásseárvodepartemeanta bargu lea:
+    ## Ná mii oažžut sámi ja álgoálbmot perspektiivva buot oahpahusas.
+    # it is important that we run the norm morphological analysis!! "ámmát" N Sg Acc @<OBJ  "álgo#álbmot" N Sg Gen @>N
+	#$ Guovdageainnus leat stuora vejolašvuođat meahcásteapmái, ja luonddu vánddardeamis, go olles Finnmárkku duottar lea juste viessouvssa olggobealde.
+	#$ Guovdageainnus lea vejolašvuohta meahcásteapmái, ja luonddu vánddardeamis, go olles Finnmárkku duottar lea juste viessouvssa olggobealde.
+	#$ Sámedikki dieđáhus doaimmas birra:
+	#$ Ráđđi bargan bures
+	#$ Dain lea sámegiella siidagiellan.
+	#$ Divodandoarjja dálvevahágahtton gittiide
+	## Illudan dakkár eará studeanta hommáide.  Illudan dakkár eará studeantahommáide.
+
+
+
+# compound or not:
+
+LIST UNLIKELY-COMPOUNDS-1PART = "kultuvra" ;
+LIST UNLIKELY-COMPOUNDS-2PART = (".*#vierru"r) ;
+
+ADD:hyphen (&msyn-addhyphen) TARGET Actio IF (0 Nom LINK 1 CC LINK NOT 0 (@CVP) LINK 1 N + COMPOUND) (NEGATE -1C (&msyn-compound))(NEGATE 0 UNLIKELY-COMPOUNDS-1PART LINK 1 CC LINK 1 UNLIKELY-COMPOUNDS-2PART)(NEGATE 0 Gen LINK 3 Po)(NEGATE 0 $$WORD LINK 2 $$WORD OR (".*#$$WORD"r)) ;
+    ## Ossodagat addet maiddái doarjaga dutkamii, geahččalan ja ovdánahttinbargui, ja servet riikkaidgaskasaš ovttasbargguide sin fágasurggiineaset.
+    
+ADD:hyphen (&msyn-addhyphen) TARGET CNOUN IF (0 N LINK 0 Gen OR (Sg Nom) LINK 1 CC LINK NOT 0 (@CVP) LINK 1 N + COMPOUND) (NEGATE -1C (&msyn-compound))(NEGATE 0 UNLIKELY-COMPOUNDS-1PART LINK 1 CC LINK 1 UNLIKELY-COMPOUNDS-2PART)(NEGATE 0 Gen LINK 3 Po)(NEGATE 0 $$ALL-LEMMA LINK 2 $$ALL-LEMMA )(NEGATE 0 $$WORD LINK 2 $$WORD OR (".*#$$WORD"r)) ;
+	## Guovdageainnus ja Diehtosiiddas leat maiddai eará guovddáš sámi ásahusat, nu go Sámedikki oahpahus-, giella ja kulturossodat, Sámi árkiiva, Gáldu- Álgoálbmotvuoigatvuođaid gelbbolašvuođaguovddáš ja Riikkaidgaskasaš boazodoalloguovddáš.
+    #$ Guovdageainnus ja Diehtosiiddas leat maiddai eará guovddáš sámi ásahusat, nu go Sámedikki oahpahus-, giella ja kulturgiella, Sámi árkiiva, Gáldu- Álgoálbmotvuoigatvuođaid gelbbolašvuođaguovddáš ja Riikkaidgaskasaš boazodoalloguovddáš.
+    #$ Buollánviinnis lea oalle johtu ja gávpotsápmi hal juhká visot maid nagoda.
+    # Here "johtu" gets error-tag because "ja" is disambiguated as CNP, not CVP    
+	#$ E-boasta čujuhus ja čoavddagoarta.
+	#$ Guollegáhkut, márffit ja biergodáigi.
+	#$ Dá lea su eallin, kultuvra ja árbevierru.
+	#$ Davviriikkalaččat lea sámi valáštallan organiserejuvvon nu, ahte guđetge riikkas lea báikkálaš sámi valáštallan servviid ja sámeservviid oktasaš ásahus, mat fas leat čohkkejuvvon oktasaš davviriikkalaš lihtu (Sámi Valáštallan Lihttu) vuollái. #servviid
+
+
+ADD:compound (&msyn-compound) TARGET (Actio Sg Nom) IF (1 CNOUN) ;
+    ## bargan vuohki
+    #$ ČÁLUS:HÅKON ISAK VARS GOVAT: ISAK NILS SIRI
+    #$ Dá leage ođđaseamos bivdu Guovdageainnus.
+    #$ Áiggid čađa rievddai servvodat bivdoservvodagas otna ruhttaservvodahkki.
+    
+
 
 	
 	# Syntactical errors
@@ -2951,7 +2992,10 @@ ADD:guin  (&msyn-loc-not-guin) TARGET (Pl Com) IF (0 NP-HEAD LINK *-1 CC OR COMM
   	## Ollu daid bivdovugiiguin guhkimus leaš gevahuvvon...
   	## Ruoŧas bođii loahpas vástadusa Sámi Oahpahusguovddážis, Johkamohkis, muhto ii fal nu ollu earáiguin.
 
-
+	# essive not locative
+	# --------------------
+	
+	## Barggan giellaveahkin ruoššastudeanttaide. Barggan giellaveahkkin ruoššastudeanttaide.
 
 
 
