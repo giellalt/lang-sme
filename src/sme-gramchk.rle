@@ -372,8 +372,7 @@ LIST <Ill-Hum> = <Ill-Hum> ;
 
 # Error tags
 # ----------
-LIST &error = &error ;
-LIST &CORR = &CORR ;
+LIST &syn-finitev_missing = &syn-finitev_missing ;
 LIST &syn-not-aidna = &syn-not-aidna ;
 LIST &syn-not-dego = &syn-not-dego ;
 LIST &syn-not-maŋga = &syn-not-maŋga ;
@@ -388,6 +387,8 @@ LIST &syn-comp = &syn-comp ;
 LIST &syn-redundant_ahte = &syn-redundant_ahte ;
 LIST &syn-inf-after-soaitit = &syn-inf-after-soaitit ; 
 LIST &syn-add-go = &syn-add-go ;
+LIST &syn-wrong-transitivity = &syn-wrong-transitivity ;
+LIST &syn-object_missing = &syn-object_missing ;
 
 LIST &msyn-addhyphen = &msyn-addhyphen ;
 LIST &msyn-compound = &msyn-compound ;
@@ -2460,7 +2461,7 @@ LIST ALL-LEMMA = ".*"r ;
 	
 LIST SENTENCE-MARKERS = \? \. \! \¶ ;
 	
-ADD:finitev_missing (&finitev_missing) TARGET CLB IF (0 SENTENCE-MARKERS)(NOT *-1 VFIN)(NEGATE *-1 BOS LINK 1 Interr OR MO-MANge) ;
+ADD:finitev_missing (&syn-finitev_missing) TARGET CLB IF (0 SENTENCE-MARKERS)(NOT *-1 VFIN)(NEGATE *-1 BOS LINK 1 Interr OR MO-MANge) ;
     #$ Gos?
 	
     # Real Word Errors
@@ -2731,7 +2732,7 @@ ADD:real-láse (&real-láse) TARGET ("lasset" V) IF (0 VGen OR Imprt OR Prs)(-1 
 
 LIST COMPOUND = (".*#.*"r) ;
 
-ADD:compound/wrong-case (&msyn-compound/&msyn-wrong-case) TARGET CNOUN IF (0C (N Sg Nom) LINK 1 CNOUN)(NOT 0 ACR)(NEGATE 0 SUBJ LINK NOT 1 SUBJ) (NEGATE 0 SPRED LINK 1 @<ADVL) (NEGATE 0 SPRED LINK NOT *0 SPRED)(NEGATE >*1 (&finitev_missing))(NOT 0 REAL-W-ERROR);
+ADD:compound/wrong-case (&msyn-compound/&msyn-wrong-case) TARGET CNOUN IF (0C (N Sg Nom) LINK 1 CNOUN)(NOT 0 ACR)(NEGATE 0 SUBJ LINK NOT 1 SUBJ) (NEGATE 0 SPRED LINK 1 @<ADVL) (NEGATE 0 SPRED LINK NOT *0 SPRED)(NEGATE >*1 (&syn-finitev_missing))(NOT 0 REAL-W-ERROR);
 	# Tino: the last condition does not work
 	#$ Hálbbes jietnagirji, vuosttáš jietnagirji
     ## Kurssain leat ámmát bagadallit. Kurssain leat ámmátbagadallit.
@@ -2786,7 +2787,22 @@ ADD:majuscule (&lex-majuscule) TARGET ("sáme#diggi") IF (0 Sg);
 #ADD:minuscule (&lex-minuscule) TARGET (".*#bealde"r) IF (0 Sg);
 	## Udmurtat lea álgoálbmot Ruoššabealde. Udmurtat lea álgoálbmot Ruošša bealde.
 	
+    # IV with an object
+    # -----------------
+LIST WRONG-TR-V = "ovdánit" "rievdat" "duhtat" "goikat" ;
+LIST CORRECT-TR-V = "ovdánahttit" "ovddidit" "rievdadit" "duhtadit" "goiket" ;    
 
+ADD:transitive (&lex-transitive) TARGET WRONG-TR-V IF (*1 Gen OR Acc BARRIER NPNH LINK NOT 0 TIME OR ROUTE OR HUMAN OR (@SPRED) OR (@>N)) ;
+    ## Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta. Dasa lassin bargá suohkan dan ala ahte ovdánahttit iežas fálaldaga kvalitehta.
+    
+ADD:transitive (&lex-transitive) TARGET WRONG-TR-V IF (*-1 Gen OR Acc BARRIER S-BOUNDARY1 OR Po LINK NOT 0 TIME OR ROUTE OR HUMAN OR (@SPRED) OR (@>N)) ;
+    ## Dasa lassin bargá suohkan dan ala ahte iežas fálaldaga mástoránddi nu bures go vejolaš ja vaikko man jođánit rievdat.
+    #$ Dan maŋŋá leat áššit ovdánan iežaset deattuin.
+    # rievdat - rievdadit
+    # duhtat - duhtadit
+    # goikat - goiket
+    # vuodjut - vuodjudit
+    # this rule works when not using the disambiguator but "jođánit" gets @SPRED> and that crashes everything
 
 	# Syntactical errors
 	# ==================
@@ -2850,8 +2866,8 @@ ADD:maŋga (&syn-not-maŋga) TARGET ("máŋga") IF (-1 ("man"))(*1 NP-HEAD BARRI
 ADD:redundant_ahte (&syn-redundant_ahte) TARGET ("ahte") IF (-1 ("go"));
     ## Dat lei seamma vearrái go ahte ii máhte dola dahkat.
 
-    # general syntactical errors
-    # --------------------------
+    # adposition and case
+    # ----------------------
 
 LIST ONLY-PO = "bakte" "bakto" "dáfos" "dáfun" "dáfus" "dihtii" "duohkai" "ektui" "heret" "hárrai" "lusa" "mađo" "mađu" "maŋil" "muttos" "njeaiga" "njeaigga" "olggil" "ovdii" "ovddal" "ovddan" "ovdii" "rájes" "seahká" "váste" "viđá" "vuođul" ;
     # ektui according to Konne mostly a plural noun ("eaktu")
@@ -2978,15 +2994,19 @@ ADD:wrong-case (&msyn-wrong-case) TARGET $$NP-HEAD IF (NOT 0 COMPOUND LINK 0 NP-
     # nom - gen/acc
     #
 SUBSTITUTE V (V <Ill-Hum>) TARGET ("liikot") ;
+SUBSTITUTE V (V <Loc-Hum>) TARGET ("boagustit") ;
+SUBSTITUTE V (V <Nom-Hum><Acc-Txt><Ill-Hum>) TARGET ("čállit") ;
+
+	## Hui ollu liikon bohccobiergu ja goikebiergu. Hui ollu liikon bohccobiergui ja goikebiergui.
 
 SETPARENT Ill + HUMAN OR Pron + Sg2 TO (*-1 (V <Ill-Hum>)) ;
 #SETPARENT Pron OR N TO (0 HUMAN OR Sg2 LINK *-1 ("liikot")) ;
     
-ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS LINK *1 ILLV LINK NONE c Ill BARRIER S-BOUNDARY2 OR VFIN OR Ill) (NEGATE *1 ("leat") + Pl3  OR ("šaddat") + Pl3 OR ("gullat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3)  (NEGATE *1 ("leat") + Sg3  OR ("šaddat") + Sg3 OR ("gullat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3);
+ADD:wrong-valency-illative (&msyn-valency-illative) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS LINK *1 ILLV LINK NONE c Ill BARRIER S-BOUNDARY2 OR VFIN OR Ill) (NEGATE *1 ("leat") + Pl3  OR ("šaddat") + Pl3 OR ("gullat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3)  (NEGATE *1 ("leat") + Sg3  OR ("šaddat") + Sg3 OR ("gullat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3);
     ## Mun liikon dus.
     #$ Skábmamánus lágiduvvo Nilut Cup.
 
-ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 HUMAN OR (Pers) LINK 0 NOT-ACC)(NOT 0 SUBJ)(*-1 BOS LINK *1 TV - Der/Pass BARRIER S-BOUNDARY2 OR VFIN OR Ill LINK NEGATE *0 OBJ BARRIER S-BOUNDARY2)(*-1 BOS LINK NEGATE *1 CS LINK *1 VFIN);    
+ADD:valency-locative (&msyn-valency-locative) TARGET NP-HEAD IF (0 HUMAN OR (Pers) LINK 0 NOT-ACC)(NOT 0 SUBJ)(*-1 BOS LINK *1 TV - Der/Pass BARRIER S-BOUNDARY2 OR VFIN OR Ill LINK NEGATE *0 OBJ BARRIER S-BOUNDARY2)(*-1 BOS LINK NEGATE *1 CS LINK *1 VFIN);    
     ## Mun boagustan dus. Mun boagustan du.
     #$ Beassášfestivála oktavuođas lágiduvvojit Sámi filbmafestivála, Sámi Grand Prix, konsearttat, máilmmimeašttirgilvvut heargegilvovuodjimis ja oaggungilvvut.
     #$ Muhtimat olggobeale olbmuin dadjet ahte ii leat dárbu loddet.
@@ -2997,10 +3017,6 @@ ADD:wrong-case (&msyn-wrong-case) TARGET NP-HEAD IF (0 HUMAN OR (Pers) LINK 0 NO
     ## Muhto várra vuos galggan vuodjinkoarta oažžut. Muhto várra vuos galggan vuodjinkoartta oažžut.
     ## 
     
-ADD:object_missing (&syn-object_missing) TARGET STV IF (NOT *0 NP-HEAD LINK 0 Acc)(NEGATE *0 CS LINK *1 VFIN); 
-    ## Dadjet olggobeale olbmot.
-    #$ Dán skuvlajagi lea Johkamohki Sámeskuvla čađahan sámegiel ovddidan prošeavtta.
-
     
 #ADD:wrong-case (&msyn-wrong_case) TARGET IF (
     # čállit: text acc - writing-place ill, text acc recipient human
@@ -3018,22 +3034,6 @@ ADD:object_missing (&syn-object_missing) TARGET STV IF (NOT *0 NP-HEAD LINK 0 Ac
    ## Guhka lean smiehtan rahkadit dakkár borramuš, muhto dušše odne ollašuvvai smavvá niehku. Guhká lean smiehttan ráhkadit dakkár borramuša, muhto dušše odne ollašuvai smávva niehku.
    ## Jus háliidat ráhkadit dan, de don dárbbašat 1 kg jáffuid, sálti, 2 láse čázi ja 1 páhkka biergodáiggi. Jus háliidat ráhkadit dan, de don dárbbašat 1 kg jáffuid, sáltti, 2 láse čázi ja 1 páhka biergodáiggi.
     
-    # IV with an object
-    # -----------------
-LIST WRONG-TR-V = "ovdánit" "rievdat" "duhtat" "goikat" ;
-LIST CORRECT-TR-V = "ovdánahttit" "ovddidit" "rievdadit" "duhtadit" "goiket" ;    
-
-ADD:wrong-transitivity (&syn-wrong-transitivity) TARGET WRONG-TR-V IF (*1 Gen OR Acc BARRIER NPNH LINK NOT 0 TIME OR ROUTE OR HUMAN OR (@SPRED) OR (@>N)) ;
-    ## Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta. Dasa lassin bargá suohkan dan ala ahte ovdánahttit iežas fálaldaga kvalitehta.
-    
-ADD:wrong-transitivity2 (&syn-wrong-transitivity) TARGET WRONG-TR-V IF (*-1 Gen OR Acc BARRIER S-BOUNDARY1 OR Po LINK NOT 0 TIME OR ROUTE OR HUMAN OR (@SPRED) OR (@>N)) ;
-    ## Dasa lassin bargá suohkan dan ala ahte iežas fálaldaga mástoránddi nu bures go vejolaš ja vaikko man jođánit rievdat.
-    #$ Dan maŋŋá leat áššit ovdánan iežaset deattuin.
-    # rievdat - rievdadit
-    # duhtat - duhtadit
-    # goikat - goiket
-    # vuodjut - vuodjudit
-    # this rule works when not using the disambiguator but "jođánit" gets @SPRED> and that crashes everything
         
     # guin-dávda: komitativ pl instead of lokativ
     # -------------------------------------------
@@ -3075,6 +3075,10 @@ ADD:partitive-loc  (&msyn-partitive-loc) TARGET (Pl Acc) OR (Pl Gen) IF (0 NP-HE
 	## Barggan giellaveahkin ruoššastudeanttaide. Barggan giellaveahkkin ruoššastudeanttaide.
 
 
+ADD:object_missing (&syn-object_missing) TARGET STV IF (NOT *0 NP-HEAD LINK 0 Acc)(NEGATE *0 CS LINK *1 VFIN); 
+    ## Dadjet olggobeale olbmot.
+    #$ Dán skuvlajagi lea Johkamohki Sámeskuvla čađahan sámegiel ovddidan prošeavtta.
+
 
     # Tense in subclauses
     # ===================
@@ -3082,7 +3086,7 @@ ADD:partitive-loc  (&msyn-partitive-loc) TARGET (Pl Acc) OR (Pl Gen) IF (0 NP-HE
 LIST AHTE-V = "atnit" "árvalit" "ballat" "čuorvut" "cealkit" "čilget" "cuoigut" "čuorvut" "čurvet" "dadjat" "dadjat" "gielistit" "gilljut" "huikit" "huikkádit" "jáhkkit" "jearrat" "juoigat" "kommenteret" "lávlut" "lohkat" "liikot" "muitalit" "oaivvildit" "savkalit" "váruhit" "vástidit" ;
 
     # Prt vs. Prs in subclause 
-ADD:prs_not_prt_subclause (&synt-prs_not_prt_subclause) TARGET Prt IF (*-1 ("ahte") BARRIER S-BOUNDARY OR VFIN LINK *-1 AHTE-V BARRIER NOT-COMMA) ;
+ADD:prs_not_prt_subclause (&syn-prs_not_prt_subclause) TARGET Prt IF (*-1 ("ahte") BARRIER S-BOUNDARY OR VFIN LINK *-1 AHTE-V BARRIER NOT-COMMA) ;
     ## Mon jáhkken ahte don lohket iežat jallan. Mon jáhkken ahte don logat iežat jallan.
     ## Nieida vástidii, ahte son ii sáhte vuolgit.
     ## Dat áhkku dajai, ahte gii son vuosttáid suoládii, ii gal bálle oađđit.
