@@ -368,6 +368,7 @@ LIST Sur = Sur ;
 # secondary tags
 # --------------
 LIST <Ill-Hum> = <Ill-Hum> ;
+LIST <Acc-Food> = <Acc-Food> ;
 
 
 # Error tags
@@ -2525,6 +2526,8 @@ ADD:jámas (&real-jámas) TARGET ("japmat" Der/st) OR ("japma" Sg PxSg3) IF (0 V
 ADD:jámas (&real-jámas) TARGET ("japmat" Der/st) OR ("japma" Sg PxSg3) IF (0 VGen OR (Imprt Sg2) OR (Imprt ConNeg) OR (Prs ConNeg) OR (Sg Loc) OR Gen OR Acc)(-1 GRADE-ADV) ;     
     ## Kotusa sámegiela lávdegoddi lea leamaš jahkeviissaid hui jamas ja dát linnjá joatkahuvvá dás duohkonai, daningo Kotusis eai leat mangelágán resurssat sámi giellapolitihkalaš bargui. 
     
+    ## Kotusa sámegiela lávdegoddi lea leamaš jahkeviissaid hui jamas ja dát linnjá joatkahuvvá dás duohkonai, daningo Kotusis eai leat mangelágán resurssat sámi giellapolitihkalaš bargui. Kotusa sámegiela lávdegoddi lea leamaš jahkeviissaid hui jámas ja dát linnjá joatkahuvvá dás duohkonai, daningo Kotusis eai leat mangelágán resurssat sámi giellapolitihkalaš bargui.
+    
     # ealla (ealas) vs. eallá (eallit V)
     # ----------------------------------
     # condition:    
@@ -2726,13 +2729,29 @@ ADD:real-láse (&real-láse) TARGET ("lasset" V) IF (0 VGen OR Imprt OR Prs)(-1 
     
     ## Vuosttaš biilla galgá leat veahá boares, vai oahpat álbma ládje vuoddjit. Vuosttaš biilla galgá leat veahá boares, vai oahpat álbma ládje vuodjit.
 
-    # 
-    # -----------------
+    # ráhkadit vs. rahkat (parre seg)
+    # -------------------
+    # condition:
+
+ADD:real-ráhkadit (&real-ráhkadit) TARGET ("rahkat" A) IF (0 (Comp Attr) OR (Der/at Adv));     
+    ## Guhka lean smiehtan rahkadit dakkár borramuš, muhto dušše odne ollašuvvai smavvá niehku. Guhká lean smiehttan ráhkadit dakkár borramuša, muhto dušše odne ollašuvai smávva niehku.
+    # Duommá
+    
+    # gaskit (plukke) vs. gáskit (bite)
+    # ---------------------------------
     # condition:
     
-    # 
-    # -----------------
-    # condition:
+    # mannan vs. manna
+    # ----------------
+    
+ADD:real-mannat (&real-mannat) TARGET ("manna") IF (0 Gen OR Acc or Nom)(1 TIME) ;   
+    ## Sámedikki dievasčoakkámis gieđahalaimet manna vahku sámi giellagažaldagaid viidáseappotge.
+    
+    # boađán vs. boađan (boađan	boađa+N+Ess boahtit+V+IV+Ind+Prs+Sg1)
+    # ----------------
+ADD:real-boahtit (&real-boahtit) TARGET ("boađa") IF (0 Ess)(1 Inf) ;    
+    ## Mun in jáhkke ahte politihkka rievda jus mun boađan jienástit. Mun in jáhkke ahte politihkka rievdá jus mun boađán jienastit.
+    #TEST
             
     # Compound errors
 	# ===============	
@@ -2788,8 +2807,9 @@ ADD:compound (&msyn-compound) TARGET (Actio Sg Nom) IF (1 CNOUN) ;
 	# Lexical errors
 	# ==================
 
-ADD:majuscule (&lex-majuscule) TARGET ("sáme#diggi") IF (0 Sg);
-	## Dáid gávdná sámedikki ruovttusiidduin ságat-gaskabláđi olis. Dáid gávdná Sámedikki ruovttusiidduin ságat-gaskabláđi olis. 	
+ADD:majuscule (&lex-majuscule) TARGET ("sáme#diggi") IF (0 Sg)(NOT *-1 Num BARRIER NOT-ADJ);
+	## Dáid gávdná sámedikki ruovttusiidduin ságat-gaskabláđi olis. Dáid gávdná Sámedikki ruovttusiidduin ságat-gaskabláđi olis.
+	# Duommá mo du mielas maŋimus kondišuvdna? 	
 	
 #ADD:minuscule (&lex-minuscule) TARGET (".*#bealde"r) IF (0 Sg);
 	## Udmurtat lea álgoálbmot Ruoššabealde. Udmurtat lea álgoálbmot Ruošša bealde.
@@ -3033,12 +3053,13 @@ ADD:wrong-case (&msyn-wrong_case) TARGET TEXT IF (*0 (<Acc-TxtA><Ill-TxtC>))(*0 
     # ADD ... TARGET CASE IF (0 TEXT-S LINK 0 CASE - $$ACC)(*1 V LINK 0 TEXT + $$ACC) ;
     ## Čále dearvvuođaidat guossegirjámet! Čále dearvvuođaidat guossegirjáseamet Gen/Acc/Nom Ill
     ## guestbook
-    ## čállit + Acc (tekst) + Ill (human)
-    ## čállit + Acc (text - abstract text) + Ill (writing place - concrete text, place)
-    ## čállit + Acc + Ill ....
     
-    ## Gasku dehálaš guovddášbáikkiide. Gasku dehálaš guovddášbáikkiid.
-    
+        
+    ## Gasku dehálaš guovddášbáikkiide. Gasku dehálaš guovddášbáikkiid. (gasku Pr? dahje V)
+
+SUBSTITUTE V (V <Acc-Food>) TARGET ("ráhkadit") ;  
+
+ADD:wrong-case (&msyn-wrong_case) TARGET FOOD IF (*0 (<Acc-Food>) BARRIER VFIN OR S-BOUNDARY) ;  
    ## Guhka lean smiehtan rahkadit dakkár borramuš, muhto dušše odne ollašuvvai smavvá niehku. Guhká lean smiehttan ráhkadit dakkár borramuša, muhto dušše odne ollašuvai smávva niehku.
    ## Jus háliidat ráhkadit dan, de don dárbbašat 1 kg jáffuid, sálti, 2 láse čázi ja 1 páhkka biergodáiggi. Jus háliidat ráhkadit dan, de don dárbbašat 1 kg jáffuid, sáltti, 2 láse čázi ja 1 páhka biergodáiggi.
     
