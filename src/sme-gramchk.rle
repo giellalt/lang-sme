@@ -480,6 +480,13 @@ LIST &real-vuosttaš = &real-vuosttaš ;
 
 SET REAL-W-ERROR = &real-beassat OR &real-dakko OR &real-eahkes OR &real-eallit OR &real-earret OR &real-guhká OR &real-guhkás OR &real-iežá OR &real-jáhkkit OR &real-láse  OR &real-lohkat OR &real-lohkat OR &real-maŋŋit OR &real-oastit OR &real-orrut OR &real-ruovttoluotta OR &real-sádji OR &real-sahkki OR &real-sáhttit OR &real-veahkki OR &real-valljái OR &real-várra OR &real-vuolgit  OR &real-vuosttaš ;
 
+# Valency tags
+# ------------
+LIST <Acc-Txt><Ill-Hum> = <Acc-Txt><Ill-Hum> ;
+LIST <Acc-TxtA><Ill-TxtC> = <Acc-TxtA><Ill-TxtC> ;
+LIST <Ill-Hum> = <Ill-Hum> ;
+LIST <Loc-Hum> = <Loc-Hum> ;
+
 # Other tags
 # ----------
 
@@ -1942,7 +1949,7 @@ LIST TEXT = (".*listu"r) (".*čálus"r) (".*girji"r) (".*-#girji"r) (".*gažalda
   # Maybe one should differentiate between written and spoken texts
 
 LIST ABSTR-TEXT = "alimus#riekte#mearrádus" "almennet#mearrádus" "almmuhus#teaksta#evttohus" "areála#plána" "áide#plána" "áige#plána" "áittardan#plána" "ákšuvdna#plána" "álbmot#meahcce#plána" "álbmot#riekte#mearrádus" "árvalus" "ássan#plána" "barta#plána" "báber#mearrádus" "bábir#mearrádus" "bággo#lonistan#mearrádus" "bálvalus#plána" "bivdo#áige#mearrádus" "bivdo#mearrádus" "boazo#doallo#láhka#evttohus" "boras#dávda#plána" "boarrásiid#plána" "boazo#doallo#plána" "buoridan#plána" "buhtadus#ortnet" "bušeahtta#evttohus"  "buhtadan#mearrádus" "buoridan#evttohus" "bušeahtta#mearrádus" "bušeahtta#málle#evttohus" 
-"cuvccas" "čađahan#mearrádus" "čađahan#plána" "čoahkke#plána"
+"cuvccas" "čađahan#mearrádus" "čađahan#plána" "čoahkke#plána" "dearvvuohta"
 "dearvvašvuođa#plána" "departemeanta#evttohus" "diibmo#juohko#plána" "diehto#juohkin#plána"  "dievasčoahkkin#mearrádus" "digge#mearrádus" "divvun#plána" "doaibma#bidjo#evttohus" "doaibma#plána" "doallo#-ortnet" "doallo#plána" "doarjja#ortnet" "dulvadan#evttohus" "dulvadan#mearrádus" "dulvadan#plána" "dutkan#plána" "duodje#oahppo#plána" "duodje#plána"
 "eaktu" "eana#čujuhus" "eana#čujuhan#cealkámuš" "eanan#doallo#plána" "eana#hálden#plána" "eanan#juohkin#mearrádus" "eana#láhka#mearrádus" "eana#mihtidan#njuolggadus" "eananvuovdin#njuolggadus" "eana#vuovdin#mearrádus" "eanetlohko#mearrádus" "eaŋkal#mearrádus" "earre#mearrádus" "ekonomiija#plána" "el#fápmo#háhkan#plána" "energi#plána" "eSápmi#plána" "EU-#mearrádus" "evttohus" 
 "fáddá#evttohus" "fága#plána" "fágaid#oahppo#plána" "fápmudus#mearrádus" "fáles#ráfáiduhttin#mearrádus" "fievrridan#plána" "finnmárkku#láhka#evttohus" "friddja#suohkan#mearrádus" "fylkka#digge#mearrádus" "fylkka#geaidno#plána" "fylkka#oasse#plána" "fylkka#plána" "fylkka#plána#evttohus" 
@@ -2993,13 +3000,12 @@ ADD:wrong-case (&msyn-wrong-case) TARGET $$NP-HEAD IF (NOT 0 COMPOUND LINK 0 NP-
     # most valency cases are: main - maiguin
     # nom - gen/acc
     #
-SUBSTITUTE V (V <Ill-Hum>) TARGET ("liikot") ;
+SUBSTITUTE V (V <Ill-Hum>) TARGET ("liikot") OR ("luohtit") ;
 SUBSTITUTE V (V <Loc-Hum>) TARGET ("boagustit") ;
-SUBSTITUTE V (V <Nom-Hum><Acc-Txt><Ill-Hum>) TARGET ("čállit") ;
 
 	## Hui ollu liikon bohccobiergu ja goikebiergu. Hui ollu liikon bohccobiergui ja goikebiergui.
 
-SETPARENT Ill + HUMAN OR Pron + Sg2 TO (*-1 (V <Ill-Hum>)) ;
+SETPARENT Ill + HUMAN OR Pron + Sg2 TO (*-1 (V <Ill-Hum>) BARRIER S-BOUNDARY) ;
 #SETPARENT Pron OR N TO (0 HUMAN OR Sg2 LINK *-1 ("liikot")) ;
     
 ADD:wrong-valency-illative (&msyn-valency-illative) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS LINK *1 ILLV LINK NONE c Ill BARRIER S-BOUNDARY2 OR VFIN OR Ill) (NEGATE *1 ("leat") + Pl3  OR ("šaddat") + Pl3 OR ("gullat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3)  (NEGATE *1 ("leat") + Sg3  OR ("šaddat") + Sg3 OR ("gullat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3);
@@ -3016,14 +3022,16 @@ ADD:valency-locative (&msyn-valency-locative) TARGET NP-HEAD IF (0 HUMAN OR (Per
     #$ Boazodolliid earenoamáš dáidun ja diehtun sirdašuvve gotti dovdamuš, namahusat ja teknihkka.
     ## Muhto várra vuos galggan vuodjinkoarta oažžut. Muhto várra vuos galggan vuodjinkoartta oažžut.
     ## 
+
+SUBSTITUTE V (V <Acc-Txt><Ill-Hum>) TARGET ("čállit") ; 
+SUBSTITUTE V (V <Acc-TxtA><Ill-TxtC>) TARGET ("čállit") ;
     
-    
-#ADD:wrong-case (&msyn-wrong_case) TARGET IF (
+ADD:wrong-case (&msyn-wrong_case) TARGET TEXT IF (*0 (<Acc-TxtA><Ill-TxtC>))(*0 ABSTR-TEXT LINK 0 Gen)(NOT 0 Ill);
     # čállit: text acc - writing-place ill, text acc recipient human
     # LIST TEXT = text TEXT ;
     # LIST ACC = acc ACC ;
     # ADD ... TARGET CASE IF (0 TEXT-S LINK 0 CASE - $$ACC)(*1 V LINK 0 TEXT + $$ACC) ;
-    ## Čále dearvvuođaidat ("guossegirjámet")! Čále dearvvuođaidat guossegirjáseamet Gen/Acc/Nom Ill
+    ## Čále dearvvuođaidat guossegirjámet! Čále dearvvuođaidat guossegirjáseamet Gen/Acc/Nom Ill
     ## guestbook
     ## čállit + Acc (tekst) + Ill (human)
     ## čállit + Acc (text - abstract text) + Ill (writing place - concrete text, place)
