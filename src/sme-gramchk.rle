@@ -2475,6 +2475,27 @@ ADD:finitev_missing (&syn-finitev_missing) TARGET CLB IF (0 SENTENCE-MARKERS)(NO
     # Real Word Errors
     # ================
     
+LIST VARIANTS = "guođáhallat" "guođahallat" "oainnahallat" "oainnáhallat" "vuoittáhallat" "vuoittahallat" "govssahallat" "govssáhallat" "gáskkahallat" "gáskkáhallat" "časkkahallat" "časkkáhallat" ("njuordat"+V+IV+Der/h+V+Der/alla) "njuorddáhallat" "cakkastallat" "cakkástallat" ("doamahit"+V+TV+Der/alla) ("doapmat"+V+IV+Der/h+V+Der/alla) "doamáhallat" ("boalbat"+V+TV+Der/l+V+Der/asti) "boalbálastit" ("gierrat"+V+TV+Der/st+V+Der/alla) "gierástallat" ("gierrat"+V+TV+Der/st+V+Der/adda) "gierástaddat"  ;
+	# words which can be written with both a and á
+
+LIST ALMOST-VARIANTS = "buorranaddat" "buorránaddat" "buorranastit" "buorránastit" "buorraneastit" "buorráneastit" ("jierbmat"+V+IV+Der/st+V+Der/alla) ("jierbmat"+V+IV+Der/st+V+Der/adda) "jierpmástallat" "jierpmástaddat" ;
+	# words where the a and á variants are very close in meaning and syntax
+	
+LIST UNLIKELY-REAL-Á = "barggastuvvat" ("giksat" Der/stuvva) ;
+LIST UNLIKELY-REAL-A = "barggástuvvat" ;
+
+    # general
+    # ----------------------------------
+    # condition: no condition
+
+ADD:real-a (&*real-a) TARGET UNLIKELY-REAL-A ;
+ADD:real-á (&*real-á) TARGET UNLIKELY-REAL-Á ;
+
+	# a little bit less general
+	# -------------------------
+	
+
+    
     # sáhtašit (skysse) vs. sáhttit Cond
     # ----------------------------------
     # condition: human object
@@ -2752,7 +2773,26 @@ ADD:real-mannat (&real-mannat) TARGET ("manna") IF (0 Gen OR Acc or Nom)(1 TIME)
 ADD:real-boahtit (&real-boahtit) TARGET ("boađa") IF (0 Ess)(1 Inf) ;    
     ## Mun in jáhkke ahte politihkka rievda jus mun boađan jienástit. Mun in jáhkke ahte politihkka rievdá jus mun boađán jienastit.
     #TEST
+
+    # galle vs. gálle
+    # ----------------    
+    ## 
+    
+    
+	# akte	akte+Adv vs. ákte (áktit / áktet)
+	# ---------------------------------------
+	# Condition: not mwe: akte vel, condition: not other fin verb
+	
+ADD:real-áktit/áktet (&real-áktit/áktet) TARGET ("akte" Adv) IF	(NEGATE 1 ("vel"))(NEGATE 1 ("vel"))(NEGATE *0 VFIN BARRIER S-BOUNDARY LINK NOT 0 (COPULAS));
+	#$ akte vel
+	#$ vel akte
+	## moai akte du ollu
+	## moai ean akte du
+	# MWE
             
+    ## In ákte das maidege
+    ## Ii ávtte dohko mannat
+
     # Compound errors
 	# ===============	
 
@@ -2803,15 +2843,6 @@ ADD:compound (&msyn-compound) TARGET (Actio Sg Nom) IF (1 CNOUN) ;
 #ADD:no-compound (&no-compound) TARGET (	
 	## Udmurtat lea álgoálbmot Ruoššabealde. Udmurtat lea álgoálbmot Ruošša bealde.   
 	#not-norm rule
-	 
-	# Lexical errors
-	# ==================
-
-ADD:majuscule (&lex-majuscule) TARGET ("sáme#diggi") IF (0 Sg)(NOT *-1 Num BARRIER NOT-ADJ);
-	## Dáid gávdná sámedikki ruovttusiidduin ságat-gaskabláđi olis. Dáid gávdná Sámedikki ruovttusiidduin ságat-gaskabláđi olis. 	
-	
-#ADD:minuscule (&lex-minuscule) TARGET (".*#bealde"r) IF (0 Sg);
-	## Udmurtat lea álgoálbmot Ruoššabealde. Udmurtat lea álgoálbmot Ruošša bealde.
 	
     # IV with an object
     # -----------------
@@ -2830,6 +2861,24 @@ ADD:transitive (&lex-transitive) TARGET WRONG-TR-V IF (*-1 Gen OR Acc BARRIER S-
     # vuodjut - vuodjudit
     # this rule works when not using the disambiguator but "jođánit" gets @SPRED> and that crashes everything
 
+	 
+	# Lexical errors
+	# ==================
+ADD:lex-ollugat-not-máŋggas (&lex-ollugat-not-máŋggas) TARGET ("máŋggas") IF (-1 GRADE-ADV) ;
+    ## Earát eai bovde nu máŋgasa dahje eai heajastala ge. 
+    ## Ii aktage lean jáhkkán nu máŋgasa dovdat alddineasetge 13-jahkásaš Agnesa identitehtaváttisvuođa Sohppara sápmelaččaid searvvis.
+    ## Mii sihtat nu máŋgasa go vejolaš oassálastit gait buoremus festiváladáhpáhussii goassege, dadjá movttegis Riddu Nuoraid jođiheaddji Kine Anita Lyshaug.
+    ## Olles olmmošlogu ektui diehttelasat sápmelaš lesbat ja homofiillat eai leat beare stuora joavku, muhto lea dattege joavku mas leat oalle máŋgasat mielde.
+
+ADD:maŋga (&lex-not-maŋga) TARGET ("máŋga") IF (-1 ("man"))(*1 NP-HEAD BARRIER NPNH) ;
+    ## Man máŋga olbmo doppe ledje? Man ollu olbmot doppe ledje?
+
+ADD:majuscule (&lex-majuscule) TARGET ("sáme#diggi") IF (0 Sg)(NOT *-1 Num BARRIER NOT-ADJ);
+	## Dáid gávdná sámedikki ruovttusiidduin ságat-gaskabláđi olis. Dáid gávdná Sámedikki ruovttusiidduin ságat-gaskabláđi olis. 	
+	
+#ADD:minuscule (&lex-minuscule) TARGET (".*#bealde"r) IF (0 Sg);
+	## Udmurtat lea álgoálbmot Ruoššabealde. Udmurtat lea álgoálbmot Ruošša bealde.
+	
 	# Syntactical errors
 	# ==================
 	
@@ -2865,11 +2914,6 @@ ADD:add-go (&syn-add-go) TARGET VFIN IF (*-1 INDIRECT-SPEECH-V BARRIER S-BOUNDAR
 ADD:syn-ollis-not-miehtá (&syn-ollis-not-miehtá) TARGET ("miehtá") IF (0 Pr) (*1 GEOGRAPHICAL-PLACE OR POLITICAL-PLACE OR GENERAL-PLACE OR Plc LINK 0 Loc BARRIER NOT-NP-HEAD-COMMA-CC) ;
     ## Mii háliidit ahte Guovdageaidnu ja Sámi allaskuvla dál maid galgá leat sámi nuoraid ja earáid deaivvadanbáiki, ja čohkket ollu sámi studeanttaid miehtá Sámis.
 
-ADD:syn-ollugat-not-máŋggas (&syn-ollugat-not-máŋggas) TARGET ("máŋggas") IF (-1 GRADE-ADV) ;
-    ## Earát eai bovde nu máŋgasa dahje eai heajastala ge. 
-    ## Ii aktage lean jáhkkán nu máŋgasa dovdat alddineasetge 13-jahkásaš Agnesa identitehtaváttisvuođa Sohppara sápmelaččaid searvvis.
-    ## Mii sihtat nu máŋgasa go vejolaš oassálastit gait buoremus festiváladáhpáhussii goassege, dadjá movttegis Riddu Nuoraid jođiheaddji Kine Anita Lyshaug.
-    ## Olles olmmošlogu ektui diehttelasat sápmelaš lesbat ja homofiillat eai leat beare stuora joavku, muhto lea dattege joavku mas leat oalle máŋgasat mielde.
     
 ADD:aidna (&syn-not-aidna) TARGET ("áidna") IF (1 Rel);
     ## Áidna gii váilu dán govas lea bussevuoddji.	Ii váillo eará go bussevuoddji dán govas. Váilu dušše bussevuoddji dán govas.
@@ -2878,8 +2922,6 @@ ADD:aidna (&syn-not-aidna) TARGET ("áidna") IF (1 Rel);
 ADD:dego (&syn-not-dego) TARGET ("dego") IF (*1 Ess BARRIER NPNH) ;
     ## SNF doaibmá dál juo dego resursaguovddážin. SNF doaibmá dál juo resursaguovddážin.
 
-ADD:maŋga (&syn-not-maŋga) TARGET ("máŋga") IF (-1 ("man"))(*1 NP-HEAD BARRIER NPNH) ;
-    ## Man máŋga olbmo doppe ledje? Man ollu olbmot doppe ledje?
 
     # ahte vs. go 
     # -----------
