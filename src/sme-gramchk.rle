@@ -432,6 +432,8 @@ LIST <TH-Ill-Hum> 			        = <TH-Ill-Hum> ;
 LIST <TH-AktioLoc>			        = <TH-AktioLoc> ;
 LIST <Loc-Hum> 			            = <Loc-Hum> ;
 LIST <TH-Acc-Food> 		            = <Acc-Food> ;
+LIST <TH-Acc-Any>                   = <TH-Acc-Any> ;
+LIST <TH-Acc-*Ani><RE-Loc-Ani>      = <TH-Acc-*Ani><RE-Loc-Ani> ;
 
 # location
 
@@ -1192,7 +1194,7 @@ LIST SOURCE-V = "gáibidit" ;
 # The idea is that the superset DYNAMIC-V does not select (Pl Loc) if the noun is a member of the set TOOL, ABSTR-TOOL or CONCEPT. This is the "minste felles multiplum". The sub-sets are different, e.g. many of them (but not all) are not connected to HUMAN in (Pl Loc), one is not connected to ABSTR-ENTITY and ACTOR in (Pl Loc). We work with negation so the rules don´t destroy analysis because of insufficent sets.
 
      
-LIST MOVEMENT-V = "ádjit" "beassat" "boahtit" "čuoigat" "čuoiggadit" "čuovvut" "fárret" "finadit" "finihit" "fitnat" "gálašit" "gállit" "girdit" "johtit" "mannat" "mátkkoštit" "njoammut" "ollit" "riidet" "ruohttat" "sáhtostit" "sihkkelastit" "suobbulit" "soabbut" "šloahtat" "váccašit" "vádjolit" "vájaldit" "vájuldit" "vánddardit" "vázzit" "viehkalit" "viehkat" "viežžat" "vuodjalit" "vuodjat" "vuodjit" "vuojadit" "vuojašit" "vuolgit" ;
+LIST MOVEMENT-V = "ádjit" "beassat" "boahtit" "čuoigat" "čuoiggadit" "čuovvut" "fárret" "finadit" "finihit" "fitnat" "gálašit" "gállit" "girdit" "johtit" "mannat" "mátkkoštit" "njoammut" "ollit" "ollet" "riidet" "ruohttat" "sáhtostit" "sihkkelastit" "suobbulit" "soabbut" "šloahtat" "váccašit" "vádjolit" "vájaldit" "vájuldit" "vánddardit" "vázzit" "viehkalit" "viehkat" "viežžat" "vuodjalit" "vuodjat" "vuodjit" "vuojadit" "vuojašit" "vuolgit" ;
 
  # These verbs typically combine with place adverbials in the genitive case @ADVL
  # (i.e. not accusative) I am not sure if the verbs in the second line do that too. They denote movement anyway.
@@ -3140,7 +3142,13 @@ ADD:real-áktit/áktet (&real-áktit/áktet) TARGET ("akte" Adv) IF	(NEGATE 1 ("
 
 LIST COMPOUND = (".*#.*"r) ;
 
-ADD:compound/wrong-case (&msyn-compound/&msyn-wrong-case) TARGET CNOUN IF (0C (N Sg Nom) LINK 1 CNOUN - Com - (N Pl Loc))(NOT 0 ACR)(NEGATE 0 SUBJ LINK NOT 1 SUBJ) (NEGATE 0 SPRED LINK 1 @<ADVL) (NEGATE 0 SPRED LINK NOT *0 SPRED)(NEGATE >*1 (&syn-finitev_missing) OR (&real-čohkkát))(NOT 0 REAL-W-ERROR);
+
+#CSLKDFJ = čohkka fágačálli
+#LIWELRJ = muorra fágačálli
+#
+#$$ CSLKDFJ
+
+ADD:compound/wrong-case (&msyn-compound/&msyn-wrong-case) TARGET CNOUN IF (0C (N Sg Nom) LINK 1 CNOUN)(NOT 0 ACR)(NEGATE 0 SUBJ LINK NOT 1 SUBJ) (NEGATE 0 SPRED LINK 1 @<ADVL) (NEGATE 0 SPRED LINK NOT *0 SPRED)(NEGATE >*1 (&syn-finitev_missing) OR (&real-čohkkát))(NOT 0 REAL-W-ERROR);
 	# Tino: the last condition does not work
 	#$ Hálbbes jietnagirji, vuosttáš jietnagirji
 	#$ Dá čohkka fágačálliin Per Mathis Oskaliin diimmá riikačoahkkimis.
@@ -3307,7 +3315,9 @@ ADD:timeadverbial-accusative (&syn-timeadverbial-accusative) TARGET TIME-QUANT I
     # ---------------------------------------
 #ADD:short-gen (&syn-short-gen)  
     
-    ## Dainna vugiin meinejit skealmmat ahte sii sáhttet du rehket ala riŋget
+    ## Dainna vugiin meinejit skealmmat ahte sii sáhttet du rehket ala riŋget.
+    ##  Njuovvanplána, boazolohku, johtináiggit ja -geainnut, ja eará leat de mearriduvvon báhper ala.
+    ## Mun orun dáppe dassážii fas boahtá johka mu eatnan ala, lohká Návuonbađa boanda Gunnar S. Mun orun dáppe dassážii fas boahtá johka mu eatnama ala, lohká Návuonbađa boanda Gunnar S.
     
     
     # adposition and case
@@ -3423,6 +3433,33 @@ ADD:gen-after-prep (&gen-after-prep) TARGET NP-HEAD IF (NEGATE -2 Gen)(NOT 0 Gen
     #$ Jus muhtun girji ii leat bukton ruovttuluotta maŋŋil go golmma geardde lea gáibiduvvon, de sáddejuvvo reive dán birra ja das maŋŋil rehket.
     
     
+    # accusative + adverbs
+    # -------------------------
+LIST ACC-ADV = ("allu" N Sg Gen) ("guhkku" N Sg Gen) ("govdu" N Sg Gen) "maŋŋil" "ovdal" "allat" "guhkki" ("govdat" A) "allosaš" "guhkkosaš" "govdosaš";
+
+ADD:acc/gen-to-adv (&acc/gen-to-adv) TARGET Num IF (NOT 0 Gen OR Acc LINK 1 Measr OR MEASURE LINK 1 ACC-ADV OR ("boaris")) ;
+    #$ Min viessu lea vihtta/viđa mehtera alu.
+    ## Min viessu lea viđas mehtera alu.
+    #$ Sus lea njealje mehtera guhkkosaš biila.
+    #$ Suorpmas lea guokte millimehtera govdat.
+    #$ Lean vihttalot jagi boaris.
+
+ADD:acc-to-adv (&acc-to-adv) TARGET Num IF (NOT 0 Acc LINK 1 CURRENCY LINK 1 ("velggolaš")) ;
+    ## Ándde lea munnje viđalot ruvnnu velggolaš.
+    #$ Ándde lea munnje vihttalot ruvnnu velggolaš.
+
+
+    #$ Máhtte lea vihtta/viđa jagi nuorat mus.
+    #$ Máhtte lea vihtta jagi nuorat go mun.
+    #$ Dat šattai guokte mehtera guhkit go galggašii.
+    #$ Son vuvddii daid bohccuid vihtta ruvnno hálbbibui.
+    #$ Lásse lea riegádan vihtta jagi ovdal go mon.
+    #$ Dat dáhpáhuvai vihtta jagi maŋŋil.
+    #$ Ádjá viessu lea guokte miilla bajábeal márkana.
+    #$ Mun oidnen guovžža golbma kilomehtera dábbelis.
+    #$ Guovdageaidnu lea guhtta miilla dás eret.
+    
+
     # adverbs and certain cases
     # -------------------------
     
@@ -3447,19 +3484,19 @@ ADD:wrong-case (&msyn-wrong-case) TARGET $$NP-HEAD IF (NOT 0 COMPOUND LINK 0 NP-
 SET DIA-DERIVATIONS = Der/Pass OR Der/h OR Der/ahtti OR Der/n ;
 	# Derivations which change the argument structure of the verb (diathesis) or by nominalizing the verb
     
-SET THEME-ILL = <TH-Ill-Plc> OR <TH-Ill-Event> OR <TH-Ill-Org> OR <TH-Ill-Org> OR <TH-Ill-Any> OR <AG-Nom-Abs><TH-Ill-Abs/Plc> ;
+SET TH-ILL = <TH-Ill-Plc> OR <TH-Ill-Event> OR <TH-Ill-Org> OR <TH-Ill-Org> OR <TH-Ill-Any> OR <AG-Nom-Abs><TH-Ill-Abs/Plc> OR <TH-Acc-Any> OR <TH-Acc-*Ani><RE-Loc-Ani>;
 
-SET THEME-ACC = <TH-Acc-*Plc> OR <TH-Acc-Any> OR <TH-Acc-*Ani> OR <TH-Acc-Impers> OR <TH-Acc-Obj><DE-Ill-WPlc> OR <TH-Acc-Obj><DE-DePp-Any> OR  <TH-Acc-Obj><CO-Com-Ani> OR <TH-Acc-*Ani><RE-Ill-WAni> ;
+SET TH-ACC = <TH-Acc-*Plc> OR <TH-Acc-Any> OR <TH-Acc-*Ani> OR <TH-Acc-Impers> OR <TH-Acc-Obj><DE-Ill-WPlc> OR <TH-Acc-Obj><DE-DePp-Any> OR  <TH-Acc-Obj><CO-Com-Ani> OR <TH-Acc-*Ani><RE-Ill-WAni> ;
 
-SET THEME-COM = <TH-Com-Any> ;
+SET TH-COM = <TH-Com-Any> ;
 
-SET THEME-LOC = <TH-Loc-Impers> ;
+SET TH-LOC = <TH-Loc-Impers> ;
 
-SET THEME-PO = <TH-lusa-Plc*Prop> OR <TH-lusa-Ani> OR <TH-lusa-Build> OR <TH-lusa-Veh> OR <TH-maŋŋái-*Plc> OR <TH-ala-*Plc> ;
+SET TH-PO = <TH-lusa-Plc*Prop> OR <TH-lusa-Ani> OR <TH-lusa-Build> OR <TH-lusa-Veh> OR <TH-maŋŋái-*Plc> OR <TH-ala-*Plc> ;
 
-SET THEME-CLAUSE = <TH-Inf> OR <TH-ahte> OR <TH-go> ;
+SET TH-CLAUSE = <TH-Inf> OR <TH-ahte> OR <TH-go> ;
 
-SET THEME-ALL = THEME-ILL OR THEME-ACC OR THEME-LOC OR THEME-COM OR THEME-PO OR THEME-CLAUSE ;
+SET TH-ALL = TH-ILL OR TH-ACC OR TH-LOC OR TH-COM OR TH-PO OR TH-CLAUSE ;
 
 SET RE-ALL = <RE-Ill-WAni> OR <RE-Loc-Ani> OR <TO-Acc-*Ani><RE-Loc-Ani> OR <TH-Acc-*Ani><RE-Ill-WAni> ;
 SET CO-ALL = <CO-Com-Ani> OR <CO-Acc-Ani> OR  <TH-Acc-Obj><CO-Com-Ani> ;
@@ -3480,7 +3517,7 @@ SET TH-Loc-Plc/Event = <TH-Loc-Plc> OR <TH-Loc-Event> ;
     # nom - gen/acc
     #
     
-SUBSTITUTE V (V <TH-0>) TARGET ("boagustit") OR ("dadjat") OR ("oskut") OR ("áibbašit") OR ("duhtat") OR ("suhttat")  OR ("ballat") OR ("beroštit") OR ("dolkat") OR ("geargat") OR ("heaitit") OR ("váibat") OR ("fuollat") OR ("ceavzit") OR ("čállit") OR ("joatkit") OR ("birget") OR ("birgehallat") OR ("bisánit") OR ("bissánit") OR ("lohkat");
+SUBSTITUTE V (V <TH-0>) TARGET ("boagustit") OR ("oskut") OR ("áibbašit") OR ("duhtat") OR ("suhttat")  OR ("liikot") OR ("ballat") OR ("beroštit") OR ("dolkat") OR ("geargat") OR ("heaitit") OR ("váibat") OR ("fuollat") OR ("ceavzit") OR ("čállit") OR ("joatkit") OR ("birget") OR ("birgehallat") OR ("bisánit") OR ("bissánit") ;
 	## Su siellu áibbaša, čuoččui niehkogirjjis, ja sihkkarit ipmirda nieida.
 
 SUBSTITUTE V (V <TH-Ill-Plc>) TARGET ("áibbašit") ;
@@ -3619,7 +3656,7 @@ SUBSTITUTE V (V <RE-Loc-Ani>) TARGET ("jearrat") ;
     # -----
 
     
-SUBSTITUTE V (V <TO-Acc-Any>) TARGET ("árvalit") OR ("basuhit") OR ("cuoigut") OR ("čuorvut") OR ("čurvet") OR ("biehttalit") OR ("dadjat") OR ("jearrat") OR ("juoigat") OR ("kommenteret") OR ("lávlut") OR ("lohkat") OR ("sivdnidit") OR ("vástidit") ;
+SUBSTITUTE V (V <TH-Acc-Any>) TARGET ("árvalit") OR ("basuhit") OR ("cuoigut") OR ("čuorvut") OR ("čurvet") OR ("biehttalit") OR ("dadjat") OR ("jearrat") OR ("juoigat") OR ("kommenteret") OR ("lávlut") OR ("lohkat") OR ("sivdnidit") OR ("vástidit") ;
 	## Mun jearan du Lindás. - Jeg spør deg om Linda.
 	## Mun biehttalan du vuolgimis
 	## Duommá - Any or *Hum/*Ani jearrat, biehttalit=Any  dadjat, vástidit=*Hum/*Ani
@@ -3658,7 +3695,7 @@ SUBSTITUTE V (V <SO-Loc-WPlc>) TARGET ("vuolgit") OR ("boahtit") ;
 	# complex frames
 	# --------------
 	
-SUBSTITUTE V (V <TO-Acc-*Ani><RE-Loc-Ani>) TARGET ("jearrat") ;
+SUBSTITUTE V (V <TH-Acc-*Ani><RE-Loc-Ani>) TARGET ("jearrat") ;
     # Duommá? -  "jearrat"=HumLoc/AnyAcc  biehttalit=anyLoc/anyAcc earuhit=anyLoc/anyAcc gieldit =anyLoc/AniAcc
   
 SUBSTITUTE V (V <TH-Acc-*Ani><RE-Ill-WAni>) TARGET ("addit") OR ("dadjat") OR ("muitalit") OR ("riŋget"); 
@@ -3677,9 +3714,15 @@ SUBSTITUTE V (V <TH-Acc-Obj><CO-Com-Ani>) TARGET ("soahpat") ;
 LIST DE-PP = "ala" "báldii" "bárrii" "badjelii" "bajá#beallai" "bajá#beallái" "beallai" "beallái" "guvlui" "siskko#beallai" "siskko#beallái" "siskka#beallai" "siskka#beallái" "olgeš#beallai" "olgeš#beallái" "olggo#beallai" "olggo#beallái" "davá#beallai" "davá#beallái" "oarjja#beallai" "oarjja#beallái" "lulá#beallai" "lulá#beallái" "máttá#beallai" "máttá#beallái" "nuortta#beallai" "nuortta#beallái" "duogá#beallai" "duogá#beallái" "duohkai" "duohkái" "gaskii" "geahčai" "gurrii" "gurut#beallai" "gurut#beallái" "ládje" "loahpa#geahčai" "loahpa#geahčen" "lusa" "maŋŋái" "maŋŋe#geahčai" "nala" "njeaiga" "njeaigga" "ollái" "ovdda#beallai" "ovdda#beallái" "ovdii" "rádjai" "rádjái" "rastá" "sadjái" "sisa" "vehkii" "vehkii" "vuollai" "vuollái" "vulo#beallai" "vulo#beallái" "vuolá#beallai" "vuolá#beallái" "vuostá" "vuostái" ;
 	# destination adpositions
 	    
-SUBSTITUTE V (V <TH-Acc-Obj><DE-Ill-WPlc>) TARGET ("leiket") OR ("guođđit") OR ("bidjat") ; 
+SUBSTITUTE V (V <TH-Acc-Obj><DE-Ill-WPlc>) TARGET  ("coggat") OR ("hukset") OR ("ráhkadit") OR ("leiket") OR ("leaikut") OR ("gomihit") OR ("gomuhit") OR ("njorret") OR ("njorrestit") OR ("njoarrat") OR ("guođđit") OR ("bidjat") OR ("njuvdit") OR ("vajálduhttit") OR ("vealuhit") ; 
+    # bonjastit hearggi eatnamii
+    # mun coggán beaska ala
+    # gomihit mielkki beavddi nala (spill)
+    # gomuhedjen vancca fielluid nala (snu opp ned)
+    # vealuhit Lindá láhttái (legge ned)
+    
+SUBSTITUTE V (V <TH-Acc-Obj><DE-DePp-Any>) TARGET ("leiket") OR ("leaikut") OR ("hukset") OR ("ráhkadit") OR ("njorret") OR ("njorrestit") OR ("njoarrat") OR ("guođđit") OR ("bidjat") OR ("njuvdit") OR ("vajálduhttit") OR ("bonjastit") OR ("gomihit") OR ("gomuhit")  OR ("vealuhit"); 
 
-SUBSTITUTE V (V <TH-Acc-Obj><DE-DePp-Any>) TARGET ("leiket") OR ("guođđit") OR ("bidjat"); 
     ## Ale guođe visot dieid čáziid biilla ala, holvvui su rádná jorba čalmmiiguin ja de gis haskadii bajás dohko ja orui gal ahte son nai lei bieđđalan visot go ii berotan ollenge das ahte Linda guođđá čázi biilla sisa.
     ## Guđđen dan barggu reaŋgga nala.
     ## Bija dan dohko beavddi nala hildu gurrii.
@@ -3834,7 +3877,7 @@ ADD:wrong-valency (&msyn-valency) Acc IF (0 N LINK 0 ANIMATE OR Ani LINK NOT 0 T
 	## Mun oskkun ahte dat lea buoremus.
 	## Atte munnje ipmárdusa ja buori dáiddu, dasgo mun oskkun du báhkkomiidda.
 
-ADD:wrong-valency (&msyn-valency) ("ahte") IF (0 CC OR CS) (*0 THEME-ALL LINK NEGATE 0 <TH-ahte> BARRIER S-BOUNDARY OR VFIN LINK NOT 0 DIA-DERIVATIONS)(NEGATE *0 <§TH>)(NEGATE *-1 ("gal") OR ("fal") OR ("han") OR ("de") OR ("hal"))(NEGATE <*-1 ("?"))(NEGATE *-1 CITATION LINK *-1 (":") LINK *-1 <vdic> BARRIER VFIN);
+ADD:wrong-valency (&msyn-valency) ("ahte") IF (0 CC OR CS) (*0 TH-ALL LINK NEGATE 0 <TH-ahte> BARRIER S-BOUNDARY OR VFIN LINK NOT 0 DIA-DERIVATIONS)(NEGATE *0 <§TH>)(NEGATE *-1 ("gal") OR ("fal") OR ("han") OR ("de") OR ("hal"))(NEGATE <*-1 ("?"))(NEGATE *-1 CITATION LINK *-1 (":") LINK *-1 <vdic> BARRIER VFIN);
 	## Eandalii leat nuorat dolkan ahte sápmelaš álo galga govviduvvot heajubun, guhte ferte veahkehuvvot vai galggaš birget.
 	#$ Mun oskkun ahte dat lea buoremus.
 	#$ Mii sáhttá leat nu dehálaš Guovdageidnulažži ahte eanas áiggi olgun geahččá albmái?
@@ -3842,15 +3885,16 @@ ADD:wrong-valency (&msyn-valency) ("ahte") IF (0 CC OR CS) (*0 THEME-ALL LINK NE
 
 SUBSTITUTE:muitalit (V) (<vdic> V) TARGET MUITALIT (0 FMAINV) ;
 
-ADD:missing-argument (&msyn-missing-argument) THEME-ALL IF (NEGATE *0 <§TH> BARRIER S-BOUNDARY)(NEGATE *-1 ("gal") OR ("fal") OR ("han") OR ("de") OR ("hal"))(NEGATE 0 <TH-0>)(NEGATE <*-1 ("?"))(NEGATE *-1 CITATION LINK *-1 (":") LINK *-1 <vdic> BARRIER VFIN)(NEGATE *0 (&msyn-valency) BARRIER S-BOUNDARY OR VFIN) ; # LINK *-1 same verb as before);
+ADD:missing-argument (&msyn-missing-argument) TH-ALL IF (NEGATE *0 <§TH> BARRIER S-BOUNDARY)(NEGATE *-1 ("gal") OR ("fal") OR ("han") OR ("de") OR ("hal"))(NEGATE 0 <TH-0>)(NEGATE <*-1 ("?"))(NEGATE *-1 CITATION LINK *-1 (":") LINK *-1 <vdic> BARRIER VFIN)(NEGATE *0 (&msyn-valency) BARRIER S-BOUNDARY OR VFIN)(NEGATE 0 <vdic> LINK -1 BOS LINK *2 SUBJ BARRIER S-BOUNDARY)(NEGATE 0 <vdic> LINK 1 COMMA OR (":") OR ("-")) (NEGATE 0 <vdic> LINK *0 ("nu") OR ("ná") OR ("nie")) ;
+
     # no de, no gal/fal/han
     # no question before containing the same verb
     # no TH realization
     #$ Maiddai Guovdageaidnulaččat. Vai galggaši go dadjat, earenomažit Guovdageaidnulaččat.
-    #$ Buot maid dárbbaša olmmoš doalahit heakka, gávdno rámbuvrriin. Dadjet olggobeale olbmot.
-    
+    #$ Buot maid dárbbaša olmmoš doalahit heakka, gávdno rámbuvrriin. Dadjet olggobeale olbmot. # if the subject is after the verb, and the verb is right in the beginning, we assume that the previous sentence is the theme of the verb
     # Mun adden biepmu (sutnje).
- 
+    #$ Nu muitalit dat olbmot
+    
 #ADD:wrong-valency-illative (&msyn-valency-illative) TARGET NP-HEAD IF (0 ADVLCASE - Ill)(*-1 BOS LINK *1 ILLV LINK NONE c Ill BARRIER S-BOUNDARY2 OR VFIN OR Ill) (NEGATE *1 ("leat") + Pl3  OR ("šaddat") + Pl3 OR ("gullat") + Pl3 OR Der/Pass + Pl3 OR BASSO + Pl3)  (NEGATE *1 ("leat") + Sg3  OR ("šaddat") + Sg3 OR ("gullat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3);
     ## Mun liikon dus.
     #$ Skábmamánus lágiduvvo Nilut Cup.
