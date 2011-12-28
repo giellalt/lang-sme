@@ -511,6 +511,9 @@ LIST &syn-add-go = &syn-add-go ;
 LIST &syn-wrong-transitivity = &syn-wrong-transitivity ;
 LIST &syn-object_missing = &syn-object_missing ;
 
+LIST &msyn-acc-to-comp = &msyn-acc-to-comp ;
+LIST &msyn-acc-to-velggolaš = &msyn-acc-to-velggolaš ;
+LIST &msyn-acc/gen-to-adv = &msyn-acc/gen-to-adv ;
 LIST &msyn-addhyphen = &msyn-addhyphen ;
 LIST &msyn-compound = &msyn-compound ;
 LIST &msyn-loc-not-guin = &msyn-loc-not-guin ;
@@ -1250,7 +1253,7 @@ SET V-JUST-TRANS-ACT = V-TRANS-ACT - NHUMAN-OBJECT-V ;
 
     # In contrast to the HUMAN-AGENT-V set, this one presupposes no human or human-like actor who initiates the action.
 
-LIST INTELLECTUAL-ACTIVITY-V = "dovdat" "fuobmát" "fuomášit" "huobmát" "jurddahit" "jurddašit" "smiehttat" ;
+LIST INTELLECTUAL-ACTIVITY-V = "dovdat" "fuobmát" "fuomášit" "ealvit" "huobmát" "jurddahit" "jurddašit" "smiehttat" ;
 
     # According to the rules choosing Loc or Com, the these verbs do not select TOOL, ABSTR-TOOL, CONCEPT or HUMAN in (Pl Loc).
 
@@ -2630,6 +2633,8 @@ LIST UNLIKELY-REAL-Á = ("speadjal#astat") ("barta#huvva") ("barta#šuvva") ("ba
 
 LIST UNLIKELY-REAL-A = ("čáskat"+V+IV+Der/h+V+Der/alla) ;
 
+LIST UNLIKELY-REAL-DOUBLE-CONS = ".*addi#miss"r ".*molsu#miss"r;
+
     # general
     # ----------------------------------
     # condition: no condition
@@ -2637,6 +2642,9 @@ LIST UNLIKELY-REAL-A = ("čáskat"+V+IV+Der/h+V+Der/alla) ;
 ADD:real-a (&*real-a) TARGET UNLIKELY-REAL-A ;
 	## speadjalastan vs.speadjalastán
 ADD:real-á (&*real-á) TARGET UNLIKELY-REAL-Á ;
+
+ADD:real-double-cons (&*real-double-cons) TARGET UNLIKELY-REAL-DOUBLE-CONS ;
+
 
 	# a little bit less general
 	# -------------------------	
@@ -3435,19 +3443,26 @@ ADD:gen-after-prep (&gen-after-prep) TARGET NP-HEAD IF (NEGATE -2 Gen)(NOT 0 Gen
     
     # accusative + adverbs
     # -------------------------
-LIST ACC-ADV = ("allu" N Sg Gen) ("guhkku" N Sg Gen) ("govdu" N Sg Gen) "maŋŋil" "ovdal" "allat" "guhkki" ("govdat" A) "allosaš" "guhkkosaš" "govdosaš";
+    
+LIST ACC-ADV = ("asu" Adv) ("allu" N Sg Gen) ("guhkku" N Sg Gen) ("govdu" N Sg Gen)  "allat" "guhkki" ("govdat" A) "allosaš" "guhkkosaš" "govdosaš";
 
-ADD:acc/gen-to-adv (&acc/gen-to-adv) TARGET Num IF (NOT 0 Gen OR Acc LINK 1 Measr OR MEASURE LINK 1 ACC-ADV OR ("boaris")) ;
-    #$ Min viessu lea vihtta/viđa mehtera alu.
-    ## Min viessu lea viđas mehtera alu.
+LIST ACC-NUM-ATTR =  (".*vihtta#logi"r Attr) (".*guokte#logi"r Attr) (".*golbma#logi"r Attr) (".*njeallje#logi"r Attr) (".*guhtta#logi"r Attr);
+
+LIST GEN-NUM-ATTR =  (".*viđa#logi"r Attr) (".*guovtte#logi"r Attr) (".*golmma#logi"r Attr) (".*njealje#logi"r Attr) (".*guđa#logi"r Attr);
+
+
+ADD:acc/gen-to-adv (&msyn-acc/gen-to-adv) TARGET Num IF (NOT 0 Gen OR Acc OR ACC-NUM-ATTR OR GEN-NUM-ATTR LINK 1 Measr OR MEASURE OR Time LINK 1 ACC-ADV OR ("boaris")) ;
+    #$ Min viessu lea vihtta mehtera alu.
+    ## Min viessu lea viđainlot mehtera alu.
     #$ Sus lea njealje mehtera guhkkosaš biila.
     #$ Suorpmas lea guokte millimehtera govdat.
     #$ Lean vihttalot jagi boaris.
 
-ADD:acc-to-adv (&acc-to-adv) TARGET Num IF (NOT 0 Acc LINK 1 CURRENCY LINK 1 ("velggolaš")) ;
+ADD:acc-to-velggolaš (&msyn-acc-to-velggolaš) TARGET Num IF (NOT 0 Acc OR ACC-NUM-ATTR LINK 1 CURRENCY LINK 1 ("velggolaš")) ;
     ## Ándde lea munnje viđalot ruvnnu velggolaš.
     #$ Ándde lea munnje vihttalot ruvnnu velggolaš.
 
+#ADD:acc-to-comp (&msyn-acc-to-comp) TARGET Num IF (NOT 0 Acc OR ACC-NUM-ATTR LINK 1 Measr OR MEASURE OR Time OR ("maŋŋil") OR ("ovdal") OR ("maŋŋil") OR Comp OR Loc ;
 
     #$ Máhtte lea vihtta/viđa jagi nuorat mus.
     #$ Máhtte lea vihtta jagi nuorat go mun.
@@ -3515,11 +3530,13 @@ SET TH-Loc-Plc/Event = <TH-Loc-Plc> OR <TH-Loc-Event> ;
     
     # most valency cases are: main - maiguin
     # nom - gen/acc
-    #
     
-SUBSTITUTE V (V <TH-0>) TARGET ("boagustit") OR ("oskut") OR ("áibbašit") OR ("duhtat") OR ("suhttat")  OR ("liikot") OR ("ballat") OR ("beroštit") OR ("dolkat") OR ("geargat") OR ("heaitit") OR ("váibat") OR ("fuollat") OR ("ceavzit") OR ("čállit") OR ("joatkit") OR ("birget") OR ("birgehallat") OR ("bisánit") OR ("bissánit") ;
+    # "mapping" av valenstagger
+    # - - - - - - - - - - - - -
+    
+SUBSTITUTE V (V <TH-0>) TARGET ("boagustit") OR ("oskut") OR ("áibbašit") OR ("duhtat") OR ("suhttat")  OR ("liikot") OR ("ballat") OR ("beroštit") OR ("ealvit") OR ("dolkat") OR ("geargat") OR ("heaitit") OR ("váibat") OR ("fuollat") OR ("ceavzit") OR ("čállit") OR ("joatkit") OR ("birget") OR ("birgehallat") OR ("bisánit") OR ("bissánit") ;
 	## Su siellu áibbaša, čuoččui niehkogirjjis, ja sihkkarit ipmirda nieida.
-
+	#ealvit - ielvvet lv märka, upptäcka; bli medveten om, komma underfund med; älváv jag märker
 SUBSTITUTE V (V <TH-Ill-Plc>) TARGET ("áibbašit") ;
     ## Mon áibbašan nu Galbárii.
 SUBSTITUTE V (V <TH-Ill-Event>) TARGET ("áibbašit") ;
@@ -3536,7 +3553,7 @@ SUBSTITUTE V (V <TH-Acc-*Plc>) TARGET ("áibbašit") ;
     ## Mun áibbašan du.
     ## Gugán lei geahččan niehkogirjjis, ja čilgen niegu dainna lágiin ahte lei muhtun nieida gii su áibbašii ja dat nieida várra ii lean guhkin eret.
     
-SUBSTITUTE V (V <TH-Acc-Any>) TARGET ("boagustit") OR ("dovdat") OR ("fuobmát") OR ("fuomášit") OR ("huobmát") OR ("jurddahit") OR ("jurddašit") OR ("smiehttat") OR ("dorvvastit") OR ("fuollat") OR ("addit");
+SUBSTITUTE V (V <TH-Acc-Any>) TARGET ("boagustit") OR ("dovdat") OR ("ealvit") OR ("fuobmát") OR ("fuomášit") OR ("huobmát") OR ("jurddahit") OR ("jurddašit") OR ("smiehttat") OR ("dorvvastit") OR ("fuollat") OR ("addit") OR ("evttohit") OR ("árvalit") ;
 	# Duommá ? buorre?
     ## dorvvastit rihkkosa čielgama
     ## Lea orrunsuohkana ovddasvástádus addit sosiála bálvalusaid ja ekonomalaš sosiálaveahki sosiálabálvaluslága mielde.
@@ -3618,7 +3635,7 @@ SUBSTITUTE V (V <TH-AktioLoc>) TARGET ("ballat") OR ("beroštit") OR ("dolkat") 
 SUBSTITUTE V (V <TH-AktioEss>) TARGET ("geargat") OR ("heaitit");
 	## Mon gergen boarrame.
     
-SUBSTITUTE V (V <TH-ahte>) TARGET ("oskut") OR ("jáhkkit") OR ("ballat") OR ("atnit") OR ("árvalit") OR ("ballat") OR ("čuorvut") OR ("cealkit") OR ("čilget") OR ("cuoigut") OR ("čuorvut") OR ("čurvet") OR ("dadjat") OR ("gielistit") OR ("gilljut") OR ("huikit") OR ("huikkádit") OR ("jáhkkit") OR ("jearrat") OR ("juoigat") OR ("kommenteret") OR ("lávlut") OR ("lohkat") OR ("liikot") OR ("muitalit") OR ("oaivvildit") OR ("savkalit") OR ("váruhit") OR ("vástidit") ;
+SUBSTITUTE V (V <TH-ahte>) TARGET ("oskut") OR ("jáhkkit") OR ("ballat") OR ("atnit") OR ("árvalit") OR ("ballat") OR ("čuorvut") OR ("cealkit") OR ("čilget") OR ("cuoigut") OR ("čuorvut") OR ("čurvet") OR ("dadjat") OR ("gielistit") OR ("gilljut") OR ("huikit") OR ("huikkádit") OR ("jáhkkit") OR ("jearrat") OR ("juoigat") OR ("kommenteret") OR ("lávlut") OR ("lohkat") OR ("liikot") OR ("muitalit") OR ("oaivvildit") OR ("savkalit") OR ("váruhit") OR ("vástidit") OR ("evttohit") OR ("árvalit") ;
 	#$ áibbašit"
 	## Eandalii leat nuorat dolkan ahte sápmelaš álo galga govviduvvot heajubun, guhte ferte veahkehuvvot vai galggaš birget. Eandalii leat nuorat dolkan dasa go sápmelaš álo galga govviduvvot heajubun, guhte ferte veahkehuvvot vai galggaš birget.
 
@@ -3633,9 +3650,15 @@ SUBSTITUTE V (V <TH-go>) TARGET ("liikot") OR ("duhtat") OR ("suhttat") ;
     # --------
 SUBSTITUTE V (V <LO-0>) TARGET ("čohkkát") OR ("čuožžut") OR ("buolvvastallat") OR ("buolvvastit") OR ("čippostallat") OR ("čippostit") OR ("čohkahit") OR ("čuožžut") OR ("čuččodit") OR ("morihit") OR ("gohččát") OR ("gullát") OR ("morránit") OR ("orrut") OR ("orodit") OR ("stuorrut") OR ("veallát") OR ("veallahit") ;
 
-SUBSTITUTE V (V <LO-Loc-WPlc>) TARGET ("fitnat") OR ("ássat") OR ("bisánit") OR ("bissánit") OR ("buolvvastallat") OR ("buolvvastit") OR ("čippostallat") OR ("čippostit") OR ("čohkkát") OR ("čohkahit") OR ("čuožžut") OR ("čuččodit") OR ("morihit") OR ("gohččát") OR ("gullát") OR ("morránit") OR ("orrut") OR ("orodit") OR ("stuorrut") OR ("veallát") OR ("veallahit") OR ("bajásšaddat") OR ("šaddat");
+LIST PASS-PLACE-V = "oidnot" "dihttot" "elvot" "gullot" ;
+
+SUBSTITUTE V (V <LO-Loc-WPlc>) TARGET ("fitnat") OR ("ássat") OR ("bisánit") OR ("bissánit") OR ("buolvvastallat") OR ("buolvvastit") OR ("čippostallat") OR ("čippostit") OR ("čohkkát") OR ("čohkahit") OR ("čuožžut") OR ("čuččodit") OR ("morihit") OR ("gohččát") OR ("gullát") OR ("morránit") OR ("orrut") OR ("orodit") OR ("stuorrut") OR ("veallát") OR ("veallahit") OR ("bajásšaddat") OR ("šaddat") OR PASS-PLACE-V ;
 	## Don finat hivssegis.
 	## Porsáŋggus, lea ohcan doarjaga Luostejogaruđain viiddidit biilabisánansaji, earret eará dan dihte go skohtervuoddjit bisánit doppe. 
+	## Læstadius lei evttohuvvon maiddái Ruoŧa ja Suoma frimearkkaide, muhto doppe ii boađe Læstadius oidnot frimearkkaid nalde.
+	
+#SUBSTITUTE V (V <TH-Nom-Any>) TARGET ("oidnot");
+	## Dat oidno.
 	
 SUBSTITUTE V (V <LO-luhtte-WPlc>) TARGET ("fitnat") OR ("ássat") OR ("bisánit") OR ("bissánit") OR ("buolvvastallat") OR ("buolvvastit") OR ("čippostallat") OR ("čippostit") OR ("čohkkát") OR ("čohkahit") OR ("čuožžut") OR ("čuččodit") OR ("morihit") OR ("gohččát") OR ("gullát") OR ("morránit") OR ("orrut") OR ("orodit") OR ("stuorrut") OR ("veallát") OR ("veallahit") OR ("bajásšaddat") OR ("šaddat");
 
@@ -3680,8 +3703,8 @@ SUBSTITUTE V (V <DE-0>) TARGET ("vuolgit");
 	# Duommá? - earát?
 SUBSTITUTE V (V <DE-Ill-WPlc>) TARGET ("mannat") OR ("ollet") OR ("boahtit") OR ("vázzit") OR ("beassat") OR ("vuolgit") OR ("vuodjat") OR ("guokkardit") OR ("beahkit") OR ("njoammut") OR ("haskat") OR ("haskadit") OR ("njuiket") OR ("njuikut") OR ("goastat") OR ("skierbmut") OR ("ciŋkut") ;
 
-SUBSTITUTE V (V <DE-Ill-Any>) TARGET ("heivehit") OR ("hárjanit");
-
+SUBSTITUTE V (V <DE-Ill-Any>) TARGET ("heivehit") OR ("hárjanit") OR ("evttohuvvot") OR ("árvaluvvot") ;
+	## Læstadius lei evttohuvvon maiddái Ruoŧa ja Suoma frimearkkaide, muhto doppe ii boađe Læstadius oidnot frimearkkaid nalde.
 
 SUBSTITUTE V (V <DE-lusa-Ani>) TARGET ("mannat") OR ("ollet") OR ("boahtit") OR ("vázzit") ;
 SUBSTITUTE V (V <DE-sisa-Build>) TARGET ("mannat") ;
@@ -3695,10 +3718,10 @@ SUBSTITUTE V (V <SO-Loc-WPlc>) TARGET ("vuolgit") OR ("boahtit") ;
 	# complex frames
 	# --------------
 	
-SUBSTITUTE V (V <TH-Acc-*Ani><RE-Loc-Ani>) TARGET ("jearrat") ;
+SUBSTITUTE V (V <TH-Acc-*Ani><RE-Loc-Ani>) TARGET ("jearrat");
     # Duommá? -  "jearrat"=HumLoc/AnyAcc  biehttalit=anyLoc/anyAcc earuhit=anyLoc/anyAcc gieldit =anyLoc/AniAcc
   
-SUBSTITUTE V (V <TH-Acc-*Ani><RE-Ill-WAni>) TARGET ("addit") OR ("dadjat") OR ("muitalit") OR ("riŋget"); 
+SUBSTITUTE V (V <TH-Acc-*Ani><RE-Ill-WAni>) TARGET ("addit") OR ("dadjat") OR ("muitalit") OR ("riŋget") OR ("evttohit") OR ("árvalit") ; 
     ## Mun attán sutnje ráhkisvuođa.
     
 SUBSTITUTE V (V <TH-Acc-Txt><DE-Ill-Hum>) TARGET ("čállit") ;    	
@@ -3842,6 +3865,9 @@ SUBSTITUTE V (<§LO> V) TARGET V IF (*0 (V <LO-AktioEss>) BARRIER S-BOUNDARY)(0 
 LIST MUITALIT = "árvalit" "bivdit" "boagustit" "cealkit" "cuoigut" "čilget" "čurvet" "čuorvut" "dadjat" "geardduhit" "gielistit" "gilljut" "hállat" "hoallat" "huikit" "huikkádit" "imaštallat" "jearrat" "jievžat"  "juoigat" "jurdilit" "jurddašit" "kommenteret" "lávlut" "lasihit" "loahpahit" "lohkat" "lohpidit" "máidnut" "máinnašit" "muitalit" "muittuhit" "nágget" "njávggádit" "oaivvildit" "rávvet" "savkalit" "sárdnidit" "šuohkihit" "váidalit" "váruhit" "vástidit" ;
     ## Njáv, váidalii Busi ja gávastalai.
     ## Njáv, njávggádii Busi fas ja fanahalai.
+    
+    # valency rules
+    # - - - - - - -
     
 ADD:wrong-valency (&msyn-valency) Po IF (0 ("lusa"))(*-1 N LINK 0 Gen BARRIER NPNH LINK NOT 0 ANIMATE OR Ani OR BUILDING OR Build OR VEHICLE OR Veh OR PLACE OR Plc LINK NOT 0 Prop) (*0 TH-lusa-Ani/Build/Veh/Plc*Prop BARRIER S-BOUNDARY OR VFIN LINK NOT 0 DIA-DERIVATIONS)(NEGATE *0 (<Inf>) BARRIER S-BOUNDARY LINK *0 Inf BARRIER S-BOUNDARY);
     # a verb that says <Ill->
