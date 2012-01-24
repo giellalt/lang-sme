@@ -118,99 +118,6 @@ all-num: num-g.summary num-a.summary
 # the file containing the infl. word, but replace the suffix
 # .txt with .greport for generation, and .areport for analysis.
 
-# Clean up all the mess created during a test pass, to prepare for new tests:
-#		  *.tgz	\	# just to remove archive files used for file transfering
-#		  *~		# to remove backup copies that may clutter the directory
-.PHONY: clean
-clean:
-	@echo
-	@echo "*** Now deleting ALL the generated files ***"
-	@echo
-	@rm -f *.testbase \
-		  *.gtest \
-		  *.atest \
-		  *.gfacit \
-		  *.afacit \
-		  *.greport \
-		  *.areport \
-		  *.gresult \
-		  *.aresult \
-		  *.summary \
-		  *.ptest \
-#		  paradigm* \
-		  *.tgz	\
-		  *~ \
-		  *.in \
-		  *.out \
-		  $(TEMP)/*test-script
-	@rm -f a*.xml
-	@rm -f b*.xml
-	@rm -f c*.xml
-	@rm -f č*.xml
-	@rm -f d*.xml
-	@rm -f e*.xml
-	@rm -f f*.xml
-	@rm -f g*.xml
-	@rm -f h*.xml
-	@rm -f i*.xml
-	@rm -f j*.xml
-	@rm -f k*.xml
-	@rm -f l*.xml
-	@rm -f m*.xml
-	@rm -f n*.xml
-	@rm -f o*.xml
-	@rm -f p*.xml
-	@rm -f r*.xml
-	@rm -f s*.xml
-	@rm -f t*.xml
-	@rm -f u*.xml
-	@rm -f v*.xml
-	@rm -f *.xml
-	@rm -f a*.paradigm
-	@rm -f b*.paradigm
-	@rm -f c*.paradigm
-	@rm -f č*.paradigm
-	@rm -f d*.paradigm
-	@rm -f e*.paradigm
-	@rm -f f*.paradigm
-	@rm -f g*.paradigm
-	@rm -f h*.paradigm
-	@rm -f i*.paradigm
-	@rm -f j*.paradigm
-	@rm -f k*.paradigm
-	@rm -f l*.paradigm
-	@rm -f m*.paradigm
-	@rm -f n*.paradigm
-	@rm -f o*.paradigm
-	@rm -f p*.paradigm
-	@rm -f r*.paradigm
-	@rm -f s*.paradigm
-	@rm -f t*.paradigm
-	@rm -f u*.paradigm
-	@rm -f v*.paradigm
-	@rm -f *.paradigm
-
-.PHONY: almost-clean
-almost-clean:
-	@echo
-	@echo "*** Now deleting all generated files but the summary & parad. files ***"
-	@echo
-	@rm -f *.testbase \
-		  *.gtest \
-		  *.atest \
-		  *.gfacit \
-		  *.afacit \
-		  *.greport \
-		  *.areport \
-		  *.gresult \
-		  *.aresult \
-		  *.ptest \
-		  *.tgz	\
-		  *~ \
-		  *.in \
-		  *.out \
-		  $(TEMP)/*test-script
-
 
 # POS SPECIFIC SECTIONS
 # =====================
@@ -905,3 +812,97 @@ twol-neg: twol-test
 
 # This doesn't work, because both twol-pos and twol-neg call twol-test
 twol-both: twol-pos twol-neg
+
+
+# Clean up all the mess created during a test pass, to prepare for new tests:
+#		  *.tgz	\	# just to remove archive files used for file transfering
+#		  *~		# to remove backup copies that may clutter the directory
+.PHONY: clean
+clean:
+	@echo
+	@echo "*** Now deleting ALL the generated files ***"
+	@echo
+	@rm -f *.testbase \
+		  *.gtest \
+		  *.atest \
+		  *.gfacit \
+		  *.afacit \
+		  *.greport \
+		  *.areport \
+		  *.gresult \
+		  *.aresult \
+		  *.summary \
+		  *.ptest \
+#		  paradigm* \
+		  *.tgz	\
+		  *~ \
+		  *.in \
+		  *.out \
+		  $(TEMP)/*test-script
+	@rm -f a*.xml
+	@rm -f b*.xml
+	@rm -f c*.xml
+	@rm -f č*.xml
+	@rm -f d*.xml
+	@rm -f e*.xml
+	@rm -f f*.xml
+	@rm -f g*.xml
+	@rm -f h*.xml
+	@rm -f i*.xml
+	@rm -f j*.xml
+	@rm -f k*.xml
+	@rm -f l*.xml
+	@rm -f m*.xml
+	@rm -f n*.xml
+	@rm -f o*.xml
+	@rm -f p*.xml
+	@rm -f r*.xml
+	@rm -f s*.xml
+	@rm -f t*.xml
+	@rm -f u*.xml
+	@rm -f v*.xml
+	@rm -f *.xml
+	@rm -f a*.paradigm
+	@rm -f b*.paradigm
+	@rm -f c*.paradigm
+	@rm -f č*.paradigm
+	@rm -f d*.paradigm
+	@rm -f e*.paradigm
+	@rm -f f*.paradigm
+	@rm -f g*.paradigm
+	@rm -f h*.paradigm
+	@rm -f i*.paradigm
+	@rm -f j*.paradigm
+	@rm -f k*.paradigm
+	@rm -f l*.paradigm
+	@rm -f m*.paradigm
+	@rm -f n*.paradigm
+	@rm -f o*.paradigm
+	@rm -f p*.paradigm
+	@rm -f r*.paradigm
+	@rm -f s*.paradigm
+	@rm -f t*.paradigm
+	@rm -f u*.paradigm
+	@rm -f v*.paradigm
+	@rm -f *.paradigm
+
+.PHONY: almost-clean
+almost-clean:
+	@echo
+	@echo "*** Now deleting all generated files but the summary & parad. files ***"
+	@echo
+	@rm -f *.testbase \
+		  *.gtest \
+		  *.atest \
+		  *.gfacit \
+		  *.afacit \
+		  *.greport \
+		  *.areport \
+		  *.gresult \
+		  *.aresult \
+		  *.ptest \
+		  *.tgz	\
+		  *~ \
+		  *.in \
+		  *.out \
+		  $(TEMP)/*test-script
