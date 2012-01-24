@@ -63,7 +63,7 @@ codesdir=codes/$(PARATYPE)
 
 # Copied from old LS makefile:
 # Bond, James Bond
-UMASK=@umask 007
+UMASK=umask 007
 
 # Empty variable to be overridden by the user when
 # generating paradigms:
@@ -72,8 +72,8 @@ WORD =
 # These variables define  the relationship between the source files
 # and the final output files (the reports), such that one can con-
 # struct a list of targets for the main target
-NGenFiles := $(patsubst %.txt,%.greport,$(wildcard $(POS)-*.txt))
-NAnaFiles := $(patsubst %.txt,%.areport,$(wildcard $(POS)-*.txt))
+NGenFiles := $(patsubst %.txt,%.greport,$(wildcard n-*.txt))
+NAnaFiles := $(patsubst %.txt,%.areport,$(wildcard n-*.txt))
 VGenFiles := $(patsubst %.txt,%.greport,$(wildcard v-*.txt))
 VAnaFiles := $(patsubst %.txt,%.areport,$(wildcard v-*.txt))
 AGenFiles := $(patsubst %.txt,%.greport,$(wildcard a-*.txt))
@@ -98,6 +98,7 @@ all: n-g.summary \
 
 # If you only want to test nouns:
 .PHONY: all-n
+all-n: POS=n
 all-n: n-g.summary n-a.summary
 
 # If you only want to test verbs:
@@ -111,6 +112,8 @@ all-a: a-g.summary a-a.summary
 # If you only want to test numerals:
 .PHONY: all-num
 all-num: num-g.summary num-a.summary
+
+paradigm: $(POS)-paradigm
 
 # If you only want to test verbal generation, use v-g.summary
 # as target. Etc. for the other cases. And do you only want to
