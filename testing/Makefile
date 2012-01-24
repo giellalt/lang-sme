@@ -27,15 +27,37 @@ SRCDIR = ../../
 # The temp directory:
 TEMP = ../../tmp
 
+# We define the 
+PARATYPE=default
+
 # The temp directories for the generated paradigms:
 GEN_TMP = Gen_tmp
-PARA_TMP = Para_tmp
+PARA_TMP = $(PARATYPE)
+
+TYPEPREF=
+
+ifeq ($(strip $(PARATYPE)),dict)
+TYPEPREF = dict-
+endif
+
+ifeq ($(strip $(PARATYPE)),oahpa)
+TYPEPREF = oahpa-
+endif
 
 # This variable is holding the filename of the save file:
 # (makes the Makefile truly language independent for
 # the Sami languages)
 SAVEFILE = $(wildcard $(FSTDIR)/ism?-norm.fst)
 #SAVEFILE = $(wildcard $(FSTDIR)/ism?-$(DIALOGUE).restr.fst)
+
+SAVEFILE = $(wildcard $(FSTDIR)/$(TYPEPREF)is??-norm.fst)
+
+ The savetarget is derived from the savefile:
+SAVETARGET=`basename $(SAVEFILE)`
+
+# Where to find the paradigm codes:
+codesdir=codes/$(PARATYPE)
+
 # Copied from old LS makefile:
 # Bond, James Bond
 UMASK=@umask 007
@@ -194,13 +216,13 @@ almost-clean:
 # =====
 
 # Create all the noun test file bases:
-n-%.testbase: n-%.txt noun-codes.txt
+n-%.testbase: n-%.txt $(codesdir)/noun-codes.txt
 	@echo
 	@echo "*** Creating the test base for n-$*.txt ***"
 	@echo
 	@rm -f $@
 	$(UMASK) && \
-	$(BINDIR)/merge-codesNforms.pl noun-codes.txt $< > $@
+	$(BINDIR)/merge-codesNforms.pl $(codesdir)/noun-codes.txt $< > $@
 	@chmod 660 $@
 
 # Finally, we concatenate all *.greports
@@ -222,7 +244,7 @@ n-a.summary: $(NAnaFiles)
 #	@less $@
 
 # Create noun paradigm generation input file:
-n-para.ptest: noun-codes.txt
+n-para.ptest: $(codesdir)/noun-codes.txt
 	@echo
 	@echo "*** Creating the noun paradigm input file for '$(WORD)' ***"
 	@echo
@@ -237,6 +259,7 @@ n-paradigm: n-para.ptest savefile
 	@echo
 	@echo "*** Running the paradigm generator for '$(WORD)' ***"
 	@echo
+	@if [ ! -d "$(GEN_TMP)/$(PARA_TMP)/" ]; then mkdir -p "$(GEN_TMP)/$(PARA_TMP)"; fi
 	@printf "load $(SAVEFILE) \n\
 	apply up < $< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
@@ -694,10 +717,10 @@ npl-paradigm: npl-para.ptest savefile
 # POS-independent parts:
 # ======================
 
-# Make sure there is an available smX.save in the parent directory:
+# Make sure there is an available smX.save in the parallel bin directory:
 savefile:
+	@cd $(SRCDIR)/ && $(MAKE) $(SAVETARGET) TARGET=sme
 #	@cd $(SRCDIR)/ && $(MAKE) ifst-restr TARGET=sme
-	@cd $(SRCDIR)/ && $(MAKE) ifst-norm TARGET=sme
 #	@cd $(SRCDIR)/ && $(MAKE) ifst TARGET=sme
 # Harmonize the choice here with the choice of SAVEFILE at appr line 30
 
@@ -838,14 +861,14 @@ twol-extract: ../src/twol-sme.txt
 	@touch twol-neg.out
 
 twol-test: twol-test-desc twol-test-norm
-	diff -s twol-$(TYPE)-desc.out twol-$(TYPE)-norm.out
+	diff -s twol-$(PARATYPE)-desc.out twol-$(PARATYPE)-norm.out
 
 twol-test-desc: twol-desc twol-extract
 	@echo
 	@echo "*** Testing descriptive twolc rules ***"
 	@echo
 	@printf "install-binary ../bin/twol-sme-descriptive.bin \n\
-	pair-test-file $(FILE) twol-$(TYPE)-desc.out \n\
+	pair-test-file $(FILE) twol-$(PARATYPE)-desc.out \n\
 	quit \n" > $(TEMP)/twol-test-desc-script
 	$(TWOLC) < $(TEMP)/twol-test-desc-script
 	@rm -f     $(TEMP)/twol-test-desc-script
@@ -855,7 +878,7 @@ twol-test-norm: twol-norm twol-extract
 	@echo "*** Testing normative twolc rules ***"
 	@echo
 	@printf "install-binary ../bin/twol-sme.bin \n\
-	pair-test-file $(FILE) twol-$(TYPE)-norm.out \n\
+	pair-test-file $(FILE) twol-$(PARATYPE)-norm.out \n\
 	quit \n" > $(TEMP)/twol-test-norm-script
 	$(TWOLC) < $(TEMP)/twol-test-norm-script
 	@rm -f     $(TEMP)/twol-test-norm-script
