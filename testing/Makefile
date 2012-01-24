@@ -216,13 +216,13 @@ almost-clean:
 # =====
 
 # Create all the noun test file bases:
-n-%.testbase: n-%.txt $(codesdir)/noun-codes.txt
+n-%.testbase: n-%.txt $(codesdir)/n-codes.txt
 	@echo
 	@echo "*** Creating the test base for n-$*.txt ***"
 	@echo
 	@rm -f $@
 	$(UMASK) && \
-	$(BINDIR)/merge-codesNforms.pl $(codesdir)/noun-codes.txt $< > $@
+	$(BINDIR)/merge-codesNforms.pl $(codesdir)/n-codes.txt $< > $@
 	@chmod 660 $@
 
 # Finally, we concatenate all *.greports
@@ -244,7 +244,7 @@ n-a.summary: $(NAnaFiles)
 #	@less $@
 
 # Create noun paradigm generation input file:
-n-para.ptest: $(codesdir)/noun-codes.txt
+n-para.ptest: $(codesdir)/n-codes.txt
 	@echo
 	@echo "*** Creating the noun paradigm input file for '$(WORD)' ***"
 	@echo
@@ -273,13 +273,13 @@ n-paradigm: n-para.ptest savefile
 # =====
 
 # Create all the verb test file bases:
-v-%.testbase: v-%.txt verb-codes.txt
+v-%.testbase: v-%.txt v-codes.txt
 	@echo
 	@echo "*** Creating the test base for v-$*.txt ***"
 	@echo
 	@rm -f $@
 	$(UMASK) && \
-	$(BINDIR)/merge-codesNforms.pl verb-codes.txt $< > $@
+	$(BINDIR)/merge-codesNforms.pl v-codes.txt $< > $@
 	@chmod 660 $@
 
 # Finally, we concatenate all *.greports:
@@ -301,7 +301,7 @@ v-a.summary: $(VAnaFiles)
 #	@less $@
 
 # Create verb paradigm generation input file:
-v-para.ptest: verb-codes.txt
+v-para.ptest: v-codes.txt
 	@echo
 	@echo "*** Creating the verb paradigm input file for '$(WORD)' ***"
 	@echo
@@ -328,13 +328,13 @@ v-paradigm: v-para.ptest savefile
 # ==========
 
 # Create all the adjective test file bases:
-a-%.testbase: a-%.txt adj-codes.txt
+a-%.testbase: a-%.txt a-codes.txt
 	@echo
 	@echo "*** Creating the test base for a-$*.txt ***"
 	@echo
 	@rm -f $@
 	$(UMASK) && \
-	$(BINDIR)/merge-codesNforms.pl adj-codes.txt $< > $@
+	$(BINDIR)/merge-codesNforms.pl a-codes.txt $< > $@
 	@chmod 660 $@
 
 # Finally, we concatenate all *.greports:
@@ -356,7 +356,7 @@ a-a.summary: $(AAnaFiles)
 #	@less $@
 
 # Create adjective paradigm generation input file:
-a-para.ptest: adj-codes.txt
+a-para.ptest: a-codes.txt
 	@echo
 	@echo "*** Creating the adjective paradigm input file for '$(WORD)' ***"
 	@echo
