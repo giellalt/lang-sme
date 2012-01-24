@@ -27,8 +27,11 @@ SRCDIR = ../../
 # The temp directory:
 TEMP = ../../tmp
 
-# We define the 
+# We define the default paradigm generation type:
 PARATYPE=default
+
+# Default POS:
+POS=n
 
 # The temp directories for the generated paradigms:
 GEN_TMP = Gen_tmp
@@ -69,8 +72,8 @@ WORD =
 # These variables define  the relationship between the source files
 # and the final output files (the reports), such that one can con-
 # struct a list of targets for the main target
-NGenFiles := $(patsubst %.txt,%.greport,$(wildcard n-*.txt))
-NAnaFiles := $(patsubst %.txt,%.areport,$(wildcard n-*.txt))
+NGenFiles := $(patsubst %.txt,%.greport,$(wildcard $(POS)-*.txt))
+NAnaFiles := $(patsubst %.txt,%.areport,$(wildcard $(POS)-*.txt))
 VGenFiles := $(patsubst %.txt,%.greport,$(wildcard v-*.txt))
 VAnaFiles := $(patsubst %.txt,%.areport,$(wildcard v-*.txt))
 AGenFiles := $(patsubst %.txt,%.greport,$(wildcard a-*.txt))
@@ -216,37 +219,37 @@ almost-clean:
 # =====
 
 # Create all the noun test file bases:
-n-%.testbase: n-%.txt $(codesdir)/n-codes.txt
+$(POS)-%.testbase: $(POS)-%.txt $(codesdir)/$(POS)-codes.txt
 	@echo
-	@echo "*** Creating the test base for n-$*.txt ***"
+	@echo "*** Creating the test base for $(POS)-$*.txt ***"
 	@echo
 	@rm -f $@
 	$(UMASK) && \
-	$(BINDIR)/merge-codesNforms.pl $(codesdir)/n-codes.txt $< > $@
+	$(BINDIR)/merge-codesNforms.pl $(codesdir)/$(POS)-codes.txt $< > $@
 	@chmod 660 $@
 
 # Finally, we concatenate all *.greports
-n-g.summary: $(NGenFiles)
+$(POS)-g.summary: $(NGenFiles)
 	@cat $^ > $@
 	@echo
-	@echo "*** All noun word form generation testing is done.      ***"
+	@echo "*** All $(POS) word form generation testing is done.      ***"
 	@echo "*** The concatenated reports are stored in $@. ***"
 	@echo
 #	@less $@
 
 # Finally, we concatenate all *.areports:
-n-a.summary: $(NAnaFiles)
+$(POS)-a.summary: $(NAnaFiles)
 	@cat $^ > $@
 	@echo
-	@echo "*** All noun word form analysis testing is done.        ***"
+	@echo "*** All $(POS) word form analysis testing is done.        ***"
 	@echo "*** The concatenated reports are stored in $@. ***"
 	@echo
 #	@less $@
 
 # Create noun paradigm generation input file:
-n-para.ptest: $(codesdir)/n-codes.txt
+$(POS)-para.ptest: $(codesdir)/$(POS)-codes.txt
 	@echo
-	@echo "*** Creating the noun paradigm input file for '$(WORD)' ***"
+	@echo "*** Creating the $(POS) paradigm input file for '$(WORD)' ***"
 	@echo
 	@rm -f $@
 	$(UMASK) && \
@@ -254,8 +257,8 @@ n-para.ptest: $(codesdir)/n-codes.txt
 	@chmod 660 $@
 
 # Paradigm generation:
-.PHONY: n-paradigm
-n-paradigm: n-para.ptest savefile
+.PHONY: $(POS)-paradigm
+$(POS)-paradigm: $(POS)-para.ptest savefile
 	@echo
 	@echo "*** Running the paradigm generator for '$(WORD)' ***"
 	@echo
