@@ -1,4 +1,3 @@
-SHELL = /bin/sh
 #!/usr/bin/make
 #
 # This is a makefile to automatise most of the testing.
@@ -55,7 +54,7 @@ SAVEFILE = $(wildcard $(FSTDIR)/ism?-norm.fst)
 
 SAVEFILE = $(wildcard $(FSTDIR)/$(TYPEPREF)is??-norm.fst)
 
- The savetarget is derived from the savefile:
+# The savetarget is derived from the savefile:
 SAVETARGET=`basename $(SAVEFILE)`
 
 # Where to find the paradigm codes:
@@ -87,12 +86,15 @@ AAnaFiles := $(patsubst %.txt,%.areport,$(wildcard a-*.txt))
 # Remove the comments in front of the verb and adjective
 # targets when you have codes and test cases for them
 .PHONY: all
-all: n-g.summary \
-	 n-a.summary \
-	 v-g.summary \
-	 v-a.summary \
-	 num-a.summary \
-	 num-g.summary
+
+all: twol-test
+
+#all: n-g.summary \
+#	 n-a.summary \
+#	 v-g.summary \
+#	 v-a.summary \
+#	 num-a.summary \
+#	 num-g.summary
 #	 a-g.summary \
 #	 a-a.summary
 
@@ -632,9 +634,9 @@ npl-paradigm: npl-para.ptest savefile
 
 # Make sure there is an available smX.save in the parallel bin directory:
 savefile:
-	@cd $(SRCDIR)/ && $(MAKE) $(SAVETARGET) TARGET=sme
-#	@cd $(SRCDIR)/ && $(MAKE) ifst-restr TARGET=sme
-#	@cd $(SRCDIR)/ && $(MAKE) ifst TARGET=sme
+	@cd $(SRCDIR)/ && $(MAKE) $(SAVETARGET) GTLANG=sme
+#	@cd $(SRCDIR)/ && $(MAKE) ifst-restr GTLANG=sme
+#	@cd $(SRCDIR)/ && $(MAKE) ifst GTLANG=sme
 # Harmonize the choice here with the choice of SAVEFILE at appr line 30
 
 # Word form generation:
@@ -642,7 +644,7 @@ savefile:
 
 # Make test cases for word form generation tests,
 # based on the test file bases:
-%.gtest: %.testbase
+$(POS)-%.gtest: $(POS)-%.testbase
 	@echo
 	@echo "*** Creating test cases for word form generation for $*.txt ***"
 	@echo
@@ -653,7 +655,7 @@ savefile:
 
 # Make facit files containing the expected output from the
 # word form generation test run:
-%.gfacit: %.testbase
+$(POS)-%.gfacit: $(POS)-%.testbase
 	@echo
 	@echo "*** Creating facit file for word form generation for $*.txt ***"
 	@echo
@@ -663,7 +665,7 @@ savefile:
 	@chmod 660 $@
 
 # Here we run the actual generation test:
-%.gresult: %.gtest savefile
+$(POS)-%.gresult: $(POS)-%.gtest savefile
 	@echo
 	@echo "*** Running the word form generator test for $*.txt ***"
 	@echo
@@ -674,7 +676,7 @@ savefile:
 	@rm -f $(TEMP)/$*-gtest-script
 
 # Then we compare with the facit, and report any differences:
-%.greport: %.gresult %.gfacit
+$(POS)-%.greport: $(POS)-%.gresult $(POS)-%.gfacit
 	@echo
 	@echo "*** Diffing the test result and the facit file for   ***"
 	@echo "*** word form generation for $*.txt ***"
@@ -682,7 +684,7 @@ savefile:
 	@echo
 	@rm -f $@
 	-$(UMASK) && \
-	diff --side-by-side --width=70 $< $*.gfacit > $@
+	diff --side-by-side --width=70 $^ > $@
 	@chmod 660 $@
 
 
@@ -699,7 +701,7 @@ savefile:
 # there is no way to tell GNU sort to ONLY sort on a specified key).
 # For a completely satisfactory result we need a different solution.
 # The present solution will have to be good enough for now.
-%.atest: %.testbase
+$(POS)-%.atest: $(POS)-%.testbase
 	@echo
 	@echo "*** Creating test cases for word form analysis for $*.txt ***"
 	@echo
@@ -711,7 +713,7 @@ savefile:
 
 # Make facit files containing the expected output from the
 # word form analysis test run:
-%.afacit: %.testbase
+$(POS)-%.afacit: $(POS)-%.testbase
 	@echo
 	@echo "*** Creating facit file for word form analysis for $*.txt ***"
 	@echo
@@ -722,7 +724,7 @@ savefile:
 	@chmod 660 $@
 
 # Here we run the actual analysis test:
-%.aresult: %.atest savefile
+$(POS)-%.aresult: $(POS)-%.atest savefile
 	@echo
 	@echo "*** Running the word form analysis test ***"
 	@echo
@@ -735,86 +737,62 @@ savefile:
 # Finally, we compare with the facit, and report any differences:
 # Due to the sorting problems mentioned above, there will always (?)
 # be (small) differences.
-%.areport: %.aresult %.afacit
+$(POS)-%.areport: $(POS)-%.aresult $(POS)-%.afacit
 	@echo
 	@echo "*** Diffing the test result and the facit file for ***"
 	@echo "*** word form analysis for $*.txt       ***"
 	@echo "*** \"Error 1 (ignored)\" means that there were diffs.   ***"
 	@echo
-	-@diff --side-by-side --width=70 $< $*.afacit > $@
+	-@diff --side-by-side --width=70 $^ > $@
 
 
 # TWOL-testing :
 # ==============
+#
+# This is the default testing. Just type:
+# 
+# make
+#
+# The twol binary will be recompiled if needed.
 
-# Usage:
-# make twol-test (extracts the test words from src/twol-sme.txt, and runs them
-#                 through both the normative and descriptive twols)
-# make twol-pos  (tests for the positive test pairs, output to twol-pos.out)
-# make twol-neg  (tests for the positive test pairs, output to twol-neg.out)
-# make twol-test FILE=filename.txt (test for pairs in filename.txt)
-# make twol      (recompiles the twol binaries when the twol rules are changed)
-
-TWOLC = twolc
-TYPE = pos
+TWOLC = twolc -q
 FILEPOS = twol-pos.in
 FILENEG = twol-neg.in
-FILE = $(FILEPOS)
-M4 = m4
-M4FLAGS = 
 
+.PHONY: twol-test
+twol-test: twol twol-extract
+	@echo
+	@echo "*** Testing twolc rules - pos ***"
+	@echo
+	@printf "install-binary ../bin/twol-sme.bin \n\
+	 pair-test-file $(FILEPOS) twol-pos.out \n\
+	 quit \n" > $(TEMP)/twol-test-script
+	@$(TWOLC) < $(TEMP)/twol-test-script
+	@rm -f      $(TEMP)/twol-test-script
+	@echo
+	@echo "*** Testing twolc rules - neg ***"
+	@echo
+	@printf "install-binary ../bin/twol-sme.bin \n\
+	 pair-test-file $(FILENEG) twol-neg.out \n\
+	 quit \n" > $(TEMP)/twol-test-script
+	@$(TWOLC) < $(TEMP)/twol-test-script
+	@rm -f      $(TEMP)/twol-test-script
+	@echo
+	@echo "*** Testing done. Result in the files: ***"
+	@echo "***     twol-pos.out ***"
+	@echo "***     twol-neg.out ***"
+	@echo
 
 twol-extract: ../src/twol-sme.txt
 	@echo
 	@echo "*** Extracting twol tests ***"
 	@echo
-	@grep '^!€' $< > $(FILEPOS)
+	@grep '^!€'  $< > $(FILEPOS)
 	@grep '^!$$' $< > $(FILENEG)
-	@touch twol-pos.out
-	@touch twol-neg.out
-
-twol-test: twol-test-desc twol-test-norm
-	diff -s twol-$(PARATYPE)-desc.out twol-$(PARATYPE)-norm.out
-
-twol-test-desc: twol-desc twol-extract
-	@echo
-	@echo "*** Testing descriptive twolc rules ***"
-	@echo
-	@printf "install-binary ../bin/twol-sme-descriptive.bin \n\
-	pair-test-file $(FILE) twol-$(PARATYPE)-desc.out \n\
-	quit \n" > $(TEMP)/twol-test-desc-script
-	$(TWOLC) < $(TEMP)/twol-test-desc-script
-	@rm -f     $(TEMP)/twol-test-desc-script
-
-twol-test-norm: twol-norm twol-extract
-	@echo
-	@echo "*** Testing normative twolc rules ***"
-	@echo
-	@printf "install-binary ../bin/twol-sme.bin \n\
-	pair-test-file $(FILE) twol-$(PARATYPE)-norm.out \n\
-	quit \n" > $(TEMP)/twol-test-norm-script
-	$(TWOLC) < $(TEMP)/twol-test-norm-script
-	@rm -f     $(TEMP)/twol-test-norm-script
-
 
 # Make sure there are up-to-date twol binaries:
-twol: twol-desc twol-norm
-twol-desc:
+twol:
 	@cd $(SRCDIR)/ && $(MAKE) TARGET=sme twol
-twol-norm:
-	@cd $(SRCDIR)/ && $(MAKE) TARGET=sme twol
-
-
-twol-pos: TYPE=pos
-twol-pos: FILE=$(FILEPOS)
-twol-pos: twol-test
-
-twol-neg: TYPE=neg
-twol-neg: FILE=$(FILENEG)
-twol-neg: twol-test
-
-# This doesn't work, because both twol-pos and twol-neg call twol-test
-twol-both: twol-pos twol-neg
 
 
 # Clean up all the mess created during a test pass, to prepare for new tests:
