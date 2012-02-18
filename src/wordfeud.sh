@@ -25,5 +25,8 @@ grep ";" numeral-sme-lex.txt | grep -v 'Use/Sub'| cut -d";" -f1|sed 's/ $//g;'|g
 
 grep ";" verb-sme-lex.txt | grep -v 'Use/Sub'| grep -v "^\!" | egrep -v '(LEXICON|STRAYFORMS|ENDLEX|\+V)' | tr ":+" " " | cut -d " " -f1 | tr -d "[#%]" | sort -u >  verb-wordfeud.sme
 
+cat $GTHOME/words/dicts/smenob/src/*l|tr '\n' '™' | sed 's/<l /£/g;'|tr '£' '\n'|grep '"vd"'|tr '<' '>'|cut -d">" -f2|grep -v ' ' |grep -v '[A-ZÁČŠ]' > dict-wordfeud.sme
+
+
 cat *-wordfeud.sme | sort -u > wordfeud.sme
 rm -f *-wordfeud.sme
