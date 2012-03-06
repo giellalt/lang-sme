@@ -20,29 +20,6 @@
 ! The file contains the rule set for the non-segmental
 ! North Sámi morphophonological rules
 
-! m4 rules for selecting parts of the file to a certain application.
-changequote(<<,>>)
-changecom(<<!>>,<<
->>)
-define(<<FLAGINIT>>,
-<<ifdef(<<$1>>,<<define(<<$1>>,1)>>,<<define(<<$1>>,0)>>)>>)dnl
-dnl
-define(<<DIVNUM>>,0)dnl
-define(<<ENDOMIT>>,<<popdef(<<DIVNUM>>)divert(DIVNUM)dnl>>)dnl
-define(<<ENDKEEP>>,<<popdef(<<DIVNUM>>)divert(DIVNUM)dnl>>)dnl
-define(<<OMITIF>>,
-  <<pushdef(<<DIVNUM>>,ifelse(eval($1),0,0,-1))divert(DIVNUM)dnl>>)dnl
-define(<<KEEPIF>>,
-  <<pushdef(<<DIVNUM>>,ifelse(eval($1),0,-1,0))divert(DIVNUM)dnl>>)dnl
-define(<<ELSE>>,
-  <<define(<<DIVNUM>>,ifelse(DIVNUM,0,-1,0))divert(DIVNUM)dnl>>)dnl
-
-FLAGINIT(<<HYPHENATE>>)
-FLAGINIT(<<HUNSPELL>>)
-
-! HYPHENATE = To be used when making hyphenators - it allows surfacing of # and ^
-! HUNSPELL  = Allow certain borders to be visible for Hunspell use only
-
 Alphabet
  a b c d e f g h i j k l m n o p q   ! small
  r s t u v w x y z å ä ö ø æ %-
@@ -59,23 +36,19 @@ Alphabet
 ! B9:B E7:E E9:E D9:D G8:G G9:G H7:H H8:H H9:H I7:I J9:J K9:K M8:M M9:M N8:N N9:N O7:O O9:O P9:P
 ! S9:S T9:T U7:U Z9:Z Ž9:Ž Š9:Š R9:R
 
-   »7:» %>7:%>
+! Literal quotes and angles must be escaped (cf morpheme boundaries further down):
+ »7     ! »
+ «7     ! «
+ %[%>%] ! >
+ %[%<%] ! <
 
  č đ ŋ š ŧ ž          ! Sámi letters.
  Č Đ Ŋ Š Ŧ Ž          !
-
-KEEPIF(HYPHENATE)
- # %^
-ELSE
- #:0 %^:0
-ENDKEEP
 
  ':0 %/ ¤:0 '7:'
 			    ! ' is for CnsGrad of the lg:lgg and l'l:ll type
                             ! ¤:0 prevents ConsGrad in certain words
                             ! '7 is the real apostroph
-                            ! # is used to mark both lexicalised and
-                            ! derived compounds
 
 
 
@@ -95,14 +68,14 @@ ENDKEEP
 
  %^DISIMP:0
 
+! Morpheme boundaries:
+ »  ! Derivational suffix
+ %> ! Inflectional suffix
+ #  ! Word boundary for both lexicalised and dynamic compounds
+ %^ ! (exceptional) soft hyphenation point
 
-OMITIF(HUNSPELL)
- %>:0 %>7:%> »:0	! stem-suffix border mark, unvisible for normal use
-ELSE
- %> »:%>			! stem-suffix border mark, only visible in Hunspell
-ENDOMIT
-
- ;
+! End of alphabet definitions
+;
 
 Sets
   Vow = a á e e7 e9 i i7 o o7 o9 u u6 u7 y æ æ7 ø å ä ö
