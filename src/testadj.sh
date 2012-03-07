@@ -12,5 +12,5 @@ cat attradjs compladjs superladjs >> adjs
 sort -u -o adjs adjs 
 sort -u -o analadjs analadjs 
 comm -23 adjs analadjs > missingadjLemmas.txt
-rm *adjs
+#rm *adjs
 open missingadjLemmas.txt
