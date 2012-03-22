@@ -188,13 +188,13 @@ $(POS)-paradigm: $(POS)-para.ptest savefile
 # =====
 
 # Create all the verb test file bases:
-v-%.testbase: v-%.txt $(codesdir)/v-codes.txt.txt
+v-%.testbase: v-%.txt $(codesdir)/v-codes.txt
 	@echo
 	@echo "*** Creating the test base for v-$*.txt ***"
 	@echo
 	@rm -f $@
 	$(UMASK) && \
-	$(BINDIR)/merge-codesNforms.pl $(codesdir)/v-codes.txt.txt $< > $@
+	$(BINDIR)/merge-codesNforms.pl $(codesdir)/v-codes.txt $< > $@
 	@chmod 660 $@
 
 # Finally, we concatenate all *.greports:
@@ -216,7 +216,7 @@ v-a.summary: $(VAnaFiles)
 #	@less $@
 
 # Create verb paradigm generation input file:
-v-para.ptest: $(codesdir)/v-codes.txt.txt
+v-para.ptest: $(codesdir)/v-codes.txt
 	@echo
 	@echo "*** Creating the verb paradigm input file for '$(WORD)' ***"
 	@echo
@@ -243,13 +243,13 @@ v-paradigm: v-para.ptest savefile
 # ==========
 
 # Create all the adjective test file bases:
-a-%.testbase: a-%.txt $(codesdir)/a-codes.txt.txt
+a-%.testbase: a-%.txt $(codesdir)/a-codes.txt
 	@echo
 	@echo "*** Creating the test base for a-$*.txt ***"
 	@echo
 	@rm -f $@
 	$(UMASK) && \
-	$(BINDIR)/merge-codesNforms.pl $(codesdir)/a-codes.txt.txt $< > $@
+	$(BINDIR)/merge-codesNforms.pl $(codesdir)/a-codes.txt $< > $@
 	@chmod 660 $@
 
 # Finally, we concatenate all *.greports:
@@ -271,7 +271,7 @@ a-a.summary: $(AAnaFiles)
 #	@less $@
 
 # Create adjective paradigm generation input file:
-a-para.ptest: $(codesdir)/a-codes.txt.txt
+a-para.ptest: $(codesdir)/a-codes.txt
 	@echo
 	@echo "*** Creating the adjective paradigm input file for '$(WORD)' ***"
 	@echo
@@ -298,13 +298,13 @@ a-paradigm: a-para.ptest savefile
 # ========
 
 # Create all the noun test file bases:
-num-%.testbase: num-%.txt $(codesdir)/num-codes.txt.txt
+num-%.testbase: num-%.txt $(codesdir)/num-codes.txt
 	@echo
 	@echo "*** Creating the test base for num-$*.txt ***"
 	@echo
 	@rm -f $@
 	$(UMASK) && \
-	$(BINDIR)/merge-codesNforms.pl $(codesdir)/num-codes.txt.txt $< > $@
+	$(BINDIR)/merge-codesNforms.pl $(codesdir)/num-codes.txt $< > $@
 	@chmod 660 $@
 
 # Finally, we concatenate all *.greports
@@ -326,7 +326,7 @@ num-a.summary: $(NAnaFiles)
 #	@less $@
 
 # Create noun paradigm generation input file:
-num-para.ptest: $(codesdir)/num-codes.txt.txt
+num-para.ptest: $(codesdir)/num-codes.txt
 	@echo
 	@echo "*** Creating the noun paradigm input file for '$(WORD)' ***"
 	@echo
@@ -354,13 +354,13 @@ num-paradigm: num-para.ptest savefile
 # ============
 
 # Create all the proper noun test file bases:
-prop-%.testbase: prop-%.txt $(codesdir)/prop-codes.txt.txt
+prop-%.testbase: prop-%.txt $(codesdir)/prop-codes.txt
 	@echo
 	@echo "*** Creating the test base for prop-$*.txt ***"
 	@echo
 	@rm -f $@
 	$(UMASK) && \
-	$(BINDIR)/merge-codesNforms.pl $(codesdir)/prop-codes.txt.txt $< > $@
+	$(BINDIR)/merge-codesNforms.pl $(codesdir)/prop-codes.txt $< > $@
 	@chmod 660 $@
 
 # Finally, we concatenate all *.greports
@@ -382,7 +382,7 @@ prop-a.summary: $(NAnaFiles)
 #	@less $@
 
 # Create noun paradigm generation input file:
-prop-para.ptest: $(codesdir)/prop-codes.txt.txt
+prop-para.ptest: $(codesdir)/prop-codes.txt
 	@echo
 	@echo "*** Creating the noun paradigm input file for '$(WORD)' ***"
 	@echo
@@ -410,13 +410,13 @@ prop-paradigm: prop-para.ptest savefile
 # ============
 
 # Create all the actor noun test file bases:
-actor-%.testbase: actor-%.txt $(codesdir)/actor-codes.txt.txt
+actor-%.testbase: actor-%.txt $(codesdir)/actor-codes.txt
 	@echo
 	@echo "*** Creating the test base for actor-$*.txt ***"
 	@echo
 	@rm -f $@
 	$(UMASK) && \
-	$(BINDIR)/merge-codesNforms.pl $(codesdir)/actor-codes.txt.txt $< > $@
+	$(BINDIR)/merge-codesNforms.pl $(codesdir)/actor-codes.txt $< > $@
 	@chmod 660 $@
 
 # Finally, we concatenate all *.greports
@@ -438,7 +438,7 @@ actor-a.summary: $(NAnaFiles)
 #	@less $@
 
 # Create noun paradigm generation input file:
-actor-para.ptest: $(codesdir)/actor-codes.txt.txt
+actor-para.ptest: $(codesdir)/actor-codes.txt
 	@echo
 	@echo "*** Creating the noun paradigm input file for '$(WORD)' ***"
 	@echo
@@ -465,13 +465,13 @@ actor-paradigm: actor-para.ptest savefile
 # ============
 
 # Create all the G3 noun test file bases:
-g3-%.testbase: g3-%.txt $(codesdir)/g3-codes.txt.txt
+g3-%.testbase: g3-%.txt $(codesdir)/g3-codes.txt
 	@echo
 	@echo "*** Creating the test base for g3-$*.txt ***"
 	@echo
 	@rm -f $@
 	$(UMASK) && \
-	$(BINDIR)/merge-codesNforms.pl $(codesdir)/g3-codes.txt.txt $< > $@
+	$(BINDIR)/merge-codesNforms.pl $(codesdir)/g3-codes.txt $< > $@
 	@chmod 660 $@
 
 # Finally, we concatenate all *.greports
@@ -493,7 +493,7 @@ g3-a.summary: $(NAnaFiles)
 #	@less $@
 
 # Create noun paradigm generation input file:
-g3-para.ptest: $(codesdir)/g3-codes.txt.txt
+g3-para.ptest: $(codesdir)/g3-codes.txt
 	@echo
 	@echo "*** Creating the noun paradigm input file for '$(WORD)' ***"
 	@echo
@@ -521,13 +521,13 @@ g3-paradigm: g3-para.ptest savefile
 # ============
 
 # Create all the pron test file bases:
-pron-%.testbase:pron-%.txt $(codesdir)/pronIndef-codes.txt.txt
+pron-%.testbase:pron-%.txt $(codesdir)/pronIndef-codes.txt
 	@echo
 	@echo "*** Creating the test base for pron-$*.txt ***"
 	@echo
 	@rm -f $@
 	$(UMASK) && \
-	$(BINDIR)/merge-codesNforms.pl $(codesdir)/pronIndef-codes.txt.txt $< > $@
+	$(BINDIR)/merge-codesNforms.pl $(codesdir)/pronIndef-codes.txt $< > $@
 	@chmod 660 $@
 
 # Finally, we concatenate all *.greports
@@ -549,7 +549,7 @@ pron-a.summary: $(NAnaFiles)
 #	@less $@
 
 # Create noun paradigm generation input file:
-pron-para.ptest: $(codesdir)/pronIndef-codes.txt.txt
+pron-para.ptest: $(codesdir)/pronIndef-codes.txt
 	@echo
 	@echo "*** Creating the noun paradigm input file for '$(WORD)' ***"
 	@echo
@@ -576,13 +576,13 @@ pron-paradigm: pron-para.ptest savefile
 # ============
 
 # Create all the npl noun test file bases:
-npl-%.testbase: npl-%.txt $(codesdir)/npl-codes.txt.txt
+npl-%.testbase: npl-%.txt $(codesdir)/npl-codes.txt
 	@echo
 	@echo "*** Creating the test base for npl-$*.txt ***"
 	@echo
 	@rm -f $@
 	$(UMASK) && \
-	$(BINDIR)/merge-codesNforms.pl $(codesdir)/npl-codes.txt.txt $< > $@
+	$(BINDIR)/merge-codesNforms.pl $(codesdir)/npl-codes.txt $< > $@
 	@chmod 660 $@
 
 # Finally, we concatenate all *.greports
@@ -604,7 +604,7 @@ npl-a.summary: $(NAnaFiles)
 #	@less $@
 
 # Create noun paradigm generation input file:
-npl-para.ptest: $(codesdir)/npl-codes.txt.txt
+npl-para.ptest: $(codesdir)/npl-codes.txt
 	@echo
 	@echo "*** Creating the noun paradigm input file for '$(WORD)' ***"
 	@echo
