@@ -10,7 +10,7 @@
 # also available in the file $GTHOME/LICENSE.txt.
 #
 # Other licensing options are available upon request, please contact
-# giellatekno@hum.uit.no or divvun@samediggi.no
+# giellatekno@hum.uit.no or divvun@hum.uit.no
 
 # ==================================================================== #
 #    N O R T H E R N  S Á M I  D I S A M B I G U A T O R               
@@ -938,7 +938,7 @@ SET V-3  = V-SG3 OR V-DU3 OR V-PL3 ;
 
 # Sets consisting of forms of "leat" (these ones need to be rewritten)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-LIST LEAN = ("leat" V Ind Prs Sg1) ("leat" V PrfPrc);
+LIST LEAN = ("leat" V Ind Prs Sg1) ("leat" V Prt ConNeg);
 LIST LEAT = ("leat" V Ind Prs Pl1) ("leat" V Ind Prs Pl3) 
       ("leat" V Ind Prs Sg2) ("leat" V Inf) ("leat" V Ind Prs ConNeg);
 
@@ -1187,7 +1187,7 @@ LIST STVLIST = (IV Der/ahtti) (IV Der/h) "addit" "amašit" "atnit" "ánssášit"
 SET STV = STVLIST - Der/Pass ;
 
 	
-SET STV-NOT-ACT = STV - (Actio Nom) - (Actio Gen) - (Actio Acc) - (Actio Loc) - (Actio Ill) - (Actio  Com) - VActor ;
+SET STV-NOT-ACT = STV - (Actio Nom) - (Actio Gen)  - (Actio Loc) -  (Actio  Com) - VActor ;
 	
 
 LIST LOCV = "ávkkástallat" "ballat" "beassat" "beroštit" "biehttalit" "bihtit" "ceavzit" "dinet" "dolkat" "eastadallat" "eastadit" "fuolahit" "fuollat" "geargat" "heaitit" "ilbmat" "jearrat" "luohpat" "máinnašit" "nohkkot" "oassálastit" "spiehkastit" "váruhit" "vástidit" ;
@@ -7905,10 +7905,8 @@ SELECT:ConNegImp (Imprt ConNeg) IF (*-1 (Neg Imprt) BARRIER ConNeg OR SV-BOUNDAR
 	## Ale ge jorggit selggiid sutnje gii bivdá dus loanas.
 
 REMOVE:NotConNegInd (Ind ConNeg) IF (-1 ConNeg)(*-2 (Neg Ind) BARRIER ConNeg OR PrfPrc OR SV-BOUNDARY)(0 A)(1 go);
-  	## Máhttájeaddji ii leat stuorit go oahpaheaddjis, ii ge bálvaleaddji
-  	## stuorit go hearrás.
-  	## Máhttájeaddji ii leat stuorit go oahpaheaddjis, ii ge bálvaleaddji
-  	## stuorit johtileabbot go hearrás.
+  	## Máhttájeaddji ii leat stuorit go oahpaheaddjis, ii ge bálvaleaddji stuorit go hearrás.
+  	## Máhttájeaddji ii leat stuorit go oahpaheaddjis, ii ge bálvaleaddji stuorit johtileabbot go hearrás.
 
 SELECT:ConNegIfNeg ConNeg IF (*-1 (Neg Ind) BARRIER ConNeg OR PrfPrc OR SV-BOUNDARY)(NEGATE 0 N LINK *1 ConNeg BARRIER NOT-ADV-PCLE)(NEGATE 0 Loc LINK -1 NEGFOC LINK -1 Loc);
 	## Eai dat dohkke šat maninge.
@@ -7931,8 +7929,7 @@ SELECT:ConNegPrfPrc ConNeg IF (*-1 PrfPrc BARRIER NOT-ADV-PCLE LINK *-1 Neg BARR
 	# material between Neg and ConNeg.
 
 REMOVE:NotConNegIfNotNeg ConNeg IF (NEGATE *-1 (Neg) BARRIER CLB OR V-IND-FIN)(NEGATE *-1 Nom LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-AA LINK *-1 ConNeg BARRIER VFIN); 
-	## Juohke muorra mii ii šaddat buriid šattuid, čullojuvvo ja 
-	## bálkestuvvo dollii.
+	## Juohke muorra mii ii šaddat buriid šattuid, čullojuvvo ja bálkestuvvo dollii.
 	## Gávpot mii lea vári alde, ii sáhte leat čihkosis.
 
 	# Imperative
@@ -8122,20 +8119,8 @@ REMOVE:r1845 PrfPrc IF (*-1 Gen BARRIER NPNH LINK *-1 CC BARRIER NPNH LINK -1 N 
  # the nominals in question are both Acc and Gen. Since Acc is NPNH, it acts as a 
  # barrier for the previous rule. 
 
-SELECT:r1846 PrfPrc IF (-1 Neg);
-	## Buorre lea go it fuobmán.
-
-SELECT:r1847 PrfPrc IF (*-1 Neg BARRIER PrfPrc OR SV-BOUNDARY)(NEGATE *-1 ConNeg BARRIER Neg LINK NOT 0 ("leat"))(NEGATE 0 Ess)(NEGATE *1 ConNeg BARRIER S-BOUNDARY2); 
-	## Iihan dat liikon Kárášjohkii.
-
-SELECT:r1848 PrfPrc IF (*-1 Neg BARRIER NOT-ADV-PCLE)(0 INFV)(*1 Inf BARRIER SV-BOUNDARY);
-	## No hits any more?
-
-REMOVE:r1849 (N Ess) IF (*-1 Neg BARRIER NOT-ADV-PCLE)(0 PrfPrc)(NEGATE *1 ConNeg OR PrfPrc BARRIER S-BOUNDARY2);
+REMOVE:r1849 (N Ess) IF (*-1 Neg BARRIER NOT-ADV-PCLE)(0 ConNeg)(NEGATE *1 ConNeg OR PrfPrc BARRIER S-BOUNDARY2);
 	## Manne son ii ohcan dan ođđa virggi?
-
-SELECT:r1850 PrfPrc IF (*-1 Neg BARRIER SV-BOUNDARY)(NEGATE 0 ESS-ADVL-N)(NEGATE *1 ConNeg OR PrfPrc BARRIER SV-BOUNDARY OR ("nugo"));
-	## In leat gal gullan inge lohkan.
 
 REMOVE:r1851 PrfPrc IF (*-1 REALCOPULAS BARRIER NPNHA OR Nom LINK *-1C (N Ess) BARRIER NOT-ADV LINK *-1 BOC2 OR CP BARRIER NPNH)(0 N)(NEGATE 0 ("leapma" Der/Dimin));
 	## Dasa lassin álggahuvvojit movttiidahttin ja nannendoaimmat, maid vuođđun lea dutkan.
@@ -8558,7 +8543,7 @@ MAP:r384 (@<OBJ) TARGET Inf IF (*-1 HAB-ACTOR BARRIER NOT-AA LINK 0 Acc LINK *-1
 MAP:r385 (@<OBJ) TARGET Inf IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER SV-BOUNDARY OR AUX OR Acc OR CC LINK NOT 0 AUX OR Adv OR Acc LINK NOT 0C Ger OR Imprt)(NEGATE 0 Pl3 LINK *-1 V-TRANS-ACT-NOT-ACT LINK 0 (Pl Nom))(NEGATE -1 CC LINK -1 Inf LINK -1 AUX) ; 
 	## Mun hálidan oahppat goarrut gávtti.
 
-MAP (@<OBJ) TARGET Inf IF (*-1 V-TRANS-ACT BARRIER SV-BOUNDARY OR AUX OR Acc LINK NOT 0 AUX LINK 0 PrfPrc LINK -1 Neg OR COPULAS) ; 
+MAP (@<OBJ) TARGET Inf IF (*-1 V-TRANS-ACT BARRIER SV-BOUNDARY OR AUX OR Acc LINK NOT 0 AUX LINK 0 PrfPrc OR ConNeg LINK -1 Neg OR COPULAS) ; 
 	## Olbmot dattetge dinejedje veaháš go vuvde dujiid, eaige dárbbašan oastit ávdnasiid duddjomii.
 
 
@@ -9314,7 +9299,7 @@ REMOVE:r2064 Gen IF (0 (N Acc) LINK 0 NATURE-PLACE)(*1 FAMILY-ALSO-ABSTRACT OR N
 
 REMOVE:r2065 Gen IF (0 (N Acc) LINK NOT 0 (Prop Plc) OR HUMAN-INDIVIDUAL OR HUMAN-GROUP OR PROFESSION OR OFFICE OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ABSTR-TEXT OR PLACE OR NATION OR EDUCATION OR ORGANIZATION OR INSTITUTION OR INDUSTRY OR TIME)(NEGATE -1 Num OR Pr)(*1 NON-FAMILY BARRIER NOT-ADJ);
  
-REMOVE:r2066 Gen IF (0 (Actio Acc))(*1 HUMAN-INDIVIDUAL OR PROFESSION OR OFFICE OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ("bearaš") OR NATION BARRIER NOT-ADJ LINK NOT 0 ("eadni") OR ("áhčči"));
+REMOVE:r2066 Gen IF (0 Der/NomAct)(*1 HUMAN-INDIVIDUAL OR PROFESSION OR OFFICE OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ("bearaš") OR NATION BARRIER NOT-ADJ LINK NOT 0 ("eadni") OR ("áhčči"));
     ## Dearvvašvuođabargiilága § 10, mii gieđahallá dieđuid addima pasienttaide, ja pasientavuoigatvuođalága § 1-3, mii gieđahallá vuoigatvuođa informerejuvvon miehtamii, leat ovdamearkkat dakkár vuoigatvuođain.
  
 SELECT:r2067 Gen IF (0 ("áhčči") OR ("ipmil"))(1 ("Vuoigŋa") OR ("vuoigŋa"));
@@ -13094,9 +13079,9 @@ SELECT (Actio Ess) IF (*-1 @+FAUXV BARRIER VERB OR S-BOUNDARY2 OR @-FMAINV LINK 
 
 REMOVE:r3080 (V*) IF (0C (N Nom) OR (TV Actio Nom));
   # Ášši 10/00 Ráđđehusa dearvvasvuođa- ja sosiálabálvalusaid doaibmaplána sámi álbmogii Norggas - gulaskuddan.
-REMOVE:r3081 (V*) IF (0C (N Acc) OR (TV Actio Acc)); 
+REMOVE:r3081 (V*) IF (0C (N Acc)); 
 #REMOVE:r3082 (V*) IF (0C (N Gen) OR (TV Actio Gen));  
-REMOVE:r3083 (V*) IF (0C (N Ill) OR (TV Actio Ill));
+REMOVE:r3083 (V*) IF (0C (N Ill));
 REMOVE:r3084 (V*) IF (0C (N Com) OR (TV Actio Com));
 REMOVE:r3085 (V*) IF (0C (N Loc) OR (TV Actio Loc));
 REMOVE:r3086 (V*) IF (0C (N Ess) OR (TV Actio Ess));  
