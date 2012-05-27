@@ -245,7 +245,7 @@ v-paradigm: v-para.ptest savefile
 # Create all the adjective test file bases:
 a-%.testbase: a-%.txt $(codesdir)/a-codes.txt
 	@echo
-	@echo "*** Creating the test base for a-$*.txt ***"
+	@echo "*** Creating the test base for $(POS)-$*.txt ***"
 	@echo
 	@rm -f $@
 	$(UMASK) && \
@@ -253,7 +253,7 @@ a-%.testbase: a-%.txt $(codesdir)/a-codes.txt
 	@chmod 660 $@
 
 # Finally, we concatenate all *.greports:
-a-g.summary: $(AGenFiles)
+$(POS)-g.summary: $(AGenFiles)
 	@cat $^ > $@
 	@echo
 	@echo "*** All noun word form generation testing is done.      ***"
@@ -262,7 +262,7 @@ a-g.summary: $(AGenFiles)
 #	@less $@
 
 # Finally, we concatenate all *.areports:
-a-a.summary: $(AAnaFiles)
+$(POS)-a.summary: $(AAnaFiles)
 	@cat $^ > $@
 	@echo
 	@echo "*** All noun word form analysis testing is done.        ***"
@@ -273,7 +273,7 @@ a-a.summary: $(AAnaFiles)
 # Create adjective paradigm generation input file:
 a-para.ptest: $(codesdir)/a-codes.txt
 	@echo
-	@echo "*** Creating the adjective paradigm input file for '$(WORD)' ***"
+	@echo "*** Creating the $(POS) paradigm input file for '$(WORD)' ***"
 	@echo
 	@rm -f $@
 	$(UMASK) && \
@@ -281,7 +281,8 @@ a-para.ptest: $(codesdir)/a-codes.txt
 	@chmod 660 $@
 
 # Paradigm generation:
-a-paradigm: a-para.ptest savefile
+.PHONY: $(POS)-paradigm
+$(POS)-paradigm: $(POS)-para.ptest savefile
 	@echo
 	@echo "*** Running the paradigm generator for '$(WORD)' ***"
 	@echo
