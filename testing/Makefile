@@ -34,7 +34,7 @@ POS=n
 
 # The temp directories for the generated paradigms:
 GEN_TMP = Gen_tmp
-PARA_TMP = $(PARATYPE)
+PARA_TMP = Para_tmp
 
 TYPEPREF=
 
