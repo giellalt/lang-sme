@@ -28,5 +28,5 @@ else
     WORDLIST=parawlist.txt
 fi
 
-rm -rf  $GEN_TMP
+#rm -rf  $GEN_TMP
 perl gen-paradigms.pl $WORDLIST $XSLTSHEET $GEN_TMP $PARATYPE
