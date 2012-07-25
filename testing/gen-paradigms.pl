@@ -7,11 +7,11 @@ use File::Spec;
 my $word_pos_list = @ARGV[0];
 my $xsl_script = @ARGV[1];
 my $gen_tmp = @ARGV[2];
-my $paratype = @ARGV[4];
+my $paratype = @ARGV[3];
 my $jc = "java net.sf.saxon.Transform -it main ";
 my $para_tmp = "Para_tmp";
 my $xml_tmp = "XML_tmp";
-my $mk_dir_cmd = "mkdir $gen_tmp/$para_tmp $gen_tmp/$xml_tmp";
+my $mk_dir_cmd = "mkdir -p $gen_tmp/$para_tmp $gen_tmp/$xml_tmp";
 
     system($mk_dir_cmd);
     print "$word_pos_list\n" ;
@@ -29,7 +29,7 @@ while ( <FILE> ) {
       $word_pos = $word . "_" . $pos;
       print "word is $word\n" ;
       print "pos is $pos\n" ;
-      my $command = "make paradigm POS\=$pos WORD\=$word GEN_TMP\=$gen_tmp" ;
+      my $command = "make paradigm POS\=$pos WORD\=$word GEN_TMP\=$gen_tmp PARATYPE\=$paratype" ;
       #    print "$command\n";
       system($command);
       my $xmlcommand = "perl paradigm2xml.pl $gen_tmp/$para_tmp/$word_pos.paradigm > $gen_tmp/$xml_tmp/$word_pos.xml";
