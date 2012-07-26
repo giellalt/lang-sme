@@ -29,7 +29,7 @@ while ( <FILE> ) {
       $word_pos = $word . "_" . $pos;
       print "word is $word\n" ;
       print "pos is $pos\n" ;
-      my $command = "make paradigm POS\=$pos WORD\=$word GEN_TMP\=$gen_tmp PARATYPE\=$paratype" ;
+      my $command = "make -f make-gen-dict paradigm POS\=$pos WORD\=$word GEN_TMP\=$gen_tmp PARATYPE\=$paratype" ;
       #    print "$command\n";
       system($command);
       my $xmlcommand = "perl paradigm2xml.pl $gen_tmp/$para_tmp/$word_pos.paradigm > $gen_tmp/$xml_tmp/$word_pos.xml";
