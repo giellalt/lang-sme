@@ -4,7 +4,7 @@
 # the processing of the word list and calls make.
 
 
-XSLTSHEET=$GTHOME/words/dicts/scripts/restruct_paradigme.xsl
+XSLTSHEET=$GTHOME/words/dicts/scripts/restruct_paradigme_smxnob.xsl
 GEN_TMP=Gen_tmp
 
 if [ $1 == '-h' ]; then
