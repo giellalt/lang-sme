@@ -3751,7 +3751,7 @@ REMOVE:r820 ("Vuollebealli") IF (0 ("vuollebealli"));
 
 	# vuorru
 	# - - - -
-REMOVE G3 (0 ("vuorru") LINK *-1 (Pers Gen) OR (Mal Gen) OR (Fem Gen) OR (Sur Gen))	;
+REMOVE G3 (0 ("vuorru") LINK *-1 (Pers Gen) OR (Mal Gen) OR (Fem Gen) OR (Sur Gen) OR (Interr Gen))	;
 
 	# Not noun
 	# --------
@@ -3838,7 +3838,7 @@ SELECT:ActioNom (Actio Nom) (0 N LINK -1 HUMAN + Gen OR (Pers Gen))(1 N) ;
 REMOVE:r841 (Der/PassS) IF (0 ("oažžut") OR ("guovlat") OR ("doaivut") OR ("diehtit"));
 	# ožžo, guvlui
 
-LIST LEX-PASS = "gávdnot" "gullot" "láhppot" "oidnot" "váldot"  "čirrot" "sorrot" "čadnot" "doddjot" "gessot" "dovdot" "rahppot" "savvot" "čoggot" ;
+LIST LEX-PASS = "gávdnot" "gullot" "láhppot" "oidnot" "váldot" "čirrot" "sorrot" "čadnot" "doddjot" "gessot" "dovdot" "rahppot" "savvot" "čoggot" ;
 
 REMOVE (Der/PassS) (0 LEX-PASS) ;
 
@@ -6015,6 +6015,8 @@ SELECT ("luovos" Adv) (*0 SLIP-V BARRIER S-BOUNDARY) ;
 SELECT Interj IF (*-1 BOS BARRIER WORD)(0 ("maid") OR ("Ho"))(1 COMMA OR EOS);
 	## Maid, iigo leat boahtán?
 
+REMOVE Interj ((-1 WORD - Interj) OR (1 WORD - Interj)) ;
+
 REMOVE:r1227 Pron IF (NEGATE *-1 Neg BARRIER VFIN)(0 ("maid"))(1 CLB);
 	## Dá lea reivve maid.
 	
@@ -6530,7 +6532,7 @@ SELECT:r1196 CS IF (0 ("vai"));
 REMOVE:r1433 (@CNP) IF (0 DADE) ;    
 
 REMOVE:r1434 (@CNP) IF (-1 COMMA)(0 ("ja" CC))(*1 VFIN BARRIER S-BOUNDARY);
-REMOVE:TEST (@CNP) IF (0 ("ja" CC) LINK 1 ("de") LINK *1 VFIN OR Inf BARRIER S-BOUNDARY)(NOT *-1 BOS BARRIER WORD) ;
+REMOVE:ja_de (@CNP) IF (0 ("ja" CC) LINK 1 ("de") LINK *1 VFIN OR Inf BARRIER S-BOUNDARY)(NOT *-1 BOS BARRIER WORD) ;
     ## 
 REMOVE:r1435 (@CNP) IF (*-1 BOS BARRIER NOT-ADV);
 REMOVE:r1436 (@CNP) IF (-2 BOS)(-1 CC);
@@ -6608,7 +6610,7 @@ REMOVE:r1453 (@CVP) IF (-1C NP-HEAD-NOM LINK *-1 VERBAL-ACTIVITY-V BARRIER NPNH)
 
 REMOVE:r1454 (@CVP) IF (-1C Acc)(*1C Acc BARRIER NPNHA);
 
-REMOVE:r1455 (@CVP) IF (-1 (@X) OR N LINK NOT 0 VFIN OR Inf)(*1C N BARRIER NPNHA LINK NOT 1 VFIN);
+REMOVE:r1455 (@CVP) IF (-1 (@X) OR N OR Pron)(NOT *-1 VERB)(*1C N OR Pron BARRIER NPNHA);
 
 REMOVE (@CNP) IF (*-1 VFIN BARRIER S-BOUNDARY)(1 MO OR Rel LINK *1 VFIN BARRIER S-BOUNDARY OR PUNCT-RIGHT OR CCCOMMA);
 	## Na maid dal juo dagažat ja maid it dagaš.
@@ -6653,7 +6655,7 @@ SELECT (@CVP) IF (*-1C VFIN BARRIER S-BOUNDARY)(1 TITLE LINK 1C NP-HEAD-NOM);
     # The comma version
 
 
-REMOVE:r1466 (@CNP) IF (*-1C VFIN OR Inf BARRIER S-BOUNDARY)(*1C VFIN BARRIER S-BOUNDARY);
+REMOVE:r1466 (@CNP) IF ((*-1C VFIN OR Inf BARRIER S-BOUNDARY) OR (-1 CC))(*1C VFIN BARRIER S-BOUNDARY);
 	## Mii eat áiggo bivdit bargolávdegotti čoahkkimii ovdal borgemánus ja dán čoahkkimis mii mearridit maid riidduáššiin dahkat, lohka Norgga áviissaid searvvi ovdaolmmoš Kåre Westlund Sámi Áigái.
 	## Mun oainnán Máreha ja Elle ja don oainnát Klausa.
 	## Eanáš ásahusain leat sámegiela gelbbolašvuohta dál nu go dalle ge lei.
@@ -6720,7 +6722,7 @@ REMOVE:r1479 (Pron Pers) IF (NEGATE -1 V-PL1)(0 ("mii"))
 SELECT:r1480 Rel IF (*-1 V-NOT-AUX BARRIER S-BOUNDARY2 LINK *-1 NP-HEAD-NOM BARRIER S-BOUNDARY2)(*1C NP-HEAD-NOM BARRIER S-BOUNDARY2);
 	## ...ahte olbmot besset oaidnit maid sii sáhttet vuordit.
 
-SELECT:r1481 (Pron Rel Sg) IF (-1C NP-HEAD-SG OR (Num Sg))(NEGATE *-2 NUMERALS BARRIER NPNH)(*1 VFIN);
+SELECT:r1481 (Pron Rel Sg) IF (-1C NP-HEAD-SG OR (Num Sg))(NEGATE *-2 NUMERALS BARRIER NPNH)(*1 VFIN)(*1 V-TRANS-ACT-NOT-ACT);
 SELECT:r1482 (Pron Rel Pl) IF (-1 NP-HEAD-PL)(NEGATE -1 NP-HEAD-SG)(*1 VFIN);
 SELECT:r1483 (Pron Rel Pl) IF (-1 NP-HEAD-SG LINK -1 Num)(*1 VFIN);
 	## ...go lei sáimmaiguin bivdán jávrris maid stáhta lei láigohan. 
@@ -7443,7 +7445,7 @@ SELECT REAL-TITLE + Attr IF (0 N)(*1 Mal OR Fem OR Sur BARRIER REALWORD-NOTABBR)
 
 SELECT (N Attr) IF (0 CAP-INITIAL)(*1 Sur BARRIER REALWORD-NOTABBR);
 	
-REMOVE:r1723 Adv IF (NEGATE *-1 VERB BARRIER S-BOUNDARY2)(NEGATE 0 ("gosa") OR ("mielde"))(NEGATE 0 ("bures") LINK 1 ("boahtin"))(NEGATE 1C A)(NEGATE *1 VERB BARRIER S-BOUNDARY2);
+REMOVE:r1723 Adv IF (NEGATE *-1 VERB BARRIER S-BOUNDARY2)(NEGATE 0 ("gosa") OR ("mielde") OR ("maid"))(NEGATE 0 ("bures") LINK 1 ("boahtin"))(NEGATE 1C A)(NEGATE *1 VERB BARRIER S-BOUNDARY2);
 	## Diehtojuohkin divššohasa lagamuš oapmahažžii.
 	## Stuorát guolit mat eai bisán čalmmiide, mannet čađa.
 
@@ -7765,6 +7767,9 @@ SUBSTITUTE (Plc) (Sur) TARGET Prop IF (-2 (Mal Attr) OR (Fem Attr))(-1 ABBR);
 
 	# Prop or not
 	# ----------- 
+
+REMOVE (Plc Com) ((0 Com - Prop) OR (0 Loc - Prop)) ;
+	## Vákkiin leat ollu váramat, jus lea buorre geassi.
 
 SELECT:r1885 Prop IF (NEGATE *-1 BOS OR (":") OR (PUNCT LEFT) OR (Num Nom) BARRIER REALWORD); 
 	## Áirras Egil Olli nammaduvvui Sámedikki ovddasteaddjin.
