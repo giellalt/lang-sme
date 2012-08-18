@@ -8,6 +8,9 @@
 # VARIABLE DEFINITIONS
 # ====================
 
+null      :=
+SPACE     := $(null) $(null)
+
 # Tools used when compiling
 XFST = xfst -utf8
 
@@ -165,7 +168,7 @@ $(POS)-para.ptest: $(codesdir)/$(POS)-codes.txt
 	@echo
 	@rm -f $@
 	$(UMASK) && \
-	$(BINDIR)/merge-codesNword.pl $< $(WORD) > $@
+	$(BINDIR)/merge-codesNword.pl $< '$(WORD)' > $@
 	@chmod 660 $@
 
 # Paradigm generation:
@@ -178,7 +181,7 @@ $(POS)-paradigm: $(POS)-para.ptest savefile
 	@printf "load $(SAVEFILE) \n\
 	apply up < $< \n\
 	quit \n" > $(TEMP)/$@-gtest-script
-	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(WORD)_$(POS).paradigm
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(subst $(SPACE),_,$(WORD))_$(POS).paradigm
 	@rm -f $(TEMP)/$@-gtest-script
 	@rm -f $<
 #	@less $(GEN_TMP)/$(PARA_TMP)/$(WORD)_n.paradigm
