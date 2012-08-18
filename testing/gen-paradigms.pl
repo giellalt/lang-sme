@@ -12,7 +12,7 @@ my $jc = "java net.sf.saxon.Transform -it main ";
 my $para_tmp = "Para_tmp";
 my $xml_tmp = "XML_tmp";
 my $mk_dir_cmd = "mkdir -p $gen_tmp/$para_tmp $gen_tmp/$xml_tmp";
-
+my $mwe = "yes";
     system($mk_dir_cmd);
     print "$word_pos_list\n" ;
 
@@ -23,12 +23,17 @@ while ( <FILE> ) {
   if (/^\s.*$/) {
     next;
   } else {
-    #my $word, $pos;
-    #($word, $pos) = split;
-    my($word, $pos) = $_ =~ /^([^\s]+\s+[^\s]+)\s([^\s])$/;
+    my $word, $pos;
+    if ($mwe eq 'yes') {
+      ($word, $pos) = $_ =~ /^([^\s]+\s+[^\s]+)\s([^\s])$/;
+    } else {
+      ($word, $pos) = split;
+    }
     if (($word ne "") and ($pos ne "") ) {
-      $word=~ s/\s+/\_/g;
-      $word_pos = $word . "_" . $pos;
+      my $linked_word = $word;
+      $linked_word=~ s/\s+/\_/g;
+      #$word=~ s/\s+/\%/g;
+      $word_pos = $linked_word . "_" . $pos;
       print "word is $word\n" ;
       print "pos is $pos\n" ;
       print "word_pos is $word_pos\n" ;
