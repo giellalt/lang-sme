@@ -25,7 +25,7 @@ while ( <FILE> ) {
   } else {
     my $word, $pos;
     if ($mwe eq 'yes') {
-      ($word, $pos) = $_ =~ /^([^\s]+\s+[^\s]+)\s([^\s])$/;
+      ($word, $pos) = $_ =~ /^([^\s]+\s+[^\s]+)\s([^\s]+)$/;
     } else {
       ($word, $pos) = split;
     }
