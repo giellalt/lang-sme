@@ -2811,9 +2811,10 @@ SELECT ("mannat" Imprt Du2) ;
 
 
 	# This is a Lule Sámi form.
-REMOVE:r853 ("Sámedigge") IF (0 ("Sámediggi"));
+REMOVE:r853 ("Sámedigge") IF (0 ("Sámediggi" N Prop));
 
 SELECT:r855 Prop IF (NEGATE *-1 BOS OR (":") BARRIER WORD)(0 N LINK NOT 0 (Der/t) OR (Der/laš));
+    # Prop if it is not the case that there is no word between 0 and the BOS/: (= if Prop is not sentence-initially)
 	## Son riegádii jagi 1943 Suoma bealde.
 
 	# The form "norga" is not in the dictionary...
@@ -7674,8 +7675,11 @@ LIST PROP-OR-NOT1 = "Biera" "bruvsa" "dat" "Danmárku-#Norga" "Deatnu" "dilli" "
 
 LIST PROP-OR-NOT2 = "Bierra" "Bruvsa" "Dan" "Danmárku-#Norge" "deatnu" "Dili" "Egypta" "gáre-#goaski" "gáre#goaski" "gáre-#muoŧŧá" "gáre#muoŧŧá" "gáre-#áhkku" "gáre#áhkku" "gáre-#oambealle" "gáre#oambealle" "gáre-#siessá" "gáre#siessá" "guovddášbellodat" "Gøteborg" "Hammerfest" "Lulli-Norge" ("Mo" Ess) ("Moa" Ill) "Mobiltelefovdna" "Návuonna" "nigá-Máhtte" "njávdánsápmelaš" "Oarje-Norge" "olgešbellodat" "ovddádusbellodat" "Pau" "Pierra" "Rollastoahkan" "Rušša" "Sálašhivvodat" "sállansuolu" "Sámeálbmot" "Sámekultuvra" "sámekomitea" "sámeradio"   "Sámevearroođastus" "Sámevearroplakáhta"   "sámivuoigatvuođalávdegoddi" "sámivuoigatvuođalávdegoddi" "Skánik"  "suonjilsápmelaš" "Trifon" ("VI" Ill);
 		
-SELECT:PropOrNot PROP-OR-NOT1 IF (0 PROP-OR-NOT2)(NEGATE -1 BOS LINK 2 Prop);	
-
+SELECT:PropOrNot PROP-OR-NOT1 IF (0 PROP-OR-NOT2)(NEGATE -1 BOS LINK 2 Prop); 
+    # What is the logic behind 1 vs. 2? Cf.
+    ## "BOS Deanu oainnán . EOS" (RESULT = Deatnu). Positions: -1 = BOS, 0 = Deanu/deanu, ) ==> PropOrNot hits
+    ## "BOS Deanu Maija oainnán (RESULT = Deatnu dahje deatnu) ==> PropOrNot does not hit
+    
 REMOVE:r1888 (Prop Pl Nom) IF (-1 BOS)(NEGATE *1 V-PL3 BARRIER SV-BOUNDARY);	   
 	## Unnit nuppástusaiguin.	
 
@@ -14801,7 +14805,11 @@ MAP (@ADVL>) TARGET MO + Adv OR ADVL + Rel (*1 FMAINV BARRIER S-BOUNDARY2) ;
 MAP (@ADVL>CS) TARGET Adv (0 ("dan_dihte") OR MANNEL OR ("justa") OR ("danne") OR ("dalle") OR ("beare") OR ("dakkaviđe") OR ("dál") OR ("ovdal") OR ("danin") OR ("dan_dihte") OR ("dassážii") OR ("dassá"))(1 CS LINK 0 ("go") OR ("ovdal_go")  OR ("danin_go"))  ;
 
 MAP (@-F<ADVL) TARGET ADVL (*-1 Ger BARRIER NPNH) ; 
-MAP:RitvaTestComV (@-F<ADVL) TARGET ADVL (*-1 Actio BARRIER NPNH LINK 0 COMV)(0 Com) ; 
+MAP:RitvaTestComVLeft (@-F<ADVL) TARGET ADVL (*-1 Actio BARRIER NPNH LINK 0 COMV)(0 Com) ; 
+MAP:RitvaTestComVRight (@-FADVL>) TARGET ADVL (1 Actio OR Der/NomAct LINK 0 COMV)(0 Com) ; 
+
+REMOVE:RitvaComNotLoc Loc IF (0 Com + (@-FADVL>));
+REMOVE:RitvaComNotLoc Loc IF (0 Com + (@-F<ADVL));
 
 MAP (@-F<ADVL) TARGET ADVL OR TIME + Gen (NOT 0 EASKKA)(*-1 Inf - FMAINV OR (Actio Ess) - FMAINV BARRIER SV-BOUNDARY2)(NEGATE 0 ("de") LINK -1 COMMA);
 MAP (@-FADVL>) TARGET Adv (*-1 VERBAL-ACTIVITY-V BARRIER Acc OR SV-BOUNDARY2)(NOT 0 EASKKA)(*1 Inf OR (Actio Ess) BARRIER SV-BOUNDARY2 LINK 0 SUBJ OR OBJ OR @ADVL OR (@A<) OR (@N<));
