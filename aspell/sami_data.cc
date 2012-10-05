@@ -438,7 +438,7 @@ STEM-WEA (beana
 STEM-STR (beatnag)
 
 contract
-STEM-DIPH-WEA (suolu)
+STEM-DIPH-WEA (suolu)
 STEM-MONO-STR (sullo)
 
 case/number
