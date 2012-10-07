@@ -4,7 +4,7 @@
 cat ~/biggies/gt/sme/corp/testkorpus.txt | preprocess --abbr=$GTHOME/gt/sme/bin/abbr.txt | $LOOKUP $GTHOME/gt/sme/bin/sme.fst | lookup2cg | vislcg3 -g $GTHOME/gt/sme/src/sme-dis.rle > $GTHOME/gt/sme/dev/testdis
 
 # Fjerner semantiske tagger og #:
-cat $GTHOME/gt/sme/dev/testdis | sed 's/Group //' |  sed 's/Time //' |  sed 's/Hum //' |  sed 's/Org N/N/' |  sed 's/Obj N/N/' | sed 's/Build //' | sed 's/Clth //' | sed 's/Wthr //' | sed 's/Food //' | sed 's/Body //' | sed 's/Event //' | sed 's/Org //' | sed 's/Obj //' | sed 's/Ani //' |  sed 's/Plc //' |  sed 's/Veh //' |  sed 's/Txt //' | sed 's/Route //' | sed 's/Plc N/N/' |  sed 's/v1 //' |  sed 's/v2 //' | sed 's/v3 //' |  sed 's/Plant //' | sed 's/Org N/N/' | sed 's/Allegro //' | tr -d "#" > $GTHOME/gt/sme/dev/cleantest
+cat $GTHOME/gt/sme/dev/testdis | perl -pe 's/(Time|Ani|Hum|Org|Obj|Build|Clth|Wthr|Food|Body|Event|Plc|Veh|Txt|Route|Plant|Allegro|Group|v1|v2|v3|v4) //g' | tr -d "#" > $GTHOME/gt/sme/dev/cleantest
 
 # Sorterer alfabetisk inne i cohortene
 perl $GTHOME/gt/script/sort-cg-cohort.pl $GTHOME/gt/sme/dev/cleantest | uniq > $GTHOME/gt/sme/dev/sortedtestdis
