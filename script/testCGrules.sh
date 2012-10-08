@@ -9,16 +9,16 @@ cat $GTHOME/gt/sme/dev/testdis | perl -pe 's/(Time|Ani|Hum|Org|Obj|Build|Clth|Wt
 # Sorterer alfabetisk inne i cohortene
 perl $GTHOME/gt/script/sort-cg-cohort.pl $GTHOME/gt/sme/dev/cleantest | uniq > $GTHOME/gt/sme/dev/sortedtestdis
 
-# Henter gullanalyse, fjerner Allegro-tag som foreløpig ikke fungerer som den skal:
+# Henter gullstandard, fjerner Allegro-tag som foreløpig ikke fungerer som den skal:
 cat ~/biggies/gt/sme/corp/correct/testkorpus.dis.corr.txt | sed 's/Allegro //' > $GTHOME/gt/sme/dev/cleantestkorpus.dis.corr.txt
 
 # Sorterer alfabetisk inne i cohortene
 perl $GTHOME/gt/script/sort-cg-cohort.pl $GTHOME/gt/sme/dev/cleantestkorpus.dis.corr.txt | uniq > $GTHOME/gt/sme/dev/sortedtestkorpus 
 
 # Antall ulike linjer:
-echo "Differansen mellom gullanalyse og ny analyse er"
-diff $GTHOME/gt/sme/dev/sortedtestkorpus $GTHOME/gt/sme/dev/sortedtestdis | wc -l
+echo "Differansen mellom gullstandard og ny analyse er"
+diff -w $GTHOME/gt/sme/dev/sortedtestkorpus $GTHOME/gt/sme/dev/sortedtestdis | wc -l
 
 # De ulike linjene:
-diff $GTHOME/gt/sme/dev/sortedtestkorpus $GTHOME/gt/sme/dev/sortedtestdis > $GTHOME/gt/sme/dev/testCG_result.txt
+diff -w $GTHOME/gt/sme/dev/sortedtestkorpus $GTHOME/gt/sme/dev/sortedtestdis > $GTHOME/gt/sme/dev/testCG_result.txt
 see $GTHOME/gt/sme/dev/testCG_result.txt
