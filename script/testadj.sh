@@ -13,6 +13,6 @@ cat compladjs | sed 's/$/+A+Comp+Sg+Nom/' | $LOOKUP $GTHOME/gt/sme/bin/isme.fst 
 cat attradjs compladjs superladjs >> adjs
 sort -u -o adjs adjs 
 sort -u -o analadjs analadjs 
-comm -23 adjs analadjs > missingadjLemmas.txt
-#rm *adjs
-open missingadjLemmas.txt
+comm -23 adjs analadjs > $GTHOME/gt/sme/dev/missingadjLemmas.txt
+rm *adjs
+open $GTHOME/gt/sme/dev/missingadjLemmas.txt

@@ -2,6 +2,6 @@
 
 grep ";" $GTHOME/gt/sme/src/verb-sme-lex.txt | grep -v "^\!" | egrep -v '(STRAYFORMS|ENDLEX|\+V)' | tr ":+" " " | cut -d " " -f1 | tr -d "%" | sort -u > verbs
 cat verbs | sed 's/$/+V+Inf/' | $LOOKUP $GTHOME/gt/sme/bin/isme.fst | cut -f2 | grep -v "V+" | grep -v "^$" | sort -u > analverbs 
-comm -23 verbs analverbs > missingverbLemmas.txt
+comm -23 verbs analverbs > $GTHOME/gt/sme/dev/missingverbLemmas.txt
 rm *verbs
-open missingverbLemmas.txt
+open $GTHOME/gt/sme/dev/missingverbLemmas.txt

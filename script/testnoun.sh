@@ -8,7 +8,7 @@ grep ";" $GTHOME/gt/sme/src/noun-sme-lex.txt | grep -v "^\!" | grep -v ShCmp | e
 grep ";" $GTHOME/gt/sme/src/noun-sme-lex.txt | grep -v "^\!" | grep -v ShCmp | grep "RHyph" | cut -d ":" -f1 | sed 's/+Use\/Sub//' | sed 's/CmpN\/Pref+CmpN\/SgN$/Cmp-#viessu+N+Sg+Nom/' |  sed 's/CmpN\/Pref+CmpN\/SgG$/Cmp-#viessu+N+Sg+Nom/' |  sed 's/CmpN\/PlG$/Cmp-#viessu+N+Sg+Nom/' | $LOOKUP $GTHOME/gt/sme/bin/isme.fst | cut -f2 | grep "\-" | cut -d "-" -f1 >> analnouns
 sort -u -o nouns nouns 
 sort -u -o analnouns analnouns 
-comm -23 nouns analnouns > missingnounLemmas.txt
+comm -23 nouns analnouns > $GTHOME/gt/sme/dev/missingnounLemmas.txt
 rm *nouns
-open missingnounLemmas.txt
+open $GTHOME/gt/sme/dev/missingnounLemmas.txt
 
