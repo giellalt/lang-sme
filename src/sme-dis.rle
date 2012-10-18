@@ -650,6 +650,10 @@ LIST Plc = Plc ;
 LIST Sur = Sur ;
 #LIST Tit = Tit ;
 
+LIST Veh = Veh ;
+LIST Build = Build ;
+LIST Edu = Edu ;
+
 # Valency tags
 # ------------
 
@@ -710,6 +714,10 @@ LIST <LO-Loc-WPlc>      = <LO-Loc-WPlc> ;
 LIST <LO-Ill-WPlc>      = <LO-Ill-WPlc> ;
 LIST <LO-luhtte-WPlc>   = <LO-luhtte-WPlc> ;
 LIST <LO-luhtte-Ani>    = <LO-luhtte-Ani> ;
+LIST <LO-0>             = <LO-0> ;
+LIST <LO-luhtte-Any>          = <LO-luhtte-Any> ;
+LIST <LO-Loc-Any>             = <LO-Loc-Any> ;
+LIST <DE-Ill-Plc><PU-Inf>    = <DE-Ill-Plc><PU-Inf> ;
 
 # destination
 
@@ -718,6 +726,9 @@ LIST <DE-Ill-WPlc> = <DE-Ill-WPlc> ;
 LIST <DE-Ill-Any> = <DE-Ill-Any> ;
 LIST <DE-lusa-Ani> = <DE-lusa-Ani> ;
 LIST <DE-sisa-Build> = <DE-sisa-Build> ;
+LIST <DE-Ill-Any>             = <DE-Ill-Any> ;
+LIST <DE-Ill-Plc>             = <DE-Ill-Plc> ;
+LIST <DE-sisa-Build>          = <DE-sisa-Build> ;
 
 # recipient
 
@@ -727,6 +738,9 @@ LIST <RE-Loc-Ani> = <RE-Loc-Ani> ;
 # source
 
 LIST <SO-Loc-WPlc> = <SO-Loc-WPlc> ;
+
+LIST <SO-Loc-Any><DE-Ill-Any> = <SO-Loc-Any><DE-Ill-Any> ;
+LIST <SO-Loc-Any>             = <SO-Loc-Any> ;
 
 # topic
 
@@ -746,6 +760,7 @@ LIST <QU-Com-Money>   = <QU-Com-Money> ;
 LIST <QU-Com-Measure> = <QU-Com-Measure> ;
 LIST <PA-Acc-Obj><QU-Acc-Measure> = <PA-Acc-Obj><QU-Acc-Measure> ;
 
+
 # patient
 
 LIST <PA-0> 	  = <PA-0> ;
@@ -753,9 +768,26 @@ LIST <PA-Acc-Any> = <PA-Acc-Any> ;
 
 # purpose
 
-LIST <PS-Inf> = <PS-Inf> ;
+LIST <PU-Inf> = <PU-Inf> ;
 
+# instrument
 
+LIST <IN-Com-Veh> = <IN-Com-Veh> ;
+
+# manner
+
+LIST <MA-Adv-Manner>          = <MA-Adv-Manner> ;
+
+# role
+
+LIST <RO-Ess-Any>             = <RO-Ess-Any> ;
+
+# other
+
+LIST <gitta> = <gitta> ;
+LIST <eret> = <eret> ;
+LIST <oktii><DE-Com-Any>      = <oktii><DE-Com-Any> ;
+LIST <oktii>                  = <oktii> ;
 
 # Other tags
 # ----------
@@ -16367,6 +16399,9 @@ SELECT ("gullat") (0 ("gullát"));
     # Rules adding <val> to valency bound adverbials
     # ----------------------------------------------
     # Run: | preprocess | lookup -flags mbTT -utf8 ~/gtsvn/gt/sme/bin/sme-norm.fst | lookup2cg | vislcg3 -g ~/gtsvn/gt/sme/src/sme-val.rle | vislcg3 -g ~/gtsvn/gt/sme/src/sme-dis.rle | l
+    
+    # illatives
+    
 SUBSTITUTE (@<ADVL) (@<ADVL <val>) TARGET Ill (*-1 <TH-Ill-Any> BARRIER S-BOUNDARY);
 
 SUBSTITUTE (@ADVL>) (@ADVL> <val>) TARGET Ill (*1 <TH-Ill-Any> BARRIER S-BOUNDARY);
@@ -16378,12 +16413,74 @@ SUBSTITUTE (@ADVL>) (@ADVL> <val>) TARGET Ill (*1 <TH-Ill-Any> BARRIER S-BOUNDAR
     #$ Dat čievččastii sutnje.
     ## Son doškii sutnje hárdui.
     ## Mánnávuođas mun liikojin beatnagiidda.
+    
+    # comitatives
 
 SUBSTITUTE (@<ADVL) (@<ADVL <val>) TARGET Com (*-1 <TH-Com-Any> BARRIER S-BOUNDARY);
 SUBSTITUTE (@ADVL>) (@ADVL> <val>) TARGET Com (*1 <TH-Com-Any> BARRIER S-BOUNDARY);
 
+SUBSTITUTE (@<ADVL) (@<ADVL <val>) TARGET Com (0 Veh)(*-1 <IN-Com-Veh> BARRIER S-BOUNDARY);
+SUBSTITUTE (@ADVL>) (@ADVL> <val>) TARGET Com (0 Veh)(*1 <IN-Com-Veh> BARRIER S-BOUNDARY);
+
+    # locatives
+
 SUBSTITUTE (@<ADVL) (@<ADVL <val>) TARGET Loc (*-1 <RE-Loc-Ani> BARRIER S-BOUNDARY);
+    ## Jearan dus.
+    ## Jearan boađátgo Guovdageainnus.
+    ## Jearan Guovdageainnusgo don boađát.
+        
 SUBSTITUTE (@ADVL>) (@ADVL> <val>) TARGET Loc (*1 <RE-Loc-Ani> BARRIER S-BOUNDARY);
+
+#question is: should the semantic part say something about what is typical or what is possible?
+# if it says something about what is possible, often maaaany things are possible and it is difficult to disambiguate and exclude anything.
+# If it says something about what is typical, it is not possible to make rules for what should be wrong
+
+    # lusa
+    
+SUBSTITUTE (@<ADVL) (@<ADVL <val>) TARGET Po (0 ("lusa"))(*-1 <DE-lusa-Ani> BARRIER S-BOUNDARY);
+    # Mun manan du lusa
+    
+    # sisa
+    
+SUBSTITUTE (@<ADVL) (@<ADVL <val>) TARGET Po (0 ("sisa"))(-1 Build)(*-1 <DE-sisa-Build> BARRIER S-BOUNDARY);
+    # Dat manai goađi sisa.
+    
+    
+    
+SUBSTITUTE (@<ADVL) (@<ADVL <val>) TARGET Num (0 Acc)(*-1 <QU-Acc-Measure> BARRIER S-BOUNDARY);    
+    # Son manná guokte mehtera.
+    
+    # infinitive
+    # ----------
+
+SUBSTITUTE (@-FMAINV) (@-FMAINV <val>) TARGET Inf (*-1 <PU-Inf> BARRIER S-BOUNDARY);    
+    # Manná boazu várrái jassaguoraid guohtut.
+
+    
+    # adverbs
+    # -------
+    
+SUBSTITUTE (@<ADVL) (@<ADVL <val>) TARGET ("gitta") (*-1 <gitta> BARRIER S-BOUNDARY);
+    # Dat manai gitta.
+    
+SUBSTITUTE (@<ADVL) (@<ADVL <val>) TARGET ("oktii") (*-1 <oktii> BARRIER S-BOUNDARY);
+    # Dat manai oktii.
+    
+LIST MANNER-ADV = "bures" "čábbát" ("fasti" Der/at Adv) ("fuotni" Der/at Adv) ("headju" Der/at Adv) "siivvut" ;
+
+SUBSTITUTE (@<ADVL) (@<ADVL <val>) TARGET MANNER-ADV (*-1 <MA-Adv-Manner> BARRIER S-BOUNDARY);
+    # Sus manná bures.
+
+#boahtit <SO-Loc-*Ani> <DE-Ill-*Ani> <SO-luhtte-Any> <DE-lusa-Any> <SO-sisa-Build> <DE-sisa-Build>
+
+#boahtit dola/áhku/goađi/jávrri lusa
+
+
+#Dasto manan das čázi viežžat.
+#mannat <SO-Loc-*Ani> <DE-Ill-*Ani> <SO-luhtte-Any> <DE-lusa-Any> <SO-sisa-Build> <DE-sisa-Build> <PS-Inf>
+#viežžat <PA-Acc-*Plc>
+
+
 
 # ======================================== #
 # Substituting back all the directed tags  #
