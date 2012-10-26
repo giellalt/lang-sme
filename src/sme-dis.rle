@@ -1119,7 +1119,7 @@ LIST ADV-AFTER-NUM = "geardde" ;
 
 LIST ADV-MOD-NP = "áibbas" "dušše" "erenoamážit" "goitge" "man" "measta" "meastui" "oalle" "oba" "oktiibuot" "oppa" "sullii" ;
 
-LIST ADV-MOD-ADV = ("áibbas" Adv) ("eanet" Adv) ("erenoamáš" Adv) ("erenoamáš" Adv) ("hirbmat" Adv) "hui" "menddo" "oalle" "nu" "oba" "oppa" ("mii" Sg Gen) ;
+LIST ADV-MOD-ADV = ("áibbas" Adv) ("eanet" Adv) ("erenoamáš" Adv) ("erenoamáš" Adv) ("hirbmat" Adv) "hui" "man" "menddo" "oalle" "nu" "oba" "oppa" ("mii" Sg Gen) ;
 
 LIST EASKKA = "easkka" "easka" ; 
 
@@ -1222,7 +1222,7 @@ SET STV = STVLIST - Der/Pass ;
 SET STV-NOT-ACT = STV - (Actio Nom) - (Actio Gen)  - (Actio Loc) -  (Actio  Com) - Der/NomAg - Der/NomAct ;
 	
 
-LIST LOCV = "ávkkástallat" "ballat" "beassat" "beroštit" "biehttalit" "bihtit" "ceavzit" "dinet" "dolkat" "eastadallat" "eastadit" "fuolahit" "fuollat" "geargat" "heaitit" "ilbmat" "jearrat" "luohpat" "máinnašit" "nohkkot" "oassálastit" "spiehkastit" "váruhit" "vástidit" ;
+LIST LOCV = "ávkkástallat" "ballat" "beassat" "beroštit" "biehttalit" "bihtit" "ceavzit" "dinet" "dolkat" "eastadallat" "eastadit" "fuolahit" "fuollat" "geargat" "heaitit" "ilbmat" "jearrat" "jearralit" "luohpat" "máinnašit" "nohkkot" "oassálastit" "spiehkastit" "váruhit" "vástidit" ;
 
 		#Note that "fuolahit" obviously has two homonymous variants: 
 		#fuolahit1+Acc, fuolahit2+Loc
@@ -1831,7 +1831,7 @@ LIST TEMPERATURE = "buolašceahkki" "buolašgráda" "lieggaceahkki" "lieggagrád
 
 LIST AMOUNT = "uhcánaš" "unnánaš" ;
 
-LIST TIME-UNIT = "jahki" "minukta" "sekunda" "vahkku" "mánnu" "diibmu" "beaivi" ;
+LIST TIME-UNIT = (".*jahki"r) "minukta" "sekunda" "vahkku" "mánnu" "diibmu" "beaivi" ;
 	# For use for rules hitting "maŋŋel" as Adv instead of Po. Also in MEASURE-set.
 
 SET MEASURE = VOLUME OR WEIGHT OR LENGTH OR AMOUNT OR TEMPERATURE OR TIME-UNIT ;
@@ -5227,6 +5227,9 @@ SELECT:r1160 CS IF (0 ("amas"))(*1 Nom BARRIER NPNHA LINK *1 Inf);
 	## Mánás leat juolggit biddjojuvvon man nu vuostái nođiid ala, amas juolggit
 	## čerggiidit. 
 
+REMOVE (Neg Sup) (0 ("amas") LINK NOT 1 WORD) ;
+	## Sáhpánvuovddi bajil lea máŋga beaivvi girddašan amas, stuora loddi.
+
 	# amat
 	# - - -
 SELECT:r1161 (Neg Sup) IF (0 ("amat"))(1 Inf); # Also Pcle?
@@ -7223,7 +7226,7 @@ SELECT:r3589 (N) + $$CASE IF (0 ADJ-N-CASE) (1 @CNP OR @CVP) (2 (N) + $$CASE) ;
 # boaris
 # - - - -
 
-SELECT A (0 ("boaris") LINK -1 ("jahki")) ;
+SELECT A (0 ("boaris") LINK -1 (".*jahki"r)) ;
 
 # dološ
 # - - - - 
@@ -7306,6 +7309,8 @@ SELECT:r1702 (A Attr) IF (*-1 BOC2 BARRIER NPNHA)(NEGATE 0 VERB)(NEGATE 1 Dem OR
 
 	# Only Attr if something to lean on
 	# ---------------------------------
+
+REMOVE:r1703 Attr IF (1 VFIN LINK NOT 0 N OR A);
 
 REMOVE:r1703 Attr IF (NOT 0 Indef OR Num)(NEGATE *1 N OR A OR (\?) BARRIER NPNHCC)(NEGATE 1 CC LINK *1 (A Attr) BARRIER WORD - GRADE-ADV LINK *1 N BARRIER NPNHCC)(NEGATE 1 PUNCT-LEFT LINK *1 PUNCT-RIGHT LINK *1 N BARRIER NPNHCC);
   	## Dalle sáhttá beaktilit háhkat guovtte ja maiddái golmmagielat (maiddái suomagielat) gelbbolašvuođa.
@@ -7406,7 +7411,7 @@ SELECT Attr IF (-1 (N Nom) LINK *-1 COPULAS LINK -1 HUMAN + Ill OR (Pers Ill))(0
 SELECT:r1727 (A Attr) IF (*-1 Num BARRIER NPNH)(*1 N BARRIER NPNH)(NEGATE 0 (V* A))(NEGATE 0 Prop LINK 1 CC)(NEGATE 0 ("kr") LINK -1 CARDINALS);
 	## Dan dihte ohcat guokte lassi stipendiáhttavirggi sámi/eamiálbmotguoskevaš dutkamiidda.
 
-SELECT:r1728 (A Attr) IF (-1 Adv LINK NOT 0 GRADE-ADV)(NEGATE 0 Inf)(*1C N BARRIER NPNH)(NEGATE 1 CLB LINK 1 N)(NEGATE 1 Prop);
+SELECT:r1728 (A Attr) IF (-1 Adv LINK NOT 0 GRADE-ADV)(NEGATE 0 Inf OR VFIN)(*1C N BARRIER NPNH)(NEGATE 1 CLB LINK 1 N)(NEGATE 1 Prop);
 	## Mánná viehkalii olggos álás julggiid.
 	## Universitehtas lea maiddái čielga nášunála ovddasvástádus...
 	
@@ -10593,7 +10598,7 @@ SELECT:r2410 Nom IF (-2C Nom)(-1 ("/"));
 SELECT:r2411 Nom IF (*-1 COMMA BARRIER VFIN LINK -1C NP-HEAD-NOM)(1 COMMA)(*2 NP-HEAD-NOM BARRIER NPNH);
 	## ..persovdnarievtti dábálaš láhkavuogádagat, bearašriekti, árberiekti,... 
 
-SELECT:r2412 Nom IF (NEGATE 0 VERB)(1 COMMA)(*2 NP-HEAD-NOM BARRIER NPNH OR CC OR COMMA LINK 1 EOS OR S-BOUNDARY2);
+SELECT:r2412 Nom IF (NEGATE 0 VERB OR (A Attr))(1 COMMA)(*2 NP-HEAD-NOM BARRIER NPNH OR CC OR COMMA LINK 1 EOS OR S-BOUNDARY2);
 	## Jáhkobii riegádii Jovsset, Márjjá boadnja.
 
 SELECT:r2413 Nom IF (-2C Nom)(-1 COMMA)(1 EOC2)(NEGATE 0 Adv LINK 1 CS)(NEGATE 0 VFIN);
@@ -10825,7 +10830,7 @@ SELECT:r2463 Acc IF (*-1 STV-NOT-ACT BARRIER SV-BOUNDARY2 OR NP-HEAD-ACC OR PUNC
 SELECT:r2465 Acc IF (*-1 STV-NOT-ACT BARRIER SV-BOUNDARY2 OR Acc OR PUNCT OR ("dego") OR ("dugo") LINK NOT 0 FAUXV LINK NOT *-1 Acc BARRIER SV-BOUNDARY2)(0 Gen)(NEGATE 0 TIME)(NEGATE 0 (Acc PxSg3) LINK 0 Loc)(NEGATE 0 Nom LINK NOT *-1 Nom BARRIER S-BOUNDARY2)(*1 (N Ill) BARRIER NOT-ADJ);
 	## Bidjet láhkaaddi lohpái seaguhit iežas dálá vuoigatvuođaide Finnmárkkus.
 
-SELECT:r2466 Acc IF (*-1C V-TRANS-ACT BARRIER SV-BOUNDARY2 OR NPNHA OR ("nugo") OR ("dego") OR ("dugo") LINK NOT 0 FAUXV OR Gen LINK NOT *-1 Acc BARRIER SV-BOUNDARY2 OR (Neg Foc/ge))(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY2)(NEGATE -1 PrfPrc LINK NOT *-1 REALCOPULAS BARRIER SV-BOUNDARY2)(NEGATE -1 NUMERALS)(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME LINK NOT 0 Px)(*1C NP-BOUNDARY OR S-BOUNDARY2 OR (Time) + Ill BARRIER WORD LINK NOT 0 Actio);
+SELECT:r2466 Acc IF (*-1C V-TRANS-ACT BARRIER SV-BOUNDARY2 OR NPNHA OR ("nugo") OR ("dego") OR ("dugo") LINK NOT 0 FAUXV OR Gen OR LOCV LINK NOT *-1 Acc BARRIER SV-BOUNDARY2 OR (Neg Foc/ge))(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY2)(NEGATE -1 PrfPrc LINK NOT *-1 REALCOPULAS BARRIER SV-BOUNDARY2)(NEGATE -1 NUMERALS)(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME LINK NOT 0 Px)(*1C NP-BOUNDARY OR S-BOUNDARY2 OR (Time) + Ill BARRIER WORD LINK NOT 0 Actio);
 	## Sámegillii galbet universitehta lea šaddan realitehta.
 	## In máhte suomagiela, eaige nieiddat máhte nu bures eŋgelasgiela.
 
@@ -14042,7 +14047,7 @@ MAP:r117 (@Num<) TARGET WEIGHT IF (*-1 Num BARRIER NOT-QMARK)(*1 FISH OR FOOD BA
 	## 1765 ja 1788 gaskal ges vuvde olgoriikii dušše 433 000 kg goikeguoli (Juel 1892: 9).
 	## Sápmelaš guhte mearragáttis ásai, galggai bivdit 857 kg dorski.
 
-MAP:r118 (@>A) TARGET (Num Sg) (1 TIME LINK 1 ("boaris") OR ("nuorra"));
+MAP:r118 (@>A) TARGET (Num Sg) (1 TIME-UNIT LINK 1 ("boaris") OR ("nuorra"));
 	## Mánná lea golbma jagi boaris.
 
 MAP (@>A) TARGET TIME + Acc (-1 (Num Pl Acc))(0 TIME + Pl LINK 1 ("boaris") OR ("nuorra"));
