@@ -4776,6 +4776,8 @@ SELECT:r1006 A IF (-1 ("eambbo"))(NEGATE 0 Comp);
 
 REMOVE:r1007 VFIN IF (*-2 VFIN BARRIER S-BOUNDARY)(-1 PrsPrc)(NEGATE -1 LEX-N) ;
 	## Johanas lei buolli ja báiti čuovggas.
+	
+REMOVE N (0 ("birrasii") LINK 1 Num)(NOT -1 Gen)  ;	
 
 	# Based on right context
 	# ----------------------
@@ -10843,7 +10845,10 @@ SELECT:r2421 Nom IF (-1 PUNCT-LEFT)(0 KLASS LINK NOT 0C ADVLCASE)(*1 PUNCT-RIGHT
 	# -------------------------------------
 
 SELECT:r2422 Nom IF (*-1 BOS LINK *1 Gen LINK 1C NP-HEAD-NOM LINK *1 TV)(-1 Gen)(0 N LINK NOT 0 VERB LINK *1 TV);
-      	## Dearvvašvuođabargiilága § 10, mii gieđahallá dieđuid addima pasienttaide, ja pasientavuoigatvuođalága § 1-3, mii gieđahallá vuoigatvuođa informerejuvvon miehtamii, leat ovdamearkkat dakkár vuoigatvuođain.
+	## Dearvvašvuođabargiilága § 10, mii gieđahallá dieđuid addima pasienttaide, ja pasientavuoigatvuođalága § 1-3, mii gieđahallá vuoigatvuođa informerejuvvon miehtamii, leat ovdamearkkat dakkár vuoigatvuođain.
+
+SELECT:r2422 Nom (-1 CC LINK *-1 VERB LINK -1 Nom)(NOT 0 VERB OR Adv)(NOT *1 VERB BARRIER S-BOUNDARY2);
+	## Nubbi goallostuvvo giehtahearggi lávžái ja goalmmát fas dan nuppi lávžái.
 
 	# Not nominative
 	# --------------
@@ -14624,9 +14629,15 @@ MAP:r220 (@P<) TARGET Gen IF (*-1 Pr BARRIER NPNH LINK *-1 Acc BARRIER NOT-QMARK
 MAP:r221 (@P<) TARGET Gen IF (*-1 TIME-PREP BARRIER NOT-NP OR CLB OR ADVLCASE)(0 TIME LINK NOT *1 Po BARRIER NOT-QMARK)(NEGATE 0 Pron)(NEGATE *1 (N Gen) BARRIER NOT-QMARK);
    ## Gávpotroggamat Várggain eai čájet o.m.d. siviila ássama ovdal 1400-jagiid (Simonsen 1959: 45).
    	## Mun vuoššan mállása juohke beaivvi earret lávvordaga ja sotnabeaivvi.
-	
+
 MAP:r222 (@P<) TARGET Gen IF (*-1 CC BARRIER S-BOUNDARY2 LINK *-1 GASKAL BARRIER S-BOUNDARY2)(*1 NP-BOUNDARY BARRIER NOT-QMARK);
 	## Dábálaččat earuha váldolaččat gaskal dábálaš (totala) geavahanvuoigatvuođaid ja sierranas (partiála) geavahanvuoigatvuođaid.
+
+MAP:PrCoord1 (@P<) TARGET Gen IF (*-1 Pr BARRIER Acc OR Nom OR VERB OR S-BOUNDARY2)(1 CC OR EOC);
+	## Maŋŋegiđa ja árrageasi guohtu boazu lulábeali rámaid, čohkaid ja jekkiid.
+
+MAP:PrCoord2 (@P<) TARGET Gen IF (*-1 Pr BARRIER NPNH)((0 Gen LINK 1 @CNP LINK *1 @P< BARRIER NPNH) OR (0 Gen LINK 1 @CNP OR COMMA LINK *1 Gen BARRIER NPNH LINK 1 @CNP OR COMMA LINK *1 @P< BARRIER NPNH));
+	## Maŋŋegiđa ja árrageasi guohtu boazu lulábeali rámaid, čohkaid ja jekkiid.
 
 MAP:r223 (@P<) TARGET (Pl Gen) IF (*-1 GASKAL BARRIER NOT-NP LINK NOT -1 (Pl Gen)) (1 NP-BOUNDARY);
 	## Finnmárkkus ii goassige leat leamaš ságastallan gaskal muhtun muddui seammadássásaš oasálaččaid.
@@ -14852,7 +14863,7 @@ MAP:r281 (@>N) TARGET Gen IF (-2 ("s") OR ("siidu") OR ("paragráfa") OR ("kapih
 
 MAP:r282 (@>N) TARGET Gen IF (NEGATE -1 NUMERALS LINK 0 Num)(NEGATE *-1 Pr BARRIER NPNH)(NEGATE 0 ALU OR Num OR RCmpnd OR ("ovttasráđđi") OR TIME OR ROUTE)(*1 N BARRIER NOT-AA OR CLB)(NEGATE 1 Inf OR (Actio Gen))(NEGATE 1 (A Ord) LINK 1 (N Loc));
 	## Vuosttaš vuojahaga fávllimus čuolda lea goaratčuoldan.
-MAP:r419 (@>N) TARGET Gen IF (NEGATE -1 NUMERALS LINK 0 Num)(*-1 Pr BARRIER NPNH)(*1 Gen BARRIER NPNH);
+MAP:r419 (@>N) TARGET Gen IF (NEGATE -1 NUMERALS LINK 0 Num)(*-1 Pr BARRIER NPNH)(*1 Gen BARRIER NPNH OR CC OR COMMA);
 	## Láhka balansere gaskkal sámi oainnu ja min oainnu.
 	
 # coordination:
@@ -15695,10 +15706,11 @@ MAP (@<SUBJ) TARGET Nom IF (*-1 (@CNP) BARRIER NPNH LINK -1 (@<SUBJ) LINK NOT 0 
 
 	# The last (N Nom)s. #	
 	# ------------------ #
-MAP (@SUBJ>) TARGET (N Nom) IF (NEGATE *-1 VFIN BARRIER SV-BOUNDARY2)(*1 VFIN);
+MAP (@SUBJ>) TARGET NP-HEAD-NOM IF (NEGATE *-1 VFIN BARRIER SV-BOUNDARY2)(NOT 0 Adv)(*1 VFIN);
 	## Mađe losit siivu, dađe njoazebut manná mátki.
-MAP (@<SUBJ) TARGET (N Nom) IF (NEGATE *1 VFIN BARRIER SV-BOUNDARY2)(*-1 VFIN)(NEGATE 0 Gen LINK *1 Ess BARRIER NPNH)(NEGATE 0 ("gaskka") LINK -1 (Gen @>P));
+MAP (@<SUBJ) TARGET NP-HEAD-NOM IF (NEGATE *1 VFIN BARRIER SV-BOUNDARY2)(*-1 VFIN)(NOT 0 Adv)(NEGATE 0 Gen LINK *1 Ess BARRIER NPNH)(NEGATE 0 ("gaskka") LINK -1 (Gen @>P));
 	## Unna mánážat dulbmet eatni askki, stuora mánát fas váimmu.
+	## Nubbi noađđeheargi goallostuvvo giehtahearggi lávžái ja goalmmátu fas dan nuppi lávžái.
 
 
 	
@@ -16605,6 +16617,9 @@ SUBSTITUTE (@<ADVL) (@ADVL>SUBJ) ADVLCASE (0 $$ADVLCASE LINK *1 (@<SUBJ) BARRIER
 
 #SUBSTITUTE:OBJ>ICL-OBJ (@OBJ) (@ICL-OBJ) Inf (-1 @-FSUBJ> OR @-FOBJ) ;
 #SUBSTITUTE:OBJ>ICL-OBJ (@OBJ) (@ICL-OBJ) Inf (1 @-FOBJ) ;
+
+SUBSTITUTE (@<SPRED) (@-F<OPRED) Ess (-1 @-F<OBJ) ;
+
 
 #MAP:r3324 (@PPRED) TARGET (A Nom) IF (*-1 NP-HEAD-NOM OR Ess BARRIER NOT-AA LINK NOT 0 Actio LINK *-1 COPULAS BARRIER NOT-AA LINK *-1 NP-HEAD-NOM) ;
 #MAP (@PPRED) TARGET Ess IF (NEGATE 0 Num)(*-1 NP-HEAD-NOM OR Ess BARRIER NOT-AA LINK NOT 0 Actio LINK *-1 COPULAS BARRIER NOT-AA LINK *-1 NP-HEAD-NOM) ;
