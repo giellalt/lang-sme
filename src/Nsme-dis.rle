@@ -753,16 +753,16 @@ SET MAIN-V = V - COPULAS - Neg - MOD-ASP OR ("orrut") ;
  
 # The set of verbs that can be main verbs. Includes AUX-OR-MAIN.
 
-LIST TRANS-V = TV (IV Der/ahtti) (IV Der/h) ;
+LIST TRANS-V1 = TV (IV Der/ahtti) (IV Der/h) ;
 # This is only a tool for making the following sets, bacause of that the symbols (|) and (-) in the set don´t function as one had expected.
-SET TRANS-ACT-V = TRANS-V - (TV Der/PassS) - (TV Der/PassL);
+SET TRANS-ACT-V = TRANS-V1 - (TV Der/PassS) - (TV Der/PassL);
  #XXX Never acc-obj for a.l. or actor?
  # All active verbs with a TV tag, including AUX-OR-MAIN.
  
-SET TRANS-ACT-NOT-AUX-V = TRANS-V - Der/Pass - AUX ;
+SET TRANS-ACT-NOT-AUX-V = TRANS-V1 - Der/Pass - AUX ;
 
-SET TRANS-ACT-NOT-ACT-V = TRANS-V - Der/Pass - Actio - Der/NomAct - Der/NomAg - PrsPrc - Attr OR (TV Actio Ess) ;
-
+#!! TRANS-V is the set for verbs really taking objects
+SET TRANS-V = TRANS-V1 - Der/Pass - Der/NomAct - Der/NomAg - PrsPrc ;
 
 #!! Sets for verbs choosing oblique objects or adverbials
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -775,8 +775,9 @@ LIST STVLIST = (IV Der/ahtti) (IV Der/h) "addit" "amašit" "atnit" "ánssášit"
 
 SET STRICT-TV-V = STVLIST - Der/Pass ;
 
-	
-SET STRICT-TV-NOT-ACT = STRICT-TV-V - (Actio Nom) - (Actio Gen)  - (Actio Loc) -  (Actio  Com) - Der/NomAg - Der/NomAct ;
+#!! STRICT-TRANS-V is the set for verbs which don't leat a GenAcc be a modifyer of anything else than an object, e.g. Mun organiseren eatni gievkkanis. - eatni wants to be the object
+
+SET STRICT-TRANS-V = STRICT-TV-V - (Actio Nom) - (Actio Gen)  - (Actio Loc) -  (Actio  Com) - Der/NomAg - Der/NomAct ;
 	
 
 LIST LOC-V = "ávkkástallat" "ballat" "beassat" "beroštit" "biehttalit" "bihtit" "ceavzit" "dinet" "dolkat" "eastadallat" "eastadit" "fuolahit" "fuollat" "geargat" "heaitit" "ilbmat" "jearrat" "jearralit" "luohpat" "máinnašit" "nohkkot" "oassálastit" "spiehkastit" "váruhit" "vástidit" ;
@@ -1089,7 +1090,7 @@ SET NP-HEAD-GEN    = (Pron Gen) OR (N Gen) OR (A Gen) - RCmpnd - Dem - ("buorre"
 # - - - - - - - - - - - - - - - -
 
 SET PRE-NP-HEAD = (Prop Attr) OR (Prop @>N) OR (A Attr) OR (ABBR Attr) OR ("buorre") OR (Pron Pers Gen) OR (N Gen) OR 
-         Num OR RCmpnd OR CC OR (Pron Dem) OR (Pron Refl Gen) OR (Pron Indef) OR 
+         Num OR RCmpnd OR CC OR (Pron Dem) OR (Pron Refl Gen) OR (Indef Attr) OR 
          (PrfPrc @>N) OR PrsPrc OR (A Ord) ;
          # The strict version of items that can only be premodifiers, not parts of the predicate
          
@@ -1115,15 +1116,16 @@ SET PRE-APP   = COMMA OR PUNCT-LEFT OR PRE-NP-HEAD ;
 
 # There must be a sensible naming convention for these sets...
 # Most strict BARRIERs...
-SET NPNH     = WORD - PRE-NP-HEAD OR ABBR ;                     
-# NPNH  = "NOT-PRE-NP-HEAD" 
-SET NPNH1     = NPNH - Acc OR ABBR ; 
-# To be used in mappingrules, before hte disambuation of Acc and Gen.                     
 
-SET NPNHA    = WORD - PRE-NP-HEAD - Adv ;                      
-# NPNHA = "NOT-PRE-NP-HEAD-OR-ADV"
-SET NPNHAI   = WORD - PRE-NP-HEAD - Adv - Indef ;              
-# NPNHAI = "     ...-OR-INDEF"
+SET NOT-NPMOD     = WORD - PRE-NP-HEAD OR ABBR ;                     
+# NOT-NPMOD  = "NOT-PRE-NP-HEAD" 
+SET NOT-NPMOD1     = NOT-NPMOD - Acc OR ABBR ; 
+# To be used in mappingrules, before the disambuation of Acc and Gen.                     
+
+SET NOT-NPMODADV    = WORD - PRE-NP-HEAD - Adv ;                      
+# NOT-NPMODADV = "NOT-PRE-NP-HEAD-OR-ADV"
+#SET NOT-NPMODADV-INDEF   = WORD - PRE-NP-HEAD - Adv - Indef ;              
+## NPNHAI = "     ...-OR-INDEF"
 SET NPNHAII  = WORD - PRE-NP-HEAD - Adv - Indef - Ill ;        
 # Illative indir.obj.
 SET NPNHAIIP = WORD - PRE-NP-HEAD - Adv - Indef - Ill - Pcle ; 
@@ -1135,7 +1137,7 @@ SET NAPP     = WORD - PRE-APP ;
 # ... Most sloppy BARRIERs
 
 # Set for NP with participle premodifier
-# ... IF *-1 X BARRIER NPNH OR 
+# ... IF *-1 X BARRIER NOT-NPMOD OR 
 # LocComIll are ok, but only with a PrfPcc to the right
 
 # Other negatively defined morphosyntactic noun sets
@@ -1962,40 +1964,29 @@ SET CP = (Pron Interr) OR (Pron Rel) OR MO ;
 
 LIST BOUNDARYSYMBOLS =  "\;" ":" "-" "–" ;
 
-SET S-BOUNDARY  = CP OR BOUNDARYSYMBOLS OR ("muhto") OR ("de" Adv) OR (Neg Sup) OR CS ;
-	# includes CP. Remember that (",") and CC are potential sentence boundaries, too
-
-SET S-BOUNDARY1 = CP OR BOUNDARYSYMBOLS OR ("muhto") OR ("de" Adv) OR (Neg Sup) ;
-	# does not include CS, because of "go" in questions, before it is disambugated.
 	
-SET S-BOUNDARY2 = CP OR BOUNDARYSYMBOLS OR ("muhto") OR ("de" Adv) OR (Neg Sup) OR (@CVP) ;
+SET S-BOUNDARY = CP OR BOUNDARYSYMBOLS OR ("muhto") OR ("de" Adv) OR (Neg Sup) OR (@CVP) ;
+	# does not include CS, because of "go" in questions, before it is disambugated.
 	# includes CP
 	# this one includes @CVP, the conjunction which actually connects two sentences (each with a finite verb) to each other, 
 	# and not @CNP, which coordinates internal NP-/AdvP-/AP ... coordination
 	# To be used only AFTER the disambiguation of @CVP and @CNP taking place in the chapter right before "Disambiguating pronouns"
 
-# S-BOUNDARY2 is used as barrier. When used as target, rather than as barrier,
-# it includes BOS and EOS, and is given the names BOC and EOC (beginning and end of clause)
 
 SET BOC = S-BOUNDARY OR BOS ;
-SET BOC2 = S-BOUNDARY2 OR BOS ;
 SET BOC-PUNCT = BOC - ("-") - ("–") ; 
 SET EOC = S-BOUNDARY OR EOS ;
-SET EOC2 = S-BOUNDARY2 OR EOS ;
 
 SET NP-BOUNDARY = BOS OR EOS OR REAL-CLB OR VFIN OR Inf OR (Actio Ess) OR ConNeg OR VGen OR Sup OR PPRON-NOT-GEN OR Recipr OR Po OR Pr OR Pcle OR ("jed") OR Interj OR CS OR CP ;
 
 SET APP-BOUNDARY = REAL-CLB OR VFIN OR Inf OR (Actio Ess) OR ConNeg OR VGen OR Sup OR Recipr OR Po OR Pr OR Pcle OR Interj OR CS OR CP ;
 # A special barrier used with mapping of appositions. 
 
-#SET SV-BOUNDARY = S-BOUNDARY OR Inf OR Sup OR MAIN-V ;
-
 # To be used in mappingrules and before mapping because FMAINV-set contents @
 SET SV-BOUNDARY = S-BOUNDARY OR Inf OR Sup OR MAIN-V - PrsPrc ;
  # VFIN-NOT-AUX ;
  # should be MAIN-V linked to VFIN-aux to the left. (cg-3)
 # This set is ment to use in rules for disambiguating due to verbs or verbsets. It contents @.
-SET SV-BOUNDARY2 = S-BOUNDARY2 OR FMAINV OR Inf OR Sup ;
 
 SET SVF-BOUNDARY = S-BOUNDARY OR VFIN ;
 
@@ -2126,7 +2117,7 @@ SELECT:r912 (Nom PxSg1) IF (-1 BOS)(NEGATE 0 VFIN)(1 EOS);  # Needs no disambigu
 	#$ Ustibažžan! 
 
 #!! *N Acc PxSg1 after a TV verb. Exception for Aux.
-SELECT:r915 (N Acc PxSg1) IF ((-1 TRANS-ACT-NOT-ACT-V + Sg1 LINK NOT 0 AUX) OR (-1 TRANS-ACT-NOT-ACT-V + PrfPrc LINK -1 COPULAS + Sg1) OR (-1 TRANS-ACT-NOT-ACT-V + ConNeg LINK -1 Neg + Sg1))(NEGATE *1 Acc BARRIER REAL-V)(NEGATE *1 ("ahte") BARRIER WORD);
+SELECT:r915 (N Acc PxSg1) ((-1 TRANS-V + Sg1 LINK NOT 0 AUX) OR (-1 TRANS-V + PrfPrc LINK -1 COPULAS + Sg1) OR (-1 TRANS-V + ConNeg LINK -1 Neg + Sg1))(NEGATE *1 Acc BARRIER REAL-V)(NEGATE *1 ("ahte") BARRIER WORD);
 	#$ Mun oidnen vielljan.
 	#$ Mun lean oaidnán vielljan.
 	#$ Mun in oaidnán vielljan.
@@ -2288,6 +2279,10 @@ SELECT:r2143 Gen IF (NEGATE 0 Adv OR PrfPrc OR (Num Nom))(1C Po)(NEGATE 1 Px OR 
 	#!! *Verbs
 
 #!! *NOMEN
+
+#SUBSTITUTE WORD (WORD <sme>) ;
+#smi-syn.rle
+
 	#!! *Genitive after preposition -- round 2
 ##############################
 #####!! *MAINLY MAPPING-RULES #####
