@@ -8004,7 +8004,7 @@ REMOVE:r1911 Prop IF (0 ("ovdal"))(NEGATE 1 Sur);
 	# ---------------------------------------
 LIST VFIN-TAG = (V Ind Prs Sg1) (V Ind Prs Sg2) (V Ind Prs Sg3) (V Ind Prs Du1) (V Ind Prs Du2) (V Ind Prs Du3) (V Ind Prs Pl1) (V Ind Prs Pl2) (V Ind Prs Pl3) (V Ind Prt Sg1) (V Ind Prt Sg2) (V Ind Prt Sg3) (V Ind Prt Du1) (V Ind Prt Du2) (V Ind Prt Du3) (V Ind Prt Pl1) (V Ind Prt Pl2) (V Ind Prt Pl3) ;  
 
-SELECT $$VFIN-TAG (NEGATE *-2 VFIN BARRIER S-BOUNDARY)(-1 $$VFIN-TAG LINK NOT 0 AUX OR N)(NOT 0 N) ;	
+SELECT:SSVFIN-TAG $$VFIN-TAG (NEGATE *-2 VFIN BARRIER S-BOUNDARY)(-1 $$VFIN-TAG LINK NOT 0 AUX OR N)(NOT 0 N) ;	
 	## Mii borrat hapmat.	
 
 	# Neg
@@ -8074,7 +8074,7 @@ SELECT:ImprtLeat Imprt IF (-1 BOS OR PUNCT OR REALCLB)(0 ("leat"))(1 A);
 SELECT:ImprtDál Imprt IF (-1 BOS OR PUNCT OR REALCLB)(1 ("dál"))(2 COMMA)(3 Rel OR Adv);
 	## Gullet dál, maid veardádus gilvi birra mearkkaša...
 	
-SELECT Imprt (-1 COMMA LINK -1 Imprt LINK *-1 BOS BARRIER NOT-ADV);
+SELECT:ImprtComma Imprt (-1 COMMA LINK -1 Imprt LINK *-1 BOS BARRIER NOT-ADV);
 
 	# Infinitive
 	# ----------
@@ -8082,7 +8082,7 @@ SELECT Imprt (-1 COMMA LINK -1 Imprt LINK *-1 BOS BARRIER NOT-ADV);
 REMOVE:r1809 Pl1 IF (-1 VFIN LINK NOT 0 N)(0 Inf);
 	## Bargu lei árvvoštallat dan.
 
-SELECT (Inf @COMP-CS<) ;
+SELECT:InfCompCs (Inf @COMP-CS<) ;
 	## Anán buorebun odne vuolgit go ihttážii vuordit. # Tøff regel
 
 SELECT:r1811 Inf IF (*-1 ("amas" CS) BARRIER VERB);
@@ -8163,7 +8163,7 @@ SELECT:r1831 Inf IF (-3 ("dat" Sg3 Gen))(-2 ("ala"))(-1 ("ahte"));
 SELECT:r1832 Inf IF (*-1 INFV BARRIER SV-BOUNDARY OR Inf LINK *1 CC BARRIER SV-BOUNDARY OR Inf)(0 Inf);
     ## ...ahte lea ferten niesteseahka dahje lávkka guoddit.
 
-SELECT Inf (*-1 (V Neg) BARRIER NOT-ADV-PCLE LINK NOT *1 ConNeg BARRIER VERB) ;
+SELECT:InfAfterNeg Inf (*-1 (V Neg) BARRIER NOT-ADV-PCLE LINK NOT *1 ConNeg BARRIER VERB) ;
 
 	# Verbgenitive
 	# ------------
@@ -8213,7 +8213,7 @@ REMOVE:r1842 VGen IF (0 (VGen));
 	# Supinum vs. potential
 	# --------------------
 SELECT:r3584 Pot IF (NEGATE *-1 VFIN BARRIER SV-BOUNDARY OR COMMA)(0 Sup);
-REMOVE Pot IF (*-1 VFIN BARRIER SV-BOUNDARY OR COMMA)(0 Sup);	
+REMOVE:RemPot Pot IF (*-1 VFIN BARRIER SV-BOUNDARY OR COMMA)(0 Sup);	
 	
 	## Eat dieđe, vuoššažit go bierggu dál.   (Pot)
 	## Son bođii sisa biepmu vieččažit.    (Sup)
@@ -8323,7 +8323,7 @@ SELECT:r1871 PrfPrc IF (*-2 PrfPrc BARRIER SV-BOUNDARY OR CC)(-1 CC)(0 ("leapma"
 
 	# Actio
 	# -----
-REMOVE PrfPrc IF (-1 NP-HEAD-GEN)(0 (TV Actio Gen))(1 N)(2 NP-BOUNDARY OR Dem);
+REMOVE:NoPrfPrcIfActio PrfPrc IF (-1 NP-HEAD-GEN)(0 (TV Actio Gen))(1 N)(2 NP-BOUNDARY OR Dem);
 #SELECT:r1872 Actio IF (-1 ACTOR OR (Pron Pers) LINK 0 Gen)(0 Actio)(1 N)(2 NP-BOUNDARY OR Dem);
 	## Háliidit go sii konvenšuvnna mearridan vuoigatvuođaid sirdojuvvon earáide? 
 	# XXX r1872 is a strong rule -- do a follow up and check whether it hits too often.
@@ -8332,7 +8332,7 @@ REMOVE PrfPrc IF (-1 NP-HEAD-GEN)(0 (TV Actio Gen))(1 N)(2 NP-BOUNDARY OR Dem);
 		
 SELECT:r1873 Gen IF (-1 ("sápmi"))(0 ("álbmotválljet"))(1 ("orgána"));	
 
-SELECT (Actio Nom)(1 ("ládje") OR ("láhkai")) ;
+SELECT:ActioIfNextIsLadje (Actio Nom)(1 ("ládje") OR ("láhkai")) ;
 
 	# Present participle
 	# ------------------
@@ -8430,7 +8430,7 @@ REMOVE:r2880 Imprt IF (*-2 BOS LINK 1 NP-MEMBER)(NEGATE *1 ("excl"));
 SELECT:r2881 Imprt (*-1 BOS OR (":") BARRIER WORD)(0 Ind)(NEGATE 0 Qst)(*1 ("excl"));  
 	## Buktet deike Jacke pistovlla!
 
-SELECT Pl2 (*-1C (Pl2 Prs) BARRIER VERB LINK *-1 ("jus"))(0 Pl3) ;
+SELECT:Pl2IfOtherPl2 Pl2 (*-1C (Pl2 Prs) BARRIER VERB LINK *-1 ("jus"))(0 Pl3) ;
 	## Jus bivddežehpet, de addet munnje nai oasi.
 
 	# Nouns vs. verbs
@@ -8448,7 +8448,7 @@ REMOVE (Actio Ess) IF (-1 (Num Gen) OR (Num Nom))(0 (N Gen));
 SELECT:ActEssIfSensationv (Actio Ess) IF (-1 Acc LINK *-1 PERCEPTION-V BARRIER SV-BOUNDARY);
 	## Go gulan olbmuid sámásteame, de lea dego doložii máhccat, go mánnán gullen áhči,  eagi ja Ristiinna-imi humadeame.
 
-REMOVE Actor (0 VFIN + Sg3) ;
+REMOVE:NoActorIfSg3 Actor (0 VFIN + Sg3) ;
 
 
 SELECT:DemAttr $$CASE + (Dem Sg) (0 DAT-PRON)(*1 $$CASE + (N Sg) BARRIER NPNH OR (Time) OR Num LINK NOT 0 VFIN OR ("leat") OR (Actio Ess))(NEGATE 0 Acc LINK *-1 STV-NOT-ACT BARRIER Acc LINK *1 Dem LINK NOT *1 Acc BARRIER NPNH)  ; 
