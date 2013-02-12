@@ -2009,17 +2009,23 @@ SET NON-APP = ALLSYNTAG - (@APP);
 #!! These were the set types.
 
 
-#!! !!!DISAMBIGUATION RULES  
-
-#!! New approach to the rule file
-
 SECTION
 
-#!! !!!Popular rules
+
+#!! !!!DISAMBIGUATION RULES  
+#!! !!One-cohort disambiguation - cycle 0
+#!! !!The section for popular rules 
+#!! !!Propernouns
+
+#!! *Selects Prop if capital letter inside clause
+SELECT:r855 Prop (NEGATE *-1 BOS OR (":") BARRIER WORD)(0 N LINK NOT 0 (Der/t) OR (Der/laš));
+
+#!! *Removes Prop if Pl
+REMOVE:r863 (Prop Pl) IF (0 COMMON-N)(NEGATE 0 VGen); 
+  	#$ Sápmelaččaide lea hui mávssolaš ahte sin dárbbut váldojit vuhtii. 
 
 
-#!! !!Popular lexical rules 
-
+#!! **Lexicalised derivations
 #!! Lexicalised words, not derivations
 #!! *Removes DER-V if lexicalised.
 REMOVE:r548 DER-V IF (0 LEX-V)(NEGATE 0 (eaddji));
@@ -2037,12 +2043,6 @@ REMOVE:r544 DER-A OR PrsPrc OR VGen (0 LEX-A);
  	#$ Áššis biddjui mearrideaddji deaddu dasa ahte... 
  	#$ Na varas guolli dal lea buorre.
 
-#!! *Removes lága Ess if Indef ja lágan A
-SELECT:r556 A IF (-1 Indef)(0 ("lága" Ess));
-	## muhtun lágan
- 	
-
- 	
 #!! *REMOVE:der *Does this function?
 REMOVE:derV DER-V (0 LEX-V) ; 
 
@@ -2066,16 +2066,17 @@ REMOVE:derST Der/st (0 Der/ahtti) ;
 REMOVE:dervuohta Attr (0 Der/vuohta) ; 
 
 
-#!! !!Propernouns
+#!! **Adjectives or nouns, not adverbs
 
-#!! *Selects Prop if capital letter inside clause
-SELECT:r855 Prop (NEGATE *-1 BOS OR (":") BARRIER WORD)(0 N LINK NOT 0 (Der/t) OR (Der/laš));
+#!! *Removes lága Ess if Indef ja lágan A
+SELECT:r556 A IF (-1 Indef)(0 ("lága" Ess));
+	## muhtun lágan
 
-#!! *Removes Prop if Pl
-REMOVE:r863 (Prop Pl) IF (0 COMMON-N)(NEGATE 0 VGen); 
-  	#$ Sápmelaččaide lea hui mávssolaš ahte sin dárbbut váldojit vuhtii. 
-
-
+#!! **Lexicalised adverbs
+#!! **Adverbs, not nouns or adjectives
+#!! **Lexicalized indefinite pronoun 
+#!! **Nouns
+#!! **Not noun
 #!! !!Interj: 
 #!! * voja voja nana nana
 LIST INTERJ-LEMMA = (".*"r Interj) ;
@@ -2083,12 +2084,12 @@ LIST INTERJ-LEMMA = (".*"r Interj) ;
 SELECT:Interjlemma $$INTERJ-LEMMA ((1 $$INTERJ-LEMMA) OR (-1 $$INTERJ-LEMMA)) ;
 	#$ Guohttehehket dál dearvan mu bohccuid, nana nana voja voja.
 
+
 #!! !!Southern Locative vs. Essive
 
 REMOVE:r824 (N Sg Loc) OR (A Sg Loc) IF (0 Ess)(NEGATE 0 Actio LINK NOT 0 ESS-ADVL-N)(NEGATE -1 CC LINK -1 Loc LINK NOT 0 Ess);
 	## girkun # This is a rule that prevents southern dialectal forms to destroy the rest of the # parser. It should be commented out whenever analysing texts with Locative -n only. # All words with Cg will avoid this rule, since e.g. várin is southern Loc only.
 	#$ Luossa-bivdin joddu-buođuin deanus.  
-
 #!! !!Px-rules for special nouns
 
 #!! *Remove Px for a special nouns
@@ -2100,11 +2101,13 @@ REMOVE:r826Px Px IF (0 N-NOPX + Px OR Num + Px OR Der/NomAct + Px OR MANNU + Px 
 #!! *Select Po for gaskaneaset	
 SELECT:r828 Po IF (0 ("gaska" N Ess)); 	
 	#$ Sii árvališgohte gaskaneaset.
-	
+#!! **Some verb rules
+#!! **Particular verbs
 
-
-
-#!! !!Px constraints (need some verb og pronoun disambiguation)
+#!! !!Local disambiguation - cycles 1 and 2 
+#!! *FAMILY pronouns
+#!! *An early rule for "eanaš"/"eanas"
+#!! !!Px constraints 
 
 #!! * Nom PxSg1 (not Ess) in the beginning of a sentence.
 SELECT:r912 (Nom PxSg1) IF (-1 BOS)(NEGATE 0 VFIN)(1 EOS);  # Needs no disambiguation.
@@ -2122,44 +2125,20 @@ SELECT:r915 (N Acc PxSg1) ((-1 TRANS-V + Sg1 LINK NOT 0 AUX) OR (-1 TRANS-V + Pr
 #!! *PxSg2 if SG2-V
 SELECT:r921 (PxSg2) IF (-1 SG2-V LINK NOT 0 REAL-COPULAS LINK -1 DON)(NEGATE 0 Attr OR Adv LINK *1 N BARRIER NOT-PRE-A-N); # Needs no disambiguation. The DON-constraint because of homonymi with (N Pl)
 	#$ Don attát heakkat mu ovddas?
+#!! *Certain verb readings
+#!! *Cycle 1b: removing the readings that were left from the 1a rules 
+#!! *Removing (nearly) all remaining Px readings
 
-
-
-	#!! !!Disambiguation rules  
-       	#!! *One-cohort disambiguation - cycle 0
-       		#!! **The section for popular rules 
-       		#!! **Proper nouns
-        	#!! **Lexicalised derivations
-        	#!! **Lexicalised adjectives
-			#!! **Adjectives or nouns, not adverbs
-        	#!! **Lexicalised adverbs
-			#!! **Adverbs, not nouns or adjectives
-			#!! **Lexicalized indefinite pronoun 
-			#!! **Nouns
-        	#!! **Not noun
-			#!! **Southern Locative vs. Essive
-        	#!! **Px
-			#!! **Some verb rules
-        	#!! **Particular verbs
-
-	#!! !!Local disambiguation - cycles 1 and 2 
-	#!! *FAMILY pronouns
-	#!! *An early rule for "eanaš"/"eanas"
-	#!! *Px constraints
-	#!! *Certain verb readings
-	#!! *Cycle 1b: removing the readings that were left from the 1a rules 
-	#!! *Removing (nearly) all remaining Px readings
-
-  #!! *Noun or not?
-  #!! *Early possessive rule    
-  #!! *Adjectives and adverbs
-  #!! *Disambiguationg abbreviations
-  #!! *Rules relating to particular adpositions
-  #!! *Some particular subjunctions
-  #!! *CC removal for specific CC candidates
-  #!! *Some particular subjunctions
-  #!! *Adverb rules
-  #!! *Complements of particles in comparison
+ #!! *Noun or not?
+ #!! *Early possessive rule    
+ #!! *Adjectives and adverbs
+ #!! *Disambiguationg abbreviations
+ #!! *Rules relating to particular adpositions
+ #!! *Some particular subjunctions
+ #!! *CC removal for specific CC candidates
+ #!! *Some particular subjunctions
+ #!! *Adverb rules
+ #!! *Complements of particles in comparison
 
 #######!! *Mapping of COMP-CS<, CC and CS
 
@@ -2169,7 +2148,7 @@ SELECT:r921 (PxSg2) IF (-1 SG2-V LINK NOT 0 REAL-COPULAS LINK -1 DON)(NEGATE 0 A
 #!! *CNP / CVP
 
 #!! !PRONOUNS
-	#!! *Disambiguating pronouns 
+#!! *Disambiguating pronouns 
 
 	#!! *Emphatic ieš     
 
