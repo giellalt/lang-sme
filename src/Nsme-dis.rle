@@ -2470,6 +2470,9 @@ REMOVE (@X) ;
 #!! (with their special syntax), infinitive, and other infinite forms. 
 #!! Person comes later (in part 2)
 
+
+# 1315446
+
 #!! !!ConNeg forms
 
 #!! * __ConNegImp__ selects ConNeg Imprt if Neg Imprt to the left.
@@ -2484,35 +2487,210 @@ SELECT:ConNegIfNeg ConNeg IF (*-1 (Neg Ind) BARRIER ConNeg OR PrfPrc OR SV-BOUND
 SELECT:ConNegCondIfNeg (Cond ConNeg) IF (*-1 (Neg Ind) BARRIER ConNeg OR SV-BOUNDARY);
 	## Ii go son ollu eanet gárvvohivčče din?
 
-#!! * __NotConNegNotNeg__ removes remaining ConNegs whenever no Neg to the left.
-REMOVE:NotConNegNotNeg ConNeg IF (NEGATE *-1 Neg BARRIER SV-BOUNDARY OR go)(NEGATE -1 Rel LINK -1 Neg)(NEGATE -2 Rel LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-AA LINK *-1 ConNeg BARRIER VFIN);
-
-#!! * __NotConNegII__ removes ConNegII if no Neg Imprt around. This is important, as the homonym forms are common.
-REMOVE:NotConNegII (ConNegII) IF (NEGATE *-1 (Neg Imprt) BARRIER SV-BOUNDARY);
-	## Dasgo mii oinniimet su nástti badjáneamen ja leat boahtán...
-	## Stáhta galgá fuolahit ahte gávdno divššohasbearráigeahčči juohke fylkkas.
-
-# The following 3 SELECT rules should probably be moved in front of the preceeding REMOVE rules. Check.
-
-SELECT:ConNegImpCC (Imprt ConNeg) IF (*-1 CC BARRIER NOT-ADV LINK *-1 (Imprt ConNeg) BARRIER REAL-V);
-SELECT:ConNegIndCC (Ind ConNeg) IF (*-1 CC BARRIER NOT-ADV LINK *-1 (Ind ConNeg) BARRIER NOT-ADV);
-	## Allet nappo moraš ja cealkke...
 
 SELECT:ConNegPrfPrc ConNeg IF (*-1 PrfPrc BARRIER NOT-ADV-PCLE LINK *-1 Neg BARRIER SV-BOUNDARY)(0 ("leat"))(NEGATE *1 PrfPrc BARRIER NOT-ADV-PCLE);
 	## Ii dál láhppán gal leat.
 	# Need more advanced rule to select ConNeg when there is more
 	# material between Neg and ConNeg.
 
+
+
+SELECT:ConNegImpCC (Imprt ConNeg) IF (*-1 ("dahje") + CC BARRIER NOT-ADV LINK *-1C (Imprt ConNeg) BARRIER REAL-V);
+SELECT:ConNegIndCC (Ind ConNeg) IF (*-1 ("dahje") + CC BARRIER NOT-ADV LINK *-1C (Ind ConNeg) BARRIER NOT-ADV);
+	## Allet nappo moraš ja cealkke...
+
+
+#!! * __NotConNegII__ removes ConNegII if no Neg Imprt around. This is important, as the homonym forms are common.
+REMOVE:NotConNegII (ConNegII) IF (NEGATE *-1 (Neg Imprt) BARRIER SV-BOUNDARY);
+	## Dasgo mii oinniimet su nástti badjáneamen ja leat boahtán...
+	## Stáhta galgá fuolahit ahte gávdno divššohasbearráigeahčči juohke fylkkas.
+
+
+
 #!! * __NotConNegIfNotNeg__ removes ConNeg if no Neg to the left. Consider unifying with NotConNegNotNeg.
 REMOVE:NotConNegIfNotNeg ConNeg IF (NEGATE *-1 Neg BARRIER CLB OR Ind)(NEGATE *-1 Nom LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-AA LINK *-1 ConNeg BARRIER VFIN); 
 	## Juohke muorra mii ii šaddat buriid šattuid, čullojuvvo ja bálkestuvvo dollii.
 	## Gávpot mii lea vári alde, ii sáhte leat čihkosis.
 
+#!! * __NotConNegNotNeg__ removes remaining ConNegs whenever no Neg to the left.
+REMOVE:NotConNegNotNeg ConNeg IF (NEGATE *-1 Neg BARRIER SV-BOUNDARY OR go)(NEGATE -1 Rel LINK -1 Neg)(NEGATE -2 Rel LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-AA LINK *-1 ConNeg BARRIER VFIN);
+# Look at this and the previous one: they overlap appr 95%, but both catch some cases the other rule does not. 
+
+
+
 
 
 
 #!! !!Imperative
+
+#!! See also ''Imprt or Ind'' some sections down.
+
+#!! * __ImprtLeat__ 
+SELECT:ImprtLeat Imprt IF (-1 BOS OR PUNCT OR REAL-CLB)(0 ("leat"))(1 A);
+	## Leage buorre!
+	
+#!! * __ImprtDál__ 
+SELECT:ImprtDál Imprt IF (-1 BOS OR PUNCT OR REAL-CLB)(1 ("dál"))(2 COMMA)(3 Rel OR Adv);
+	## Gullet dál, maid veardádus gilvi birra mearkkaša...
+	
+
+#!! * __ImprtComma__ 
+SELECT:ImprtComma Imprt (-1 COMMA LINK -1 Imprt LINK *-1 BOS BARRIER NOT-ADV);
+
+#!! * __ImprtNotVGen
+REMOVE:ImprtNotVGen VGen (-1 BOS OR PUNCT OR REAL-CLB)(0 Imprt);
+
+#!! * __NotImprtInd__ 
+REMOVE:NotImprtInd Imprt IF (*-1 (Neg Ind) BARRIER CLB OR Ind);
+
+#!! * __NotImprtConNeg__ 
+REMOVE:NotImprtConNeg Imprt IF (*-1 ConNeg BARRIER COMMA OR SV-BOUNDARY);
+	## Go bohciida soahpameahttunvuohta das ahte galget go journála... 
+	## Mánát eai gillen dálu čorget.
+	## Na muhto don it leat dasa nama čállán!
+
+#!! * __NotImprtA__ 
+REMOVE:NotImprtA Imprt IF (-1 A LINK NOT 0 Ess);
+
+#!! * __NotImprtN__ 
+REMOVE:NotImprtN Imprt IF (-1 N OR Po);
+	## Čuorvvas gullo Ramas. 
+	## Boarrásis leai dat vel eanaš ealáhussan ge.
+ # This will work fine when headings no longer interfere.
+
+
+#!! * __NotImprtVFIN__ 
+REMOVE:NotImprtVFIN Imprt IF (*1C VFIN BARRIER NOT-ADV-PCLE OR CLB);
+	## Lágas ii duššaduvvo oktage bustávaš dahje čuoggáš, ovdal go...
+
+
+#!! * __NotImprtSlash__ 
+REMOVE:NotImprtSlash Imprt IF (*-1 ("\(") BARRIER ("\)"))(0 N);
+	## Láigolihtus eai čuovo makkárge sierravuoigatvuođat gáddái (buo.
+	## riehkit, stárat).
+
+
+# Moving candidates down:
+#!! * __NotImprtGo__ 
+REMOVE:NotImprtGo Imprt IF (1 ("go" Pcle));
+
+
 #!! !!Infinitive
+
+#!! This section still not evaluated
+
+#!! * __r18__ 
+REMOVE:r1809 Pl1 IF (-1 VFIN LINK NOT 0 N)(0 Inf);
+	## Bargu lei árvvoštallat dan.
+
+#!! * __r18__ 
+SELECT:InfCompCs (Inf @COMP-CS<) ;
+	## Anán buorebun odne vuolgit go ihttážii vuordit. # Tøff regel
+
+#!! * __r18__ 
+SELECT:r1811 Inf IF (*-1 ("amas" CS) BARRIER REAL-V);
+	## ...amaset sin čalmmit oaidnit,... 
+	## ...amas lojes hearggit livvut. 
+
+#!! * __r18__ 
+SELECT:r1812 Inf IF (*-1 NP-HEAD-SG-NOM BARRIER NOT-ADV-PCLE LINK *-1 CC BARRIER NOT-NPMODADV LINK *-1 Inf BARRIER NOT-ADV);
+	## Dearvvašvuođaveahkkedárbu galgá árvvoštallojuvvot ja diehto addojuvvot.
+ # This rule has to come before the ones below.
+ 
+#!! * __r18__ 
+SELECT:r1813 Inf IF (*-1 INF-V BARRIER SV-BOUNDARY OR Neg LINK NOT 0 N OR PrfPrc)(NEGATE *1 Inf BARRIER SV-BOUNDARY);
+  	## Bissuin galgá heahkkahuhttit, ii nie váigadit goddit; sáhttá leat váiga.
+ 
+#!! * __r18__ 
+SELECT:r1814 Inf IF (-1 BOS)(*1 ("ii" V IV Neg Ind Sg3) BARRIER V);
+	## Viežžat viervván rivgo čiektageregin ii leat ásti, iige sáváháhttin.
+
+#!! * __r18__ 
+SELECT:r1815 Inf IF (*-1 ("veara") BARRIER NOT-ADV LINK -1 COPULAS); 	
+
+	# Rules that prevent later selection of Inf for a finite verb in the frame 						  
+	# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+	# INF-V...CC... __r18__	
+ 
+#!! * __r18__ 
+REMOVE:r1816 Inf IF (*-1 NP-HEAD-PL-NOM BARRIER NOT-NPMODADV LINK -1 CC)(NEGATE *-1 A BARRIER NOT-ADV-PCLE)(NEGATE *-1 INF-V OR Inf BARRIER REAL-V);
+#!! * __r18__ 
+REMOVE:r1817 Inf IF (*-1 (Num Nom) BARRIER NOT-N-A LINK -1 CC LINK NOT *-1 Inf OR INF-V BARRIER VFIN);
+	## ...ja ollugat biehttalit iežaset sámevuođa.
+	## ...ja máŋga Davviálbmogiid fakultehta studeantta leat oasi oahpus gazzan Romssa universitehtas.
+
+#!! * __r18__ 
+REMOVE:r1818 Inf IF (-1 CC LINK NOT *-1 Inf BARRIER S-BOUNDARY);
+#!! * __r18__ 
+SELECT:r1819 N IF (-3 (A Attr))(-2 CC)(-1 PrfPrc)(0 N);
+	## Áirasat geat vuostálastet eavttuhusa jienastit nu ahte deaddilit boalu "vuostá" ja čuožžilit.
+	## Mearrasápmelaččat ledje áŋgiris ja oahppan bivdit.
+
+	# Going for Pl1 instead of Inf 
+	# - - - - - - - - - - - - - - 
+
+#!! * __r18__ 
+REMOVE:r1820 Inf IF (-1C Adv LINK *-1 BOS BARRIER NOT-NPMOD);
+	## Vulobealde guorahallat fas mo sáhtášii deattuhit dákkár jávohisvuođa.
+
+#!! * __r18__ 
+REMOVE:r1821 Pl1 IF (-1 BOS)(0 Inf)(NEGATE 0 Qst OR Imprt);
+
+	# Now we select Inf 
+	# - - - - - - - - -
+
+ # The first rule seems much better without the NOT 0 Adv.
+
+#!! * __r18__ 
+SELECT:r1822 Inf IF (*-1 INF-V + V BARRIER SV-BOUNDARY OR Neg) ;
+	## Skuvla galggai oahpahit sámemánáide dárogiela.
+    	## Prošeavtta áigut čađahit.
+
+#!! * __r18__ 
+SELECT:r1823 Inf IF (*-1 INF-V + V BARRIER NP-HEAD-PL-NOM OR SV-BOUNDARY LINK 0 VFIN OR PrfPrc OR Inf LINK NOT 0 N)(NOT 0 ("leat"));
+	## Son oažžu vuokkain ja luovosfirpmiin, namalassii golgadagain, bivdit miehtá deanu.
+
+#!! * __r18__ 
+SELECT:r1824 Inf IF (-2 Inf)(-1 COMMA)(1 COMMA OR CC);
+	## Luondduresursaealáhusat sáhttet álggahuvvot, bisuhuvvot ja ovddiduvvot.
+
+	# This rule looks backwards across a relative clause:
+#!! * __r18__ 
+SELECT:r1825 Inf IF (*-1 VFIN BARRIER S-BOUNDARY LINK *-1 (Pron Rel) BARRIER S-BOUNDARY LINK *-1 INF-V BARRIER Inf OR SV-BOUNDARY);
+	## ...galgá sihke divššohas ja váhnemat dahje earát geain lea váhnenovddasvástádus oažžut dieđu.
+
+#!! * __r18__ 
+SELECT:r1826 Inf IF (*-1 ACC-INF-V BARRIER Inf OR SV-BOUNDARY OR Nom OR Neg);
+	## Lea deaŧalaš movttiidahttit studeanttaid gazzagoahtit doavttergráda-
+	## oahpu.
+
+#!! * __r18__ 
+SELECT:r1827 Inf IF (*-1 (A Nom) BARRIER NOT-ADV OR COMMA LINK *-1 COPULAS BARRIER NOT-ADV-PCLE);
+#!! * __r18__ 
+SELECT:r1828 Inf IF (-1 ADVLCASE LINK *-1 (A Nom) BARRIER NOT-NPMOD LINK *-1 COPULAS BARRIER NOT-ADV-PCLE);
+	## Dál lea váttis dadjat juste beaivvi goas váttisvuođat čoavdašuvvet.
+	## Danne go mii orrut tunealla lahka, de lea álki isidii vuodjit tunealla go manná girdišilljui. 
+
+#!! * __r18__ 
+SELECT:r1829 Inf IF (*-1 REAL-COPULAS BARRIER NOT-ADV-PCLE OR CLB	LINK *-1 Loc BARRIER NOT-ADV-PCLE)(NEGATE 0 Adv);
+	## ...vaikkovel sis livččege ovdal leat leamaš geavahanvuoigatvuohta.
+
+#!! * __r18__ 
+SELECT:r1830 Inf IF (*-1 ("leat" Sg3) BARRIER NOT-ADV)(*1 ("ahte") BARRIER WORD);
+	## Doaibmaplána ulbmil lea sihkkarastit, ahte...
+
+#!! * __r18__ 
+SELECT:r1831 Inf IF (-3 ("dat" Sg3 Gen))(-2 ("ala"))(-1 ("ahte"));
+	## Sámediggi áigu bargat dan ala ahte oččodit ruovttoluotta...
+
+#!! * __r18__ 
+SELECT:r1832 Inf IF (*-1 INF-V BARRIER SV-BOUNDARY OR Inf LINK *1 CC BARRIER SV-BOUNDARY OR Inf)(0 Inf);
+    ## ...ahte lea ferten niesteseahka dahje lávkka guoddit.
+
+#!! * __r18__ 
+SELECT:InfAfterNeg Inf (*-1 (V Neg) BARRIER NOT-ADV-PCLE LINK NOT *1 ConNeg BARRIER REAL-V) ;
+
+
 #!! !!Verbgenitive
 #!! !!Supinum vs. potential
 #!! !!Perfect Participle
@@ -2523,6 +2701,13 @@ REMOVE:NotConNegIfNotNeg ConNeg IF (NEGATE *-1 Neg BARRIER CLB OR Ind)(NEGATE *-
 #!! !!Actio Loc = Actio Ess
 #!! !!Actio Gen = Actio Ess
 #!! !!Imprt or Ind
+
+
+
+#!! * __removeAllImp__
+#REMOVE:removeAllImp Imprt ;
+
+
 #!! !!Nouns vs. verbs
 
 #!! !!!Verb mappings
