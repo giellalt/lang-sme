@@ -615,6 +615,9 @@ SET NOT-Attr = WORD - Attr ;
 SET NOT-A-PCLE = WORD - A - Pcle ;
 SET NOT-A-CC = WORD - A-CC ;
 
+# This set was removed, for a good reason?
+SET NOT-AA = WORD - A - Adv OR ("maid") ;
+
 
 LIST NOMINAL-A = "guoktilaš" "lámis" "oasálaš" ("suddu" Der/laš) "viissis";
  
@@ -2395,9 +2398,54 @@ REMOVE (@X) ;
 #!! !!Proper nouns
 
 #!! !!!VERBS
+
 #!! !!Disambiguating verbs - part 1 
-#!! !!Verbal contains a pare of finite verbs
+
+#!! First ConNeg forms, they are dependent upon Neg verbs. Then Imperative 
+#!! (with their special syntax), infinitive, and other infinite forms. 
+#!! Person comes later (in part 2)
+
 #!! !!ConNeg forms
+
+#!! * __ConNegImp__ selects ConNeg Imprt if Neg Imprt to the left.
+SELECT:ConNegImp (Imprt ConNeg) IF (*-1 (Neg Imprt) BARRIER ConNeg OR SV-BOUNDARY);
+	## Ale ge jorggit selggiid sutnje gii bivdá dus loanas.
+
+#!! * __ConNegIfNeg__ selects Ind ConNeg if Neg Ind to the left. This is the main (and common) ConNeg rule.
+SELECT:ConNegIfNeg ConNeg IF (*-1 (Neg Ind) BARRIER ConNeg OR PrfPrc OR SV-BOUNDARY)(NEGATE 0 N LINK *1 ConNeg BARRIER NOT-ADV-PCLE)(NEGATE 0 Loc LINK -1 NEGFOC LINK -1 Loc);
+	## Eai dat dohkke šat maninge.
+
+#!! * __ConNegCondIfNeg__ selects Cond ConNeg if Neg Cond to the left. Less used, obviously.
+SELECT:ConNegCondIfNeg (Cond ConNeg) IF (*-1 (Neg Ind) BARRIER ConNeg OR SV-BOUNDARY);
+	## Ii go son ollu eanet gárvvohivčče din?
+
+#!! * __NotConNegNotNeg__ removes remaining ConNegs whenever no Neg to the left.
+REMOVE:NotConNegNotNeg ConNeg IF (NEGATE *-1 Neg BARRIER SV-BOUNDARY OR go)(NEGATE -1 Rel LINK -1 Neg)(NEGATE -2 Rel LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-AA LINK *-1 ConNeg BARRIER VFIN);
+
+#!! * __NotConNegII__ removes ConNegII if no Neg Imprt around. This is important, as the homonym forms are common.
+REMOVE:NotConNegII (ConNegII) IF (NEGATE *-1 (Neg Imprt) BARRIER SV-BOUNDARY);
+	## Dasgo mii oinniimet su nástti badjáneamen ja leat boahtán...
+	## Stáhta galgá fuolahit ahte gávdno divššohasbearráigeahčči juohke fylkkas.
+
+# The following 3 SELECT rules should probably be moved in front of the preceeding REMOVE rules. Check.
+
+SELECT:ConNegImpCC (Imprt ConNeg) IF (*-1 CC BARRIER NOT-ADV LINK *-1 (Imprt ConNeg) BARRIER REAL-V);
+SELECT:ConNegIndCC (Ind ConNeg) IF (*-1 CC BARRIER NOT-ADV LINK *-1 (Ind ConNeg) BARRIER NOT-ADV);
+	## Allet nappo moraš ja cealkke...
+
+SELECT:ConNegPrfPrc ConNeg IF (*-1 PrfPrc BARRIER NOT-ADV-PCLE LINK *-1 Neg BARRIER SV-BOUNDARY)(0 ("leat"))(NEGATE *1 PrfPrc BARRIER NOT-ADV-PCLE);
+	## Ii dál láhppán gal leat.
+	# Need more advanced rule to select ConNeg when there is more
+	# material between Neg and ConNeg.
+
+#!! * __NotConNegIfNotNeg__ removes ConNeg if no Neg to the left. Consider unifying with NotConNegNotNeg.
+REMOVE:NotConNegIfNotNeg ConNeg IF (NEGATE *-1 Neg BARRIER CLB OR Ind)(NEGATE *-1 Nom LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-AA LINK *-1 ConNeg BARRIER VFIN); 
+	## Juohke muorra mii ii šaddat buriid šattuid, čullojuvvo ja bálkestuvvo dollii.
+	## Gávpot mii lea vári alde, ii sáhte leat čihkosis.
+
+
+
+
 #!! !!Imperative
 #!! !!Infinitive
 #!! !!Verbgenitive
