@@ -2153,6 +2153,8 @@ SELECT:r921 (PxSg2) IF (-1 SG2-V LINK NOT 0 REAL-COPULAS LINK -1 DON)(NEGATE 0 A
 #!! !!Disambiguationg abbreviations
 #!! !!Rules relating to particular adpositions
 #!! !!Some particular subjunctions
+
+
 #!! !!CC removal for specific CC candidates
 #!! !!Some particular subjunctions
 #!! !!Adverb rules
@@ -2229,7 +2231,7 @@ MAP:r439 (@COMP-CS<) TARGET NP-HEAD-NOM (-1 Attr LINK -1 CRD LINK -1 (@COMP-CS<)
 
  	
 #!! * Remove analysis which are not @COMP-CS<
-SELECT  @COMP-CS< ;	
+SELECT:removeAll  @COMP-CS< ;	
 
 SELECT:goCS ("go" CS)(*1 @COMP-CS< BARRIER REAL-V OR CC) ;
 
@@ -2239,23 +2241,45 @@ SELECT:goCS ("go" CS)(*1 @COMP-CS< BARRIER REAL-V OR CC) ;
 MAP:cnp_comp-cs (@CNP) TARGET ("go" CS) (*1 @COMP-CS< BARRIER REAL-V OR CC);
 
 
-#!! *Map CS both @CNP @CVP
+#!! *Map some CSs both @CNP @CVP
 MAP:r10 (@CNP @CVP) TARGET CS IF (0 ("go") OR ("vai") OR XGO OR DADE);
 
 #!! *Map @CVP to CS
 MAP:r11 (@CVP) TARGET CS IF (NEGATE 0 Indef) ;
-	## Leago guhkes áigi dassá go Máreha oidnet?
+	#$ Leago guhkes áigi dassá go Máreha oidnet?
 
 #!! *Map (@CNP @CVP) to CC
 MAP:r12 (@CNP @CVP) TARGET CC ;
 
-#!! * @CNP ahte CC, all other occurrences are CS
-SELECT:r988 (CC @CNP) (-1 COMPAR OR Comp)(0 ("ahte"))(1 COMPAR OR Comp);
-	## Dárogiel sánit bohtet eanet ahte eanet sámegiela sisa.
-	## Dat šattai heajut ahte heajut.
+#!! * @CNP ahte CC, remove the rest
+IFF:r988 ("ahte" CC @CVP) (-1 COMPAR OR Comp)(0 ("ahte"))(1 COMPAR OR Comp);
+	#$ Dárogiel sánit bohtet eanet ahte eanet sámegiela sisa.
+	#$ Dat šattai heajut ahte heajut.
+	
+#!! *All other occurrences of "ahte" are CSs.
+SELECT:removeAll ("ahte" CS) ; 
 
+#!! * vai as CC or CS
+SELECT:r1191 (CC @CNP) IF (0 ("vai")) (*-1 Inf BARRIER REAL-V OR CLB)(*1 Inf BARRIER REAL-V);
+	#$ Buriid dahkat vai baháid dahkat.
 
+# remove vai as CC 
+REMOVE:r1186 CC IF (0 ("vai"))(NEGATE *-1 Qst OR Interr OR ("go" Pcle))(NEGATE 1 Qst OR Neg)(NEGATE 2 ("go" Pcle))(*1 VFIN LINK NOT 0 N)(NEGATE *1 ("?"));
+	#$ Árranis sii vušše liepmasa ealuide vai sestet goikerásiid.
+	#$ Vai miehtan galgá leat lágalaš, ferte divššohas leat ožžon.
 
+# vai CC @CVP before Neg or question
+SELECT:r1187 (CC @CVP) (0 ("vai")) ((1 Neg OR VFIN + Qst) OR (1 VFIN LINK 1 ("go" Pcle)));
+	#$ Leago sámeálbmogis vuoigatvuođat vai eai?
+	#$ Dáhpáhuvvá go dat ođđa lágaid bokte, vai geahččaluvvo go gávdnat čovdosiid bissovaš rievttis? 
+	#$ Dáhpáhuvvá go dat ođđa lágaid bokte, vai geahččaluvvogo gávdnat čovdosiid bissovaš rievttis? 
+
+# vai CC @CVP in question about two alternatives
+SELECT (CC @CVP) (0 ("vai"))(-1 N OR A OR Adv)(*1 N OR A OR Adv BARRIER NOT-NPMOD LINK NOT *2C VFIN BARRIER S-BOUNDARY)(*1 ("?")); 
+	#$ Leago nieida vai bárdni?
+	#$ Odne vai ihttin?
+	#$ ...čállogo journála elektrovnnalaččat vai báhpárii.
+		
 
 MAP:r528 (@X) TARGET CC-CS ;
 REMOVE (@X) ;    
