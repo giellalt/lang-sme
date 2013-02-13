@@ -1973,6 +1973,8 @@ SET CP = (Pron Interr) OR (Pron Rel) OR MO ;
 
 LIST BOUNDARYSYMBOLS =  "\;" ":" "-" "–" ;
 
+
+SET S-BOUNDARY1 = CP OR BOUNDARYSYMBOLS OR ("muhto") OR ("de" Adv) OR (Neg Sup) ;
 	
 SET S-BOUNDARY = CP OR BOUNDARYSYMBOLS OR ("muhto") OR ("de" Adv) OR (Neg Sup) OR (@CVP) ;
 	# does not include CS, because of "go" in questions, before it is disambugated.
@@ -2023,6 +2025,7 @@ SECTION
 
 #!! !!!DISAMBIGUATION RULES  
 #!! !!One-cohort disambiguation - cycle 0
+
 #!! !!The section for popular rules 
 #!! !Propernouns
 
@@ -2165,14 +2168,14 @@ SELECT:r921 (PxSg2) IF (-1 SG2-V LINK NOT 0 REAL-COPULAS LINK -1 DON)(NEGATE 0 A
 SELECT:r1159 CS IF (0 ("amas") LINK 1 Neg);
 	#$ Prinsihpa maid lean čuovvon lea juohkehačča ektui fuolahan, amas ii vuovdi vahágahtto.
 
-SELECT:r1156 A IF (NEGATE -1 Neg LINK NOT *2 N BARRIER NOT-NPMOD)(0 ("amas") LINK NOT *1 Inf BARRIER S-BOUNDARY)(NOT 1 Neg);
+SELECT:r1156 A IF (NEGATE -1 Neg LINK NOT *2 N BARRIER NOT-NPMOD)(0 ("amas") LINK NOT *1 Inf BARRIER S-BOUNDARY1)(NOT 1 Neg);
 	#$ Máŋgasat leat sakka fuolastuvvan amas ja dovddus vahágiin.
 	#$ Ollu sápmelaččaide lea dál ain amas jurdda.
 	#$ Eai dovdda amas olbmo jiena.
 	#$ Amas olbmo jiena ii dovdda.
 	#$ Sáhpánvuovddi bajil lea máŋga beaivvi girddašan amas, stuora loddi.
 
-SELECT:r1158 (Neg Sup) IF (0 ("amas"))(*1 Inf BARRIER S-BOUNDARY);
+SELECT:r1158 (Neg Sup) IF (0 ("amas"))(*1 Inf BARRIER S-BOUNDARY1);
 	#$ Bávlos lei nappo mearidan gárvit Efesosa, amas ájihuvvot Asia eanangottis. 
 
 #!! * amat as CS or Neg Sup
@@ -2185,7 +2188,8 @@ SELECT:r1162 CS IF (0 ("dasgo"))((NEGATE *1 ("?")) OR (1 Interr)) ;
 	#$ Dasgo goabbá lea stuorit,...
 
 #!! * vaikko is always CS because of abbr: "vaikko_mii" Pron Indef
-REMOVE Adv (0 ("vaikko") OR ("vaikke")) ;	
+REMOVE Adv (0 ("vaikko") OR ("vaikke")) ;
+	#$ Ásahusa journálaovddasvástideaddji sáhttá liikká rievdadit journála vaikko gustojit vuolláičállojuvvon journálamerkestemiide.	
 
 #!! * go as CS and Qst Pcle
 
@@ -2197,7 +2201,7 @@ SELECT:standard Pcle (-1 VFIN LINK -1 BOS OR CLB OR PUNCT)(0 go LINK *1 ("?"));
 	#$ Addet go máŋga dearvvašvuođabargiidjoavkku veahki ja fállojuvvo go divššohasaide birrajándororrun?
 
 # Question as object
-SELECT:r1171 Pcle IF (**-2 VFIN BARRIER S-BOUNDARY LINK NOT 0 Inf)(-1 VFIN LINK NOT 0 Inf OR Comp)(0 go)(NEGATE *1 VFIN BARRIER S-BOUNDARY LINK NOT 0 Inf); 
+SELECT:r1171 Pcle IF (**-2 VFIN BARRIER S-BOUNDARY1 LINK NOT 0 Inf)(-1 VFIN LINK NOT 0 Inf OR Comp)(0 go)(NEGATE *1 VFIN BARRIER S-BOUNDARY1 LINK NOT 0 Inf); 
 	#$ Dalle ferten iskat lea go dus feber.
 	#$ De oaidná olmmoš dárbbaša go oalgebáddi luoitiluvvot. 
 	#$ Dalle mun ferten iskat lea go dus feber, ja mihtidit dus varradeattu.
@@ -2229,11 +2233,11 @@ SELECT:x Pcle IF (-1 VFIN LINK -1 BOS OR REAL-CLB OR PUNCT OR COMMA)(0 go)(*1 CO
 	#$ Oinnežan go su ihttin, dan in dieđe.
 	
 # noun + go
-SELECT:r1176 Pcle IF (-1 N LINK *-1 BOS BARRIER NOT-NP)(NEGATE -1 ("hávvi"))(0 go)(*1 VFIN BARRIER S-BOUNDARY)(*1 ("?"));
+SELECT:r1176 Pcle IF (-1 N LINK *-1 BOS BARRIER NOT-NP)(NEGATE -1 ("hávvi"))(0 go)(*1 VFIN BARRIER S-BOUNDARY1)(*1 ("?"));
 	#$ Eatni goarrun gákti go dus lea die?
 
 # Po + go
-SELECT:r1177 Pcle IF (-2 (N Gen) LINK *-1 BOS BARRIER NOT-NP)(-1 Po)(0 go)(*1 VFIN BARRIER S-BOUNDARY);
+SELECT:r1177 Pcle IF (-2 (N Gen) LINK *-1 BOS BARRIER NOT-NP)(-1 Po)(0 go)(*1 VFIN BARRIER S-BOUNDARY1);
 	#$ Girdi mielde go don manat Helssegii? 
 
 REMOVE:removeAll Pcle (0 go) ;
@@ -2252,9 +2256,8 @@ IFF:r1199 DADE + CS IF (0 DADE)(*-1 MADE) ;
 	#$ Mađe stuorit RAM-muitu du dihtoris lea, dađe eanet dihtorprográmmaid sáhtát geavahit oktanaga.	
 
 #!! !!Adverb rules
-#!! !!Complements of particles in comparison
 
-#!! !!!Mapping of COMP-CS<
+#!! !!!Mapping of COMP-CS< , Complements of particles in comparison
 
 #!! *buoret go ovdal
 MAP (@COMP-CS<) TARGET TIME-ADV (-1 ("go" CS) LINK -1 A OR ("seammá") OR ("eará"))(1 COMMA LINK 1 ("de")) ;
@@ -2281,8 +2284,9 @@ MAP:r424 (@COMP-CS<) TARGET NP-HEAD-NOM (*-1 ("go" CS) BARRIER NOT-NP OR Nom LIN
 	#$ Máhttájeaddji ii leat stuorit go oahpaheaddji. # oahpaheaddjis (må fikses i FST) 
 
 #!! * Comp NP-HEAD-NOM leat go NP-HEAD-NOM  
-MAP:r431 (@COMP-CS<) TARGET NP-HEAD-NOM (*-1 ("go" CS) BARRIER NOT-NPMOD LINK *-1 NP-HEAD-NOM BARRIER S-BOUNDARY LINK -1 Comp)(NEGATE *-1 go BARRIER NOT-NPMOD LINK -1 VFIN LINK *-1 VFIN BARRIER S-BOUNDARY)(0 Nom OR ADVLCASE)(1 EOS OR CLB) (NEGATE 1 CLB LINK *1 VFIN BARRIER CC) (NEGATE 1 CLB LINK *1 NP-HEAD-NOM BARRIER NOT-NPMOD) (NEGATE 2 Interr LINK *1 VFIN LINK *1 VFIN BARRIER S-BOUNDARY); 
+MAP:r431 (@COMP-CS<) TARGET NP-HEAD-NOM (*-1 ("go" CS) BARRIER NOT-NPMOD LINK *-1 NP-HEAD-NOM BARRIER S-BOUNDARY1 OR CS LINK -1 Comp)(NEGATE *-1 go BARRIER NOT-NPMOD LINK -1 VFIN LINK *-1 VFIN BARRIER S-BOUNDARY1 OR CS)(0 Nom OR ADVLCASE)(1 EOS OR CLB) (NEGATE 1 CLB LINK *1 VFIN BARRIER CC) (NEGATE 1 CLB LINK *1 NP-HEAD-NOM BARRIER NOT-NPMOD) (NEGATE 2 Interr LINK *1 VFIN LINK *1 VFIN BARRIER S-BOUNDARY1 OR CS); 
 	#$ ...muhto galjibut dat lea go guv-čalmmit. 
+	#$ Dán njuolggadusa deaŧalaš eaktu lea ahte ođđa siidaosiid ásaheapmi ii galgga dagahit ahte boazolohku šaddá alit go siidii mearriduvvon lohku, geahča dás maŋŋelis. ## Ii máhte vuos dán 'mearriduvvon' dihte
 
 
 #!! * go geassebuođut, go dán áigge
@@ -2297,19 +2301,20 @@ MAP (@COMP-CS<) TARGET Inf IF (*-1 ("go" CS) BARRIER NOT-ADV LINK -1 Inf)(NEGATE
 
 
 #!! * dego @COMP-CS<
-MAP:r432LLx (@COMP-CS<) TARGET NP-HEAD-NOM - Px OR (Num Nom) (*-1 ("dego") OR ("dugo") BARRIER NOT-NP)(NEGATE *1 VFIN-NOT-IMPRT OR AUX BARRIER S-BOUNDARY OR CC); 
+MAP:r432LLx (@COMP-CS<) TARGET NP-HEAD-NOM - Px OR (Num Nom) (*-1 ("dego") OR ("dugo") BARRIER NOT-NP)(NEGATE *1 VFIN-NOT-IMPRT OR AUX BARRIER S-BOUNDARY OR CC OR CS); 
 	#$ Sii leat dego eŋgelat almmis.
 	#$ Son oahppaladdá min allagasas dego beaivváža badjáneapmi.
 	#$ Dat lea dego olmmái gii manai olgoriikii.
 	#$ Dego njamaheaddji eadni dikšumin mánáidis.
 	#$ Dat guhte ii biso mu siste, bálkestuvvo olggos dego oaksi ja son goldná.
+	#$ Ráhkkásiiddán, allet vajáldahte ahte Hearrái lea okta beaivi dego duhát jagi ja duhát jagi dego okta beaivi.
 
 #!! *Acc dego Acc
-MAP:r432LLx (@COMP-CS<) TARGET NP-HEAD-ACC - Px (*-1 ("dego") OR ("dugo") BARRIER NOT-NP LINK -1 NP-HEAD-ACC)(NOT 1 Po)(NEGATE *1 VFIN-NOT-IMPRT OR AUX BARRIER S-BOUNDARY OR CC); 
+MAP:r432LLx (@COMP-CS<) TARGET NP-HEAD-ACC - Px (*-1 ("dego") OR ("dugo") BARRIER NOT-NP LINK -1 NP-HEAD-ACC)(NOT 1 Po)(NEGATE *1 VFIN-NOT-IMPRT OR AUX BARRIER S-BOUNDARY OR CS OR CC); 
 	#$ Mun vuolggahan din dego sávzzaid gumppiid gaskii.
 	
 #!! *TRANS-V eambbo go Num Acc + Gen
-MAP:r150 (@COMP-CS<) TARGET (Num Acc) IF (-1 ("go") LINK *-1 TRANS-V - ("eanet") BARRIER NOT-ADV-PCLE)(NEGATE 1 N + ADVLCASE) (NEGATE *1 VFIN BARRIER S-BOUNDARY OR CC);
+MAP:r150 (@COMP-CS<) TARGET (Num Acc) IF (-1 ("go") LINK *-1 TRANS-V - ("eanet") BARRIER NOT-ADV-PCLE)(NEGATE 1 N + ADVLCASE) (NEGATE *1 VFIN BARRIER S-BOUNDARY OR CS OR CC);
 	#$ Ii heargi gal nagot guoddit eambbo go guokte diekkára. 
 	
  	
@@ -2346,9 +2351,10 @@ MAP:r11 (@CVP) TARGET CS IF (NEGATE 0 Indef) ;
 MAP:r12 (@CNP @CVP) TARGET CC ;
 
 #!! * @CNP ahte CC, remove the rest
-IFF:r988 ("ahte" CC @CVP) (-1 COMPAR OR Comp)(0 ("ahte"))(1 COMPAR OR Comp);
+IFF:r988 ("ahte" CC @CNP) (-1 COMPAR OR Comp)(0 ("ahte"))(1 COMPAR OR Comp);
 	#$ Dárogiel sánit bohtet eanet ahte eanet sámegiela sisa.
 	#$ Dat šattai heajut ahte heajut.
+	#$ Áiggi mielde eanet ahte eanet lohkagohtet sámegillii.
 	
 #!! *All other occurrences of "ahte" are CSs.
 SELECT:removeAll ("ahte" CS) ; 
@@ -2368,13 +2374,72 @@ SELECT:r1187 (CC @CVP) (0 ("vai")) ((1 Neg OR VFIN + Qst) OR (1 VFIN LINK 1 ("go
 	#$ Dáhpáhuvvá go dat ođđa lágaid bokte, vai geahččaluvvo go gávdnat čovdosiid bissovaš rievttis? 
 	#$ Dáhpáhuvvá go dat ođđa lágaid bokte, vai geahččaluvvogo gávdnat čovdosiid bissovaš rievttis? 
 
-# vai CC @CVP in question about two alternatives
-SELECT (CC @CVP) (0 ("vai"))(-1 N OR A OR Adv)(*1 N OR A OR Adv BARRIER NOT-NPMOD LINK NOT *2C VFIN BARRIER S-BOUNDARY)(*1 ("?")); 
+# vai CC @CNP in question about two alternatives
+SELECT (CC @CNP) (-1 N OR A OR Adv)(0 ("vai"))(*1 N OR A OR Adv BARRIER NOT-NPMOD LINK NOT *2C VFIN BARRIER S-BOUNDARY OR CS) (*1 ("?")); 
 	#$ Leago nieida vai bárdni?
 	#$ Odne vai ihttin?
-	#$ ...čállogo journála elektrovnnalaččat vai báhpárii.
-		
+	#$ ...čállogo journála elektrovnnalaččat vai báhpárii?
 
+#!! Select all	vai CS @CVP	
+SELECT:removeAll (CS @CVP) IF (0 ("vai"));
+
+#!! dađe @CVP
+REMOVE:LLr1433 (@CNP) IF (0 DADE) ; 
+	#$ Mađe mielde oaivi, dađe mielde ságat. # ii leat VFIN   
+
+#!! No potential finite verb following
+REMOVE:LLr1456 (@CVP) IF (NOT *1 VFIN BARRIER S-BOUNDARY OR CS OR PUNCT-RIGHT)(NEGATE *1 ("leat" PrfPrc) BARRIER S-BOUNDARY1 OR PUNCT-RIGHT OR CCCOMMA LINK NOT *-1 PrfPrc BARRIER REAL-V)(NOT 1 ("de"))(NEGATE 1 Rel); 
+	#$ Mun máhtán láibut sihke šuhkoládagáhku ja lákcagáhku.
+	#$ Mii bidjat dávviriid skáhpiide ja lođáide.
+	#$ Mii vuolgit Londonii golmmain mánáin ja ovttain beatnagiin.
+	#$ Dain hirbmat váriin ja mehciin sin guovllus lei earenoamáš vallji sihke elliid ja eará dáfus.
+	#$ Bargiidbellodaga Per Nils Saari beasai suohkanstivrii ja válljii ovttasbargat olgešbellodagain, gurutbellodagain ja johttisámi listtuin.
+	#$ Eai galgga sii geat gullet dakkáraš minoritehtaide ovttas eará láhttuiguin mat gullet sin jovkui, manahit vuoigatvuođaideaset dikšut iežaset kultuvra, dovddastit ja geavahit iežaset oskku, dahje geavahit iežaset giela. # This does not function yet because it needs verb disambiguation.
+
+##!! No finite verb in front ADVLCASE @CNP ADVLCASE	
+REMOVE:LLr1452 (@CVP) IF (-1C ADVLCASE OR Adv LINK NOT *-1 VFIN BARRIER S-BOUNDARY1 OR CS)(1C ADVLCASE OR Adv);
+	#$	Universitehtain ja allaskuvllain leat ollu studeanttat.
+    # Should not hit sentences like this:  
+	## Lávdegoddi lea dasa lassin guorahallan báikkálaš riekteáddejumiid Finnmárkkus ja vuordimis áigu dán ilbmadit iežas boahtte čielggadeami mielddusin.
+
+##!! No finite verb or verbalactivity in front N/Pron @CNP N/Pron	
+REMOVE:LLr1455 (@CVP) ((-1 NP-HEAD-NOM LINK NOT *-1 REAL-V BARRIER S-BOUNDARY1 OR CS) OR (-1 NP-HEAD-NOM LINK *-1 VERBAL-ACTIVITY-V BARRIER NOT-NPMOD)) (*1 NP-HEAD-NOM BARRIER NOT-NPMODADV);
+	#$ Maid moarsi ja irgi leaba čiŋadan gávttiiguin.
+
+##!! * Nom @CNP Adv Nom	
+REMOVE:LLr1453 (@CVP) IF (-1 NP-HEAD-NOM LINK *-1 VERBAL-ACTIVITY-V BARRIER NOT-NPMOD)(*1 NP-HEAD-NOM BARRIER NOT-NPMODADV);
+	#$ Son lohká bargit ja maiddái fáŋggat fertejit oažžut sámegiel oahpahusa.
+
+##!! * COPULAS Nom @CNP Nom Inf	
+REMOVE:LL (@CVP) (-1C (N Nom) LINK *-1 VFIN BARRIER NOT-NPMODADV)(1C (N Nom) LINK 1 Inf);
+	#$ Jagi 2005 Sámediggi álggahii Divvuma, mii lei prošeakta ja bargojoavku ráhkadit sámegielaid sátnedivvunprográmmaid.
+
+
+##!!  Lásse, Iŋgá ja mun
+REMOVE:LL (@CVP) IF (-1 Nom LINK *-1 COMMA BARRIER NOT-NPMOD LINK -1 Nom)(0 CC)(*1 Nom BARRIER NOT-NPMOD);
+	#$ Lásse, Iŋgá ja mun leimmet Romssas.
+	#  "Lásse" also have VFIN reading.
+
+
+##!! *RCmpnd @CNP
+REMOVE:LLr1444 (@CVP) IF (-1 RCmpnd);
+	#$ Ulbmil seammádássásaš bohtosiid juksamis galgá gustot álo beroškeahttá makkár giella- dahje kulturduogáš veahki dárbbašeaddjis lea.
+
+##!! *wrongly formated compounds
+REMOVE:LLr1445 (@CVP) IF (-1 ("\-") LINK -1 (\?) LINK -1 BOS)(0 CC LINK 1 N);
+	#$ Eanandoallo - ja biebmoministtar Lars Sponheim lohká ahte goas boazodoalloláhka biddjo Stuoradikki ovdii mearrideapmái, lea dan duohken man muddui Oarje-Finnmárkkus lea dohkálaš boazolohku cuoŋománu 1. beaivvi.
+
+##!! * A Attr @CNP A Attr	
+REMOVE:LLr1448 (@CVP) IF (-1 (A Attr) OR Gen LINK -1 CC OR CS)(0 CC)(1 (A Attr) OR Gen OR (@>N));
+	#$ Olbmuin geain leat lihkadanváttut leat váttisvuođat go boares ruovdemáđiija vovnnaid oláheapmi ii leat nu buorre, ja ođđa ja stuorit stášuvnnain ges lea heajos čalmmálaš.
+REMOVE:LL (@CVP) IF (-1C A)(1C A LINK *1 N BARRIER NOT-NPMOD);
+	#$ E-boasta lea hui álkes ja jođánis vuohki sáddet reivviid birra máilmmi.
+
+
+##!! * Acc @CNP Adv Acc	
+REMOVE:LLr1454 (CC @CVP) IF (-1 Acc)(*1 Acc BARRIER NOT-NPMODADV);
+
+REMOVE @CNP (0 @CVP) ;
 MAP:r528 (@X) TARGET CC-CS ;
 REMOVE (@X) ;    
 
