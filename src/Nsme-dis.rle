@@ -437,8 +437,8 @@ SET WORD-NOT-de = WORD - ("de") ;
 
 LIST DER-V = Der/adda Der/alla Der/asti Der/d Der/g Der/h Der/halla Der/hudda Der/huhtti Der/huvva Der/j Der/l Der/ahtti Der/st Der/stuvva Der/goahti ;
 
-LIST DER-N = Der/eaddji Der/Dimin Der/eamoš  Der/heapmi Der/NomAct Der/š Der/muš Der/upmi Der/us Der/vuohta Der/NomAg ;
- # Der/NomAct ;
+LIST DER-N = Der/Dimin Der/eamoš  Der/heapmi Der/NomAct Der/š Der/muš Der/upmi Der/us Der/vuohta Der/NomAg  ;
+
 
 LIST DER-A = Der/diibmosaš Der/dássásaš Der/eaddji Der/geahtes Der/keahtes Der/heapmi Der/jahkásaš Der/lágan Der/lágaš Der/laš Der/meahttun Der/lágán (V* A);
 
@@ -2051,7 +2051,7 @@ REMOVE:derV DER-V IF (0 LEX-V)(NEGATE 0 (eaddji));
 REMOVE:derN DER-N IF (0 LEX-N LINK NOT 0 Ess OR ("dahkat"));
 
 #!! *Removes __derNEss__ if lexicalised, and both nouns are essive.
-REMOVE:derNEss DER-N + Ess (0 LEX-N + Ess)(NEGATE 0 Actio); 
+REMOVE:derNEss DER-N + Ess (0 LEX-N + Ess) ; #(NEGATE 0 Actio); # Vi hadde denne constrainten tidligere, vi får se på om vi trenger den
 	#$ Dat lea oahpaheaddjin doppe.	
  		
 #!! *Removes __derA__ or PrsPrc or VGen if lexicalised. VGen is a chance.
@@ -2148,14 +2148,19 @@ REMOVE:leapmaDimin ("leapma" Der/Dimin) ;
 #!! !!!Local disambiguation - cycles 1 and 2 
 #!! !!FAMILY pronouns
 #!! !!An early rule for "eanaš"/"eanas"
+
+#!! * __eanasPron__ selects Pron in front of Pron Loc
+SELECT:eanasPron Pron IF (0 ("eanaš") OR ("eanas"))(1 (Dem Loc) OR (Pers Loc));
+	#$ Eanaš dáin gálduin leat hui unnán dieđuid.
+
 #!! !!Px constraints 
 
 #!! * Nouns: __NomPxSg1__ (not Ess) in the beginning of a sentence.
-SELECT:NomPxSg1 (N Nom PxSg1) IF (-1 BOS)(NEGATE 0 VFIN)(1 EOS);  # Needs no disambiguation.
+SELECT:PxNomPxSg1 (N Nom PxSg1) IF (-1 BOS)(NEGATE 0 VFIN)(1 EOS);  # Needs no disambiguation.
 	#$ Ustibažžan! 
 
 #!! * Nouns:  __AccPxSg1__ after a TV verb. Exception for Aux.
-SELECT:AccPxSg1 (N Acc PxSg1) ((-1 TRANS-V + Sg1 LINK NOT 0 AUX) OR (-1 TRANS-V + PrfPrc LINK -1 COPULAS + Sg1) OR (-1 TRANS-V + ConNeg LINK -1 Neg + Sg1))(NEGATE *1 Acc BARRIER REAL-V)(NEGATE *1 ("ahte") BARRIER WORD);
+SELECT:PxAccPxSg1 (N Acc PxSg1) ((-1 TRANS-V + Sg1 LINK NOT 0 AUX) OR (-1 TRANS-V + PrfPrc LINK -1 COPULAS + Sg1) OR (-1 TRANS-V + ConNeg LINK -1 Neg + Sg1))(NEGATE *1 Acc BARRIER REAL-V LINK NOT 1 Po)(NEGATE *1 ("ahte") BARRIER WORD);
 	#$ Mun oidnen vielljan.
 	#$ Mun lean oaidnán vielljan.
 	#$ Mun in oaidnán vielljan.
@@ -2163,9 +2168,31 @@ SELECT:AccPxSg1 (N Acc PxSg1) ((-1 TRANS-V + Sg1 LINK NOT 0 AUX) OR (-1 TRANS-V 
 	#$ Mun attán heaggan, áhkkán ja ruhtan sávzzaid ovddas. # This one is not yet.
   	#$ Mun válddán ovdamearkan Buolbmága. # It shouldn`t take this example.
 
+#!! * __PxSg1LocAcc__ is Acc to the right.
+SELECT:PxSg1LocAcc (Loc PxSg1) IF (-1 SG1-V + TRANS-V)(1 Acc); 	
+	## Mun roggen ozastan njálgáid mánáide.
+
+
 #!! * Nouns: __PxSg2__ if SG2-V
 SELECT:PxSg2 (PxSg2) IF (-1 SG2-V LINK NOT 0 REAL-COPULAS LINK -1 DON)(NEGATE 0 Attr OR Adv LINK *1 N BARRIER NOT-PRE-A-N); # Needs no disambiguation. The DON-constraint because of homonymi with (N Pl)
 	#$ Don attát heakkat mu ovddas?
+
+#!! * Nouns: __PxSg3Acc__ if Sg3 or Sg to the left
+SELECT:PxSg3Acc (Acc PxSg3) (*-1 (V TV Sg3) BARRIER Nom OR S-BOUNDARY LINK NOT 0 Der/Pass OR LOC-V LINK *-1 (Pron Nom) OR (N Nom) BARRIER (N Nom) OR (N Acc) LINK 0 (Sg3 Nom) OR (Sg Nom) LINK NOT *-1 Acc BARRIER S-BOUNDARY OR REAL-V)(0 Loc)(NEGATE 0 N-NOPX OR PLACE)(NEGATE 0 ("árvu") LINK *-1 ("atnit") BARRIER NOT-ADV)(NEGATE 0 Attr LINK *1 N BARRIER NOT-NPMOD)(NEGATE 0 Gen LINK 1 (N Acc) LINK NOT 0 Po);
+	#$ Son beastá álbmogis sin suttuin.
+	#$ Son hárve gullá eatnigielas. # This one needs verbdisambiguation of hárve
+	#$ Dat guhte ráhkista bártnis dahje nieiddas eanebut go mu, ii dohkke munnje.
+	#$ Jesus leai sullii golmmalotjahkásaš go álggahii doaimmas. 
+
+
+#SELECT:PxSg3Acc (PxSg3) (*-1 (V TV Sg3) BARRIER NOT-ADV-PCLE LINK NOT 0 Der/Pass OR LOC-V LINK *-1 (Pron Sg3 Nom) OR (N Sg Nom) BARRIER NOT-ADV-PCLE LINK NOT *-1 Acc BARRIER S-BOUNDARY OR REAL-V)(0 Loc)(NEGATE 0 N-NOPX OR PLACE)(NEGATE 0 ("árvu") LINK *-1 ("atnit") BARRIER NOT-ADV)(NEGATE 0 Attr LINK *1 N BARRIER NOT-NPMOD);
+
+#SELECT:PxSg3Acc (PxSg3) (*-1 (Sg Nom) OR (Sg3 Nom) BARRIER Pers OR S-BOUNDARY OR LOC-V OR Num OR Dem LINK NOT 0 Attr)(NEGATE *-1 (Imprt Sg2) BARRIER SV-BOUNDARY)(NEGATE -1 (N Nom) OR (N Acc))(0 N-PX)(NEGATE 0 Loc LINK 1 Ill);
+
+
+
+
+
 
 #!! !!Certain verb readings
 
