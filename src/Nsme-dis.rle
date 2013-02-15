@@ -2051,7 +2051,23 @@ SUBSTITUTE:PlcSur2 (Plc) (Sur) TARGET (Prop Plc) IF (-2 (Mal Attr) OR (Fem Attr)
 
 #!! !!Other popular rules?
 
-#!! No one so far.
+#!!  * Remove ABBR, e.g. "dii" N ABBR Nom
+REMOVE ABBR (0 Adv OR Pcle OR Pron) ;
+
+#!!  * __Dert__ Rule for removing Der/t Prop when there are other analysis
+REMOVE:Dert (Der/t) (0 Prop) ;
+
+#!!  * Rules for removing Prop
+REMOVE Prop ((0 ("profehta") OR ("vuoigŋa") OR Pron) OR (0 Adv LINK 1 go)) ;
+	## Ovdal go
+
+
+#!! * Removes __viibmat__ 
+REMOVE:viibmat ("viibmat") IF (0 ("viimmat" Adv) LINK NOT 1 Inf);
+
+#!! * Removes __dussat__ 
+REMOVE:dussat ("duššat") IF (0 ("dušše" Adv) LINK -1 VFIN LINK NOT *-1 CS);
+
 
 
 #!! !!!ONE-COHORT DISAMBIGUATION - CYCLE 0
@@ -2172,6 +2188,29 @@ REMOVE:leapmaDimin ("leapma" Der/Dimin) ;
 
 
 #!! !!FAMILY pronouns
+
+
+#!!	! son ( = Pcle) 
+SELECT:sonSG3V (Pron Pers Sg3 Nom) (0 ("son"))(NEGATE -1 Qst OR go) ((*-1 SG3-V BARRIER SV-BOUNDARY) OR (*1 SG3-V BARRIER N)) ; 
+	#$ Ii son liikon dohko.
+	#$ Son fertii vuolgit. 
+
+SELECT:sonRel Pers (0 ("son" Pron Pers Sg3 Nom))(1 (Pron Rel Sg));
+	#$ Son gii addá veahki galgá mearridit.
+
+SELECT:goson Pcle (NEGATE -2 CLB)(-1 Qst OR go)(0 ("son"))(1 Nom LINK NEGATE 0 Refl OR Inf OR RCmpnd);
+	#$ Lea go son Máret boahtán?
+	
+	
+#!!	! dat (Pron Pers, Pron Dem, Pcle)
+
+SELECT:dat1 Sg3 (NEGATE *0 PL-V BARRIER S-BOUNDARY)(0 ("dat" Sg3 Nom))(NEGATE 0 Pcle LINK -1 (N Nom) OR (Pron Nom))(NEGATE *1 (N Nom) BARRIER VFIN OR S-BOUNDARY LINK NOT 0 VFIN)(*0 SG3-V BARRIER PL-V) ;
+	#$ Dat movt sámi oahpahus lea doaibman...
+	#$ Dat orru leamen buorre fanas.
+
+#! * __dat2__ selects dat in front of leamaš
+SELECT:dat2 Sg3 IF (NEGATE *-1 PL-V BARRIER S-BOUNDARY)(0 ("dat" Sg3 Nom))(1 ("leat" PrfPrc) LINK *1 Sg BARRIER NOT-NPMOD);
+	
 
 #!! !!An early rule for "eanaš"/"eanas"
 
@@ -2513,7 +2552,7 @@ MAP:cnpCompSC (@CNP) TARGET ("go" CS) (*1 @COMP-CS< BARRIER REAL-V OR CC);
 MAP:CSasCNPCVP (@CNP @CVP) TARGET CS IF (0 ("go") OR ("vai") OR XGO OR DADE);
 
 #!! * __CSasCVP__ Map @CVP to CS
-MAP:CSasCVP (@CVP) TARGET CS IF (NEGATE 0 Indef) ;
+MAP:CSasCVP (@CVP) TARGET CS (NEGATE 0 Indef) ;
 	#$ Leago guhkes áigi dassá go Máreha oidnet?
 
 #!! * __CCasCNPCVP__ Map (@CNP @CVP) to CC
@@ -2538,7 +2577,7 @@ REMOVE:vaiCC CC IF (0 ("vai"))(NEGATE *-1 Qst OR Interr OR ("go" Pcle))(NEGATE 1
 	#$ Vai miehtan galgá leat lágalaš, ferte divššohas leat ožžon.
 
 #!! * __vaiCCNegQst1__ vai CC @CVP before Neg or question
-SELECT:vaiCCNegQst1 (CC @CVP) (0 ("vai")) ((1 Neg OR VFIN + Qst) OR (1 VFIN LINK 1 ("go" Pcle)));
+SELECT:vaiCCNegQst1 (CC @CVP) (0 ("vai")) ((1 Neg LINK 1 Qst OR ("?")) OR (1 VFIN + Qst) OR (1 VFIN LINK 1 ("go" Pcle)));
 	#$ Leago sámeálbmogis vuoigatvuođat vai eai?
 	#$ Dáhpáhuvvá go dat ođđa lágaid bokte, vai geahččaluvvo go gávdnat čovdosiid bissovaš rievttis? 
 	#$ Dáhpáhuvvá go dat ođđa lágaid bokte, vai geahččaluvvogo gávdnat čovdosiid bissovaš rievttis? 
@@ -2572,7 +2611,7 @@ REMOVE:CVPnoVfinAdvl (@CVP) IF (-1C ADVLCASE OR Adv LINK NOT *-1 VFIN BARRIER S-
 	## Lávdegoddi lea dasa lassin guorahallan báikkálaš riekteáddejumiid Finnmárkkus ja vuordimis áigu dán ilbmadit iežas boahtte čielggadeami mielddusin.
 
 #!! * __CVPNPron__ No finite verb or verbalactivity in front N/Pron @CNP N/Pron	
-REMOVE:CVPNPron (@CVP) ((-1 NP-HEAD-NOM LINK NOT *-1 REAL-V BARRIER S-BOUNDARY-NOT-CVP OR CS) OR (-1 NP-HEAD-NOM LINK *-1 VERBAL-ACTIVITY-V BARRIER NOT-NPMOD)) (*1 NP-HEAD-NOM BARRIER NOT-NPMODADV);
+REMOVE:CVPNPron (CC @CVP) ((-1 NP-HEAD-NOM LINK NOT *-1 REAL-V BARRIER S-BOUNDARY-NOT-CVP OR CS) OR (-1 NP-HEAD-NOM LINK *-1 VERBAL-ACTIVITY-V BARRIER NOT-NPMOD)) (*1 NP-HEAD-NOM BARRIER NOT-NPMODADV);
 	#$ Maid moarsi ja irgi leaba čiŋadan gávttiiguin.
 
 #!! * __CVPAdvNom__ Nom @CNP Adv Nom	
@@ -2609,6 +2648,11 @@ REMOVE:CVPA (@CVP) IF (-1C A)(1C A LINK *1 N BARRIER NOT-NPMOD);
 
 #!! * __CVPAccAdv__ Acc @CNP Adv Acc	
 REMOVE:CVPAccAdv (CC @CVP) IF (-1 Acc)(*1 Acc BARRIER NOT-NPMODADV);
+
+SELECT:CVP (@CVP) IF (*-1C VFIN BARRIER S-BOUNDARY)(*1C NP-HEAD-NOM BARRIER NOT-NPMOD LINK *1 VFIN BARRIER S-BOUNDARY)(NEGATE 0 go LINK *1 Inf BARRIER VFIN) ;
+	#$ Áhčči vulggii, ovdalgo mun bohten.
+	#$ Mun mannen maŋŋilgo mii leimmet čorgen. # fungerer ikke enda pga manglende verbdisambiguering
+
 
 #!! * __killAllCNP__ removes all remaining @CNP
 REMOVE:killAllCNP @CNP (0 @CVP) ;
