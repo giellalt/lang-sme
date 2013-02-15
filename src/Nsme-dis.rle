@@ -1128,7 +1128,7 @@ SET PRE-APP   = COMMA OR PUNCT-LEFT OR PRE-NP-HEAD ;
 #!! part of the noun phrase of that noun (i.e., "scan to the next NP head")
 
 SET NOT-NPMOD     = WORD - PRE-NP-HEAD OR ABBR ;                     
-# This is the previous NPNH set.
+# This is the previous NOT-NPMOD set.
 # NOT-NPMOD  = "NOT-PRE-NP-HEAD"
  
 SET NOT-NPMOD1     = NOT-NPMOD - Acc OR ABBR ; 
@@ -1137,12 +1137,12 @@ SET NOT-NPMOD1     = NOT-NPMOD - Acc OR ABBR ;
 SET NOT-NPMODADV    = WORD - PRE-NP-HEAD - Adv ;                      
 # NOT-NPMODADV = "NOT-PRE-NP-HEAD-OR-ADV"
 #SET NOT-NPMODADV-INDEF   = WORD - PRE-NP-HEAD - Adv - Indef ;              
-## NPNHAI = "     ...-OR-INDEF"
-SET NPNHAII  = WORD - PRE-NP-HEAD - Adv - Indef - Ill ;        
+## NOT-NPMODADVI = "     ...-OR-INDEF"
+SET NOT-NPMODADVII  = WORD - PRE-NP-HEAD - Adv - Indef - Ill ;        
 # Illative indir.obj.
-SET NPNHAIIP = WORD - PRE-NP-HEAD - Adv - Indef - Ill - Pcle ; 
-# <== is this our NPNH set?
-SET NPNHCC   = WORD - PRE-NP-HEAD - COMMA - LCRD ;
+SET NOT-NPMODADVIIP = WORD - PRE-NP-HEAD - Adv - Indef - Ill - Pcle ; 
+# <== is this our NOT-NPMOD set?
+SET NOT-NPMODCC   = WORD - PRE-NP-HEAD - COMMA - LCRD ;
 SET NAPP     = WORD - PRE-APP ;
 
 # SET TOLERANT-PRENPP = V ; (everything non-NP-head!)
@@ -2058,7 +2058,7 @@ REMOVE ABBR (0 Adv OR Pcle OR Pron) ;
 REMOVE:Dert (Der/t) (0 Prop) ;
 
 #!!  * Rules for removing Prop
-REMOVE Prop ((0 ("profehta") OR ("vuoigŋa") OR Pron) OR (0 Adv LINK 1 go)) ;
+REMOVE:Prop Prop ((0 ("profehta") OR ("vuoigŋa") OR Pron) OR (0 Adv LINK 1 go)) ;
 	## Ovdal go
 
 
@@ -2188,6 +2188,32 @@ REMOVE:leapmaDimin ("leapma" Der/Dimin) ;
 
 
 #!! !!FAMILY pronouns
+
+#!! * __moai__ This rule is not in use because of REMOVE:Prop
+SELECT:moai MOAI ( *1 DU1-V);   	
+	#$ Moai čilge dan ášši.
+
+
+#!! * __miiPers__
+
+#!!	Left conditions
+SELECT:miiPersLeft1 Pers (0 MII-PERS) ((-1 go LINK -1 PL1-V LINK -1 BOC) OR (-1 (V Ind Prs Pl1 Qst)) OR (-1 (V Neg Pl1))) ; 
+	#$ Eat go mii leat profehtastallan du nammii?
+	#$ Eat mii sáhte vuolgit.
+
+SELECT:miiPersLeft2 Pers (*-1 PL1-V BARRIER NOT-ADV OR ("seammá"))(0 MII-PERS)(NEGATE 0 Rel LINK *1 SG3-V BARRIER NOT-ADV);
+	#$ Goas oinniimet mii du nelgon dahje goikan?
+
+#!!	Right conditions
+SELECT:miiPersRight Pers (0 MII-PERS)((*1C Rel BARRIER WORD) OR (*1 PL1-V BARRIER S-BOUNDARY OR VFIN LINK NOT 0 Adv) OR (1 CC LINK 1 (N Nom))) ;
+	#$ .. de mii, guđet leat eatnagat, leat okta rumaš. # funker ikke pga 1C Rel
+	#$ Dasgo mii oinniimet su násti badjáneamen.
+	#$ Mii ja farisealaččat atnit borakeahttáivuođa.
+
+#!!	* __donPers__
+SELECT:donPers Pers (0 DON)((*-1 (V Sg2) BARRIER SV-BOUNDARY LINK NOT 0 Adv) OR (*1 SG2-V BARRIER PUNCT)); 
+	## Liikotgo don Abbai?
+	## Don it leat nama čállán.
 
 
 #!!	! son ( = Pcle) 
@@ -2935,6 +2961,10 @@ SELECT:InfAfterNeg Inf (*-1 (V Neg) BARRIER NOT-ADV-PCLE LINK NOT *1 ConNeg BARR
 #!! !!Nouns vs. verbs
 
 #!! !!!VERB MAPPINGS
+
+#!!	!!Prenominal participles
+
+
 
 #!! !!!NOUNS
 #!! !!Disambiguating nouns 
