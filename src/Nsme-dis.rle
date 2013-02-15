@@ -2155,27 +2155,49 @@ SELECT:eanasPron Pron IF (0 ("eanaš") OR ("eanas"))(1 (Dem Loc) OR (Pers Loc));
 
 #!! !!Px constraints 
 
-#!! * Nouns: __NomPxSg1__ (not Ess) in the beginning of a sentence.
-SELECT:PxNomPxSg1 (N Nom PxSg1) IF (-1 BOS)(NEGATE 0 VFIN)(1 EOS);  # Needs no disambiguation.
+#!! * Nouns: __NomPxSg1__ (not Ess) as the only word in a sentence. Needs no disambiguation. Should it have N-PX as constraint?
+SELECT:PxSg1Nom (N Nom PxSg1) IF (-1 BOS)(NEGATE 0 VFIN)(*1 EOS OR VFIN BARRIER WORD);  
 	#$ Ustibažžan! 
+	#$ Vielljan sáhttá vuoitit gilvvu.
 
 #!! * Nouns:  __AccPxSg1__ after a TV verb. Exception for Aux.
-SELECT:PxAccPxSg1 (N Acc PxSg1) ((-1 TRANS-V + Sg1 LINK NOT 0 AUX) OR (-1 TRANS-V + PrfPrc LINK -1 COPULAS + Sg1) OR (-1 TRANS-V + ConNeg LINK -1 Neg + Sg1))(NEGATE *1 Acc BARRIER REAL-V LINK NOT 1 Po)(NEGATE *1 ("ahte") BARRIER WORD);
+SELECT:PxSg1Acc (N Acc PxSg1) ((-1 TRANS-V + Sg1 LINK NOT 0 AUX) OR (-1 TRANS-V + PrfPrc LINK -1 COPULAS + Sg1) OR (-1 TRANS-V + ConNeg LINK -1 Neg + Sg1))(NEGATE *1 Acc BARRIER REAL-V LINK NOT 1 Po)(NEGATE *1 ("ahte") BARRIER WORD);
+
+#!! * Nouns:  __AccPxSg1__ after a TV Inf verb.
+SELECT:PxSg1Acc (Acc PxSg1) (-1 TRANS-V + Inf) ; # LINK *-1 SG1-V BARRIER NOT-ADV-PCLE LINK NOT 0 ("leat"))(NEGATE 0 Dem) ;
 	#$ Mun oidnen vielljan.
 	#$ Mun lean oaidnán vielljan.
 	#$ Mun in oaidnán vielljan.
+	#$ Dál mun ferten gaikkodit visson. # visson is also PrfPrc
 	#$ Mun attán heaggan sávzzaid ovddas.
-	#$ Mun attán heaggan, áhkkán ja ruhtan sávzzaid ovddas. # This one is not yet.
   	#$ Mun válddán ovdamearkan Buolbmága. # It shouldn`t take this example.
+  
 
 #!! * __PxSg1LocAcc__ is Acc to the right.
 SELECT:PxSg1LocAcc (Loc PxSg1) IF (-1 SG1-V + TRANS-V)(1 Acc); 	
-	## Mun roggen ozastan njálgáid mánáide.
+	#$ Mun roggen ozastan njálgáid mánáide.
 
+#!! * coordination __PxSg1coord__ 
+SELECT:PxSg1coord1 (PxSg1) (*-1 SG1-V - ("leat"))(NEGATE 0 Dem)(1 CC OR COMMA LINK 1 PxSg1) ;
 
-#!! * Nouns: __PxSg2__ if SG2-V
-SELECT:PxSg2 (PxSg2) IF (-1 SG2-V LINK NOT 0 REAL-COPULAS LINK -1 DON)(NEGATE 0 Attr OR Adv LINK *1 N BARRIER NOT-PRE-A-N); # Needs no disambiguation. The DON-constraint because of homonymi with (N Pl)
+#!! * __PxSg1coordLast__ for the last word of a coordination
+SELECT:PxSg1coordLast (PxSg1) (*-3 SG1-V - ("leat"))(-1 CC LINK -1 PxSg1)(NEGATE 0 Dem);
+	#$ Mun attán heaggan, áhkkán ja ruhtan sávzzaid ovddas.  
+
+#!! * Nouns: __PxSg2__ if SG2-V. The rule needs no disambiguation. The DON-constraint because of homonymi with (N Pl)
+SELECT:PxSg2 (PxSg2) (-1 SG2-V - REAL-COPULAS LINK -1 DON)(NEGATE 0 Attr OR Adv LINK *1 N BARRIER NOT-PRE-A-N); 
 	#$ Don attát heakkat mu ovddas?
+
+SELECT:PxSg2Acc (Acc PxSg2) (0 (N Pl Nom))(*-1 TRANS-V + Sg2 BARRIER SV-BOUNDARY OR Acc LINK NOT 0 A OR Imprt OR Inf OR Pl3);
+	#$ Máhtát go namat čállit?
+	#$ Leat go oaidnán oappát? # Doesn't function on this
+
+SELECT:PxSg2AccImprt (Acc PxSg2) (*-1 (Imprt Sg2) BARRIER NOT-NPMODADV LINK *-1 BOS BARRIER WORD)(*1 ADVLCASE BARRIER NOT-ADV LINK 1 EOS) ;
+	## Váldde mánát sallasat!
+
+SELECT:PxSg2Gen (Gen PxSg2) (*-1 Sg2 BARRIER S-BOUNDARY OR COMMA)(0 (N Pl Nom))(1 Po LINK NOT 0 N)(NEGATE *2 NP-HEAD-GEN BARRIER NOT-NPMOD);
+	## Go don rohkadalat, de mana gámmárat sisa.
+
 
 #!! * Nouns: __PxSg3Acc__ if Sg3 or Sg to the left
 SELECT:PxSg3Acc (Acc PxSg3) (*-1 (V TV Sg3) BARRIER Nom OR S-BOUNDARY LINK NOT 0 Der/Pass OR LOC-V LINK *-1 (Pron Nom) OR (N Nom) BARRIER (N Nom) OR (N Acc) LINK 0 (Sg3 Nom) OR (Sg Nom) LINK NOT *-1 Acc BARRIER S-BOUNDARY OR REAL-V)(0 Loc)(NEGATE 0 N-NOPX OR PLACE)(NEGATE 0 ("árvu") LINK *-1 ("atnit") BARRIER NOT-ADV)(NEGATE 0 Attr LINK *1 N BARRIER NOT-NPMOD)(NEGATE 0 Gen LINK 1 (N Acc) LINK NOT 0 Po);
@@ -2183,6 +2205,23 @@ SELECT:PxSg3Acc (Acc PxSg3) (*-1 (V TV Sg3) BARRIER Nom OR S-BOUNDARY LINK NOT 0
 	#$ Son hárve gullá eatnigielas. # This one needs verbdisambiguation of hárve
 	#$ Dat guhte ráhkista bártnis dahje nieiddas eanebut go mu, ii dohkke munnje.
 	#$ Jesus leai sullii golmmalotjahkásaš go álggahii doaimmas. 
+
+#!! * Nouns: __PxSg3AccPrfPrc__ if PrfPrc and Sg3 to the left
+SELECT:PxSg3AccPrfPrc (Acc PxSg3) (-1 PrfPrc + TRANS-V - LOC-V LINK *-1 SG3-V BARRIER NOT-AUX-V)(0 N-PX - Nom);
+	#$ Nu geavai ovdal go Márjá lei riegádahttán bártnis.
+
+#!! *  __PxSg3CC__ in coordination with the owner
+SELECT:PxSg3CC (PxSg3) (-1 CC LINK -1 N-PX + Sg);
+	## Mun lean boahtán bidjat soahpameahttunvuođa bártni ja áhčis gaskii.
+
+#!! *  __PxSg3GenPo__ in front of Po, to the left of the owner
+SELECT:PxSg3GenPo (Gen PxSg3) IF (*-1 BOC OR COMMA BARRIER NOT-NPMOD)(1 Po)(*2 SG3-V BARRIER NOT-ADV-PCLE LINK NOT 0 A LINK *1 NP-HEAD-NOM BARRIER NOT-NPMOD);
+	## Raporttas bokte dáhttu bargojoavku čalmmustahttit Sámedikki.
+
+
+#!! __Genguossis__ is  selection Gen, not only with Px. The FAMILY-set would be better than Hum-tag, but there is often a propernoun connected to the noun. guossái and guossis should have Po analysis?
+SELECT:Genguossis Gen (0 Hum LINK 1 ("guossi" Ill) OR ("guossi" Loc)) ;	
+	#$ Odne lea Joneš-bojá vuolgimin Biette-eagis guossái.
 
 
 #SELECT:PxSg3Acc (PxSg3) (*-1 (V TV Sg3) BARRIER NOT-ADV-PCLE LINK NOT 0 Der/Pass OR LOC-V LINK *-1 (Pron Sg3 Nom) OR (N Sg Nom) BARRIER NOT-ADV-PCLE LINK NOT *-1 Acc BARRIER S-BOUNDARY OR REAL-V)(0 Loc)(NEGATE 0 N-NOPX OR PLACE)(NEGATE 0 ("árvu") LINK *-1 ("atnit") BARRIER NOT-ADV)(NEGATE 0 Attr LINK *1 N BARRIER NOT-NPMOD);
