@@ -2121,6 +2121,11 @@ REMOVE:derVuohta Attr (0 Der/vuohta) ;
 
 #!! !!Adjectives or nouns, not adverbs
 
+#!! * __Aifeambbo__ selects A after eambbo
+SELECT:Aifeambbo A IF (-1 ("eambbo") OR ("eanet"))(NEGATE 0 Pl);
+	#$ Muhto eambbo eahpidahtti lea čielggadusa s. 17 cealkámuš.
+
+
 #!! * __muhtunlagan__ removes lága Ess if Indef ja lágan A
 SELECT:muhtunlagan A IF (-1 Indef)(0 ("lága" Ess));
 	## muhtun lágan
@@ -2140,6 +2145,10 @@ LIST ADV-NOT-NOMEN = "beare" "čoahkkái" "čoahkis" "fárrui"  "fárus" "ihttá
 
 REMOVE:AdvNotNA N OR A (0 ADV-NOT-NOMEN) ;
 
+#!! * __birrasii__ removes birrasii N
+REMOVE:birrasii N (0 ("birrasii") LINK 1 Num)(NOT -1 Gen)  ;	
+
+
 #!! * __eambbogo__ selects Adv eambbo go
 SELECT:eambbogo Adv (0 ("eambbo") OR ("eanet") LINK -1 REAL-V)(1 ("go")) ; ;
 
@@ -2152,10 +2161,11 @@ SELECT:eambbogo Adv (0 ("eambbo") OR ("eanet") LINK -1 REAL-V)(1 ("go")) ; ;
 
 #!! !!Not adposition
 
-REMOVE Po (0 ("oaivái") LINK NOT -1 HUMAN) ;	
-	## Eksempel fra N/S som skal ha Po: Válden vealggi vielljan oaivái.
-REMOVE Po (0 ("gieđas") LINK 1 ("eret")) ;	
-	## Eksempel fra N/S som skal ha Po: Go bohccot leat olbmuid gieđas.
+#!! * The rules __Pooaivai, Pogiedas__ removes oaivái and gieđas as Po
+REMOVE:Pooaivai Po (0 ("oaivái") LINK NOT -1 HUMAN) ;	
+	#$ Eksempel fra N/S som skal ha Po: Válden vealggi vielljan oaivái.
+REMOVE:Pogiedas Po (0 ("gieđas") LINK 1 ("eret")) ;	
+	#$ Eksempel fra N/S som skal ha Po: Go bohccot leat olbmuid gieđas.
 
 #!! !!Not Qst
 
@@ -2194,6 +2204,11 @@ SELECT:gaskaneaset Po IF (0 ("gaska" N Ess));
 	#$ Sii árvališgohte gaskaneaset.
 
 #!! !!Some verb rules
+
+#!! * __vfingo__ selects VFIN in front of go Qst
+SELECT:vfingo VFIN (-1 BOC)(NOT 0 ("ollu") OR Adv)(1 go + Qst LINK NOT 1 VFIN) ; 
+	#$ Dáhtut go min gaikut dan eret?
+	#$ Lea go dus ruhta?
 
 #!! !Particular verbs
 
@@ -2707,7 +2722,8 @@ REMOVE:r985 (Prt Sg2) IF (NEGATE *-1 (Pron Pers Sg2))(0 (Prs Pl3))(*1 Der/Pass B
 SELECT:r986 PrsPrc IF (NEGATE 0 LEX-N)(1 CC OR COMMA)(2 A);
 	## Soahpamušas váilu njuolggadusat smávit vahágahtti ja geavatlaččat
 	## bággolonistemiide.
- #!! Early rule since many PrsPrc readings are removed later.
+#!! Early rule since many PrsPrc readings are removed later.
+
 
 
 #!! !!!SECTION 4: CYCLE 1B: REMOVING THE READINGS THAT WERE LEFT FROM THE 1A RULES 
@@ -2716,12 +2732,30 @@ SECTION
 
 #!! !!We don't need more Px sections, it's done alrady: Removing (nearly) all remaining Px reading 
 
-#!! !!Noun or not?
+#!! !!Noun, adjectiv, PrsPrc or not?
+
+SELECT:NounNotEará N (-1 (A Attr) OR Indef)(NEGATE -1 Adv)(NEGATE 0 Inf OR VFIN OR Der/veara OR ("veara") OR ("leat" PrfPrc) OR Indef)(1 NP-BOUNDARY);  
+	#$ Dat lea čuovvovaš sajis.
+	#$ Jáhkán livččii váddáseabbu leamaš jus ii livčče juogalágan bearašoktavuohta, lohká Budeaju nieida gii lea bajásšaddan gávpogis. 
+	# It should not take the latter one.
+
+REMOVE:NounNotPrsPrc PrsPrc IF (-1 A)(NEGATE -1 Adv)(NEGATE 1 Ess); 
+	#$ Dainnna ii leat vissis mearri galljodagas.
+
+#!! * __NnotAcoord__ selects N instead of A, based on coordination with N, and a vfin-verb
+SELECT:NnotAcoord N (NEGATE 0 PrfPrc LINK *0 REAL-COPULAS + PL-V BARRIER SV-BOUNDARY)(0 A LINK 1 COMMA OR CC LINK *1 HEAD-N BARRIER NOT-NPMOD OR CC LINK 1 CC OR EOC OR VFIN);
+	#$ Sápmelaččat ja dážat leat ovdal eallán ovttas.
+	#$ ...ležžet sii dál sápmelaččat, dážat dahje kveanat.
+
+#!! * __NPlbeforeRel, NSgbeforeRel__ select N in front of Rel and MO
+SELECT:NPlbeforeRel N + Pl (NEGATE 0 Inf OR Adv)(*1 Rel + Pl BARRIER WORD) ;  
+SELECT:NSgbeforeRel N + Sg (NEGATE 0 Adv)(*1 Rel + Sg OR MO BARRIER WORD) ;  
+	#$ Dat leat doaimmat, maiguin mun barggan.
+	## Gažaldat lea dušše, man ollu ... # NOT 0 Adv!
+	## Lea miellagiddevaš lohkat, maid ...# NOT 0 Inf!
+
 
 #!! !!Adjectives and adverbs
-
-
-
 
 
 #!! !!Disambiguationg abbreviations
@@ -2736,8 +2770,6 @@ SELECT:sonPcle Pcle (0 ("son"))(1 NP-HEAD-NOM)(((NOT -1 PUNCT LINK -1 BOS) OR (-
 
 REMOVE:KillSonPcle Pcle IF (0 ("son"));
 	## Son mu nama ipmirdii boastut.
-
-
 
 
 #!! !!Disambiguationg numerals
@@ -3041,7 +3073,15 @@ REMOVE (@X) ;
 
 
 #!! !!!PRONOUNS
-#!! !!Disambiguating pronouns 
+
+#!! !!Interrogative and relative pronouns
+
+#!! * __Interr__ selects interrogative pronouns
+
+SELECT:Interr Interr ((-1 COMMA LINK *-1 CS LINK *-1 BOS BARRIER NOT-PCLE) OR (*-1 BOC BARRIER NOT-PCLE))(0 Rel LINK NOT 0 ("man" Adv) LINK *1 ("?"));
+	#$ Juos Ipmil lea min beale, gii lea min vuostái?
+	#$ Maid don doaivvut, mun gielistan?
+	#$ Na maid don diŋgojit?
 
 #!! !!Emphatic ieš     
 
