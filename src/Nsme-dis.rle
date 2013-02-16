@@ -429,7 +429,7 @@ LIST WORD = N A Adv V Pron CS CC Po Pr Interj Pcle Num ABBR ACR  \? ;
 
 SET REAL-WORD = WORD - Num - Ord ;
 
-SET REAL-WORD-NOT-ABBR = WORD - Num - Ord - ABBR ;
+SET REAL-WORD-NOT-ABBR = WORD - Num - Ord - (ABBR N) ;
 
 SET WORD-NOT-de = WORD - ("de") ; 
 
@@ -2041,6 +2041,9 @@ SECTION
 #!! *Selects __Prop__ if capital letter inside clause
 SELECT:Prop Prop (NEGATE *-1 BOS OR (":") BARRIER WORD)(0 N LINK NOT 0 (Der/t) OR (Der/laš));
 
+#!! *Removes __PropAttr__ if no Prop on the right side
+REMOVE:PropAttr (Prop Attr) (NEGATE *1 Prop BARRIER REAL-WORD-NOT-ABBR) ;
+
 #!! *Removes __PropPl__
 REMOVE:PropPl (Prop Pl) IF (0 COMMON-N)(NEGATE 0 VGen); 
   	#$ Sápmelaččaide lea hui mávssolaš ahte sin dárbbut váldojit vuhtii. 
@@ -2221,6 +2224,9 @@ SELECT:gaskaneaset Po IF (0 ("gaska" N Ess));
 SELECT:vfingo VFIN (-1 BOC)(NOT 0 ("ollu") OR Adv)(1 go + Qst LINK NOT 1 VFIN) ; 
 	#$ Dáhtut go min gaikut dan eret?
 	#$ Lea go dus ruhta?
+
+REMOVE V (0 ("buorre" Pl Nom) LINK 1 (N Pl)) ;
+	#$ Das leat buorit lanjat.
 
 #!! !Particular verbs
 
@@ -3254,6 +3260,112 @@ SELECT:DemAttr Attr (0 MAKKAR LINK *1 N BARRIER NOT-A) ;
 
 #!! !!Disambiguating adjectives 
 
+#!!	!Rules related to specific adjectives
+
+
+#!! * boaris A or N
+SELECT:boarisA A (0 ("boaris") LINK -1 VAHKKU-DUR) ;
+	#$ Son lea vihtta jagi boaris.
+
+#!! * dološ 
+SELECT:r1684 (A Attr) IF (0 ("dološ"))(*1 N BARRIER NOT-NPMOD);
+	#$ ...go lea gažaldat háhkamis dološ áiggi rájes geavaheami...
+
+#!! * garra N vs. garas A
+SELECT:garasAttr1 Attr (0 ("garas"))(1 (N Nom)); 
+SELECT:garasAttr2 Attr IF (NEGATE *-1 SG3-V)(0 ("garas" A Attr))(1 A OR N)(NEGATE *1 SG3-V);
+	#$ Norggas lea leamaš gal garra digaštallan sámi oahppoplána hárrái.
+	#$ Beatnagat eai biva viššat garra buollašiid.
+
+#!! * nanus
+SELECT:nanusA A IF (-1 GRADE-ADV)(0 ("nanus"));
+	#$ Dat lea hui nanus. 
+
+#!! * nuorra (vs. nuorrat V)
+REMOVE:nuorraV V IF (0 ("nuorra") LINK *-1 NOT-COP-V BARRIER SV-BOUNDARY);
+	#$ Son bođii dohko nuorran.
+REMOVE:nuorraV V IF (0 ("nuorra") LINK *1 V BARRIER SV-BOUNDARY);
+	#$ Min nuorat leat mielde nu olu doaimmain, sii leat oidnosis sápmelažžan.
+
+	
+#!! * sierra
+SELECT:sierraAAtrr (A Attr) IF (0 ("sierra"))(*1 N BARRIER NOT-NPMOD);
+	#$ Sámelága vuođul lea ásahuvvon sierra ovddasteaddji orgána.
+
+#!! * surgat
+SELECT:surgatA (A Sg Nom) IF (0 ("surgat"))(-1 Interj);
+	#$ Hei surgat, lea divrras!
+
+#!! * veara
+SELECT:vearaANom (A Nom) IF (-1 Gen OR ("eanet"))(0 ("veara"));
+	#$ De bođii geafes leaska ge gii bijai guokte smávvaruđaža, moatte šlántte veara.
+	#$ ...buot dan mii leat ráhkistan ja gudnejahttin veara.
+
+REMOVE:vearaN N IF (0 Der/veara OR ("veara"));
+	#$ Buhttenrievttálaččat ii nuppástuvvon mearkkašanveara...
+  
+#!! * vuolit
+SELECT:vulitAttr Attr IF (0 ("vuolit"))(1 ("gráda") OR ("dássi"));
+	#$ Skuvla dušše addá oahpu vuolit dásis. 
+
+SELECT:Comp Comp (NEGATE -1 ("nu") OR ("seammá") OR CC)(NEGATE 0 (Pl Nom) LINK -1 Comp OR COMPAR LINK *-1 COPULAS BARRIER NOT-ADV-PCLE)(NEGATE 0 VFIN)(1 N LINK 1 go BARRIER NOT-N);
+    	## Dážat navde Finnmárkku buoret guovlun go iežaset ruovttubáiki.
+
+SELECT:Comp Comp IF (-1 ("mihá"));
+SELECT:Comp Comp IF (-1 ("olu"))(NEGATE 0 (Pl Nom) LINK *1 PL3-V BARRIER NOT-ADV-PCLE);
+	#$ Nuppe dáfus ledje mihá eanebut geat bivde lagabus gátti.
+	#$ ...ja danin lea buot nu olu álkit inuihtaide. 
+
+#!!	!Attribute disambiguation
+	
+REMOVE:XAttrVFIN Attr (1 VFIN LINK NOT 0 N OR A);
+	#$ Dan gal juohkehaš fuobmá dakkaviđe.
+
+REMOVE:Xr1703b Attr IF (NOT 0 Indef OR Num OR ABBR)(NEGATE *1 N OR A OR (\?) BARRIER NOT-NPMODCC)(NEGATE 1 CC LINK *1 (A Attr) BARRIER NOT-ADV-PCLE LINK *1 N BARRIER NOT-NPMODCC)(NEGATE 1 PUNCT-LEFT LINK *1 PUNCT-RIGHT LINK *1 N BARRIER NOT-NPMODCC);
+  	## Dalle sáhttá beaktilit háhkat guovtte ja maiddái golmmagielat (maiddái suomagielat) gelbbolašvuođa.
+	## Seamma guoská geassemánu.
+	## Ráđđehus hálida erenoamažit buktit ovdan ILO-konvenšuvnna nr. 169 eamiálbmogiid ja čearddaid birra iehčanas stáhtain, jagi 1966 ON-konvenšuvnna siviila ja politihkalaš vuoigatvuođaid birra artihkal 27,...
+	#$ Mii leat dávjá ságastallan dán golmma alit, rukses, ruoná ja ihána stuorra diŋgga birra.
+	#$ Ollu go dus lea ruhta?
+	
+	
+REMOVE:X Attr IF (0 ILL-A LINK 0 @<SPRED)(1 Ill);
+	#$ Ja danin son lei šaddan nu bahá tálaide ja bustávaide.
+
+	# Rules for Attr between Dem and N
+	# --------------------------------
+SELECT:Xr1704 (A Attr) IF (*-1 (Dem Sg Nom) BARRIER NOT-NPMOD)(*1 (N Sg Nom) BARRIER NOT-NPMOD);
+SELECT:Xr1705 (A Attr) IF (*-1 (Dem Pl Nom) BARRIER NOT-NPMOD)(*1 (N Pl Nom) BARRIER NOT-NPMOD);
+	## Dalle dat geahppaset gurppas daddjojuvvo veajan.
+	## ...jus dát máinnašuvvon árbevirolaš dilálašvuođat eai geahččaluvvo čuvgejuvvot.
+
+SELECT:Xr1706x (A Attr) IF (*-1 (Dem Sg Acc) BARRIER NOT-NPMOD)(*1 (N Sg Acc) BARRIER NOT-NPMOD);
+SELECT:Xr1707 (A Attr) IF (*-1 (Dem Pl Acc) BARRIER NOT-NPMOD)(*1 (N Pl Acc) BARRIER NOT-NPMOD);
+	## ...ja son doaimmaha dán dábálaš dahje eanaš geavaheami.
+	## Nuppe beales geahččalit dahkat dáid siskkáldas áddejumiid duođaštanfáddán.
+
+SELECT:Xr1708 (A Attr) IF (*-1 (Dem Sg Gen) BARRIER NOT-NPMOD)(*1 (N Sg Gen) BARRIER NOT-NPMOD);
+SELECT:Xr1709 (A Attr) IF (*-1 (Dem Pl Gen) BARRIER NOT-NPMOD)(*1 (N Pl Gen) BARRIER NOT-NPMOD);
+	## Dán konkrehta háve gustojedje gáržžideamit nappo earáide go boazosapmelaččaide. 
+	## No cases left after the Dem Pl Acc-Attr-N Pl Acc rule? 
+
+SELECT:Xr1710x (A Attr) IF (*-1 (Dem Sg Gen) BARRIER NOT-NPMOD)(*1 (N Sg Ill) BARRIER NOT-NPMOD);
+SELECT:Xr1711 (A Attr) IF (*-1 (Dem Pl Ill) BARRIER NOT-NPMOD)(*1 (N Pl Ill) BARRIER NOT-NPMOD);
+	## Dás lei maiddái gažaldat geavahanvuoigatvuođas vuovdái ja dan vejolaš viidodahkii. 
+	## ...mat gullet dáidda ja eará lunddolaš sullasaš doaimmaide. 
+
+SELECT:Xr1712x (A Attr) IF (*-1 (Dem Sg Gen) BARRIER NOT-NPMOD)(*1 (N Sg Loc) BARRIER NOT-NPMOD);
+SELECT:Xr1713x (A Attr) IF (*-1 (Dem Pl Loc) BARRIER NOT-NPMOD)(*1 (N Pl Loc) BARRIER NOT-NPMOD);
+	## Ja dan báhkka cizas leat firpmit dassá go dat čoasku.
+	## Sápmelaččat ledje vuosttasin dahje okta dain vuosttaš álbmot-joavkkuin,... 
+	## ...dainna váilevaš vejolašvuođain...
+
+SELECT:Xr1714x (A Attr) IF (*-1 (Dem Pl Com) BARRIER NOT-NPMOD)(*1 (N Pl Com) BARRIER NOT-NPMOD);
+	## Geainnuin livččii eambbo turistajohtolat suohkana čoahkkeássanguovddážiid čađa daiguin ekonomalaš oalgeváikkuhusaiguin.
+
+SELECT:Xr1715 (A Attr) IF (*-1C Dem BARRIER NOT-NPMOD)(*1 N BARRIER NOT-A-CC)(NEGATE 0 N LINK *1 VFIN BARRIER NOT-ADV);
+	## Mo Alimusriekti meannudii vaikkoba dakkár vuolit dási olbmuid vihtančilgehusaigun?
+
 
 #!! !!!MISC 
 #!! !!And now some rules for adverbs that modify adjectives
@@ -3510,9 +3622,27 @@ SELECT:InfAfterNeg Inf (*-1 (V Neg) BARRIER NOT-ADV-PCLE LINK NOT *1 ConNeg BARR
 #!! * __removeAllImp__
 #REMOVE:removeAllImp Imprt ;
 
+#!! !!Nouns or verbs
+
+
+REMOVE:VFINAttr VFIN IF (-1C Attr LINK NOT 0 ("eanet"));
+  	## Eambbo doaimmat ruovttuin váikkuhit maiddái veahkkebálvalusossodaga.
+  	#$ Máhtte-vilbealle duddjui ođđa fatnasa.
+  
+SELECT:NPlbuorit (N Pl) IF (-1 ("buorre" Pl Nom))(0 (V Ind));  
+	## Das leat buorit lanjat čáppa guovllus.
+	
+REMOVE:ActioEssNum (Actio Ess) (-1 (Num Gen) OR (Num Nom))(0 (N Gen));	
+	## Odne leat golbma vihaheame.
+	
+SELECT:ActEssIfSensationv (Actio Ess) (-1 Acc LINK *-1 PERCEPTION-V BARRIER SV-BOUNDARY);
+	#$ Go gulan olbmuid sámásteame, de lea dego doložii máhccat, go mánnán gullen áhči, eagi ja Ristiinna-imi humadeame.
+
+REMOVE:NoActorIfSg3 Actor (0 VFIN + Sg3) ;
+	#$ Heasta čuožžu golmma juolggi nalde.
+	#$ Dat orru buorre fanas.
 
 #!! !!Demonstrative pronouns, agreement in DP
-
 
 SELECT:DemAttr $$CASE + (Dem Sg) (0 DAT-PRON)(*1 $$CASE + (N Sg) BARRIER NOT-NPMOD OR (Time) OR Num LINK NOT 0 VFIN OR ("leat") OR (Actio Ess))(NEGATE 0 Acc LINK *-1 STRICT-TV-V BARRIER Acc LINK *1 Dem LINK NOT *1 Acc BARRIER NOT-NPMOD)  ; 
 	## Mun muitalin dan vielljasan. # Should not hit this one.
