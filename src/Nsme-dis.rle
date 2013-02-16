@@ -156,6 +156,7 @@ LIST Com = Com ;
 LIST Ess = Ess ;
 
 LIST Sg = Sg ;
+LIST Du = Du ;
 LIST Pl = Pl ;
 
 LIST RCmpnd = RCmpnd ;
@@ -2152,7 +2153,18 @@ REMOVE:birrasii N (0 ("birrasii") LINK 1 Num)(NOT -1 Gen)  ;
 #!! * __eambbogo__ selects Adv eambbo go
 SELECT:eambbogo Adv (0 ("eambbo") OR ("eanet") LINK -1 REAL-V)(1 ("go")) ; ;
 
-#!! !!Lexicalized indefinite pronoun 
+#!! !!Pronouns 
+
+#!! * __recipr, reciprPl__ select Recipr
+
+SELECT:recipr Recipr ((-1 Recipr) OR (1 Recipr)); 
+SELECT:reciprPl Pl IF (-1 (Recipr Pl))(0 Recipr);
+REMOVE:reciprPl Pl IF (-1 (Recipr Du))(0 Recipr);
+	## ...de dadje guhtet guoibmáseaset:... 
+	## Gielddat berrejit ásahit fásta dulkaveaga, kánske ovttasbarggus nubbi nuppiin.
+
+REMOVE:Killrecipr Recipr ;
+	## Jos dajan nubbái: Mana! de son manná.
 
 #!! !!Nouns
 
@@ -3107,20 +3119,131 @@ SELECT:RelPl (Rel Pl) ((-1 NP-HEAD-PL LINK NOT 0 NP-HEAD-SG) OR (-1 NP-HEAD-SG L
 	#$ ...go lei sáimmaiguin bivdán jávrris maid stáhta lei láigohan. 
 	#$ Doaibma gullá doaimmaide maid ulbmil lea movttiidahttit sámi nuoraid... 
 
-#
-#REMOVE:r1485 (Rel Pl) IF (NEGATE *-1 (N Pl) OR PRON-NOT-SG BARRIER N OR Pron)(NEGATE *-1 N LINK *-1 Num OR CC BARRIER V)(0 (Rel Sg));
-	## 
-
-
+#!! * __RelPl__ removes Rel
+REMOVE:RelPl (Rel Pl) (NEGATE *-1 (N Pl) OR NOT-SG-PRON BARRIER N OR Pron)(NEGATE *-1 N LINK *-1 Num OR CC BARRIER V)(0 (Rel Sg));
+	#$ Lávvui gullá maid uvssot.
 
 #!! !!Emphatic ieš     
 
-#!! !!!PRONOUNS
-#!! !!Reciprocal pronouns
+#!! * __ies1Pl, ies2Pl__ select Pl for ieža
+
+SELECT:ies1Pl Pl (*-1 PL-V OR (V Imprt Pl2) OR MII-PERS OR DII OR SII OR (Pron Rel Pl Nom) BARRIER SV-BOUNDARY OR PUNCT)(0 ("ieš" Pron Refl Pl Nom))(NEGATE *1 DU-V BARRIER NOT-ADV-PCLE);
+	#$ Allet dubme, amadet ieža dubmejuvvot!
+	#$ ...muhto leat maiddái muhtumat geat ieža leat dahkan iežaset 
+	#$ dohkketmeahttumin...
+
+SELECT:ies2Pl Pl (0 ("ieš" Pron Refl Pl Nom))(*1 PL-V BARRIER SV-BOUNDARY);
+	#$ ...ja didjiide mihtiduvvo seammá mihtuin mainna ieža ge mihtidehpet.
+
+#!! * __iesDu__ select Pl for ieža
+SELECT:iesDu Du (*0 DU-V OR MOAI OR DOAI OR SOAI BARRIER SV-BOUNDARY OR PUNCT)(0 ("ieš" Pron Refl Du Nom));
+	#$ Doai galgabeahtti ieža mannat.
+	#$ Ieža soai muitaleigga mii lei dáhpáhuvvan mátkkis.
+
+
 #!! !!Numerals
-#!! !!More pronouns
+
+#!! * __NifNum__ 
+REMOVE:NifNum N (0 Num)(*1 (N Sg Gen) BARRIER NOT-A);
+	#$ Mii finaimet doppe guđa geardde.
+	
+#!! * __AdvOvtta__ 
+REMOVE:AdvOvtta Adv (0 OKTA + Acc)(1 (Sg Acc)); 
+	#$ Soai vácciiga ovtta gaskka.
+	
+#!! * __AdvNumEss__ 
+REMOVE:AdvNumEss Adv (0 OKTA + Ess)(1 Ess); 
+	#$ Mii barggaimet oktan joavkun.
+
+SELECT:NumCurrency Num (1 CURRENCY OR MEASURE);
+	#$ Dainna čuđiin ruvnnuin áiggun bierggu oastit.
+
 #!! !!Indefinite pronouns
+
+SELECT:galleIndef ("galle" Indef) (*-1 Neg BARRIER S-BOUNDARY) ;
+	#$ Eaige sámiid ássanguovllus leat galle gieldda, mat...
+ 
+REMOVE:galleIndef ("galle" Indef) ;
+
+SELECT:galleNum ("galle" Num)(NEGATE -1 Neg)(*1 N BARRIER NOT-NPMOD);
+	#$ ...ja govve galle joga leat Deanučázádaga njuoskkadagas.
+
+SELECT:nubbiGen ("nubbi" Pron Indef Gen) (1 ("dáfus" Po) OR ("beali" Po) OR ("hávvi") OR ("beallái" Po) OR ("bealli") OR ("sohkabealli") OR ("bealde") OR ("beales") OR ("láhkai") OR ("riika") OR ("máilbmi"));
+	#$ Nuppe dáfus deattuha suohkan, ahte...
+
+SELECT:nubbiIndef ("nubbi" Pron) ((*-1 ("nubbi") OR ("guokte") BARRIER ("goalmmát") OR ("vuosttas") OR ("vuosttaš")) OR (*1 ("nubbi") BARRIER ("goalmmát"))) ;
+
+SELECT:nuppiIndefCom ("nubbi" Pron Com) (1 ("sátni" Com));
+
+SELECT:IndefLoc (Indef Loc) (-1 COMMA OR CC LINK -1 (N Nom) LINK *-1 COPULAS BARRIER REAL-V LINK -1 (N Pl Loc));
+	#$ Muhtun siiddain leat moanat goađit, nuppiin unnánat, dan duohken leago rájá siskkobealde stuorra dahje unna eanaguvlloš. 
+	
+SELECT:nubbiIndefPl ("nubbi" Pl)(0 ("nubbi" Indef Pl) LINK NOT 1 PL-N);	
+
+SELECT:nubbiOrd ("nubbi" Ord) (*0 ("vuosttas") OR ("vuosttaš") OR ("goalmmát")) ;
+	#$ Vuosttaš vuojahaga fávllimus čuolda lea goaratčuoldan ja nubbi čuolda fas gáddeoal-čuoldan.
+	#$ Nubbi noađđeheargi goallostuvvo giehtahearggi lávžái ja goalmmát fas dan nuppi lávžái.
+	#$ Sii leat Ohcejogas golggotmánu vuosttaš beaivvi, Gáregasnjárggas nuppi beaivvi ja Njuolggámis ges goalmmát beaivvi.
+
+SELECT:nubbiOrdManu ("nubbi" Ord) IF (-1 MANNU + Gen)(1 ("beaivi") OR ("b") OR ("vahkku"));
+	#$ Son lei doppe Ohcejogas golggotmánu nuppi beaivvi.
+
+SELECT:nubbiOrdSuperl ("nubbi" Ord)(1 A LINK 0 Superl OR Loc OR ("maŋit" Superl) OR ("maŋemuš"));
+	#$ Listu lea gieldda nubbi stuorámus bellodat.
+	#$ Nubbin vuolemusas lea Guovdageaidnu Finnmárkku listtus.
+
+SELECT:nubbiIndefIll ("nubbi" Indef) (-1 (N Sg Loc))(0 ("nubbi" Ill));
+	#$ Son lea viehkan čoahkkimis nubbái maŋŋebárgga rájes.
+
+SELECT:nubbiOrdLex ("nubbi" Ord)(1 ("geardi") OR ("buolva" Loc) OR ("giella") OR ("máilbmesoahti") OR ("lađas") OR ("čuokkis") OR ("vuorru"));
+	#$ Henrik oaččui buot gussiid dearvan nuppi gearddi čađa, gos ii buollán.
+	#$ Soai leigga fulkkežat nuppi buolvvas.
+		
+SELECT:nubbiIndefOkta ("nubbi" Indef) (*-1 OKTA);
+	#$ Okta nubbi vuodjá tráktor máđiiráigge.
+	#$ Okta ášši lea mii lágas mearriduvvui, nubbi lea man kommišuvnnat čuvvo mearrádusaid.
+	#$ Riektegeavadis sáhtášii danin geavahit guokte váldolinjjá, okta ovdal ja nubbi fas maŋŋá 1970.
+	
+SELECT:nubbiOrdEss ("nubbi" Ord Ess) (*-1 MOVEMENT-V OR COPULAS BARRIER REAL-V) ;
+	#$ Sii olihedje diibmá nu movt dán jagi nubbin.	
+	
+SELECT:nubbiIndefAcc ("nubbi" Indef Acc) IF (*-1 TRANS-V BARRIER SV-BOUNDARY)(1 Inf);
+	#$ Ulbmil lea oažžut nuppi boagustit.	
+
+SELECT:nubbiIndefUnnimusat Indef IF (-1 ("unnimustá") OR ("unnimusat"))(0 ("nubbi"));
+	#$ Mánáin lea ovttastallanvuoigatvuohta unnimustá nuppiin váhnemiin.
+
+REMOVE:unbbiAttr Attr (0 ("nubbi"))(1 Dem OR Adv);
+	#$ ... ja nubbi dán suorggi siskkabeale hálddahusortnegiid birra.
+	#$ ...nubbi fas rávesolbmuid psykiatriijas.
+
+SELECT:KillnubbiOrd Indef (0 ("nubbi" Ord));
+
+
 #!! !!Demonstrative pronouns
+
+REMOVE:DemPlIll (Dem Pl Ill) (0 Pers)(1 (N Pl Acc));
+	## Muhto boanddat leat goikadan ollu jekkiid ja gilván daidda rásiid.
+
+SELECT:Dem Dem (NEGATE -1 REAL-V)(1 (Indef Attr));
+	## Nuppi geahči dan seammá lávžžis fas biddjojuvvo bađa birra.
+
+SELECT:DemGenSeammas (Dem Gen) (0 ("dat" Sg) LINK 1 ("seammás"));
+
+REMOVE:DemSg (Dem Sg) IF (0 ("dat" Sg))(NEGATE *1 (N Sg) BARRIER NOT-NP LINK 0 HEAD-N)(NEGATE 1 PrfPrc LINK *1 (N Sg) BARRIER NP-BOUNDARY)(NEGATE 1 (Indef Sg) OR ("seammás")); 
+	## .. ja dan golut leat govttolaččat veahki ektui.
+
+SELECT:datPersSg3 ("dat" Pers Sg3)(NEGATE *1 (N Pl) OR (Indef Pl) OR NUM BARRIER NOT-NP)(NEGATE 1 NP-HEAD-GEN LINK 1 (Actio Nom) LINK 1 (N Pl));
+	## ...ja ahte dat dáhttu čielgasit berre doahttaluvvot. 
+
+REMOVE:Pers Pers (0 (Dem Gen))(1 N LINK *1 Rel BARRIER WORD);
+
+REMOVE:Dem Dem (0 Pers)(1 (Num Gen))(2 MEASURE OR NUMUNIT LINK 0 Ill) ; 
+	## Na gal don dal oaččut dan beannot čuohtái, go juo válddežat.
+
+
+
+
 #!! !!Disambiguating adjectives 
 
 #!! !!!MISC 
