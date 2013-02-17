@@ -1129,7 +1129,7 @@ SET PRE-APP   = COMMA OR PUNCT-LEFT OR PRE-NP-HEAD ;
 #!! part of the noun phrase of that noun (i.e., "scan to the next NP head")
 
 SET NOT-NPMOD     = WORD - PRE-NP-HEAD OR ABBR ;                     
-# This is the previous NOT-NPMOD set.
+# This is the previous NPNH set.
 # NOT-NPMOD  = "NOT-PRE-NP-HEAD"
  
 SET NOT-NPMOD1     = NOT-NPMOD - Acc OR ABBR ; 
@@ -2901,10 +2901,12 @@ SELECT:poQst Pcle IF (-2 (N Gen) LINK *-1 BOS BARRIER NOT-NP)(-1 Po)(0 go)(*1 VF
 #!! * __killPcle__ removes all remaining Pcle for go 
 REMOVE:killPcle Pcle (0 go) ;
 
+
+#!! !!!SECTION 9 WORD-SPECIFIC RULES
+
 	# ============== #
           SECTION #9 # 
 	# ============== #
-
 
 #!! !!Some particular subjunctions
 
@@ -2986,10 +2988,13 @@ MAP:compCoordAttr (@COMP-CS<) TARGET NP-HEAD-NOM (-1 Attr LINK -1 CRD LINK -1 (@
 #!! * __killAllnotComp__ Removes analysis which are not @COMP-CS<
 SELECT:killAllnotComp  @COMP-CS< ;	
 
+#!! !! ** ''This was the kill all not Comp rule!!''
+
 #!! * __goCSbeforeComp__ Selects CS analysis in front of @COMP-CS<
 SELECT:goCSbeforeComp ("go" CS)(*1 @COMP-CS< BARRIER REAL-V OR CC) ;
 
 #!! !!!MAPPING OF CC AND CS
+
 #!! Mostly we map both @CNP and @CVP, then we select @CNP, after that we remove them so @CVP remains
 
 #!! * __cnpCompSC__ Map @CNP if @COMP-CS< or COMPAR ahte
@@ -4229,8 +4234,177 @@ SELECT:r2143 Gen IF (NEGATE 0 Adv OR PrfPrc OR (Num Nom))(1C Po)(NEGATE 1 Px OR 
 #!! !!Essive  
 #!! !!Late case rules (after other case rules have worked). 
 
-#!! !!!VERBS
+#!! !!!VERBS PART 2, SECTION #22
+SECTION
+
+
 #!! !!Finite or not
+
+SELECT:r2906 SG2-V IF (*-2C SG2-V BARRIER SV-BOUNDARY OR PUNCT)(-1 Rel)(NEGATE -1 (Pl Nom));
+	## Don leat garra olmmái gii láddjet doppe gosa it leat gilván.
+
+SELECT:r2820 VFIN IF (-1 NP-HEAD-NOM LINK NOT *-1 VFIN OR Acc)(0 PrsPrc LINK 0 TRANS-V)(*1 NP-HEAD-ACC BARRIER VFIN);
+	## Jus stálu beana njoallu stálu háviid, de hávit sávvojit.
+
+SELECT:r2821 VFIN IF (*-1 BOC BARRIER REAL-V)(0 INF-V LINK NOT 0 Imprt)(NEGATE 0 ("manne") LINK *-1 BOS BARRIER NOT-CC)(*1 Inf BARRIER SV-BOUNDARY);
+	## Áigugo fas skuvlii álgit? 
+	## Sáhttit maid namahit ahte ...
+ # Looks brave but works!
+
+SELECT:r2822 VFIN IF (NEGATE *-1C VFIN BARRIER S-BOUNDARY)(-1 Loc)(NEGATE -1 (Interr Sg))(0 LOC-V); 
+	## Nuppi lađđasis čuovvu, ahte...
+
+REMOVE:r2823 VFIN IF (NEGATE -2 BOS OR CLB)(-1C Inf)(NEGATE 0 Qst);
+	## Lága juksanmearrin lea váikkuhit sihkkarastit álbmogii 
+	## ovttadássásaš dearvvašvuođaveahki.
+ # Neg conditions because of:
+	## Suhpodit daddjojuvvo dat go dušše nođiid váldá olmmoš eret...
+	## Mearrideaddjin dasa ferte danin leat addojuvvogo... 
+
+REMOVE:r2824 VFIN IF (*-1 Nom BARRIER NOT-ADV-PCLE OR CLB LINK *-1C VFIN BARRIER NOT-ADV-PCLE OR CLB OR CP);
+	## Lea dárbu nannet doaimmaid mat ovddidit sámi dutkama.
+
+#REMOVE:r2825 VFIN IF (*-1 PrfPrc BARRIER HNOUN OR (Pron Nom) OR SV-BOUNDARY LINK *-1 REALCOPULAS BARRIER NOT-ADV-PCLE);
+ 	## Sin badjel geat orrot jápmima eatnamis ja suoivanis, lea ihtán čuovggas.
+	## Gii lea cuigen din báhtarit boahttevaš moarreduomus?
+
+REMOVE:r2827 VFIN IF (NEGATE *-1 Rel OR CS OR COMMA BARRIER S-BOUNDARY)(*-1C VFIN BARRIER S-BOUNDARY OR PUNCT LINK NOT *-1 Interr BARRIER NOT-NP)(*1 S-BOUNDARY OR CC OR EOS BARRIER NP-HEAD-NOM OR NP-HEAD-ACC);
+	## Muhto sáđuid son boaldá čáskatmeahttun dolas.
+
+REMOVE:r2828 VFIN IF (NEGATE 0 Imprt LINK *-1 BOS BARRIER NOT-ADV-PCLE)(NEGATE *-1 Rel BARRIER REAL-V)(NOT 0 N)(*1C VFIN BARRIER S-BOUNDARY OR PUNCT OR ("dego") OR ("dugo") OR ("galle" Num) LINK NOT 0 Qst)(NEGATE *1 Neg BARRIER VFIN)(NEGATE *1 VFIN BARRIER S-BOUNDARY LINK 1 go);
+	## Sámegillii galbet universitehta lea šaddan realitehta.
+	## Áldu mii dálvvi miehtá njamaha miesi gohčoduvvo čearpmateadnin.
+
+REMOVE:r2829 VFIN IF (0 Loc)(*1 Neg BARRIER NOT-ADV-PCLE OR CLB LINK *1 PrfPrc OR ConNeg BARRIER SV-BOUNDARY);	
+	## Lágas ii duššaduvvo oktage bustávaš dahje čuoggáš, ovdal go...
+	## Máhttájeaddjit orro jávohaga eai ge dalle muitalan geasage maid ledje oaidnán. 
+
+REMOVE:r2832 ConNeg IF (*-1 PrfPrc BARRIER NOT-ADV-PCLE);
+	## Go geavahus ii duođaštuvvon leat álggahuvvon ovdal go... 
+#SELECT:r2833 (@+FMAINV) IF (*-1 CS BARRIER S-BOUNDARY)(0C (Actio @>N) OR (PrfPrc @>N) OR (Gen @>N) OR (@+FMAINV))(*1 NP-HEAD-ACC)(NEGATE *1 VFIN BARRIER S-BOUNDARY);
+    ## Go gulan olbmuid sámásteame, de lea dego doložii máhccat, go mánnán gullen áhči,  eagi ja Ristiinna-imi humadeame.
+
+SELECT:r2834 VFIN IF (-1 BOS)(1 Adv)(2 (":"));
+SELECT:r2835 VFIN IF (-1 BOS)(1 EOS);
+SELECT:r2836 VFIN IF (-1 BOS)(1 ("go") LINK NOT *1 VFIN BARRIER S-BOUNDARY);
+	## Ozan ain: 
+
+	# Indicative Negative
+	# -------------------
+ # Unique are Sg1, Sg3, Du1, Du2, Du3, Pl1, Pl2, Pl3
+ # Sg2 "it" = ABBR.
+
+	# Select Neg Sg2 instead of ABBR
+REMOVE:r2837 ABBR IF (*-1 ConNeg OR PrfPrc)(0 Neg); 	## Dáppe don leamaš it.
+REMOVE:r2838 ABBR IF (0 Neg)(*1 ConNeg OR PrfPrc); 	## Don it leat dál.
+
+	# Infinitive
+	# ----------
+SELECT:r2839 Inf IF (*-2 INF-V BARRIER NP-HEAD-NOM OR SV-BOUNDARY)(-1 Po)(NEGATE *-1 CP BARRIER SV-BOUNDARY);
+	## Dearvvašvuođabargit galget divššohasa agi, silolaš dilálašvuođa, láddama ja vásáhusduogáža ektui láhčit dilálašvuođaid buoremus lági mielde.
+
+SELECT:r2840 Inf IF (-1C (Sg Nom) LINK NOT 0 Num LINK NEGATE *-1 CC BARRIER NOT-NPMOD LINK *-1 Nom BARRIER VFIN)(NEGATE 0 PL3-V LINK *1 NP-HEAD-PL-NOM BARRIER NOT-NPMODADV);
+	## Mánáin lea vuoigatvuohta oažžut dearvvašvuođaiskkadeami.
+	## Mus ii leat báljo dilli vuolgit.
+	
+SELECT:r2841 Inf IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(0 VFIN);
+	## Gean vuorru lea dál bálkestit birccu?	
+	
+SELECT:r2842 Inf IF (*-1 COPULAS BARRIER AUX LINK -1 (N Pl Acc) LINK -1 ("mii") OR ("gii") LINK 0 (Interr Sg Nom) LINK *-1 BOS OR (":") BARRIER WORD)(0 VFIN);	
+	## Mii ávkkiid lea min doppe johtit?		
+
+SELECT:Inf_ICL Inf IF (-1 Acc LINK NOT 0 Rel OR VFIN OR Adv OR Nom LINK *-1 VFIN BARRIER Acc OR S-BOUNDARY)(*1 ADVLCASE OR Acc BARRIER NOT-NPMOD);
+	## Son vuolggahii bálvaleaddjiidis rávkat bovdejuvvon gussiid heajaide.
+	## ...leago dieđiheamis doarvái vuođđu ášši váldit meannudeapmái.
+	## Vaikko ii loga makkárge revolušuvnna vuordit dásseárvopolitihkas iežas gielddas maŋŋel dán kurssa, de deattuha ahte buot dáhpáhuvvet proseassa čađa.
+
+
+SELECT:r2845 Inf IF (-1 Nom LINK *-1 Loc BARRIER NOT-AA LINK *-1 COPULAS BARRIER NOT-PCLE)(*1 Acc BARRIER NOT-AA);
+    ## Leatgo geavaheaddjis váttisvuođat buktit áššiid ovdan?
+
+SELECT:r2846 Inf IF (-1 COMMA LINK *-1 (Pron Rel) LINK *-1 INF-V BARRIER REAL-V);
+	## Dalle fertejit buotlágan ávnnaslaš eavttut maid dárbbaša vai duođalaččat galgá sáhttit kultuvrras dikšut, gullat dása.
+
+SELECT:r2847 Inf IF (-1 COMMA LINK *-1 (Pron Rel) LINK *-1 (Pron Rel) LINK *-1 INF-V BARRIER REAL-V);
+	## Eai galgga sii geat gullet dakkáraš minoritehtaide ovttas eará láhttuiguin mat gullet sin jovkui, manahit vuoigatvuođaideaset dikšut iežaset kultuvra, dovddastit ja geavahit iežaset oskku, dahje geavahit  iežaset giela.
+
+SELECT:r2848 Inf IF (NEGATE *-1 (Pl Nom) BARRIER NOT-ADV-PCLE)(1 LEAT-FIN-NOT-IMP)(NEGATE 1 Qst);
+	## Dáidda heŋgejuvvojit gurpasat, ja maid dál de guottehit lea áigumin.
+
+SELECT:r2849 Inf IF (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 (A Sg Nom) BARRIER NOT-ADV-PCLE);
+	## Dárbbašlaš lea dikšut jávrriid ovdal go lea ekonomalaččat veara bivdit.
+
+SELECT:r2850 Inf IF (*-1 NP-HEAD-NOM + Sg BARRIER VERB OR go)(1 PUNCT OR EOS);
+	## Áigemearri váidalusa buktit.
+
+REMOVE:r2851 Inf IF (NEGATE *-1 VFIN BARRIER S-BOUNDARY)(0 ("leat"))(*1 PrfPrc BARRIER REAL-V);
+	## De leat máksán.
+
+	# Coordinated infinitives
+	# - - - - - - - - - - - -
+SELECT:r2852 Inf (*-1 COMMA BARRIER VERB OR MO LINK -1C Inf)(NEGATE 0 (Neg Imprt))(NEGATE *-1 (Pl Nom) BARRIER S-BOUNDARY)(NEGATE *1 (Pl Nom) BARRIER S-BOUNDARY);
+	## Mun in leat boahtán gomihit, muhto ollašuhttit.
+	## Son galgá stuorrut, mun fas uhccut.
+
+SELECT:r2853 Inf IF (*-1 CC BARRIER SV-BOUNDARY LINK *-1 Inf BARRIER WORD); 
+	## Hearrá Ipmilat galggat gudnejahttit, ja áivvestassii su bálvalit.
+
+SELECT:r2854 Inf IF (*-2C Inf BARRIER REAL-V)(-1 CC);
+	## Duođalaš nana jáhku geažil lea divššohas vuoigatvuohta biehttalit vuostáváldimis vara dahje varabuktagiid dahje biehttalit botkemis nealgudeami mii lea jođus.
+ 
+SELECT:r2855 Inf IF (*-3 Interr LINK *-1 Inf BARRIER REAL-V)(-2 COMMA)(-1 CC)(NEGATE *1 Nom BARRIER NOT-NPMODADV);
+	## Divššohasbearráigeahčis lea vuoigatvuohta buktit oaiviliiddis dilálašvuođaid birra mat gullet bearráigeahčči bargoviidodahkii, ja evttohit konkrehtalaš buoridandoaimmaid.
+
+	# Infinitives 
+	# - - - - - -
+
+SELECT:r2856 Inf IF (*-1 BOS BARRIER NOT-ADV)(NEGATE 0 Imprt)(NEGATE 0 VFIN LINK *1 Nom BARRIER NOT-NPMOD);
+
+SELECT:r2857 Inf IF (-2 ABBR)(-1 (PUNCT RIGHT));
+
+SELECT:r2858 Inf IF (-1 N)(0 V)(*1 Rel BARRIER NOT-NPMODADVII LINK NOT 0 Adv);
+
+SELECT Inf (-1 Nom LINK *-1 CC BARRIER NOT-NPMOD LINK -1 Nom LINK *-1 COPULAS BARRIER NOT-NPMODADV) ;
+	## Jagi 2005 Sámediggi álggahii Divvuma, mii lei prošeakta ja bargojoavku ráhkadit sámegielaid sátnedivvunprográmmaid.
+
+
+	# Infinitives in lists
+	# - - - - - - - - - - 
+
+SELECT:r2859 Inf IF (-2 VFIN)(-1 (":" CLB));
+	## Ulbmilat leat: eastadit soađi, nannet ráfi.
+
+SELECT:r2860 Inf IF (*-2 Inf BARRIER VFIN LINK -1 (":" CLB) LINK -1 VFIN)(-1 ("\;" CLB));
+	## Ulbmilat leat: eastadit soađi; nannet ráfi.
+
+SELECT:r2861 Inf IF (*-2 Inf BARRIER VFIN LINK -1 ("\;" CLB) OR ("," CLB) LINK *-1 Inf BARRIER VFIN LINK -1 (":" CLB) LINK -1 VFIN)(-1 ("\;" CLB) OR ("," CLB));
+	## Ulbmilat leat : eastadit soađi; nannet ráfi; lohkat girjiid. 
+	#      L-1 L-1 L*-1    L-1 *L-2   -1  0
+
+SELECT:r2862 Inf IF (*-2 Inf BARRIER VFIN LINK -1 ("\;" CLB) OR ("," CLB) LINK *-1 Inf BARRIER VFIN LINK -1 ("\;" CLB) OR ("," CLB) LINK *-1 Inf BARRIER VFIN LINK -1 (":" CLB) LINK -1 VFIN)(-1 ("\;" CLB) OR ("," CLB));
+	## Ulbmilat leat : eastadit soađi; nannet ráfi;  lohkat girjiid , borrat márffi.
+	 #      L-1 L-1 L*-1    L-1 *L-2   L-1  L* -1     -1  0
+
+	# Infinitive in sentence fragments
+	# - - - - - - - - - - - - - - - - 
+
+SELECT:r2863 Inf IF (-1C Acc LINK *-1 BOS BARRIER NOT-NPMOD)(1 EOS);
+	## Ruđa juogadit.
+
+SELECT:r2864 Inf IF (-1C Ill LINK *-1 BOS BARRIER NOT-NPMOD)(0 ILLV)(1 EOS);
+	## Mánáidgárdái hárjánit.
+
+SELECT:r2865 Inf IF (-1 BOS)(*1C Acc BARRIER NOT-NPMOD LINK 1 EOS);
+	## Ruđa juogadit.
+
+SELECT:r2866 Inf IF (-1 BOS)(0 ILLV)(*1C Ill BARRIER NOT-NPMOD LINK 1 EOS);
+	## Hárjánit mánáidgárdái.
+
+SELECT:r2867 Inf IF (-1 BOS)(0 LOC-V)(*1C Loc BARRIER NOT-NPMOD LINK 1 EOS);
+
+SELECT:r2868 Inf IF (-1C Loc LINK *-1 BOS BARRIER NOT-NPMOD)(0 LOC-V)(1 EOS);
+
+
 #!! !!Indicative or imperative
 #!! !!Verbs according to person and number
 #!! !!Rules for a special infinitive construction
