@@ -2397,7 +2397,7 @@ SELECT:eanasPron Pron IF (0 ("eanaš") OR ("eanas"))(1 (Dem Loc) OR (Pers Loc));
 #!! First select Px, then remove all remaining Px
 
 #!! * Nouns: __NomPxSg1__ (not Ess) as the only word in a sentence. Needs no disambiguation. Should it have N-PX as constraint?
-SELECT:PxSg1Nom (N Nom PxSg1) IF (-1 BOS)(NEGATE 0 VFIN)(*1 EOS OR VFIN BARRIER WORD);  
+SELECT:PxSg1Nom (N Nom PxSg1) IF (-1 BOS)(NEGATE 0 VFIN)(*1 EOS OR VFIN - Der/Pass BARRIER WORD);  
 	#$ Ustibažžan! 
 	#$ Vielljan sáhttá vuoitit gilvvu.
 
@@ -3657,7 +3657,82 @@ REMOVE:DemAcc (Dem Acc) IF (0 DAT-PRON)(1 ADVLCASE);
 
 #!! !!!VERB MAPPINGS
 
-#!!	!!Prenominal participles
+#!! !!Verbs as predicatives (@SPRED>) and (@<OPRED) 
+
+#!! !(@SPRED>) and (@<OPRED) target  PrfPrc
+MAP:spredPrfPrc (@SPRED>) TARGET PrfPrc (-1 BOC)(0 Der/Pass)(1 ("leat") LINK NOT 1 V)(*2 NP-HEAD-NOM BARRIER NOT-NP);
+	#$ Buressivdniduvvon lehkos son guhte boahtá Hearránammii.
+	
+MAP:opredPrfPrc (@<OPRED) TARGET PrfPrc (-1 Acc LINK *-1 STRICT-TV-V BARRIER NOT-NPMOD)(0 Der/Pass);
+	#$ Seammás orru Alimusriekti Skjerstad-áššis dovdan iežas čadnojuvvon dupmui.
+
+MAP:opredPrfPrc (@<OPRED) TARGET PrfPrc (*-1 COMMA BARRIER NP OR S-BOUNDARY LINK -1 Ess)(1 EOC OR CC) ;	
+	#$ Dat boahtá dohko ja gávdná dan guorusin, suohpalastojuvvon ja čiŋahuvvon.
+
+
+#!!	!!Verbs as prenominal participles (@>N) - Er ikke ferdig med reglene som kommer her:
+
+#!!	! (@>N) target  PrfPrc
+MAP:>NPrfPrc1 (@>N) TARGET PrfPrc (NEGATE *-1 Neg BARRIER REAL-V)(NEGATE -1 COPULAS LINK *-1 Ill BARRIER NOT-A)(NEGATE 0 AUX)(1C (N Nom));
+	#$ Son lea oahppan olmmoš.
+	#$ ..maid almmolaš dohkkehuvvon dearvvašvuođabargit addet,..
+	#$ Mearrasápmelaččat ledje áŋgiris ja oahppan bivdit.
+	#$ Sus leat hervejuvvon gálssohat main heaŋgájit čáppa diehpit. 
+  	#$ Sieiddi bálvalemiin sturron eallu gohčoduvvui bálvvoseallun, mii sáhtii jávkat, go oamasteaddji jámii dahje go sieidi ii bálvaluvvon.
+
+
+MAP:>NPrfPrc2 (@>N) TARGET PrfPrc (-1C Dem OR Num OR Attr OR Indef)(*1 N BARRIER NOT-A);
+	#$ Galgá leat okta čohkkejuvvon divššohasjournála. 
+
+MAP:>NPrfPrc3 (@>N) TARGET PrfPrc (-1 PrfPrc LINK *-1 ("leat") OR Neg BARRIER REAL-V OR S-BOUNDARY)(1 N);
+	#$ ...dan mii lei dáhpáhuvvan bosttahuvvon olbmuide. 
+	#$ Ránnjá Ole Vuolab imašta manne eai leat čorgen eaige čázi ge gidden buollán viesus.
+	#$ Ii lean boahtán mannan vahkus.
+
+MAP:>NPrfPrc4 (@>N) TARGET PrfPrc (*-1 CLB OR go BARRIER NOT-PRE-A-N)(1 TIME);
+	#$ Dalle šattašii liikka buorit dálki go mannan sotnabeaivve. 
+
+MAP:>NPrfPrc5 (@>N) TARGET PrfPrc (*-1 BOC BARRIER ("leat"))(NEGATE 0 ("leat")) (*1 N BARRIER NOT-NPMOD LINK NOT 0 TIME LINK NEGATE 1 TIME);
+	#$ Sámiid várás oaivvilduvvon doaimmaid hárrái galggašii...  (strange)
+
+MAP:Xr94 (@>N) TARGET PrfPrc IF (*-1 Po BARRIER NOT-NP LINK *-1 BOS OR REAL-CLB BARRIER NOT-NP)(NEGATE 0 ("leat"))(*1 N BARRIER NOT-NPMOD LINK NOT 0 TIME LINK NEGATE 1 TIME) ;
+ # For those cases where the Po is homonymous with verb, and therefore a barrier in the preceding rule.
+
+MAP:Xr95x (@>N) TARGET PrfPrc IF (*-1 Pr BARRIER NOT-NP LINK -1 NP-BOUNDARY LINK NOT 0 ("leat"))(*1 (N Gen) BARRIER NOT-NP);
+	#$ 1978 láhka balansere gaskal sámi vuoigatvuođaid boarásmuvvan oainnu,...  x
+
+MAP:>NPrfPrcX (@>N) TARGET PrfPrc (*-1 BOS OR REAL-CLB BARRIER NOT-PRE-A-N)(NEGATE 0 ("leat")) (*1 N BARRIER NOT-NPMOD LINK NOT 0 TIME LINK NEGATE 1 TIME);
+	#$ Ovdamearkan oaivvilduvvon fálaldahkii lea sámi kulturdieđu lohkanbaji. ---
+
+
+MAP:Xr96x (@>N) TARGET PrfPrc IF (*-1 NOT-AUX-V LINK NOT 0 PrfPrc BARRIER S-BOUNDARY OR AUX LINK NOT 0 A OR N)(NEGATE -1 COPULAS)(0 Der/Pass)(1 N)(NEGATE 1 TIME); 
+MAP:Xr97 (@>N) TARGET PrfPrc IF (*-1 S-BOUNDARY BARRIER NOT-NPMODADV LINK NOT 0 A OR N)(0 Der/Pass)(*1 N LINK NOT 0 TIME BARRIER NOT-NPMODADV);
+	#$ Divššohasas, gii dárbbaša guhkit áiggi ja oktiiheivehuvvon dearvvašvuođabálvalusaid,...
+
+MAP:Xr98 (@>N) TARGET PrfPrc IF (-1 Adv LINK *-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 Nom BARRIER NOT-AUX-V OR S-BOUNDARY) (*1C Nom BARRIER NOT-NPMODADV LINK 1 NP-BOUNDARY);
+	#$ Ruonáeana lea čielgasit ráddjejuvvon geográfalaš guovlu. ---
+
+
+MAP:X (@>N) TARGET PrfPrc IF (-2 Attr)(-1 CC)(1 (N Nom))(2 EOC);	
+
+MAP:Xr100 (@>N) TARGET PrfPrc IF (*-1 COPULAS BARRIER NOT-NPMOD LINK -1 Loc)(1 (N Nom));	
+
+MAP:Xr101x (@>N) TARGET PrfPrc IF (*-1 Nom BARRIER REAL-V LINK *-1 COPULAS BARRIER NOT-NPMOD LINK -1 Loc)(1 N);		
+	#$ Sus lea ovddasvástádus gárrenávnnasfuolaheami spesialiserejuvvon osiin. x
+
+MAP:Xr102x (@>N) TARGET PrfPrc IF (0 ("mannat"))(1 TIME);
+
+MAP:Xr104x (@>N) TARGET PrfPrc IF (NEGATE *-1 COPULAS OR Neg BARRIER S-BOUNDARY OR ConNeg OR PrfPrc)(NEGATE -1 GRADE-ADV)(NEGATE -1 Acc OR Gen)(1 N)(NEGATE *1 COPULAS BARRIER REAL-V OR S-BOUNDARY);
+	#$ Son hálidii náitalan nissona. x
+
+MAP:Xr105 (@>N) TARGET PrfPrc IF (NEGATE *-1 COPULAS BARRIER S-BOUNDARY)(*1 (N Loc) BARRIER NOT-AA LINK 1 COPULAS LINK 0 VFIN LINK *1 Nom BARRIER NOT-COP-V);
+	#$ Seammago ovdalis namahuvvon riektehistorjjálaš ovdanbuktimis leat dán barggus maid muhtun buhtes historjjálaš dilit, ja almmuhuvvo danne joavkku čielggadeami mielddusin (2. mielddus).  x
+    
+MAP:Xr106 (@>N) TARGET PrfPrc IF (*-1 COPULAS OR Neg BARRIER S-BOUNDARY LINK 0 VFIN LINK NOT *-1 Ill BARRIER NOT-A)(0 NOT-COP-V)(1 (N Nom) LINK NOT 0 Acc OR Inf LINK 1 EOS); 
+	#$ Buorre sápmelaš lea jápmán sápmelaš.  x
+    
+MAP:Xr107 (@>N) TARGET PrfPrc IF (*-1 CC BARRIER NOT-NPMOD LINK -1 Acc LINK NOT 0 PrfPrc)(1 (N Acc));
+
 
 
 
