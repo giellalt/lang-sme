@@ -2216,7 +2216,7 @@ REMOVE:NnoPx Px IF (0 N-NOPX + Px OR Num + Px OR Der/NomAct + Px OR MANNU + Px O
 	#$ Mun gal ceavzzán du goargŋumis.
 	
 #!! * __gaskaneaset__ selects Po for gaskaneaset	
-SELECT:gaskaneaset Po IF (0 ("gaska" N Ess)); 	
+SELECT:gaskaneaset Po (0 ("gaskan") + Px)(NOT 1 VGen); 	
 	#$ Sii árvališgohte gaskaneaset.
 
 #!! !!Some verb rules
@@ -2418,8 +2418,8 @@ SELECT:eanasPron Pron IF (0 ("eanaš") OR ("eanas"))(1 (Dem Loc) OR (Pers Loc));
 #!! !!Px constraints 
 #!! First select Px, then remove all remaining Px
 
-#!! * Nouns: __NomPxSg1__ (not Ess) as the only word in a sentence. Needs no disambiguation. Should it have N-PX as constraint?
-SELECT:PxSg1Nom (N Nom PxSg1) IF (-1 BOS)(NEGATE 0 VFIN)(*1 EOS OR VFIN - Der/Pass BARRIER WORD);  
+#!! * Nouns: __NomPxSg1__ (not Ess) as the only word in a sentence. Needs no disambiguation.
+SELECT:PxSg1Nom N-PX + (N Nom PxSg1) (-1 BOS)(NEGATE 0 VFIN)(*1 EOS OR VFIN - Der/Pass BARRIER WORD);  
 	#$ Ustibažžan! 
 	#$ Vielljan sáhttá vuoitit gilvvu.
 
@@ -2797,63 +2797,68 @@ SELECT:NSgbeforeRel N + Sg (NEGATE 0 Adv)(*1 Rel + Sg OR MO BARRIER WORD) ;
 
 
 #!! !!Adjectives and adverbs
-##SELECT Adv IF (-1 ("man"))(0 ("ollu"));
-#	#$ Man ollu lea diibmu?
-#SELECT Adv IF (0 ("ollu") LINK 0 Qst);
-#	#$ Ollugo diibmu lea?
-#SELECT Adv IF (0 ("ollu") LINK 1 ("go"))(NOT -1 ("nu") OR ("na"))(NEGATE *2 @COMP-CS<);
-#
-#SELECT:r1051 A IF (-2 BOC)(-1 ("mii" Interr Sg Gen))(NEGATE 0 Po);
-#	## Man guhkki lea girkui?
-#
-#REMOVE:r1052 VERB IF (-1 ("mii" Interr Sg Gen)); 
-#	## In dieđe man buorit dat leat.
-#
-#REMOVE:r1053 VERB IF (-1 ("mihá")); 
-#REMOVE:r1054 VERB IF (-1 ("seammá"))(*1 go BARRIER NOT-NA LINK NOT 1 VFIN); 
-#REMOVE:r1055 V IF (1 ("ihkinassii"));
-#	## Muhtun riggodagaid geavahit mihá unnit dál.
-#	## Bargiid guottut mearkkašit seamma ollu go fáktadieđut.
-#	## Mun áiggun čuovvut du ihkinassii manažat.
-#
-#REMOVE:r1056 N IF (-1 ("nu") OR ("mihá") OR ("hirbmat") OR ("hui"))(0 Adv OR A OR PrfPrc);
-#	## Mun lean nu suhttan. 
-#	## Lea hui easkka čuožžilan gažaldat.
-#
-#SELECT:r1057 Adv IF (-1 ("leat"))(1 PrfPrc);
-#SELECT:r1058 Adv IF (-1 VERB OR Com)(0 ("ovttas"))(NEGATE 0 Foc/ge); 
-#	## Divššohas lea duođalaččat roasmmohuvvan.
-#	## Bátnedoavttir galgá ovttas eará bargiiguin mearridit.
-#
-#REMOVE:r1059 Adv IF (0 ("nuorra"));
-#	## Nuorat dajai sutnje:...
-#
-#SELECT:r1060 (A Nom) IF (-1 ("vuoi"));
-#	## Vuoi surgat dan gándda! 
-#REMOVE:r1061 (A Comp) IF (-1 BOS OR CLB)(0 Adv)(1 EOS OR CLB);
-#  	## Ovttajienalaččat.
-#  
-#REMOVE:r1062 (A Comp) IF (-1 V)(0 Adv)(1 (N Ess));
-#  	## Son lea válljejuvvon ovttajienalaččat ovddideaddjin.
-#
-#SELECT:r1310 Adv IF (-1 COPULAS)(0 ("eanas") OR ("eanaš"))(1 N)(NEGATE 1 TIME)(*2 EOC BARRIER N); 
-#	## Dál lea eanaš ovttamielalašvuohta, ahte...
-#	## Ovdal ledje eanas vuonaid bivdán, muhto go skoavdefatnasat bohte... 
-#	## Ealus lea eanaš álddut.
-#
-# 	
-#REMOVE:r1063 Adv IF (-1 V OR Acc)(0 ("eanas" A) OR ("eanaš" A))(1 N LINK NOT 0 Ill);
-#	#$ Ná sáhttá geavvat eanas geasi.
-#    
-#REMOVE:r1064 A IF (*-1 IV BARRIER SV-BOUNDARY LINK NOT 0 COPULAS OR ("áibbas") OR Indef)(0 Adv)(1 EOC);
-#REMOVE:r1065 A IF (*-1 IV BARRIER SV-BOUNDARY LINK NOT 0 COPULAS)(0 ("maŋŋit" Adv))(1 Ill OR DOHKO)(2 EOC);    
-#	#$ Boađán maŋŋeleappos.
-#	#$ Eatnandoallu bođii maŋŋit Sápmái.
+
+#!! * __olluAdv__ 
+SELECT:olluAdv ("ollu" Adv)((0 Qst) OR (1 ("go")) OR (-1 ("man")))(NOT -1 ("nu") OR ("na")); 
+	#$ Ollugo diibmu lea?
+	#$ Ollu go diibmu lea?
+	#$ Man ollu lea diibmu?
+	#$ Bargiid guottut mearkkašit seamma ollu go fáktadieđut.
+
+REMOVE:XV-N V OR N (-1 ("man" Adv) OR ("mihá"))(NEGATE 0 Po);
+	#$ Man guhkki lea girkui?
+	#$ In dieđe man buorit dat leat.
+	#$ Muhtun riggodagaid geavahit mihá unnit dál.
+
+REMOVE:XV V IF (-1 ("seammá"))(*1 go BARRIER NOT-N-A LINK NOT 1 VFIN); 
+SELECT:XREAL-V REAL-V (-1 ("ihkinassii"));
+	## Mun áiggun čuovvut du ihkinassii manažat.
+
+REMOVE:XN N (-1 ("nu") OR ("mihá") OR ("hirbmat") OR ("hui"))(0 Adv OR A OR PrfPrc);
+	## Mun lean nu suhttan. 
+	## Lea hui easkka čuožžilan gažaldat.
+
+SELECT:XAdv Adv (-1 COPULAS)(1 PrfPrc);
+SELECT:XovttasAdv Adv IF (-1 REAL-V OR Com)(0 COM-ADV)(NEGATE 0 Foc/ge); 
+	## Divššohas lea duođalaččat roasmmohuvvan.
+	## Bátnedoavttir galgá ovttas eará bargiiguin mearridit.
+
+REMOVE:Xr1059 Adv (0 ("nuorra"));
+	## Nuorat dajai sutnje: ...
+
+SELECT:Xr1060Avuoi (A Nom) IF (-1 ("vuoi"));
+	## Vuoi surgat dan gándda! 
+REMOVE:XAComp (A Comp) (-1 BOS OR CLB)(0 Adv)(1 EOS OR CLB);
+  	## 
+  
+REMOVE:XAComp (A Comp) (-1 V)(0 Adv)(1 (N Ess));
+  	##  
+
+SELECT:XeanasAdv Adv IF (-1 COPULAS)(0 ("eanas") OR ("eanaš"))(1 N)(NEGATE 1 TIME)(*2 EOC BARRIER N); 
+	## Dál lea eanaš ovttamielalašvuohta, ahte...
+	## Ovdal ledje eanas vuonaid bivdán, muhto go skoavdefatnasat bohte... 
+	## Ealus lea eanaš álddut.
+
+ 	
+SELECT:XeanasAttr (A Attr) (-1 V OR Acc)(0 ("eanas" A) OR ("eanaš" A))(1 N LINK NOT 0 Ill);
+	#$ Ná sáhttá geavvat eanas geasi.
+    
+REMOVE:XA A (*-1 IV BARRIER SV-BOUNDARY LINK NOT 0 COPULAS OR ("áibbas") OR Indef)(0 Adv)(1 EOC);
+REMOVE:XA A (*-1 IV BARRIER SV-BOUNDARY LINK NOT 0 COPULAS)(0 ("maŋŋit" Adv))(1 Ill OR DOHKO)(2 EOC);    
+	#$ Boađán maŋŋeleappos.
+	#$ Eatnandoallu bođii maŋŋit Sápmái.
 
 
 #!! !!Disambiguationg abbreviations
 
+#!!	Abbreviations are also disambiguated via normal case disambiguation rules,  
+#!!	but some contexts are special to abbreviations, and therefore dealt with
+#!!	separately here. Keep in mind: perhaps the placement of these rules is to early.
 
+#!! * __AttrABBRNum__
+SELECT:AttrABBRNum Attr (*-1 BOS LINK NOT *1 V)(0 (N ABBR))(1 Num);
+	#$ Sd.prp.nr. 63:s.
+    	 
 #!! !!Disambiguationg particles
 
 #!! * __sonPcle__ selects son Pcle, the remaining Pcle are removed
@@ -2870,7 +2875,115 @@ REMOVE:KillSonPcle Pcle IF (0 ("son"));
 
 #!! !!Disambiguationg adpositions
 
-#!! !Rules relating to particular adpositions
+REMOVE:caddaN ("čađđa") (0 ("čađa") LINK 0* MOVEMENT-V BARRIER SV-BOUNDARY) ;
+	#$ Gal sii besset čađa.
+
+SELECT:cadaAdv Adv (*-1 ("oažžut") BARRIER REAL-V OR S-BOUNDARY)(0 ("čađa"));
+	#$ Mii oažžut daid áššiid čađa.
+
+SELECT Po (0 ("čađa") LINK -1 ("jahki" Gen) OR ("áigi" Gen))(NOT 1 TIME + Gen);
+SELECT Po (0 ("čađa") LINK -1 Gen)(1 MANNU + Gen LINK 1 Ord);
+SELECT Pr (0 ("čađa") LINK 1 ("gaska" Gen));
+	#$ Nu dáhpáhuvai čađa gaskka.
+
+SELECT:r1095 Adv (0 ("gaskan"))(1 VGen);
+	## Gaskan bora viehkalin olggos.
+
+REMOVE ("geahčai") ((0 ("geahččat") LINK NOT -1 Gen) OR ((0 ("geahččat") LINK *1 Ill BARRIER NOT-NPMOD)));
+	## Áhkku geahčai iežas speadjalis.
+	## Tommi geahčai boksii.
+
+SELECT:r1096 Po IF (-1 (Num Gen))(0 ("mađe"));
+SELECT:r1097 Num IF (1 ("mađe"));
+LIST MANNEL = "maŋŋel" "maŋŋil" "maŋŋá"  ;
+
+SELECT Adv (0 MANNEL LINK 1 go) ;
+
+SELECT:r1098 Adv IF (-1 TIME-UNIT LINK 0 Acc OR Gen LINK NOT -1 (Dem Gen))(0 MANNEL)(NEGATE 1 Gen);	
+	## Nu dáhpáhuvai 22 minuvtta maŋŋel go čiekčamat ledje álgán.	
+
+ # These rules are here because "miehtá" is also VFIN, and many of the Pr/Po
+ # rules below include the condition (NEGATE VFIN). So "miehtá" goes wrong there. 
+SELECT Po (0 ("miehtá") LINK -1 ("máilbmi" Gen) OR NATION + Gen) ;
+SELECT Pr (0 ("miehtá") LINK 1 ("máilbmi" Gen) OR NATION + Gen) ;
+
+SELECT:r1099 Pr IF (*-1 VFIN BARRIER S-BOUNDARY)(NEGATE -1 Gen)(0 ("miehtá"))(*1 Gen BARRIER NOT-NPMOD LINK NOT 0 PrfPrc);
+	## Dalle bisttii luossaguolli miehtá dálvvi.
+
+SELECT:r1100 Pr IF (-1 Acc LINK *-1 V-TRANS-ACT BARRIER NOT-NPMODADV)(0 ("miehtá"))(*1 Gen BARRIER NOT-NPMOD);
+	## Sii dieđihedje dan miehtá guovllu, ja sii bukte su lusa buot
+	## buhcciid.
+
+SELECT:r1101 Pr IF (-1 Nom LINK *-1 COPULAS BARRIER NOT-NPMODADV)(0 ("miehtá"))(*1 Gen BARRIER NOT-NPMOD);
+	## Searvegottiin lei dál ráfi miehtá Judea ja Galilea ja Samaria.
+
+SELECT:r1102 Pr IF (*-2 VFIN BARRIER S-BOUNDARY)(-1 COMMA OR CC)(0 ("miehtá"))(*1 NP-HEAD-GEN BARRIER NP-BOUNDARY LINK NOT 1 Po);
+	##
+
+SELECT:r1103 VFIN IF (NEGATE *-1 VFIN BARRIER S-BOUNDARY)(NEGATE -1 Gen LINK NOT 0 Nom)(0 ("miehtá"))(NEGATE 1 Gen LINK 0 TIME OR PLACE);
+	## Jus divššohas dasa miehtá, dahje dilálašvuohta lea nu,...
+	## Áldu mii dálvvi miehtá njamaha miesi gohčoduvvo čearpmateadni.
+	## Dat sáhttet leat ovttasbargošiehtadusat oanahis áigái, dahje oktasašdoallu muhtin áiggiid jagis, dahje vaikko miehtá jagi.
+	
+SELECT Po (0 ("miehtá" Adv) LINK -1 TIME + Gen)(NOT 1 NP-HEAD-GEN) ;
+	## Beaivvi miehtá galget earát lohkat galle geardde viehká mearriduvvon guhkkodaga, ja galgá sáhttit árvidit galle geardde háhppeha viehkat 12 diimmus.
+
+	
+SELECT:r1104 Adv IF (1 TIME-UNIT + Acc)(2 MANNEL);	
+SELECT:r1105 Adv IF (1 Num)(2 TIME-UNIT + Acc)(3 MANNEL);		
+	
+SELECT:r1107 ("ovddas" Po) IF (-1 Gen LINK *-1 NP-HEAD-NOM BARRIER S-BOUNDARY)(0 Nom LINK 1 V);
+ 	## Láilá Susanne Vars lea ge dál Sámedikki ovddas bargamin njuolggadusaiguin Finnmárkoláhkii.
+
+SELECT ("rastá" Adv)(*0 ("čuohppat") OR ("časkit") OR ("čuohpastit") OR ("sahet") BARRIER SV-BOUNDARY) ;	
+REMOVE ("rastá" Po)(-1 HUMAN + Acc OR (Pers Acc) LINK *0 ("doalvut") OR ("fievrridit") OR ("guoddit") OR ("láidet") BARRIER SV-BOUNDARY) ;	
+REMOVE ("rastá" Pr)(1 HUMAN + Acc OR (Pers Acc) LINK *0 ("doalvut") OR ("fievrridit") OR ("guoddit") OR ("láidet") BARRIER SV-BOUNDARY) ;	
+SELECT ("rastá" Pr)(1 ("rádji" Gen) OR ("rádjá" Gen)) ;
+
+
+SELECT:r1108 Adv IF (-1 ("váldit"))(0 ("vuostá") OR ("vuostái"));
+	## Sámi servodagas váilu árbevierru váldit vuostá almmolaš diehtojuohkima dakkár hámis.
+	
+REMOVE Pr (0 ("vuostá") OR ("vuostái"))(*-1 REAL-V BARRIER S-BOUNDARY LINK NOT 0 REAL-COPULAS) ; 
+
+	# Adpositions that take modifiers
+	# -------------------------------
+
+SELECT:r1109 Pr IF (-1 Gen)(0 ("bealde") OR ("beale") OR ("beallái") OR ("geahčai") OR ("geahčen") OR ("geaže"))(1 Gen)(NEGATE 1 TIME);
+	## Daid sáhttá heaŋggastit dan heargái mii daid eará goahtemuoraid lea guoddimin, guokte bealji goappáge beallái hearggi. 
+	
+
+ 
+SELECT:r1111 Po IF (-3 (Pron Gen))(-2 CC)(-1 (Pron Gen))(0 GASKAL);
+	## Dat lei min ja din gaskkas.
+
+SELECT:r1112 Pr IF (0 GASKAL)(1 Num)(2 CC)(3 Num);
+	## Gaskal 12 ja 16 jahkásaš mánáin lea muhtun muddui iešheanalis
+
+SELECT:r1113 Po IF (-3 Num)(-2 CC)(-1 Num)(0 GASKAL);
+	## Alimusriekti veadjá leat jagiid 1854 ja 1897 gaskka doallan siskkáldas čoahkkima.
+
+SELECT:r1114 Pr IF (0 GASKAL)(*1 NP-HEAD-GEN BARRIER SV-BOUNDARY LINK 1 CC LINK *1 NP-HEAD-GEN BARRIER SV-BOUNDARY);
+	## Ferte navdit ahte dáža duopmostuolut ja eará riektegeavaheaddjit dábálaččat dulkojit dáža siskkáldas rievtti nu ahte garvá vejolaš vuostálasvuođa gaskal dákkár álbmotriektenorpma ja siskkáldas norgga njuolggadusa.
+
+SELECT:r1115 Pr IF (0 GASKAL)(*1 (N Gen) BARRIER NOT-NPMOD LINK *1 CC BARRIER NOT-NP LINK *1 (N Gen) BARRIER NOT-NPMOD LINK 0 HEAD-N);
+	## Lága mearrádusat galget váikkuhit luohttevašvuođa gaskal divššohas ja dearvvašvuođabálvalusa.
+	## Dán láhkai lea leamaš muhtun muddui lotnolas doahttaluvvon dássádatdilálašvuohta gaskal stáhta almenneteaiggádin ja geavahanvuoigaduvvon giliássiid.
+
+SELECT:r1116 Pr IF (0 GASKAL)(1 Dem)(2 NUM);
+	## Ferte oaidnit oktavuođa gaskal dan guokte soahpamuša.
+
+SELECT:r1117 Pr IF (0 GASKAL)(1 A)(2 CC)(3 A LINK *1 (N Gen) LINK 0 HEAD-N); # Barrier?
+	## Galgá válljejuvvot gaskal vejolaš ja dohkálaš iskkadan- ja
+	## dikšunvugiid.
+
+SELECT:r1118 Po IF (-1 (N Gen) LINK *-1 CC BARRIER NOT-NPMOD LINK -1 (N Gen))(0 GASKAL);
+	## Riiddut boazodolliid ja eará vuoigatvuođaoamásteddjiid gaskkas 
+	## livčče lassánan. 
+
+SELECT:r1119 Po IF (-3 Inf)(-2 CC)(-1 Inf)(0 GASKAL);
+	## Sániid oamastit ja eaiggáduššat gaskkas geavahuvvo "ja".
+
 
 #!! !!Some particular subjunctions and Neg Sup
 
@@ -4104,8 +4217,9 @@ MAP:-FAUXVConNegAux (@-FAUXV) TARGET ConNeg + AUX - COPULAS (*-1 Neg BARRIER S-B
 MAP:-FAUXVPrfPrcAux (@-FAUXV) TARGET PrfPrc + AUX (*1 Inf OR (Actio Ess) BARRIER SV-BOUNDARY);	
 	#$ In leat sáhttán gáhku borrat dan rájes.  # trenger verbdis
 
-MAP:XXr409 (@-FMAINV) TARGET PrfPrc (*-1 REAL-COPULAS + VFIN OR ("orrut") + VFIN OR Neg BARRIER S-BOUNDARY)(NEGATE *-1C PrfPrc BARRIER REAL-V OR N); 
-	#$ Muhto boanddat leat goikadan ollu jekkiid ja gilván daidda rásiid.Mu mielas lea suohtas oahppat sámegiela.
+MAP:XX-FMAINVPrfPrc (@-FMAINV) TARGET PrfPrc (*-1 REAL-COPULAS + VFIN OR ("orrut") + VFIN OR Neg BARRIER S-BOUNDARY)(NEGATE *-1C PrfPrc BARRIER REAL-V OR N); 
+	#$ Muhto boanddat leat goikadan ollu jekkiid ja gilván daidda rásiid.
+	#$ Mu mielas lea suohtas oahppat sámegiela.
 	#$ Ja Biret-Elle lea easka skuvllas geargan.
 
 #!! * __FMAINVPrfPrc__ infinite to PrfPrc 
@@ -4252,7 +4366,6 @@ SELECT:r1995 Gen IF (1 (Num Sg Acc) LINK 1 (Num Sg Acc) LINK 1 MEASURE LINK 1 AL
 SELECT:r1996 Gen IF (1 COMMA LINK 1 (Num Sg Acc) LINK 1 COMMA LINK 1 (Num Sg Acc) LINK 1 MEASURE LINK 1 ALU OR A);
   	#$ Čuollun sáhttá leat dušše okta fierbmi gurgaluvvon, muhto dábálaččat lea čuollu guhkit, golbma, njeallja fierbmebaji guhku.
 
-LIST MANNEL = "maŋŋel" "maŋŋil" "maŋŋá"  ;
 
 # Ritva comment: TIME + GEN, no ALU/adjective here... Concider moving? 
 SELECT Gen IF (NEGATE -1 (Num Gen))(0 TIME)(1 ("áigi" Adv));
@@ -4328,7 +4441,7 @@ REMOVE:r2823 VFIN IF (NEGATE -2 BOS OR CLB)(-1C Inf)(NEGATE 0 Qst);
 REMOVE:r2824 VFIN IF (*-1 Nom BARRIER NOT-ADV-PCLE OR CLB LINK *-1C VFIN BARRIER NOT-ADV-PCLE OR CLB OR CP);
 	## Lea dárbu nannet doaimmaid mat ovddidit sámi dutkama.
 
-#REMOVE:r2825 VFIN IF (*-1 PrfPrc BARRIER HNOUN OR (Pron Nom) OR SV-BOUNDARY LINK *-1 REALCOPULAS BARRIER NOT-ADV-PCLE);
+#REMOVE:r2825 VFIN IF (*-1 PrfPrc BARRIER HNOUN OR (Pron Nom) OR SV-BOUNDARY LINK *-1 REAL-COPULAS BARRIER NOT-ADV-PCLE);
  	## Sin badjel geat orrot jápmima eatnamis ja suoivanis, lea ihtán čuovggas.
 	## Gii lea cuigen din báhtarit boahttevaš moarreduomus?
 
