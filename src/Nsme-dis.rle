@@ -737,7 +737,7 @@ LIST COPULAS = "dáidit" "gártat" "leat" "soaitit" "šaddat" "orrut" "veadjit" 
 
 SET NOT-COP-V = V - COPULAS ;
 
-LIST MOD-ASP = "bállet" "berret" "dáidit" "fertet" "galgat" "gillet" "lávet"  "sáhttit" "seahtit" "soaitit" "viggat" ;
+LIST MOD-ASP = "bállet" "berret" "dáidit" "fertet" "galgat" "gillet" "lávet" "sáhttit" "seahtit" "soaitit" "viggat" ;
 
  # Verbs that never have arguments of their own - so we leave out "áigut", for ex.
 
@@ -2198,6 +2198,8 @@ REMOVE:Killrecipr Recipr ;
 
 #!! !!Nouns
 
+
+
 #!! !Not noun
 
 
@@ -2252,8 +2254,13 @@ SELECT:vfingo VFIN (-1 BOC)(NOT 0 ("ollu") OR Adv)(1 go + Qst LINK NOT 1 VFIN) ;
 	#$ Dáhtut go min gaikut dan eret?
 	#$ Lea go dus ruhta?
 
-REMOVE V (0 ("buorre" Pl Nom) LINK 1 (N Pl)) ;
+#!! * __buoritV__ removes buorit as V
+REMOVE:buoritV V (0 ("buorre" Pl Nom) LINK 1 (N Pl)) ;
 	#$ Das leat buorit lanjat.
+
+#!! * __ImprtCopPrfPrc__ removes imperative readings in front of coopulas and PrfPrc
+REMOVE:ImprtCopPrfPrc Imprt IF (-1 BOS)(1 COPULAS LINK 1 PrfPrc) ;
+	#$ Oahppit leat lohkan ollu girjjiid.
 
 #!! !Particular verbs
 
@@ -2532,7 +2539,7 @@ SELECT:PxSg3GenPo1 (Gen PxSg3) (*-1 BOC OR COMMA BARRIER NOT-NPMOD)(1 Po)(*2 SG3
 	#$ Raporttas bokte dáhttu bargojoavku čalmmustahttit Sámedikki.
 
 #!! *  __PxSg3GenPo2__ in front of Po, to the left of the owner
-SELECT:PxSg3GenPo2 (Gen PxSg3) (1 Po OR ("veara"))(NEGATE 1 Adv LINK *-2 TRANS-V BARRIER S-BOUNDARY) ;
+SELECT:PxSg3GenPo2 (Gen PxSg3) (1 Po OR ("veara"))(0C N)(NEGATE 1 Adv LINK *-2 TRANS-V BARRIER S-BOUNDARY) ;
 	#$ Ábo logai eatnis maŋis eahketrohkosas.
 
 #!! * __Genguossis__ is  selection Gen, not only with Px. The FAMILY-set would be better than Hum-tag, but there is often a propernoun connected to the noun. guossái and guossis should have Po analysis?
@@ -2540,7 +2547,7 @@ SELECT:Genguossis Gen (0 Hum LINK 1 ("guossi" Ill) OR ("guossi" Loc)) ;
 	#$ Odne lea Joneš-bojá vuolgimin Biette-eagis guossái.
 
 #!! * __GenNPFinal__ selects Gen as the modifier of a noun in the end of a sentence.
-SELECT:GenNPFinal Gen (-1 COPULAS)(0 (N Loc))(1C N LINK 1 EOC) ; 
+SELECT:GenNPFinal Gen + Px (-1 COPULAS)(0 (N Loc) LINK NOT 0 Attr)(1C N LINK 1 EOC) ; 
 	#$ Ábo lei eatnis čalbmebealle.
 
 #!! * __PxSg3Nom__ is waiting for changes in FST: oahpaheaddji and hearrá with Px Sg3 Nom
@@ -3127,13 +3134,17 @@ SELECT:auxQst Pcle (-1 (V Neg) OR MOD-ASP)(0 go);
 SELECT:refQst Pcle (-1 VFIN LINK -1 BOS OR REAL-CLB OR PUNCT OR COMMA)(0 go)(*1 COMMA BARRIER VFIN LINK 1 ("dat" Pers));	
 	#$ Oinnežan go su ihttin, dan in dieđe.
 	
-#!! * __nounQst__ selects Pcle for go after noun
+#!! * __nounQst__ selects Pcle for go after NP
 SELECT:nounQst Pcle (-1 N LINK *-1 BOS BARRIER NOT-NP)(NEGATE -1 ("hávvi"))(0 go)(*1 VFIN BARRIER S-BOUNDARY-NOT-CVP)(*1 ("?"));
 	#$ Eatni goarrun gákti go dus lea die?
 
 #!! * __poQst__ selects Pcle for go after Po
 SELECT:poQst Pcle (-2 (N Gen) LINK *-1 BOS BARRIER NOT-NP)(-1 Po)(0 go)(*1 VFIN BARRIER S-BOUNDARY-NOT-CVP);
 	#$ Girdi mielde go don manat Helssegii? 
+
+#!! * __AdvQst__ selects Pcle for go after WORD
+SELECT:wordQst Pcle (-1 Adv OR A LINK -1 BOS)(0 go)(*1 VFIN BARRIER S-BOUNDARY-NOT-CVP)(*1 ("?"));
+
 
 #!! * __killPcle__ removes all remaining Pcle for go 
 REMOVE:killPcle Pcle (0 go) ;
@@ -4262,6 +4273,12 @@ MAP:-FAUXVConNegAux (@-FAUXV) TARGET ConNeg + AUX-OR-MAIN (*-1 Neg BARRIER REAL-
 	#$ Daid ii galgga suovvat bargat joavdelasaid.
 	#$ Ii daid galgga joavdelasaid bargat suovvat.
 
+#!! * __-FAUXVConNegAux__  to ConNeg AUX   
+MAP:-FAUXVConNegAux (@-FAUXV) TARGET ConNeg + AUX - COPULAS (*-1 Neg BARRIER S-BOUNDARY)(*1 Inf BARRIER REAL-V OR S-BOUNDARY);
+	#$ Ii sáhte suohtastallat.
+	#$ Ii sáhte dieđusge dušše suohtastallat. #needs verbdis dušše
+	#$ Eat mii sáhte vuolgit.
+
 #!! * __-FMAINVConNeg__  to ConNeg   
 MAP:-FMAINVConNeg (@-FMAINV) TARGET ConNeg (*-1 Neg BARRIER REAL-V)(NEGATE *1 Inf OR PrfPrc OR (Actio Ess) BARRIER REAL-V OR S-BOUNDARY)(NEGATE **1 Adv BARRIER REAL-V OR S-BOUNDARY LINK 1 Inf);
 	#$ Ii son liikon dohko.
@@ -4277,11 +4294,6 @@ MAP:-FMAINVConNeg (@-FMAINV) TARGET ConNeg (*-1 REAL-COPULAS + VFIN OR ("orrut")
 MAP:-FMAINVConNegCop (@-FMAINV) TARGET ConNeg + COPULAS (*-1 Neg BARRIER REAL-V)(NEGATE *1 PrfPrc OR Inf OR (Actio Ess) BARRIER REAL-V OR S-BOUNDARY OR Nom);
 	#$ Ii lean šat nu álki vuovdit.
 
-#!! * __-FAUXVConNegAux__  to ConNeg AUX   
-MAP:-FAUXVConNegAux (@-FAUXV) TARGET ConNeg + AUX - COPULAS (*-1 Neg BARRIER S-BOUNDARY)(*1 Inf BARRIER REAL-V OR S-BOUNDARY);
-	#$ Ii sáhte suohtastallat.
-	#$ Ii sáhte dieđusge dušše suohtastallat. #needs verbdis dušše
-	#$ Eat mii sáhte vuolgit.
 
 #!! * __-FAUXVPrfPrcAux__  to PrfPrc AUX  before Inf or Actio Ess
 MAP:-FAUXVPrfPrcAux (@-FAUXV) TARGET PrfPrc + AUX (*1 Inf OR (Actio Ess) BARRIER SV-BOUNDARY);	
@@ -4295,6 +4307,7 @@ MAP:-FMAINVPrfPrc (@-FMAINV) TARGET PrfPrc (*-1 REAL-COPULAS + VFIN OR ("orrut")
 	#$ Máŋgasat leat maid vásihan, ahte sii leat bártidan.
 	#$ In leat leamaš mielde gáhku láibume ovdal.  
 	#$ Moanaid guovlluin gos lavdnji lea leamaš adnon boaldámuššan lea buot lavdnji dál čuhppon.
+	#$ Oahppit leat lohkan ollu girjjiid.
 	#$ Lean mun gal oaidnán čakčaseavdnjadiin dola rievdamiin čázi alde Deanus. #must fix NPrfPrc6
 
 #!! * __-FMAINVPrfPrcEss__  to PrfPrc before Ess
