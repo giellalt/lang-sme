@@ -798,7 +798,7 @@ LIST COM-V = "árvalit" "árvvohuššat" "ávkašuvvat" "bálddalastit" "bárta�
 		#Note that "leaikkastallat" has two homonymous variants:
 		#leaikkastallat1 (IV), leaikkastallat2+Com
 
-LIST ILL-V = "áibbašit" "álgit" "ásaiduvvat" "báitit" "beassat" "čohkkedit" "čujuhit" "čuohcit" "deaivat" "doaškut" "dorvvastit" "došket" "duhtat"  "gullat" "guoskat" "gustot" "hárjánit" "heivet" "irggástallat" "jáhkkit" "liikot" "luohttit" "mannat" "máhccat" "mieđihit" "njiedjat" "oahpásmuvvat" "oahpásnuvvat" "ollet" "oskut" "riepmat" "ráhkkanit" "soahpat" "searvat" "suhttat" "vástidit" "vuolgit";  
+LIST ILL-V = "áibbašit" "álgit" "ásaiduvvat" "báitit" "beassat" "čohkkedit" "čujuhit" "čuohcit" "deaivat" "doaškut" "dorvvastit" "došket" "duhtat"  "gullat" "guoskat" "gustot" "hárjánit" "heivet" "irggástallat" "jáhkkit" "liikot" "luohttit" "mannat" "máhccat" "mieđihit" "miehtat" "njiedjat" "oahpásmuvvat" "oahpásnuvvat" "ollet" "oskut" "riepmat" "ráhkkanit" "soahpat" "searvat" "suhttat" "vástidit" "vuolgit";  
 ###"geahččat" Lene: fjerna denne
  		
 
@@ -2172,10 +2172,6 @@ REMOVE:dussat ("duššat") IF (0 ("dušše" Adv))((-1 VFIN LINK NOT *-1 CS) OR (
 	#$ Lea go dus dušše okta mánná?
 	#$ Dušše ovttas lanjas leat jorba beavddit.
 
-# Foreløpig regel, disse formene forsvinner fra fst
-REMOVE:dusse N OR A IF (0 ("dušše")); 
-
-
 #!! !!!ONE-COHORT DISAMBIGUATION - CYCLE 0
 
 #!! The idea behind "cycle 0" is to have safe rules without context first.
@@ -3058,37 +3054,50 @@ REMOVE:KillSonPcle Pcle IF (0 ("son"));
 
 #!! !!Disambiguationg adpositions
 
-#!! The rules are not documented yet
-REMOVE:caddaN ("čađđa") (0 ("čađa") LINK 0* MOVEMENT-V BARRIER SV-BOUNDARY) ;
+#!! * __caddaN__ if čađa and movement-v
+REMOVE:WcaddaN ("čađđa") (0 ("čađa") LINK 0* MOVEMENT-V BARRIER SV-BOUNDARY) ;
 	#$ Gal sii besset čađa.
 
-SELECT:cadaAdv Adv (*-1 ("oažžut") BARRIER REAL-V OR S-BOUNDARY)(0 ("čađa"));
+#!! * __cadaAdv__ if oažžut čađa
+SELECT:WcadaAdv ("čađa" Adv) (*-1 ("oažžut") BARRIER REAL-V OR S-BOUNDARY);
 	#$ Mii oažžut daid áššiid čađa.
 
-SELECT:cadaPo1 Po (0 ("čađa") LINK -1 ("jahki" Gen) OR ("áigi" Gen))(NOT 1 TIME + Gen);
-SELECT:cadaPo1 Po (0 ("čađa") LINK -1 Gen)(1 MANNU + Gen LINK 1 Ord);
-SELECT:cadaPr Pr (0 ("čađa") LINK 1 ("gaska" Gen));
+#!! * __cadaPoTime__ after Time Gen
+SELECT:WcadaPoTime ("čađa" Po) (-1 TIME + Gen)(NOT 1 TIME + Gen);
+	#$ Ii sáhte dieđusge dušše suohtastallat go rievtti mielde leat dát meassut áiggiid čađa leamaš girkostallanmeassut.
+
+SELECT:WcadaPo1 Po (0 ("čađa") LINK -1 Gen)(1 MANNU + Gen LINK 1 Ord);
+
+#!! * __cadaPrTime__ after Time Gen
+SELECT:WcadaPrTime ("čađa" Pr) ((1 ("gaska" Gen)) OR (1 Time + Gen LINK NOT -3 Time + Gen));
 	#$ Nu dáhpáhuvai čađa gaskka.
 
-SELECT:gaskanAdv Adv (0 ("gaskan"))(1 VGen);
+#!! * __gaskanAdvVGen__ after Time Gen
+SELECT:WgaskanAdvVGen ("gaskan" Adv) (1 VGen);
  	#$ Gaskan bora viehkalin olggos.
 
-REMOVE:geahcaiPP ("geahčai") ((0 ("geahččat") LINK NOT -1 Gen) OR ((0 ("geahččat") LINK *1 Ill BARRIER NOT-NPMOD)));
+#!! * __geahcaiPP__ not geahččat V
+REMOVE:WgeahcaiPP ("geahčai") ((0 ("geahččat") LINK NOT -1 Gen) OR ((0 ("geahččat") LINK *1 Ill BARRIER NOT-NPMOD)));
  	#$ Áhkku geahčai iežas speadjalis.
  	#$ Tommi geahčai boksii.
 
-SELECT:madePo Po (-1 (Num Gen))(0 ("mađe"));
-SELECT:NumMade Num (1 ("mađe"));
+#!! * __madePo__ after Num Gen
+SELECT:WmadePo ("mađe" Po) (-1 (Num Gen)) ;
 
-SELECT:Advmannelgo Adv (0 MANNEL LINK 1 go) ;
- 	#$ Nu dáhpáhuvai 22 minuvtta maŋŋel go čiekčamat ledje álgán.	
+SELECT:WNumMade Num (1 ("mađe"));
 
 #SELECT:AdvTIMEmannel (-1 TIME-UNIT LINK 0 Acc OR Gen LINK NOT -1 (Pron Dem Gen))(0 MANNEL)(NEGATE 1 Gen);	
 
  # These rules are here because "miehtá" is also VFIN, and many of the Pr/Po
  # rules below include the condition (NEGATE VFIN). So "miehtá" goes wrong there. 
-SELECT:miehtaPo Po (0 ("miehtá") LINK -1 PLACE + Gen OR VAHKKU-DUR + Gen OR (Plc Gen)) ;
-SELECT:miehtaPr Pr (0 ("miehtá") LINK 1 PLACE + Gen OR VAHKKU-DUR + Gen OR (Plc Gen)) ;
+
+#!! * __miehtaPo__ after place or time Gen
+SELECT:WmiehtaPo ("miehtá" Po) (-1 PLACE + Gen OR VAHKKU-DUR + Gen OR (Plc Gen)) ;
+	#$ Áldu mii dálvvi miehtá njamaha miesi gohčaduvvo čearpmateadni.
+	#$ Beaivvi miehtá galget earát lohkat galle geardde viehká mearriduvvon guhkkodaga, ja galgá sáhttit árvidit galle geardde háhppeha viehkat 12 diimmus.
+
+#!! * __miehtaPo__ before place or time Gen
+SELECT:WmiehtaPr ("miehtá" Pr) (1 PLACE + Gen OR VAHKKU-DUR + Gen OR (Plc Gen)) ;
  	#$ Dalle bisttii luossaguolli miehtá dálvvi.
  	#$ Sii dieđihedje dan miehtá guovllu, ja sii bukte su lusa buot buhcciid.
  	#$ Searvegottiin lei dál ráfi miehtá Judea ja Galilea ja Samaria.
@@ -3096,56 +3105,56 @@ SELECT:miehtaPr Pr (0 ("miehtá") LINK 1 PLACE + Gen OR VAHKKU-DUR + Gen OR (Plc
  	#$ Dat sáhttet leat ovttasbargošiehtadusat oanahis áigái, dahje oktasašdoallu muhtin áiggiid jagis, dahje vaikko miehtá jagi.
  	#$ Beaivvi miehtá galget earát lohkat galle geardde viehká mearriduvvon guhkkodaga, ja galgá sáhttit árvidit galle geardde háhppeha viehkat 12 diimmus.
 
-SELECT:miehtaV VFIN IF (NEGATE *-1 VFIN BARRIER S-BOUNDARY)(NEGATE -1 Gen LINK NOT 0 Nom)(0 ("miehtá"))(NEGATE 1 Gen LINK 0 TIME OR PLACE);
+SELECT:WmiehtaV VFIN IF (NEGATE *-1 VFIN BARRIER S-BOUNDARY)(NEGATE -1 Gen LINK NOT 0 Nom)(0 ("miehtá"))(NEGATE 1 Gen LINK 0 TIME OR PLACE);
  	#$ Jus divššohas dasa miehtá, dahje dilálašvuohta lea nu,...
 	
-SELECT:mannelAdv Adv ((1 TIME-UNIT + Acc LINK 1 MANNEL) OR (1 Num LINK 1 TIME-UNIT + Acc LINK 1 MANNEL));	
+SELECT:WmannelAdv Adv ((1 TIME-UNIT + Acc LINK 1 MANNEL) OR (1 Num LINK 1 TIME-UNIT + Acc LINK 1 MANNEL));	
 
-SELECT:ovddasPo ("ovddas" Po) IF (-1 Gen LINK *-1 NP-HEAD-NOM BARRIER S-BOUNDARY)(0 Nom LINK 1 V);
+SELECT:WovddasPo ("ovddas" Po) IF (-1 Gen LINK *-1 NP-HEAD-NOM BARRIER S-BOUNDARY)(0 Nom LINK 1 V);
   	#$ Láilá Susanne Vars lea ge dál Sámedikki ovddas bargamin njuolggadusaiguin Finnmárkoláhkii.
 
-SELECT:rastaAdv ("rastá" Adv)(*0 ("čuohppat") OR ("časkit") OR ("čuohpastit") OR ("sahet") BARRIER SV-BOUNDARY) ;	
-REMOVE:rastaPo ("rastá" Po)(-1 HUMAN + Acc OR (Pers Acc) LINK *0 ("doalvut") OR ("fievrridit") OR ("guoddit") OR ("láidet") BARRIER SV-BOUNDARY) ;	
-REMOVE:rastaPr ("rastá" Pr)(1 HUMAN + Acc OR (Pers Acc) LINK *0 ("doalvut") OR ("fievrridit") OR ("guoddit") OR ("láidet") BARRIER SV-BOUNDARY) ;	
-SELECT:rastaPr ("rastá" Pr)(1 ("rádji" Gen) OR ("rádjá" Gen)) ;
+SELECT:WrastaAdv ("rastá" Adv)(*0 ("čuohppat") OR ("časkit") OR ("čuohpastit") OR ("sahet") BARRIER SV-BOUNDARY) ;	
+REMOVE:WrastaPo ("rastá" Po)(-1 HUMAN + Acc OR (Pers Acc) LINK *0 ("doalvut") OR ("fievrridit") OR ("guoddit") OR ("láidet") BARRIER SV-BOUNDARY) ;	
+REMOVE:WrastaPr ("rastá" Pr)(1 HUMAN + Acc OR (Pers Acc) LINK *0 ("doalvut") OR ("fievrridit") OR ("guoddit") OR ("láidet") BARRIER SV-BOUNDARY) ;	
+SELECT:WrastaPr ("rastá" Pr)(1 ("rádji" Gen) OR ("rádjá" Gen)) ;
 
 
-SELECT:vuostaAdv Adv IF (-1 ("váldit"))(0 ("vuostá") OR ("vuostái"));
+SELECT:WvuostaAdv Adv IF (-1 ("váldit"))(0 ("vuostá") OR ("vuostái"));
  	#$ Sámi servodagas váilu árbevierru váldit vuostá almmolaš diehtojuohkima dakkár hámis.
 	
-REMOVE:vuostaPr Pr (0 ("vuostá") OR ("vuostái"))(*-1 REAL-V BARRIER S-BOUNDARY LINK NOT 0 REAL-COPULAS) ; 
+REMOVE:WvuostaPr Pr (0 ("vuostá") OR ("vuostái"))(*-1 REAL-V BARRIER S-BOUNDARY LINK NOT 0 REAL-COPULAS) ; 
 
 #!!	!Adpositions that take modifiers
 
-SELECT:GenPrGen Pr (-1 Gen)(0 ("bealde") OR ("beale") OR ("beallái") OR ("geahčai") OR ("geahčen") OR ("geaže"))(1 Gen)(NEGATE 1 TIME);
+SELECT:WGenPrGen Pr (-1 Gen)(0 ("bealde") OR ("beale") OR ("beallái") OR ("geahčai") OR ("geahčen") OR ("geaže"))(1 Gen)(NEGATE 1 TIME);
  	#$ Daid sáhttá heaŋggastit dan heargái mii daid eará goahtemuoraid lea guoddimin, guokte bealji goappáge beallái hearggi. 
 	
-SELECT:gaskalPo Po (-1 NP-HEAD-GEN LINK -1 CC LINK -1 NP-HEAD-GEN)(0 GASKAL);
+SELECT:WgaskalPo Po (-1 NP-HEAD-GEN LINK -1 CC LINK -1 NP-HEAD-GEN)(0 GASKAL);
  	#$ Dat lei min ja din gaskkas.
 
-SELECT:gaskalPrNum Pr (0 GASKAL)(1 Num LINK 1 CC LINK 1 Num);
+SELECT:WgaskalPrNum Pr (0 GASKAL)(1 Num LINK 1 CC LINK 1 Num);
  	#$ Gaskal 12 ja 16 jahkásaš mánáin lea muhtun muddui iešheanalis.
 
-SELECT:gaskalPoNum Po (-1 Num LINK -1 CC LINK -1 Num)(0 GASKAL);
+SELECT:WgaskalPoNum Po (-1 Num LINK -1 CC LINK -1 Num)(0 GASKAL);
  	#$ Alimusriekti veadjá leat jagiid 1854 ja 1897 gaskka doallan siskkáldas čoahkkima.
 
-SELECT:gaskalPr Pr (0 GASKAL)(*1 NP-HEAD-GEN BARRIER SV-BOUNDARY LINK 1 CC LINK *1 NP-HEAD-GEN BARRIER SV-BOUNDARY);
+SELECT:WgaskalPr Pr (0 GASKAL)(*1 NP-HEAD-GEN BARRIER SV-BOUNDARY LINK 1 CC LINK *1 NP-HEAD-GEN BARRIER SV-BOUNDARY);
  	#$ Ferte navdit ahte dáža duopmostuolut ja eará riektegeavaheaddjit dábálaččat dulkojit dáža siskkáldas rievtti nu ahte garvá vejolaš vuostálasvuođa gaskal dákkár álbmotriektenorpma ja siskkáldas norgga njuolggadusa.
  	#$ Lága mearrádusat galget váikkuhit luohttevašvuođa gaskal divššohasa ja dearvvašvuođabálvalusa.
 
-SELECT:gaskalPr Pr (0 GASKAL)(*1 (N Gen) BARRIER NOT-NPMOD LINK *1 CC BARRIER NOT-NP LINK *1 (N Gen) BARRIER NOT-NPMOD LINK 0 HEAD-N);
+SELECT:WgaskalPr Pr (0 GASKAL)(*1 (N Gen) BARRIER NOT-NPMOD LINK *1 CC BARRIER NOT-NP LINK *1 (N Gen) BARRIER NOT-NPMOD LINK 0 HEAD-N);
  	#$ Dán láhkai lea leamaš muhtun muddui lotnolas doahttaluvvon dássádatdilálašvuohta gaskal stáhta almenneteaiggádin ja geavahanvuoigaduvvon giliássiid.
 
-SELECT:gaskalPrNum Pr (0 GASKAL LINK *1 NUM BARRIER NOT-NPMOD);
+SELECT:WgaskalPrNum Pr (0 GASKAL LINK *1 NUM BARRIER NOT-NPMOD);
  	#$ Ferte oaidnit oktavuođa gaskal dan guokte soahpamuša.
 
-SELECT:gaskalPrA Pr (0 GASKAL)(1 A LINK 1 CC LINK 1 A LINK *1 (N Gen) + HEAD-N); 
+SELECT:WgaskalPrA Pr (0 GASKAL)(1 A LINK 1 CC LINK 1 A LINK *1 (N Gen) + HEAD-N); 
  	#$ Galgá válljejuvvot gaskal vejolaš ja dohkálaš iskkadan- ja dikšunvugiid.
 
-SELECT:gaskalPo Po (-1 (N Gen) LINK *-1 CC BARRIER NOT-NPMOD LINK -1 (N Gen))(0 GASKAL);
+SELECT:WgaskalPo Po (-1 (N Gen) LINK *-1 CC BARRIER NOT-NPMOD LINK -1 (N Gen))(0 GASKAL);
  	#$ Riiddut boazodolliid ja eará vuoigatvuođaoamasteddjiid gaskkas livčče lassánan. # Does not function because of barrier
 
-SELECT:gaskalPoInf Po (-3 Inf)(-2 CC)(-1 Inf)(0 GASKAL);
+SELECT:WgaskalPoInf Po (-3 Inf)(-2 CC)(-1 Inf)(0 GASKAL);
  	#$ Sániid oamastit ja eaiggáduššat gaskkas geavahuvvo "ja".
 
 
