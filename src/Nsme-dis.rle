@@ -3962,6 +3962,7 @@ REMOVE:NotConNegNotNeg ConNeg IF (NEGATE *-1 Neg BARRIER SV-BOUNDARY OR go)(NEGA
 
 #!! See also ''Imprt or Ind'' some sections down.
 
+
 #!! * __ImprtLeat__ says BOS Leat A is Imprt - 575
 SELECT:ImprtLeat Imprt IF (-1 BOS OR PUNCT OR REAL-CLB)(0 ("leat"))(1 A);
  	#$ Leage buorre!
@@ -3975,7 +3976,7 @@ SELECT:ImprtDál Imprt IF (-1 BOS OR PUNCT OR REAL-CLB)(1 ("dál"))(2 COMMA)(3 R
 SELECT:ImprtComma Imprt (-1 COMMA LINK -1 Imprt LINK *-1 BOS BARRIER NOT-ADV);
 
 #!! * __ImprtNotVGen__
-REMOVE:ImprtNotVGen VGen (-1 BOS OR PUNCT OR REAL-CLB)(0 Imprt);
+REMOVE:ImprtNotVGen VGen (-1 BOS OR PUNCT OR REAL-CLB)(0 Imprt)(NOT *1C VFIN BARRIER NOT-ADV-PCLE OR CLB);
 
 #!! * __NotImprtInd__ 
 REMOVE:NotImprtInd Imprt IF (*-1 (Neg Ind) BARRIER CLB OR Ind);
@@ -4014,6 +4015,11 @@ REMOVE:NotImprtGo Imprt IF (1 ("go" Pcle));
 #!! !!Infinitive
 
 # The r29xx rules here might come too early.
+
+#!!
+SELECT:r2996 PL3-V IF (*1 (Pl Nom) BARRIER NOT-NPMODADV LINK NOT 0 Adv)(NEGATE 0 ("leat" Imprt Pl2))(NEGATE 0 Inf LINK -1 MOVT);
+	## Ja dis leat velá buot oaivvi vuoktačalmmit lohkkojuvvon.
+
 
 #!! * __r2974__ was moved up to select PL3-V after N Pl, might be relaxed to REMOVE Inf
 SELECT:r2974 PL3-V IF (*-1 (Pl Nom) BARRIER NOT-ADV-PCLE  LINK NOT 0 VFIN) ;
@@ -4129,6 +4135,35 @@ SELECT:Zr1828 Inf IF (-1 ADVLCASE LINK *-1 (A Nom) BARRIER NOT-NPMOD LINK *-1 CO
 
 
 #!! !!Verbgenitive
+
+	# Verbgenitive
+	# ------------
+	
+# Background: 	
+# VGen is a bad lookalike for various finite forms. It is rare, and occurs in
+# special contexts.
+# Philosophy:
+# 1. We make rules selecting VGen where we feel safe to say we have found it.
+# 2. We remove all remaining VGen readings.
+
+# 1. Looking for VGen.
+
+#!! * __r1835__ selects VGen if VGEN-V to the left (2)
+SELECT:Xr1835 VGen IF (*-1 VGEN-V BARRIER Neg OR SV-BOUNDARY LINK 0 MAIN-V)(0 VGEN-V LINK NOT 0 Der/Pass OR Loc OR Inf OR ("mannat"));	
+	
+SELECT:Xr1833 VGen IF (-1 ("gaskan"))(NEGATE 0 Der/Pass OR Loc OR Inf);
+	## Gaskan bora viehkalin olggos.
+
+SELECT:Xr1837 VGen IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(0 VGEN-V LINK NOT 0 Der/Pass OR Loc OR Inf);  
+	## Muhtumat ledje vácci, ja muhtumat ledje čuoigga. 
+	
+
+# 2. Done that, now we remove whatever VGen was left.
+
+#!! * __KillAllVGen__ removes all VGen (r1842)
+REMOVE:ZKillAllVGen VGen IF (0 (VGen));
+
+
 #!! !!Supinum vs. potential
 #!! !!Perfect Participle
 #!! !!Actio
