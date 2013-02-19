@@ -1091,8 +1091,8 @@ SET NP-HEAD-PL     = PL-PRON OR (N Pl) OR (A Pl) - RCmpnd  - Dem - ("buorre");
 SET NP-HEAD-SG-NOM = SG-PRON + Nom OR (N Sg Nom) OR (A Sg Nom) - ("buorre") - RCmpnd ;
 SET NP-HEAD-PL-NOM = PL-PRON + Nom OR (N Pl Nom) OR (A Pl Nom) - RCmpnd  - ("buorre");
 SET NP-HEAD-NOM    = NP-HEAD-SG-NOM OR NP-HEAD-PL-NOM ;
-SET NP-HEAD-ACC    = (Pron Acc) OR (N Acc) OR (A Acc) - RCmpnd - Dem - ("buorre");
-SET NP-HEAD-GEN    = (Pron Gen) OR (N Gen) OR (A Gen) - RCmpnd - Dem - ("buorre");
+SET NP-HEAD-ACC    = (Pron Acc) OR (N Acc) OR (A Acc) - RCmpnd - (Dem Attr) - ("buorre");
+SET NP-HEAD-GEN    = (Pron Gen) OR (N Gen) OR (A Gen) - RCmpnd - (Dem Attr) - ("buorre") ;
 
 #!! * The PRE-NP-HEAD family of sets
 
@@ -1935,7 +1935,7 @@ LIST GASKAL = "gaskal" "gaskkal" "gaskii" "gaskka" "gaskkas" ;
  
  # p-positions that like coordination
  
-LIST TIME-PREP = "badjel" "čađa" "earret" "gaskkal" "guovddáš" "maŋŋel" "maŋŋil" "maŋŋá" "miehtá" "ovdal" ;
+LIST TIME-PP = "badjel" "čađa" "earret" "gaskkal" "guovddáš" "maŋŋel" "maŋŋil" "maŋŋá" "miehtá" "ovdal" ;
  
 
 SET NUM = Num - OKTA ;
@@ -3094,7 +3094,7 @@ SELECT:WmiehtaPo ("miehtá" Po) (-1 PLACE + Gen OR VAHKKU-DUR + Gen OR (Plc Gen)
 	#$ Áldu mii dálvvi miehtá njamaha miesi gohčaduvvo čearpmateadni.
 	#$ Beaivvi miehtá galget earát lohkat galle geardde viehká mearriduvvon guhkkodaga, ja galgá sáhttit árvidit galle geardde háhppeha viehkat 12 diimmus.
 
-#!! * __miehtaPo__ before place or time Gen
+#!! * __miehtaPr__ before place or time Gen
 SELECT:WmiehtaPr ("miehtá" Pr) (1 PLACE + Gen OR VAHKKU-DUR + Gen OR (Plc Gen)) ;
  	#$ Dalle bisttii luossaguolli miehtá dálvvi.
  	#$ Sii dieđihedje dan miehtá guovllu, ja sii bukte su lusa buot buhcciid.
@@ -3102,10 +3102,12 @@ SELECT:WmiehtaPr ("miehtá" Pr) (1 PLACE + Gen OR VAHKKU-DUR + Gen OR (Plc Gen))
  	#$ Áldu mii dálvvi miehtá njamaha miesi gohčoduvvo čearpmateadni.
  	#$ Dat sáhttet leat ovttasbargošiehtadusat oanahis áigái, dahje oktasašdoallu muhtin áiggiid jagis, dahje vaikko miehtá jagi.
  	#$ Beaivvi miehtá galget earát lohkat galle geardde viehká mearriduvvon guhkkodaga, ja galgá sáhttit árvidit galle geardde háhppeha viehkat 12 diimmus.
+	## Olbmuin bisttii luossaguolli miehtá dálvvi. 
 
 #!! * __miehtaV__  
 SELECT:WmiehtaV VFIN (NEGATE *-1 VFIN BARRIER S-BOUNDARY)(NEGATE -1 Gen LINK NOT 0 Nom)(0 ("miehtá"))(NEGATE 1 Gen LINK 0 TIME OR PLACE);
  	#$ Jus divššohas dasa miehtá, dahje dilálašvuohta lea nu,...
+	## Jus divššohas dasa miehtá,... 
 	
 SELECT:WmannelAdv Adv ((1 TIME-UNIT + Acc LINK 1 MANNEL) OR (1 Num LINK 1 TIME-UNIT + Acc LINK 1 MANNEL));	
 
@@ -3161,6 +3163,136 @@ SELECT:WgaskalPo Po (-1 (N Gen) LINK *-1 CC BARRIER NOT-NPMOD LINK -1 (N Gen))(0
 
 SELECT:WgaskalPoInf Po (-3 Inf)(-2 CC)(-1 Inf)(0 GASKAL);
  	#$ Sániid oamastit ja eaiggáduššat gaskkas geavahuvvo "ja".
+
+#!! * __PoParantes__ selects Po after paranteces
+SELECT:WPoParantes Po (-1 (PUNCT RIGHT) LINK *-2 (PUNCT LEFT) LINK -1 Gen);
+	## ...sáhttá dulkot telestudio dahje govvatelefovnna (ruoná nummira) bokte. 
+
+	# Requiring Genitive
+
+#!! * __PrNomCompl__ removes Po if no possible complement
+REMOVE:WPrNomComplr1121 Po (NEGATE -1 NP-HEAD-GEN)(NEGATE 0 ("gaskan"));
+	## Jus divššohas lea badjel 16 jagi boaris,... 
+	## Dat lea dušše badjelaš állanbeali guhku.
+	## Jesus manai fatnasii ja vulggii rastá jávrri iežas gávpogii.
+	## ... muhto ovdal dan áiggi ledje "sápmelaččat boahtán dán guvlui". 
+	## Ovdal dan áiggi ledje sápmelaččat boahtán dán guvlui.
+	## Vuollel 12 jahkásaš mánáin ii leat iešheanalis geahččanvuoigatvuohta.
+
+REMOVE:Wr1122 Po IF (-1 N)(NEGATE -1 Gen); 
+	#REMOVE Po IF (0 ("mielde"))(-1 Acc)(-2 TV);
+
+#!! * __PrNoCompl__ removes Pr if no complement to the right	
+REMOVE:Wr1123 Pr (NEGATE *1 N OR A OR Num OR Pron OR GRADE-ADV BARRIER NOT-NPMOD OR S-BOUNDARY OR CC) ;
+	## Na mun gal hupmen dan birra.
+	## Dán vuostá sáhttá dadjat, ahte ...
+
+SELECT:Wr1124 Pr IF (NEGATE -1 Gen OR (Pron Interr Nom))(NEGATE 0 A OR VFIN OR Adv)(*1 (N Gen) BARRIER NOT-NPMOD LINK 0 HEAD-N);
+
+#SELECT:r1125 Pr IF (-1 ("dušše"))(*1 NP-HEAD-GEN BARRIER NOT-NPMOD); # denne er ikke bra, og eksempelsetninga funker likevel
+
+SELECT:Wr1126 Pr IF (-1 MAIN-V LINK 0 VFIN OR ConNeg OR PrfPrc LINK NOT 0 Gen)(0 Adv LINK NEGATE 0 ("čađa") LINK -1 ("mannat"))(1 Gen LINK NOT 0 PrfPrc)(NEGATE 2 N);
+	## Jesus manai fatnasii ja vulggii rastá jávrri iežas gávpogii.
+
+#SELECT:r1127 Pr IF (NEGATE -1 Gen)(1 (Pron Gen)); # ii galggaše deaivat Rel, muhto njuolggadus ii leat dárbbašlaš
+
+#REMOVE:r1128 Pr IF (NEGATE 1 (Num Gen))(NEGATE *1 (N Gen) BARRIER SV-BOUNDARY);# denne er ikke bra
+
+SELECT:Wr1129 Po IF (*-1 BOC OR CLB BARRIER NOT-NPMOD OR Num)(-1 Gen)(NEGATE 0 N-PO OR ("mielde"))(NEGATE 1 NP-HEAD-GEN);
+	## Vuoi dan olbmo gean bokte fillehusat bohtet.
+
+SELECT:Wr1130 Po IF (-1 Gen)(1 CC)(NEGATE -1 Acc LINK *-1 CC BARRIER NOT-NP LINK -1 Acc LINK -1 TRANS-V BARRIER NOT-NPMODADV)(NEGATE 0 ("mielde") OR ("fárrui"));
+	## Jos sáddo deavdá buođu vuollái dahje jos sáddo hávddarda buođu vuolde... 
+SELECT:Wr1131 Po IF (-1 Gen LINK NEGATE 0 Loc LINK *2 NP-HEAD-GEN BARRIER NOT-NPMOD)(NEGATE -1 REAL-V OR Adv)(NEGATE 0 TIME-PP)(1 TIME); 
+	## Sámi guovlluin ožžo Sámeparlameantta Suoma beallái jagi 1976.  funker ikke
+
+SELECT:Wr1132 Po IF (-1 LAHKA-N OR LAHKA OR ("sávaldat") OR ("ovttasbargovuoigŋa") OR ("dárbu") OR ("oaivil") OR DAT-PRON LINK 0 Gen)(0 ("mielde"));
+	## Dat ii leat Olgoriikadepartemeantta njuolggadusaid mielde.
+	# Can be removed if the next rule functions well.
+
+SELECT:Wr1133 Po IF (-1 Gen)(1 Gen LINK *1 Po BARRIER NP-BOUNDARY)(NEGATE 0 Adv LINK -1 Acc);
+	## Dattetge ii leat muitaluvvon makkárge namahan veara geavahanriiddu birra dálolaččaid ja boazodoalu gaskkas.
+
+SELECT:Wr1134 Po IF (-1 (Interr Gen));
+
+#SELECT:r1135 Pr IF (NEGATE -1 Gen LINK *-1 BOC BARRIER STRICT-ACT OR Pr)(NEGATE -1 TIME)(NEGATE 0 Attr OR VFIN OR Adv)(NEGATE 1 VFIN)(*1 (N Gen) OR (Pron Gen) BARRIER PUNCT OR NOT-NPMOD OR (Num Nom) LINK NEGATE 0 RCmpnd LINK NOT *1 N OR Po BARRIER S-BOUNDARY OR CC)(NEGATE -1C Gen); # kommentert ut, eksempelsetninga funker likevel
+	## Sáhttá dattetge vurket journála olggobealde doaimma.  # funker ikke
+
+SELECT:Wr1136 Po (-1C Gen LINK NOT 0 Num LINK NOT -1 Num)(NEGATE 0 N-PO OR ("mielde") OR ("fárrui") OR ("mađe"))(NEGATE 1 NP-HEAD-GEN);
+	## Leansmánni lea kommišuvnnas fárus.
+
+SELECT:Wr1137 Pr IF (1 (Num Gen));
+	## Vuollel 12 jahkásaš mánáin ii leat iešheanalis geahččanvuoigatvuohta.
+	## Jus divššohas lea badjel 16 jagi boaris,... 
+  	## DBE dáhttu oažžut dieđu suohkanis ovdal 01.11.99. 
+	## Vuosttasnaššuvnnaid čoagganeapmi ovddasta badjel 300 indiánaservodagaid miehtá Kanada ja gáibida dál iešstivrejumi Davvi-Amerihká buot eamiálbmogiidda.
+
+#REMOVE:r1138 Pr IF (NEGATE *1 Gen BARRIER SV-BOUNDARY); # kommentert ut
+	## Geavatlaš sivaid geažil čatnasa bajimus submi namuhuvvon máksomearrái. # funker ikke
+SELECT:Wr1139 Pr IF (0 TIME-PP)(1 TIME OR ("soahti") LINK NEGATE 1 Num)(NEGATE 2 Po)(NEGATE 0 ("čađa") LINK 1 MANNU LINK 1 Ord LINK -3 Gen);
+
+SELECT:Wr1140 Pr IF (*-1 MOVEMENT-V BARRIER NOT-ADV)(0 ("guovddáš"))(1 PLACE)(NEGATE 2 Po);
+	## Dat váccaša guovddáš márkana.
+
+SELECT:Wr1141 Adv IF (-2 (Num Acc))(-1 (N Gen))(0 MANNEL);
+	## Dat dáhpáhuvai golbma jagi maŋŋil.
+
+SELECT:W Po IF (0 ("vuollái") LINK -1 ("beallji" Gen) LINK *-1 ("addit") BARRIER SV-BOUNDARY);
+	## Mon gal attán dutnje bealji vuollái.
+	## Na mun gal hupmen dan birra.
+	# "addit" is STV-verb, but in this idiom there is no Obj.
+	
+SELECT:Wr3579 Adv IF (-1 Acc LINK *-1 STRICT-TV-V BARRIER SV-BOUNDARY OR Acc LINK NOT -1 Acc)(0 Po LINK NOT *1 Acc BARRIER NOT-NPMOD); 	
+
+SELECT:Wr1142 Po IF (-1 NP-HEAD-GEN LINK NOT 0 Num OR MEASURE OR PrfPrc) (NEGATE 0 Refl LINK -1 PrfPrc)(NEGATE -1 VFIN OR ("leat" PrfPrc) OR Adv)(NEGATE -1 Acc LINK *-1 CC BARRIER NOT-NP LINK -1 Acc LINK *-1 V-TRANS-ACT BARRIER NOT-NPMODADV)(NEGATE 0 Attr OR ("mielde") OR ("fárrui") OR ("mađe") OR ("buorre") OR N-PO OR CS)(NEGATE 0 ("bajil") LINK *-1 ("oahppat") BARRIER SV-BOUNDARY)(NEGATE 1C Po)(NEGATE 1 Gen)(NEGATE 0 Pr LINK 1 Gen);
+	## Gonagas addá láhkaásahusa lága geavaheami birra Svalbarddas.
+	## Jos sáddo deavdá buođu vuollái dahje jos sáddo hávddarda buođu vuolde... 
+
+SELECT:W Pr (0 Po LINK -1 Gen LINK *-1 Num BARRIER NOT-NPMOD)(1 NP-HEAD-GEN LINK NOT 0 PrfPrc) ;
+
+
+SELECT:Wr1143 Po IF (-1 Num)(0 ("rádjai")); # Make general rule!
+REMOVE:Wr1144 Po IF (NEGATE -1 Gen OR Num OR Indef)(NEGATE 0 ("gaskan"));
+	## ... paragráfaide 3-18 rájes 3-21 rádjái. funker ikke
+
+# Diambiguation N - Po, Noun vs. Po:
+# - - - - - - - - - - - - - - - - - 
+
+REMOVE:Wr1145 Po IF (-1C (Num Gen));
+
+SELECT:Wr1146 Po IF (-1 ("guovttá"))(0 ("gaskan"));
+	## Mun áiggošin duinna guovttá gaskan hupmat.
+	
+SELECT:Wr1147 Po IF (-1 Gen)(0 ("gaskkas") OR ("vuostá"))(NEGATE 0 ("vuostá") LINK *-2 BOC BARRIER NOT-NPMOD);
+	# This is a problematic one because "gaskkas" can also be (N Sg Loc) or (N Sg Nom), "vuostá" can be N Sg Nom.  It shouldn´t hit: "Áhku vuostá lea buoremus vuostá maid mun dieđán."
+	
+SELECT:Wr1148 Adv IF (NEGATE -2 (Num Gen))(-1 TIME-UNIT + Acc)(0 ("áigi"));	
+	## Ánde Máhtte Somby Sandvik beasai guokte vahku áigi diehtit ahte son beassá vuolgit.
+
+SELECT:Wr1149 Po IF (*-2 ("máksit") OR ("máksu") BARRIER NOT-NPMOD)(-1 Gen)(0 ("ovddas"));
+	## Logut čájehit makkár kilohatti gaskamearálaččat Finnmárkkus ferte máksit ealggabierggu ovddas.
+	
+SELECT:Wr1150 Po IF (*-2 Acc BARRIER NOT-NPMOD LINK *-1 ("máksit") OR ("máksu") BARRIER NOT-NPMOD)(-1 Gen)(0 ("ovddas"));
+	## ...maid ovddas sihtá máksit bálkámassima 30 beaivvi ovddas.
+
+SELECT:Wr1151 Po IF (-1 Gen)(0 ("ovddas"))(*1 ("máksit") OR ("máksu") BARRIER SV-BOUNDARY);
+	## Spider-Man-gova ovddas máksojuvvo bures!
+	## Daid ovddas gal in máksán maidege.
+
+# Coordination
+SELECT:Wr1152 Po IF (0 ("ovddas") LINK -1 Gen LINK *-1 (V Neg) BARRIER V OR Pr OR Po LINK *-1 ("ovddas" Po) BARRIER NOT-NPMOD);
+	## Sámediggi lea miehtan sutnje máksit 800 ruvnno juohke árgabeaivvi ovddas, muhto ii fal lávvordagaid, sotnabeivviid ja bassebeivviid ovddas.
+ 
+
+# Removing some readings that compete with Po
+# -------------------------------------------
+REMOVE:Wr1153 N IF (-1 Gen LINK NOT 0 Num)(0 Po)(NEGATE 0 N-PO)(NEGATE 1C Po);
+REMOVE:Wr1154 V IF (-1 Gen)(0 Po)(NEGATE 1C Po);
+	## ...maid ektui sáhtii leat buori oskkus.
+	## Gávpot mii lea vári alde, ii sáhte leat čihkosis.
+	
+
+          SECTION #9 # 
 
 
 #!! !!Some particular subjunctions and Neg Sup
@@ -4202,7 +4334,7 @@ REMOVE:NoActorIfSg3 Actor (0 VFIN + Sg3) ;
 #!! !!Demonstrative pronouns, agreement in DP - should it be moved to after verbmappings? 
 #!! The rules are no documented yet
 
-SELECT:DemAttr $$CASE + (Dem Sg) (0 DAT-PRON)(*1 $$CASE + (N Sg) BARRIER NOT-NPMOD OR (Time) OR Num LINK NOT 0 VFIN OR ("leat") OR (Actio Ess))(NEGATE 0 Acc LINK *-1 STRICT-TV-V BARRIER Acc LINK *1 Dem LINK NOT *1 Acc BARRIER NOT-NPMOD)  ; 
+SELECT:DemAttr $$CASE + (Dem Sg) (0 DAT-PRON)(*1 $$CASE + (N Sg) BARRIER NOT-NPMOD OR (Time) OR Num LINK NOT 0 VFIN OR ("leat") OR (Actio Ess) OR Po)(NEGATE 0 Acc LINK *-1 STRICT-TV-V BARRIER Acc LINK *1 Dem LINK NOT *1 Acc BARRIER NOT-NPMOD)  ; 
 	#$ Mun muitalin dan vielljasan. # Should not hit this one.
 SELECT $$CASE + (Dem Pl) (0 DAT-PRON)(*1 $$CASE + (N Pl) BARRIER NOT-NPMOD) ; 
 SELECT $$CASE + (Dem Sg) (0 DAT-PRON)(1 Gen LINK 1 $$CASE + (N Sg)) ; 
