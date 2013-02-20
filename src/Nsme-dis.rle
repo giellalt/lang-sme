@@ -899,7 +899,7 @@ LIST DADJAT = "dadjat" "lohkat" "muitalit" ;
 LIST HUPMAT =  "dáikit" "dárostit" "digáštallat" "digaštit" "duoldat"  "háladit" "háleštit" "hállat" "hoallat" "humadit" "hupmat" "logaldallat" "máidnut" "máinnašit" "muitaladdat" "njurgut" "oaivvildit" "savkalit" "ságastaddat" "ságastallat" "ságastit" "sámástit" "sámistit" "sárdnidit" "sárdnut" "sártnodit" "solžat" "suomastit" ;
 # These should not take HUMAN as object
 
-LIST VERBAL-ACTIVITY =  "árvalit" "cealkit" "čilget" "basuhit" "cuoigut" "čuorvut" "čurvet"  "dadjat" "gielistit" "gilljut" "gopmulit" "háladit" "háleštit" "hállat" "hoallat" "huikit" "huikkádit" "jearrat" "juoigat" "kommenteret" "lávlut" "lohkat"  "muitalit"  "rávvet" "sivdnidit" "váruhit" "vástidit" ;
+LIST VERBAL-ACTIVITY =  "árvalit" "cealkit" "čilget" "basuhit" "cuoigut" "čuorvut" "čurvet"  "dadjat" "gielistit" "gilljut" "gopmulit" "háladit" "háleštit" "hállat" "hoallat" "huikit" "huikkádit" "jearrat" "juoigat" "kommenteret" "lávlut" "lohkat"  "muitalit" "namahit" "namuhit" "rávvet" "sivdnidit" "váruhit" "vástidit" ;
 
 SET VERBAL-ACTIVITY-V = VERBAL-ACTIVITY OR HUPMAT ;
 
@@ -2287,7 +2287,7 @@ REMOVE:Pogiedas Po (0 ("gieđas") LINK 1 ("eret")) ;
 #!! !!Not Qst
 
 #!! * __AdvQst__ removes dego/nugo Qst 
-REMOVE:AdvQst (Adv Qst) (0 CS)(NEGATE 1 ("?")); 
+REMOVE:AdvQst (Adv Qst) OR (Po Qst) OR (Pr Qst) (0 CS)(NEGATE 1 ("?")); 
  	#$ Su ámadadju báittii dego beaivváš. 
  	#$ Nugo dieđát, de lean dál.
 
@@ -3128,7 +3128,7 @@ SELECT:mannelAdv Adv ((1 TIME-UNIT + Acc LINK 1 MANNEL) OR (1 Num LINK 1 TIME-UN
 SELECT:ovddasPo ("ovddas" Po) (-1 Gen LINK *-1 NP-HEAD-NOM BARRIER S-BOUNDARY)(1 V);
   	#$ Láilá Susanne Vars lea ge dál Sámedikki ovddas bargamin njuolggadusaiguin Finnmárkoláhkii.
 
-#!! * do we really need special rules for rastá? 
+#!! * special rules for rastá because it often is Adv, and it can be an object connected to the PP
 #!! ** __rastaAdv__  čuohppat/časkit/sahet rastá
 SELECT:rastaAdv ("rastá" Adv)(*0 ("čuohppat") OR ("časkit") OR ("čuohpastit") OR ("sahet") BARRIER SV-BOUNDARY) ;	
 
@@ -3138,6 +3138,16 @@ REMOVE:rastaPr ("rastá" Pr)(1 HUMAN + Acc OR (Pers Acc) LINK *0 ("doalvut") OR 
 
 #!! ** __rastaPr__  rastá ráji/rájá
 SELECT:rastaPr ("rastá" Pr)(1 ("rádji" Gen) OR ("rádjá" Gen)) ;
+
+#!! * __birraPo, birraPr__ special rules for birra because it often is Adv, and it can be an object connected to the PP
+SELECT:birraPo ("birra" Po)((-1 ("máilbmi" Gen)) OR (-1 NP-HEAD-GEN LINK *-1 VERBAL-ACTIVITY BARRIER NOT-ADV-PCLE)) ;
+	#$ Dattetge ii leat muitaluvvon geavahanriiddu birra dálolaččaid ja boazodoalu gaskkas.
+	#$ Dattetge ii leat muitaluvvon makkárge namahan veara geavahanriiddu birra dálolaččaid ja boazodoalu gaskkas. #This doesn't function yet.
+SELECT:birraPr ("birra" Pr)(1 ("máilbmi" Gen))  ;
+	#$ E-boasta lea hui álkes ja jođánis vuohki sáddet reivviid birra máilmmi.
+
+
+
 
 #!! * "vuostá" has many readings and needs special treatment 
 #!! ** __vuostaAdv__  váldit vuostá/vuostái
@@ -3231,7 +3241,7 @@ REMOVE:XPrNoCompl Pr (NEGATE *1 NP-HEAD-GEN OR (A Gen) BARRIER NOT-NPMOD) ;
 
 
 #!! * __PoGen__ selects Po
-SELECT:PoGen Po - Foc - N-PO (-1 NP-HEAD-GEN - VAHKKU-DUR - Qst LINK NEGATE 0 Acc LINK *-1 STRICT-TV-V BARRIER NOT-ADV-PCLE)(NEGATE 1 NP-HEAD-GEN OR STRICT-TV-V OR (A Gen) BARRIER NOT-NPMOD);
+SELECT:PoGen Po - Foc - N-PO (-1 NP-HEAD-GEN - VAHKKU-DUR - Qst LINK NEGATE 0 Acc LINK *-1 STRICT-TV-V BARRIER NOT-ADV-PCLE)(NEGATE 1 NP-HEAD-GEN OR (A Gen) BARRIER NOT-NPMOD) (NEGATE 1 STRICT-TV-V LINK NOT 1 Acc BARRIER NOT-NPMODADV);
 	#$ Vuoi dan olbmo gean bokte fillehusat bohtet.
 	#$ Nieida bođii ráhkkásis mielde.
 	#$ Tommi ja Annika dárkilit geahččaba Pippi oaidnin dihte mo diŋggaohccit barget.
@@ -3239,6 +3249,7 @@ SELECT:PoGen Po - Foc - N-PO (-1 NP-HEAD-GEN - VAHKKU-DUR - Qst LINK NEGATE 0 Ac
 	#$ Mii bidjat boaldinmuoraid bearpmehiid gaskii.
 	#$ Váldde biergasiid iežat fárrui!
 	#$ Su vuosttaš girji bođii jagi 1986, ja girji lea muitalus nuorra sámenieidda birra gii šaddá bajás internáhtas.
+	#$ Lávvomuoraid nala bidjat álo loavdaga.
 
 #!! !Diambiguation  Noun vs. Po or Pr:
 
@@ -5039,7 +5050,7 @@ REMOVE:NAr2268 Gen IF (*-1 BOC BARRIER NOT-NPMOD OR Sg)(0 NP-HEAD-PL LINK 0 Gen)
 SELECT:NAAccEllipsis Acc (*-1 CS BARRIER VFIN LINK -1 Acc)(0 Gen LINK NOT 0 Nom)(1 EOS);
 	## Ovdal buorida Ipmil dálkkiidis go neavrres olmmoš dábiidis.
 
-#REMOVE:NAr2269 Gen IF (-1 BOC)(1 Adv)(NEGATE 1 N OR A); 
+REMOVE:NAr2269 Gen IF (-1 BOC)(1 Adv)(NEGATE 1 N OR A); 
     	## Dieđuid maiddái ii dárbbaš addit go...
 
 REMOVE:NAr2271 Gen IF (*-1 TRANS-V BARRIER SV-BOUNDARY OR Acc OR COMMA LINK NOT *-1 Acc BARRIER SV-BOUNDARY)(NEGATE *-1 Pr OR NUM BARRIER NP-BOUNDARY)(NEGATE -1 ("mii"))(NEGATE *-1 CC BARRIER NOT-NP LINK *-1 GASKAL BARRIER S-BOUNDARY)(NEGATE 0 TIME OR ROUTE OR Refl)(1 Ill OR Loc OR Com OR Adv LINK NOT *1 Acc BARRIER TRANS-V)(NOT *2 REAL-V BARRIER S-BOUNDARY)(NEGATE *-1 HEADOFPARTS LINK 1 Gen LINK 1 Loc);
