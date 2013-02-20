@@ -1482,7 +1482,7 @@ LIST OFFICE = "áirras" "ámtamánni" "bajitbáhppa" "boazodoallohoavda" (".*č�
 
 SET TITLE = REAL-TITLE OR TITLE-LIKE OR PROFESSION OR OFFICE ; 
 
-LIST HUM-FUNCTION =  "Bergen-soalddát" "kandidáhtta" "kandidáhta" "nomáda" "oahppan#olmmoš" "oktavuođaolmmoš" "olbmobárdni" "pasieanta" "ráđđealmmái" "riika#vuloš" "sámedemokráhtta" "skohtervuoddji" "soahteolmmái" "stáhtaboargár" ("suddu" Der/laš) "turista" "virge#guoibmi" "virgeolmmoš" "vuorasolmmoš" ;
+LIST HUM-FUNCTION =  "Bergen-soalddát" "buohcci" "divššohas" "kandidáhtta" "kandidáhta" "nomáda" "oahppan#olmmoš" "oktavuođaolmmoš" "olbmobárdni" "pasieanta" "ráđđealmmái" "riika#vuloš" "sámedemokráhtta" "skohtervuoddji" "soahteolmmái" "stáhtaboargár" ("suddu" Der/laš) "turista" "virge#guoibmi" "virgeolmmoš" "vuorasolmmoš" ;
  #XXX bad name
  # Don´t add veahkki + Ess.
  
@@ -5165,22 +5165,162 @@ SELECT:WLocdynamicVL (Pl Loc) (0 (Sg Com) LINK NOT 0 TOOL OR ABSTR-TOOL OR WRITI
 #!! * __ComAnimate__ selecst Sg Com if there is an animate to the left, and the noun itself is not a ABSTR-TEXT,  TEXT,  PLACE,  INDUSTRY,  EDUCATION,  INSTITUTION,  ANIMATE
 SELECT:WComAnimateL (Sg Com) (*-1 ANIMATE BARRIER NOT-NPMOD LINK 0 Nom OR Gen)(0 (Pl Loc) LINK NOT 0 ABSTR-TEXT OR TEXT OR PLACE OR INDUSTRY OR EDUCATION OR INSTITUTION OR ANIMATE)(1 CLB OR EOS);   
 	#$ Sii vástidedje: Johanasa gásttain.  
+  	## 1996:s rájes lea Romssa universitehtas leamaš Sámi dutkamiid guovddáža bokte formaliserejuvvon ovttasbargu St. Petersburga Hertzen universitehta Davviálbmogiid fakultehtain.
     #Does it really need (1 CLB OR EOS)?
 
-
-#!! !atnit fuola
 #!! * __LocfuolaL, LocfuolaR__ selecst Pl Loc: Son atná fuola dávviriin.
 SELECT:WLocfuolaL (Pl Loc) IF (*-1 ("atnit") BARRIER SV-BOUNDARY LINK *1 ("fuolla" Acc) BARRIER NOT-ADV)(0 (Sg Com)); 
 SELECT:WLocfuolaR (Pl Loc) IF (0 (Sg Com))(*1 ("atnit") BARRIER SV-BOUNDARY LINK *1 ("fuolla" Acc) BARRIER NOT-ADV);
-	
 	#$ Son atná fuola dávviriin.
 
 
+#!! * __ComProp__ selecst Prop Sg Com for person names. Exception for habitive constructions.
+SELECT:WComProp (Prop Sg Com) (0 Mal OR Sur OR Fem)(NEGATE 0 Loc LINK 1 COPULAS LINK *1 Nom BARRIER NOT-NPMODADV) ; 
+	#$ Nystø mielas leaba soai Lene Hanseniin rievttes olbmot ovddastit sámi álbmoga dáhtu Tromssa ohcamušas.
+	#$ Moai Birehiin barggašeimme mánáidgárddis.
+
+  
+#!! * __ComComplPl-N__ selecst Sg Com for HUMAN, ORGANIZATION, INSTITUTION, STATE, EVENT-TOOL-ACTIVITY when there is a COM-COMPL-N to the left
+SELECT:WComComplPl-N (Sg Com) (*-1 COM-COMPL-N BARRIER NP-BOUNDARY)(0 HUMAN OR ORGANIZATION OR INSTITUTION OR STATE OR EVENT-TOOL-ACTIVITY);
+  	## Dearvvašvuođabargiid doaibma adnojuvvo priváhtan, vaikke vel dearvvašvuođabargiin lea fástadoavtteršiehtadus dahje eará šiehtadus almmolašvuođain, muhto eai leat dattetge virggis almmolaš ásahusas.
+  	
+  	 #Dat lea oktavuođas luondduvuođuin ja birrasa vejolaš nuoskkidemiin. # Dát ii doaimma
+  
+
+#!! !HAB-ACTOR in habitive-constructions
+	
+SELECT:WLocHab (Pl Loc) (0 (Sg Com) + HAB-ACTOR) (*1 LEAT-FIN-NOT-IMPRT BARRIER SV-BOUNDARY LINK *1 NP-HEAD-NOM BARRIER NOT-ADV) ;
+	#$ Divššohasain lea vuoigatvuohta dearvvašvuođaveahkkái dan áigodagas. 
+	#$ Searvegottiin lei dál ráfi miehtá Judea ja Galilea ja Samaria.
+
+	
+SELECT:WLocHab1 (Pl Loc) (*-1 (Pron Rel) BARRIER NOT-NPMOD LINK -1 NP-HEAD-NOM)(0 (Sg Com) LINK 0 HAB-ACTOR)(*1 LEAT-FIN-NOT-IMPRT BARRIER SV-BOUNDARY LINK NOT *1 PRC-NOT-LEAT);
+	#$ Orru čielga vuohki: Dat friddjavuohta mii guođoheddjiin dássážii lei leamaš, gáržžiduvvui dađistaga. 
+
+#!! !Disambiguation based upon verb valency - Har ikke ennå arbeidet med reglene som kommer her:
+
+SELECT:WComr2679 (Sg Com) (*-1 COM-V + REAL-V BARRIER SV-BOUNDARY)(NEGATE 0 PLACE OR SITUATION);
+	#$ Dieđut galget meannuduvvot várrugasvuođain.
+	#$ Nissonat barget gávppiin.
+	
+SELECT:Wr2680 (Sg Com) (*-1 COM-V + REAL-V BARRIER SV-BOUNDARY)(0 POLITICAL-PLACE OR EDUCATION OR INSTITUTION OR INDUSTRY OR ORGANIZATION) ;
+	#$ Sii áigot šiehtadit ođđasit skuvllain. 
+
+SELECT:Wr2681 (Sg Com) (*1 COM-V + REAL-V BARRIER SV-BOUNDARY)(NEGATE *1 COPULAS BARRIER REAL-V LINK *1 COM-V + Inf BARRIER NOT-ADV-PCLE) ;
+	#$ ...go sápmelaččat duođas álge eanadoaluin bargat.
+
+REMOVE:Wr2682 (Pl Loc) (*-2 OKTII-V OR COM-V)(*-1 ("oktii"))(0 N BARRIER Loc);
+	#$ Mii heive bures oktii ránes datneláiggiin.
+  # we have to think about a barrier, another Loc to the right for example
+  
+REMOVE:Wr2683 Loc IF (*1 OKTII-V)(*2 ("oktii") BARRIER S-BOUNDARY)(NEGATE *3 Com BARRIER S-BOUNDARY);
+	#$ Dáinna háliidan čatnat oktii digáštallamiid fidnopedagogihka ja
+	#$ álgoálbmotoahpu birra, mat dán rádjái leat leamašan birrasiin man 
+	#$ gaskkas lea leamaš unnán oktavuohta.
+
+SELECT:Wr2684 (Sg Com) IF (*-1 ("ovttasbargat") LINK 0 SG-V)(0 (Pl Loc))(NEGATE *-1 Com);  
+	#$ SDD ovttasbargá Sámedikkiin , Helse Nordiin ja gelbbolaš dutkanbirrasiiguin , ja čađahit sámi pasientaiskkadeami.
+  
+SELECT:Wr2685 (Sg Com) IF (*-1 ("ovttasbargat" Inf) LINK *-1 SG-V)(NEGATE *-1 Com);
+	#$ SDD áigu ovttasbargat Sámedikkiin , Helse Nordiin ja gelbbolaš dutkanbirrasiiguin , ja čađahit sámi pasientaiskkadeami.
+  
+  
+#!! !tools (concrete and abstract)
+
+REMOVE:Wr2686 (Pl Loc) IF (*-1 ACTIVITY-V OR MOVEMENT-V OR PLACE-V BARRIER SV-BOUNDARY)(0 (Sg Com) + TOOL);
+	#$ Dan moai ráidniime skárbbaniin.
+  
+REMOVE:Wr2687 (Pl Loc) (0 TOOL)(*1 ACTIVITY-V OR MOVEMENT-V OR PLACE-V BARRIER NOT-ADV);
+	#$ Ja ovdal go háhppehin basttiin goivestit eret de Ánddar guvssiin bođii, vierrulii áicemaehtton: šattai ollái ipnun.
+  
+REMOVE:Wr2688 (Pl Loc) (0 TOOL LINK 1 CC LINK *1 Loc BARRIER NOT-NPMODADV)(*1 ACTIVITY-V OR MOVEMENT-V);
+	#$ Mon in leat dugo Sivvar - mii láve bissuin ja beatnagiin mannat dugo livččii dáčča.
+  
+REMOVE:Wr2689 (Pl Loc) (*-1 NP-HEAD-NOM BARRIER S-BOUNDARY LINK 0 HUMAN)(0 ABSTR-TOOL OR SATNI)(*1 HUMAN-AGENT-V);
+	#$ Geahččoeiseválddit galget bearráigeahčuin váikkuhit dasa ahte dearvvašvuođa- ja sosiálabálvalusain váldet vuhtii geavaheaddjiid vuoigatvuođa oažžut áddehahtti informašuvnna ja vuoigatvuođa informerejuvvon miehtamii, ja fágalaččat dohkálaš doaimmaid giellagáibádusaid.
+	#$ Muhto Ipmil lea seammá sániin vurken dáláš almmiid ja eatnama duopmobeaivvi dola várás, go ipmilmeahttumat duššaduvvojit.
+
+#!! !BODY as an instrument
+
+SELECT:Wr2690 (Sg Com) (*-1 VERBAL-ACTIVITY-V BARRIER VFIN OR LOC-HEAD)(0 (Pl Loc) + BODY);
+	#$ Lávdde luhtte juiget olbmot olles čoddagiin.
+  # Idea: Body as an instrument to perform verbal activity.
+  
+SELECT:Wr2691 (Sg Com) (*-1 VERBAL-ACTIVITY-V BARRIER VFIN OR LOC-HEAD)(0 (Pl Loc) + HUMAN);
+	#$ Terje hárve hupmá mediain, muhto son áinnas hupmá sápmelašvuođas birra.
+  
+	# Disambiguation based upon idiosyncratic V NP combinations has been removed to the locative-chapter
+	#   	 
+  	 
+#!! !Disambiguation based upon verb valency
+
+SELECT:Wr2692 (Pl Loc) (*-1 LOC-V BARRIER SV-BOUNDARY OR COM-HEAD LINK NOT 0 Adv)(NEGATE *-1 CC BARRIER S-BOUNDARY LINK -1 LOC-V)(NEGATE 0 Num OR Pron LINK *1C (N Com) BARRIER NOT-NPMOD)(0 Com OR Px);
+	#$ Juohke dáhpáhusas ferte áibbas boastut leat beroškeahttá sámiid riekteáddejumiin.
+	#$ Rakel čierru mánáidis dihtii ii ge beroš jeđđehusas.
+
+SELECT:Wr2693 Loc IF (NEGATE 0 DAT-PRON OR Actio)(NEGATE *1C Com BARRIER NOT-NPMOD)(NEGATE 0 (Coll Nom) LINK 1 (Sg Com))(NEGATE 0 (Sg Com) LINK -1 (Coll Nom) OR ("buorre" Com))(*1 LOC-V BARRIER SV-BOUNDARY);
+	#$ Maiddái sámi fágabirrasiin ja ásahusain sáhttá jearrat ráđiid.
+
+SELECT:Wr2694 Loc IF (*-1 ACC-LOC-V BARRIER NOT-NP);
+	#$ Sáhttá viežžat dieđuid divššohasa oapmahaččain. 
+	# Removed "viežžat" from ACC-LOC-V, because it can take Com: "Mun vižžen su biillain."
+	
+#!! !Event-tool-actio
+#!! Most actio can be both tool and event. 
+
+	
+#!! !PLACE-V
+
+SELECT:Wr2695 Loc (*-1 PLACE-V BARRIER SV-BOUNDARY)(0 FURNITURE);
+	#$ Ii go leat son gii čohkká beavddis?
+    # This one disambiguates between Px and locative, that's why it is so narrow
+
+REMOVE:Wr2696 (Pl Loc) (*0 PLACE-V BARRIER SV-BOUNDARY)(0 (Sg Com) LINK 0 ANIMATE OR CONCEPT OR TOOL OR ABSTR-TOOL OR EVENT-TOOL-ACTIVITY);
+	#$ ..gohčodedje maid earáid go sámesogat olbmuid, geat orro sámesiiddain.
+	#$ Gávpotbussiin olbmot dávjá fertejit čuožžut.
+  	
+SELECT:Wr2698 (Pl Loc) (*-1 ABSTR-PLACE-V BARRIER SV-BOUNDARY)(0 INSTITUTION);
+	#$ Go sápmelaččat ohcet fuolahanbálkká lagaš olbmuideaset dikšumii, de galgá gielda juolludeamis váldit vuhtii, váilugo bálvalusain giella ja kulturgelbbolašvuohta.
+  
+SELECT:Wr2699 (Pl Loc) (*-1 INDUSTRY BARRIER NOT-NPMOD)(0 GEOGRAPHICAL-PLACE);
+	#$ Guollebivdu jogain ja jávrriin.
+  
+SELECT:Wr2700 (Pl Loc) (0 HUMAN OR ORGANIZATION)(*1 SOURCE-V BARRIER SV-BOUNDARY LINK NOT 0 Adv)(NEGATE *-1 CC BARRIER S-BOUNDARY LINK -1 LOC-V);
+	#$ Guovlluid dearvvašvuođafitnodagain gáibiduvvojit dakkár rutiinnat.
+
+SELECT:Wr2701 (Pl Loc) (*-1 SOURCE-V BARRIER SV-BOUNDARY LINK NOT 0 Adv)(NEGATE *-1 CC BARRIER S-BOUNDARY LINK -1 LOC-V)(0 HUMAN OR ORGANIZATION); 
+SELECT:Wr2702 (Pl Loc) (*-1 NP-HEAD-NOM LINK 0 HUMAN OR ORGANIZATION OR (Pron Rel))(0 ORGANIZATION OR HUMAN OR EVENT LINK 0 (Sg Com) LINK NOT -1 PRON-DU)(*1 HUMAN-AGENT-V - Actio LINK NOT 1 N BARRIER S-BOUNDARY OR COMMA);
+	#$ Gielddat berrejit dearvvašvuođastašuvnnain deattuhit mánáid ja nuoraid váttisvuođaid ovddalgihtii eastadeami ja psykososiálabarggu mánáid ja nuoraid váras.
+
+SELECT:Wr2703 (Pl Loc) (*-1 HUMAN-AGENT-V - Actio LINK NOT 1 N)(0 ORGANIZATION OR EVENT LINK 0 (Sg Com) BARRIER S-BOUNDARY OR COMMA LINK NOT -1 PRON-DU);
+	#$ Departemeanta áigu ovttasbargat Sámedikkiin ja movttiidahttit gielddaid ovddidit doaimmaid, mat nannejit sámi mánáid ja nuoraid identitehta ja oktiigullevašvuođa sámi servodagain.
+  # This rules assumes that abstract activities are performed with a tool but not with the help of others in comitative case. The set of abstract-activity verbs might have to be restricted to those verbs that do have these features.
+  
+SELECT:Wr2704 (Pl Loc) IF (0 ORGANIZATION OR HUMAN OR EVENT LINK 0 (Sg Com) BARRIER S-BOUNDARY OR COMMA LINK NOT -1 PRON-DU)(*1 HUMAN-AGENT-V - Actio LINK NOT 1 N);
+  
+SELECT:Wr2705 (N Pl) IF (0 (Sg Com))(1C (Pron Rel Pl));
+	#$ Áigodatbajilgovva nissoniin geat leat válljejuvvon Sámediggái 1989-2001 54 Tab.4 .
+  	
+#!! !STATE-V
+
+SELECT:Wr2706 (Pl Loc) IF (*0 STATE-V BARRIER SV-BOUNDARY)(0 (Sg Com) LINK 0 STATE OR OTHER-INDUSTRY);
+	#$ Olbmot geat ellet náitoslágan dahje guimmešvuođalágan gaskavuođain.
+	#$ Buolvvaid gaskkas leat stuora erohusat, vuorrasat let eallán vuođđoealáhusain ja dujiin.
+	
+#!!	!ILLNESS-V
+
+SELECT:Wr2708 (Pl Loc) IF (*0 ILLNESS-V BARRIER SV-BOUNDARY)(0 ILLNESS LINK NOT *1 Loc BARRIER NOT-NPMOD);
+	#$ Muhtun offisearas lei bálvaleaddji gean son anii árvvus, muhto bálvaleaddji lei buohcamin jápmindávddas.
+    # This one disambiguates between Px and locative
+
+  	
+#!!	!Periphrastic constructions
+    
+SELECT:Wr2710 (Sg Com) (*-1 ACTIVITY-A BARRIER NOT-NPMOD LINK *-1 REAL-COPULAS BARRIER S-BOUNDARY OR REAL-V)(0 ANIMATE OR TOOL);
+	#$ Mun ledjen hilbat mánáin.
 
 
 
-
-#!! !!Locative
 
 #!! !!Essive  
 #!! !!Late case rules (after other case rules have worked). 
