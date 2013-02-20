@@ -2123,43 +2123,43 @@ REMOVE:r863 Prop IF (0 COMMON-N)(0 (Prop Pl))(NEGATE 0 VGen);
 
 #!! ! Removing proper nouns that are lookalikes
 
-IFF:Dan ("Dan" Prop) (NEGATE -1 BOS OR (":") OR PUNCT) ; 
-
-REMOVE:Hui ("Hu" Ill) (1 A or Adv);
-
-REMOVE:Lassi ("Lassi" Prop) (-1 BOS) ; 
-  	#$ Lassi dutkandoarjagat sáhttet leat mielde... 
- 	#$ Lassin dasa ferte váldit vuhtii sierralágan dilálašvuođaid.
- 	#$ Lassin jorgalandoarjagii, de lea dárbu sihke...
-  	#$ Lassin leat oalle viiddis boazuguohtunguovllut.
 
 #!! * __PropVfin__ selects propernouns which can be Vfin in the beginning of a sentence
 SELECT:PropVfin Prop (0 VFIN LINK *-1 BOS BARRIER WORD)((1 VFIN + Sg3) OR (1 Pcle LINK 1 VFIN + Sg3) OR (1 CC OR COMMA LINK 1 Prop OR Pers) OR (1 CC OR COMMA LINK 1 (Pers Gen) OR Indef LINK 1 N));
  	#$ Lásse dat lei sihtan mu váldit dan.
  	#$ Máhtte ii sáhttán boahtit ovdal.
  	#$ Máhtte ja Ánne eaba sáhttán boahtit ovdal.
+
+
+LIST CONF-PROP = "Lea" "Lassi" ;
+
+#!! * __confProp, Lea, Man, Hui, Prop__ removes Props which confuces the analyser, 
  
-REMOVE:Lea ("Lea" Prop) (-1 BOS OR PUNCT)(NEGATE 1 SG3-V); 
-REMOVE:Lea ("Lea" Prop) (-1 BOS OR PUNCT OR (":"))(1 A); 
+REMOVE:confProp CONF-PROP (-1 BOS OR PUNCT OR (":"))(NEGATE 1 SG3-V); 
+  	#$ Lassi dutkandoarjagat sáhttet leat mielde... 
  	#$ Lea dušše okta Ipmil. Lea idja.  
+
+REMOVE:Lea ("Lea" Prop) (-1 BOS OR PUNCT OR (":"))(1 A); 
  	#$ Lea buolaš. 
  	#$ Son dajai: Leage gierdávaš.
  
 REMOVE:Man ("Man" Prop) (-1 BOS OR PUNCT OR (":"))(0 (V Imprt));
  	#$ De son celkkii sutnje: "Mana basadit Siloaláddos."
 
+REMOVE:Hui ("Hu" Ill) (1 A or Adv);
+#!!  * Rules for removing Prop
+
+REMOVE:Prop Prop ((0 ("profehta") OR ("vuoigŋa") OR Pron) OR (0 Adv LINK 1 go)) ;
+ 	#$ Ovdal go
+
 
 #!! !!Other popular rules?
 
-#!!  * Remove ABBR, e.g. "dii" N ABBR Nom
-REMOVE ABBR (0 Adv OR Pcle OR Pron) ;
+#!!  * __ABBR__ Removes ABBR in favour of Adv, Pcle or Pron, e.g. "dii" when there is no punctuation
+REMOVE:ABBR ABBR (0 Adv OR Pcle OR Pron) ;
 
 #!!  * __Dert__ Rule for removing Der/t Prop when there are other analysis
 REMOVE:Dert (Der/t) (0 Prop) ;
-
-#!!  * Rules for removing Prop
-REMOVE:Prop Prop ((0 ("profehta") OR ("vuoigŋa") OR Pron) OR (0 Adv LINK 1 go)) ;
- 	#$ Ovdal go
 
 
 #!! * Removes __viibmat__ 
@@ -2379,14 +2379,13 @@ SECTION
 
 #!! !!FAMILY pronouns
 
+#!! !Pron Pers 1. p.
+
 #!! * __moai__ This rule is not in use because of REMOVE:Prop
-SELECT:moai MOAI ( *1 DU1-V);   	
-	#$ Moai čilge dan ášši.
+#SELECT:moai MOAI ( *1 DU1-V);   	
+	#$ Moai čilgejetne dan ášši.
 
-
-#!! * __miiPers__
-
-#!! Left conditions
+#!! * __miiPersLeft1, miiPersLeft2, _miiPersRight__ select mii Pers 
 SELECT:miiPersLeft1 Pers (0 MII-PERS) ((-1 go LINK -1 PL1-V LINK -1 BOC) OR (-1 (V Ind Prs Pl1 Qst)) OR (-1 (V Neg Pl1))) ; 
 	#$ Eat go mii leat profehtastallan du nammii?
 	#$ Eat mii sáhte vuolgit.
@@ -2394,19 +2393,21 @@ SELECT:miiPersLeft1 Pers (0 MII-PERS) ((-1 go LINK -1 PL1-V LINK -1 BOC) OR (-1 
 SELECT:miiPersLeft2 Pers (*-1 PL1-V BARRIER NOT-ADV OR ("seammá"))(0 MII-PERS)(NEGATE 0 Rel LINK *1 SG3-V BARRIER NOT-ADV);
 	#$ Goas oinniimet mii du nelgon dahje goikan?
 
-#!! Right conditions
 SELECT:miiPersRight Pers (0 MII-PERS)((*1C Rel BARRIER WORD) OR (*1 PL1-V BARRIER S-BOUNDARY OR VFIN LINK NOT 0 Adv) OR (1 CC LINK 1 (N Nom))) ;
 	#$ .. de mii, guđet leat eatnagat, leat okta rumaš. #funker ikke pga 1C Rel
 	#$ Dasgo mii oinniimet su násti badjáneamen.
 	#$ Mii ja farisealaččat atnit borakeahttáivuođa.
 
-#!! * __donPers__
+#!! !Pron Pers 2. p.
+
+#!! * __donPers__ selecst don as Pers instead of Dem
 SELECT:donPers Pers (0 DON)((*-1 (V Sg2) BARRIER SV-BOUNDARY LINK NOT 0 Adv) OR (*1 SG2-V BARRIER PUNCT)); 
  	#$ Liikotgo don Abbai?
  	#$ Don it leat nama čállán.
 
+#!! !Pron Pers 3. p.
 
-#!! ! son ( = Pcle) 
+#!! * __sonSG3V, sonRel, goson__ select son as Pers, Rel or Pcle 
 SELECT:sonSG3V (Pron Pers Sg3 Nom) (0 ("son"))(NEGATE -1 Qst OR go) ((*-1 SG3-V BARRIER SV-BOUNDARY) OR (*1 SG3-V BARRIER N)) ; 
 	#$ Ii son liikon dohko.
 	#$ Son fertii vuolgit. 
@@ -2419,7 +2420,6 @@ SELECT:goson Pcle (NEGATE -2 CLB)(-1 Qst OR go)(0 ("son"))(1 Nom LINK NEGATE 0 R
 	
 
 #!! * __sutnje__ ( = forms of the verb "suotnjat")
-
 SELECT:sutnje (Pron Ill) (0 ("son"))((1 (Pron Rel Sg)) OR (*-1 (V Ind))); 
 	#$ Dearvvašvuođabálvalus galgá addit sutnje gii ohcá ...
 	#$ Son galgá addit sutnje dárbbašlaš dieđuid.
@@ -2428,24 +2428,20 @@ SELECT:sutnje (Pron Ill) (0 ("son"))((1 (Pron Rel Sg)) OR (*-1 (V Ind)));
 SELECT:danin (Pron Ess) (*-1 COPULAS BARRIER NOT-ADV-PCLE)(0 ("danin"))(1 EOS OR CLB);
 	#$ ...jos oapmi fierpmit leat danin,...
 
-#!! * __daidda__ (N Sg Nom or Pron Dem Pl Ill)
-SELECT:daidda Ill IF (0 ("dáidda"))((-1 NP-HEAD-NOM) OR (*1 (N Pl Ill) BARRIER NOT-NPMOD));
+#!! * __datPlIll__ selects dát Pron Dem Pl Ill
+SELECT:datPlIll Ill (0 ("dáidda"))((-1 NP-HEAD-NOM OR ("lassi")) OR (*1 (N Pl Ill) BARRIER NOT-NPMOD));
 	#$ ...ja dáidda gielaide sáhttá čállit journálaid. 
 	#$ Sus lea álgovuorus dušše guohtunvuoigatvuohta dáidda. 
+	#$ Lassin dáidda lea Sámi vuoigatvuođalávdegotti ovdaolmmoš...
 
+#!! * __daiddaVerb__ removes dáidda N Sg Nom 
 REMOVE:daiddaVerb Nom (0 ("dáidda"))((*-1 TRANS-V OR ILL-V BARRIER SV-BOUNDARY) OR (*1 ("bidjat") OR ("lasihit") BARRIER NOT-AUX-V)) ;
 	#$ ...lea čađahan iskamiid muhtun orohagain ja ávžžuhan boazologu dáidda.
 	#$ ...mat gullet dáidda 1972-konvenšuvnna mielde.
 	#$ Ferte mearridit makkár deattu dáidda galgá bidjat.
 
-SELECT:daiddaLassi Ill (-1 ("lassi"))(0 ("dáidda"));
-	#$ Lassin dáidda lea Sámi vuoigatvuođalávdegotti ovdaolmmoš...
 
-
-#!! ! dat (Pron Pers, Pron Dem, Pcle)
-
-
-#!! * dasa ( = forms of the verb "dassat"): __dasaVGen, dasaLassin__
+#!! * __dasaVGen, dasaLassin dasa,datSg3, datSg3PrfPrc__ ( = forms of the verb "dassat"): 
 
 REMOVE:dasaVGen VGen (0 Pron);
 	#$ Na muhto don it leat dasa nama čállán! 
@@ -2453,13 +2449,13 @@ REMOVE:dasaVGen VGen (0 Pron);
 SELECT:dasaLassin Ill (0 DAT-PRON)(1 ("lassi" Ess));
 	#$ Dasa lassin buvttán dás lasseargumenttaid. 
 
-#!! * __datSg3__ selects if there is no Pl3-verb, and in front of Rel Sg, and if the next word is not N 
+# selects if there is no Pl3-verb, and in front of Rel Sg, and if the next word is not N 
 SELECT:datSg3 Sg3 (NEGATE *0 PL-V BARRIER S-BOUNDARY)(0 ("dat" Sg3 Nom))(NEGATE 0 Pcle LINK -1 (N Nom) OR (Pron Nom))(NEGATE *1 (N Nom) BARRIER VFIN OR S-BOUNDARY LINK NOT 0 VFIN)(*0 SG3-V BARRIER PL-V) ;
 	#$ Dat movt sámi oahpahus lea doaibman...
 	#$ Dat orru leamen buorre fanas.
 	#$ Dat gal lei beare unnán.
 
-#!! * __datSg3PrfPrc__ selects dat in front of leamaš
+# selects dat in front of leamaš
 SELECT:datSg3PrfPrc Sg3 (NEGATE *-1 PL-V BARRIER S-BOUNDARY)(0 ("dat" Sg3 Nom))(1 ("leat" PrfPrc) LINK *1 Sg BARRIER NOT-NPMODADV) ;
 	#$ Dat leamaš hui stuorra noađđi midjiide.
 
