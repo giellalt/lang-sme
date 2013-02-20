@@ -2154,6 +2154,9 @@ REMOVE:Man ("Man" Prop) (-1 BOS OR PUNCT OR (":"))(0 (V Imprt));
 REMOVE:Hui ("Hu" Ill) (1 A or Adv);
 #!!  * Rules for removing Prop
 
+#!!  * __Dert__ Rule for removing Der/t Prop when there are other analysis
+REMOVE:Dert (Der/t) (0 Prop) ;
+
 #REMOVE:Prop Prop ((0 ("profehta") OR ("vuoigŋa") OR Pron) OR (0 Adv LINK 1 go)) ;
  	#$ Ovdal go
 
@@ -2163,8 +2166,6 @@ REMOVE:Hui ("Hu" Ill) (1 A or Adv);
 #!!  * __ABBR__ Removes ABBR in favour of Adv, Pcle or Pron, e.g. "dii" when there is no punctuation
 REMOVE:ABBR ABBR (0 Adv OR Pcle OR Pron) ;
 
-#!!  * __Dert__ Rule for removing Der/t Prop when there are other analysis
-REMOVE:Dert (Der/t) (0 Prop) ;
 
 
 #!! * Removes __viibmat__ 
@@ -2242,6 +2243,38 @@ IFF:buotSuperl ("buot" Adv) ((1 Superl) OR (-1 Acc LINK 2 Inf)) ;
  	#$ Buot buoremus lea ieš vuolgit.	
 
 #!! !Lexicalised adverbs
+
+#!! * __mannelTimeAdv__ golbma jagi maŋŋel
+SELECT:mannelTimeAdv MANNEL + Adv (-1 VAHKKU-DUR LINK -1 Num) ;
+	## Dat dáhpáhuvai golbma jagi maŋŋil.
+	#$ Logi minuvtta maŋŋel nagodii Sørøy Glimt čiekči Stig Martinsen dulbet bohtosa ovttain moalain.
+
+#!! * __AdvSTV__ váldit mielde, oahppat bajil. eará? STRICT-TV-V is too strong
+SELECT:AdvSTV1 Adv (-1 Acc LINK *-1 ("váldit") OR ("oahppat") BARRIER SV-BOUNDARY OR Acc LINK NOT -1 Acc)(0 Po LINK NOT *1 Acc BARRIER NOT-NPMOD); 	
+SELECT:AdvSTV2 Adv (-1 Acc LINK -1 (Pron Gen) LINK *-1 ("váldit") OR ("oahppat") BARRIER SV-BOUNDARY OR Acc LINK NOT -1 Acc)(0 Po LINK NOT *1 Acc BARRIER NOT-NPMOD); 	
+	#$ Váldot beatnaga mielde!
+	#$ Oahpa lávlaga bajil! 	
+	
+#!! * __cadaAdv__ if oažžut juoidá čađa
+SELECT:cadaAdv ("čađa" Adv) (*-1 ("oažžut") BARRIER REAL-V OR S-BOUNDARY);
+	#$ Mii oažžut daid áššiid čađa.
+
+
+#!! * __gaskanAdvVGen__  
+SELECT:gaskanAdvVGen ("gaskan" Adv) (1 VGen);
+ 	#$ Gaskan bora viehkalin olggos.
+
+#!! ** __miehtaV__  
+SELECT:miehtaV VFIN (NEGATE *-1 VFIN BARRIER S-BOUNDARY)(NEGATE -1 Gen LINK NOT 0 Nom)(0 ("miehtá"))(NEGATE 1 Gen LINK 0 TIME OR PLACE);
+ 	#$ Jus divššohas dasa miehtá, dahje dilálašvuohta lea nu,...
+	## Jus divššohas dasa miehtá,... 
+	
+SELECT:mannelAdv Adv ((1 TIME-UNIT + Acc LINK 1 MANNEL) OR (1 Num LINK 1 TIME-UNIT + Acc LINK 1 MANNEL));	
+
+#!! * "áigi" has many readings and needs special treatment 
+#!! ** __aigiAdv__  guokte vahku áigi
+SELECT:aigiAdv Adv IF (NEGATE -2 (Num Gen))(-1 TIME-UNIT + Acc)(0 ("áigi"));	
+	#$ Ánde Máhtte Somby Sandvik beasai guokte vahku áigi diehtit ahte son beassá vuolgit.
 
 
 #!! !Adverbs, not nouns or adjectives
@@ -3068,20 +3101,6 @@ REMOVE:KillSonPcle Pcle IF (0 ("son"));
 REMOVE:caddaN ("čađđa") (0 ("čađa") LINK 0* MOVEMENT-V BARRIER SV-BOUNDARY) ;
 	#$ Gal sii besset čađa.
 	
-#!! * __mannelTimeAdv__ golbma jagi maŋŋel
-SELECT:mannelTimeAdv MANNEL + Adv (-1 VAHKKU-DUR LINK -1 Num) ;
-	## Dat dáhpáhuvai golbma jagi maŋŋil.
-	#$ Logi minuvtta maŋŋel nagodii Sørøy Glimt čiekči Stig Martinsen dulbet bohtosa ovttain moalain.
-
-#!! * __AdvSTV__ váldit mielde, oahppat bajil. eará? STRICT-TV-V is too strong
-SELECT:AdvSTV1 Adv (-1 Acc LINK *-1 ("váldit") OR ("oahppat") BARRIER SV-BOUNDARY OR Acc LINK NOT -1 Acc)(0 Po LINK NOT *1 Acc BARRIER NOT-NPMOD); 	
-SELECT:AdvSTV2 Adv (-1 Acc LINK -1 (Pron Gen) LINK *-1 ("váldit") OR ("oahppat") BARRIER SV-BOUNDARY OR Acc LINK NOT -1 Acc)(0 Po LINK NOT *1 Acc BARRIER NOT-NPMOD); 	
-	#$ Váldot beatnaga mielde!
-	#$ Oahpa lávlaga bajil! 	
-	
-#!! * __cadaAdv__ if oažžut juoidá čađa
-SELECT:cadaAdv ("čađa" Adv) (*-1 ("oažžut") BARRIER REAL-V OR S-BOUNDARY);
-	#$ Mii oažžut daid áššiid čađa.
 
 #!! Commented out som adp-rules we don't need anymore:
 
@@ -3092,9 +3111,6 @@ SELECT:cadaAdv ("čađa" Adv) (*-1 ("oažžut") BARRIER REAL-V OR S-BOUNDARY);
 #SELECT:cadaPrTime ("čađa" Pr) ((1 ("gaska" Gen)) OR (1 Time + Gen LINK NOT -3 Time + Gen));
 	#$ Nu dáhpáhuvai čađa gaskka.
 
-#!! * __gaskanAdvVGen__  
-SELECT:gaskanAdvVGen ("gaskan" Adv) (1 VGen);
- 	#$ Gaskan bora viehkalin olggos.
 
 #!! * __geahcaiPP__ not geahččat V
 REMOVE:geahcaiPP ("geahčai") ((0 ("geahččat") LINK NOT -1 Gen) OR ((0 ("geahččat") LINK *1 Ill BARRIER NOT-NPMOD)));
@@ -3123,12 +3139,6 @@ SELECT:miehtaPr ("miehtá" Pr) (1 PLACE + Gen OR VAHKKU-DUR + Gen OR (Plc Gen)) 
  	#$ Beaivvi miehtá galget earát lohkat galle geardde viehká mearriduvvon guhkkodaga, ja galgá sáhttit árvidit galle geardde háhppeha viehkat 12 diimmus.
 	## Olbmuin bisttii luossaguolli miehtá dálvvi. 
 
-#!! ** __miehtaV__  
-SELECT:miehtaV VFIN (NEGATE *-1 VFIN BARRIER S-BOUNDARY)(NEGATE -1 Gen LINK NOT 0 Nom)(0 ("miehtá"))(NEGATE 1 Gen LINK 0 TIME OR PLACE);
- 	#$ Jus divššohas dasa miehtá, dahje dilálašvuohta lea nu,...
-	## Jus divššohas dasa miehtá,... 
-	
-SELECT:mannelAdv Adv ((1 TIME-UNIT + Acc LINK 1 MANNEL) OR (1 Num LINK 1 TIME-UNIT + Acc LINK 1 MANNEL));	
 
 #!! * "ovddas" has many readings and needs special treatment 
 #!! ** __ovddasPo__  
@@ -3153,20 +3163,12 @@ SELECT:birraPo ("birra" Po)((-1 ("máilbmi" Gen)) OR (-1 NP-HEAD-GEN LINK *-1 VE
 SELECT:birraPr ("birra" Pr)(1 ("máilbmi" Gen))  ;
 	#$ E-boasta lea hui álkes ja jođánis vuohki sáddet reivviid birra máilmmi.
 
-
-
-
 #!! * "vuostá" has many readings and needs special treatment 
 #!! ** __vuostaAdv__  váldit vuostá/vuostái
 SELECT:vuostaAdv Adv IF (-1 ("váldit"))(0 ("vuostá") OR ("vuostái"));
  	#$ Sámi servodagas váilu árbevierru váldit vuostá almmolaš diehtojuohkima dakkár hámis.
 #!! ** __vuostaPr__  váldit vuostá/vuostái	
 REMOVE:vuostaPr Pr (0 ("vuostá") OR ("vuostái"))(*-1 REAL-V BARRIER S-BOUNDARY LINK NOT 0 REAL-COPULAS) ; 
-
-#!! * "áigi" has many readings and needs special treatment 
-#!! ** __aigiAdv__  guokte vahku áigi
-SELECT:aigiAdv Adv IF (NEGATE -2 (Num Gen))(-1 TIME-UNIT + Acc)(0 ("áigi"));	
-	#$ Ánde Máhtte Somby Sandvik beasai guokte vahku áigi diehtit ahte son beassá vuolgit.
 
 
 #!!	!Adpositions that take modifiers
@@ -5381,8 +5383,7 @@ SELECT:NDr2373 Nom IF (*-1C PL3-V BARRIER NOT-ADV-PCLE OR MO LINK *-1 BOC BARRIE
 	## Mus báhce moadde girjji logakeahttá.
 	## Go sotnabeaivi šattai, de čuoigaledje máŋggas várrái.
 
-	## ...de bohte
- muhtun viisát nuortan Jerusalemii.
+	## ...de bohte muhtun viisát nuortan Jerusalemii.
 
 SELECT:NDr2375 Nom IF (*-1 COMMA BARRIER NOT-NPMOD LINK NOT *-1 MAIN-V BARRIER S-BOUNDARY)(NEGATE *1 VFIN BARRIER S-BOUNDARY)(NEGATE 0 Adv OR ("leat" PrfPrc) OR Imprt OR Po OR VFIN)(NEGATE 0 Actio LINK 1 ("veara"));
 	## Dá dat leat, 350 ruvnno.
