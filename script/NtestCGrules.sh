@@ -18,14 +18,16 @@ perl $GTHOME/gt/script/sort-cg-cohort.pl $GTHOME/gt/sme/dev/cleantestkorpus.dis.
 diff -w $GTHOME/gt/sme/dev/sortedtestkorpus $GTHOME/gt/sme/dev/sortedtestdis > $GTHOME/gt/sme/dev/testCG_result.txt
 
 # Antall ulike linjer:
-echo "Antall disambiguert annerledes enn gullstandard:"
-cat dev/testCG_result.txt | grep '^<' | wc -l
-echo "Hva er disambiguert annerledes enn gullstandard:"
-cat dev/testCG_result.txt | grep '^<' | perl -pe 's/(TV|IV|G3|V\*|V\*\*) //' | cut -d '"' -f3 | rev | awk -F' ' '{print $1" "$2}' | rev | sort | uniq -c | sort -nr | see
-echo "Antall ikke disambiguert eller uriktig disambiguert:"
-cat dev/testCG_result.txt | grep '^>' | wc -l
-echo "Hva er ikke disambiguert pluss eller disambiguert:"
-cat dev/testCG_result.txt | grep '^>' | perl -pe 's/(TV|IV|G3|V\*|V\*\*) //' | cut -d '"' -f3 | rev | awk -F' ' '{print $1" "$2}' | rev | sort | uniq -c | sort -nr | see
+echo "Antall disambiguert annerledes enn gullstandard:" > NtestCG.txt
+cat dev/testCG_result.txt | grep '^<' | wc -l >> NtestCG.txt
+echo "Antall ikke disambiguert eller uriktig disambiguert:" >> NtestCG.txt
+cat dev/testCG_result.txt | grep '^>' | wc -l >> NtestCG.txt
+echo "Hva er disambiguert annerledes enn gullstandard:" >> NtestCG.txt
+cat dev/testCG_result.txt | grep '^<' | perl -pe 's/(TV|IV|G3|V\*|V\*\*) //' | cut -d '"' -f3 | rev | awk -F' ' '{print $1" "$2}' | rev | sort | uniq -c | sort -nr >> NtestCG.txt
+echo "Hva er ikke disambiguert pluss eller disambiguert:" >> NtestCG.txt
+cat dev/testCG_result.txt | grep '^>' | perl -pe 's/(TV|IV|G3|V\*|V\*\*) //' | cut -d '"' -f3 | rev | awk -F' ' '{print $1" "$2}' | rev | sort | uniq -c | sort -nr >> NtestCG.txt
+see NtestCG.txt
+
 # De ulike linjene:
 #diff -w $GTHOME/gt/sme/dev/sortedtestkorpus $GTHOME/gt/sme/dev/sortedtestdis > $GTHOME/gt/sme/dev/testCG_result.txt
 #see $GTHOME/gt/sme/dev/testCG_result.txt
