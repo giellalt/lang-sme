@@ -2138,7 +2138,7 @@ SELECT:PropVfin Prop (0 VFIN LINK *-1 BOS BARRIER WORD)((1 VFIN + Sg3) OR (1 Pcl
 
 LIST CONF-PROP = "Lea" "Lassi" "Dan" ;
 
-#!! * __confProp, Lea, Man, Hui, Prop__ removes Props which confuces the analyser, 
+#!! * __confProp, Lea, Man, Hui, Mo, Prop__ removes Props which confuces the analyser, 
  
 SELECT:confProp CONF-PROP + Attr - ("Lea") (-1 BOS OR PUNCT OR (":"))(*1 Sur OR Mal OR Fem BARRIER REAL-WORD-NOT-ABBR) ;
 	#$ Dan Robert Larsen 
@@ -2154,10 +2154,13 @@ REMOVE:Man ("Man" Prop) (-1 BOS OR PUNCT OR (":"))(0 (V Imprt));
 REMOVE:Hui ("Hu" Ill) (1 A or Adv);
 #!!  * Rules for removing Prop
 
+REMOVE:Mo Prop (0 ("moai"));
+
+
 #!!  * __Dert__ Rule for removing Der/t Prop when there are other analysis
 REMOVE:Dert (Der/t) (0 Prop) ;
 
-#REMOVE:Prop Prop ((0 ("profehta") OR ("vuoigŋa") OR Pron) OR (0 Adv LINK 1 go)) ;
+REMOVE:Prop Prop ((0 ("profehta") OR ("vuoigŋa") OR Pron) OR (0 Adv LINK 1 go)) ;
  	#$ Ovdal go
 
 
@@ -3616,7 +3619,14 @@ REMOVE (@X) ;
 
 #!! !!!PRONOUNS
 
+#!! !Plural?
+
+#!! * __PlSg3V__ removes plural in front of Sg3 verb
+REMOVE:PlSg3V NP-HEAD-PL-NOM (0 (Inf) OR NP-HEAD-SG-NOM)(1C SG3-V);
+	## Dát lei deháleamos ágga.
+
 #!! !!Interrogative and relative pronouns
+
 
 #!! * __Interr__ selects interrogative pronouns in questions
 
@@ -3653,6 +3663,10 @@ SELECT:RelPl (Rel Pl) ((-1 NP-HEAD-PL LINK NOT 0 NP-HEAD-SG) OR (-1 NP-HEAD-SG L
 #!! * __RelPl__ removes Rel
 REMOVE:RelPl (Rel Pl) (NEGATE *-1 (N Pl) OR NOT-SG-PRON BARRIER N OR Pron)(NEGATE *-1 N LINK *-1 Num OR CC BARRIER V)(0 (Rel Sg));
 	#$ Lávvui gullá maid uvssot.
+
+REMOVE:miiPl Pl (*-1 BOC-PUNCT OR (":" CLB) BARRIER NOT-ADV-PCLE)(0 ("mii" Pron Acc) LINK 0 Rel OR Interr);
+	## Maid don doaivvut, mon gielistan?
+
 
 #!! !!Emphatic ieš     
 
@@ -5659,8 +5673,8 @@ SELECT:WComAnimateL (Sg Com) (*-1 ANIMATE BARRIER NOT-NPMOD LINK 0 Nom OR Gen)(0
 
 
 #!! * __LocfuolaL, LocfuolaR__ selecst Pl Loc: Son atná fuola dávviriin.
-SELECT:WLocfuolaL (Pl Loc) IF (*-1 ("atnit") BARRIER SV-BOUNDARY LINK *1 ("fuolla" Acc) BARRIER NOT-ADV)(0 (Sg Com)); 
-SELECT:WLocfuolaR (Pl Loc) IF (0 (Sg Com))(*1 ("atnit") BARRIER SV-BOUNDARY LINK *1 ("fuolla" Acc) BARRIER NOT-ADV);
+SELECT:WLocfuolaL- (Pl Loc) IF (*-1 ("atnit") BARRIER SV-BOUNDARY LINK *1 ("fuolla" Acc) BARRIER NOT-ADV)(0 (Sg Com)); 
+SELECT:WLocfuolaR- (Pl Loc) IF (0 (Sg Com))(*1 ("atnit") BARRIER SV-BOUNDARY LINK *1 ("fuolla" Acc) BARRIER NOT-ADV);
 	#$ Son atná fuola dávviriin.
 
 
@@ -5703,7 +5717,7 @@ SELECT:WComVOktiiL (Sg Com) (*-2 OKTII-V OR COM-V)(*-1 ("oktii"))(0 N BARRIER Lo
 	#$ Mii heive bures oktii ránes datneláiggiin.
   # we have to think about a barrier, another Loc to the right for example
   
-SELECT:WComVOktiiR (Sg Com) (*1 OKTII-V)(*2 ("oktii") BARRIER S-BOUNDARY)(NEGATE *3 Com BARRIER S-BOUNDARY);
+SELECT:WComVOktiiR- (Sg Com) (*1 OKTII-V)(*2 ("oktii") BARRIER S-BOUNDARY)(NEGATE *3 Com BARRIER S-BOUNDARY);
   
 #!! !tools (concrete and abstract)
 
@@ -5717,11 +5731,11 @@ SELECT:WComTool2 (Sg Com) + TOOL (*1 ACTIVITY-V OR MOVEMENT-V OR PLACE-V BARRIER
 SELECT:WComToolCoord (Sg Com) + TOOL (1 CC LINK *1 Com BARRIER NOT-NPMODADV)(*1 ACTIVITY-V OR MOVEMENT-V);
 	#$ Mon in leat dugo Sivvar - mii láve bissuin ja beatnagiin mannat dugo livččii dáčča.
   
-SELECT:WComHuman (Sg Com) (*-1 NP-HEAD-NOM + HUMAN BARRIER S-BOUNDARY)(0 ABSTR-TOOL OR SATNI)(*1 HUMAN-AGENT-V);
+SELECT:WComHuman- (Sg Com) (*-1 NP-HEAD-NOM + HUMAN BARRIER S-BOUNDARY)(0 ABSTR-TOOL OR SATNI)(*1 HUMAN-AGENT-V);
 
 #!! !BODY as an instrument
 
-SELECT:WComBodyVerbalV (Sg Com) + BODY (*-1 VERBAL-ACTIVITY-V BARRIER VFIN OR LOC-HEAD)(0 (Pl Loc));
+SELECT:WComBodyVerbalV- (Sg Com) + BODY (*-1 VERBAL-ACTIVITY-V BARRIER VFIN OR LOC-HEAD)(0 (Pl Loc));
   # Idea: Body as an instrument to perform verbal activity.
   
 SELECT:WComHumanVerbalV (Sg Com) + HUMAN (*-1 VERBAL-ACTIVITY-V BARRIER VFIN OR LOC-HEAD)(0 (Pl Loc));
@@ -5759,7 +5773,7 @@ SELECT:WLocInstitution (Pl Loc) (*-1 ABSTR-PLACE-V BARRIER SV-BOUNDARY)(0 INSTIT
 SELECT:WLocPlaceIndustry (Pl Loc) (*-1 INDUSTRY BARRIER NOT-NPMOD)(0 GEOGRAPHICAL-PLACE);
 	#$ Guollebivdu jogain ja jávrriin.
   
-SELECT:WLocSourceVR (Pl Loc) (0 HUMAN OR ORGANIZATION)(*1 SOURCE-V BARRIER SV-BOUNDARY LINK NOT 0 Adv)(NEGATE *-1 CC BARRIER S-BOUNDARY LINK -1 LOC-V);
+SELECT:WLocSourceVR- (Pl Loc) (0 HUMAN OR ORGANIZATION)(*1 SOURCE-V BARRIER SV-BOUNDARY LINK NOT 0 Adv)(NEGATE *-1 CC BARRIER S-BOUNDARY LINK -1 LOC-V);
 
 SELECT:WLocSourceVL (Pl Loc) (*-1 SOURCE-V BARRIER SV-BOUNDARY LINK NOT 0 Adv)(NEGATE *-1 CC BARRIER S-BOUNDARY LINK -1 LOC-V)(0 HUMAN OR ORGANIZATION); 
 SELECT:WLocHumanAgVR (Pl Loc) (*-1 NP-HEAD-NOM LINK 0 HUMAN OR ORGANIZATION OR (Pron Rel))(0 ORGANIZATION OR HUMAN OR EVENT LINK 0 (Sg Com) LINK NOT -1 PRON-DU)(*1 HUMAN-AGENT-V - Actio LINK NOT 1 N BARRIER S-BOUNDARY OR COMMA);
@@ -5790,21 +5804,21 @@ SELECT:WComOaivil (Sg Com) (*-1 ("oaivil" Loc) BARRIER NOT-NPMOD LINK -1 ("okta"
    
 #!!	!Verbal-activity-verbs
 
-SELECT:WComVerbalactV (Sg Com) + SATNI (*0 VERBAL-ACTIVITY-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf)(0 (Pl Loc));   
+SELECT:WComVerbalactV- (Sg Com) + SATNI (*0 VERBAL-ACTIVITY-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf)(0 (Pl Loc));   
     
     
 SELECT:WLocVerbalactV (Pl Loc) (*-1 VERBAL-ACTIVITY-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf)(0 Com LINK 0 EVENT OR EVENT-TOOL-ACTIVITY);
   
 SELECT:WLocText (Pl Loc) (NEGATE *-1 COM-HEAD BARRIER NOT-NPMOD)(0 TEXT OR ABSTR-TEXT)(*0 VERBAL-ACTIVITY-V LINK 0 Der/Pass BARRIER NOT-NPMOD);
   	
-SELECT:WLocWeather (Pl Loc) (*-1 PERCEPTION-V OR VERBAL-ACTIVITY-V BARRIER SV-BOUNDARY)(0 WEATHER-ENTITY OR SITUATION);
+SELECT:WLocWeather- (Pl Loc) (*-1 PERCEPTION-V OR VERBAL-ACTIVITY-V BARRIER SV-BOUNDARY)(0 WEATHER-ENTITY OR SITUATION);
 
 #!! !Movement-verbs
 
 SELECT:WComboahtitR (Sg Com) IF (*-1 ANIMATE OR PPRON-NOM-NOT-DAT BARRIER S-BOUNDARY LINK *1 ("boahtit") LINK 0 FMAINV OR Inf)(0 (Pl Loc) LINK NOT 0 PLACE OR ABSTR-PLACE OR EVENT-TOOL-ACTIVITY);
 	#$ Son bođii biillain. 
 	#$ Son bođii politihkkariin.
-SELECT:WComboahtitV (Sg Com) (0 (Pl Loc) LINK NOT 0 PLACE OR ABSTR-PLACE OR EVENT-TOOL-ACTIVITY)(*1 ANIMATE OR PPRON-NOM-NOT-DAT BARRIER NOT-NPMOD LINK *1 ("boahtit") BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf);
+SELECT:WComboahtitV- (Sg Com) (0 (Pl Loc) LINK NOT 0 PLACE OR ABSTR-PLACE OR EVENT-TOOL-ACTIVITY)(*1 ANIMATE OR PPRON-NOM-NOT-DAT BARRIER NOT-NPMOD LINK *1 ("boahtit") BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf);
 
 SELECT:WComMovemVL (Sg Com) (*-1 MOVEMENT-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf LINK NOT 0 ("boahtit"))(0 (Pl Loc) LINK NOT 0 PLACE OR ABSTR-PLACE OR EVENT-TOOL-ACTIVITY);
 	#$ Sáhttá viežžat dieđuid divššohasa oapmahaččain. 
@@ -5813,7 +5827,7 @@ SELECT:WComMovemVL (Sg Com) (*-1 MOVEMENT-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR
 SELECT:WComMovemVR (Sg Com) (0 (Pl Loc) LINK NOT 0 PLACE OR ABSTR-PLACE OR EVENT-TOOL-ACTIVITY)(*1 MOVEMENT-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf LINK NOT 0 ("boahtit"));
 
 SELECT:WLocMovemVL (Pl Loc) IF (*-1 ANIMATE OR PPRON-NOM-NOT-DAT BARRIER S-BOUNDARY LINK *-1 MOVEMENT-V LINK 0 FMAINV OR Inf)(0 (Pl Loc) LINK 0 PLACE OR ABSTR-PLACE OR EVENT-TOOL-ACTIVITY);
-SELECT:WWLocMovemVR (Pl Loc) (0 (Pl Loc) LINK 0 PLACE OR ABSTR-PLACE OR EVENT-TOOL-ACTIVITY)(*1 ANIMATE OR PPRON-NOM-NOT-DAT BARRIER NOT-NPMOD LINK *1 MOVEMENT-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf LINK *1 VEHICLE OR ANIMATE BARRIER S-BOUNDARY);  	
+SELECT:WWLocMovemVR- (Pl Loc) (0 (Pl Loc) LINK 0 PLACE OR ABSTR-PLACE OR EVENT-TOOL-ACTIVITY)(*1 ANIMATE OR PPRON-NOM-NOT-DAT BARRIER NOT-NPMOD LINK *1 MOVEMENT-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf LINK *1 VEHICLE OR ANIMATE BARRIER S-BOUNDARY);  	
 	 #$ Suovva bođii biillain.
 
 SELECT:WLocboahtitVL (Pl Loc) (*-1 NP-HEAD-NOM BARRIER S-BOUNDARY LINK 0 CONCEPT LINK 1 ("boahtit"))(0 (Pl Loc) LINK NOT 0 TOOL OR ABSTR-TOOL);
@@ -5844,7 +5858,7 @@ SELECT:WComBody (Sg Com) + BODY (*0 BODY-ACTIVITY-V OR VERBAL-ACTIVITY-V BARRIER
     # They belong to the dynamic-verbs, but they can also have BODY as a tool.    
 
 #!! * FROM-HUMAN-LOC-VEH-V
-SELECT:ComVeh (Sg Com) + VEHICLE (*0 VEHICLE-TOOL-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf)(0 (Pl Loc));
+SELECT:ComVeh- (Sg Com) + VEHICLE (*0 VEHICLE-TOOL-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf)(0 (Pl Loc));
 	#$ Sii bukte girjjiid biillain.
 
 #!! * Abstract-entity-com-verbs
@@ -5859,11 +5873,11 @@ SELECT:WComOnlyPlaceV (Sg Com) (0 (Pl Loc) LINK NOT 0 PLACE OR ORGANIZATION OR H
 
 
 #!! !HUMAN-LOC-V 
-SELECT:WLOCsatni (Pl Loc) (0 (Sg Com) + SATNI)(*1 HUMAN-LOC-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf LINK *1 WORD-PARTS OR SINGLE-SOUND LINK 0 Acc OR Nom BARRIER SV-BOUNDARY);
+SELECT:WLOCsatni- (Pl Loc) (0 (Sg Com) + SATNI)(*1 HUMAN-LOC-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf LINK *1 WORD-PARTS OR SINGLE-SOUND LINK 0 Acc OR Nom BARRIER SV-BOUNDARY);
 	#$ Váldonjuolggadus lea ahte báikenamain dábálaččat eat ane goallossázu.
 	#$ Movt báikenamain geavahuvvo goallossáhcu čilgejuvvo 2.1.5 čuoggás. 
 
-SELECT:WLOCwordparts (Pl Loc) (*0 HUMAN-LOC-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf LINK *1 WORD-PARTS OR SINGLE-SOUND LINK 0 Acc OR Nom BARRIER SV-BOUNDARY)(0 (Sg Com) LINK 0 CONCEPT OR HUMAN OR SATNI);
+SELECT:WLOCwordparts- (Pl Loc) (*0 HUMAN-LOC-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf LINK *1 WORD-PARTS OR SINGLE-SOUND LINK 0 Acc OR Nom BARRIER SV-BOUNDARY)(0 (Sg Com) LINK 0 CONCEPT OR HUMAN OR SATNI);
 	#$ Atnit stuora bustáva lágaid namain:
 	#$ Gravismearka adnojuvvo sámegielas dušše muhtun vierronamain.
     # Have to preceede the next Sg Com rules because they are an exception to it with respect to SATNI
@@ -5876,7 +5890,7 @@ SELECT:WComHumanLocV (Sg Com) (0 (Pl Loc) LINK 0 CONCEPT OR HUMAN OR SATNI)(*0 H
   	
 #!!	!COPULAS 
 SELECT:WComCop (Sg Com) (*-1 COPULAS BARRIER SV-BOUNDARY LINK 0 PrfPrc OR Inf OR ConNeg OR VFIN)(0 (Pl Loc) LINK 0 ANIMATE OR CONCEPT LINK *-1 A - Ord BARRIER NP-BOUNDARY);
-SELECT:r2761 (Sg Com) IF (0 (Pl Loc) LINK 0 ANIMATE OR CONCEPT LINK *-1 A BARRIER NP-BOUNDARY)(*1 COPULAS LINK 0 Inf OR ConNeg OR VFIN BARRIER S-BOUNDARY LINK NEGATE *1 REAL-V LINK NEGATE 0 VFIN LINK NOT 0 COPULAS);
+SELECT:WComCop (Sg Com)(0 (Pl Loc) LINK 0 ANIMATE OR CONCEPT LINK *-1 A BARRIER NP-BOUNDARY)(*1 COPULAS LINK 0 Inf OR ConNeg OR VFIN BARRIER S-BOUNDARY LINK NEGATE *1 REAL-V LINK NEGATE 0 VFIN LINK NOT 0 COPULAS);
  	#$ Go dii ehpet leat šiega leamaš ealibiin.
 	#$ Go dii lehpet šiega leamaš ealibiin.
 	#$ Go dii lehpet šiega ealibiin.
@@ -5894,7 +5908,7 @@ SELECT:WCombivvat (Sg Com) (*0 ("bivvat") BARRIER SV-BOUNDARY LINK 0 FMAINV OR I
 
 #!! * ealihit
 SELECT:WComealihitL (Sg Com) (-1 NP-HEAD-ACC LINK *-1 ("ealihit") BARRIER W-NOT-ACC-GEN)(0 (Pl Loc));	
-SELECT:WComealihitR (Sg Com) (0 (Der/NomAct Pl Loc))(1 NP-HEAD-NOM LINK 1 ("ealihit"));	
+SELECT:WComealihitR- (Sg Com) (0 (Der/NomAct Pl Loc))(1 NP-HEAD-NOM LINK 1 ("ealihit"));	
 	#$ Sii ealihit sin heakkaset vuodjimiin ja geasehemiin.
 	
 #!! * ipmirdit / áddet
@@ -5903,18 +5917,18 @@ SELECT:WComipmirdit (Sg Com) (0 (Pl Loc Foc/ge))(1 ("ipmirdit") OR ("áddet") OR
 	# It should be possible to claim that 0 has to be Der/NomAct , but the tags are not there because of lexical baseform:
   
 #!! * ruhtadit
-SELECT:WComcruhta1 Com (0 ("ruhta" Com) LINK NOT *-1 HEADOFPARTS BARRIER S-BOUNDARY)(*1 ("ruhtadit"));
-SELECT:WComruhta2 Com (0 HEADOFPARTS LINK 0 Com LINK *1 ("ruhta" Loc) BARRIER S-BOUNDARY)(*1 ("ruhtadit"));
+SELECT:WComcruhta1- Com (0 ("ruhta" Com) LINK NOT *-1 HEADOFPARTS BARRIER S-BOUNDARY)(*1 ("ruhtadit"));
+SELECT:WComruhta2- Com (0 HEADOFPARTS LINK 0 Com LINK *1 ("ruhta" Loc) BARRIER S-BOUNDARY)(*1 ("ruhtadit"));
   	#$ Osiin gelbbolašvuođaguovddážiidda juolluduvvon ruđain sáhttá maid ruhtadit sadjásašgoluid hospiterema oktavuođas dahje lassigoluid, mat Kárášjogas / Leavnnjas šaddet joatkkaoahpus.
   
  
 #!! * suokkardit and čielggadit
-SELECT:WComsuohkkardit (Sg Com) (*0 ("suokkardit") OR ("čielggadit") BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf)(0 (Pl Loc) LINK 0 ACTOR);
+SELECT:WComsuohkkardit- (Sg Com) (*0 ("suokkardit") OR ("čielggadit") BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf)(0 (Pl Loc) LINK 0 ACTOR);
   	##$SDD áigu suokkardit Sámedikkiin, sáhttágo dán plána doaimmaid čađaheami delegeret Helse Nordii.
      
    
 #!! * vástidit 
-SELECT:WLocvastidit1 (Pl Loc) IF (*-1 ("vástidit") BARRIER NOT-NPMOD LINK 0 FMAINV OR Inf LINK *1 Ill BARRIER NOT-NPMOD)(0 (Sg Com));
+SELECT:WLocvastidit1- (Pl Loc) IF (*-1 ("vástidit") BARRIER NOT-NPMOD LINK 0 FMAINV OR Inf LINK *1 Ill BARRIER NOT-NPMOD)(0 (Sg Com));
 SELECT:WLocvastidit2 (Pl Loc) IF (*-1 ("vástidit") BARRIER NOT-NPMOD LINK 0 FMAINV OR Inf)(0 (Sg Com) LINK *1 Ill BARRIER NOT-NPMOD);
   	## SDD lea nammadan guovlluid dearvvašvuođafitnodagaid stivrraid, mat vástidit doaimmaineaset dušše stáhtii, mii daid eaiggáduššá.
     
@@ -5945,9 +5959,9 @@ SELECT:WComCoord Com (*-1 CRD2 BARRIER NOT-NPMOD LINK *-1C Com BARRIER WORD);
 	# ================================================================
  # The idea is to let the other rules work first, and then let the coordination follow suit.
 
-SELECT:WLocCoord6 Loc (*-1C Loc LINK *1 Rel BARRIER Com OR S-BOUNDARY)(0 Com LINK *-1 CRD2 BARRIER NOT-NPMOD);
+SELECT:WLocCoord6- Loc (*-1C Loc LINK *1 Rel BARRIER Com OR S-BOUNDARY)(0 Com LINK *-1 CRD2 BARRIER NOT-NPMOD);
 
-SELECT:WComCoord1 (Sg Com) IF (*-1 CRD2 BARRIER NOT-NPMOD LINK -1 Com LINK NOT 0 Loc);
+SELECT:WComCoord1- (Sg Com) IF (*-1 CRD2 BARRIER NOT-NPMOD LINK -1 Com LINK NOT 0 Loc);
 	## Ii lean dárbu dábálaš eanavuovdimii, oktan opmodatregistreremiin ja čuoldimiin.
 
 SELECT:WComCoord2 (Sg Com) IF (1 CRD2)(*2 Com BARRIER NOT-NPMOD LINK NOT 0 Loc);
