@@ -18,16 +18,16 @@ perl $GTHOME/gt/script/sort-cg-cohort.pl $GTHOME/gt/sme/dev/cleantestkorpus.dis.
 diff -w $GTHOME/gt/sme/dev/sortedtestkorpus $GTHOME/gt/sme/dev/sortedtestdis > $GTHOME/gt/sme/dev/testCG_result.txt
 
 # Antall ulike linjer:
-echo "Antall disambiguert annerledes enn gullstandard:" > NtestCG.txt
-cat dev/testCG_result.txt | grep '^<' | wc -l >> NtestCG.txt
-echo "Antall ikke disambiguert eller uriktig disambiguert:" >> NtestCG.txt
-cat dev/testCG_result.txt | grep '^>' | wc -l >> NtestCG.txt
-echo "Dette inneholder gullstandarden som er blitt borte i den nye analysen:" >> NtestCG.txt
-cat dev/testCG_result.txt | grep '^<' | perl -pe 's/(TV|IV|G3|V\*|V\*\*) //' | cut -d '"' -f3 | rev | awk -F' ' '{print $1" "$2}' | rev | sort | uniq -c | sort -nr >> NtestCG.txt
-echo "Dette inneholder den nye analysen som ikke finnes i gullstandarden:" >> NtestCG.txt
-cat dev/testCG_result.txt | grep '^>' | perl -pe 's/(TV|IV|G3|V\*|V\*\*) //' | cut -d '"' -f3 | rev | awk -F' ' '{print $1" "$2}' | rev | sort | uniq -c | sort -nr >> NtestCG.txt
-see NtestCG.txt
+echo "Antall disambiguert annerledes enn gullstandard:" > dev/NtestCG.txt
+cat dev/testCG_result.txt | grep '^<' | wc -l >> dev/NtestCG.txt
+echo "Antall ikke disambiguert eller uriktig disambiguert:" >> dev/NtestCG.txt
+cat dev/testCG_result.txt | grep '^>' | wc -l >> dev/NtestCG.txt
+echo " " >> dev/NtestCG.txt
+echo "Gullstandarden inneholder analyser som ikke finnes i den nye analysen:" >> dev/NtestCG.txt
+cat dev/testCG_result.txt | grep '^<' | perl -pe 's/(TV|IV|G3|V\*|V\*\*) //' | cut -d '"' -f3 | rev | awk -F' ' '{print $1" "$2}' | rev | sort | uniq -c | sort -nr >> dev/NtestCG.txt
+echo " " >> dev/NtestCG.txt
+echo "Den nye analysen inneholder analyser som ikke finnes i gullstandarden:" >> dev/NtestCG.txt
+cat dev/testCG_result.txt | grep '^>' | perl -pe 's/(TV|IV|G3|V\*|V\*\*) //' | cut -d '"' -f3 | rev | awk -F' ' '{print $1" "$2}' | rev | sort | uniq -c | sort -nr >> dev/NtestCG.txt
+see dev/NtestCG.txt
 
-# De ulike linjene:
-#diff -w $GTHOME/gt/sme/dev/sortedtestkorpus $GTHOME/gt/sme/dev/sortedtestdis > $GTHOME/gt/sme/dev/testCG_result.txt
-#see $GTHOME/gt/sme/dev/testCG_result.txt
+
