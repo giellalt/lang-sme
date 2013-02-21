@@ -464,6 +464,7 @@ LIST ADVLCASE = Ill Loc Com Ess ;
 # Ess - Ess
 
 LIST CASE-HALFAGREEMENT = Ill (Sg Loc) (Pl Com) Ess ;
+LIST CASE-AGREEMENT = Nom Acc Gen (Pl Ill) Loc Com Ess ;
 LIST CASE = Nom Acc Gen Ill Loc Com Ess ;
 
 SET NOT-NOM = CASE - Nom ;
@@ -946,7 +947,7 @@ LIST ABSTR-ENTITY-COM-V = "investeret" "lihkosmuvvat" "lihkosnuvvat" "lihkostuvv
 
     # According to the rules choosing Loc or Com, these verbs do not select TOOL, ABSTR-TOOL, CONCEPT, ABSTR-ENTITY and ACTOR in (Pl Loc).
 
-LIST ONLY-PLACE-LOC-V = "áimmahuššat" "álggahit" "bártidit" "bargat" "dahkat" "veahkehit" ;
+LIST ONLY-PLACE-LOC-V = "álggahit" "bártidit" "bargat" "dahkat" "veahkehit" ;
 
     # According to the rules choosing Loc or Com, these verbs only select (Pl Loc) if PLACE or ORGANIZATION.
 
@@ -1130,7 +1131,7 @@ SET PRE-APP   = COMMA OR PUNCT-LEFT OR PRE-NP-HEAD ;
 
 
 
-#!! The set __NOT-NPOD__ is used to find barriers between NPs.
+#!! The set __NOT-NPMOD__ is used to find barriers between NPs.
 #!! Typical usage: ... (*1 N BARRIER NPT-NPMOD) ...
 #!! meaning: Scan to the first noun, ignoring anything that can be
 #!! part of the noun phrase of that noun (i.e., "scan to the next NP head")
@@ -1362,7 +1363,7 @@ LIST PL-N = "áiru" "beaivváščalbmeláset" "beassážat" "biddu" "čalbmelás
  
  # Nominals that appear with plural numerals.
  
-LIST SG-WORD = ("addit" Der/upmi) "almmolašvuohta" "anistupmi" "arvi" "álgu" "áŋgirvuohta" "ávvu" "ballu" "bealli" "boazodoallu" "borakeahttáivuohta" ("buorredáhtolaš" Der/vuohta) "doaivu" "dárogiella" "Finnmárkoláhka" "fuolalašvuohta" "gaskkamuddu" "gávvilvuohta" ("geargat" Der/vuohta) "geavaheapmi" "gelbbolašvuohta" "giellageavaheapmi" "giellapolitihkka" ("giitevaš" Der/vuohta) ("gudnejahttit" Der/NomAct) "fápmu"  ("guovttegielalaš" Der/vuohta) "hearvásvuohta" "illu" "ipmárdus" "isitvuohta" ("juotna" Der/laš Der/vuohta) "kulturduogáš" "kulturgelbbolašvuohta" "loahppa" ("máŋggabealat" Der/vuohta) "mielki" "miella" "moraš" "muohta" "musihkka" "oamedovdu" "olahahttivuohta" "ovddasvástádus" "ovttasbargu" "ovttadássásašvuohta" "politihkka" "ráffi" "ráfi" "ráhkisvuohta" "riska" "roahkkatvuohta" "sámegiella" "sámegielmáhttu" "sámekultuvra" "unnitlogupolitihkka" "ustitvuohta" ("vanhurskkis" Der/vuohta) "vásáhusduogáš" ("veahkaválddálaš" Der/vuohta) ("vuordnut" Der/NomAct)   ;
+LIST SG-WORD = ("addit" Der/upmi) "almmolašvuohta" "anistupmi" "arvi" "álgu" "áŋgirvuohta" "ávvu" "ballu" "bealli" "boazodoallu" "borakeahttáivuohta" ("buorredáhtolaš" Der/vuohta) "doaivu" "dárogiella" "Finnmárkoláhka" "fuolalašvuohta" "gaskkamuddu" "gávvilvuohta" ("geargat" Der/vuohta) "geavaheapmi" "gelbbolašvuohta" "giellageavaheapmi" "giellapolitihkka" ("giitevaš" Der/vuohta) ("gudnejahttit" Der/NomAct) "fápmu"  ("guovttegielalaš" Der/vuohta) "hearvásvuohta" "iešdovdu" "illu" "ipmárdus" "isitvuohta" ("juotna" Der/laš Der/vuohta) "kulturduogáš" "kulturgelbbolašvuohta" "loahppa" ("máŋggabealat" Der/vuohta) "mielki" "miella" "moraš" "muohta" "musihkka" "oamedovdu" "olahahttivuohta" "ovddasvástádus" "ovttasbargu" "ovttadássásašvuohta" "politihkka" "ráffi" "ráfi" "ráhkisvuohta" "riska" "roahkkatvuohta" "sámegiella" "sámegielmáhttu" "sámekultuvra" "unnitlogupolitihkka" "ustitvuohta" ("vanhurskkis" Der/vuohta) "vásáhusduogáš" ("veahkaválddálaš" Der/vuohta) ("vuordnut" Der/NomAct)   ;
 
 # Words that are used in singular unless their plurality is stressed by words such as "goappeš", "goappašat", "earálágan", "máŋgalágan" or Num or Ord.
 
@@ -2213,6 +2214,8 @@ REMOVE:Prop Prop ((0 ("profehta") OR ("vuoigŋa") OR Pron) OR (0 Adv LINK 1 go))
 #!!  * __ABBR__ Removes ABBR in favour of Adv, Pcle or Pron, e.g. "dii" when there is no punctuation
 REMOVE:ABBR ABBR (0 Adv OR Pcle OR Pron) ;
 
+#!! 
+REMOVE ("ollit" V) (0 OLLU) ;
 
 #!! !!!ONE-COHORT DISAMBIGUATION - CYCLE 0
 
@@ -4427,6 +4430,18 @@ SELECT:BMr1756 (A Attr) IF (*-1 Neg BARRIER S-BOUNDARY OR VFIN)(*1 CONTRA BARRIE
 #Biret Merete stop
 
 #!! !!!MISC 
+
+#!! !Special rules for 'buorre' (the only adjective showing case agreement)
+
+SELECT:SeCaseAgrBuorre $$CASE-AGREEMENT + A (0 ("buorre") OR OKTA OR Dem LINK NOT 0 Superl OR Comp) (*1 $$CASE-AGREEMENT BARRIER NOT-NPMOD LINK 0 N)(NEGATE -1 Nom LINK NOT 0 Gen) ;
+SELECT:SeComAgrBuorre Com (0 ("buorre") OR OKTA OR Dem OR ("nubbi")) (*1 Com BARRIER NOT-NPMOD LINK 0 N) ;
+SELECT:SeLocAgrBuorre (Pl Loc) (0 ("buorre") OR OKTA OR Dem) (*1 (Pl Loc) BARRIER NOT-NPMOD LINK 0 N) ;
+	## Son dadjá dan nuppiin sániin.
+
+
+SELECT:SeCaseHalfagrBuorre (A Gen) IF (0 ("buorre") OR OKTA OR Dem) (*1 CASE-HALFAGREEMENT + N BARRIER NOT-NPMOD);
+
+
 #!! !!And now some rules for adverbs that modify adjectives
 
 
@@ -6020,6 +6035,30 @@ REMOVE:ND Nom (0 HUMAN + Gen)(*1 BODY BARRIER NOT-NPMOD) ;
 
 #!! !NP internal disambiguation of Com
 
+
+#!! * __PlSg-W__ removes Pl when SG-WORD
+REMOVE:PlSg-W Pl (0 SG-WORD LINK NOT 0 VFIN)(NEGATE *-1 Num OR Ord BARRIER NOT-NPMOD)(*-1 BOS LINK NOT *1 PLURALIZER);
+	#$ Go funet lea guolli goddomin, de fitná olmmoš buođu luhtte dušše oktii jándoris, savdnjileamen joddu amas dat dierrut, suollemasat dainna doaivvuin ahte nago de lea boađistan.
+	#$ Buoremus sámepolitihkka ožžojuvvo áigálii sámi veahkadaga ja ráđđehusa gaskaneas ipmárdusain.
+
+#!! * __Locgoabbat__ selects Pl Loc after goabbat Foc/ge
+SELECT:Locgoabbat (Pl Loc) (-1 ("goabbat" Foc/ge))(0 (Sg Com)) ;
+	#$ Goabbatge joavkkuin lonuhit čikčiid juohke viđát minuvttas.
+
+
+SELECT:WWComalmma (Sg Com) (-1 ("almmá"))(0 (Pl Loc));
+	#$ Sáhttá muddet ja fárrehit báikkis nubbái almmá buhtadusain.
+  
+SELECT:WWComvrd (Sg Com) IF (*-1 ("vrd") OR ("veardidit") BARRIER Com)(0 (Pl Loc));
+	#$ Sámediggi lea váldán badjelasas váldoovddasvástádusa sihkkarastimis doaibmadoarjaga Nuortasámi museai (vrd. čoahkkimiin Njávdámis 05.06.01).
+	#$ Sii čuvvot sámilága mearrádusaid, veardit siskkáldas goziheami geatnegasvuođain.
+
+#!! * __ComComAdv__
+SELECT:WComComAdv (Sg Com) IF (0 (Pl Loc) LINK 0 ACTOR OR ACTOR-ROLE)(1 COM-ADV);  
+SELECT:WComComAdv (Sg Com) IF (-1 COM-ADV)(0 (Pl Loc) LINK 0 ACTOR OR ACTOR-ROLE); 
+	#$ Leahppi go fárrolaga ádjáineatte?
+
+
 #!! * __NumCom__ selects Num Com: guvttiin nieiddain if not plural-noun like: guvttiin heajain
 SELECT:WNumCom (Num Com) (*1 Com BARRIER NOT-A LINK NOT 0 PL-N + Pl);  
 	#$ Juhán vulggii viđain nieiddain.
@@ -6102,7 +6141,7 @@ SELECT:WLocHab (Pl Loc) (0 (Sg Com) + HAB-ACTOR) (*1 LEAT-FIN-NOT-IMPRT BARRIER 
 SELECT:WLocHab1 (Pl Loc) (*-1 (Pron Rel) BARRIER NOT-NPMOD LINK -1 NP-HEAD-NOM)(0 (Sg Com) LINK 0 HAB-ACTOR)(*1 LEAT-FIN-NOT-IMPRT BARRIER SV-BOUNDARY LINK NOT *1 PRC-NOT-LEAT);
 	#$ Orru čielga vuohki: Dat friddjavuohta mii guođoheddjiin dássážii lei leamaš, gáržžiduvvui dađistaga. 
 
-#!! !Disambiguation based upon verb valency - Har ikke ennå arbeidet med reglene som kommer her:
+#!! !Disambiguation based upon verb valency 
 
 #!! !COM-V 
 SELECT:WComVR (Sg Com) (*-1 COM-V + REAL-V BARRIER SV-BOUNDARY)(NEGATE 0 PLACE OR SITUATION);
@@ -6225,7 +6264,7 @@ SELECT:WComMovemVL (Sg Com) (*-1 MOVEMENT-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR
 	#$ Sáhttá viežžat dieđuid divššohasa oapmahaččain. 
 	#$ Máhtte vujii biillain.
 
-SELECT:WComMovemVR (Sg Com) (0 (Pl Loc) LINK NOT 0 PLACE OR ABSTR-PLACE OR EVENT-TOOL-ACTIVITY)(*1 MOVEMENT-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf LINK NOT 0 ("boahtit"));
+SELECT:WComMovemVR (Sg Com) (0 (Pl Loc) LINK NOT 0 PLACE OR ABSTR-PLACE OR EVENT-TOOL-ACTIVITY)(*1 MOVEMENT-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf LINK NOT 0 ("boahtit")) ;
 
 SELECT:WLocMovemVL (Pl Loc) IF (*-1 ANIMATE OR PPRON-NOM-NOT-DAT BARRIER S-BOUNDARY LINK *-1 MOVEMENT-V LINK 0 FMAINV OR Inf)(0 (Pl Loc) LINK 0 PLACE OR ABSTR-PLACE OR EVENT-TOOL-ACTIVITY);
 SELECT:WWLocMovemVR- (Pl Loc) (0 (Pl Loc) LINK 0 PLACE OR ABSTR-PLACE OR EVENT-TOOL-ACTIVITY)(*1 ANIMATE OR PPRON-NOM-NOT-DAT BARRIER NOT-NPMOD LINK *1 MOVEMENT-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf LINK *1 VEHICLE OR ANIMATE BARRIER S-BOUNDARY);  	
@@ -6367,6 +6406,8 @@ SELECT:WComCoord1- (Sg Com) IF (*-1 CRD2 BARRIER NOT-NPMOD LINK -1 Com LINK NOT 
 
 SELECT:WComCoord2 (Sg Com) IF (1 CRD2)(*2 Com BARRIER NOT-NPMOD LINK NOT 0 Loc);
 	## Fága galgá ovddiidit ovttasbarggus Sámedikkiin ja sámi dearvvašvuođa- ja sosiálabargiiguin. 
+
+#!! !And then we remove the remaining Sg Com analysis
 
 REMOVE:KillComSg (Sg Com) (0 (Pl Loc)) ;
 	 #$ Giellakantuvrras ii leat formála váldi álggahit gielladoaimmaid etáhtain, muhto veahkehit.
