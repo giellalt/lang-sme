@@ -22,9 +22,9 @@ echo "Antall disambiguert annerledes enn gullstandard:" > NtestCG.txt
 cat dev/testCG_result.txt | grep '^<' | wc -l >> NtestCG.txt
 echo "Antall ikke disambiguert eller uriktig disambiguert:" >> NtestCG.txt
 cat dev/testCG_result.txt | grep '^>' | wc -l >> NtestCG.txt
-echo "Hva er disambiguert annerledes enn gullstandard:" >> NtestCG.txt
+echo "Dette inneholder gullstandarden som er blitt borte i den nye analysen:" >> NtestCG.txt
 cat dev/testCG_result.txt | grep '^<' | perl -pe 's/(TV|IV|G3|V\*|V\*\*) //' | cut -d '"' -f3 | rev | awk -F' ' '{print $1" "$2}' | rev | sort | uniq -c | sort -nr >> NtestCG.txt
-echo "Hva er ikke disambiguert pluss eller disambiguert:" >> NtestCG.txt
+echo "Dette inneholder den nye analysen som ikke finnes i gullstandarden:" >> NtestCG.txt
 cat dev/testCG_result.txt | grep '^>' | perl -pe 's/(TV|IV|G3|V\*|V\*\*) //' | cut -d '"' -f3 | rev | awk -F' ' '{print $1" "$2}' | rev | sort | uniq -c | sort -nr >> NtestCG.txt
 see NtestCG.txt
 
