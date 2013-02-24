@@ -244,6 +244,7 @@ LIST Ger = Ger ;
 LIST Sup = Sup ;
 LIST Actio = Actio ;
 
+LIST Der/PassL = Der/PassL ;
 LIST Der/NomAg = Der/NomAg ;
 LIST Actor = NomAg Der/NomAg ;
 LIST VAbess = VAbess ;
@@ -1109,7 +1110,8 @@ SET NP-HEAD-GEN    = (Pron Gen) OR (N Gen) OR (A Gen) - Der/NomAct - RCmpnd - (D
 #!! expression __WORD - premodifiers__.
 
 
-SET PRE-NP-HEAD = (Prop Attr) OR (Prop @>N) OR (A Attr) OR (ABBR Attr) OR ("buorre") OR (Pron Pers Gen) OR (N Gen) OR 
+SET PRE-NP-HEAD = (Prop Attr) OR (Prop @>N) OR (A Attr) OR (ABBR Attr) OR ("buorre") 
+         OR (Pron Pers Gen) OR (N Gen) OR ("buot") OR
          Num OR RCmpnd OR CC OR (Pron Dem) OR (Pron Refl Gen) OR (Indef Attr) OR 
          (PrfPrc @>N) OR PrsPrc OR (A Ord) ;
          # The strict version of items that can only be premodifiers, not parts of the predicate
@@ -2092,13 +2094,44 @@ REMOVE:r551anotv (V*) IF (0 A-NOT-V) ; #tjaa
 
 #!! !!Propernouns
 
+
+REMOVE:PropAttrIfProp (Prop Attr) IF (NOT 1 Prop);
+	#$ Ášši 05/01 Ođđa áššiid dieđiheapmi.
+	
 #!! *Selects __Prop__ if capital letter inside clause
-SELECT:Prop Prop (NEGATE *-1 BOS OR (":") BARRIER WORD)(0 N LINK NOT 0 (Der/t) OR (Der/laš));
+SELECT:PropInside Prop (NEGATE *-1 BOS OR (":") BARRIER WORD - ("ášši") - Num)(0 N LINK NOT 0 (Der/t) OR (Der/laš));
+
+#!! * __SamediggiProp__ selects Prop after Ášši 01/12
+SELECT:SamediggiProp Prop IF (-2 ("ášši"))(-1 Num);
+	#$ Ášši 02/13 Sámedikki čoahkkinortnet.
 
 #!! * __Prop=noun__ removes some prop which are identical with noun,  which is bad e.g. Apertium. This rule can be moved to the end of this file.
 #REMOVE:Prop=noun (Prop Sg) (0 COMMON-N + Sg) ; Denne går ikke
   	
-REMOVE:Prop=noun Prop (0 ("Vuoksá") OR ("Heasta") OR ("Stállu") OR ("Guksi") OR ("Návet") OR ("Náhkki") OR ("Njunni")) ;
+REMOVE:Prop=noun Prop (0 ("Vuoksá") OR ("Heasta") OR ("Stállu") OR ("Guksi") OR ("Návet") OR ("Náhkki") OR ("Njunni") OR ("Áigi")) ;
+# Comment: Min Áigi is Prop but Áigi in the beginning of the sentence is not.
+
+REMOVE (Der/t) (0 Prop) ;
+REMOVE Prop (0 ("profehta") OR ("vuoigŋa")) ;
+REMOVE Prop (0 Pron) ;
+REMOVE Prop (0 Adv LINK 1 go) ;
+	## Ovdal go
+
+
+REMOVE:r867 Prop IF (0 ("sieidi")) (1 ("bálvaleapmi"));
+SELECT:r868 NP-HEAD-GEN IF (0 ("sieidi") LINK 1 ("bálvaleapmi"));
+  	## Sieiddi bálvalemiin sturron eallu gohčoduvvui bálvvoseallun, mi sáhtii jávkat, go oamasteaddji jámii dahje go sieidi ii bálvaluvvon.
+
+REMOVE:r869 Prop IF (0 ("unni" Attr))(1 Der/Dimin OR ("mánáš"));
+
+	# The form "norga" is not in the dictionary...
+REMOVE:r856 ("norga") IF (0 ("Norga"));
+  
+REMOVE:r540 ACR IF (0 Prop) ;
+  	## NRK lea čujuhan iežas áigut leat dehálaš seailluhit sámi servodaga.
+
+
+
 
 
 ## Biret Merete
@@ -2226,6 +2259,13 @@ REMOVE ("ollit" V) (0 OLLU) ;
 #!! The idea behind "cycle 0" is to have safe rules without context first.
 #!! These rules typically chose lexicalisations over derivations, 
 #!! Saami words instead of marginal names, etc.
+
+
+
+   
+   
+   
+
 
 #!! !!Lexicalised derivations
 
@@ -2635,6 +2675,32 @@ REMOVE:Killrecipr Recipr ;
 
 
 
+#!! !Nouns, not verbs
+#    ----------------
+
+SELECT ("heahti" Loc Foc/ge)(0 ("heahtit")) ;
+	## ii heađisge
+
+REMOVE:r595 VAbess IF (0 ("orohat"));
+	## Guovlu lea orohaga olggobealde.
+	
+REMOVE:r596 ("fatnasit" Sg2) IF (0 ("fanas"));	
+
+REMOVE:r597 PrsPrc IF (0 (N Sg))(NEGATE -1 ("nu") LINK 2 go)(NEGATE *1 Acc BARRIER NOT-NPMOD) ;
+	# Should not hit cealkkavástaga with PrsPrc + Obj.
+	## geavaheaddji
+	
+#!! * __UsImprt__ removes Imprt Sg3 for all nouns in -us	
+REMOVE:UsImprt Imprt IF (0 ("alidus") OR ("bajásdoalahus") OR ("bealuštus") OR ("birastus") OR ("birračuohpahus") OR ("bittus") OR ("bižus") OR ("bovdehus") OR ("buhtadus") OR ("buvttadus") OR ("bálvalus") OR ("bázahus") OR ("doaimmahus") OR ("dohkkehus") OR ("dovddastus") OR ("dovddiidus") OR ("duljahus") OR ("dárkkistus") OR ("dárkkuhus") OR ("earuhus") OR ("eastadus") OR ("evttohus") OR ("fuolahus") OR ("fáhtehus") OR ("fápmudus") OR ("geahpedus") OR ("geavahus") OR ("golahus") OR ("golggahus") OR ("govvidus") OR ("govvádus") OR ("gáržžidus") OR ("huksehus") OR ("hálbbidus") OR ("hálddahus") OR ("háliidus") OR ("hállehus") OR ("hávdádus") OR ("jolggaštus") OR ("julggaštus") OR ("juogus") OR ("juogustus") OR ("juolludus") OR ("loahpahus") OR ("lonuhus") OR ("manahus") OR ("meannudus") OR ("mearkkahus") OR ("muitalus") OR ("muittuhus") OR ("muosáhus") OR ("máinnus") OR ("namahus") OR ("niegadus") OR ("njuolggadus") OR ("oamastus") OR ("oktoráđđehus") OR ("ovddastus") OR ("ovttastus") OR ("ođastus") OR ("prentehus") OR ("rentehus") OR ("ráhkadus") OR ("ráđđehus") OR ("sojahus") OR ("suodjalus") OR ("suohkudus") OR ("sáddehus") OR ("vealahus") OR ("vearuhus") OR ("vuoiddadus") OR ("vuolggahus") OR ("vuolidus") OR ("vuosehus") OR ("vuođđudus") OR ("váidalus") OR ("váikkuhus") OR ("válddahus") OR ("várjalus") OR ("váruhus") OR ("vásihus") OR ("álggahus") OR ("árvalus") OR ("árvvoštus") OR ("ásahus") OR ("ávaštus") OR ("čalmmus") OR ("čielggadus") OR ("čohkkehus") OR ("čujuhus") OR ("čuohpadus") OR ("šiehtadus"));	
+
+REMOVE:r599 VFIN IF (-1 ("makkár"))(0 N);
+REMOVE:r600 Inf IF (-1 ("makkár"))(0 N);
+	## Makkár gáhkut dis leat?	
+	
+SELECT:r601 N IF (0 ("ráđđeviessu"));
+	# not "ráđđe#viessut" V*	
+
+
 #!! !Not noun
 
 
@@ -2694,7 +2760,7 @@ REMOVE:buoritV V (0 ("buorre" Pl Nom) LINK 1 (N Pl)) ;
 	#$ Das leat buorit lanjat.
 
 #!! * __ImprtCopPrfPrc__ removes imperative readings in front of coopulas and PrfPrc
-REMOVE:ImprtCopPrfPrc Imprt IF (-1 BOS)(1 COPULAS LINK 1 PrfPrc) ;
+REMOVE:ImprtCopPrfPrc Imprt IF (-1 BOS)(*1 COPULAS BARRIER NOT-ADV LINK 1 PrfPrc) ;
 	#$ Oahppit leat lohkan ollu girjjiid.
 
 #!! !Particular verbs
@@ -2732,6 +2798,17 @@ IFF:madeCS MADE + CS (*1 DADE) ;
 IFF:dadeCS DADE + CS IF (*-1 MADE) ;
 	#$ Mađe mielde oaivi, dađe mielde ságat.
 	#$ Mađe stuorit RAM-muitu du dihtoris lea, dađe eanet dihtorprográmmaid sáhtát geavahit oktanaga.	
+
+
+#!! !!Adpositions
+
+#!! !Adpositions, not verbs
+
+#!! * __bealisPo__ removes imperatives when Po lookalikes
+REMOVE:bealisPo Imprt IF (-1 Gen)(0 Po);
+	## Dan bealis.
+	
+
 
 
 
@@ -3017,6 +3094,34 @@ REMOVE:NotVGenIfDer VGen IF (0 Der/Pass OR Der/goahti OR Der/st OR Der/l);
 
 
 	#!! !All imperatives
+	
+#!! For imperative disambiguation we need the following:
+#!! Pick imoerative contexts, and thereafter remove imperative.
+#!! Such contexts are: Imperative verb to the
+
+# Imperative examples:
+	## ..., geahčá sámediggeválgalága láhkaásahusas.
+
+# Non-imperative examples:
+	## Rievdaduvvo leat ná: 
+	## Doaimma birra¶
+	## Evttohus 1¶
+	## Bargu sámi fanasduddjonvieruid ektui lea dakkár bargu masa Sámediggi sáhtášii váikkuhit eanet dutkama bokte .
+	## 
+	
+#!! * __NotEmbeddedImprt__ removed Imprt after CS
+REMOVE:NotEmbeddedImprt Imprt IF (*-1 CS BARRIER ("de" Adv));
+	#$ Go ollet sáhpánvári ala, de muitte čuovvolit bálgá.
+	#$ 
+	
+#!! * __NotImprtWhenInd__ removes Imprt if part of an Ind domain
+REMOVE:NotImprtWhenInd Imprt IF (*-1C Ind BARRIER SV-BOUNDARY);
+	#$ Beana jávkkai guhká ovdalgo bođii njága suolggaid, vilppui munnje ja manai fas.
+
+	
+#!! * __NotImprtIfAttrLeft__ removes Imprt after attribute
+REMOVE:NotImprtIfAttrLeft Imprt IF (NOT -1 BOC OR COMMA)(0 (N Nom));
+	#$ Buot oahppit leat mannan.	
 
 #!! * __NotImprtIfRel__ removes Imprt after Rel, unify this with other left context (r948)
 REMOVE:NotImprtIfRel Imprt IF (*-1C Rel BARRIER S-BOUNDARY OR CC OR COMMA);
@@ -4165,6 +4270,10 @@ SELECT:DemAttr Attr (0 MAKKAR LINK *1 N BARRIER NOT-A) ;
 SELECT:boarisA A (0 ("boaris") LINK -1 VAHKKU-DUR) ;
 	#$ Son lea vihtta jagi boaris.
 
+#!! * dáláš
+REMOVE Imprt IF (0 ("dáláš"))(1 N + Nom);
+	## Dáláš ortnet ahte dieđut juogaduvvojit soaittáhagas ii leat dohkálaš.
+	
 #!! * dološ 
 SELECT:r1684 (A Attr) (0 ("dološ"))(*1 N BARRIER NOT-NPMOD);
 	#$ ...go lea gažaldat háhkamis dološ áiggi rájes geavaheami...
@@ -4511,15 +4620,25 @@ REMOVE:NotConNegNotNeg ConNeg IF (NEGATE *-1 Neg BARRIER SV-BOUNDARY OR go)(NEGA
 
 #!! See also ''Imprt or Ind'' some sections down.
 
+#!! * __PassLNotImprt__ removes Imprt when passive (sentence-initial, hence important)
+REMOVE:PassLNotImprt Imprt IF (0 Der/PassL)(*1 Rel or CS);
+	#$ Ásahuvvo bargojoavku mas leat sámi mediaid ovddastaddjit.
+	# Perhaps without the Rel/CS condition as well.
 
 #!! * __ImprtLeat__ says BOS Leat A is Imprt - 575
 SELECT:ImprtLeat Imprt IF (-1 BOS OR PUNCT OR REAL-CLB)(0 ("leat"))(1 A);
  	#$ Leage buorre!
 	
 #!! * __ImprtDál__ 
-SELECT:ImprtDál Imprt IF (-1 BOS OR PUNCT OR REAL-CLB)(1 ("dál"))(2 COMMA)(3 Rel OR Adv);
+SELECT:ImprtDál Imprt IF (-1 BOS OR PUNCT OR REAL-CLB)(1 ("dál")); #(2 COMMA)(3 Rel OR Adv);
  	#$ Gullet dál, maid veardádus gilvi birra mearkkaša...
 	
+#!! * __SelImprtExcl__ selects initial Imprt when excl mark 
+SELECT:SelImprtExcl Imprt IF (-1 BOS OR PUNCT OR REAL-CLB)(*1 ("^excl"));
+SELECT:SelImprtExclPl (Imprt Pl2) IF (-2 Nom + Pl)(-1 COMMA)(*1 ("^excl"));
+	#$ Mánát, váldet alcceseattet láibevajahasaid!
+	
+SELECT:SelImprtExclSg (Imprt Sg2) IF (-2 Nom + Sg)(-1 COMMA)(*1 ("^excl"));
 
 #!! * __ImprtComma__ 
 SELECT:ImprtComma Imprt (-1 COMMA LINK -1 Imprt LINK *-1 BOS BARRIER NOT-ADV);
