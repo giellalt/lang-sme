@@ -532,7 +532,8 @@ LIST PL2-V = (V Ind Prs Pl2)  (V Ind Prt Pl2) (V Cond Prs Pl2)
  
 LIST PL3-V = (V Ind Prs Pl3)  (V Ind Prt Pl3) (V Cond Prs Pl3) 
              (V Cond Prt Pl3) (V Pot Prs Pl3) (V Neg Ind Pl3);
- 
+
+SET POSITIVE-V = SG1-V OR SG2-V OR SG3-V OR DU1-V OR DU2-V OR DU3-V OR PL1-V OR PL2-V OR PL3-V ;  
 
  # Note that imperative verbs are not included in these sets!
 
@@ -1093,6 +1094,8 @@ SET HEAD-N = N - RCmpnd ;
 
 SET HEAD-N-NOM = (N Nom) - RCmpnd ;
 
+SET SUBJECTHEAD = N OR A OR Pron - Refl ; # These, can be subject heads
+
 SET NP = N OR A ;                      # anything that can take except numerals
 SET NP-HEAD        = Pron OR HEAD-N - ("buorre") ;
 SET NP-HEAD-SG     = SG-PRON OR (N Sg) OR (A Sg) - RCmpnd  - Dem - ("buorre");
@@ -1186,6 +1189,7 @@ SET CLB_NOT_COMMA = CLB - COMMA OR PUNCT-LEFT OR PUNCT-RIGHT ;
 SET NOT-QMARK = WORD OR CLB OR PUNCT - QMARK ; 
 
 SET W-NOT-ACC-GEN = WORD - Acc - Gen ;
+
 
 
 #!! * Noun sets
@@ -3350,8 +3354,9 @@ SELECT:NounNotEará N (-1 (A Attr) OR Indef)(NEGATE -1 Adv)(NEGATE 0 Inf OR VFIN
 REMOVE:NounNotPrsPrc PrsPrc IF (-1 A)(NEGATE -1 Adv)(NEGATE 1 Ess); 
 	#$ Dainnna ii leat vissis mearri galljodagas.
 
-#!! * __NnotAcoord__ selects N instead of A, based on coordination with N, and a vfin-verb
-SELECT:NnotAcoord N (NEGATE 0 PrfPrc LINK *0 REAL-COPULAS + PL-V BARRIER SV-BOUNDARY)(0 A LINK 1 COMMA OR CC LINK *1 HEAD-N BARRIER NOT-NPMOD OR CC LINK 1 CC OR EOC OR VFIN);
+#!! * __NnotAcoord__ removes A instead of N (earlier: selects N instead of A), based on coordination with N, and a vfin-verb
+REMOVE:NnotAcoord A (NEGATE 0 PrfPrc LINK *0 REAL-COPULAS + PL-V BARRIER SV-BOUNDARY)(0 A LINK 1 COMMA OR CC LINK *1 HEAD-N BARRIER NOT-NPMOD OR CC LINK 1 CC OR EOC OR VFIN);
+#SELECT:NnotAcoord N (NEGATE 0 PrfPrc LINK *0 REAL-COPULAS + PL-V BARRIER SV-BOUNDARY)(0 A LINK 1 COMMA OR CC LINK *1 HEAD-N BARRIER NOT-NPMOD OR CC LINK 1 CC OR EOC OR VFIN);
 	#$ Sápmelaččat ja dážat leat ovdal eallán ovttas.
 	#$ ...ležžet sii dál sápmelaččat, dážat dahje kveanat.
 
@@ -4823,19 +4828,19 @@ REMOVE:NotImprtGo Imprt IF (1 ("go" Pcle));
 # The r29xx rules here might come too early.
 
 #!!
-SELECT:r2996 PL3-V IF (*1 (Pl Nom) BARRIER NOT-NPMODADV LINK NOT 0 Adv)(NEGATE 0 ("leat" Imprt Pl2))(NEGATE 0 Inf LINK -1 MOVT);
+SELECT:r2996b PL3-V IF (NOT *-1 POSITIVE-V BARRIER CS)(*1 (Pl Nom) BARRIER NOT-NPMODADV LINK NOT 0 Adv)(NEGATE 0 ("leat" Imprt Pl2))(NEGATE 0 Inf LINK -1 MOVT);
 	## Ja dis leat velá buot oaivvi vuoktačalmmit lohkkojuvvon.
 
 
 #!! * __r2974__ was moved up to select PL3-V after N Pl, might be relaxed to REMOVE Inf
-SELECT:r2974 PL3-V IF (*-1 (Pl Nom) BARRIER NOT-ADV-PCLE  LINK NOT 0 VFIN) ;
+SELECT:r2974 PL3-V IF (*-1C SUBJECTHEAD + Pl + Nom BARRIER Pl3 OR Du3 LINK *-1 BOC BARRIER Pl3 or Du3) ;
 	## Muhto dorskit gal leat varrasat.
 	## Divššohasaid birra geat leat uminddegin dahkkon.
 	## Eatnagat bohtet nuortan ja oarjin.
 	## Geafit gal leat álo din luhtte.
 
 #!! * __r2976__ was moved up to select PL3-V after N Pl, might be relaxed to REMOVE Inf
-SELECT:r2976 PL3-V IF (1C NP-HEAD-PL-NOM BARRIER PPRON-NOT-SII);
+SELECT:r2976 PL3-V IF (1C NP-HEAD-PL-NOM BARRIER PPRON-NOT-SII)(NOT *-1 POSITIVE-V BARRIER CS);
 
 
 
@@ -4878,6 +4883,8 @@ SELECT:r1811 Inf IF (*-1 ("amas" CS) BARRIER REAL-V);
 SELECT:r1814 Inf IF (-1 BOS)(*1 ("ii" V IV Neg Ind Sg3) BARRIER V);
  	#$ Viežžat viervván rivgo čiektageregin ii leat ásti, iige sáváháhttin.
 
+SELECT:EssInf Inf IF (*-1 LEAT-FIN-NOT-IMPRT BARRIER NOT-ADV LINK -1 Ess);
+	#$ Sin bargun lei váldit fáŋan Gonagasa.
 
 #!! Rules that prevent later selection of Inf for a finite verb in the frame 						  
 #!! ''INF-V...CC...''
