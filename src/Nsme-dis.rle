@@ -2109,10 +2109,10 @@ SELECT:SamediggiProp Prop IF (-2 ("ášši"))(-1 Num);
 REMOVE:Prop=noun Prop (0 ("Vuoksá") OR ("Heasta") OR ("Stállu") OR ("Guksi") OR ("Návet") OR ("Náhkki") OR ("Njunni") OR ("Áigi") OR ("Ovdal") OR ("Sieidi") OR ("Profehta")) ;
 # Comment: Min Áigi is Prop but Áigi in the beginning of the sentence is not.
 
-#!! *Removes __PropPl__
-REMOVE:PropPl (Prop Pl) IF (0 COMMON-N)(NEGATE 0 VGen); 
+#!! *Removes __PropPl__, but problems with names as Davviriikkaid Ráđi, there we want Prop Pl
+REMOVE:PropPl (Prop Pl) IF (0 COMMON-N LINK NOT 1 ("ráđđi"))(NEGATE 0 VGen); 
   	#$ Sápmelaččaide lea hui mávssolaš ahte sin dárbbut váldojit vuhtii. 
-  	#% Davviriikkaid Ráđi
+  	#% Davviriikkaid Ráđi - It should not hit this 
 
 #!! * __PropVfin__ selects propernouns which can be Vfin in the beginning of a sentence
 SELECT:PropVfin Prop (0 VFIN LINK *-1 BOS BARRIER WORD)((1 VFIN + Sg3) OR (1 Pcle LINK 1 VFIN + Sg3) OR (1 CC OR COMMA LINK 1 Prop OR Pers) OR (1 CC OR COMMA LINK 1 (Pers Gen) OR Indef LINK 1 N));
@@ -2432,7 +2432,7 @@ SELECT:duoAdv ("duo" Adv) (NEGATE -1 Dem or (A Attr))(0 ("duo"));
 	#$ Áddjá go duo lea boahtime?
 
 #!! * __duodaidAdv__  
-SELECT:duodaidAdv1 ("duođaid" Adv) (-1 BOC)(1 COMMA);
+SELECT:duodaidAdv1 ("duođaid" Adv) ((-1 BOC LINK 2 COMMA) OR (-1 Nom LINK 2 VFIN));
 	#$ Duođaid, mun cealkkán didjiide:...
 SELECT:duodaidAdv2 ("duođaid" Adv) (-1 COPULAS)(1 Ess);
 	#$ Eatnandoallu šattai duođaid buressivdnádussan sámiide, nugo dat lei iežáge álbmogiidda.
@@ -2543,7 +2543,7 @@ SELECT ("luovos" Adv) (*0 SLIP-V BARRIER S-BOUNDARY) ;
 #REMOVE Interj ((-1 WORD - Interj) OR (1 WORD - Interj)) ;
 
 #!! * __maninAdv__
-SELECT:maninAdv ("manin" Adv)(NEGATE *-1 REAL-V BARRIER S-BOUNDARY)(NEGATE 0 Ess LINK *1 OPRED-V) ;
+SELECT:maninAdv ("manin" Adv)(NEGATE *-1 REAL-V BARRIER S-BOUNDARY)(NEGATE 0 Ess LINK *1 OPRED-V LINK -1 Acc) ;
 	#$ Manin don leat heittohit nohkkan?
 	#% Manin don geavahat dan?
 
@@ -3362,7 +3362,7 @@ REMOVE:NounNotPrsPrc PrsPrc IF (-1 A)(NEGATE -1 Adv)(NEGATE 1 Ess);
 	#$ Dainnna ii leat vissis mearri galljodagas.
 
 #!! * __NnotAcoord__ removes A instead of N (earlier: selects N instead of A), based on coordination with N, and a vfin-verb
-REMOVE:NnotAcoord A (NEGATE 0 PrfPrc LINK *0 REAL-COPULAS + PL-V BARRIER SV-BOUNDARY)(0 A LINK 1 COMMA OR CC LINK *1 HEAD-N BARRIER NOT-NPMOD OR CC LINK 1 CC OR EOC OR VFIN);
+REMOVE:NnotAcoord A (NEGATE 0 PrfPrc LINK *0 REAL-COPULAS + PL-V BARRIER SV-BOUNDARY)(0 N LINK 1 COMMA OR CC LINK *1 HEAD-N BARRIER NOT-NPMOD OR CC LINK 1 CC OR EOC OR VFIN);
 #SELECT:NnotAcoord N (NEGATE 0 PrfPrc LINK *0 REAL-COPULAS + PL-V BARRIER SV-BOUNDARY)(0 A LINK 1 COMMA OR CC LINK *1 HEAD-N BARRIER NOT-NPMOD OR CC LINK 1 CC OR EOC OR VFIN);
 	#$ Sápmelaččat ja dážat leat ovdal eallán ovttas.
 	#$ ...ležžet sii dál sápmelaččat, dážat dahje kveanat.
@@ -4951,6 +4951,9 @@ SELECT:VGen2 VGen IF (-1 ("gaskan"))(NEGATE 0 Der/Pass OR Loc OR Inf);
 
 SELECT:VGen3 VGen IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(0 VGEN-V LINK NOT 0 Der/Pass OR Loc OR Inf);  
 	## Muhtumat ledje vácci, ja muhtumat ledje čuoigga. 
+
+SELECT:VGen4 VGen IF (-2 COPULAS)(-1 Indef OR Adv)(0 VGEN-V LINK NOT 0 Der/Pass OR Loc OR Inf);  	
+	## Dát ađa lea uhccán vuošša. 
 	
 
 # 2. Done that, now we remove whatever VGen was left.
