@@ -1446,11 +1446,12 @@ LIST PREGEN = "álggogeahčen" "beallemuttus" "beallemuddu" ("bealli" N Sg Loc) 
 # INSTITUTION              +                      x               x		    |
 # INDUSTRY                 +                                      x		    |
 
-LIST FAMILY-ONLY-HUMAN = (Prop Mal) (Prop Fem) (Prop Sur) "áddjut" "áhkká" "áhkkut" "bárdnemánná" "boadnji" "čeahci" "čeahcit" "dálueamit" "eahki" "eamit" "eammi" "eanu" "goaski" "guoibmi" "irgi" "isit" "lunta" "mánáidmánná" "mannji" "máttaráddjá" "máttaráhkku" "moarsi" "muoŧŧá" "muoŧŧal" "náittosguoibmi" "neahpi" "oabbá" "oabbábealli" "oambealle" "oappáš" "oarpmealle" "osku#guoibmi" "ristváhnen" (".*sássa"r) "siessal" "siessá" "vieljaš" "viellja" "vielljabealli" "vilbealle" "vuohppa" "vuonáhkku" "vuoni" ;
+LIST FAMILY-ONLY-HUMAN = (Prop Mal) (Prop Fem) (Prop Sur) "áddjut" "áhkká" "áhkkut" "bárdnemánná" "boadnji" "čeahci" "čeahcit" "dálueamit" "eahki" "eamit" "eammi" "eanu" "goaski" "guoibmi" "irgi" "isit" "lunta" "mánáidmánná" "mannji" "máttaráddjá" "máttaráhkku" "moarsi" "muoŧŧá" "muoŧŧal" "náittosguoibmi" "neahpi" "oabbá" "oabbábealle" "oambealle" "oappáš" "oarpmealle" "osku#guoibmi" "ristváhnen" (".*sássa"r) "siessal" "siessá" "vieljaš" "viellja" "vielljabealle" "vilbealle" "vuohppa" "vuonáhkku" "vuoni" ;
 # These can only be possessed by HUMAN-INDIVIDUAL, HUMAN-GROUP, PROFESSION, OFFICE, HUM-FUNCTION, ABSTR-TEXT
 
 LIST FAMILY-ALSO-ABSTRACT = "áhčči" "áddjá" "áhkku" "bearaš" "eadni" "oapmahaš" "sohka" "sohkagoddi" "váhnen" "veahka" ;
 # These can be possessed by HUMAN-INDIVIDUAL, HUMAN-GROUP, PROFESSION, OFFICE, HUM-FUNCTION, ABSTR-TEXT, PLACE (minus NATURE-PLACE), Prop Plc, NATION, ANIMAL, EDUCATION, ORGANIZATION and INSTITUTION. Can also be used as metaphors.
+# Giellaplánaid eadni.
 
 SET FAMILY = FAMILY-ONLY-HUMAN OR FAMILY-ALSO-ABSTRACT ;
 
@@ -2095,7 +2096,7 @@ REMOVE:r551anotv (V*) IF (0 A-NOT-V) ; #tjaa
 #!! !!Propernouns
 
 
-REMOVE:PropAttrIfProp (Prop Attr) IF (NOT 1 Prop);
+REMOVE:PropAttrIfProp (Prop Attr) IF (NOT *1 Prop BARRIER REAL-WORD-NOT-ABBR);
 	#$ Ášši 05/01 Ođđa áššiid dieđiheapmi.
 	
 #!! *Selects __Prop__ if capital letter inside clause
@@ -2137,11 +2138,14 @@ REMOVE:r540 ACR IF (0 Prop) ;
 ## Biret Merete
 
 #!! *Substitute __PlcSur__ (Plc) (Sur) 
+SUBSTITUTE:PlcSur0 (Prop Plc) (Prop Sur) TARGET (Prop Plc Ill) IF (-1 (Mal Attr) OR (Fem Attr))(*0 ("riŋget") OR ("čuojahit") BARRIER REAL-V OR S-BOUNDARY OR CC) ;
+	#$ Sárá riŋgii Trond Trosterudii.
+	#% Son riŋgii Kárášjohkii. 
 
-SUBSTITUTE:PlcSur1 (Prop Plc) (Prop Sur) TARGET (Prop Plc) IF (*-1 (Mal Attr) OR (Fem Attr) BARRIER REAL-WORD-NOT-ABBR)(NEGATE 0 Sur OR Ill OR Loc) ;
+SUBSTITUTE:PlcSur1 (Prop Plc) (Prop Sur) TARGET (Prop Plc) IF (*-1C (Mal Attr) OR (Fem Attr) BARRIER REAL-WORD-NOT-ABBR)(NEGATE 0 (Prop Ill) OR (Prop Loc) LINK NOT *-1 Mal OR Fem BARRIER REAL-WORD-NOT-ABBR) ;
   	#$ Linda England.
   	#$ Linda B. England.
-  	#$ De vuolgá Biret Trosterudii.
+  	#% De vuolgá Biret Trosterudii.
 
 SUBSTITUTE:PlcSur2 (Prop Plc) (Prop Sur) TARGET (Prop Plc Com)(NEGATE 0 SAPMI OR SUOPMA)   ;
   	#$ Mun bohten Trosterudain.
@@ -2170,7 +2174,7 @@ SELECT:BMXXX (Prop Sur) IF (*-1 VFIN BARRIER S-BOUNDARY) (1 Mal OR Fem LINK NOT 
     	#$ Dovdágo Biret Turi Lene Antonsen?
 
 
-SELECT:BMr1918 Attr IF (0 (Prop Mal) OR (Prop Fem))(NEGATE 0 Loc)(1C Prop LINK 0 Sur OR Fem OR Mal); #(NEGATE 0 Acc LINK *1 Acc BARRIER NOT-NP LINK NOT 0 Mal OR Fem) ; Lene: kommenterte ut denne fordi den hindret regelen i å fugere på alle setninger, vi får se på hva slags constraint det bør være. 
+SELECT:BMr1918 Attr IF (0 (Prop Mal) OR (Prop Fem))(NEGATE 0 Loc)(1C Prop LINK 0 Sur OR Fem OR Mal LINK NEGATE 0 ADVLCASE LINK -1 Nom); #(NEGATE 0 Acc LINK *1 Acc BARRIER NOT-NP LINK NOT 0 Mal OR Fem) ; Lene: kommenterte ut denne fordi den hindret regelen i å fungere på alle setninger, vi får se på hva slags constraint det bør være. 
     	#$ Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna.
     	#$ Dat lea dehálaš, lohká Svein Ottar Helander.
     	#$ Do boahtá Biret Turi Sara.
