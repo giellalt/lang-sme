@@ -2094,55 +2094,72 @@ REMOVE:r551anotv (V*) IF (0 A-NOT-V) ; #tjaa
 
 
 #!! !!Propernouns
-
-
-REMOVE:PropAttrIfPropx (Prop Attr) IF (NOT *1 Prop BARRIER REAL-WORD-NOT-ABBR);
-	#$ Ášši 05/01 Ođđa áššiid dieđiheapmi.
-	
-#!! *Selects __Prop__ if capital letter inside clause
-SELECT:PropInside Prop (NEGATE *-1 BOS OR (":") BARRIER WORD - ("ášši") - Num)(0 N LINK NOT 0 (Der/t) OR (Der/laš));
+#!! ! Removing proper nouns that are lookalikes
 
 #!! * __SamediggiProp__ selects Prop after Ášši 01/12
 SELECT:SamediggiProp Prop IF (-2 ("ášši"))(-1 Num);
 	#$ Ášši 02/13 Sámedikki čoahkkinortnet.
 
-#!! * __Prop=noun__ removes some prop which are identical with noun,  which is bad e.g. Apertium. This rule can be moved to the end of this file.
-#REMOVE:Prop=noun (Prop Sg) (0 COMMON-N + Sg) ; Denne går ikke
   	
-REMOVE:Prop=noun Prop (0 ("Vuoksá") OR ("Heasta") OR ("Stállu") OR ("Guksi") OR ("Návet") OR ("Náhkki") OR ("Njunni") OR ("Áigi") OR ("Ovdal")) ;
+#!! * Rules for removing some Props which are identical to common nouns
+REMOVE:Prop=noun Prop (0 ("Vuoksá") OR ("Heasta") OR ("Stállu") OR ("Guksi") OR ("Návet") OR ("Náhkki") OR ("Njunni") OR ("Áigi") OR ("Ovdal") OR ("Sieidi") OR ("Profehta")) ;
 # Comment: Min Áigi is Prop but Áigi in the beginning of the sentence is not.
 
+#!! *Removes __PropPl__
+REMOVE:PropPl (Prop Pl) IF (0 COMMON-N)(NEGATE 0 VGen); 
+  	#$ Sápmelaččaide lea hui mávssolaš ahte sin dárbbut váldojit vuhtii. 
+  	#% Davviriikkaid Ráđi
+
+#!! * __PropVfin__ selects propernouns which can be Vfin in the beginning of a sentence
+SELECT:PropVfin Prop (0 VFIN LINK *-1 BOS BARRIER WORD)((1 VFIN + Sg3) OR (1 Pcle LINK 1 VFIN + Sg3) OR (1 CC OR COMMA LINK 1 Prop OR Pers) OR (1 CC OR COMMA LINK 1 (Pers Gen) OR Indef LINK 1 N));
+ 	#$ Lásse dat lei sihtan mu váldit dan.
+ 	#$ Máhtte ii sáhttán boahtit ovdal.
+ 	#$ Máhtte ja Ánne eaba sáhttán boahtit ovdal.
+
+
+LIST CONF-PROP = "Lea" "Lassi" "Dan" "Hu" "Goa" "Mo" "Moa" "Man" "Naba" ;
+
+#!! * __confProp, Lea, Man, Hui, Mo, Prop__ removes Props which confuces the analyser, 
+ 
+SELECT:confProp CONF-PROP + Attr - ("Lea") (-1 BOS OR PUNCT OR (":"))(*1 Sur OR Mal OR Fem BARRIER REAL-WORD-NOT-ABBR OR COMMA) ;
+	#$ Dan Robert Larsen 
+	#$ Lea O. Olsen
+ 
+REMOVE:confProp CONF-PROP (-1 BOS OR PUNCT OR (":"))(0 Mal OR Sur OR Fem OR Attr)(NEGATE 1 SG3-V); 
+  	#$ Lassi dutkandoarjagat sáhttet leat mielde... 
+ 	#$ Lea dušše okta Ipmil. Lea idja.  
+
+REMOVE:confProp Prop (0 CONF-PROP LINK 0 Adv OR Pron OR V) ;
+  	#$ De son celkkii sutnje: "Mana basadit Siloaláddos."
+
+#!!  * __Dert__ Rule for removing Der/t Prop when there are other analysis
+REMOVE:Dert (Der/t) (0 Prop) ;
+
+
 REMOVE (Der/t) (0 Prop) ;
-REMOVE Prop (0 ("profehta") OR ("vuoigŋa")) ;
 REMOVE Prop (0 Pron) ;
-REMOVE Prop (0 Adv LINK 1 go) ;
-	## Ovdal go
+REMOVE:PropUnni Prop IF (0 ("unni" Attr))(1 Der/Dimin OR ("mánáš"));
+SELECT:PropNorga ("Norga") IF (0 ("norga")); # The form "norga" is not in the dictionary...
 
-
-REMOVE:r867 Prop IF (0 ("sieidi")) (1 ("bálvaleapmi"));
-SELECT:r868 NP-HEAD-GEN IF (0 ("sieidi") LINK 1 ("bálvaleapmi"));
+#SELECT:Gen NP-HEAD-GEN IF (0 ("sieidi") LINK 1 ("bálvaleapmi"));
   	## Sieiddi bálvalemiin sturron eallu gohčoduvvui bálvvoseallun, mi sáhtii jávkat, go oamasteaddji jámii dahje go sieidi ii bálvaluvvon.
 
-REMOVE:r869 Prop IF (0 ("unni" Attr))(1 Der/Dimin OR ("mánáš"));
+#!! !Rules for Prop Attr, Sur and Plc
 
-	# The form "norga" is not in the dictionary...
-REMOVE:r856 ("norga") IF (0 ("Norga"));
-  
-REMOVE:r540 ACR IF (0 Prop) ;
-  	## NRK lea čujuhan iežas áigut leat dehálaš seailluhit sámi servodaga.
+#!! * __PropAttrIfPropx__ removes Attr if no Prop on the right side
+REMOVE:PropAttrIfPropx (Prop Attr) IF (NOT *1 Prop BARRIER REAL-WORD-NOT-ABBR OR COMMA)(NEGATE 1 CC LINK 1 (Prop Attr) LINK *1 Prop BARRIER REAL-WORD-NOT-ABBR OR COMMA);
+	#$ Ášši 05/01 Ođđa áššiid dieđiheapmi.
+	
+#!! *Selects __Prop__ if capital letter inside clause
+SELECT:PropInside Prop (NEGATE *-1 BOS OR (":") BARRIER WORD - ("ášši") - Num)(0 N LINK NOT 0 (Der/t) OR (Der/laš));
 
-
-
-
-
-## Biret Merete
 
 #!! *Substitute __PlcSur__ (Plc) (Sur) 
 SUBSTITUTE:PlcSur0 (Prop Plc) (Prop Sur) TARGET (Prop Plc Ill) IF (-1 (Mal Attr) OR (Fem Attr))(*0 ("riŋget") OR ("čuojahit") BARRIER REAL-V OR S-BOUNDARY OR CC) ;
 	#$ Sárá riŋgii Trond Trosterudii.
 	#% Son riŋgii Kárášjohkii. 
 
-SUBSTITUTE:PlcSur1 (Prop Plc) (Prop Sur) TARGET (Prop Plc) IF (*-1C Mal OR Fem BARRIER REAL-WORD-NOT-ABBR)(NEGATE 0 (Prop Ill) OR (Prop Loc) LINK NOT *-1 Mal OR Fem BARRIER REAL-WORD-NOT-ABBR) ;
+SUBSTITUTE:PlcSur1 (Prop Plc) (Prop Sur) TARGET (Prop Plc) IF (*-1C Mal OR Fem BARRIER REAL-WORD-NOT-ABBR OR COMMA)(NEGATE 0 (Prop Ill) OR (Prop Loc) LINK NOT *-1 Mal OR Fem BARRIER REAL-WORD-NOT-ABBR OR COMMA) ;
   	#$ Linda England.
   	#$ Linda B. England.
   	#% De vuolgá Biret Trosterudii.
@@ -2158,106 +2175,53 @@ SUBSTITUTE:PlcSur4 (Prop Plc) (Prop Sur) TARGET (Prop Plc Ill) IF (*0 VERBAL-ACT
 	#$ Atte reivve Trosterudii.
 	
 SUBSTITUTE:PlcSur5 (Prop Plc) (Prop Sur) TARGET (Prop Plc Gen) IF (1 ("lusa") OR ("luhtte") OR ("geahčai") OR ("geahčen"));
-   #$ Biret vuolgá Trosterud lusa.
-   #$ Biret lea Trosterud luhtte.
-   #$ Biret vuolgá Trosterud geahčai.
-   #$ Biret les Trosterud geahčen.
+	#$ Biret vuolgá Trosterud lusa.
+	#$ Biret lea Trosterud luhtte.
+	#$ Biret vuolgá Trosterud geahčai.
+	#$ Biret les Trosterud geahčen.
   	
 
-REMOVE:BMr1912 (Prop Attr) IF (NEGATE *1 Prop OR Ord BARRIER NOT-INITIAL-CC);
-    	#$Dat lea dehálaš, lohká Svein Ottar Helander.
+REMOVE:PropAttr (Prop Attr) IF (NEGATE *1 Prop OR Ord BARRIER NOT-INITIAL-CC);
+	#$ Dat lea dehálaš, lohká Svein Ottar Helander.
 
 # All these superseded by the remove rule above:
-SELECT:BMXXX (Prop Sur) IF (*-1 VFIN BARRIER S-BOUNDARY) (1 Mal OR Fem LINK NOT 0 Sur) ;
-    	#$ De vuolgá Biret Turi Lene Antonsen lusa.
-    	#$ De vuolgá viimmat Biret Turi Lene Antonsen lusa.
-    	#$ Dovdágo Biret Turi Lene Antonsen?
+SELECT:PropSur (Prop Sur) IF (*-1 VFIN BARRIER S-BOUNDARY) (1 Mal OR Fem LINK NOT 0 Sur) ;
+	#$ De vuolgá Biret Turi Lene Antonsen lusa.
+	#$ De vuolgá viimmat Biret Turi Lene Antonsen lusa.
+	#$ Dovdágo Biret Turi Lene Antonsen?
 
 
-SELECT:BMr1918 Attr IF (0 (Prop Mal) OR (Prop Fem))(NEGATE 0 Loc)(1C Prop LINK 0 Sur OR Fem OR Mal); # LINK NEGATE 0 ADVLCASE LINK -1 Nom LINK NOT *-1 Nom BARRIER S-BOUNDARY); #(NEGATE 0 Acc LINK *1 Acc BARRIER NOT-NP LINK NOT 0 Mal OR Fem) ; Lene: kommenterte ut denne fordi den hindret regelen i å fungere på alle setninger, vi får se på hva slags constraint det bør være. 
-    	#$ Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna.
-    	#$ Dat lea dehálaš, lohká Svein Ottar Helander.
-    	#$ Do boahtá Biret Turi Sara.
-SELECT:BMr1913 (Prop Attr) IF ((-1 (V Sg3) LINK 2 Prop LINK 1 Prop LINK 1 CLB) OR (-1 Prop LINK -1 (V Sg3) LINK 3 Prop - Ill - Loc LINK 1 CLB));
+SELECT:PropAttr1 Attr IF (0 (Prop Mal) OR (Prop Fem))(NEGATE 0 Loc)(*1C Prop LINK 0 Sur OR Fem OR Mal BARRIER REAL-WORD-NOT-ABBR OR COMMA); # LINK NEGATE 0 ADVLCASE LINK -1 Nom LINK NOT *-1 Nom BARRIER S-BOUNDARY); #(NEGATE 0 Acc LINK *1 Acc BARRIER NOT-NP LINK NOT 0 Mal OR Fem) ; Lene: kommenterte ut denne fordi den hindret regelen i å fungere på alle setninger, vi får se på hva slags constraint det bør være. 
+	#$ Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna.
+	#$ Dat lea dehálaš, lohká Svein Ottar Helander.
+	#$ Do boahtá Biret Turi Sara.
+	#$ Áirras nr. 17 Randi S. Pedersen oaččui permišuvnna.
+	#$ De vuolgá Biret Turi Lene Antonsen lusa.
+SELECT:PropAttr2 (Prop Attr) IF ((-1 (V Sg3) LINK 2 Prop LINK 1 Prop LINK 1 CLB) OR (-1 Prop LINK -1 (V Sg3) LINK 3 Prop - Ill - Loc LINK 1 CLB));
 #SELECT:BMr1914 (Prop Attr) IF (-1 Prop LINK -1 (V Sg3) LINK 3 Prop LINK 1 CLB);
-    	#$ Dat lea dehálaš, lohká Svein Ottar Helander.
-    	#$ De vuolgá Biret Turi Lene Antonsen lusa.
 
-SELECT:BMr1915 (Prop Attr) IF (NEGATE -1 Prop)(1 CC)(2 (Prop Attr))(3 INITIAL OR (N Prop));
-    	#$ Dá leaba Brita ja Ove Kåven.
 
-REMOVE:BMr1916 (Prop Attr) IF (NEGATE 1 (Prop Mal) OR (Prop Fem) OR (Prop Sur) OR INITIAL OR Ord); 
-    	#$ Trond Trosterud lea dá.
-    	#$ Olles doaibmaviessu lea sullii 2300 njealjehasmehtera. 
-    	#$ De vuolgá Biret Merete Trosterudii.
+SELECT:PropAttrCoord (Prop Attr) IF (NEGATE -1 Prop)(1 CC LINK 1 (Prop Attr) LINK *1 (N Prop Sur));
+	#$ Dá leaba Brita ja Ove Kåven.
 
-SELECT:BMr1919 Attr IF (0 (Prop Mal) OR (Prop Fem))(NEGATE 0 Loc)(1 INITIAL LINK *1C (Prop Sur) BARRIER REAL-WORD-NOT-ABBR)(NEGATE 0 Acc LINK *1 Acc BARRIER NOT-NP  LINK NOT 0 Mal OR Fem);
+REMOVE:PropAttr1 (Prop Attr) IF (NEGATE 1 (Prop Mal) OR (Prop Fem) OR (Prop Sur) OR INITIAL OR Ord); 
+	#$ De vuolgá Biret Merete Trosterudii. #This one gets Sur
 
-SELECT:BMr1920- Attr IF (0 (Prop Sur))(NEGATE 0 Loc)(1C (N Prop Sur))(NEGATE 0 Acc LINK *1 Acc BARRIER NOT-NP  LINK NOT 0 Mal OR Fem);
-    	#$ Áirras nr. 17 Randi S. Pedersen oaččui permišuvnna.
-    	#$ Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna. # Two rules in order to avoid Sur Attr to Mal or Fem.
+SELECT:PropAttr2 Attr IF (0 (Prop Mal) OR (Prop Fem))(NEGATE 0 Loc)(1 INITIAL LINK *1C (Prop Sur) BARRIER REAL-WORD-NOT-ABBR)(NEGATE 0 Acc LINK *1 Acc BARRIER NOT-NP LINK NOT 0 Mal OR Fem);
 
-SELECT:BMr1921 (@>N) IF (0C (Prop Nom))(1 ORGANIZATION);
-    	#$ Ođđajagimánus 2001 lei Beazedievvá mánáidgárdi doaimmas golmmain ossodagain.
+#SELECT:BMr1920- Attr IF (0 (Prop Sur))(NEGATE 0 Loc)(1C (N Prop Sur))(NEGATE 0 Acc LINK *1 Acc BARRIER NOT-NP  LINK NOT 0 Mal OR Fem);
+	#$ Áirras nr. 17 Randi S. Pedersen oaččui permišuvnna.
+	#$ Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna. # Two rules in order to avoid Sur Attr to Mal or Fem.
   	
-REMOVE:BM (Gen @>N) IF (0 (Attr @>N))(1C Sur); 
-REMOVE:BM (@OBJ>) IF (0 (Attr @>N))(1C Sur);
-    	#$ Don fertet Kirsti Palttoin muhtun vahkuid gal vel bargat.
-
-SELECT:BMr1922 Gen IF (0C Prop)((1 ORGANIZATION) OR (1 PROFESSION LINK 1 ORGANIZATION)); #Lene: la inn C for å unngå at den treffer Lea osv.
+SELECT:PropGen Gen IF (0C Prop)((1 ORGANIZATION) OR (1 PROFESSION LINK 1 ORGANIZATION)); #Lene: la inn C for å unngå at den treffer Lea osv.
     	#$ Oslo universiteahta namas Oslo namma lea genitiivvas.
 
-REMOVE:BM Acc IF (0 PROFESSION LINK *-1 VERBAL-ACTIVITY-V BARRIER V OR SV-BOUNDARY LINK -1 COMMA)(1 ORGANIZATION);  	
-    	#$ Mii leat vávján ahte lea dárbu addit praktihkalaš oahpu nuoraide mat áigot ealggaid bivdit, muitala Anders Nordsletta Kárášjoga ealgabivdiid searvvis.
-
-## - Biret Merete slutt
 #!! *Removes __PropAttr__ if no Prop on the right side
-REMOVE:PropAttr (Prop Attr) - Der/laš (NEGATE *1 Prop BARRIER REAL-WORD-NOT-ABBR) ;
-
-#!! *Removes __PropPl__
-REMOVE:PropPl (Prop Pl) IF (0 COMMON-N)(NEGATE 0 VGen); 
-  	#$ Sápmelaččaide lea hui mávssolaš ahte sin dárbbut váldojit vuhtii. 
+REMOVE:XXPropAttr (Prop Attr) - Der/laš (NEGATE *1 Prop BARRIER REAL-WORD-NOT-ABBR) ;
 
 
+#!! !MISC
 
-#!! * __r863__ removed plural Prop if COMMON-N
-REMOVE:r863 Prop IF (0 COMMON-N)(0 (Prop Pl))(NEGATE 0 VGen);
-  	## Sápmelaččaide lea hui mávssolaš ahte sin dárbbut váldojit vuhtii. 
-
-
-#!! ! Removing proper nouns that are lookalikes
-
-
-#!! * __PropVfin__ selects propernouns which can be Vfin in the beginning of a sentence
-SELECT:PropVfin Prop (0 VFIN LINK *-1 BOS BARRIER WORD)((1 VFIN + Sg3) OR (1 Pcle LINK 1 VFIN + Sg3) OR (1 CC OR COMMA LINK 1 Prop OR Pers) OR (1 CC OR COMMA LINK 1 (Pers Gen) OR Indef LINK 1 N));
- 	#$ Lásse dat lei sihtan mu váldit dan.
- 	#$ Máhtte ii sáhttán boahtit ovdal.
- 	#$ Máhtte ja Ánne eaba sáhttán boahtit ovdal.
-
-
-LIST CONF-PROP = "Lea" "Lassi" "Dan" "Hu" "Goa" "Mo" "Moa" "Man" "Naba" ;
-
-#!! * __confProp, Lea, Man, Hui, Mo, Prop__ removes Props which confuces the analyser, 
- 
-SELECT:confProp CONF-PROP + Attr - ("Lea") (-1 BOS OR PUNCT OR (":"))(*1 Sur OR Mal OR Fem BARRIER REAL-WORD-NOT-ABBR) ;
-	#$ Dan Robert Larsen 
-	#$ Lea O. Olsen
- 
-REMOVE:confProp CONF-PROP (-1 BOS OR PUNCT OR (":"))(0 Mal OR Sur OR Fem OR Attr)(NEGATE 1 SG3-V); 
-  	#$ Lassi dutkandoarjagat sáhttet leat mielde... 
- 	#$ Lea dušše okta Ipmil. Lea idja.  
-
-REMOVE:confProp Prop (0 CONF-PROP LINK 0 Adv OR Pron OR V) ;
-  	#$ De son celkkii sutnje: "Mana basadit Siloaláddos."
-
-#!!  * __Dert__ Rule for removing Der/t Prop when there are other analysis
-REMOVE:Dert (Der/t) (0 Prop) ;
-
-REMOVE:Prop Prop ((0 ("profehta") OR ("vuoigŋa") OR Pron) OR (0 Adv LINK 1 go)) ;
- 	#$ Ovdal go
-
-
-#!! !!Other popular rules?
 
 #!!  * __ABBR__ Removes ABBR in favour of Adv, Pcle or Pron, e.g. "dii" when there is no punctuation
 REMOVE:ABBR ABBR (0 Adv OR Pcle OR Pron) ;
