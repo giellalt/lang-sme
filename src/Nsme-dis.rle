@@ -2096,7 +2096,7 @@ REMOVE:r551anotv (V*) IF (0 A-NOT-V) ; #tjaa
 #!! !!Propernouns
 
 
-REMOVE:PropAttrIfProp (Prop Attr) IF (NOT *1 Prop BARRIER REAL-WORD-NOT-ABBR);
+REMOVE:PropAttrIfPropx (Prop Attr) IF (NOT *1 Prop BARRIER REAL-WORD-NOT-ABBR);
 	#$ Ášši 05/01 Ođđa áššiid dieđiheapmi.
 	
 #!! *Selects __Prop__ if capital letter inside clause
@@ -2142,7 +2142,7 @@ SUBSTITUTE:PlcSur0 (Prop Plc) (Prop Sur) TARGET (Prop Plc Ill) IF (-1 (Mal Attr)
 	#$ Sárá riŋgii Trond Trosterudii.
 	#% Son riŋgii Kárášjohkii. 
 
-SUBSTITUTE:PlcSur1 (Prop Plc) (Prop Sur) TARGET (Prop Plc) IF (*-1C (Mal Attr) OR (Fem Attr) BARRIER REAL-WORD-NOT-ABBR)(NEGATE 0 (Prop Ill) OR (Prop Loc) LINK NOT *-1 Mal OR Fem BARRIER REAL-WORD-NOT-ABBR) ;
+SUBSTITUTE:PlcSur1 (Prop Plc) (Prop Sur) TARGET (Prop Plc) IF (*-1C Mal OR Fem BARRIER REAL-WORD-NOT-ABBR)(NEGATE 0 (Prop Ill) OR (Prop Loc) LINK NOT *-1 Mal OR Fem BARRIER REAL-WORD-NOT-ABBR) ;
   	#$ Linda England.
   	#$ Linda B. England.
   	#% De vuolgá Biret Trosterudii.
@@ -2174,7 +2174,7 @@ SELECT:BMXXX (Prop Sur) IF (*-1 VFIN BARRIER S-BOUNDARY) (1 Mal OR Fem LINK NOT 
     	#$ Dovdágo Biret Turi Lene Antonsen?
 
 
-SELECT:BMr1918 Attr IF (0 (Prop Mal) OR (Prop Fem))(NEGATE 0 Loc)(1C Prop LINK 0 Sur OR Fem OR Mal LINK NEGATE 0 ADVLCASE LINK -1 Nom); #(NEGATE 0 Acc LINK *1 Acc BARRIER NOT-NP LINK NOT 0 Mal OR Fem) ; Lene: kommenterte ut denne fordi den hindret regelen i å fungere på alle setninger, vi får se på hva slags constraint det bør være. 
+SELECT:BMr1918 Attr IF (0 (Prop Mal) OR (Prop Fem))(NEGATE 0 Loc)(1C Prop LINK 0 Sur OR Fem OR Mal); # LINK NEGATE 0 ADVLCASE LINK -1 Nom LINK NOT *-1 Nom BARRIER S-BOUNDARY); #(NEGATE 0 Acc LINK *1 Acc BARRIER NOT-NP LINK NOT 0 Mal OR Fem) ; Lene: kommenterte ut denne fordi den hindret regelen i å fungere på alle setninger, vi får se på hva slags constraint det bør være. 
     	#$ Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna.
     	#$ Dat lea dehálaš, lohká Svein Ottar Helander.
     	#$ Do boahtá Biret Turi Sara.
@@ -3433,6 +3433,7 @@ SELECT:maidAdv ("maid" Adv) (*-1 CS OR BOC OR Rel BARRIER VFIN OR CLB)(NEGATE -1
  	#$ Lea go stáhtas maid geatnegasvuohta doarjut dán kultuvrra.
  	#$ Leago stáhtas maid geatnegasvuohta doarjut dán kultuvrra.
 	#$ Maid moarsi ja irgi leaba čiŋadan gávttiiguin.
+	#% Na maid dal juo dagaža ja maid ii dagaš. #derfor VFIN - Pot
 
 #!! * __maidAdv4__ selects maid Adv between two verbs.
 SELECT:maidAdv ("maid" Adv) (*-1 INF-V BARRIER REAL-V)(*1 Inf BARRIER REAL-V);
@@ -4174,25 +4175,18 @@ SELECT:year (Num Gen) (-1 GEASSET) ;
 SELECT:numunit (Num Gen) + NUMUNIT (-1 (Num Acc)) ;
 	## Dat máksá guokte duhát ruvnno.
 
-SELECT:WWNumGen Gen (0 Num LINK NOT 0 Acc)(1 (N Gen) LINK *1 (N Acc) OR (N Gen) OR (N Nom) BARRIER NOT-A)(NEGATE -1 TRANS-V LINK NOT *3 Acc)(NEGATE -1 TRANS-V LINK *3 Acc LINK 1 Po);
+SELECT:WWNumOrdGen Gen (0 Num OR Ord LINK NOT 0 Acc)(1 (N Gen) LINK *1 (N Acc) OR (N Gen) OR (N Nom) BARRIER NOT-A)(NEGATE -1 TRANS-V LINK NOT *3 Acc)(NEGATE -1 TRANS-V LINK *3 Acc LINK 1 Po);
 	## Dan eatnamis oažžu ovtta gusa fuođđara.
 
-#!! * selecting Ill Attr and Loc Attr for numerals	
-SELECT:WWNumIllAttr (Num Ill Attr) (*1 (N Ill) OR (Num Ill) BARRIER NOT-A);	
+#!! * selecting Ill Attr and Loc Attr for numerals	and ordinals
+SELECT:WWNumOrdIllAttr (Ill Attr) (0 Num OR Ord) (*1 (N Ill) OR (Num Ill) BARRIER NOT-A);	
 	## Mun attán girjji ovtta oahppái.
-SELECT:WWNumr15292 (Num Ill Attr) (1 (N Gen) LINK *1 (N Ill) BARRIER NOT-A);	
-SELECT:WWNumLocAttr (Num Loc Attr) (*1 (N Loc) BARRIER NOT-A);	
+SELECT:WWNumOrdIllAttr (Ill Attr) (0 Num OR Ord) (1 (N Gen) LINK *1 (N Ill) BARRIER NOT-A);	
+SELECT:WWNumOrdLocAttr (Loc Attr)  (0 Num OR Ord)(*1 (N Loc) BARRIER NOT-A);	
 	## Ovtta ovddasteaddjis divššohasa ovddas lea vuoigatvuohta...
 	## Na gal don dal oaččut dan beannot čuohtái, go juo válddežat.	
-REMOVE:WWNum (Num Attr) (NOT *1 ADVLCASE + N BARRIER NOT-A) ;	
-
-
-#!! !!Indefinite pronouns
-#!! The rules are not documented yet
-
-IFF:miiIndef ("mii" Indef) (-1 ("vaikko") OR ("vaikke"))(NOT *1 Pl1 BARRIER NOT-ADV-PCLE);
-	## Doppe lea vaikko mii.
-
+REMOVE:WWNumOrdAttr (Num Attr) OR ("nubbi" Ord Attr)(NOT *1 ADVLCASE + N BARRIER NOT-A) ;	
+	#$ Nuppi vuoru goalmmát minuvttas Anette nivkalii čiehkačievččastaga čábbát njuolga mollii.
 
 SELECT:galleIndef ("galle" Indef) (*-1 Neg BARRIER S-BOUNDARY) ;
 	#$ Eaige sámiid ássanguovllus leat galle gieldda, mat...
@@ -4222,7 +4216,7 @@ SELECT:nubbiOrd ("nubbi" Ord) (*0 ("vuosttas") OR ("vuosttaš") OR ("goalmmát")
 SELECT:nubbiOrdManu ("nubbi" Ord) (-1 MANNU + Gen)(1 ("beaivi") OR ("b") OR ("vahkku"));
 	#$ Son lei doppe Ohcejogas golggotmánu nuppi beaivvi.
 
-SELECT:nubbiOrdSuperl ("nubbi" Ord)(1 A LINK 0 Superl OR Loc OR ("maŋit" Superl) OR ("maŋemuš"));
+SELECT:nubbiOrdSuperl ("nubbi" Ord)((-1 ("juohke")) OR (1 A LINK 0 Superl OR Loc OR ("maŋit" Superl) OR ("maŋemuš")));
 	#$ Listu lea gieldda nubbi stuorámus bellodat.
 	#$ Nubbin vuolemusas lea Guovdageaidnu Finnmárkku listtus.
 
@@ -4247,12 +4241,166 @@ SELECT:nubbiIndefAcc ("nubbi" Indef Acc) (*-1 TRANS-V BARRIER SV-BOUNDARY)(1 Inf
 SELECT:nubbiIndefUnnimusat Indef (-1 ("unnimustá") OR ("unnimusat"))(0 ("nubbi"));
 	#$ Mánáin lea ovttastallanvuoigatvuohta unnimustá nuppiin váhnemiin.
 
-REMOVE:unbbiAttr Attr (0 ("nubbi"))(1 Dem OR Adv);
+REMOVE:nubbiAttr Attr (0 ("nubbi"))(1 Dem OR Adv);
 	#$ ... ja nubbi dán suorggi siskkabeale hálddahusortnegiid birra.
 	#$ ...nubbi fas rávesolbmuid psykiatriijas.
 
 SELECT:KillnubbiOrd Indef (0 ("nubbi" Ord));
 
+#!! !!Indefinite pronouns
+#!! The rules are not documented yet
+
+
+	
+REMOVE:r1567 (Indef Attr) IF (*-1 LEAT-FIN-NOT-IMPRT LINK NOT *1 PRC-NOT-LEAT BARRIER VFIN)(NEGATE *-1 COM-HEAD BARRIER NOT-NPMOD)(0 ("muhtun") OR ("soames") OR ("soamis"))(*1 Loc BARRIER NOT-NPMOD)(NEGATE *1 VFIN);
+#REMOVE:r1568 (Pron @>N) IF (*-1 LEAT-FIN-NOT-IMP LINK NOT *1 PRC-NOT-LEAT BARRIER VFIN)(NEGATE *-1 COM-HEAD BARRIER NOT-NPMOD)(0 ("muhtun") OR ("soames") OR ("soamis"))(*1 Loc BARRIER NOT-NPMOD)(NEGATE *1 VFIN);
+	## Son lea profehta, aiddo dego muhtun boares profehtain.
+    # Both rules are necessary in exactly this order
+#OBS
+
+SELECT:r1569 (Indef Attr) IF (0C Pron - ("nubbi"))(*1C N BARRIER NOT-A-PCLE OR go)(NEGATE 0 ("eará") LINK -1 ("earret"));
+	## Dan muitalii muhtin mátkkošteaddji gean namma lei Keilhau.
+	## Njuolggadusain ledje eará ge mearrádusat.
+
+SELECT:r1570 (Indef Attr) IF (1 (A Attr))(*2 HEAD-N BARRIER NP-BOUNDARY);
+	## ...ja eará almmolaš dahje priváhta doaibma.
+
+SELECT:r1571 (Indef Attr) IF (1 ("láhkai"));
+	## Seammá láhkái go váldojournála ja lassijournála geavaheami oktavuođas...
+REMOVE:r1572 Attr IF (0 Pron)(1 (Pron Rel));
+	## Lea unnán maid sáhttit dahkat. 
+REMOVE:r1573 (Indef Attr) IF (1 (Pron Pers Loc));
+  	## Ja muhtun sis viegai dakkaviđe su lusa.    
+
+SELECT:r1576 Indef IF (*-1 ("jus") OR ("jos") OR ("juos") OR ("joas") BARRIER S-BOUNDARY)(0 Interr); 
+	## Jus guhtege dadjá áhččásis dahje eadnásis:...
+	## ...ahte doaimmat eai juogaduvvo menddo ollugiidda.
+
+#SELECT:r1579 Indef IF (*-1 BOC BARRIER NOT-ADV)(*1 N BARRIER NOT-NPMOD);
+	## Ollu amerihkálaččat doivot Oslo Ruoŧa oaivegávpogin.
+
+REMOVE:r1580 Adv IF (*-1 REAL-COPULAS BARRIER S-BOUNDARY OR CC OR REAL-V)(0 Indef)(NEGATE 1 A)(NEGATE *1 REAL-V BARRIER S-BOUNDARY OR CC);
+	## Doppe ledje ollu olbmot.
+	## Diet gal lei beare unnán.
+ # Indefinite pronouns, not adverbs, if there is no verb other than 'leat'.
+
+REMOVE:r1581 Adv IF (*-1 CC OR CLB BARRIER NOT-ADV)(0 Indef)(NEGATE 0 Loc)(*1 N BARRIER NOT-NPMOD);
+	## Dán áššis, nugo eanaš eará áššiin,...
+
+REMOVE:r1583 Adv IF (1 Interr);
+  	## Attášii sutnje buot maid dárbbašit.
+  	## Danne lea váttis čohkket barggu buot surggiide oktanaga.
+  # Possibly sentences such as: 
+  	## Son lea njuoskan buot, mii lea fuones ášši.
+  # could be counterexamples, but until now a comma is supposed to be inbetween.
+	
+REMOVE:r1585 (Sur Attr) IF (NEGATE 1 Prop);	
+
+#REMOVE:r3581 Rel IF (0 Indef)(1 EOS);
+	
+	# Particular indefinite pronouns
+	# ------------------------------
+
+	# This is an important section. It should first be expanded
+	# and then probably generalised according to classes of 
+	# indefinite pronouns.
+
+	# buot
+	# - - -
+
+IFF:r1586 ("buot" Pron Indef Attr) OR ("gait" Pron Indef Attr) (*1 N OR (A Pl) BARRIER NOT-NPMOD);
+	## Sii meannudit buot velggolaččaid máksingeahpádusohcamiid. 
+	## Mii addet bálvalusfálaldaga buot álbmogii.
+	## De fertejit buot vihtta miellahtu oassálastit.
+	## ahte buot náitalan olbmuin galggai leat guolástanvuoigatvuohta.
+
+ 	
+SELECT:r1590 (Pron Indef Nom) IF (0 ("buot") OR ("gait"))(1 PL3-V);
+	## Vuollásaš ráđit buot heaittihuvvojedje oktasaš hálddahuslaš jođiheapmái. 
+	
+
+SELECT:r1596 (Indef Nom) IF (NEGATE *-1 TRANS-V BARRIER NOT-ADV-PCLE)(0 ("buot") OR ("gait"))(NEGATE *1 TRANS-V BARRIER S-BOUNDARY LINK 0 MAIN-V OR Inf);
+	## Buot lea lávkkas.
+	
+#SELECT:r1597 Indef IF (-1 ("gullat") LINK -1 Ill)(0 ("buot") OR ("gait")); # trenges ikke
+	## Dat mearkkaša ahte dása gullet buot mat eai leat spiehkastuvvon.		
+
+#SELECT:r1598 Indef IF (*-1 TRANS-V BARRIER NOT-ADV-PCLE)(0 ("buot") OR ("gait") LINK 1 S-BOUNDARY OR REAL-CLB); # trenges ikke
+	## Mun borren buot.
+
+#SELECT:r1599 Indef IF (0 ("buot") OR ("gait"))(*1 TRANS-V BARRIER Acc OR S-BOUNDARY); # trenges ikke
+	## Sii fertejit buot earret eatnamiid gohčodit danin.
+
+
+# eará
+# - - -
+
+SELECT:r1601 (Indef Attr) IF (0 ("eará"))(1 PrfPrc)(2 N);
+	## ...ja eará vuostáiváldojuvvon dokumeanttaid...
+	
+SELECT ("eará" Gen) IF (-1 ("earret")) ;
+
+# earri
+# - - -
+
+REMOVE:r1602 ("earri" N Sg Acc PxSg2) IF (-2 (V Pl3))(-1 COMMA)(0 ("eará"))(1 (V Pl3));
+	## Muhtamat čállet, earát ožžot jorgalan ja bagadallanveahki dán bargui.
+
+REMOVE:r1603 ("earri" N Sg Acc PxSg2) IF (-1 ("buot") OR ("gait") OR ("máŋga"));
+	## Buot earát.
+
+REMOVE:r1604 ("earri" N Sg Acc PxSg2) IF (NEGATE *-1 Sg2)(*1 (V Pl3));
+	## ... go dat maid earát vásihit.
+
+REMOVE:r1605 ("earri" N Sg Acc PxSg2) IF (1 (Pron Rel Pl));
+	## ... ja earát geat háliidit ...
+
+# eatnat
+# - - - 
+SELECT:r1606 Indef IF (-1 ("giittos"))(0 ("eatnat"));
+
+# juoga
+# - - -
+SELECT:r1607 (Indef Nom) IF (-1 CLB)(0 ("juoga"))(1 Rel);
+	## ..., juoga mii boahtá ovdan Romssa universitehta plánain.
+
+# ollu
+# - - -
+SELECT:r1608 Pron IF (-2 Pron)(-1 CC)(0 ("ollu") OR ("olu"));
+	## Váilos unnán dahje ollu.
+
+SELECT:r1609 Pron IF (-1 ("seammá"))(0 ("ollu") OR ("olu"))(*1 N BARRIER NOT-NPMOD);
+	## Jus eanebut leat ožžon seamma ollu jienaid, de mearriduvvo boađus vuorbádemiin.
+
+# seamma/seammá
+# - - - - - - - 
+
+SELECT:r1610 Attr IF (0 ("seammá"))(*1 N BARRIER NOT-NUM);
+	## Dasto smiehttatge fas seamma sullasaš jearaldagaid. 
+	## Sáhttá leat ulbmillaš, ahte seamma olmmoš áimmahuššá máŋga
+	## dain doaimmain.
+
+SELECT:r1611 Attr IF (0 ("seammá"))(1 Adv OR ("ollu" Pron))(NEGATE 1 REAL-V OR ("gusto")) ;
+	## Mu oainnu mielde sáhttá seammá bures oaidnit dan láhkai, ahte... 
+  # The "gusto" here should be removed by a set of sentence adeverbials
+
+	# Then we kill the rest of the attributes...
+	# But did we catch enough attributes?  
+
+	#REMOVE Attr IF (0 ("seammá")) ;
+	## Seammá gusto poliklinihkalaš divššus. 
+  	## Seamma gusto poliklinihkalaš divššus. 
+
+# unnán
+# - - -
+SELECT:r1612 Indef IF (*-1 COPULAS BARRIER NOT-AUX-V)(0 ("unnán"))(NEGATE 1 PrfPrc LINK *1 NP-HEAD-ACC BARRIER NOT-NPMOD);
+	## Dat gal lei beare unnán.
+	## Sii leat hui unnán dahkan guorahallat "sámi vieruid ja riekteáddejumiid".
+	## Eanetlohku lea menddo unnán bidjan Finnmárkku mihtilmas diliid vuođđun.
+
+ # In the last example "unnán" is an Adv. Hence the last condition. 
+ # Alternative: (NEGATE 1 PrfPrc LINK 1 Inf)?
+  
 
 #!! !!Demonstrative pronouns
 
@@ -4449,7 +4597,7 @@ SELECT:BM (N Attr) IF (0 INITIAL)(*1 Sur BARRIER REAL-WORD-NOT-ABBR);
 REMOVE:BMr1723 Adv IF (NEGATE *-1 REAL-V BARRIER S-BOUNDARY)(0 A)(NEGATE 1C A)(NEGATE *1 REAL-V BARRIER S-BOUNDARY); # This rule makes sense to this sentence.
 	#$ Maŋimus maid Will Turneris oinniimet lei go son vuojui meara bodnái.
 
-SELECT:BM (A Attr) IF (*-1 BOC BARRIER NOT-NPMODADV)(NEGATE 0 REAL-V)(NEGATE 1 Dem OR REAL-V OR Prop)(NEGATE 0 Prop LINK -1 (Prop Attr) LINK 2 CC)(NEGATE 0 Prop LINK 1 CC LINK 1 Prop LINK NOT 1 Prop)(*1 N BARRIER NOT-NPMOD LINK NOT 1 Po)(NEGATE 1 COMMA LINK 1 N);
+SELECT:BM (A Attr) - ("nubbi") IF (*-1 BOC BARRIER NOT-NPMODADV)(NEGATE 0 REAL-V)(NEGATE 1 Dem OR REAL-V OR Prop)(NEGATE 0 Prop LINK -1 (Prop Attr) LINK 2 CC)(NEGATE 0 Prop LINK 1 CC LINK 1 Prop LINK NOT 1 Prop)(*1 N BARRIER NOT-NPMOD LINK NOT 1 Po)(NEGATE 1 COMMA LINK 1 N);
 	#$ Golbma čáppa, doaimmalaš nieidda livžo áhčiset riegádanbeaivve.
 
 SELECT:BM Attr IF (-1 (N Nom) LINK *-1 COPULAS LINK -1 HUMAN + Ill OR (Pers Ill))(0 A)(1 (Nom)) ;	
@@ -4474,8 +4622,8 @@ SELECT:BMr1730 (A Attr) IF (NEGATE *-3 COPULAS BARRIER NOT-ADV-PCLE)(-2 Attr OR 
 REMOVE:BMr1731 (A Nom) IF (NEGATE -1 COPULAS LINK 1 DEHALAS LINK *1 ADVLCASE BARRIER NOT-NPMOD)(0 (A Attr))(NEGATE 0 (Pl Nom) LINK *-1 (V Pl3) BARRIER NOT-ADV-PCLE OR CS LINK NOT *-1 (Pl Nom) BARRIER S-BOUNDARY)(NEGATE 0 (Pl Nom) LINK *-1 COPULAS BARRIER NOT-ADV-PCLE LINK 0 Pl3)(NEGATE *1 NP-HEAD-NOM OR Ess BARRIER NOT-ADV-A)(*1C N OR RCmpnd BARRIER NOT-NPMOD OR (PUNCT RIGHT) OR CC LINK NOT 1 Po OR PREGEN)(NEGATE 1 Prop OR Ill)(NEGATE 1 COMMA LINK 1 N)(NEGATE 1 Gen LINK *1 Po OR PREGEN BARRIER NP-BOUNDARY);
 	#$ Dat lea čuovvovaš sajis.
 
-REMOVE:BMr1732 (A Gen) IF (0 (A Attr))(*1 N BARRIER NOT-A LINK NOT 1 Po);
-REMOVE:BMr1733 (A Acc) IF (0 (A Attr))(*1 N BARRIER NOT-A LINK NOT 1 Po);
+REMOVE:BMr1732 (A Gen) IF (0 (A Attr) - ("nubbi"))(*1 N BARRIER NOT-A LINK NOT 1 Po);
+REMOVE:BMr1733 (A Acc) IF (0 (A Attr) - ("nubbi"))(*1 N BARRIER NOT-A LINK NOT 1 Po);
     	#$ Sámegiella ja dárogiella leat ovttaárvosaš gielat.
 	#$ Lea deaŧalaš movttiidahttit studenttaide gazzat doavttergrádaoahpu. 
  # The careful mode (*1C N) was removed because of the second example.
@@ -4497,10 +4645,10 @@ SELECT:BMr1737 (A Attr) IF (NEGATE *-1 LEAT-FIN-NOT-IMPRT BARRIER NOT-ADV LINK *
 REMOVE:BMr1738 Adv IF (-2 A OR N)(-1 go)(*1 N BARRIER NOT-NPMOD);
 	#$ No longer needed after the introduction of the previous rule?
  
-REMOVE:BMr1740 (A Loc) IF (0 Attr)(1 N);
+REMOVE:BMr1740 (A Loc) - ("nubbi") IF (0 Attr LINK 1 N);
 	#$ Olggosaddin sáhttá liikká dáhpáhuvvat jos gávdnojit dasa beaktilis sivat.
 
-SELECT:BMr1741 (A Attr) IF (*-1 BOC BARRIER NOT-NPMODADV)(NEGATE 0 VFIN OR Inf)(*1 HEAD-N BARRIER NOT-NPMOD)(NEGATE 1 VFIN OR Prop)(NEGATE 1 COMMA LINK 1 N);
+SELECT:BMr1741 (A Attr) - ("nubbi") IF (*-1 BOC BARRIER NOT-NPMODADV)(NEGATE 0 VFIN OR Inf)(*1 HEAD-N BARRIER NOT-NPMOD)(NEGATE 1 VFIN OR Prop)(NEGATE 1 COMMA LINK 1 N);
 	#$ Sámedikki vuosttamuš dábálaš dievasčoahkkima maŋŋá... 
 
 REMOVE:BMr1742 N IF (-1 Gen OR Dem OR Indef)(0 Attr LINK NOT 0 (V* A) OR ABBR)(1 N)(NEGATE 1 VFIN);
