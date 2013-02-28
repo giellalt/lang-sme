@@ -498,9 +498,6 @@ SET VFIN-NOT-NEG = VFIN - Neg ;
 
 SET NOT-PRFPRC = WORD - PrfPrc ;
 
-LIST V-TRANS = TV (IV Der/ahtti) (IV Der/h) ;
-
-SET V-TRANS-ACT = V-TRANS - (TV Der/PassS) - (TV Der/PassL);
 
 
 #!! * Sets for person
@@ -730,7 +727,8 @@ SETS
 #!! * Sets for verbs
 # -----
 # Hmm V*?
-SET REAL-V = V - (Actio Nom) -  (Actio Gen) ;
+SET REAL-V-NOT-ACTIO = V - Actio  ;
+SET REAL-V = REAL-V-NOT-ACTIO  +  (V Actio Ess) ;
   #!! ** V is all readings with a V tag in them, REAL-V should
   #!! be the ones without an N tag following the V.  
   #!! The REAL-V set thus awaits a fix to the preprocess V ... N bug.
@@ -772,16 +770,17 @@ SET MAIN-V = V - COPULAS - Neg - MOD-ASP OR ("orrut") ;
  
 # The set of verbs that can be main verbs. Includes AUX-OR-MAIN.
 
-LIST TRANS-V1 = TV (IV Der/ahtti) (IV Der/h) ;
-# This is only a tool for making the following sets, bacause of that the symbols (|) and (-) in the set don´t function as one had expected.
-SET TRANS-ACT-V = TRANS-V1 - (TV Der/PassS) - (TV Der/PassL);
+LIST TV-V = (V TV) (IV Der/ahtti) (IV Der/h) ;
+
+SET TV-V-NOT-PASS = TV-V - Der/Pass ;
+
  #XXX Never acc-obj for a.l. or actor?
  # All active verbs with a TV tag, including AUX-OR-MAIN.
  
-SET TRANS-ACT-NOT-AUX-V = TRANS-V1 - Der/Pass - AUX ;
+SET TV-V-NOT-PASS-NOT-AUX-V = TV-V-NOT-PASS - AUX ; #not in use
 
 #!! TRANS-V is the set for verbs really taking objects
-SET TRANS-V = TRANS-V1 - Der/Pass - Der/NomAct - Der/NomAg - PrsPrc ;
+SET TRANS-V = TV-V-NOT-PASS - PrsPrc ;
 
 #!! * Sets for verbs choosing oblique objects or adverbials
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -792,11 +791,13 @@ LIST STVLIST = (IV Der/ahtti) (IV Der/h) "addit" "amašit" "atnit" "ánssášit"
 	# Strictly transitiv-verbs - a start. This set is ment as a help choosing Acc or Gen. Example: "Mun borren eatni kafeás." - there is Gen, no Acc, even if the verb is transitive. That´s why "borrat" is not in this set.
 	# These verbs: "addit", "fidnet" and "oažžut" can, when it´s about sex, be without object: "Son oaččui gonagasa bártnis." 
 
-SET STRICT-TV-V = STVLIST - Der/Pass ;
+SET STRICT-TV-V = STVLIST + V - Der/Pass ;
 
 #!! STRICT-TRANS-V is the set for verbs which don't leat a GenAcc be a modifyer of anything else than an object, e.g. Mun organiseren eatni gievkkanis. - eatni wants to be the object
 
-SET STRICT-TRANS-V = STRICT-TV-V - (Actio Nom) - (Actio Gen)  - (Actio Loc) -  (Actio  Com) - Der/NomAg - Der/NomAct ;
+SET STRICT-TRANS-V1 = STRICT-TV-V - Actio  ;
+
+SET STRICT-TRANS-V = STRICT-TV-V OR (Actio Ess)  ;
 	
 
 LIST LOC-V = "ávkkástallat" "ballat" "beassat" "beroštit" "biehttalit" "bihtit" "ceavzit" "dinet" "dolkat" "eastadallat" "eastadit" "fuolahit" "fuollat" "geargat" "heaitit" "ilbmat" "jearrat" "jearralit" "luohpat" "máinnašit" "nohkkot" "oassálastit" "spiehkastit" "váruhit" "vástidit" ;
@@ -925,7 +926,7 @@ LIST NOT-HUMAN-OBJECT-V = "bargat" "borrat" "čállit" "lohkat" "vuodjit" ;
 LIST USUALLY-IV =  "boradit" ;
 	# TV verbs which usually are used intransitively
 
-SET JUST-TRANS-ACT-V = V-TRANS-ACT - NOT-HUMAN-OBJECT-V ;
+SET JUST-TRANS-ACT-V = TV-V-NOT-PASS - NOT-HUMAN-OBJECT-V ;
 
 #LIST ABSTR-EVENT-V = "lassánit" ;
 
@@ -2938,13 +2939,13 @@ SELECT:PersAcc (Pers Acc) (-1 Acc LINK *-1 VERBAL-ACTIVITY-V BARRIER NOT-NPMOD)(
 
 
 #!! * __datPers__ selects Pers. I made it stronger than it was. ref. r897 in sme-dis.rle
-SELECT:datPers Pers (0 DAT-PRON)(NEGATE 0 ("dasgo") OR ("danin") OR ("dainna"))(NEGATE 1 A OR Num OR N OR Indef OR Attr)(NEGATE 1 PrfPrc LINK *1 N BARRIER NOT-NPMOD)(NEGATE 0 Nom LINK 1 ("gal") OR Pcle LINK 1 (N Nom))(NEGATE 1 NP-HEAD-GEN LINK 1 (Actio Nom) LINK 1 N)(NEGATE 1 ("seammás"))(NEGATE 0 Acc LINK *1 STRICT-TV-V BARRIER S-BOUNDARY LINK NOT *1 Acc BARRIER NOT-NPMOD);
+SELECT:datPers Pers (0 DAT-PRON)(NEGATE 0 ("dasgo") OR ("danin") OR ("dainna"))(NEGATE 1 A OR Num OR N OR Indef OR Attr)(NEGATE 1 PrfPrc LINK *1 N BARRIER NOT-NPMOD)(NEGATE 0 Nom LINK 1 ("gal") OR Pcle LINK 1 (N Nom))(NEGATE 1 NP-HEAD-GEN LINK 1 (Actio Nom) LINK 1 N)(NEGATE 1 ("seammás"))(NEGATE 0 Acc LINK *1 STRICT-TRANS-V BARRIER S-BOUNDARY LINK NOT *1 Acc BARRIER NOT-NPMOD);
 	#$ Dá dat leat.
 	#$ Moai soabaime dasa.
 	#$ Aiddo sii movttidahttojuvvojit daid buot smiehttat sámegillii.
  
 #!! * __datDemSg__ selects Dem from Pron Pers Sg3 Gen
-SELECT:datDemSg (Dem Sg) (NEGATE *-1 STRICT-TV-V LINK NOT *2C Acc BARRIER N)(0 (Pron Pers Sg3 Gen))(NEGATE 1 Po)(NEGATE *1 STRICT-TV-V BARRIER S-BOUNDARY OR Acc)(NEGATE *1 Pl OR Ess OR Com BARRIER N)(NEGATE -1 BOS LINK 2 Prop) ;
+SELECT:datDemSg (Dem Sg) (NEGATE *-1 STRICT-TRANS-V LINK NOT *2C Acc BARRIER N)(0 (Pron Pers Sg3 Gen))(NEGATE 1 Po)(NEGATE *1 STRICT-TRANS-V BARRIER S-BOUNDARY OR Acc)(NEGATE *1 Pl OR Ess OR Com BARRIER N)(NEGATE -1 BOS LINK 2 Prop) ;
 	#$ Nubbi noađđeheargi goallostuvvo giehtahearggi lávžái ja goalmmát fas dan nuppi lávžái. #It shouldn´t take this one.
     # It shouldn´t hit: Mun gohčodan dan eadnin. Sii čurvot dan dáhkiid alde. De dearvvahehket dan ráfiin. Son dasto attii dan eadnásis. Disse vil bli tatt hånd om i More pronouns  
 
@@ -3686,7 +3687,7 @@ REMOVE:PrNoCompl Pr (NEGATE *1 NP-HEAD-GEN OR (A Gen) OR (Num Gen) BARRIER NOT-N
 
 
 #!! * __PoGen__ selects Po
-SELECT:PoGen Po - Foc - N-PO (-1 NP-HEAD-GEN - VAHKKU-DUR - Qst LINK NEGATE 0 Acc LINK *-1 STRICT-TV-V BARRIER NOT-ADV-PCLE)(NEGATE 1 NP-HEAD-GEN OR (A Gen) OR (Num Gen) BARRIER NOT-NPMOD) (NEGATE 1 STRICT-TV-V LINK NOT 1 Acc BARRIER NOT-NPMODADV);
+SELECT:PoGen Po - Foc - N-PO (-1 NP-HEAD-GEN - VAHKKU-DUR - Qst LINK NEGATE 0 Acc LINK *-1 STRICT-TRANS-V BARRIER NOT-ADV-PCLE)(NEGATE 1 NP-HEAD-GEN OR (A Gen) OR (Num Gen) BARRIER NOT-NPMOD) (NEGATE 1 STRICT-TRANS-V LINK NOT 1 Acc BARRIER NOT-NPMODADV);
 	#$ Vuoi dan olbmo gean bokte fillehusat bohtet.
 	#$ Nieida bođii ráhkkásis mielde.
 	#$ Tommi ja Annika dárkilit geahččaba Pippi oaidnin dihte mo diŋggaohccit barget.
@@ -5228,11 +5229,11 @@ REMOVE:NoActorIfSg3 Actor (0 VFIN + Sg3) ;
 #!! !!Demonstrative pronouns, agreement in DP - should it be moved to after verbmappings? 
 #!! The rules are no documented yet
 
-SELECT:DemAttr $$CASE + (Dem Sg) (0 DAT-PRON)(*1 $$CASE + (N Sg) BARRIER NOT-NPMOD OR (Time) OR Num LINK NOT 0 VFIN OR ("leat") OR (Actio Ess) OR Po)(NEGATE 0 Acc LINK *-1 STRICT-TV-V BARRIER Acc LINK *1 Dem LINK NOT *1 Acc BARRIER NOT-NPMOD)  ; 
+SELECT:DemAttr $$CASE + (Dem Sg) (0 DAT-PRON)(*1 $$CASE + (N Sg) BARRIER NOT-NPMOD OR (Time) OR Num LINK NOT 0 VFIN OR ("leat") OR (Actio Ess) OR Po)(NEGATE 0 Acc LINK *-1 STRICT-TRANS-V BARRIER Acc LINK *1 Dem LINK NOT *1 Acc BARRIER NOT-NPMOD)  ; 
 	#$ Mun muitalin dan vielljasan. # Should not hit this one.
 SELECT $$CASE + (Dem Pl) (0 DAT-PRON)(*1 $$CASE + (N Pl) BARRIER NOT-NPMOD) ; 
 SELECT $$CASE + (Dem Sg) (0 DAT-PRON)(1 Gen LINK 1 $$CASE + (N Sg)) ; 
-SELECT:DemAttrNum $$CASE + (Dem Sg) (0 DAT-PRON)(1 $$CASE + Num LINK *1 (N Sg) BARRIER NOT-NPMOD OR (Time) OR Num LINK NOT 0 VFIN OR ("leat") OR (Actio Ess))(NEGATE 0 Acc LINK *-1 STRICT-TV-V BARRIER Acc LINK *1 Dem LINK NOT *1 Acc BARRIER NOT-NPMOD)  ; 
+SELECT:DemAttrNum $$CASE + (Dem Sg) (0 DAT-PRON)(1 $$CASE + Num LINK *1 (N Sg) BARRIER NOT-NPMOD OR (Time) OR Num LINK NOT 0 VFIN OR ("leat") OR (Actio Ess))(NEGATE 0 Acc LINK *-1 STRICT-TRANS-V BARRIER Acc LINK *1 Dem LINK NOT *1 Acc BARRIER NOT-NPMOD)  ; 
 	#$ Dovddat go dan vihtta bártni geat leat doppe.
 
 REMOVE:DemAcc (Dem Acc) IF (0 DAT-PRON)(1 ADVLCASE);
@@ -5252,7 +5253,7 @@ LIST MIELLA = "árbevierru" "bággu" "dárbu" "dilli" "lohpi" "miella" "riekti" 
 MAP:spredPrfPrc (@SPRED>) TARGET PrfPrc (-1 BOC)(0 Der/Pass)(1 ("leat") LINK NOT 1 V)(*2 NP-HEAD-NOM BARRIER NOT-NP);
 	#$ Buressivdniduvvon lehkos son guhte boahtá Hearránammii.
 	
-MAP:opredPrfPrc (@<OPRED) TARGET PrfPrc (-1 Acc LINK *-1 STRICT-TV-V BARRIER NOT-NPMOD)(0 Der/Pass);
+MAP:opredPrfPrc (@<OPRED) TARGET PrfPrc (-1 Acc LINK *-1 STRICT-TRANS-V BARRIER NOT-NPMOD)(0 Der/Pass);
 	#$ Seammás orru Alimusriekti Skjerstad-áššis dovdan iežas čadnojuvvon dupmui.
 
 MAP:opredPrfPrc (@<OPRED) TARGET PrfPrc (*-1 COMMA BARRIER NP OR S-BOUNDARY LINK -1 Ess)(1 EOC OR CC) ;	
@@ -5728,7 +5729,7 @@ SELECT:GenPoCoord Gen (1 CC LINK *1C Gen BARRIER NOT-NPMOD LINK *1C Po BARRIER N
 	#$ Beana goarjádii beavddi vuollái.
 
 #!! * Transitive verb + Acc-object
-SELECT:AccTV1 Acc (*-1C STRICT-TV-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc BARRIER S-BOUNDARY OR CC)(0 NP-HEAD-ACC LINK NOT *1 Acc - Pron BARRIER S-BOUNDARY)(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK *1 Ill BARRIER NOT-NPMOD) ;
+SELECT:AccTV1 Acc (*-1C STRICT-TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc BARRIER S-BOUNDARY OR CC)(0 NP-HEAD-ACC LINK NOT *1 Acc - Pron BARRIER S-BOUNDARY)(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK *1 Ill BARRIER NOT-NPMOD) ;
 	#$ Biret addá skeaŋkka Lemehii.
 
 #!! * Transitive verb + Acc-object, Ill (modifier of acc or not)
