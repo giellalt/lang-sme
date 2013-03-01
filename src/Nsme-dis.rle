@@ -793,7 +793,7 @@ LIST STVLIST = (IV Der/ahtti) (IV Der/h) "addit" "amašit" "atnit" "ánssášit"
 
 SET STRICT-TV-V = STVLIST + V - Der/Pass ;
 
-#!! STRICT-TRANS-V is the set for verbs which don't leat a GenAcc be a modifyer of anything else than an object, e.g. Mun organiseren eatni gievkkanis. - eatni wants to be the object
+#!! STRICT-TRANS-V is the set for verbs which don't let a GenAcc be a modifyer of anything else than an object, e.g. Mun organiseren eatni gievkkanis. - eatni wants to be the object
 
 SET STRICT-TRANS-V = STRICT-TV-V + REAL-V ;
 
@@ -5754,6 +5754,285 @@ SUBSTITUTE:TV-IV (V TV) (V IV) FAUXV (0 ("lávet") OR ("áigut"));
 #!! !!Secure rules for choosing Acc
 # Avtir
 
+# pron (select/remove Gen) 
+
+# semantihkka: Choosing accusative or genitive semantically
+
+REMOVE:SEMr2062 Gen IF (0 (N Acc) or (Rel Gen) LINK NOT 0 HUMAN-INDIVIDUAL OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ABSTR-TEXT OR ANIMAL OR TIME OR TITLE OR ("dállu") OR ("báiki") OR NATION)(NEGATE -1 Num OR Pr)(*1 FAMILY BARRIER NOT-NPMOD)(NEGATE 0 ANIMAL LINK *1 FAMILY-ALSO-ABSTRACT BARRIER NOT-NPMOD);
+
+REMOVE:SEMr2063 Gen IF (0 (N Acc) LINK NOT 0 (Prop Plc) OR HUMAN-INDIVIDUAL OR PROFESSION OR OFFICE OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ABSTR-TEXT OR PLACE OR NATION OR ANIMAL OR EDUCATION OR ORGANIZATION OR INSTITUTION OR TIME)(NEGATE -1 Num)(*1 FAMILY-ALSO-ABSTRACT BARRIER NOT-A);
+
+REMOVE:SEMr2064 Gen IF (0 (N Acc) LINK 0 NATURE-PLACE)(*1 FAMILY-ALSO-ABSTRACT OR NON-FAMILY BARRIER NOT-A);
+
+REMOVE:SEMr2065 Gen IF (0 (N Acc) LINK NOT 0 (Prop Plc) OR HUMAN-INDIVIDUAL OR HUMAN-GROUP OR PROFESSION OR OFFICE OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ABSTR-TEXT OR PLACE OR NATION OR EDUCATION OR ORGANIZATION OR INSTITUTION OR INDUSTRY OR TIME OR Loc)(NEGATE -1 Num OR Pr)(*1 NON-FAMILY BARRIER NOT-A);
+ 
+REMOVE:SEMr2066 Gen IF (0 Der/NomAct)(*1 HUMAN-INDIVIDUAL OR PROFESSION OR OFFICE OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ("bearaš") OR NATION BARRIER NOT-A LINK NOT 0 ("eadni") OR ("áhčči"));
+    ## Dearvvašvuođabargiilága § 10, mii gieđahallá dieđuid addima pasienttaide, ja pasientavuoigatvuođalága § 1-3, mii gieđahallá vuoigatvuođa informerejuvvon miehtamii, leat ovdamearkkat dakkár vuoigatvuođain.
+ 
+SELECT:SEMr2067 Gen IF (0 ("áhčči") OR ("ipmil"))(1 ("Vuoigŋa") OR ("vuoigŋa"));
+	## Ehpet dii leat ieža sárdnumin, muhto Áhčádet Vuoigŋa sárdnu din bokte.
+
+REMOVE:SEMr2068 Gen IF (0 ("vuoigŋa"))(1 ("ipmil"));  
+	## Muhto jos mun áján olggos bahá vuoiŋŋaid Ipmila Vuoiŋŋa fámuin.
+	
+# Genetive + Ess
+REMOVE:SEMr2069 Acc IF (0 PLACE LINK 0 Gen)(1 HUMAN LINK 0 Ess);
+## Vánit eahpiduvvo ahte stáhta geatnegasvuođat sámiid ektui 27. artihkkala mielde dagahivččii stáhta dihto guovlluid eaiggádin geatnegassan doaimmahit eaiggáduššanvuoigatvuođa nu ahte deavddášii 27. artihkkala geatnegasvuođa.	
+	
+REMOVE:SEMr2070 Gen IF (0 SINGLE-SOUND)(1 ROUTE);
+	## Ii son bealkke ii ge čuorvvo, ii ge oktage gula su jiena gáhtaid alde.
+ 
+# Nobody can possess a Proper name? Except from pers.pron. and Mal and Fem
+REMOVE:SEMr2071 Gen IF (NEGATE -1 Num OR Pr)(0 (N Acc) LINK NOT 0 NATION OR TIME OR TITLE OR Mal OR Fem)(1 Prop LINK NOT 0 NATION OR ("Vuoigŋa"))(NEGATE 1 (Prop Org))(NEGATE 1 (Prop Attr) LINK 1 (Prop Org))(NEGATE 0 N-PX LINK 1 Mal OR Fem OR Sur LINK *1 Po BARRIER NOT-NPMOD);
+	## ...go čielggadii oamastanvuoigatvuođa Finnmárkku eatnamiid hárrái.
+
+# Who can possess Prop Org?    
+REMOVE:SEMr2072 Gen IF (NEGATE -1 Num)(0 (N Acc) LINK NOT 0 NATION OR TIME)(1 (Prop Org) LINK NOT 1 (Prop Org));
+	## Álggos coggalii Anti vuosttaš spáppa Sørøy Glimt mollii 22 minuvtta maŋŋel go čiekčamat ledje álgán Niitoguolban stadionas.
+    
+# Accusative in front of a human group:
+REMOVE:SEMr2073 Gen IF (0 (N Acc) LINK NOT 0 GENERAL-PLACE OR GEOGRAPHICAL-PLACE OR GEN-POLITICAL-PLACE OR NATION OR ORGANIZATION OR EDUCATION OR TIME OR Prop)(NEGATE -1 Num)(1 HUMAN-GROUP);
+	## Ráđđehus deattuha sámi kulturáddejumi gelbbolašvuođa loktema sámiid buorrin.
+	
+# Genetive in front of "joavku":
+SELECT:SEMr2074 Gen IF (0 Plc OR Org OR ACR)(1 ("joavku") OR ("spáppa#čiekčan#joavku") OR ("lávlunjoavku") OR ("dánsunjoavku") OR ("valáštallanjoavku") OR ("čuoigan#joavku") OR ("bođuvaláštallanjoavku") OR ("a-joavku") OR ("b-joavku") OR ("filbmenjoavku") OR ("čuojahanjoavku"));	
+
+# Genitive in front of "oaidninčiehka" ja "vuoigatvuohta":
+SELECT:SEMr2075 Gen IF (NEGATE *-1 TRANS-V BARRIER SV-BOUNDARY OR Acc LINK 0 FMAINV OR Inf)(0 HUMAN + Acc OR (Pron Acc) LINK NOT 0 Loc)(*1 ("oaidninčiehka") OR ("vuoigatvuohta") BARRIER REAL-V);
+	## Romeriid vealahanáššis lea dárbu geahččat sihke ovttaskas olbmo, struktuvrralaš ja unnitlogu oaidninčiegas.
+	
+SELECT:SEMr2076 Gen IF (*-1 TRANS-V BARRIER SV-BOUNDARY OR Acc LINK 0 FMAINV OR Inf)(0 Acc LINK 0 HUMAN OR Pron)(*1 ("oaidninčiehka") OR ("vuoigatvuohta") BARRIER REAL-V LINK 0 Acc);	
+	## Mátta-Norgga almennehiin dihtto ahte giliolbmot gitta 1700-lohkui dahke iežaset vuoigatvuođa almennehiidda erenoamážit gustojeaddjin Gonagasa eiseválddiide.
+
+# Accusative in front of a nation or "sápmi":
+
+REMOVE:SEMr2081 Gen IF (0 Acc LINK NOT 0 NATION OR GENERAL-PLACE OR ORGANIZATION OR EDUCATION OR ANIMATE OR ("evangelium") OR (Prop Plc))(0 N LINK NOT *-1 Pr BARRIER NOT-NPMOD)(1 NATION OR POLITICAL-PLACE LINK NOT 0 ("sápmi" Pl));
+    ## Ráđđehus láhčá dilálašvuođaid sámi kultuvrra máŋggadáfotvuođa seailluheapmái.
+	
+    
+# "Sámegiela hálddašanguovlu/hálddahusguovllu"
+SELECT:SEMr2082 Gen IF (0 ("sámegiella") OR ("suomagiella") OR ("giellanjuolggadus") OR ("giellaláhka") LINK 0 Acc)(1 ("hálddašanguovlu") OR ("hálddahusguovlu"));
+    ## Sámiláhka meroštallá sámegiela hálddašanguovlun Kárášjoga, Guovdageainnu, Unjárgga, Deanu, Porsáŋggu ja Gáivuona gielddaid. 
+    
+SELECT:SEMr2083 Gen IF (0 ("sámiláhka"))(1 ("giellanjuolggadus"));    
+   
+# hálddašanguovllu suohkanat/gielddat
+SELECT:SEMr2084 Gen IF (0 ("hálddašanguovlu") OR ("hálddahusguovlu") LINK 0 Acc)(1 ("gielda") OR ("suohkan") OR ("fylka"));   
+
+# giella
+SELECT:SEMr2085 Gen IF (-1 VERBAL-ACTIVITY-V)(0 Acc)(1 (giella));
+	## ... hállet iežaset giela ...
+    
+# Gen + MEDIA
+SELECT:SEMr2086 Gen IF (0 NATION LINK 0 Acc)(1 MEDIA);
+	## Mediat Ruoŧa rádio, Oahpahusrádio ja Ruoŧa Televišuvdna, ožžot jagis 2002 ođđa sáddenlobiid.    
+
+    
+# Gen + "gielda" or "suohkan"
+SELECT:SEMr2087 Gen IF (0 (Prop Plc Acc))(*1 ("suohkan") OR ("gielda") BARRIER NOT-NPMOD LINK 0 Pl); 
+
+
+SELECT:SEMr2087 (Plc Gen) IF (0 (Prop Acc))(1 ("eana") OR ("guovlu")); 
+SELECT:SEMr2087 (Plc Gen) IF (0 (Prop Acc))(1 CC LINK 1 Gen LINK 1 ("eana")); 
+	## Sodoma ja Gomorra eatnamii geavvá geahppaseabbot duopmobeaivvi go dan gávpogii.
+
+SELECT ("ráđđi" Gen)(-1 ("Davviriikkat"))(1 ("girjjálašvuođabálkkašupmi")) ;
+    
+# "guovddáš#lihttu"
+SELECT:SEMr2088 Gen IF (0 ("gielda" Pl))(1 ("guovddášlihttu"));
+
+LIST SIERRA-GUOVLU = (".*guovlu"r) "suomabealli" "norggabealli" "riddu" "ruoŧabealli" "ruoššabealli" ;
+
+# Genitive in front of PLACE-ADV:
+SELECT:SEMr2077 Gen IF (0 (Prop Plc) OR GEOGRAPHICAL-PLACE LINK 0 Acc)(1 PLACE-ADV);
+	## vealgelogahallama mearkkašumi fylkkain Finnmárkku máttabealde 
+
+	
+# Accusative in front of a political-place or general-place:
+REMOVE:SEMr2078 Gen IF (0 N LINK NOT 0 ABSTR-PLACE OR ACTIVITY OR TOPIC OR HUMAN OR TOPIC OR PROCESS OR INDUSTRY OR INSTITUTION OR ORGANIZATION OR TIME OR Prop OR SIERRA-GUOVLU OR SAPMI LINK NOT *-1 Pr BARRIER NOT-NPMOD)(1 GENERAL-PLACE OR POLITICAL-PLACE LINK NOT 0 ("biras" Pl Loc) OR ("sápmi"));
+	## Sámediggi sáhttá maid buktit cealkámušaid guovlluid dearvvašvuođafitnodagaid jahkedieđáhusain ja plánaárvalusain.
+	## Ráđđehus áigu Sámedikkiin guorahallat dan rolla gieldda bálvalusaid ja ovddideami ektui.	
+
+# Accusative in front of MANNU
+REMOVE:SEMr2079 Gen IF (0 Acc LINK NOT 0 ("jahki") OR LAHKA OR ("Sámediggi"))(NEGATE *-1 Num OR Pr BARRIER NOT-NPMOD)(1 MANNU);
+	## Carsten Smith guđii Sámi vuoigatvuođalávdegotti ovdaolbmo virggi skábmamánu 1. b. 1985.	
+	
+# Genitive in front of "virgi":
+REMOVE:SEMr2080 Acc IF (0 OFFICE OR PROFESSION)(1 ("virgi"));
+	## Carsten Smith guđii Sámi vuoigatvuođalávdegotti ovdaolbmo virggi skábmamánu 1. b. 1985.		
+
+# mii ávkkiid
+SELECT:SEMhab Acc IF (0 HAB-ACTOR)(*-1 COPULAS BARRIER NOT-NPMOD LINK -1 (Pl Acc) LINK -1 ("mii" Sg Nom)) ; 
+	## Mii ávkkiid lea min doppe johtit?
+
+SELECT:SEMboaris Gen (0 ("boaris" Pl Acc) LINK 1 ("siida")) ;
+	## boarrásiid siida
+
+# "dárbu"
+SELECT:SEMr2089 Gen IF (0 ANIMATE)(1 ("dárbu"));
+
+# "heagga"
+SELECT:SEMr2090 Gen IF (0 (Acc))(1 ("heagga") LINK 0 Px);
+	## Sii ealihit sin heakkaset vuodjimiin ja geasehemiin.
+	
+#REMOVE Acc IF (-1 HUPMAT)(0 HUMAN) ; 
+	## Mun human Tronda beatnaga birra.
+
+# buo.
+SELECT:SEMr2091 Acc IF (*-1 ("buo") BARRIER NOT-NPMOD)(0 (N Gen));
+	## , buo. sierra sámestáhta.
+
+# ovttasráđiid
+REMOVE:SEMr2092 Gen IF (1 ("ovttasráđđi" Pl Gen));
+
+# váldit mielde
+SELECT:SEMr2093 Acc IF (*-1 ("váldit") BARRIER NOT-NPMOD)(0 Gen)(1 ("mielde") OR ("fárrui"));
+	## Sámediggi lea bivdán ráđđehusa váldit Sámedikki mielde árvoháhkanprográmmabargui.
+
+# "barggahit"
+SELECT:SEMr2094 Acc IF (*-1 ("barggahit") BARRIER NOT-ADV-PCLE)(0 HUMAN)(NEGATE 0 Gen LINK 1 HUMAN);     
+
+# Accusative in front of an organization:
+REMOVE:SEMr2096 Gen IF (0 Acc LINK 0 TEXT OR ABSTR-TEXT OR ABSTRACT)(NEGATE -1 Num)(1 ORGANIZATION);  
+    # We could do it the other way: IF (O Acc LINK NOT HUMAN OR POLITICAL-PLACE OR GENERAL-PLACE).
+    # Or we could concider to widen the other part: (NEGATE 1 HUMAN-INDIVIDUAL OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ANIMALS OR ABSTRACT)
+    ## Bargiidbellodaga sámediggejoavku divvu gažaldagaid ráđi ruhtavuoruhemiid hárrái.
+    
+REMOVE:SEMr2097 Gen IF (0 N LINK NOT 0 NATION OR TIME)(NEGATE -1 Num)(1 ("sámediggi") OR ("Sámediggi"));  
+	## Sámedikkit nammadit lahtuid sámedikkiid gaskasaš ovttasbargoorgánii.  
+
+# Genitive in front of an organization:  
+SELECT:SEMr2098 Gen IF (0 NATION LINK 0 Acc)(*1 ORGANIZATION OR INSTITUTION OR EDUCATION OR INDUSTRY BARRIER NOT-NPMOD LINK NOT 0 ("skuvla")); # OKAY II
+    ## 80-logu beallemuttus ásahuvvojedje sámi organisašuvnnat.
+    #$ Norgga ja Ruoŧa ráđđehusaide KOmmišuvdna lea jagi 1997 cuoŋománu rájis bargan doaimmaiguin mat dasa ledje biddjon ja ela odne, čoahkkimis Helssegis, loahpahan barggu ovttahienalaš evttohusain.
+ 
+REMOVE:SEMr2099 Gen IF (0 N LINK NOT 0 TIME OR ANIMATE OR NATIONAL-IDENTITY OR POLITICAL-PLACE)(NEGATE -1 Num)(1 ("servodat"));
+	## Lea dan vuođul geatnegasvuohta ovddidit buot mánáid beroštumiid servodagas.  
+    # Should consider if we could put in (1 ORGANIZATION). Then we have to add at least Prop as 0. 
+    
+# buot + Pl
+REMOVE:SEMr2100 Acc IF (-1 ("buot") OR ("gait") OR ("gait") OR ("buohkat"))(0 (Sg Gen) LINK *1 (N Pl) BARRIER REAL-V);   
+    ## Kantuvra meannuda buot Nordlándda, Romssa ja Finnmárkku ohppiid ja studeanttaid loatna- ja stipeandaohcamiid, ja buot velggolaččaid máksingeahpádusohcamiid, geat orrot seamma guovllus.
+ 
+    
+# "bargat" + object
+REMOVE:SEMr2101 Acc IF (*-1 ("bargat") BARRIER SV-BOUNDARY OR ("dihte") LINK 0 FMAINV OR Inf)(0 Gen LINK NOT 0 TEXT OR ("bargu") LINK *1 N BARRIER VFIN); 
+REMOVE:r2102 Gen IF (*-1 ("bargat") BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf)(0 Acc LINK 0 TEXT OR ("bargu") LINK NOT 1 N OR Po);
+    # This is based on that the object will be "leavssuid, bargobihtáid, barggu"  elsewhere Gen:  
+    ## ... geaiguin lei bargan ovttas sihke anárašgiela, nuortalašgiela ja lullisámegiela ovddidanbargguiguin. 
+  
+
+# "Oassi" is usually not in genitive:
+SELECT:SEMr2103 Acc IF (*-1 TRANS-V BARRIER SV-BOUNDARY)(NEGATE -1 Num)(0 OASSI LINK 0 Gen)(1 Gen LINK NOT 0 Der/NomAg);
+    ## Son vuolggahii muhtun bálvaleaddji lusa vai son oččošii oasis viidnegárddi šattuin.     
+    # Try to make a set of nouns which cannot be Gen in a AccGen string.
+    # Possible Gen-construction: Nuppi oasi geavaheaddji ......
+
+# Writing a text:
+SELECT:SEMr2104 Acc IF (*-1 WRITING-ACTIVITY-V BARRIER SV-BOUNDARY)(NEGATE -1 Num)(0 TEXT OR ABSTR-TEXT LINK 0 Acc)(NEGATE 1 CONCEPT OR TEXT OR ABSTR-TEXT OR LANGUAGE OR Po);
+    ## Sámi geavaheaddjit galggašedje sáhttit váidalit njálmmálaččat, man vuođul fylkkadoavttir de čállá váidaga, dárbbu mielde dulkka vehkiin .
+    # CONCEPT should be a constraint, so that in "write a text's outline", "text" still gets Gen.
+
+REMOVE:SEMacc Acc IF (*-1 WRITING-ACTIVITY-V BARRIER SV-BOUNDARY)(NEGATE -1 Num)(NEGATE 0 TEXT OR ABSTR-TEXT OR LANGUAGE)(*1 N LINK 0 Gen OR Acc);
+
+    
+# An organization´s representative:
+SELECT:SEMr2105 Gen IF (0 Acc LINK 0 ORGANIZATION OR INSTITUTION OR (Prop Org))(1 PROFESSION OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR OFFICE LINK NOT 0 Pl);
+  	## Dán gáibideigga foandda hoavda Per Edvard Klemetsen ja Norgga Sámiráđi ovdaolmmoš Aslak Nils Sara gielddaministaris Arne Rettedalas geainna soai maŋŋebárgga deaivvadeigga Oslos.
+
+# ášši
+SELECT:SEMr2106 Gen IF (-1 NATIONAL-IDENTITY)(0 ("ášši"));
+
+# fáktemuš
+SELECT:SEMr2107 Acc IF (*-1 ("fáktemuš") BARRIER NOT-NPMOD)(0 (N Gen))(NEGATE 1 Acc OR Po);
+	## Dain lea fáktemuš juohke balvva. 
+ 
+
+
+
+# "sápmi"
+# - - - - 
+
+# Ritva comment: might wanna remove this LIST if we can find an other solution for the sentences it's made for. 
+LIST SAPMI-N-HEAD =  "álbmot" "álbmotbeaivi" "álbmotdálkkodeapmi" "álbmotjoavku" "árbevierru" "ássanguovlu" "ássi" "áviisa" "beales" "beroštupmi" "boaris" ("boazodoallu" Nom) ("boazodoallu" Loc) "byråkratgiella" "databáŋku" ("dearvvašvuohta" RCmpnd) "dievdu" "doaibma" ("dutkan" Sg) "ealáhus" "fágabiras" "fierpmádat" "giella" "gilli" "gili#ássi" ("guovlu" Pl) "kulturovdáneapmi" "kulturviessu" "plána" "doaibmaplána" "geavaheaddji" "gelbbolašvuođa#doaibma" "giellaláhka" "girjjálašvuohta" ("guolástit" Der/NomAct) "guovddášguovlu"  "hálddašanguovlu" "iešdovdu"  "ja" ("nuoraidsearvi" Pl) "oahppoplána" "oktasaš" "perspektiiva" "mánná" "nisu" "álbmot" "bargi" "geavaheaddji" "jienastuslohku" "kulturmuitu" "kulturmuitohálddašeapmi" "kulturmuitosuodjalus"  "kultuvra" "náhkke#gálvu" "nuorra" "oktavuohta"  "resursageavaheapmi" "riggodat" "riikkajoavku" "searvevuohta" "searvi" "servodat" ("siida" Pl) "siseana" "siseatnansiida" "sisafárren" "sosiáladutkan"  "strategiijaplána" "valáštallan" "vierru" "vuohki" "vuoigatvuohta" "vuoigatvuođabargu" (PUNCT LEFT) ;
+
+
+# Ritva comment: might wanna remove this LIST later on if we can find an other solution for the sentences it's made for. 
+LIST SAPMI-PROP-HEAD = "allaskuvla" "bálvalusguovddáš" "cup" "datalávdegoddi" "dearvvašvuođadutkanguovddáš" "doavttersearvi" "ealáhusfoanda" "eanahálddahus" "giellaláhka" "giellalávdegoddi" "giellaráđđi" "guovddáš" ("joatkka" SgNomCmp) "kulturmuitoráđđi" "l" "L-97" "leatna" "meašttirgilvu" "ossodat" "ovdanahttinfoanda" "parlamentáralaš" ("riddu" SgNomCmp) "sátnevuorká" "sierrabiblioteahka" ("siida" Sg)"teáhter" "valáštallanlihttu" "válgalávdegoddi" "válgalihttu" "vuoigatvuođalávdegoddi"  "vuoigatvuođalávdegoddi" ;
+
+
+SELECT:SEMr2108 Gen IF (-1 Acc OR Gen)(0 SAPMI + Sg)(1 N); 
+	## Čálán girjji sámi áššiid birra. 
+SELECT:r2109 Gen IF (0 SAPMI + Sg)(*1C Acc BARRIER NOT-A);
+	## Dalle čujuhuvvui ahte lea dárbu nannet doaimmaid mat ovddidit 
+	## sámi dutkama, fágaidgaskasaš ovttasbarggu ja sámi áššiid oahpahusa.
+	## Ráđđehus deattuha sámegiela ja sámi kulturáddejumi gelbbolašvuođa loktema.	 
+SELECT:SEMr2110 Gen IF (0 SAPMI + Sg)(1C Gen)(2C Acc);
+	## Ráđđehus deattuha sámegiela ja sámi kulturáddejumi gelbbolašvuođa loktema, ja sámi bargiid bálkáheami.	 	
+	
+SELECT:SEMr2111 Gen IF (0 SAPMI LINK 1 SAPMI-N-HEAD OR SAPMI-PROP-HEAD);
+	## Soai áiguba ovddastit sámi álbmoga dáhtu go Tromsa ohcá Olympia gilvvuid lágidit 2014:s.		
+    
+SELECT:SEMr2112 Gen IF (NEGATE *-1 ("máhttit") OR ("oahppat") OR ("oahpahit") OR ("juohkit") OR ("čállit") OR ("lohkat") OR ("gallestallat") OR ("galledit") OR VERBAL-ACTIVITY-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf)(0 SAPMI OR SUOPMA)(*1 N BARRIER NOT-A); # Sámi, suoma or ruoŧa  as modifier of noun
+SELECT:SEMr2113 Gen IF (NEGATE *-1 ("máhttit") OR ("oahppat") OR ("oahpahit") OR ("juohkit") OR ("čállit") OR ("lohkat") OR ("gallestallat") OR ("galledit") OR VERBAL-ACTIVITY-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf)(0 SAPMI OR SUOPMA)(1 (@CNP) LINK 1 SAPMI OR SUOPMA OR NATION LINK 0 Gen); 
+
+SELECT:SEMr2114 Gen IF (0 SAPMI OR SUOPMA)(1 (@CNP))(2 ("eará") OR ("iežá"))(3 N);
+	## Ulbmil lea čuovvulit sámilága áigumušaid ja vuoigatvuođaid sámegiela viidásut geavaheamis.
+
+# LAHKA
+SELECT:SEMr2115 Gen IF (0 LAHKA)(1 LAHKA-GEN-N OR LAHKA-N OR ("áigumuš") LINK 0 Acc);	
+	##
+SELECT:SEMr2116 Gen IF (0 LAHKA OR ("Sámediggi"))(1 MANNU)(2 Ord OR CARDINALS)(3 ("beaivi") OR ("b"))(4 Num)(*5 N BARRIER NOT-NPMOD LINK NOT *1 FMAINV OR Inf BARRIER S-BOUNDARY);	
+	## Dás čujuha lávdegoddi muđui Sámedikki miessemánu 30. beaivvi 2000 doalloplána čuoggái 13.1.
+	
+# KLASS	
+SELECT:SEMr2117 Gen IF (0 TEXT OR ABSTR-TEXT LINK 0 Acc)(1 KLASS);
+	## Dás čujuha lávdegoddi muđui Sámedikki miessemánu 30. beaivvi 2000 doalloplána čuoggái 13.1.
+	
+# giella
+SELECT:SEMr2118 Gen IF (0 LANGUAGE LINK 0 Acc)(*1 LESSON OR ("dilli") OR ("prošeakta") OR ("geavaheapmi") OR ("doaibmaplána") OR ("ovdáneapmi") OR ("sajádat") OR ("korrektur-#prográmma") OR ("dutkan#dilli") OR ("vuohki") BARRIER NOT-NPMOD LINK NOT 0 Nom OR Acc LINK NOT 1 ("ektui") OR ("olis") OR ("dihte")); 
+SELECT:r2119 Gen IF (*-1 TRANS-V BARRIER SV-BOUNDARY)(0 LANGUAGE LINK 0 Acc)(*1 LESSON OR ("dilli") OR ("prošeakta") OR ("geavaheapmi") OR ("doaibmaplána") OR ("ovdáneapmi") OR ("sajádat") OR ("korrektur-#prográmma") BARRIER NOT-NPMOD); 
+
+SELECT:SEMr2120 Gen IF (0 LANGUAGE LINK 0 Acc)(1 SATNI);
+
+SELECT:SEMr2121 Gen IF (0 LANGUAGE LINK 0 Acc)(1 ("nubbi") OR ("vuosttaš") OR Ord OR ("a") OR ("b") OR ("c"))(2 ("giella") LINK NOT 0 Ess);
+
+REMOVE:SEMr2122 Gen IF (0 N LINK NOT 0 ACTOR-ROLE OR ABSTR-PLACE OR TIME OR TEXT OR ABSTR-TEXT OR SETTLEMENT-PLACE OR EMOTION OR ACTIVITY)(1 LANGUAGE); 	
+	## Ulbmil lea čuovvulit sámilága áigumušaid ja vuoigatvuođaid sámegiela viidásut geavaheamis.
+SELECT:SEMr2123 Gen IF (0 Pron)(1 ("giella"));
+	## Dát joavku galggašii beassat geavahit iežas giela dearvvašvuođabargiiguin.       
+
+# Sámediggi/ stáhta
+REMOVE:SEMr2124 Gen IF (0 (N Acc) LINK NOT 0 ("Norga") OR NATION-NOT-NORGA OR HUMAN)(1 ("Sámediggi") OR ("stáhta") OR ("stáhtta") OR ("stáda"));
+	## Departemeanttat buktet jahkásaš mearkkašumiideaset Sámedikki doaimmaid hárrái.
+	
+SELECT:SEMr2126 Gen IF (0 ("Sámediggi"))(1 Num)(2 ("bušeahtta"));
+
+SELECT:SEMr2127 Gen IF (0 ("stáhta") OR ("stáhtta") OR ("stáda") LINK 0 Acc)(1 ("sápmi" Gen) OR ("Sápmi" Gen))(2 ("joatkkaskuvla"));	
+
+SELECT:SEMr2128 Gen IF (-1 FYLKA LINK 0 Gen)(0 ("stáhta") OR ("stáhtta") OR ("stáda") LINK 0 Acc)(1 ("oahpahuskantuvra"));	
+
+SELECT:SEMr2129 Gen IF (0 ("Sámediggi" Acc))(1 SAPMI)(2 ("sátnevuorká"));	
+	
+SELECT:SEMr2130 Gen IF (0 ("Sámediggi" Acc))(*1 SAMEDIGGI-GEN OR TEXT OR ABSTR-TEXT BARRIER NOT-NPMOD LINK NOT 0 Ess);
+	## Sámediggi lea geigen jahkedieđáhusas departementii Sámedikki doaimmas 2005.
+
+SELECT:SEMr2131 Gen IF (0 ("stáhta") OR ("stáhtta") OR ("stáda") LINK 0 Acc)(*1 STAHTA-GEN OR ORGANIZATION OR TEXT OR ABSTR-TEXT OR INSTITUTION OR RIEKTEDILLI BARRIER NOT-NPMOD OR Dem LINK NOT 0 Ess);
+	# TEXT and ABSTR-TEXT are perhaps too big.
+	## Heiveheami ovddidit ovttas Sámedikkiin ja Davvi-Norgga spesiálapedagogalaš birrasiiguin, stáhta spesiálapedagogalaš doarjjavuogádagain ja Læringssenteret:iin.
+
+	      
+# FYLKA
+SELECT:SEMr2132 Gen IF (0 FYLKA + Acc)(1 ("fylka") OR ("fylkkagielda") OR ("fylkkasuohkan") OR ("ámta"));
+
+SELECT:SEMr2133 Gen IF (0 FYLKA + Acc)(1 CC)(2 FYLKA + Gen);
+    ## Giellanjuolggadusat leat váikkuhan vaikkoba Finnmárkku ja Romssa fylkkagielddaide nu, ahte leat váldigoahtán ovdan dákkár áššiid.
+    
+SELECT:SEMr2134 Gen IF (0 FYLKA + Acc)(*1 GEOGRAPHICAL-PLACE OR GEN-POLITICAL-PLACE OR HUMAN OR DILLI OR INDUSTRY OR RIEKTEDILLI OR ORGANIZATION BARRIER NOT-NPMODADVII); # NPNHAI
+	## Álbmotrievttálaš ja historjjálaš ođđa riektegáldoosiid ferte árvvoštallat stáhta dálá geavada ja riikka lágaid ektui, erenoamážit Finnmárkku eatnamiid vuoigatvuođaid deasttas.
+
+
+
 #!! *Gen and preposition/postposition
 SELECT:GenAPP Gen ((*-1C Pr BARRIER NOT-NPMOD) OR (*1C Po BARRIER WORD)) ;
 SELECT:GenPoCoordPunct Gen (1 PUNCT LINK *1 Gen BARRIER NOT-NPMOD LINK *1C Po BARRIER WORD) ;
@@ -5764,6 +6043,7 @@ SELECT:GenPoCoord Gen (1 CC LINK *1C Gen BARRIER NOT-NPMOD LINK *1C Po BARRIER N
 #!! * Transitive verb + Acc-object
 SELECT:AccTV1 Acc (*-1C STRICT-TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc BARRIER S-BOUNDARY OR CC)(0 NP-HEAD-ACC LINK NOT *1 Acc - Pron BARRIER S-BOUNDARY)(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK *1 Ill BARRIER NOT-NPMOD) ;
 	#$ Biret addá skeaŋkka Lemehii.
+	#$ Šiehatdus sittisdoallá dárkilis evttohusa movt guohtun eatnamiid sáhttá atnit ávkin goabbat bealde riikaráji.
 
 #!! * Transitive verb + Acc-object, Ill (modifier of acc or not)
 SELECT:AccTV2 Acc (*-1C TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc BARRIER S-BOUNDARY)(0 NP-HEAD-ACC LINK NEGATE *1 Acc BARRIER SV-BOUNDARY LINK NOT 0 (Pron Gen) LINK *1 N BARRIER NOT-NPMOD)(0 Acc LINK NOT 0 ROUTE OR TIME)(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK 1 Ill) ;
