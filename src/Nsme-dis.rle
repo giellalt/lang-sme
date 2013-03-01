@@ -733,7 +733,7 @@ SET REAL-V = V - NOT-REAL-V  ;
   #!! be the ones without an N tag following the V.  
   #!! The REAL-V set thus awaits a fix to the preprocess V ... N bug.
             
-SET LEX-V = REAL-V - DER-V ;
+SET LEX-V = V - DER-V ;
        # VERB but not DER-V
  
  # The set REAL is smaller than COPULAS, made for verbs with PrfPrc complements: Seammás REAL-COPULAS son dovdan iežas...
@@ -797,7 +797,7 @@ SET STRICT-TV-V = STVLIST + V - Der/Pass ;
 
 SET STRICT-TRANS-V = STRICT-TV-V + REAL-V ;
 
-LIST LOC-V = "ávkkástallat" "ballat" "beassat" "beroštit" "biehttalit" "bihtit" "ceavzit" "dinet" "dolkat" "eastadallat" "eastadit" "fuolahit" "fuollat" "geargat" "heaitit" "ilbmat" "jearrat" "jearralit" "luohpat" "máinnašit" "nohkkot" "oassálastit" "spiehkastit" "váruhit" "vástidit" ;
+LIST LOC-V = "ávkkástallat" "ballat" "beassat" "beroštit" "biehttalit" "bihtit" "ceavzit" "dinet" "dolkat" "eastadallat" "eastadit" "fuolahit" "fuollat" "geargat" "heaitit" "hehttet" "ilbmat" "jearrat" "jearralit" "luohpat" "máinnašit" "nohkkot" "oassálastit" "spiehkastit" "váibat" "váruhit" "vástidit" ;
 
 		#Note that "fuolahit" obviously has two homonymous variants: 
 		#fuolahit1+Acc, fuolahit2+Loc
@@ -2056,8 +2056,8 @@ REMOVE:derNEss DER-N IF (0 DER-N LINK 0 Ess)(0 LEX-N LINK 0 Ess)(NEGATE 0 Actio)
 REMOVE:derA DER-A IF (0 LEX-A);
  	## Dábálaš mearrádusat.
  
-#!! * __derV__ removes DER-V if lexicalised V, but not eaddji
-REMOVE:derV DER-V IF (0 LEX-V)(NEGATE 0 (eaddji)); 
+#!! * __derV__ removes DER-V if lexicalised V,
+REMOVE:derV DER-V IF (0 LEX-V) ; 
 
 #!! * __derHderAlla, derAlla, derH, derST__ chosses longest Der/tag
 REMOVE:derHderAlla (Der/h Der/alla) (0 Der/halla) ;
@@ -2730,7 +2730,8 @@ SELECT:Interjlemma $$INTERJ-LEMMA ((1 $$INTERJ-LEMMA) OR (-1 $$INTERJ-LEMMA)) ;
 #!! !!Southern Locative vs. Essive
 
 #!! * __SouthLoc__ removes Southern Locative vs. Essive
-REMOVE:SouthLoc (N Sg Loc) OR (A Sg Loc) IF (0 Ess)(NEGATE 0 Actio LINK NOT 0 ESS-ADVL-N)(NEGATE -1 CC LINK -1 Loc LINK NOT 0 Ess);
+REMOVE:SouthLoc (N Sg Loc South) OR (A Sg Loc) IF (0 Ess)(NEGATE -1 CC LINK -1 Loc LINK NOT 0 Ess);
+#REMOVE:SouthLoc (N Sg Loc South) OR (A Sg Loc) IF (0 Ess)(NEGATE 0 Actio LINK NOT 0 ESS-ADVL-N)(NEGATE -1 CC LINK -1 Loc LINK NOT 0 Ess);
  	#$ girkun # This is a rule that prevents southern dialectal forms to destroy the rest of the # parser. It should be commented out whenever analysing texts with Locative -n only. # All words with Cg will avoid this rule, since e.g. várin is southern Loc only.
 	#$ Luossa-bivdin joddu-buođuin deanus.  
 
@@ -3090,6 +3091,9 @@ SECTION
 #!! * __NotVGenIfDer__ removes VGen if 0 = Der/Pass or Der...(r947)
 REMOVE:NotVGenIfDer VGen IF (0 Der/Pass OR Der/goahti OR Der/st OR Der/l);
 
+#!! * __NotVGenIfDer__ removes VGen if 0 = Der/Pass or Der...(r947)
+SELECT:ActioEss (Actio Ess) (0 (N Ess) LINK *-1 COPULAS BARRIER REAL-V);
+
 
 	#!! !All imperatives
 	
@@ -3338,6 +3342,15 @@ SELECT:r986 PrsPrc IF (NEGATE 0 LEX-N)(1 CC OR COMMA)(2 A);
  	#$ Soahpamušas váilu njuolggadusat smávit vahágahtti ja geavatlaččat bággolonistemiide.
 #!! Early rule since many PrsPrc readings are removed later.
 
+#!! * Actio Gen
+SELECT:GenVeara (Actio Gen) ((1 ("veara") OR ("dihte")) OR (1 CC LINK 1 Gen LINK 1 ("veara") OR ("dihte"))) ;
+	#$ Dasgo bargi lea bálkkás veara.
+
+SELECT:ActioNom (TV Actio Nom) (0 N LINK NOT 0 Der/Pass LINK -1 HAB-ACTOR + Gen OR (Pers Gen))(*1 N BARRIER NOT-A LINK NOT 0 ("dihte")) ; 
+
+#REMOVE:ActioGen (Actio Gen)(NOT 1 Po) ;
+	#$ Sii lohket fatnasa gopmánan.
+	#$ Sii lohket bártni lápmašuvvan.
 
 
 #!! !!!SECTION 4: CYCLE 1B: REMOVING THE READINGS THAT WERE LEFT FROM THE 1A RULES 
@@ -4335,6 +4348,9 @@ SELECT:r1606 Indef IF (-1 ("giittos"))(0 ("eatnat"));
 # - - -
 SELECT:r1607 (Indef Nom) IF (-1 CLB)(0 ("juoga"))(1 Rel);
 	## ..., juoga mii boahtá ovdan Romssa universitehta plánain.
+
+#!! * __miiIndef__ it vaikko mii or mii beare
+IFF:miiIndef ("mii" Indef)((-1 ("vaikko")) OR (1 ("beare")))(NOT *0 (V Pl1) BARRIER SV-BOUNDARY) ;
 
 # ollu
 # - - -
@@ -5695,10 +5711,21 @@ MAP:ADVLGer> (@ADVL>) TARGET Ger (*1 VFIN BARRIER S-BOUNDARY);
 	#$ Konvenšuvdnaevttohusa ráhkadettiin delegašuvnnat leat váldán vuhtii Ruoŧa ođđa boazodoallolága.
 	#$ Báhpa boradettiin biigá lei bassaladdame. 
 
+#!! * Actio Loc
+MAP:-FMAINVLoc (@<ADVL) TARGET (Actio Loc) (*-1 LOC-V BARRIER SV-BOUNDARY) ;
+
+#!! * Actio Gen
+MAP:>AActioGen (@>A) TARGET (Actio Gen) ((1 ("veara")) OR (1 CC LINK 1 Gen LINK 1 ("veara"))) ;
+	#$ Dasgo bargi lea bálkkás veara.
+
+
 
 #!! !And then we remove the verbs which didn't get any syntactic tag, in favour of verbs with syntactic tags.
 
-MAP (@X) TARGET V  ;
+MAP (@X) TARGET REAL-V  ;
+
+MAP (@X) TARGET (Der/NomAct Loc)(0 @<ADVL)  ;
+
 
 REMOVE (@X) ;
 
@@ -6117,7 +6144,7 @@ SELECT:NDr2332 (Num Nom) IF (-1 (Dem Sg Nom));
 SELECT:NDr2333 (Num Nom) IF (1 TIME + Gen BARRIER NOT-A LINK *1 ("leat") BARRIER N LINK *1 Nom BARRIER NOT-NPMOD) ;
 	## Vuosttaš logi minuvtta lei buorre áigodat Nordlysa ektui.
 
-SELECT:NDr2334 Nom IF (*-1 BOC OR PUNCT BARRIER NOT-NPMODADV OR (Dem Acc))(0 Sg OR ABBR LINK NOT 0 Ord)(NEGATE 0 Adv OR Loc OR Po OR VFIN)(NEGATE 0 Ess LINK *1 Nom BARRIER NOT-NPMOD)(NEGATE 0 Attr LINK *1 N BARRIER NOT-NPMOD)(*1C SG3-V BARRIER NOT-ADV-PCLE );
+SELECT:NDr2334 Nom IF (*-1 BOC OR PUNCT BARRIER NOT-NPMODADV OR (Dem Acc))(0 Sg OR ABBR LINK NOT 0 Ord)(NEGATE 0 Adv OR Loc OR Po OR VFIN)(NEGATE 0 Ess LINK *1 Nom BARRIER NOT-NPMOD)(NEGATE 0 Ess LINK *1 OPRED-V BARRIER SV-BOUNDARY LINK *0 Nom BARRIER WORD)(NEGATE 0 Attr LINK *1 N BARRIER NOT-NPMOD)(*1C SG3-V BARRIER NOT-ADV-PCLE );
 	## ...ahte doaimma jođihangoddi vejolaččat mearrida...
 
 SELECT:NDr2335 Nom IF (*-1 BOC OR PUNCT BARRIER NOT-NPMODADV OR (Dem Acc))(0 Sg)(NEGATE 0 Adv OR Loc)(NEGATE 0 Ess)(NEGATE 0 Attr LINK *1 N BARRIER NOT-NPMOD)(1 (Num Nom))(*2C SG3-V BARRIER NOT-ADV-PCLE);	
@@ -6294,7 +6321,7 @@ SELECT:NDr2387 Nom IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(0 Coll);
 
 	# Nominative as objects in existential clauses
 	# --------------------------------------------
-SELECT:NDr2388 Nom IF (*-1 COPULAS BARRIER NOT-NPMODADV LINK *-1 NORM-LOC BARRIER N OR SV-BOUNDARY)(NEGATE 0 Adv OR Ess)(NEGATE *1 Nom BARRIER NOT-NPMOD);
+SELECT:NDr2388 Nom IF (*-1 COPULAS BARRIER NOT-NPMODADV LINK *-1 NORM-LOC BARRIER N OR SV-BOUNDARY)(NEGATE 0 Adv OR Ess OR PrfPrc)(NEGATE *1 Nom BARRIER NOT-NPMOD);
 	## Ii dus leat gávdni masage.
 
 SELECT:NDr2389 Nom IF (*-1 COPULAS BARRIER NOT-NPMODADV OR Nom LINK *-1 Loc BARRIER N OR A OR SV-BOUNDARY)(NEGATE 0 PrfPrc)(1 NP-BOUNDARY)(NEGATE 0 Attr OR PrsPrc LINK *1 N BARRIER NOT-A-CC)(NEGATE 0 Adv LINK *1 Nom BARRIER S-BOUNDARY);
@@ -6848,6 +6875,31 @@ REMOVE:KillComSg (Sg Com) (0 (Pl Loc)) ;
 
 
 #!! !!Essive  
+
+SELECT:ESSr2806 ESS-ADVL-N + Ess  (NOT *-1 OPRED-V BARRIER S-BOUNDARY) ;
+	#$ Seavdnjadin ii oainne gosa hearggit mannet.
+	#$ Bassin ii galggaše kantuvvras čohkkát.
+	#$ Beaskkain gal bivvá buolašin.
+
+SELECT:ESS2807 Ess IF (-1C Nom)(0 Nom);
+	## Gáibadussan lea ahte olbmos lea sámegiella ruovttogiellan. #no need
+
+SELECT:ESSOpredV Ess IF (*-1 Acc BARRIER NOT-NPMOD LINK *-1 OPRED-V BARRIER NOT-NPMODADV)(NEGATE 0 ("oktan"));
+	#$ Máret anii Máhte jallan.
+	#$ Sii dahke iežaset oađđin.
+	
+SELECT:ESS2809 Ess - Actio IF (*-1 OPRED-V BARRIER NOT-A-ADV LINK *-1 Acc BARRIER SV-BOUNDARY);
+	#$ Duon mun gohčodan juoigamin.
+
+#SELECT:r2810 Ess IF (0 (N Ess) OR (A Ess))(1 CC)(*2C Ess BARRIER NOT-NP);
+	## Ovdal go kristtalašvuohta bođii Sápmái lei noaiddis erenoamáš rolla oaidnilin ja dálkkodeaddjin.
+	
+SELECT:ESS2811 Ess IF (-1 ("bissut"))(0 Loc);	
+	
+# Essive, not Actio Nom:	
+SELECT:ESS2812 Ess IF (0 (Actio Nom))(1C NP-HEAD-NOM);
+	## Nuorran son bođii dohko.	 #no need
+
 #!! !!Late case rules (after other case rules have worked). 
 
 #!! !!!VERBS PART 2, SECTION #22
