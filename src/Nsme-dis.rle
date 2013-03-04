@@ -861,7 +861,7 @@ LIST ACC-INF-V = "bivdit" "čuorvut" "dagahit" "diktit" "gohččut" "movttiidaht
  # a subset of INF-V.
  	#$ Ii suova nieiddas náitalit.
 
-LIST OPRED-V = "alidit" "atnit" "dadjat" "dahkat" "dulkot" "geavahit" "geahččat" "gohčodit" "gohččut" "málet" "meroštallat" "navdit" "oaivvildit" "sihkkarastit" "váldit" "válljet" "rábmot" ;
+LIST OPRED-V = "alidit" "atnit" "álggahit" "bargat" "bidjat" "dadjat" "dahkat" "dulkot" "geavahit" "geahččat" "gohčodit" "gohččut" "málet" "meroštallat" "navdit" "oaivvildit" "sihkkarastit" "váldit" "válljet" "rábmot" ;
 
  # Verbs that occur with objects that have secondary predicates.
  
@@ -1028,7 +1028,7 @@ LIST NUMAG-A = "čeahppi" "viššal" "láiki" ;
 # these subcategorize for comitative, locative etc. depending on 
 # the noun's semantic properties
     
-LIST COM-A = "ollis" "oppa" ;
+LIST COM-A = "duhtavaš" "ollis" "oppa" ;
 
 LIST ILL-A = "gullevaš" "bahá";
 	## Ja danin son lei šaddan nu bahá tálaide ja bustávaide.
@@ -2094,9 +2094,10 @@ REMOVE:r551anotv (V*) IF (0 A-NOT-V) ;
 SELECT:SamediggiProp Prop IF (-2 ("ášši"))(-1 Num);
 	#$ Ášši 02/13 Sámedikki čoahkkinortnet.
 
+LIST NOT-PROP = "Vuoksá" "Heasta" "Stállu" "Guksi" "Návet" "Náhkki" "Njunni" "Áigi" "Ovdal" "Sieidi" "Profehta" "Muvra" "Gielda" ;
   	
 #!! * Rules for removing some Props which are identical to common nouns
-REMOVE:Prop=noun Prop (0 ("Vuoksá") OR ("Heasta") OR ("Stállu") OR ("Guksi") OR ("Návet") OR ("Náhkki") OR ("Njunni") OR ("Áigi") OR ("Ovdal") OR ("Sieidi") OR ("Profehta")) ;
+REMOVE:Prop=noun Prop (0 NOT-PROP) ;
 # Comment: Min Áigi is Prop but Áigi in the beginning of the sentence is not.
 
 #!! *Removes __PropPl__, but problems with names as Davviriikkaid Ráđi, there we want Prop Pl
@@ -2971,16 +2972,18 @@ SELECT:PxSg1Nom N-PX + (N Nom PxSg1) (-1 BOS)(NEGATE 0 VFIN)(*1 EOS OR VFIN - De
 	#$ Vielljan sáhttá vuoitit gilvvu.
 
 #!! * Nouns:  __AccPxSg1__ after a TV verb. Exception for Aux.
-SELECT:PxSg1Acc (N Acc PxSg1) ((-1 TRANS-V + Sg1 LINK NOT 0 AUX) OR (-1 TRANS-V + PrfPrc LINK -1 COPULAS + Sg1) OR (-1 TRANS-V + ConNeg LINK -1 Neg + Sg1))(NEGATE *-1 VFIN - Sg1 BARRIER S-BOUNDARY OR CS)(NEGATE *1 Acc BARRIER REAL-V LINK NOT 1 Po)(NEGATE *1 ("ahte") BARRIER WORD);
+SELECT:PxSg1Acc (N Acc PxSg1) ((-1 TRANS-V + Sg1 - OPRED-V LINK NOT 0 AUX) OR (-1 TRANS-V + PrfPrc - OPRED-V LINK -1 COPULAS + Sg1) OR (-1 TRANS-V + ConNeg - OPRED-V LINK -1 Neg + Sg1))(NEGATE *-1 VFIN - Sg1 BARRIER S-BOUNDARY OR CS)(NEGATE *1 Acc BARRIER REAL-V LINK NOT 1 Po)(NEGATE *1 ("ahte") BARRIER WORD);
 
 #!! * Nouns:  __AccPxSg1__ after a TV Inf verb.
-SELECT:PxSg1Acc (N Acc PxSg1) (-1 TRANS-V + Inf LINK *-1 SG1-V BARRIER NOT-ADV-PCLE LINK NOT 0 ("leat"))(NEGATE 0 Dem) ;
+SELECT:PxSg1Acc (N Acc PxSg1) (*-1 TRANS-V + Inf - OPRED-V BARRIER NOT-NPMOD LINK *-1 SG1-V BARRIER NOT-ADV-PCLE LINK NOT 0 ("leat"))(NEGATE 0 Dem) ;
+SELECT:PxSg1Acc (N Acc PxSg1) (*-1 TRANS-V + Inf - OPRED-V BARRIER SV-BOUNDARY OR CC OR CS LINK *-1 SG1-V BARRIER NOT-ADV-PCLE LINK NOT 0 ("leat"))(NEGATE 0 Dem) ;
 	#$ Mun oidnen vielljan.
 	#$ Mun lean oaidnán vielljan.
 	#$ Mun in oaidnán vielljan.
 	#$ Dál mun ferten gaikkodit visson. # visson is also PrfPrc
 	#$ Mun attán heaggan sávzzaid ovddas.
-  	#$ Mun válddán ovdamearkan Buolbmága. # It shouldn`t take this example.
+	#$ Addet munnje eatnama hávdebáikin, vai mun beasan hávdádit jápmán áhkkán.
+  	#% Mun válddán ovdamearkan Buolbmága. # It shouldn`t take this example.
   
 
 #!! * __PxSg1LocAcc__ is Acc to the right.
@@ -2988,7 +2991,7 @@ SELECT:PxSg1LocAcc (Loc PxSg1) IF (-1 SG1-V + TRANS-V)(1 Acc);
 	#$ Mun roggen ozastan njálgáid mánáide.
 
 #!! * __PxSg1Acc__ is Acc to the right.
-SELECT:PxSg1Acc (N Acc PxSg1) (-1 TRANS-V)((*-1 SG1-V BARRIER VFIN OR Acc OR S-BOUNDARY) OR (-2 COPULAS LINK -1 SG1-V))(NEGATE *-1 VFIN - Sg1 BARRIER S-BOUNDARY OR CS); 	
+SELECT:PxSg1Acc (N Acc PxSg1) (-1 TRANS-V - OPRED-V)((*-1 SG1-V BARRIER VFIN OR Acc OR S-BOUNDARY) OR (-2 COPULAS LINK -1 SG1-V))(NEGATE *-1 VFIN - Sg1 BARRIER S-BOUNDARY OR CS); 	
 	#$ Mun háliidan mánnán boahtit ruoktot!
 	#$ Mun in oaidnán vielljan jahkái.
 	#$ Mun in leat oaidnán vielljan jahkái.
@@ -3652,7 +3655,7 @@ SELECT:gaskalPrA GASKAL + Pr (1 A LINK 1 CC LINK 1 A LINK *1 (N Gen) + HEAD-N);
 SELECT:gaskalPo GASKAL + Po (-1 (N Gen) LINK *-1 CC BARRIER NOT-NPMOD LINK -1 (N Gen)) ;
  	#$ Riiddut boazodolliid ja eará vuoigatvuođaoamasteddjiid gaskkas livčče lassánan. # Does not function because of barrier
 
-#!! ! LIST LG-MATERIAL = Inf Adv Nom ;
+#!! !LIST LG-MATERIAL = Inf Adv Nom ;
 LIST LG-MATERIAL = Inf Adv Nom ; # Eará?
 
 #!! * __gaskasPosticky, gaskasPrsticky__ selects Po after coordinating language materials
@@ -3664,7 +3667,7 @@ SELECT:gaskasPrsticky GASKAL + Pr (1 $$LG-MATERIAL LINK 1 CC LINK 1 $$LG-MATERIA
 SELECT:PoParantes Po (-1 (PUNCT RIGHT) LINK *-2 (PUNCT LEFT) LINK -1 Gen);
 	## ...sáhttá dulkot telestudio dahje govvatelefovnna (ruoná nummira) bokte. 
 
-	# Requiring Genitive
+#!!	!Requiring Genitive
 
 #!! * __PoNomCompl__ removes Po if no possible complement to the left
 REMOVE:PoNoCompl Po (NEGATE -1 NP-HEAD-GEN OR (A Gen) OR (Num Gen))(NEGATE 0 ("gaskan"));
@@ -3701,7 +3704,7 @@ REMOVE:PrNoCompl Pr (NEGATE *1 NP-HEAD-GEN OR (A Gen) OR (Num Gen) BARRIER NOT-N
 
 
 #!! * __PoGen__ selects Po
-SELECT:PoGen Po - Foc - N-PO (-1 NP-HEAD-GEN - VAHKKU-DUR - Qst LINK NEGATE 0 Acc LINK *-1 STRICT-TRANS-V BARRIER NOT-ADV-PCLE)(NEGATE 1 NP-HEAD-GEN OR (A Gen) OR (Num Gen) BARRIER NOT-NPMOD) (NEGATE 1 STRICT-TRANS-V LINK NOT 1 Acc BARRIER NOT-NPMODADV);
+SELECT:PoGen Po - Foc - N-PO (-1 NP-HEAD-GEN - Qst LINK NEGATE 0 Acc LINK *-1 STRICT-TRANS-V BARRIER NOT-ADV-PCLE)(NEGATE -1 VAHKKU-DUR + Acc LINK -1 REAL-V)(NEGATE 1 NP-HEAD-GEN OR (A Gen) OR (Num Gen) BARRIER NOT-NPMOD) (NEGATE 1 STRICT-TRANS-V LINK NOT 1 Acc BARRIER NOT-NPMODADV);
 	#$ Vuoi dan olbmo gean bokte fillehusat bohtet.
 	#$ Nieida bođii ráhkkásis mielde.
 	#$ Tommi ja Annika dárkilit geahččaba Pippi oaidnin dihte mo diŋggaohccit barget.
@@ -4571,14 +4574,15 @@ SELECT:AAttrDemComPl (A Attr) (*-1 (Dem Pl Com) BARRIER NOT-NPMOD)(*1 (N Pl Com)
  	#$ Geainnuin livččii eambbo turistajohtolat suohkana čoahkkeássanguovddážiid čađa daiguin ekonomalaš oalgeváikkuhusaiguin.
 
 #!! * __AAttrDemdakkar__ 
-SELECT:AAttrDemdakkar (A Attr) (*-1C Dem BARRIER NOT-NPMOD)(*1 N BARRIER NOT-A-CC)(NEGATE 0 N LINK *1 VFIN BARRIER NOT-ADV);
+SELECT:AAttrDemdakkar (A Attr) (*-1C Dem BARRIER NOT-NPMOD)(*1 N BARRIER NOT-A-CC)(NEGATE 0 N LINK *1 VFIN BARRIER NOT-ADV)(NEGATE 0 Gen LINK -1 (Dem Gen)) ;
  	#$ Mo Alimusriekti meannudii vaikkoba dakkár vuolit dási olbmuid vihtančilgehusaiguin?
 	#$ Muhto dakkár radikála rievdadus eahpitkeahttá buktá garra reakšuvnnaid.
+	#% Sii lohket iežaset leat oalle duhtavaččat dán jagáš básárdoaluin.
 
 #!! !Other attribute rules 
 
 #!! * __AAttrN__ no copulas close to the left
-SELECT:AAttrN (A Attr) IF (NEGATE *-1 COPULAS BARRIER NP-HEAD-NOM OR NOT-AUX-V)(NEGATE 0 Num OR Inf OR Comp OR ("nubbi") OR V) (NEGATE 0 Adv LINK 1 Gen LINK 1 N)(NEGATE 0 Adv LINK 1C (N Gen))(1 N OR A LINK NOT 0 TIME OR PLACE)(NEGATE 1 VFIN OR Inf OR PREGEN OR Prop)(NEGATE 0 (N Sg Nom) LINK *-1 SG3-V BARRIER NOT-NPMODADV LINK NOT *-1 NP-HEAD-NOM BARRIER S-BOUNDARY)(NEGATE *-1 ("go") BARRIER NOT-NP LINK NOT -1 VFIN LINK NOT 1 EOS);
+SELECT:AAttrN (A Attr) IF (NEGATE *-1 COPULAS BARRIER NP-HEAD-NOM OR NOT-AUX-V)(NEGATE 0 Num OR Inf OR Comp OR ("nubbi") OR V) (NEGATE 0 Adv LINK 1 Gen LINK 1 N)(NEGATE 0 Adv LINK 1C (N Gen))(1 N OR A LINK NOT 0 TIME OR PLACE)(NEGATE 1 VFIN OR Inf OR PREGEN OR Prop)(NEGATE 0 (N Sg Nom) LINK *-1 SG3-V BARRIER NOT-NPMODADV LINK NOT *-1 NP-HEAD-NOM BARRIER S-BOUNDARY)(NEGATE *-1 ("go") BARRIER NOT-NP LINK NOT -1 VFIN LINK NOT 1 EOS)(NEGATE 0 Gen LINK -1 (Dem Gen));
 	#$ Oainnán ollu olbmuid.
 	#$ Gonagas sáhttá mearridit dábálaš njuolggadusaid báikkálaš dilálašvuođaid ektui.
 	#$ Sis-Finnmárkkus lea vuolit gaskamearálaš bruttoboahtu go fylkkas...  # gaskamearálaš
@@ -4593,6 +4597,7 @@ SELECT:AAttrN (A Attr) IF (NEGATE *-1 COPULAS BARRIER NP-HEAD-NOM OR NOT-AUX-V)(
 	#$ Sámedikki vuosttamuš dábálaš dievasčoahkkima maŋŋá... 
 	#$ Oktasaš vuoigatvuođat ledje šaddan dološ áiggi rájes...
 	#$ ...galget divššohasa lagamus oapmahaččat oažžut dieđu...
+	#% Sii lohket iežaset leat oalle duhtavaččat dán jagáš básárdoaluin.
 
 #!! * __AAttrCop__  copulas close to the left
 SELECT:AAttrCop (A Attr) IF (*-1 COPULAS BARRIER NOT-ADV)(NEGATE 0 Adv LINK 1 A)(NEGATE (A Comp) LINK 1 N)(1 A OR N LINK NOT 0 Acc OR Superl OR Ord)(NEGATE 1 Gen LINK *1 Po OR Loc OR Inf BARRIER NP-BOUNDARY)(NEGATE 1 Adv OR REAL-V OR ADVLCASE)(*2 go OR EOC OR Neg BARRIER NOT-NP);
@@ -4640,7 +4645,7 @@ REMOVE:ANom (A Nom) IF (NEGATE -1 COPULAS LINK 1 DEHALAS LINK *1 ADVLCASE BARRIE
 	#$ Vuoigatvuohta leat Sámedikkiid jienastusloguin lea lassin dábálaš jienastanvuoigatvuođa eavttuide.
 
 #!! * __AAttr__  selects A Attr
-SELECT:AAttr (A Attr) (NOT 0 (V* A) OR Adv OR Inf)(NEGATE 1 VFIN OR PrfPrc OR CLB OR Num)(NEGATE 1 PREGEN)(NEGATE 0 (Sg Nom) LINK *-1 (V Sg3) BARRIER NOT-ADV-PCLE LINK NOT *-1 Nom BARRIER S-BOUNDARY OR CC)(NEGATE 0 (Pl Nom) LINK *-1 (V Pl3) BARRIER NOT-ADV-PCLE LINK NOT *-1 Nom BARRIER S-BOUNDARY OR CC)(*1 N - Ess BARRIER NOT-A LINK NOT 1 Po);
+SELECT:AAttr (A Attr) (NOT 0 (V* A) OR Adv OR Inf)(NEGATE 1 VFIN OR PrfPrc OR CLB OR Num)(NEGATE 1 PREGEN)(NEGATE 0 (Sg Nom) LINK *-1 (V Sg3) BARRIER NOT-ADV-PCLE LINK NOT *-1 Nom BARRIER S-BOUNDARY OR CC)(NEGATE 0 (Pl Nom) LINK *-1 (V Pl3) BARRIER NOT-ADV-PCLE LINK NOT *-1 Nom BARRIER S-BOUNDARY OR CC)(*1 N - Ess BARRIER NOT-A LINK NOT 1 Po)(NEGATE 0 Gen LINK -1 (Dem Gen)) ;
 	#$ Máttimus sápmelaččat eahpidedje dáža dutkiid eanet go davit sápmelaččat. # davit
 	#$ ...main leat mielde dušše priváhta oasálaččat, ii leat...
 	#$ Sámedikki ásaheapmi lea eanet ideologalaš go čielga mearrádus. # čielga
@@ -6827,8 +6832,14 @@ SELECT:Comburiin (Sg Com) (0 (Pl Loc))(1C Com);
 
 
 #!! * __ComCOM-A__ selects Sg Com after COM-A
-SELECT:ComCOM-A (Sg Com) IF (-1 COM-A)(0 (Pl Loc));  
+SELECT:ComCOM-A (Sg Com) IF (*-1 COM-A BARRIER NOT-NPMOD)(0 (Pl Loc));  
 	#$ Ja son lei doppe oppa joavkkuinis.
+
+
+#!! * __Comduhtavas__ selects Sg Com after duhtavaš
+#SELECT:Comduhtavas (Sg Com) (*-1 ("duhtavaš") BARRIER NOT-NPMOD)(0 (Pl Loc));  
+	#$ Sii lohket iežaset leat oalle duhtavaččat dán jagáš básárdoaluin.
+
 
 #!! !Disambiguation of Com depending on Adv or certain verb or N
   
