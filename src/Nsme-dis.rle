@@ -2073,7 +2073,6 @@ REMOVE:derHderNomAct (Der/h Der/NomAct) (0 Der/NomAct) ;
 REMOVE:vuohtaNotAttr Attr (0 Der/vuohta) ;
 	# when attribute form predicative form
 
-
 	# Lexicalised adjectives
 	# ----------------------
 
@@ -2083,8 +2082,8 @@ REMOVE:r549 VGen IF (0 A);
 REMOVE:r550 PrsPrc IF (0 A);
 	## Áššis biddjui mearrideaddji deaddu dasa ahte... 
 
-REMOVE:r551anotv (V*) IF (0 A-NOT-V) ;  
-	#$ 	#$ Dat lea seammá guhkki go govdat.
+REMOVE:r551anotv (V*) - Der/NomAct (0 A-NOT-V) ;  
+	#$ Dat lea seammá guhkki go govdat.
 
 
 #!! !!Propernouns
@@ -2441,14 +2440,20 @@ SELECT:duodaidAdv2 ("duođaid" Adv) (-1 COPULAS)(1 Ess);
 	#$ Eatnandoallu šattai duođaid buressivdnádussan sámiide, nugo dat lei iežáge álbmogiidda.
 
 #!! * __AdvNotNA__ Adverbs, not nouns or adjectives
-LIST ADV-NOT-NOMEN = "beare" "čoahkkái" "čoahkis" "fárrui"  "fárus" "ihttážii" "goalmmádassii" "nuppádassii" "oidnosis" "oidnosii" "ođđasis" "olámuddui" "ovttasráđiid" "ruossalassii" "sullii" ; 
+LIST ADV-NOT-NOMEN = "bealleheggii" "beare" "čoahkkái" "čoahkis" "fárrui"  "fárus" "gárrenoaivvis" "ihttážii" "goalmmádassii" "nuppádassii" "oidnosis" "oidnosii" "ođđasis" "olámuddui" "oppalohkái" "ovdagihtii" "ovttasráđiid" "ruossalassii" "ruovttoguvlui" "sullii" "válbmasii" ; 
 
 REMOVE:AdvNotNA N OR A (0 ADV-NOT-NOMEN) ;
 
+#!! * __AComp__ remove A Comp when Adv
+REMOVE:AComp (A Comp) (-1 DYNAMIC-V)(0 Adv LINK NOT 0 ("eanet") OR Indef);         
+	#$ Eadni ráhkadii johtilit ruovttusiiddu.  
+
+REMOVE:ACompAdv (A Comp) (-1 BOS OR CLB)(0 Adv)(1 EOS OR CLB);
+REMOVE:ACompAdv (A Comp) (-1 V)(0 Adv)(1 (N Ess)); 
+
+
 #!! * __birrasii__ removes birrasii N
 REMOVE:birrasii N (0 ("birrasii") LINK 1 Num)(NOT -1 Gen)  ;	
-
-
 
 #!! * __eanasAdv__  
 SELECT:eanasAdv Adv (*-1 NP-HEAD-NOM BARRIER S-BOUNDARY)(0 ("eanas") OR ("eanaš"))(NEGATE *1 N BARRIER NOT-A-ADV);
@@ -2675,9 +2680,19 @@ REMOVE:reciprPl Pl IF (-1 (Recipr Du))(0 Recipr);
 REMOVE:Killrecipr Recipr ;
  	#$ Jos dajan nubbái: Mana! de son manná.
 
-#!! !!Nouns
+#!! !!Variant lemmas
+LIST LEMMA1 = "álbmot" "beassážat" "boadnji" "boalvvir" "čábmit" "čáppat" "eanaláigo#boahtu" "Elle" (".*geaisár") (".*gursa"r) "kaleandar" (".*keallir"r)
+"lihpar" ("[0-9]*-lohku"r) ("mieđihit") (".*mirko"r) "moattis" "moraš" (".*muslima"r) "oapman" (".*rádji"r) "ruošša#čuhti" "sáhpán" "suoivva" "visot" "vuollái" ;
+    # first dictionary form
 
+LIST LEMMA2 = "álbmut" ("beassi" Der/Dimin) "boadnjá" "boalvár" "čápmit" "čáppis" "eanaláigo#boađđu" "Elli" (".*geaissir") (".*gurse"r) "kaleanddar" (".*keallár"r)
+"libar" ("[0-9]*-loahku"r) ("[0-9]*-logus"r) "mieđidit" (".*mirku"r) (".*mirkko"r) "moattes" "mora" (".*muslim"r) "oama" (".*rádjá"r) "ruošša#čuđđi" "sábin"
+"suoivvan" "viso" "vuolli" ;
 
+#!! * Remove lemma2 if lemma 1
+REMOVE:lemma2 LEMMA2 (0 LEMMA1);
+
+REMOVE:derHeapmi (N* Der/heapmi)(0 Der/NomAct) ;
 
 #!! !Nouns, not verbs
 #    ----------------
@@ -2745,7 +2760,6 @@ REMOVE:SouthLoc (Loc South) ;
 #!! !!Px-rules for special nouns
 
 #!! * __NnoPx__ Remove Px for special nouns
-
 REMOVE:NnoPx Px IF (0 N-NOPX + Px OR Num + Px OR Der/NomAct + Px OR MANNU + Px OR WEATHER-SITUATION + Px);
 	#$ Čoahkkin lea eahkedis.
 	#$ Mun gal ceavzzán du goargŋumis.
@@ -2775,18 +2789,15 @@ REMOVE:ImprtCopPrfPrc Imprt IF (-1 BOS)(*1 COPULAS BARRIER NOT-ADV LINK 1 PrfPrc
 REMOVE:leapmaDimin ("leapma" Der/Dimin) ;
 
 #!! * __Der/PassS__ removes some of them which are not likely at all
-
 REMOVE:Der/PassS (Der/PassS) (0 ("guovlat") OR ("diehtit") OR (".*ut"r PrfPrc) OR (".*ut"r Prs Sg3) OR (".*ut"r Inf)) ;	
 
 LIST LEX-PASS = "gávdnot" "gullot" "láhppot" "oidnot" "váldot" "čirrot" "sorrot" "čadnot" "doddjot" "gessot" "dovdot" "rahppot" "savvot" "čoggot" ;
 
 #!! * __LEX-PASS__ removes passive forms of some lemmas in favour for the lexixalised one
-
 REMOVE:LEX-PASS (Der/PassS) (0 LEX-PASS) ;
 
 	
 #!! * __Ger and GER-NOTV__ remove Ger-forms which are not likely at all
-	
 REMOVE:Ger Ger IF (0 ("geavat" N) OR ("vásedin") OR ("hálihit"));
 
 LIST GER-NOTV = "barggadit" "bijadit" "čohkkedit" "dagadit" "deaivvadit" "dutkkadit" "geahčadit" "jugadit" "lihkkat" "logadit" "manadit" "njuovadit" "ozadit" "šlivggodit" ;
@@ -3506,9 +3517,6 @@ REMOVE:nuorra Adv (0 ("nuorra"));
 
 SELECT:vuoiA (A Nom) IF (-1 ("vuoi"));
  	#$ Vuoi surgat dan gándda! 
-REMOVE:ACompAdv (A Comp) (-1 BOS OR CLB)(0 Adv)(1 EOS OR CLB);
-  
-REMOVE:ACompAdv (A Comp) (-1 V)(0 Adv)(1 (N Ess)); 
 
 SELECT:eanasAdv Adv IF (-1 COPULAS)(0 ("eanas") OR ("eanaš"))(1 N)(NEGATE 1 TIME)(*2 EOC BARRIER N); 
  	#$ Dál lea eanaš ovttamielalašvuohta, ahte...
