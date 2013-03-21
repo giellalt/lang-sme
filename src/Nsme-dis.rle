@@ -6223,6 +6223,7 @@ SELECT:AccTV1 Acc (*-1C STRICT-TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc BAR
 
 #!! * Selects genitive: (modifier) when a finite verb to the left and a nominative or accusative to the right: ''lei skuvllajođiheaddjin''
 SELECT:r2206 Gen IF (*-1 VFIN BARRIER N OR (Pers Pron) OR CLB)(0 N OR Pron LINK NOT 0 ("buorre") OR VFIN)(NEGATE 0 Num OR Dem OR VGen OR PrfPrc OR PrsPrc OR Indef OR Interr OR Adv OR Loc OR (Actio Ess))(NEGATE 1 CLB OR Num)(NEGATE 0 Nom)(*1 (N Nom) OR (N Acc) BARRIER NOT-NPMOD OR PrfPrc OR CC OR PUNCT LINK NOT 0 Prop OR TIME OR Time OR ROUTE OR Loc OR PrfPrc)(NOT *1 Po OR V-TRANS BARRIER SV-BOUNDARY);
+	#$ Soai lohkaba su girjji eaŋgalasgillii.
 	#$ Son lei moanat jagiid lullisámi skuvllajođiheaddjin. # Hits "jagiid" that is time-Gen ADVL. Should we allow it even if it's correct.. 
 
 #!! *Removes genitive: when a transitive verb to the left and you (not if you are a pronoun) are followed by Ill/Loc/Com/Adv: ''doalvvui stálu meahccái''
@@ -6255,19 +6256,21 @@ SELECT:topOBJ1 Acc (*1 STRICT-TRANS-V BARRIER SV-BOUNDARY OR ("nugo") OR ("dego"
 	
 #SELECT:duration (DURATION-V objeakta sáhttá leat akk hámis!)
 
-# Alternatively this rule is not needed after removal of all Acc "KillAcc?", but for now it stays.
+#!! * Select genitive for pronoun (modifier): if NP-BOUNDARY OR Acc (but don't select if the finite verb is TV) to the left and noun to the right 
 SELECT:GenNP1 (Pron Pers Gen) (-1 NP-BOUNDARY - TRANS-V OR Acc)(*1 N BARRIER NOT-NPMOD)(NEGATE 0 Gen LINK 1 Po) ;
-	#$ Soai lohkaba su girjji eaŋgalasgillii.
-	#$ Mu čeahci duddjo čáppa niibbi.
-	#$ Min miestagis leat ollu váramat.
+	#$ Min mánáin leat ollu stohkosat.
+	#$ Mun lean náitalan, ja mu eamit bargá girdišilljus.
+	#$ Áhkku láve boahtit min siidii čakčat.
+	#$ Dál lea du vuorru.
+	#$ Mii du namma lea?
 	#$% Dat, gii ákkastallá dan ovddas, dovdá ášši.
-# Works here as well: "Mu čeahcái Lemet duddjo niibbi", but Lemet is not disambiguated yet.
 
-#!! *if CC "ja", then you are a genitive if accusative follows (if you are not listed as negate) 
+#!! * Select genitive for noun (modifier): if CC "ja" immediately to your left and accusative to your right ''ja sámi jurddašanvuogi''
 SELECT:GenNP2 (N Gen) (-1 ("ja"))(1 (N Acc))(NEGATE 0 V OR ABBR OR Attr);
 	#$ Miššonbarggu álggu rájes juo Leem háliidii oahppat sámegiela ja sámi jurddašanvuogi.
 	#% Sii ožžot geavahit eatnama ja gáttiid ja elliideaset ja iežaset ealáhussii. # Deaivá dán vaikko eat hálit dan.
 
+#!! * Select accusative: if genitiv to the left, and CC "ja" to the left of genitive ''eamiálbmot- ja globaliserenprošeavtta koordináhtor''
 SELECT:AccAfterCC (N Acc) (-1 (N Gen) LINK -1 ("ja"))(0 (N Acc))(NEGATE *1 (N Acc) OR (N Nom) OR (N Ess) OR (N Loc) BARRIER NOT-Attr)(NEGATE 0 V)(NEGATE 1 Gen LINK 1 (N Loc))(NEGATE *1 Gen LINK 1 Po); #Mii eat soaitte oba hálidit dákkár njuolggadusa? Galggašgo koordinašuvdnanjuolggadus... Dát doaibmá gal bures. 
 	#% Son oassásdoallá dál sámi historjjálaš girjebarggus ja lea máŋggafágalaš eamiálbmot- ja globaliserenprošeavtta koordináhtor. #Deaivá dán vaikko eat hálit dan.
 	#% Lávdegoddi lea maiddái atnán áiggi ságastallat davviruoŧa čearuid ja Romssa boazoorohagaid gaskaneas váttisvuođaid birra. # Seamma.
@@ -6282,7 +6285,8 @@ SELECT:AccAfterCC (N Acc) (-1 (N Gen) LINK -1 ("ja"))(0 (N Acc))(NEGATE *1 (N Ac
 
 #!! First part
 
-SELECT:CoAcc2520 Acc IF (*-1 COMMA BARRIER NOT-NPMOD LINK -1C NP-HEAD-ACC)(1 COMMA OR CC) ;
+#!! * Select accusative (coordinated acc): if comma to the left and accusative cased NP-head to the left of comma. Comma or CC immediately to your right '', dáruid, debbuiđ buđeittaid, boares rásiid''
+SELECT:CoAcc2520 Acc (*-1 COMMA BARRIER NOT-NPMOD LINK -1C NP-HEAD-ACC)(1 COMMA OR CC) ;
 	#$ Doppe moai sáhtiime oastit gáfe, deaja dahje sávtta.
 	#$ Lipemasii olbmot bidje guolleoivviid, dáraid, debbuid, buđeittaid, boares rásiid ja rohkajáffuid.
 	#% Dat guoskkai Čohkkirasa, Wilhelmina, Suorssá ja Deardná gielddaid sápmelaččaide. #Hits this, but it shouldn't. Choose gen coordination first?
@@ -6290,12 +6294,13 @@ SELECT:CoAcc2520 Acc IF (*-1 COMMA BARRIER NOT-NPMOD LINK -1C NP-HEAD-ACC)(1 COM
 	
 #!! Second part
 
-SELECT:CoAcc2521 Acc IF (*-1 CRD BARRIER NOT-NPMOD LINK -1C Acc)(NEGATE 0 Inf)(NEGATE 0 Nom LINK *1 VFIN BARRIER S-BOUNDARY)(1 NP-BOUNDARY LINK NOT 0 Acc)(NEGATE 0 Dem LINK 1 PrfPrc LINK *1 N BARRIER NOT-NPMOD);
+#!! * Select accusative (coordinated acc): if coordinater to your left and accusative to the left of the coordinator ''deaja dahje sávtta'
+SELECT:CoAcc2521 Acc (*-1 CRD BARRIER NOT-NPMOD LINK -1C Acc)(NEGATE 0 Inf)(NEGATE 0 Nom LINK *1 VFIN BARRIER S-BOUNDARY)(1 NP-BOUNDARY LINK NOT 0 Acc)(NEGATE 0 Dem LINK 1 PrfPrc LINK *1 N BARRIER NOT-NPMOD);
 	#$ Doppe moai sáhtiime oastit gáfe, deaja dahje sávtta. #maŋit objeakta
 	
 #!! Third part
 
-
+#!! *
 
 
 #!! !Intransitive verbs can sometimes be transitive
@@ -6303,25 +6308,32 @@ SELECT:CoAcc2521 Acc IF (*-1 CRD BARRIER NOT-NPMOD LINK -1C Acc)(NEGATE 0 Inf)(N
 
 LIST JOHTIT = "čuoigat" "čuoiggadit" "gálašit" "gállit" "girdit" "johtit" "mátkkoštit" "njoammut" "riidet" "ruohttat" "sihkkelastit" "soabbulit" "soabbut" "šloahtat" "váccašit" "vádjolit" "vájaldit" "vájuldit" "vánddardit" "vázzit" "viehkalit" "viehkat" "vuodjalit" "vuodjat" "vuodjit" "vuojadit" "vuojašit" ;
 
-
+#!! *
 SELECT:r1977ja1978 Acc IF ((*-1 JOHTIT + IV BARRIER S-BOUNDARY OR Pr LINK 0 IV) OR (*1 MOVEMENT-V BARRIER S-BOUNDARY LINK NOT 0 ("mannat") OR ("vuolgit") OR ("boahtit")))(0 GEOGRAPHICAL-PLACE OR ABSTR-ROUTE)(NEGATE 1 Po)(NEGATE -1 CC LINK *1 VFIN) ;
 	#$ Čuoigat vári.
 	#$ Mun váccán vákkiid, vuvddiid ja váriid.	
+#!! *
 SELECT:r1979ja1980 Acc (((*-1 ("vázzit") OR ("viehkat") BARRIER S-BOUNDARY) OR (*1 ("vázzit") OR ("viehkat") BARRIER S-BOUNDARY)))(0 EDUCATION)(NEGATE 1 Po)(NEGATE 1 ROOM LINK 0 Loc)(NEGATE -1 CC LINK *1 VFIN) ;
 	#$ Sii vázzet skuvlla.
 	#$ Mun váccán skuvlla gávpogis.
 	#% Mun váccán skuvlla šiljus. !This is not Acc, but Gen.
+#!! *
 SELECT:r1981ja1982 Acc (0* ("viehkat") BARRIER S-BOUNDARY)(0 ("spábba")) ;
 	#$ Son viehká spáppa.
 	#$ Spáppa son viehká.
+#!! *
 SELECT:r1983ja1984 Acc (0* ("vázzit") BARRIER S-BOUNDARY)(0 SHOE OR HUNT-ANIMAL OR BOAZU) ;
 	#$ Vázzit rievssaha.
 	#$ Rievssaha vázzit.
+#!! *
 SELECT:r1985 Acc IF (*0 ("ceavzit") BARRIER S-BOUNDARY)(0 ("eksámen")) ;
-	#$ Ikte mun cevzen eksámena nuoraidskuvllas. 
+	#$ Ikte mun cevzen eksámena nuoraidskuvllas.
+#!! * 
 SELECT:r1985ja1986 Acc (0* ("nohkkat") OR ("oađđit") OR ("oađašit") OR ("oađástallat") OR ("nohkastit") BARRIER S-BOUNDARY)(0 BEDCLOTHES) ;
 	#$ Son oađđá beaskka.
+#!! *
 SELECT:r1987 Acc IF (-1 ("sáhttit") LINK NOT *1 FMAINV OR Inf BARRIER S-BOUNDARY)(0 (Pron Pers) OR HUMAN LINK 0 Gen)(*1 Ill OR DOHKO BARRIER NOT-ADV);   
+#!! *
 SELECT:r1988 Acc IF (0 (Pron Pers) OR HUMAN LINK 0 Gen)(*1 ("sáhttit") BARRIER S-BOUNDARY LINK NOT *1 FMAINV OR Inf BARRIER S-BOUNDARY)(*1 ("sáhttit") LINK *1 Ill OR DOHKO BARRIER NOT-ADV);  
 	#$ Gii sáhtii du dohko?
 	#$ Gii du nu johtilit sáhtii dohko?
@@ -6336,63 +6348,78 @@ SELECT:r1988 Acc IF (0 (Pron Pers) OR HUMAN LINK 0 Gen)(*1 ("sáhttit") BARRIER 
 	#$ Min viessu lea vihtta mehtara alu.
 
 
-#!! Exceptional accusative attributes in front of ALU nouns.
+#!! !Exceptional accusative attributes in front of ALU nouns.
+
+#!! *
 SELECT:XXr1989 Acc IF (0 Num LINK *1 MEASURE BARRIER NOT-A LINK 1 ALU);
 	#$ Visti lei vihtta mehter alu.
+#!! *
 SELECT:XXr1990 Acc IF (0 Num LINK NOT 0 Adv LINK 1 ALU);
 	#$
+#!! *
 SELECT:XXr1991 Acc IF (0 Num LINK 1 Num LINK 1 ALU);
 #Not-so-exceptional?
 
+#!! *
 SELECT:NewGen (Sg Gen) (0 (N Acc) LINK *-1 NUM + Sg BARRIER NOT-A LINK 0 Nom OR Acc) ; #Ritva comment: This rule is back in buisness! Tt's a good rule that seems to be working quite fine and it replaces many of the below rules. Please specify in which cases it doesn't work so we can work on the constraints. Old comment: "It seems like there is no need for this rule because the rule REMOVE: 5755: NAr229 works. If there is still a need for this rule we have to make some constraints."
 	#$ Juohke heasta borrá sullii guhtta kilu suinniid beaivái.
 	#% Finnmárkku fylkkagielda lea jagi 1988 rájes ovddidan doaimmaid sámi álbmoga várás spesialistadearvvašvuođabálvalusas, ja ráhkadii jagi 1991 fylkkagieldda sámi dearvvašvuođa- ja sosiálaplána.
 	#% 
 
+#!! *
 #SELECT:XXr1993ja1997 Gen IF (-1 (Num Sg Acc))(0 MEASURE)(1 ALU OR A OR Pr OR ("dassái") OR ("dás") OR ("áigi" Adv)); #This is not needed because of NewGen!
 	#$ Sus lea njeallje mehtara guhkkosaš biila. 
 	#$ Ádjá viessu lea guokte miilla bajábeal márkana.
 	#$ Son bođii guokte jagi dás ovdal.
-	
+
+#!! *	
 SELECT:XXr1994 Acc IF (0 NUM)(*1 (Num Acc) BARRIER NOT-COMMA LINK 1 MEASURE LINK 1 ALU OR A);
 	#$ Guokte golbma mehtera guhku, ja guhkitge, sáhttá vuojahat leat. 
+#!! *
 SELECT:XXr1995 Gen IF (1 (Num Sg Acc) LINK 1 (Num Sg Acc) LINK 1 MEASURE LINK 1 ALU OR A);
+#!! *
 SELECT:r1996 Gen IF (1 COMMA LINK 1 (Num Sg Acc) LINK 1 COMMA LINK 1 (Num Sg Acc) LINK 1 MEASURE LINK 1 ALU OR A);
   	#$ Čuollun sáhttá leat dušše okta fierbmi gurgaluvvon, muhto dábálaččat lea čuollu guhkit, golbma, njeallja fierbmebaji guhku.
 
 #LIST JAHKI-NUM = "jahki" "skuvlajahki" ; JAHKI-NUM
 
-# Ritva comment: TIME + GEN, no ALU/adjective here... Concider moving? 
+
+#Comment: TIME + GEN, no ALU/adjective here... Concider moving? 
+#!! *
 SELECT:XXTimeGen Gen IF (NEGATE -1 (Num Gen))(0 TIME)(1 ("áigi" Adv));
 	#$ Son bođii jagi áigi.
 
-# Ritva comment: NUM + ACC, no ALU/adjective here... Concider moving?
+#Comment: NUM + ACC, no ALU/adjective here... Concider moving?
+#!! *
 SELECT:XXr1998 Acc IF (0 Num)(1 TIME)(2 MANNEL);
-	#$ Logi minuvtta maŋŋel nagodii Sørøy Glimt čiekči Stig Martinsen dulbet bohtosa ovttain moalain.	
+	#$ Logi minuvtta maŋŋel nagodii Sørøy Glimt čiekči Stig Martinsen dulbet bohtosa ovttain moalain.
+#!! *	
 SELECT:XAAccNUM1 Acc IF (0 Num)(1 ("siidu") OR ("kapihtal"))(2 MANNEL);
+#!! *
 SELECT:XAAccNUM2 Acc IF (0 Num)(1 ("siidu") OR ("kapihtal") LINK 2 ("maŋŋelis") OR ("ovdalis"));
 	#$ Earát su luohkás ledje juo vissa njeallje siiddu su ovdalis matematihkka-girjjis.
-
+#!! *
 SELECT:XXr1999 Gen IF (-1 (Num Gen))(0 TIME)(1 ("boaris"));
 	#$ Son lea viđa jagi boaris.	
-
+#!! *
 #SELECT:r2000 Gen IF (-1 (Num Acc))(0 TIME)(1 ("boaris"));
 	#$ Mánná lea golbma jagi boaris.
-
+#!! *
 SELECT:XXr2001 Gen IF (-1 (Num Gen))(0 MEASURE)(1 A OR ALU); #Ritva comment: Find a rule for "viđa" aswell, this hits "mehter" as it should
 	#$ Dohko manai viđa mehter govdosaš geaidnu.
-
+#!! *
 #!! * Selects genitive if there is a numeral immediately to your left, and you are TIME: ''golbma jagi''
 SELECT:XXr2002 Gen IF (-1 (Num Sg Acc))(0 TIME); #(1 ("maŋŋil"));
 	#$ Dat dáhpáhuvai golbma jagi maŋŋil.
-
+#!! *
 SELECT:XXr2003 Gen IF (0 Num)(1 (N Acc) LINK 1 ("velggolaš")); #Ritva comment:2003 and 2004 seems really fishy... How is it supposed to work? 
 	#$
-
+#!! *
 SELECT:XXr2004 Gen IF (-1 Num)(1 ("velggolaš"));
 	#$ Ánde lea munnje vihttalot ruvnno velggolaš.
 
 # Does not hit.
+#!! *
 SELECT:XXr2005 Adv IF (0 ("ovtta"))(1 ALU);
 	#$ Dábálaččat leat joddut sullii ovtta guhku.
 
@@ -6427,8 +6454,9 @@ REMOVE:XXr1523 Acc IF (-1 JAHKI-NUM LINK NOT -1 (PrfPrc @>N) OR Attr OR Dem)(0 N
 #!! !!Choosing accusative or genitive semantically
 #!! !!Genitive
 
-#!! The most frequent genitive rule: Gen when postpos immediately to the right:
+#!! * The most frequent genitive rule: Gen when postpos immediately to the right:
 SELECT:r2143 Gen IF (NEGATE 0 Adv OR PrfPrc OR (Num Nom))(1C Po)(NEGATE 1 Px OR ("eret")); 
+	#Comment: Iskka doallágo deaivása.
 
 
 
