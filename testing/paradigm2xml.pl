@@ -34,7 +34,7 @@ while (<>) {
   } elsif (/^([^\+]+)[\+]([^\+]+)[\+](.+)$/) {
     $newAnalysis = 0;
     $lemma = $1;
-    $pos = lc($2);
+    $pos = $2;
     $rest = $3;
     $rest =~ s/\+/\_/g;
     $rest = $pos.'_'.$rest;
