@@ -8,11 +8,11 @@ my $word_pos_list = @ARGV[0];
 my $xsl_script = @ARGV[1];
 my $gen_tmp = @ARGV[2];
 my $paratype = @ARGV[3];
-my $jc = "java net.sf.saxon.Transform -it main ";
+my $jc = "java net.sf.saxon.Transform -it:main ";
 my $para_tmp = "Para_tmp";
 my $xml_tmp = "XML_tmp";
 my $mk_dir_cmd = "mkdir -p $gen_tmp/$para_tmp $gen_tmp/$xml_tmp";
-my $mwe = "yes";
+my $mwe = "no";
     system($mk_dir_cmd);
     print "$word_pos_list\n" ;
 
