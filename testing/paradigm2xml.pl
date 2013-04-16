@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 use strict;
+use Encode;
 
 # Script that transforms something into something else
 # Yess, Cip! Very informative comments!
@@ -16,6 +17,10 @@ my $xmlOutput = "<paradigm>\n";
 my $firstClosing = 1;
 my $rest = "";
 my $orig = "";
+
+# Take the lemma-pos pair from the file name because of the fused pos value!
+my ($rest, $word_pos) = (decode("utf8", @ARGV[0]) =~ /^(.+)\/([^\/]+)$/);
+my ($n_lemma, $n_pos) = ($word_pos =~ /^([^_]+)_(.+)\..+$/);
 
 while (<>) {
   chomp;
@@ -43,6 +48,8 @@ while (<>) {
     #print STDERR "orig ---:::::--- $orig\n";
 
     if (!$hasLemma) {
+      $xmlOutput = $xmlOutput."  <n_lemma>$n_lemma</n_lemma>\n";
+      $xmlOutput = $xmlOutput."  <n_pos>$n_pos</n_pos>\n";
       $xmlOutput = $xmlOutput."  <lemma>$lemma</lemma>\n";
       $xmlOutput = $xmlOutput."  <pos>$pos</pos>\n";
       $xmlOutput = $xmlOutput."  <analysis ms=\"$rest\">\n";
