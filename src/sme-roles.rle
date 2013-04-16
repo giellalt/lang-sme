@@ -379,6 +379,7 @@ LIST Tit = Tit ;
 LIST Ani = Ani ;
 LIST Body = Body ;
 LIST Hum = Hum ;
+LIST Dance = Dance ;
 LIST Food = Food ;
 LIST Lang = Lang ;
 LIST Plant = Plant ;
@@ -2757,13 +2758,26 @@ MAPPING-PREFIX = § ;
 #MAP (§EXP) TARGET @SUBJ> (*0 @+FMAINV LINK 0 (§vq)) ;
 #MAP (§INS) TARGET @ADVL (0 Com LINK NOT 0 HUMAN) ;
 
-#LIST VALENCY-BOUNDARY = V (N VALENCYTAG) CS Rel COMMA
+SET VALENCY-BOUNDARY = V OR CS OR Rel OR COMMA ; # (N VALENCYTAG)
 
 
 # AGENT
 # - - -
 
-MAP (§AG) TARGET @<ADVL (0 Ill LINK 0 Hum OR Ani OR Org OR ("son"))(*-1 <AG-Ill-Ani><PR-Acc-Any> OR <AG-Ill-Any>)(NEGATE *-1 (§AG));
+#Sets up templates of alternative contextual tests which can later be referred to by multiple rules or templates.
+#
+#     TEMPLATE name = (1 (N) LINK 1 (V)) OR (-1 (N) LINK 1 (V)) ;
+#     TEMPLATE other = (T:name LINK 1 (P)) OR (1 (C)) ;
+#     SELECT (x) IF ((T:name) OR (T:other)) ;
+#     
+    TEMPLATE unique = (NEGATE *-1 (§AG)) ;
+#     TEMPLATE other = (T:name LINK 1 (P)) OR (1 (C)) ;
+#     SELECT (x) IF ((T:name) OR (T:other)) ;
+    
+
+
+
+MAP (§AG) TARGET @<ADVL (0 Ill LINK 0 Hum OR Ani OR Org OR ("son"))(*-1 <AG-Ill-Ani><PR-Acc-Any> OR <AG-Ill-Any>)(T:unique);
 	## Áhčči dagahii niibbi rávdái. Son gáskkáhallá beatnagii. Lágidit sidjiide guohtuneatnamiid ja fuolahit ahte lea vejolaš bargat boazodoaluin. Fertet sidjiide ásahit albma vuođu man ala sáhtte hukset.
 MAP (§AG) TARGET @ADVL (0 Loc LINK 0 Hum OR Ani OR Org)(*0 <AG-Loc-Any>)(NEGATE *-1 (§AG));
 	## Dán jagi miessemánu álgugeahčen bekkii mediain ahte ovddeš NATO-stašuvnna lahkosis lei gávdnon olu PCB-birasmirko, ja lossametállat nu go ladju, siŋka ja kadmiuma.
@@ -3135,9 +3149,15 @@ MAP (§TH) TARGET @RIGHTOBJ (0 Acc LINK NOT 0 Ani OR Hum)(*-1 <TH-Acc-*Ani> OR <
 MAP (§TH) TARGET @RIGHTOBJ (0 Acc LINK NOT 0 Plc)(*-1 <TH-Acc-*Plc>)(NEGATE *-1 (§TH));
 MAP (§TH) TARGET @RIGHTOBJ (0 Acc)(*-1 <TH-Acc-Any>)(NEGATE *-1 (§TH)); # OR <TH-Acc-Any><CO-Com-Ani> OR <TH-Acc-Any><CO-vuostá-Any> OR <TH-Acc-Any><DE-Ill-Any> OR <TH-Acc-Any><DE-Ill-Lang> OR <TH-Acc-Any><DE-Ill-Time> OR  <TH-Acc-Any><EX-Ill-Any> OR <TH-Acc-Any><IN-Com-Any> OR <TH-Acc-Any><IN-Com-Money> OR <TH-Acc-Any><IN-bokte-Money> OR <TH-Acc-Any><LO-Ill-Any> OR <TH-Acc-Any><LO-Ill-WPlc> OR <TH-Acc-Any><LO-Loc-Any> OR <TH-Acc-Any><LO-ala-Any> OR <TH-Acc-Any><MA-Ess-Any> OR <TH-Acc-Any><OR-Loc-Any> OR <TH-Acc-Any><OR-Loc-Any><RE-Ill-Any> OR <TH-Acc-Any><PU-Ill-Any> OR <TH-Acc-Any><PU-Inf> OR <TH-Acc-Any><RE-Com-Ani> OR <TH-Acc-Any><RE-Ill-Any> OR <TH-Acc-Any><RE-Loc-Any> OR <TH-Acc-Any><RF-Com-Any> OR <TH-Acc-Any><RF-Loc-Any> OR <TH-Acc-Any><RF-vuostá-Any> OR <TH-Acc-Any><RF-vuostái-Any> OR <TH-Acc-Any><RO-Ess-Any> OR <TH-Acc-Any><RO-Ill-Any> OR <TH-Acc-Any><RS-Loc-Any> OR <TH-Acc-Any><RS-ovddas-Any> OR <TH-Acc-Any><SO-Loc-Any> OR <TH-Acc-Any><SO-Loc-Any><DE-Ill-Any> OR <TH-Acc-Any><SO-Loc-Lang> OR <TH-Acc-Any><SO-Loc-Lang><DE-Ill-Lang> OR <TH-Acc-Any><TH-Com-Any> OR <TH-Acc-Any><TH-Loc-Any> OR  <TH-Acc-Any><TO-Ill-Any> OR <TH-Acc-Any><TO-Loc-Any> OR <TH-Acc-Any><XT-Com-Measure> OR <TH-Acc-Any><badjelii> OR <TH-Acc-Any><bajás> OR <TH-Acc-Any><doibmii> OR <TH-Acc-Any><eret> OR <TH-Acc-Any><fápmui> OR <TH-Acc-Any><johtui> OR <TH-Acc-Any><oktii> OR <TH-Acc-Any><ovdan> OR <TH-Acc-Any><sisa>)(NEGATE *-1 (§TH));
 MAP (§TH) TARGET @RIGHTOBJ (0 Acc LINK 0 Body)(*-1 <TH-Acc-Body>)(NEGATE *-1 (§TH));
-MAP (§TH) TARGET @RIGHTOBJ (0 Acc)(*-1 <TH-Acc-Concrete>)(NEGATE *-1 (§TH));
-MAP (§TH) TARGET @RIGHTOBJ (0 Acc)(*-1 <TH-Acc-Dance>)(NEGATE *-1 (§TH));
+	## Riebaniin leat biejut, ja almmi lottiin leat beasit, muhto Olbmobártnis ii leat sadji gos vuoiŋŋastahtášii oaivvis.
+MAP (§TH) TARGET @RIGHTOBJ (0 Acc LINK NOT 0 Time)(*-1 <TH-Acc-Concrete>)(NEGATE *-1 (§TH));
+	## Das vuolgá ahte Sámedikki bargosuorgái gullet buot áššit mat dikki mielas gusket sámi álbmoga.
+MAP (§TH) TARGET @RIGHTOBJ (0 Acc LINK 0 Dance)(*-1 <TH-Acc-Dance>)(NEGATE *-1 (§TH));
+	## Ollugat dánso swinga lávddi ovddabeale.
+	## Dánsun buktá ollu buriid, lášmmodan ja liigekilot jávket, lohká Gaup gii niegada gávttiin dánsut wienerválssa, muhto ii ihttin go dalle lea cha cha cha.
 MAP (§TH) TARGET @RIGHTOBJ (0 Acc LINK 0 Body)(*-1 <TH-Acc-Edu>)(NEGATE *-1 (§TH));
+	## NRK Sámi Radio lea ásahuvvon gokčandihti áššiid mat gusket sámi guovlluide sámegillii ja addit sámegielat mediafálaldaga.
+
 MAP (§TH) TARGET @RIGHTOBJ (0 Acc)(*-1 <TH-Acc-Hum><eret>)(NEGATE *-1 (§TH));
 
 
@@ -3145,8 +3165,10 @@ MAP (§TH) TARGET @RIGHTOBJ (0 Acc)(*-1 <TH-Acc-Hum><eret>)(NEGATE *-1 (§TH));
 #MAP (§TH) TARGET <TH-Acc-Obj><CO-Com-Ani> = <TH-Acc-Obj><CO-Com-Ani> ;
 #MAP (§TH) TARGET <TH-Acc-Obj><DE-DePp-Any> = <TH-Acc-Obj><DE-DePp-Any> ;
 #MAP (§TH) TARGET <TH-Acc-Obj><XT-Acc-Measure> = <TH-Acc-Obj><XT-Acc-Measure> ;
-#MAP (§TH) TARGET <TH-Acc-Txt> = <TH-Acc-Txt> ;
-#MAP (§TH) TARGET <TH-Acc-Txt><DE-Ill-Txt> = <TH-Acc-Txt><DE-Ill-Txt> ;
+
+MAP (§TH) TARGET @RIGHTOBJ (0 Acc)(*-1 <TH-Acc-Txt> OR <TH-Acc-Txt><DE-Ill-Txt>)(NEGATE *-1 (§TH));
+	## Sire logaldii giellaovdaneami birra, ja gaikat lávlo máŋgga sámegiel lávlagiid, stohke ja hárjehalle velá boradettiin sámástit.
+	
 #MAP (§TH) TARGET <TH-AktioEss> = <TH-AktioEss> ;
 #MAP (§TH) TARGET <TH-AktioLoc> = <TH-AktioLoc> ;
 #MAP (§TH) TARGET <TH-Com-*Ani> = <TH-Com-*Ani> ;
@@ -3507,12 +3529,16 @@ IFF ("mánnat" V) (0* §RS OR §TH) ;
 IFF ("mannat" V) (0* §DE OR §IN OR §LO OR §TH) ; 
 #mannet <0> 
 
-#mannat <DE-lusa-Ani> <DE-Ill-Any> <SO-Loc-Any><DE-Ill-Any> <RO-Ess-Any> <PU-Inf> <TH-AktioLoc-Any> <LO-Loc-Any> <oktii><DE-Com-Any> <gitta> <eret> <MA-Adv-Manner> # Dan ii dohkkehan Buljo, ja ášši manai duopmostuolu duohkai. # De sii manne rastá meara ja bohte báhpa dállui. # Márju ja su ustit Isabellá manaiga ovdii, eaba ge luoitán su meaddel. # lei bivdán friddja ja lei mannan eatnis mielde lulás muhtun fulkkiid guossái. # Liná manai seainni vuostá čuožžut ja geahččat Lárina go čievččai spáppa eará bártniiguin. #gå i kirke - girkus mannat vs. gå inn i kirken - girkui mannat #siiddas fitnat/siiddas mannat - avlegge et besøk i fjellbyen # eret - go olmmoš mánná Ibmila luhtte eret - når mennesket går bort fra Gud # Davábeali rádji evttohuvvo galgat mannat Balvatn rájis riikarádjái. # Jus konvenšuvdna ii loahpahuvvo maŋemusat vihtta jagi ovdalgo áigodat manná lohppii, dalle gusto dát velá nuppi logi jagi. # Guovllu rájit sáhttet mannat guhkás nuppi riikka sisa. # dasságo jogat manne oktii Dieváideanuin # Das manná njuolga linjjás Váhttečohkkii. # Das fas manná dan seammá jávrri lulimus luovtta rádjái. # Guovllu rájit sáhttet mannat guhkás nuppi riikka sisa. # Maŋŋil fas dárbbaša boazu mannat alla várreeatnamiidda. # Dat manná viidáseappot riddoguvlui. # Ruoŧa ja Norgga riikarádji manná čađa boazodoalloguovlluid. # Manná boazu várrái jassaguoraid guohtut. # Dáid orohagai johtingeaidnu manná nuorttabeali. --- Trond is that still goal??? # Buhtadus manná doalloovttadaga oamasteaddjái. # Riikkaid rájit mannet doarrás ja sirrejit boazoguohtunguovlluid. # Dat galget mannat sisaboahtun. # Erenoamáš ruhtadoarjagat iešguđetlágán vuoruhuvvon ulbmiliidda. # Muhto manai garrasit maŋás maŋŋil 1990. # 1998 rádjái manai boazolohku sakka ollu/19 % maŋás Finnmárkkus. # ovdalgo áigodat manná lohppii. #Das manná njuolga linjjás Váhttečohkkii. #Das manná dán jávrri mielde Lavzejávrái. # Sörkaitum bohtet riikarádjái ja manná gitta dan báikái gokko rádji gaskal... #  ja gonagaslaš vázzinráidu manai gávpoga gáhtaid mielde.
+#mannat <DE-lusa-Ani> <DE-Ill-Any> <SO-Loc-Any><DE-Ill-Any> <RO-Ess-Any> <PU-Inf> <TH-AktioLoc-Any> <LO-Loc-Any> <oktii><DE-Com-Any> <gitta> <eret> <MA-Adv-Manner> # Dan ii dohkkehan Buljo, ja ášši manai duopmostuolu duohkai. # De sii manne rastá meara ja bohte báhpa dállui. # Márju ja su ustit Isabellá manaiga ovdii, eaba ge luoitán su meaddel. # lei bivdán friddja ja lei mannan eatnis mielde lulás muhtun fulkkiid guossái. # Liná manai seainni vuostá čuožžut ja geahččat Lárina go čievččai spáppa eará bártniiguin. #gå i kirke - girkus mannat vs. gå inn i kirken - girkui mannat #siiddas fitnat/siiddas mannat - avlegge et besøk i fjellbyen # eret - go olmmoš mánná Ibmila luhtte eret - når mennesket går bort fra Gud # Davábeali rádji evttohuvvo galgat mannat Balvatn rájis riikarádjái. # Jus konvenšuvdna ii loahpahuvvo maŋemusat vihtta jagi ovdalgo áigodat manná lohppii, dalle gusto dát velá nuppi logi jagi. # Guovllu rájit sáhttet mannat guhkás nuppi riikka sisa. # dasságo jogat manne oktii Dieváideanuin # Das manná njuolga linjjás Váhttečohkkii. # Das fas manná dan seammá jávrri lulimus luovtta rádjái. # Guovllu rájit sáhttet mannat guhkás nuppi riikka sisa. # Maŋŋil fas dárbbaša boazu mannat alla várreeatnamiidda. # Dat manná viidáseappot riddoguvlui. # Ruoŧa ja Norgga riikarádji manná čađa boazodoalloguovlluid. # Manná boazu várrái jassaguoraid guohtut. # Dáid orohagai johtingeaidnu manná nuorttabeali. --- Trond is that still goal??? # Buhtadus manná doalloovttadaga oamasteaddjái. # Riikkaid rájit mannet doarrás ja sirrejit boazoguohtunguovlluid. # Dat galget mannat sisaboahtun. # Erenoamáš ruhtadoarjagat iešguđetlágán vuoruhuvvon ulbmiliidda. # Muhto manai garrasit maŋás maŋŋil 1990. # 1998 rádjái manai boazolohku sakka ollu/19 % maŋás Finnmárkkus. # ovdalgo áigodat manná lohppii. #Das manná njuolga linjjás Váhttečohkkii. # Das manná dán jávrri mielde Lavzejávrái. # Sörkaitum bohtet riikarádjái ja manná gitta dan báikái gokko rádji gaskal... #  ja gonagaslaš vázzinráidu manai gávpoga gáhtaid mielde.
 
 
 #miehtat `admit, join' vs. miehtá & 53/1902 & \\
 
 IFF ("miehtat" V) (0* §TH) ;
+SUBSTITUTE ("miehtat" V <TH-Inf> <TH-Ill-Any> TV Ind Prs Sg3) ("miehtá" Adv) TARGET ("miehtat") (NEGATE 0* §TH BARRIER VALENCY-BOUNDARY);
+	## Ballari dadjá Vuolle-Deanu dážaid birra ahte Ruksesbávtti rájes ja miehtá Juovlavuona ledje buot dáža bearrašiin muhtin sámegielhálli. 
+	## Hospiterenbálká miehtá 12 mánu: 320.250,-
+	## Áiti gos fatnasa áittarda 5.
 
 #miehtat <TH-Ill-Any> <TH-Inf> # Dasa gal mieđai beaivváš. # vuordagasas šaddet váldojuvvot dikšui dan guovtti postii, várra sullii 50 mihtet searvat iskkadeapmái. # Miehtá suopmelaš gielaid dihtto maid suorggádus su. koskettaa ja dan vástagat, mii morfologalaččat vástida sá. sáni guoskkahit. # Mieđan dasa ahte lean bákkolaš psyhkalaš divššu njuolggadusaid §3-1 vuollásaš. # Don it leat miehtan váldit dálkasiid mat leat dárbbašlaččat dálkkodeapmái. # Min bearaš lei bisuhan sámegoarggu, eaba lean miehtan lonuhit Baltto nama muhtin dáža namman nugo omd. váldit namman min báikki nama mii lei virggálaččat Randberg. # Fágalaš ovddasvástideaddji mearrida, leago divššohas dan dilis ahte sáhttá miehtat dikšui. # 
 
