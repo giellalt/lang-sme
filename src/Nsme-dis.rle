@@ -329,7 +329,7 @@ SET FOBJ = @-F<OBJ OR @-FOBJ> ;
 SET FMAINV = @-FMAINV OR @+FMAINV ;
 SET FAUXV = @-FAUXV OR @+FAUXV ;
 
-LIST @ADVL = @ADVL @ADVL> @ADVL< @<ADVL @>ADVL @-F<ADVL @-FADVL> ;
+LIST ADVL = @ADVL @ADVL> @ADVL< @<ADVL @>ADVL @-F<ADVL @-FADVL> ;
 LIST @>ADVL = @>ADVL ;
 LIST @ADVL< = @ADVL< ;
 LIST @<ADVL = @<ADVL ;
@@ -398,6 +398,8 @@ LIST OBJ> = @OBJ> @-FOBJ> ;
 SET <OBJ-OTHERS = <OBJ OR (Gen) OR (Nom) OR (Ess) OR (Loc) OR (Adv) ;
 SET OBJ>-OTHERS = OBJ> OR (Gen) OR (Nom) OR (Ess) OR (Loc) OR (Adv) ;
 
+SET NOT-FAUXV = FMAINV OR OBJ + V OR ADVL + V ;
+# Works after the mapping rules for verbs.
 
 LIST @X = @X ;
 
@@ -6302,13 +6304,35 @@ SELECT:GenPlc Gen (*0 MOVEMENT-V BARRIER SV-BOUNDARY OR COMMA OR NP-HEAD-ACC - (
 
 
 
-#!! !Genitive in time adverbials
+#!! !Accusative or genitive in temporal adverbials
+
+#Fuom! Ritvas experiment
+
+#REMOVE:r2052 Gen IF (-1 Dem OR TIME-A LINK -1 ("dušše"))(0 VAHKKU OR MANNU);
+    #$ Dušše maŋemus jagi heaittihuvvo njealje čuoiganjoavkku.
+    # "dušše" as presenting year as a lasting period
+    
+#SELECT:r2053 Acc IF (0 TIME + Pl LINK -1 Attr);
+    #$ NVE dieđiha maid, ahte dáid lagamus beivviid eat dárbbaš Finnmárkkus ballat dulvvis.
+    
+#REMOVE:DurTime Gen IF (*-1 DURATION-A BARRIER NOT-NPMOD)(0 TIME);
+    #$ Jus oahppi dahje ohppiidjoavku jávká lobihemiid osiid diimmus dahje olles diimmu.
+
+#REMOVE:r2056 Gen IF (*0 PLACE-V OR DURATION-V BARRIER SV-BOUNDARY)(0 VAHKKU-DUR + Acc LINK NOT 1 Ill OR TIME OR Po OR PREGEN LINK NEGATE 0 Nom LINK 1 EOS)(0 VAHKKU-DUR + Acc LINK NOT *-1 Dem OR TIME-A OR Ord OR Indef OR PREGEN OR Pr BARRIER NOT-NPMOD);
+
+#REMOVE:r2057 Gen IF (*-1 PLACE-V OR DURATION-V LINK 0 PrfPrc OR Inf BARRIER SV-BOUNDARY LINK *-1 AUX OR Neg BARRIER SV-BOUNDARY)(0 VAHKKU-DUR + Acc LINK NOT *-1 Dem OR TIME-A OR Ord BARRIER NOT-NPMOD LINK NEGATE *1 VAHKKU-DUR + Acc LINK 1 Po);
+     #$ Skiippaguras Kárášjohkii ádjánii bures beaivvi, muhto vuloseano ii ádjánan go beaivvi go dábálaš olu čáhci lei (Fixdal 1938: 64).
+
+
+
+
 
 # !! * __GenTime__ selects genitive if 0 TIME and COPULAS somewhere to the left or right
 SELECT:GenTime Gen (0 TIME + Acc LINK NOT 0 Loc OR Nom)(*0 COPULAS BARRIER SV-BOUNDARY LINK 0 FMAINV)(NEGATE -1 Num) ;
 	#$ Dán jagi eai leat luopmánat.
 	#$ Beassážiid leat dábálaččat heargevuodjingilvvut, sihke Kárášjogas ja Guovdageainnus.
 	#$ Son lei moanat jagiid lullisámi skuvllajođiheaddjin.
+	#Comment: Dát njuolggadus vállje olu boastut iige doala deaivása. Hálidan sihkkut dasto go gávdnojit buoret njulggadusat: áigi + akk!
 
 
 #!! * Selects genitive when you are TIME and there is a mainverb COPULAS somewhere in the sentence
@@ -6321,7 +6345,7 @@ SELECT:GenTime Gen (0 TIME + Acc LINK NOT 0 Loc OR Nom)(*0 COPULAS BARRIER SV-BO
 #!! !Accusative as an object 
 
 #!! * __AccTV1__ Selects accusative: when a Strict transitive verb to the left: ''oste mielkki gávppis''
-SELECT:AccTV1 Acc (*-1C STRICT-TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc BARRIER S-BOUNDARY OR CC)(0 NP-HEAD-ACC LINK NOT *1 Acc - Pron BARRIER S-BOUNDARY)(NEGATE -1 Num)(NEGATE 0 TIME OR ROUTE)(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK *1 Ill BARRIER NOT-NPMOD)(NEGATE 0 (Pron Refl) LINK 1 (N Ess))(NEGATE 0 (Pron Refl) LINK 1 Gen LINK 1 Po) ;
+SELECT:AccTV1 Acc (*-1C STRICT-TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc BARRIER S-BOUNDARY OR CC)(0 NP-HEAD-ACC LINK NOT *1 Acc - Pron BARRIER S-BOUNDARY)(NEGATE *-1 Num BARRIER NOT-Attr LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(NEGATE 0 TIME OR ROUTE)(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK *1 Ill BARRIER NOT-NPMOD)(NEGATE 0 (Pron Refl) LINK 1 (N Ess))(NEGATE 0 (Pron Refl) LINK 1 Gen LINK 1 Po)(NEGATE 1 (N Nom)) ;
 	#$ Moai oste mielkki gávppis.
 	#$ Šiehatdus sittsisdoallá dárkilis evttohusa movt guohtun eatnamiid sáhttá atnit ávkin goabbat bealde riikaráji.
 	#$ Soai oastiba bileahta su filbmii.
@@ -6341,8 +6365,7 @@ REMOVE:r2271 Gen IF (*-1 TRANS-V BARRIER SV-BOUNDARY OR Acc OR COMMA LINK NOT *-
 
 
 #!! * __AccTV2__ Selects accusative: when a transitive verb to the left
-SELECT:AccTV2 Acc (*-1C TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc - Num BARRIER S-BOUNDARY)(0 NP-HEAD-ACC LINK NEGATE *1 Acc BARRIER CC OR COMMA OR SV-BOUNDARY LINK NOT 0 (Pron Gen) LINK *1 N BARRIER NOT-NPMOD)(0 Acc LINK NOT 0 ROUTE OR TIME)(NEGATE -1 Num)(NEGATE 0 (Pron Dem))(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK 1 Ill)(NEGATE 1 (N Acc) OR Com)(NEGATE 1 Gen LINK 1 Po)  ;
-#SELECT:AccTV2 Acc (*-1C TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc BARRIER S-BOUNDARY)(0 NP-HEAD-ACC LINK NEGATE *1 Acc BARRIER SV-BOUNDARY)(0 Acc LINK NOT 0 ROUTE OR TIME)(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK 1 Ill) ;
+SELECT:AccTV2 Acc (*-1C TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc - Num BARRIER S-BOUNDARY)(0 NP-HEAD-ACC LINK NEGATE *1 Acc BARRIER CC OR COMMA OR SV-BOUNDARY LINK NOT 0 (Pron Gen) LINK *1 N BARRIER NOT-NPMOD)(0 Acc LINK NOT 0 ROUTE OR TIME)(NEGATE *-1 Num BARRIER NOT-Attr LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(NEGATE 0 (Pron Dem))(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK 1 Ill)(NEGATE 1 (N Acc) OR Com OR (N Nom))(NEGATE 1 Gen LINK 1 Po)  ;
 	#$ De son ohcá stálu silbbaid.	
 	#$ Sámegillii galbet universitehta lea šaddan realitehta.
 	#$ In máhte suomagiela, eaige nieiddat máhte nu bures eŋgelasgiela.
@@ -6357,7 +6380,7 @@ SELECT:AccTV3 Acc (*-1 TRANS-V BARRIER COMMA OR Num OR REAL-V OR Ess OR S-BOUNDA
 
 
 #!! * __OLDr2466__ Selects accusative: when transitive verb to the left, but not if the TV is FAUX OR LOC-V
-SELECT:OLDr2466 Acc IF (*-1C TRANS-V BARRIER SV-BOUNDARY OR NOT-NPMODADV OR ("nugo") OR ("dego") OR ("dugo") LINK NOT 0 FAUXV OR LOC-V LINK NOT *-1 Acc BARRIER SV-BOUNDARY OR (Neg Foc/ge))(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY)(NEGATE -1 PrfPrc LINK NOT *-1 REAL-COPULAS BARRIER SV-BOUNDARY)(NEGATE -1 NUM)(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME LINK NOT 0 Px)(NEGATE 0 TIME OR ROUTE)(*1C NP-BOUNDARY OR S-BOUNDARY OR (Time) + Ill BARRIER WORD LINK NOT 0 Actio OR Inf);
+SELECT:OLDr2466 Acc IF (*-1C TRANS-V BARRIER SV-BOUNDARY OR NOT-NPMODADV OR ("nugo") OR ("dego") OR ("dugo") LINK NOT 0 FAUXV OR LOC-V LINK NOT *-1 Acc BARRIER SV-BOUNDARY OR (Neg Foc/ge))(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY)(NEGATE -1 PrfPrc LINK NOT *-1 REAL-COPULAS BARRIER SV-BOUNDARY)(NEGATE *-1 Num BARRIER NOT-Attr LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME LINK NOT 0 Px)(NEGATE 0 TIME OR ROUTE)(*1C NP-BOUNDARY OR S-BOUNDARY OR (Time) + Ill BARRIER WORD LINK NOT 0 Actio OR Inf);
 	#$
 
 #!! * __topOBJ1__ Selects accusative: when a Strict transitive verb to the right (topicalized object)
@@ -6610,7 +6633,7 @@ REMOVE:XXr1523 Acc IF (-1 JAHKI-NUM LINK NOT -1 (PrfPrc @>N) OR Attr OR Dem)(0 N
 #!! !Numerals
 
 #!! * __NumAcc__ selects Acc for singular numerals if followed by a noun ''logi báhkkoma''
-SELECT:NumAcc Acc (0* TRANS-V BARRIER S-BOUNDARY)(0 NUM + Sg LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(*1 (N Acc) OR (N Gen) BARRIER NOT-Attr LINK NOT 0 Ill)(NEGATE *-1 COPULAS + FMAINV BARRIER S-BOUNDARY)(NEGATE *-1 Der/Pass BARRIER NOT-ADV)(NEGATE *1 COPULAS BARRIER COMMA OR S-BOUNDARY);#(NEGATE *-1 CC BARRIER NOT-ADV LINK -1 (Num Sg) + Nom);
+SELECT:NumAcc Acc (0* NOT-FAUXV + TRANS-V BARRIER SV-BOUNDARY)(0 NUM + Sg LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(*1 (N Acc) OR (N Gen) BARRIER NOT-Attr LINK NOT 0 Ill)(NEGATE *-1 COPULAS + FMAINV BARRIER SV-BOUNDARY)(NEGATE *-1 Der/Pass BARRIER NOT-ADV)(NEGATE *1 COPULAS BARRIER COMMA OR SV-BOUNDARY);
 	#$ Sii máhtte áddekeahttá bajillohkat logi báhkkoma ja Áhččámet.
 	#$ Áiggun dušše geahččat moadde filmma.
 	#$ Dákkár dápáhusat, ja máŋga iežá dáhpáhusa ja digaštallama dahke munnje persovnnalaččat váttisin dáid gažaldagaid mat bohciidedje Gáivuonas. 
