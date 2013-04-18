@@ -73,7 +73,8 @@ endif
 # Add the target of local additions here:
 # HFST targets here:
 if CAN_HFST
-GT_FILTER_TARGETS+=
+GT_FILTER_TARGETS+=remove-RCmpnd-strings.hfst \
+				   remove-CLB-strings.hfst
 
 endif
 
