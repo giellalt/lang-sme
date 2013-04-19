@@ -3230,6 +3230,13 @@ REMOVE:r958 (V Pl3) IF (-1 (Pron Rel Sg))(0 (V Sg3));
 SELECT:NegSg3BeforeFoc (V IV Neg Ind Sg3) IF (0 ("ii"))(*1 Foc/ge OR ConNeg BARRIER COMMA OR PUNCT);
  	#$ Ii oktage lea boahtán.
 
+#!! * __vfin__ removes verb reading when the reading should be noun  
+REMOVE:vfin1 VFIN (0 (N Sg Nom) LINK *1 VFIN + Sg3 BARRIER NOT-ADV-PCLE OR COMMA) ; 
+REMOVE:vfin2 VFIN (0 Acc LINK *-1 TRANS-V BARRIER NOT-ADV-PCLE OR COMMA)(*-1 VFIN BARRIER S-BOUNDARY) ; 
+REMOVE:vfin3 VFIN (0 N LINK 1 ("vai" CC) LINK 1 N LINK NOT 0 VFIN) ;
+	#$ Birasgáhttenlihkadus ja álgoálbmogat – ovttasbargit vai vuostálagaid?
+
+
 #!! Negative verb, not abbreviation or roman numeral Ii.
 
 	#!! !Du1 - early cycle, safe rules
@@ -5742,9 +5749,13 @@ MAP:+FMAINVCop (@+FMAINV) TARGET VFIN + COPULAS (NEGATE *-1 Inf OR PrfPrc OR (Ac
 	#$ Mun lean Romssas. 
     
 #!! * __+FMAINV__  to the remaining finite verbs which are not AUX    
-MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX ;
+MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX (NOT 0 V + OBJ OR V + SUBJ OR V + ADVL OR (V @>N)) ;
+#MAP:TESTFMAINV (@+FMAINV) TARGET VFIN-NOT-AUX + Sg3 (*-1 Sg BARRIER VFIN OR S-BOUNDARY) ;
 	#$ Boađe boahtte vahku.
 	#$ Son lea oappáin náitalan.
+	#$ Mánná čohkána láhttái.
+	#$ Son gii oažžu lobi, galgá vuostáiváldit goartta dahje sullasačča, mii čájeha ahte sus lea lohpi.
+	#% Mun lean ráhkkásisttán ožžon cummá.
 
 #!! !(@-FMAINV) and (@-FAUXV)
 
@@ -5875,6 +5886,10 @@ MAP:NomActLocX (@X) TARGET (Der/NomAct Loc)(0 @<ADVL)  ;
 
 #!! * __NomActX__ removes other readings when PrfPrc Or Actio Ess
 MAP:NomActX (@X) TARGET (Der/NomAct) OR Actio (0 (V @<OBJ) OR FMAINV OR (V @>N))  ;
+
+#!! * __IfonlyVerb__
+SELECT:IfonlyVerb FMAINV (NEGATE *0 FMAINV BARRIER S-BOUNDARY) ;
+	#$ Juohke loddi gielainis lávlu.
 
 
 #!! * __X__
@@ -6451,7 +6466,7 @@ SELECT:CoAcc2520 Acc (*-1 COMMA BARRIER NOT-NPMOD LINK -1C NP-HEAD-ACC)(1 COMMA 
 #!! Second part
 
 #!! * __CoAcc2521__ Select accusative (coordinated acc): if coordinator to your left and accusative to the left of the coordinator ''deaja dahje sávtta''
-SELECT:CoAcc2521 Acc (*-1 CRD BARRIER NOT-NPMOD LINK -1C Acc)(NEGATE 0 Inf)(NEGATE 0 Nom LINK *1 VFIN BARRIER S-BOUNDARY)(1 NP-BOUNDARY OR COMMA OR Ill)(NEGATE 0 Dem LINK 1 PrfPrc LINK *1 N BARRIER NOT-NPMOD);
+SELECT:CoAcc2521 Acc (*-1 CRD BARRIER NOT-NPMOD LINK -1C Acc)(NEGATE 0 Inf OR Rel)(NEGATE 0 Nom LINK *1 VFIN BARRIER S-BOUNDARY)(1 NP-BOUNDARY OR COMMA OR Ill LINK NOT 0 Po)(NEGATE 0 Dem LINK 1 PrfPrc LINK *1 N BARRIER NOT-NPMOD);
 	#$ Doppe moai sáhtiime oastit gáfe, deaja dahje sávtta. #maŋit objeakta
 
 #!! * __CoAcc__ (relies on AccTV3) selects Acc if there is a CC to its right with an secure Acc to the right of CC ''semináraid ja diehtojuohkinčoahkimiid''
@@ -7083,8 +7098,11 @@ SELECT:NDr2376 Nom IF (*-1 VERBAL-ACTIVITY-V BARRIER NOT-NPMOD LINK -1 COMMA LIN
 	## Don leat jallu, dadja Tomi skihpar.
 
 # !! * __PostVNom__ selects Nom if a Sg 3p verb to the left with no Nom to the left of it
-SELECT:PostVNom (N Sg Nom) (*-1C SG3-V BARRIER NOT-NPMODADV OR PrfPrc LINK NOT *-1 (Sg Nom) BARRIER S-BOUNDARY)(NEGATE 0 Gen LINK *1 N BARRIER NOT-NPMOD)(NEGATE 0 Loc LINK *1 (Sg Nom) BARRIER VFIN)(NEGATE 0 Po OR Loc);
-	#$ Lávvui gullá maid uvssot.
+SELECT:PostVNom (N Sg Nom) (*-1C SG3-V BARRIER NOT-NPMODADV OR PrfPrc LINK NOT *-1 (Sg Nom) OR (Pron Sg3) BARRIER S-BOUNDARY)(NEGATE 0 Gen LINK *1 N BARRIER NOT-NPMOD)(NEGATE 0 Loc LINK *1 (Sg Nom) BARRIER VFIN)(NEGATE 0 Po OR Loc)(NEGATE 0 Attr LINK 1 N);
+	#$ Lávvui gullá maid uvssot. 
+	#% Bovnnas lei viessu, ja viesus lei nuorra nisu mánnáváivvis.
+	#% Son lea njulgen čielggi, ja lea nuorra ja searra.
+	#% Son liiko guollái.
 
  
 	# Nominative predicatives
