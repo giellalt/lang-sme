@@ -45,10 +45,20 @@ GT_LEXC_SRCS=\
 			stems/verbs.lexc
 
 # Set this to the names of all generated lexc files, if any
-GENERATED_LEXC_SRCS=
+GENERATED_LEXC_SRCS=$(srcdir)/stems/smi-$(GTLANG)-propernouns.lexc
 
 # Set this to the names of all source xml files, if any
 GT_XML_SRCS=
+
+$(srcdir)/stems/smi-$(GTLANG)-propernouns.lexc: \
+		$(srcdir)/stems/smi-propernouns.lexc \
+		$(srcdir)/stems/$(GTLANG)-propernouns.lexc
+	$(AM_V_GEN)rm -f $@ && \
+	cp -f $(srcdir)/stems/$(GTLANG)-propernouns.lexc $@ && \
+	echo "" >> $@ && \
+	echo "! <--- Dump from SMI -->" >> $@ && \
+	echo "" >> $@ && \
+	cat $< >> $@
 
 include $(top_srcdir)/am-shared/lexc-include.am
 
