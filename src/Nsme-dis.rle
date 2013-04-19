@@ -1370,7 +1370,7 @@ LIST PL-N = "áiru" "beaivváščalbmeláset" "beassážat" "biddu" "čalbmelás
  
  # Nominals that appear with plural numerals.
  
-LIST SG-WORD = ("addit" Der/upmi) "almmolašvuohta" "anistupmi" "arvi" "áigemearri" "álgu" "áŋgirvuohta" "ávvu" "ballu" "boazodoallu" "borakeahttáivuohta" ("buorredáhtolaš" Der/vuohta) "doaivu" "doarjja" "dárogiella" "Finnmárkoláhka" "fuolalašvuohta" "gaskkamuddu" "gávvilvuohta" ("geargat" Der/vuohta) "geardun" "geavaheapmi" "gelbbolašvuohta" "giellageavaheapmi" ("giitevaš" Der/vuohta) ("gudnejahttit" Der/NomAct) "fápmu"  ("guovttegielalaš" Der/vuohta) "hearvásvuohta" "iešdovdu" "illu" "ipmárdus" "isitvuohta" ("juotna" Der/laš Der/vuohta) "kulturduogáš" "kulturgelbbolašvuohta" "láhkavuođđu" luondduvuođu" "loahppa" ("máŋggabealat" Der/vuohta) "mielki" "miella" "miellasuvvan" "moraš" "muohta" "musihkka" "oamedovdu" "olahahttivuohta" "ovddasvástádus" "ovttasbargu" "ovttadássásašvuohta"  (".*politihkka"r) "ráffi" "ráfi" "ráhkisvuohta" "riska" "roahkkatvuohta" "sámegiella" "sámegielmáhttu" "sámekultuvra" "ustitvuohta" ("vanhurskkis" Der/vuohta) "vásáhusduogáš" ("veahkaválddálaš" Der/vuohta) ("vuordnut" Der/NomAct)   ;
+LIST SG-WORD = ("addit" Der/upmi) "almmolašvuohta" "anistupmi" "arvi" "áigemearri" "álgu" "áŋgirvuohta" "ávvu" "ballu" "boazodoallu" "borakeahttáivuohta" ("buorredáhtolaš" Der/vuohta) "doaivu" "doarjja" "dárogiella" "Finnmárkoláhka" "fuolalašvuohta" "gaskkamuddu" "gávvilvuohta" ("geargat" Der/vuohta) "geardun" "geavaheapmi" "gelbbolašvuohta" "giellageavaheapmi" ("giitevaš" Der/vuohta) ("gudnejahttit" Der/NomAct) "fápmu" "guossoheapmi" ("guovttegielalaš" Der/vuohta) "hearvásvuohta" "iešdovdu" "illu" "ipmárdus" "isitvuohta" ("juotna" Der/laš Der/vuohta) "kulturduogáš" "kulturgelbbolašvuohta" "láhkavuođđu" luondduvuođu" "loahppa" ("máŋggabealat" Der/vuohta) "mielki" "miella" "miellasuvvan" "moraš" "muohta" "musihkka" "oamedovdu" "olahahttivuohta" "ovddasvástádus" "ovttasbargu" "ovttadássásašvuohta"  (".*politihkka"r) "ráffi" "ráfi" "ráhkisvuohta" "riska" "roahkkatvuohta" "sámegiella" "sámegielmáhttu" "sámekultuvra" "ustitvuohta" ("vanhurskkis" Der/vuohta) "vásáhusduogáš" ("veahkaválddálaš" Der/vuohta) ("vuordnut" Der/NomAct)   ;
 
 # Words that are used in singular unless their plurality is stressed by words such as "goappeš", "goappašat", "earálágan", "máŋgalágan" or Num or Ord.
 
@@ -2149,6 +2149,9 @@ LIST LOHKU = ("[0-9]*-#lohku"r) ;
 
 SELECT:lohku LOHKU ;
 	# "1960-#lohku", not loahku or logus
+	
+#!! !Some adjectives are never derived as Adv
+REMOVE:NeverAdv (Der/at Adv) (0 ("nuorra") ) ; 	
 
 #!! !Rules for Prop Attr, Sur and Plc
 
@@ -3420,8 +3423,9 @@ REMOVE:NnotAcoord A (NEGATE 0 PrfPrc LINK *0 REAL-COPULAS + PL-V BARRIER SV-BOUN
 	#$ ...ležžet sii dál sápmelaččat, dážat dahje kveanat.
 
 #!! * __NPlbeforeRel, NSgbeforeRel__ select N in front of Rel and MO
-SELECT:NPlbeforeRel N + Pl (NEGATE 0 Inf OR Adv)(*1 Rel + Pl BARRIER WORD) ;  
-SELECT:NSgbeforeRel N + Sg (NEGATE 0 Adv OR Po OR VFIN)(NEGATE -1 HEADOFPARTS OR (Dem Pl Loc))(*1 Rel + Sg BARRIER WORD) ;  # Lene: fjerna MO
+SELECT:NPlbeforeRel N + Pl (NEGATE 0 Inf OR Adv)(*1 Rel + Pl BARRIER WORD LINK NOT 0 Sg) ;  
+SELECT:NSgbeforeRel N + Sg (NEGATE 0 Adv OR Po OR VFIN)(NEGATE -1 HEADOFPARTS OR (Dem Pl Loc))(*1 Rel + Sg BARRIER WORD LINK NOT 0 Pl) ;  # Lene: fjerna MO og la til not Sg/Pl pga av maid som kan være både Sg og Pl
+SELECT:NbeforeRel N (NEGATE 0 Adv OR Po OR VFIN OR Inf)(NEGATE -1 HEADOFPARTS OR (Dem Pl Loc))(1 Rel LINK *1 VFIN) ;
 	#$ Dat leat doaimmat, maiguin mun barggan.
  	#$ Gažaldat lea dušše, man ollu ... # NOT 0 Adv!
  	#$ Lea miellagiddevaš lohkat, maid ...# NOT 0 Inf!
@@ -3456,7 +3460,7 @@ SELECT:maidAdv ("maid" Adv) (*-1 COPULAS BARRIER NOT-ADV)(*1 PrfPrc OR (Actio Es
 
 
 #!! * __maidAdv3__ selects maid Adv even if there is a vfin to the right.
-SELECT:maidAdv ("maid" Adv) (*-1 CS OR BOC OR Rel BARRIER VFIN OR CLB)(NEGATE -1 go)((*1 VFIN - Pot LINK NOT *1 VFIN BARRIER CC OR COMMA) OR (NEGATE **1 TRANS-V BARRIER CC OR COMMA OR REAL-V) OR (*1 COPULAS BARRIER REAL-V LINK 1 PrfPrc OR (Actio Ess) LINK NOT *1 VFIN)) (NOT *1 ("?"));
+SELECT:maidAdv ("maid" Adv) (*-1 CS - go OR BOC OR Rel BARRIER VFIN OR CLB)(NEGATE -1 go)((*1 VFIN - Pot LINK NOT *1 VFIN BARRIER CC OR COMMA) OR (NEGATE **1 TRANS-V BARRIER CC OR COMMA OR REAL-V) OR (*1 COPULAS BARRIER REAL-V LINK 1 PrfPrc OR (Actio Ess) LINK NOT *1 VFIN)) (NOT *1 ("?"));
  	#$... nu ahte dat maid siskkilda ávnnaslaš kultureavttuid.  
    	#$ Maid moarsi lea borran.
    	#$ ... mat maid leat politihkalaš bellodagat.
@@ -3520,6 +3524,7 @@ SELECT:olluNom OLLU + Nom ((0 Qst) OR (1 go))(*1 COPULAS)(NOT -1 ("nu") OR ("na"
 	#$ Man ollu lea diibmu?
 	#$ Bargiid guottut mearkkašit seamma ollu go fáktadieđut.
 
+
 REMOVE:manV-N V OR N (-1 ("man" Adv) OR ("mihá"))(NEGATE 0 Po);
 	#$ Man guhkki lea girkui?
 	#$ In dieđe man buorit dat leat.
@@ -3538,8 +3543,15 @@ SELECT:ovttasAdv Adv (-1 REAL-V OR Com)(0 COM-ADV)(NEGATE 0 Foc/ge OR Num);
  	#$ Divššohas lea duođalaččat roasmmohuvvan.
  	#$ Bátnedoavttir galgá ovttas eará bargiiguin mearridit.
 
-REMOVE:nuorra Adv (0 ("nuorra"));
- 	#$ Nuorat dajai sutnje: ...
+#!! * __olluAdv__
+SELECT:olluAdv1 OLLU + Adv ((-1 AUX LINK 2 Inf OR PrfPrc) OR (1 Adv LINK NOT 0 N) OR (1 go LINK 1 (A Nom) OR VFIN) OR (-1 REAL-V LINK NEGATE 2 A OR N)) ;
+	#$ Dolin olbmot lávejedje ollu dulkot nieguid.
+	
+SELECT:olluAdv2 OLLU + Adv (NOT *-1 REAL-V BARRIER S-BOUNDARY)((1 Pron LINK *1 VFIN) OR (1 VFIN LINK NOT 0 N)) ;
+	#$ Nissonat duddjojedje dieđinge biktasiid, gávnniid ja biergasiid maid ieža atne, muhto ollu sii vuvde márkaniin, sihke Bossegohpis ja Ivgubađas.
+
+SELECT:olluAdv3 OLLU + Adv (-1 GRADE-ADV LINK -1 REAL-V - AUX) (1 N + ADVLCASE OR Pron) ;
+	#$ Ja go geahččá maŋás historjjás, de lea Bargiidbellodat bargan hui ollu sámepolitihkain, dadjá Ørnebakk.
 
 SELECT:vuoiA (A Nom) IF (-1 ("vuoi"));
  	#$ Vuoi surgat dan gándda! 
@@ -4405,6 +4417,7 @@ IFF:miiIndef ("mii" Indef)((-1 ("vaikko")) OR (1 ("beare")))(NOT *0 (V Pl1) BARR
 
 # ollu
 # - - -
+REMOVE:killOLLUAdv OLLU + Adv ;
 SELECT:r1608 Pron IF (-2 Pron)(-1 CC)(0 OLLU);
 	## Váilos unnán dahje ollu.
 
@@ -4705,8 +4718,9 @@ SELECT:AAttrgoAAttr (A Attr) IF (-1 COMPAR)(1 go)(2 (A Attr) LINK NOT 0 Nom)(*3 
 	#$ Sámedikki ásaheapmi lea eanet ideologalaš go čielga mearrádus. # ideologalaš
 
 #!! * __AttrTIME__    
-SELECT:AttrTIME (A Attr) (NEGATE 0 Adv OR Num OR PrfPrc)(1 TIME);  
+SELECT:AttrTIME (A Attr) (NEGATE 0 Num OR PrfPrc)(NEGATE 0 Adv LINK *-1 REAL-V BARRIER NOT-ADV-PCLE)(1 TIME);  
 	#$ Guovdageaidnu čájehii fámuid vuosttaš minuvtta rájes.
+	#$ Ollu jagiid mielde lei dáhpin šaddan ahte stuorra gánddat bohte min geahčái lávvardaga ja sotnabeaivve go radios ledje sáddagat skeittástan- ja čuoigangilvvuin.	
  
 #!! * __AAttrCoord1__ coordination, first part
 SELECT:AAttrCoord1 (A Attr) IF (1 CC OR COMMA LINK *1C (A Attr) OR ("nubbi") BARRIER NOT-ADV-PCLE LINK 1 N);
@@ -4732,7 +4746,6 @@ SELECT:ACoordPrfPrc (A Attr) IF (NEGATE -1 ("leat"))(1 CC OR COMMA)(*2 PrfPrc BA
 #!! * __AAttrContra__ selects A itn coordination with PrfPrc 
 SELECT:AAttrContra (A Attr) IF (*-1 Neg BARRIER S-BOUNDARY OR VFIN)(*1 CONTRA BARRIER WORD LINK 1C Attr);
 	#$ ILO-konvenšuvdna nr 169 ii vuođđuduva formála, muhto funktionála oamastanvuoigatvuođa doahpagii.
-
 
 #!! !Special rules for 'buorre' (the only adjective showing case agreement)
 
