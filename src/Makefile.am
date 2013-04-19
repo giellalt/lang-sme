@@ -8,8 +8,11 @@ SUBDIRS = phonology morphology filters phonetics hyphenation orthography syntax 
 ####### Automake targets: ########
 
 if CAN_HFST
-GT_ANALYSERS_HFST=analyser-gt-desc.hfst analyser-gt-norm.hfst
-GT_GENERATORS_HFST=generator-gt-desc.hfst generator-gt-norm.hfst
+GT_ANALYSERS_HFST=analyser-gt-desc.hfst \
+				  analyser-gt-norm.hfst
+GT_GENERATORS_HFST=generator-gt-desc.hfst \
+				   generator-gt-norm.hfst \
+				   generator-tts-gt-norm.hfst
 GT_TRANSFORMERS_HFST=transcriptor-clock2text-desc.hfst \
 					 transcriptor-date2text-desc.hfst \
 					 transcriptor-numbers2text-desc.hfst
@@ -58,7 +61,87 @@ endif # WANT_OAHPA
 
 #### BEGIN: Add local processing instructions BELOW this line ####
 
-
+# A generator for producing word forms suitable for tts:
+# * no circular constructions:
+# ** no (arabic) cardinals
+# ** no (arabic) ordinals
+# ** no generated acronyms
+# ** no dynamic compounding
+# * no abbreviations (they should instead be expanded)
+# * no pounctuation
+# * no substandard forms
+# * no illegal derivations
+# * only Guovdageaidnu dialect forms
+generator-tts-gt-norm.hfst: analyser-raw-gt-desc.hfst              \
+					filters/make-optional-semantic-tags.hfst       \
+					filters/make-optional-transitivity-tags.hfst   \
+					filters/make-optional-homonymy-tags.hfst       \
+					filters/make-optional-variant-tags.hfst        \
+					filters/remove-derivation-position-tags.hfst   \
+					filters/remove-dialect-tags.hfst               \
+					filters/remove-morph-borders.hfst              \
+					filters/remove-norm-comp-tags.hfst             \
+					filters/remove-number-string-tags.hfst         \
+					filters/remove-usage-tags.hfst                 \
+					filters/remove-sub-forms.hfst                  \
+					filters/remove-ABBR-strings.hfst               \
+					filters/remove-illegal-derivation-strings.hfst \
+					filters/remove-PUNCT-strings.hfst              \
+					filters/remove-UseCirc-strings.hfst            \
+					filters/remove-RCmpnd-strings.hfst             \
+					filters/remove-CLB-strings.hfst
+	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -1 $< \
+			-2 filters/remove-morph-borders.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-sub-forms.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-ABBR-strings.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-illegal-derivation-strings.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-PUNCT-strings.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-UseCirc-strings.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-RCmpnd-strings.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-CLB-strings.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-usage-tags.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-number-string-tags.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-norm-comp-tags.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-dialect-tags.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-derivation-position-tags.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/make-optional-homonymy-tags.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/make-optional-variant-tags.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/make-optional-transitivity-tags.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/make-optional-semantic-tags.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		-o $@
 
 #### END: Add local processing instructions ABOVE this line ######
 
