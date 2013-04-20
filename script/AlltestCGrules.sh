@@ -32,6 +32,6 @@ echo " " >> dev/AlltestCG.txt
 echo "Den nye analysen inneholder analyser som ikke finnes i gullstandarden:" >> dev/AlltestCG.txt
 cat dev/testCG_result.txt | grep '^>' | perl -pe 's/(TV|IV|G3|V\*|V\*\*) //' | cut -d '"' -f3 | rev | awk -F' ' '{print $1" "$2}' | rev | sort | uniq -c | sort -nr >> dev/AlltestCG.txt
 see dev/AlltestCG.txt
-cat dev/testCG_result.txt | sed 's/$/¢/' |sed 's/---¢/€/' | tr "\n" " " | sed 's/¢ €/€/g' |tr "¢" "\n" | grep € | grep ' V ' > dev/AlltestCGverbs.txt
+cat dev/testCG_result.txt | sed 's/$/¢/' |sed 's/---¢/€/' | tr "\n" " " | sed 's/¢ €/€/g' |tr "¢" "\n" | grep € | grep ' V ' | rev | sort | rev > dev/AlltestCGverbs.txt
 
 
