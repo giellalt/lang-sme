@@ -4989,8 +4989,12 @@ SELECT:AdvModA4 Adv IF (0 A LINK 1 CC LINK 1 Adv);
 SELECT:ConNegImp (Imprt ConNeg) IF (*-1 (Neg Imprt) BARRIER ConNeg OR SV-BOUNDARY);
  	#$ Ale ge jorggit selggiid sutnje gii bivdá dus loanas.
 
+#!! * __PrfPrcConNeg__  to ConNeg Aux after PrfPrc
+SELECT:PrfPrcConNeg ConNeg + AUX (*-1 PrfPrc BARRIER REAL-V OR SV-BOUNDARY LINK *-1 (Neg Ind) BARRIER NOT-ADV-PCLE)(NOT *1 REAL-V BARRIER NOT-ADV-PCLE); 
+	#$ Ii dal láhppán gal leat. 
+
 #!! * __ConNegIfNeg__ selects Ind ConNeg if Neg Ind to the left. This is the main (and common) ConNeg rule. - 660327
-SELECT:ConNegIfNeg ConNeg IF (*-1 (Neg Ind) BARRIER ConNeg OR PrfPrc OR SV-BOUNDARY)(NEGATE 0 N LINK *1 ConNeg BARRIER NOT-ADV-PCLE)(NEGATE 0 Loc LINK -1 NEGFOC LINK -1 Loc);
+SELECT:ConNegIfNeg ConNeg IF (*-1 (Neg Ind) BARRIER ConNeg OR PrfPrc OR SV-BOUNDARY)(NEGATE 0 N OR PrfPrc LINK *1 ConNeg BARRIER NOT-ADV-PCLE)(NEGATE 0 Loc LINK -1 NEGFOC LINK -1 Loc);
  	#$ Eai dat dohkke šat maninge.
 
 #!! * __ConNegCondIfNeg__ selects Cond ConNeg if Neg Cond to the left. Less used, obviously. - 0
@@ -5015,11 +5019,14 @@ REMOVE:NotConNegII (ConNegII) IF (NEGATE *-1 (Neg Imprt) BARRIER SV-BOUNDARY);
  	#$ Dasgo mii oinniimet su nástti badjáneamen ja leat boahtán...
  	#$ Stáhta galgá fuolahit ahte gávdno divššohasbearráigeahčči juohke fylkkas.
 
+
 #!! * __NotConNegIfNotNeg__ removes ConNeg if no Neg to the left. Consider unifying with NotConNegNotNeg. - 1094269
 REMOVE:NotConNegIfNotNeg ConNeg IF (NEGATE *-1 Neg BARRIER CLB OR Ind)(NEGATE *-1 Nom LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-A-ADV LINK *-1 ConNeg BARRIER VFIN)(NEGATE -1 ("ja" CC) OR ("dahje" CC) LINK **-1 ConNeg LINK -1 Neg); 
  	#$ Juohke muorra mii ii šaddat buriid šattuid, čullojuvvo ja bálkestuvvo dollii.
  	#$ Gávpot mii lea vári alde, ii sáhte leat čihkosis.
  	#% Bearehan dal son ii geige vel gieđa ja váldde maiddái eallima muoras ja bora ja beasa nu eallit agálaččat.
+ 	#% Ii dal láhppán gal leat. 
+
 
 
 #!! * __NotConNegNotNeg__ removes remaining ConNegs whenever no Neg to the left. - 5862
@@ -5470,12 +5477,6 @@ MAP:+FAUXVorrut (@+FAUXV) TARGET ("orrut") + VFIN (*1 PrfPrc OR (Actio Ess) BARR
 MAP:-FAUXVorrut (@-FAUXV) TARGET ("orrut") - VFIN (*1 PrfPrc OR (Actio Ess) BARRIER NOT-ADV-PCLE) ;
 	#$ Mánás ii oro leamen borranmiella.
 
-#!! * __-FMAINVorrut__ infinite orrut
-MAP:-FMAINVorrut (@-FMAINV) TARGET ("orrut") - VFIN (NEGATE *1 PrfPrc OR (Actio Ess) BARRIER SV-BOUNDARY)(NEGATE *-1 A BARRIER WORD - Adv - Ill LINK *-1 COPULAS BARRIER NOT-ADV LINK NOT *-1 Nom BARRIER S-BOUNDARY) ;  
- 	#$ It don leat mus goahtemuorran orron. #needs verbdisambiguation PrfPrc vs ConNeg
- 	#$ Ja ii leatge buorre sutnje orrut suhkkes vuvddiid siste, gos lea liegga ilbmi.
- 	#$ Dál ii oro šat bávččas.
-	#$ Ii oro nu vuogas.
 
 #!! !(@<SUBJ)  target Inf
 
@@ -5800,10 +5801,13 @@ MAP:-FMAINVConNegCoor (@-FMAINV) TARGET (Prs ConNeg) (-1 ("ja" CC) OR ("dahje" C
 
 #!! * __-FMAINVConNeg__  to ConNeg
 #MAP:-FMAINVConNeg (@-FMAINV) TARGET ConNeg (*-1 REAL-COPULAS + VFIN OR ("orrut") + VFIN OR Neg BARRIER SV-BOUNDARY)(NEGATE *-1C PrfPrc BARRIER REAL-V OR N); 
-MAP:-FMAINVConNeg (@-FMAINV) TARGET ConNeg (*-1 (Neg Ind) BARRIER SV-BOUNDARY OR ConNeg) ; 
+MAP:-FMAINVConNeg (@-FMAINV) TARGET ConNeg (*-1 (Neg Ind) BARRIER SV-BOUNDARY OR ConNeg)(NEGATE 0 AUX LINK *-1 PrfPrc BARRIER REAL-V) ; 
 	#$ Ii okta ge geahččalan eará sivaid ohcat.
 	#% It don leat mus goahtemuorran orron.
-	 #$ Ii dal láhppán gal leat. #Vi må lage en regel for slike.
+
+#!! * __-FMAINVConNeg__  to ConNeg Aux after PrfPrc
+MAP:-FAUXVConNeg (@-FAUXV) TARGET ConNeg + AUX (*-1 PrfPrc BARRIER REAL-V OR SV-BOUNDARY LINK *-1 (Neg Ind) BARRIER NOT-ADV-PCLE)(NOT *1 REAL-V BARRIER NOT-ADV-PCLE); 
+	#$ Ii dal láhppán gal leat. 
 
 #!! * __-FMAINVConNegCop__  to ConNeg COPULAS   
 MAP:-FMAINVConNegCop (@-FMAINV) TARGET ConNeg + COPULAS (*-1 (Neg Ind) BARRIER REAL-V)(NEGATE *1 PrfPrc OR Inf OR (Actio Ess) BARRIER REAL-V OR S-BOUNDARY OR Nom);
