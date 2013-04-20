@@ -3164,6 +3164,10 @@ REMOVE:NotEmbeddedImprt Imprt IF (*-1 CS BARRIER ("de" Adv));
 #!! * __NotImprtWhenInd__ removes Imprt if part of an Ind domain
 REMOVE:NotImprtWhenInd Imprt IF (*-1C Ind BARRIER SV-BOUNDARY);
 	#$ Beana jávkkai guhká ovdalgo bođii njága suolggaid, vilppui munnje ja manai fas.
+	
+#!! * __NotImprtWhenIndCoor__ removes Imprt when coordination of an Ind domain - a very special case
+REMOVE:NotImprtWhenIndCoop Imprt IF (0 ConNeg LINK -1 ("ja" CC) OR ("dahje" CC) LINK **-1 ConNeg LINK -1 Neg);
+	#$ Bearehan dal son ii geige vel gieđa ja váldde maiddái eallima muoras ja bora ja beasa nu eallit agálaččat.
 
 	
 #!! * __NotImprtIfAttrLeft__ removes Imprt after attribute
@@ -3405,6 +3409,16 @@ SELECT:ActioNom (TV Actio Nom) (0 N LINK NOT 0 Der/Pass LINK -1 HAB-ACTOR + Gen 
 REMOVE:ActioGen (Actio Gen)(NOT 1 Po) ;
 	#$ Sii lohket fatnasa gopmánan.
 	#$ Sii lohket bártni lápmašuvvan.
+
+
+#!! * __r1813__ 
+SELECT:Inf1 Inf IF (*-1 INF-V BARRIER SV-BOUNDARY OR CS OR Neg LINK NOT 0 N OR PrfPrc)(NEGATE *1 Inf BARRIER SV-BOUNDARY);
+  	#$ Bissuin galgá heahkkahuhttit, ii nie váigadit goddit; sáhttá leat váiga.
+
+#!! * __r1822__ selects Inf (NOTE, this was further down in sme-dis)
+SELECT:Inf2 Inf IF (*-1 INF-V + V BARRIER SV-BOUNDARY OR Neg OR CS) ;
+	#$ Skuvla galggai oahpahit sámemánáide dárogiela.
+	#$ Prošeavtta áigut čađahit.
 
 
 #!! !!!SECTION 4: CYCLE 1B: REMOVING THE READINGS THAT WERE LEFT FROM THE 1A RULES 
@@ -5002,12 +5016,14 @@ REMOVE:NotConNegII (ConNegII) IF (NEGATE *-1 (Neg Imprt) BARRIER SV-BOUNDARY);
  	#$ Stáhta galgá fuolahit ahte gávdno divššohasbearráigeahčči juohke fylkkas.
 
 #!! * __NotConNegIfNotNeg__ removes ConNeg if no Neg to the left. Consider unifying with NotConNegNotNeg. - 1094269
-REMOVE:NotConNegIfNotNeg ConNeg IF (NEGATE *-1 Neg BARRIER CLB OR Ind)(NEGATE *-1 Nom LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-A-ADV LINK *-1 ConNeg BARRIER VFIN); 
+REMOVE:NotConNegIfNotNeg ConNeg IF (NEGATE *-1 Neg BARRIER CLB OR Ind)(NEGATE *-1 Nom LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-A-ADV LINK *-1 ConNeg BARRIER VFIN)(NEGATE -1 ("ja" CC) OR ("dahje" CC) LINK **-1 ConNeg LINK -1 Neg); 
  	#$ Juohke muorra mii ii šaddat buriid šattuid, čullojuvvo ja bálkestuvvo dollii.
  	#$ Gávpot mii lea vári alde, ii sáhte leat čihkosis.
+ 	#% Bearehan dal son ii geige vel gieđa ja váldde maiddái eallima muoras ja bora ja beasa nu eallit agálaččat.
+
 
 #!! * __NotConNegNotNeg__ removes remaining ConNegs whenever no Neg to the left. - 5862
-REMOVE:NotConNegNotNeg ConNeg IF (NEGATE *-1 Neg BARRIER SV-BOUNDARY OR go)(NEGATE -1 Rel LINK -1 Neg)(NEGATE -2 Rel LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-A-ADV LINK *-1 ConNeg BARRIER VFIN);
+REMOVE:NotConNegNotNeg ConNeg IF (NEGATE *-1 Neg BARRIER SV-BOUNDARY OR go)(NEGATE -1 Rel LINK -1 Neg)(NEGATE -2 Rel LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-A-ADV LINK *-1 ConNeg BARRIER VFIN)(NEGATE -1 ("ja" CC) OR ("dahje" CC) LINK **-1 ConNeg LINK -1 Neg);
 # Look at this and the previous one: they overlap appr 95%, but both catch some cases the other rule does not. 
 
 
@@ -5097,18 +5113,6 @@ SELECT:r2974 PL3-V IF (*-1C SUBJECTHEAD + Pl + Nom BARRIER Pl3 OR Du3 LINK *-1 B
 
 #!! * __r2976__ was moved up to select PL3-V after N Pl, might be relaxed to REMOVE Inf
 SELECT:r2976 PL3-V IF (1C NP-HEAD-PL-NOM BARRIER PPRON-NOT-SII)(NOT *-1 POSITIVE-V BARRIER CS);
-
-
-
-
-#!! * __r1813__ 
-SELECT:r1813 Inf IF (*-1 INF-V BARRIER SV-BOUNDARY OR Neg LINK NOT 0 N OR PrfPrc)(NEGATE *1 Inf BARRIER SV-BOUNDARY);
-  	#$ Bissuin galgá heahkkahuhttit, ii nie váigadit goddit; sáhttá leat váiga.
-
-#!! * __r1822__ selects Inf (NOTE, this was further down in sme-dis)
-SELECT:r1822 Inf IF (*-1 INF-V + V BARRIER SV-BOUNDARY OR Neg) ;
-	#$ Skuvla galggai oahpahit sámemánáide dárogiela.
-    	## Prošeavtta áigut čađahit.
 
 
 #!! * __r1809__ Not Pl1 (but Inf) if VFIN to the left, This is the basic Inf rule.
@@ -5782,6 +5786,14 @@ MAP:-FMAINVConNeg (@-FMAINV) TARGET ConNeg (*-1 Neg BARRIER REAL-V)(NEGATE *1 In
 	#$ Ii son liikon dohko.
 	#$ Sieiddi bálvalemiin sturron eallu gohčoduvvui bálvvoseallun, mii sáhtii jávkat, go oamasteaddji jámii dahje go sieidi ii bálvaluvvon.
 	#$ Iigo dutnje šat boađe áviisa?
+
+MAP:-FMAINVConNegCoor (@-FAUXV) TARGET (Prs ConNeg) + AUX (-1 ("ja" CC) OR ("dahje" CC) LINK **-1 ConNeg LINK -1 Neg)(*1 Inf BARRIER REAL-V OR S-BOUNDARY);
+	#$ Bearehan dal son ii geige vel gieđa ja váldde maiddái eallima muoras ja bora ja beasa nu eallit agálaččat.
+
+
+MAP:-FMAINVConNegCoor (@-FMAINV) TARGET (Prs ConNeg) (-1 ("ja" CC) OR ("dahje" CC) LINK **-1 ConNeg LINK -1 Neg);
+	#$ Bearehan dal son ii geige vel gieđa ja váldde maiddái eallima muoras ja bora ja beasa nu eallit agálaččat.
+
 
 #!! * __-FMAINVConNeg__  to ConNeg
 MAP:-FMAINVConNeg (@-FMAINV) TARGET ConNeg (*-1 REAL-COPULAS + VFIN OR ("orrut") + VFIN OR Neg BARRIER SV-BOUNDARY)(NEGATE *-1C PrfPrc BARRIER REAL-V OR N); 
