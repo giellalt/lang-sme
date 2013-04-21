@@ -401,6 +401,8 @@ SET OBJ>-OTHERS = OBJ> OR (Gen) OR (Nom) OR (Ess) OR (Loc) OR (Adv) ;
 SET NOT-FAUXV = FMAINV OR OBJ + V OR ADVL + V ;
 # Works after the mapping rules for verbs.
 
+SET SYN-V = FMAINV OR FAUXV OR V + SUBJ OR OBJ + V OR ADVL + V OR (V @>N) OR (V @N<) ;
+
 LIST @X = @X ;
 
 
@@ -484,6 +486,8 @@ SET NOT-V = WORD - V ;
 
 #!! * Sets for finiteness and mood
 # - - - - - - - - - -
+
+SET REAL-NEG = Neg - Sup ;
 
 SET MOOD-V = Ind OR Pot OR Imprt OR ImprtII OR Cond OR (Neg Sup) ;
 
@@ -2399,7 +2403,7 @@ SELECT:aigiAdv Adv IF (NEGATE -2 (Num Gen))(-1 TIME-UNIT + Acc)(0 ("áigi"));
 SELECT:viimmatAdv ("viimmat" Adv) (NOT 1 Inf);
 
 #!! *  __dusseAdv__ 
-SELECT:dusseAdv ("dušše" Adv)((*-1 VFIN OR (Neg Foc/ge) BARRIER NOT-ADV) OR (*-1 go BARRIER REAL-V OR S-BOUNDARY LINK -1 VFIN LINK -1 BOC) OR (-1 NP-BOUNDARY OR S-BOUNDARY LINK 2 Num LINK *1 N BARRIER NOT-A-ADV LINK 1 VFIN) OR (1 Num LINK *-2 VFIN BARRIER S-BOUNDARY));
+SELECT:dusseAdv ("dušše" Adv)((*-1 VFIN OR (Neg Foc/ge) BARRIER NOT-ADV) OR (*-1 go BARRIER REAL-V OR S-BOUNDARY LINK -1 VFIN LINK -1 BOC) OR (-1 NP-BOUNDARY OR S-BOUNDARY LINK 2 Num LINK *1 N BARRIER NOT-A-ADV LINK 1 VFIN) OR (*1 Num BARRIER NOT-ADV LINK *-2 VFIN BARRIER S-BOUNDARY));
 	#$ Dan mun muitalan dušše dutnje.
 	#$ Áiggun geahččat dušše moadde filmma? # This function because geahččat is homonym to VFIN
 	#$ Lea go dus dušše okta mánná?
@@ -3398,13 +3402,13 @@ REMOVE:r985 (Prt Sg2) IF (NEGATE *-1 (Pron Pers Sg2))(0 (Prs Pl3))(*1 Der/Pass B
 	# - - - -
 
 #!! * __PrsPrc__ selects PrsPrc if coordinated with A - 10
-SELECT:PrsPrcA PrsPrc IF ((-1 GRADE-ADV) OR (1 CC OR COMMA LINK 1 A));
+SELECT:PrsPrcA PrsPrc IF ((-1 GRADE-ADV LINK 2 N) OR (1 CC OR COMMA LINK 1 A LINK 1 N));
  	 #$ Soahpamušas váilot njuolggadusat smávit vahágahtti ja geavatlaččat bággolonistemiide. #Dette eksemplet inneholder Adv, ikke A
  	#$ Mearridanváldi berre leat nu čadni go vejolaš.
  	#$ Mudden ferte dagahit janza ja hui vahágahtti meassamiid.
 #!! Early rule since many PrsPrc readings are removed later.
 
-SELECT:PrsPrcAdvl PrsPrc IF ((-1 PLACE + Loc OR Adv) OR (-1 Po LINK -1 Gen))(1 N);
+SELECT:PrsPrcAdvl PrsPrc IF ((-1 PLACE + Loc OR Adv) OR (-1 Po LINK -1 Gen))(NEGATE 0 VFIN LINK *-1 (Nom Sg)) (1 N);
 	#$ Finnmárkkus ássi olbmuid divat ii galgga leat alit go guovtti dan mađe go gielddas ássi olbmuid divat.
 	#$ Uvnna duohken orru sáhpánat riggerit beaivvi.
 	#$ Guhkkelis boaittobeale orru mánát bohte Gárdima ja Mollešjoga, Šuoššjávrri ja Iešjohleagi duoddarstobuin.
@@ -4152,7 +4156,7 @@ REMOVE:CVPA (@CVP) (-1C A)(1C A LINK *1 N BARRIER NOT-NPMOD);
 
 
 #!! * __CVPAccAdv__ Acc @CNP Adv Acc	
-REMOVE:CVPAccAdv (CC @CVP) (-1 Acc)(*1 Acc BARRIER NOT-NPMODADV);
+REMOVE:CVPAccAdv (CC @CVP) (-1 Acc)(*1 Acc BARRIER NOT-NPMODADV LINK NOT 0 VFIN);
 
 SELECT:CVP (@CVP) (*-1C VFIN BARRIER S-BOUNDARY)(*1C NP-HEAD-NOM BARRIER NOT-NPMOD LINK *1 VFIN BARRIER S-BOUNDARY)(NEGATE 0 go LINK *1 Inf BARRIER VFIN) ;
 	#$ Áhčči vulggii, ovdalgo mun bohten.
@@ -5025,15 +5029,15 @@ SELECT:ConNegImp (Imprt ConNeg) IF (*-1 (Neg Imprt) BARRIER ConNeg OR SV-BOUNDAR
  	#$ Ale ge jorggit selggiid sutnje gii bivdá dus loanas.
 
 #!! * __PrfPrcConNeg__  to ConNeg Aux after PrfPrc
-SELECT:PrfPrcConNeg ConNeg + AUX (*-1 PrfPrc BARRIER REAL-V OR SV-BOUNDARY LINK *-1 (Neg Ind) BARRIER NOT-ADV-PCLE)(NOT *1 REAL-V BARRIER NOT-ADV-PCLE); 
+SELECT:PrfPrcConNeg ConNeg + AUX (*-1 PrfPrc BARRIER REAL-V OR SV-BOUNDARY LINK *-1 REAL-NEG BARRIER NOT-ADV-PCLE)(NOT *1 REAL-V BARRIER NOT-ADV-PCLE); 
 	#$ Ii dal láhppán gal leat. 
 
 #!! * __ConNegIfNeg__ selects Ind ConNeg if Neg Ind to the left. This is the main (and common) ConNeg rule. - 660327
-SELECT:ConNegIfNeg ConNeg IF (*-1 (Neg Ind) BARRIER ConNeg OR PrfPrc OR SV-BOUNDARY)(NEGATE 0 N OR PrfPrc LINK *1 ConNeg BARRIER NOT-ADV-PCLE)(NEGATE 0 Loc LINK -1 NEGFOC LINK -1 Loc);
+SELECT:ConNegIfNeg ConNeg IF (*-1 REAL-NEG BARRIER ConNeg OR PrfPrc OR SV-BOUNDARY)(NEGATE 0 N OR PrfPrc LINK *1 ConNeg BARRIER NOT-ADV-PCLE)(NEGATE 0 Loc LINK -1 NEGFOC LINK -1 Loc);
  	#$ Eai dat dohkke šat maninge.
 
 #!! * __ConNegCondIfNeg__ selects Cond ConNeg if Neg Cond to the left. Less used, obviously. - 0
-SELECT:ConNegCondIfNeg (Cond ConNeg) IF (*-1 (Neg Ind) BARRIER ConNeg OR SV-BOUNDARY);
+SELECT:ConNegCondIfNeg (Cond ConNeg) IF (*-1 REAL-NEG BARRIER ConNeg OR SV-BOUNDARY);
  	#$ Ii go son ollu eanet gárvvohivčče din?
 
 #!! * __ConNegPrfPrc__ selects ConNeg for leat when topicalised PrfPrc between Neg and leat - 713
@@ -5104,7 +5108,7 @@ SELECT:ImprtComma Imprt (-1 COMMA LINK -1 Imprt LINK *-1 BOS BARRIER NOT-ADV);
 REMOVE:ImprtNotVGen VGen (-1 BOS OR PUNCT OR REAL-CLB)(0 Imprt)(NOT *1C VFIN BARRIER NOT-ADV-PCLE OR CLB);
 
 #!! * __NotImprtInd__ 
-REMOVE:NotImprtInd Imprt IF (*-1 (Neg Ind) BARRIER CLB OR Ind);
+REMOVE:NotImprtInd Imprt IF (*-1 REAL-NEG BARRIER CLB OR Ind);
 
 #!! * __NotImprtConNeg__ 
 REMOVE:NotImprtConNeg Imprt IF (*-1 ConNeg BARRIER COMMA OR SV-BOUNDARY);
@@ -5479,7 +5483,7 @@ MAP:>NPrfPrcGen (@>N) TARGET PrfPrc (-1 Gen LINK *-1 REAL-V - COPULAS BARRIER S-
 
 
 #!! * __NPrfPrc6__ the verb can be to the right
-MAP:>NPrfPrc6 (@>N) TARGET PrfPrc (*-1 BOS OR REAL-CLB BARRIER S-BOUNDARY)(NEGATE 0 AUX)(*1 N - TIME - Prop BARRIER NOT-A LINK NEGATE 1 TIME)(NEGATE *-1 COPULAS OR Neg BARRIER NOT-ADV) ;
+MAP:>NPrfPrc6 (@>N) TARGET PrfPrc (*-1 BOS OR REAL-CLB BARRIER S-BOUNDARY)(NEGATE 0 AUX)(*1 N - TIME - Prop BARRIER NOT-A LINK NEGATE 1 TIME)(NEGATE *-1 COPULAS OR Neg BARRIER NOT-ADV-PCLE) ;
 	#$ Ovdamearkan oaivvilduvvon fálaldahkii lea sámi kulturdieđu lohkanbaji.
 	#$ Sus lea ovddasvástádus gárrenávnnasfuolaheami spesialiserejuvvon osiin.
 	#$ Son deaivvai náitalan nissona.
@@ -5768,11 +5772,11 @@ MAP:+FMAINVAux1 (@+FMAINV) TARGET VFIN + AUX-OR-MAIN (NEGATE *1 Inf BARRIER S-BO
 	#$ Maid Máret áiggui goarrumis?
 
 #!! * __-FMAINVAux2__  
-MAP:-FMAINVAux2 (@-FMAINV) TARGET ConNeg + ("leat") (*1 (N Nom) BARRIER NOT-NPMOD LINK NOT 0 PrfPrc LINK *-1 (Neg Ind) LINK -1 Nom OR HAB-ACTOR + Loc);
+MAP:-FMAINVAux2 (@-FMAINV) TARGET ConNeg + ("leat") (*1 (N Nom) BARRIER NOT-NPMOD LINK NOT 0 PrfPrc LINK *-1 REAL-NEG LINK -1 Nom OR HAB-ACTOR + Loc);
 	#$ Muhto dus ii leat riekti dearpat su beare dan dihte.
 		
 #!! * __+FAUXVCop__  copulas coming after the mainverb
-MAP:+FAUXVCop (@+FAUXV) TARGET VFIN + COPULAS (*-1 Inf OR PrfPrc OR (Actio Ess) BARRIER NOT-ADV-PCLE) ;
+MAP:+FAUXVCop (@+FAUXV) TARGET VFIN + COPULAS (*-1 Inf OR PrfPrc OR (Actio Ess) BARRIER NOT-ADV-PCLE LINK NOT 0 SYN-V) ;
 	#$ Ja boahtán ledje su gudnejahttit.
 		
 #!! * __+FAUXVCop__  copulas coming before the mainverb
@@ -5789,35 +5793,55 @@ MAP:+FMAINVCop (@+FMAINV) TARGET VFIN + COPULAS (NEGATE *-1 Inf OR PrfPrc OR (Ac
 	#$ Mun lean Romssas. 
     
 #!! * __+FMAINV__  to the remaining finite verbs which are not AUX    
-MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX (NOT 0 V + OBJ OR V + SUBJ OR V + ADVL OR (V @>N) OR (V @N<)) ;
+MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX (NOT 0 V + OBJ OR V + SUBJ OR V + ADVL OR (V @>N) OR (V @N<)) (NEGATE *0 VFIN-NOT-AUX - SYN-V BARRIER S-BOUNDARY) ;
 	#$ Boađe boahtte vahku.
 	#$ Son lea oappáin náitalan.
 	#$ Mánná čohkána láhttái.
 	#$ Son gii oažžu lobi, galgá vuostáiváldit goartta dahje sullasačča, mii čájeha ahte sus lea lohpi.
 	#% Mun lean ráhkkásisttán ožžon cummá.
 
+#Lene holder på med reglene under her - disse er foreløpige
+MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX (NOT 0 SYN-V) (*-1 NP-HEAD-NOM OR (Pron Nom) BARRIER NOT-ADV-PCLE) ;
+
+MAP:+FMAINV (@-FMAINV) TARGET PrfPrc (NOT 0 SYN-V) (*-1 FAUXV BARRIER NOT-ADV-PCLE) ;
+
+MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX (NOT 0 SYN-V) (0 Imprt LINK *-1 BOC BARRIER NOT-ADV) ;
+
+MAP:+FMAINV (@+FMAINV) TARGET AUX (NOT *1 Inf OR PrfPrc OR (Actio Ess)) ;
+
+MAP:+FMAINV (@+FMAINV) TARGET (V Pl) (NOT *1 Inf OR PrfPrc) ;
+
+
+MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX + Pl3 (NOT 0 SYN-V)(*1 NP-HEAD-PL-NOM BARRIER NOT-NPMODADV) ;
+
+MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX + Sg3 (NOT 0 SYN-V)(*1 NP-HEAD-SG-NOM BARRIER NOT-NPMODADV) ;
+
+
+MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX + 1-2-V OR VFIN-NOT-AUX + Sg3 (NOT 0 SYN-V)(*-1 BOC BARRIER REAL-V) ;
+
+
 #!! !(@-FMAINV) and (@-FAUXV)
 
 #!! * __-FAUXVConNegCop__  to ConNeg COPULAS   
-MAP:-FAUXVConNegCop (@-FAUXV) TARGET ConNeg + COPULAS (*-1 (Neg Ind) BARRIER REAL-V)(*1 PrfPrc OR (Actio Ess) BARRIER REAL-V OR S-BOUNDARY);
+MAP:-FAUXVConNegCop (@-FAUXV) TARGET ConNeg + COPULAS (*-1 REAL-NEG BARRIER REAL-V)(*1 PrfPrc OR (Actio Ess) BARRIER REAL-V OR S-BOUNDARY);
 	#$ Muhto juos Kristus ii leat bajásčuožžilan, ..
 
 #!! * __-FAUXVConNegAux__  to ConNeg AUX-OR-MAIN   
-MAP:-FAUXVConNegAux (@-FAUXV) TARGET ConNeg + AUX-OR-MAIN (*-1 (Neg Ind) BARRIER REAL-V) ; # (*1 Inf OR PrfPrc BARRIER REAL-V OR S-BOUNDARY);
+MAP:-FAUXVConNegAux (@-FAUXV) TARGET ConNeg + AUX-OR-MAIN (*-1 REAL-NEG BARRIER REAL-V) ; # (*1 Inf OR PrfPrc BARRIER REAL-V OR S-BOUNDARY);
 	#$ Eai guovttis ge nagot loktet dan geađggi.
 	#$ In sáhte olles gáhku borrat. 
 	#$ Daid ii galgga suovvat bargat joavdelasaid.
 	#$ Ii daid galgga joavdelasaid bargat suovvat.
 
 #!! * __-FAUXVConNegAux__  to ConNeg AUX   
-MAP:-FAUXVConNegAux (@-FAUXV) TARGET ConNeg + AUX - COPULAS (*-1 (Neg Ind) BARRIER S-BOUNDARY OR ConNeg)(*1 Inf BARRIER REAL-V OR S-BOUNDARY);
+MAP:-FAUXVConNegAux (@-FAUXV) TARGET ConNeg + AUX - COPULAS (*-1 REAL-NEG BARRIER S-BOUNDARY OR ConNeg)(*1 Inf BARRIER REAL-V OR S-BOUNDARY);
 	#$ Ii sáhte suohtastallat.
 	#$ Ii sáhte dieđusge dušše suohtastallat. #needs verbdis dušše
 	#$ Eat mii sáhte vuolgit.
 	#% It don leat mus goahtemuorran orron.
 
 #!! * __-FMAINVConNeg__  to ConNeg   
-MAP:-FMAINVConNeg (@-FMAINV) TARGET ConNeg (*-1 (Neg Ind) BARRIER REAL-V)(NEGATE *1 Inf OR PrfPrc OR (Actio Ess) BARRIER REAL-V OR S-BOUNDARY)(NEGATE **1 Adv BARRIER REAL-V OR S-BOUNDARY LINK 1 Inf);
+MAP:-FMAINVConNeg (@-FMAINV) TARGET ConNeg (*-1 REAL-NEG BARRIER REAL-V)(NEGATE *1 Inf OR PrfPrc OR (Actio Ess) BARRIER REAL-V OR S-BOUNDARY)(NEGATE **1 Adv BARRIER REAL-V OR S-BOUNDARY LINK 1 Inf);
 	#$ Ii son liikon dohko.
 	#$ Sieiddi bálvalemiin sturron eallu gohčoduvvui bálvvoseallun, mii sáhtii jávkat, go oamasteaddji jámii dahje go sieidi ii bálvaluvvon.
 	#$ Iigo dutnje šat boađe áviisa?
@@ -5834,16 +5858,16 @@ MAP:-FMAINVConNegCoor (@-FMAINV) TARGET (Prs ConNeg) (-1 ("ja" CC) OR ("dahje" C
 
 #!! * __-FMAINVConNeg__  to ConNeg
 #MAP:-FMAINVConNeg (@-FMAINV) TARGET ConNeg (*-1 REAL-COPULAS + VFIN OR ("orrut") + VFIN OR Neg BARRIER SV-BOUNDARY)(NEGATE *-1C PrfPrc BARRIER REAL-V OR N); 
-MAP:-FMAINVConNeg (@-FMAINV) TARGET ConNeg (*-1 (Neg Ind) BARRIER SV-BOUNDARY OR ConNeg)(NEGATE 0 AUX LINK *-1 PrfPrc BARRIER REAL-V) ; 
+MAP:-FMAINVConNeg (@-FMAINV) TARGET ConNeg (*-1 REAL-NEG BARRIER SV-BOUNDARY OR ConNeg)(NEGATE 0 AUX LINK *-1 PrfPrc BARRIER REAL-V) ; 
 	#$ Ii okta ge geahččalan eará sivaid ohcat.
 	#% It don leat mus goahtemuorran orron.
 
 #!! * __-FMAINVConNeg__  to ConNeg Aux after PrfPrc
-MAP:-FAUXVConNeg (@-FAUXV) TARGET ConNeg + AUX (*-1 PrfPrc BARRIER REAL-V OR SV-BOUNDARY LINK *-1 (Neg Ind) BARRIER NOT-ADV-PCLE)(NOT *1 REAL-V BARRIER NOT-ADV-PCLE); 
+MAP:-FAUXVConNeg (@-FAUXV) TARGET ConNeg + AUX (*-1 PrfPrc BARRIER REAL-V OR SV-BOUNDARY LINK *-1 REAL-NEG BARRIER NOT-ADV-PCLE)(NOT *1 REAL-V BARRIER NOT-ADV-PCLE); 
 	#$ Ii dal láhppán gal leat. 
 
 #!! * __-FMAINVConNegCop__  to ConNeg COPULAS   
-MAP:-FMAINVConNegCop (@-FMAINV) TARGET ConNeg + COPULAS (*-1 (Neg Ind) BARRIER REAL-V)(NEGATE *1 PrfPrc OR Inf OR (Actio Ess) BARRIER REAL-V OR S-BOUNDARY OR Nom);
+MAP:-FMAINVConNegCop (@-FMAINV) TARGET ConNeg + COPULAS (*-1 REAL-NEG BARRIER REAL-V)(NEGATE *1 PrfPrc OR Inf OR (Actio Ess) BARRIER REAL-V OR S-BOUNDARY OR Nom);
 	#$ Ii lean šat nu álki vuovdit.
 
 
@@ -5904,7 +5928,7 @@ MAP:-FMAINVSup (@-FMAINV) TARGET Sup ;
 MAP:+FAUXV (@+FAUXV) TARGET VFIN + AUX ;
 
 #!! * __<ADVLVAbess__ VAbess ADVL
-MAP:<ADVLVAbess (@<ADVL) TARGET VAbess (*-1 VFIN BARRIER S-BOUNDARY) ;
+MAP:<ADVLVAbess (@<ADVL) TARGET VAbess (*-1 VFIN BARRIER S-BOUNDARY)(NOT 0 SYN-V) ;
 	#$ Mus báhce moadde girjji logakeahttá.
 MAP:ADVL>VAbess (@ADVL>) TARGET VAbess (*1 VFIN BARRIER S-BOUNDARY) ;
 
