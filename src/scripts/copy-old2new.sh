@@ -11,11 +11,13 @@ STEMSDIR=morphology/stems
 AFFIXDIR=morphology/affixes
 
 # morphology/ dir files
+echo "*** Copying morphology ***"
 cp -f $OLDSRCDIR/sme-lex.txt              $NEWSRCDIR/morphology/root.lexc
 cp -f $OLDSRCDIR/clitics-sme-lex.txt      $NEWSRCDIR/morphology/clitics.lexc
 cp -f $OLDSRCDIR/compound-sme-lex.txt     $NEWSRCDIR/morphology/compounds.lexc
 
 # affixes/ dir files
+echo "*** Copying morphology/affixes ***"
 cp -f $OLDSRCDIR/adj-sme-morph.txt        $NEWSRCDIR/$AFFIXDIR/adjectives.lexc
 cp -f $OLDSRCDIR/noun-sme-morph.txt       $NEWSRCDIR/$AFFIXDIR/nouns.lexc
 cp -f $OLDSRCDIR/poss-sme-morph.txt       $NEWSRCDIR/$AFFIXDIR/possessive-suffixes.lexc
@@ -24,6 +26,7 @@ cp -f $OLDSRCDIR/propernoun-sme-morph.txt $NEWSRCDIR/$AFFIXDIR/propernouns.lexc
 cp -f $OLDSRCDIR/verb-sme-morph.txt       $NEWSRCDIR/$AFFIXDIR/verbs.lexc
 
 # stems/ dir files
+echo "*** Copying morphology/stems ***"
 cp -f $OLDSRCDIR/abbr-sme-lex.txt         $NEWSRCDIR/$STEMSDIR/abbreviations.lexc
 cp -f $OLDSRCDIR/acro-sme-lex.txt         $NEWSRCDIR/$STEMSDIR/acronyms.lexc
 cp -f $OLDSRCDIR/adj-sme-lex.txt          $NEWSRCDIR/$STEMSDIR/adjectives.lexc
@@ -41,12 +44,15 @@ cp -f $OLDSRCDIR/subjunction-sme-lex.txt  $NEWSRCDIR/$STEMSDIR/subjunctions.lexc
 cp -f $OLDSRCDIR/verb-sme-lex.txt         $NEWSRCDIR/$STEMSDIR/verbs.lexc
 
 # syntax/ dir files
+echo "*** Copying syntax ***"
 cp -f $OLDSRCDIR/sme-dis.rle    $NEWSRCDIR/syntax/disambiguation.cg3
 
 # phonology/ dir files
+echo "*** Copying phonology ***"
 cp -f $OLDSRCDIR/twol-sme.txt   $NEWSRCDIR/phonology/sme-phon.twolc
 
 # transcriptions/ dir files
+echo "*** Copying transcriptions ***"
 cp -f $OLDSRCDIR/clock-sme.lexc $NEWSRCDIR/transcriptions/clock.lexc
 cp -f $OLDSRCDIR/date-sme.lexc  $NEWSRCDIR/transcriptions/date.lexc
 cp -f $OLDSRCDIR/sme-num.txt    $NEWSRCDIR/transcriptions/numbers.lexc
