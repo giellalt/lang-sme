@@ -12,6 +12,7 @@ if CAN_DOCC
 JSP_PAGES=root-morphology.jspwiki        \
 		  disambiguation-syntax.jspwiki  \
 		  nouns-affixes.jspwiki          \
+		  adjectives-affixes.jspwiki       \
 		  verbs-affixes.jspwiki
 # clitics-morphology.jspwiki       \
 # compounding-morphology.jspwiki   \
@@ -34,7 +35,6 @@ JSP_PAGES=root-morphology.jspwiki        \
 # subjunctions-stems.jspwiki       \
 # verbs-stems.jspwiki              \
 # adjectives-oahpa-affixes.jspwiki \
-# adjectives-affixes.jspwiki       \
 # propernouns-affixes.jspwiki      \
 ALLINONE_JSP_PAGE=$(GTLANG).jspwiki
 
