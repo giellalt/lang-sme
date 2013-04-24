@@ -56,3 +56,7 @@ echo "*** Copying transcriptions ***"
 cp -f $OLDSRCDIR/clock-sme.lexc $NEWSRCDIR/transcriptions/clock.lexc
 cp -f $OLDSRCDIR/date-sme.lexc  $NEWSRCDIR/transcriptions/date.lexc
 cp -f $OLDSRCDIR/sme-num.txt    $NEWSRCDIR/transcriptions/numbers.lexc
+
+# orthography/ dir files
+echo "*** Copying orthography ***"
+cp -f $GTHOME/gt/common/src/spellrelax.regex $NEWSRCDIR/orthography/spellrelax.regex
