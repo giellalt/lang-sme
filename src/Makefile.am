@@ -79,7 +79,8 @@ generator-tts-gt-norm.hfst: analyser-raw-gt-desc.hfst              \
 					filters/make-optional-variant-tags.hfst        \
 					filters/remove-derivation-position-tags.hfst   \
 					filters/remove-dialect-tags.hfst               \
-					filters/remove-morph-borders.hfst              \
+					filters/remove-hyphenation-marks.hfst          \
+					filters/remove-infl_deriv-borders.hfst         \
 					filters/remove-norm-comp-tags.hfst             \
 					filters/remove-number-string-tags.hfst         \
 					filters/remove-usage-tags.hfst                 \
@@ -91,7 +92,10 @@ generator-tts-gt-norm.hfst: analyser-raw-gt-desc.hfst              \
 					filters/remove-RCmpnd-strings.hfst             \
 					filters/remove-CLB-strings.hfst
 	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -1 $< \
-			-2 filters/remove-morph-borders.hfst \
+			-2 filters/remove-hyphenation-marks.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-2 filters/remove-infl_deriv-borders.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-sub-forms.hfst \
