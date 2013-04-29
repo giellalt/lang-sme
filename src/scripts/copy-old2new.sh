@@ -60,3 +60,11 @@ cp -f $OLDSRCDIR/sme-num.txt    $NEWSRCDIR/transcriptions/numbers.lexc
 # orthography/ dir files
 echo "*** Copying orthography ***"
 cp -f $GTHOME/gt/common/src/spellrelax.regex $NEWSRCDIR/orthography/spellrelax.regex
+
+# phonetics/ dir files
+echo "*** Copying phonetics ***"
+cp -f $OLDSRCDIR/phon-sme.xfst $NEWSRCDIR/phonetics/text2ipa.xfscript
+
+# hyphenation/ dir files
+echo "*** Copying hyphenation ***"
+cp -f $OLDSRCDIR/hyph-sme.txt $NEWSRCDIR/hyphenation/hyphenation.xfscript
