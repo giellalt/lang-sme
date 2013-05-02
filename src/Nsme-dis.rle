@@ -2744,11 +2744,11 @@ REMOVE:Killrecipr Recipr ;
 
 #!! !!Variant lemmas
 LIST LEMMA1 = "álbmot" "bearal" "beassážat" "boadnji" "boalvvir" "čábmit" "čáppat" "eanaláigo#boahtu" "Elle" (".*geaisár") (".*gursa"r) "kaleandar" (".*keallir"r)
-"lihpar" ("[0-9]*-lohku"r) ("mieđihit") (".*mirko"r) "moattis" "motocrossa" "moraš" (".*muslima"r) "oapman" (".*rádji"r) "ruošša#čuhti" "sáhpán" "suoivva" "visot" "vuollái" ;
+"lihpar" ("[0-9]*-lohku"r) ("mieđihit") (".*mirko"r) "moattis" "motocrossa" "moraš" (".*muslima"r) (".*Norge"r) "oapman" (".*rádji"r) "ruošša#čuhti" "sáhpán" "suoivva" "visot" "vuollái" ;
     # first dictionary form
 
 LIST LEMMA2 = "álbmut" "bearral" ("beassi" Der/Dimin) "boadnjá" "boalvár" "čápmit" "čáppis" "eanaláigo#boađđu" "Elli" (".*geaissir") (".*gurse"r) "kaleanddar" (".*keallár"r)
-"libar" ("[0-9]*-loahku"r) ("[0-9]*-logus"r) "mieđidit" (".*mirku"r) (".*mirkko"r) "moattes" "motocross" "mora" (".*muslim"r) "oama" (".*rádjá"r) "ruošša#čuđđi" "sábin"
+"libar" ("[0-9]*-loahku"r) ("[0-9]*-logus"r) "mieđidit" (".*mirku"r) (".*mirkko"r) "moattes" "motocross" "mora" (".*muslim"r) "Norga" "oama" (".*rádjá"r) "ruošša#čuđđi" "sábin"
 "suoivvan" "viso" "vuolli" ;
 
 #!! * Remove lemma2 if lemma 1
@@ -3660,6 +3660,10 @@ SELECT:gradeAdv GRADE-ADV (0 REAL-V LINK 1 A OR Adv) ;
 #!! * __AttrABBRNum__
 SELECT:AttrABBRNum Attr (*-1 BOS LINK NOT *1 V)(0 (N ABBR))(1 Num);
 	#$ Sd.prp.nr. 63:s.
+	
+SELECT:AttrNr Attr (0 NUMMAR LINK 1 Num);
+	#$ Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna.
+
     	 
 #!! !!Disambiguationg particles
 
@@ -3697,6 +3701,13 @@ REMOVE:geahcaiPP ("geahčai") ((0 ("geahččat") LINK NOT -1 Gen) OR ((0 ("geah�
  	#$ Áhkku geahčai iežas speadjalis.
  	#$ Tommi geahčai boksii.
 
+
+#!! * __guovddasPP__ or not 
+REMOVE:guovddasPo ("guovddáš" Po)(NEGATE -1 GENERAL-PLACE OR VAHKKU-DUR) ;
+REMOVE:guovddasPr ("guovddáš" Pr)(NEGATE 1 GENERAL-PLACE OR VAHKKU-DUR) ;
+REMOVE:guovddasA ("guovddáš" A Sg) OR ("guovddáš" A Ess)(NEGATE -1 COPULAS) ; #Needs constraints
+	#% Dat váccaša guovddáš márkana.
+
 #!! * __madePo__ after Num Gen
 SELECT:madePo MADE + Po (-1 (Num Gen)) ;
 
@@ -3721,8 +3732,8 @@ SELECT:miehtaPr ("miehtá" Pr) (1 PLACE + Gen OR VAHKKU-DUR + Gen OR (Plc Gen)) 
 
 
 #!! * "ovddas" has many readings and needs special treatment 
-#!! ** __ovddasPo__  
-SELECT:ovddasPo ("ovddas" Po) (-1 Gen LINK *-1 NP-HEAD-NOM BARRIER S-BOUNDARY)(1 V);
+#!! ** __ovddasPo__  - commented out because we don't need it
+#SELECT:ovddasPo ("ovddas" Po) (-1 Gen LINK *-1 NP-HEAD-NOM BARRIER S-BOUNDARY)(1 V); #we don't need it anymore
   	#$ Láilá Susanne Vars lea ge dál Sámedikki ovddas bargamin njuolggadusaiguin Finnmárkoláhkii.
 
 #!! * special rules for rastá because it often is Adv, and it can be an object connected to the PP
@@ -4318,6 +4329,10 @@ SELECT:NumNomCoord (Num Nom) (-1 CC LINK -1 Num LINK -1 ABBR OR ACR OR ("§") OR
 	#$ Riekti oaivvilda dán vuoigatvuođadilálašvuođa dál sáhttit lea ain eanet cieggan almmá vuostálastima haga nu go leamaš vássán áiggis gitta das rájes go advokáhta Schiefloe almmuhii girjjiidis jagiin 1952 ja 1955.
  # These rules leave only the Nom Num reading, 
  
+SELECT:r1082 (Num Nom) IF (-1 COUNTABLE - Ess OR ("nr"))(0 ABBR OR ACR OR Num) ;
+	#$ Dieđáhusa oasis I ovdanbuktojuvvo Bb:a sámepolitihkalaš vuođđolávdi. 
+	#$ Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna.
+
 SELECT:year (Num Gen) (-1 GEASSET) ;
 	#$ ...maid KITH gárvvistii ja almmuhii geasset 2001.
  
@@ -6829,12 +6844,13 @@ REMOVE:NumCop Acc (1 (N Gen))(2 NOT-FAUXV + TRANS-V)(*3 (N Acc) BARRIER NOT-NPMO
 	#$ Máŋga gávpeolbmá lonuhedje fáhcaid gálvvuiguin.
 
 #!! * __NumAcc__ selects Acc for singular numerals if followed by a noun ''logi báhkkoma''
-SELECT:NumAcc Acc (0* NOT-FAUXV + TRANS-V BARRIER SV-BOUNDARY)(0 NUM + Sg LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(*1 (N Acc) OR (N Gen) BARRIER NOT-Attr LINK NOT 0 Ill)(NEGATE *-1 COPULAS + FMAINV BARRIER SV-BOUNDARY)(NEGATE *-1 Der/Pass BARRIER NOT-ADV)(NEGATE *1 COPULAS BARRIER COMMA OR SV-BOUNDARY);
+SELECT:NumAcc Acc (0* NOT-FAUXV + TRANS-V BARRIER SV-BOUNDARY)(0 NUM + Sg LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(*1 (N Acc) OR (N Gen) BARRIER NOT-Attr LINK NOT 0 Ill)(NEGATE *-1 COPULAS + FMAINV BARRIER SV-BOUNDARY)(NEGATE *-1 Der/Pass BARRIER NOT-ADV)(NEGATE *1 COPULAS BARRIER COMMA OR SV-BOUNDARY)(NEGATE -1 NUMMAR);
 	#$ Sii máhtte áddekeahttá bajillohkat logi báhkkoma ja Áhččámet.
 	#$ Áiggun dušše geahččat moadde filmma.
 	#$ Dákkár dáhpáhusat, ja máŋga iežá dáhpáhusa ja digaštallama dahke munnje persovnnalaččat váttisin dáid gažaldagaid mat bohciidedje Gáivuonas. 
 	#% Oarje-Finnmárkkus leat dál registrerejuvvon 8.500 muohtaskohtera.
 	#% Buot njeallje máná ledje náđđon eagi vuostá.
+	#% Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna.
 
 #!! * __NumGen__ selects Gen Sg if there is a Num Sg to your left 
 SELECT:NumGen (Gen Sg) (*-1 NUM + Sg BARRIER NOT-A LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(0 (N Gen))(NEGATE 1 Po)(NEGATE -1 CC) ;
@@ -7263,7 +7279,7 @@ SELECT:NDr2306 (N Nom) IF (*-1 ("okta" Nom) BARRIER NOT-NPMOD LINK NOT 0 Foc/ge)
 
 
 	# Nominative if two names in a row
-SELECT:NDr2308 Nom IF (-1 PROP)(0 PROP)(NEGATE 0 Gen LINK 1 N)(*1 SG3-V BARRIER VFIN); 
+SELECT:NDr2308 Nom IF (*-1 PROP BARRIER REAL-WORD-NOT-ABBR)(0 PROP)(NEGATE 0 Gen LINK 1 N)(*1 SG3-V BARRIER VFIN); 
 	## Birasgáhttenminister Siri Bjerke dajai čielgasit ahte...
 
  
