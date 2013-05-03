@@ -68,7 +68,7 @@ endif # WANT_OAHPA
 # ** no generated acronyms
 # ** no dynamic compounding
 # * no abbreviations (they should instead be expanded)
-# * no pounctuation
+# * no punctuation
 # * no substandard forms
 # * no illegal derivations
 # * only Guovdageaidnu dialect forms
@@ -92,9 +92,6 @@ generator-tts-gt-norm.hfst: analyser-raw-gt-desc.hfst              \
 					filters/remove-RCmpnd-strings.hfst             \
 					filters/remove-CLB-strings.hfst
 	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -1 $< \
-			-2 filters/remove-hyphenation-marks.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-2 filters/remove-infl_deriv-borders.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
