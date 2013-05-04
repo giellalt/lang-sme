@@ -2110,6 +2110,12 @@ LIST GER-NOTV = "barggadit" "bijadit" "čohkkedit" "dagadit" "deaivvadit" "dutkk
 
 REMOVE:GER-NOTV GER-NOTV (0 Ger); 
 
+REMOVE (VAbess Attr) (0 VFIN) ;
+	## ex. njamaha (
+
+REMOVE (PrsPrc Qst) (0 VFIN + Qst) ;
+
+
 	# Lexicalised adjectives
 	# ----------------------
 
@@ -3284,13 +3290,17 @@ SELECT:NegSg3BeforeFoc (V IV Neg Ind Sg3) IF (0 ("ii"))(*1 Foc/ge OR ConNeg BARR
  	#$ Ii oktage lea boahtán.
 
 #!! * __vfin__ removes verb reading when the reading should be noun  
-REMOVE:vfin1 VFIN (0 (N Sg Nom) LINK *1 VFIN + Sg3 BARRIER NOT-ADV-PCLE OR COMMA) ; 
-REMOVE:vfin2 VFIN (0 Acc LINK *-1 TRANS-V BARRIER NOT-ADV-PCLE OR COMMA)(*-1 VFIN BARRIER S-BOUNDARY) ; 
+REMOVE:vfin1 VFIN - Qst (0 (N Sg Nom) LINK *1 VFIN + Sg3 BARRIER NOT-ADV-PCLE OR COMMA OR Qst) ; 
+REMOVE:vfin2 VFIN (0 Acc LINK *-1 TRANS-V BARRIER NOT-ADV-PCLE OR COMMA)(*-1 VFIN BARRIER S-BOUNDARY LINK NOT 0 Po)(NEGATE 1 Acc) ; 
 REMOVE:vfin3 VFIN (0 N LINK 1 ("vai" CC) LINK 1 N LINK NOT 0 VFIN) ;
 	#$ Birasgáhttenlihkadus ja álgoálbmogat – ovttasbargit vai vuostálagaid?
 REMOVE:vfin4 REAL-V (0 N LINK 1 ("dat" Pcle)) ;
 	#$ Riššat dat gal leat musge, jus eai leačča njuoskan.
 REMOVE:vfin5 VFIN (0 (N Pl Nom) LINK *1 VFIN + Pl3 BARRIER NOT-ADV-PCLE OR COMMA LINK NOT 0 Inf) ; 
+
+REMOVE:vfin4 VFIN - Qst (0 N LINK *-1 AUX BARRIER NOT-ADV-PCLE OR COMMA OR Qst)(*1 Inf BARRIER NOT-ADV-PCLE) ; 
+	#$ Áigugo fas skuvlii álgit?
+
 
 #!! Negative verb, not abbreviation or roman numeral Ii.
 
@@ -5757,16 +5767,18 @@ MAP:<ADVLActioEss (@<ADVL) TARGET (Actio Ess)(*-1 ("oidnot") OR ("gullot") BARRI
 #!! !(@<OBJ)  target Inf, Actio Ess, PrfPrc 
 
 #!!	* __OBJInf__ Inf 		
-MAP:<OBJInf1 (@<OBJ) TARGET Inf (*-1 TRANS-V BARRIER SV-BOUNDARY OR AUX OR Acc OR CC OR COMMA LINK NOT 0 AUX OR Adv OR Acc LINK NOT 0C Ger)(NEGATE 0 Pl3 LINK *-1 TRANS-V LINK 0 (Pl Nom))(NEGATE -1 CC LINK -1 Inf LINK -1 AUX) ; 
+MAP:<OBJInf1 (@<OBJ) TARGET Inf (*-1 TRANS-V BARRIER SV-BOUNDARY OR AUX OR Acc OR CC OR COMMA LINK NOT 0 AUX OR Adv OR Acc LINK NOT 0C Ger)(NEGATE 0 Pl3 LINK *-1 TRANS-V LINK 0 (Pl Nom))(NEGATE -1 CC LINK -1 Inf LINK -1 AUX)(NEGATE 0 Inf LINK *-1 AUX BARRIER REAL-V) ; 
 	#$ Mun hálidan oahppat goarrut gávtti.
 	#$ Oahpa goarrut gávtti. #funker ikke for Oahpa også er Acc
 	#$ Go ollet Sáhpánvári ala, de muitte čuovvolit bálgá mii manná olgeš guvlui.
 	#$ Anán buorebun odne vuolgit go ihttážii vuordit. 
 	#$ Duosttan go dahkat dan?
 	#$ Olbmot dattetge dinejedje veaháš go vuvde dujiid, eaige dárbbašan oastit ávdnasiid duddjomii.
+	#% Áigugo fas skuvlii álgit?
+
 
 #!!	* __<OBJInf2__
-MAP:<OBJInf2 (@<OBJ) TARGET Inf (*-1 HAB-ACTOR + Acc BARRIER NOT-A-ADV LINK *-1 TRANS-V BARRIER NOT-NPMODADV LINK NOT 0 (A Attr) OR AUX LINK *-1 Nom)(NEGATE *-1 CC BARRIER VFIN LINK *-1 Inf BARRIER VFIN LINK *-1 AUX BARRIER NOT-ADV-PCLE LINK 0 VFIN);
+MAP:<OBJInf2 (@<OBJ) TARGET Inf (*-1 HAB-ACTOR + Acc BARRIER NOT-A-ADV LINK *-1 TRANS-V BARRIER NOT-NPMODADV LINK NOT 0 (A Attr) OR AUX LINK *-1 Nom)(NEGATE *-1 CC BARRIER VFIN LINK *-1 Inf BARRIER VFIN LINK *-1 AUX BARRIER NOT-ADV-PCLE LINK 0 VFIN)(NEGATE 0 Inf LINK *-1 AUX BARRIER REAL-V);
 	#$ Mánnávuođas son vásihii dulvademiid ja eará luonddubillistemiid mat leat ožžon su čállit divttaid. 
 	#$ Mun háliidan mánnán boahtit ruoktot!  #funker ikke pga av at háliidit er AUX
 
@@ -5905,6 +5917,12 @@ MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX (NOT 0 V + OBJ OR V + SUBJ OR V + ADV
 	#$ Ovdal go čielggadan dan lagabui,...
 
 #Lene holder på med reglene under her - disse er foreløpige
+
+# Mapping both verbs in a rel bisetning even if no comma
+MAP:+FMAINVRel1 (@+FMAINV) TARGET VFIN-NOT-AUX (NOT 0 V + OBJ OR V + SUBJ OR V + ADVL OR (V @>N) OR (V @N<) OR Adv) (*-1 Rel BARRIER SV-BOUNDARY LINK NOT *-1 VFIN) ;
+MAP:+FMAINVRel2 (@+FMAINV) TARGET VFIN-NOT-AUX (NOT 0 V + OBJ OR V + SUBJ OR V + ADVL OR (V @>N) OR (V @N<) OR Adv OR N) (*-1 FMAINV BARRIER REAL-V LINK *-1 Rel BARRIER SV-BOUNDARY LINK NOT *-1 VFIN) ;
+	#$ Áldu mii dálvvi miehtá njamaha miesi gohčoduvvo čearpmateadni.
+
 MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX (NOT 0 SYN-V) (*-1 (N Nom) OR (Pron Nom) BARRIER NOT-ADV-PCLE LINK NOT *-1 REAL-V - @>N BARRIER S-BOUNDARY OR COMMA)(NEGATE *1 VFIN OR PrfPrc - @>N BARRIER S-BOUNDARY OR COMMA) ;
 
 MAP:+FMAINV (@-FMAINV) TARGET PrfPrc (NOT 0 SYN-V) (*-1 FAUXV BARRIER NOT-ADV-PCLE) ;
@@ -6083,7 +6101,6 @@ SELECT:IfonlyVerb FMAINV (NEGATE *0 FMAINV BARRIER S-BOUNDARY)(NOT 0 FAUXV)(NOT 
 	#% Lea 43 olbmo unnit go diibmá dán muddui.
 # The last NOT clause keeps the correct Ill in the 43 sentence.
 # The intuition is that the frame "Lea ... go ... (lei)" is an ellipsis frame.
-
 
 #!! * __IfonlyConNeg__ ConNeg if it is @-FMAINV or @-FAUXV
 SELECT:IfonlyConNeg ConNeg (0 (ConNeg @-FMAINV) OR (ConNeg @-FAUXV)) ;
@@ -8240,7 +8257,7 @@ REMOVE:r2824 VFIN IF (*-1 Nom BARRIER NOT-ADV-PCLE OR CLB LINK *-1C VFIN BARRIER
 REMOVE:r2827 VFIN IF (NEGATE *-1 Rel OR CS OR COMMA BARRIER S-BOUNDARY)(*-1C VFIN BARRIER S-BOUNDARY OR PUNCT LINK NOT *-1 Interr BARRIER NOT-NP)(*1 S-BOUNDARY OR CC OR EOS BARRIER NP-HEAD-NOM OR NP-HEAD-ACC);
  	#$ Muhto sáđuid son boaldá čáskatmeahttun dolas.
 
-REMOVE:r2828 VFIN IF (NEGATE 0 Imprt LINK *-1 BOS BARRIER NOT-ADV-PCLE)(NEGATE *-1 Rel BARRIER REAL-V)(NOT 0 N)(*1C VFIN BARRIER S-BOUNDARY OR PUNCT OR ("dego") OR ("dugo") OR ("galle" Num) LINK NOT 0 Qst)(NEGATE *1 Neg BARRIER VFIN)(NEGATE *1 VFIN BARRIER S-BOUNDARY LINK 1 go);
+REMOVE:r2828 VFIN - Qst IF (NEGATE 0 Imprt LINK *-1 BOS BARRIER NOT-ADV-PCLE)(NEGATE *-1 Rel BARRIER REAL-V)(NOT 0 N)(*1C VFIN BARRIER S-BOUNDARY OR PUNCT OR ("dego") OR ("dugo") OR ("galle" Num) LINK NOT 0 Qst)(NEGATE *1 Neg BARRIER VFIN)(NEGATE *1 VFIN BARRIER S-BOUNDARY LINK 1 go);
  	#$ Sámegillii galbet universitehta lea šaddan realitehta.
  	#$ Áldu mii dálvvi miehtá njamaha miesi gohčoduvvo čearpmateadnin.
 
