@@ -2763,9 +2763,11 @@ REMOVE:derHeapmi (N* Der/heapmi)(0 Der/NomAct) ;
 #!! !Nouns, not verbs
 #    ----------------
 
-SELECT ("heahti" Loc Foc/ge)(0 ("heahtit")) ;
+#!! * __headisge__, ii heađisge.
+SELECT:headisge ("heahti" Loc Foc/ge)(0 ("heahtit")) ;
 	## ii heađisge
 
+#!! * __loahppa__ after TIME Gen.
 SELECT:loahppa ("loahppa") (0 REAL-V LINK -1 TIME + Gen) ;
 
 REMOVE:r595 VAbess IF (0 ("orohat"));
@@ -2776,6 +2778,16 @@ REMOVE:fatnasit ("fatnasit" Sg2) IF (0 ("fanas"));
 REMOVE:PrsPrc PrsPrc IF (0 LEX-N + Sg)(NEGATE -1 ("nu") LINK 2 go)(NEGATE *1 Acc BARRIER NOT-A-ADV)(NEGATE -1 PLACE + Loc OR Adv OR Po)(NEGATE -1 ("leat") LINK 2 N) ;
 	#$ Dainna ii leat vissis mearri galljodagas.
 	# Should not hit cealkkavástaga with PrsPrc + Obj.
+
+
+    # sáhka vs. sáhkat
+    # - - - - - -- - -
+
+#!! * __sahkaEss__ if Mii lea sáhkan.
+SELECT:sahkaEss ("sáhka" Ess) (0 PrfPrc LINK -1 COPULAS LINK -1 ("mii" Nom)) ;    
+
+#!! * __sahkaPl__ after PLURALIZER in NP
+SELECT:sahkaPl ("sáhka" Pl) (0 TV LINK *-1 PLURALIZER BARRIER NOT-NPMOD) ;    
 
 	
 #!! * __UsImprt__ removes Imprt Sg3 for all nouns in -us	
@@ -3656,7 +3668,7 @@ REMOVE:Amannit A (*-1 IV BARRIER SV-BOUNDARY LINK NOT 0 COPULAS)(0 ("maŋŋit" A
 SELECT:gradeAdv GRADE-ADV (0 REAL-V LINK 1 A OR Adv) ;
 	#$ Dii uhccán oskkolaččat.
 
-#!! !!Disambiguationg abbreviations
+#!! !!Disambiguating abbreviations
 
 #!!	Abbreviations are also disambiguated via normal case disambiguation rules,  
 #!!	but some contexts are special to abbreviations, and therefore dealt with
@@ -3670,7 +3682,7 @@ SELECT:AttrNr Attr (0 NUMMAR LINK 1 Num);
 	#$ Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna.
 
     	 
-#!! !!Disambiguationg particles
+#!! !!Disambiguating particles
 
 #!! * __sonPcle__ selects son Pcle, the remaining Pcle are removed
 SELECT:sonPcle Pcle (0 ("son"))(1 NP-HEAD-NOM)(((NOT -1 PUNCT LINK -1 BOS) OR (-1 N LINK *-1 BOS BARRIER NOT-NPMOD))) ;
@@ -3681,10 +3693,23 @@ REMOVE:KillSonPcle Pcle IF (0 ("son"));
  	#$ Son mu nama ipmirdii boastut.
 
 
-#!! !!Disambiguationg numerals
+#!! !!Disambiguating clitics
+
+REMOVE:Dego Qst IF (0 ("dego") OR ("dugo"));
+	## Su ámadadju báittii dego beaivváš. 
+
+REMOVE:Nugo Qst IF (NEGATE *-1 REAL-V BARRIER WORD)(0 Adv)(NEGATE *1 ("?")); 
+	## Nugo dieđát, de lean dál.
+
+REMOVE:leagis Foc/gis IF (0 ("leahki")) (1 EOC OR CCCOMMA);
+	## Mánát bohte Kárášjoga leagis, Deanu leagis ja Anárjoga leagis.
+# Philosophy: "Dat leagis duohta" (if possible?): -gis modifies something to the right.
+# If correct, the rule might be generalised.
+
+#!! !!Disambiguating numerals
 
 
-#!! !!Disambiguationg adpositions
+#!! !!Disambiguating adpositions
 
 #!! * __caddaN__ if čađa and movement-v
 REMOVE:caddaN ("čađđa") (0 ("čađa") LINK 0* MOVEMENT-V BARRIER SV-BOUNDARY) ;
@@ -5501,7 +5526,7 @@ LIST MIELLA = "árbevierru" "bággu" "dárbu" "dilli" "lohpi" "miella" "riekti" 
 #!! !The tags (@SPRED>) and (@<OPRED) target  PrfPrc
 #!! The rules are no documented yet
 
-#!! * __spredPrfPrc__
+#!! * __spredPrfPrc__ Buressivdniduvvon lehkos (topicalised PrfPrc) -- was r494
 MAP:spredPrfPrc (@SPRED>) TARGET PrfPrc (-1 BOC)(0 Der/Pass)(1 ("leat") LINK NOT 1 V)(*2 NP-HEAD-NOM BARRIER NOT-NP);
 	#$ Buressivdniduvvon lehkos son guhte boahtá Hearránammii.
 
@@ -6052,9 +6077,12 @@ MAP:NomActLocX (@X) TARGET (Der/NomAct Loc)(0 @<ADVL)  ;
 MAP:NomActX (@X) TARGET (Der/NomAct) OR Actio (0 (V @<OBJ) OR FMAINV OR (V @>N))  ;
 
 #!! * __IfonlyVerb__ selects the FMAINV reading in the cohort
-SELECT:IfonlyVerb FMAINV (NEGATE *0 FMAINV BARRIER S-BOUNDARY)(NOT 0 FAUXV) ;
+SELECT:IfonlyVerb FMAINV (NEGATE *0 FMAINV BARRIER S-BOUNDARY)(NOT 0 FAUXV)(NOT *-1 ("go") LINK *-1 VFIN) ;
 	#$ Juohke loddi gielainis lávlu.
 	#$ Das maŋŋá dajan juoidá álbmotrievtti mearkkašumi birra, ja geavahan das veahkkin ođđaseamos riektegáldu.
+	#% Lea 43 olbmo unnit go diibmá dán muddui.
+# The last NOT clause keeps the correct Ill in the 43 sentence.
+# The intuition is that the frame "Lea ... go ... (lei)" is an ellipsis frame.
 
 
 #!! * __IfonlyConNeg__ ConNeg if it is @-FMAINV or @-FAUXV
@@ -6936,6 +6964,12 @@ SELECT:NomMannu Nom IF (-3 MANNU)(-2 Ord OR Num)(-1 ("beaivi") OR ("b" ABBR))(0 
 SELECT:GenBoahtte Gen IF (-1 ("boahtte") OR ("boahtit" PrsPrc) OR ("čuovvovaš" Attr) OR ("ovddit" Attr))(0 TIME)(NEGATE 0 Px) ;
 	#$ Boađe boahtte vahku.
 	#Comment: Assuming that the time-expression following those words will be in an idiomatic construction that implies a point of time rather than a period
+
+#!! __r406__ VFIN-NOT-AUX is +FMAINV
+#MAP:r406 (@+FMAINV) TARGET VFIN-NOT-AUX ;
+	## Boađe boahtte vahku.
+    ## Son lea oappáin náitalan.
+# Sjå på denne, TT.
 
 #!! * __GenDURadj1__ selects Gen if a duration adverbial to the left 
 SELECT:GenDURadj1 Gen IF (NEGATE -1 DURATION-A)(0 ("čakčageassi") OR ("giđđadálvi") OR ("čakčadálvi") OR ("giđđageassi") LINK 0 Acc);
@@ -8435,6 +8469,33 @@ SELECT:r2916 (V Sg2) IF (0 Pl1 OR Pl3)(*1C (V Sg2) OR PxSg2 BARRIER VFIN);
 
 #!! !Du1 - First person dual 
 
+ # Prs Du1 = Prt Pl3 (even syllable verbs); also similar to Prs Sg3 of other verbs.
+
+#!! * __MunJaDonDu__ selects Du1 if Mon V ja don V de V-Du2
+SELECT:MunJaDonDu (V Du1) IF (*-1 CC OR ("de") BARRIER VFIN LINK *-1C (V Sg2) BARRIER VFIN LINK *-1C (V Sg1) BARRIER VFIN);
+
+#!! * __DonJaMunDu__ selects Du1 if Don V ja mun V de V-Du2
+SELECT:DonJaMunDu (V Du1) IF (*-1 CC OR ("de") BARRIER VFIN LINK *-1C (V Sg1) BARRIER VFIN LINK *-1C (V Sg2) BARRIER VFIN);
+	## Jus lean váiban ja don maid leat váiban, de manne nohkkat hui árrat.
+	
+#!! The previous two rules look marginal.	
+	
+#!! * __DuNotPrtIfToday__ selects Du1 over Prt in the context of a present-marker.
+SELECT:DuNotPrtIfToday_r2948 (Prs Du1) IF (0 Prt)(*1 PRESENT-MARKER BARRIER S-BOUNDARY);
+	## Gergego vuolgit ihttin?
+# This rule selects Prs over Prt. Better would be REMOVE Prt?
+
+#!! * __Du1IfDu1__ selects Du1 with a left context Du1 ... ja ... 
+SELECT:Du1IfDu1_r2947 (V Du1) IF (*-1 CC BARRIER VFIN LINK *-1C (V Du1) BARRIER VFIN);
+	## Moai bohte su lusa ja orrugohte su luhtte.
+
+
+#!! * __NoDu1__ removes Du1 if no MOAI or Du1 around.
+REMOVE:NoDu1_r2949 (V Du1) IF (NEGATE *-1 MOAI OR Du1)(NEGATE 0 Imprt LINK *-1 BOC BARRIER NOT-ADV)(NEGATE *1 MOAI);
+	## De bohte ruđat.
+	## Nieiddat jerre.
+	
+
 #!! !Du2 - Second person dual
 
 #!! !Rules for leahppi = ("leahppi" N Sg Nom)
@@ -8446,6 +8507,20 @@ SELECT:r2916 (V Sg2) IF (0 Pl1 OR Pl3)(*1C (V Sg2) OR PxSg2 BARRIER VFIN);
 #!! !Pl2 - Second person plural
 
 #!! !Pl3 - Third person plural
+
+
+#!! * __Pl3IfPlSubj__ Pl3 if Pl noun to the left
+SELECT:Pl3IfPlSubj PL3-V IF (*-1  NP-HEAD-PL-NOM BARRIER NOT-ADV-PCLE  LINK NOT 0 VFIN) ; # r2974
+	## Muhto dorskit gal leat varrasat.
+	## Divššohasaid birra geat leat uminddegin dahkkon.
+	## Eatnagat bohtet nuortan ja oarjin.
+	## Geafit gal leat álo din luhtte.
+
+#!! * __Pl3IfPlSubj__ Pl3 if safe plural (incl pron) to the left
+SELECT:r2975 PL3-V IF (*-1C NP-HEAD-PL-NOM BARRIER (V PrfPrc) OR PPRON-NOT-SII OR (N Sg Nom) OR CS OR CC)(NEGATE *-1 (V Pl3) BARRIER SV-BOUNDARY OR PUNCT);
+	## Makkár vuoigatvuođat dain leat riikavuložin? 
+	
+SELECT:r2976 PL3-V IF (1C NP-HEAD-PL-NOM BARRIER PPRON-NOT-SII);
 
 
 
@@ -8515,6 +8590,38 @@ REMOVE:Zr3057 PrfPrc IF (NEGATE -1 LEAT-FIN-NOT-IMPRT LINK *-1 CP BARRIER VFIN)(
 #!! !!Actio
 #!! !!Selecting some more finite verbs
 #!! !!Lexical disambiguation of verbs 
+
+	# arvit vs arvát vs arvat
+	# ------------------------
+IFF:Arvit ("arvit") IF (0 ("arvát") OR ("arvat"))(NEGATE *0 HUMAN LINK 0 SUBJ);
+
+
+	# boahtit vs. bohtat 
+	# ------------------
+	# boahtit 'come', bohtat 'swell'
+
+	# These verbs have 5 homonym forms, Prs Du1/Pl3 bohte, Prt Sg1 bohten,
+	# Prs Pl3/Prt Sg2 bohtet, Imprt Sg1 bohton, Imprt Pl1 bohtot
+	# In almost all cases, the correct choice will be "boahtit", the 
+	# challenge is to avoid removing the cases where it might be "bohtat"
+
+LIST BOHTAT-NOUN = "bálká" "áiteuksa" "bunci" "dáigi" "fanas" "lássa" "láse" "luŋka" "stohpouksa" "uksa" "viesso#uksa" "vanca" ;
+
+
+REMOVE:r3109 ("bohtat" Sg1) IF (0 ("boahtit")); # Will hit 'bohten' and 'bohton'.
+REMOVE:r3110 ("bohtat" Sg2) IF (0 ("boahtit")); # Will hit 'bohtet'.
+	## Go mun bohten du vissui,...
+	## Journálat álmmolaš doaimmas bohtet arkiivalága vuollái.
+
+REMOVE:r3111 ("bohtat" Du1) IF (0 ("boahtit")); # Will hit 'bohte'.
+REMOVE:r3112 ("bohtat" Pl1) IF (0 ("boahtit")); # Will hit 'bohtot'.
+
+REMOVE:r3113 ("bohtat" Pl3) IF (0 ("boahtit"))(*1 ("son" Pl3 Nom) BARRIER SV-BOUNDARY) ;
+REMOVE:r3114 ("bohtat" Pl3) IF (*-1 ("son" Pl3 Nom) BARRIER NOT-ADV-PCLE)(0 ("boahtit"));
+
+SELECT:r3115 ("boahtit") IF (0 ("bohtat"))(NEGATE *1 (Pron Pers) OR BOHTAT-NOUN BARRIER SV-BOUNDARY OR Neg OR NP-HEAD-NOM LINK 0 Nom)(NEGATE *-1 (Pron Pers) OR BOHTAT-NOUN BARRIER NOT-ADV-PCLE LINK 0 Nom)(NEGATE *-1 (Pron Rel) OR MO LINK *-1 BOHTAT-NOUN BARRIER SV-BOUNDARY LINK 0 Nom);
+	# Only if there is a BOHTAT-NOUN Nom or "dat" Nom, we leave the possibility of "bohtat". But also in those cases, it cuold be "boahtit".
+
 
 #!! !!!NOMEN
 #!! !!Case rules
