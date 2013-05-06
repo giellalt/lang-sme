@@ -1304,14 +1304,14 @@ LIST DATE1 = ("[0-3][0-9]\.[0-1][0-9]\.[0-3][0-9][0-9][0-9]"r) ("[0-3][0-9]\.[0-
 
 SET DATE = DATE1 - ("[0-9]*"r) ; # En litt klosset måte å gjøre det på, fikk ikke regex i DATE1 til å fungere som de skulle
 
-SET BEAIVI = SP-BEAIVI OR GEN-BEAIVI OR DATE ;
+SET BEAIVI-REF = SP-BEAIVI OR GEN-BEAIVI OR DATE ;
 
-LIST REAL-BEAIVI = "beaivi" "b" ;
+LIST BEAIVI = "beaivi" "b" ;
 
 LIST YEAR = ("[0-2][0-9][0-9][0-9]"r) ;
 
 
-SET TIME = MANNU OR VAHKKU OR BEAIVI OR AIGI OR YEAR ;
+SET TIME = MANNU OR VAHKKU OR BEAIVI-REF OR AIGI OR YEAR ;
 
   # Do not add AIGODAT, it has some other characteristics in some cases.
   # But fix!!
@@ -6990,7 +6990,7 @@ SELECT:GenOrd Gen IF (-1 Ord)(0 ("beaivi") OR ("vahkku"));
 	#$ Geassemánu 8. beaivvi 2001 láhkaásahus nr 676 oktagaslaš plánaid birra dearvvašvuođalágaid vuođul lea addojuvvon láhkamearrádusaid láhkavuođuin.
 
 #!! * __NomMannu__ selects Nom if you are Num, to your left is beaivi, then ord/Num and then mannu ''borgemánu 1. b. 1891''
-SELECT:NomMannu Nom IF (-3 MANNU)(-2 Ord OR Num)(-1 REAL-BEAIVI)(0 Num);
+SELECT:NomMannu Nom IF (-3 MANNU)(-2 Ord OR Num)(-1 BEAIVI)(0 Num);
 	#$ Sámedikki bargiidčoahkkimis Guovdageainnus juovlamánu 7. beaivvi 2001 mearridii...
 	#$ Maiddái borgemánu 1. b. 1891 čuovvu njuolggadusain.
 	#$ Juovlamánu 1. beaivi 1972 lei buorre beaivi.
@@ -7030,31 +7030,31 @@ SELECT:GenBeaivi Nom IF (-2 Gen LINK 0 MANNU)(-1 Num OR Ord)(0 ("b") OR ("beaivi
 	#Comment: Not in use?
 
 #!! * __NomBeaivi__ selects Nom if your are b/beaivi with a numeral/Ord to your left and a mannu to the left of that. To your right copulas followd by beaivi in nom-case ''juovlamánu 1. b. 1972 lei buorre beaivi''
-SELECT:NomBeaivi Nom IF (-2 Gen LINK 0 MANNU)(-1 Num OR Ord)(0 ("b") OR ("beaivi"))(*1 COPULAS + Sg3 BARRIER REAL-WORD-NOT-ABBR LINK *1 BEAIVI + Nom);
+SELECT:NomBeaivi Nom IF (-2 Gen LINK 0 MANNU)(-1 Num OR Ord)(0 ("b") OR ("beaivi"))(*1 COPULAS + Sg3 BARRIER REAL-WORD-NOT-ABBR LINK *1 BEAIVI-REF + Nom);
 	## Juovlamánu 1. b. 1972 lei buorre beaivi.
 	#Comment: Not in use?
 
 #!! * __NomBeaivi2__ selects Nom if you are b/beaivi with Num/Ord to your left, with mannu to the left of that, with copulas even futer to the left and beaivi to the left of copulas
-SELECT:NomBeaivi2 Nom IF (-4 BEAIVI + Nom)(-3 COPULAS + Sg3)(-2 Gen LINK 0 MANNU)(-1 Num OR Ord)(0 ("b") OR ("beaivi"));
+SELECT:NomBeaivi2 Nom IF (-4 BEAIVI-REF + Nom)(-3 COPULAS + Sg3)(-2 Gen LINK 0 MANNU)(-1 Num OR Ord)(0 ("b") OR ("beaivi"));
 	## Mu riegádanbeaivi lea čakčamánu 3. b.
 	#Comment: Not in use?
 
 #!! * __GenBeaivi2__ selects Gen if you are beaivi with the end of the sentence or comma to your right. Restrictions to the left ''riegádanbeaivvi,''
-SELECT:GenBeaivi2 Gen IF (NEGATE *-1 STRICT-TRANS-V OR DURATION-V BARRIER SV-BOUNDARY OR DURATION-A LINK NOT 0 ("leat"))(0 BEAIVI)(1 EOS OR COMMA LINK NOT *1 REAL-V);	
+SELECT:GenBeaivi2 Gen IF (NEGATE *-1 STRICT-TRANS-V OR DURATION-V BARRIER SV-BOUNDARY OR DURATION-A LINK NOT 0 ("leat"))(0 BEAIVI-REF)(1 EOS OR COMMA LINK NOT *1 REAL-V);	
 	#$ Mii leimmet doppe mu riegádanbeaivvi, čakčamánu 3. b.
 	#$ Mun vuolggán ihttin, bearjadaga.
 	#$ Mun láven basadanlanja bassat juohke bearjadaga.
 
 #!! * __GenBeaivi3__ selects Gen if you are beaivi with the beginning of the sentence to your right ''Bearjadaga mii vuolgit''
-SELECT:GenBeaivi3 Gen IF (-1 BOC OR NP-BOUNDARY)(0 BEAIVI LINK NOT 0 ("beaivi"));
+SELECT:GenBeaivi3 Gen IF (-1 BOC OR NP-BOUNDARY)(0 BEAIVI-REF LINK NOT 0 ("beaivi"));
 	#$ Bearjadaga mii vuolgit oaggut.
 	#$ Mánnodagaid gehčče vel Sámi mánáid-TV ovttas mánáiguin.
 	#$ Giellatekno álggahuvvui 1.8.2001 prošeaktan ráhkadit sámegiela grammatihkalaš analysa.
 
 #!! * __GenBeaivi4__ selects Gen if you are beaivi with a NP-boundary to your right
-SELECT:GenBeaivi4 Gen IF (-1 NP-BOUNDARY)(0 BEAIVI LINK NOT 0 ("beaivi"));
+SELECT:GenBeaivi4 Gen IF (-1 NP-BOUNDARY)(0 BEAIVI-REF LINK NOT 0 ("beaivi"));
 	## Mun boađán bearjadaga.
-	#Comment: The idea here is that the BEAIVI should not be modified by e.g. 'olles'.
+	#Comment: The idea here is that the BEAIVI-REF should not be modified by e.g. 'olles'.
 	#Comment: Not in use?
 
 #!! * __GenBeaivi5__ 
