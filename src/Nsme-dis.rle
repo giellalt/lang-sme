@@ -306,6 +306,7 @@ LIST Der/duohkai = Der/duohkai ;
 LIST Der/vuolle = Der/vuolle ;
 LIST Der/vuollai = Der/vuollai ;
 LIST Der/vuolde = Der/vuolde ;
+LIST <vdic> = <vdic> ;
 
 #!! * Sets for Syntactic tags
 # --------------
@@ -2111,10 +2112,9 @@ LIST GER-NOTV = "barggadit" "bijadit" "čohkkedit" "dagadit" "deaivvadit" "dutkk
 
 REMOVE:GER-NOTV GER-NOTV (0 Ger); 
 
-REMOVE (VAbess Attr) (0 VFIN) ;
-	## ex. njamaha (
-
 REMOVE (PrsPrc Qst) (0 VFIN + Qst) ;
+
+REMOVE Ord (0 ABBR) ;
 
 
 	# Lexicalised adjectives
@@ -2196,6 +2196,18 @@ REMOVE:NeverAdv (Der/at Adv) (0 ("nuorra") ) ;
 
 #!! !Rules for Prop Attr, Sur and Plc
 
+
+#!! * Rule for adding <vdic> to verbs denoting verbal actions like: ... dadjá Aili Kestkitalo.
+
+
+LIST MUITALIT = "árvalit" "bivdit" "boagustit" "cealkit" "cuoigut" "čilget" "čurvet" "čuorvut" "dadjat" "deattuhit" "eahpidit" "geardduhit" "gielistit" "gilljut" "hállat" "hoallat" "huikit" "huikkádit" "imaštallat" "jearrat" "jievžat"  "juoigat" "jurdilit" "jurddašit" "kommenteret" "lávlut" "lasihit" "loahpahit" "lohkat" "lohpidit" "máidnut" "máinnašit" "muitalit" "muittuhit" "nágget" "njávggádit" "oaivvildit" "rávvet" "savkalit" "sárdnidit" "šuohkihit" "váidalit" "váruhit" "vástidit" ;
+	#$ Deaŧalaš lea sihkkarastit eamiálbmogiid ovddastusa dákkár čállingottis, dadjá Keskitalo.
+
+
+SUBSTITUTE:muitalit (V) (<vdic> V) TARGET MUITALIT (0 FMAINV LINK -1 COMMA LINK 2 HUMAN-INDIVIDUAL + Nom OR (Prop Plc Nom) LINK *1 EOS BARRIER WORD - Prop) ;
+	#$ Sápmelaččat eai leat goassege luohpan meara riggodagain, ja danne ii sáhte eahpidit sápmelaččaid vuoigatvuođaid mearrariggodagaide, deattuha Keskitalo.
+
+
 #!! * __PropAttrIfPropx__ removes Attr if no Prop on the right side
 REMOVE:PropAttrIfPropx (Prop Attr) - Der/laš IF (NOT *1 Prop BARRIER REAL-WORD-NOT-ABBR OR COMMA)(NEGATE 1 CC LINK 1 (Prop Attr) LINK *1 Prop BARRIER REAL-WORD-NOT-ABBR OR COMMA);
 	#$ Ášši 05/01 Ođđa áššiid dieđiheapmi.
@@ -2209,7 +2221,7 @@ SUBSTITUTE:PlcSur0 (Prop Plc) (Prop Sur) TARGET (Prop Plc Ill) IF (-1 (Mal Attr)
 	#$ Sárá riŋgii Trond Trosterudii.
 	#% Son riŋgii Kárášjohkii. 
 
-SUBSTITUTE:PlcSur1 (Prop Plc) (Prop Sur) TARGET (Prop Plc) IF (*-1 Mal OR Fem BARRIER REAL-WORD-NOT-ABBR OR COMMA LINK NOT 0 Sur OR Plc)(NEGATE 0 (Prop Ill) OR (Prop Loc) LINK NOT *-1 Mal OR Fem BARRIER REAL-WORD-NOT-ABBR OR COMMA) ;
+SUBSTITUTE:PlcSur1 (Prop Plc) (Prop Sur) TARGET (Prop Plc) IF (*-1 Mal OR Fem OR <vdic> BARRIER REAL-WORD-NOT-ABBR OR COMMA LINK NOT 0 Sur OR Plc)(NEGATE 0 (Prop Ill) OR (Prop Loc) LINK NOT *-1 Mal OR Fem BARRIER REAL-WORD-NOT-ABBR OR COMMA) ;
   	#$ Linda England.
   	#$ Linda B. England.
   	#% De vuolgá Biret Trosterudii.
@@ -4837,12 +4849,13 @@ SELECT:XAttrPlacelašr1718 (Plc Der/laš A Attr) IF (1 Mal OR Fem OR Sur OR N);
 	#$ Oslolaš Jostein Johnsen šattai Eurohpameašttirin skohtergilvvus.
 	#$ Oslolaš gánda šattai Eurohpameašttirin skohtergilvvus.
   
-#REMOVE:Xr1719 VFIN IF (NEGATE *-2 Rel OR CS BARRIER S-BOUNDARY)(-1C VFIN)(NEGATE 0 ConNeg);
+REMOVE:Xr1719 VFIN IF (NEGATE *-2 Rel OR CS BARRIER S-BOUNDARY)(-1C VFIN)(NEGATE 0 ConNeg);
 	#$ Mun áiggun oastit biilla.
 	#$ Gos dáppe lea máddi?
 	#$ Ánne-Sofe buvttii varas biergguid.
 	#$ Máhtte manai čuoigga skuvlii.
 	#$ Dan dihte go lea čađat dárbu ođasmahttit jorgalusaid.
+	#$ Tommi geahčai skuvlii.
  # As we see, this rule can lead to a verbal, a nominal, an adjectival or an
  # adverbial reading. It comes here because this is where it is first needed.
 	
@@ -6140,15 +6153,6 @@ SUBSTITUTE:TV-IV (V TV) (V IV) FAUXV (0 ("lávet") OR ("áigut"));
 
 #SELECT:Sg2 (V Prt Sg2) (0 (Prs Pl3) LINK *-1 BOS BARRIER WORD)(NEGATE 1 go LINK 1 HAB-ACTOR + Loc) ;
 
-#!! !Rule for adding <vdic> to verbs denoting verbal actions like: ... dadjá Aili Kestkitalo.
-
-
-LIST MUITALIT = "árvalit" "bivdit" "boagustit" "cealkit" "cuoigut" "čilget" "čurvet" "čuorvut" "dadjat" "deattuhit" "eahpidit" "geardduhit" "gielistit" "gilljut" "hállat" "hoallat" "huikit" "huikkádit" "imaštallat" "jearrat" "jievžat"  "juoigat" "jurdilit" "jurddašit" "kommenteret" "lávlut" "lasihit" "loahpahit" "lohkat" "lohpidit" "máidnut" "máinnašit" "muitalit" "muittuhit" "nágget" "njávggádit" "oaivvildit" "rávvet" "savkalit" "sárdnidit" "šuohkihit" "váidalit" "váruhit" "vástidit" ;
-	#$ Deaŧalaš lea sihkkarastit eamiálbmogiid ovddastusa dákkár čállingottis, dadjá Keskitalo.
-
-
-SUBSTITUTE:muitalit (V) (<vdic> V) TARGET MUITALIT (0 FMAINV LINK -1 COMMA LINK 2 HUMAN-INDIVIDUAL + Nom LINK *1 EOS BARRIER WORD - Prop) ;
-	#$ Sápmelaččat eai leat goassege luohpan meara riggodagain, ja danne ii sáhte eahpidit sápmelaččaid vuoigatvuođaid mearrariggodagaide, deattuha Keskitalo.
 
 
 #!! !!!NOUNS
@@ -6611,7 +6615,7 @@ REMOVE:AccEss Acc (0 SAPMI-N-HEAD LINK 1C (N Ess))(NEGATE 0 SAPMI-N-HEAD LINK 1 
 	#% Dán váilevašvuođa vigge buoridit nuvttá sámegielkurssa fállama bokte ja bálkálasáhusaiguin sidjiide geat máhtte geavahit giela veahkkin oahpahusas.
 
 #!! * __AccTV1__ Selects accusative: when a Strict transitive verb to the left: ''oste mielkki gávppis''
-SELECT:AccTV1 Acc (*-1C STRICT-TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc BARRIER S-BOUNDARY OR CC)(0 NP-HEAD-ACC LINK NOT *1 Acc - Pron - EDUCATION BARRIER S-BOUNDARY)(NEGATE *-1 Num BARRIER NOT-Attr LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(NEGATE 0 TIME OR ROUTE)(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK *1 Ill BARRIER NOT-NPMOD)(NEGATE 0 (Pron Refl) LINK 1 (N Ess))(NEGATE 0 (Pron Refl) LINK 1 Gen LINK 1 Po)(NEGATE 1 (N Nom)) ;
+SELECT:AccTV1 Acc (*-1C STRICT-TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc BARRIER S-BOUNDARY OR CC)(0 NP-HEAD-ACC LINK NOT *1 Acc - Pron - EDUCATION BARRIER S-BOUNDARY)(NEGATE *-1 Num BARRIER NOT-Attr LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(NEGATE 0 TIME OR ROUTE)(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK *1 Ill BARRIER NOT-NPMOD)(NEGATE 0 (Pron Refl) LINK 1 (N Ess))(NEGATE 0 (Pron Refl) LINK 1 Gen LINK 1 Po)(NEGATE 1 (N Nom))(NEGATE 0 HUMAN-INDIVIDUAL + Nom OR (Prop Plc Nom) LINK -1 MUITALIT) ; ;
 	#$ Moai oste mielkki gávppis.
 	#$ Šiehtadus sisttisdoallá dárkilis evttohusa movt guohtuneatnamiid sáhttá atnit ávkin goabbat bealde riikaráji.
 	#$ Soai oastiba bileahta su filbmii.
@@ -6635,7 +6639,7 @@ REMOVE:r2271 Gen IF (*-1 TRANS-V BARRIER SV-BOUNDARY OR Acc OR COMMA LINK NOT *-
 	#% Dat bahkkejit min jurdagiidda. # Mis váilu semantalaš njuolggadus illatiivva oamasteaddjái. 
 
 #!! * __AccTV2__ Selects accusative: when a transitive verb to the left
-SELECT:AccTV2 Acc (*-1C TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc - Num BARRIER S-BOUNDARY)(0 NP-HEAD-ACC LINK NEGATE *1 Acc BARRIER CC OR COMMA OR SV-BOUNDARY LINK NOT 0 (Pron Gen) LINK *1 N BARRIER NOT-NPMOD)(0 Acc LINK NOT 0 ROUTE OR TIME)(NEGATE *-1 Num BARRIER NOT-Attr LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(NEGATE 0 (Pron Dem))(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK 1 Ill)(NEGATE 1 (N Acc) OR Com OR (N Nom))(NEGATE 1 Gen LINK 1 Po)(NEGATE *-1C SG3-V BARRIER NOT-NPMODADV OR PrfPrc LINK NOT *-1 (N Nom) OR (Pron Nom) BARRIER S-BOUNDARY) ;
+SELECT:AccTV2 Acc (*-1C TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc - Num BARRIER S-BOUNDARY)(0 NP-HEAD-ACC LINK NEGATE *1 Acc BARRIER CC OR COMMA OR SV-BOUNDARY LINK NOT 0 (Pron Gen) LINK *1 N BARRIER NOT-NPMOD)(0 Acc LINK NOT 0 ROUTE OR TIME)(NEGATE *-1 Num BARRIER NOT-Attr LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(NEGATE 0 (Pron Dem))(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK 1 Ill)(NEGATE 1 (N Acc) OR Com OR (N Nom))(NEGATE 1 Gen LINK 1 Po)(NEGATE *-1C SG3-V BARRIER NOT-NPMODADV OR PrfPrc LINK NOT *-1 (N Nom) OR (Pron Nom) BARRIER S-BOUNDARY)(NEGATE 0 HUMAN-INDIVIDUAL + Nom OR (Prop Plc Nom) LINK -1 MUITALIT) ;
 	#$ De son ohcá stálu silbbaid.	
 	#$ Sámegillii galbet universitehta lea šaddan realitehta.
 	#$ In máhte suomagiela, eaige nieiddat máhte nu bures eŋgelasgiela.
@@ -6644,7 +6648,7 @@ SELECT:AccTV2 Acc (*-1C TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc - Num BARR
 	#% Lávvui gullá maid uvssot.
 
 #!! * __AccTV3__ Selects accusative: when transitive verb to the left if it doesn't find a barrier: COMMA, Num, REAL-V, Ess, S-BOUNDARY 
-SELECT:AccTV3 Acc (*-1 TRANS-V BARRIER COMMA OR Num OR REAL-V OR Ess OR S-BOUNDARY LINK NOT *-1 Acc BARRIER S-BOUNDARY)(NEGATE *-1C Acc BARRIER SV-BOUNDARY)(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK *1 Ill BARRIER NOT-NPMOD)(NEGATE *1 Acc BARRIER S-BOUNDARY OR (@CVP))(NEGATE 0 Num OR TIME OR ROUTE OR Adv)(NEGATE *1 Po BARRIER NP-BOUNDARY)(NEGATE 1 Com)(NEGATE *-1C SG3-V BARRIER NOT-NPMODADV OR PrfPrc LINK NOT *-1 (Sg Nom) BARRIER S-BOUNDARY)(NEGATE 0 (Pron Dem) LINK 1 N)(NEGATE 0 (Pron Rel) LINK 1 Time); 
+SELECT:AccTV3 Acc (*-1 TRANS-V BARRIER COMMA OR Num OR REAL-V OR Ess OR S-BOUNDARY LINK NOT *-1 Acc BARRIER S-BOUNDARY)(NEGATE *-1C Acc BARRIER SV-BOUNDARY)(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK *1 Ill BARRIER NOT-NPMOD)(NEGATE *1 Acc BARRIER S-BOUNDARY OR (@CVP))(NEGATE 0 Num OR TIME OR ROUTE OR Adv)(NEGATE *1 Po BARRIER NP-BOUNDARY)(NEGATE 1 Com)(NEGATE *-1C SG3-V BARRIER NOT-NPMODADV OR PrfPrc LINK NOT *-1 (Sg Nom) BARRIER S-BOUNDARY)(NEGATE 0 (Pron Dem) LINK 1 N)(NEGATE 0 (Pron Rel) LINK 1 Time)(NEGATE 0 HUMAN-INDIVIDUAL + Nom OR (Prop Plc Nom) LINK -1 MUITALIT); 
 	#$ Biera oahpaha munnje matematihka.
 	#$ Son áiggui sáddet iežas bártni mu viežžat, son muitalii. #Comment: correct, but not't sure it's a good idea.. mu is obj of viežžat.
 	#$ Nieiddat liikojedje guldalit sávaldatkonseartta ja mánáidbottu.
@@ -7771,6 +7775,7 @@ SELECT:NDr2422 Nom (-1 CC LINK *-1 REAL-V LINK -1 Nom)(NOT 0 REAL-V OR Adv)(NOT 
 	#$ Okta lei Hámmarfeastta gávpeguovddážis ja golbma eará fas Álttá-Dálbmeluovtta báhpasuohkanis.
 	#$ Eamit barggai vuođđoskuvllas ja isit fas gymnásas.
 	#% Juohke mánná oaččui guokte ja eanemusat golbma mánu oahpahusa jahkái.
+	
 
 	# Not nominative
 	# --------------
