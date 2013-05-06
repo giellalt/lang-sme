@@ -3738,9 +3738,7 @@ REMOVE:leagis Foc/gis IF (0 ("leahki")) (1 EOC OR CCCOMMA);
 # If correct, the rule might be generalised.
 
 #!! !!Disambiguating numerals
-#!! !Rule for adding Date as a tag to readings which looks like dates
-SUBSTITUTE:Date1 (Num Sg) (Num Sg Date) TARGET ("<[0-3][0-9]\.[0-2][0-9].[1-2][0-9][0-9][0-9]>"r Num) ;
-SUBSTITUTE:Date1 (Num Sg) (Num Sg Date) TARGET ("<[0-3][0-9]\.[0-2][0-9].[0-9][0-9]>"r Num) ;
+
 
 #!! !!Disambiguating adpositions
 
@@ -5536,8 +5534,9 @@ REMOVE:NoActorIfSg3 Actor (0 VFIN + Sg3) ;
 #!! The rules are no documented yet
 
 #!! * __DemAttr__
-SELECT:DemAttr $$CASE + (Dem Sg) (0 DAT-PRON)(*1 $$CASE + (N Sg) BARRIER NOT-NPMOD OR (Time) OR Num LINK NOT 0 VFIN OR ("leat") OR (Actio Ess) OR Po)(NEGATE 0 Acc LINK *-1 STRICT-TRANS-V BARRIER Acc LINK *1 Dem LINK NOT *1 Acc BARRIER NOT-NPMOD)  ; 
-	#$ Mun muitalin dan vielljasan. # Should not hit this one.
+SELECT:DemAttr $$CASE + (Dem Sg) (0 DAT-PRON)(*1 $$CASE + (N Sg) BARRIER NOT-NPMOD OR (Time) OR Num LINK NOT 0 VFIN OR ("leat") OR (Actio Ess) OR Po)(NEGATE 0 Acc LINK *-1 STRICT-TRANS-V BARRIER Acc LINK *1 Dem LINK NOT *1 Acc BARRIER NOT-NPMOD)  ;
+	#$  
+	#% Mun muitalin dan vielljasan. # Should not hit this one.
 
 #!! * __DemCASEPl__
 SELECT:DemCASEPl $$CASE + (Dem Pl) (0 DAT-PRON)(*1 $$CASE + (N Pl) BARRIER NOT-NPMOD) ; 
@@ -6259,7 +6258,7 @@ SELECT:SEMr2074 Gen IF (0 Plc OR Org OR ACR)(1 HUMAN-GROUP) ;	# or (".*joavku"r)
 	#$
 
 #!!  * __SEMXxr2075__ Select genitive in front of ABSTRACT and RIEKTEDILLI: ''unnitlogu oaidninčiegas''
-SELECT:SEMXxr2075 Gen IF (NEGATE *-1 TRANS-V BARRIER SV-BOUNDARY OR Acc LINK 0 FMAINV OR Inf)(0 HAB-ACTOR + Acc OR (Pron Acc) LINK NOT 0 Loc)(*1 ABSTRACT OR RIEKTEDILLI BARRIER NOT-NPMODADV);
+SELECT:SEMXxr2075 Gen IF (NEGATE *-1 TRANS-V BARRIER SV-BOUNDARY OR Acc LINK 0 FMAINV OR Inf)(0 HAB-ACTOR + Acc OR (Pron Acc) LINK NOT 0 Loc)(*1 ABSTRACT OR RIEKTEDILLI BARRIER NOT-NPMODADV);#(NEGATE 0 (Pron Dem) LINK *1 N BARRIER NOT-NPMOD);
 	#$ Romeriid vealahanáššis lea dárbu geahččat sihke ovttaskas olbmo, struktuvrralaš ja unnitlogu oaidninčiegas.
 	
 #!! * __SEMXr2076__ Selects genitive if you are HUMAN or Pron with an ABSTRACT to your right, ''iežaset vuoigatvuođa''
@@ -6555,8 +6554,15 @@ SELECT:SEMXr2133 Gen IF (0 FYLKA + Acc)(1 CC)(2 FYLKA + Gen);
 SELECT:SEMXr2134 Gen IF (0 FYLKA + Acc)(*1 GEOGRAPHICAL-PLACE OR GEN-POLITICAL-PLACE OR HUMAN OR DILLI OR INDUSTRY OR RIEKTEDILLI OR ORGANIZATION BARRIER NOT-NPMODADVII); # NPNHAI
 	#$ Álbmotrievttálaš ja historjjálaš ođđa riektegáldoosiid ferte árvvoštallat stáhta dálá geavada ja riikka lágaid ektui, erenoamážit Finnmárkku eatnamiid vuoigatvuođaid deasttas.
 
+# OTHER 
 
-
+#!! * __topGEN__ (modifier) selects Gen if sentence-intitial. To the right a perfect patrticiple that modifies nominative ''Stáhta nammadan láhtu''
+SELECT:topGEN Gen (-1 BOS)(0 Gen LINK 1 (@>N) + PrfPrc LINK 1 Nom)(NEGATE 0 ABBR) ; 
+	#$ Stáhta nammadan láhttu ja sadjásašlahttu galgaba deavdit gáibádusaid, maid Lahtut ja sadjásašlahtut nammaduvvojit gitta njealji jagi rádjai háválassii.
+	#$ Skuvllaviesu báhcán fiellut ja ávdnasat dolvouvvojedje Goalsevuohpái ja adnoje doppe skuvlii.
+	#$ Plána celkojuvvon mihttomearri, juobe vuosttaš veršuvnnas, lei bajásgeassit ođđa sámebuolvvaid.
+	#% Ollesdálveskuvlla ožžon easka go jagi maŋŋeil mannen Kárášjohkii vázzit Sámi álbmotallaskuvlla.
+	
 #!! !Gen and preposition/postposition
 
 #!! * __GenAPP__ Selects genitive when a preposition to the left, or when a postposition to the right ''rastá riikarájiid''
@@ -6662,14 +6668,15 @@ SELECT:OLDr2466 Acc IF (*-1C TRANS-V BARRIER SV-BOUNDARY OR NOT-NPMODADV OR ("nu
 	#$ Sus báhkkanii olles gorut go oinnii Lárina čuvges vuovttaid.
 
 #!! * __topOBJ1__ Selects accusative: when a Strict transitive verb to the right (topicalized object) ''beaskka geavahedje''
-SELECT:topOBJ1 Acc (*1 STRICT-TRANS-V BARRIER SV-BOUNDARY OR ("nugo") OR ("dego") OR ("dugo") OR Acc LINK NOT 0 FAUXV OR VAbess LINK NOT *1 Acc OR ("ahte") OR Inf OR VAbess OR VFIN BARRIER S-BOUNDARY)(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY)(NEGATE -1 PrfPrc LINK NOT *-1 REAL-COPULAS BARRIER SV-BOUNDARY)(NEGATE -1 NUM)(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME LINK NOT 0 Px)(NOT *-1 Acc BARRIER SV-BOUNDARY) ; 
+SELECT:topOBJ1 Acc (*1 STRICT-TRANS-V BARRIER SV-BOUNDARY OR ("nugo") OR ("dego") OR ("dugo") OR Acc LINK NOT 0 FAUXV OR VAbess LINK NOT *1 Acc OR ("ahte") OR Inf OR VAbess OR VFIN BARRIER S-BOUNDARY)(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY)(NEGATE -1 PrfPrc LINK NOT *-1 REAL-COPULAS BARRIER SV-BOUNDARY)(NEGATE -1 NUM)(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME LINK NOT 0 Px)(NOT *-1 Acc BARRIER SV-BOUNDARY)(NOT 0 Nom)(NEGATE 0 Gen LINK 1 Nom)(NEGATE 0 Gen LINK 1 (@>N) + PrfPrc LINK 1 Nom) ; 
 	#$ Beaskka geavahedje gávtti badjel.
 	#$ Vuovssá goddá boanda. 
 	#$ Son mu nama ipmirdii boastut.
 	#% Lei unnán čáhci deanus dán gease, ja Bill-guovttos Iŋggáin fertiiga gálistit luvvet fatnasa. OBS gease = geassit Imprt berrešii leat disambiguerejuvvon ovdal
+	#% Stáhta nammadan láhttu ja sadjásašlahttu galgaba deavdit gáibádusaid.
 
 #!! * __topOBJ2__ Selects Acc when a transitive verb to the right (less strict) ''dan juohkehaš fuobmá''
-SELECT:topOBJ2 Acc (*1 TRANS-V BARRIER SV-BOUNDARY OR ("nugo") OR ("dego") OR ("dugo") OR Acc LINK NOT 0 FAUXV OR VAbess LINK NOT *1 Acc OR ("ahte") OR Inf OR VAbess OR VFIN BARRIER S-BOUNDARY)(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY)(NEGATE -1 PrfPrc LINK NOT *-1 REAL-COPULAS BARRIER SV-BOUNDARY)(NEGATE -1 NUM)(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME LINK NOT 0 Px)(NOT *-1 Acc BARRIER SV-BOUNDARY)(NEGATE *-1 VFIN BARRIER SV-BOUNDARY)(NEGATE 0 (N Nom))(NEGATE 1 (N Nom)) ; 
+SELECT:topOBJ2 Acc (*1 TRANS-V BARRIER SV-BOUNDARY OR ("nugo") OR ("dego") OR ("dugo") OR Acc LINK NOT 0 FAUXV OR VAbess LINK NOT *1 Acc OR ("ahte") OR Inf OR VAbess OR VFIN BARRIER S-BOUNDARY)(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY)(NEGATE -1 PrfPrc LINK NOT *-1 REAL-COPULAS BARRIER SV-BOUNDARY)(NEGATE -1 NUM)(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME LINK NOT 0 Px)(NOT *-1 Acc BARRIER SV-BOUNDARY)(NEGATE *-1 VFIN BARRIER SV-BOUNDARY)(NEGATE 0 (N Nom))(NEGATE 1 (N Nom))(NOT 0 Nom)(NEGATE 0 Gen LINK 1 (@>N) + PrfPrc LINK 1 Nom) ; 
 	#$ Dan gal juohkehaš fuobmá dakkaviđe.
 	#$ Gáhkuid mii goikadit geađggi nalde goardagis.
 	#$ Gos daid lehpet goldán? 
