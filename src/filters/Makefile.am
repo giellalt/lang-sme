@@ -78,13 +78,18 @@ endif
 # HFST targets here:
 if CAN_HFST
 GT_FILTER_TARGETS+=remove-RCmpnd-strings.hfst \
-				   remove-CLB-strings.hfst
+				   remove-CLB-strings.hfst \
+				   remove-lang_hom-tags.hfst \
+				   make-optional-lang_hom-tags.hfst
 
 endif
 
 # And Xerox targets here:
 if CAN_XFST
-GT_FILTER_TARGETS+=
+GT_FILTER_TARGETS+=remove-RCmpnd-strings.xfst \
+				   remove-CLB-strings.xfst \
+                   remove-lang_hom-tags.xfst \
+                   make-optional-lang_hom-tags.xfst
 
 endif
 
