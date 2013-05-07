@@ -144,6 +144,18 @@ generator-tts-gt-norm.hfst: analyser-raw-gt-desc.hfst              \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		-o $@
 
+
+# We need to add processing of language-specific tags in the generator:
+generator-gt-%.xfst: generator-gt-%.tmp.xfst \
+				     filters/make-optional-lang_hom-tags.xfst
+	$(AM_V_GEN)$(PRINTF) "read regex                              \
+				@\"filters/make-optional-lang_hom-tags.xfst\"     \
+			.o. @\"$<\".i                                         \
+			;\n\
+		 invert net\n\
+		 save stack $@\n\
+		 quit\n" | $(XFST)
+
 #### END: Add local processing instructions ABOVE this line ######
 
 #### HFST transducer fallback target:
