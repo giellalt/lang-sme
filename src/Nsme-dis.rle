@@ -1359,7 +1359,7 @@ SET CURRENCY-GEN = CURRENCY + Gen ;
  	
 
 LIST NUMUNIT = "čuohti" "duhát" "miljovdna" "mill" "milj" "miljárda" "mrd";
-
+#Comment: Can we add: "miljon" to NUMUNIT?
 LIST KIND = (".*šládja"r)  ;
 
 LIST COUNTABLE = "oassi" "kapihtal" "paragráfa" ;
@@ -6382,19 +6382,21 @@ SELECT:SEMXxr2098 Gen IF (0 NATION LINK 0 Acc)(*1 ORGANIZATION OR INSTITUTION OR
 #REMOVE:SEMr2099 Gen IF (0 N LINK NOT 0 TIME OR ANIMATE OR NATIONAL-IDENTITY OR POLITICAL-PLACE)(NEGATE -1 Num)(1 ("servodat"));
 	#$ Lea dan vuođul geatnegasvuohta ovddidit buot mánáid beroštumiid servodagas.  
     # Should consider if we could put in (1 ORGANIZATION). Then we have to add at least Prop as 0. 
-    
-#!! * __SEMxr2100__ Genitiv if buot in front of plural noun ''buot Norlándda ohppiid''
-REMOVE:SEMxr2100 Acc IF (-1 ("buot") OR ("gait") OR ("gait") OR ("buohkat"))(0 (Sg Gen) LINK *1 (N Pl) BARRIER REAL-V);  
+
+# x    
+#!! * __SEMgen1__ removes Acc if buot, gait or buohkat in front of a genitive, followed by a plural noun ''buot Norlándda ohppiid''
+REMOVE:SEMgen1 Acc IF (-1 ("buot") OR ("gait") OR ("buohkat"))(0 (Sg Gen) LINK *1 (N Pl) BARRIER REAL-V);  
 	#$ Son lea almmuhan eanemus girjjiid buot sámi čálliin. 
 	#$ Kantuvra meannuda buot Nordlándda, Romssa ja Finnmárkku ohppiid ja studeanttaid loatna- ja stipeandaohcamiid, ja buot velggolaččaid máksingeahpádusohcamiid, geat orrot seamma guovllus.
  
     
-# "bargat" + object
-#!! * __SEMXxr2101__ Removes accusative: if bargat somewhere to the left 
-REMOVE:SEMXxr2101 Acc IF (*-1 ("bargat") BARRIER SV-BOUNDARY OR ("dihte") LINK 0 FMAINV OR Inf)(NEGATE -1 Pr)(0 Gen LINK NOT 0 TEXT OR ("bargu") LINK *1 N BARRIER VFIN); 
-	#$ Dán leat mii bargan ovttas guoskevaš čearuid, boazoorohagaid, ja eiseválddiid áirasiiguin.
+# "bargat" + object: X
+#!! * __SEMgen2__ removes Acc if bargat or dihte are FMAINV or Inf and are found somewhere to the left of a Gen, which is followed by a noun ''bargame boazodoallolága ođastemiin''
+REMOVE:SEMgen2 Acc IF (*-1 ("bargat") BARRIER SV-BOUNDARY OR ("dihte") LINK 0 FMAINV OR Inf)(NEGATE -1 Pr)(0 Gen LINK NOT 0 TEXT OR ("bargu") LINK *1 N BARRIER VFIN); 
 	#$ Leat maid bargame dálá boazodoallolága ođastemiin.
+	#$ Dán leat mii bargan ovttas guoskevaš čearuid, boazoorohagaid, ja eiseválddiid áirasiiguin.
 	#$ Almmatge lea jáhkkimis ahte boahtteáiggis bargojuvvo dáiguin jurdagiiguin, dannego kommišuvnna oaivila mielde eai boađe makkárge eará čovdosat nu bures buorrin buohkaide.
+	#$ De son barggai guokte jagi buohccidivššárin Kolvereidas, Trøndelágas.
 	
 # * Removes genitive: if you are a TEXT and bargat is to the left ''bargat leavssuid'' 
 #REMOVE:r2102 Gen IF (*-1 ("bargat") BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf)(0 Acc LINK 0 TEXT OR ("bargu") LINK NOT 1 N OR Po); # This is based on that the object will be "leavssuid, bargobihtáid, barggu"  elsewhere Gen.  
@@ -6626,7 +6628,7 @@ REMOVE:AccEss Acc (0 SAPMI-N-HEAD LINK 1C (N Ess))(NEGATE 0 SAPMI-N-HEAD LINK 1 
 	#% Dán váilevašvuođa vigge buoridit nuvttá sámegielkurssa fállama bokte ja bálkálasáhusaiguin sidjiide geat máhtte geavahit giela veahkkin oahpahusas.
 
 #!! * __AccTV1__ Selects accusative: when a Strict transitive verb to the left: ''oste mielkki gávppis''
-SELECT:AccTV1 Acc (*-1C STRICT-TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc BARRIER S-BOUNDARY OR CC)(0 NP-HEAD-ACC LINK NOT *1 Acc - Pron - EDUCATION BARRIER S-BOUNDARY)(NEGATE *-1 Num BARRIER NOT-Attr LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(NEGATE 0 TIME OR ROUTE)(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK *1 Ill BARRIER NOT-NPMOD)(NEGATE 0 (Pron Refl) LINK 1 (N Ess))(NEGATE 0 (Pron Refl) LINK 1 Gen LINK 1 Po)(NEGATE 1 (N Nom))(NEGATE -1 <vdic>) ; 
+SELECT:AccTV1 Acc (*-1C STRICT-TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc BARRIER S-BOUNDARY OR CC)(0 NP-HEAD-ACC LINK NOT *1 Acc - Pron - EDUCATION BARRIER S-BOUNDARY)(NEGATE *-1 NUM BARRIER NOT-Attr LINK NOT 0 NUMUNIT)(NEGATE 0 TIME OR ROUTE)(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK *1 Ill BARRIER NOT-NPMOD)(NEGATE 0 (Pron Refl) LINK 1 (N Ess))(NEGATE 0 (Pron Refl) LINK 1 Gen LINK 1 Po)(NEGATE 1 (N Nom))(NEGATE -1 <vdic>) ; 
 	#$ Moai oste mielkki gávppis.
 	#$ Šiehtadus sisttisdoallá dárkilis evttohusa movt guohtuneatnamiid sáhttá atnit ávkin goabbat bealde riikaráji.
 	#$ Soai oastiba bileahta su filbmii.
@@ -6650,7 +6652,7 @@ REMOVE:r2271 Gen IF (*-1 TRANS-V BARRIER SV-BOUNDARY OR Acc OR COMMA LINK NOT *-
 	#% Dat bahkkejit min jurdagiidda. # Mis váilu semantalaš njuolggadus illatiivva oamasteaddjái. 
 
 #!! * __AccTV2__ Selects accusative: when a transitive verb to the left
-SELECT:AccTV2 Acc (*-1C TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc - Num BARRIER S-BOUNDARY)(0 NP-HEAD-ACC LINK NEGATE *1 Acc BARRIER CC OR COMMA OR SV-BOUNDARY LINK NOT 0 (Pron Gen) LINK *1 N BARRIER NOT-NPMOD)(0 Acc LINK NOT 0 ROUTE OR TIME)(NEGATE *-1 Num BARRIER NOT-Attr LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(NEGATE 0 (Pron Dem))(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK 1 Ill)(NEGATE 1 (N Acc) OR Com OR (N Nom))(NEGATE 1 Gen LINK 1 Po)(NEGATE *-1C SG3-V BARRIER NOT-NPMODADV OR PrfPrc LINK NOT *-1 (N Nom) OR (Pron Nom) BARRIER S-BOUNDARY)(NEGATE -1 <vdic>) ;
+SELECT:AccTV2 Acc (*-1C TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc - Num BARRIER S-BOUNDARY)(0 NP-HEAD-ACC LINK NEGATE *1 Acc BARRIER CC OR COMMA OR SV-BOUNDARY LINK NOT 0 (Pron Gen) LINK *1 N BARRIER NOT-NPMOD)(0 Acc LINK NOT 0 ROUTE OR TIME)(NEGATE *-1 NUM BARRIER NOT-Attr LINK NOT 0 NUMUNIT)(NEGATE 0 (Pron Dem))(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK 1 Ill)(NEGATE 1 (N Acc) OR Com OR (N Nom))(NEGATE 1 Gen LINK 1 Po)(NEGATE *-1C SG3-V BARRIER NOT-NPMODADV OR PrfPrc LINK NOT *-1 (N Nom) OR (Pron Nom) BARRIER S-BOUNDARY)(NEGATE -1 <vdic>) ;
 	#$ De son ohcá stálu silbbaid.	
 	#$ Sámegillii galbet universitehta lea šaddan realitehta.
 	#$ In máhte suomagiela, eaige nieiddat máhte nu bures eŋgelasgiela.
@@ -6669,7 +6671,7 @@ SELECT:AccTV3 Acc (*-1 TRANS-V BARRIER COMMA OR Num OR REAL-V OR Ess OR S-BOUNDA
 
 
 #!! * __OLDr2466__ Selects accusative: when transitive verb to the left, but not if the TV is FAUX OR LOC-V
-SELECT:OLDr2466 Acc IF (*-1C TRANS-V BARRIER SV-BOUNDARY OR NOT-NPMODADV OR ("nugo") OR ("dego") OR ("dugo") LINK NOT 0 FAUXV OR LOC-V LINK NOT *-1 Acc BARRIER SV-BOUNDARY OR (Neg Foc/ge))(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY)(NEGATE -1 PrfPrc LINK NOT *-1 REAL-COPULAS BARRIER SV-BOUNDARY)(NEGATE *-1 Num BARRIER NOT-Attr LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME LINK NOT 0 Px)(NEGATE 0 TIME OR ROUTE)(*1C NP-BOUNDARY OR S-BOUNDARY OR (Time) + Ill BARRIER WORD LINK NOT 0 Actio OR Inf);
+SELECT:OLDr2466 Acc IF (*-1C TRANS-V BARRIER SV-BOUNDARY OR NOT-NPMODADV OR ("nugo") OR ("dego") OR ("dugo") LINK NOT 0 FAUXV OR LOC-V LINK NOT *-1 Acc BARRIER SV-BOUNDARY OR (Neg Foc/ge))(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY)(NEGATE -1 PrfPrc LINK NOT *-1 REAL-COPULAS BARRIER SV-BOUNDARY)(NEGATE *-1 NUM BARRIER NOT-Attr LINK NOT 0 NUMUNIT)(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME LINK NOT 0 Px)(NEGATE 0 TIME OR ROUTE)(*1C NP-BOUNDARY OR S-BOUNDARY OR (Time) + Ill BARRIER WORD LINK NOT 0 Actio OR Inf);
 	#$ Sus báhkkanii olles gorut go oinnii Lárina čuvges vuovttaid.
 
 #!! * __topOBJ1__ Selects accusative: when a Strict transitive verb to the right (topicalized object) ''beaskka geavahedje''
@@ -6862,13 +6864,15 @@ SELECT:XXr1990 Acc IF (0 Num LINK NOT 0 Adv LINK 1 ALU);
 SELECT:XXr1991 Acc IF (0 Num LINK 1 Num LINK 1 ALU);
 #Not-so-exceptional?
 
-#!! * __NewGen__ (complement of numerals) selects Gen Sg when -1 Num Sg ''guhtta kilu''
-SELECT:NewGen (Sg Gen) (0 (N Acc) LINK *-1 NUM + Sg BARRIER NOT-A LINK 0 Nom OR Acc)(NEGATE -1 ("moadde")) ; 
+#!! * __NewGen__ (complement of numerals) selects Gen Sg when Num Sg to the left ''guhtta kilu''
+SELECT:NewGen (Sg Gen) OR CURRENCY + Gen (0 (N Acc)LINK *-1 NUM + Sg BARRIER NOT-A LINK 0 Nom OR Acc)(NEGATE -1 ("moadde")) ;
 	#$ Juohke heasta borrá sullii guhtta kilu suinniid beaivái.
 	#$ Dán skuvllas ledje jahkásaččat sullii 20 oahppi geat iešdáhtolaččat bohte deike, ja buohkat ledje lullisámit.
+	#$ Do bohtet guokte olbmo.
+	#$ Vuoiti oažžu 500 ru.
 	#% Finnmárkku fylkkagielda lea jagi 1988 rájes ovddidan doaimmaid sámi álbmoga várás spesialistadearvvašvuođabálvalusas, ja ráhkadii jagi 1991 fylkkagieldda sámi dearvvašvuođa- ja sosiálaplána.
-#!! ** Ritva comment: This rule is back in buisness! Tt's a good rule that seems to be working quite fine and it replaces many of the below rules. Please specify in which cases it doesn't work so we can work on the constraints. 
-#!! ** Old comment: "It seems like there is no need for this rule because the rule REMOVE: 5755: NAr229 works. If there is still a need for this rule we have to make some constraints."
+	#Comment: NewGen always pics genitiv for the noun that follows a Sg Num. There are two varieties, depending on whether preceded by TV (a transitive verb) = akk+gen or COPULAS = nom+gen.
+
 
 #SELECT:XXr1993ja1997 Gen IF (-1 (Num Sg Acc))(0 MEASURE)(1 ALU OR A OR Pr OR ("dassái") OR ("dás") OR ("áigi" Adv)); #This is not needed because of NewGen!
 	#$ Sus lea njeallje mehtara guhkkosaš biila. 
@@ -6936,39 +6940,44 @@ SELECT:NumGitta Acc IF (0 Num)(1 ("gitta"))(2 (Num Acc));
 
 
 #!! * __NumAcc1__ selects Acc if you are a numeral with a transitive verb to the left ''oste guokte mielkki''
-SELECT:NumAcc1 Acc IF (*-1 TRANS-V BARRIER S-BOUNDARY OR Pr LINK 0 FMAINV OR Inf)(NEGATE -1 N LINK 2 VFIN)(NEGATE -1 CS OR ("jahki") OR GEASSET)(0 Num LINK NOT 0 Adv)(NEGATE *1 Acc BARRIER S-BOUNDARY)(NEGATE *1 Ill OR Loc BARRIER NOT-A)(NEGATE 1 (N Gen) LINK 1 Po)(NEGATE *-1 CC BARRIER NOT-ADV LINK -1 Num + Sg)(NEGATE -1 BEAIVI + Gen)(NEGATE -1 MANNU LINK 1 (A Ord) LINK 1 (Adv ABBR));  ;
+SELECT:NumAcc1 Acc IF (*-1 TRANS-V BARRIER S-BOUNDARY OR Pr LINK 0 FMAINV OR Inf)(NEGATE -1 N LINK 2 VFIN)(NEGATE -1 CS OR ("jahki") OR GEASSET)(0 NUM LINK NOT 0 Adv OR NUMUNIT)(NEGATE *1 Acc BARRIER S-BOUNDARY)(NEGATE *1 Ill OR Loc BARRIER NOT-A)(NEGATE 1 (N Gen) LINK 1 Po)(NEGATE *-1 CC BARRIER NOT-ADV LINK -1 Num + Sg)(NEGATE -1 BEAIVI + Gen)(NEGATE -1 MANNU LINK 1 (A Ord) LINK 1 (Adv ABBR));  
 	#$ Moai oste guokte mielkki gávppis.
 	#$ Giliviessu geassá 200 olbmo.
-	#% Láhttu 4 lea rabas. 
+	#$ De son barggai guokte jagi buohccidivššárin Kolvereidas, Trøndelágas.
 	#% Carsten Smith guđii Sámi vuoigatvuođalávdegotti ovdaolbmo virggi skábmamánu 1. beaivvi 1985.
+	#Comment: NumAcc1 is intended to work with NewGen: as in it is always followed by Gen.
 
-#!! * __XXr1523__ removes Acc if you are a numeral and JAHKI-NUM is immediately to your left ''mávssii mannan jagi 43 ruvnnu''
-REMOVE:XXr1523 Acc IF (-1 JAHKI-NUM LINK NOT -1 (PrfPrc @>N) OR Attr OR Dem)(0 Num);
+#XX
+#!! * __NumJahki__ removes Acc if you are a numeral and JAHKI-NUM is immediately to your left ''mávssii mannan jagi 43 ruvnnu''
+REMOVE:NumJahki Acc IF (-1 JAHKI-NUM LINK NOT -1 (PrfPrc @>N) OR Attr OR Dem)(0 Num);
 	#$ Son mávssii mannan jagi 43 ruvnnu kilos.
 	#Comment: what's the difference between this one and XXr2006 (put it the other way: why wasn't XXr2006 chosen over this?)
 	
-#!! * __NumIfNomCop__ removes Acc if Gen first one to the right, followed by a transitive verb with an Acc to its right ''máŋga gávpeolbmá lonuhedje fáhcaid''
-REMOVE:NumIfNomCop Acc (1 (N Gen))(2 NOT-FAUXV + TRANS-V)(*3 (N Acc) BARRIER NOT-NPMOD);
+#!! * __NomIfNum__ removes Acc if Gen to the right, followed by a transitive verb with an Acc to its right ''máŋga gávpeolbmá lonuhedje fáhcaid''
+REMOVE:NomIfNum Acc (1 (N Gen))(2 NOT-FAUXV + TRANS-V)(*3 (N Acc) BARRIER NOT-NPMOD);
 	#$ Máŋga gávpeolbmá lonuhedje fáhcaid gálvvuiguin.
+	#Comment: The subject is a numeral.
 
-#!! * __NumAcc2__ selects Acc for singular numerals if followed by a noun ''logi báhkkoma''
-SELECT:NumAcc2 Acc (0* NOT-FAUXV + TRANS-V BARRIER SV-BOUNDARY)(0 NUM + Sg LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(*1 (N Acc) OR (N Gen) BARRIER NOT-Attr LINK NOT 0 Ill)(NEGATE *-1 COPULAS + FMAINV BARRIER SV-BOUNDARY)(NEGATE *-1 Der/Pass BARRIER NOT-ADV)(NEGATE *1 COPULAS BARRIER COMMA OR SV-BOUNDARY)(NEGATE -1 NUMMAR);
+#!! * __NumAcc2__ selects Acc for singular numerals if there is a transitive verb somewhere in the sentence and the numeral is followed by a noun ''logi báhkkoma''
+SELECT:NumAcc2 Acc (0* NOT-FAUXV + TRANS-V BARRIER SV-BOUNDARY)(0 NUM + Sg LINK NOT 0 NUMUNIT)(*1 (N Acc) OR (N Gen) BARRIER NOT-Attr LINK NOT 0 Ill)(NEGATE *-1 COPULAS + FMAINV BARRIER SV-BOUNDARY)(NEGATE *-1 Der/Pass BARRIER NOT-ADV)(NEGATE *1 COPULAS BARRIER COMMA OR SV-BOUNDARY)(NEGATE -1 NUMMAR);
 	#$ Sii máhtte áddekeahttá bajillohkat logi báhkkoma ja Áhččámet.
 	#$ Áiggun dušše geahččat moadde filmma.
 	#$ Dákkár dáhpáhusat, ja máŋga iežá dáhpáhusa ja digaštallama dahke munnje persovnnalaččat váttisin dáid gažaldagaid mat bohciidedje Gáivuonas. 
 	#% Oarje-Finnmárkkus leat dál registrerejuvvon 8.500 muohtaskohtera.
 	#% Buot njeallje máná ledje náđđon eagi vuostá.
 	#% Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna.
+	#Comment: Is intended to work with GenIfNum (or NewGen in some cases.)
 
-#!! * __NumGen__ selects Gen Sg if there is a Num Sg to your left ''guđa geardde'' 
-SELECT:NumGen (Gen Sg) (*-1 NUM + Sg BARRIER NOT-A LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(0 (N Gen))(NEGATE 1 Po)(NEGATE -1 CC) ;
+#!! * __GenIfNum__ (complement of numerals) selects Gen Sg if there is a Num Sg to your left ''guđa geardde'' 
+SELECT:GenIfNum (Gen Sg) OR CURRENCY + Gen (*-1 NUM + Sg BARRIER NOT-A LINK NOT 0 NUMUNIT)(0 (N Gen))(NEGATE 1 Po)(NEGATE -1 CC) ;
 	#$ Mii finaimet doppe guđa geardde.
 	#$ Sii geat máhtte dušše moadde luođi, ohppe máŋga ođđa luođi internáhtas orodettiin.
 	#$ Viđa máná biktasat ledje jávkan.
-	#% Do bohtet guokte olbmo.
+	#$ De ohccu moadde girjji.
+	#Comment: GenIfNum always pics genitiv for the noun that follows a Sg Num. There are two varieties, depending on whether preceded by TV (a transitive verb) = akk+gen or IV (intransitive verb) = gen+gen.
 
 #!! * __NumAccCo__ (coordinated num) selects Acc if you are Num Sg and to your right: CC with a Num to the right ''guokte ja eanemusat golbma''
-SELECT:NumAccCo Acc (0 NUM + Sg LINK NOT 0 ("okta") OR ("miljon") OR ("čuohti"))(1 CC LINK *1C (Num Sg Acc) BARRIER NOT-ADV);
+SELECT:NumAccCo Acc (0 NUM + Sg LINK NOT 0 NUMUNIT)(1 CC LINK *1C (Num Sg Acc) BARRIER NOT-ADV);
 	#$ Juohke mánná oaččui guokte ja eanemusat golbma jagi oahpahusa jagis.
 	
 #Different rules for "okta"!
@@ -7492,11 +7501,12 @@ SELECT:NDr2339 Nom IF (*-1 BOC OR PUNCT BARRIER NOT-NPMODADV)(0 Pl)(NEGATE 0 Adv
  # The idea here is that 0 is not accusative, since there is an ILL-V.
  # So we could alternativelyREMOVE:ND Acc. But the present rule seems to work.
 
-SELECT:NDr2341 Nom IF (*-1 CS OR BOS OR CC OR CP BARRIER NP-HEAD OR VFIN)(0 NUM)(*1 PL3-V BARRIER SV-BOUNDARY)(NEGATE *1 Nom BARRIER S-BOUNDARY);
+SELECT:NDr2341 Nom IF (*-1 CS OR BOS OR CC OR CP BARRIER NP-HEAD - ("buot" Pron Indef Attr) OR VFIN)(0 NUM)(*1 PL3-V BARRIER SV-BOUNDARY)(NEGATE *1 Nom BARRIER S-BOUNDARY);
 	## Guokte jahkásaš doavttergrádakurssa leat lágiduvvon.
 	## Go máŋggas galget čállit seamma journálii, de... 
  # In the last example, the reading N Sg Nom is chosen because of the reading 
  # Num Sg Loc.
+ 	#$ Buot njeallje máná ledje náđđon eagi vuostá. #Comment: In order for the numeral to be the head in this sentence, I had to add - ("buot") to the BARRIER NP-HEAD which includes pronouns.
 
 SELECT:NDr2342 Nom IF (*-1 CS OR BOS OR CC OR CP BARRIER NP-HEAD OR VFIN)(0 NUM)(*1 COPULAS BARRIER SV-BOUNDARY LINK 0 (Pl3) LINK NOT *1 PrfPrc OR Inf BARRIER SV-BOUNDARY);
 	## Vihtta bivdovuogi leat Deanus luosa bivddidettiin. 
