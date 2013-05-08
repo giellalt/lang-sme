@@ -2289,6 +2289,8 @@ REMOVE:XXPropAttr (Prop Attr) - Der/laš (NEGATE *1 Prop BARRIER REAL-WORD-NOT-A
 
 #!! !MISC
 
+#!! * sutnje is not verb
+REMOVE ("suotnjat" Ind)(0 Pers LINK -1 VFIN) ;
 
 #!!  * __ABBR__ Removes ABBR in favour of Adv, Pcle or Pron, e.g. "dii" when there is no punctuation
 REMOVE:ABBR ABBR (0 Adv OR Pcle OR Pron) ;
@@ -2374,9 +2376,12 @@ SELECT:muhtunlagan A IF (-1 Indef)(0 ("lága" Ess));
 
 #!! !!Adverbs
 
-#!! * IFF __buotSuperl__ : buot Adv in front of Superl
-IFF:buotSuperl ("buot" Adv) ((1 Superl) OR (-1 Acc LINK 2 Inf)) ;
- 	#$ Buot buoremus lea ieš vuolgit.	
+#!! * IFF __buotAdv__ : buot Adv in front of Superl
+IFF:buotAdv ("buot" Adv) ((1 Superl) OR (-1 Acc LINK 2 Inf) OR (-1 TRANS-V LINK 2 ("dat" Acc)) OR (-1 COPULAS LINK 2 (N Ess)) OR (-1 REAL-V + IV LINK NOT 0 Pron LINK 2 COMMA OR EOS)) ;
+ 	#$ Buot buoremus lea ieš vuolgit.
+ 	#$ Son dáhtui buot dan ollašuvvat, vai eatnat olbmot bisošedje heakkas.	
+ 	#$ Son lea njuoskan buot, mii lea fuones ášši.
+ 	#$ Skávžá lea buot soalsin ja njuoskkas.
 
 SELECT:AdvLACCAT1 Adv (NEGATE *-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 (N Pl) OR PPRON-DU-PL BARRIER Nom LINK 0 Nom)(NEGATE 0 (Comp Sg) LINK *-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 (N Sg) OR SG-PRON BARRIER Nom LINK 0 Nom)(0 LACCAT-ADV) ;
 SELECT:AdvLACCAT2 Adv IF (0 LACCAT-ADV LINK NEGATE 0 Pl LINK *-1 COPULAS BARRIER NOT-A-ADV LINK *-1 NP-HEAD-NOM + Pl BARRIER NOT-ADV-PCLE)(1 A OR N LINK NOT 1 go) ;    
@@ -3568,7 +3573,7 @@ IFF:Interj Interj (*-1 BOS BARRIER WORD LINK *1 Interj LINK 1 COMMA OR EOS);
  	#$ Maid, iigo leat boahtán?
 
 #!! * __maidAdv1__ selects maid Adv when there is no vfin to the right.
-SELECT:maidAdv ("maid" Adv)((NEGATE *1 VFIN BARRIER S-BOUNDARY OR CS) OR (*1 COMMA BARRIER VFIN LINK 1 CC))(NEGATE *1 NP-HEAD BARRIER NOT-NPMOD LINK 1 Rel LINK *1 VFIN LINK *1 VFIN)(NEGATE 1C CC)(NEGATE -1 BOS LINK *1 EOS BARRIER VFIN) ;
+SELECT:maidAdv ("maid" Adv)((NEGATE *1 VFIN BARRIER S-BOUNDARY OR CS) OR (*1 COMMA BARRIER VFIN LINK 1 CC) OR (1 Nom LINK -2 Loc LINK *-1 COPULAS BARRIER NOT-PCLE LINK NOT *-1 Nom))(NEGATE *1 NP-HEAD BARRIER NOT-NPMOD LINK 1 Rel LINK *1 VFIN LINK *1 VFIN)(NEGATE 1C CC)(NEGATE -1 BOS LINK *1 EOS BARRIER VFIN) ;
  	#$ Dán oktavuođas čujuhuvvo maid oanáduslistui ja gáldolistui.
  	#$ Sápmelaččat oasálaste maid dasa, muhto lassin ledje sis vel eará resursat.
  	#$ Dá lea reive maid.
@@ -3743,6 +3748,7 @@ REMOVE:leagis Foc/gis IF (0 ("leahki")) (1 EOC OR CCCOMMA);
 
 #!! !Rule for adding Date as a tag to readings which looks like dates
 SUBSTITUTE:Date1 (Num Sg) (Num Sg Date) TARGET ("<[0-3][0-9]\.[0-2][0-9].[1-2][0-9][0-9][0-9]>"r Num) ;
+SUBSTITUTE:Date1 (Num Sg) (Num Sg Date) TARGET ("<[0-9]\.[0-9].[1-2][0-9][0-9][0-9]>"r Num) ;
 SUBSTITUTE:Date1 (Num Sg) (Num Sg Date) TARGET ("<[0-3][0-9]\.[0-2][0-9].[0-9][0-9]>"r Num) ;
 
 #!! !!Disambiguating adpositions
@@ -4019,7 +4025,7 @@ SELECT:dasgoCS CS (0 ("dasgo"))((NEGATE *1 ("?")) OR (1 Interr)) ;
 	#$ Dasgo goabbá lea stuorit,...
 
 #!! * Removes __vaikkoAdv__ , it is always CS because of abbr: "vaikko_mii" Pron Indef
-REMOVE:vaikkoAdv Adv (0 ("vaikko") OR ("vaikke")) ;
+REMOVE:vaikkoAdv Adv (0 ("vaikko") OR ("vaikke") LINK NOT 0 Foc/ba) ;
 	#$ Ásahusa journálaovddasvástideaddji sáhttá liikká rievdadit journála vaikko gustojit vuolláičállojuvvon journálamerkesteamit.	
 
 #!! !!go as CS and Qst Pcle
@@ -4033,12 +4039,14 @@ SELECT:standQst Pcle (-1 VFIN LINK -1 BOS OR CLB OR PUNCT)(0 go LINK *1 ("?"));
 	#$ Addet go máŋga dearvvašvuođabargiidjoavkku veahki ja fállojuvvo go divššohasaide birrajándororrun?
 
 #!! * __objQst__ selects Pcle in questions which function as object in the clause
-SELECT:objQst Pcle (**-2 VFIN BARRIER S-BOUNDARY-NOT-CVP LINK NOT 0 Inf)(-1 VFIN LINK NOT 0 Inf OR Comp)(0 go)(NEGATE *1 VFIN BARRIER S-BOUNDARY-NOT-CVP LINK NOT 0 Inf); 
+SELECT:objQst Pcle (**-2 VFIN BARRIER S-BOUNDARY-NOT-CVP LINK NOT 0 Inf)(-1 VFIN LINK NOT 0 Inf OR Comp LINK NOT -1 (Ind Neg))(0 go)(NEGATE *1 VFIN BARRIER S-BOUNDARY-NOT-CVP LINK NOT 0 Inf)(NEGATE 1 (A Nom) LINK NOT -2 COPULAS); 
 	#$ Dalle ferten iskat lea go dus feber.
 	#$ De oaidná olmmoš dárbbaša go oalgebáddi luoitiluvvot. 
 	#$ Dalle mun ferten iskat lea go dus feber, ja mihtidit dus varradeattu.
 	#$ Farisealaččat atne Jesusa čalmmis oaidnit áigu go buoridit sábbáhin.
 	#$ Politihkas lei 1866 rájes sáhka ahte galggai go stivrregoahtit gii oažžu eatnama láigohit stáhtas.
+	#% Mearridanváldi berre leat nu stuoris go vejolaš
+	#% Oidnen man váttis dilli lei mánáide geat eai máhttán go sámegiela.
 
 #!! * __subQst__ selects Pcle in questions as subordinated clause
 SELECT:subQst Pcle (*-2 VFIN-NOT-IMPRT LINK NEGATE 0 Inf LINK *-1 AUX BARRIER REAL-V)(-1 VFIN LINK NOT 0 Ill OR COPULAS LINK -1 COMMA OR CC)(0 go LINK NEGATE *1 VFIN) ;
@@ -4072,8 +4080,8 @@ SELECT:poQst Pcle (-2 (N Gen) LINK *-1 BOS BARRIER NOT-NP)(-1 Po)(0 go)(*1 VFIN 
 	#$ Girdi mielde go don manat Helssegii? 
 
 #!! * __AdvQst__ selects Pcle for go after WORD
-SELECT:wordQst Pcle (-1 Adv OR A LINK -1 BOS)(0 go)(*1 VFIN BARRIER S-BOUNDARY-NOT-CVP)(*1 ("?"));
-
+SELECT:wordQst Pcle (-1 Adv OR A LINK *-1 BOS BARRIER NOT-PCLE)(0 go)(*1 VFIN BARRIER S-BOUNDARY-NOT-CVP)(*1 ("?"));
+	#$ Na geasset go bođii diehtit ahte ii beasa skuvlii?
 
 #!! * __killPcle__ removes all remaining Pcle for go 
 REMOVE:killPcle Pcle (0 go) ;
@@ -4554,10 +4562,10 @@ SELECT:r1590 (Pron Indef Nom) IF (0 ("buot") OR ("gait"))(1 PL3-V);
 	## Vuollásaš ráđit buot heaittihuvvojedje oktasaš hálddahuslaš jođiheapmái. 
 	
 
-SELECT:r1596 (Indef Nom) IF (NEGATE *-1 TRANS-V BARRIER NOT-ADV-PCLE)(0 ("buot") OR ("gait"))(NEGATE *1 TRANS-V BARRIER S-BOUNDARY LINK 0 MAIN-V OR Inf);
+SELECT:r1596 (Indef Nom) IF (NEGATE *-1 TRANS-V BARRIER REAL-V OR S-BOUNDARY)(0 ("buot") OR ("gait"))(NEGATE *1 TRANS-V BARRIER S-BOUNDARY LINK 0 MAIN-V OR Inf);
 	## Buot lea lávkkas.
 	
-#SELECT:r1597 Indef IF (-1 ("gullat") LINK -1 Ill)(0 ("buot") OR ("gait")); # trenges ikke
+SELECT:r1597 Nom IF (-1 ("gullat" Pl3) LINK -1 Ill)(0 ("buot") OR ("gait")); # trenges ikke
 	## Dat mearkkaša ahte dása gullet buot mat eai leat spiehkastuvvon.		
 
 #SELECT:r1598 Indef IF (*-1 TRANS-V BARRIER NOT-ADV-PCLE)(0 ("buot") OR ("gait") LINK 1 S-BOUNDARY OR REAL-CLB); # trenges ikke
@@ -6199,6 +6207,14 @@ SELECT:CoGen2 Gen (-1 COMMA LINK -1C Gen)(0 Gen)(1 CC LINK 1 Gen LINK 1C Acc);
 	# Xx Best rules!
 	# X Good rules  
 	# x Found, but not necassarily good
+
+
+#!! * vuoi selects accusative
+SELECT:vuoiAcc Acc ((*-1 ("vuoi") BARRIER NOT-NPMODADV) OR (*-1 ("surgat") BARRIER NOT-NPMODADV LINK -1 ("vuoi"))) ;
+	#$ Vuoi mu, maid mun dál galggan?
+	#$ Vuoi dan olbmo gean bokte fillehusat bohtet.
+	#$ Vuoi surgat dan gándda!
+
 	
 LIST SAPMI-N-HEAD =  "álbmot" "álbmotbeaivi" "álbmotdálkkodeapmi" "álbmotjoavku" "árbevierru" "ássanguovlu" "ássi" "áviisa" "beales" "beroštupmi" "boaris" ("boazodoallu" Nom) ("boazodoallu" Loc) "byråkratgiella" "diehtobáŋku" ("dearvvašvuohta" RCmpnd) "dievdu" "doaibma" ("dutkan" Sg) "ealáhus" "fágabiras" "fierpmádat" "giella" "gilli" "gili#ássi" ("guovlu" Pl) "kulturovdáneapmi" "kulturviessu" "plána" "doaibmaplána" "geavaheaddji" "gelbbolašvuođa#doaibma" "giellaláhka" "girjjálašvuohta" ("guolástit" Der/NomAct) "guovddášguovlu"  "hálddašanguovlu" "iešdovdu"  "ja" ("nuoraidsearvi" Pl) "oahppoplána" "oktasaš" "perspektiiva" "mánná" "nisu" "álbmot" "bargi" "geavaheaddji" "jienastuslohku" "kulturmuitu" "kulturmuitohálddašeapmi" "kulturmuitosuodjalus"  "kultuvra" "náhkkegálvu" "nuorra" "oktavuohta"  "resursageavaheapmi" "riggodat" "riikkajoavku" "searvevuohta" "searvi" "servodat" ("siida" Pl) "siseana" "siseatnansiida" "sisafárren" "sosiáladutkan"  "strategiijaplána" "valáštallan" "vierru" "vuohki" "vuoigatvuohta" "vuoigatvuođabargu" (PUNCT LEFT) ;
 
