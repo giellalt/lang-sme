@@ -6643,7 +6643,7 @@ SELECT:GenORG Gen (0 MAIN-ORGANIZATION + Gen)(1 SAMEDIGGI-GEN + Loc) ;
 	#$ Ledje stuora hástalusat oahpahusráđi barggus ja lei somá bargagoahtit Edela buori bargovuođu ala.
 		
 #!! * __GenNom__ (modifies Nom) selects Gen if sentence boundary or adv to the left. To the right is Nom followed by a transitive verb ''stálu beana njoallu''
-SELECT:GenNom Gen (-1 Adv OR BOC OR S-BOUNDARY)(1C (N Nom))(2 TRANS-V + FMAINV); #(*3 (N Acc)) ;
+SELECT:GenNom Gen (-1 Adv OR BOC OR S-BOUNDARY)(1C (N Nom))(2 TRANS-V + FMAINV)(NEGATE 0 (Pron Dem)); 
 	#$ Jus stálu beana njoallu stálu háviid, de hávit savvojit.
 	#$ Ehpet dii leat ieža sárdnumin, muhto Áhčádet Vuoigŋa sárdnu din bokte.
 	#$ Mánáidgirjjiin muitaluvvo dávjá govt olbmuid mánát deivet nuppi máilmmi ássiid.
@@ -6712,7 +6712,14 @@ SELECT:AccTV1 Acc (*-1C STRICT-TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc BAR
 	#% Dieđálin eanet Oslo go iežan gili birra. #Hits Oslo, but this is Gen+Po.
 	#% Son lea dovddus sánálaš ja girjjálaš nissonin geas lea iežas oaivilat feara man birra, ja eatnasat Finnmárkkushan leat oaidnán su lohkkiidreivviid aviissain.
 
-#!! * __r2206__ selects Gen when a finite verb to the left and Nom or Acc to the right ''lei skuvllajođiheaddjin''
+#!! * __PronNP__ (removes Acc): selects Gen for Pron Pers if Acc or Ill to the right, given that there is a secure object or that no transitive verb is found ''bija ruđa mu kontoi''
+REMOVE:PronNP Acc (0 PPRON-NOT-DAT + Gen)(NEGATE 0* TRANS-V + FMAINV BARRIER Acc OR S-BOUNDARY)(*1 Acc OR Ill BARRIER NOT-Attr LINK NOT 1 Inf) ;
+	#$ Oinniide go Mihkkala, munno nuoramus bártni?
+	#$ Bija fal ruđa njuolgga mu kontui.
+	#$ Min márkanii lea ráhkaduvvon ođđa skuvla.
+	#$ Mun oainnán fierpmi, su merkka, ja dieđán ahte Spider-Man lea leamaš das.
+
+#!! * __r2206__ selects Gen when a finite verb to the left and Nom or Acc to the right ''lohkaba su girjji''
 SELECT:r2206 Gen IF (*-1 VFIN BARRIER N OR (Pers Pron) OR CLB)(0 N OR Pron LINK NOT 0 ("buorre") OR VFIN)(NEGATE 0 Num OR Dem OR VGen OR PrfPrc OR PrsPrc OR Indef OR Interr OR Adv OR Loc OR (Actio Ess))(NEGATE 1 CLB OR Num)(NEGATE 0 Nom)(*1 (N Nom) OR (N Acc) BARRIER NOT-NPMOD OR PrfPrc OR CC OR PUNCT LINK NOT 0 Prop OR TIME OR Time OR ROUTE OR Loc OR PrfPrc)(NOT *1 Po OR V-TRANS BARRIER SV-BOUNDARY)(NEGATE *-1 TRANS-V + FMAINV BARRIER NOT-NPMOD LINK *1 (Pron Refl Acc) BARRIER NOT-NPMOD LINK 1 Ess);
 	#$ Soai lohkaba su girjji eaŋgalasgillii.
 	#$ De son ohcá stálu silbbaid.
@@ -6721,6 +6728,7 @@ SELECT:r2206 Gen IF (*-1 VFIN BARRIER N OR (Pers Pron) OR CLB)(0 N OR Pron LINK 
 	#% Leago Čáhppes Bearral oahpis dutnje?
 	#% Juohke mánná oaččui eanemusat guokte ja eanemusat golbma jagi oahpahusa jagis.
 	#% Boarráseamos oahppit váldet áigeguovdilis govaid skuvlla ruovttusiidui.
+	#Comment: Differs from ACC by not beeing restricted by an secure Acc. Also not restricted to pronouns and there is no claim 1 Ill.
 
 
 #!! * __r2271__ Removes genitive: when a transitive verb to the left and you (not if you are a pronoun) are followed by Ill/Loc/Com/Adv: ''doalvvui stálu meahccái''
@@ -6729,6 +6737,7 @@ REMOVE:r2271 Gen IF (*-1 TRANS-V BARRIER SV-BOUNDARY OR Acc OR COMMA LINK NOT *-
 	#$ Biera oahpaha matematihka munnje.
 	#$ Dupmár bosádii vuoru johtui. 
 	#$ Máŋga gávpeolbmo lonuhedje fáhcaid gálvvuiguin. (AccTV4)
+	#$ Ja dál mun goittotge lean riegádahttán bártni su boaresvuođa beivviin.
 	#% Dat bahkkejit min jurdagiidda. # Mis váilu semantalaš njuolggadus illatiivva oamasteaddjái. 
 
 #!! * __AccTV2__ Selects accusative: when a transitive verb to the left
@@ -6743,6 +6752,7 @@ SELECT:AccTV2 Acc (*-1C TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc - Num BARR
 #!! * __AccTV3__ Selects accusative: when transitive verb to the left if it doesn't find a barrier: COMMA, Num, REAL-V, Ess, S-BOUNDARY 
 SELECT:AccTV3 Acc (*-1 TRANS-V BARRIER COMMA OR Num OR REAL-V OR Ess OR S-BOUNDARY LINK NOT *-1 Acc BARRIER S-BOUNDARY)(NEGATE *-1C Acc BARRIER SV-BOUNDARY)(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK *1 Ill BARRIER NOT-NPMOD)(NEGATE *1 Acc BARRIER S-BOUNDARY OR (@CVP))(NEGATE 0 Num OR TIME OR ROUTE OR Adv)(NEGATE *1 Po BARRIER NP-BOUNDARY)(NEGATE 1 Com)(NEGATE *-1C SG3-V BARRIER NOT-NPMODADV OR PrfPrc LINK NOT *-1 (Sg Nom) BARRIER S-BOUNDARY)(NEGATE 0 (Pron Dem) LINK 1 N)(NEGATE 0 (Pron Rel) LINK 1 Time)(NEGATE -1 <vdic>); 
 	#$ Biera oahpaha munnje matematihka.
+	#$ Oastte min ja min eatnamiid láibbiin, de mii ja min eatnamat šaddet farao opmodahkan.
 	#$ Son áiggui sáddet iežas bártni mu viežžat, son muitalii. #Comment: correct, but not't sure it's a good idea.. mu is obj of viežžat.
 	#$ Nieiddat liikojedje guldalit sávaldatkonseartta ja mánáidbottu.
 	#% Lávvui gullá maid uvssot.
@@ -6790,8 +6800,8 @@ SELECT:AccCOP Acc (*-1 COPULAS + FMAINV BARRIER NOT-NPMOD OR CC LINK *-1 (N Nom)
 	#% Lihtti lea ravddaid dási.
 	#Commet: (1 EOC OR COMMA OR NEGFOC) dárkkis dán oasi korpusis.. 
 
-#!! * __GenNP1__ Select genitive for pronoun (modifier): if NP-BOUNDARY OR Acc (but don't select if the finite verb is TV) to the left and noun to the right 
-SELECT:GenNP1 (Pron Pers Gen) (-1 NP-BOUNDARY - TRANS-V OR Acc)(*1 N BARRIER NOT-NPMOD)(NEGATE 0 Gen LINK 1 Po) ;
+#!! * __GenNP1__ selects Gen for Pron Pers (modifier): if NP-BOUNDARY OR Acc (but not if the finite verb is TV) to the left and N to right 
+SELECT:GenNP1 (Pron Pers Gen)(-1 NP-BOUNDARY - TRANS-V OR Acc)(*1 N BARRIER NOT-NPMOD)(NEGATE 0 Gen LINK 1 Po) ;
 	#$ Min mánáin leat ollu stohkosat.
 	#$ Mun lean náitalan, ja mu eamit bargá girdišiljus.
 	#$ Áhkku láve boahtit min siidii čakčat.
@@ -6799,13 +6809,13 @@ SELECT:GenNP1 (Pron Pers Gen) (-1 NP-BOUNDARY - TRANS-V OR Acc)(*1 N BARRIER NOT
 	#$ Mii du namma lea?
 	#$% Dat, gii ákkastallá dan ovddas, dovdá ášši.
 
-#!! * __GenNP2__ Select genitive for noun (modifier): if CC "ja" immediately to your left and accusative to your right ''ja sámi jurddašanvuogi''
+#!! * __GenNP2__ selects Gen for N (modifier): if CC "ja" immediately to your left and accusative to your right ''ja sámi jurddašanvuogi''
 SELECT:GenNP2 (N Gen) (-1 ("ja"))(1 (N Acc))(NEGATE 0 V OR ABBR OR Attr);
 	#$ Miššonbarggu álggu rájes juo Leem háliidii oahppat sámegiela ja sámi jurddašanvuogi.
 	#% Sii ožžot geavahit eatnama ja gáttiid ja elliideaset ja iežaset ealáhussii. # Deaivá dán vaikko eat hálit dan.
 
-#!! * __GenLocNom__ (modifier) selects Gen if first one to right is Nom or Loc ''Norgga oaivegávpogis''
-SELECT:GenLocNom Gen (-1 BOS OR COMMA)(0 Gen)(1 (N Loc) OR (N Nom))(NEGATE 0 (Pron Interr) OR (Pron Rel))(NEGATE 0 TITLE + Nom LINK 1 (Prop Nom));#(*2 (N Nom) BARRIER NOT-NPMOD)(*3 TRANS-V BARRIER Adv);	
+#!! * __GenNP3__ (modifier) selects Gen if first one to right is Nom or Loc ''Norgga oaivegávpogis''
+SELECT:GenNP3 Gen (-1 BOS OR COMMA)(0 Gen)(1 (N Loc) OR (N Nom))(NEGATE 0 (Pron Interr) OR (Pron Rel))(NEGATE 0 TITLE + Nom LINK 1 (Prop Nom))(NEGATE 0 (Pron Dem) + Acc);	
 	#$ Ánde orru Oslos, Norgga oaivegávpogis.
 	#$ Nieidda eadni ii sihtan vuolgit, muhto nisu hásttii.
 	#$ Organisašuvnna bláđđi, man gohčodit Fokusin muitala ahte gonagas Olav su áiggistis lei bivdán beassat leat servodaga suodjaleaddji.
