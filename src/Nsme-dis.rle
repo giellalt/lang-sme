@@ -84,8 +84,7 @@ LIST V = V ;
 LIST Pron = Pron ;
 
 LIST CS = CS ;
-LIST CCC = CC ;
-SET CC = CCC - ("sihke") ;
+LIST CC = CC ;
 SET CC-CS = CC OR CS ;
 LIST Po = Po ;
 LIST Pr = Pr ;
@@ -1159,7 +1158,7 @@ SET NOT-NPMOD-ACC     = NOT-NPMOD - Acc OR ABBR ;
 SET NOT-NPMOD-ACC-ADV     = NOT-NPMOD - Acc - Adv OR ABBR ; 
 # To be used in mappingrules, before the disambuation of Acc and Gen.                     
 
-SET NOT-NPMODADV    = WORD - PRE-NP-HEAD - Adv - ("sihke") ;                      
+SET NOT-NPMODADV    = WORD - PRE-NP-HEAD - Adv ;                      
 # NOT-NPMODADV = "NOT-PRE-NP-HEAD-OR-ADV"
 SET NOT-NPMODADV-INDEF   = WORD - PRE-NP-HEAD - Adv - Indef ;              
 ## NOT-NPMODADVI = "     ...-OR-INDEF"
@@ -3519,13 +3518,13 @@ SELECT:ENr2996b PL3-V IF (NOT *-1 POSITIVE-V BARRIER CS OR CC)((*1 (Pl Nom) BARR
 SELECT:ENleatPl3Rel ("leat" Pl3) (*-1 PL3-V BARRIER VFIN OR S-BOUNDARY LINK -1 (Rel Nom Pl) LINK -1 NP-HEAD-PL-NOM) (*1 NP-HEAD-PL-NOM BARRIER NOT-NPMODADV) ;
 	#$ Oahpaheaddjit geat leat leamaš dán suorggis leat sihke sámit ja dážat, muhto dat geat bohte olggobealde ledje ovdal bargan dearvvašvuođabálvalusas sámi guovlluin ja ledje integrerejuvvon sosiálalaččat ja dađistaga maiddái gielalaččat. # leat sihke
 
-#!! * __r1813__ 
-SELECT:ENInf1 Inf IF (*-1 INF-V BARRIER SV-BOUNDARY OR CS OR Neg LINK NOT 0 N OR PrfPrc)(NEGATE *1 Inf BARRIER SV-BOUNDARY)(NEGATE 0 Adv);
+#!! * __ENInf1__ 
+SELECT:ENInf1 Inf IF (*-1 INF-V BARRIER SV-BOUNDARY OR CS OR Neg OR COMMA LINK NOT 0 N OR PrfPrc)(NEGATE *1 Inf BARRIER SV-BOUNDARY)(NEGATE 0 Adv);
   	#$ Bissuin galgá heahkkahuhttit, ii nie váigadit goddit; sáhttá leat váiga.
 	#$ Dearvvašvuođabargit galget divššohasa agi, silolaš dilálašvuođa, láddama ja vásáhusduogáža ektui láhčit dilálašvuođaid buoremus lági mielde.
 
-#!! * __r1822__ selects Inf (NOTE, this was further down in sme-dis)
-SELECT:ENInf2 Inf IF (*-1 INF-V + V BARRIER SV-BOUNDARY OR Neg OR CS)(NEGATE -1 Attr)(NEGATE -1 Attr OR PrfPrc LINK *-1 CC BARRIER NOT-ADV) ;
+#!! * __ENInf2__ selects Inf (NOTE, this was further down in sme-dis)
+SELECT:ENInf2 Inf IF (*-1 INF-V + V BARRIER SV-BOUNDARY OR Neg OR CS OR COMMA)(NEGATE -1 Attr)(NEGATE -1 Attr OR PrfPrc LINK *-1 CC BARRIER NOT-ADV) ;
 	#$ Skuvla galggai oahpahit sámemánáide dárogiela.
 	#$ Prošeavtta áigut čađahit.
 	#% Mearrasápmelaččat ledje áŋgiris ja oahppan bivdit.
@@ -4224,7 +4223,7 @@ IFF:ahteCNP ("ahte" CC @CNP) (-1 COMPAR OR Comp)(0 ("ahte"))(1 COMPAR OR Comp);
 SELECT:killAllahtenotCS ("ahte" CS) ; 
 
 #!! * __vaiCCCNP__ vai as CC or CS
-SELECT:vaiCCCNP (CC @CNP) (0 ("vai")) (*-1 Inf BARRIER REAL-V OR CLB)(*1 Inf BARRIER REAL-V);
+SELECT:vaiCCCNP (CC @CVP) (0 ("vai")) (*-1 Inf BARRIER REAL-V OR CLB)(*1 Inf BARRIER REAL-V);
 	#$ Buriid dahkat vai baháid dahkat.
 
 #!! * __vaiCC__ remove vai as CC 
@@ -4251,19 +4250,26 @@ SELECT:killAllvainotCSCVP (CS @CVP) (0 ("vai"));
 REMOVE:dadeCNP (@CNP) (0 DADE) ; 
 	#$ Mađe mielde oaivi, dađe mielde ságat. # ii leat VFIN   
 
+
 #!! * __CVPnoVfin__ No potential finite verb following
-REMOVE:CVPnoVfin1 (@CVP) (NOT *1 VFIN BARRIER S-BOUNDARY OR CS OR PUNCT-RIGHT)(NEGATE *1 ("leat" PrfPrc) BARRIER S-BOUNDARY-NOT-CVP OR PUNCT-RIGHT OR CCCOMMA LINK NOT *-1 PrfPrc BARRIER REAL-V)(NOT 1 ("de"))(NEGATE 1 Rel); 
+REMOVE:CVPnoVfin1 (@CVP) (NOT *1 VFIN BARRIER S-BOUNDARY OR CS OR PUNCT-RIGHT)(NEGATE *1 ("leat" PrfPrc) BARRIER S-BOUNDARY-NOT-CVP OR PUNCT-RIGHT OR CCCOMMA LINK NOT *-1 PrfPrc BARRIER REAL-V)(NEGATE 1 MO - ("nugo") OR ("de") OR Rel LINK *1 VFIN)(NEGATE -1 BOS)  ; 
 	#$ Mun máhtán láibut sihke šuhkoládagáhku ja lákcagáhku.
 	#$ Mii bidjat dávviriid skáhpiide ja lođáide.
 	#$ Mii vuolgit Londonii golmmain mánáin ja ovttain beatnagiin.
 	#$ Dain hirbmat váriin ja mehciin sin guovllus lei earenoamáš vallji sihke elliid ja eará dáfus.
 	#$ Bargiidbellodaga Per Nils Saari beasai suohkanstivrii ja válljii ovttasbargat olgešbellodagain, gurutbellodagain ja johttisámi listtuin.
 	#$ Eai galgga sii geat gullet dakkáraš minoritehtaide ovttas eará láhttuiguin mat gullet sin jovkui, manahit vuoigatvuođaideaset dikšut iežaset kultuvra, "mihkkege" Pron Indef Sg Acc ja geavahit iežaset oskku, dahje geavahit iežaset giela. # This does not function yet because it needs verb disambiguation.
+	#$ Muhto go Martha Hoffmann dáppe oastigođii ránuid maid son vuvddii Lulli-Norgii, sihke museaide ja olbmuide, de šattai fas gánnáhahtti gođđit ránuid.
+	#$ Ja nugo olmmoš gohčodii guđege ealli, nu dat šattai navdojuvvot.	
+
+
 	
 #!! * __CVPInfInf__ between to Inf
 REMOVE:CVPInfInf (@CVP) (-1 Inf)(1 Inf); 
 	#$ Dii oahppabehtet lohkat ja čállit sámegillii.
-	
+
+REMOVE:CVPCase (@CVP) (-1 Com)(1 Com); 
+	#$ Son oažžu vuokkain ja luovosfirpmiin bivdit miehtá deanu.	
 	
 REMOVE:CVPnoVfin2 (@CVP) (-1 (N Nom)) (*1 (N Nom) BARRIER NOT-NPMODADV-INDEF LINK 1 EOS); 
 	#$ Pippi viesu bálddas lei nubbi gárdin ja nubbi viessu.
@@ -4275,11 +4281,23 @@ REMOVE:CVPnoVfinAdvl (@CVP) (-1C ADVLCASE OR Adv LINK NOT *-1 VFIN BARRIER S-BOU
     # Should not hit sentences like this:  
  	#$ Lávdegoddi lea dasa lassin guorahallan báikkálaš riekteáddejumiid Finnmárkkus ja vuordimis áigu dán ilbmadit iežas boahtte čielggadeami mielddusin.
 
+	#$ Grammatihkkavuđot giellateknologalaš reaiddut teakstaanalyseremii ja giellaoahpahussii ja digitálalaš sátnegirjjit leat buot gielaide eaktun.	#% Dállu lea divrras midjiide danne go dat vuosiha govt mearrasámit elle ovdal ja makkár viesut sis ledje.	
+
+
+LIST MIELLA = "árbevierru" "bággu" "dárbu" "dilli" "lohpi" "miella" "riekti" "vejolašvuohta" "vuohki" "vuoigatvuohta" "vuorru" ;
+# These give Inf @N< instead of @ADVL (like more concrete nouns: ruhta, bileahta, dálki ...)
+
+
+REMOVE:CVPMiella (@CVP) (-1C ADVLCASE OR Adv LINK *-1 COPULAS BARRIER NOT-ADV-PCLE)(*1 ADVLCASE OR Adv BARRIER NOT-NPMOD-ACC-ADV) ;
+REMOVE:CVPMiella (@CVP) (-1C ADVLCASE OR Adv LINK *-1 COPULAS BARRIER NOT-ADV-PCLE)(*1 Attr BARRIER NOT-NPMOD-ACC-ADV LINK *1 ADVLCASE OR Adv BARRIER NOT-NPMOD-ACC-ADV) ;
+	#$ De lea divššohasas ja su lagamus oapmahaččas vuoigatvuohta oažžut dieđuid.
+
+
 #!! * __CVPNPron__ No finite verb or verbalactivity in front N/Pron @CNP N/Pron	
 REMOVE:CVPNPron (CC @CVP) ((-1 NP-HEAD-NOM OR (Pron Nom) LINK NOT *-1 REAL-V BARRIER S-BOUNDARY-NOT-CVP OR CS) OR (-1 NP-HEAD-NOM LINK *-1 VERBAL-ACTIVITY-V BARRIER NOT-NPMOD))(*1 NP-HEAD-NOM BARRIER NOT-NPMOD-ACC-ADV);
 	#$ Maid moarsi ja irgi leaba čiŋadan gávttiiguin.
 	#$ Mun ja mu ustibat manaimet kinoi geahččat buot ođđaseamos Harry Potter-filmma.
-
+ 
 #!! * __CVPAdvNom__ Nom @CNP Adv Nom	
 REMOVE:CVPAdvNom (@CVP) (-1 NP-HEAD-NOM LINK *-1 VERBAL-ACTIVITY-V BARRIER NOT-NPMOD)(*1 NP-HEAD-NOM BARRIER NOT-NPMODADV);
 	#$ Son lohká bargit ja maiddái fáŋggat fertejit oažžut sámegiel oahpahusa.
@@ -5597,9 +5615,6 @@ REMOVE:TESTAttr Attr (NEGATE 1 A OR N OR Num OR Pr OR CC OR COMMA OR PrfPrc)(NEG
 	#% Dattetge ii leat muitaluvvon makkárge namahan veara geavahanriiddu birra dálolaččaid ja boazodoalu gaskkas.
 
 #!! !!!VERB MAPPINGS
-
-LIST MIELLA = "árbevierru" "bággu" "dárbu" "dilli" "lohpi" "miella" "riekti" "vejolašvuohta" "vuohki" "vuoigatvuohta" "vuorru" ;
-# These give Inf @N< instead of @ADVL (like more concrete nouns: ruhta, bileahta, dálki ...)
 
 
 #!! !!Verbs as predicatives (@SPRED>) and (@<OPRED) 
