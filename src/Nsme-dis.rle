@@ -1983,7 +1983,7 @@ LIST BOUNDARYSYMBOLS =  "\;" ":" "-" "–" ;
 # This set if for disambiguating rules after mapping @CVP and @CNP to all CS and CC readings, therefore we cannot have @CVP in the set
 SET S-BOUNDARY-NOT-CVP = CP OR BOUNDARYSYMBOLS OR ("muhto") OR ("de" Adv) OR (Neg Sup) ;
 	
-SET S-BOUNDARY = CP OR BOUNDARYSYMBOLS OR ("muhto") OR ("de" Adv) OR (Neg Sup) OR (@CVP) ;
+SET S-BOUNDARY = CP OR BOUNDARYSYMBOLS OR ("muhto") OR ("de" Adv) OR (Neg Sup) OR (@CVP) OR ("vel" Adv Qst) ;
 	# does not include CS, because of "go" in questions, before it is disambugated.
 	# includes CP
 	# this one includes @CVP, the conjunction which actually connects two sentences (each with a finite verb) to each other, 
@@ -3272,6 +3272,9 @@ REMOVE:NotImprtIfRel Imprt IF (*-1C Rel BARRIER S-BOUNDARY OR CC OR COMMA);
 SELECT:VSg1IfLeftMun (V Sg1) IF (*-1 MUN BARRIER Nom OR SG1-V OR S-BOUNDARY LINK NOT *-1 SG1-V BARRIER NOT-ADV-PCLE)(NEGATE 0 PrfPrc LINK *-1 REAL-COPULAS BARRIER S-BOUNDARY OR CLB)(NEGATE 0 PrfPrc LINK *-1 SG1-V BARRIER NOT-ADV-PCLE);
  	#$ Dego mun dás vuollelis mottiin ovdamearkkain čájehan,...
 
+SELECT:VSg1NoMun (V Sg1) IF (-1 Po LINK -1 Gen LINK -1 BOS) ; 
+ 	#$ Telefuvnna bokte ožžon Álttá Johtolatstašuvnna ságaide.
+
 #!! * __VSG1IfRightMun__ selects Sg1 when "mun" is to the right (r950)
 SELECT:r950 (V Sg1) IF (*1 MUN BARRIER NOT-ADV-PCLE OR CLB);
  	#$ Man guhká ferten mun gierdat din?
@@ -3486,6 +3489,10 @@ REMOVE:VSg3Lookalikes (V Ind Sg3) IF (*-1C VFIN BARRIER S-BOUNDARY OR REAL-V OR 
 REMOVE:r985 (Prt Sg2) IF (NEGATE *-1 (Pron Pers Sg2))(0 (Prs Pl3))(*1 Der/Pass BARRIER NOT-ADV);
  	#$ Reivelonuhallan sámi institušuvnnaiguin galgá dahkkot sáme- ja dárogillii. 
 	# Probably not prodrop if passivized Sg2.
+
+#!! * __EssNotV__ selects Ess instead of VFIN
+SELECT:EssV Ess (0 ESS-ADVL-N)(*-1 VFIN BARRIER S-BOUNDARY) ;
+	#$ Beaskkain bivvá buolašin.
 
 	#!! !PrsPrc
 	# - - - -
@@ -6027,6 +6034,12 @@ MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX (NOT 0 V + OBJ OR V + SUBJ OR V + ADV
 	#% Mun lean ráhkkásisttán ožžon cummá.
 	#$ Ovdal go čielggadan dan lagabui,...
 
+MAP:+FMAINVC (@+FMAINV) TARGET VFIN-NOT-AUX (NOT 0 V + OBJ OR V + SUBJ OR V + ADVL OR (V @>N) OR (V @N<)) (0C VFIN) ;
+
+MAP:+FMAINVObjV (@+FMAINV) TARGET VFIN-NOT-AUX + TRANS-V (NOT 0 V + OBJ OR V + SUBJ OR V + ADVL OR (V @>N) OR (V @N<) OR Ill)((1 V + OBJ) OR (1 Acc LINK 1 TRANS-V + OBJ)) ;
+	#$ Dii oahppabehtet lohkat ja čállit sámegillii.
+
+
 #Lene holder på med reglene under her - disse er foreløpige
 
 # Mapping both verbs in a rel bisetning even if no comma
@@ -6114,6 +6127,10 @@ MAP:-FMAINVConNegCop (@-FMAINV) TARGET ConNeg + COPULAS (*-1 REAL-NEG BARRIER RE
 	#$ Ii lean šat nu álki vuovdit.
 
 
+#MAP:ConNegCop (@-FMAINV) TARGET ConNeg (*-1 REAL-NEG BARRIER S-BOUNDARY OR ConNeg)(0 ("leat"))(1 (A Nom));
+	#$ Ii ge almmolaš sámi ságastallan leat vejolaš jus eai leat journalisttat geat máhttet sámegiela bures.
+
+
 #!! * __-FAUXVPrfPrcAux__  to PrfPrc AUX  before Inf or Actio Ess
 MAP:-FAUXVPrfPrcAux (@-FAUXV) TARGET PrfPrc + AUX (*1 Inf OR (Actio Ess) BARRIER SV-BOUNDARY)(*-1 ("leat") BARRIER NOT-ADV-PCLE);	
 	#$ In leat sáhttán gáhku borrat dan rájes.  #trenger verbdis, gáhkku has Prs Sg3 reading
@@ -6183,7 +6200,7 @@ MAP:<ADVLVGen (@<ADVL) TARGET VGen (*-1 VFIN BARRIER S-BOUNDARY) ;
 MAP:ADVL>VGen (@ADVL>) TARGET VGen (*1 VFIN BARRIER S-BOUNDARY) ;
 
 #!! * __<ADVLGer__ Gerundium ADVL
-MAP:<ADVLGer (@<ADVL) TARGET Ger (*-1 VFIN BARRIER S-BOUNDARY) ;
+MAP:<ADVLGer (@<ADVL) TARGET Ger (NOT *1 VFIN BARRIER S-BOUNDARY OR COMMA) ;
 	#$ Biigá lei bassaladdame báhpa boađedettiin.
 	
 #!! * __ADVLGer>__
@@ -6223,7 +6240,7 @@ SELECT:IfonlyVerb FMAINV (NEGATE *0 FMAINV BARRIER S-BOUNDARY)(NOT 0 FAUXV)(NOT 
 
 # Problem 2
 #!! * __IfonlyConNeg__ ConNeg if it is @-FMAINV or @-FAUXV
-SELECT:IfonlyConNeg ConNeg (0 (ConNeg @-FMAINV) OR (ConNeg @-FAUXV)) ;#(NEGATE 1 ("leat") + FMAINV) ;
+SELECT:IfonlyConNeg ConNeg (0 (ConNeg @-FMAINV) OR (ConNeg @-FAUXV))(NEGATE 1 ("leat") + REAL-V) ;
 	#% Iige almmolaš sámi ságastallan leat vejolaš. 
 	#% De ledje baicca eatnašat dan dilis ahte eai máhttán eai stávetge.
 
