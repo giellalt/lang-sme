@@ -13,7 +13,7 @@ perl $GTHOME/gt/script/sort-cg-cohort.pl $GTHOME/gt/sme/dev/cleantest | uniq > $
 
 # Henter gullstandarder, fjerner Allegro-tag som foreløpig ikke fungerer som den skal:
 cat $GTBIG/gt/sme/corp/correct/testkorpus.dis.corr.txt | perl -pe 's/(Ani|Body|Build|Clth|Edu|Event|Fem|Food|Group|Hum|Mal|Measr|Obj|Org|Plant|Plc|Route|Sur|Time|Txt|Veh|Wpn|Wthr|Allegro|v1|v2|v3|v4|<vdic>|Date) //g' | cut -d "@" -f1 > $GTHOME/gt/sme/dev/cleantestkorpus.dis.corr.txt
-perl $GTHOME/gt/script/sort-cg-cohort.pl $GTBIG/gt/sme/corp/correct/divgullkorpus.morph.corr.txt | uniq >> $GTHOME/gt/sme/dev/cleantestkorpus.dis.corr.txt
+perl $GTHOME/gt/script/sort-cg-cohort.pl $GTBIG/gt/sme/corp/correct/divgullkorpus.N.corr.txt |  cut -d "@" -f1 | uniq >> $GTHOME/gt/sme/dev/cleantestkorpus.dis.corr.txt
 
 # Sorterer alfabetisk inne i cohortene
 perl $GTHOME/gt/script/sort-cg-cohort.pl $GTHOME/gt/sme/dev/cleantestkorpus.dis.corr.txt | uniq > $GTHOME/gt/sme/dev/sortedtestkorpus 
