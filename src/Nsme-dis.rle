@@ -2892,11 +2892,11 @@ REMOVE:buoritV V (0 ("buorre" Pl Nom) LINK 1 (N Pl)) ;
 	#$ Das leat buorit lanjat.
 	
 #!! * A very brave rule for removing Imprt
-REMOVE:TESTImprt Imprt - ConNeg - Neg (NEGATE -1 CC OR BOS OR COMMA OR (":") OR ("de") OR PUNCT OR ("""))(NEGATE 0 (Imprt Sg3) LINK -1 (Pron Sg3) OR (N Sg) OR ("nu")) ;
+REMOVE:TESTImprt Imprt - ConNeg - Neg (NEGATE -1 CC OR BOS OR COMMA OR (":") OR ("de") OR PUNCT OR ("""))(NEGATE 0 (Imprt Sg3) LINK -1 (Pron Sg3) OR (N Sg) OR ("nu"))(NEGATE 0 (Imprt Sg3) LINK 1 (Pron Sg3) OR (N Sg));
 	#% Geas ležžet bealjit, son gullos!
 	#% Nu báitos din čuovggas ge olbmuide.
 
-REMOVE:ImprtCase Imprt (0 $$CASE LINK -1 COMMA OR CC LINK -1 $$CASE)(NEGATE -3 BOS) ;
+REMOVE:ImprtCase Imprt (0 $$CASE LINK -1 COMMA OR CC LINK -1 $$CASE)(NOT 0 (Imprt Sg3))(NEGATE -3 BOS) ;
 
 #!! * __ImprtCopPrfPrc__ removes imperative readings in front of coopulas and PrfPrc
 REMOVE:ImprtCopPrfPrc Imprt IF (-1 BOS)(*1 COPULAS BARRIER NOT-ADV LINK 1 PrfPrc) ;
@@ -3490,8 +3490,10 @@ REMOVE:VPl3Lookalikes (V Ind Pl3) IF (1C VFIN)(NEGATE 1 Pl3) ;
  	#$ Vihtta bivdovuogi mun gal dušše namahin. 
 
 #!! * __VSg3Lookalikes__ removes "verbs" like "skuvlii" 
-REMOVE:VSg3Lookalikes (V Ind Sg3) IF (*-1C VFIN BARRIER S-BOUNDARY OR REAL-V OR CC OR CS OR COMMA LINK NOT -1 Rel)((NEGATE 1 (Nom Sg3)) OR (NEGATE -1 (Nom Sg3))) ;
+REMOVE:VSg3Lookalikes (V Ind Sg3) IF (*-1C VFIN BARRIER S-BOUNDARY OR REAL-V OR CC OR CS OR COMMA LINK NOT -1 Rel)(NEGATE 1 (Nom Sg3) OR (Nom Sg)) (NEGATE -1 (Nom Sg3) OR (Nom Sg)) ;
 	#$ Moai vázze ruovttus skuvlii.
+	#% Vai bálvalusas lea buohccedikšofágalaš dássi eaktuduvvo ahte leat fágabargit geat virgáibiddjojit.
+
 
 #!! * __VPl3NotSg2BefPassive__ removes Sg2 for Pl3 and Inf before passive (r985)
 REMOVE:r985 (Prt Sg2) IF (NEGATE *-1 (Pron Pers Sg2))(0 (Prs Pl3))(*1 Der/Pass BARRIER NOT-ADV);
@@ -5222,7 +5224,7 @@ SELECT:SECr2996b PL3-V IF (NOT *-1 POSITIVE-V BARRIER CS OR CC)((*1 (Pl Nom) BAR
 	#$ Son lea čállán lohkameahttun čállosiid sámi historjjás ja sus leat leamaš ollu luohttámušdoaimmat.
 	 #% Mii doarjut Sámelávdegotti evttohusa oainnu ahte sámegiela berre sáhttit válljet fágan dan sadjái go duiskkagiela gymnásaráhkkaneaddji linnjás nuoraidskuvlla ovccát jagis.
 
-REMOVE:InfCS Inf (0 VFIN LINK NOT 1 REAL-V)((-1 CS LINK -1 BOS) OR (-1 BOS)) ;
+REMOVE:InfCS Inf (0 VFIN LINK NOT 1 REAL-V)((-1 CS LINK -1 BOS OR COMMA) OR (-1 BOS)) ;
 	#$ Go bassat lihtiid dahje málestit siiddas, de sáhttit seammás guldalit radio.
 
 SELECT:InfCS Prt (0 Prs LINK NOT 1 REAL-V)(-1 CS LINK -1 Prt) ;
@@ -5948,9 +5950,12 @@ MAP:<OBJActioEss2 (@<OBJ) TARGET (Actio Ess)(*-1 HAB-ACTOR + Acc BARRIER NOT-ADV
 	#$ Oađidettiin gullen olbmo boahtimin.
 
 #!! * __OBJPrfPrc__ Inf 			
-MAP:<OBJPrfPrc1 (@<OBJ) TARGET PrfPrc IF (*-1 Acc BARRIER NOT-ADV LINK *-1 VERBAL-ACTIVITY-V OR ("dovdat") BARRIER NOT-NPMODADV);	
+MAP:<OBJPrfPrc1 (@<OBJ) TARGET PrfPrc IF ((*-1 Acc BARRIER NOT-ADV LINK *-1 VERBAL-ACTIVITY-V OR PERCEPTION-V BARRIER NOT-NPMODADV) OR (*-1 Acc BARRIER NOT-ADV LINK -1 Nom LINK *-1 VERBAL-ACTIVITY-V OR PERCEPTION-V BARRIER NOT-NPMODADV));	
 	#$ Sii lohket fatnasa gopmánan.
 	#$ Olbmot muitaledje juo du vuolgán.   
+
+MAP:<OBJPrfPrcCoor (@<OBJ) TARGET PrfPrc IF (-1 CC LINK -1 (PrfPrc @<OBJ) );	
+
 
 #!!	* __<OBJPrfPrc2__	
 MAP:<OBJPrfPrc2 (@<OBJ) TARGET PrfPrc IF (*-1 Acc BARRIER NOT-ADV LINK -1 Acc LINK *-1 VERBAL-ACTIVITY-V BARRIER NOT-NPMODADV)(0 TRANS-V);
