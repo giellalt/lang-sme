@@ -1440,7 +1440,7 @@ LIST PREGEN = "álggogeahčen" "beallemuttus" "beallemuddu" ("bealli" N Sg Loc) 
  
  
 
-# aPossessor hierarchy
+# Possessor hierarchy
 #                          +            P  o  s  s  e  s  s  e  d		    |
 # Possible possessors      +  FAMILY    FAMILY-ALSO-ABSTRACT    NON-FAMILY  + 
 # ------------------------ +  --------    -----------------   ------------  |
@@ -2207,7 +2207,7 @@ LIST MUITALIT = "árvalit" "bivdit" "boagustit" "cealkit" "cuoigut" "čilget" "�
 
 SUBSTITUTE:muitalit (V) (<vdic> V) TARGET MUITALIT (0 REAL-V LINK -1 COMMA LINK 2 HUMAN-INDIVIDUAL + Nom OR (Prop Plc Nom) LINK *1 EOS BARRIER WORD - Prop) ;
 	#$ Sápmelaččat eai leat goassege luohpan meara riggodagain, ja danne ii sáhte eahpidit sápmelaččaid vuoigatvuođaid mearrariggodagaide, deattuha Keskitalo.
-
+	#$ Mii fertet maiddái geahčadit makkár lassi guoimmuhemiid galgat fállat vai bohtet vel eanet olbmot boahtte jagi, loahpaha duhtavaš beaivválaš jođiheaddji Eriksen. #Comment: Shold hit, but doesen't?
 
 #!! * __PropAttrIfPropx__ removes Attr if no Prop on the right side
 REMOVE:PropAttrIfPropx (Prop Attr) - Der/laš IF (NOT *1 Prop BARRIER REAL-WORD-NOT-ABBR OR COMMA)(NEGATE 1 CC LINK 1 (Prop Attr) LINK *1 Prop BARRIER REAL-WORD-NOT-ABBR OR COMMA);
@@ -6377,8 +6377,8 @@ REMOVE:SEMXr2066 Gen IF (0 Der/NomAct)(*1 HUMAN-INDIVIDUAL OR PROFESSION OR OFFI
 #REMOVE:SEMr2068 Gen IF (0 ("vuoigŋa"))(1 ("ipmil"));  
 	#$ Muhto jos mun áján olggos bahá vuoiŋŋaid Ipmila Vuoiŋŋa fámuin.
 
-#!! * __SEMXxr2069__ Removes Acc if there is Genetive + Ess, like ''dálu eamidin''
-REMOVE:SEMXxr2069 Acc IF (0 PLACE LINK 0 Gen)(1 HUMAN LINK 0 Ess);
+#!! * __SEMgenEss__ Removes Acc if there is Gen + Ess, like ''dálu eamidin''
+REMOVE:SEMgenEss Acc IF (0 PLACE LINK 0 Gen)(1 HUMAN LINK 0 Ess);
 	#$ Vánit eahpiduvvo ahte stáhta geatnegasvuođat sámiid ektui 27. artihkkala mielde dagahivččii stáhta dihto guovlluid eaiggádin geatnegassan doaimmahit eaiggáduššanvuoigatvuođa nu ahte deavddášii 27. artihkkala geatnegasvuođa.	
 	#$ Máret beasai dálu eamidin.
 	
@@ -6417,6 +6417,14 @@ SELECT:SEMXxr2075 Gen IF (NEGATE *-1 TRANS-V BARRIER SV-BOUNDARY OR Acc LINK 0 F
 #!! * __SEMXr2076__ Selects genitive if you are HUMAN or Pron with an ABSTRACT to your right, ''iežaset vuoigatvuođa''
 SELECT:SEMXr2076 Gen IF (*-1 TRANS-V BARRIER SV-BOUNDARY OR Acc LINK 0 FMAINV OR Inf)(0 Acc + HUMAN OR Acc + Pron)(*1 ABSTRACT OR RIEKTEDILLI BARRIER REAL-V LINK 0 Acc);	
 	## Mátta-Norgga almennehiin dihtto ahte giliolbmot gitta 1700-lohkui dahke iežaset vuoigatvuođa almennehiidda erenoamážit gustojeaddjin Gonagasa eiseválddiide.
+
+#!! * __SEMyouareNom__ Removes Gen when 0 FAMILY or PROFESSION because you are Nom ''Oahpai go Sire sámegiela''
+#REMOVE:SEMyouareNom Gen (*-1 VFIN BARRIER SV-BOUNDARY)(0 (N Nom) + FAMILY OR NON-FAMILY OR PROFESSION1)(*1 EOS BARRIER WORD - Acc OR TIME-ADV OR (VGen))(NEGATE *-1 NUM - NUMUNIT BARRIER NOT-Attr LINK *-1 LEAT-FIN-NOT-IMPRT BARRIER TV)(NEGATE *-1 TRANS-V + FMAINV BARRIER NOT-NPMOD)(NEGATE -1 SAPMI) ;
+	#Comment: (NEGATE *-1 TRANS-V + FMAINV BARRIER NOT-NPMOD LINK NEGATE *1 Acc BARRIER S-BOUNDARY)
+	#$ Oahpai go Sire sámegiela?
+	#$ Do boahtá Lemet Niillas, min ođđa oahpaheaddji.
+	#% Jávregáttis leat guokte olbmá.
+	#% Gula, mánážan! 
 
 # Accusative in front of a NATION or "sápmi":
 
@@ -6886,6 +6894,7 @@ SELECT:AccTV2 Acc (*-1C TRANS-V BARRIER NOT-NPMODADV LINK NOT *-1 Acc - Num BARR
 	#$ De son ohcá stálu silbbaid ja politiija golliid. 
 	#$ Fidniimet gillái náitalan nissona veahkkin, ja guokte vuosttamuš jagi vuoššaimet liema ja biđđosa.
 	#% Lávvui gullá maid uvssot.
+	#% Gula, mánážan! (NEGATE *-1 Imprt BARRIER SV-BOUNDARY)
 
 #!! * __AccTV3__ Selects accusative: when transitive verb to the left if it doesn't find a barrier: COMMA, Num, REAL-V, Ess, S-BOUNDARY 
 SELECT:AccTV3 Acc (*-1 TRANS-V BARRIER COMMA OR Num OR REAL-V OR Ess OR S-BOUNDARY LINK NOT *-1 Acc BARRIER S-BOUNDARY)(NEGATE *-1C Acc BARRIER SV-BOUNDARY)(NEGATE 0 ANIMATE + Gen OR Pron + Gen LINK *1 Ill BARRIER NOT-NPMOD)(NEGATE *1 Acc BARRIER S-BOUNDARY OR COMMA OR (@CVP))(NEGATE 0 Num OR TIME OR ROUTE OR Adv)(NEGATE *1 Po BARRIER NP-BOUNDARY)(NEGATE 1 Com)(NEGATE *-1C SG3-V BARRIER NOT-NPMODADV OR PrfPrc LINK NOT *-1 (Sg Nom) BARRIER S-BOUNDARY)(NEGATE 0 (Pron Dem) LINK 1 N)(NEGATE 0 (Pron Rel) LINK 1 Time)(NEGATE -1 <vdic>); 
@@ -6895,6 +6904,7 @@ SELECT:AccTV3 Acc (*-1 TRANS-V BARRIER COMMA OR Num OR REAL-V OR Ess OR S-BOUNDA
 	#$ Nieiddat liikojedje guldalit sávaldatkonseartta ja mánáidbottu.
 	#% Lávvui gullá maid uvssot.
 	#% Dieđátgo guđe beaivvi mis lea čoahkkin?
+	#% Mii fertet maiddái geahčadit makkár lassi guoimmuhemiid galgat fállat vai bohtet vel eanet olbmot boahtte jagi, loahpaha duhtavaš beaivválaš jođiheaddji Eriksen. #Comment: search for the vdic-rule.
 
 
 
@@ -8064,6 +8074,7 @@ SELECT:NDr2422 Nom (-1 CC LINK *-1 REAL-V LINK -1 Nom)(NOT 0 REAL-V OR Adv)(NOT 
 REMOVE:NDr2424 Nom IF (*-1 NOT-AUX-V BARRIER S-BOUNDARY OR PUNCT LINK *-1 (Pron Nom) BARRIER S-BOUNDARY OR PUNCT OR COMMA)(NEGATE *-1 PrsPrc BARRIER NOT-NPMOD)(NEGATE 0 Adv)(NEGATE 0 Nom LINK *1 VFIN BARRIER S-BOUNDARY)(NEGATE -1 ("diibmu"));
 	## ...vai ollašuvašii dat mii lea celkojuvvon profehta Jesaja bokte.
 	#$ - Maid don dainna dieđuin, vástidii Liná ja áiggui vázzát viidáseappot.
+
 
 REMOVE:NDr2425 Nom IF (*-1 VFIN BARRIER NOT-ADV-PCLE OR REAL-CLB LINK NOT 0 COPULAS OR FAUXV LINK *-1C Nom BARRIER NOT-ADV-PCLE)(*1 NOT-AUX-V BARRIER S-BOUNDARY);
 	## ...jus sierranas sivat eai eará cealkke.
