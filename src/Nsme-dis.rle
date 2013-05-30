@@ -3292,7 +3292,7 @@ SELECT:r950 (V Sg1) IF (*1 MUN BARRIER NOT-ADV-PCLE OR CLB);
 
 
 #!! * __VSG2IfLeftDon__ selects Sg2 when "don" is to the right (r951)
-SELECT:VSG2IfLeftDon SG2-V IF (*-1 DON BARRIER SG2-V OR ConNeg OR S-BOUNDARY LINK NOT *-1 SG2-V BARRIER S-BOUNDARY);
+SELECT:VSG2IfLeftDon SG2-V IF ((*-1 DON BARRIER SG2-V OR ConNeg OR S-BOUNDARY LINK NOT *-1 SG2-V BARRIER S-BOUNDARY) OR (-1 (Rel Nom) LINK -1 DON));
  	#$ ...jos don fal luoitádat ja gudnejahtát mu.
  	#$ Rohkadallet dasto ná: Áhččámet, don guhte leat almmis.
 
@@ -3490,7 +3490,7 @@ REMOVE:VPl3Lookalikes (V Ind Pl3) IF (1C VFIN)(NEGATE 1 Pl3) ;
  	#$ Vihtta bivdovuogi mun gal dušše namahin. 
 
 #!! * __VSg3Lookalikes__ removes "verbs" like "skuvlii" 
-REMOVE:VSg3Lookalikes (V Ind Sg3) IF (*-1C VFIN BARRIER S-BOUNDARY OR REAL-V OR CC OR CS OR COMMA LINK NOT -1 Rel)(NEGATE 1 (Nom Sg3) OR (Nom Sg)) (NEGATE -1 (Nom Sg3) OR (Nom Sg)) ;
+REMOVE:VSg3Lookalikes (V Ind Sg3) IF ((*-1C VFIN BARRIER S-BOUNDARY OR REAL-V OR CC OR CS OR COMMA LINK NOT -1 Rel) OR (0 (N Ill) LINK -1 Gen - TIME))(NEGATE 1 (Nom Sg3) OR (N Nom Sg)) (NEGATE -1 (Nom Sg3) OR (Nom Sg)) ;
 	#$ Moai vázze ruovttus skuvlii.
 	#% Vai bálvalusas lea buohccedikšofágalaš dássi eaktuduvvo ahte leat fágabargit geat virgáibiddjojit.
 
@@ -5224,10 +5224,11 @@ SELECT:SECr2996b PL3-V IF (NOT *-1 POSITIVE-V BARRIER CS OR CC)((*1 (Pl Nom) BAR
 	#$ Son lea čállán lohkameahttun čállosiid sámi historjjás ja sus leat leamaš ollu luohttámušdoaimmat.
 	 #% Mii doarjut Sámelávdegotti evttohusa oainnu ahte sámegiela berre sáhttit válljet fágan dan sadjái go duiskkagiela gymnásaráhkkaneaddji linnjás nuoraidskuvlla ovccát jagis.
 
-REMOVE:InfCS Inf (0 VFIN LINK NOT 1 REAL-V)((-1 CS LINK -1 BOS OR COMMA) OR (-1 BOS)) ;
+REMOVE:InfCS Inf (0 VFIN LINK NOT 1 REAL-V)((-1 CS) OR (-1 BOS OR Rel) OR (-1 COMMA LINK *-1 Rel BARRIER S-BOUNDARY LINK NEGATE *-1 AUX BARRIER REAL-V))(NEGATE -1 go OR ("ahte") LINK NOT -1 BOC OR COMMA) ;
 	#$ Go bassat lihtiid dahje málestit siiddas, de sáhttit seammás guldalit radio.
+	#$ Organisašuvnna bláđđi man gohčodit Fokusin muitala ahte gonagas Olav su áiggistis lei bivdán beassat leat servodaga suodjaleaddji.
 
-SELECT:InfCS Prt (0 Prs LINK NOT 1 REAL-V)(-1 CS LINK -1 Prt) ;
+SELECT:InfCSPrt Prt (0 Prs LINK NOT 1 REAL-V)(-1 CS LINK -1 Prt) ;
 	#$ Buorre lei go bohtet.
 
 SELECT:vfin VFIN (NOT *0 VFIN)(NEGATE 0 Attr LINK 1 N) ;
@@ -5270,8 +5271,12 @@ SELECT:PrfPrcConNeg ConNeg + AUX (*-1 PrfPrc BARRIER REAL-V OR SV-BOUNDARY LINK 
 #!! * __ConNegIfNeg__ selects Ind ConNeg if Neg Ind to the left. This is the main (and common) ConNeg rule. - 660327
 SELECT:ConNegIfNeg ConNeg IF (*-1 REAL-NEG BARRIER ConNeg OR PrfPrc OR SV-BOUNDARY)(NEGATE 0 N OR PrfPrc LINK *1 ConNeg BARRIER NOT-ADV-PCLE)(NEGATE 0 Loc LINK -1 NEGFOC LINK -1 Loc)(NEGATE 0 Inf LINK *-1 REAL-NEG LINK -1 ConNeg LINK -1 REAL-NEG) ; #(NEGATE *1 ("leat") + FMAINV );
  	#$ Eai dat dohkke šat maninge.
+ 	
+#!! * __ConNegPrt__ selects Prt if Prt to the left
+SELECT:ConNegPrt (ConNeg Prt)(0 (ConNeg Prs) LINK -1 REAL-NEG LINK *-1 S-BOUNDARY LINK *-1C Prt) ;
+	#$ Marit lei áidna sis gii ii hállan sámegiela.	
 
-#!! * __ConNegCondIfNeg__ selects Cond ConNeg if Neg Cond to the left. Less used, obviously. - 0
+#!! * __ConNegCondIfNeg__ selects Cond ConNeg if Neg Cond to the left. Less used, obviously. - 0 - homonymi?
 SELECT:ConNegCondIfNeg (Cond ConNeg) IF (*-1 REAL-NEG BARRIER ConNeg OR SV-BOUNDARY);
  	#$ Ii go son ollu eanet gárvvohivčče din?
 
@@ -5750,7 +5755,7 @@ MAP:+FMAINVorrut (@+FMAINV) TARGET ("orrut") + VFIN (NEGATE *1 PrfPrc OR (Actio 
 	#$ Oro jaska!
 
 #!! * __FAUXVorrut__ finite orrut
-MAP:+FAUXVorrut (@+FAUXV) TARGET ("orrut") + VFIN (*1 PrfPrc OR (Actio Ess) BARRIER REAL-V OR S-BOUNDARY) ;
+MAP:+FAUXVorrut (@+FAUXV) TARGET ("orrut") + VFIN-NOT-IMPRT (*1 PrfPrc OR (Actio Ess) BARRIER REAL-V OR S-BOUNDARY) ;
 	#$ Nieiddat orro váibagoahtán.
 	#$ Mánás orru leamen borranmiella.
 
@@ -5974,14 +5979,14 @@ MAP:+FMAINVcop (@+FMAINV) TARGET VFIN + COPULAS OR PrfPrc + COPULAS (*1 Nom OR E
 	#$ Leamaš váttis ipmirdit dan.
 
 #!! * __+FAUXVaux__ AUX  verbs     
-MAP:+FAUXVaux (@+FAUXV) TARGET AUX + VFIN (NEGATE 0 ("leat"))(*1 Inf BARRIER SV-BOUNDARY OR AUX)(NEGATE 0 ("šaddat") LINK *1 Nom OR Ess BARRIER NOT-ADV-PCLE) ;
+MAP:+FAUXVaux (@+FAUXV) TARGET AUX + VFIN-NOT-IMPRT (NEGATE 0 ("leat"))(*1 Inf BARRIER SV-BOUNDARY OR AUX)(NEGATE 0 ("šaddat") LINK *1 Nom OR Ess BARRIER NOT-ADV-PCLE) ;
 	#$ Máhtte áigu heaitit vuola juhkamis.
 	#$ Dalle galget miesit leat merkejuvvon eaiggáda merkii.  
 	#$ Don šattat vel joksat Sirpmás gohcciid.  
 	#$ Mu mielas lea suohtas beassat johtit riikkas riikii ja báikkis báikái.
 
 #!! * __+FAUXVboahtit__ boahtit as AUX      
-MAP:+FAUXVboahtit (@+FAUXV) TARGET ("boahtit") + VFIN (1 Inf)(NEGATE 0 ("boahtit") LINK *1 Nom OR Ess BARRIER NOT-ADV-PCLE) ;
+MAP:+FAUXVboahtit (@+FAUXV) TARGET ("boahtit") + VFIN-NOT-IMPRT (1 Inf)(NEGATE 0 ("boahtit") LINK *1 Nom OR Ess BARRIER NOT-ADV-PCLE) ;
 	#$ Na geasset go bođii diehtit ahte ii beasa skuvlii?
 
 #!! * __-FAUXVaux__ AUX verbs     
@@ -6018,7 +6023,7 @@ MAP:+FMAINVCoopCoord (@+FMAINV) TARGET ("leat" Du3) OR ("leat" Pl3) (*1 (N Nom) 
 	#$ Nemi ja Pondus leaba sárgojuvvon hámit.
 
 #!! * __+FAUXVleat__  
-MAP:+FAUXVleat (@+FAUXV) TARGET ("leat") + VFIN ((*1 PrfPrc OR (Actio Ess) BARRIER SV-BOUNDARY OR REAL-V LINK NOT -1 Num LINK NEGATE 2 (N Nom) LINK *-1 VFIN LINK -1 Nom OR HAB-ACTOR + Loc) OR (1 ("nu") LINK 1 MOVT))(NEGATE *1 ("mannat" PrfPrc) BARRIER SV-BOUNDARY OR REAL-V LINK 1 TIME);
+MAP:+FAUXVleat (@+FAUXV) TARGET ("leat") + VFIN-NOT-IMPRT ((*1 PrfPrc OR (Actio Ess) BARRIER SV-BOUNDARY OR REAL-V LINK NOT -1 Num LINK NEGATE 2 (N Nom) LINK *-1 VFIN LINK -1 Nom OR HAB-ACTOR + Loc) OR (1 ("nu") LINK 1 MOVT))(NEGATE *1 ("mannat" PrfPrc) BARRIER SV-BOUNDARY OR REAL-V LINK 1 TIME);
 	#$ Sápmelaččat ledje orron dáin guovlluin 1600-logu birrasiin.
 	#$ Mun ledjen borramin.	
 
@@ -6031,15 +6036,15 @@ MAP:-FMAINVAux2 (@-FMAINV) TARGET ConNeg + ("leat") (*1 (N Nom) BARRIER NOT-NPMO
 	#$ Muhto dus ii leat riekti dearpat su beare dan dihte.
 		
 #!! * __+FAUXVCop__  copulas coming after the mainverb
-MAP:+FAUXVCop (@+FAUXV) TARGET VFIN + COPULAS (*-1 PrfPrc OR (Actio Ess) BARRIER NOT-ADV-PCLE OR COMMA LINK NOT 0 SYN-V OR (@>N)) ;
+MAP:+FAUXVCop (@+FAUXV) TARGET VFIN-NOT-IMPRT + COPULAS (*-1 PrfPrc OR (Actio Ess) BARRIER NOT-ADV-PCLE OR COMMA LINK NOT 0 SYN-V OR (@>N)) ;
 	#$ Ja boahtán ledje su gudnejahttit.
 		
 #!! * __+FAUXVCop__  copulas coming before the mainverb
-MAP:+FAUXVCop (@+FAUXV) TARGET VFIN + COPULAS (*1 PrfPrc OR (Actio Ess) BARRIER VFIN OR S-BOUNDARY LINK NOT 0 (@>N) LINK NOT -1 (Num Nom));	
+MAP:+FAUXVCop (@+FAUXV) TARGET VFIN-NOT-IMPRT + COPULAS (*1 PrfPrc OR (Actio Ess) BARRIER VFIN OR S-BOUNDARY LINK NOT 0 (@>N) LINK NOT -1 (Num Nom));	
 	#$ Son lea leamaš oahpaheaddji maŋimuš 15-20 jagi, sihke mánáidskuvllas ja joatkkaskuvllas.
   
 #!! * __+FAUXVboahtit__  boahtit coming before the mainverb
-MAP:+FAUXVboahtit (@+FAUXV) TARGET VFIN + ("boahtit") (NOT 0 Imprt LINK *1 AUX + Inf OR PERCEPTION-V + Inf OR MOVEMENT-V + Inf BARRIER NOT-ADV) ;
+MAP:+FAUXVboahtit (@+FAUXV) TARGET VFIN-NOT-IMPRT + ("boahtit") (NOT 0 Imprt LINK *1 AUX + Inf OR PERCEPTION-V + Inf OR MOVEMENT-V + Inf BARRIER NOT-ADV) ;
 	#$ Nuppi bealis lea vejolaš bidjat ráji oarjelii dainna lágiin ahte caggá Sirgása bohccuid beassamis Gjerdalenii, mii boahtá šaddat Hápmirii mávssolaš guohtunguovlun boahtteáiggis.
 	#$ Jus dulvvi niegadat, de boađát gullat unohis šlárvaságaid.
     
@@ -6214,7 +6219,7 @@ MAP:-FMAINVSup (@-FMAINV) TARGET Sup ;
 	#$ Áddjá bázii mállása vuoššažit. 
 
 #!! * __+FAUXV__ to  Aux
-MAP:+FAUXV (@+FAUXV) TARGET VFIN + AUX ;
+MAP:+FAUXV (@+FAUXV) TARGET VFIN-NOT-IMPRT + AUX ;
 
 #!! * __<ADVLVAbess__ VAbess ADVL
 MAP:<ADVLVAbess (@<ADVL) TARGET VAbess (*-1 VFIN BARRIER S-BOUNDARY)(NOT 0 SYN-V) ;
@@ -8809,7 +8814,7 @@ REMOVE:r2914 (V Sg2) IF (0 COPULAS)(*1 (Pl Nom) BARRIER NOT-ADV-PCLE);
 REMOVE:r2915 (V Sg2) IF (*-1 (Num Nom) BARRIER NOT-NPMOD);
 	## Gitta guhtta hearggi sáhttet leat ovtta ráiddus.
 	
-SELECT:r2916 (V Sg2) IF (0 Pl1 OR Pl3)(*1C (V Sg2) OR PxSg2 BARRIER VFIN);	
+SELECT:r2916 (V Sg2) IF (0 Pl1 OR Pl3)(*1C (V Sg2) OR PxSg2 BARRIER VFIN OR (":"));	
 	## Jus dulvvi niegadat, de boađát gullat unohis šlárvaságaid.
 
 
