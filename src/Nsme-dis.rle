@@ -756,7 +756,7 @@ LIST COPULAS = "dáidit" "gártat" "leat" "soaitit" "šaddat" "orrut" "veadjit" 
 
 SET NOT-COP-V = V - COPULAS ;
 
-LIST MOD-ASP = ("áigut" IV) "bállet" "berret" "dáidit" "fertet" "galgat" "gillet" "lávet" "sáhttit" "seahtit" "soaitit" "viggat" ;
+LIST MOD-ASP = "áigut" "bállet" "berret" "dáidit" "fertet" "galgat" "gillet" "lávet" "sáhttit" "seahtit" "soaitit" "viggat" ;
 
  # Verbs that never have arguments of their own - so we leave out "áigut", for ex.
 
@@ -2891,12 +2891,15 @@ SELECT:vfingo VFIN (-1 BOC)(NOT 0 OLLU OR Adv)(1 go + Qst LINK NOT 1 VFIN) ;
 REMOVE:buoritV V (0 ("buorre" Pl Nom) LINK 1 (N Pl)) ;
 	#$ Das leat buorit lanjat.
 	
-#!! * A very brave rule for removing Imprt
+#!! * Some brave rules for removing Imprt
 REMOVE:TESTImprt Imprt - ConNeg - Neg (NEGATE -1 CC OR BOS OR COMMA OR (":") OR ("de") OR PUNCT OR ("""))(NEGATE 0 (Imprt Sg3) LINK -1 (Pron Sg3) OR (N Sg) OR ("nu"))(NEGATE 0 (Imprt Sg3) LINK 1 (Pron Sg3) OR (N Sg));
 	#% Geas ležžet bealjit, son gullos!
 	#% Nu báitos din čuovggas ge olbmuide.
 
 REMOVE:ImprtCase Imprt (0 $$CASE LINK -1 COMMA OR CC LINK -1 $$CASE)(NOT 0 (Imprt Sg3))(NEGATE -3 BOS) ;
+
+REMOVE:ImprtCoor Imprt (-1 CC LINK -1 VFIN-NOT-IMPRT) ;
+
 
 #!! * __ImprtCopPrfPrc__ removes imperative readings in front of coopulas and PrfPrc
 REMOVE:ImprtCopPrfPrc Imprt IF (-1 BOS)(*1 COPULAS BARRIER NOT-ADV LINK 1 PrfPrc) ;
@@ -3221,11 +3224,14 @@ REMOVE:KillPx Px ;
 SECTION
 
 
-#!! * __FinGoInf__ for  vai áigu go njulget..
-REMOVE N OR PrsPrc IF (1 ("go" Qst))(2 Inf);
+#!! * __FinGoInf__ for  vai áigu go njulget.. Lene:  we don't need this
+#REMOVE N OR PrsPrc IF (1 ("go" Qst))(2 Inf);
 	## vai áigu go njulget boares boasttuvuođaid
-	
-	
+
+#!! verb or adv	
+SELECT Adv (0 VFIN LINK 1 CC LINK 1C Adv) ;	
+	#$ Dás galget nuorat, čohkut dahje veallut duorggaid alde buolli árrandola ovddas vuostáiváldit oahpahusa sis.
+
 
 #!! * __NotVGenIfDer__ removes VGen if 0 = Der/Pass or Der...(r947)
 REMOVE:NotVGenIfDer VGen IF (0 Der/Pass OR Der/goahti OR Der/st OR Der/l);
@@ -3333,7 +3339,7 @@ SELECT:NegSg3BeforeFoc (V IV Neg Ind Sg3) IF (0 ("ii"))(*1 Foc/ge OR ConNeg BARR
 
 #!! * __vfin__ removes verb reading when the reading should be noun  
 REMOVE:vfin1 VFIN - Qst (0 (N Sg Nom) LINK *1 VFIN + Sg3 BARRIER NOT-ADV-PCLE OR COMMA OR Qst) ; 
-REMOVE:vfin2 VFIN (0 Acc LINK *-1 TRANS-V BARRIER NOT-ADV-PCLE OR COMMA)(*-1 VFIN BARRIER S-BOUNDARY LINK NOT 0 Po)(NEGATE 1 Acc) ; 
+REMOVE:vfin2 VFIN (0 Acc LINK *-1 TRANS-V BARRIER NOT-ADV-PCLE OR COMMA)(*-1 VFIN BARRIER S-BOUNDARY LINK NOT 0 Po)(NEGATE 1 Acc OR go) ; 
 REMOVE:vfin3 VFIN (0 N LINK 1 ("vai" CC) LINK 1 N LINK NOT 0 VFIN) ;
 	#$ Birasgáhttenlihkadus ja álgoálbmogat – ovttasbargit vai vuostálagaid?
 REMOVE:vfin4 REAL-V (0 N LINK 1 ("dat" Pcle)) ;
@@ -4295,6 +4301,11 @@ REMOVE:CVPnoVfin1 (@CVP) (NOT *1 VFIN BARRIER S-BOUNDARY OR CS OR PUNCT-RIGHT)(N
 #!! * __CVPInfInf__ between to Inf
 REMOVE:CVPInfInf (@CVP) (-1 Inf LINK NOT -1 N)(1 Inf); 
 	#$ Dii oahppabehtet lohkat ja čállit sámegillii.
+
+#!! * __CVPInfInf__ between to Adv
+REMOVE:CVPAdvAdv (@CVP) (-1C Adv)(0 CC LINK 1C Adv); 
+	#$ čohkut dahje veallut
+
 
 REMOVE:CVPPrfPrc (@CVP) (-1 PrfPrc)(0 CC)(1 PrfPrc LINK NEGATE 0 VFIN + AUX LINK *1 Inf BARRIER NOT-ADV-PCLE); 
 	#% Jus lean váiban dahje ferten lihkkat árrat, de manan nohkkat oalle árrat.
@@ -5465,9 +5476,11 @@ REMOVE:r1821 Pl1 IF (-1 BOS)(0 Inf)(NEGATE 0 Qst OR Imprt);
 
  # The first rule seems much better without the NOT 0 Adv.
 
-SELECT:XYr1822 Inf IF (*-1 INF-V + V BARRIER SV-BOUNDARY OR Neg) ;
+SELECT:XYr1822 Inf IF (*-1 INF-V + V BARRIER SV-BOUNDARY OR Neg)(NOT 0 Adv);
 	## Skuvla galggai oahpahit sámemánáide dárogiela.
-    	## Prošeavtta áigut čađahit.
+	## Prošeavtta áigut čađahit.
+	#% Dás galget nuorat, čohkut dahje veallut duorggaid alde buolli árrandola ovddas vuostáiváldit oahpahusa sis.
+	
 
 
 #!! * __r1823__ 
@@ -5625,7 +5638,7 @@ REMOVE:ActioEssNum (Actio Ess) (-1 (Num Gen) OR (Num Nom))(0 (N Gen));
 	#$ Odne leat golbma vihaheame.
 
 #!! * __ActEssIfSensationv__	
-SELECT:ActEssIfSensationv (Actio Ess) (-1 Acc LINK *-1 PERCEPTION-V BARRIER SV-BOUNDARY);
+SELECT:ActEssIfSensationv (Actio Ess) (-1 Acc LINK *-1 PERCEPTION-V OR DADJAT BARRIER SV-BOUNDARY);
 	#$ Go gulan olbmuid sámásteame, de lea dego doložii máhccat, go mánnán gullen áhči, eagi ja Ristiinna-imi humadeame.
 
 #!! * __NoActorIfSg3__
@@ -5863,7 +5876,7 @@ MAP:-F<OBJInf (@-F<OBJ) TARGET Inf ((-1 TRANS-V + Inf LINK NOT 0 AUX LINK -1 ("l
 
 #!! !(@A<)  target Inf 	
 #!! * __AInf__ Inf 	
-MAP:A<Inf (@A<) TARGET Inf ((*-1 (A Nom) BARRIER NOT-ADV LINK *-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 NP-HEAD-NOM BARRIER VFIN-NOT-AUX OR S-BOUNDARY) OR (*-1 ("vejolaš") OR ("lossat") OR ("álki") OR ("buorre") BARRIER NOT-ADV LINK *-1 COPULAS BARRIER VFIN OR FMAINV LINK *-1 HAB-ACTOR BARRIER SV-BOUNDARY OR N)) ;	
+MAP:A<Inf (@A<) TARGET Inf ((*-1 (A Nom) BARRIER NOT-ADV LINK *-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 NP-HEAD-NOM BARRIER S-BOUNDARY) OR (*-1 ("vejolaš") OR ("lossat") OR ("álki") OR ("buorre") BARRIER NOT-ADV LINK *-1 COPULAS BARRIER VFIN OR FMAINV LINK *-1 HAB-ACTOR BARRIER SV-BOUNDARY OR N)) ;	
 	#$ Dološ olbmot ledje hui čeahpit dulkot nieguid.
 
 #!! * __r368__	
@@ -5947,11 +5960,11 @@ MAP:<OBJInfCoord2 (@<OBJ) TARGET Inf (-1 CC LINK *-1 Inf BARRIER REAL-V LINK *-1
 	#$ Oahpa goarrut gávtti ja gođđit ránu.	  
 
 #!! * __OBJActioEss__ Inf 		
-MAP:<OBJActioEss1 (@<OBJ) TARGET (Actio Ess) (-1 Acc LINK NOT 0 TIME LINK *-1 TRANS-V BARRIER SV-BOUNDARY OR AUX LINK NOT 0 AUX OR Adv OR N LINK NOT 0C Ger OR Imprt);
+MAP:<OBJActioEss1 (@<OBJ) TARGET (Actio Ess) (-1 Acc LINK NOT 0 TIME LINK *-1 TRANS-V + PERCEPTION-V OR DADJAT BARRIER SV-BOUNDARY OR AUX LINK NOT 0 AUX OR Adv OR N LINK NOT 0C Ger OR Imprt);
 	#$ De oinnii olbmá čohkkámin tuolloviesus.
 
 #!!	* __<OBJActioEss2__
-MAP:<OBJActioEss2 (@<OBJ) TARGET (Actio Ess)(*-1 HAB-ACTOR + Acc BARRIER NOT-ADV-PCLE LINK *-1 TRANS-V BARRIER NOT-NPMODADV)(NEGATE 0 AUX LINK 1 Inf);
+MAP:<OBJActioEss2 (@<OBJ) TARGET (Actio Ess)(*-1 HAB-ACTOR + Acc BARRIER NOT-ADV-PCLE LINK *-1 TRANS-V + PERCEPTION-V OR DADJAT BARRIER NOT-NPMODADV)(NEGATE 0 AUX LINK 1 Inf);
 	#$ Oađidettiin gullen olbmo boahtimin.
 
 #!! * __OBJPrfPrc__ Inf 			
@@ -6116,11 +6129,13 @@ MAP:-FAUXVConNegAux (@-FAUXV) TARGET ConNeg + AUX-OR-MAIN (*-1 REAL-NEG BARRIER 
 	#$ Ii daid galgga joavdelasaid bargat suovvat.
 
 #!! * __-FAUXVConNegAux__  to ConNeg AUX   
-MAP:-FAUXVConNegAux (@-FAUXV) TARGET ConNeg + AUX - ("leat") (*-1 REAL-NEG BARRIER S-BOUNDARY OR ConNeg)(*1 Inf BARRIER REAL-V OR S-BOUNDARY OR Attr);
+MAP:-FAUXVConNegAux (@-FAUXV) TARGET ConNeg + AUX - ("leat") (*-1 REAL-NEG BARRIER S-BOUNDARY OR ConNeg)((*1 Inf BARRIER REAL-V OR S-BOUNDARY OR Attr) OR (0 TRANS-V LINK *-1 Acc BARRIER NOT-NPMOD LINK *1 Inf BARRIER REAL-V OR S-BOUNDARY OR Attr));
 	#$ Ii sáhte suohtastallat.
 	#$ Ii sáhte dieđusge dušše suohtastallat. #needs verbdis dušše
 	#$ Eat mii sáhte vuolgit.
+	#$ In sáhte gáhku borrat.
 	#% It don leat mus goahtemuorran orron.
+	
 
 
 MAP:-FAUXVConNegAuxNeg (@-FAUXV) TARGET ConNeg + AUX - ("leat") (*-1 REAL-NEG BARRIER S-BOUNDARY OR ConNeg)(1 (Ind Neg) LINK *1 Inf BARRIER REAL-V OR S-BOUNDARY);	
@@ -6276,7 +6291,7 @@ SELECT:IfonlyConNeg ConNeg (0 (ConNeg @-FMAINV) OR (ConNeg @-FAUXV))(NEGATE 1 ("
 	#% Iige almmolaš sámi ságastallan leat vejolaš. 
 	#% De ledje baicca eatnašat dan dilis ahte eai máhttán eai stávetge.
 
-#SELECT:TESTkillVERB SYN-V  ;
+SELECT:TESTkillVERB SYN-V  ;
 
 #!! * __TEST__ selects some infinte verb readings in the cohort
 SELECT:TEST OBJ + V OR SUBJ + V OR V + @>N ;
