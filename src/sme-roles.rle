@@ -2761,12 +2761,24 @@ SET VALENCY-BOUNDARY = V OR CS OR Rel OR COMMA ; # (N VALENCYTAG)
 
 # V - Der/NomAct
 
-LIST TIME-E = ("..\...\..*"r Num) ("[1-9][0-9][0-9][0-9]"r Num Sg Loc) ;
+LIST TIME-E = ("[0-9][0-9]\.[0-9][0-9]\.[0-9][0-9][0-9][0-9]"r Num Sg) ("[1-9][0-9][0-9][0-9]"r Num Sg Loc) ("[0-9][0-9]\.[0-9][0-9]\.[0-9][0-9]"r Num Sg);
 
-SUBSTITUTE (Num)(Num Date Time) TARGET TIME-E ;
+SUBSTITUTE (Num)(Num Date Time) TARGET TIME-E (NOT -1 ("§") OR ("nr" N ABBR));
 	##"01.07.01" Num Sg Gen @>N #3->5 
 	## Sámediggi lea buktán gulaskuddancealkámuša Luondduhálddašan direktoráhtii anadromalaš luossabivddu regulerema ektui 2001:s.
+	
+SUBSTITUTE (Num)(Num Date Time) TARGET ("[1-9][0-9][0-9][0-9]"r Num Sg) (-1 ("b" Adv ABBR));
+	## Ovdal 1972 lága lea maiddái geassemánu 23. b. 1683 bákteásahus, čakčamánu 7. b. 1812 bákteásahus ja maŋŋil suoidnemánu 14. b. 1842 bákteláhka mudde báktedoaimma Norggas.
 
+
+LIST MONEY-E = ("[0-9]*\.[0-9]*\,\-"r Num) ("[0-9]*\,\-"r Num);
+	
+SUBSTITUTE (Num)(Num Money) TARGET MONEY-E (1 ("kruvdnu"));
+	## sáhttá máksot 750,- kruvdnosaš buhtadus čoahkkimiid ovddas mat bistet gitta 3 diimmu rádjái ja 1.500,- kruvnnu dalle jos čoahkkimat bistet badjel golbma diimmu beaivái.
+
+LIST MEASURE-E = ("cm" ABBR) ("kg" ABBR) ;
+
+SUBSTITUTE (N ABBR)(N ABBR Measr) TARGET MEASURE-E;
 
 # PARTITIVE
 # ----------
@@ -2779,9 +2791,44 @@ MAP (§PV) TARGET Loc (p <PV-Loc-Any> BARRIER NPNH OR COMMA);
 # -------------
 
 #LIST AG-SUBJ-V =
-LIST TH-SUBJ-V = "rahppot" ;      
-MAP (§TH) TARGET TH-SUBJ-V (NONE p Der/Pass)(NEGATE p (*) LINK c Der/Pass);
+LIST TH-SUBJ-V = "gávdnot" "rahppot" ;      
+MAP (§TH) TARGET SUBJ (p TH-SUBJ-V LINK NOT 0 Der/Pass);
 	## čakčaluossabivdu rahppo fas mearas Finnmárkkus.
+MAP (§TH) TARGET SUBJ (p* TH-SUBJ-V);
+	## Nuppi lađđasis lea spiehkastan metállaid mat eai gávdno giddes bávttiin ( mearra- ja jeaggemálbma ) ja golli mássaluvvosa 781 ( doidon golli ).
+	
+
+MAP (§TH) TARGET SUBJ (p* <PO-Ill-Any>); #(0* Ill);
+	## Eai eará minerálatge mat eai gula vuosttas lađđasa logahallamii, leat ozolaččat.
+
+#"<Eai>"
+#        "ii" <aux> V IV Neg Ind Pl3 @FAUX #1->0 
+#"<eará>"
+#        "eará" Pron Indef Attr @>N #2->3 
+#"<minerálatge>"
+#        "minerála" N Pl Nom Foc/ge @<SUBJ #3->1 
+#"<mat>"
+#        "mii" Pron Rel Pl Nom @SUBJ> #4->5 
+#"<eai>"
+#        "ii" <aux> V IV Neg Ind Pl3 @FS-N< #5->3 
+#"<gula>"
+#        "gullat" <mv> V <PO-Ill-Any> <TO-Loc-Any> <TO-Acc-Any> <TH-Acc-Any><TH-AktioEss> <TH-FS> <TH-ahte> <TH-Acc-Any> <TH-0> TV Ind Prs ConNeg @FS-N<IMV #6->5 
+#"<vuosttas>"
+#        "vuosttas" A Ord Attr @>N #7->8 
+#"<lađđasa>"
+#        "lađas" N Sg Gen @>N §PO #8->9 MAP:3636 
+#"<logahallamii>"
+#        "logahallan" N Sg Ill @<ADVL §PO #9->6 MAP:3191 
+#"<,>"
+#        "," CLB #10->9 
+#"<leat>"
+#        "leat" <mv> V <LO-luhtte-Any> <LO-Loc-Plc> <AktioEss> <RO-Ess-Any> IV Ind Prs Pl3 @FMV #11->1 
+#"<ozolaččat>"
+#        "ohcu" N* Der/laš A Pl Nom @<SPRED #12->11 
+#"<.>"
+#        "." CLB #13->1 
+
+
     
 
 #LIST EX-SUBJ-V =
@@ -2795,6 +2842,10 @@ MAP (§TH) TARGET SUBJ (NOT 0 Ani OR Hum)(p (*) LINK c Der/Pass + <TH-Acc-*Ani> 
 MAP (§TH) TARGET SUBJ (p Der/Pass + <TH-Acc-Any> OR Der/Pass + <TH-Acc-Any><eret>);
 MAP (§TH) TARGET SUBJ (p (*) LINK c Der/Pass + <TH-Acc-Any> OR Der/Pass + <TH-Acc-Any><eret>);
 	## Dakkár vejolaš dilis go Sámediggeráđđi guođđá doaimmas ja ođđa Sámediggeráđđi válljejuvvo, de šaddá ođđa válljen Sámi parlamentáralaš ráđđái. 
+	
+	
+MAP (§TH) TARGET SUBJ (p (*) LINK c Der/Pass + <TH-Acc-Any><LO-Ill-Any>)(s Ill);
+	## 1842-láhka lei vuođđuduvvon bákteregála 783 prinsihppii ( mii lea 1400-logu rájes ja nu mealgat boarrasat go láhka ), namalassii ahte Gonagas eaiggáduššá buot metállaid ja málmmaid, oktan bákteluđolašvuođa prinsihpain.
 	
 	
 MAP (§AG) TARGET SUBJ (p Der/Pass + <AG-Nom-Abs><TH-Ill-Plc> OR Der/Pass + <AG-Nom-Abs><TH-Ill-Abs>);
@@ -3063,9 +3114,13 @@ MAP (§LO) TARGET @ADVL (0 Com + Ani OR Hum OR Pron)(p <LO-Com-Ani>)(T:uniqueLO)
     ## Vuoigatvuođa orrut bohccuiguin ja johtalit.
     ## Son ii hálidan earáin báhcit. === LO OR CO ???
 
-MAP (§LO) TARGET @ADVL (0 Ill + Plc OR DE-ILL-ADV)(p <LO-Ill-Any> OR <LO-Ill-Plc> OR <PR-Acc-Any><LO-Ill-Any> OR <PR-Acc-Any><LO-Ill-Any> OR <TH-Acc-Any><LO-Ill-Any> OR <TH-Acc-Any><LO-Ill-WPlc> OR <PA-Acc-Hum><LO-Ill-Plc>)(T:uniqueLO);
+MAP (§LO) TARGET @ADVL (0 Ill + Plc OR DE-ILL-ADV)(p <LO-Ill-Any> OR <LO-Ill-Plc> OR <TH-Acc-Any><LO-Ill-WPlc> OR <PA-Acc-Hum><LO-Ill-Plc>)(T:uniqueLO);
+
+MAP (§LO) TARGET @ADVL (0 Ill)(p <PR-Acc-Any><LO-Ill-Any> OR <PR-Acc-Any><LO-Ill-Any> OR <TH-Acc-Any><LO-Ill-Any> LINK NOT 0 Der/Pass)(s Acc)(T:uniqueLO);
 	## Norgga stáhtaministar lea maid stáhtaministar sámi álbmoga váras mii ássá Norggas ja lea iežas virggi bokte sihke geatnegahttojuvvon ja váldi váikkuhit dilálašvuođaid mat leat nu ahte olbmot duostagohtet čálihit iežaset sámi jienastuslohkui.
 	## De son fertii riepmat čuorvut Báluha ruoktot.
+MAP (§LO) TARGET @ADVL (0 Ill)(p <PR-Acc-Any><LO-Ill-Any> OR <PR-Acc-Any><LO-Ill-Any> OR <TH-Acc-Any><LO-Ill-Any> LINK 0 Der/Pass)(T:uniqueLO);
+	## 1842-láhka lei vuođđuduvvon bákteregála 783 prinsihppii (mii lea 1400-logu rájes ja nu mealgat boarrasat go láhka ), namalassii ahte Gonagas eaiggáduššá buot metállaid ja málmmaid, oktan bákteluđolašvuođa prinsihpain.
 
 MAP (§LO) TARGET @ADVL (0 Ill + Time)(p <LO-Ill-Time>)(T:uniqueLO);
 	## Deanu gieldda plánaid mielde gárvána Deanu máŋggabealatguovddáš skuvlaálgimii čakčii.
@@ -3624,7 +3679,6 @@ MAP (§XT) TARGET @ADVL (0 Loc LINK 0 Money)(p <XT-Loc-Money> OR <PA-Acc-Any><XT
 #LIST <sisa> = <sisa> ;
 #LIST <vuhtii> = <vuhtii> ;
 #LIST <vuostá> = <vuostá> ;
-
 
 
 # round of mapping coordination
