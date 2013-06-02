@@ -4130,6 +4130,8 @@ SELECT:wordQst Pcle (-1 Adv OR A LINK *-1 BOS BARRIER NOT-PCLE)(0 go)(*1 VFIN BA
 #!! * __killPcle__ removes all remaining Pcle for go 
 REMOVE:killPcle Pcle (0 go) ;
 
+SELECT:ConNegIfNeg ConNeg IF (*-1 REAL-NEG BARRIER ConNeg OR PrfPrc OR SV-BOUNDARY OR CS)(NEGATE 0 N OR PrfPrc OR Pron LINK *1 ConNeg BARRIER NOT-ADV-PCLE)(NEGATE 0 Loc LINK -1 NEGFOC LINK -1 Loc)(NEGATE 0 Inf LINK *-1 REAL-NEG LINK -1 ConNeg LINK -1 REAL-NEG) ; #(NEGATE *1 ("leat") + FMAINV );
+
 
 #!! !!!Section 9 WORD-SPECIFIC RULES
 
@@ -4150,7 +4152,7 @@ MAP:ComptimeAdvl (@COMP-CS<) TARGET TIME-ADV (-1 ("go" CS) LINK -1 A OR ("seamm�
 	#$ Dál go ruhtadilli lea buoret go ovdal, de leat gávttis eanet čiŋat.
 
 #!! * __Compadvlcase__ eará sivas go fuorrávuođas
-MAP:Compadvlcase (@COMP-CS<) TARGET $$ADVLCASE (-1 ("go" CS) LINK -1 $$ADVLCASE)(1 COMMA LINK 1 VFIN) ;
+MAP:Compadvlcase (@COMP-CS<) TARGET $$ADVLCASE (-1 ("go" CS) LINK *-1 $$ADVLCASE BARRIER ADVLCASE)(1 COMMA OR EOC) ;
 	#$ Juohkehaš guhte earrána áhkástis mange eará sivas go fuorrávuođas, dagaha su rihkkut náittosdili.
 
 #!! * __CompNumP__ uhcit go njealji stivrralahtu doarjagiin
@@ -4167,7 +4169,7 @@ MAP:Compvejolas (@COMP-CS<) TARGET ("vejolaš") - Attr (-1 ("go" CS) LINK -1 A O
 	#$ Dat galgá čuovvoluvvot nu guhkás go vejolaš.
  
 #!! * __compNomHead__ NP-HEAD-NOM (ADVL) go NP-HEAD-NOM (ADVL). VFIN-NOT-IMPRT pga manglende disamgiguering
-MAP:compNomHead (@COMP-CS<) TARGET NP-HEAD-NOM (*-1 ("go" CS) BARRIER NOT-NP OR Nom LINK NOT -1 VFIN-NOT-IMPRT OR CC OR BOC)(*-1 ("go" CS) LINK *-1 Comp OR ("seammá"))(0 Nom OR ADVLCASE)(NEGATE 0 Attr OR PrfPrc OR TITLE LINK 1 N OR A)(NEGATE *1 VFIN BARRIER SV-BOUNDARY OR CC); 
+MAP:compNomHead (@COMP-CS<) TARGET NP-HEAD-NOM - Comp ((*-1 ("go" CS) BARRIER NOT-NP OR Nom OR REAL-V LINK NOT -1 VFIN-NOT-IMPRT OR CC OR BOC) OR (-1 Attr LINK -1 ("go" CS) LINK NOT -1 VFIN-NOT-IMPRT OR CC OR BOC))(*-1 ("go" CS) LINK *-1 Comp OR ("seammá"))(0 Nom OR ADVLCASE LINK NEGATE 0 Gen LINK 1 N)(NEGATE 0 Attr OR PrfPrc OR TITLE LINK 1 N OR A)(NEGATE *1 VFIN BARRIER SV-BOUNDARY OR CC); 
  	#$ Ovdabarggut állanit seamma beallái go "láhkateavstta lunddolaš lohkan". 
  	#$ Ovdabarggut állanit seamma beallái go "láhkateavstta lohkan". 
  	#$ Sápmelaččat guđet orrot Norgga bealde Deanu, geavahit seammá gávtti go sápmelaččat Suoma bealde Deanu.
@@ -4182,7 +4184,7 @@ MAP:CompNomHead (@COMP-CS<) TARGET NP-HEAD-NOM (*-1 ("go" CS) BARRIER NOT-NPMOD 
 
 
 #!! * __compMisc__ go geassebuođut, go dán áigge
-MAP:compMisc (@COMP-CS<) TARGET NP-HEAD-NOM - Attr OR TIME (*-1 ("go") BARRIER NOT-NP OR Nom LINK NOT -1 VFIN OR BOS)(1 CLB LINK NOT *1 VFIN BARRIER CC); 
+MAP:compMisc (@COMP-CS<) TARGET NP-HEAD-NOM - Attr - Comp OR TIME (*-1 ("go") BARRIER NOT-NP OR Nom LINK NOT -1 VFIN OR BOS)(1 CLB LINK NOT *1 VFIN BARRIER CC); 
 	#$ Muhto buođđogeažit ja giđđabuođut ráhkaduvvojit muđui seammá vugiid mielde go geassebuođut, ja danne heive buođđun birra obbalohkái juo muitaluvvot.
 	#$ Šibihat ledje ovdal unnibut go dán áigge.
 	#$ Viššalat ohppet eanet go láikkit.
@@ -4192,8 +4194,11 @@ MAP:compInf (@COMP-CS<) TARGET Inf (*-1 ("go" CS) BARRIER NOT-ADV LINK -1 Inf)(N
 	#$ Anán buorebun odne vuolgit go ihttážii vuordit.  	
 
 
+MAP:Compgo (@COMP-CS<) TARGET NP-HEAD-NOM - Px OR (Num Nom) ((-1 ("go" CS) BARRIER NOT-NPMOD-ACC) OR (-1 Gen LINK -1 ("go" CS)) OR (-1 TITLE + Nom LINK -1 ("go" CS))) (*-1 ("go" CS) LINK *-1 Comp LINK *-1 VFIN BARRIER S-BOUNDARY)(NEGATE *1 VFIN BARRIER S-BOUNDARY)(NEGATE 0 Attr OR Gen LINK 1 N)(NEGATE 0 Attr OR Gen LINK 1 Attr LINK 1 N)(NEGATE 0 TITLE LINK 1 (Prop Nom)) ; 
+
+
 #!! * __Compdego__ dego @COMP-CS<
-MAP:Compdego (@COMP-CS<) TARGET NP-HEAD-NOM - Px OR (Num Nom) (*-1 ("dego") OR ("dugo") BARRIER NOT-NP)(NEGATE *1 VFIN-NOT-IMPRT OR AUX BARRIER S-BOUNDARY OR CC OR CS)(NEGATE 0 Attr LINK 1 N); 
+MAP:Compdego (@COMP-CS<) TARGET NP-HEAD-NOM - Px OR (Num Nom) OR (ABBR Nom) (*-1 XGO BARRIER NOT-NP OR CC)(NEGATE *1 VFIN-NOT-IMPRT OR AUX BARRIER S-BOUNDARY OR CC OR CS)(NEGATE 0 Attr OR (N Gen) LINK 1 N)(NEGATE 0 Attr OR Gen LINK 1 Attr LINK 1 N)(NEGATE 0 OKTA LINK 1 (N Nom)); 
 	#$ Sii leat dego eŋgelat almmis.
 	#$ Son oahppaladdá min allagasas dego beaivváža badjáneapmi.
 	#$ Dat lea dego olmmái gii manai olgoriikii.
@@ -4201,17 +4206,22 @@ MAP:Compdego (@COMP-CS<) TARGET NP-HEAD-NOM - Px OR (Num Nom) (*-1 ("dego") OR (
 	#$ Dat guhte ii biso mu siste, bálkestuvvo olggos dego oaksi ja son goldná.
 	#$ Ráhkkásiiddán, allet vajáldahte ahte Hearrái lea okta beaivi dego duhát jagi ja duhát jagi dego okta beaivi.
 
+MAP:CompdegoAdvl (@COMP-CS<) TARGET $$ADVLCASE - Px (*-1 XGO BARRIER NOT-NP LINK *-1 $$ADVLCASE BARRIER WORD)(NEGATE *1 VFIN-NOT-IMPRT OR AUX BARRIER S-BOUNDARY OR CC OR CS)(NEGATE 0 Attr OR (N Gen) LINK 1 N)(NEGATE 0 Attr OR Gen LINK 1 Attr LINK 1 N)(NEGATE 0 OKTA LINK 1 (N Nom)); 
+	#$ Dolin sámit leat geavahan raddeleahpi eanaš guovlluin, nugo dán áigge julevsámi ja oarjesámi guovlluin.	
+
 #!! * __compAccdego__ Acc dego Acc
-MAP:compAccdego (@COMP-CS<) TARGET NP-HEAD-ACC - Px (*-1 ("dego") OR ("dugo") BARRIER NOT-NP LINK -1 NP-HEAD-ACC)(NOT 1 Po)(NEGATE *1 VFIN-NOT-IMPRT OR AUX BARRIER S-BOUNDARY OR CS OR CC)(NEGATE 0 Attr LINK 1 N); 
+MAP:compAccdego (@COMP-CS<) TARGET NP-HEAD-ACC - Px (*-1 XGO BARRIER NOT-NP LINK *-1 NP-HEAD-ACC) (NOT 1 Po)(NEGATE *1 VFIN-NOT-IMPRT OR AUX BARRIER S-BOUNDARY OR CS OR CC)(NEGATE 0 Attr OR Gen LINK *1 N - ADVLCASE OR @COMP-CS< BARRIER NOT-NPMOD-ACC)(NEGATE 0 Attr OR Gen LINK 1 Attr LINK 1 N - ADVLCASE OR @COMP-CS<); 
 	#$ Mun vuolggahan din dego sávzzaid gumppiid gaskii.
 	
 #!! * __compTVeambbo__ TRANS-V eambbo go Num Acc + Gen
-MAP:compTVeambbo (@COMP-CS<) TARGET (Num Acc) (-1 ("go") LINK *-1 TRANS-V - ("eanet") BARRIER NOT-ADV-PCLE)(NEGATE 1 N + ADVLCASE) (NEGATE *1 VFIN BARRIER S-BOUNDARY OR CS OR CC);
+MAP:compTVeambbo (@COMP-CS<) TARGET (Num Acc) (-1 ("go" CS) LINK *-1 TRANS-V - ("eanet") BARRIER NOT-ADV-PCLE)(NEGATE 1 N + ADVLCASE) (NEGATE *1 VFIN BARRIER S-BOUNDARY OR CS OR CC);
 	#$ Ii heargi gal nagot guoddit eambbo go guokte diekkára. 
 	
+MAP:compEss (@COMP-CS<) TARGET (N Ess) (-1 ("go" CS) LINK -1 Nom LINK -1 Comp LINK *-1 (N Ess) BARRIER S-BOUNDARY) ;
+	#$ Noađđeheargin dárbbašuvvojit sakka lojit hearggit go geresgeassin.
  	
 #!! * __compCoord__ coordination	
-MAP:compCoord (@COMP-CS<) TARGET NP-HEAD-NOM (*-1 CRD BARRIER NOT-NPMODADV LINK -1 (@COMP-CS<))(NEGATE 0 Attr LINK 1 NP-HEAD-NOM) ; #(1 CRD) (*2 Nom BARRIER NOT-NPMOD);
+MAP:compCoord (@COMP-CS<) TARGET NP-HEAD-NOM (*-1 CRD BARRIER NOT-NPMOD-ACC LINK -1 (@COMP-CS<))(NEGATE 0 Attr LINK 1 NP-HEAD-NOM) ; #(1 CRD) (*2 Nom BARRIER NOT-NPMOD);
 	#$ Seamma gusto uhcit fuđđožiidda nu go neahti, čeavrris, mievri ja rieban.
 	#$ Dat ledje beakkán ja dovddus olbmot nu go Diaz, Maria, Anne, Erik ja vel muhtin eará dovddus olbmot. # ii máhte maŋemuš oassi
  	#$ Dat ledje beakkán ja dovddus olbmot nu go Diaz, Maria Hætta, Anne Gaup, Erik ja vel muhtin eará dovddus olbmot. # ii vuos dán
@@ -4220,6 +4230,7 @@ MAP:compCoord (@COMP-CS<) TARGET NP-HEAD-NOM (*-1 CRD BARRIER NOT-NPMODADV LINK 
 MAP:compCoordAttr (@COMP-CS<) TARGET NP-HEAD-NOM (-1 Attr LINK -1 CRD LINK -1 (@COMP-CS<))(NEGATE 0 Attr LINK 1 NP-HEAD-NOM) ;
 	#$ Jesus lea gievrrat go Sáhtán ja bahá vuoiŋŋat.
 
+SECTION
  	
 #!! * __killAllnotComp__ Removes analysis which are not @COMP-CS<
 SELECT:killAllnotComp  @COMP-CS< ;	
@@ -4288,7 +4299,7 @@ REMOVE:dadeCNP (@CNP) (0 DADE) ;
 #!! * __CVPnoVfin__ No potential finite verb following
 REMOVE:CVPnoVfinAttr (@CVP) (0 CC LINK -1 N) (1 Attr LINK 1 N LINK NOT 1* VFIN BARRIER S-BOUNDARY OR CS OR PUNCT-RIGHT)(NEGATE *1 ("leat" PrfPrc) BARRIER S-BOUNDARY-NOT-CVP OR PUNCT-RIGHT OR CCCOMMA LINK NOT *-1 PrfPrc BARRIER REAL-V)(NEGATE 1 MO - ("nugo") OR ("de") OR Rel LINK *1 VFIN)(NEGATE -1 BOS)  ; 
 
-REMOVE:CVPnoVfin1 (@CVP) (NOT *1 VFIN BARRIER S-BOUNDARY OR CS OR PUNCT-RIGHT)(NEGATE *1 ("leat" PrfPrc) BARRIER S-BOUNDARY-NOT-CVP OR PUNCT-RIGHT OR CCCOMMA LINK NOT *-1 PrfPrc BARRIER REAL-V)(NEGATE 1 MO - ("nugo") OR ("de") OR Rel LINK *1 VFIN)(NEGATE -1 BOS)  ; 
+REMOVE:CVPnoVfin1 (@CVP) (NOT *1 VFIN BARRIER S-BOUNDARY OR CS OR PUNCT-RIGHT)(NEGATE *1 ("leat" PrfPrc) BARRIER S-BOUNDARY-NOT-CVP OR PUNCT-RIGHT OR CCCOMMA LINK NOT *-1 PrfPrc BARRIER REAL-V)(NEGATE 1 MO - ("nugo") OR ("de") OR Rel LINK *1 VFIN)(NEGATE -1 BOS)(NEGATE 1 CC OR CS LINK *1 VFIN)  ; 
 	#$ Mun máhtán láibut sihke šuhkoládagáhku ja lákcagáhku.
 	#$ Mii bidjat dávviriid skáhpiide ja lođáide.
 	#$ Mii vuolgit Londonii golmmain mánáin ja ovttain beatnagiin.
@@ -4333,7 +4344,7 @@ REMOVE:CVPnoVfinAdvl (@CVP) (-1C ADVLCASE OR Adv LINK NOT *-1 VFIN BARRIER S-BOU
 	#$ Grammatihkkavuđot giellateknologalaš reaiddut teakstaanalyseremii ja giellaoahpahussii ja digitálalaš sátnegirjjit leat buot gielaide eaktun.	#% Dállu lea divrras midjiide danne go dat vuosiha govt mearrasámit elle ovdal ja makkár viesut sis ledje.	
 
 
-LIST MIELLA = "árbevierru" "bággu" "dárbu" "dilli" "lohpi" "miella" "riekti" "vejolašvuohta" "vuohki" "vuoigatvuohta" "vuorru" ;
+LIST MIELLA = "árbevierru" "bággu" "dárbu" "dilli" "lohpi" "miella" "riekti" "váldi" "vejolašvuohta" "vuohki" "vuoigatvuohta" "vuorru" ;
 # These give Inf @N< instead of @ADVL (like more concrete nouns: ruhta, bileahta, dálki ...)
 
 
@@ -4385,7 +4396,6 @@ REMOVE:CVPAccAdv (CC @CVP) (-1 Acc)(*1 Acc BARRIER NOT-NPMODADV LINK NOT 0 VFIN)
 SELECT:CVP (@CVP) (*-1C VFIN BARRIER S-BOUNDARY)(*1C NP-HEAD-NOM BARRIER NOT-NPMOD LINK *1 VFIN BARRIER S-BOUNDARY)(NEGATE 0 go LINK *1 Inf BARRIER VFIN) ;
 	#$ Áhčči vulggii, ovdalgo mun bohten.
 	#$ Mun mannen maŋŋilgo mii leimmet čorgen. # fungerer ikke enda pga manglende verbdisambiguering
-
 
 #!! * __killAllCNP__ removes all remaining @CNP
 REMOVE:killAllCNP @CNP (0 @CVP) ;
@@ -5036,6 +5046,8 @@ SELECT:ACoordPrfPrc (A Attr) IF (NEGATE -1 ("leat"))(1 CC OR COMMA)(*2 PrfPrc BA
 SELECT:AAttrContra (A Attr) IF (*-1 Neg BARRIER S-BOUNDARY OR VFIN)(*1 CONTRA BARRIER WORD LINK 1C Attr);
 	#$ ILO-konvenšuvdna nr 169 ii vuođđuduva formála, muhto funktionála oamastanvuoigatvuođa doahpagii.
 
+IFF:sapmelas ("sápmelaš" A) (0 Attr LINK *1 N) ;	
+
 #!! !Special rules for 'buorre' (the only adjective showing case agreement)
 
 SELECT:SeCaseAgrBuorre $$CASE-AGREEMENT + A (0 ("buorre") OR OKTA OR Dem LINK NOT 0 Superl OR Comp) (*1 $$CASE-AGREEMENT BARRIER NOT-NPMOD LINK 0 N)(NEGATE -1 Nom LINK NOT 0 Gen) ;
@@ -5242,9 +5254,10 @@ REMOVE:InfCS Inf (0 VFIN LINK NOT 1 REAL-V)((-1 CS) OR (-1 BOS OR Rel) OR (-1 CO
 SELECT:InfCSPrt Prt (0 Prs LINK NOT 1 REAL-V)(-1 CS LINK -1 Prt) ;
 	#$ Buorre lei go bohtet.
 
-SELECT:vfin VFIN (NOT *0 VFIN)(NEGATE 0 Attr LINK 1 N) ;
+SELECT:vfin VFIN (NOT *0 VFIN)(NEGATE 0 Attr LINK 1 N)(NEGATE -1 Nom LINK *-1 ("leat" PrfPrc)) ;
 	## Dál lean cealkán dan dudnuide.
 	#% Njuolggadusat meahccegeavaheami rievdamis – rabas gulaskuddan.
+	#% Leamaš váttis ipmirdit dan.
 
 SELECT:Pl1coord (V Pl1) (0 Pl1 OR Inf LINK -1 CC OR ("de") LINK *-1C (V Pl1) BARRIER VFIN OR Inf) ;
 	#$ Go bassat lihtiid dahje málestit siiddas, de sáhttit seammás guldalit radio.
@@ -5611,7 +5624,15 @@ SELECT:Yr1863 PrfPrc IF (0 ("mannat"))(1 TIME);
 #!! !!Present participle
 #!! !!Rules for "orrut" (there are som more rules at #!! *orrut vs. orrot) 
 #!! !!Rules for "addit" (which is an adjective, but more often a verb)
-#!! !!Actio Loc = Actio Ess
+#!! !!Actio Loc = N Loc
+
+LIST JAHKKIT = "jáhkkit" "sávvat" "vuordit" "beassat" ;
+
+#!! * __ActioLoc__ is an IFF rule, we also need rule for 'leat', like in lea go bieru oastimis
+IFF:ActioLoc (Actio Loc) - JAHKKIT (0 (N Loc) LINK *-1 ("ceavzit") OR ("heaitit") OR ("geargat") OR ("váibat") OR ("dolkat") OR ("ádjánit") OR ("beassat") OR ("vajálduhttit") OR ("hehttet") OR ("biehttalit") BARRIER REAL-V OR S-BOUNDARY) ; 
+
+
+
 #!! !!Actio Gen = Actio Ess
 #!! !!Imprt or Ind
 
@@ -5786,13 +5807,13 @@ MAP:<SUBJInf1 (@<SUBJ) TARGET Inf (NEGATE 0 AUX LINK 1 Inf)(*-1 A BARRIER WORD -
 	#$ Ja ii leatge buorre sutnje orrut suhkkes vuvddiid siste, gos lea liegga ilbmi.
 	#$ Danne go mii orrut tunealla lahka, de lea álki isidii vuodjit tunealla go manná girdišilljui. 
 
-MAP:<SUBJInf1 (@<SUBJ) TARGET Inf (NEGATE 0 AUX LINK 1 Inf)(-1 Acc LINK *-1 A BARRIER WORD - Ill - Adv  LINK *-1 COPULAS BARRIER NOT-ADV LINK NOT *-1 Nom BARRIER S-BOUNDARY);
+MAP:<SUBJInf1 (@<SUBJ) TARGET Inf (NEGATE 0 AUX LINK 1 Inf)(-1 Acc - MIELLA LINK *-1 (A Nom) BARRIER WORD - Ill - Adv LINK *-1 COPULAS BARRIER NOT-ADV LINK NOT *-1 Nom BARRIER S-BOUNDARY);
 	#$ Raporttas galgá gozihanlávdegoddi čilget gozihandoaimmas, árvvoštallat stivrra jahkemuitalusa ja dilálašvuođaid maid dat siskkilda, ja árvvoštallat mo dát láhka doaibmá ja leago sávahahtti dan nuppástuhttit. 
 
 
 #	álki lea vánddardit
 #!! * __<SUBJInf2__
-MAP:<SUBJInf2 (@<SUBJ) TARGET Inf (NEGATE 0 AUX LINK 1 Inf)(*-1 COPULAS BARRIER NOT-ADV-PCLE LINK -1 A LINK *-1 BOC BARRIER NOT-ADV);	
+MAP:<SUBJInf2 (@<SUBJ) TARGET Inf (NEGATE 0 AUX LINK 1 Inf)(*-1 ("leat") BARRIER NOT-ADV-PCLE LINK -1 A LINK *-1 BOC BARRIER NOT-ADV);	
 	#$ Vearrámus lea go nu váttis lea oažžut eret dan gova, lohká nisu, gii ii hálit namas aviisii. 
 	#$ Man álki livččii de vánddardit.
 
@@ -5821,7 +5842,7 @@ MAP:<SUBJInf6 (@<SUBJ) TARGET Inf (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK -1 Ess 
 	
 #	vuolgit lea suohtas
 #!! * __SUBJ>Inf__
-MAP:SUBJ>Inf (@SUBJ>) TARGET Inf (1 COPULAS)(*2 A BARRIER NOT-ADV);
+MAP:SUBJ>Inf (@SUBJ>) TARGET Inf (1 COPULAS + VFIN)(*2 A BARRIER NOT-ADV);
 	#$ Vuolgit lea suohtas.
 
 #!! !(@<SPRED)  target Inf
@@ -5897,10 +5918,15 @@ MAP:N<Inf2 (@N<) TARGET Inf (-1 NP-HEAD-ACC LINK -1 MIELLA + Nom LINK NOT 0 REAL
 MAP:N<Inf3 (@N<) TARGET Inf (-1 MIELLA + Acc LINK *-1 TRANS-V BARRIER Acc OR REAL-V OR SV-BOUNDARY LINK NOT 0 AUX) ; 	
 	#$ Suohkanat addet váhnemiidda vejolašvuođa bidjat mánáideaset dakkár skuvllaide.	
 
+#!!	* __N<Inf4__
+MAP:N<Inf4 (@N<) TARGET Inf (-1 MIELLA + Nom LINK -1 BOS) ; 	
+	#$ Riekti oassálastit luondduriggodagaid hálddašeamis sáhttá čađahuvvot dakko bokte ahte Sámediggi nammada áirasiid oktasaš stivrenorgánaide, nu movt Finnmárkoopmodahkii ja guovllu boraspirelávdegottiide.	
+
+
 #!! !(@<ADVL)  target Inf, Actio Ess
 
 #!!	* __ADVLInf__ Inf 		
-MAP:<ADVLInfReksj1 (@<ADVL) TARGET Inf (*-1 REKS-V BARRIER NOT-ADV) ; 
+MAP:<ADVLInfReksj1 (@<ADVL) TARGET Inf ((*-1 REKS-V - ("jáhkkit") BARRIER NOT-ADV) OR (0 TRANS-V LINK -1 Acc LINK *-1 REKS-V - ("jáhkkit") BARRIER NOT-ADV)) ; 
 	#$ Go beassážiid leat čáppa dálkkit ja beaivvádat, de olbmot liikojit čuoigat meahcis dahje vuodjit mohtorgielkkáin. 
 
 #!!	* __<ADVLInfReksj2__
@@ -5987,7 +6013,8 @@ MAP:+FMAINVaux (@+FMAINV) TARGET VFIN IF (0 AUX-OR-MAIN + TV LINK NOT 0 ("áigut
 	#$ Ruoŧa hállehus háliida min veahkehit. (ii galgga deaivat dan)
 
 #!! * __+FMAINVcop__ COPULAS verbs     
-MAP:+FMAINVcop (@+FMAINV) TARGET VFIN + COPULAS OR PrfPrc + COPULAS (*1 Nom OR Ess BARRIER NOT-ADV-PCLE LINK NOT 0 (Actio Ess) LINK 1 Inf);
+MAP:+FMAINVcop (@+FMAINV) TARGET VFIN + COPULAS (*1 Nom OR Ess BARRIER NOT-ADV-PCLE LINK NOT 0 (Actio Ess) LINK 1 Inf);
+MAP:+FMAINVcop (@-FMAINV) TARGET PrfPrc + COPULAS (*1 Nom OR Ess BARRIER NOT-ADV-PCLE LINK NOT 0 (Actio Ess) LINK 1 Inf);
 	#$ Lei váttis vuodjit odne.
 	#$ Leamaš váttis ipmirdit dan.
 
@@ -6095,7 +6122,7 @@ MAP:+FMAINV (@-FMAINV) TARGET PrfPrc (NOT 0 SYN-V) (*-1 FAUXV BARRIER REAL-V OR 
 MAP:+FMAINV (@-FMAINV) TARGET PrfPrc (NOT 0 SYN-V) (*-1 MOVT BARRIER REAL-V OR S-BOUNDARY LINK -1 ("nu") LINK -1 FAUXV)(NEGATE 0 AUX LINK *1 Inf BARRIER REAL-V OR S-BOUNDARY) ;
 
 
-MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX (NOT 0 SYN-V) (0 Imprt LINK *-1 BOC BARRIER NOT-ADV) ;
+MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX + Imprt (NOT 0 SYN-V) (*-1 BOC BARRIER NOT-ADV)(NEGATE 1 Inf LINK NOT -1 INF-V) ;
 
 MAP:+FMAINV (@+FMAINV) TARGET AUX + VFIN (NOT *1 Inf OR PrfPrc - @>N OR (Actio Ess)) ;
 	#$ Mearrasápmelaččat ledje áŋgiris ja oahppan bivdit.
@@ -6256,7 +6283,7 @@ MAP:ADVLGer> (@ADVL>) TARGET Ger (*1 VFIN BARRIER S-BOUNDARY);
 	#$ Báhpa boradettiin biigá lei bassaladdame. 
 
 #!! * __-FMAINVLoc__ Actio Loc
-MAP:-FMAINVLoc (@<ADVL) TARGET (Actio Loc) (*-1 LOC-V BARRIER SV-BOUNDARY) ;
+MAP:-FMAINVLoc (@<ADVL) TARGET (Actio Loc) ; 
 
 #!! * __>AActioGen__ Actio Gen
 MAP:>AActioGen (@>A) TARGET (Actio Gen) ((1 ("veara")) OR (1 CC LINK 1 Gen LINK 1 ("veara"))) ;
@@ -6292,7 +6319,7 @@ SELECT:IfonlyConNeg ConNeg (0 (ConNeg @-FMAINV) OR (ConNeg @-FAUXV))(NEGATE 1 ("
 	#% De ledje baicca eatnašat dan dilis ahte eai máhttán eai stávetge.
 
 
-#!! * __killifVinCohort__ This rule removes all other readings, if there is a mapped V reading in the same cohort. Every case which this goes wrong, should be fixed in mapping rules or previous disrules.
+#!! !__killifVinCohort__ This rule removes all other readings, if there is a mapped V reading in the same cohort. Every case which this goes wrong, should be fixed in mapping rules or previous disrules.
 SELECT:killifVinCohort SYN-V  ;
 
 #!! * __TEST__ selects some infinte verb readings in the cohort
@@ -6830,7 +6857,7 @@ SELECT:GenPlc Gen (*0 MOVEMENT-V BARRIER SV-BOUNDARY OR COMMA OR NP-HEAD-ACC - (
 	#% 
 	 
 #! * Selects genitive if you are ROUTE, and there is a MOVEMENT-V to your left: ''vujiimet duon luotta''
-#SELECT:GenPlc Gen IF (*-1 MOVEMENT-V BARRIER SV-BOUNDARY OR Acc OR PUNCT OR ("dego") OR ("dugo") LINK 0 FMAINV OR Inf)(0 ROUTE);
+#SELECT:GenPlc Gen IF (*-1 MOVEMENT-V BARRIER SV-BOUNDARY OR Acc OR PUNCT OR XGO LINK 0 FMAINV OR Inf)(0 ROUTE);
 	#$ Mii vujiimet duon luotta. 
 
 #SELECT:r2197 Gen IF (*-1 MOVEMENT-V BARRIER NOT-NPMODADVII)(0 ROUTE);
@@ -6934,11 +6961,11 @@ SELECT:AccTV3 Acc (*-1 TRANS-V BARRIER COMMA OR Num OR REAL-V OR Ess OR S-BOUNDA
 
 
 #!! * __OLDr2466__ Selects accusative: when transitive verb to the left, but not if the TV is FAUX OR LOC-V
-SELECT:OLDr2466 Acc IF (*-1C TRANS-V - Imprt BARRIER SV-BOUNDARY OR NOT-NPMODADV OR ("nugo") OR ("dego") OR ("dugo") LINK NOT 0 FAUXV OR LOC-V LINK NOT *-1 Acc BARRIER SV-BOUNDARY OR (Neg Foc/ge))(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY)(NEGATE -1 PrfPrc LINK NOT *-1 REAL-COPULAS BARRIER SV-BOUNDARY)(NEGATE *-1 NUM BARRIER NOT-Attr LINK NOT 0 NUMUNIT)(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME LINK NOT 0 Px)(NEGATE 0 TIME OR ROUTE)(*1C NP-BOUNDARY OR S-BOUNDARY OR (Time) + Ill BARRIER WORD LINK NOT 0 Actio OR Inf);
+SELECT:OLDr2466 Acc IF (*-1C TRANS-V - Imprt BARRIER SV-BOUNDARY OR NOT-NPMODADV OR XGO LINK NOT 0 FAUXV OR LOC-V LINK NOT *-1 Acc BARRIER SV-BOUNDARY OR (Neg Foc/ge))(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY)(NEGATE -1 PrfPrc LINK NOT *-1 REAL-COPULAS BARRIER SV-BOUNDARY)(NEGATE *-1 NUM BARRIER NOT-Attr LINK NOT 0 NUMUNIT)(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME LINK NOT 0 Px)(NEGATE 0 TIME OR ROUTE)(*1C NP-BOUNDARY OR S-BOUNDARY OR (Time) + Ill BARRIER WORD LINK NOT 0 Actio OR Inf);
 	#$ Sus báhkkanii olles gorut go oinnii Lárina čuvges vuovttaid.
 
 #!! * __topOBJ1__ Selects accusative: when a Strict transitive verb to the right (topicalized object) ''beaskka geavahedje''
-SELECT:topOBJ1 Acc (*1 STRICT-TRANS-V BARRIER SV-BOUNDARY OR ("nugo") OR ("dego") OR ("dugo") OR Acc LINK NOT 0 FAUXV OR VAbess LINK NOT *1 Acc OR ("ahte") OR Inf OR VAbess OR VFIN BARRIER S-BOUNDARY)(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY)(NEGATE -1 PrfPrc LINK NOT *-1 REAL-COPULAS BARRIER SV-BOUNDARY)(NEGATE -1 NUM)(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME LINK NOT 0 Px)(NOT *-1 (N Acc) BARRIER SV-BOUNDARY)(NOT 0 Nom)(NEGATE 0 Gen LINK 1 Nom)(NEGATE 0 Gen LINK 1 (@>N) + PrfPrc LINK 1 Nom) ; 
+SELECT:topOBJ1 Acc (*1 STRICT-TRANS-V BARRIER SV-BOUNDARY OR XGO OR Acc LINK NOT 0 FAUXV OR VAbess LINK NOT *1 Acc OR ("ahte") OR Inf OR VAbess OR VFIN BARRIER S-BOUNDARY)(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY)(NEGATE -1 PrfPrc LINK NOT *-1 REAL-COPULAS BARRIER SV-BOUNDARY)(NEGATE -1 NUM)(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME LINK NOT 0 Px)(NOT *-1 (N Acc) BARRIER SV-BOUNDARY)(NOT 0 Nom)(NEGATE 0 Gen LINK 1 Nom)(NEGATE 0 Gen LINK 1 (@>N) + PrfPrc LINK 1 Nom) ; 
 	#$ Beaskka geavahedje gávtti badjel.
 	#$ Vuovssá goddá boanda. 
 	#$ Son mu nama ipmirdii boastut.
@@ -6946,7 +6973,7 @@ SELECT:topOBJ1 Acc (*1 STRICT-TRANS-V BARRIER SV-BOUNDARY OR ("nugo") OR ("dego"
 	#% Stáhta nammadan láhttu ja sadjásašlahttu galgaba deavdit gáibádusaid.
 
 #!! * __topOBJ2__ Selects Acc when a transitive verb to the right (less strict) ''dan juohkehaš fuobmá''
-SELECT:topOBJ2 Acc (*1 TRANS-V BARRIER SV-BOUNDARY OR ("nugo") OR ("dego") OR ("dugo") OR Acc LINK NOT 0 FAUXV OR VAbess OR Ger LINK NOT *1 Acc OR ("ahte") OR VAbess OR VFIN BARRIER S-BOUNDARY)(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY)(NEGATE -1 PrfPrc LINK NOT *-1 REAL-COPULAS BARRIER SV-BOUNDARY)(NEGATE -1 NUM)(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME LINK NOT 0 Px)(NOT *-1 (N Acc) BARRIER SV-BOUNDARY)(NEGATE 0 (N Nom))(NOT 0 Nom)(NEGATE 0 Gen LINK 1 (@>N) + PrfPrc LINK 1 Nom)(NEGATE 0 (Pron Refl) LINK 1 (N Ess))(NEGATE 0 (Pron Pers) - ("dat" Pron Pers) LINK 1 (N Nom) + FAMILY-ONLY-HUMAN) ;
+SELECT:topOBJ2 Acc (*1 TRANS-V BARRIER SV-BOUNDARY OR XGO OR Acc LINK NOT 0 FAUXV OR VAbess OR Ger LINK NOT *1 Acc OR ("ahte") OR VAbess OR VFIN BARRIER S-BOUNDARY)(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY)(NEGATE -1 PrfPrc LINK NOT *-1 REAL-COPULAS BARRIER SV-BOUNDARY)(NEGATE -1 NUM)(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc OR TIME LINK NOT 0 Px)(NOT *-1 (N Acc) BARRIER SV-BOUNDARY)(NEGATE 0 (N Nom))(NOT 0 Nom)(NEGATE 0 Gen LINK 1 (@>N) + PrfPrc LINK 1 Nom)(NEGATE 0 (Pron Refl) LINK 1 (N Ess))(NEGATE 0 (Pron Pers) - ("dat" Pron Pers) LINK 1 (N Nom) + FAMILY-ONLY-HUMAN) ;
 	#$ Dan gal juohkehaš fuobmá dakkaviđe.
 	#$ Gáhkuid mii goikadit geađggi nalde goardagis.
 	#$ Gos daid lehpet goldán? 
@@ -6987,7 +7014,7 @@ SELECT:GenNP2 (N Gen) (-1 ("ja"))(1 (N Acc))(NEGATE 0 V OR ABBR OR Attr);
 	#% Sii ožžot geavahit eatnama ja gáttiid ja elliideaset ja iežaset ealáhussii. # Deaivá dán vaikko eat hálit dan.
 
 #!! * __GenNP3__ (modifier) selects Gen if first one to right is Nom or Loc ''Norgga oaivegávpogis''
-SELECT:GenNP3 Gen (*-1 BOS OR COMMA OR ("nugo") OR ("dego") BARRIER NOT-Attr)(0 Gen)(1 (N Loc) OR (N Nom))(NEGATE 0 (Pron Interr) OR (Pron Rel))(NEGATE 0 TITLE + Nom LINK 1 (Prop Nom))(NEGATE 0 (Pron Dem) + Acc)(NEGATE 0 (Sg Nom) LINK *1 SG3-V BARRIER VFIN OR Nom);
+SELECT:GenNP3 Gen (*-1 BOS OR COMMA OR XGO BARRIER NOT-Attr)(0 Gen)(1 (N Loc) OR (N Nom))(NEGATE 0 (Pron Interr) OR (Pron Rel))(NEGATE 0 TITLE + Nom LINK 1 (Prop Nom))(NEGATE 0 (Pron Dem) + Acc)(NEGATE 0 (Sg Nom) LINK *1 SG3-V BARRIER VFIN OR Nom);
 	#$ Ánde orru Oslos, Norgga oaivegávpogis.
 	#$ Nieidda eadni ii sihtan vuolgit, muhto nisu hásttii.
 	#$ Organisašuvnna bláđđi, man gohčodit Fokusin muitala ahte gonagas Olav su áiggistis lei bivdán beassat leat servodaga suodjaleaddji.
@@ -7737,10 +7764,10 @@ SELECT:NDr2324 Nom IF (*-1 go BARRIER NOT-NPMOD LINK NOT -1 VFIN)(*-1 COPULAS BA
 SELECT:NDr2325 Nom IF (*-1 go BARRIER NOT-NP LINK NOT -1 VFIN)(NEGATE 0 Acc OR VFIN)(1 EOC);
 	## Ii leat almmustuvvan oktage stuorit go gásttašeaddji Johanas.
 
-SELECT:NDr2326 Nom IF (*-1 ("dego") OR ("dugo") OR ("nugo") BARRIER NOT-NPMOD)(NEGATE 0 Attr LINK *1 N BARRIER NOT-NPMOD)(*1 NP-BOUNDARY OR CLB BARRIER WORD);
+SELECT:NDr2326 Nom IF (*-1 XGO BARRIER NOT-NPMOD)(NEGATE 0 Attr LINK *1 N BARRIER NOT-NPMOD)(*1 NP-BOUNDARY OR CLB BARRIER WORD);
 	## Su ámadadju báittii dego beaivváš.
 
-SELECT:NDr2327 Nom IF (-2 ("dego") OR ("dugo") OR ("nugo"))(-1 Gen OR PrsPrc)(1 NP-BOUNDARY);
+SELECT:NDr2327 Nom IF (-2 XGO)(-1 Gen OR PrsPrc)(1 NP-BOUNDARY);
 	## ...johtá dego gillju ledjon ozadettiin muhtuma...
 
 	## ...dego vuonccis čohkke čivggaidis soajáidis vuollái.
@@ -8627,7 +8654,7 @@ REMOVE:r2824 VFIN IF (*-1 Nom BARRIER NOT-ADV-PCLE OR CLB LINK *-1C VFIN BARRIER
 REMOVE:r2827 VFIN IF (NEGATE *-1 Rel OR CS OR COMMA BARRIER S-BOUNDARY)(*-1C VFIN BARRIER S-BOUNDARY OR PUNCT LINK NOT *-1 Interr BARRIER NOT-NP)(*1 S-BOUNDARY OR CC OR EOS BARRIER NP-HEAD-NOM OR NP-HEAD-ACC);
  	#$ Muhto sáđuid son boaldá čáskatmeahttun dolas.
 
-REMOVE:r2828 VFIN - Qst IF (NEGATE 0 Imprt LINK *-1 BOS BARRIER NOT-ADV-PCLE)(NEGATE *-1 Rel BARRIER REAL-V)(NOT 0 N)(*1C VFIN BARRIER S-BOUNDARY OR PUNCT OR ("dego") OR ("dugo") OR ("galle" Num) LINK NOT 0 Qst)(NEGATE *1 Neg BARRIER VFIN)(NEGATE *1 VFIN BARRIER S-BOUNDARY LINK 1 go);
+REMOVE:r2828 VFIN - Qst IF (NEGATE 0 Imprt LINK *-1 BOS BARRIER NOT-ADV-PCLE)(NEGATE *-1 Rel BARRIER REAL-V)(NOT 0 N)(*1C VFIN BARRIER S-BOUNDARY OR PUNCT OR XGO OR ("galle" Num) LINK NOT 0 Qst)(NEGATE *1 Neg BARRIER VFIN)(NEGATE *1 VFIN BARRIER S-BOUNDARY LINK 1 go);
  	#$ Sámegillii galbet universitehta lea šaddan realitehta.
  	#$ Áldu mii dálvvi miehtá njamaha miesi gohčoduvvo čearpmateadnin.
 
@@ -9016,6 +9043,7 @@ SELECT:r3115 ("boahtit") IF (0 ("bohtat"))(NEGATE *1 (Pron Pers) OR BOHTAT-NOUN 
 
 #!! !!Determiners
 #!! !!Adverbs and adjectives
+
 
 #!! !!!NOUNS
 
