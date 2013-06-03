@@ -2761,24 +2761,42 @@ SET VALENCY-BOUNDARY = V OR CS OR Rel OR COMMA ; # (N VALENCYTAG)
 
 # V - Der/NomAct
 
+# Secondary semantic tags
+# - - - - - - - - - - - -
+
+	# Date
+	# ----
+
 LIST TIME-E = ("[0-9][0-9]\.[0-9][0-9]\.[0-9][0-9][0-9][0-9]"r Num Sg) ("[1-9][0-9][0-9][0-9]"r Num Sg Loc) ("[0-9][0-9]\.[0-9][0-9]\.[0-9][0-9]"r Num Sg);
 
-SUBSTITUTE (Num)(Num Date Time) TARGET TIME-E (NOT -1 ("§") OR ("nr" N ABBR));
+SUBSTITUTE (Num)(Num Date Time) TARGET TIME-E (NOT -1 ("§") OR ("nr" N ABBR) OR ("ášši"));
 	##"01.07.01" Num Sg Gen @>N #3->5 
 	## Sámediggi lea buktán gulaskuddancealkámuša Luondduhálddašan direktoráhtii anadromalaš luossabivddu regulerema ektui 2001:s.
+	#$ Ášši 03/01 Sámediggeráđi doaibmadieđáhus
 	
 SUBSTITUTE (Num)(Num Date Time) TARGET ("[1-9][0-9][0-9][0-9]"r Num Sg) (-1 ("b" Adv ABBR));
 	## Ovdal 1972 lága lea maiddái geassemánu 23. b. 1683 bákteásahus, čakčamánu 7. b. 1812 bákteásahus ja maŋŋil suoidnemánu 14. b. 1842 bákteláhka mudde báktedoaimma Norggas.
 
-
+	# Money
+	# -----
+	
 LIST MONEY-E = ("[0-9]*\.[0-9]*\,\-"r Num) ("[0-9]*\,\-"r Num);
 	
 SUBSTITUTE (Num)(Num Money) TARGET MONEY-E (1 ("kruvdnu"));
 	## sáhttá máksot 750,- kruvdnosaš buhtadus čoahkkimiid ovddas mat bistet gitta 3 diimmu rádjái ja 1.500,- kruvnnu dalle jos čoahkkimat bistet badjel golbma diimmu beaivái.
 
+	# Measure
+	# -------
+	
 LIST MEASURE-E = ("cm" ABBR) ("kg" ABBR) ;
 
 SUBSTITUTE (N ABBR)(N ABBR Measr) TARGET MEASURE-E;
+
+	# Human
+	# -----
+
+SUBSTITUTE (Prop)(Prop Hum) TARGET N (0 Mal OR Fem OR Sur);
+	## Ole Henrik Magga oaččui permišuvnna 19.02. – 23.02.01.
 
 # PARTITIVE
 # ----------
@@ -2831,6 +2849,10 @@ MAP (§TH) TARGET SUBJ (p* <PO-Ill-Any>); #(0* Ill);
 #"<.>"
 #        "." CLB #13->1 
 
+LIST RE-SUBJ-V = "oažžut" ;      
+MAP (§RE) TARGET SUBJ (p RE-SUBJ-V LINK NOT 0 Der/Pass);
+	## Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna 19.02. – 23.02.01.
+
 MAP (§TH) TARGET @<SPRED (s* §PO);
 	## Sámedikki áirasiin lea geatnegasvuohta orrut muitalkeahttá áššiin mat eai leat almmolaččat.    
 
@@ -2841,8 +2863,10 @@ MAP (§AG §TH) TARGET SUBJ (NONE p Der/Pass)(NEGATE p (*) LINK c Der/Pass);
 MAP (§TH) TARGET SUBJ (NOT 0 Ani OR Hum)(p Der/Pass + <TH-Acc-*Ani> OR Der/Pass + <TH-Acc-*Ani><RE-Loc-Ani>);
 MAP (§TH) TARGET SUBJ (NOT 0 Ani OR Hum)(p (*) LINK c Der/Pass + <TH-Acc-*Ani> OR Der/Pass + <TH-Acc-*Ani><RE-Loc-Ani>);
 	## Dán áššis ii gáibiduvvon lasáhus čoahkkingirjái.
-	
+		
 MAP (§TH) TARGET SUBJ (p Der/Pass + <TH-Acc-Any> OR Der/Pass + <TH-Acc-Any><eret>);
+	## Ášši meannudeapmi loahpahuvvui guovvamánu 20. b. dii. 09.15. 
+
 MAP (§TH) TARGET SUBJ (p (*) LINK c Der/Pass + <TH-Acc-Any> OR Der/Pass + <TH-Acc-Any><eret>);
 	## Dakkár vejolaš dilis go Sámediggeráđđi guođđá doaimmas ja ođđa Sámediggeráđđi válljejuvvo, de šaddá ođđa válljen Sámi parlamentáralaš ráđđái. 
 	
@@ -3101,6 +3125,8 @@ MAP (§IN) TARGET @ADVL (0 ("bokte") LINK c Money)(p <TH-Acc-Any><IN-bokte-Money
 # LOCATION
 # - - - - -
 
+LIST LO-LOC-ADV = "doppe" ;
+
 TEMPLATE numhead = OR Num LINK p ;
 
 TEMPLATE uniqueLO = (NONE s (§LO)) ;
@@ -3127,8 +3153,8 @@ MAP (§LO) TARGET @ADVL (0 Ill)(p <PR-Acc-Any><LO-Ill-Any> OR <PR-Acc-Any><LO-Il
 
 MAP (§LO) TARGET @ADVL (0 Ill + Time)(p <LO-Ill-Time>)(T:uniqueLO);
 	## Deanu gieldda plánaid mielde gárvána Deanu máŋggabealatguovddáš skuvlaálgimii čakčii.
-MAP (§LO) TARGET @ADVL (0 Loc + Plc OR Loc + Event)(p <LO-Loc-Plc> OR <LO-Loc-Any><gitta> OR <LO-Loc-Any><guossis> OR <TH-Acc-Any><LO-Loc-Any>)(T:uniqueLO); #20.03.2013
-
+MAP (§LO) TARGET @ADVL (0 Loc + Plc OR Loc + Event OR LO-LOC-ADV)(p <LO-Loc-Plc> OR <LO-Loc-Any><gitta> OR <LO-Loc-Any><guossis> OR <TH-Acc-Any><LO-Loc-Any>)(T:uniqueLO); #20.03.2013
+	## Mu ruoktu lea doppe gos mu bargu lea.
 MAP (§LO) TARGET @ADVL (0 Loc + Time)(p <LO-Loc-Time>)(T:uniqueLO);
 	## Bággema ja fápmogeavaheami leat mii loahpahan geassemánus siskkáldas kurssa bargiidasamat.  
 MAP (§LO) TARGET @ADVL (0 (Po) + ("ala") LINK c Plc)(p <LO-ala-Plc>)(T:uniqueLO);
@@ -3348,10 +3374,11 @@ MAP (§RE) TARGET @ADVL (0 Loc LINK 0 Hum OR Pron OR Org) (p <PA-Acc-Any><RE-Loc
 # - - -	-
 
     TEMPLATE uniqueRF = (NONE s (§RF)) ;
-MAP (§RF) TARGET @ADVL (0 Ill LINK 0 Hum OR Pron OR Org) (p <RF-Ill-Any> OR <PA-Acc-Any><RF-Ill-Any>)(T:uniqueRF);
+MAP (§RF) TARGET @ADVL (0 Ill LINK NOT 0 Hum OR Pron OR Org) (p <RF-Ill-Any> OR <PA-Acc-Any><RF-Ill-Any>)(T:uniqueRF);
 	## Læstadius lei evttohuvvon maiddái Ruoŧa ja Suoma frimearkkaide, muhto doppe ii boađe Læstadius oidnot frimearkkaid nalde.
 	## Lágideaddjit vurdet ahte badjel 100 hearggi servet gilvvuide.
     ## Buohkat geat leat badjel 15 jagi besset searvat aerobic dánsumii.
+    ## Lávdegoddi lea álgán ráhkkanit 2001 nuoraidkonferensii.
 MAP (§RF) TARGET @ADVL (0 Loc) (p <RF-Loc-Any> OR <TH-Acc-Any><RF-Loc-Any> OR <PA-Acc-Any><RF-Loc-Any>)(T:uniqueRF);
     ## Lean bajásšaddan sámi birrasis, muhto mii earuha mu seamma ahkásaččain Oslos?
     ## Ná buohcci guliid ii sáhte áiggil sirret dearvvas guliin, mii hehttešii parasihta leavvama.
@@ -3384,9 +3411,13 @@ MAP (§RO) TARGET @ADVL (0 Ill)(p <RO-Ill-Any> OR <TH-Acc-Any><RO-Ill-Any>)(T:un
 MAP (§RO) TARGET @ADVL (0 Ill)(p <RO-Ill-Any> OR <TH-Acc-Any><RO-Ill-Any>)(T:uniqueRO);
     ## Stáhta virggiide galgá nammadit dohkálašvuođa mielde.
 
-MAP (§RO) TARGET @<OPRED (0 Ess LINK *-1 Hum OR Ani OR Pron LINK 0 Acc) (p <BE-Acc-Ani><RO-Ess-Any> OR <TO-Acc-Any><RO-Ess-Any> OR <TH-Acc-Any><RO-Ess-Any>)(T:uniqueRO);
+MAP (§RO) TARGET @<OPRED (0 Ess) (p Acc  LINK *-1 Hum OR Ani OR Pron LINK p <BE-Acc-Ani><RO-Ess-Any> OR <TO-Acc-Any><RO-Ess-Any> OR <TH-Acc-Any><RO-Ess-Any>)(T:uniqueRO);
 	## Mii gudnejahttit du oahpaheaddjin.
-	
+	## Sámediggeráđđi lea nammadan Heaika Skum lahttun Davvi-Norgga Davviriikkalaš diehtojuohkinkantuvrra stivrii áigodahkii 2001 – 2002.
+
+MAP (§RO) TARGET @SPRED> (0 Ess) (p Der/Pass + <BE-Acc-Ani><RO-Ess-Any> OR <TO-Acc-Any><RO-Ess-Any> OR <TH-Acc-Any><RO-Ess-Any>); #(T:uniqueRO);	
+	## Skum várrelahttun nammaduvvui Inga Ravna Eira. 
+
 
 # REASON
 # - - -	-
@@ -3421,6 +3452,8 @@ MAP (§SO) TARGET @ADVL (0 ("luhtte") LINK c Ani OR Hum OR Pron)(p <SO-luhtte-An
 	## go olmmoš mánná Ibmila luhtte eret
 MAP (§SO) TARGET @ADVL (0 Loc + Lang)(p <TH-Acc-Any><SO-Loc-Lang> OR <TH-Acc-Any><SO-Loc-Lang><DE-Ill-Lang> OR <SO-Loc-Lang><DE-Ill-Lang>)(T:uniqueSO);
 	## Semináras hállojuvvui hui olu váttisvuođain mat šaddet go gártá jorgalit luondduálbmoga gielas omd. dárogillii.
+	
+	
 
 
 # THEME
