@@ -45,7 +45,7 @@ cp -f $OLDSRCDIR/verb-sme-lex.txt         $NEWSRCDIR/$STEMSDIR/verbs.lexc
 
 # syntax/ dir files
 echo "*** Copying syntax ***"
-cp -f $OLDSRCDIR/Nsme-dis.rle    $NEWSRCDIR/syntax/disambiguation.cg3
+cp -f $OLDSRCDIR/sme-dis.rle    $NEWSRCDIR/syntax/disambiguation.cg3
 
 # phonology/ dir files
 echo "*** Copying phonology ***"
