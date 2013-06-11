@@ -142,6 +142,7 @@ LIST Sur = Sur ;
 LIST Time = Time ;
 LIST Hum = Hum ;
 LIST Date = Date ;
+LIST Group = Group ;
 
 
 #!! * Sets for Morphosyntactic properties
@@ -1822,7 +1823,7 @@ SET ACTOR = ANIMATE OR INSTITUTION OR ORGANIZATION ;
   # Should EVENT be part of this set?
 
 # To be used in habitative-sentences:
-SET HAB-ACTOR = ACTOR OR HUMAN-GROUP OR INDUSTRY OR EDUCATION OR PEOPLE-NUM OR ("gii") OR Pers OR ("eará") OR ("buohkat") OR ("gaikkat") OR ("juohkehaš") OR ("goappašagat") OR ("soames") OR Hum - SAPMI ;
+SET HAB-ACTOR = ACTOR OR HUMAN-GROUP OR INDUSTRY OR EDUCATION OR PEOPLE-NUM OR ("gii") OR Pers OR ("eará") OR ("buohkat") OR ("gaikkat") OR ("juohkehaš") OR ("goappašagat") OR ("soames") OR ("oktage") OR Hum - SAPMI ;
 SET HAB-ACTOR-NOT-HUMAN =  INSTITUTION OR ORGANIZATION OR INDUSTRY OR EDUCATION ;
 
 
@@ -3058,7 +3059,7 @@ SELECT:datPersCopulas Pers IF (-1 Nom)(NEGATE -1 Pers)(0 ("dat" Nom))(*1 REAL-CO
 	#$ Gean mearkka bohccot dat ledje?
 
 #!! * __datPcle1__ selects dat Pcle between N and finite, even if there is agreement between verb and dat .
-SELECT:datPcle1 ("dat" Pcle) (-1 (N Nom) OR (Pers Nom) LINK NOT 0 A OR Interr OR PrfPrc)((*1 VFIN BARRIER NOT-ADV-PCLE) OR (1 Adv LINK 1 VFIN BARRIER NOT-ADV-PCLE)); # the last constraint because of that the Adv can have other readings, like eanaš
+SELECT:datPcle1 ("dat" Pcle) (-1 (N Nom) OR (Pers Nom) OR (Pers Loc) LINK NOT 0 A OR Interr OR PrfPrc)((*1 VFIN BARRIER NOT-ADV-PCLE) OR (1 Adv LINK 1 VFIN BARRIER NOT-ADV-PCLE)); # the last constraint because of that the Adv can have other readings, like eanaš
 	#$ Máret dat boahtá.
 	#$ Mun dat lean.
 	#$ Nissonat dat eanaš duddjojit sámi biktasiid.
@@ -5743,22 +5744,27 @@ REMOVE:TESTAttr Attr (NEGATE 1 A OR N OR Num OR Pr OR CC OR COMMA OR PrfPrc)(NEG
 
 #!! !!HABITIVE MAPPING
 
+LIST HAB-V-TAGS = Pl3 Sg3 ConNeg PrsPrc Inf ;
+
 #!! * __hab1__ 
-MAP:hab1 (@HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(1 AUX + Pl3 OR AUX + Sg3 LINK *1 ("leat") BARRIER NP-HEAD OR FMAINV);
+MAP:hab1 (@HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(1 AUX + HAB-V-TAGS LINK *1 ("leat") BARRIER NP-HEAD OR MAIN-V);
 	#$ Mus eai leat girjjit mielde.
 	#% Dorskis sáhttet leat vuoivvas ja meađđemat.
 
 #!! * __hab2__ 
-MAP:hab2 (@HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(1 AUX + Pl3 OR AUX + Sg3 LINK 1 Adv LINK *1 ("leat") BARRIER NOT-ADV-PCLE);
+MAP:hab2 (@HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(1 AUX + HAB-V-TAGS LINK 1 Adv LINK *1 ("leat") BARRIER NOT-ADV-PCLE);
 
 #!! * __hab3__ 
-MAP:hab3 (@HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(*1 ("leat" Pl3) OR ("leat" Sg3)  BARRIER NOT-ADV-PCLE);
+MAP:hab3 (@HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(NEGATE 0 (Ani Group) LINK *1 Ani BARRIER (N Nom))(NEGATE 0 (Hum Group) LINK *1 Hum BARRIER (N Nom))(NEGATE 0 N OR Pers OR Indef LINK *-1 HAB-ACTOR + Loc BARRIER NOT-NPMOD-ACC OR CC)(*1 ("leat") + HAB-V-TAGS BARRIER NOT-ADV-PCLE);
 	#$ Máhtes lea beana.
-	#% Hui dávjá lea nu ahte dain leat olbmot, geat eai doarvái bures dovdda sámi kultuvrra eaige sin jurddašanvuogi.
 	#% Juos gorreválggain Sámedikkis lea dárbbašlaš deavdit gáibádusa, ahte okta stivrralahtuin ja su sadjásašlahttu galgaba leat boazodoalu ovddasteaddjit, de galgá boazodoalu ovddasteddjiid loktet badjeliidda dan listtas, mii lea ožžon uhcimus jienaid daid listtaid gaskkas, mat galget ovddastuvvot ja main leat dakkár evttohasat. 
+	#% Ealus leat eanaš álddut.
+
+MAP:habAdvl (@HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(NEGATE 0 (Ani Group) LINK *1 Ani BARRIER (N Nom))(NEGATE 0 (Hum Group) LINK *1 Hum BARRIER (N Nom))(*1 Loc BARRIER NOT-NPMOD-ACC LINK *1 ("leat") + HAB-V-TAGS BARRIER NOT-ADV-PCLE);
+	#$ Ii han ovttasge du sogas leat dat namma.
 
 #!! * __hab4__ 	
-MAP:hab4 (@HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(1 CC LINK *1 HAB-ACTOR BARRIER NOT-NPMOD LINK *1 ("leat") BARRIER NOT-ADV-PCLE);
+MAP:hab4 (@HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(1 CC LINK *1 HAB-ACTOR BARRIER NOT-NPMOD LINK *1 ("leat") + HAB-V-TAGS BARRIER NOT-ADV-PCLE);
 
 #!! * __hab5__  This is not HAB
 #MAP:hab5 (@HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(*1 HAB-V BARRIER NOT-ADV-PCLE LINK *1 Nom BARRIER VFIN);
@@ -5766,33 +5772,31 @@ MAP:hab4 (@HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUM
 
 
 #!! * __hab6__ 
-MAP:hab6 (@HAB) TARGET HAB-ACTOR + Loc ((*-1 go BARRIER NOT-NPMOD LINK -1 ("leat") LINK -1 BOC) OR (*-1 ("leat" Qst) BARRIER NOT-NPMOD LINK -1 BOC));
+MAP:hab6 (@HAB) TARGET HAB-ACTOR + Loc ((*-1 go BARRIER NOT-NPMOD LINK -1 ("leat") + HAB-V-TAGS LINK -1 BOC) OR (*-1 ("leat" Qst) BARRIER NOT-NPMOD LINK -1 BOC));
 	#$ Lea go dis ruhta?
 	#$ Leago sámeálbmogis vuoigatvuođat vai eai?
 
 #!! * __hab7__ 
-MAP:hab7 (@HAB) TARGET HAB-ACTOR + Loc (*-1 go BARRIER NOT-NPMOD LINK -1 ("leat") LINK -1 MAIN-V);
+MAP:hab7 (@HAB) TARGET HAB-ACTOR + Loc (*-1 go BARRIER NOT-NPMOD LINK -1 ("leat") + HAB-V-TAGS LINK -1 MAIN-V);
 	#$ Dalle mun ferten iskat lea go dus feber.
 
 #!! * __hab8__ This is not HAB
 #MAP:hab8 (@HAB) TARGET HAB-ACTOR + Ill IF (*-1 BOS BARRIER NOT-NPMODADV)(*1 COPULAS BARRIER NOT-ADV-PCLE LINK *1 A OR N BARRIER NOT-ADV-PCLE);
 	#$ Ellii šattai hoahppu.
 
-MAP:hab9 (@HAB) TARGET Loc IF (-1 Mal OR Fem)(0 Ord)(NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(*1 ("leat") BARRIER NOT-ADV-PCLE);
+MAP:hab9 (@HAB) TARGET Loc IF (-1 Mal OR Fem)(0 Ord)(NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(*1 ("leat") + HAB-V-TAGS BARRIER NOT-ADV-PCLE);
 	#$ Heinrich njealjádis lea rikkis eamit.
 	
-MAP:hab10 (@HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN + Nom BARRIER S-BOUNDARY)(NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 Num BARRIER S-BOUNDARY LINK 1 HUMAN + Gen)(*0 ("leat") + FMAINV BARRIER Nom OR S-BOUNDARY OR MAIN-V LINK -1 ADVL);
+MAP:hab10 (@HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN + Nom BARRIER S-BOUNDARY) (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 Num BARRIER S-BOUNDARY LINK 1 HUMAN + Gen)(*-1 ("leat") + HAB-V-TAGS BARRIER Nom OR S-BOUNDARY OR MAIN-V LINK -1 ADVLCASE OR Adv)(*1 Nom BARRIER NOT-NPMOD-ACC);
 	#$ Dál leat sus 137 gáicca.
 	#$ De lea sihke divššohasas ja su lagamus oapmahaččas vuoigatvuohta oažžut dieđuid.
 
 # before relative clause
-MAP:habRel (@HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(*1 Rel BARRIER WORD LINK *1 VFIN BARRIER S-BOUNDARY OR MAIN-V LINK *1 ("leat") BARRIER S-BOUNDARY OR MAIN-V);
+MAP:habRel (@HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(*1 Rel BARRIER WORD LINK *1 VFIN BARRIER S-BOUNDARY OR MAIN-V LINK *1 ("leat") + HAB-V-TAGS BARRIER S-BOUNDARY OR MAIN-V);
 	#$ Divššohasas, gii dárbbaša guhkit áiggi ja oktiiheivehuvvon dearvvašvuođabálvalusaid, lea vuoigatvuohta oažžut ráhkaduvvot oktagaslaš plána.
 
 
-	#$ De lea sihke divššohasas ja su lagamus oapmahaččas vuoigatvuohta oažžut dieđuid.
 	#$ Riššat dat gal leat musge, jus eai leačča njuoskan.
-	#$ Ii han ovttasge du sogas leat dat namma.
 	#$ Dán čieža oassálasti searvvis ii lean oktage boazodoalli, muhto kurssa oahpaheaddjis, Kjell Smestadas, lea doaivva ahte boazodolliide maid galgá gávdnot sierra heivehuvvon fálaldat.
 	#$ Dás ii gávdno eará ágga go ahte njunuš olbmuin gielddas lea vuosteháhku sámegillii, go jo ákkat dán mearrádussii maid váilot, čujuha son das mii dáhpáhuvvá gieldda siste politihkalaččat.
 	#$ Mu mielas goit galggaše sáhttit ovttasbargat, sis dat han leat ollu seamma beroštumit, galggaše goit sin áigumušaid ektui, luonddu gáhttet.
@@ -5809,7 +5813,6 @@ MAP:habRel (@HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 H
 	#$ Sápmelaččat oasálaste maid dasa, muhto lassin ledje sis vel eará resursat.
 	
 	#% Olbmot jáhkke ahte stáhtainternáhtain lei buoret dássi, muhto dat guhkin eret duhtadedje dáláš gáibádusaid.
-	#% Hui dávjá lea nu ahte dain leat olbmot, geat eai doarvái bures dovdda sámi kultuvrra eaige sin jurddašanvuogi.
 	#% Dan ulbmil das lea nannet oktavuođa ja mearridit vejolaš ovttasbargosurggiid mat leat ealáhusa oasálaččaide ávkin.
 	#% Earát su luohkás ledje juo vissa njeallje siiddu su ovdalis matematihkka-girjjis.
 	#% Mánáid-skuvllas gal lei mannan bures, muhto go álggii nuoraid-skuvlii, de ii gillen šat oba bargat ge rehkenastimiin.
@@ -5817,7 +5820,6 @@ MAP:habRel (@HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 H
 	#% Das leat buorit lanjat čáppa guovllus.
 	#% Das leat mielde olbmot geain lea sihke suoma ja sámi gullevašvuohta.
 	#% Dat bulle ja goldne go dain ii lean ruohtas.
-	#% Ealus leat eanaš álddut.
 	#% Joavkkus leat guokte Riikaoasselávdegotti ovddasteaddji ja 2 Sámedikkis.
 	#% Jus lea sáhka 12 jagi deavdán mánás, gii ii leat ovtta oaivilis mearrádusain, gozihanlávdegoddi galgá gieđahallat mearrádusa.
 	#% Muhtin biirres leat gávcci 12 áirasis leamaš nissonolbmot, ja eará biirres leat buohkat geat leat válljejuvvon leamaš dievddut.
