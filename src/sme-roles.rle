@@ -445,8 +445,10 @@ LIST Body = Body ;
 LIST Hum = Hum ;
 LIST Date = Date ;
 LIST Dance = Dance ;
+LIST Emo = Emo ;
 LIST Food = Food ;
 LIST Lang = Lang ;
+LIST Mat = Mat ; # Material
 LIST Plant = Plant ;
 LIST Group = Group ;
 LIST Time = Time ;
@@ -2888,6 +2890,21 @@ SUBSTITUTE (N ABBR)(N ABBR Measr) TARGET MEASURE-E;
 
 SUBSTITUTE (Prop)(Prop Hum) TARGET N (0 Mal OR Fem OR Sur);
 	## Ole Henrik Magga oaččui permišuvnna 19.02. – 23.02.01.
+	
+	# Emotion
+	# -------
+LIST EMOTION-ADV = "illávejiid" ;
+LIST EMOTION-N = ("moraš" N Sg Loc) ; # buore mielas ...
+
+SUBSTITUTE (Adv)(Adv Emo) TARGET EMOTION-ADV ;	
+SUBSTITUTE (N)(Emo N) TARGET EMOTION-N;
+
+	# Material
+	# -------
+LIST MATERIAL-N = "stálli" "metálla" "málbma" "diamánta" "golli" "minerála" "muorra" ;
+
+SUBSTITUTE (N)(Mat N) TARGET MATERIAL-N;
+
 
 # PARTITIVE
 # ----------
@@ -2902,12 +2919,13 @@ MAP (§PO) TARGET @HAB ;
 # SUBJECT-ROLES
 # -------------
 
-MAP (§TH) TARGET SUBJ (p <AT-Nom-Any> + <mv> OR <ID-Nom-Any> + <mv> LINK c Nom);
+MAP (§TH) TARGET SUBJ (p <AT-Nom-Any> + <mv> OR <ID-Nom-Any> + <mv>)(s Nom OR Mat + Loc);
 MAP (§TH) TARGET SUBJ (p <aux> LINK c* <AT-Nom-Any> + <mv> OR <ID-Nom-Any> + <mv> LINK c Nom);
 	## Son lea čáppa.
 MAP (§TH) TARGET SUBJ (p <AT-Ess-Any> + <mv> OR <RO-Ess-Any> + <mv> OR <TH-Acc-Any><RO-Ess-Any> + <mv> + Der/Pass LINK c Ess);
 MAP (§TH) TARGET SUBJ (p <aux> LINK c* <AT-Ess-Any> + <mv> OR <RO-Ess-Any> + <mv> OR <TH-Acc-Any><RO-Ess-Any> + <mv> + Der/Pass LINK c Ess);
 
+MAP (§EX) TARGET SUBJ (p ("leat") + <mv> LINK c Emo);
 
 LIST SO-DE-V = "báhtarit" "beassat" "boahtit" "boršut" "cirgat" "čákŋat" "čierastit" "čiŋkut" "čuoigat" "deabardit" "fierrat" "fárret" "gahččat" "gakcut" "geassádit" "gáidat" "gállit" "gárgedit" "girdit" "gizzut" "goargŋut" "golgat" "guokkardit" "heailut" "ihtit" "ilbmat" "jávkat" "lávket" "joatkit" "johtit" "jorrat" "jorggihit" "leavvat" "lihkkat" "loktanit" "mannat" "máhccat" "mátkkoštit" "molsut" "njiedjat" "njáhkat" "njuiket" "ollet" "ollit" "rievdat" "riidet" "riššat" "rugáhit" "ruohttat" "sirdit" "skierbmut" "spiehkastit" "suotnjat" "šleaŋgut" "vájaldit" "váldot" "vánddardit" "vássit" "vázzit" "viehkat" "vuodjat" "vuodjit" "vuojašit" "vuolgit" ;
 
@@ -3361,16 +3379,22 @@ MAP (§AT) TARGET @<SPRED (0 Ess LINK 0 Ani OR Hum)(p <AT-Ess-Any>)(T:uniqueAT);
 	## Son báhcá dohko mánnágeahččin.
 	
 MAP (§AT) TARGET SPRED (0 A + Nom)(p <AT-Nom-Any>)(T:uniqueAT);
+
+MAP (§AT) TARGET @ADVL (0 Emo)(p <AT-Nom-Any>)(T:uniqueAT);
+
+MAP (§AT) TARGET SPRED (0 Mat + Loc)(p <AT-Nom-Any>)(T:uniqueAT);
 	
 	
 # IDENTITY
 # - - - - -
-MAP (§ID) TARGET @<SPRED (0 N + Nom)(p <ID-Nom-Any> LINK *-1 Dem OR Pers)(T:uniqueAT);
+TEMPLATE uniqueID = (NONE s (§ID)) ;
+
+MAP (§ID) TARGET @<SPRED (0 N + Nom)(p <ID-Nom-Any> LINK *-1 Dem OR Pers)(T:uniqueID);
 	## Dat orru čáhci.
 
-MAP (§ID) TARGET SPRED (0 N + Nom)(p <ID-Nom-Any> LINK *-1 Dem OR Pers)(T:uniqueAT);
+MAP (§ID) TARGET SPRED (0 N + Nom)(p <ID-Nom-Any> LINK *-1 Dem OR Pers)(T:uniqueID);
 
-MAP (§ID) TARGET SPRED (0 N + Nom + Hum)(p <ID-Nom-Any>)(T:uniqueAT);
+MAP (§ID) TARGET SPRED (0 N + Nom + Hum)(p <ID-Nom-Any>)(T:uniqueID);
 
 # BENEFICIARY
 # - - - - - -
