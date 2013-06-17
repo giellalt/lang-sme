@@ -2956,7 +2956,7 @@ LIST TO-ACC-ANY-V = "almmuhit" "árvalit" "ávžžuhit" "bivdit" "čilget" "jien
 LIST PA-ACC-ANI-V = "boktit" "čorbmadit" "čorbmat" "časkit" "doaškalit" "speaččastit" "cábmit" "dearpat" "huškut" "huškkastit" "bágget" "čievččastit" "čiekčat" "dohppet" "fáhtet" "deaivvat "dearppastit" "njuovvat" "speažžalit" "spežžet" "váruhit" ;
 LIST PA-ACC-V = "atnit" "áitit" "bassat" "bágget" "bálvalit" "báhčit" "biebmat" "bilidit" "billistit" "bilistit" "bissehit" "boaldit" "boradit" "borrat" "botket" "buoridit" "caggat" "cakkadit" "čavgat" "čavget" "čálihit" "čiekčat" "čoaggit" "čuohppat" "čuohpadit" "dassat" "dassalit" "deaddit"  "deaddilit" "dikšut" "dinet" "divodit" "doaimmahit" "doidit" "dollet" "duvdit" "fallehit" "fátmmastit" "gárvvistit" "gáržžidit" "geahpedit" "geasuhit" "geatnegahttit" "gilvit" "givssidit" "goddit" "gokčat" "guhkidit" "gullet" "guođohit" "guohtut" "guolástit" "guorrasit" "guoskkahit" "guossohit" "gárvet" "hábmet" "hástalit" "heivehit" "iskat" "jienastit" "juhkat" "juohkit" "juogadit" "liktet" "luvvet" "meannudit" "muddet" "nanosmahttit" "nanusmahttit" "njávkkadit" "njeaidit" "njulget" "nuppástuhttit" "nuorrat" "oaggut" "oanidit" "ođasmahttit" "ođastit" "opereret" "ráddjet" "ráhkkanahttit" "ráigat" "rievdadit" "seaguhit" "sihkodit" "sihkkut" "sivahallat" "vahágahttit" "viididit" "vuovdit" ;
 
-SET AG-SUBJ-V = SO-DE-V OR TH-ACC-V OR TH-ILL-V OR EX-ACC-V OR TO-ACC-ANY-V OR PA-ACC-ANI-V OR PA-ACC-V OR <PR-Acc-Any>;
+SET AG-SUBJ-V = SO-DE-V OR TH-ACC-V OR TH-ILL-V OR EX-ACC-V OR TO-ACC-ANY-V OR PA-ACC-ANI-V OR PA-ACC-V OR <PR-Acc-Any> OR <TH-Acc-Txt> OR <TH-ahte> OR <TH-Acc-Any> OR <TH-Acc-Any><SO-Loc-Any><DE-Ill-Any> OR <TH-Acc-Any><DE-Ill-Any>;
 
 
 MAP (§AG) TARGET SUBJ (p AG-SUBJ-V - Der/Pass);
@@ -3021,11 +3021,10 @@ LIST RE-SUBJ-V = "oažžut" ;
 MAP (§RE) TARGET SUBJ (p RE-SUBJ-V LINK NOT 0 Der/Pass);
 	## Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna 19.02. – 23.02.01.
 
-MAP (§TH) TARGET @<SPRED (s* §PO);
-	## Sámedikki áirasiin lea geatnegasvuohta orrut muitalkeahttá áššiin mat eai leat almmolaččat.    
-
-#LIST EX-SUBJ-V =
-
+MAP (§TH) TARGET @<SPRED (p <mv> LINK c §PO);
+MAP (§TH) TARGET @<SPRED (p* <aux> LINK c §PO);
+	## Sámedikki áirasiin lea geatnegasvuohta orrut muitalkeahttá áššiin mat eai leat almmolaččat. 
+	
 MAP (§AG §TH) TARGET SUBJ (NONE p Der/Pass)(NEGATE p (*) LINK c Der/Pass);
 
 MAP (§TH) TARGET SUBJ (NOT 0 Ani OR Hum)(p Der/Pass + <TH-Acc-*Ani> OR Der/Pass + <TH-Acc-*Ani><RE-Loc-Ani>);
@@ -3078,7 +3077,7 @@ MAP (§AG) TARGET SUBJ (p (*) LINK c Der/Pass + <AG-Nom-Abs><TH-Ill-Plc>);
 #"<.>"
 #        "." CLB #7->3 
 
-MAP (§TH) TARGET @<SPRED (p ("leat") + <mv> LINK NONE c SUBJ)(*-1 BOS LINK 1 Adv); 
+MAP (§TH) TARGET @<SPRED (p ("leat") + <mv> LINK NONE c SUBJ)(*-1 BOS LINK *1 @ADVL>); 
 	# Doppe lea muorra.
     
 # AGENT
@@ -3128,7 +3127,7 @@ MAP (§XT) TARGET Acc (c Time)(p <XT-Acc-Time>);
 
 LIST DE-ILL-ADV = "bajás" ("dat" Pron Pers Sg3 Ill) "deike" "diehke" "diehko" "dohko" "duohko" "lulás" "olggos" "ruoktot" "ruovttoluotta" "sisa" ; # DOHKO + "vuovdimassii"
 
-TEMPLATE uniqueTH = (NOT s §TH) ;
+TEMPLATE uniqueTH = (NONE s §TH) ;
     
 MAP (§TH) TARGET OBJ (0 Acc LINK *-1 Loc)(p <TH-Acc-Any><OR-Loc-Any> OR <TH-Acc-Any><XT-Loc-Money>)(T:uniqueTH);
 	## Mii leat maid diŋgon ja oastán sis viehka ollu girjjiid.
@@ -3237,11 +3236,13 @@ MAP (§TH) TARGET @ADVL (0 Loc + Der/NomAct)(p <TH-AktioLoc>)(T:uniqueTH);
 MAP (§TH) TARGET @ADVL (0 Loc + Actio)(p <PA-Acc-Any><TH-AktioLoc> LINK c Acc)(T:uniqueTH);
 MAP (§TH) TARGET @ADVL (0 Loc + Actio)(p <TH-AktioLoc><RF-Loc-Any> LINK c Loc)(T:uniqueTH);
 
-MAP (§TH) TARGET @ADVL (0 Com LINK NOT 0 Ani OR Hum)(p <TH-Com-*Ani> OR <BE-Acc-Ani><TH-Com-*Ani>);
+MAP (§TH) TARGET @ADVL (0 Com LINK NOT 0 Ani OR Hum)(p <TH-Com-*Ani>)(T:uniqueTH);
+MAP (§TH) TARGET @ADVL (0 Com LINK NOT 0 Ani OR Hum)(p <BE-Acc-Ani><TH-Com-*Ani> LINK c Acc + Ani)(T:uniqueTH);
 	## Mun veahkehan ustiba dainna.
 	## Dat konvenšuvdna berre maiddái álggahuvvot sullasaš ulbmilčilgehusain. 
 
-MAP (§TH) TARGET @ADVL (0 Com)(p <TH-Com-Any> OR <PA-Acc-Any><TH-Com-Any>) ;
+MAP (§TH) TARGET @ADVL (0 Com)(p <TH-Com-Any>)(T:uniqueTH); 
+MAP (§TH) TARGET @ADVL (0 Com)(p <PA-Acc-Any><TH-Com-Any> LINK c Acc)(T:uniqueTH);
     ## Mun duđan duinna.
     ## Dalle lei seammalágan dilli olles Skandinavias ja láikivuohta ii bálkkáhuvvon, ja aivve garra bargguin lihkostuvai.  
     
@@ -3313,7 +3314,7 @@ MAP (§TH) TARGET @ADVL (0 Loc LINK NOT 0 Ani OR Hum OR Pron)(p <CO-Com-Ani><TH-
 
 MAP (§TH) TARGET @ADVL (0 ("birra") LINK 0 Po) (p <TH-birra-Any><RE-Acc-Any> LINK c Acc + Ani OR Acc + Hum)(T:uniqueTH); 
 MAP (§TH) TARGET @ADVL (0 ("birra") LINK 0 Po) (p <TH-birra-Any><RE-Com-Ani> OR <TH-birra-Any><CO-Com-Ani> LINK c Com + Ani OR Com + Hum)(T:uniqueTH); 
-MAP (§TH) TARGET @ADVL (0 ("birra") LINK 0 Po) (p <TH-birra-Any> LINK NONE c §TH);
+MAP (§TH) TARGET @ADVL (0 ("birra") LINK 0 Po) (p <TH-birra-Any>)(T:uniqueTH); 
 	## Mihttomearrin lea muittuhit gielddaid sámediggeválgga birra ja sihkkarastit dan ahte válgaloahppameanut čađahuvvojit johtilit ja beaktilit.
 	## Mii ollásit juoga birra soapmásiin.
 	
@@ -3422,12 +3423,12 @@ MAP (§AT) TARGET SPRED (0 Mat + Loc)(p <AT-Nom-Any>)(T:uniqueAT);
 # - - - - -
 TEMPLATE uniqueID = (NONE s (§ID)) ;
 
-MAP (§ID) TARGET @<SPRED (0 N + Nom)(p <ID-Nom-Any> LINK *-1 Dem OR Pers)(T:uniqueID);
+MAP (§ID) TARGET @<SPRED (0 N + Nom)(p <ID-Nom-Any> LINK *-1 Dem OR Pers)(NOT *-1 @HAB)(T:uniqueID);
 	## Dat orru čáhci.
 
-MAP (§ID) TARGET SPRED (0 N + Nom)(p <ID-Nom-Any> LINK *-1 Dem OR Pers)(T:uniqueID);
+MAP (§ID) TARGET SPRED (0 N + Nom)(p <ID-Nom-Any> LINK *-1 Dem OR Pers)(NOT *-1 @HAB)(T:uniqueID);
 
-MAP (§ID) TARGET SPRED (0 N + Nom + Hum)(p <ID-Nom-Any>)(T:uniqueID);
+MAP (§ID) TARGET SPRED (0 N)(p <ID-Nom-Any>)(NOT *-1 @HAB)(T:uniqueID); # (0 N + Nom + Hum)????
 
 # BENEFICIARY
 # - - - - - -
@@ -3644,7 +3645,10 @@ MAP (§LO) TARGET @ADVL (0 Ill)(p <PR-Acc-Any><LO-Ill-Any> OR <PR-Acc-Any><LO-Il
 
 MAP (§LO) TARGET @ADVL (0 Ill + Time)(p <LO-Ill-Time>)(T:uniqueLO);
 	## Deanu gieldda plánaid mielde gárvána Deanu máŋggabealatguovddáš skuvlaálgimii čakčii.
-MAP (§LO) TARGET @ADVL (0 Loc + Plc OR Loc + Event OR Loc + Org OR LO-LOC-ADV OR LO-LOC-ADP)(p <LO-Loc-Plc> OR <LO-Loc-Any><gitta> OR <LO-Loc-Any><guossis> OR <TH-Acc-Any><LO-Loc-Any>)(T:uniqueLO); #20.03.2013
+MAP (§LO) TARGET @ADVL (0 Loc + Plc OR Loc + Event OR Loc + Org OR LO-LOC-ADV OR LO-LOC-ADP)(p <LO-Loc-Plc>)(NOT *-1 §PO)(T:uniqueLO); 
+MAP (§LO) TARGET @ADVL (0 Loc + Plc OR Loc + Event OR Loc + Org OR LO-LOC-ADV OR LO-LOC-ADP)(p <LO-Loc-Any><gitta> LINK c ("gitta"))(NOT *-1 §PO)(T:uniqueLO); 
+MAP (§LO) TARGET @ADVL (0 Loc + Plc OR Loc + Event OR Loc + Org OR LO-LOC-ADV OR LO-LOC-ADP)(p <LO-Loc-Any><guossis> LINK c ("guossi") + Loc)(NOT *-1 §PO)(T:uniqueLO);
+MAP (§LO) TARGET @ADVL (0 Loc + Plc OR Loc + Event OR Loc + Org OR LO-LOC-ADV OR LO-LOC-ADP)(p <TH-Acc-Any><LO-Loc-Any> LINK c Loc)(NOT *-1 §PO)(T:uniqueLO); #20.03.2013
 	## Mu ruoktu lea doppe gos mu bargu lea.
 	## Servvodat govvideapmi dán girjjis lea oalle erenoamáš ja Isaksen dadjá ahte dákkár servodateallin ii gávdno eará ođđa áigásaš servodagain.
 	## Vahágiid gordnebealdduin, gilvojuvvon gittiin ja ládjogittiin, guohtoneatnamiin mat ledje 2 km siskkobealde, dahje jus ledje dobbelis, muhto ledje áidojuvvon, galge buhtadit ( 1932 Stuorradikke šiehtadusat. 
