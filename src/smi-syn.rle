@@ -567,12 +567,12 @@ LIST QUANT-PRON = "ollu" "olu" "unnán" "váháš" "veaháš" "veháš" ;
 # Adjectival sets and their complements
 # -------------------------------------
 
-SET NOT-ADJ = WORD - A ;
-SET NOT-ADJ-COMMA = WORD - A - COMMA ;
+SET NOT-A = WORD - A ;
+SET NOT-A-COMMA = WORD - A - COMMA ;
 SET NOT-Attr = WORD - Attr ;
-SET NOT-ADJ-PCLE = WORD - A - Pcle ;
+SET NOT-A-PCLE = WORD - A - Pcle ;
 
-SET NOT-AA = WORD - A - Adv OR ("maid") ;
+SET NOT-A-ADV = WORD - A - Adv OR ("maid") ;
 
 LIST NOMINAL-ADJ = "guoktilaš" "lámis" "oasálaš" ("suddu" Der/laš) "viissis";
  
@@ -895,6 +895,7 @@ SET SVF-BOUNDARY = S-BOUNDARY OR VFIN ;
 SET CCCOMMA = CC OR COMMA ;
 	# remember that those are potential sentence boundaries, too
 LIST ADVLCASE = Ill Loc Com Ess ;
+LIST CASE = Nom Acc Gen Ill Loc Com Ess ;
 
 
 #!! * Syntactic sets
@@ -916,11 +917,18 @@ MAP:interj (@INTERJ) TARGET Interj ;
 
 MAP:P< (@P<) Gen (-1 Pr) ;
 
+MAP:Num< (@Num<) TARGET (N Sg Gen)(-1 NUM + (Sg Nom) OR NUM + (Sg Acc)) ;
 
-MAP:>N (@>N) TARGET Attr OR Gen OR ("buorre" A) OR DUSSE  (*1 N BARRIER NOT-NPMOD) ;
+MAP:>N (@>N) TARGET Attr OR Gen OR ("buorre" A) OR DUSSE (*1 N BARRIER NOT-NPMOD)(NEGATE 0 OKTA + Nom LINK *1 (N Pl Loc) BARRIER NOT-NPMOD) ;
+MAP:>N (@>N) TARGET $$CASE (0 Dem OR OKTA OR ("buorre" A) LINK *1 $$CASE + N BARRIER NOT-A) ;
+
+
+
 MAP:>A (@>A) TARGET GRADE-ADV (*1 A BARRIER NOT-NPMOD) ;
 
-MAP:<spred (@<SPRED) TARGET Nom ((*-1 COPULAS BARRIER NOT-NPMODADV LINK *-1 @HAB OR DOPPE OR (N Loc) BARRIER SV-BOUNDARY) OR (-1 Ill LINK *-1 COPULAS BARRIER NOT-NPMODADV LINK *-1 @HAB OR DOPPE OR (Plc Loc) BARRIER SV-BOUNDARY)) ;
+
+
+MAP:<spred (@<SPRED) TARGET Nom - OKTA ((*-1 COPULAS BARRIER NOT-NPMODADV LINK *-1 @HAB OR DOPPE OR (N Loc) BARRIER SV-BOUNDARY) OR (-1 Ill LINK *-1 COPULAS BARRIER NOT-NPMODADV LINK *-1 @HAB OR DOPPE OR (Plc Loc) BARRIER SV-BOUNDARY)) ;
 	#$ Dá lea dutnje biebmu.
 	#$ Juohke guovllu gávttis lea sierralágan holbi.
 
@@ -928,6 +936,9 @@ MAP:<spredQst (@<SPRED) TARGET Nom (*-1 @HAB OR DOPPE OR (Plc Loc) BARRIER NOT-N
 
 MAP:<spredSg (@<SPRED) TARGET (Sg Nom) (*-1 COPULAS BARRIER NOT-NPMODADV LINK -1 (Sg Nom) OR SGPRON + Nom OR (Indef Nom)) ;
 MAP:<spredPl (@<SPRED) TARGET (Pl Nom) (*-1 COPULAS BARRIER NOT-NPMODADV LINK -1 (Pl Nom) OR PLPRON + Nom OR DUPRON + Nom ) ;
+MAP:<spredEss (@<SPRED) TARGET (N Ess) IF (*-1 COPULAS BARRIER S-BOUNDARY OR Ess - ("buorre" Ess) OR Nom LINK 0 FMAINV LINK *-1 NP-HEAD-NOM BARRIER SV-BOUNDARY OR @HAB);
+
+
 MAP:spredSg> (@SPRED>) TARGET (Sg Nom) (1 (Sg Nom) OR SGPRON + Nom OR (Indef Nom) LINK 1 COPULAS) ;
 MAP:spredPl> (@SPRED>) TARGET (Pl Nom) (1 (Pl Nom) OR PLPRON + Nom OR DUPRON + Nom LINK 1 COPULAS)  ;
 
@@ -947,16 +958,22 @@ MAP:subj>Sg (@SUBJ>) TARGET (Nom Sg) IF (*1 VFIN + Sg3 BARRIER NOT-ADV-PCLE) ;
 MAP:<subjSg (@<SUBJ) TARGET (Nom Sg) IF (*-1 VFIN + Sg3 BARRIER NOT-ADV-PCLE) ;
 MAP:<subjPl (@<SUBJ) TARGET (Nom Pl) OR (Group Nom) OR (Coll Nom) IF (*-1 VFIN + Pl3 BARRIER NOT-ADV-PCLE) ;
 
-MAP:subj>Coor1 (@SUBJ>) TARGET Nom IF (1 CC LINK *1 Nom BARRIER NOT-NPMOD LINK *1 VFIN + Pl3 BARRIER NOT-ADV-PCLE) ;
-MAP:subj>Coor2 (@SUBJ>) TARGET Nom (*-1 CC BARRIER NOT-NPMOD LINK -1 @SUBJ>)(*1 VFIN + Pl3 BARRIER NOT-ADV-PCLE) ;
-MAP:<subjCoor1 (@<SUBJ) TARGET Nom IF (1 CC LINK *1 Nom BARRIER NOT-NPMOD)(*-1 VFIN + Pl3 BARRIER NOT-ADV-PCLE LINK NOT *-1 Nom BARRIER NOT-ADV-PCLE) ;
-MAP:<subjCoor2 (@<SUBJ) TARGET Nom (*-1 CC BARRIER NOT-NPMOD LINK -1 @<SUBJ LINK *-1 VFIN + Pl3 BARRIER NOT-ADV-PCLE LINK NOT *-1 Nom BARRIER NOT-ADV-PCLE) ;
+MAP:subj>Coor1 (@SUBJ>) TARGET Nom IF (1 CC LINK *1 Nom BARRIER NOT-NPMOD LINK *1 VFIN + Pl3 OR VFIN + Du3 BARRIER NOT-ADV-PCLE) ;
+MAP:subj>Coor2 (@SUBJ>) TARGET Nom (*-1 CC BARRIER NOT-NPMOD LINK -1 @SUBJ>)(*1 VFIN + Pl3 OR VFIN + Du3 BARRIER NOT-ADV-PCLE) ;
+MAP:<subjCoor1 (@<SUBJ) TARGET Nom IF (1 CC LINK *1 Nom BARRIER NOT-NPMOD)(*-1 VFIN + Pl3 OR VFIN + Du3 BARRIER NOT-ADV-PCLE LINK NOT *-1 Nom BARRIER NOT-ADV-PCLE) ;
+MAP:<subjCoor2 (@<SUBJ) TARGET Nom (*-1 CC BARRIER NOT-NPMOD LINK -1 @<SUBJ LINK *-1 VFIN + Pl3 OR VFIN + Du3 BARRIER NOT-ADV-PCLE LINK NOT *-1 Nom BARRIER NOT-ADV-PCLE) ;
 
+
+MAP:>cc (@>CC) TARGET ("sihke")(*1 ("ja") OR ("ahte")) ;
 
 LIST ADVL = Adv Ill Com Loc Po Pr ;
 
 MAP:<advl (@<ADVL) TARGET ADVL OR (Time Gen) OR (Route Gen) (*-1 FMAINV BARRIER SV-BOUNDARY) ;
 MAP:advl> (@ADVL>) TARGET ADVL OR (Time Gen) OR (Route Gen) (*1 FMAINV BARRIER SV-BOUNDARY) ;
+
+MAP:Acc<advl (@<ADVL) TARGET (Time Acc) OR ("gaska" Acc) (*-1 FMAINV BARRIER SV-BOUNDARY) ;
+MAP:Accadvl> (@ADVL>) TARGET (Time Acc) OR ("gaska" Acc) (*1 FMAINV BARRIER SV-BOUNDARY) ;
+
 
 MAP:<obj (@<OBJ) TARGET Acc (*-1 FMAINV BARRIER SV-BOUNDARY) ;
 MAP:obj> (@OBJ>) TARGET Acc (*1 FMAINV BARRIER SV-BOUNDARY) ;
@@ -1042,6 +1059,7 @@ MAP:r321 (@APP-Pron<) TARGET (N Acc) IF (*-1 ("nugo") OR ("sihke") BARRIER APP-B
 
 
 	#$ Báhpaeamit, Margrethe Wiig, gii lei gasku giellamoivvi, ráhkadii iežas sárgumiiguin sámegiela Áppesa, mii lei stuorra ávkin sámegiela oahpahusas.
+
 
 
 	#=====#
