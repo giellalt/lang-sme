@@ -100,6 +100,7 @@ LIST Sur = Sur ;
 
 LIST Time = Time ;
 LIST Hum = Hum ;
+LIST Group = Group ;
 LIST Date = Date ;
 
 
@@ -922,7 +923,11 @@ MAP:interj (@INTERJ) TARGET Interj ;
 
 MAP:P< (@P<) Gen (-1 Pr) ;
 
-MAP:Num< (@Num<) TARGET (N Sg Gen)(-1 NUM + (Sg Nom) OR NUM + (Sg Acc)) ;
+MAP:Num< (@Num<) TARGET (N Sg Gen)(*-1 NUM + (Sg Nom) OR NUM + (Sg Acc) BARRIER NOT-A) ;
+MAP:N< (@N<) TARGET (Sg Com)(-1 Coll) ;
+	#$ Mun oidnen Ándde-guovtto Ristiinnáin.
+
+MAP:N< (@N<) TARGET (Num Nom) (-1 ("jahki") OR ("diibmu")) ;
 
 MAP:>Num (@>Num) TARGET DUSSE (1 Num) ;
 MAP:>Num (@>N) TARGET DUSSE (*1 N BARRIER NOT-A) ;
@@ -935,73 +940,9 @@ MAP:>N (@>N) TARGET $$CASE (0 Dem OR OKTA OR ("buorre" A) LINK *1 $$CASE + N BAR
 
 MAP:>A (@>A) TARGET GRADE-ADV (*1 A BARRIER NOT-NPMOD) ;
 
-MAP:pron< (@Pron<) TARGET $$CASE (0 Refl LINK *-1 $$CASE LINK 0 Hum OR Pers) ;
+MAP:pron< (@Pron<) TARGET $$CASE (0 Refl LINK *-1 $$CASE + Pers BARRIER S-BOUNDARY OR CC) ;
+MAP:pron< (@N<) TARGET $$CASE (0 Refl LINK *-1 $$CASE + (N Hum) BARRIER S-BOUNDARY OR CC) ;
 	#$ Sis lea alddiset ruhta.
-
-MAP:<spred (@<SPRED) TARGET Nom - OKTA ((*-1 COPULAS BARRIER NOT-NPMODADV LINK *-1 @HAB> OR DOPPE OR (N Loc) OR (Time Adv) OR (Time Gen) BARRIER SV-BOUNDARY) OR (-1 Ill OR @Pron<  LINK *-1 COPULAS BARRIER NOT-NPMODADV LINK *-1 @HAB> OR DOPPE OR (Plc Loc) OR Time BARRIER SV-BOUNDARY)) ;
-	#$ Dá lea dutnje biebmu.
-	#$ Juohke guovllu gávttis lea sierralágan holbi.
-
-MAP:<spredQst (@<SPRED) TARGET Nom (*-1 @<HAB OR DOPPE OR (Plc Loc) OR (Time Adv) OR (Time Gen) BARRIER NOT-NPMODADV LINK -1 Qst LINK -1 COPULAS) ;
-	#$ Lea go dis ruhta?
-
-MAP:<spredSg (@<SPRED) TARGET (Sg Nom) (*-1 COPULAS BARRIER NOT-NPMODADV LINK *-1 (Sg Nom) OR SGPRON + Nom OR (Indef Nom) BARRIER SV-BOUNDARY) ;
-MAP:<spredPl (@<SPRED) TARGET (Pl Nom) (*-1 COPULAS BARRIER NOT-NPMODADV LINK *-1 (Pl Nom) OR PLPRON + Nom OR DUPRON + Nom BARRIER NOT-ADV-PCLE) ;
-MAP:<spredEss (@<SPRED) TARGET (N Ess) IF (*-1 COPULAS BARRIER S-BOUNDARY OR Ess - ("buorre" Ess) OR Nom LINK 0 FMAINV LINK *-1 NP-HEAD-NOM BARRIER SV-BOUNDARY OR @HAB>);
-
-
-MAP:spredSg> (@SPRED>) TARGET (Sg Nom) (1 (Sg Nom) OR SGPRON + Nom OR (Indef Nom) LINK 1 COPULAS) ;
-MAP:spredPl> (@SPRED>) TARGET (Pl Nom) (1 (Pl Nom) OR PLPRON + Nom OR DUPRON + Nom LINK 1 COPULAS)  ;
-
-MAP:<spredCoor (@<SPRED) TARGET Nom (*-1 CC BARRIER NOT-NPMOD LINK -1 @<SPRED) ;
-
-
-LIST PERS-TAGS = Sg1 Sg2 Sg3 Du1 Du2 Du3 Pl1 Pl2 P3 ;
-
-MAP:subj>Pers (@SUBJ>) TARGET $$PERS-TAGS + Nom IF (*1 $$PERS-TAGS + VFIN BARRIER NOT-ADV-PCLE) ;
-MAP:<subjPers (@<SUBJ) TARGET $$PERS-TAGS + Nom IF (*-1 $$PERS-TAGS + VFIN BARRIER NOT-ADV-PCLE) ;
-
-MAP:subj>Sg (@SUBJ>) TARGET (Nom Sg) OR (Sg3 Nom) OR (Indef Nom) IF (*1 VFIN + Sg3 BARRIER NOT-ADV-PCLE) ;
-MAP:subj>Du (@SUBJ>) TARGET (Coll Nom) IF (*1 VFIN + Du3 BARRIER NOT-ADV-PCLE) ;
-MAP:subj>Pl (@SUBJ>) TARGET (Nom Pl) OR (Pl3 Nom) OR (Group Nom) OR (Coll Nom) IF (*1 VFIN + Pl3 BARRIER NOT-ADV-PCLE) ;
-MAP:subj>Sg (@SUBJ>) TARGET (Nom Sg) IF (*1 VFIN + Sg3 BARRIER NOT-ADV-PCLE) ;
-
-MAP:<subjSg (@<SUBJ) TARGET (Nom Sg) IF (*-1 VFIN + Sg3 BARRIER NOT-ADV-PCLE) ;
-MAP:<subjPl (@<SUBJ) TARGET (Nom Pl) OR (Group Nom) OR (Coll Nom) IF (*-1 VFIN + Pl3 BARRIER NOT-NPMOD) ;
-
-MAP:subj>Coor1 (@SUBJ>) TARGET Nom IF (1 CC LINK *1 Nom BARRIER NOT-NPMOD LINK *1 VFIN + Pl3 OR VFIN + Du3 BARRIER NOT-ADV-PCLE) ;
-MAP:subj>Coor2 (@SUBJ>) TARGET Nom (*-1 CC BARRIER NOT-NPMOD LINK -1 @SUBJ>)(*1 VFIN + Pl3 OR VFIN + Du3 BARRIER NOT-ADV-PCLE) ;
-MAP:<subjCoor1 (@<SUBJ) TARGET Nom IF (1 CC LINK *1 Nom BARRIER NOT-NPMOD)(*-1 VFIN + Pl3 OR VFIN + Du3 BARRIER NOT-ADV-PCLE LINK NOT *-1 Nom BARRIER NOT-ADV-PCLE) ;
-MAP:<subjCoor2 (@<SUBJ) TARGET Nom (*-1 CC BARRIER NOT-NPMOD LINK -1 @<SUBJ LINK *-1 VFIN + Pl3 OR VFIN + Du3 BARRIER NOT-ADV-PCLE LINK NOT *-1 Nom BARRIER NOT-ADV-PCLE) ;
-
-
-MAP:>cc (@>CC) TARGET ("sihke")(*1 ("ja") OR ("ahte")) ;
-
-LIST ADVL = Adv Ill Com Loc Po Pr ;
-
-MAP:<advl (@<ADVL) TARGET ADVL OR (Time Gen) OR (Route Gen) OR ("beassážat" Gen) OR ("juovllat" Gen) (*-1 FMAINV BARRIER SV-BOUNDARY) ;
-MAP:advl> (@ADVL>) TARGET ADVL OR (Time Gen) OR (Route Gen) OR ("beassážat" Gen) OR ("juovllat" Gen) (*1 FMAINV BARRIER SV-BOUNDARY) ;
-
-#MAP:<advl (@<ADVL) TARGET ADVL (*-1 FMAINV BARRIER SV-BOUNDARY) ;
-#MAP:advl> (@ADVL>) TARGET ADVL (*1 FMAINV BARRIER SV-BOUNDARY) ;
-
-MAP:<advl (@<ADVL) TARGET (N Gen) (*-1 FMAINV BARRIER SV-BOUNDARY)(NOT *1 N BARRIER NOT-A)(NOT 1 Po) ;
-MAP:advl> (@ADVL>) TARGET (N Gen) (*1 FMAINV BARRIER SV-BOUNDARY OR Po)(NOT *1 N BARRIER NOT-A) ;
-MAP:advl> (@ADVL>) TARGET Ess (*1 FMAINV BARRIER SV-BOUNDARY LINK NOT *1 Nom BARRIER NOT-NPMOD) ;
-	#$ Čuoikan ...
-
-MAP:Acc<advl (@<ADVL) TARGET (Time Acc) OR ("gaska" Acc) (*-1 FMAINV BARRIER SV-BOUNDARY) ;
-MAP:Accadvl> (@ADVL>) TARGET (Time Acc) OR ("gaska" Acc) (*1 FMAINV BARRIER SV-BOUNDARY) ;
-
-
-MAP:<obj (@<OBJ) TARGET Acc (*-1 FMAINV BARRIER SV-BOUNDARY) ;
-MAP:obj> (@OBJ>) TARGET Acc (*1 FMAINV BARRIER SV-BOUNDARY) ;
-
-MAP:>P (@>P) Gen (1 Po + @<ADVL OR Po + @ADVL>) ;
-
-	# Appositions
-	# -----------
-
 
 MAP:app<n (@APP-N<) TARGET (Num Nom) IF (-1 (Prop Sur Nom) LINK -1 ("\("))(1 COMMA LINK 1 ("s") LINK 1 CARDINALS LINK 1 ("\)"));
 	#$ (Simonsen 1959, s. 45)
@@ -1075,6 +1016,74 @@ MAP:r319 (@APP-Pron<) TARGET (N Nom) IF (*-1 ("nugo") OR ("sihke") BARRIER APP-B
 MAP:r320 (@APP-N<) TARGET (N Acc) IF (*-1 ("nugo") OR ("sihke") BARRIER APP-BOUNDARY LINK -1 COMMA LINK -1 (N Acc) LINK *-1 BOS BARRIER APP-BOUNDARY)(*1 COMMA BARRIER APP-BOUNDARY) ;
 MAP:r321 (@APP-Pron<) TARGET (N Acc) IF (*-1 ("nugo") OR ("sihke") BARRIER APP-BOUNDARY LINK -1 COMMA LINK -1 (Pron Acc) LINK *-1 BOS BARRIER APP-BOUNDARY)(*1 COMMA BARRIER APP-BOUNDARY) ;
 	#$ Muhtun sámi biktasiid, nugo gápmagiid ja vuoddagiid, sii geavahedje guhkit, gitta 1960-logu rádjai.
+
+
+MAP:<spred (@<SPRED) TARGET Nom - OKTA ((*-1 COPULAS BARRIER NOT-NPMODADV LINK *-1 @HAB> OR DOPPE OR (N Loc) OR (Time Adv) OR (Time Gen) OR TIME-ADVL BARRIER SV-BOUNDARY) OR (-1 Ill OR @Pron<  LINK *-1 COPULAS BARRIER NOT-NPMODADV LINK *-1 @HAB> OR DOPPE OR (Plc Loc) OR Time OR TIME-ADVL BARRIER SV-BOUNDARY)) ;
+	#$ Dá lea dutnje biebmu.
+	#$ Juohke guovllu gávttis lea sierralágan holbi.
+
+MAP:<spredQst (@<SPRED) TARGET Nom ((*-1 @<HAB OR DOPPE OR (Plc Loc) OR (Time Adv) OR (Time Gen) OR TIME-ADVL BARRIER NOT-NPMODADV LINK -1 Qst LINK -1 COPULAS) OR (*-1 Qst BARRIER NOT-NPMOD LINK -1 COPULAS) OR (*-1 COPULAS BARRIER NOT-NPMOD LINK -1 BOS)) ;
+	#$ Lea go dis ruhta?
+
+MAP:<spredSg (@<SPRED) TARGET (Sg Nom) ((*-1 COPULAS BARRIER NOT-NPMODADV LINK *-1 (Sg Nom) OR SGPRON + Nom OR (Indef Nom) BARRIER SV-BOUNDARY) OR (0 Coll OR Group LINK *-1 COPULAS BARRIER NOT-NPMODADV LINK *-1 (Pl Nom) OR PLPRON + Nom OR (Indef Nom) BARRIER SV-BOUNDARY)) ;
+MAP:<spredPl (@<SPRED) TARGET (Pl Nom) (*-1 COPULAS BARRIER NOT-NPMODADV LINK *-1 (Pl Nom) OR PLPRON + Nom OR DUPRON + Nom BARRIER NOT-ADV-PCLE) ;
+MAP:<spredEss (@<SPRED) TARGET (N Ess) IF (*-1 COPULAS BARRIER S-BOUNDARY OR Ess - ("buorre" Ess) OR Nom LINK 0 FMAINV LINK *-1 NP-HEAD-NOM BARRIER SV-BOUNDARY OR @HAB>);
+
+MAP:HABspredSg> (@SPRED>) TARGET Nom (1 @HAB> LINK 1 COPULAS) ;
+	#$ Mii dus lea?
+
+
+MAP:spredSg> (@SPRED>) TARGET (Sg Nom) (1 (Sg Nom) OR SGPRON + Nom OR (Indef Nom) LINK 1 COPULAS) ;
+MAP:spredSg> (@SPRED>) TARGET (A Sg Nom) (*1 COPULAS + FMAINV BARRIER SV-BOUNDARY OR COMMA OR CC LINK NOT 1 A) ;
+MAP:spredPl> (@SPRED>) TARGET (Pl Nom) (1 (Pl Nom) OR PLPRON + Nom OR DUPRON + Nom LINK 1 COPULAS)  ;
+
+MAP:<spredCoor (@<SPRED) TARGET Nom (*-1 CC BARRIER NOT-NPMOD LINK -1 @<SPRED) ;
+
+
+LIST PERS-TAGS = Sg1 Sg2 Sg3 Du1 Du2 Du3 Pl1 Pl2 P3 ;
+
+MAP:subj>Pers (@SUBJ>) TARGET $$PERS-TAGS + Nom IF (*1 $$PERS-TAGS + VFIN BARRIER NOT-ADV-PCLE) ;
+MAP:<subjPers (@<SUBJ) TARGET $$PERS-TAGS + Nom IF (*-1 $$PERS-TAGS + VFIN BARRIER NOT-ADV-PCLE) ;
+
+MAP:subj>Sg (@SUBJ>) TARGET (Nom Sg) OR (Sg3 Nom) OR (Indef Nom) IF (*1 VFIN + Sg3 BARRIER NOT-ADV-PCLE) ;
+MAP:subj>Du (@SUBJ>) TARGET (Coll Nom) IF (*1 VFIN + Du3 BARRIER NOT-ADV-PCLE) ;
+MAP:subj>Pl (@SUBJ>) TARGET (Nom Pl) OR (Pl3 Nom) OR (Group Nom) OR (Coll Nom) IF (*1 VFIN + Pl3 BARRIER NOT-ADV-PCLE) ;
+MAP:subj>Sg (@SUBJ>) TARGET (Nom Sg) IF (*1 VFIN + Sg3 BARRIER NOT-ADV-PCLE) ;
+
+MAP:<subjSg (@<SUBJ) TARGET (Nom Sg) IF (*-1 VFIN + Sg3 BARRIER NOT-ADV-PCLE) ;
+MAP:<subjPl (@<SUBJ) TARGET (Nom Pl) OR (Group Nom) OR (Coll Nom) IF (*-1 VFIN + Pl3 BARRIER NOT-NPMOD) ;
+
+MAP:subj>Coor1 (@SUBJ>) TARGET Nom IF (1 CC LINK *1 Nom BARRIER NOT-NPMOD LINK *1 VFIN + Pl3 OR VFIN + Du3 BARRIER NOT-ADV-PCLE) ;
+MAP:subj>Coor2 (@SUBJ>) TARGET Nom (*-1 CC BARRIER NOT-NPMOD LINK -1 @SUBJ>)(*1 VFIN + Pl3 OR VFIN + Du3 BARRIER NOT-ADV-PCLE) ;
+MAP:<subjCoor1 (@<SUBJ) TARGET Nom IF (1 CC LINK *1 Nom BARRIER NOT-NPMOD)(*-1 VFIN + Pl3 OR VFIN + Du3 BARRIER NOT-ADV-PCLE LINK NOT *-1 Nom BARRIER NOT-ADV-PCLE) ;
+MAP:<subjCoor2 (@<SUBJ) TARGET Nom (*-1 CC BARRIER NOT-NPMOD LINK -1 @<SUBJ LINK *-1 VFIN + Pl3 OR VFIN + Du3 BARRIER NOT-ADV-PCLE LINK NOT *-1 Nom BARRIER NOT-ADV-PCLE) ;
+
+
+MAP:>cc (@>CC) TARGET ("sihke")(*1 ("ja") OR ("ahte")) ;
+
+LIST ADVL = Adv Ill Com Loc Po Pr ;
+
+MAP:<advl (@<ADVL) TARGET ADVL OR (Time Gen) OR (Route Gen) OR ("beassážat" Gen) OR ("juovllat" Gen) (*-1 FMAINV BARRIER SV-BOUNDARY) ;
+MAP:advl> (@ADVL>) TARGET ADVL OR (Time Gen) OR (Route Gen) OR ("beassážat" Gen) OR ("juovllat" Gen) (*1 FMAINV BARRIER SV-BOUNDARY) ;
+
+#MAP:<advl (@<ADVL) TARGET ADVL (*-1 FMAINV BARRIER SV-BOUNDARY) ;
+#MAP:advl> (@ADVL>) TARGET ADVL (*1 FMAINV BARRIER SV-BOUNDARY) ;
+
+MAP:<advl (@<ADVL) TARGET (N Gen) (*-1 FMAINV BARRIER SV-BOUNDARY)(NOT *1 N BARRIER NOT-A)(NOT 1 Po) ;
+MAP:advl> (@ADVL>) TARGET (N Gen) (*1 FMAINV BARRIER SV-BOUNDARY OR Po)(NOT *1 N BARRIER NOT-A) ;
+MAP:advl> (@ADVL>) TARGET Ess (*1 FMAINV BARRIER SV-BOUNDARY LINK NOT *1 Nom BARRIER NOT-NPMOD) ;
+	#$ Čuoikan ...
+
+MAP:Acc<advl (@<ADVL) TARGET (Time Acc) OR ("gaska" Acc) (*-1 FMAINV BARRIER SV-BOUNDARY) ;
+MAP:Accadvl> (@ADVL>) TARGET (Time Acc) OR ("gaska" Acc) (*1 FMAINV BARRIER SV-BOUNDARY) ;
+
+
+MAP:<obj (@<OBJ) TARGET Acc - Rel (*-1 FMAINV BARRIER SV-BOUNDARY) ;
+MAP:obj> (@OBJ>) TARGET Acc (*1 FMAINV BARRIER SV-BOUNDARY) ;
+
+MAP:>P (@>P) Gen (1 Po + @<ADVL OR Po + @ADVL>) ;
+
+
 
 
 	#$ Báhpaeamit, Margrethe Wiig, gii lei gasku giellamoivvi, ráhkadii iežas sárgumiiguin sámegiela Áppesa, mii lei stuorra ávkin sámegiela oahpahusas.
