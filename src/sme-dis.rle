@@ -1027,6 +1027,7 @@ LIST GRADE-ADV =  "áibbas" "beare" ("eanet" Adv) "erenoamán" "erenoamáš" "hi
 LIST PLURALIZER = "buot" "buotlágan" "buotlágaš" "earálágan" "iežálágan" "gait" "gaitlágan" "goappeš" "goappašat" "máŋggalágan" "moattelágan" ;
     # Singular nouns can have a plural form combined with those
   
+LIST BUOT = "buot" "gait" "gaitin" "gaitdivnnat" ;
 
 #!! * Adjective sets
 # ----------
@@ -1126,7 +1127,7 @@ SET NP-HEAD-GEN    = (Pron Gen) OR (N Gen) OR (A Gen) - Der/NomAct - RCmpnd - (D
 
 
 SET PRE-NP-HEAD = (Prop Attr) OR (Prop @>N) OR (A Attr) OR (ABBR Attr) OR ("buorre") 
-         OR (Pron Pers Gen) OR (N Gen) OR ("buot") OR
+         OR (Pron Pers Gen) OR (N Gen) OR BUOT OR
          Num OR RCmpnd OR CC OR (Pron Dem) OR (Pron Refl Gen) OR (Indef Attr) OR 
          (PrfPrc @>N) OR PrsPrc OR (A Ord) ;
          # The strict version of items that can only be premodifiers, not parts of the predicate
@@ -2370,6 +2371,7 @@ REMOVE:derST Der/st (0 Der/ahtti) ;
 REMOVE:derVuohta Attr (0 Der/vuohta) ; 
 
 REMOVE (Der/heapmi A Comp Attr) ;
+REMOVE:ihttin ("ihtit") (0 ("ihttin")) ;
 
 #!! !!Adjectives or nouns, not adverbs
 
@@ -4696,27 +4698,27 @@ REMOVE:r1583 Adv IF (1 Interr);
 	# buot
 	# - - -
 
-IFF:r1586 ("buot" Pron Indef Attr) OR ("gait" Pron Indef Attr) (*1 N OR (A Pl) BARRIER NOT-NPMOD);
+IFF:r1586 BUOT + Attr (*1 N OR (A Pl) BARRIER NOT-NPMOD);
 	## Sii meannudit buot velggolaččaid máksingeahpádusohcamiid. 
 	## Mii addit bálvalusfálaldaga buot álbmogii.
 	## De fertejit buot vihtta miellahtu oassálastit.
 	## ahte buot náitalan olbmuin galggai leat guolástanvuoigatvuohta.
 
  	
-SELECT:r1590 (Pron Indef Nom) IF (0 ("buot") OR ("gait"))(1 PL3-V);
+SELECT:r1590 (Pron Indef Nom) IF (0 BUOT)(1 PL3-V);
 	## Vuollásaš ráđit buot heaittihuvvojedje oktasaš hálddahuslaš jođiheapmái. 
 	
 
-SELECT:r1596 (Indef Nom) IF (NEGATE *-1 TRANS-V BARRIER REAL-V OR S-BOUNDARY)(0 ("buot") OR ("gait"))(NEGATE *1 TRANS-V BARRIER S-BOUNDARY LINK 0 MAIN-V OR Inf);
+SELECT:r1596 (Indef Nom) IF (NEGATE *-1 TRANS-V BARRIER REAL-V OR S-BOUNDARY)(0 BUOT)(NEGATE *1 TRANS-V BARRIER S-BOUNDARY LINK 0 MAIN-V OR Inf);
 	## Buot lea lávkkas.
 	
-SELECT:r1597 Nom IF (-1 ("gullat" Pl3) LINK -1 Ill)(0 ("buot") OR ("gait")); # trenges ikke
+SELECT:r1597 Nom IF (-1 ("gullat" Pl3) LINK -1 Ill)(0 BUOT); # trenges ikke
 	## Dat mearkkaša ahte dása gullet buot mat eai leat spiehkastuvvon.		
 
-#SELECT:r1598 Indef IF (*-1 TRANS-V BARRIER NOT-ADV-PCLE)(0 ("buot") OR ("gait") LINK 1 S-BOUNDARY OR REAL-CLB); # trenges ikke
+#SELECT:r1598 Indef IF (*-1 TRANS-V BARRIER NOT-ADV-PCLE)(0 BUOT LINK 1 S-BOUNDARY OR REAL-CLB); # trenges ikke
 	## Mun borren buot.
 
-#SELECT:r1599 Indef IF (0 ("buot") OR ("gait"))(*1 TRANS-V BARRIER Acc OR S-BOUNDARY); # trenges ikke
+#SELECT:r1599 Indef IF (0 BUOT)(*1 TRANS-V BARRIER Acc OR S-BOUNDARY); # trenges ikke
 	## Sii fertejit buot earret eatnamiid gohčodit danin.
 
 
@@ -4734,7 +4736,7 @@ SELECT ("eará" Gen) IF (-1 ("earret")) ;
 REMOVE:r1602 ("earri" N Sg Acc PxSg2) IF (-2 (V Pl3))(-1 COMMA)(0 ("eará"))(1 (V Pl3));
 	## Muhtimat čállet, earát ožžot jorgalan- ja bagadallanveahki dán bargui.
 
-REMOVE:r1603 ("earri" N Sg Acc PxSg2) IF (-1 ("buot") OR ("gait") OR ("máŋga"));
+REMOVE:r1603 ("earri" N Sg Acc PxSg2) IF (-1 BUOT OR ("máŋga"));
 	## Buot earát.
 
 REMOVE:r1604 ("earri" N Sg Acc PxSg2) IF (NEGATE *-1 Sg2)(*1 (V Pl3));
@@ -5759,7 +5761,7 @@ MAP:hab1 (@HAB>) TARGET HAB-ACTOR + Loc OR ("dat" Dem Loc) - Attr (NEGATE 0 HAB-
 MAP:hab2 (@HAB>) TARGET HAB-ACTOR + Loc OR ("dat" Dem Loc) - Attr (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(1 AUX + HAB-V-TAGS LINK 1 Adv LINK *1 ("leat") BARRIER NOT-ADV-PCLE);
 
 #!! * __hab3__ 
-MAP:hab3 (@HAB>) TARGET HAB-ACTOR + Loc OR ("dat" Dem Loc) - Attr (NEGATE 0 Group LINK *-1 Indef OR HUMAN BARRIER NOT-NPMOD-ACC)(NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(NEGATE 0 (Ani Group) LINK *1 Ani BARRIER (N Nom))(NEGATE 0 (Hum Group) LINK *1 Hum BARRIER (N Nom))(NEGATE 0 N OR Pers OR Indef LINK *-1 HAB-ACTOR + Loc BARRIER NOT-NPMOD-ACC OR CC)(NEGATE -1 Num LINK -1 Num)(*1 ("leat") + HAB-V-TAGS BARRIER NOT-ADV-PCLE LINK *1 Nom BARRIER S-BOUNDARY);
+MAP:hab3 (@HAB>) TARGET HAB-ACTOR + Loc OR ("dat" Dem Loc) - Attr (NEGATE 0 Group OR Pl - Rel LINK *-1 Indef - BUOT OR HUMAN BARRIER NOT-NPMOD-ACC)(NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(NEGATE 0 (Ani Group) LINK *1 Ani BARRIER (N Nom))(NEGATE 0 (Hum Group) LINK *1 Hum BARRIER (N Nom))(NEGATE 0 N OR Pers OR Indef LINK *-1 HAB-ACTOR + Loc BARRIER NOT-NPMOD-ACC OR CC)(NEGATE -1 Num LINK -1 Num)(*1 ("leat") + HAB-V-TAGS BARRIER NOT-ADV-PCLE LINK *1 Nom BARRIER S-BOUNDARY);
 	#$ Máhtes lea beana.
 	#% Juos gorreválggain Sámedikkis lea dárbbašlaš deavdit gáibádusa, ahte okta stivrralahtuin ja su sadjásašlahttu galgaba leat boazodoalu ovddasteaddjit, de galgá boazodoalu ovddasteddjiid loktet badjeliidda dan listtas, mii lea ožžon uhcimus jienaid daid listtaid gaskkas, mat galget ovddastuvvot ja main leat dakkár evttohasat. 
 	#% Ealus leat eanaš álddut.
@@ -5805,7 +5807,7 @@ MAP:hab10 (@<HAB) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 H
 	#$ Doppe leamaš sámiin stuora deaddu.
 
 # before relative clause
-MAP:habRel (@HAB>) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(*1 Rel BARRIER WORD LINK *1 VFIN BARRIER S-BOUNDARY OR MAIN-V LINK *1 ("leat") + HAB-V-TAGS BARRIER S-BOUNDARY OR MAIN-V);
+MAP:habRel (@HAB>) TARGET HAB-ACTOR + Loc (NEGATE 0 HAB-ACTOR-NOT-HUMAN LINK *1 HUMAN BARRIER (N Nom))(*1 Rel BARRIER WORD LINK *1 FMAINV BARRIER S-BOUNDARY LINK *1 ("leat") + HAB-V-TAGS BARRIER S-BOUNDARY OR MAIN-V);
 	#$ Divššohasas, gii dárbbaša guhkit áiggi ja oktiiheivehuvvon dearvvašvuođabálvalusaid, lea vuoigatvuohta oažžut ráhkaduvvot oktagaslaš plána.
 
 MAP:habEllipse (@<HAB) TARGET HAB-ACTOR + Loc (1 Adv LINK 1 (N Nom))(-1 COMMA LINK -1 (N Nom) LINK *-1 ("leat") + HAB-V-TAGS BARRIER NOT-NPMOD LINK -1 HAB-ACTOR + Loc);
@@ -6436,7 +6438,7 @@ MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-IMPRT + AUX-OR-MAIN ;
 	#$ Lásse dat lei sihtan mu váldit dan.
 
 #!! * __NPrsPrc1__ with 1C N Nom
-MAP:NPrsPrc1 (@>N) TARGET PrsPrc ((-1 (N Loc) OR ("buot") OR Attr OR (N Gen)) OR (-1 CC LINK -1 Attr))(NEGATE 0 N)(1 N)(NEGATE 0 VFIN LINK *1 Inf BARRIER REAL-V) ;
+MAP:NPrsPrc1 (@>N) TARGET PrsPrc ((-1 (N Loc) OR BUOT OR Attr OR (N Gen)) OR (-1 CC LINK -1 Attr))(NEGATE 0 N)(1 N)(NEGATE 0 VFIN LINK *1 Inf BARRIER REAL-V) ;
 
 MAP:NPrsPrc2 (@>N) TARGET PrsPrc (0C PrsPrc) ;
 
@@ -6793,7 +6795,7 @@ SELECT:SEMmainOrg Gen (0 Gen + MAIN-ORGANIZATION)(1 Loc LINK NEGATE 0 Plc OR (Pr
 
 # x    
 #!! * __SEMgen1__ removes Acc if buot, gait or buohkat in front of a genitive, followed by a plural noun ''buot Norlándda ohppiid''
-REMOVE:SEMgen1 Acc IF (-1 ("buot") OR ("gait") OR ("buohkat"))(0 (Sg Gen) LINK *1 (N Pl) BARRIER REAL-V);  
+REMOVE:SEMgen1 Acc IF (-1 BUOT OR ("buohkat"))(0 (Sg Gen) LINK *1 (N Pl) BARRIER REAL-V);  
 	#$ Son lea almmuhan eanemus girjjiid buot sámi čálliin. 
 	#$ Kantuvra meannuda buot Nordlándda, Romssa ja Finnmárkku ohppiid ja studeanttaid loatna- ja stipeandaohcamiid, ja buot velggolaččaid máksingeahpádusohcamiid, geat orrot seamma guovllus.
  
