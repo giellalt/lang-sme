@@ -281,10 +281,10 @@ LIST @SPRED<OBJ = @SPRED<OBJ ;
 LIST @-FADVL = @-FADVL ;
 
 SET FOBJ = @-F<OBJ OR @-FOBJ> ; 
-SET FMAINV = @-FMAINV OR @+FMAINV ;
+SET FMAINV = @-FMAINV OR @+FMAINV OR (V @<OBJ) OR (V @N<) OR (V @<SUBJ) OR (V @<ADVL) ;
 SET FAUXV = @-FAUXV OR @+FAUXV ;
 
-LIST @ADVL = @ADVL @ADVL> @ADVL< @<ADVL @>ADVL @-FADVL ;
+LIST @ADVL = @ADVL @ADVL> @ADVL< @<ADVL @>ADVL @-F<ADVL ;
 LIST @>ADVL = @>ADVL ;
 LIST @ADVL< = @ADVL< ;
 LIST @<ADVL = @<ADVL ;
@@ -928,7 +928,7 @@ MAP:p<coor (@P<) Gen (-1 CRD OR COMMA LINK -1 @P<) ;
 	#$ Maŋŋegiđa ja árrageasi guohtu boazu lulábeali rámaid, čohkaid ja jekkiid.
 
 
-MAP:num< (@Num<) TARGET (N Sg Gen)(*-1 NUM + (Sg Nom) OR NUM + (Sg Acc) BARRIER NOT-A) ;
+MAP:num< (@Num<) TARGET (N Sg Gen)(*-1 NUM + (Sg Nom) OR NUM + (Sg Acc) BARRIER NOT-A LINK NOT -1 ("jahki")) ;
 MAP:n< (@N<) TARGET (Sg Com)(-1 Coll) ;
 	#$ Mun oidnen Ándde-guovtto Ristiinnáin.
 
@@ -938,7 +938,7 @@ MAP:>num (@>Num) TARGET DUSSE (1 Num) ;
 MAP:>num (@>N) TARGET DUSSE (*1 N BARRIER NOT-A) ;
 
 
-MAP:>n (@>N) TARGET Attr OR Gen (*1 N BARRIER NOT-NPMOD)(NEGATE 0 OKTA + Nom LINK *1 (N Pl Loc) BARRIER NOT-NPMOD) ;
+MAP:>n (@>N) TARGET Attr OR Gen (*1 N BARRIER NOT-NPMOD)(NEGATE 0 OKTA + Nom LINK *1 (N Pl Loc) BARRIER NOT-NPMOD)(NEGATE 0 Gen LINK 1 CC LINK 1 Gen LINK 1 Po) ;
 MAP:>n (@>N) TARGET $$CASE (0 Dem OR OKTA OR ("buorre" A) LINK *1 $$CASE + N BARRIER NOT-A) ;
 
 MAP:>pron (@>Pron) GRADE-ADV OR DUSSE OR BUOT (1 Pron) ;
@@ -1068,10 +1068,20 @@ MAP:subj>Num (@SUBJ>) TARGET (Num Nom) (*1 (N Sg Gen) BARRIER NOT-A LINK *1 VFIN
 
 MAP:>cc (@>CC) TARGET ("sihke")(*1 ("ja") OR ("ahte")) ;
 
+MAP:>P (@>P) Gen (1 Po) ;
+MAP:>Pcoor (@>P) Gen (1 CC LINK *1 @>P BARRIER NOT-NPMOD) ;
+
+
 LIST ADVL = Adv Ill Com Loc Po Pr ;
+
+MAP:f<advl (@-F<ADVL) TARGET ADVL - MO OR (Time Gen) OR (Route Gen) (*-1 (V @<OBJ) BARRIER SV-BOUNDARY) ;
 
 MAP:<advl (@<ADVL) TARGET ADVL - MO OR (Time Gen) OR (Route Gen) (*-1 FMAINV BARRIER SV-BOUNDARY) ;
 MAP:advl> (@ADVL>) TARGET ADVL OR (Time Gen) OR (Route Gen) (*1 FMAINV BARRIER SV-BOUNDARY) ;
+
+MAP:<advl (@<ADVL) TARGET Po OR Pr (*-1 FMAINV BARRIER SV-BOUNDARY) ;
+MAP:advl> (@ADVL>) TARGET Po OR Pr (*1 FMAINV BARRIER SV-BOUNDARY) ;
+
 
 #MAP:<advl (@<ADVL) TARGET ADVL (*-1 FMAINV BARRIER SV-BOUNDARY) ;
 #MAP:advl> (@ADVL>) TARGET ADVL (*1 FMAINV BARRIER SV-BOUNDARY) ;
@@ -1091,7 +1101,6 @@ MAP:-f<obj (@-F<OBJ) TARGET Acc (*-1 (V @<OBJ) OR (V @<SUBJ) OR (V @<ADVL) BARRI
 MAP:<obj (@<OBJ) TARGET Acc - Rel (*-1 FMAINV BARRIER SV-BOUNDARY) ;
 MAP:obj> (@OBJ>) TARGET Acc (*1 FMAINV BARRIER SV-BOUNDARY) ;
 
-MAP:>P (@>P) Gen (1 Po + @<ADVL OR Po + @ADVL>) ;
 
 
 
