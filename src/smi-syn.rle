@@ -103,6 +103,7 @@ LIST Hum = Hum ;
 LIST Group = Group ;
 LIST Date = Date ;
 
+LIST HUMAN = Hum Mal Fem Sur Pers NumAg Der/NumAg ;
 
 #!! * Sets for Morphosyntactic properties
 # --------------------------
@@ -355,18 +356,6 @@ SET OBJ>-OTHERS = OBJ> OR (Gen) OR (Nom) OR (Ess) OR (Loc) OR (Adv) ;
 
 
 LIST @X = @X ;
-
-# Semantic tags
-# -------------
-
-LIST Fem = Fem ;
-LIST Mal = Mal ;
-
-LIST Obj = Obj ;
-LIST Org = Org ;
-LIST Plc = Plc ;
-
-LIST Sur = Sur ;
 
 
 
@@ -971,6 +960,10 @@ MAP:pron< (@Pron<) TARGET $$CASE (0 Refl LINK *-1 $$CASE + Pers BARRIER S-BOUNDA
 MAP:pron< (@N<) TARGET $$CASE (0 Refl LINK *-1 $$CASE + (N Hum) BARRIER S-BOUNDARY OR CC) ;
 	#$ Sis lea alddiset ruhta.
 
+MAP (@VOC) TARGET HUMAN + Nom IF (-1 BOS OR REAL-CLB)(1 COMMA LINK NEGATE *1 HUMAN + Nom BARRIER NOT-NPMOD LINK 1 COMMA OR CC)(NEGATE 2 Rel) ;
+	#$ Ustiban, in mun daga dutnje vearrut.
+
+
 MAP:app<n (@APP-N<) TARGET (Num Nom) IF (-1 (Prop Sur Nom) LINK -1 ("\("))(1 COMMA LINK 1 ("s") LINK 1 CARDINALS LINK 1 ("\)"));
 	#$ (Simonsen 1959, s. 45)
 
@@ -991,6 +984,30 @@ MAP:r293 (@APP-Pron<) TARGET (N Acc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR
 	#$ Oidnet go Mihkkala, min nuoramus bártni?
 	#$ Mon oainnán fierpmi, su mearkka, ja dieđán ahte Spider-Man lea leamaš das.	
 		
+
+SET NOT-NP = VFIN-NOT-NEG OR ConNeg OR Inf OR Pcle OR Interj OR CS ;
+
+MAP:voc (@VOC) TARGET Nom IF (*-1 COMMA BARRIER NOT-NP OR CC LINK *-1 (V Sg2) OR (V Du2) OR (V Pl2) OR (Pron Sg2) OR (Pron Du2) OR (Pron Pl2) LINK NOT 0 ("leat"))(1 EOS)(0 HUMAN)(NEGATE 0 Sg LINK *-1 V-SG3 BARRIER REAL-V);
+	## Vuoi du, Betsaida!
+	
+MAP:voc (@VOC) TARGET Nom IF (-1 Attr LINK -1 COMMA BARRIER NOT-NP OR CC LINK *-1 (V Sg2) OR (V Du2) OR (V Pl2) OR (Pron Sg2) OR (Pron Du2) OR (Pron Pl2) LINK NOT 0 ("leat"))(1 EOS)(0 HUMAN)(NEGATE 0 Sg LINK *-1 V-SG3 BARRIER REAL-V);
+	
+	
+MAP:voc (@VOC) TARGET (N Nom) IF (*-1 COMMA BARRIER NP-BOUNDARY LINK *-1 ("boahtin" Nom) BARRIER REAL-V OR S-BOUNDARY LINK -1 ("bures"))(1 EOC);
+	## Bures boahtin Čáhppes Bearralii, Miss Turner!	
+
+MAP:voc (@VOC) TARGET Nom IF (-1 COMMA)(0 Pers)(0 Sg2 OR Du2 Or Pl2) (*1 Nom BARRIER NOT-NPMOD LINK 1 EOS);
+	## Gáidet eret mu luhtte, dii verrošeaddjit! 
+
+MAP:voc (@VOC) TARGET (N Nom) IF (-2 BOS)(-1 (Imprt Sg2))(NEGATE -1 Adv OR Qst)(1 EOS);
+	## Gula eadni!
+
+MAP:voc (@VOC) TARGET (N Nom) IF (-3 BOS)(-2 (Imprt Sg2) OR (Sg2 Qst))(NEGATE -2 Nom) (-1 COMMA)(1 COMMA);
+	## Buvttes, Máhtte, goikemuoraid!
+
+MAP:voc (@VOC) TARGET (N Nom) IF (-4 BOS)(-3 (V Sg2))(-2 go)(-1 COMMA)(1 COMMA);
+	## It go, bártnážan, boađáše fargga ruoktot?
+
 
 MAP:r294 (@APP-N<) TARGET (N Loc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR ADVLCASE LINK -1 (N Loc))(1 EOS) ;	
 MAP:r295 (@APP-N<) TARGET (N Loc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR ADVLCASE LINK -1 (N Loc))(1 COMMA LINK 1 S-BOUNDARY OR Adv) ;	
@@ -1045,7 +1062,7 @@ MAP:r321 (@APP-Pron<) TARGET (N Acc) IF (*-1 ("nugo") OR ("sihke") BARRIER APP-B
 	#$ Muhtun sámi biktasiid, nugo gápmagiid ja vuoddagiid, sii geavahedje guhkit, gitta 1960-logu rádjai.
 
 
-MAP:<spred (@<SPRED) TARGET Nom - OKTA ((*-1 COPULAS + FMAINV BARRIER NOT-NPMODADV LINK *-1 @HAB> OR DOPPE OR (N Loc) OR Ill OR (Time Adv) OR (Time Gen) OR TIME-ADVL OR Po BARRIER SV-BOUNDARY) OR (-1 Ill OR @Pron<  LINK *-1 COPULAS + FMAINV BARRIER NOT-NPMODADV LINK *-1 @HAB> OR DOPPE OR (Plc Loc) OR Ill OR Time OR TIME-ADVL OR Po BARRIER SV-BOUNDARY)) ;
+MAP:<spred (@<SPRED) TARGET Nom - OKTA ((*-1 COPULAS + FMAINV BARRIER NOT-NPMODADV LINK *-1 @HAB> OR DOPPE OR (N Loc) OR Ill OR (Time Adv) OR (Time Gen) OR TIME-ADVL OR Po OR Adv BARRIER SV-BOUNDARY) OR (-1 Ill OR @Pron<  LINK *-1 COPULAS + FMAINV BARRIER NOT-NPMODADV LINK *-1 @HAB> OR DOPPE OR (Plc Loc) OR Ill OR Time OR TIME-ADVL OR Po BARRIER SV-BOUNDARY)) ;
 	#$ Dá lea dutnje biebmu.
 	#$ Juohke guovllu gávttis lea sierralágan holbi.
 
@@ -1072,6 +1089,7 @@ MAP:<spredCoor (@<SPRED) TARGET Nom - Rel (*-1 CC OR COMMA BARRIER NOT-NPMOD LIN
 LIST PERS-TAGS = Sg1 Sg2 Sg3 Du1 Du2 Du3 Pl1 Pl2 P3 ;
 
 MAP:subj>Pers (@SUBJ>) TARGET $$PERS-TAGS + Nom IF (*1 $$PERS-TAGS + VFIN BARRIER NOT-ADV-PCLE) ;
+MAP:subj>Pers (@SUBJ>) TARGET (Sg1 Nom) (-1 CC LINK *2 (V Pl1) BARRIER NOT-ADV-PCLE) ;
 MAP:<subjPers (@<SUBJ) TARGET $$PERS-TAGS + Nom IF (*-1 $$PERS-TAGS + VFIN BARRIER NOT-ADV-PCLE) ;
 	#$ Mii du namma lea?
 	#$ Gii ..
@@ -1088,6 +1106,8 @@ MAP:subj>Coor2 (@SUBJ>) TARGET Nom (*-1 CC BARRIER NOT-NPMOD LINK -1 @SUBJ>)(*1 
 MAP:<subjCoor1 (@<SUBJ) TARGET Nom IF (1 CC LINK *1 Nom BARRIER NOT-NPMOD)(*-1 VFIN + Pl3 OR VFIN + Du3 BARRIER NOT-ADV-PCLE LINK NOT *-1 Nom BARRIER NOT-ADV-PCLE) ;
 MAP:<subjCoor2 (@<SUBJ) TARGET Nom (*-1 CC BARRIER NOT-NPMOD LINK -1 @<SUBJ LINK *-1 VFIN + Pl3 OR VFIN + Du3 BARRIER NOT-ADV-PCLE LINK NOT *-1 Nom BARRIER NOT-ADV-PCLE) ;
 MAP:subj>Num (@SUBJ>) TARGET (Num Nom) (*1 (N Sg Gen) BARRIER NOT-A LINK *1 VFIN + Pl3 BARRIER NOT-ADV-PCLE) ;
+MAP:subj>Coor3 (@SUBJ>) TARGET Nom IF (1 CC OR COMMA LINK *1 @SUBJ> BARRIER NOT-NPMOD) ;
+MAP:subj>Coor4 (@SUBJ>) TARGET Nom IF (1 CC OR COMMA LINK *1 @SUBJ> BARRIER NOT-NPMOD) ;
 
 
 MAP:>cc (@>CC) TARGET ("sihke")(*1 ("ja") OR ("ahte")) ;
@@ -1130,7 +1150,7 @@ MAP (@>ADVL) TARGET Adv IF (0 MOD-ADV)(*1 @ADVL BARRIER NOT-NPMOD);
 
 MAP:<advl (@<ADVL) TARGET Adv (*-1 FMAINV BARRIER SV-BOUNDARY)(NEGATE -1 COMMA LINK *1 FMAINV BARRIER S-BOUNDARY) ;
 
-MAP:-fsubj> (@-FSUBJ>) TARGET (Hum Acc) OR (Mal Acc) OR (Fem Acc) OR (Pron Acc) (1 (V @<OBJ)) ; 
+MAP:-fsubj> (@-FSUBJ>) TARGET HUMAN + Acc (1 (V @<OBJ)) ; 
 MAP:-f<obj (@-F<OBJ) TARGET Acc (*-1 (V @<OBJ) OR (V @<SUBJ) OR (V @<ADVL) BARRIER NOT-NPMOD) ; 
 	#$ Máret muitalii Máhte oaidnán guovžža.
 
