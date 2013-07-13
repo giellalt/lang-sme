@@ -10,10 +10,10 @@
 if CAN_DOCC
 
 JSP_PAGES=root-morphology.jspwiki        \
-		  disambiguation-syntax.jspwiki  \
-		  nouns-affixes.jspwiki          \
 		  adjectives-affixes.jspwiki       \
-		  verbs-affixes.jspwiki
+		  nouns-affixes.jspwiki          \
+		  verbs-affixes.jspwiki \
+		  disambiguation-syntax.jspwiki  
 # clitics-morphology.jspwiki       \
 # compounding-morphology.jspwiki   \
 # abbreviations-stems.jspwiki      \
