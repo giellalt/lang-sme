@@ -40,6 +40,7 @@ GT_FILTER_TARGETS+=\
 				   remove-NA-strings.hfst                 \
 				   remove-NG-strings.hfst                 \
 				   remove-NGminip-strings.hfst            \
+				   remove-semantic-tags-except-prop.hfst  \
 				   remove-MinusSpell-strings.hfst         \
 				   remove-ABBR-strings.hfst               \
 				   remove-illegal-derivation-strings.hfst \
