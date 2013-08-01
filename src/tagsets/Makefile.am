@@ -49,7 +49,7 @@ GT_REGEX_SRCS=$(GT_TAGSET_SRCS)
 gttags.hfst.txt: ../morphology/$(GTLANG).lexc.hfst
 	$(AM_V_GEN)$(HFST_PROJECT) -p upper $< \
 		| $(HFST_MINIMIZE)     \
-		| $(HFST_SUMMARIZE) -v -s \
+		| $(HFST_SUMMARIZE) -v \
 		| grep -A1 'arc symbols actually seen' \
 		| grep -F '+'   \
 		| tr ' ' '\n'   \
@@ -59,6 +59,7 @@ gttags.hfst.txt: ../morphology/$(GTLANG).lexc.hfst
 # Convert GT-tags to Apertium-tags:
 apertiumtags.hfst.txt: gttags.hfst.txt
 	$(AM_V_GEN)tr -d '+' < $< \
+		| tr '#' '+' \
 		| tr '/[:upper:]' '_[:lower:]' \
 		| awk '{print "%<"$$0"%>"}' > $@
 
