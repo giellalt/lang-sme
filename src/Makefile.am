@@ -172,6 +172,7 @@ analyser-apertium-norm.att: generator-raw-gt-desc.hfst \
 					filters/remove-norm-comp-tags.hfst \
 					filters/remove-number-string-tags.hfst \
 					filters/remove-usage-tags.hfst \
+					filters/remove-g-tags.hfst \
 					filters/remove-semantic-tags-except-prop.hfst \
 					filters/remove-sub-forms.hfst \
 					filters/remove-hyphenation-marks.hfst        \
@@ -195,6 +196,9 @@ analyser-apertium-norm.att: generator-raw-gt-desc.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-semantic-tags-except-prop.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-g-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-usage-tags.hfst \
