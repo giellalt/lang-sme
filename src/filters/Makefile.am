@@ -29,6 +29,7 @@ GT_FILTER_TARGETS+=\
 				   remove-derivation-position-tags.hfst   \
 				   remove-dialect-tags.hfst               \
 				   remove-homonymy-tags.hfst              \
+				   remove-g-tags.hfst              \
 				   remove-variant-tags.hfst               \
 				   remove-norm-comp-tags.hfst             \
 				   remove-number-string-tags.hfst         \
