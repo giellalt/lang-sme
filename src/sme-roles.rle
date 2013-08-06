@@ -482,6 +482,9 @@ LIST Build = Build ;
 LIST Edu = Edu ;
 LIST Veh = Veh ;
 LIST Event = Event ;
+LIST Obj = Obj ; # concrete object, movable
+LIST Semcon = Semcon ; # semantic concept
+
 
 LIST Fem = Fem ;
 LIST Mal = Mal ;
@@ -515,7 +518,7 @@ LIST <AT-Abe-Any> = <AT-Abe-Any> ;
 LIST <AT-Ess-Any> = <AT-Ess-Any> ;
 LIST <AT-Nom-Any> = <AT-Nom-Any> ;
 LIST <AT-Nom-Adj><EX-Ill-Ani> = <AT-Nom-Adj><EX-Ill-Ani> ;
-LIST <TH-Nom-Any><RE-Ill-Ani> = <TH-Nom-Any><RE-Ill-Ani> ;
+LIST <TH-Nom-Obj><RE-Ill-Ani> = <TH-Nom-Obj><RE-Ill-Ani> ;
 LIST <AktioEss> = <AktioEss> ;
 LIST <BE-Acc-Ani> = <BE-Acc-Ani> ;
 LIST <BE-Acc-Ani><RO-Ess-Any> = <BE-Acc-Ani><RO-Ess-Any> ;
@@ -2937,6 +2940,9 @@ TEMPLATE uniqueTH = (NONE s (§TH)) ;
 
 LIST EX-SUBJ-V = "bállet" "beahtahallat" "beassat" "birget" "bivvat" "čoaskut" "dárbbašit" "diehtit" "dovdat" "ipmirdit" "jápmit" "liikot" "njuoskat" "ruoidnat" "seargat" "váibat" ;
 
+SET AG-SUBJ-V = <TH-Acc-Any> OR <TH-Ill-Any> OR <TO-Acc-Any> OR <PA-Acc-Ani> OR <EX-Acc-Any> OR <PA-Acc-Any> OR <PR-Acc-Any> OR <TH-Acc-Txt> OR <TH-ahte> OR <TH-Acc-Any> OR <TH-Acc-Any><SO-Loc-Any><DE-Ill-Any> OR <TH-Acc-Any><DE-Ill-Any> OR <PR-Acc-Any> OR ("rievidit") OR <SO-Loc-Any><DE-Ill-Any> OR ("fitnat") OR ("oađđit") OR ("atnit");
+
+
 LIST TH-SUBJ-V = "dáhpáhuvvat" "dáidit" "doaibmat" "duoldat" "gávdnot" "geavvat" "giksat"  "gopmánit" "gustot" "hehttet" "ilbmat" "lápmašuvvat" "ligget" "nohkat" "oidnot" "rahpasit" "rahppot" "riegádit" "rievdat" "savvot" "šaddat";  
 LIST TH-TIME-SUBJ-V = "gollat" ;
 
@@ -3012,8 +3018,12 @@ SUBSTITUTE (Refl)(Refl Hum) TARGET Pron;
 		
 LIST HUM-PRON = Pers "eará" "gii" "giinai" "giijai" "iešgiige" "iešgiinai" "iešgiijai" "buohkat" "vaikko gii" "feara gii" "gallis" "eatnagat" "juohkehaš" "ollut" "olus" "gallis" "oktage" "ollugat"; #"eará"???
 
-SUBSTITUTE (Pron)(Pron Hum) TARGET HUM-PRON;
+LIST HUM+OBJ-PRON = "dat" ;
+
+SUBSTITUTE (Pron)(Pron Hum) TARGET HUM-PRON - HUM+OBJ-PRON;
 	## 
+
+SUBSTITUTE (Pron)(Pron Hum Obj) TARGET HUM+OBJ-PRON;
 	
 	# Emotion
 	# -------
@@ -3105,7 +3115,7 @@ MAP (§TH) TARGET SUBJ (p <AT-Nom-Any> + <mv> OR <ID-Nom-Any> + <mv>)(s Nom OR M
 MAP (§TH) TARGET SUBJ (p <aux> LINK c <AT-Nom-Any> + <mv> OR <ID-Nom-Any> + <mv> LINK c Nom + A)(NONE p SUBJ);
 	## Son lea čáppa.
 	
-MAP (§TH) TARGET SUBJ (p <AT-Ess-Any> + <mv> OR <RO-Ess-Any> + <mv> OR <TH-Acc-Any><RO-Ess-Any> + <mv> + PASSIVE LINK c Ess)(NONE p SUBJ);
+MAP (§TH) TARGET SUBJ (p <AT-Ess-Any> + <mv> - AG-SUBJ-V OR <RO-Ess-Any> + <mv> - AG-SUBJ-V OR <TH-Acc-Any><RO-Ess-Any> + <mv> + PASSIVE - AG-SUBJ-V LINK c Ess)(NONE p SUBJ);
 MAP (§TH) TARGET SUBJ (p <aux> LINK c* <AT-Ess-Any> + <mv> OR <RO-Ess-Any> + <mv> OR <TH-Acc-Any><RO-Ess-Any> + <mv> + PASSIVE LINK c Ess)(NONE p SUBJ);
 
 MAP (§TH) TARGET SUBJ (0 Nom)(p <TH-Nom-Any><XT-Acc-Measure>  + <mv> LINK c* Measr)(T:uniqueTH);
@@ -3160,8 +3170,6 @@ MAP (§RE) TARGET SUBJ (p <aux> LINK c* RE-SUBJ-V + <mv> - PASSIVE)(NONE p SUBJ)
 MAP (§LO) TARGET SUBJ (p <LO-Nom-Any><TH-Acc-Any> + <mv> - PASSIVE)(NONE p SUBJ);
 MAP (§LO) TARGET SUBJ (p <aux> LINK c* <LO-Nom-Any><TH-Acc-Any> + <mv> - PASSIVE)(NONE p SUBJ);
 	## Eai gait ságat čázi jeage.
-
-SET AG-SUBJ-V = SO-DE-V OR TH-ACC-V OR TH-ILL-V OR EX-ACC-V OR TO-ACC-ANY-V OR PA-ACC-ANI-V OR <PA-Acc-Any> OR <PR-Acc-Any> OR <TH-Acc-Txt> OR <TH-ahte> OR <TH-Acc-Any> OR <TH-Acc-Any><SO-Loc-Any><DE-Ill-Any> OR <TH-Acc-Any><DE-Ill-Any> OR <PR-Acc-Any> OR ("rievidit") OR <SO-Loc-Any><DE-Ill-Any> OR ("fitnat") OR ("oađđit");
 
 
 MAP (§AG) TARGET SUBJ OR @VOC (p AG-SUBJ-V + <mv> - PASSIVE - <AG-Ill-Any>)(NEGATE 0 (*) - Hum - Ani LINK p <TH-Nom-*Ani><MA-Adv-Manner> LINK c MANNER-ADV)(NEGATE p <TH-Nom-Any><PO-Ill-Any> + <mv> LINK c Ill)(NEGATE p <aux> LINK c* <TH-Nom-Any><PO-Ill-Any> + <mv> LINK c Ill)(NONE p SUBJ)(NEGATE s ("mađe") LINK s ("dađe"));
@@ -3285,7 +3293,7 @@ MAP (§TH) TARGET @<SPRED (p ("leat") + <mv> LINK NONE c SUBJ)(NEGATE p* V LINK 
 	#$ Dat sáhttá álgobáliid leat oalle váttis.
 	## Doppe lea muorra.
 	
-MAP (§TH) TARGET @<SPRED (p ("leat") + <mv> OR ("šaddat") + <mv> LINK NONE c SUBJ OR @ADVL> + Time OR @ADVL> + Plc OR @ADVL> + Build OR @ADVL> + Org OR @ADVL> + Hum OR @ADVL> + Ani)(NEGATE p ("leat") OR ("šaddat") + <mv> LINK p <aux> LINK p <aux> LINK c SUBJ)(NEGATE p ("leat") OR ("šaddat") + <mv> LINK p <aux> LINK c SUBJ)(NEGATE p <OR-Loc-Mat><PR-Nom-Any> + <mv> LINK c Loc + Mat)(NEGATE p V LINK s @CVP LINK p V LINK c SUBJ)(NEGATE p V LINK p <aux> LINK s @CVP LINK p V LINK c SUBJ)(T:uniqueTH); # the c* is important because in a coordinated sentence, the subject can be higher up
+MAP (§TH) TARGET @<SPRED (p ("leat") + <mv> OR ("šaddat") + <mv> LINK NONE c SUBJ OR @ADVL> + Time OR @ADVL> + Plc OR @ADVL> + Build OR @ADVL> + Org OR @ADVL> + Hum OR @ADVL> + Ani);#(NEGATE p ("leat") OR ("šaddat") + <mv> LINK p <aux> LINK p <aux> LINK c SUBJ)(NEGATE p ("leat") OR ("šaddat") + <mv> LINK p <aux> LINK c SUBJ)(NEGATE p <OR-Loc-Mat><PR-Nom-Any> + <mv> LINK c Loc + Mat)(NEGATE p V LINK s @CVP LINK p V LINK c SUBJ)(NEGATE p V LINK p <aux> LINK s @CVP LINK p V LINK c SUBJ)(T:uniqueTH); # the c* is important because in a coordinated sentence, the subject can be higher up
 	## Vuovdimassii leat maid gáhkut ja láibevajahasat.
 	#$ Dán báhkis šaddá čáppa gohppu.
 	#$ Son lea mu oabbá, ja lea 35 jagi boaris.
@@ -3430,14 +3438,14 @@ MAP (§TH)  TARGET OBJ + Acc (p <TH-Acc-Any><RF-vuostá-Any> LINK c ("vuostá"))
 MAP (§TH)  TARGET OBJ + Acc (p <TH-Acc-Any><RF-vuostái-Any> LINK c ("vuostái"))(T:uniqueTH);
 MAP (§TH) TARGET OBJ + Acc OR OBJ + Inf (p <TH-Acc-Any><RO-Ess-Adj> LINK c Ess + A)(T:uniqueTH);
 	## Anán buorebun odne vuolgit go ihttážii vuordit.
-MAP (§TH)  TARGET OBJ + Acc  OR OBJ + Inf (p <TH-Acc-Any><RO-Ess-Any> LINK c Ess)(T:uniqueTH);
-MAP (§TH)  TARGET OBJ + Acc  OR OBJ + Inf (p <TH-Acc-Any><RO-Ess-Any>)(c Ess + A)(T:uniqueTH);
+MAP (§TH)  TARGET OBJ + Acc OR OBJ + Inf (p <TH-Acc-Any><RO-Ess-Any> LINK c Ess)(T:uniqueTH);
+MAP (§TH)  TARGET OBJ + Acc OR OBJ + Inf (p <TH-Acc-Any><RO-Ess-Any>)(c Ess + A)(T:uniqueTH);
 	## Son atná iežas sápmelažžan.
-MAP (§TH)  TARGET OBJ + Acc  OR OBJ + Inf (p <TH-Acc-Any><RO-Ill-Any> LINK c Ill)(T:uniqueTH);
-MAP (§TH)  TARGET OBJ + Acc  OR OBJ + Inf (p <TH-Acc-Any><RS-Loc-Any> LINK c Loc)(T:uniqueTH);
-MAP (§TH)  TARGET OBJ + Acc  OR OBJ + Inf (p <TH-Acc-Any><RS-ovddas-Any> LINK c ("ovddas"))(T:uniqueTH);
-MAP (§TH)  TARGET OBJ + Acc  OR OBJ + Inf (p <TH-Acc-Any><SO-Loc-Any> LINK c Loc)(T:uniqueTH);
-MAP (§TH)  TARGET OBJ + Acc  OR OBJ + Inf (p <TH-Acc-Any><SO-Loc-Any><DE-Ill-Any> LINK c Loc)(T:uniqueTH);
+MAP (§TH)  TARGET OBJ + Acc OR OBJ + Inf (p <TH-Acc-Any><RO-Ill-Any> LINK c Ill)(T:uniqueTH);
+MAP (§TH)  TARGET OBJ + Acc OR OBJ + Inf (p <TH-Acc-Any><RS-Loc-Any> LINK c Loc)(T:uniqueTH);
+MAP (§TH)  TARGET OBJ + Acc OR OBJ + Inf (p <TH-Acc-Any><RS-ovddas-Any> LINK c ("ovddas"))(T:uniqueTH);
+MAP (§TH)  TARGET OBJ + Acc OR OBJ + Inf (p <TH-Acc-Any><SO-Loc-Any> LINK c Loc)(T:uniqueTH);
+MAP (§TH)  TARGET OBJ + Acc OR OBJ + Inf (p <TH-Acc-Any><SO-Loc-Any><DE-Ill-Any> LINK c Loc)(T:uniqueTH);
 MAP (§TH)  TARGET OBJ + Acc (p <TH-Acc-Any><SO-Loc-Lang>  LINK c Loc + Lang)(T:uniqueTH);
 MAP (§TH)  TARGET OBJ + Acc  OR OBJ + Inf (p <TH-Acc-Any><SO-Loc-Lang><DE-Ill-Lang> LINK c Loc + Lang)(T:uniqueTH);
 MAP (§TH)  TARGET OBJ + Acc (p <TH-Acc-Any><TH-Com-Any> LINK c Com); # No (T:uniqueTH)
@@ -3758,13 +3766,13 @@ MAP (§TH) TARGET @FS-OBJ OR @FS-<ADVL (s §AT LINK p <AT-Nom-Any>)(T:uniqueTH)(
 # - - - - -
 TEMPLATE uniqueID = (NONE s (§ID)) ;
 
-MAP (§ID) TARGET @<SPRED (0 N + Nom OR Num + Nom OR Dem + Nom)(p <ID-Nom-Any> LINK *-1 Dem OR Pers)(NOT *-1 @HAB)(0* SUBJ)(T:uniqueID);
+MAP (§ID) TARGET @<SPRED (0 N + Nom OR Num + Nom OR Dem + Nom)(p <ID-Nom-Any> LINK *-1 Dem OR Pers)(NOT *-1 @HAB)(0* SUBJ BARRIER S-BOUNDARY)(T:uniqueID);
 	## Dat orru čáhci.
 
-MAP (§ID) TARGET SPRED (0 N + Nom OR Num + Nom OR Dem + Nom)(p <ID-Nom-Any> LINK *-1 Dem OR Pers)(NOT *-1 @HAB)(0* SUBJ)(T:uniqueID);
+MAP (§ID) TARGET SPRED (0 N + Nom OR Num + Nom OR Dem + Nom)(p <ID-Nom-Any> LINK *-1 Dem OR Pers)(NOT *-1 @HAB)(0* SUBJ BARRIER S-BOUNDARY)(T:uniqueID);
 
-MAP (§ID) TARGET SPRED (0 N + Nom OR Num + Nom OR Dem + Nom)(p <ID-Nom-Any>)(NOT *-1 @HAB)(T:uniqueID)(0* SUBJ); # (0 N + Nom + Hum)????
-MAP (§ID) TARGET SPRED (0 Num + Nom OR Num + Nom OR Dem + Nom)(p <ID-Nom-Any>)(NOT *-1 @HAB)(T:uniqueID)(0* SUBJ + Time);
+MAP (§ID) TARGET SPRED (0 N + Nom OR Num + Nom OR Dem + Nom)(p <ID-Nom-Any>)(NOT *-1 @HAB)(T:uniqueID)(0* SUBJ BARRIER S-BOUNDARY); # (0 N + Nom + Hum)????
+MAP (§ID) TARGET SPRED (0 Num + Nom OR Num + Nom OR Dem + Nom)(p <ID-Nom-Any>)(NOT *-1 @HAB)(T:uniqueID)(0* SUBJ + Time BARRIER S-BOUNDARY);
 	## Diibmu lea njeallje.
 	
 MAP (§ID) TARGET SPRED (0 Interr + Nom)(p <mv> + <ID-Nom-Any> LINK c SUBJ)(T:uniqueID); 
@@ -4366,7 +4374,7 @@ MAP (§RE) TARGET @ADVL (0 Ill LINK 0 Hum OR Org OR Prop) (p <RE-Ill-Ani>)(T:uni
 MAP (§RE) TARGET @ADVL (0 Ill LINK 0 Hum OR Org OR Prop) (p <TO-Acc-*Ani><RE-Ill-Ani> OR <RE-Ill-Ani><TH-Acc-*Ani> LINK c Acc - Hum - Ani);
 	# Prop because a country can represent a human
 	## Muhto go Martha Hoffmann dáppe oastigođii ránuid maid son vuvddii Lulli-Norgii, sihke museaide ja olbmuide, de šattai fas gánnáhahtti gođđit ránuid.
-MAP (§RE) TARGET @ADVL (0 Ill LINK 0 Hum OR Org OR Prop) (p <TH-Nom-Any><RE-Ill-Ani> LINK c §TH + Nom - A);
+MAP (§RE) TARGET @ADVL (0 Ill LINK 0 Hum OR Org OR Prop) (p <TH-Nom-Obj><RE-Ill-Ani> LINK c §TH + Nom - A - Time - Semcon - Build - Ani - Hum - Org);
 	#$ Lea go Čáhppes Bearral oahpis dutnje?
 	## Dá lea dutnje biebmu.
 MAP (§RE) TARGET @ADVL (0 Ill LINK 0 Hum OR Pron OR Org OR Prop) (p <RE-Ill-Ani><TH-ahte> OR <TH-ahte><RE-Ill-Any> OR <TO-ahte><RE-Ill-Any> LINK 0* ("ahte"))(T:uniqueRE);
@@ -4389,7 +4397,7 @@ MAP (§RE) TARGET @ADVL (0 Loc + Ani OR Loc + Hum OR Loc + Org) (p <TH-Acc-Any><
 MAP (§RE) TARGET @ADVL (0 Loc LINK 0 Hum OR Pron OR Org) (p <TO-Acc-*Ani><RE-Loc-Ani> LINK c Acc - Ani)(T:uniqueRE);
 	##  Mii bivdit sis veahki. 
 
-MAP (§RE) TARGET @ADVL (0 Ill + Ani OR Ill + Hum)(p <AT-Nom-Adj><EX-Ill-Ani> LINK c SPRED - A)(T:uniqueRE);	
+MAP (§RE) TARGET @ADVL (0 Ill + Ani - Obj OR Ill + Hum - Obj)(p <AT-Nom-Adj><EX-Ill-Ani> LINK c SPRED - A)(T:uniqueRE);	
 	## Dá livčče dutnje sabehat.
 
 # REFERENT
@@ -4598,6 +4606,13 @@ MAP (§XT) TARGET @ADVL (0 Loc LINK 0 Money)(p <TH-Acc-Any><XT-Loc-Money> LINK c
 #LIST <vuostá> = <vuostá> ;
 
 
+# kill them all rules
+# ===================
+
+MAP (§TH) TARGET SPRED ;
+	## Ja dasa lea dát sivva: go sápmelaš boahtá moskkus gámmirii, de son ii ipmir ii báljo maidege, go ii biegga beasa bossut njuni vuostá
+
+
 # round of mapping coordination
 # - - - - - - - - - - - - - - -
 
@@ -4612,6 +4627,12 @@ MAP $$ROLE (N) OR (V Inf) OR (A) (NOT 0 @>N)(p $$ROLE)(s CC OR COMMA OR Neg + Fo
 	## Čoahkkima jođiheaddji čuorvu namaid ja vuostáiváldá áirasiid ja sadjásaš áirasiid fápmudusaid.
 	## Sámediggi vállje čoahkkinjođihangotti, válgalávdegotti, bearráigeahččanlávdegotti ja sámediggeráđi.
 	## Juona dáfus sirdá Eallinbihtát romána olggobeal Sámi, ja mii beassat oahpásmuvvat albmán gii lea vuolgán buoret eallima ohcat eará sajis go šaddanbáikkis. -- adjunct?
+
+MAP $$ROLE N + $$ROLECASE OR (V Inf) + $$ROLECASE OR A + $$ROLECASE (NOT 0 @>N)(p $$ROLE + $$ROLECASE)(-1 COMMA)(1 CC)(s $$ROLECASE);
+	## Lea stáhta eiseválddiid ovddasvástádus láhčit dili nu ahte sámi álbmot sáhttá sihkkarastit ja ovddidit gielaset, kultuvrraset ja servodateallima.
+MAP $$ROLE N + $$ROLECASE OR (V Inf) + $$ROLECASE OR A + $$ROLECASE (NOT 0 @>N)(p $$ROLE + $$ROLECASE)(-1 CC)(s $$ROLECASE LINK -1 COMMA);
+	## Lea stáhta eiseválddiid ovddasvástádus láhčit dili nu ahte sámi álbmot sáhttá sihkkarastit ja ovddidit gielaset, kultuvrraset ja servodateallima.
+
 MAP $$ROLE (Po) (p $$ROLE)(s CC OR COMMA);
 	## Ovddeš áiggiid headjaguossit lávejedje heasttaiguin johtit girkui ja headjaviesu lusa.
 MAP $$ROLE A (NOT 0 @>N) (p $$ROLE)(s CC OR COMMA OR Neg + Foc/ge); ## maybe only §AT ??
