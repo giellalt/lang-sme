@@ -31,6 +31,7 @@ GT_FILTER_TARGETS+=\
 				   remove-homonymy-tags.hfst              \
 				   remove-g-tags.hfst              \
 				   remove-variant-tags.hfst               \
+				   remove-deriv-strings-MT-sma.hfst     \
 				   remove-norm-comp-tags.hfst             \
 				   remove-number-string-tags.hfst         \
 				   remove-usage-tags.hfst                 \
