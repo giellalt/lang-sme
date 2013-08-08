@@ -386,6 +386,7 @@ LIST @<ADVL = @<ADVL ;
 LIST @ADVL> = @ADVL> ;
 LIST @FS-<ADVL = @FS-<ADVL ;
 LIST @FS-ADVL> = @FS-ADVL> ;
+LIST @ADVL<OBJ = @ADVL<OBJ ;
 
 LIST @HAB = @HAB ;
  
@@ -446,7 +447,7 @@ LIST @VOC = @VOC ;
 LIST @CVP = @CVP ;
 LIST @CNP = @CNP ;
 
-SET OBJ = @<OBJ OR @OBJ> OR @OBJ OR @-F<OBJ OR @-FOBJ> OR @FS-OBJ OR @ICL-OBJ OR @SPRED<OBJ;
+SET OBJ = @<OBJ OR @OBJ> OR @OBJ OR @-F<OBJ OR @-FOBJ> OR @FS-OBJ OR @ICL-OBJ OR @SPRED<OBJ OR @ADVL<OBJ;
 LIST <OBJ = @-F<OBJ @<OBJ ;
 LIST OBJ> = @OBJ> @-FOBJ> ;
 
@@ -3313,11 +3314,12 @@ MAP (§TH) TARGET @<SPRED (p ("leat") + <mv> LINK NONE c SUBJ)(NEGATE p* V LINK 
 	#$ Dat sáhttá álgobáliid leat oalle váttis.
 	## Doppe lea muorra.
 	
-MAP (§TH) TARGET @<SPRED (p ("leat") + <mv> OR ("šaddat") + <mv> LINK NONE c SUBJ OR @ADVL> + Time OR @ADVL> + Plc OR @ADVL> + Build OR @ADVL> + Org OR @ADVL> + Hum OR @ADVL> + Ani);#(NEGATE p ("leat") OR ("šaddat") + <mv> LINK p <aux> LINK p <aux> LINK c SUBJ)(NEGATE p ("leat") OR ("šaddat") + <mv> LINK p <aux> LINK c SUBJ)(NEGATE p <OR-Loc-Mat><PR-Nom-Any> + <mv> LINK c Loc + Mat)(NEGATE p V LINK s @CVP LINK p V LINK c SUBJ)(NEGATE p V LINK p <aux> LINK s @CVP LINK p V LINK c SUBJ)(T:uniqueTH); # the c* is important because in a coordinated sentence, the subject can be higher up
+MAP (§TH) TARGET @<SPRED (p ("leat") + <mv> OR ("šaddat") + <mv> LINK NONE c SUBJ OR @ADVL> + Time OR @ADVL> + Plc OR @ADVL> + Build OR @ADVL> + Org OR @ADVL> + Hum OR @ADVL> + Ani)(NEGATE p ("leat") OR ("šaddat") + <mv> LINK p <aux> LINK p <aux> LINK c SUBJ)(NEGATE p ("leat") OR ("šaddat") + <mv> LINK p <aux> LINK c SUBJ)(NEGATE p <OR-Loc-Mat><PR-Nom-Any> + <mv> LINK c Loc + Mat)(NEGATE p V LINK s @CVP LINK p V LINK c SUBJ)(NEGATE p V LINK p <aux> LINK s @CVP LINK p V LINK c SUBJ)(T:uniqueTH); # the c* is important because in a coordinated sentence, the subject can be higher up
 	## Vuovdimassii leat maid gáhkut ja láibevajahasat.
 	#$ Dán báhkis šaddá čáppa gohppu.
 	#$ Son lea mu oabbá, ja lea 35 jagi boaris.
 	#$ Stállu lea hirbmat gievra, muhto ii leat nu jierbmái.
+	#
 
 MAP (§PR) TARGET @<SPRED (0 Nom)(p <OR-Loc-Mat><PR-Nom-Any> LINK c Loc + Mat)(T:uniqueOR);
 	## Dán báhkis šaddá čáppa gohppu.
@@ -3414,7 +3416,8 @@ MAP (§TH) TARGET OBJ + Acc (NOT 0 Ani OR Hum)(p <TH-Acc-*Ani><BE-Loc-Ani> OR <T
 	## 
 LIST MA-NOT-TH-ADVL = "eambbo" "eanet" "ollu" ;
 MAP (§TH) TARGET OBJ + Acc - Plc (p <TH-Acc-*Plc>)(T:uniqueTH);
-MAP (§TH) TARGET OBJ + Acc (p <TH-Acc-Any>)(T:uniqueTH);
+MAP (§TH) TARGET OBJ + Acc (p <TH-Acc-Any>)(NEGATE 0 Lang LINK p <IN-Acc-Lang>)(T:uniqueTH);
+	#$ Viimmat mun ohppen čállit sámegiela, iežan eatnigiela.
 MAP (§MA) TARGET @ADVL (0 MA-NOT-TH-ADVL) (p <TH-Acc-Any>)(T:uniqueTH);
 	## Viššalat ohppet eanet.
 
@@ -4059,7 +4062,7 @@ MAP (§LO) TARGET Gen (0 Plc OR Build)(p <PA-Acc-Any><LO-Loc-Any> LINK c Acc)(T:
 	
 MAP (§LO) TARGET @ADVL (0 Loc OR LO-LOC-ADV OR LO-LOC-ADP)(p <TH-Acc-vuođđu><LO-Loc-Any> LINK c ("vuođđu") + Acc)(T:uniqueLO);
 	
-MAP (§LO) TARGET @ADVL (0 Loc - Ani - Hum OR LO-LOC-ADV OR LO-LOC-ADP)(p <LO-Loc-Any>)(NOT *-1 §PO)(NONE s §TH + Acc OR §TH + Ess OR §ID OR §AT)(T:uniqueLO);
+MAP (§LO) TARGET @ADVL (0 Loc - Ani - Hum OR Plc OR LO-LOC-ADV OR LO-LOC-ADP)(p <LO-Loc-Any>)(NOT *-1 §PO)(NONE s §TH + Acc OR §TH + Ess OR §ID OR §AT)(T:uniqueLO);
 	
 MAP (§LO) TARGET @ADVL (0 Loc + Plc OR Loc + Event OR Loc + Org OR Loc + Build OR LO-LOC-ADV OR LO-LOC-ADP OR Loc + Txt)(p <LO-Loc-Plc>)(NOT *-1 §PO)(NONE s §TH + Acc OR §TH + Ess OR §ID)(NEGATE s §DE LINK p <SO-Loc-Any><DE-Ill-Any>)(T:uniqueLO); # important that there should be not theme object
 	# maybe this rule selects some argument that should be source..?? check it!
@@ -4134,8 +4137,10 @@ MAP (§LO) TARGET OBJ (0 Acc + Body)(p <PA-Loc-Ani><LO-Acc-Body> LINK c Acc + An
 MAP (§OR) TARGET @ADVL (0 ("eret") LINK c Loc + Plc) (p <OR-eret-Plc>);
     ## Isaksen dadjá ahte lea veahá amas lohkkái gii lea lullin eret, áddet man garra dilli sámi guovllus lea.
     
-MAP (§OR) TARGET @ADVL (0 Loc + Hum + Group) (p <OR-Loc-HumGroup>);
+MAP (§OR) TARGET @ADVL (0 Loc + Hum + Group - Plc) (p <OR-Loc-HumGroup>);
     ## Bárdni lea riggámus sogas.
+    #$ Golmma luohkás leat dušše nieiddat.
+    #$ Mii leimmet viđas seamma joavkkus.
 
 # MANNER
 # - - -	-
@@ -4301,7 +4306,10 @@ MAP (§PA) TARGET @ADVL (0 ("gaskkas"))(p <PA-gaskkas-Any>)(T:uniquePA);
 # PRODUCT
 # - - -	-
 
-MAP (§PR) TARGET OBJ (0 Acc LINK NOT 0 Ani OR Hum)(p <PR-Acc-Any>)(T:uniquePR);
+MAP (§PR) TARGET OBJ (0 Acc LINK NOT 0 Hum - Obj)(p <PR-Acc-Any>)(T:uniquePR);
+	## Sii ráhkadedje muohtaádjáid ja muohtaeŋgeliid.
+	## Harry viežžá báđi návsttis ja dainna vuoššat guliid dolas.
+
 MAP (§PR) TARGET OBJ + Acc (p <AG-Ill-Ani><PR-Acc-Any> LINK c Ill + Ani OR Ill + Hum)(T:uniquePR);
 MAP (§PR) TARGET OBJ (0 Acc LINK NOT 0 Ani OR Hum)(p <PR-Acc-Any><BE-Ill-Any> OR <PR-Acc-Any><LO-Ill-*Ani> LINK c Ill OR DE-ILL-ADP OR DE-ILL-ADV)(T:uniquePR); 
 	## Sámi meavrresgárri ii sulas ovttage árktalaš álbmoga meavrresgári go leat duddjon dan earaláhkai go eará álbmogat.
@@ -4682,12 +4690,16 @@ LIST ROLE = §AG §AT §BE §CO §DE §EX §ID §IN §LO §MA §OR §PA §PO §P
 
 	## Mu mielas lea suohtas beassat johtit riikkas riikii ja báikkis báikái.
 
-MAP $$ROLE (N) OR (V Inf) OR (A) (NOT 0 @>N OR @>P)(p $$ROLE + $$ROLECASE)(s CC OR COMMA OR Neg + Foc/ge LINK NEGATE 1 $$ROLECASE - @>N - @>P) ;
+MAP $$ROLE (N) OR (V Inf) OR (A) (NOT 0 @>N OR @>P)(p $$ROLE + $$ROLECASE)(s CC OR COMMA OR Neg + Foc/ge)(NEGATE 1 $$ROLECASE - @>N - @>P) ;
 	## Journalista ii oaččo geavahit iežas dahje iežas gaskaoami sajádaga boastut iige dohkkehit ovdduid, mat sáhttet áitit su sorjjasmeahttunvuođa dahje vejolašvuođa barggildit fidnoetihkalaš prinsihpaid mielde.
 	## Oktasašbivdoearrái gullet dorski, sáidi ja diksu dábálaš fatnasiid regulerema ektui mat leat vuollel 28 mehtera.
 	## Čoahkkima jođiheaddji čuorvu namaid ja vuostáiváldá áirasiid ja sadjásaš áirasiid fápmudusaid.
 	## Sámediggi vállje čoahkkinjođihangotti, válgalávdegotti, bearráigeahččanlávdegotti ja sámediggeráđi.
 	## Juona dáfus sirdá Eallinbihtát romána olggobeal Sámi, ja mii beassat oahpásmuvvat albmán gii lea vuolgán buoret eallima ohcat eará sajis go šaddanbáikkis. -- adjunct?
+	
+	
+MAP $$ROLE (N) + $$ROLECASE OR (V Inf) OR (A) + $$ROLECASE (NOT 0 @>N OR @>P)(s $$ROLE + $$ROLECASE)(-1 @CNP) ;
+	## Mun máhtán láibut šuhkoládagáhku ja lákcagáhku.
 
 MAP $$ROLE N + $$ROLECASE OR (V Inf) + $$ROLECASE OR A + $$ROLECASE (NOT 0 @>N OR @>P)(p $$ROLE + $$ROLECASE)(-1 COMMA)(1 CC)(s $$ROLECASE);
 	## Lea stáhta eiseválddiid ovddasvástádus láhčit dili nu ahte sámi álbmot sáhttá sihkkarastit ja ovddidit gielaset, kultuvrraset ja servodateallima.
