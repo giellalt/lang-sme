@@ -174,6 +174,7 @@ analyser-apertium-norm.att: generator-raw-gt-desc.hfst \
 					filters/remove-usage-tags.hfst \
 					filters/remove-g-tags.hfst \
 					filters/remove-semantic-tags-except-prop.hfst \
+					filters/remove-deriv-strings-MT-sma.hfst \
 					filters/remove-sub-forms.hfst \
 					filters/remove-hyphenation-marks.hfst        \
 					filters/remove-infl_deriv-borders.hfst       \
