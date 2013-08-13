@@ -585,6 +585,7 @@ LIST <LO-Ill-Time> = <LO-Ill-Time> ;
 LIST <LO-Nom-Any><TH-Acc-Any> = <LO-Nom-Any><TH-Acc-Any> ;
 LIST <LO-Loc-Any><gitta> = <LO-Loc-Any><gitta> ;
 LIST <LO-Loc-Any><guossis> = <LO-Loc-Any><guossis> ;
+LIST <guossái> = <guossái> ;
 LIST <LO-Loc-Any> = <LO-Loc-Any> ;
 LIST <LO-Loc-Plc> = <LO-Loc-Plc> ;
 LIST <LO-Loc-Time> = <LO-Loc-Time> ;
@@ -2968,6 +2969,8 @@ LIST TH-TIME-SUBJ-V = "gollat" ;
 
 LIST PA-SUBJ-V = "amasmuvvat" "borahallat" "cuovkanit" "earránit" "fillehallat" "gáskkáhallat" "giksat" ; ## add more Duommá
 
+LIST NEG-PRON = "mihkkege" ;
+
 
 # Secondary semantic tags
 # - - - - - - - - - - - -
@@ -3095,6 +3098,11 @@ SUBSTITUTE (Adv)(Adv <verb-part>) TARGET ("mielde")(p <mielde> LINK NONE c Acc);
 	
 SUBSTITUTE (N)(N <verb-part>) TARGET ("luoikkas") + Ess (p ("oažžut") LINK c Acc);	
 	## Gaup dojii stivrrana hárjehallamiin, muhto oaččui luoikkasin eará stivrrana.
+	
+SUBSTITUTE (N)(N <verb-part>) TARGET  ("guossi") + Loc (p <LO-Loc-Any><guossis> LINK c Loc);
+
+SUBSTITUTE (N)(N <verb-part>) TARGET ("guossi") + Ill (p <guossái>);
+	## Odne lea Joneš-bojá vuolgimin Biette-eagis guossái.
 
 # RULES BEFORE SUBJECT-RULES
 # ---------------------------
@@ -3451,6 +3459,8 @@ LIST MA-NOT-TH-ADVL = "eambbo" "eanet" "ollu" ;
 MAP (§TH) TARGET OBJ + Acc - Plc (p <TH-Acc-*Plc>)(T:uniqueTH);
 MAP (§TH) TARGET OBJ + Acc (p <TH-Acc-Any>)(NEGATE 0 Lang LINK p <IN-Acc-Lang>)(T:uniqueTH);
 	#$ Viimmat mun ohppen čállit sámegiela, iežan eatnigiela.
+MAP (§TH) TARGET NEG-PRON + Acc (p <aux> + Neg LINK p <aux> + Neg LINK c <TH-Acc-Any>)(NEGATE 0 Lang LINK p <IN-Acc-Lang>)(T:uniqueTH);
+
 MAP (§MA) TARGET @ADVL (0 MA-NOT-TH-ADVL) (p <TH-Acc-Any>)(T:uniqueTH);
 	## Viššalat ohppet eanet.
 
@@ -3831,6 +3841,9 @@ TEMPLATE uniqueID = (NONE s (§ID)) ;
 
 MAP (§ID) TARGET @<SPRED (0 N + Nom OR Num + Nom OR Dem + Nom)(p <ID-Nom-Any> LINK *-1 Dem OR Pers)(NOT *-1 @HAB)(p* VFIN LINK c SUBJ BARRIER S-BOUNDARY OR OBJ)(T:uniqueID);
 	## Dat orru čáhci.
+	
+MAP (§ID) TARGET @<SPRED (0 N + Nom OR Num + Nom OR Dem + Nom)(p <ID-Nom-Any>)(NOT *-1 @HAB)(p* VFIN LINK s @CVP LINK p VFIN LINK c SUBJ BARRIER S-BOUNDARY OR OBJ)(T:uniqueID);
+	## Divvun šattai universitehta oassin 2011 rájes, muhto lea velge sierra joavku.
 
 MAP (§ID) TARGET SPRED (0 N + Nom OR Num + Nom OR Dem + Nom)(p <ID-Nom-Any> LINK *-1 Dem OR Pers)(NOT *-1 @HAB)(0* SUBJ BARRIER S-BOUNDARY)(T:uniqueID);
 
@@ -4122,7 +4135,8 @@ MAP (§LO) TARGET @ADVL (0 Loc + Plc OR Loc + Event OR Loc + Org OR Loc + Build 
 	#$ Rádjerasttildeaddji boazodoallu galgá čuovvut vuoigatvuođaid ja geatnegasvuođaid mat gustojit dan riikkas gos boazodoaluin bargá.
 
 MAP (§LO) TARGET @ADVL (0 Loc + Plc OR Loc + Event OR Loc + Org OR LO-LOC-ADV OR LO-LOC-ADP)(p <LO-Loc-Any><gitta> LINK c ("gitta"))(NOT *-1 §PO)(T:uniqueLO); 
-MAP (§LO) TARGET @ADVL (0 Loc + Plc OR Loc + Event OR Loc + Org OR LO-LOC-ADV OR LO-LOC-ADP)(p <LO-Loc-Any><guossis> LINK c ("guossi") + Loc)(NOT *-1 §PO)(T:uniqueLO);
+MAP (§LO) TARGET @ADVL (0 Loc OR LO-LOC-ADV OR LO-LOC-ADP)(p <LO-Loc-Any><guossis> LINK c ("guossi") + Loc)(NOT *-1 §PO)(T:uniqueLO);
+
 MAP (§LO) TARGET @ADVL (0 Loc + Plc OR Loc + Event OR Loc + Org OR LO-LOC-ADV OR LO-LOC-ADP)(p <TH-Acc-Any><LO-Loc-Any> LINK c Acc)(NOT *-1 §PO)(T:uniqueLO); #20.03.2013
 	## Mu ruoktu lea doppe gos mu bargu lea.
 	## Servvodat govvideapmi dán girjjis lea oalle erenoamáš ja Isaksen dadjá ahte dákkár servodateallin ii gávdno eará ođđa áigásaš servodagain.
@@ -4458,7 +4472,7 @@ MAP (§PU) TARGET @ADVL (0 Inf)(p PASSIVE LINK 0 <BE-Acc-Any><PU-Inf> OR <TH-Acc
 	## 
 
 MAP (§PU) TARGET @ADVL (0 Inf)(p <DE-Ill-Plc><PU-Inf> LINK c Ill)(T:uniquePU); 
-MAP (§PU) TARGET @ADVL OR @IMV (0 Inf)(p <PU-Inf>)(T:uniquePU)(NEGATE -1 CC OR Neg + Foc/ge)(NEGATE p <aux>);
+MAP (§PU) TARGET @ADVL OR @IMV OR OBJ (0 Inf)(p <PU-Inf>)(T:uniquePU)(NEGATE -1 CC OR Neg + Foc/ge)(NEGATE p <aux>);
 	## Stipeandaortnega áigumuš lea movttiidahttit sámi nuoraid joatkkaskuvllas válljet oahpahusa sámegielas dahje sámegillii. Mii sávvat ahte dakkár bálkkašupmi galgá movttidahttit olbmuid bargat dan badjelii ahte buoridit johtolatsihkarvuođa Finnmárkkus, lohká bajimusinšenevra Astrid Eide Statens Vegvesen:is.
 	## Mun vuolggán gávpái gálvvuid oastit.
 	## De bođii oahpaheaddji, muhtin lullirivgu, dárkkistitasadeami.
