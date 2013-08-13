@@ -2950,6 +2950,7 @@ LIST XT-FREQUENCY-ADV = "máŋgii" "hárve" ;
 
 SET PASSIVE = Der/Pass OR Der/alla ;
 
+TEMPLATE uniqueAG = (NONE s (§AG)) ;
 TEMPLATE uniqueAT = (NONE s (§AT)) ;
 TEMPLATE uniqueOR = (NONE s (§OR)) ;
 TEMPLATE uniquePR = (NONE s (§PR)) ;
@@ -2959,7 +2960,7 @@ TEMPLATE uniqueMA = (NONE s (§MA)) ;
 
 LIST EX-SUBJ-V = "bállet" "beahtahallat" "beassat" "birget" "bivvat" "čoaskut" "dárbbašit" "diehtit" "dovdat" "ipmirdit" "jápmit" "liikot" "njuoskat" "nohkkat" "ruoidnat" "seargat" "váibat" ;
 
-SET AG-SUBJ-V = <TH-Acc-Any> OR <TH-Ill-Any> OR <TO-Acc-Any> OR <PA-Acc-Ani> OR <EX-Acc-Any> OR <PA-Acc-Any> OR <PR-Acc-Any> OR <TH-Acc-Txt> OR <TH-ahte> OR <TH-Acc-Any> OR <TH-Acc-Any><SO-Loc-Any><DE-Ill-Any> OR <TH-Acc-Any><DE-Ill-Any> OR <PR-Acc-Any> OR ("rievidit") OR <SO-Loc-Any><DE-Ill-Any> OR <TH-Loc-Any> OR <IN-Acc-Any> OR <RE-Acc-Ani> OR <CO-Acc-Ani> OR ("fitnat") OR ("oađđit") OR ("atnit") OR ("čiŋadit") OR ("ganjaldallat") OR ("čierastallat") OR ("náđđut") OR ("bassaladdat") OR ("mannat");
+SET AG-SUBJ-V = <TH-Acc-Any> OR <TH-Ill-Any> OR <TO-Acc-Any> OR <PA-Acc-Ani> OR <EX-Acc-Any> OR <PA-Acc-Any> OR <PR-Acc-Any> OR <TH-Acc-Txt> OR <TH-ahte> OR <TH-Acc-Any> OR <TH-Acc-Any><SO-Loc-Any><DE-Ill-Any> OR <TH-Acc-Any><DE-Ill-Any> OR <PR-Acc-Any> OR ("rievidit") OR <SO-Loc-Any><DE-Ill-Any> OR <SO-Loc-*Ani><DE-Ill-*Ani> OR <TH-Loc-Any> OR <IN-Acc-Any> OR <RE-Acc-Ani> OR <CO-Acc-Ani> OR ("fitnat") OR ("oađđit") OR ("atnit") OR ("čiŋadit") OR ("ganjaldallat") OR ("čierastallat") OR ("náđđut") OR ("bassaladdat") OR ("mannat");
 
 
 LIST TH-SUBJ-V = "dáhpáhuvvat" "dáidit" "doaibmat" "duoldat" "gávdnot" "geavvat"  "gopmánit" "gustot" "hehttet" "ilbmat" "lápmašuvvat" "ligget" "nohkat" "oidnot" "rahpasit" "rahppot" "riegádit" "rievdat" "savvot" "šaddat";  
@@ -3053,7 +3054,7 @@ SUBSTITUTE (Pron)(Pron Hum) TARGET HUM-PRON - HUM+OBJ-PRON;
 	# Emotion
 	# -------
 LIST EMOTION-ADV = "illávejiid" ; # eanet Duommá?????
-LIST EMOTION-N = ("ballu" N Sg Loc) ("moraš" N Sg Loc) ("mánná#váivi" N Sg Loc); # buore mielas ...
+LIST EMOTION-N = ("ballu" N Sg Loc) ("moraš" N Sg Loc) ("mánná#váivi" N Sg Loc) ("mánnáváivi" N Sg Loc); # buore mielas ...
 
 SUBSTITUTE (Adv)(Adv Emo) TARGET EMOTION-ADV ;	
 SUBSTITUTE (N)(Emo N) TARGET EMOTION-N;
@@ -3162,7 +3163,12 @@ MAP (§TH) TARGET SUBJ (0 Nom)(p <aux> LINK c* <TH-Nom-Any><XT-Acc-Money>  + <mv
 MAP (§EX) TARGET SUBJ (p ("leat") + <mv> LINK c Emo)(NONE p SUBJ);
 MAP (§EX) TARGET SUBJ (p <aux> LINK c* ("leat") + <mv> LINK c Emo)(NONE p SUBJ);
 
-MAP (§EX) TARGET SUBJ (p <mv> + EX-SUBJ-V OR <mv> + <EX-Nom-Time>)(NONE p SUBJ);
+MAP (§EX) TARGET SUBJ + Time (p <mv> + EX-SUBJ-V OR <mv> + <EX-Nom-Time>)(NONE p SUBJ);
+MAP (§EX) TARGET SUBJ (p <mv> + EX-SUBJ-V)(NONE p SUBJ);
+	## Son liiko guollái.
+MAP (§EX) TARGET SUBJ (p <aux> LINK c* EX-SUBJ-V + <mv> - PASSIVE)(NONE p SUBJ);
+
+
 MAP (§EX) TARGET SUBJ (p <aux> LINK c* EX-SUBJ-V + <mv> - PASSIVE)(NONE p SUBJ);
 
 MAP (§IN) TARGET SUBJ (p <IN-Acc-Any> + <mv> + PASSIVE)(NONE p SUBJ);
@@ -3205,9 +3211,12 @@ MAP (§RE) TARGET SUBJ (p <aux> LINK p <aux> LINK c RE-SUBJ-V + <mv> - PASSIVE)(
 MAP (§LO) TARGET SUBJ (p <LO-Nom-Any><TH-Acc-Any> + <mv> - PASSIVE)(NONE p SUBJ);
 MAP (§LO) TARGET SUBJ (p <aux> LINK c* <LO-Nom-Any><TH-Acc-Any> + <mv> - PASSIVE)(NONE p SUBJ);
 	## Eai gait ságat čázi jeage.
+	
+	
+MAP (§TH) TARGET SUBJ - Ani - Hum - Org (p <TH-Nom-*Ani><MA-Adv-Manner> + <mv> - PASSIVE LINK c MANNER-ADV);
+	## Bures dat manná.
 
-
-MAP (§AG) TARGET SUBJ OR @VOC (p AG-SUBJ-V + <mv> - PASSIVE - <AG-Ill-Any>)(NEGATE 0 (*) - Hum - Ani OR Obj LINK p <TH-Nom-*Ani><MA-Adv-Manner> LINK c MANNER-ADV)(NEGATE p <TH-Nom-Any><PO-Ill-Any> + <mv> LINK c Ill)(NEGATE p <aux> LINK c* <TH-Nom-Any><PO-Ill-Any> + <mv> LINK c Ill)(NONE p SUBJ)(NEGATE s ("mađe") LINK s ("dađe"));
+MAP (§AG) TARGET SUBJ OR @VOC (p AG-SUBJ-V + <mv> - PASSIVE - <AG-Ill-Any> - EX-SUBJ-V)(NEGATE 0 (*) - Hum - Ani OR Obj LINK p <TH-Nom-*Ani><MA-Adv-Manner> LINK c MANNER-ADV)(NEGATE p <TH-Nom-Any><PO-Ill-Any> + <mv> LINK c Ill)(NEGATE p <aux> LINK c* <TH-Nom-Any><PO-Ill-Any> + <mv> LINK c Ill)(NONE p SUBJ)(NEGATE s ("mađe") LINK s ("dađe"));
 	#$ Bures dat manná, muhto mun lean heittohit oađđán.
 MAP (§AG) TARGET SUBJ OR @VOC (p <aux> LINK c* AG-SUBJ-V + <mv> - TH-SUBJ-V - PA-SUBJ-V - PASSIVE)(NONE p SUBJ);
 	## Harald O. Lindbach čállá iežas árvvoštallamis Ságat áviissas cuoŋománu 12. beaivve 1997, ahte girjji lágádus ii leat bures ovddidan dán girjji.
@@ -3278,10 +3287,13 @@ MAP (§TH) TARGET SPRED (p* <aux> LINK c §PO);
 MAP (§TH) TARGET @<SPRED (p <mv> LINK c §EX + @HAB);
 MAP (§TH) TARGET @<SPRED (p* <aux> LINK c §EX + @HAB);
 
+MAP (§AG) TARGET @<SPRED (p <mv> + AG-SUBJ-V LINK NEGATE c SUBJ); #(NEGATE p <mv> + AG-SUBJ-V LINK p* <aux> LINK c SUBJ)(T:uniqueAG);
+	## Do bohtet guokte olbmo.
+
 MAP (§TH) TARGET SUBJ (NEGATE p WORD);
 	## Dat movt sámi oahpahus lea doaibman...
 	# some subjects go directly to root, those should be theme by default	
-MAP (§AG) TARGET SUBJ (p* V)(NONE p PASSIVE)(NEGATE p (*) LINK c PASSIVE)(NEGATE p <mv> + <EX-Loc-Any> OR <EX-Ill-Ani> OR <ID-Nom-Any>)(NEGATE p <aux> LINK c* <mv> + <EX-Loc-Any> OR <EX-Ill-Ani> OR <ID-Nom-Any>)(NONE p §AG OR SUBJ);
+MAP (§AG) TARGET SUBJ (p* V)(NONE p PASSIVE)(NEGATE p (*) LINK c PASSIVE)(NEGATE p <mv> + <EX-Loc-Any> OR <EX-Ill-Ani> OR <ID-Nom-Any> OR EX-SUBJ-V)(NEGATE p <aux> LINK c* <mv> + <EX-Loc-Any> OR <EX-Ill-Ani> OR <ID-Nom-Any>)(NONE p §AG OR SUBJ);
 	# (NONE p §AG OR SUBJ) makes sure that it is not a coordinated subject which should get the same role as its head
 	# some subjects go directly to root, those should be theme by default
 
@@ -3374,7 +3386,7 @@ MAP (§TH) TARGET @N< (p @<SPRED);
 #     TEMPLATE other = (T:name LINK 1 (P)) OR (1 (C)) ;
 #     SELECT (x) IF ((T:name) OR (T:other)) ;
 #     
-    TEMPLATE uniqueAG = (NONE s (§AG)) ;
+
 #     TEMPLATE other = (T:name LINK 1 (P)) OR (1 (C)) ;
 #     SELECT (x) IF ((T:name) OR (T:other)) ;
     
@@ -3579,7 +3591,7 @@ MAP (§TH) TARGET @FS-<ADVL + VFIN OR @FMV + VFIN OR @FS-ADVL> + VFIN (p <TH-go>
 MAP (§TH) TARGET @ADVL (0 Inf)(p <TH-Inf> + <TH-Ill-Any> OR <TH-Inf> + <TH-Loc-Any>)(T:uniqueTH);
 	## Áile liikošii stoahkat mánáiguin.
 	
-MAP (§TH) TARGET @FS-<ADVL + VFIN OR @FMV + VFIN OR @FS-ADVL> + VFIN OR @FS-N< + VFIN OR @FAUX + VFIN (p <TH-FS> + <TH-Ill-Any> OR <TH-FS> + <TH-Loc-Any> OR <TH-FS> + <PA-Acc-Any> OR <TH-FS> + <TH-Acc-Any> OR <TH-FS> + <TO-Acc-*Ani> LINK NEGATE p <aux> LINK c SUBJ + §TH)(NONE s CC)(NONE s CC OR COMMA)(NONE c ("go"))(T:uniqueTH);
+MAP (§TH) TARGET @FS-<ADVL + VFIN OR @FMV + VFIN OR @FS-ADVL> + VFIN OR @FS-N< + VFIN OR @FAUX + VFIN (p <TH-FS> + <TH-Ill-Any> OR <TH-FS> + <TH-Loc-Any> OR <TH-FS> + <PA-Acc-Any> OR <TH-FS> + <TH-Acc-Any> OR <TH-FS> + <TO-Acc-*Ani> LINK NEGATE p <aux> LINK c SUBJ + §TH)(NONE s CC OR COMMA)(NONE c CS)(T:uniqueTH);
 	## Sámediggeráđđi čujuhii man váttis dilli muhtun sajiin Finnmárkkus leai dan geažil go eai lean sáhttán doarvái njuovvat bohccuid čakčat.
 	## De dáhpáhuvai, ahte rievvár bođii.
 	# for "go" there are other rules
@@ -3842,7 +3854,7 @@ MAP (§MA) TARGET ("áigi") + Ill (p <TH-Acc-Any><MA-Ill-áigi> LINK c Acc)(T:un
 MAP (§MA) TARGET ("háldu") + Ill (p <TH-Acc-Any><MA-Ill-háldu> LINK c Acc)(T:uniqueMA);
 	## De našunálastáhtat válde daid háldoseaset.
 
-MAP (§MA) TARGET @ADVL (0 VGen) ;
+MAP (§MA) TARGET @ADVL (0 VGen)(p <SO-Loc-Any><DE-Ill-Any>) ;
 	## Sii guđđe sihkkeliiddiset ja manne vácci.
 
 # BENEFICIARY
@@ -3934,9 +3946,9 @@ MAP (§CO) TARGET @ADVL (0 Po LINK 0 ("vuostá") LINK c Gen)(p <TH-Acc-Any><CO-v
 TEMPLATE uniqueDE = (NONE s (§DE)) ;
 
 MAP (§DE) TARGET @ADVL (0 DE-ILL-ADV OR Ill + Plc OR Ill + Org OR Ill + Build OR Ill + Event)(p <DE-Ill-Any> OR <DE-Ill-Plc>)(NONE s OBJ)(T:uniqueDE);
-MAP (§DE) TARGET @ADVL (0 DE-ILL-ADP LINK NEGATE c Time)(p <DE-Ill-Any> OR <DE-Ill-Plc>)(NONE s OBJ)(T:uniqueDE);
+MAP (§DE) TARGET @ADVL (0 DE-ILL-ADV OR Ill - Ani - Hum)(p <DE-Ill-*Ani>)(NONE s OBJ)(T:uniqueDE);
+MAP (§DE) TARGET @ADVL (0 DE-ILL-ADP LINK NEGATE c Time)(p <DE-Ill-Any> OR <DE-Ill-Plc> OR <DE-Ill-*Ani>)(NONE s OBJ)(T:uniqueDE);
 
-MAP (§DE) TARGET @ADVL (0 LO-LOC-ADV OR Loc + Plc OR Loc + Org OR Ill + Build LINK c ("gitta"))(p <DE-Ill-*Ani> OR <DE-Ill-Plc>)(NONE s OBJ)(T:uniqueDE); 
 MAP (§DE) TARGET @ADVL (0 LO-LOC-ADV OR Loc LINK c ("gitta"))(p <DE-Ill-Any>)(NONE s OBJ)(T:uniqueDE); 
 
 MAP (§DE) TARGET @ADVL (0 DE-ILL-ADV OR DE-ILL-ADP OR Ill + Plc OR Ill + Org OR Ill + Build OR Ill + Event)(p <SO-Loc-*Ani><DE-Ill-*Ani> LINK c Loc OR LO-LOC-ADV)(NONE s OBJ)(T:uniqueDE);
@@ -4110,6 +4122,9 @@ MAP (§LO) TARGET @ADVL (0 Loc + Plc OR Loc + Event OR Loc + Org OR LO-LOC-ADV O
 	## Mu ruoktu lea doppe gos mu bargu lea.
 	## Servvodat govvideapmi dán girjjis lea oalle erenoamáš ja Isaksen dadjá ahte dákkár servodateallin ii gávdno eará ođđa áigásaš servodagain.
 	## Vahágiid gordnebealdduin, gilvojuvvon gittiin ja ládjogittiin, guohtoneatnamiin mat ledje 2 km siskkobealde, dahje jus ledje dobbelis, muhto ledje áidojuvvon, galge buhtadit ( 1932 Stuorradikke šiehtadusat. 
+MAP (§LO) TARGET @ADVL (0 LO-LOC-ADV)(p <aux> LINK c <TH-Acc-Any><LO-Loc-Any> LINK c Acc)(NOT *-1 §PO)(T:uniqueLO);
+	## Muhtun geasi nieida jávkkai, ja olbmot ohce su, muhto eai gávdnan su eai gostege, eaige diehtán gosa lei šaddan.
+
 	
 MAP (§LO) TARGET @ADVL (0 Ill + Txt OR DE-ILL-ADV OR DE-ILL-ADP)(p <TH-Acc-Txt><LO-Ill-Txt> LINK c Acc + Txt)(NOT *-1 §PO)(T:uniqueLO); 
 	## Soai čáliiga muitalusaid ruovttusiidui.
@@ -4120,7 +4135,7 @@ MAP (§LO) TARGET @ADVL (0 Loc + Pos OR LO-LOC-ADV OR LO-LOC-ADP)(p <BE-Acc-Hum>
 MAP (§LO) TARGET @ADVL (0 ("johtu") + Loc)(p <LO-Loc-johtu><DE-Ill-Plc> LINK c Plc + Ill)(T:uniqueTH);
 	## Genadutkit geaid eamiálbmogat miehtá máilmmi leat vuosttaldan garrasit, leat dál jođus Sápmái, ja sii ohcet sámi dievdduid genadutkamii.
 	
-MAP (§LO) TARGET @ADVL (0 Acc + Time OR Gen + Time OR LO-LOC-TIME-ADV)(p <LO-Acc-Time>)(NEGATE s §TH LINK s §PO OR §AT)(NEGATE s §DE)(NONE s §PO OR §AT)(T:uniqueLO);
+MAP (§LO) TARGET @ADVL (0 Acc + Time OR Gen + Time OR LO-LOC-TIME-ADV)(p <LO-Acc-Time>)(NEGATE s §TH LINK s §PO OR §AT OR §ID)(NONE s §DE OR SPRED + Ess)(NONE s §PO OR §AT)(T:uniqueLO);
 	# this one needs to be after the Plc rules
 	## Ođasmahttin-, hálddahus- ja girkodepartemeanta doarju jahkásaččat Sámi statistihka fágalaš analysajoavkku barggu ja Statistihkalaš guovddášdoaimmahaga barggu sámi statistihkalaš jahkegirjji ráhkadeamis mii ilbmá juohke nuppi jagi.
 	## Suohkan lea 01.07.01 loahpahan geahččalanortnega. 
