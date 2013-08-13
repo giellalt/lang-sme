@@ -2220,7 +2220,7 @@ LIST MUITALIT = "árvalit" "bivdit" "boagustit" "cealkit" "cuoigut" "čilget" "�
 	#$ Deaŧalaš lea sihkkarastit eamiálbmogiid ovddastusa dákkár čállingottis, dadjá Keskitalo.
 
 
-SUBSTITUTE:muitalit (V) (<vdic> V) TARGET MUITALIT IF (0 REAL-V LINK -1 COMMA LINK 2 HUMAN-INDIVIDUAL + Nom OR (Prop Plc Nom) LINK *1 EOS BARRIER WORD - Prop) ;
+SUBSTITUTE:muitalit (V) (<vdic> V) TARGET MUITALIT (0 REAL-V LINK -1 COMMA LINK 2 HUMAN-INDIVIDUAL + Nom OR (Prop Plc Nom) LINK *1 EOS BARRIER WORD - Prop) ;
 	#$ Sápmelaččat eai leat goassege luohpan meara riggodagain, ja danne ii sáhte eahpidit sápmelaččaid vuoigatvuođaid mearrariggodagaide, deattuha Keskitalo.
 	#$ Mii fertet maiddái geahčadit makkár lassi guoimmuhemiid galgat fállat vai bohtet vel eanet olbmot boahtte jagi, loahpaha duhtavaš beaivválaš jođiheaddji Eriksen. #Comment: Shold hit, but doesen't?
 
@@ -2230,6 +2230,8 @@ REMOVE:PropAttrIfPropx (Prop Attr) - Der/laš IF (NOT *1 Prop BARRIER REAL-WORD-
 	
 #!! *Selects __Prop__ if capital letter inside clause
 SELECT:PropInside Prop IF (NEGATE *-1 BOS OR (":") BARRIER WORD - ("ášši") - Num)(0 N LINK NOT 0 (Der/t) OR (Der/laš));
+	#$
+	#% 
 
 
 #!! *Substitute __PlcSur__ (Plc) (Sur) 
@@ -6550,7 +6552,7 @@ REMOVE:X (@X) ;
 
 #!! !Substitute-rule __TV-IV__ for verbs which are both IV AUX and TV main verb: lávet and sáhttit
 #!! * __TV-IV__
-SUBSTITUTE:TV-IV (V TV) (V IV) TARGET FAUXV IF (0 ("lávet") OR ("áigut"));
+SUBSTITUTE:TV-IV (V TV) (V IV) FAUXV (0 ("lávet") OR ("áigut"));
 
 #SELECT:Sg2 (V Prt Sg2) IF (0 (Prs Pl3) LINK *-1 BOS BARRIER WORD)(NEGATE 1 go LINK 1 HAB-ACTOR + Loc) ;
 
@@ -6662,8 +6664,8 @@ REMOVE:SEMXxr2071 Gen IF (NEGATE -1 Num OR Pr)(0 (N Acc) LINK NOT 0 NATION OR TI
 	#% Romsa ja davágeaži Norrbotten, Davit Nordlánda ja gaska ja lulimus Norrbotten, Helgelánda ja Västerbotten, Davvi-Trøndelága ja davágeaži Jämtlánda. #Comment: davágeaži can "possess" (or mofify if you will) Jämtlánda.
 	#% Loahpas jearai listtu Anders Somby jr. sudnos njuolga háliida go čearru gulahallat, juo dahje ii.
 
-#!! * __SEMXxr2072__ Removes genetiv: Who can possess Prop Org?    
-REMOVE:SEMXxr2072 Gen IF (NEGATE -1 Num)(0 (N Acc) LINK NOT 0 NATION OR TIME)(1 (Prop Org) LINK NOT 1 (Prop Org));
+#!! * __SEMXxPropOrg__ Removes genetiv: Who can possess Prop Org?    
+REMOVE:SEMXxrPropOrg Gen IF (NEGATE -1 Num)(0 (N Acc) LINK NOT 0 NATION OR TIME)(1 (Prop Org) LINK NOT 1 (Prop Org));
 	#$ Álggos coggalii Anti vuosttaš spáppa Sørøy Glimt mollii 22 minuvtta maŋŋel go čiekčamat ledje álgán Niitoguolban stadionas.
     
 #!! * __SEMdep__ select gen if main-organization in front of department   
@@ -6886,8 +6888,8 @@ REMOVE:SEMXxacc Acc IF (*-1 WRITING-ACTIVITY-V BARRIER SV-BOUNDARY)(NEGATE -1 Nu
 	#$ Dán oasis mii čállit Norgga ja Ruoŧa vásáhusaid ja juohkit daid osiide.
 
     
-#!! * __SEMXxr2105__ Selects genitive: An organization´s representative ''Sámiráđi ovdaolmmoš''
-SELECT:SEMXxr2105 Gen IF (0 Acc LINK 0 ORGANIZATION OR INSTITUTION OR (Prop Org))(1 PROFESSION OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR OFFICE LINK NOT 0 Pl);
+#!! * __SEMXxOrgRep__ Selects genitive: An organization´s representative ''Sámiráđi ovdaolmmoš''
+SELECT:SEMXxOrgRep Gen IF (0 Acc LINK 0 ORGANIZATION OR INSTITUTION OR (Prop Org))(1 PROFESSION OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR OFFICE LINK NOT 0 Pl);
   	#$ Dán gáibideigga foandda hoavda Per Edvard Klemetsen ja Norgga Sámiráđi ovdaolmmoš Aslak Nils Sara gielddaministaris Arne Rettedalas geainna soai maŋŋebárgga deaivvadeigga Oslos.
   	#$ Jus áššebáhpirat leat váilevaččat, de galgá lávdegotti jođiheaddji addit sutnje, gii ovddida ášši, áigemeari divvut váilevašvuođaid. 
 
@@ -7964,11 +7966,14 @@ SELECT:AccIll Acc IF (*-1 STRICT-TRANS-V + FMAINV BARRIER SV-BOUNDARY OR Acc)(1 
 #!! * __NomIfProp__ Removes Acc and Gen when you Prop because you are Nom. To the left is a sg3-verb. Should not hit Prop that are Plc.
 REMOVE:NomIfProp Acc OR Gen IF (*-1 SG3-V BARRIER SV-BOUNDARY)(0 (N Nom) + Prop OR (N Acc) + Prop)(NEGATE 0 (Prop Plc))(NEGATE -1 Acc LINK *1 Ill BARRIER NOT-Attr) ;
 	#$ Logi minuvtta maŋŋel nagodii Sørøy Glimt čiekči Stig Martinsen dulbet bohtosa ovttain moalain.
-	#% Soai áiguba ovddastit sámi álbmoga dáhtu go Tromsa ohcá Olympia gilvvu lágidit 2014:s. 
-	#% Issát asai Røros birrasiin. <= Dárbbaša Plc-njuolggadusa, mii vállje Gen.
+	#% Issát ásai Beer Lahai Roi birrasiin. <= Dárbbaša Plc-njuolggadusa, mii vállje Gen.
 	#% Doppe Abram čuorvvui Hearrá nama. <= dát dárbbaša sierra njuolggadusa badjelis, mii vállje Gen.
-	#% Vuosttasnaššuvnnaid čoagganeapmi ovddasta badjel 300 indiánaservodaga miehtá Kanada ja gáibida dál iešstivrejumi Davvi-Amerihká buot eamiálbmogiidda.
-	
+
+#!! * __NomIfProp__ Removes Acc and Nom when you are Prop Plc because you are Gen. To the left is a sg3-verb. To the right is a noun.
+REMOVE:NomIfProp2 (Nom Plc) OR (Acc Plc) (*-1 SG3-V BARRIER SV-BOUNDARY)(NEGATE 0 (Prop Mal) OR (Prop Fem) OR (Prop Sur))(0 (N Nom) + (Prop Plc) OR (N Acc) + (Prop Plc))(*1 N BARRIER NOT-Attr) ;
+	#$ Issát ásai Røros birrasiin.
+	#$ Sidjiide lei maid liegga Ruija geasuheaddji guovlu.
+	#$ Vuosttasnaššuvnnaid čoagganeapmi ovddasta badjel 300 indiánaservodaga miehtá Kanada ja gáibida dál iešstivrejumi Davvi-Amerihká buot eamiálbmogiidda.
 
 
 #!! !!Intransitive verbs can sometimes be transitive
