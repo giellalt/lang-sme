@@ -598,6 +598,7 @@ LIST <MA-Com-*Plc> = <MA-Com-*Plc> ;
 LIST <MA-Com-Any> = <MA-Com-Any> ;
 LIST <OR-Loc-Any> = <OR-Loc-Any> ;
 LIST <OR-Loc-Mat><PR-Nom-Any> = <OR-Loc-Mat><PR-Nom-Any> ;
+LIST <PR-Nom-Any> = <PR-Nom-Any> ;
 LIST <PA-0> = <PA-0> ;
 LIST <PA-Acc-*Ani><BE-Ill-Ani> = <PA-Acc-*Ani><BE-Ill-Ani> ;
 LIST <PA-Acc-Ani> = <PA-Acc-Ani> ;
@@ -669,6 +670,7 @@ LIST <PR-Acc-Any><bajás> = <PR-Acc-Any><bajás> ;
 LIST <PR-Acc-Any><BE-Ill-Any> = <PR-Acc-Any><BE-Ill-Any> ;
 LIST <PR-Acc-Any><LO-Ill-*Ani> = <PR-Acc-Any><LO-Ill-*Ani> ;
 LIST <PR-Acc-Any><MA-Ess-Any> = <PR-Acc-Any><MA-Ess-Any> ;
+LIST <PR-Acc-Any><MA-Acc-Adj> = <PR-Acc-Any><MA-Acc-Adj> ;
 LIST <PR-Acc-Any><OR-Loc-Mat> = <PR-Acc-Any><OR-Loc-Mat> ;
 LIST <PR-Acc-Any><OR-Loc-Any> = <PR-Acc-Any><OR-Loc-Any> ;
 LIST <PR-Ess-Any> = <PR-Ess-Any> ;
@@ -2964,7 +2966,7 @@ LIST EX-SUBJ-V = "bállet" "beahtahallat" "beassat" "birget" "bivvat" "čoaskut"
 SET AG-SUBJ-V = <TH-Acc-Any> OR <TH-Ill-Any> OR <TO-Acc-Any> OR <PA-Acc-Ani> OR <EX-Acc-Any> OR <PA-Acc-Any> OR <PR-Acc-Any> OR <TH-Acc-Txt> OR <TH-ahte> OR <TH-Acc-Any> OR <TH-Acc-Any><SO-Loc-Any><DE-Ill-Any> OR <TH-Acc-Any><DE-Ill-Any> OR <PR-Acc-Any> OR ("rievidit") OR <SO-Loc-Any><DE-Ill-Any> OR <SO-Loc-*Ani><DE-Ill-*Ani> OR <TH-Loc-Any> OR <IN-Acc-Any> OR <RE-Acc-Ani> OR <CO-Acc-Ani> OR ("fitnat") OR ("oađđit") OR ("atnit") OR ("čiŋadit") OR ("ganjaldallat") OR ("čierastallat") OR ("náđđut") OR ("bassaladdat") OR ("mannat");
 
 
-LIST TH-SUBJ-V = "dáhpáhuvvat" "dáidit" "doaibmat" "duoldat" "gávdnot" "geavvat"  "gopmánit" "gustot" "hehttet" "ilbmat" "lápmašuvvat" "ligget" "nohkat" "oidnot" "rahpasit" "rahppot" "riegádit" "rievdat" "savvot" "šaddat";  
+LIST TH-SUBJ-V = "dáhpáhuvvat" "dáidit" "doaibmat" "duoldat" "gávdnot" "geavvat"  "gopmánit" "gustot" "ilbmat" "lápmašuvvat" "ligget" "nohkat" "oidnot" "rahpasit" "rahppot" "riegádit" "rievdat" "savvot" "šaddat";  
 LIST TH-TIME-SUBJ-V = "gollat" ;
 
 LIST PA-SUBJ-V = "amasmuvvat" "borahallat" "cuovkanit" "earránit" "fillehallat" "gáskkáhallat" "giksat" ; ## add more Duommá
@@ -3103,6 +3105,9 @@ SUBSTITUTE (N)(N <verb-part>) TARGET  ("guossi") + Loc (p <LO-Loc-Any><guossis> 
 
 SUBSTITUTE (N)(N <verb-part>) TARGET ("guossi") + Ill (p <guossái>);
 	## Odne lea Joneš-bojá vuolgimin Biette-eagis guossái.
+	
+SUBSTITUTE (N)(N <verb-part>) TARGET ("johtu") + Ill (p <TH-Acc-Any><johtui> LINK c Acc) ;
+	## 
 
 # RULES BEFORE SUBJECT-RULES
 # ---------------------------
@@ -3297,8 +3302,9 @@ MAP (§TH) TARGET SPRED (p* <aux> LINK c §PO);
 MAP (§TH) TARGET @<SPRED (p <mv> LINK c §EX + @HAB);
 MAP (§TH) TARGET @<SPRED (p* <aux> LINK c §EX + @HAB);
 
-MAP (§AG) TARGET @<SPRED (p <mv> + AG-SUBJ-V LINK NEGATE c SUBJ); #(NEGATE p <mv> + AG-SUBJ-V LINK p* <aux> LINK c SUBJ)(T:uniqueAG);
+MAP (§AG) TARGET @<SPRED - Ess (p <mv> + AG-SUBJ-V LINK NEGATE c SUBJ); #(NEGATE p <mv> + AG-SUBJ-V LINK p* <aux> LINK c SUBJ)(T:uniqueAG);
 	## Do bohtet guokte olbmo.
+	## Boahtti veahkkin!
 
 MAP (§TH) TARGET SUBJ (NEGATE p WORD);
 	## Dat movt sámi oahpahus lea doaibman...
@@ -3359,8 +3365,12 @@ MAP (§TH) TARGET @<SPRED (p ("leat") + <mv> OR ("šaddat") + <mv> LINK NONE c S
 	#$ Stállu lea hirbmat gievra, muhto ii leat nu jierbmái.
 	#
 
-MAP (§PR) TARGET @<SPRED (0 Nom)(p <OR-Loc-Mat><PR-Nom-Any> LINK c Loc + Mat)(T:uniqueOR);
+MAP (§PR) TARGET @<SPRED (0 Nom)(p <OR-Loc-Mat><PR-Nom-Any> LINK c Loc + Mat)(T:uniquePR);
 	## Dán báhkis šaddá čáppa gohppu.
+
+MAP (§PR) TARGET @<SPRED (0 Nom - A - Pron)(p <PR-Nom-Any> LINK c SUBJ)(T:uniquePR);
+	## Boađus šattai 3-2.
+	## son šaddá buorre oahpaheaddji
 
 MAP (§AT) TARGET @<SPRED + A OR @<SPRED + Num (p <AT-Nom-Any> + <mv> LINK NONE c SUBJ)(NEGATE p* V LINK c CC LINK s SUBJ)(NEGATE p* V LINK c CC LINK s SUBJ)(*-1 BOS LINK *1 @ADVL> - Time - Plc - Build - AT-ADV)(T:uniqueAT); 
 	## why LINK NONE c SUBJ ????
@@ -3869,8 +3879,9 @@ MAP (§MA) TARGET ("áigi") + Ill (p <TH-Acc-Any><MA-Ill-áigi> LINK c Acc)(T:un
 MAP (§MA) TARGET ("háldu") + Ill (p <TH-Acc-Any><MA-Ill-háldu> LINK c Acc)(T:uniqueMA);
 	## De našunálastáhtat válde daid háldoseaset.
 
-MAP (§MA) TARGET @ADVL (0 VGen)(p <SO-Loc-Any><DE-Ill-Any>) ;
+MAP (§MA) TARGET @ADVL (0 VGen)(p <SO-Loc-Any><DE-Ill-Any> OR <SO-Loc-*Ani><DE-Ill-*Ani>) ;
 	## Sii guđđe sihkkeliiddiset ja manne vácci.
+	## Son manná viega márkanii.
 
 # BENEFICIARY
 # - - - - - -
@@ -4127,6 +4138,10 @@ MAP (§LO) TARGET @ADVL (0 Loc OR LO-LOC-ADV OR LO-LOC-ADP)(p <TH-Acc-vuođđu><
 	
 MAP (§LO) TARGET @ADVL (0 Loc OR LO-LOC-ADV OR LO-LOC-ADP)(p <LO-Loc-Any>)(NOT *-1 §PO)(NONE s §TH + Acc OR §TH + Ess OR §ID OR §AT)(NEGATE 0 Hum + Group - Plc LINK p <OR-Loc-HumGroup>)(T:uniqueLO);
 	## Fertet vázzilit vai it báze duoin earáin.
+	
+MAP (§LO) TARGET @ADVL (*-1 BOS OR @CVP BARRIER (*) - @>P - @>N)(0 Loc OR LO-LOC-ADV OR LO-LOC-ADP)(p <LO-Loc-Any>)(NEGATE 0 Hum + Group - Plc LINK p <OR-Loc-HumGroup>)(T:uniqueLO);
+	## Bovnnas lei viessu, ja viesus lei nuorra nisu mánnáváivvis.
+	# if the location is in the start it should still be there despite following §AT or §ID
 	
 MAP (§LO) TARGET @ADVL (0 Loc + Plc OR Loc + Event OR Loc + Org OR Loc + Build OR Loc + Veh OR LO-LOC-ADV OR LO-LOC-ADP OR Loc + Txt)(NEGATE 0 <verb-part>)(p <LO-Loc-Plc>)(NONE s §TH + Acc OR §TH + Ess OR §TH + Com OR §ID)(NEGATE s §DE LINK p <SO-Loc-Any><DE-Ill-Any> OR <SO-Loc-*Ani><DE-Ill-*Ani> LINK NEGATE c §PO)(T:uniqueLO)(NEGATE p <mv> LINK p <aux> LINK c §PO)(NEGATE 0 LO-LOC-ADP LINK c Time); # # important that there should be not theme object
 	# maybe this rule selects some argument that should be source..?? check it!
@@ -4420,6 +4435,13 @@ MAP (§PR) TARGET @ADVL (0 Ill - Ani - Hum)(p <PA-Acc-Any><PR-Ill-*Ani> + PASSIV
     
 MAP (§PR) TARGET Ess - Actio - Hum - Ani (p <PR-Ess-Any><BE-Ill-Ani> LINK c Ill + Hum OR Ill + Ani OR Ill + Org)(T:uniquePR);
     ## Eatnandoallu šattai duođaid buressivdnádussan sámiide nugo dat lei iežáge álbmogiidda.
+    
+#    round after §PR
+#    ---------------
+    
+MAP (§MA) TARGET OPRED (0 Acc + A)(p §PR LINK p <PR-Acc-Any><MA-Acc-Adj>)(T:uniqueMA);
+	## Gáhkuid son ráhkada hui buriid.
+	
     
 # PATH
 # - - -	
