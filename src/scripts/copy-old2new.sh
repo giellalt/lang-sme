@@ -7,6 +7,7 @@
 
 OLDSRCDIR=$GTHOME/gt/sme/src
 NEWSRCDIR=$GTHOME/langs/sme/src
+OLDCOMMONDIR=$GTHOME/gt/smi/src
 STEMSDIR=morphology/stems
 AFFIXDIR=morphology/affixes
 
@@ -46,6 +47,8 @@ cp -f $OLDSRCDIR/verb-sme-lex.txt         $NEWSRCDIR/$STEMSDIR/verbs.lexc
 # syntax/ dir files
 echo "*** Copying syntax ***"
 cp -f $OLDSRCDIR/sme-dis.rle    $NEWSRCDIR/syntax/disambiguation.cg3
+cp -f $OLDCOMMONDIR/smi-dep.rle    $NEWSRCDIR/syntax/dependency.cg3
+cp -f $OLDSRCDIR/smi-syn.rle    $NEWSRCDIR/syntax/functions.cg3
 
 # phonology/ dir files
 echo "*** Copying phonology ***"
