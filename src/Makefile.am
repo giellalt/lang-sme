@@ -18,10 +18,12 @@ GT_TRANSFORMERS_HFST=transcriptor-clock2text-desc.hfst \
 
 #				   generator-tts-gt-norm.hfst
 if WANT_APERTIUM
-APERTIUM_ANALYSERS_HFST=analyser-apertium-desc.hfst \
-						analyser-apertium-norm.hfst
-APERTIUM_GENERATORS_HFST=generator-apertium-desc.hfst \
-						generator-apertium-norm.hfst
+# This is just a generic analyser. You need to add pair-specific analysers to
+# the language-specific part further down.
+APERTIUM_ANALYSERS_HFST=analyser-mt-gt-desc.hfst
+APERTIUM_GENERATORS_HFST=generator-mt-gt-norm.hfst \
+						generator-mt-apertium-norm.hfst \
+						generator-mt-apertium-norm.att
 endif # WANT_APERTIUM
 endif # CAN_HFST
 
@@ -76,7 +78,32 @@ endif
 #### analyser-%.hfst: analyser-%.tmp.hfst
 #### generator-%.hfst: generator-%.tmp.hfst
 
+##################################################################
 #### BEGIN: Add local processing instructions BELOW this line ####
+##################################################################
+
+########################################################
+#### Add language-specific transducer targets here: ####
+
+#### Xerox transducers:
+if CAN_XFST
+GT_ANALYSERS_XFST+=analyser-dict-gt-desc.xfst analyser-dict-gt-norm.xfst
+GT_GENERATORS_XFST+=generator-dict-gt-norm.xfst generator-dict-gt-desc.xfst
+endif
+
+#### HFST transducers
+if CAN_HFST
+GT_ANALYSERS_HFST+=
+GT_GENERATORS_HFST+=
+if WANT_APERTIUM
+APERTIUM_ANALYSERS_HFST+=analyser-mt-gt-desc.und.hfst
+APERTIUM_GENERATORS_HFST+=
+
+endif
+endif
+
+#################################################
+#### Add language-specific build rules here: ####
 
 # A generator for producing word forms suitable for tts:
 # * no circular constructions:
@@ -161,7 +188,10 @@ generator-tts-gt-norm.hfst: analyser-raw-gt-desc.hfst              \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		-o $@
 
-
+# Apertium-related language-specific targets - modify to suit each language:
+analyser-mt-%.und.hfst: analyser-mt-%.tmp.hfst
+	$(AM_V_GEN)$(HFST_INVERT) $< \
+		| $(HFST_FST2FST) $(HFST_FLAGS) -f olw -o $@
 
 analyser-apertium-norm.att: generator-raw-gt-desc.hfst \
 					filters/remove-derivation-position-tags.hfst \
@@ -244,7 +274,9 @@ generator-gt-%.xfst: generator-gt-%.tmp.xfst \
 		 save stack $@\n\
 		 quit\n" | $(XFST)
 
+##################################################################
 #### END: Add local processing instructions ABOVE this line ######
+##################################################################
 
 #### HFST transducer fallback target:
 #### - inversion is needed FOR THE ANALYSER because the hfst model is upside
