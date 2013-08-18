@@ -192,7 +192,7 @@ generator-tts-gt-norm.hfst: analyser-raw-gt-desc.hfst              \
 # Apertium-related language-specific targets - modify to suit each language:
 analyser-mt-%.und.hfst: analyser-mt-%.tmp.hfst
 	$(AM_V_GEN)$(HFST_INVERT) $< \
-		| $(HFST_FST2FST) $(HFST_FLAGS) -f olw -o $@
+		| $(HFST_FST2FST) $(HFST_FLAGS) -t -o $@
 
 analyser-apertium-norm.att: generator-raw-gt-desc.hfst \
 					filters/remove-derivation-position-tags.hfst \
