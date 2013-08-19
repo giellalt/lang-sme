@@ -96,8 +96,10 @@ if CAN_HFST
 GT_ANALYSERS_HFST+=
 GT_GENERATORS_HFST+=
 if WANT_APERTIUM
-APERTIUM_ANALYSERS_HFST+=analyser-mt-apertium-desc.und.hfst \
-						 analyser-mt-apertium-desc.und.att.gz
+APERTIUM_ANALYSERS_HFST+=analyser-mt-apertium-desc.sma.hfst \
+						 analyser-mt-apertium-desc.sma.att.gz \
+						 analyser-mt-apertium-desc.smj.hfst \
+						 analyser-mt-apertium-desc.smj.att.gz
 APERTIUM_GENERATORS_HFST+=
 
 endif
@@ -194,36 +196,13 @@ analyser-mt-%.und.hfst: analyser-mt-%.tmp.hfst
 	$(AM_V_GEN)$(HFST_INVERT) $< \
 		| $(HFST_FST2FST) $(HFST_FLAGS) -t -o $@
 
-analyser-apertium-norm.att: generator-raw-gt-desc.hfst \
-					filters/remove-derivation-position-tags.hfst \
+analyser-mt-gt-desc.sma.hfst: analyser-mt-gt-desc.tmp.hfst \
 					filters/remove-dialect-tags.hfst \
-                                        filters/make-optional-semantic-tags.hfst \
-					filters/remove-homonymy-tags.hfst \
-					filters/remove-variant-tags.hfst \
-					filters/remove-norm-comp-tags.hfst \
-					filters/remove-number-string-tags.hfst \
-					filters/remove-usage-tags.hfst \
 					filters/remove-g-tags.hfst \
 					filters/remove-semantic-tags-except-prop.hfst \
 					filters/remove-deriv-strings-MT-sma.hfst \
-					filters/remove-sub-forms.hfst \
-					filters/remove-hyphenation-marks.hfst        \
-					filters/remove-infl_deriv-borders.hfst       \
-					filters/remove-word-boundary.hfst \
-					$(srcdir)/tagsets/apertium.relabel
-	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -1 $< \
-			-2 filters/remove-hyphenation-marks.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-2 filters/remove-infl_deriv-borders.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-2 filters/remove-word-boundary.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/make-optional-semantic-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+					filters/remove-sub-forms.hfst
+	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -2 $< \
 			-1 filters/remove-sub-forms.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
@@ -233,34 +212,33 @@ analyser-apertium-norm.att: generator-raw-gt-desc.hfst \
 			-1 filters/remove-g-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-usage-tags.hfst \
+			-1 filters/remove-deriv-strings-MT-sma.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-dialect-tags.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		-o $@
+
+analyser-mt-gt-desc.smj.hfst: analyser-mt-gt-desc.tmp.hfst \
+					filters/remove-dialect-tags.hfst \
+					filters/remove-semantic-tags-except-prop.hfst \
+					filters/remove-deriv-strings-MT-sma.hfst \
+					filters/remove-sub-forms.hfst
+	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -2 $< \
+			-1 filters/remove-sub-forms.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-semantic-tags-except-prop.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-g-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-deriv-strings-MT-sma.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-number-string-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-norm-comp-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-homonymy-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-variant-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-dialect-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-derivation-position-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_FST2FST) $(HFSTFLAGS) -t \
-		| $(HFST_SUBSTITUTE) $(HFSTFLAGS) -F $(srcdir)/tagsets/apertium.relabel \
-		| $(HFST_INVERT) \
-		| $(HFST_FST2FST) $(HFSTFLAGS) -w \
-		| hfst-fst2txt \
 		-o $@
 
 
