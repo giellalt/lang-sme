@@ -8,15 +8,12 @@ SUBDIRS = phonology morphology filters phonetics hyphenation orthography syntax 
 ####### Automake targets: ########
 
 if CAN_HFST
-GT_ANALYSERS_HFST=analyser-gt-desc.hfst \
-				  analyser-gt-norm.hfst
-GT_GENERATORS_HFST=generator-gt-desc.hfst \
-				   generator-gt-norm.hfst 
+GT_ANALYSERS_HFST=analyser-gt-desc.hfst analyser-gt-norm.hfst
+GT_GENERATORS_HFST=generator-gt-desc.hfst generator-gt-norm.hfst 
 GT_TRANSFORMERS_HFST=transcriptor-clock2text-desc.hfst \
 					 transcriptor-date2text-desc.hfst \
 					 transcriptor-numbers2text-desc.hfst
 
-#				   generator-tts-gt-norm.hfst
 if WANT_APERTIUM
 # This is just a generic analyser. You need to add pair-specific analysers to
 # the language-specific part further down.
@@ -43,16 +40,6 @@ if CAN_XFST
 GT_GENERATORS_XFST+=generator-oahpa-gt-norm.xfst
 endif # CAN_XFST
 endif # WANT_OAHPA
-
-# HFST transducers
-if CAN_HFST
-GT_ANALYSERS_HFST+=
-GT_GENERATORS_HFST+=
-if WANT_APERTIUM
-APERTIUM_ANALYSERS_HFST+=analyser-apertium-norm.att
-endif
-endif
-
 
 #### Local modifications in *fst processing: ####
 ####
@@ -101,6 +88,8 @@ APERTIUM_ANALYSERS_HFST+=analyser-mt-apertium-desc.sma.hfst \
 						 analyser-mt-apertium-desc.smj.hfst \
 						 analyser-mt-apertium-desc.smj.att.gz
 APERTIUM_GENERATORS_HFST+=
+
+#				   generator-tts-gt-norm.hfst
 
 endif
 endif
@@ -217,6 +206,7 @@ analyser-mt-gt-desc.sma.hfst: analyser-mt-gt-desc.tmp.hfst \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-dialect-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_INVERT) $(HFST_FLAGS) \
 		-o $@
 
 analyser-mt-gt-desc.smj.hfst: analyser-mt-gt-desc.tmp.hfst \
@@ -239,6 +229,7 @@ analyser-mt-gt-desc.smj.hfst: analyser-mt-gt-desc.tmp.hfst \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-dialect-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_INVERT) $(HFST_FLAGS) \
 		-o $@
 
 
