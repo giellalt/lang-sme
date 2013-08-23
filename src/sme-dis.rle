@@ -1519,7 +1519,7 @@ LIST HUM-ATTR =  "bassi" "divššohas" "eananeaiggát" "eaiggát" "eatnigielhál
 LIST HUM-VERB = "ássi" "boaris" "bálvaleaddji" "bálvalanguoibmi" "boazoeaiggát" "dállodoalli" "eananeaiggát" "geavaheaddji" "gili#ássi" "muitaleaddji" "ovttasássi" "riikkaássi" "vuotnaássi" "vuostebelle" "vuostebealli" ;
     # vearbal
 
-LIST NATIONAL-IDENTITY-NOT-SAPMI = "badjesápmelaš" "dáčča" "dánskalaš" "dáža" "duiskalaš" "Enodatsápmelaš" "Guovdageainsápmelaš" "guovdageaidnolaš" "hollándalaš" "indiána" "israellaš" "judálaš" "juvddálaš" "julevsápmelaš" "lullisápmelaš" "maya-#indiána" "njávdánsápmelaš" "nuortalaš" "oarjesápmelaš" "olgoriikalaš" "palestinalaš" "romalaš" "romer" "ruotasuopmelaš" "ruošša-#sápmelaš" "samarialaš" "siseatnansápmelaš" "Suonjilsápmelaš" "Várjjatsápmelaš" "vuotnasápmelaš" ;
+LIST NATIONAL-IDENTITY-NOT-SAPMI = "badjesápmelaš" "dáčča" "dánskalaš" "dáža" "duiskalaš" "Enodatsápmelaš" "Guovdageainsápmelaš" "guovdageaidnolaš" "hollándalaš" "indiána" "israellaš" "judálaš" "juvddálaš" "julevsápmelaš" "kvena" "lullisápmelaš" "maya-#indiána" "njávdánsápmelaš" "nuortalaš" "oarjesápmelaš" "olgoriikalaš" "palestinalaš" "romalaš" "romer" "ruotasuopmelaš" "ruošša-#sápmelaš" "samarialaš" "siseatnansápmelaš" "Suonjilsápmelaš" "Várjjatsápmelaš" "vuotnasápmelaš" ;
 
      # Also regional identity 
  # Duomma:lea
@@ -4155,6 +4155,11 @@ SELECT:objQst Pcle IF (**-2 VFIN BARRIER S-BOUNDARY-NOT-CVP LINK NOT 0 Inf)(-1 V
 	#% Mearridanváldi berre leat nu stuoris go vejolaš
 	#% Oidnen man váttis dilli lei mánáide geat eai máhttán go sámegiela.
 
+#!! * __objQst2__ selects Pcle in standard questions where an object follows VFIN
+SELECT:objQst2 Pcle (-1 VFIN LINK -1 BOS OR CLB OR PUNCT)(0 go LINK 1 Acc OR Gen) ;
+	#$ Oinnežan go su ihttin, dan in dieđe.
+ 
+
 #!! * __subQst__ selects Pcle in questions as subordinated clause
 SELECT:subQst Pcle IF (*-2 VFIN-NOT-IMPRT LINK NEGATE 0 Inf LINK *-1 AUX BARRIER REAL-V)(-1 VFIN LINK NOT 0 Ill OR COPULAS LINK -1 COMMA OR CC)(0 go LINK NEGATE *1 VFIN) ;
 	#$ Mun jurddašin iežainan, leažžá go duohta?
@@ -5775,8 +5780,10 @@ SELECT:DemAttrNum $$CASE + (Dem Sg) IF (0 DAT-PRON)(1 $$CASE + Num LINK *1 (N Sg
 	#$ Dovddat go dan vihtta bártni geat leat doppe.
 
 #!! * __DemAcc__
-REMOVE:DemAcc (Dem Acc) IF (0 DAT-PRON)(1 ADVLCASE);
+REMOVE:DemAcc (Dem Acc) IF (0 DAT-PRON)(1C ADVLCASE);#(NEGATE *-1 TRANS-V BARRIER V OR COMMA);
+#SELECT:DemAcc (Dem Acc) IF (0 DAT-PRON)(1C ADVLCASE - Ill);
 	#$ De našunálastáhtat válde daid háldoseaset.
+	#Comment: Surely the original REMOVE is a mistake? or concider moving to after verbmappings!
 
 #!! * __DemAttr__
 REMOVE:DemAttr (Dem Attr) IF (0 DAT-PRON)(NOT *1 Loc OR Ill OR Com BARRIER NOT-NPMOD);
@@ -6681,7 +6688,7 @@ SELECT:SEMr2074 Gen IF (0 Plc OR Org OR ACR)(1 HUMAN-GROUP) ;	# or (".*joavku"r)
 	#$
 
 #!!  * __SEMactor__ Select genitive in front of ABSTRACT and RIEKTEDILLI: ''unnitlogu oaidninčiegas''
-SELECT:SEMactor Gen IF (0 HAB-ACTOR + Acc OR (Pron Acc) LINK NOT 0 Loc)(*1 ABSTRACT OR RIEKTEDILLI BARRIER NOT-NPMOD)(NEGATE *-1 TRANS-V + FMAINV OR Inf BARRIER SV-BOUNDARY OR Acc)(NEGATE 1 ("ja"));#(NEGATE 0 (Pron Dem) LINK 1 Acc);
+SELECT:SEMactor Gen IF (0 HAB-ACTOR + Acc OR (Pron Acc) LINK NOT 0 Loc)(*1 ABSTRACT OR RIEKTEDILLI BARRIER NOT-NPMOD)(NEGATE *-1 TRANS-V + FMAINV OR Inf BARRIER SV-BOUNDARY OR Acc)(NEGATE 1 ("ja"))(NEGATE 0 (Pron Dem) LINK 1 Acc);
 	#$ Romeriid vealahanáššis lea dárbu geahččat sihke ovttaskas olbmo, struktuvrralaš ja unnitlogu oaidninčiegas.
 	
 #!! * __SEMXr2076__ Selects genitive if you are HUMAN or Pron with an ABSTRACT to your right, ''iežaset vuoigatvuođa''
@@ -7165,7 +7172,6 @@ REMOVE:AccIESPo (Pron Refl Acc) IF (NEGATE *-1 TRANS-V + FMAINV BARRIER Acc OR S
 	#$ Dieđálin eanet Oslo go iežan gili birra.
 	#$ Mii leat fitnan su luhtte ja bivdán su muitalit iežas skuvlavázzima birra.
 
-# Ritvan
 
 #!! !Accusative object 
 
@@ -7191,7 +7197,6 @@ SELECT:AccTV1 Acc IF (*-1C STRICT-TRANS-V BARRIER NOT-NPMODADV - (N Ess)- (N Loc
 	#$ Mii fertiimet doalvut su buohccivissui.
 	#$ Sin bargun lei váldit fáŋgan gonagasa.
 	#% Dieđálin eanet Oslo go iežan gili birra. #Hits Oslo, but this is Gen+Po.
-	#% Son lea dovddus sánálaš ja girjjálaš nissonin geas lea iežas oaivilat feara man birra, ja eatnasat Finnmárkkushan leat oaidnán su lohkkiidreivviid aviissain.
 
 #!! * __PronNP__ (removes Acc): selects Gen for Pron Pers if Acc or Ill to the right, given that there is a secure object or that no transitive verb is found ''bija ruđa mu kontoi''
 REMOVE:PronNP Acc IF (0 PPRON-NOT-DAT + Gen)(NEGATE 0* TRANS-V + FMAINV BARRIER Acc OR S-BOUNDARY)(*1 Acc OR Ill BARRIER NOT-Attr LINK NOT 1 Inf) ;
@@ -7211,7 +7216,7 @@ SELECT:r2206 Gen IF (*-1 VFIN BARRIER N OR (Pers Pron) OR CLB)(0 N OR Pron LINK 
 	#% Alimusriekti gávnnai dettetge doarjaga Čáhppesvuovdeášši bohtosii riikkaidgaskasaš álgoálbmot- ja unnitlohkorievttis. 
 
 
-#!! * __r2271__ Removes genitive: when a transitive verb to the left and you (not if you are a pronoun) are followed by Ill/Loc/Com/Adv: ''doalvvui stálu meahccái''
+#!! * __r2271__ Removes genitive when a transitive verb to the left and you (not if you are a pronoun) are followed by Ill/Loc/Com/Adv: ''doalvvui stálu meahccái''
 REMOVE:r2271 Gen IF (*-1 TRANS-V BARRIER SV-BOUNDARY OR Acc OR COMMA LINK NOT *-1 Acc BARRIER SV-BOUNDARY)(0 (N Acc) LINK NOT 0 (Pron))(1 Ill OR Loc OR Com OR Adv LINK NOT *1 Acc BARRIER TRANS-V)(NEGATE 0 TIME OR ROUTE OR Refl)(NEGATE *-1 Pr OR NUM BARRIER NP-BOUNDARY)(NEGATE *-1 ("mii") BARRIER Acc OR S-BOUNDARY OR Po)(NEGATE *-1 CC BARRIER NOT-NP LINK *-1 GASKAL BARRIER S-BOUNDARY)(NEGATE *-1 HEADOFPARTS LINK 1 Gen LINK 1 Loc)(NOT *2 REAL-V BARRIER S-BOUNDARY);
 	#$ De son doalvvui stálu meahccái.
 	#$ Biera oahpaha matematihka munnje.
@@ -7907,7 +7912,7 @@ SELECT:timeADVL Gen IF (*-1 TIME-ADVL-V OR N-TIMEOBJECT-V LINK 0 (PrfPrc) OR (In
 # And now the accusatives that in spite all got through.. 
 
 #!! * __AccInf2__ Selects Acc if Inf immediately to the RIGHT ''guliid čoallut''
-SELECT:AccInf2 Acc IF (1C TRANS-V + Inf OR (V TV PrfPrc) LINK NOT 0 (@>N))(NEGATE 0 Adv OR TIME)(NEGATE 0 Prop + Nom)(NEGATE -1 Num)(NEGATE *-1 COPULAS + FMAINV BARRIER SV-BOUNDARY)(NEGATE *-2 Loc BARRIER Nom OR SV-BOUNDARY OR S-BOUNDARY)(NEGATE -1 ("ja") + @CNP LINK -1 Nom) ;
+SELECT:AccInf2 Acc IF (1C TRANS-V + Inf OR (V TV PrfPrc) LINK NOT 0 (@>N))(NEGATE 0 Adv OR TIME)(NEGATE 0 Prop + Nom)(NEGATE -1 Num)(NEGATE *-1 COPULAS + FMAINV BARRIER SV-BOUNDARY)(NEGATE *-2 Loc BARRIER Nom OR SV-BOUNDARY)(NEGATE -1 ("ja") + @CNP LINK -1 Nom) ;
 	#Comment: Concider => (1C TRANS-V + Inf OR IV + Inf).. but this "steals" from others..
 	#$ Son čájeha midjiide mo galgat guliid čoallut.
 	#$ Mun láven basadanlanja bassat juohke bearjadaga.
