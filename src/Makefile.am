@@ -186,7 +186,6 @@ analyser-mt-%.und.hfst: analyser-mt-%.tmp.hfst
 
 analyser-mt-gt-desc.sma.hfst: analyser-mt-gt-desc.tmp.hfst \
 					filters/remove-dialect-tags.hfst \
-					filters/remove-g-tags.hfst \
 					filters/reorder-semantic-tags.hfst \
 					filters/remove-deriv-strings-MT-sma.hfst \
 					filters/remove-sub-forms.hfst
@@ -198,9 +197,6 @@ analyser-mt-gt-desc.sma.hfst: analyser-mt-gt-desc.tmp.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/reorder-semantic-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-g-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-deriv-strings-MT-sma.hfst \
@@ -224,9 +220,6 @@ analyser-mt-gt-desc.smj.hfst: analyser-mt-gt-desc.tmp.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/reorder-semantic-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-g-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-deriv-strings-MT-sma.hfst \
