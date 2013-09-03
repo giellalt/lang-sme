@@ -14,9 +14,16 @@
 
 ###### Variables: #######
 
-generator=${srcdir}/../../../src/generator-tts-gt-norm.hfst
-hyphenator=${srcdir}/../../../src/hyphenation/hyphenation.hfst
-ipa_converter=${srcdir}/../../../src/phonetics/text2ipa.hfst
+# $srcdir:
+if test -z "$srcdir"; then
+    srcdir=$(echo "$0" | sed s,[^/]*$,,)
+    test "$srcdir" = "$0" && srcdir=.
+    test -z "$srcdir" && srcdir=.
+fi
+
+generator=${srcdir}/../../src/generator-tts-gt-norm.hfst
+hyphenator=${srcdir}/../../src/hyphenation/hyphenation.hfst
+ipa_converter=${srcdir}/../../src/phonetics/text2ipa.hfst
 
 tts_lexicon=${srcdir}/tts-lexicon.txt
 
@@ -35,7 +42,7 @@ hfst_lookup="@HFST_LOOKUP@"
 hfst_fst2strings=@HFST_FST2STRINGS@
 
 function convert() {
-	$hfst_fst2strings $generator --random=20000 > $tts_lexicon.tmp.txt
+	$hfst_fst2strings $generator --random=2000 > $tts_lexicon.tmp.txt
 	# Extract word forms:
 	cut -d':' -f 2- < $tts_lexicon.tmp.txt > $tts_lexicon.wordforms.txt
 	# Extract lemmas:
@@ -44,13 +51,15 @@ function convert() {
 	$hfst_lookup -q $hyphenator < $tts_lexicon.wordforms.txt \
 		| cut -f2 \
 		| grep -v '^$' \
-		| $hfst_lookup -q $ipa_converter
-		| grep -v '^$' \
+		| $hfst_lookup -q $ipa_converter \
 		> $tts_lexicon.ipatmp.txt
+	# Remove empty lines (done separately to preserve easy identification of
+	# double IPA conversion/overgeneration, in the ipatmp file):
+	grep -v '^$' < $tts_lexicon.ipatmp.txt > $tts_lexicon.ipa.txt
 	tr -d '#^' < $tts_lexicon.wordforms.txt > $tts_lexicon.wordformsclean.txt
 	paste $tts_lexicon.lemmas.txt \
 		  $tts_lexicon.wordformsclean.txt \
-		  $tts_lexicon.ipatmp.txt \
+		  $tts_lexicon.ipa.txt \
 		| cut -f1,2,4 \
 		> $tts_lexicon
 }
@@ -61,6 +70,6 @@ function convert() {
 if test -f "$generator" -a -f "$hyphenator" -a -f "$ipa_converter" ; then
     convert
 else
-    echo "FAIL: Transducer not found! $(basename $generator)"
+    echo "FAIL: Transducer not found! $generator"
     exit 1
 fi
