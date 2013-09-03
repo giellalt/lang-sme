@@ -1,0 +1,66 @@
+#!/bin/bash
+# @configure_input@
+
+# This is a shell script that will produce a three-column text file:
+#
+# 1. lemma+analysis tags
+# 2. orthographic word form
+# 3. phonetic transcription of the word form
+#
+# The generated text file is used as input to certain TTS systems.
+#
+# This file must be processed by ./configure before being used.
+# The script only works with hfst transducers.
+
+###### Variables: #######
+
+generator=${srcdir}/../../../src/generator-tts-gt-norm.hfst
+hyphenator=${srcdir}/../../../src/hyphenation/hyphenation.hfst
+ipa_converter=${srcdir}/../../../src/phonetics/text2ipa.hfst
+
+tts_lexicon=${srcdir}/tts-lexicon.txt
+
+# Use autotools mechanisms to check if hfst transducers are available:
+fsttype=
+@CAN_HFST_TRUE@fsttype="$fsttype hfst"
+
+# Exit if hfst has not been configured:
+if [[ "$fsttype" == "" ]]; then
+    echo "Error: HFST transducers have been shut off at configure time."
+    echo "The script can't work."
+    exit 1
+fi
+
+hfst_lookup="@HFST_LOOKUP@"
+hfst_fst2strings=@HFST_FST2STRINGS@
+
+function convert() {
+	$hfst_fst2strings $generator --random=20000 > $tts_lexicon.tmp.txt
+	# Extract word forms:
+	cut -d':' -f 2- < $tts_lexicon.tmp.txt > $tts_lexicon.wordforms.txt
+	# Extract lemmas:
+	cut -d':' -f 1 < $tts_lexicon.tmp.txt > $tts_lexicon.lemmas.txt
+	# Convert word forms to IPA:
+	$hfst_lookup -q $hyphenator < $tts_lexicon.wordforms.txt \
+		| cut -f2 \
+		| grep -v '^$' \
+		| $hfst_lookup -q $ipa_converter
+		| grep -v '^$' \
+		> $tts_lexicon.ipatmp.txt
+	tr -d '#^' < $tts_lexicon.wordforms.txt > $tts_lexicon.wordformsclean.txt
+	paste $tts_lexicon.lemmas.txt \
+		  $tts_lexicon.wordformsclean.txt \
+		  $tts_lexicon.ipatmp.txt \
+		| cut -f1,2,4 \
+		> $tts_lexicon
+}
+
+###### Start testing: #######
+
+# Check whether the actual fst's exist, run the tests if true, FAIL if not:
+if test -f "$generator" -a -f "$hyphenator" -a -f "$ipa_converter" ; then
+    convert
+else
+    echo "FAIL: Transducer not found! $(basename $generator)"
+    exit 1
+fi
