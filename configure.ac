@@ -150,6 +150,8 @@ AC_CONFIG_FILES([test/src/morphology/run-morph-tester.sh], \
       [chmod a+x test/src/morphology/run-morph-tester.sh])
 AC_CONFIG_FILES([test/src/morphology/generate-noun-lemmas.sh], \
       [chmod a+x test/src/morphology/generate-noun-lemmas.sh])
+AC_CONFIG_FILES([tools/shellscripts/generate-ipa-lexicon.sh], \
+      [chmod a+x tools/shellscripts/generate-ipa-lexicon.sh])
 
 # This must be near the end of all configure.ac files:
 AC_OUTPUT
