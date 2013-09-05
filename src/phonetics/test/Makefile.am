@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
-
-## Copyright (C) 2011 Samediggi
+## Copyright: Sámediggi/Divvun/UiT
+## Licence: GPL v3+
 
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -15,16 +15,27 @@
 ## You should have received a copy of the GNU General Public License
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS=. test
+######## Test targets: ###########
 
-####### Source file defs: ########
+# List here (space separated) all test scripts that should be run:
+TESTS=
 
-#! @param GT_PHONETICS_MAIN required, the source of phonetic transcription
-#! @param GT_PHONETICS_SUPPLEMENTS optional, other sources to distribute and
-#! 		  compile for other things
-GT_PHONETICS_MAIN=text2ipa.xfscript
-GT_PHONETICS_SUPPLEMENTS=
+# The following test scripts depend on HFST being available:
+if CAN_HFST
+TESTS+=test-triple-vowel-conversion.sh
+endif # CAN_HFST
 
-include $(top_srcdir)/am-shared/phonetics-include.am
+# List tests that are presently (expected) failures here, ie things that should
+# be fixed *later*, but is not critical at the moment:
+XFAIL_TESTS=
+
+# Add all scripts here to ensure they are tracked for changes, and to include
+# them in the distribution package.
+check_SCRIPTS=test-ipa-conversion.sh \
+              test-triple-vowel-conversion.sh
+
+####### Other targets: ###########
+clean-local:
+	-rm -f *.gen.txt
 
 # vim: set ft=automake:

@@ -126,6 +126,7 @@ AC_CONFIG_FILES([Makefile \
                  src/morphology/Makefile \
                  src/orthography/Makefile \
                  src/phonetics/Makefile \
+                 src/phonetics/test/Makefile \
                  src/phonology/Makefile \
                  src/syntax/Makefile \
                  src/tagsets/Makefile \
@@ -152,6 +153,8 @@ AC_CONFIG_FILES([test/src/morphology/generate-noun-lemmas.sh], \
       [chmod a+x test/src/morphology/generate-noun-lemmas.sh])
 AC_CONFIG_FILES([tools/shellscripts/generate-ipa-lexicon.sh], \
       [chmod a+x tools/shellscripts/generate-ipa-lexicon.sh])
+AC_CONFIG_FILES([src/phonetics/test/test-ipa-conversion.sh], \
+      [chmod a+x src/phonetics/test/test-ipa-conversion.sh])
 
 # This must be near the end of all configure.ac files:
 AC_OUTPUT
