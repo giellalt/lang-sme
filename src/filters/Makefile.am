@@ -48,6 +48,7 @@ GT_FILTER_TARGETS+=\
 				   remove-semantic-tags-except-prop.hfst  \
 				   remove-MinusSpell-strings.hfst         \
 				   remove-ABBR-strings.hfst               \
+				   remove-ACR-strings.hfst                \
 				   remove-illegal-derivation-strings.hfst \
 				   remove-PUNCT-strings.hfst              \
 				   remove-CLB-strings.hfst                \
@@ -81,6 +82,7 @@ GT_FILTER_TARGETS+=\
 				   remove-NGminip-strings.xfst            \
 				   remove-MinusSpell-strings.xfst         \
 				   remove-ABBR-strings.xfst               \
+				   remove-ACR-strings.xfst                \
 				   remove-illegal-derivation-strings.xfst \
 				   remove-PUNCT-strings.xfst              \
 				   remove-CLB-strings.xfst                \
@@ -96,8 +98,9 @@ GT_FILTER_TARGETS+=remove-RCmpnd-strings.hfst \
 				   remove-CLB-strings.hfst \
 				   remove-lang_hom-tags.hfst \
 				   make-optional-lang_hom-tags.hfst \
-				   reorder-semantic-tags.hfst 
-
+				   reorder-semantic-tags.hfst \
+				   remove-hyphenated-strings.hfst \
+				   remove-Prop-strings.hfst
 endif
 
 # And Xerox targets here:
@@ -106,8 +109,9 @@ GT_FILTER_TARGETS+=remove-RCmpnd-strings.xfst \
 				   remove-CLB-strings.xfst \
                    remove-lang_hom-tags.xfst \
                    make-optional-lang_hom-tags.xfst \
-		   reorder-semantic-tags.xfst 
-
+                   reorder-semantic-tags.xfst \
+				   remove-hyphenated-strings.xfst \
+				   remove-Prop-strings.xfst
 endif
 
 include $(top_srcdir)/am-shared/filters-include.am
