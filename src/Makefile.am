@@ -125,6 +125,7 @@ generator-tts-gt-norm_noprop_nonum_noabbr_nohyph.hfst: \
 					filters/remove-usage-tags.hfst                 \
 					filters/remove-sub-forms.hfst                  \
 					filters/remove-ABBR-strings.hfst               \
+					filters/remove-ACR-strings.hfst                \
 					filters/remove-illegal-derivation-strings.hfst \
 					filters/remove-PUNCT-strings.hfst              \
 					filters/remove-UseCirc-strings.hfst            \
@@ -154,6 +155,9 @@ generator-tts-gt-norm_noprop_nonum_noabbr_nohyph.hfst: \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-ABBR-strings.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-ACR-strings.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-illegal-derivation-strings.hfst \
