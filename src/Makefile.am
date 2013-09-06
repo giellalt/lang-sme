@@ -86,7 +86,7 @@ endif
 #### HFST transducers
 if CAN_HFST
 GT_ANALYSERS_HFST+=
-GT_GENERATORS_HFST+=generator-tts-gt-norm.hfst
+GT_GENERATORS_HFST+=generator-tts-gt-norm_noprop_nonum_noabbr_nohyph.hfst
 
 if WANT_APERTIUM
 APERTIUM_ANALYSERS_HFST+=analyser-mt-apertium-desc.sma.hfst \
@@ -112,9 +112,9 @@ endif
 # * no substandard forms
 # * no illegal derivations
 # * only Guovdageaidnu dialect forms
-generator-tts-gt-norm.hfst: generator-raw-gt-desc.hfst             \
+generator-tts-gt-norm_noprop_nonum_noabbr_nohyph.hfst: \
+					generator-raw-gt-desc.hfst             \
 					filters/make-optional-semantic-tags.hfst       \
-					filters/make-optional-transitivity-tags.hfst   \
 					filters/make-optional-homonymy-tags.hfst       \
 					filters/make-optional-variant-tags.hfst        \
 					filters/remove-derivation-position-tags.hfst   \
@@ -122,7 +122,6 @@ generator-tts-gt-norm.hfst: generator-raw-gt-desc.hfst             \
 					filters/remove-hyphenation-marks.hfst          \
 					filters/remove-infl_deriv-borders.hfst         \
 					filters/remove-norm-comp-tags.hfst             \
-					filters/remove-number-string-tags.hfst         \
 					filters/remove-usage-tags.hfst                 \
 					filters/remove-sub-forms.hfst                  \
 					filters/remove-ABBR-strings.hfst               \
@@ -130,9 +129,25 @@ generator-tts-gt-norm.hfst: generator-raw-gt-desc.hfst             \
 					filters/remove-PUNCT-strings.hfst              \
 					filters/remove-UseCirc-strings.hfst            \
 					filters/remove-RCmpnd-strings.hfst             \
-					filters/remove-CLB-strings.hfst
+					filters/remove-orthography-tags.hfst           \
+					filters/remove-Orth_Strd-strings.hfst          \
+					filters/remove-CLB-strings.hfst                \
+					filters/remove-hyphenated-strings.hfst         \
+					filters/remove-Prop-strings.hfst
 	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -1 $< \
 			-2 filters/remove-infl_deriv-borders.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-2 filters/remove-hyphenated-strings.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-Orth_Strd-strings.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-Prop-strings.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-orthography-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-sub-forms.hfst \
@@ -159,9 +174,6 @@ generator-tts-gt-norm.hfst: generator-raw-gt-desc.hfst             \
 			-1 filters/remove-usage-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-number-string-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-norm-comp-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
@@ -175,9 +187,6 @@ generator-tts-gt-norm.hfst: generator-raw-gt-desc.hfst             \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/make-optional-variant-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/make-optional-transitivity-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/make-optional-semantic-tags.hfst \
