@@ -120,7 +120,6 @@ generator-tts-gt-norm_noprop_nonum_noabbr_nohyph.hfst: \
 					filters/remove-derivation-position-tags.hfst   \
 					filters/remove-dialect-tags.hfst               \
 					filters/remove-hyphenation-marks.hfst          \
-					filters/remove-infl_deriv-borders.hfst         \
 					filters/remove-norm-comp-tags.hfst             \
 					filters/remove-usage-tags.hfst                 \
 					filters/remove-sub-forms.hfst                  \
@@ -137,9 +136,6 @@ generator-tts-gt-norm_noprop_nonum_noabbr_nohyph.hfst: \
 					filters/remove-spaced-strings.hfst             \
 					filters/remove-Prop-strings.hfst
 	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -1 $< \
-			-2 filters/remove-infl_deriv-borders.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-2 filters/remove-hyphenated-strings.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
