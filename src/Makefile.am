@@ -133,13 +133,13 @@ generator-tts-gt-norm_noprop_nonum_noabbr_nohyph.hfst: \
 					filters/remove-Orth_Strd-strings.hfst          \
 					filters/remove-CLB-strings.hfst                \
 					filters/remove-hyphenated-strings.hfst         \
-					filters/remove-spaced-strings.hfst             \
+					filters/remove-mwe-strings.hfst                \
 					filters/remove-Prop-strings.hfst
 	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -1 $< \
 			-2 filters/remove-hyphenated-strings.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-2 filters/remove-spaced-strings.hfst \
+			-2 filters/remove-mwe-strings.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-Orth_Strd-strings.hfst \
