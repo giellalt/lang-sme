@@ -100,7 +100,7 @@ GT_FILTER_TARGETS+=remove-RCmpnd-strings.hfst \
 				   make-optional-lang_hom-tags.hfst \
 				   reorder-semantic-tags.hfst \
 				   remove-hyphenated-strings.hfst \
-				   remove-spaced-strings.hfst \
+				   remove-mwe-strings.hfst \
 				   remove-Prop-strings.hfst
 endif
 
@@ -112,7 +112,7 @@ GT_FILTER_TARGETS+=remove-RCmpnd-strings.xfst \
                    make-optional-lang_hom-tags.xfst \
                    reorder-semantic-tags.xfst \
 				   remove-hyphenated-strings.xfst \
-				   remove-spaced-strings.xfst \
+				   remove-mwe-strings.xfst \
 				   remove-Prop-strings.xfst
 endif
 
