@@ -101,7 +101,8 @@ GT_FILTER_TARGETS+=remove-RCmpnd-strings.hfst \
 				   reorder-semantic-tags.hfst \
 				   remove-hyphenated-strings.hfst \
 				   remove-mwe-strings.hfst \
-				   remove-Prop-strings.hfst
+				   remove-Prop-strings.hfst \
+				   remove-infl_boundary-marks.hfst
 endif
 
 # And Xerox targets here:
@@ -113,7 +114,8 @@ GT_FILTER_TARGETS+=remove-RCmpnd-strings.xfst \
                    reorder-semantic-tags.xfst \
 				   remove-hyphenated-strings.xfst \
 				   remove-mwe-strings.xfst \
-				   remove-Prop-strings.xfst
+				   remove-Prop-strings.xfst \
+				   remove-infl_boundary-marks.xfst
 endif
 
 include $(top_srcdir)/am-shared/filters-include.am
