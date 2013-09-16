@@ -64,20 +64,30 @@ echo <<defining Vow and Cns...>>
 
 
 
-define Vow       [ a | á | e | i | o | u | y | æ | ø | å | ä | ö | 
-                   A | Á | E | I | O | U | Y | Æ | Ø | Å | Ä | Ö | 
-                   é | ó | ú | í | à | è | ò | ù | ì | ë | ü | ï | 
-                   â | ê | ô | û | î | ã | ý |
-                   É | Ó | Ú | Í | À | È | Ò | Ù | Ì | Ë | Ü | Ï | 
-                   Â | Ê | Ô | Û | Î | Ã | Ý |
-                   ɑ | ə | ă | ĕ | ĭ | ŭ | ŏ |
+define Vow       [ a | e | i | o | u | y | æ | ø | å | 
+                   á | é | í | ó | ú | ý |
+                   à | è | ì | ò | ù | 
+                   â | ê | î | ô | û | 
+                   ä | ë | ï | ö | ü | 
+                   ă | ĕ | ĭ | ŭ | ŏ |
+                   ã | 
+                   ɑ | ə | 
+
+                   A | E | I | O | U | Y | Æ | Ø | Å | 
+                   Á | É | Í | Ó | Ú | Ý |
+                   À | È | Ì | Ò | Ù | 
+                   Â | Ê | Î | Ô | Û | 
+                   Ä | Ë | Ï | Ö | Ü | 
+                   Ã | 
+
                    ː ] ;
 
-define Cns [ b | c | č | d | đ | f | g | h | j | k | l | m | n | ŋ | 
-             B | C | Č | D | Đ | F | G | H | J | K | L | M | N | Ŋ | 
-             p | q | r | s | š | t | ŧ | v | w | x | z | ž |   
-             P | Q | R | S | Š | T | Ŧ | V | W | X | Z | Ž |
-             ɟ | ʎ | ʃ | ː ] ;
+define Cns [ b | c | č | ç | d | đ | f | g | h | j | k | l | m | n | ŋ | 
+             B | C | Č | Ç | D | Đ | F | G | H | J | K | L | M | N | Ŋ | 
+             p | q | r | s | š | t | ŧ | þ | v | w | x | z | ž |   
+             P | Q | R | S | Š | T | Ŧ | Þ | V | W | X | Z | Ž |
+             ɟ | ʎ | ʃ | 
+             ː ] ;
 
 define Sgm [ Vow | Cns ] ;
 
@@ -96,40 +106,34 @@ define StressBorder [ WordBorder | %» ] ;
 ! ^SL = Secondary Lengthening
 define Dummy %^SL ;
 
-define SyllWithoutOnset Vow+ Cns* (Dummy) Cns* (ə) %^ ;
+! Define a syllable without Onset:
+define SyllWOOnset Vow+ Cns* (Dummy) Cns* (ə) %^ ;
 
-define Syll Cns* SyllWithoutOnset ;
+! Define a full syllable:
+define Syll Cns* SyllWOOnset ;
 
-
-! PrimStress always on first syllable:
+! Primary stress always on first syllable:
 define PrimStress [..] -> ˈ || .#. Cns* _ Vow ;
 
-! SecStress after word boundary:
-define WordInitSecStress  [..] -> ˌ || StressBorder Cns* _ Vow  ;
+! Secondary stress:
+define SecStress  [..] -> ˌ ||
+                         StressBorder Cns*                         _ Vow                      ,
+                   ˈ SyllWOOnset Syll Cns*                         _ Vow+ \Vow* \StressBorder ,
+                   ˈ SyllWOOnset Syll Cns* ˌ SyllWOOnset Syll Cns* _ Vow+ \Vow* \StressBorder ,
+ StressBorder Cns* ˌ SyllWOOnset Syll Cns*                         _ Vow+ \Vow* \StressBorder ,
+ StressBorder Cns* ˌ SyllWOOnset Syll Cns* ˌ SyllWOOnset Syll Cns* _ Vow+ \Vow* \StressBorder ;
+
 ! giella#skuvla -> giel^la#skuv^la -> kˈiella#skˌuvla
 ! Dihtti^oalgi  -> Diht^ti^oal^gi  -> tˈihtiˌŏɑləki
 ! granihtalamosiid -> gra^nih^ta»la^mos>iid -> grˈɑ.nih.tˌɑ»lˌɑ.mosijh
-
-
-! SecStress according to foot structure, first occurence:
-define FootStructSecStress1  [..] -> ˌ || ˈ SyllWithoutOnset Syll Cns* _ Vow+ ( \Vow+ ) \StressBorder ;
 ! gulahallama  -> gu^la^hal^la^ma  -> kˈulahˌallama
 ! hálddahuslaš -> 
 ! borrama -> bor^ra^ma -> pˈo^SLrr^raa^ma
-
-! SecStress according to foot structure, second occurence:
-define FootStructSecStress2  [..] -> ˌ || ˌ SyllWithoutOnset Syll Cns* _ Vow+ ( \Vow+ ) \StressBorder ;
 ! giella#gulahallama -> giel^la#gu^la^hal^la^ma -> kˈiella#kˌulahˌallama
-
+! kˈiel^la#kˌu^la^hal^la^mĕä^seh -> kˈiella#kˌulahˌallamˌĕæ^seh
 ! ^hˌɑl^lɑ^mĕæ^seh
-
-! SecStress according to foot structure, non-first and non-second occurences:
-define FootStructSecStress3  [..] -> ˌ || ˌ SyllWithoutOnset Syll Cns* _ Vow+ Syll \StressBorder ;
-
 ! gulahallameaset -> gu^la^hal^la^mea^set -> kˈulahˌallamˌĕæseh
 ! ráidarasažiiddisguin -> rái^da^ra^sa»žiid^dis^guin -> rˈájtarˌasa»dʃˌijtisguin
-
-
 ! giella#gulahallameaset -> giel^la#gu^la^hal^la^mea^set -> kˈiella#kˌulahˌallamˌĕæseh
 ! giella#ráidarasažiiddisguin -> giel^la#rái^da^ra^sa»žiid^dis^guin -> kˈiella#rˌájtarˌasa»dʃˌijtisguin
 
@@ -138,12 +142,20 @@ define FootStructSecStress3  [..] -> ˌ || ˌ SyllWithoutOnset Syll Cns* _ Vow+ 
 
 echo << Downcasing rules>>
 
-define down [ A -> a, Á -> á, B -> b, C -> c, Č -> č, Ç -> ç, D -> d, Đ -> đ,
-              E -> e, É -> é, F -> f, G -> g, H -> h, I -> i, Í -> í, J -> j,
-              K -> k, L -> l, M -> m, N -> n, Ŋ -> ŋ, O -> o, Ò -> ò, Ó -> ó,
-              P -> p, Q -> q, R -> r, S -> s, Š -> š, T -> t, Ŧ -> ŧ, Þ -> þ,
-              U -> u, Ü -> ü, V -> v, W -> w, X -> x, Y -> y, Z -> z, Ž -> ž,
-              Æ -> æ, Ø -> ø, Å -> å, Ö -> ö, Ä -> ä  ] ;
+define down [ A -> a, E -> e, I -> i, O -> o, U -> u, Y -> y, 
+              Á -> á, É -> é, Í -> í, Ó -> ó, Ú -> ú, Ý -> ý, 
+              À -> à, È -> è, Ì -> ì, Ò -> ò, Ù -> ù, 
+              Â -> â, Ê -> ê, Î -> î, Ô -> ô, Û -> û, 
+              Ä -> ä, Ë -> ë, Ï -> ï, Ö -> ö, Ü -> ü, 
+              Ã -> ã,
+              Æ -> æ, Ø -> ø, Å -> å, 
+
+              B -> b, C -> c, Č -> č, Ç -> ç, D -> d, Đ -> đ, 
+              F -> f, G -> g, H -> h, J -> j, K -> k, L -> l, 
+              M -> m, N -> n, Ŋ -> ŋ, P -> p, Q -> q, R -> r, 
+              S -> s, Š -> š, T -> t, Ŧ -> ŧ, Þ -> þ, V -> v, 
+              W -> w, X -> x, Z -> z, Ž -> ž
+              ] ;
 
 
 
@@ -881,22 +893,22 @@ read regex [
 .o. aaRule
 .o. PronounLenghtening
 .o. PrimStress
-.o. WordInitSecStress
-.o. FootStructSecStress1
+.o. SecStress
+!.o. FootStructSecStress1
 !.o. FootStructSecStress2
 !.o. FootStructSecStress2
 !.o. FootStructSecStress3
 !.o. FootStructSecStress3
 !.o. FootStructSecStress3
 
-.o. OUTPUTFORMAT
-.o. OUTPUTFORMAT2
-.o. COLONLENGTH
-.o. COLONLENGTH
-.o. COLONLENGTH
-!.o. COLONLENGTHSYLL
-.o. DummyDeletion
-.o. OtherSymbolDeletion
+!.o. OUTPUTFORMAT
+!.o. OUTPUTFORMAT2
+!.o. COLONLENGTH
+!.o. COLONLENGTH
+!.o. COLONLENGTH
+!!.o. COLONLENGTHSYLL
+!.o. DummyDeletion
+!.o. OtherSymbolDeletion
 
 ] ;
 
