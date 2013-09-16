@@ -119,7 +119,7 @@ generator-tts-gt-norm_noprop_nonum_noabbr_nohyph.hfst: \
 					filters/make-optional-variant-tags.hfst        \
 					filters/remove-derivation-position-tags.hfst   \
 					filters/remove-dialect-tags.hfst               \
-					filters/remove-hyphenation-marks.hfst          \
+					filters/remove-infl_boundary-marks.hfst        \
 					filters/remove-norm-comp-tags.hfst             \
 					filters/remove-usage-tags.hfst                 \
 					filters/remove-sub-forms.hfst                  \
@@ -140,6 +140,9 @@ generator-tts-gt-norm_noprop_nonum_noabbr_nohyph.hfst: \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-2 filters/remove-mwe-strings.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-2 filters/remove-infl_boundary-marks.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-Orth_Strd-strings.hfst \
