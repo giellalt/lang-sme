@@ -1681,7 +1681,7 @@ LIST TEXT = (".*listu"r) (".*čálus"r) (".*girji"r) (".*-girji"r) (".*gažaldat
   # A potential place (locative?) for sth. written.
   # Maybe one should differentiate between written and spoken texts
 
-LIST ABSTR-TEXT = (".*plána"r) (".*mearrádus"r) (".*evttohus"r)  (".*njuolggadus"r) (".*ortnet"r) (".*árvalus"r) (".*cealkámuš"r) "cuvccas" "eaktu" "eanačujuhus" "gažaldat" "gáhtteneaktu" "gáldokoda" "geasku" "giellagažaldat" "ILO-soahpamuš" "jearaldat" "láhkaásahus" "luođaleaktu" "lonuhanmearrádus" "máinnas" "muitalus" "resolušuvdna" "riektecealkámuš" "sáme#kodisilla" "Wienersoahpamuš" ;
+LIST ABSTR-TEXT = (".*plána"r) (".*mearrádus"r) (".*evttohus"r)  (".*njuolggadus"r) (".*ortnet"r) (".*árvalus"r) (".*cealkámuš"r) "cuvccas" "doaibmabidju" "eaktu" "eanačujuhus" "gažaldat" "gáhtteneaktu" "gáldokoda" "geasku" "giellagažaldat"  "jearaldat" "lappekodisilla" "láhkaásahus" "luođaleaktu" (".*mearrádus"r) "máinnas" "muitalus" "resolušuvdna" "sáme#kodisilla" (".*soahpamuš"r) ;
 
   # A potential place (locative?) for sth. written, spoken or abstract activity 
   
@@ -1842,10 +1842,9 @@ LIST OTHER-ABSTR-ENTITY = "ášši" (".*prošeakta"r) (".*plána"r) "hehttehus" 
 
   # can represent a concrete entity
 
-LIST MONEY = "ánsu" "árvu" "bálká" (".*bálká"r)  "buorrin" "bušeahtta" (".*bušeahtta"r) "čoahkkinbuhtadus" "dearvvasvuođabálvalusmearreruhta" "dienas" "divat" "doarjja"
-"fuolahan#bálká" "giellaprošeaktaruhta" "gollu" "guovttegielalašvuođaruhta" "haddi" 
-"juolludeapmi" "juolludus" "kulturmearreruhta" ("liigudit" Der/NomAct) "máksu" "mátkkoštangollu"
-"preassadoarjja" "reantu" "ruhta" (".*ruhta"r) "sáhkku" "sisaboahtu" "stáhtadoaibma" "tienas" "vealgi" "vearru" "vuoitu";
+LIST MONEY = "ánsu" "árvu" (".*bálká"r) (".*bušeahtta"r) (".*buhtadus"r) "dienas" "divat" (".*doarjja"r)
+(".*gollu"r) "haddi" "juolludeapmi" "juolludus" ("liigudit" Der/NomAct) "máksu" 
+ "reantu" (".*ruhta"r) "sáhkku" "sisaboahtu" "tienas" "vealgi" "vearru" "vuoitu";
 
     # Ambiguous with respect to concreteness, either the symbolic amount or the concrete coins and bills
 
@@ -5108,6 +5107,10 @@ SELECT:AAttr (A Attr) IF  (NOT 0 (V* A) OR Adv OR Inf)(NEGATE 1 PREGEN)(NEGATE *
 	#$ Váillui guhkit áiggi heivvolaš oaivil. 
 	#% lea dehálaš vuovdingálvun
 
+SELECT:OrdAttr (Ord Attr) IF (1 N) ;
+	#$ Son lea viđát luohkás.
+
+
 #!! * __AdvN__ removes Adv   
 REMOVE:AdvN Adv IF (NEGATE -2 NOT-AUX-V)(-1 Gen OR Dem OR Indef LINK NEGATE -1 PrfPrc)(0 Attr LINK 1 N);
 	#$ Muhto dán geasi gal áiggun bargat vai dinen veháš ruđaid.
@@ -5220,11 +5223,12 @@ SELECT:WASgNomNoSubj (A Sg Nom) IF ((*-1 COPULAS + Sg3 BARRIER NOT-ADV-PCLE) OR 
 	## Ii leat vuogas geavahit hálduiváldima dálá fásta opmodagaide.
 
 #!! * __ASgNomafterCop__ selects A Sg Nom after copulas and Sg Nom, not so strong constraint for the target
-SELECT:WASgNomafterCop (A Sg Nom) IF (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 (Sg Nom) BARRIER NOT-ADV-PCLE LINK *-1 BOC OR CP BARRIER NOT-ADV-PCLE)(1 NP-BOUNDARY OR PrfPrc);	
+SELECT:WASgNomafterCop (A Sg Nom) IF (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 (Sg Nom) BARRIER NOT-ADV-PCLE LINK *-1 BOC OR CP BARRIER NOT-ADV-PCLE)(1 NP-BOUNDARY OR PrfPrc LINK NOT 0 N);	
 	#$ Vuoigŋa gal lea geargat, muhto oažži lea headju. # geargat, headju
 	#$ ...dan dihte go geassegollebivdu lei áibbas heittot leamaš,... # heittot
 	#$ Joddu suhppejuvvo go doaris lea gárvvis.	
 	#$ Buođđu lea dál gárvvis.
+	#% Dat lea guhkimus fanas.
 
 
 #!! * __ASgNomEssCopNeg__ selects A Sg Nom after copulas Sg3 or Neg Sg3s, 
@@ -9811,7 +9815,7 @@ LIST JUOHKIN-PASS-SUBJ = "gávdnoštupmi" "eana" "čázádat" "vuoigatvuohta" ;
 
 
 SELECT:LexSel ("juohkit") IF (0 ("juhkat"))(*0 Ill BARRIER Loc OR SV-BOUNDARY LINK NOT 0 Sem/Time) ;	
-SELECT:LexSel ("juohkit") IF (0 ("juhkat"))(*1 ("diehtu") BARRIER NOT-A-PCLE) ;		
+SELECT:LexSel ("juohkit") IF (0 ("juhkat"))(*0 ("diehtu") OR TEXT OR ABSTR-TEXT OR CURRENCY BARRIER NOT-NPMOD) ;		
 SELECT:LexSel ("juohkit") IF (0 ("juhkat"))(*1 Ess BARRIER NOT-A-PCLE) ;	
 SELECT:LexSel ("juohkit") IF (0 ("juhkat"))(*1 ("mielde") OR ("ektui") OR ("gaskkas") OR ("ovddas") OR ("gaskka") BARRIER NOT-NPMOD) ;	
 SELECT:LexSel ("juohkit") IF (0 ("juhkat"))(*0 JUOHKIN-ADV BARRIER REAL-V) ;
