@@ -2455,7 +2455,7 @@ SELECT:gaskanAdvVGen ("gaskan" Adv)  IF (1 VGen);
  	#$ Gaskan bora viehkalin olggos.
 
 #!! * __gotAdv__  
-SELECT:gotAdv ("got" Adv)(-1 ("nu") OR ("jur")) ; #eksempler på CS?
+SELECT:gotAdv ("got" Adv)(-1 ("jur")) ; #eksempler på CS?
 
 #!! * __ikteAdv__  
 SELECT:ikteAdv ("ikte" Adv) IF  (*0 VFIN BARRIER S-BOUNDARY) ;
@@ -3088,6 +3088,16 @@ SELECT:datSg3 Sg3 IF (NEGATE *0 PL-V BARRIER S-BOUNDARY)(0 ("dat" Sg3 Nom) LINK 
 # selects dat in front of leamaš
 SELECT:datSg3PrfPrc Sg3 IF (NEGATE *-1 PL-V BARRIER S-BOUNDARY)(0 ("dat" Sg3 Nom))(1 ("leat" PrfPrc) LINK *1 Sg BARRIER NOT-A-ADV) ;
 	#$ Dat leamaš hui stuorra noađđi midjiide.
+
+
+# selects dat Sg in front of Rel Sg
+SELECT:datSgRel (Pron Sg Nom) IF (*1 ("mii" Rel Sg) BARRIER WORD) ;
+	#$ Dat mii sáhttá háhkkojuvvot, lea ovdalis juo namuhuvvon..
+
+# selects dat Pl in front of Rel Pl
+SELECT:datPlRel (Pron Pl Nom) IF (*1 ("mii" Rel Pl) BARRIER WORD) ;
+	#$ Dat mat sáhttet háhkkojuvvot, leat ovdalis juo namuhuvvon..
+
 
 #!! * __DemPlLoc__ selects Dem when Dem Pl Loc and agreement, perhaps no need for it here because we have agreement-rules later. Men viktig: her blir vi kvitt duo N.
 SELECT:DemPlLoc Dem IF (*1 (Pl Loc) BARRIER NOT-A-ADV)(0 (Pl Loc));
@@ -3939,7 +3949,7 @@ REMOVE:rastaPr ("rastá" Pr) IF (1 HUMAN + Acc OR (Pers Acc) LINK *0 ("doalvut")
 SELECT:rastaPr Pr IF (0 ("rastá") OR ("badjel"))(1 ("rádji" Gen) OR ("rádjá" Gen)) ;
 
 #!! * __birraPo, birraPr__ special rules for birra because it often is Adv, and it can be an object connected to the PP
-SELECT:birraPo ("birra" Po) IF ((-1 ("máilbmi" Gen)) OR (-1 NP-HEAD-GEN LINK *-1 VERBAL-ACTIVITY BARRIER NOT-ADV-PCLE)) ;
+SELECT:birraPo ("birra" Po) IF ((-1 ("máilbmi" Gen)) OR (-1 NP-HEAD-GEN LINK *-1 VERBAL-ACTIVITY-V BARRIER NOT-ADV-PCLE)) ;
 	#$ Dattetge ii leat muitaluvvon geavahanriiddu birra dálolaččaid ja boazodoalu gaskkas.
 	#$ Dattetge ii leat muitaluvvon makkárge namahan veara geavahanriiddu birra dálolaččaid ja boazodoalu gaskkas. #This doesn't function yet.
 SELECT:birraPr ("birra" Pr) IF (1 ("máilbmi" Gen))  ;
@@ -4045,7 +4055,8 @@ REMOVE:PrNoCompl Pr IF (NEGATE *1 NP-HEAD-GEN OR (A Gen) OR (Num Gen) BARRIER NO
 
 
 #!! * __PoGen__ selects Po
-SELECT:PoGen Po - Foc - N-PO IF (-1 NP-HEAD-GEN - Qst LINK NEGATE 0 Acc LINK *-1 STRICT-TRANS-V BARRIER NOT-ADV-PCLE)(NEGATE -1 VAHKKU-DUR + Acc LINK -1 REAL-V)(NEGATE *1 NP-HEAD-GEN OR (A Gen) OR (Num Gen) BARRIER NOT-NPMOD) (NEGATE 1 STRICT-TRANS-V LINK NOT *1 Acc BARRIER NOT-NPMODADV);
+SELECT:PoGen Po - Foc - N-PO IF (-1 NP-HEAD-GEN - Qst LINK NEGATE 0 Acc LINK *-1 STRICT-TRANS-V BARRIER NOT-ADV-PCLE)(NEGATE -1 VAHKKU-DUR + Acc LINK -1 REAL-V) (NEGATE *1 NP-HEAD-GEN OR (A Gen) OR (Num Gen) BARRIER NOT-NPMOD LINK NOT *1 Po BARRIER SV-BOUNDARY
+) (NEGATE 1 STRICT-TRANS-V LINK NOT *1 Acc BARRIER NOT-NPMODADV);
 	#$ Vuoi dan olbmo gean bokte fillehusat bohtet.
 	#$ Nieida bođii ráhkkásis mielde.
 	#$ Tommi ja Annika dárkilit geahččaba Pippi oaidnin dihte mo diŋggaohccit barget.
@@ -4054,6 +4065,7 @@ SELECT:PoGen Po - Foc - N-PO IF (-1 NP-HEAD-GEN - Qst LINK NEGATE 0 Acc LINK *-1
 	#$ Váldde biergasiid iežat fárrui!
 	#$ Su vuosttaš girji bođii jagi 1986, ja girji lea muitalus nuorra sámenieidda birra gii šaddá bajás internáhtas.
 	#$ Lávvomuoraid nala bidjat álo loavdaga.
+	#$ Dattetge ii leat muitaluvvon makkárge namahan veara geavahanriiddu birra dálolaččaid ja boazodoalu gaskkas.
 	#% Ii galgga leat vejolaš addit nuppi áššebeallái viidát vuoigatvuođaid dahje geatnegasvuođaid go alddis leat.
 	#% Áhku vuostá lea buoremus vuostá maid mun dieđán.
 
@@ -4520,8 +4532,9 @@ REMOVE (@X) ;
 REMOVE:PlSg3V NP-HEAD-PL-NOM IF (0 (Inf) OR NP-HEAD-SG-NOM)(1C SG3-V);
 	## Dát lei deháleamos ágga.
 
-REMOVE:SgPl3V (Pron Sg Nom) IF  (1C PL3-V);
+REMOVE:SgPl3V (Pron Sg Nom) IF  (*1C PL3-V BARRIER NOT-ADV-PCLE);
 	## Dát lei deháleamos ágga.
+	#$ Dathan han gal leat buorit guolit.
 
 
 #!! !!Interrogative and relative pronouns
@@ -4706,9 +4719,10 @@ REMOVE:r1567 (Indef Attr) IF (*-1 LEAT-FIN-NOT-IMPRT LINK NOT *1 PRC-NOT-LEAT BA
     # Both rules are necessary in exactly this order
 #OBS
 
-SELECT:r1569 (Indef Attr) IF (0C Pron - ("nubbi"))(*1 N - Prop BARRIER NOT-A-PCLE OR go)(NEGATE 0 ("eará") LINK -1 ("earret"));
+SELECT:r1569 (Indef Attr) IF (0C Pron - ("nubbi"))((*1 N - Prop BARRIER NOT-A-PCLE OR go) OR (1 (Actio Gen) LINK 1 ("veara") LINK 1 N - Prop))(NEGATE 0 ("eará") LINK -1 ("earret"));
 	## Dan muitalii muhtin mátkkošteaddji gean namma lei Keilhau.
 	## Njuolggadusain ledje eará ge mearrádusat.
+	#$ Dattetge ii leat muitaluvvon makkárge namahan veara geavahanriiddu birra dálolaččaid ja boazodoalu gaskkas.
 
 SELECT:r1570 (Indef Attr) IF (1 (A Attr))(*2 HEAD-N BARRIER NP-BOUNDARY);
 	## ...ja eará almmolaš dahje priváhta doaibma.
@@ -4908,8 +4922,8 @@ SELECT:DerDiminA ("jagáš" A Gen) IF  (-1 Dem)(0 Der/Dimin LINK 1 N) ;
 	#$ Dán jagáš mánát gal leat buohkat fitnan Sámis ovdal.
 
 #!! * boaris A or N
-SELECT:boarisA A IF (0 ("boaris") LINK -1 VAHKKU-DUR) ;
-	#$ Son lea vihtta jagi boaris.
+SELECT:boarisA A IF (0 ("boaris") LINK -1 Sem/Time) ;
+	#$ Son lea vihtta sáhpánjagi boaris.
 
 #!! * dáláš
 REMOVE Imprt IF (0 ("dáláš"))(1 N + Nom);
@@ -10014,6 +10028,13 @@ SELECT:genAdv Adv (0 A LINK 1 SYN-V)(-1 Acc) ;
 	#$ Dihkkádeaddji rávve skohtervuddjiid várrugasat mátkkoštit, go dán jagi lea erenoamán heajos jiekŋa jogain.
 
 #!! !!!NOUNS
+REMOVE Prop (-1 BOC) ;
+	#$ Girjjis leat boares govat.
+
+REMOVE (Pl Nom) (1 VFIN + Sg3) ;
+REMOVE (Sg Nom) (1 VFIN + Pl3) ;
+
+#REMOVE (A Pl) + $$CASE (0 (N Pl) + $$CASE) ;
 
 #!! !!!VERBS
 
