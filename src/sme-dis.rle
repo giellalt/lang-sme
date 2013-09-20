@@ -876,7 +876,7 @@ LIST ACC-INF-V = "bivdit" "čuorvut" "dagahit" "diktit" "gohččut" "movttiidaht
  # a subset of INF-V.
  	#$ Ii suova nieiddas náitalit.
 
-LIST OPRED-V = "alidit" "atnit" "álggahit" "bargat" "bidjat" "dadjat" "dahkat" "dulkot" "geavahit" "geahččat" "gohčodit" "gohččut" "málet" "meroštallat" "meroštallojuvvot" "navdit" "oaivvildit" "sihkkarastit" "váldit" "válljet" "rábmot" "vihahit" ;
+LIST OPRED-V = "alidit" "atnit" "álggahit" "bargat" "bidjat" "ceavzit" "dadjat" "dahkat" "dulkot" "geavahit" "geahččat" "gohčodit" "gohččut" "málet" "meroštallat" "meroštallojuvvot" "navdit" "oaivvildit" "sihkkarastit" "váldit" "válljet" "rábmot" "vihahit" ;
 
  # Verbs that occur with objects that have secondary predicates.
  
@@ -2072,8 +2072,8 @@ REMOVE:derN DER-N IF (0 LEX-N LINK NOT 0 Ess OR ("dahkat"));
  # many Actio. This may be unfortunate. If so, the 
  # Der/NomAct is removed from the DER-N set.
  
-#!! * __derNEss__ removes DER-N if lexicalised essives (revise this)
-REMOVE:derNEss DER-N IF (0 DER-N LINK 0 Ess)(0 LEX-N LINK 0 Ess)(NEGATE 0 (NomAg Ess) OR (Der/NomAg Ess));
+#!! * __derNEss__ removes DER-N if lexicalised essives (revise this) - flytter denne til slutten av fila
+#REMOVE:derNEss DER-N IF (0 DER-N LINK 0 Ess)(0 LEX-N LINK 0 Ess)(NEGATE 0 (NomAg Ess) OR (Der/NomAg Ess));
  	## Boarrásis leai dat vel eanaš ealáhussan ge.
  	# Removes DER-N if O is also a lexical noun, and both nouns are essive.	
 
@@ -7239,9 +7239,14 @@ REMOVE:AccEss Acc IF (0 SAPMI-N-HEAD LINK 1C (N Ess))(NEGATE 0 SAPMI-N-HEAD LINK
 # Main rules are: AccTV1, r2271, AccTV2, AccTV3, topOBJ1, topOBJ2, AccInf
 
 #!! * __AccTV1__ Selects accusative: when a Strict transitive verb to the left (barrier exludes everything but: adv, N Ess , N Loc and Pcle). No Acc allowed to the left of the verb. No Acc allowed to the right of you, except pronouns and education (sentenceboundary and N Ess as barriers). Only numunit numerals are allowed to the left. You are not Acc if you are: time, ruote or Pron Indef. Neither if you are Pron Refl with Gen to your right followed by N Ess. Neither if you are Pron Refl with Gen to your right followed by Po. N Nom and Ger not allowed immediatly to your right. You are not Acc if you are a Nom cased Prop and the verb is some kind of verbalactivityverb and ahte or sentenceboundary is to the right. Vdic not allowed immediately to your left. If váldit is the verb, you are likely to be a Gen if Ill-body noun is found to the right. ''oste mielkki gávppis''
-SELECT:AccTV1 Acc IF (*-1C STRICT-TRANS-V BARRIER NOT-NPMODADV - (N Ess) - (N Loc) - (Pcle) LINK NOT *-1 Acc BARRIER S-BOUNDARY OR CC)
+SELECT:AccTV1 Acc IF 
+(*-1C STRICT-TRANS-V BARRIER NOT-NPMODADV - (N Ess) - (N Loc) - (Pcle) LINK NOT *-1 Acc BARRIER S-BOUNDARY OR CC)
 (0 NP-HEAD-ACC LINK NEGATE *1 Acc - Pron BARRIER S-BOUNDARY OR (N Ess) LINK NOT 1 Ger)
-(NEGATE *-1 NUM BARRIER NOT-Attr LINK NOT 0 NUMUNIT)(NEGATE 0 TIME OR ROUTE)(NEGATE 0 (Pron Indef))(NEGATE 0 (Pron Refl) LINK 1 (N Ess))(NEGATE 0 (Pron Refl) LINK 1 Gen LINK 1 Po)(NEGATE 1 (N Nom) OR Ger)(NEGATE 0 FIRSTNAME + Nom OR (Prop Sem/Sur) + Nom LINK *-1 VERBAL-ACTIVITY-V OR DADJAT OR HUMAN-AGENT-V BARRIER SV-BOUNDARY LINK *2 ("ahte") OR EOC)(NEGATE -1 <vdic>)(NEGATE *-1 ("váldit") BARRIER NOT-NPMOD LINK 1 Gen LINK 1 Ill + BODY) ;#(NEGATE 0 Prop + Gen OR Pron + Gen LINK *1 BODY + Acc BARRIER S-BOUNDARY)  ;
+(NEGATE *-1 NUM BARRIER NOT-Attr LINK NOT 0 NUMUNIT)
+(NEGATE 0 TIME OR ROUTE)(NEGATE 0 (Pron Indef))(NEGATE 0 (Pron Refl) LINK 1 (N Ess))(NEGATE 0 (Pron Refl) LINK 1 Gen LINK 1 Po)
+(NEGATE 1 (N Nom) OR Ger)
+(NEGATE 0 FIRSTNAME + Nom OR (Prop Sem/Sur) + Nom LINK *-1 VERBAL-ACTIVITY-V OR DADJAT OR HUMAN-AGENT-V BARRIER SV-BOUNDARY LINK *2 ("ahte") OR EOC)
+(NEGATE -1 <vdic>)(NEGATE *-1 ("váldit") BARRIER NOT-NPMOD LINK 1 Gen LINK 1 Ill + BODY) ;#(NEGATE 0 Prop + Gen OR Pron + Gen LINK *1 BODY + Acc BARRIER S-BOUNDARY)  ;
 	#$ Moai oste mielkki gávppis.
 	#$ Šiehtadus sisttisdoallá dárkilis evttohusa movt guohtuneatnamiid sáhttá atnit ávkin goabbat bealde riikaráji.
 	#$ Soai oastiba bileahta su filbmii.
@@ -10048,6 +10053,12 @@ REMOVE (Pl Nom) (1 VFIN + Sg3) ;
 REMOVE (Sg Nom) (1 VFIN + Pl3) ;
 
 REMOVE (A @HAB>) (0 N) ;
+
+#!! * __derNEss__ removes DER-N if lexicalised essives (revise this) - flytter denne til slutten av fila
+REMOVE:derNEss DER-N IF (0 DER-N LINK 0 Ess)(0 LEX-N LINK 0 Ess)(NEGATE 0 (NomAg Ess) OR (Der/NomAg Ess));
+ 	## Grammatihkkavuđot giellateknologalaš reaiddut teakstaanalyseremii ja giellaoahpahussii ja digitálalaš sátnegirjjit leat buot gielaide eaktun dasa ahte sáhttet ceavzit geavahangiellan ođđaáigásaš servodagas.
+ 	# Removes DER-N if O is also a lexical noun, and both nouns are essive.	
+
 
 #REMOVE (A Pl) + $$CASE (0 (N Pl) + $$CASE) ;
 
