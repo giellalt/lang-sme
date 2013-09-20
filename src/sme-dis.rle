@@ -649,10 +649,11 @@ LIST OLLU = "ollu" "olu" ;
 # ------------------------------------
 SET LEX-ADV = Adv - (A*) ;
 
-SET NOT-ADV            = WORD - Adv;
-SET NOT-ADV-N          = WORD - Adv - N;
-SET NOT-ADV-PCLE       = WORD - Adv - Pcle ;
-SET NOT-ADV-INDEF      = WORD - Adv - Indef ;
+SET NOT-ADV-DE            = WORD - Adv ;
+SET NOT-ADV            = NOT-ADV-DE OR ("de" Adv) OR CLB ;
+SET NOT-ADV-N          = NOT-ADV - N;
+SET NOT-ADV-PCLE       = NOT-ADV - Pcle ;
+SET NOT-ADV-INDEF      = NOT-ADV - Indef ;
 SET NOT-ADV-PCLE-ILL-LOC-COM = WORD - Adv - Pcle - Ill - Loc - Com;
 SET NOT-A-ADV-PCLE = WORD - Pcle - A - Adv OR ("maid") ; # 
 
@@ -3274,8 +3275,8 @@ SELECT:PxGenPo (Gen PxSg3) IF (0 N OR A) (*-1 (Sg Nom) OR (Sg3 Nom) BARRIER Pers
 	#$ Son logai oappás dan bargan.
 
 #!! * __PxGenPr__  
-SELECT:PxGenPr (N Gen PxSg3)  IF (-1 Pr LINK -1 BOC)(*1 VFIN + Sg3 OR (Pers Nom Sg3) OR (N Nom Sg) BARRIER NOT-ADV-PCLE) ;
-	#$ Maŋŋá jápmimis de aliduvvui Gonagas Olav bassin.
+SELECT:PxGenPr (N Gen PxSg3)  IF (-1 Pr LINK -1 BOC)((*1 VFIN + Sg3 OR (Pers Nom Sg3) OR (N Nom Sg) BARRIER NOT-ADV-PCLE) OR ((1 Adv LINK 1 VFIN + Sg3 OR (Pers Nom Sg3) OR (N Nom Sg) BARRIER NOT-ADV-PCLE))) ;
+	#$ Maŋŋá jápmimis de aliduvvui Gonagas Olav bassin. # "de" er en del av NOT-ADV-PCLE, derfor to regler
 
 
 #!! We end section 2 by removing all remaining Px
@@ -3356,7 +3357,7 @@ SELECT:VSg1NoMun (V Sg1) IF (-1 Po LINK -1 Gen LINK -1 BOS) ;
  	#$ Telefuvnna bokte ožžon Álttá Johtolatstašuvnna ságaide.
 
 #!! * __VSG1IfRightMun__ selects Sg1 when "mun" is to the right (r950)
-SELECT:r950 (V Sg1) IF (*1 MUN BARRIER NOT-ADV-PCLE OR CLB);
+SELECT:r950 (V Sg1) IF (*1 MUN BARRIER NOT-ADV-PCLE);
  	#$ Man guhká ferten mun gierdat din?
 
 
@@ -3384,7 +3385,7 @@ SELECT:r954 (V Sg3) IF (*-1 SON BARRIER Nom OR SG3-V OR CS OR PUNCT LINK NOT *-1
  	#$ Geas ležžet bealjit, son gullos!
 
 #!! * __VSG3IfRithgSon__ selects Sg3 when "son" is to the right (r954)
-SELECT:r955 (V Sg3) IF (*1 SON BARRIER NOT-ADV-PCLE OR go OR CLB)(NEGATE 0 CS)(NEGATE 0 Adv LINK *1 (V Sg3) BARRIER SV-BOUNDARY);
+SELECT:r955 (V Sg3) IF (*1 SON BARRIER NOT-ADV-PCLE OR go)(NEGATE 0 CS)(NEGATE 0 Adv LINK *1 (V Sg3) BARRIER SV-BOUNDARY);
  	#$ ...oažžu son atnit dušše dan čázis mii sutnje lea mearriduvvon.
 
 #!! * __VNotSg3When12Left__ removes Sg3 if 12 Pron immediate left (r955)
@@ -3404,15 +3405,15 @@ SELECT:NegSg3BeforeFoc (V IV Neg Ind Sg3) IF (0 ("ii"))(*1 Foc/ge OR ConNeg BARR
  	#$ Ii oktage lea boahtán.
 
 #!! * __vfin__ removes verb reading when the reading should be noun  
-REMOVE:vfin1 VFIN - Qst IF (0 (N Sg Nom) LINK *1 VFIN + Sg3 BARRIER NOT-ADV-PCLE OR COMMA OR Qst) ; 
-REMOVE:vfin2 VFIN IF (0 Acc LINK *-1 TRANS-V BARRIER NOT-ADV-PCLE OR COMMA)(*-1 VFIN BARRIER S-BOUNDARY LINK NOT 0 Po)(NEGATE 1 Acc OR go) ; 
+REMOVE:vfin1 VFIN - Qst IF (0 (N Sg Nom) LINK *1 VFIN + Sg3 BARRIER NOT-ADV-PCLE OR Qst) ; 
+REMOVE:vfin2 VFIN IF (0 Acc LINK *-1 TRANS-V BARRIER NOT-ADV-PCLE)(*-1 VFIN BARRIER S-BOUNDARY LINK NOT 0 Po)(NEGATE 1 Acc OR go) ; 
 REMOVE:vfin3 VFIN IF (0 N LINK 1 ("vai" CC) LINK 1 N LINK NOT 0 VFIN) ;
 	#$ Birasgáhttenlihkadus ja álgoálbmogat – ovttasbargit vai vuostálagaid?
 REMOVE:vfin4 REAL-V IF (0 N LINK 1 ("dat" Pcle)) ;
 	#$ Riššat dat gal leat musge, jus eai leačča njuoskan.
-REMOVE:vfin5 VFIN IF (0 (N Pl Nom) LINK *1 VFIN + Pl3 BARRIER NOT-ADV-PCLE OR COMMA LINK NOT 0 Inf) ; 
+REMOVE:vfin5 VFIN IF (0 (N Pl Nom) LINK *1 VFIN + Pl3 BARRIER NOT-ADV-PCLE LINK NOT 0 Inf) ; 
 
-REMOVE:vfin4 VFIN - Qst IF (0 N LINK *-1 AUX BARRIER NOT-ADV-PCLE OR COMMA OR Qst)(*1 Inf BARRIER NOT-ADV-PCLE) ; 
+REMOVE:vfin4 VFIN - Qst IF (0 N LINK *-1 AUX BARRIER NOT-ADV-PCLE OR Qst)(*1 Inf BARRIER NOT-ADV-PCLE) ; 
 	#$ Áigugo fas skuvlii álgit?
 
 SELECT:vfin5 VFIN + LOC-V IF (0 Ill LINK -1 CC)(1 Loc) ; 
@@ -3447,7 +3448,7 @@ SELECT:VDu2IFDoaiLeft (V Du2) IF (*-1 DOAI BARRIER DU2-V OR SV-BOUNDARY OR PUNCT
  	#$ Manne doai ozaide mu?
 
 #!! * __VDu2IFDoaiRight__ selects Du2 if "doai" to the right (r963)	 
-SELECT:VDu2IFDoaiRight (V Du2) IF (*1 DOAI BARRIER NOT-ADV-PCLE OR CLB);
+SELECT:VDu2IFDoaiRight (V Du2) IF (*1 DOAI BARRIER NOT-ADV-PCLE);
  	#$
 
 	#!! !Du3 - early cycle, safe rules
@@ -3460,7 +3461,7 @@ SELECT:VDu3IfSoaiLeft (V Du3) IF (*-1 SOAI BARRIER DU3-V OR SV-BOUNDARY OR PUNCT
  	#$ Soai ferteba mannat. 
 
 #!! * __VDu3IFSoaiLeft__ selects Du2 if "doai" to the right (r965)	 
-SELECT:VDu3IFSoaiRight (V Du3) IF (*1 SOAI BARRIER NOT-ADV-PCLE OR CLB);
+SELECT:VDu3IFSoaiRight (V Du3) IF (*1 SOAI BARRIER NOT-ADV-PCLE);
  	#$ Fertebago soai mannat? 
 
 #!! * __VDu3IfGuokteLeft__ selects Du3 if "guokte" left (r966) - 15
@@ -3492,11 +3493,11 @@ REMOVE:r970 (V Sg3) IF (*-1 (Coll Nom) BARRIER SV-BOUNDARY )(0 (V Du3));
 #!! The competitor here is obviously Inf, but also Pl3 and Prt Sg2.
 
 #!! * __VPl1IfMiiLeft__ selects Pl1 if "mii" Pron to the left (r971) - 3163
-SELECT:VPl1IfMiiLeft (V Pl1) IF (*-1 MII-PERS BARRIER VFIN OR PUNCT LINK NOT *-1 PL1-V BARRIER NOT-ADV-PCLE OR CLB)(NEGATE *-1 AUX + Pl1 BARRIER REAL-V OR COMMA);
+SELECT:VPl1IfMiiLeft (V Pl1) IF (*-1 MII-PERS BARRIER VFIN OR PUNCT LINK NOT *-1 PL1-V BARRIER NOT-ADV-PCLE)(NEGATE *-1 AUX + Pl1 BARRIER REAL-V OR COMMA);
  	#$ Mii sápmelaččat gal leat vásihan dán...
 
 #!! * __VPl1IfMiiRight__ selects Pl1 if "mii" Pron to the right (r972) - 272
-SELECT:VPl1IfMiiRight (V Pl1) IF (*1C MII-PERS BARRIER NOT-ADV-PCLE OR CLB OR ("seammá") OR S-BOUNDARY LINK NOT *1 SG3-V BARRIER NOT-A-ADV OR CLB);
+SELECT:VPl1IfMiiRight (V Pl1) IF (*1C MII-PERS BARRIER NOT-ADV-PCLE OR ("seammá") OR S-BOUNDARY LINK NOT *1 SG3-V BARRIER NOT-A-ADV OR CLB);
 #SELECT:VPl1IfMiiRight (V Pl1) ((1 ("go" Qst) LINK 1 MII-PERS) OR (-1 MO OR ("danne") LINK 2 MII-PERS) OR (0 TRANS-V LINK -1 Acc LINK 2 MII-PERS)) ;
  	#$ Galgat go mii vuordit muhtun eará? 
 
@@ -3508,10 +3509,10 @@ REMOVE:r973 Imprt IF (-1 MII-PERS OR (N Pl Nom))(0 (V Prs Pl1));
 
 #!! These rules are not used when disambiguating the corpus
 #!! * __VPl2IfDiiLeft__ selects Pl2 if "dii" Pron to the left (r974) - 0
-SELECT:r974 (V Pl2) IF (*-1 DII BARRIER NOT-ADV-PCLE OR CLB);
+SELECT:r974 (V Pl2) IF (*-1 DII BARRIER NOT-ADV-PCLE);
 
 #!! * __VPl2IfDiiRight__ selects Pl2 if "dii" Pron to the right (r975) - 0
-SELECT:r975 (V Pl2) IF (*1 DII BARRIER NOT-ADV-PCLE OR MO OR CLB);
+SELECT:r975 (V Pl2) IF (*1 DII BARRIER NOT-ADV-PCLE OR MO);
  	#$ Addet dii sidjiide borramuša!
 
 
@@ -3524,7 +3525,7 @@ SELECT:r976 (V Pl3) IF (*-1 SII BARRIER PL3-V OR S-BOUNDARY OR PUNCT LINK NOT *-
  	#$ ...vai sii áiggi mielde oččoše doarvái gelbbolašvuođa.
 
 #!! * __r977__ SE V Pl1 if *1 SII
-SELECT:r977 (V Pl3) IF (*1 SII BARRIER NOT-ADV-PCLE OR CLB)(NEGATE 0 Adv OR Po LINK *1 PL3-V BARRIER S-BOUNDARY);	
+SELECT:r977 (V Pl3) IF (*1 SII BARRIER NOT-ADV-PCLE)(NEGATE 0 Adv OR Po LINK *1 PL3-V BARRIER S-BOUNDARY);	
  	#$ Máhttego sii čilget áššiset dárogillii?
 
 #!! * __VPl3jaPl3__ selects Prt Pl3 in coordination (r978)
@@ -4526,7 +4527,7 @@ REMOVE (@X) ;
 #!! !Plural?
 
 #!! * __PlSg3V__ removes plural in front of Sg3 verb (and __SgPl3V__ does the opposite)
-REMOVE:PlSg3V NP-HEAD-PL-NOM IF (0 (Inf) OR NP-HEAD-SG-NOM)(*1C SG3-V BARRIER NOT-ADV-PCLE OR COMMA);
+REMOVE:PlSg3V NP-HEAD-PL-NOM IF (0 (Inf) OR NP-HEAD-SG-NOM)(*1C SG3-V BARRIER NOT-ADV-PCLE);
 	## Dát lei deháleamos ágga.
 
 REMOVE:SgPl3V (Pron Sg Nom) IF  (*1C PL3-V BARRIER NOT-ADV-PCLE);
@@ -5270,7 +5271,7 @@ SELECT:Wr1777c (Sg Nom) IF (*-1 Ill BARRIER NOT-ADV-PCLE LINK *-1 COPULAS BARRIE
 	#$ ... muhtun gii lei sutnje velggolaš logi duhát taleantta.
 	#$ Mus lea dutnje juoga dadjamuš.
 
-SELECT:Wr1778xc (A Pl Nom) IF (*-1 (N Pl Nom) BARRIER NOT-ADV-PCLE OR CLB LINK *-1 COPULAS BARRIER SV-BOUNDARY);
+SELECT:Wr1778xc (A Pl Nom) IF (*-1 (N Pl Nom) BARRIER NOT-ADV-PCLE LINK *-1 COPULAS BARRIER SV-BOUNDARY);
 	#$ Mánnáguoddi-spagáin leat spahká-oaivvit sakka guhkibut. # guhkibut
 	#$ Dán oktavuođas leat dološ geavahusa njuolggadusat miellagiddevaččat. # miellagiddevaččat
 
@@ -5496,7 +5497,7 @@ SELECT:SelImprtExclSg (Imprt Sg2) IF (-2 Nom + Sg)(-1 COMMA)(*1 ("^excl"));
 SELECT:ImprtComma Imprt IF (-1 COMMA LINK -1 Imprt LINK *-1 BOS BARRIER NOT-ADV);
 
 #!! * __ImprtNotVGen__
-REMOVE:ImprtNotVGen VGen IF (-1 BOS OR PUNCT OR REAL-CLB)(0 Imprt)(NOT *1C VFIN BARRIER NOT-ADV-PCLE OR CLB);
+REMOVE:ImprtNotVGen VGen IF (-1 BOS OR PUNCT OR REAL-CLB)(0 Imprt)(NOT *1C VFIN BARRIER NOT-ADV-PCLE);
 
 #!! * __NotImprtInd__ 
 REMOVE:NotImprtInd Imprt IF (*-1 REAL-NEG BARRIER CLB OR Ind);
@@ -5518,7 +5519,7 @@ REMOVE:NotImprtN Imprt IF (-1 N OR Po);
 
 
 #!! * __NotImprtVFIN__ 
-REMOVE:NotImprtVFIN Imprt IF (*1C VFIN BARRIER NOT-ADV-PCLE OR CLB);
+REMOVE:NotImprtVFIN Imprt IF (*1C VFIN BARRIER NOT-ADV-PCLE);
  	#$ Lágas ii duššaduvvo oktage bustávaš dahje čuoggáš, ovdal go...
 
 
@@ -6051,9 +6052,9 @@ MAP:<SUBJInf1 (@<SUBJ) TARGET Inf (NEGATE 0 AUX LINK 1 Inf)(-1 Acc - MIELLA LINK
 
 #	álki lea vánddardit
 #!! * __<SUBJInf2__
-MAP:<SUBJInf2 (@<SUBJ) TARGET Inf (NEGATE 0 AUX LINK 1 Inf)(*-1 ("leat") BARRIER NOT-ADV-PCLE LINK -1 A LINK *-1 BOC BARRIER NOT-ADV);	
+MAP:<SUBJInf2 (@<SUBJ) TARGET Inf (NEGATE 0 AUX LINK 1 Inf)((*-1 ("leat") BARRIER NOT-ADV-PCLE LINK -1 A LINK *-1 BOC BARRIER NOT-ADV) OR (-1 Adv LINK -1 ("leat") LINK -1 A LINK *-1 BOC BARRIER NOT-ADV));	
 	#$ Vearrámus lea go nu váttis lea oažžut eret dan gova, lohká nisu, gii ii hálit namas aviisii. 
-	#$ Man álki livččii de vánddardit.
+	#$ Man álki livččii de vánddardit. # her  'de' brukt som Pcle 
 
 #!! * __r354__
 MAP:r354 (@<SUBJ) TARGET Inf (NEGATE 0 AUX LINK 1 Inf)(-1 ADVLCASE LINK *-1 A BARRIER NOT-ADV LINK *-1 COPULAS BARRIER NOT-ADV LINK NOT *-1 Nom BARRIER S-BOUNDARY);
@@ -6328,7 +6329,7 @@ MAP:-FMAINVAux2 (@-FMAINV) TARGET ConNeg + ("leat") (*1 (N Nom) BARRIER NOT-NPMO
 	#$ Muhto dus ii leat riekti dearpat su beare dan dihte.
 		
 #!! * __+FAUXVCop__  copulas coming after the mainverb
-MAP:+FAUXVCop (@+FAUXV) TARGET VFIN-NOT-IMPRT + COPULAS (*-1 PrfPrc OR (Actio Ess) BARRIER NOT-ADV-PCLE OR COMMA LINK NOT 0 SYN-V OR (@>N)) ;
+MAP:+FAUXVCop (@+FAUXV) TARGET VFIN-NOT-IMPRT + COPULAS (*-1 PrfPrc OR (Actio Ess) BARRIER NOT-ADV-PCLE LINK NOT 0 SYN-V OR (@>N)) ;
 	#$ Ja boahtán ledje su gudnejahttit.
 		
 #!! * __+FAUXVCop__  copulas coming before the mainverb
@@ -8682,7 +8683,7 @@ REMOVE:NDr2424 Nom IF (*-1 NOT-AUX-V BARRIER S-BOUNDARY OR PUNCT LINK *-1 (Pron 
 	#% Danne son oaččui nama Peres. Comment: We want Nom on this!
 
 
-REMOVE:NDr2425 Nom IF (*-1 VFIN BARRIER NOT-ADV-PCLE OR REAL-CLB LINK NOT 0 COPULAS OR FAUXV LINK *-1C Nom BARRIER NOT-ADV-PCLE)(*1 NOT-AUX-V BARRIER S-BOUNDARY);
+REMOVE:NDr2425 Nom IF (*-1 VFIN BARRIER NOT-ADV-PCLE LINK NOT 0 COPULAS OR FAUXV LINK *-1C Nom BARRIER NOT-ADV-PCLE)(*1 NOT-AUX-V BARRIER S-BOUNDARY);
 	## ...jus sierranas sivat eai eará cealkke.
 	## Dii galgabehtet vuđolaččat bargat.
 
@@ -9213,7 +9214,7 @@ REMOVE:r2823 VFIN IF (NEGATE -2 BOS OR CLB)(-1C Inf)(NEGATE 0 Qst);
  	#$ Suhpodit daddjojuvvo dat go dušše nođiid váldá olmmoš eret...
  	#$ Mearrideaddjin dasa ferte danin leat addojuvvogo... 
 
-REMOVE:r2824 VFIN IF (*-1 Nom BARRIER NOT-ADV-PCLE OR CLB LINK *-1C VFIN BARRIER NOT-ADV-PCLE OR CLB OR CP);
+REMOVE:r2824 VFIN IF (*-1 Nom BARRIER NOT-ADV-PCLE LINK *-1C VFIN BARRIER NOT-ADV-PCLE OR CP);
  	#$ Lea dárbu nannet doaimmaid mat ovddidit sámi dutkama.
 
 #REMOVE:r2825 VFIN IF (*-1 PrfPrc BARRIER HEAD-N OR (Pron Nom) OR SV-BOUNDARY LINK *-1 REAL-COPULAS BARRIER NOT-ADV-PCLE);
@@ -9227,7 +9228,7 @@ REMOVE:r2828 VFIN - Qst IF (NEGATE 0 Imprt LINK *-1 BOS BARRIER NOT-ADV-PCLE)(NE
  	#$ Sámegillii galbet universitehta lea šaddan realitehta.
  	#$ Áldu mii dálvvi miehtá njamaha miesi gohčoduvvo čearpmateadnin.
 
-REMOVE:r2829 VFIN IF (0 Loc)(*1 Neg BARRIER NOT-ADV-PCLE OR CLB LINK *1 PrfPrc OR ConNeg BARRIER SV-BOUNDARY);	
+REMOVE:r2829 VFIN IF (0 Loc)(*1 Neg BARRIER NOT-ADV-PCLE LINK *1 PrfPrc OR ConNeg BARRIER SV-BOUNDARY);	
  	#$ Lágas ii duššaduvvo oktage bustávaš dahje čuoggáš, ovdal go...
  	#$ Máhttájeaddjit orro jávohaga eai ge dalle muitalan geasage maid ledje oaidnán. 
 
