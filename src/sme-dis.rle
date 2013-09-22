@@ -457,7 +457,9 @@ LIST DER-V = Der/adda Der/alla Der/asti Der/d Der/g Der/h Der/halla Der/hudda De
 LIST DER-N = Der/Dimin Der/eamoš  Der/heapmi Der/NomAct Der/š Der/muš Der/upmi Der/us Der/vuohta Der/NomAg Der/NomAct ;
 
 
-LIST DER-A = Der/diibmosaš Der/dássásaš Der/eaddji Der/geahtes Der/keahtes Der/heapmi Der/jahkásaš Der/lágan Der/lágaš Der/laš Der/meahttun Der/lágán Der/gielat Der/kultuvrrat (V* A) Der/A ;
+LIST DER-A1 = Der/diibmosaš Der/dássásaš Der/eaddji Der/geahtes Der/keahtes Der/heapmi Der/jahkásaš Der/lágan Der/lágaš Der/laš Der/meahttun Der/lágán Der/gielat Der/kultuvrrat (V* A) Der/A Der/A* ;
+
+SET DER-A = DER-A1 - Adv ;
 
 LIST A-V = (V* A) ;
 
@@ -1411,7 +1413,7 @@ LIST N-NOPXLIST = "atnu" "almmolašvuohta" "áibmu" "áigemearri" "áigi" "álbm
 
 SET N-NOPX = N-NOPXLIST OR LAHKA ;
 
-LIST N-PX = "áhčči" "bárdni" "biigá" "boadnji" "eadni" "eammi" "gáibmi" "guoibmi" "hearrá" "nieida" "oabbá" "olmmái" "ráhkis" "reaŋga" "skibir" "skihpár" "ustit" "viellja" ;
+LIST N-PX = "áhčči" "bárdni" "biigá" "boadnji" "eadni" "eammi" "gáibmi" "guoibmi" "hearrá" "nieida" "oabbá" "olmmái" "ráhkis" "reaŋga" "skibir" "skihpár" "ustibaš" "ustit" "viellja" ;
 
  # Nominals that well may have a Px. 
 
@@ -1423,7 +1425,7 @@ LIST ALU = "alu" "gasu" "govddu" "guhku" "losu" "stuoru" "viiddu" "čieŋu" ;
 # These are ABBR:
 LIST REAL-TITLE =  "prof" "cand.mag" "cand.oecon" "cand.philol" "cand.real" "cand.scient" "cand.theol" "cand" "dr.art" "eksp.hoavd" "eksp.sj" "fenr" "fig" "fil.tri" "gen.lt" "genr" "genr.lt" "h.r.adv" "hr" "kapt" "korp" "lekt" "lic" "ltn" "mag.art" "mag" "merc" "miss" "Mr" "mr" "Mrs" "mrs" "odont" "oecon" "ordf" "ossod.dir" "stud.phil." "res.kap" "stud.philol" "vit.ass" "dr" "dr.med" "dr.philos" "dr.theol" ;
  
-LIST TITLE-LIKE = ("gásttašit" Der/NomAg) "justitiarius" "majestehta" "miss" "ránnjá" ;
+LIST TITLE-LIKE = "gásttašeaddji" "justitiarius" "majestehta" "miss" "ránnjá" ;
 # Ránnjá Ole Vuolab imašta manne ....
 
 #!! * Sets for nouns as pred
@@ -1780,7 +1782,7 @@ SET ORGANIZATION = DEPARTMENT OR MAIN-ORGANIZATION ;
  
 #!! * Sets that can both be buildings/places and represent humans
 
-LIST INSTITUTION = (".*bálvalus"r) "bálvalus" "geahččoortnet" "guovddáš" "instituhtta" "kulturráđđi" "searvegodderáđđi" ;
+LIST INSTITUTION =  "geahččoortnet" "guovddáš" "instituhtta" "kulturráđđi" "searvegodderáđđi" ;
 
 # the previous items can both represent abstract processes and humans
  
@@ -2074,6 +2076,7 @@ REMOVE:derN DER-N IF (0 LEX-N LINK NOT 0 Ess OR ("dahkat"));
  # Der/NomAct is removed from the DER-N set.
  
 REMOVE:semAct Der/NomAct IF (0 (Sem/Act));
+REMOVE:semNomAg Der/NomAg IF (0 NomAg);
 
  
 #!! * __derNEss__ removes DER-N if lexicalised essives (revise this) - flytter denne til slutten av fila
@@ -2084,11 +2087,16 @@ REMOVE:semAct Der/NomAct IF (0 (Sem/Act));
 #!! * __derA__ removes DER-A if lexicalised A
 REMOVE:derA DER-A IF (0 LEX-A);
  	## Dábálaš mearrádusat.
+
+LIST DER-A-ADV = (Der/laš Der/at Adv) ;
+SET NOT-DER-A-ADV = Adv - DER-A-ADV ;
+
+REMOVE:derAdv DER-A-ADV (0 NOT-DER-A-ADV) ;
  
 #!! * __derV__ removes DER-V if lexicalised V,
 REMOVE:derV DER-V IF (0 LEX-V) ; 
 
-LIST VDER-ONE = Der/h Der/st ;
+LIST VDER-ONE = Der/h Der/st Der/d Der/l ;
 
 LIST VDER-TWO =  Der/alla Der/halla Der/ahtti ;
 
@@ -2140,6 +2148,8 @@ REMOVE (A Comp) IF (0 Inf LINK 0 ("jođiheapme") OR ("eavttuheapme") OR ("vuojah
 SELECT ("beaivádit" PrfPrc) IF (1 Sem/Date) ;
 
 SELECT ("geahččat" Imprt Sg2) IF (0 VGen LINK NOT -1 Neg) ;
+
+REMOVE:eadjit (".*#eadjit"r) ;
 
 	# Lexicalised adjectives
 	# ----------------------
@@ -2821,12 +2831,12 @@ REMOVE:Killrecipr Recipr IF ;
  	#$ Jos dajan nubbái: Mana! de son manná.
 
 #!! !!Variant lemmas
-LIST LEMMA1 = "álbmot" "bargi" "beassážat" "boadnji" "boalvvir" "buvssat" "čábmit" "čáppat" "eanaláigo#boahtu" "Elle" (".*geaisár") (".*gursa"r) "kaleandar" (".*keallir"r) "lávži"
-"lihpar" ("[0-9]*-lohku"r) ("mieđihit") (".*mirko"r) "moattis" "motocrossa" "moraš" (".*muslima"r) (".*Norga"r) "oapman" (".*rádji"r) "rájes" "ruošša#čuhti" "ruvdnu" "sáhpán" "speajal" "suoivva" "visot" "vuollái" ;
+LIST LEMMA1 = "álbmot" "bargi" "beassážat" "boadnji" "boalvvir" ("boaris" A Comp) "buvssat" "čábmit" "čáppat" "čuohti" "dadjalit" "dahkamuš" "dálolaš"  ("dát" Pron Dem Pl Com) "dološ" "eanaláigo#boahtu" "Elle" (".*geaisár") (".*gursa"r) "kaleandar" (".*keallir"r) "lávži"
+"lihpar" ("[0-9]*-lohku"r) ("mieđihit") (".*mirko"r) "moattis" "motocrossa" "moraš" (".*muslima"r) (".*Norga"r) "oapman" "oasálaš" (".*rádji"r) "rájes" ("rikkis" A Comp Pl Nom) "ruošša#čuhti" "ruvdnu" "sáhpán" "smávvadálolaš" "speajal" "suoivva" "visot" "vuollái" ;
     # first dictionary form
 
-LIST LEMMA2 = "álbmut" "bargit" ("beassi" Der/Dimin) "boadnjá" "boalvár" "buksa" "čápmit" "čáppis" "eanaláigo#boađđu" "Elli" (".*geaissir") (".*gurse"r) "kaleanddar" (".*keallár"r) "lávžá"
-"libar" ("[0-9]*-loahku"r) ("[0-9]*-logus"r) "mieđidit" (".*mirku"r) (".*mirkko"r) "moattes" "motocross" "mora" (".*muslim"r) (".*Norge"r) "oama" (".*rádjá"r) "rájis" "ruošša#čuđđi" "ruvdno" "sábin" "speadjal" "suoivvan" "viso" "vuolli" ;
+LIST LEMMA2 = "álbmut" "bargit" ("beassi" Der/Dimin) "boadnjá" "boalvár" ("boaris" A* Comp Der/at Adv) "buksa" "čápmit" "čáppis" "čuođi" ("dadjat" V* TV Der/l) ("dahkat" V* TV* Der/muš) ("dáigut" V* IV* Der/NomAg N Sg Com) ("dállu" N* Der/laš) ("doallu" N* Der/Dimin) "eanaláigo#boađđu" "Elli" (".*geaissir") (".*gurse"r) "kaleanddar" (".*keallár"r) "lávžá"
+"libar" ("[0-9]*-loahku"r) ("[0-9]*-logus"r) "mieđidit" (".*mirku"r) (".*mirkko"r) "moattes" "motocross" "mora" (".*muslim"r) (".*Norge"r) "oama" ("oassi" N* Der/laš) (".*rádjá"r) "rájis" ("rikkis" A* Comp Der/at Adv) "ruošša#čuđđi" "ruvdno" "sábin" ("smávvadállu" N* Der/laš) "speadjal" "suoivvan" "viso" "vuolli" ;
 
 #!! * Remove lemma2 if lemma 1
 REMOVE:lemma2 LEMMA2 IF (0 LEMMA1);
@@ -3246,7 +3256,9 @@ SELECT:PxSg3Acc (Acc PxSg3)  IF ((*-1 TRANS-V + Sg3 BARRIER Nom OR S-BOUNDARY OR
 	#$ Bárdni ozai beatnagis miehtá gili.
 
 #!! * Nouns: __PxSg3AccPrfPrc__ if PrfPrc and Sg3 to the left
-SELECT:PxSg3AccPrfPrc (Acc PxSg3)  IF (-1 PrfPrc + TRANS-V - LOC-V LINK *-1 SG3-V BARRIER NOT-AUX-V)(0 N-PX - Nom);
+SELECT:PxSg3AccPrfPrc (N Acc PxSg3)  IF 
+(-1 PrfPrc + TRANS-V - LOC-V LINK *-1 SG3-V BARRIER NOT-AUX-V LINK *-1 Nom)
+#(0 N-PX - Nom);
 	#$ Nu geavai ovdal go Márjá lei riegádahttán bártnis.
 
 #!! *  __PxSg3CC__ in coordination with the owner
@@ -4620,6 +4632,9 @@ REMOVE:AdvNumEss Adv IF (0 OKTA + Ess)(1 Ess);
 SELECT:NumCurrency Num IF (1 CURRENCY OR MEASURE);
 	#$ Dainna čuđiin ruvnnuin áiggun bierggu oastit.
 
+SELECT:NumAccCurrency (Num Acc) IF (NOT *-1 COPULAS BARRIER NOT-ADV - CLB)(NOT -1 Num)(1 CURRENCY + Acc OR MEASURE + Acc LINK NEGATE 0 Gen LINK 1 COPULAS OR Po);
+
+
 SELECT:NumNom (Num Nom) IF  (-1 ABBR OR ACR OR ("§") OR ("paragráfa") OR ("kapihtal") OR HEADOFPARTS OR JAHKI-NUM OR TEXT OR LAHKA LINK NOT 0 Ess)(NEGATE -1 ("b" ABBR))(NEGATE -1 ("nr"))(0 Num)(NEGATE 1 Ill - Attr OR Loc - Attr);
 	#$ ... maid KITH gárvvistii ja almmuhii geasset 2001.
 	#$ Son vuittii Davviriikkaid Ráđi girjjálašvuođabálkkašumi jagi 1991 dán girjji ovddas.
@@ -4637,13 +4652,18 @@ SELECT:year (Num Gen)  IF (-1 GEASSET) ;
 SELECT:numunit (Num Gen) + NUMUNIT IF  (-1 (Num Acc)) ;
 	## Dat máksá guokte duhát ruvnno.
 
+#SELECT:NumGenPo Gen IF (0 Num LINK **1 (N Gen) BARRIER NOT-NPMOD-ACC LINK 1 Po) ;	Hmm?
+	#$ Miehtá čájáhuslanja lea lebbejuvvon plastihkkagovččas ja gávcci máná njuni ovddas lea čáhcemála.
+
 SELECT:jagiGen (Num Sg Nom) IF (-1 ("jahki" Gen)) ;
 REMOVE:numGen (Num Loc Attr) IF (NOT *1 (N Loc) BARRIER NOT-NPMOD-ACC) ;
 REMOVE:numGen (Num Ill Attr) IF (NOT *1 (N Ill) BARRIER NOT-NPMOD-ACC) ;
 REMOVE:numGen NUM + (Loc Attr) OR NUM + (Ill Attr) IF (1 (N Gen)) ;
+SELECT:numPlAccn (Num Pl Acc)(1 MEASURE + Pl) ;
 
 SELECT:WWNumOrdGen Gen IF (0 Num OR Ord LINK NOT 0 Acc)(1 (N Gen) LINK *1 (N Acc) OR (N Gen) OR (N Nom) BARRIER NOT-A)(NEGATE -1 TRANS-V LINK NOT *3 Acc)(NEGATE -1 TRANS-V LINK *3 Acc LINK 1 Po);
 	## Dan eatnamis oažžu ovtta gusa fuođđara.
+
 
 #!! * __WWNumOrdIllAttr__ selects Ill Attr and Loc Attr for numerals and ordinals
 SELECT:WWNumOrdIllAttr (Ill Attr) IF (0 Num OR Ord) (*1 (N Ill) OR (Num Ill) BARRIER NOT-A);	
@@ -6402,8 +6422,9 @@ MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX + Pl3 (NOT 0 SYN-V)(*1 NP-HEAD-PL-NOM
 MAP:+FMAINVQst (@+FMAINV) TARGET VFIN-NOT-AUX (NOT 0 SYN-V)(*-1 BOS BARRIER WORD)(1 go + Qst) ;
 
 
-MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX + Sg3 (NOT 0 SYN-V)(NOT *-1 REAL-V - @>N BARRIER S-BOUNDARY OR COMMA)(*1 NP-HEAD-SG-NOM BARRIER NOT-NPMOD-ACC-ADV) ;
+MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX + Sg3 (NOT 0 SYN-V)(NOT *-1 REAL-V - @>N BARRIER S-BOUNDARY OR COMMA)(*1 NP-HEAD-SG-NOM BARRIER NOT-NPMOD-ACC-ADV LINK NOT 1 VFIN + Sg3) ;
 	#$ Loahpas jearai Johttisámelisttu Anders Somby jr. sudnos njuolga háliida go čearru gulahallat, juo dahje ii.
+	#% Ádjá viessu lea guokte miilla bajábeal márkana.
 
 
 MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX + 1-2-V OR VFIN-NOT-AUX + Sg3 (NOT 0 SYN-V)(*-1 BOC BARRIER REAL-V)(NEGATE 0 N LINK -1 Dem)(NEGATE 0 N LINK *-1 COMMA OR @CNP BARRIER NOT-A-ADV LINK -1 N)(NEGATE 0 Pl LINK *1 VFIN + Pl3 BARRIER REAL-V OR S-BOUNDARY OR COMMA)(NEGATE *1 VFIN OR PrfPrc - @>N BARRIER S-BOUNDARY OR COMMA)(NEGATE 0 Inf LINK -1 CC LINK *-1 Inf BARRIER REAL-V LINK -1 AUX)  ;
@@ -6541,9 +6562,13 @@ MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-IMPRT + AUX-OR-MAIN ;
 	#$ Lásse dat lei sihtan mu váldit dan.
 
 #!! * __NPrsPrc1__ with 1C N Nom
-MAP:NPrsPrc1 (@>N) TARGET PrsPrc ((-1 (N Loc) OR BUOT OR Attr OR (N Gen)) OR (-1 CC LINK -1 Attr))(NEGATE 0 N)(1 N)(NEGATE 0 VFIN LINK *1 Inf BARRIER REAL-V) ;
+MAP:NPrsPrc1 (@>N) TARGET PrsPrc 
+#((-1 (N Loc) OR BUOT OR Attr OR (N Gen)) OR (-1 CC LINK -1 Attr))
+((*-1 VFIN BARRIER COMMA OR S-BOUNDARY) OR (1 N LINK *1 VFIN BARRIER S-BOUNDARY OR COMMA))
+(NEGATE 0 N - Der/NomAg)
+(1 N)(NEGATE 0 VFIN LINK *1 Inf BARRIER REAL-V) ;
 
-MAP:NPrsPrc2 (@>N) TARGET PrsPrc (0C PrsPrc) ;
+MAP:NPrsPrc2 (@>N) TARGET PrsPrc ((0C PrsPrc) OR (0 ("johtit") LINK 1 N));
 #MAP:NPrsPrc2 (@>N) TARGET PrsPrc (NOT 0 NomAg OR VFIN LINK 1C N) ;
 
 
@@ -6719,6 +6744,10 @@ REMOVE:SEMXr2066 Gen IF (0 Der/NomAct)(*1 HUMAN-INDIVIDUAL OR PROFESSION OR OFFI
 REMOVE:SEMgenEss Acc IF (0 PLACE LINK 0 Gen)(1 HUMAN LINK 0 Ess);
 	#$ Vánit eahpiduvvo ahte stáhta geatnegasvuođat sámiid ektui 27. artihkkala mielde dagahivččii stáhta dihto guovlluid eaiggádin geatnegassan doaimmahit eaiggáduššanvuoigatvuođa nu ahte deavddášii 27. artihkkala geatnegasvuođa.	
 	#$ Máret beasai dálu eamidin.
+
+
+REMOVE:SEMTr Gen IF (0 (N Acc) - Sem/Time - Sem/Route LINK *1 (Sem/Time Gen) BARRIER NOT-NPMOD OR CC)(*-1 STRICT-TV-V BARRIER SV-BOUNDARY OR Num) ;
+	#$ Vuojadansearvi váldá din fitnodagain oktavuođa vahkku 20:s, gullat mo dii sáhttibehtet veahkehit.
 
 #REMOVE:SEMr2070 Gen IF (0 SINGLE-SOUND)(1 ROUTE);
 	#$ Ii son bealkke ii ge čuorvvo, ii ge oktage gula su jiena gáhtaid alde.
@@ -7675,7 +7704,7 @@ REMOVE:NomIfNum Acc IF (1 (N Gen))(2 NOT-FAUXV + TRANS-V)(*3 (N Acc) BARRIER NOT
 	#Comment: The subject is a numeral.
 
 #!! * __NumAcc2__ selects Acc for singular numerals if there is a transitive verb somewhere in the sentence and the numeral is followed by a noun ''logi báhkkoma''
-SELECT:NumAcc2 Acc IF (0* NOT-FAUXV + TRANS-V BARRIER SV-BOUNDARY)(0 NUM + Sg LINK NOT 0 NUMUNIT)(*1 (N Acc) OR (N Gen) BARRIER NOT-Attr LINK NOT 0 Ill)(NEGATE *-1 COPULAS + FMAINV BARRIER SV-BOUNDARY)(NEGATE *-1 Der/Pass BARRIER NOT-ADV)(NEGATE *1 COPULAS + FMAINV BARRIER COMMA OR SV-BOUNDARY)(NEGATE -1 NUMMAR);
+SELECT:NumAcc2 Acc IF (0* NOT-FAUXV + TRANS-V BARRIER SV-BOUNDARY)(0 NUM + Sg LINK NOT 0 NUMUNIT)(*1 (N Acc) OR (N Gen) BARRIER NOT-Attr LINK NOT 0 Ill)(NEGATE *-1 COPULAS + FMAINV BARRIER SV-BOUNDARY)(NEGATE *-1 Der/Pass OR (Dem Nom) BARRIER NOT-ADV)(NEGATE *1 COPULAS + FMAINV BARRIER COMMA OR SV-BOUNDARY)(NEGATE -1 NUMMAR);
 	#$ Sii máhtte áddekeahttá bajillohkat logi báhkkoma ja Áhččámet.
 	#$ Áiggun dušše geahččat moadde filmma.
 	#$ Dákkár dáhpáhusat, ja máŋga iežá dáhpáhusa ja digaštallama dahke munnje persovnnalaččat váttisin dáid gažaldagaid mat bohciidedje Gáivuonas. 
@@ -9203,6 +9232,9 @@ SELECT:ESS2812 Ess IF (0 (Actio Nom))(1C NP-HEAD-NOM);
 
 SECTION
 
+#Lexical disambiguation of nouns
+
+REMOVE ("vuorru" G3) (-1 Gen - Sem/Time) ;
 
 #!! !!Finite or not
 
@@ -10053,7 +10085,7 @@ REMOVE:LexSel ("vuordát") IF (0 ("vuordit")) ;
 
 #!! !!!NOMEN
 REMOVE ("gáfe") (0 ("gáffe") - Nom) ;
-REMOVE N (0 Num)((-1 ("diibmu")) OR (-2 ("diibmu")))   ;
+SELECT (Num Nom)((-1 ("diibmu")) OR (-2 ("diibmu")))   ;
 	#$ Diibmu lea vihtta.
 
 
