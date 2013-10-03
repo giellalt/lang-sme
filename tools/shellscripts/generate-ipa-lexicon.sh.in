@@ -21,55 +21,48 @@ if test -z "$srcdir"; then
     test -z "$srcdir" && srcdir=.
 fi
 
+# Fst files:
 generator=${srcdir}/../../src/generator-tts-gt-norm_nonum_noabbr_nohyph.hfst
 hyphenator=${srcdir}/../../src/hyphenation/hyphenation.hfst
 ipa_converter=${srcdir}/../../src/phonetics/text2ipa.hfst
 
+# Output file:
 tts_lexicon=${srcdir}/tts-lexicon.txt
 
-# Use autotools mechanisms to check if hfst transducers are available:
-fsttype=
-@CAN_HFST_TRUE@fsttype="$fsttype hfst"
-
-# Exit if hfst has not been configured:
-if [[ "$fsttype" == "" ]]; then
-    echo "Error: HFST transducers have been shut off at configure time."
-    echo "The script can't work."
+# Check whether the actual fst's exist:
+if ! test -f "$generator" ; then
+    echo "FAIL: Transducer not found! $generator"
+    exit 1
+fi
+if ! test -f "$hyphenator" ; then
+    echo "FAIL: Transducer not found! $hyphenator"
+    exit 1
+fi
+if ! test -f "$ipa_converter" ; then
+    echo "FAIL: Transducer not found! $ipa_converter"
     exit 1
 fi
 
 hfst_lookup="@HFST_LOOKUP@"
 hfst_fst2strings=@HFST_FST2STRINGS@
 
-function convert() {
-	$hfst_fst2strings $generator --random=2000 > $tts_lexicon.tmp.txt
-	# Extract word forms:
-	cut -d':' -f 2- < $tts_lexicon.tmp.txt > $tts_lexicon.wordforms.txt
-	# Extract lemmas:
-	cut -d':' -f 1 < $tts_lexicon.tmp.txt > $tts_lexicon.lemmas.txt
-	# Convert word forms to IPA:
-	$hfst_lookup -q $hyphenator < $tts_lexicon.wordforms.txt \
-		| cut -f2 \
-		| grep -v '^$' \
-		| $hfst_lookup -q $ipa_converter \
-		> $tts_lexicon.ipatmp.txt
-	# Remove empty lines (done separately to preserve easy identification of
-	# double IPA conversion/overgeneration, in the ipatmp file):
-	grep -v '^$' < $tts_lexicon.ipatmp.txt > $tts_lexicon.ipa.txt
-	tr -d "#^»>" < $tts_lexicon.wordforms.txt > $tts_lexicon.wordformsclean.txt
-	paste $tts_lexicon.lemmas.txt \
-		  $tts_lexicon.wordformsclean.txt \
-		  $tts_lexicon.ipa.txt \
-		| cut -f1,2,4 \
-		> $tts_lexicon
-}
-
-###### Start testing: #######
-
-# Check whether the actual fst's exist, run the tests if true, FAIL if not:
-if test -f "$generator" -a -f "$hyphenator" -a -f "$ipa_converter" ; then
-    convert
-else
-    echo "FAIL: Transducer not found! $generator"
-    exit 1
-fi
+$hfst_fst2strings $generator --random=2000 > $tts_lexicon.tmp.txt
+# Extract word forms:
+cut -d':' -f 2- < $tts_lexicon.tmp.txt > $tts_lexicon.wordforms.txt
+# Extract lemmas:
+cut -d':' -f 1 < $tts_lexicon.tmp.txt > $tts_lexicon.lemmas.txt
+# Convert word forms to IPA:
+$hfst_lookup -q $hyphenator < $tts_lexicon.wordforms.txt \
+    | cut -f2 \
+    | grep -v '^$' \
+    | $hfst_lookup -q $ipa_converter \
+    > $tts_lexicon.ipatmp.txt
+# Remove empty lines (done separately to preserve easy identification of
+# double IPA conversion/overgeneration, in the ipatmp file):
+grep -v '^$' < $tts_lexicon.ipatmp.txt > $tts_lexicon.ipa.txt
+tr -d "#^»>" < $tts_lexicon.wordforms.txt > $tts_lexicon.wordformsclean.txt
+paste $tts_lexicon.lemmas.txt \
+      $tts_lexicon.wordformsclean.txt \
+      $tts_lexicon.ipa.txt \
+    | cut -f1,2,4 \
+    > $tts_lexicon
