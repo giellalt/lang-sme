@@ -139,8 +139,7 @@ generator-tts-gt-norm_noprop_nonum_noabbr_nohyph.hfst: \
 					filters/remove-Orth_Strd-strings.hfst          \
 					filters/remove-CLB-strings.hfst                \
 					filters/remove-hyphenated-strings.hfst         \
-					filters/remove-mwe-strings.hfst                \
-					filters/remove-Prop-strings.hfst
+					filters/remove-mwe-strings.hfst
 	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -1 $< \
 			-2 filters/remove-hyphenated-strings.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
@@ -152,9 +151,6 @@ generator-tts-gt-norm_noprop_nonum_noabbr_nohyph.hfst: \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-Orth_Strd-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-Prop-strings.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-orthography-tags.hfst \
