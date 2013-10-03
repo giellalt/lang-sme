@@ -92,7 +92,7 @@ endif
 #### HFST transducers
 if CAN_HFST
 GT_ANALYSERS_HFST+=
-GT_GENERATORS_HFST+=generator-tts-gt-norm_noprop_nonum_noabbr_nohyph.hfst
+GT_GENERATORS_HFST+=generator-tts-gt-norm_nonum_noabbr_nohyph.hfst
 
 if WANT_APERTIUM
 APERTIUM_ANALYSERS_HFST+=analyser-mt-apertium-desc.sma.hfst \
@@ -118,7 +118,7 @@ endif
 # * no substandard forms
 # * no illegal derivations
 # * only Guovdageaidnu dialect forms
-generator-tts-gt-norm_noprop_nonum_noabbr_nohyph.hfst: \
+generator-tts-gt-norm_nonum_noabbr_nohyph.hfst: \
 					generator-raw-gt-desc.hfst             \
 					filters/make-optional-semantic-tags.hfst       \
 					filters/make-optional-homonymy-tags.hfst       \
