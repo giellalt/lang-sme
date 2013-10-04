@@ -94,24 +94,35 @@ endif
 # HFST targets here:
 if CAN_HFST
 GT_FILTER_TARGETS+=\
-					remove-OLang_ENG-strings.hfst \
-					remove-OLang_FIN-strings.hfst \
-					remove-OLang_NNO-strings.hfst \
-					remove-OLang_NOB-strings.hfst \
-					remove-OLang_SME-strings.hfst \
-					remove-OLang_SWE-strings.hfst
+					remove-OLang_ENG-strings.hfst  \
+					remove-OLang_FIN-strings.hfst  \
+					remove-OLang_NNO-strings.hfst  \
+					remove-OLang_NOB-strings.hfst  \
+					remove-OLang_SME-strings.hfst  \
+					remove-OLang_SWE-strings.hfst  \
+					extract-OLang_ENG-strings.hfst \
+					extract-OLang_FIN-strings.hfst \
+					extract-OLang_NNO-strings.hfst \
+					extract-OLang_NOB-strings.hfst \
+					extract-OLang_SME-strings.hfst \
+					extract-OLang_SWE-strings.hfst
 endif
 
 # And Xerox targets here:
 if CAN_XFST
 GT_FILTER_TARGETS+=\
-					remove-OLang_ENG-strings.xfst \
-					remove-OLang_FIN-strings.xfst \
-					remove-OLang_NNO-strings.xfst \
-					remove-OLang_NOB-strings.xfst \
-					remove-OLang_SME-strings.xfst \
-					remove-OLang_SWE-strings.xfst
-
+					remove-OLang_ENG-strings.xfst  \
+					remove-OLang_FIN-strings.xfst  \
+					remove-OLang_NNO-strings.xfst  \
+					remove-OLang_NOB-strings.xfst  \
+					remove-OLang_SME-strings.xfst  \
+					remove-OLang_SWE-strings.xfst  \
+					extract-OLang_ENG-strings.xfst \
+					extract-OLang_FIN-strings.xfst \
+					extract-OLang_NNO-strings.xfst \
+					extract-OLang_NOB-strings.xfst \
+					extract-OLang_SME-strings.xfst \
+					extract-OLang_SWE-strings.xfst
 endif
 
 include $(top_srcdir)/am-shared/filters-include.am
