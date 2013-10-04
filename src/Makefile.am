@@ -118,14 +118,13 @@ endif
 # * no substandard forms
 # * no illegal derivations
 # * only Guovdageaidnu dialect forms
-generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst: \
-					generator-raw-gt-desc.hfst             \
-					filters/make-optional-semantic-tags.hfst       \
-					filters/make-optional-homonymy-tags.hfst       \
-					filters/make-optional-variant-tags.hfst        \
+generator-tts-gt-norm_nonum_noabbr_nohyph.hfst: \
+					generator-raw-gt-desc.hfst                     \
+					filters/remove-semantic-tags-except-prop.hfst  \
+					filters/remove-homonymy-tags.hfst              \
+					filters/remove-variant-tags.hfst               \
 					filters/remove-derivation-position-tags.hfst   \
 					filters/remove-dialect-tags.hfst               \
-					filters/remove-infl_boundary-marks.hfst        \
 					filters/remove-norm-comp-tags.hfst             \
 					filters/remove-usage-tags.hfst                 \
 					filters/remove-sub-forms.hfst                  \
@@ -139,35 +138,12 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst: \
 					filters/remove-Orth_Strd-strings.hfst          \
 					filters/remove-CLB-strings.hfst                \
 					filters/remove-hyphenated-strings.hfst         \
-					filters/remove-mwe-strings.hfst                \
-					filters/remove-OLang_ENG-strings.hfst          \
-					filters/remove-OLang_FIN-strings.hfst          \
-					filters/remove-OLang_NNO-strings.hfst          \
-					filters/remove-OLang_NOB-strings.hfst          \
-					filters/remove-OLang_SWE-strings.hfst          
+					filters/remove-mwe-strings.hfst
 	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -1 $< \
 			-2 filters/remove-hyphenated-strings.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-2 filters/remove-mwe-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-2 filters/remove-OLang_ENG-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-2 filters/remove-OLang_FIN-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-2 filters/remove-OLang_NNO-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-2 filters/remove-OLang_NOB-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-2 filters/remove-OLang_SWE-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-2 filters/remove-infl_boundary-marks.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-Orth_Strd-strings.hfst \
@@ -212,13 +188,41 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst: \
 			-1 filters/remove-derivation-position-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/make-optional-homonymy-tags.hfst \
+			-1 filters/remove-homonymy-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/make-optional-variant-tags.hfst \
+			-1 filters/remove-variant-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/make-optional-semantic-tags.hfst \
+			-1 filters/remove-semantic-tags-except-prop.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		-o $@
+
+generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst: \
+					generator-tts-gt-norm_nonum_noabbr_nohyph.hfst \
+					filters/remove-OLang_ENG-strings.hfst          \
+					filters/remove-OLang_FIN-strings.hfst          \
+					filters/remove-OLang_NNO-strings.hfst          \
+					filters/remove-OLang_NOB-strings.hfst          \
+					filters/remove-OLang_SWE-strings.hfst          \
+					filters/remove-orig_lang-tags.hfst
+	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -1 $< \
+			-1 filters/remove-OLang_ENG-strings.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-OLang_FIN-strings.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-OLang_NNO-strings.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-OLang_NOB-strings.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-OLang_SWE-strings.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-orig_lang-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		-o $@
 
