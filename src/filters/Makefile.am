@@ -22,100 +22,85 @@ GT_FILTER_SRCS=
 GT_FILTER_TARGETS=
 if CAN_HFST
 GT_FILTER_TARGETS+=\
+				   make-optional-homonymy-tags.hfst       \
 				   make-optional-semantic-tags.hfst       \
 				   make-optional-transitivity-tags.hfst   \
-				   make-optional-homonymy-tags.hfst       \
 				   make-optional-variant-tags.hfst        \
 				   remove-derivation-position-tags.hfst   \
-				   remove-semantic-tags-except-prop.hfst  \
 				   remove-dialect-tags.hfst               \
 				   remove-homonymy-tags.hfst              \
-				   remove-g-tags.hfst              \
-				   remove-variant-tags.hfst               \
-				   remove-deriv-strings-MT-sma.hfst     \
 				   remove-norm-comp-tags.hfst             \
 				   remove-number-string-tags.hfst         \
-				   remove-usage-tags.hfst                 \
+				   remove-orig_lang-tags.hfst             \
 				   remove-orthography-tags.hfst           \
+				   remove-semantic-tags-except-prop.hfst  \
+				   remove-usage-tags.hfst                 \
+				   remove-variant-tags.hfst               \
 				   remove-hyphenation-marks.hfst          \
 				   remove-infl_deriv-borders.hfst         \
 				   remove-word-boundary.hfst              \
 				   remove-sub-forms.hfst                  \
-				   remove-variant-strings.hfst            \
+				   remove-ABBR-strings.hfst               \
+				   remove-ACR-strings.hfst                \
+				   remove-CLB-strings.hfst                \
+				   remove-MinusSpell-strings.hfst         \
 				   remove-NA-strings.hfst                 \
 				   remove-NG-strings.hfst                 \
 				   remove-NGminip-strings.hfst            \
-				   remove-semantic-tags-except-prop.hfst  \
-				   remove-MinusSpell-strings.hfst         \
-				   remove-ABBR-strings.hfst               \
-				   remove-ACR-strings.hfst                \
-				   remove-illegal-derivation-strings.hfst \
-				   remove-PUNCT-strings.hfst              \
-				   remove-CLB-strings.hfst                \
-				   remove-UseCirc-strings.hfst            \
 				   remove-Orth_IPA-strings.hfst           \
-				   remove-Orth_Strd-strings.hfst
+				   remove-Orth_Strd-strings.hfst          \
+				   remove-PUNCT-strings.hfst              \
+				   remove-UseCirc-strings.hfst            \
+				   remove-illegal-derivation-strings.hfst \
+				   remove-variant-strings.hfst
 endif
 
 if CAN_XFST
 GT_FILTER_TARGETS+=\
+				   make-optional-homonymy-tags.xfst       \
 				   make-optional-semantic-tags.xfst       \
 				   make-optional-transitivity-tags.xfst   \
-				   make-optional-homonymy-tags.xfst       \
 				   make-optional-variant-tags.xfst        \
 				   remove-derivation-position-tags.xfst   \
-				   remove-semantic-tags-except-prop.xfst  \
 				   remove-dialect-tags.xfst               \
 				   remove-homonymy-tags.xfst              \
-				   remove-variant-tags.xfst               \
 				   remove-norm-comp-tags.xfst             \
 				   remove-number-string-tags.xfst         \
-				   remove-usage-tags.xfst                 \
+				   remove-orig_lang-tags.xfst             \
 				   remove-orthography-tags.xfst           \
+				   remove-semantic-tags-except-prop.xfst  \
+				   remove-usage-tags.xfst                 \
+				   remove-variant-tags.xfst               \
 				   remove-hyphenation-marks.xfst          \
 				   remove-infl_deriv-borders.xfst         \
 				   remove-word-boundary.xfst              \
 				   remove-sub-forms.xfst                  \
-				   remove-variant-strings.xfst            \
+				   remove-ABBR-strings.xfst               \
+				   remove-ACR-strings.xfst                \
+				   remove-CLB-strings.xfst                \
+				   remove-MinusSpell-strings.xfst         \
 				   remove-NA-strings.xfst                 \
 				   remove-NG-strings.xfst                 \
 				   remove-NGminip-strings.xfst            \
-				   remove-MinusSpell-strings.xfst         \
-				   remove-ABBR-strings.xfst               \
-				   remove-ACR-strings.xfst                \
-				   remove-illegal-derivation-strings.xfst \
-				   remove-PUNCT-strings.xfst              \
-				   remove-CLB-strings.xfst                \
-				   remove-UseCirc-strings.xfst            \
 				   remove-Orth_IPA-strings.xfst           \
-				   remove-Orth_Strd-strings.xfst
+				   remove-Orth_Strd-strings.xfst          \
+				   remove-PUNCT-strings.xfst              \
+				   remove-UseCirc-strings.xfst            \
+				   remove-illegal-derivation-strings.xfst \
+				   remove-variant-strings.xfst
 endif
 
 # Add the target of local additions here:
 # HFST targets here:
 if CAN_HFST
-GT_FILTER_TARGETS+=remove-RCmpnd-strings.hfst \
-				   remove-CLB-strings.hfst \
-				   remove-lang_hom-tags.hfst \
-				   make-optional-lang_hom-tags.hfst \
-				   reorder-semantic-tags.hfst \
-				   remove-hyphenated-strings.hfst \
-				   remove-mwe-strings.hfst \
-				   remove-Prop-strings.hfst \
-				   remove-infl_boundary-marks.hfst
+GT_FILTER_TARGETS+=
+
 endif
 
 # And Xerox targets here:
 if CAN_XFST
-GT_FILTER_TARGETS+=remove-RCmpnd-strings.xfst \
-				   remove-CLB-strings.xfst \
-                   remove-lang_hom-tags.xfst \
-                   make-optional-lang_hom-tags.xfst \
-                   reorder-semantic-tags.xfst \
-				   remove-hyphenated-strings.xfst \
-				   remove-mwe-strings.xfst \
-				   remove-Prop-strings.xfst \
-				   remove-infl_boundary-marks.xfst
+GT_FILTER_TARGETS+=
+
 endif
 
 include $(top_srcdir)/am-shared/filters-include.am
