@@ -92,7 +92,8 @@ endif
 #### HFST transducers
 if CAN_HFST
 GT_ANALYSERS_HFST+=
-GT_GENERATORS_HFST+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst
+GT_GENERATORS_HFST+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst \
+					generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst
 
 if WANT_APERTIUM
 APERTIUM_ANALYSERS_HFST+=analyser-mt-apertium-desc.sma.hfst \
@@ -117,7 +118,11 @@ endif
 # * no punctuation
 # * no substandard forms
 # * no illegal derivations
-# * only Guovdageaidnu dialect forms
+# * only Guovdageaidnu dialect forms (NB! not yet implemented!!)
+#
+# First we build a general-purpose fst with the above things removed, but
+# with all lexical content retained, irrespective of orthography/loan word
+# source:
 generator-tts-gt-norm_nonum_noabbr_nohyph.hfst: \
 					generator-raw-gt-desc.hfst                     \
 					filters/remove-semantic-tags-except-prop.hfst  \
@@ -198,6 +203,8 @@ generator-tts-gt-norm_nonum_noabbr_nohyph.hfst: \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		-o $@
 
+# The second step, to extract the strings that only (or mostly) follow
+# SME orthographic conventions.
 generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst: \
 					generator-tts-gt-norm_nonum_noabbr_nohyph.hfst \
 					filters/remove-OLang_ENG-strings.hfst          \
@@ -220,6 +227,20 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst: \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-OLang_SWE-strings.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-1 filters/remove-orig_lang-tags.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		-o $@
+
+# The second step, to extract the strings that follow
+# FIN orthographic conventions for the stem (and SME in the inflections):
+generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst: \
+					generator-tts-gt-norm_nonum_noabbr_nohyph.hfst \
+					filters/extract-OLang_FIN-strings.hfst         \
+					filters/remove-orig_lang-tags.hfst
+	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -1 $< \
+			-1 filters/extract-OLang_FIN-strings.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-orig_lang-tags.hfst \
