@@ -93,13 +93,24 @@ endif
 # Add the target of local additions here:
 # HFST targets here:
 if CAN_HFST
-GT_FILTER_TARGETS+=
-
+GT_FILTER_TARGETS+=\
+					remove-OLang_ENG-strings.hfst \
+					remove-OLang_FIN-strings.hfst \
+					remove-OLang_NNO-strings.hfst \
+					remove-OLang_NOB-strings.hfst \
+					remove-OLang_SME-strings.hfst \
+					remove-OLang_SWE-strings.hfst
 endif
 
 # And Xerox targets here:
 if CAN_XFST
-GT_FILTER_TARGETS+=
+GT_FILTER_TARGETS+=\
+					remove-OLang_ENG-strings.xfst \
+					remove-OLang_FIN-strings.xfst \
+					remove-OLang_NNO-strings.xfst \
+					remove-OLang_NOB-strings.xfst \
+					remove-OLang_SME-strings.xfst \
+					remove-OLang_SWE-strings.xfst
 
 endif
 
