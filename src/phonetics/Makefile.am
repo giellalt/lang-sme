@@ -22,8 +22,35 @@ SUBDIRS=. test
 #! @param GT_PHONETICS_MAIN required, the source of phonetic transcription
 #! @param GT_PHONETICS_SUPPLEMENTS optional, other sources to distribute and
 #! 		  compile for other things
-GT_PHONETICS_MAIN=text2ipa.xfscript
-GT_PHONETICS_SUPPLEMENTS=
+GT_PHONETICS_MAIN=text2ipa-$(GTLANG).xfscript
+GT_PHONETICS_SUPPLEMENTS=text2ipa-fin.xfscript
+
+####### Automake targets: ########
+
+# The rule transducer will be built, not installed
+GT_PHONETICS=
+
+if WANT_PHONETIC
+if CAN_HFST
+GT_PHONETICS+=text2ipa-$(GTLANG).hfst
+endif # CAN_HFST
+
+if CAN_XFST
+GT_PHONETICS+=text2ipa-$(GTLANG).xfst
+endif # CAN_XFST
+endif # WANT_PHONETIC
+
+############ Local additions: ############
+## Add the target of local additions here:
+if WANT_PHONETIC
+if CAN_HFST
+GT_PHONETICS+=text2ipa-fin.hfst
+endif # CAN_HFST
+
+if CAN_XFST
+GT_PHONETICS+=text2ipa-fin.xfst
+endif # CAN_XFST
+endif # WANT_PHONETIC
 
 include $(top_srcdir)/am-shared/phonetics-include.am
 
