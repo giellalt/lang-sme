@@ -213,7 +213,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst: \
 					filters/remove-OLang_NOB-strings.hfst          \
 					filters/remove-OLang_SWE-strings.hfst          \
 					filters/remove-orig_lang-tags.hfst
-	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -1 $< \
+	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -2 $< \
 			-1 filters/remove-OLang_ENG-strings.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
@@ -239,7 +239,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst: \
 					generator-tts-gt-norm_nonum_noabbr_nohyph.hfst \
 					filters/extract-OLang_FIN-strings.hfst         \
 					filters/remove-orig_lang-tags.hfst
-	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -1 $< \
+	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -2 $< \
 			-1 filters/extract-OLang_FIN-strings.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
