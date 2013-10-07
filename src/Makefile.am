@@ -87,13 +87,20 @@ endif # WANT_OAHPA
 
 #### Xerox transducers:
 if CAN_XFST
+if WANT_PHONETIC
+GT_ANALYSERS_XFST+=
+GT_GENERATORS_XFST+=generator-tts-gt-norm_nonum_noabbr_nohyph_fin.xfst \
+					generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst
+endif # WANT_PHONETIC
 endif
 
 #### HFST transducers
 if CAN_HFST
+if WANT_PHONETIC
 GT_ANALYSERS_HFST+=
 GT_GENERATORS_HFST+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst \
 					generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst
+endif # WANT_PHONETIC
 
 if WANT_APERTIUM
 APERTIUM_ANALYSERS_HFST+=analyser-mt-apertium-desc.sma.hfst \
@@ -203,6 +210,54 @@ generator-tts-gt-norm_nonum_noabbr_nohyph.hfst: \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		-o $@
 
+# Xerox version, mainly used or debugging
+analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst: \
+					analyser-raw-gt-desc.xfst                      \
+					filters/remove-semantic-tags-except-prop.xfst  \
+					filters/remove-homonymy-tags.xfst              \
+					filters/remove-variant-tags.xfst               \
+					filters/remove-derivation-position-tags.xfst   \
+					filters/remove-dialect-tags.xfst               \
+					filters/remove-norm-comp-tags.xfst             \
+					filters/remove-usage-tags.xfst                 \
+					filters/remove-sub-forms.xfst                  \
+					filters/remove-ABBR-strings.xfst               \
+					filters/remove-ACR-strings.xfst                \
+					filters/remove-illegal-derivation-strings.xfst \
+					filters/remove-PUNCT-strings.xfst              \
+					filters/remove-UseCirc-strings.xfst            \
+					filters/remove-RCmpnd-strings.xfst             \
+					filters/remove-orthography-tags.xfst           \
+					filters/remove-Orth_Strd-strings.xfst          \
+					filters/remove-CLB-strings.xfst                \
+					filters/remove-hyphenated-strings.xfst         \
+					filters/remove-mwe-strings.xfst
+	$(AM_V_GEN)$(PRINTF) "read regex \
+				@\"filters/remove-semantic-tags-except-prop.xfst\"  \
+			.o. @\"filters/remove-homonymy-tags.xfst\"              \
+			.o. @\"filters/remove-variant-tags.xfst\"               \
+			.o. @\"filters/remove-derivation-position-tags.xfst\"   \
+			.o. @\"filters/remove-dialect-tags.xfst\"               \
+			.o. @\"filters/remove-norm-comp-tags.xfst\"             \
+			.o. @\"filters/remove-usage-tags.xfst\"                 \
+			.o. @\"filters/remove-ABBR-strings.xfst\"               \
+			.o. @\"filters/remove-ACR-strings.xfst\"                \
+			.o. @\"filters/remove-illegal-derivation-strings.xfst\" \
+			.o. @\"filters/remove-PUNCT-strings.xfst\"              \
+			.o. @\"filters/remove-UseCirc-strings.xfst\"            \
+			.o. @\"filters/remove-RCmpnd-strings.xfst\"             \
+			.o. @\"filters/remove-Orth_Strd-strings.xfst\"          \
+			.o. @\"filters/remove-CLB-strings.xfst\"                \
+			.o. @\"filters/remove-sub-forms.xfst\"                  \
+			.o. @\"filters/remove-orthography-tags.xfst\"           \
+			.o. @\"filters/remove-Orth_Strd-strings.xfst\"          \
+			.o. @\"$<\" \
+			.o. @\"filters/remove-mwe-strings.xfst\"                \
+			.o. @\"filters/remove-hyphenated-strings.xfst\"         \
+			;\n\
+		 save stack $@\n\
+		 quit\n" | $(XFST) -q
+
 # The second step, to extract the strings that only (or mostly) follow
 # SME orthographic conventions.
 generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst: \
@@ -233,6 +288,27 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst: \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		-o $@
 
+generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst: \
+					analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst \
+					filters/remove-OLang_ENG-strings.xfst          \
+					filters/remove-OLang_FIN-strings.xfst          \
+					filters/remove-OLang_NNO-strings.xfst          \
+					filters/remove-OLang_NOB-strings.xfst          \
+					filters/remove-OLang_SWE-strings.xfst          \
+					filters/remove-orig_lang-tags.xfst
+	$(AM_V_GEN)$(PRINTF) "read regex \
+			    @\"filters/remove-orig_lang-tags.xfst\"     \
+			.o. @\"filters/remove-OLang_ENG-strings.xfst\"  \
+			.o. @\"filters/remove-OLang_FIN-strings.xfst\"  \
+			.o. @\"filters/remove-OLang_NNO-strings.xfst\"  \
+			.o. @\"filters/remove-OLang_NOB-strings.xfst\"  \
+			.o. @\"filters/remove-OLang_SWE-strings.xfst\"  \
+			.o. @\"$<\" \
+			;\n\
+		 invert net\n\
+		 save stack $@\n\
+		 quit\n" | $(XFST) -q
+
 # The second step, to extract the strings that follow
 # FIN orthographic conventions for the stem (and SME in the inflections):
 generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst: \
@@ -246,6 +322,19 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst: \
 			-1 filters/remove-orig_lang-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		-o $@
+
+generator-tts-gt-norm_nonum_noabbr_nohyph_fin.xfst: \
+					analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst \
+					filters/extract-OLang_FIN-strings.xfst         \
+					filters/remove-orig_lang-tags.xfst
+	$(AM_V_GEN)$(PRINTF) "read regex \
+			    @\"filters/remove-orig_lang-tags.xfst\"     \
+			.o. @\"filters/extract-OLang_FIN-strings.xfst\" \
+			.o. @\"$<\" \
+			;\n\
+		 invert net\n\
+		 save stack $@\n\
+		 quit\n" | $(XFST) -q
 
 # Apertium-related language-specific targets - modify to suit each language:
 analyser-mt-%.und.hfst: analyser-mt-%.tmp.hfst
