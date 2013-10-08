@@ -267,7 +267,8 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst: \
 					filters/remove-OLang_NNO-strings.hfst          \
 					filters/remove-OLang_NOB-strings.hfst          \
 					filters/remove-OLang_SWE-strings.hfst          \
-					filters/remove-orig_lang-tags.hfst
+					filters/remove-orig_lang-tags.hfst             \
+					filters/remove-infl_boundary-marks.hfst
 	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -2 $< \
 			-1 filters/remove-OLang_ENG-strings.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
@@ -286,16 +287,20 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst: \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-orig_lang-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-2 filters/remove-infl_boundary-marks.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		-o $@
 
 generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst: \
 					analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst \
-					filters/remove-OLang_ENG-strings.xfst          \
-					filters/remove-OLang_FIN-strings.xfst          \
-					filters/remove-OLang_NNO-strings.xfst          \
-					filters/remove-OLang_NOB-strings.xfst          \
-					filters/remove-OLang_SWE-strings.xfst          \
-					filters/remove-orig_lang-tags.xfst
+					filters/remove-OLang_ENG-strings.xfst         \
+					filters/remove-OLang_FIN-strings.xfst         \
+					filters/remove-OLang_NNO-strings.xfst         \
+					filters/remove-OLang_NOB-strings.xfst         \
+					filters/remove-OLang_SWE-strings.xfst         \
+					filters/remove-orig_lang-tags.xfst            \
+					filters/remove-infl_boundary-marks.xfst
 	$(AM_V_GEN)$(PRINTF) "read regex \
 			    @\"filters/remove-orig_lang-tags.xfst\"     \
 			.o. @\"filters/remove-OLang_ENG-strings.xfst\"  \
@@ -304,6 +309,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst: \
 			.o. @\"filters/remove-OLang_NOB-strings.xfst\"  \
 			.o. @\"filters/remove-OLang_SWE-strings.xfst\"  \
 			.o. @\"$<\" \
+			.o. @\"filters/remove-infl_boundary-marks.xfst\" \
 			;\n\
 		 invert net\n\
 		 save stack $@\n\
