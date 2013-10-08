@@ -112,6 +112,7 @@ GT_FILTER_TARGETS+=\
 					remove-RCmpnd-strings.hfst       \
 					remove-hyphenated-strings.hfst   \
 					remove-infl_boundary-marks.hfst  \
+					remove-nonfirst_infl_boundary-marks.hfst \
 					remove-lang_hom-tags.hfst        \
 					remove-mwe-strings.hfst          \
 					reorder-semantic-tags.hfst
@@ -138,6 +139,7 @@ GT_FILTER_TARGETS+=\
 					remove-RCmpnd-strings.xfst       \
 					remove-hyphenated-strings.xfst   \
 					remove-infl_boundary-marks.xfst  \
+					remove-nonfirst_infl_boundary-marks.xfst \
 					remove-lang_hom-tags.xfst        \
 					remove-mwe-strings.xfst          \
 					reorder-semantic-tags.xfst
