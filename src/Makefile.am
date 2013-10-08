@@ -320,23 +320,29 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst: \
 generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst: \
 					generator-tts-gt-norm_nonum_noabbr_nohyph.hfst \
 					filters/extract-OLang_FIN-strings.hfst         \
-					filters/remove-orig_lang-tags.hfst
+					filters/remove-orig_lang-tags.hfst             \
+					filters/remove-nonfirst_infl_boundary-marks.hfst
 	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -2 $< \
 			-1 filters/extract-OLang_FIN-strings.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
 			-1 filters/remove-orig_lang-tags.hfst \
 		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
+		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
+			-2 filters/remove-nonfirst_infl_boundary-marks.hfst \
+		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
 		-o $@
 
 generator-tts-gt-norm_nonum_noabbr_nohyph_fin.xfst: \
-					analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst \
+					analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst  \
 					filters/extract-OLang_FIN-strings.xfst         \
-					filters/remove-orig_lang-tags.xfst
+					filters/remove-orig_lang-tags.xfst             \
+					filters/remove-nonfirst_infl_boundary-marks.xfst
 	$(AM_V_GEN)$(PRINTF) "read regex \
 			    @\"filters/remove-orig_lang-tags.xfst\"     \
 			.o. @\"filters/extract-OLang_FIN-strings.xfst\" \
 			.o. @\"$<\" \
+			.o. @\"filters/remove-nonfirst_infl_boundary-marks.xfst\" \
 			;\n\
 		 invert net\n\
 		 save stack $@\n\
