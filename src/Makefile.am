@@ -155,64 +155,31 @@ generator-tts-gt-norm_nonum_noabbr_nohyph.hfst: \
 					filters/remove-CLB-strings.hfst                \
 					filters/remove-hyphenated-strings.hfst         \
 					filters/remove-mwe-strings.hfst
-	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -1 $< \
-			-2 filters/remove-hyphenated-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-2 filters/remove-mwe-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-Orth_Strd-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-orthography-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-sub-forms.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-ABBR-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-ACR-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-illegal-derivation-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-PUNCT-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-UseCirc-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-RCmpnd-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-CLB-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-usage-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-norm-comp-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-dialect-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-derivation-position-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-homonymy-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-variant-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-semantic-tags-except-prop.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		-o $@
+	$(AM_V_GEN)$(PRINTF) \
+			   "@\"filters/remove-semantic-tags-except-prop.hfst\"  \
+			.o. @\"filters/remove-homonymy-tags.hfst\"              \
+			.o. @\"filters/remove-variant-tags.hfst\"               \
+			.o. @\"filters/remove-derivation-position-tags.hfst\"   \
+			.o. @\"filters/remove-dialect-tags.hfst\"               \
+			.o. @\"filters/remove-norm-comp-tags.hfst\"             \
+			.o. @\"filters/remove-usage-tags.hfst\"                 \
+			.o. @\"filters/remove-ABBR-strings.hfst\"               \
+			.o. @\"filters/remove-ACR-strings.hfst\"                \
+			.o. @\"filters/remove-illegal-derivation-strings.hfst\" \
+			.o. @\"filters/remove-PUNCT-strings.hfst\"              \
+			.o. @\"filters/remove-UseCirc-strings.hfst\"            \
+			.o. @\"filters/remove-RCmpnd-strings.hfst\"             \
+			.o. @\"filters/remove-Orth_Strd-strings.hfst\"          \
+			.o. @\"filters/remove-CLB-strings.hfst\"                \
+			.o. @\"filters/remove-sub-forms.hfst\"                  \
+			.o. @\"filters/remove-orthography-tags.hfst\"           \
+			.o. @\"filters/remove-Orth_Strd-strings.hfst\"          \
+			.o. @\"$<\" \
+			.o. @\"filters/remove-mwe-strings.hfst\"                \
+			.o. @\"filters/remove-hyphenated-strings.hfst\"         \
+			;" \
+		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
+		> $@
 
 # Xerox version, mainly used or debugging
 analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst: \
@@ -281,7 +248,8 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst: \
 			.o. @\"filters/remove-OLang_NOB-strings.hfst\"  \
 			.o. @\"filters/remove-OLang_SWE-strings.hfst\"  \
 			.o. @\"$<\" \
-			.o. @\"filters/remove-infl_boundary-marks.hfst\" ;" \
+			.o. @\"filters/remove-infl_boundary-marks.hfst\" \
+			;" \
 		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
 		> $@
 
@@ -319,7 +287,8 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst: \
 			   "@bin\"filters/remove-orig_lang-tags.hfst\"     \
 			.o. @bin\"filters/extract-OLang_FIN-strings.hfst\"   \
 			.o. @bin\"$<\" \
-			.o. @bin\"filters/remove-nonfirst_infl_boundary-marks.hfst\" ;" \
+			.o. @bin\"filters/remove-nonfirst_infl_boundary-marks.hfst\" \
+			;" \
 		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
 		> $@
 
@@ -354,7 +323,8 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_nob.hfst: \
 			  | @bin\"filters/extract-OLang_NNO-strings.hfst\"   \
 			  | @bin\"filters/extract-OLang_SWE-strings.hfst\" ] \
 			.o. @bin\"$<\" \
-			.o. @bin\"filters/remove-nonfirst_infl_boundary-marks.hfst\" ;" \
+			.o. @bin\"filters/remove-nonfirst_infl_boundary-marks.hfst\" \
+			;" \
 		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
 		> $@
 
@@ -389,7 +359,8 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_eng.hfst: \
 			   "@bin\"filters/remove-orig_lang-tags.hfst\"     \
 			.o. @bin\"filters/extract-OLang_ENG-strings.hfst\"   \
 			.o. @bin\"$<\" \
-			.o. @bin\"filters/remove-nonfirst_infl_boundary-marks.hfst\" ;" \
+			.o. @bin\"filters/remove-nonfirst_infl_boundary-marks.hfst\" \
+			;" \
 		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
 		> $@
 
