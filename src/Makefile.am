@@ -90,6 +90,8 @@ if CAN_XFST
 if WANT_PHONETIC
 GT_ANALYSERS_XFST+=
 GT_GENERATORS_XFST+=generator-tts-gt-norm_nonum_noabbr_nohyph_fin.xfst \
+					generator-tts-gt-norm_nonum_noabbr_nohyph_eng.xfst \
+					generator-tts-gt-norm_nonum_noabbr_nohyph_nob.xfst \
 					generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst
 endif # WANT_PHONETIC
 endif
@@ -99,7 +101,9 @@ if CAN_HFST
 if WANT_PHONETIC
 GT_ANALYSERS_HFST+=
 GT_GENERATORS_HFST+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst \
-					generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst
+					generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst \
+					generator-tts-gt-norm_nonum_noabbr_nohyph_eng.hfst \
+					generator-tts-gt-norm_nonum_noabbr_nohyph_nob.hfst
 endif # WANT_PHONETIC
 
 if WANT_APERTIUM
@@ -269,28 +273,17 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst: \
 					filters/remove-OLang_SWE-strings.hfst          \
 					filters/remove-orig_lang-tags.hfst             \
 					filters/remove-infl_boundary-marks.hfst
-	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -2 $< \
-			-1 filters/remove-OLang_ENG-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-OLang_FIN-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-OLang_NNO-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-OLang_NOB-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-OLang_SWE-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-orig_lang-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-2 filters/remove-infl_boundary-marks.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		-o $@
+	$(AM_V_GEN)$(PRINTF) \
+			   "@\"filters/remove-orig_lang-tags.hfst\"     \
+			.o. @\"filters/remove-OLang_ENG-strings.hfst\"  \
+			.o. @\"filters/remove-OLang_FIN-strings.hfst\"  \
+			.o. @\"filters/remove-OLang_NNO-strings.hfst\"  \
+			.o. @\"filters/remove-OLang_NOB-strings.hfst\"  \
+			.o. @\"filters/remove-OLang_SWE-strings.hfst\"  \
+			.o. @\"$<\" \
+			.o. @\"filters/remove-infl_boundary-marks.hfst\" ;" \
+		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
+		> $@
 
 generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst: \
 					analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst \
@@ -322,16 +315,13 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst: \
 					filters/extract-OLang_FIN-strings.hfst         \
 					filters/remove-orig_lang-tags.hfst             \
 					filters/remove-nonfirst_infl_boundary-marks.hfst
-	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -2 $< \
-			-1 filters/extract-OLang_FIN-strings.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-orig_lang-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-2 filters/remove-nonfirst_infl_boundary-marks.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		-o $@
+	$(AM_V_GEN)$(PRINTF) \
+			   "@bin\"filters/remove-orig_lang-tags.hfst\"     \
+			.o. @bin\"filters/extract-OLang_FIN-strings.hfst\"   \
+			.o. @bin\"$<\" \
+			.o. @bin\"filters/remove-nonfirst_infl_boundary-marks.hfst\" ;" \
+		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
+		> $@
 
 generator-tts-gt-norm_nonum_noabbr_nohyph_fin.xfst: \
 					analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst  \
@@ -341,6 +331,76 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_fin.xfst: \
 	$(AM_V_GEN)$(PRINTF) "read regex \
 			    @\"filters/remove-orig_lang-tags.xfst\"     \
 			.o. @\"filters/extract-OLang_FIN-strings.xfst\" \
+			.o. @\"$<\" \
+			.o. @\"filters/remove-nonfirst_infl_boundary-marks.xfst\" \
+			;\n\
+		 invert net\n\
+		 save stack $@\n\
+		 quit\n" | $(XFST) -q
+
+# The second step, to extract the strings that follow
+# NOB (and NNO + SWE) orthographic conventions for the stem::
+generator-tts-gt-norm_nonum_noabbr_nohyph_nob.hfst: \
+					generator-tts-gt-norm_nonum_noabbr_nohyph.hfst \
+					filters/extract-OLang_NOB-strings.hfst         \
+					filters/extract-OLang_NNO-strings.hfst         \
+					filters/extract-OLang_SWE-strings.hfst         \
+					filters/remove-orig_lang-tags.hfst             \
+					filters/remove-nonfirst_infl_boundary-marks.hfst
+	$(AM_V_GEN)$(PRINTF) \
+			   "@bin\"filters/remove-orig_lang-tags.hfst\"     \
+			.o. \
+			  [ @bin\"filters/extract-OLang_NOB-strings.hfst\"   \
+			  | @bin\"filters/extract-OLang_NNO-strings.hfst\"   \
+			  | @bin\"filters/extract-OLang_SWE-strings.hfst\" ] \
+			.o. @bin\"$<\" \
+			.o. @bin\"filters/remove-nonfirst_infl_boundary-marks.hfst\" ;" \
+		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
+		> $@
+
+generator-tts-gt-norm_nonum_noabbr_nohyph_nob.xfst: \
+					analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst  \
+					filters/extract-OLang_NOB-strings.xfst         \
+					filters/extract-OLang_NNO-strings.xfst         \
+					filters/extract-OLang_SWE-strings.xfst         \
+					filters/remove-orig_lang-tags.xfst             \
+					filters/remove-nonfirst_infl_boundary-marks.xfst
+	$(AM_V_GEN)$(PRINTF) "read regex \
+			    @\"filters/remove-orig_lang-tags.xfst\"     \
+			.o. \
+			  [ @\"filters/extract-OLang_NOB-strings.xfst\"   \
+			  | @\"filters/extract-OLang_NNO-strings.xfst\"   \
+			  | @\"filters/extract-OLang_SWE-strings.xfst\" ] \
+			.o. @\"$<\" \
+			.o. @\"filters/remove-nonfirst_infl_boundary-marks.xfst\" \
+			;\n\
+		 invert net\n\
+		 save stack $@\n\
+		 quit\n" | $(XFST) -q
+
+# The second step, to extract the strings that follow
+# ENG orthographic conventions for the stem (and SME in the inflections):
+generator-tts-gt-norm_nonum_noabbr_nohyph_eng.hfst: \
+					generator-tts-gt-norm_nonum_noabbr_nohyph.hfst \
+					filters/extract-OLang_ENG-strings.hfst         \
+					filters/remove-orig_lang-tags.hfst             \
+					filters/remove-nonfirst_infl_boundary-marks.hfst
+	$(AM_V_GEN)$(PRINTF) \
+			   "@bin\"filters/remove-orig_lang-tags.hfst\"     \
+			.o. @bin\"filters/extract-OLang_ENG-strings.hfst\"   \
+			.o. @bin\"$<\" \
+			.o. @bin\"filters/remove-nonfirst_infl_boundary-marks.hfst\" ;" \
+		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
+		> $@
+
+generator-tts-gt-norm_nonum_noabbr_nohyph_eng.xfst: \
+					analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst  \
+					filters/extract-OLang_ENG-strings.xfst         \
+					filters/remove-orig_lang-tags.xfst             \
+					filters/remove-nonfirst_infl_boundary-marks.xfst
+	$(AM_V_GEN)$(PRINTF) "read regex \
+			    @\"filters/remove-orig_lang-tags.xfst\"     \
+			.o. @\"filters/extract-OLang_ENG-strings.xfst\" \
 			.o. @\"$<\" \
 			.o. @\"filters/remove-nonfirst_infl_boundary-marks.xfst\" \
 			;\n\
