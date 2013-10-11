@@ -51,7 +51,6 @@ GT_FILTER_TARGETS+=\
 				   remove-Orth_Strd-strings.hfst          \
 				   remove-PUNCT-strings.hfst              \
 				   remove-UseCirc-strings.hfst            \
-				   remove-illegal-derivation-strings.hfst \
 				   remove-variant-strings.hfst
 endif
 
@@ -86,7 +85,6 @@ GT_FILTER_TARGETS+=\
 				   remove-Orth_Strd-strings.xfst          \
 				   remove-PUNCT-strings.xfst              \
 				   remove-UseCirc-strings.xfst            \
-				   remove-illegal-derivation-strings.xfst \
 				   remove-variant-strings.xfst
 endif
 
@@ -94,6 +92,7 @@ endif
 # HFST targets here:
 if CAN_HFST
 GT_FILTER_TARGETS+=\
+					remove-illegal-derivation-strings.hfst \
 					remove-OLang_ENG-strings.hfst    \
 					remove-OLang_FIN-strings.hfst    \
 					remove-OLang_NNO-strings.hfst    \
@@ -121,6 +120,7 @@ endif
 # And Xerox targets here:
 if CAN_XFST
 GT_FILTER_TARGETS+=\
+					remove-illegal-derivation-strings.xfst \
 					remove-OLang_ENG-strings.xfst    \
 					remove-OLang_FIN-strings.xfst    \
 					remove-OLang_NNO-strings.xfst    \
