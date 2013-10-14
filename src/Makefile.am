@@ -389,58 +389,36 @@ analyser-mt-gt-desc.sma.hfst: analyser-mt-gt-desc.tmp.hfst \
 					filters/reorder-semantic-tags.hfst \
 					filters/remove-deriv-strings-MT-sma.hfst \
 					filters/remove-sub-forms.hfst
-	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -2 $< \
-			-1 filters/remove-sub-forms.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/reorder-semantic-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/reorder-semantic-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/reorder-semantic-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/reorder-semantic-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-deriv-strings-MT-sma.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-dialect-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_INVERT) $(HFST_FLAGS) \
-		-o $@
+	$(AM_V_GEN)$(PRINTF) \
+			   "@bin\"filters/remove-dialect-tags.hfst\"     \
+			.o. @bin\"filters/extract-deriv-strings-MT-sma.hfst\"   \
+			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
+			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
+			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
+			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
+			.o. @bin\"filters/remove-sub-forms.hfst\"     \
+			.o. @bin\"$<\" \
+			;" \
+		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
+		> $@
 
 analyser-mt-gt-desc.smj.hfst: analyser-mt-gt-desc.tmp.hfst \
 					filters/remove-dialect-tags.hfst \
 					filters/reorder-semantic-tags.hfst \
 					filters/remove-deriv-strings-MT-sma.hfst \
 					filters/remove-sub-forms.hfst
-	$(AM_V_GEN)$(HFST_COMPOSE) $(HFST_FLAGS) -F -2 $< \
-			-1 filters/remove-sub-forms.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/reorder-semantic-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/reorder-semantic-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/reorder-semantic-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/reorder-semantic-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-deriv-strings-MT-sma.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_COMPOSE) $(HFST_FLAGS) -F \
-			-1 filters/remove-dialect-tags.hfst \
-		| $(HFST_MINIMIZE) $(HFST_FLAGS) \
-		| $(HFST_INVERT) $(HFST_FLAGS) \
-		-o $@
+	$(AM_V_GEN)$(PRINTF) \
+			   "@bin\"filters/remove-dialect-tags.hfst\"     \
+			.o. @bin\"filters/extract-deriv-strings-MT-sma.hfst\"   \
+			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
+			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
+			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
+			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
+			.o. @bin\"filters/remove-sub-forms.hfst\"     \
+			.o. @bin\"$<\" \
+			;" \
+		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
+		> $@
 
 
 # We need to add processing of language-specific tags in the generator:
