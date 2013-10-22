@@ -99,6 +99,7 @@ GT_FILTER_TARGETS+=\
 					remove-OLang_NOB-strings.hfst    \
 					remove-OLang_SME-strings.hfst    \
 					remove-OLang_SWE-strings.hfst    \
+					remove-OLang_UND-strings.hfst    \
 					extract-OLang_ENG-strings.hfst   \
 					extract-OLang_FIN-strings.hfst   \
 					extract-OLang_NNO-strings.hfst   \
@@ -127,6 +128,7 @@ GT_FILTER_TARGETS+=\
 					remove-OLang_NOB-strings.xfst    \
 					remove-OLang_SME-strings.xfst    \
 					remove-OLang_SWE-strings.xfst    \
+					remove-OLang_UND-strings.xfst    \
 					extract-OLang_ENG-strings.xfst   \
 					extract-OLang_FIN-strings.xfst   \
 					extract-OLang_NNO-strings.xfst   \
