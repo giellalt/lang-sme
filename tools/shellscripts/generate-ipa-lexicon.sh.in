@@ -64,10 +64,13 @@ for lang in $languages; do
 	# Extract lemmas:
 	cut -d':' -f 1 < $tts_lexicon.tmp.txt > $tts_lexicon.lemmas.txt
 	# Convert word forms to IPA:
-	$hfst_lookup -q $hyphenator < $tts_lexicon.wordforms.txt \
+	$hfst_lookup -q $hyphenator \
+	    < $tts_lexicon.wordforms.txt \
 	    | cut -f2 \
 	    | grep -v '^$' \
-	    | $hfst_lookup -q $ipa_converter \
+	    > $tts_lexicon.hyph.txt
+	$hfst_lookup -q $ipa_converter \
+	    < $tts_lexicon.hyph.txt \
 	    > $tts_lexicon.ipatmp.txt
 	# Remove empty lines (done separately to preserve easy identification of
 	# double IPA conversion/overgeneration, in the ipatmp file):
