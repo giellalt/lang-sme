@@ -24,8 +24,7 @@ SUBDIRS=. test
 #! 		  compile for other things
 GT_PHONETICS_MAIN=text2ipa-$(GTLANG).xfscript
 GT_PHONETICS_SUPPLEMENTS=text2ipa-fin.xfscript \
-						 text2ipa-nob.xfscript \
-						 text2ipa-eng.xfscript
+						 text2ipa-nob.xfscript
 
 ####### Automake targets: ########
 
@@ -47,14 +46,12 @@ endif # WANT_PHONETIC
 if WANT_PHONETIC
 if CAN_HFST
 GT_PHONETICS+=text2ipa-fin.hfst \
-			  text2ipa-nob.hfst \
-			  text2ipa-eng.hfst
+			  text2ipa-nob.hfst
 endif # CAN_HFST
 
 if CAN_XFST
 GT_PHONETICS+=text2ipa-fin.xfst \
-			  text2ipa-nob.xfst \
-			  text2ipa-eng.xfst
+			  text2ipa-nob.xfst
 endif # CAN_XFST
 endif # WANT_PHONETIC
 
