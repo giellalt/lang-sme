@@ -89,10 +89,9 @@ endif # WANT_OAHPA
 if CAN_XFST
 if WANT_PHONETIC
 GT_ANALYSERS_XFST+=
-GT_GENERATORS_XFST+=generator-tts-gt-norm_nonum_noabbr_nohyph_fin.xfst \
-					generator-tts-gt-norm_nonum_noabbr_nohyph_eng.xfst \
-					generator-tts-gt-norm_nonum_noabbr_nohyph_nob.xfst \
-					generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst
+GT_GENERATORS_XFST+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst \
+					generator-tts-gt-norm_nonum_noabbr_nohyph_fin.xfst \
+					generator-tts-gt-norm_nonum_noabbr_nohyph_nob.xfst
 endif # WANT_PHONETIC
 endif
 
@@ -102,7 +101,6 @@ if WANT_PHONETIC
 GT_ANALYSERS_HFST+=
 GT_GENERATORS_HFST+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst \
 					generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst \
-					generator-tts-gt-norm_nonum_noabbr_nohyph_eng.hfst \
 					generator-tts-gt-norm_nonum_noabbr_nohyph_nob.hfst
 endif # WANT_PHONETIC
 
@@ -341,37 +339,6 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_nob.xfst: \
 			  [ @\"filters/extract-OLang_NOB-strings.xfst\"   \
 			  | @\"filters/extract-OLang_NNO-strings.xfst\"   \
 			  | @\"filters/extract-OLang_SWE-strings.xfst\" ] \
-			.o. @\"$<\" \
-			.o. @\"filters/remove-nonfirst_infl_boundary-marks.xfst\" \
-			;\n\
-		 invert net\n\
-		 save stack $@\n\
-		 quit\n" | $(XFST) -q
-
-# The second step, to extract the strings that follow
-# ENG orthographic conventions for the stem (and SME in the inflections):
-generator-tts-gt-norm_nonum_noabbr_nohyph_eng.hfst: \
-					generator-tts-gt-norm_nonum_noabbr_nohyph.hfst \
-					filters/extract-OLang_ENG-strings.hfst         \
-					filters/remove-orig_lang-tags.hfst             \
-					filters/remove-nonfirst_infl_boundary-marks.hfst
-	$(AM_V_GEN)$(PRINTF) \
-			   "@bin\"filters/remove-orig_lang-tags.hfst\"     \
-			.o. @bin\"filters/extract-OLang_ENG-strings.hfst\"   \
-			.o. @bin\"$<\" \
-			.o. @bin\"filters/remove-nonfirst_infl_boundary-marks.hfst\" \
-			;" \
-		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
-		> $@
-
-generator-tts-gt-norm_nonum_noabbr_nohyph_eng.xfst: \
-					analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst  \
-					filters/extract-OLang_ENG-strings.xfst         \
-					filters/remove-orig_lang-tags.xfst             \
-					filters/remove-nonfirst_infl_boundary-marks.xfst
-	$(AM_V_GEN)$(PRINTF) "read regex \
-			    @\"filters/remove-orig_lang-tags.xfst\"     \
-			.o. @\"filters/extract-OLang_ENG-strings.xfst\" \
 			.o. @\"$<\" \
 			.o. @\"filters/remove-nonfirst_infl_boundary-marks.xfst\" \
 			;\n\
