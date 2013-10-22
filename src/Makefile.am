@@ -236,6 +236,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst: \
 					filters/remove-OLang_NNO-strings.hfst          \
 					filters/remove-OLang_NOB-strings.hfst          \
 					filters/remove-OLang_SWE-strings.hfst          \
+					filters/remove-OLang_UND-strings.hfst          \
 					filters/remove-orig_lang-tags.hfst             \
 					filters/remove-infl_boundary-marks.hfst
 	$(AM_V_GEN)$(PRINTF) \
@@ -245,6 +246,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst: \
 			.o. @\"filters/remove-OLang_NNO-strings.hfst\"  \
 			.o. @\"filters/remove-OLang_NOB-strings.hfst\"  \
 			.o. @\"filters/remove-OLang_SWE-strings.hfst\"  \
+			.o. @\"filters/remove-OLang_UND-strings.hfst\"  \
 			.o. @\"$<\" \
 			.o. @\"filters/remove-infl_boundary-marks.hfst\" \
 			;" \
@@ -258,6 +260,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst: \
 					filters/remove-OLang_NNO-strings.xfst         \
 					filters/remove-OLang_NOB-strings.xfst         \
 					filters/remove-OLang_SWE-strings.xfst         \
+					filters/remove-OLang_UND-strings.xfst         \
 					filters/remove-orig_lang-tags.xfst            \
 					filters/remove-infl_boundary-marks.xfst
 	$(AM_V_GEN)$(PRINTF) "read regex \
@@ -267,6 +270,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst: \
 			.o. @\"filters/remove-OLang_NNO-strings.xfst\"  \
 			.o. @\"filters/remove-OLang_NOB-strings.xfst\"  \
 			.o. @\"filters/remove-OLang_SWE-strings.xfst\"  \
+			.o. @\"filters/remove-OLang_UND-strings.xfst\"  \
 			.o. @\"$<\" \
 			.o. @\"filters/remove-infl_boundary-marks.xfst\" \
 			;\n\
