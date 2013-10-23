@@ -145,6 +145,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph.hfst: \
 					filters/remove-ABBR-strings.hfst               \
 					filters/remove-ACR-strings.hfst                \
 					filters/remove-illegal-derivation-strings.hfst \
+					filters/remove-lexsub-strings.hfst             \
 					filters/remove-PUNCT-strings.hfst              \
 					filters/remove-UseCirc-strings.hfst            \
 					filters/remove-RCmpnd-strings.hfst             \
@@ -169,6 +170,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph.hfst: \
 			.o. @\"filters/remove-RCmpnd-strings.hfst\"             \
 			.o. @\"filters/remove-Orth_Strd-strings.hfst\"          \
 			.o. @\"filters/remove-CLB-strings.hfst\"                \
+			.o. @\"filters/remove-lexsub-strings.hfst\"             \
 			.o. @\"filters/remove-sub-forms.hfst\"                  \
 			.o. @\"filters/remove-orthography-tags.hfst\"           \
 			.o. @\"filters/remove-Orth_Strd-strings.hfst\"          \
@@ -193,6 +195,7 @@ analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst: \
 					filters/remove-ABBR-strings.xfst               \
 					filters/remove-ACR-strings.xfst                \
 					filters/remove-illegal-derivation-strings.xfst \
+					filters/remove-lexsub-strings.xfst             \
 					filters/remove-PUNCT-strings.xfst              \
 					filters/remove-UseCirc-strings.xfst            \
 					filters/remove-RCmpnd-strings.xfst             \
@@ -217,6 +220,7 @@ analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst: \
 			.o. @\"filters/remove-RCmpnd-strings.xfst\"             \
 			.o. @\"filters/remove-Orth_Strd-strings.xfst\"          \
 			.o. @\"filters/remove-CLB-strings.xfst\"                \
+			.o. @\"filters/remove-lexsub-strings.xfst\"             \
 			.o. @\"filters/remove-sub-forms.xfst\"                  \
 			.o. @\"filters/remove-orthography-tags.xfst\"           \
 			.o. @\"filters/remove-Orth_Strd-strings.xfst\"          \
