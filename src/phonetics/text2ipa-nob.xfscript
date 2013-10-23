@@ -101,6 +101,8 @@ define Nas [ m | M | n | N | ŋ | Ŋ ] ;
 
 define Front [ e | i | æ | ø | y ] ;
 
+define ScandFront [ i | y | e i | ö | ä ] ;
+
 define WordBorder [ .#. | %# | %- ] ;
 
 define StressBorder [ WordBorder | %» ] ;
@@ -175,23 +177,76 @@ define slRule  s -> š || WordBorder _ l ;
 
 define snjRule s -> š || WordBorder _ n j ;
 
-define cRule1 c -> s || _ Front  ;
-define cRule2 c -> k ;
 
-define aaRule a a -> o o ;
+
+!!!!!! Scandinavian/North Germanic rules: !!!!!!
+
+define cRule1 c -> s || _ Front  ;
+define cRule2 c -> k, ç -> s ;
+
+!define aaRule a a -> o o ;
 
 define wRule w -> v ;
 
-define oRule o -> u || _ Cns [ Vow | .#. ] ;
+define VowHRule h -> 0 || \WordBorder _ \Vow ;
 
-define uRule u -> ü || _ Cns [ Vow | .#. ] ;
+define LongVowRule a a -> o o,
+                   a   -> a a,
+                   e   -> e e,
+                   é   -> e e,
+                   e u -> o y,
+                   i   -> i i,
+                   í   -> i i,
+                   o   -> u u,
+                   ó   -> u u,
+                   ú   -> u u,
+                   u   -> ʉ ʉ,
+                   ü   -> y y,
+                   y   -> y y,
+                   ý   -> y y,
+                   y e -> y y,
+                   ä   -> æ æ,
+                   ø   -> ø ø,
+                   ø e -> ø ø,
+                   ö   -> ø ø,
+                   å   -> o o
+                          || WordBorder Cns* _ [ .#.
+                                               | %>
+                                               | WordBorder
+                                               |   %^   Vow
+                                               | ( %^ ) Cns WordBorder
+                                               |        r d WordBorder
+                                               | ( %^ ) Cns %>
+                                               | ( %^ ) Cns ( %^ ) Vow
+                                               | ( %^ ) Cns ( %^ ) Vow ?* %> ] ;
 
-define kjRule k j -> ç || _ Vow ;
+define ÆRule æ -> æ æ, a e -> æ æ ;
+define auRule a u -> ø ʉ ;
+
+
+define kjRule k j -> ç, k %^ j -> ç || _ Vow ;
+define tjRule t j -> ç || WordBorder _ ;
 
 define gRule g -> 0 || _ j ;
 
-define sjRule s j -> š ;
+define gjRule g -> j ,
+              k -> ç || _ ScandFront ?* [ %> | .#. ] ;
 
+define sjRule s j -> š ;
+define shRule s h -> š || .#. _ ;
+
+define ndRule n d -> n n || Vow _ [ WordBorder | %> ] ;
+
+define rdRule r d -> r   || Vow _ [ WordBorder | %> ] ;
+
+define manRule1 a a -> a  || WordBorder m _ n [ WordBorder | %> ] ;
+define manRule2 n -> n n  || WordBorder m a _ [ WordBorder | %> ] ;
+
+define erRule   e -> æ || _ r ( %^ ) Cns [ WordBorder | %> ] ;
+
+
+
+!!!!!! Sámi rules: !!!!!!
 
 define StrongGrade    m %^ b     -> m m %^ b     ,
                       m %^ p     -> m m %^ p     ,
@@ -317,7 +372,7 @@ define StopCluster    k %^ c   -> k k %^ h t s || Vow _ Vow ,,
 define tkRule         t %^ k   -> t t %^ h k   || Vow _ Vow ;
 define tmRule         t %^ m   -> t t %^ m     || Vow _ Vow ;
 
-define 3rdSylld d -> đ || .#. Syll (Cns) Vow %^ _ Vow ;
+define 3rdSylld d -> đ || %> Syll (Cns) Vow %^ _ Vow ;
 # bo.ra.dit -> bo.ra.đih
 
 !Schwarules commented out
@@ -741,7 +796,6 @@ echo << And now we go for some OUTPUTFORMAT or another >>
 
 ! ... here outputformat is IPA:              
  define OUTPUTFORMAT a -> ɑ ,
-                     ç -> s ,
                      đ -> ð ,
                      é -> e e ,
                      í -> i i ,
@@ -783,6 +837,10 @@ define COLONLENGTH   ɑ ɑ -> ɑ ː        || \[a] _ .o.
                      i i -> i ː        || \[i] _ .o.
                      o o -> o ː        || \[o] _ .o.
                      u u -> u ː        || \[u] _ .o.
+                     ʉ ʉ -> ʉ ː        || \[ʉ] _ .o.
+                     y y -> y ː        || \[y] _ .o.
+                     æ æ -> æ ː        || \[æ] _ .o.
+                     ø ø -> ø ː        || \[ø] _ .o.
                      b b -> b ː        || \[b] _ .o.
                      β β -> β ː        || \[β] _ .o.
                      ɸ ɸ -> ɸ ː        || \[ɸ] _ .o.
@@ -799,6 +857,7 @@ define COLONLENGTH   ɑ ɑ -> ɑ ː        || \[a] _ .o.
                      ʎ ʎ -> ʎ ː        || \[ʎ] _ .o.
                      m m -> m ː        || \[m] _ .o.
                      n n -> n ː        || \[n] _ .o.
+                     ŋ ŋ -> ŋ ː        || \[ŋ] _ .o.
                      ɲ ɲ -> ɲ ː        || \[ɲ] _ .o.
                      p p -> p ː        || \[p] _ .o.
                      r r -> r ː        || \[r] _ .o.
@@ -859,13 +918,23 @@ read regex [
 .o. snjRule
 .o. cRule1
 .o. cRule2
-.o. aaRule
+!.o. aaRule
 .o. wRule
-.o. oRule
-.o. uRule
+.o. VowHRule
+.o. ÆRule
+.o. LongVowRule
+.o. auRule
 .o. kjRule
+.o. tjRule
 .o. gRule
+.o. gjRule
 .o. sjRule
+.o. shRule
+.o. ndRule
+.o. rdRule
+.o. manRule1
+.o. manRule2
+
 
 .o. StrongNasalClusters
 .o. olju
@@ -928,6 +997,7 @@ read regex [
 .o. COLONLENGTH
 !.o. COLONLENGTHSYLL
 .o. DummyDeletion
+.o. DerBorderSimplification
 .o. HyphenDeletion
 
 ] ;
@@ -991,15 +1061,25 @@ invert net
 !  H       ɥ    (turned down h)    palato-labial approximant
 !  j       j    palatal approximant
 !  
-!  Vowels
+!  Vowels - SAMPA:
 !                front   near-front    central   near-back   back
-!  close          i • y               1 • }                 M • u
-!  near-close              I • Y                    U
-!  close-mid      e • 2              @\ • 8                 7 • o
-!  mid                                  @            
-!  open-mid       E • 9               3 • 3\                V • O
-!  near-open        {                    6           
-!  open           a • &                                     A • Q
+!  close          i • y                1 • }                 M • u
+!  near-close              I • Y                     U
+!  close-mid      e • 2               @\ • 8                 7 • o
+!  mid                                   @            
+!  open-mid       E • 9                3 • 3\        z        V • O
+!  near-open        {                     6           
+!  open           a • &                                      A • Q
+
+!  Vowels - IPA:
+!                Front   Near-​front   Central     Near-​back   Back
+! Close           i • y                ɨ • ʉ                 ɯ • u
+! Near-close               ɪ • ʏ       ɪ̈ • ʊ̈          ʊ
+! Close-mid       e • ø                ɘ • ɵ                 ɤ • o
+! Mid             e̞ • ø̞                  ə                   ɤ̞ • o̞
+! Open-mid        ɛ • œ                ɜ • ɞ                 ʌ • ɔ
+! Near-open       æ                      ɐ
+! Open            a • ɶ                  ä                   ɑ • ɒ
 
 
 
