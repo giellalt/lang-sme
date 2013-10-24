@@ -86,7 +86,7 @@ define Cns [ b | c | č | ç | d | đ | f | g | h | j | k | l | m | n | ŋ |
              B | C | Č | Ç | D | Đ | F | G | H | J | K | L | M | N | Ŋ | 
              p | q | r | s | š | t | ŧ | þ | v | w | x | z | ž |   
              P | Q | R | S | Š | T | Ŧ | Þ | V | W | X | Z | Ž |
-             ɟ | ʎ | ʃ | 
+             ɟ | ʎ | ʃ | ɳ | β | ɸ | ð | ɲ | ʈ | l̥ | r̥ | m̥ | n̥ | ŋ̊ | v̥ |
              ː ] ;
 
 define Sgm [ Vow | Cns ] ;
@@ -171,7 +171,7 @@ echo << Rules >>
 
 ! Here comes the other rules
 
-define ijRule  i -> j || Vow _ ;
+define ijRule  i -> j || %> ?* Vow _ ;
 
 define slRule  s -> š || WordBorder _ l ;
 
@@ -184,18 +184,31 @@ define snjRule s -> š || WordBorder _ n j ;
 define cRule1 c -> s || _ Front  ;
 define cRule2 c -> k, ç -> s ;
 
-!define aaRule a a -> o o ;
+define aaRule a a -> o o ;
 
 define wRule w -> v ;
 
 define VowHRule h -> 0 || \WordBorder _ \Vow ;
 
-define LongVowRule a a -> o o,
-                   a   -> a a,
+define sjRule s    j ->    š ,
+              s %^ j -> %^ š ,
+              s  k j ->    š ;
+
+define skRule s k -> š || _ ScandFront ?* %> ;
+
+define gjRule g -> j ,
+              k -> ç || _ ScandFront ?* %> ;
+
+define kjRule k      j -> ç ,
+              k %^   j -> ç ,
+              k %^ k j -> ç %^ ç || _ Vow ;
+
+define LongVowRule a   -> a a,
                    e   -> e e,
                    é   -> e e,
                    e u -> o y,
                    i   -> i i,
+                   i e -> i i,
                    í   -> i i,
                    o   -> u u,
                    ó   -> u u,
@@ -210,39 +223,44 @@ define LongVowRule a a -> o o,
                    ø e -> ø ø,
                    ö   -> ø ø,
                    å   -> o o
-                          || WordBorder Cns* _ [ .#.
-                                               | %>
-                                               | WordBorder
-                                               |   %^   Vow
-                                               | ( %^ ) Cns WordBorder
-                                               |        r d WordBorder
-                                               | ( %^ ) Cns %>
-                                               | ( %^ ) Cns ( %^ ) Vow
-                                               | ( %^ ) Cns ( %^ ) Vow ?* %> ] ;
+                   || WordBorder \Vow* _ [ .#.
+                                         | %>
+                                         | WordBorder
+                                         |   %^   Vow
+                                         | ( %^ ) Cns WordBorder
+                                         |        r d WordBorder
+                                         | ( %^ ) Cns %>
+                                         | ( %^ ) Cns ( %^ ) Vow
+                                         | ( %^ ) Cns ( %^ ) Vow ?* %> ] ;
 
-define ÆRule æ -> æ æ, a e -> æ æ ;
+define ÆRule  æ   -> æ æ,
+              a e -> æ æ ;
 define auRule a u -> ø ʉ ;
 
 
-define kjRule k j -> ç, k %^ j -> ç || _ Vow ;
-define tjRule t j -> ç || WordBorder _ ;
+define tjRule t    j -> ç || WordBorder _ Vow ;
 
 define gRule g -> 0 || _ j ;
 
-define gjRule g -> j ,
-              k -> ç || _ ScandFront ?* [ %> | .#. ] ;
-
-define sjRule s j -> š ;
+define rsRule r    s ->    š ;
 define shRule s h -> š || .#. _ ;
 
-define ndRule n d -> n n || Vow _ [ WordBorder | %> ] ;
-
-define rdRule r d -> r   || Vow _ [ WordBorder | %> ] ;
+define ndRule n    d -> n    n,
+              n %^ d -> n %^ n   || Vow _ ( s ) [ WordBorder | %> ] ;
+define ldRule l    d -> l    l,
+              l %^ d -> l %^ l   || Vow _ ( s ) [ WordBorder | %> ] ;
+define rdRule r    d ->      r,
+              r %^ d ->   %^ r   || WordBorder [ [ Cns* Vow ]
+                                               - [ v e ] ] _ ?* %> ; ! Don't touch "verden"
+define rnRule r    n ->      ɳ,
+              r %^ n ->   %^ ɳ   || Vow _ ?* %> ;
+define rtRule r    t -> ʈ    ʈ,
+              r %^ t -> ʈ %^ ʈ   || Vow _ ( s ) [ WordBorder | %> ] ;
 
 define manRule1 a a -> a  || WordBorder m _ n [ WordBorder | %> ] ;
 define manRule2 n -> n n  || WordBorder m a _ [ WordBorder | %> ] ;
 
-define erRule   e -> æ || _ r ( %^ ) Cns [ WordBorder | %> ] ;
+define erRule   e -> æ || WordBorder Cns* _ r ;
 
 
 
@@ -735,7 +753,7 @@ define DiphthongShorteningIIIGr  i -> ĭ ,
                                  e -> ĕ ,
                                  u -> ŭ ,
                                  o -> ŏ 
-                                        || _ [e|a|o] 
+                                  || %> ?* _ [e|a|o] 
                                              [ [ h h
                                                | m m
                                                | n n
@@ -754,13 +772,13 @@ define DiphthongShorteningSecLng  i e -> ĭ ĕ ,
                                   e a -> ĕ ă ,
                                   u o -> ŭ ŏ ,
                                   o a -> ŏ ă 
-                                             || _ Cns* %^SL ;
+                                             || %> ?* _ Cns* %^SL ;
 
 define DiphthongShorteningAllegro  i e -> ĭ e ,
                                    e a -> ĕ a ,
                                    u o -> ŭ o ,
                                    o a -> ŏ a 
-                                              || _ Cns* %^ Cns* [e|o] ;
+                                             || %> ?* _ Cns* %^ Cns* [e|o] ;
 echo << Dialectal rules >>
 
 !define dhRule đ -> r ; ! Moving from Karesuando to Kautokeino
@@ -846,6 +864,7 @@ define COLONLENGTH   ɑ ɑ -> ɑ ː        || \[a] _ .o.
                      ɸ ɸ -> ɸ ː        || \[ɸ] _ .o.
                      ɟ ɟ -> ɟ ː        || \[ɟ] _ .o.
                      c c -> c ː        || \[c] _ .o.
+                     ç ç -> ç ː        || \[ç] _ .o.
                      d d -> d ː        || \[d] _ .o.
                      ð ð -> ð ː        || \[ð] _ .o.
                      f f -> f ː        || \[f] _ .o.
@@ -859,10 +878,12 @@ define COLONLENGTH   ɑ ɑ -> ɑ ː        || \[a] _ .o.
                      n n -> n ː        || \[n] _ .o.
                      ŋ ŋ -> ŋ ː        || \[ŋ] _ .o.
                      ɲ ɲ -> ɲ ː        || \[ɲ] _ .o.
+                     ɳ ɳ -> ɳ ː        || \[ɳ] _ .o.
                      p p -> p ː        || \[p] _ .o.
                      r r -> r ː        || \[r] _ .o.
                      s s -> s ː        || \[s] _ .o.
                      t t -> t ː        || \[t] _ .o.
+                     ʈ ʈ -> ʈ ː        || \[ʈ] _ .o.
                      ʃ ʃ -> ʃ ː        || \[ʃ] _ .o.
                      v v -> v ː        || \[v] _ .o.
                      l̥ l̥ -> l̥ ː        || \[l̥] _ .o.
@@ -913,29 +934,36 @@ read regex [
 .o. DerBorderSimplification
 
 .o. ijRule
-
 .o. slRule
 .o. snjRule
+
+! North Germanic rules:
 .o. cRule1
 .o. cRule2
-!.o. aaRule
+.o. aaRule
 .o. wRule
 .o. VowHRule
 .o. ÆRule
-.o. LongVowRule
-.o. auRule
-.o. kjRule
-.o. tjRule
-.o. gRule
-.o. gjRule
 .o. sjRule
+.o. kjRule
+.o. skRule
+.o. gjRule
+.o. auRule
+.o. gRule
+.o. tjRule
+.o. rsRule
 .o. shRule
 .o. ndRule
+.o. ldRule
 .o. rdRule
+.o. rnRule
+.o. rtRule
+.o. LongVowRule
 .o. manRule1
 .o. manRule2
+.o. erRule
 
-
+! North Sámi rules:
 .o. StrongNasalClusters
 .o. olju
 .o. StrongGrade
