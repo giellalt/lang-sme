@@ -27,8 +27,8 @@ cat dev/syntestCG_result.txt | sed 's/ $/¢/' | tr -d "\n" | sed 's/¢-/ /g' | t
 echo "Antall uten syntag:" >> dev/syntestCG.txt
 cat dev/synsortedtestdis | sed 's/"</¢/' | tr "\n" " " | tr "¢" "\n" | egrep -v '(@|CLB)' | wc -l >> dev/syntestCG.txt
 echo " " >> dev/syntestCG.txt
-echo "Disse har samme morfologisk analyse, men ikke samme syntagg" >> dev/syntestCG.txt
-cat dev/syntestCG_result.txt | sed 's/ $/¢/' | tr -d "\n" | sed 's/¢-/ /g' | tr "¢" "\n" | grep '\-\-' | sed 's/ -->//' | tr "\t" "\n" | cut -d "@" -f1 | sed 's/ $//' | uniq >> dev/syntestCG.txt
+echo "Disse har samme morfologisk analyse, men ikke samme syntag" >> dev/syntestCG.txt
+cat dev/syntestCG_result.txt| cut -d "@" -f1 | sed 's/ $/¢/' | tr -d "\n" | sed 's/¢-/ /g' | tr "¢" "\n" |grep '\-\-' |sed 's/ -->//' | tr "\t" "\n" | uniq | sed 's/ $//' | uniq | sed 's/^/€/' | sed 's/€"/"/' | tr "\n" " " | tr "€" "\n" | grep -v '".*".*".*"' >> dev/syntestCG.txt
 echo " " >> dev/syntestCG.txt
 echo "Gullstandarden inneholder analyser som ikke finnes i den nye analysen:" >> dev/syntestCG.txt
 cat dev/syntestCG_result.txt | grep '^<' | perl -pe 's/(TV|IV|G3|V\*|V\*\*) //' | cut -d '"' -f3 | rev | awk -F' ' '{print $1" "$2}' | rev | sort | uniq -c | sort -nr >> dev/syntestCG.txt
