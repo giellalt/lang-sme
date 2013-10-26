@@ -23,7 +23,7 @@ echo "Antall syntagger i gullkorpuset:" > dev/syntestCG.txt
 cat $GTHOME/gt/sme/dev/synsortedgullkorpus | grep "@" | wc -l >> dev/syntestCG.txt
 echo " " >> dev/syntestCG.txt
 echo "Antall med samme morfologisk analyse, men annen syntag enn gullstandard:" >> dev/syntestCG.txt
-cat dev/syntestCG_result.txt | sed 's/ $/¢/' | tr -d "\n" | sed 's/¢-/ /g' | tr "¢" "\n" | grep '\-\-' | sed 's/ -->//' | tr "\t" "\n" | cut -d "@" -f1 | sed 's/ $//' | uniq | tr "\n" " " | tr "<" "\n" | grep -v '".*".*".*"' | wc -l >> dev/syntestCG.txt
+cat dev/syntestCG_result.txt | sed 's/ $/¢/' | tr -d "\n" | sed 's/¢-/ /g' | tr "¢" "\n" | grep '\-\-' | sed 's/ -->//' | tr "\t" "\n" | cut -d "@" -f1 | sed 's/ $//' | uniq | tr "\n" " " | tr "<" "\n" | grep -v '".*".*".*"' | grep '"' | wc -l >> dev/syntestCG.txt
 echo "Antall uten syntag:" >> dev/syntestCG.txt
 cat dev/synsortedtestdis | sed 's/"</¢/' | tr "\n" " " | tr "¢" "\n" | egrep -v '(@|CLB)' | wc -l >> dev/syntestCG.txt
 echo " " >> dev/syntestCG.txt
