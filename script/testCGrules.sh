@@ -19,7 +19,10 @@ perl $GTHOME/gt/script/sort-cg-cohort.pl $GTHOME/gt/sme/dev/cleangullkorpus.dis.
 diff -w $GTHOME/gt/sme/dev/sortedgullkorpus $GTHOME/gt/sme/dev/sortedtestdis > $GTHOME/gt/sme/dev/testCG_result.txt
 
 # Antall ulike linjer:
-echo "Antall disambiguert annerledes enn gullstandard:" > dev/testCG.txt
+echo "Antall ord i gullkorpuset:" > dev/testCG.txt
+grep '"<' dev/sortedgullkorpus | wc -l >> dev/testCG.txt
+echo " " >> dev/testCG.txt
+echo "Antall disambiguert annerledes enn gullstandard:" >> dev/testCG.txt
 cat dev/testCG_result.txt | grep '^<' | wc -l >> dev/testCG.txt
 echo "Antall ikke disambiguert eller uriktig disambiguert:" >> dev/testCG.txt
 cat dev/testCG_result.txt | grep '^>' | wc -l >> dev/testCG.txt
