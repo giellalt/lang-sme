@@ -606,6 +606,7 @@ LIST PLACE-ADV =  "davá#bealde" "mátta#bealde" "nuortta#bealde" "oarje#bealde"
 
 LIST TIME-ADVL = "dalle" "diibmá" "dolin" "dovle" "duvle" "eske" "gieskat" "ikte" "ovdal" ("ovdditbeaivi" Gen) ("vássánáigi" Loc) ("boaresáigi" Gen) "dál" "ihttin" "odne" "otne" ("boahtteáigi" Loc) ("boahtteáigi" Gen)  ;
 
+LIST TIME-ADV = (Adv Sem/Time) ;
 
 
 LIST DOPPE = "badjin" "bajil" "dakko" "dá" "dákko" "dáppe" "diekko" "dieppe" "do" "dokko" "doppe" "duo" "duokko" "duoppe" "olgun" ;
@@ -651,7 +652,7 @@ LIST GRADE-ADV =  "áibbas" "beare" ("eanet" Adv) "erenoamán" "erenoamáš" "hi
 LIST BUOT = "buot" "gait" "gaitin" "gaitdivnnat" "visot" ;
 
 
-LIST EASKKA = "easkka" ; 
+LIST EASKKA = "easkka" ("easka" Adv) ; 
 
 LIST ADV-NOT-ARG = "aiddo" "ain" "aivve" "albma" "aŋkke" "álggos" "bái#fáhkka" "beanta" "beare" ;
 
@@ -1071,6 +1072,13 @@ MAP:>ntittel (@>N) TARGET TIME-N + (Sg Nom) - Coll OR (Sem/Hum Sg Nom) - Coll (1
 MAP:>veara (@>A) TARGET Gen  (1 ("veara" Nom))  ;
 MAP:>nAttrCoor (@>N) TARGET Attr (1 CC LINK 1 @>N)  ;
 
+LIST PREGEN = "álggogeahčen" "beallemuttus" "beallemuddu" ("bealli" N Sg Loc) "gaskamuddu"  "gaskkamuddu" ("gaskavuohta" N Sg Loc) "loahpageahčen" ("miella" N Sg Loc) "oktavuohta" "ovttasbargu" ;
+
+
+MAP:>NTime (@>N) TARGET Gen IF (*-1 BOC BARRIER Pr)(NEGATE -1 Num)(0 TIME-N)(1 PREGEN);
+	#$ Gursa bistá miessemánu beallemuddui.	
+
+
 
 MAP:pron< (@Pron<) (Pl Acc) (-1 ("mii" Pron)) ;
 MAP:pron< (@Pron<) (Sg Com) (0 HUMAN LINK -1 (Pers Du1) OR (Pers Du2) OR (Pers Du1)) ;
@@ -1121,7 +1129,26 @@ MAP:r292 (@APP-Pron<) TARGET (N Acc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR
 MAP:r293 (@APP-Pron<) TARGET (N Acc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR (N Nom) LINK -1 (Pron Acc) LINK NOT *-1 COMMA BARRIER APP-BOUNDARY OR CC)(1 COMMA LINK 1 S-BOUNDARY) ;	
 	#$ Oidnet go Mihkkala, min nuoramus bártni?
 	#$ Mon oainnán fierpmi, su mearkka, ja dieđán ahte Spider-Man lea leamaš das.	
+
 		
+MAP:r244 (@APP-ADVL<) TARGET (N Loc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC OR ADVLCASE LINK -1 DOPPE)(1 EOS) ;	
+MAP:r245 (@APP-ADVL<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 DOHKO  LINK *-1 BOS BARRIER APP-BOUNDARY)(1 COMMA) ;
+MAP:r246 (@APP-Pron<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 DOHKO)(1 EOS) ;
+MAP:r247 (@APP-Pron<) TARGET (N Ill) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 DOHKO)(1 COMMA LINK 1 S-BOUNDARY OR CC) ;
+
+MAP:r248 (@APP-ADVL<) TARGET (N Gen) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 TIME-N OR TIME-ADV)(0 TIME-N + Gen)(1 EOS); 	
+	#$ Mun vuolggán ihttin, bearjadaga.
+
+MAP:appAdvlAcc (@APP-ADVL<) TARGET (Num Acc) IF (*-1 COMMA BARRIER APP-BOUNDARY OR CC LINK -1 TIME-N OR TIME-ADV)(1 TIME-N + Gen LINK 1 EOS); 	
+	#$ Doppe son orui guhká, vihtta jagi.
+	
+MAP:r249 (@APP-ADVL<) TARGET Pr IF (*-1 COMMA BARRIER NOT-ADV LINK -1 TIME-ADV OR TIME-N)(*1 (N Gen) OR (Pers Gen) BARRIER NOT-NPMOD LINK 1 EOS);	
+MAP:r250 (@APP-ADVL<) TARGET Pr IF (*-1 COMMA BARRIER NOT-ADV LINK -1 TIME-ADV OR TIME-N LINK -1 BOS)(*1 (N Gen) OR (Pers Gen) BARRIER APP-BOUNDARY OR CC LINK 1 COMMA);	
+	#$ Dolin, ovdal soađi, olbmot lávejedje vuovdit joŋaid. 
+	
+MAP:r251 (@APP-ADVL<) TARGET (Po) IF (-1 Gen LINK *-1 COMMA BARRIER NOT-ADV LINK -1 TIME-ADV OR TIME-N LINK -1 BOS)(1 COMMA);	
+MAP:r252 (@APP-ADVL<) TARGET (Po) IF (-1 Gen LINK *-1 COMMA BARRIER NOT-ADV LINK -1 TIME-ADV OR TIME-N)(1 EOS);	
+	#$ Daid sii geavahedje guhkit, gitta 1960-logu rádjai.		
 
 SET NOT-NP = VFIN-NOT-NEG OR ConNeg OR Inf OR Pcle OR Interj OR CS ;
 
@@ -1272,6 +1299,9 @@ MAP:Gallespred> (@SPRED>) TARGET ("galle" Num Nom) (*-1 BOS BARRIER NOT-ADV) ;
 
 MAP:spredSg> (@SPRED>) TARGET ("mii" Sg Nom) (*1 (Sg Nom) BARRIER NOT-NPMOD LINK 1 COPULAS) ;
 
+MAP:r492 (@SPRED>) TARGET (Interr Gen) IF (NEGATE 0 ("mii"))(NEGATE *1 A OR N BARRIER NOT-NPMOD) (NEGATE *1 NOT-AUX-V BARRIER S-BOUNDARY);
+	#$ Gean dat lea?
+
 
 MAP:spredSg> (@SPRED>) TARGET (Sg Nom) (1 (Sg Nom) OR SGPRON + Nom OR (Indef Nom) LINK 1 COPULAS) ;
 MAP:spredSg> (@SPRED>) TARGET (A Sg Nom) (*1 COPULAS + FMAINV BARRIER SV-BOUNDARY OR COMMA OR CC LINK NOT 1 A) ;
@@ -1323,11 +1353,14 @@ LIST ADVL = Adv Ill Com Loc Po Pr ;
 
 SET MOD-ADV = DUSSE OR ("njuolga") OR ("njuolgga") OR EASKKA OR ("gitta") ;
 
-MAP:f<advl (@-F<ADVL) TARGET ADVL - MO - S-BOUNDARY OR TIME-N + Gen OR (Sem/Route Gen) (*-1 SYN-V - VGen - VAbess BARRIER SV-BOUNDARY OR CS) ;
+MAP:f<advl (@-F<ADVL) TARGET ADVL - MO - S-BOUNDARY OR TIME-N + Gen OR (Sem/Route Gen) (*-1 SYN-V - VGen - VAbess BARRIER SV-BOUNDARY OR CS)(NEGATE 0 DUSSE OR EASKKA) ;
 	#$ Min mielas goit lea veara jurddašit nissongova birra mii boahtá ovdan jearahallamiin.
 
 MAP:fadvl> (@-FADVL>) TARGET ADVL - MO - S-BOUNDARY OR TIME-N + Gen OR (Sem/Route Gen)(NEGATE *-1 FMAINV BARRIER S-BOUNDARY OR CS)(*1 SYN-V - VGen - VAbess BARRIER SV-BOUNDARY OR CS OR FMAINV) ;
 	#$ Anán buorebun odne vuolgit go ihttážii vuordit.
+
+MAP:advl> (@ADVL>) TARGET ADVL (NOT *-1 FMAINV)(*1 FMAINV) ; 
+	#$ Dál de viimmat asttan lohkat reivve.
 
 	# Accusatives
 
@@ -1456,6 +1489,10 @@ MAP:spred>Ess (@SPRED>) TARGET (N Ess) OR (A Ess) IF (*1 FMAINV + IV OR ("bargat
 MAP:opred>Ess (@OPRED>) TARGET (N Ess) OR (A Ess) IF (*1 FMAINV + TRANS-V BARRIER SV-BOUNDARY);
 #MAP:<spredEss (@<SPRED) TARGET (A Ess) IF (*-1 FMAINV BARRIER SV-BOUNDARY);
 #MAP:spred>Ess (@SPRED>) TARGET (A Ess) IF (*1 FMAINV BARRIER SV-BOUNDARY);
+
+
+MAP:>advl (@>ADVL) TARGET Adv IF (0 DUSSE  OR EASKKA)(*1 @ADVL BARRIER NOT-NPMOD);
+	#$ Jus in leat váiban, de manan nohkkat easkka gaskaija.
 
 MAP (@HNOUN) TARGET N (NEGATE *0 REAL-V) ;
 #$ Fiskes, rukses, alit, ruoná ja muđui buotlágaš ivnnit.
