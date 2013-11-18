@@ -144,7 +144,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph.hfst: \
 					filters/remove-sub-forms.hfst                  \
 					filters/remove-ABBR-strings.hfst               \
 					filters/remove-ACR-strings.hfst                \
-					filters/remove-illegal-derivation-strings.hfst \
+				    filters/remove-derivation-strings.hfst         \
 					filters/remove-lexsub-strings.hfst             \
 					filters/remove-PUNCT-strings.hfst              \
 					filters/remove-UseCirc-strings.hfst            \
@@ -164,7 +164,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph.hfst: \
 			.o. @\"filters/remove-usage-tags.hfst\"                 \
 			.o. @\"filters/remove-ABBR-strings.hfst\"               \
 			.o. @\"filters/remove-ACR-strings.hfst\"                \
-			.o. @\"filters/remove-illegal-derivation-strings.hfst\" \
+			.o. @\"filters/remove-derivation-strings.hfst\"         \
 			.o. @\"filters/remove-PUNCT-strings.hfst\"              \
 			.o. @\"filters/remove-UseCirc-strings.hfst\"            \
 			.o. @\"filters/remove-RCmpnd-strings.hfst\"             \
@@ -194,7 +194,7 @@ analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst: \
 					filters/remove-sub-forms.xfst                  \
 					filters/remove-ABBR-strings.xfst               \
 					filters/remove-ACR-strings.xfst                \
-					filters/remove-illegal-derivation-strings.xfst \
+				    filters/remove-derivation-strings.xfst         \
 					filters/remove-lexsub-strings.xfst             \
 					filters/remove-PUNCT-strings.xfst              \
 					filters/remove-UseCirc-strings.xfst            \
@@ -214,7 +214,7 @@ analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst: \
 			.o. @\"filters/remove-usage-tags.xfst\"                 \
 			.o. @\"filters/remove-ABBR-strings.xfst\"               \
 			.o. @\"filters/remove-ACR-strings.xfst\"                \
-			.o. @\"filters/remove-illegal-derivation-strings.xfst\" \
+			.o. @\"filters/remove-derivation-strings.xfst\"         \
 			.o. @\"filters/remove-PUNCT-strings.xfst\"              \
 			.o. @\"filters/remove-UseCirc-strings.xfst\"            \
 			.o. @\"filters/remove-RCmpnd-strings.xfst\"             \
