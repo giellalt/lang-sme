@@ -6,13 +6,13 @@ cat $GTBIG/gt/sme/corp/testkorpus.txt $GTBIG/gt/sme/corp/divgullkorpus.txt | pre
 
 # Fjerner semantiske tagger, # osv:
 
-cat $GTHOME/gt/sme/dev/syntestdis | perl -pe 's/(Sem\/Lang|Sem\/Money|Sem\/Ani|Sem\/Body|Sem\/Build|Sem\/Clth|Sem\/Edu|Sem\/Event|Sem\/Fem|Sem\/Food|Sem\/Group|Sem\/Hum|Sem\/Mal|Sem\/Measr|Sem\/Obj|Sem\/Org|Sem\/Plant|Sem\/Plc|Sem\/Route|Sem\/Sur|Sem\/Time|Sem\/Txt|Sem\/Veh|Sem\/Wpn|Sem\/Wthr|Sem\/Mat|Sem\/Semcon|Sem\/Ctain|Sem\/Date|Sem\/Act|Allegro|v1|v2|v3|v4|<vdic>) //g' | tr -d "#" > $GTHOME/gt/sme/dev/syncleantestdis
+cat $GTHOME/gt/sme/dev/syntestdis | perl -pe 's/(Sem\/Lang|Sem\/Money|Sem\/Ani|Sem\/Body|Sem\/Build|Sem\/Clth|Sem\/Edu|Sem\/Event|Sem\/Fem|Sem\/Food|Sem\/Group|Sem\/Hum|Sem\/Mal|Sem\/Measr|Sem\/Obj|Sem\/Org|Sem\/Plant|Sem\/Plc|Sem\/Route|Sem\/Sur|Sem\/Time|Sem\/Txt|Sem\/Veh|Sem\/Wpn|Sem\/Wthr|Sem\/Mat|Sem\/Semcon|Sem\/Ctain|Sem\/Date|Sem\/Act|Allegro|v1|v2|v3|v4|v5|v6|v7|v8|<vdic>) //g' | tr -d "#" > $GTHOME/gt/sme/dev/syncleantestdis
 
 # Sorterer alfabetisk inne i cohortene
 perl $GTHOME/gt/script/sort-cg-cohort.pl $GTHOME/gt/sme/dev/syncleantestdis | uniq > $GTHOME/gt/sme/dev/synsortedtestdis
 
 # Henter gullstandarder, fjerner semantiske tagger, # osv :
-cat $GTBIG/gt/sme/corp/correct/testkorpus.dis.corr.txt $GTBIG/gt/sme/corp/correct/divgullkorpus.dis.corr.txt | perl -pe 's/(Sem\/Lang|Sem\/Money|Sem\/Ani|Sem\/Body|Sem\/Build|Sem\/Clth|Sem\/Edu|Sem\/Event|Sem\/Fem|Sem\/Food|Sem\/Group|Sem\/Hum|Sem\/Mal|Sem\/Measr|Sem\/Obj|Sem\/Org|Sem\/Plant|Sem\/Plc|Sem\/Route|Sem\/Sur|Sem\/Time|Sem\/Txt|Sem\/Veh|Sem\/Wpn|Sem\/Wthr|Sem\/Mat|Sem\/Semcon|Sem\/Ctain|Sem\/Date|Sem\/Act|Allegro|v1|v2|v3|v4|<vdic>) //g'  > $GTHOME/gt/sme/dev/syncleangullkorpus.dis.corr.txt
+cat $GTBIG/gt/sme/corp/correct/testkorpus.dis.corr.txt $GTBIG/gt/sme/corp/correct/divgullkorpus.dis.corr.txt | perl -pe 's/(Sem\/Lang|Sem\/Money|Sem\/Ani|Sem\/Body|Sem\/Build|Sem\/Clth|Sem\/Edu|Sem\/Event|Sem\/Fem|Sem\/Food|Sem\/Group|Sem\/Hum|Sem\/Mal|Sem\/Measr|Sem\/Obj|Sem\/Org|Sem\/Plant|Sem\/Plc|Sem\/Route|Sem\/Sur|Sem\/Time|Sem\/Txt|Sem\/Veh|Sem\/Wpn|Sem\/Wthr|Sem\/Mat|Sem\/Semcon|Sem\/Ctain|Sem\/Date|Sem\/Act|Allegro|v1|v2|v3|v4|v5|v6|v7|v8|<vdic>) //g'  > $GTHOME/gt/sme/dev/syncleangullkorpus.dis.corr.txt
 
 # Sorterer alfabetisk inne i cohortene
 perl $GTHOME/gt/script/sort-cg-cohort.pl $GTHOME/gt/sme/dev/syncleangullkorpus.dis.corr.txt | uniq > $GTHOME/gt/sme/dev/synsortedgullkorpus 
