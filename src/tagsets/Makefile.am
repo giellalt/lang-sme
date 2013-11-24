@@ -46,14 +46,14 @@ GT_REGEX_SRCS=$(GT_TAGSET_SRCS)
 ####### HFST build rules: ########
 
 # Convert GT-tags to Apertium-tags:
-apertiumtags.hfst.txt: ../filters/gttags.hfst.txt
+apertiumtags.txt: ../filters/gttags.txt
 	$(AM_V_GEN)tr -d '+' < $< \
 		| tr '#' '+' \
 		| tr '/[:upper:]' '_[:lower:]' \
 		| awk '{print "%<"$$0"%>"}' > $@
 
 # Generate relabel file for replacing GT with Apertium tags:
-apertium.relabel: gttags.hfst.txt apertiumtags.hfst.txt
+apertium.relabel: ../filters/gttags.txt apertiumtags.txt
 	$(AM_V_GEN)paste $^ | tr -d '%' > $@
 	$(AM_V_GEN)printf "#\t+\n" >> $@
 
