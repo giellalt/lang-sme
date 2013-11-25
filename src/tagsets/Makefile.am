@@ -60,7 +60,7 @@ apertium.relabel: ../filters/gttags.txt apertiumtags.txt
 # The regex generating rule isn't used for hfst, but the target below can be
 # a useful reference for future Xerox relabeling targets.
 ## Generate regex for replacing GT with Apertium tags:
-#apertium.regex: gttags.hfst.txt apertiumtags.hfst.txt
+#apertium.regex: ../filters/gttags.txt apertiumtags.txt
 #	$(AM_V_GEN)paste $^ \
 #		| awk '{print $$0","}' \
 #		| sed 's/_/%_/g' \
