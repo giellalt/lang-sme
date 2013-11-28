@@ -3133,7 +3133,7 @@ ADD:real-double-cons (&*real-double-cons) TARGET UNLIKELY-REAL-DOUBLE-CONS ;
 
 
 
-ADD:rađastaddat (&real-rađastaddat) TARGET ("ráđastaddat") OR ("ráđistit" V* IV Der/adda) IF (*0 (Nom) LINK 0 Sem/Hum OR Sem/Mal OR Sem/Fem OR Sur Or  Pers OR Dem BARRIER GRAMCHK-S-BOUNDARY )  (*0 (N Acc) LINK 0 BEDCLOTHES OR CLOTHES OR ("sávdnji") BARRIER GRAMCHK-S-BOUNDARY )  ;
+ADD:rađastaddat (&real-rađastaddat) TARGET ("ráđastaddat") OR ("ráđistit" V* IV Der/adda) IF (*0 (Nom) BARRIER GRAMCHK-S-BOUNDARY LINK 0 Sem/Hum OR Sem/Mal OR Sem/Fem OR Sur Or  Pers OR Dem)(*0 (N Acc) BARRIER GRAMCHK-S-BOUNDARY LINK 0 BEDCLOTHES OR CLOTHES OR ("sávdnji"))  ;
 	## Bengtsson ráđastattai sávnnjiid.
 	## Bengtsson ráđástattai sávnnjiid.
 	#$ Bengtsson ráđástattai gerresiid.
@@ -3913,7 +3913,7 @@ LIST PO-A = "olgešbeallái" "guovddáš" "gurutbeale" "gurutbeali" "gurutbeall�
 
 LIST PO-CS = "mađe" "mađi" ;
 
-SETPARENT Gen TO (*1 Po LINK 0 ONLY-PO BARRIER GRAMCHK-S-BOUNDARY);
+SETPARENT Gen TO (*1 Po  BARRIER GRAMCHK-S-BOUNDARY LINK 0 ONLY-PO);
     # dan rájes
 SETPARENT Gen TO (*1C Po BARRIER GRAMCHK-S-BOUNDARY);
 	# this rule depends on good disambiguation (specific Po rules for the disambiguator)
@@ -4120,7 +4120,12 @@ ADD:mearridit-not-meannudit (&lex-mearridit-not-meannudit) TARGET ("meannudit") 
 	
 	# missing conneg after neg
 	
-	ADD:missing-conneg-after-neg (&missing-conneg-after-neg) TARGET	Neg (NOT 1 EOS)(NEGATE *1 ConNeg BARRIER Neg OR S-BOUNDARY);
+	ADD:missing-conneg-after-neg (&missing-conneg-after-neg) TARGET	Neg - Foc/ge (NOT 1 EOS)(NEGATE *1 ConNeg BARRIER Neg OR S-BOUNDARY)(NEGATE *1 COMMA BARRIER VFIN);
+
+	#$Dál galge lerat nu seammaláganat go vejolaš albma lottiid. Eai dušše olggosoaidnit ráhkadettiin, muhto maiddai čázis ii galgan čohkamis oaidnit goal lea ealli loddi ja goal lea čohkanloddi, dahje hápma nu go muhtimat dadjet.
+	#$Jus lei loddedahkki duhttavaš, váldii gáddai ja bihkkadii hámaid. Jus ii, fearai ja čuohpadii son dassá go lei duhttavaš.
+	#$Dalle dihte buohkat čilás ahte dál lea áigi náđustit, iige lihkkasit.
+	#$Ii, son bidja iežas moni eara loddiid beassái.
 
 	
 	# soaitit + inf or PrcPrf
@@ -4160,6 +4165,7 @@ ADD:add-go (&syn-add-go) TARGET GRAMCHK-VFIN IF (*-1 INDIRECT-SPEECH-V BARRIER G
 	
     
 ADD:aidna (&syn-not-aidna) TARGET ("áidna") IF (1 Rel);
+#COPY:syn-not-aidna ("go" &CORRECT) EXCEPT (&syn-not-aidna) TARGET (A Attr &syn-not-aidna) ;
     ## Áidna gii váilu dán govas lea bussevuoddji.	Ii váillo eará go bussevuoddji dán govas. Váilu dušše bussevuoddji dán govas.
     #$ Dat lea áidna vejolašvuohta, mii gávdno.
     
@@ -4741,8 +4747,8 @@ ADD:attr_not_pred (&msyn-attr_not_pred) TARGET (A) IF (NOT 0 Attr OR Gen OR @<SP
     # verb subcategorization Actio vs. Inf 
     # ------------------------------------
 ADD:not_actio (&syn-not_actio) TARGET (Actio Ess) (NEGATE *-1  ACTIOESS-V OR ("leat") OR ("orrut")) (NEGATE *1 ACTIOESS-V ) (NEGATE *-1 WORD - GRAMCHK-VFIN BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN)(NEGATE *1 WORD - GRAMCHK-VFIN BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN);
-COPY:syn-not_actio (Inf &CORRECT) EXCEPT (Actio Ess &syn-not_inf) TARGET (V syn-not_actio) ; #Duommá??
-    ## Lávejit nu máilmmi fiidnát orrome diet doahpagat.  Lávejit nu máilmmi fiidnat orrut diet doahpagat. === Duommá???
+COPY:syn-not_actio (Inf &CORRECT) EXCEPT (Actio Ess &syn-not_inf) TARGET (V syn-not_actio) ; 
+    ## Lávejit nu máilmmi fiidnát orrome diet doahpagat.  Lávejit nu máilmmi fiidnát orrut diet doahpagat.
     #$ Lodejeaddjis fertejit álot leat čalmmit čuovvumen juoke lihkkastaga, sihke guhkkin ja lahkkosis
     #$ Dalle lávejedje oidnot ádját lunttaiguin beaivvi ovddas čohkadeamen ja fearrame muoras čohkkánlottiid.
     # for linda: how many occurrences are caught by this rule?
@@ -4752,11 +4758,14 @@ ADD:not_inf (&syn-not_inf) TARGET ("leat") IF (*-1 LOC-ACTIO-ACC-V BARRIER NOT-A
     ##   Mun lean buorre olmmoš geas eadni, áhčči ja beana ja visot iežá alit olbmot máilmmis lohket leat váivvi.
     
 ADD:not_inf (&syn-not_inf) TARGET ("leat") IF (*-1 LOC-ACTIO-ACC-V LINK *1 NP-HEAD + Loc BARRIER GRAMCHK-S-BOUNDARY)(*1 N LINK 0 Acc OR Gen BARRIER GRAMCHK-NPNH) ;
-COPY:syn-not_inf (Ind Prs Sg3 &CORRECT) EXCEPT (Inf &syn-not_inf) TARGET (V &syn-not_inf) ; #Duommá??
-    ## Eadni balai mánás leat golgodávdda.
+COPY:syn-not_inf (Actio Ess &CORRECT) EXCEPT (Inf &syn-not_inf) TARGET (V &syn-not_inf) ; #Duommá??
+    ## Eadni balai mánás leat golgodávdda. Eadni balai mánás leahkime golgodávdda. Eadni balai mánás leamen golgodávdda.
     ## Eadni balai golgodávdda mánás leat.
     # this rule doesn't get applied because leat does not get Inf analysis
-    # adapt dis file
+    # adapt dis file!!
+    #R: Nickel1994:441ff
+    #R: mon ballen stálu boahtit = jag var rædd att stállu skulle komma
+    #R: mon ballen stálu boahtime (dál juo) = jag var rædd før att stállu høll på å komme (allerede)
     
     # passive
     # --------
@@ -4765,8 +4774,7 @@ ADD:syn-no-agent-with-ot-passive (&syn-no-agent-with-ot-passive) TARGET Loc IF (
 COPY:syn-no-agent-with-uvvot-passive (Nom &CORRECT) EXCEPT (Loc &syn-no-agent-with-ot-passive) TARGET (N &syn-no-agent-with-ot-passive) ;
 	## Eanan gos barta čuožžu, eaiggáduvvo viđa {olbmos}, namalassii dan golbma vieljažiin, daid {oappás} ja sin {neabis}. Eatnan gos barta čuožžu, eaiggádit vihtta olbmo, namalassii dat golbma vieljaža, daid oabbá ja sin neahpi.
 	#R: Nickel1994:227
-	
-	
+		
 ADD:syn-illative-agent-with-hallat-passive (&syn-illative-agent-with-hallat-passive) TARGET Loc IF (0 Sem/Hum OR Sem/Ani OR Sem/Org)(NEGATE 0 §SO OR §LO)(p (Der/h Der/alla) OR (Der/halla) OR (Der/adda));
 COPY:syn-illative-agent-with-hallat-passive (Ill &CORRECT) EXCEPT (Loc &syn-illative-agent-with-hallat-passive) TARGET (N &syn-illative-agent-with-hallat-passive) ;
 	## Prospero lea herttot Milanos Itálias, muhto rivvehallá vieljastis válddi. Prospero lea herttot Milanos Itálias, muhto rivvehallá vieljasis válddi.
@@ -4776,7 +4784,15 @@ COPY:syn-illative-agent-with-hallat-passive (Ill &CORRECT) EXCEPT (Loc &syn-illa
 #not passive: govvahállojuvvot
 	## Muhto máttaáhpesullo eallin sáhttá maid govvahállat áibbas eará govaiguin. Muhto máttaáhpesullo eallin sáhttá maid govahallot áibbas eará govaiguin. Muhto máttaáhpesullo eallima sáhttá maid govahallat áibbas eará govaiguin.
 
-    
+#not passive: "bázahaddat" V* TV* Der/PassS: wrong form?
+#Vaikko Lujávri lea earotbealde giláš, de eai leat nuorat bázahaddon rivttes áigásaš biktasiid dáfus. Vaikko Lujávri lea earotbealde giláš, de eai leat nuorat bázahaddan rivttes áigásaš biktasiid dáfus.   
+
+#"oahpahaddat" + Ill / + Acc
+#R: Sammalahti/Nickel2006 s529
+#R: Nielsen1921 s167
+#Livččii váivi jos mat muhtin háliidivččii Norgii dárogiela oahpahaddat, ja de boahtá Sirbmái gos dárogiella eanaš dušše gullo radios ja TV:s go eai leat go áibbas moattis geat beaivválaččat hállet dárogiela Sirpmás, lohká son. Livččii váivi jos mat muhtin háliidivččii Norgii dárogillii oahpahaddat, ja de boahtá Sirbmái gos dárogiella eanaš dušše gullo radios ja TV:s go eai leat go áibbas moattis geat beaivválaččat hállet dárogiela Sirpmás, lohká son.
+#
+#Sámi Dáiddárráđi ruhtada Davviriikkalaš ministtarráđđi, muhto lea bázahaddon geafes ruhtadillái go sihke hattit, ja bargobálkkát leat gorgŋon seammásgo Sámi Dáiddárráđi bargu lea lassánan. Sámi Dáiddárráđi ruhtada Davviriikkalaš ministtarráđđi, muhto lea bázahaddan geafes ruhtadillái go sihke hattit, ja bargobálkkát leat gorgŋon seammásgo Sámi Dáiddárráđi bargu lea lassánan.
 
     
     # style error
