@@ -181,7 +181,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph.hfst: \
 		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
 		> $@
 
-# Xerox version, mainly used or debugging
+# Xerox version, mainly used for debugging
 analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst: \
 					analyser-raw-gt-desc.xfst                      \
 					filters/remove-semantic-tags-except-prop.xfst  \
@@ -354,18 +354,20 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_nob.xfst: \
 		 save stack $@\n\
 		 quit\n" | $(XFST) -q
 
-# Apertium-related language-specific targets - modify to suit each language:
+# MT/Apertium-related language-specific targets - modify to suit each language:
 analyser-mt-%.und.hfst: analyser-mt-%.tmp.hfst
 	$(AM_V_GEN)$(HFST_INVERT) $< \
 		| $(HFST_FST2FST) $(HFST_FLAGS) -t -o $@
 
 analyser-mt-gt-desc.sma.hfst: analyser-mt-gt-desc.tmp.hfst \
 					filters/remove-dialect-tags.hfst \
+					filters/remove-semantic-tags-except-prop.hfst \
 					filters/reorder-semantic-tags.hfst \
 					filters/remove-deriv-strings-MT-sma.hfst \
 					filters/remove-sub-forms.hfst
 	$(AM_V_GEN)$(PRINTF) \
 			   "@bin\"filters/remove-dialect-tags.hfst\"     \
+			.o. @bin\"filters/remove-semantic-tags-except-prop.hfst\"   \
 			.o. @bin\"filters/extract-deriv-strings-MT-sma.hfst\"   \
 			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
 			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
@@ -379,11 +381,13 @@ analyser-mt-gt-desc.sma.hfst: analyser-mt-gt-desc.tmp.hfst \
 
 analyser-mt-gt-desc.smj.hfst: analyser-mt-gt-desc.tmp.hfst \
 					filters/remove-dialect-tags.hfst \
+					filters/remove-semantic-tags-except-prop.hfst \
 					filters/reorder-semantic-tags.hfst \
 					filters/remove-deriv-strings-MT-sma.hfst \
 					filters/remove-sub-forms.hfst
 	$(AM_V_GEN)$(PRINTF) \
 			   "@bin\"filters/remove-dialect-tags.hfst\"     \
+			.o. @bin\"filters/remove-semantic-tags-except-prop.hfst\"   \
 			.o. @bin\"filters/extract-deriv-strings-MT-sma.hfst\"   \
 			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
 			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
@@ -395,12 +399,77 @@ analyser-mt-gt-desc.smj.hfst: analyser-mt-gt-desc.tmp.hfst \
 		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
 		> $@
 
+generator-mt-gt-norm.hfst: generator-mt-gt-norm.tmp.hfst \
+					filters/make-optional-semantic-tags.hfst
+	$(AM_V_GEN)$(PRINTF) \
+			   "@bin\"filters/make-optional-semantic-tags.hfst\" \
+			.o. @bin\"$<\" \
+			;" \
+		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
+		> $@
+
+# Oahpa-related local modifications and language-specific changes:
+# HFST:
+generator-oahpa-gt-norm.hfst: generator-oahpa-gt-norm.tmp.hfst \
+					filters/make-optional-semantic-tags.hfst
+	$(AM_V_GEN)$(PRINTF) \
+			   "@bin\"filters/make-optional-semantic-tags.hfst\" \
+			.o. @bin\"$<\" \
+			;" \
+		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
+		> $@
+
+# Xerox:
+generator-oahpa-gt-norm.xfst: generator-oahpa-gt-norm.tmp.xfst \
+					filters/make-optional-semantic-tags.xfst
+	$(AM_V_GEN)$(PRINTF) "read regex                          \
+				@\"filters/make-optional-semantic-tags.xfst\" \
+			.o. @\"$<\".i                                     \
+			;\n\
+		 invert net\n\
+		 save stack $@\n\
+		 quit\n" | $(XFST)
+
+# Dict-fst local modifications and language-specific changes:
+generator-dict-gt-norm.xfst: generator-dict-gt-norm.tmp.xfst \
+					filters/make-optional-semantic-tags.xfst
+	$(AM_V_GEN)$(PRINTF) "read regex                          \
+				@\"filters/make-optional-semantic-tags.xfst\" \
+			.o. @\"$<\".i                                     \
+			;\n\
+		 invert net\n\
+		 save stack $@\n\
+		 quit\n" | $(XFST)
+
+analyser-dict-gt-norm.xfst: analyser-dict-gt-norm.tmp.xfst \
+					filters/make-optional-semantic-tags.xfst
+	$(AM_V_GEN)$(PRINTF) "read regex                          \
+				@\"filters/make-optional-semantic-tags.xfst\" \
+			.o. @\"$<\"                                       \
+			;\n\
+		 save stack $@\n\
+		 quit\n" | $(XFST)
 
 # We need to add processing of language-specific tags in the generator:
+# HFST:
+generator-gt-%.hfst: generator-gt-%.tmp.hfst \
+					 filters/make-optional-lang_hom-tags.hfst \
+					 filters/make-optional-semantic-tags.hfst
+	$(AM_V_GEN)$(PRINTF) \
+			   "@\"filters/make-optional-lang_hom-tags.hfst\"     \
+			.o. @\"filters/make-optional-semantic-tags.hfst\"     \
+			.o. @\"$<\"                                           \
+			;" \
+		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
+		> $@
+
+# Xerox:
 generator-gt-%.xfst: generator-gt-%.tmp.xfst \
-				     filters/make-optional-lang_hom-tags.xfst
+					 filters/make-optional-lang_hom-tags.xfst \
+					 filters/make-optional-semantic-tags.xfst
 	$(AM_V_GEN)$(PRINTF) "read regex                              \
 				@\"filters/make-optional-lang_hom-tags.xfst\"     \
+			.o. @\"filters/make-optional-semantic-tags.xfst\"     \
 			.o. @\"$<\".i                                         \
 			;\n\
 		 invert net\n\
