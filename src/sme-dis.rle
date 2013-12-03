@@ -2840,8 +2840,8 @@ SELECT:sahkaPl ("sáhka" Pl) IF (0 TV LINK *-1 PLURALIZER BARRIER NOT-NPMOD) ;
 LIST UN-N = (".*us"r N) ;
 REMOVE:UsImprt Imprt IF (0 UN-N OR ("oažžut") LINK NOT 0 ("šaddat")) ;
 
-#!! * __SUBImprt__ removes Imprt when it can be a subject	
-REMOVE:SUBImprt Imprt IF (0 (Sg Nom) LINK *1 (V Sg3) BARRIER S-BOUNDARY OR REAL-V) ;
+#!! * __SUBImprt__ removes Imprt when it can be a part of an NP	
+REMOVE:SUBImprt Imprt IF (0 (Sg Nom) OR Attr) ((*1 (V Sg3) BARRIER S-BOUNDARY OR REAL-V) OR (*1 (Rel Nom) LINK *1 VFIN BARRIER S-BOUNDARY OR REAL-V LINK *1 COMMA LINK 1 (V Sg3))) ;
 	#$ Bargu sámi fanasduddjonvieruid ektui lea dakkár bargu masa Sámediggi sáhtášii váikkuhit eanet dutkama bokte .
 
 REMOVE:r599 VFIN IF (-1 ("makkár"))(0 N);
@@ -5149,7 +5149,7 @@ REMOVE:ANom (A Nom) IF (NEGATE -1 COPULAS LINK 1 DEHALAS LINK *1 ADVLCASE BARRIE
 	#$ Vuoigatvuohta leat Sámedikkiid jienastusloguin lea lassin dábálaš jienastanvuoigatvuođa eavttuide.
 
 #!! * __AAttr__  selects A Attr
-SELECT:AAttr (A Attr) IF  (NOT 0 (V* A) OR Adv OR Inf)(NEGATE 1 PREGEN)(NEGATE *-1 COPULAS BARRIER NOT-A-ADV-PCLE) (*1 N - Ess BARRIER NOT-NPMOD OR Dem LINK NOT 1 Po)(NEGATE 0 Gen LINK -1 (Dem Gen))(NEGATE 1 CC LINK 1 Num OR N) ;
+SELECT:AAttr (A Attr) IF  (NOT 0 (V* A) OR Adv OR Inf)(NEGATE 0 PrfPrc LINK *-1 REAL-COPULAS BARRIER REAL-V)(NEGATE 1 PREGEN)(NEGATE *-1 COPULAS BARRIER NOT-A-ADV-PCLE) (*1 N - Ess BARRIER NOT-NPMOD OR Dem LINK NOT 1 Po)(NEGATE 0 Gen LINK -1 (Dem Gen))(NEGATE 1 CC LINK 1 Num OR N) ;
 	#$ Máttimus sápmelaččat eahpidedje dáža dutkiid eanet go davit sápmelaččat. # davit
 	#$ ...main leat mielde dušše priváhta oasálaččat, ii leat...
 	#$ Sámedikki ásaheapmi lea eanet ideologalaš go čielga mearrádus. # čielga
@@ -5157,6 +5157,7 @@ SELECT:AAttr (A Attr) IF  (NOT 0 (V* A) OR Adv OR Inf)(NEGATE 1 PREGEN)(NEGATE *
 	#$ Dábálaččat earuha gaskal dábálaš (oppalaš) geavahanvuoigatvuođaid ja sierranas (partiála) geavahanvuoigatvuođaid.
 	#$ Váillui guhkit áiggi heivvolaš oaivil. 
 	#% lea dehálaš vuovdingálvun
+	#% Dán girjji vuođul ja ságastallamiiguin lullisámiin lea munnje báhcán millii ahte internáhttadoaibma ii lean gal alla dásis, muhto internáhttaskuvlii dattetge bohte viššalit lullisámi bearrašat.
 
 SELECT:OrdAttr (Ord Attr) IF (1 N) ;
 	#$ Son lea viđát luohkás.
@@ -5270,9 +5271,10 @@ SELECT:WAPlNomafterDu (A Pl Nom) IF (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 (
 	#$ Vuoi, doai leahppi nu čeahpit!
 
 #!! * __ASgNomNoSubj__ selects A Sg Nom after copulas Sg3 or Neg Sg3
-SELECT:WASgNomNoSubj (A Sg Nom) IF ((*-1 COPULAS + Sg3 BARRIER NOT-ADV-PCLE) OR (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK -1 (Neg Sg3))) (NEGATE 0 N OR Inf)(NEGATE 1 Adv LINK 1 A)(1 NP-BOUNDARY OR PrfPrc)(NEGATE 0 Attr LINK 1 N)(NEGATE 0 GRADE-ADV LINK 1 A); 
-	## Lea ártet go it gallet fulkkiid.
-	## Ii leat vuogas geavahit hálduiváldima dálá fásta opmodagaide.
+SELECT:WASgNomNoSubj (A Sg Nom) IF ((-1 COMMA LINK NOT *2 VFIN) OR (*-1 COPULAS + Sg3 BARRIER NOT-ADV-PCLE) OR (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK -1 (Neg Sg3))) (NEGATE 0 N OR Inf)(NEGATE 1 Adv LINK 1 A)(1 NP-BOUNDARY OR PrfPrc)(NEGATE 0 Attr LINK 1 N)(NEGATE 0 GRADE-ADV LINK 1 A); 
+	#$ Lea ártet go it gallet fulkkiid.
+	#$ Ii leat vuogas geavahit hálduiváldima dálá fásta opmodagaide.
+	#$ Gávpoga geaidnu lei ráhkaduvvon gollis, buhtis dego čađačuovgi láse.
 
 #!! * __ASgNomafterCop__ selects A Sg Nom after copulas and Sg Nom, not so strong constraint for the target
 SELECT:WASgNomafterCop (A Sg Nom) IF (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 (Sg Nom) BARRIER NOT-ADV-PCLE LINK *-1 BOC OR CP BARRIER NOT-ADV-PCLE)(1 NP-BOUNDARY OR PrfPrc LINK NOT 0 N);	
