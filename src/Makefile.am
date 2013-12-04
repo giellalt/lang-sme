@@ -39,6 +39,7 @@ GT_TRANSFORMERS_XFST=transcriptor-clock2text-desc.xfst \
 
 if WANT_DICTIONARIES
 GT_ANALYSERS_XFST+=analyser-dict-gt-desc.xfst \
+					analyser-dict-gt-desc-mobile.xfst \
 					analyser-dict-gt-norm.xfst
 GT_GENERATORS_XFST+=generator-dict-gt-norm.xfst \
 					generator-dict-gt-desc.xfst
