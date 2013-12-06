@@ -37,8 +37,6 @@ GT_TRANSFORMERS_XFST=transcriptor-clock2text-desc.xfst \
 					 transcriptor-text2date-desc.xfst \
 					 transcriptor-text2numbers-desc.xfst
 
-# analyser-dict-gt-desc-mobile.xfst 
-
 if WANT_DICTIONARIES
 GT_ANALYSERS_XFST+=analyser-dict-gt-desc.xfst \
 				    analyser-dict-gt-desc-mobile.xfst \
