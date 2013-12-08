@@ -1761,7 +1761,7 @@ LIST POLITICAL-INDUSTRY = (".*politihkka"r) ;
  
 SET INDUSTRY = POLITICAL-INDUSTRY OR OTHER-INDUSTRY ;
 
-LIST RIEKTEDILLI = "bajithearrávuohta" "bálvalusfálaldat" "čearddalašvuohta" "diggegirji" "dilálašvuohta" "ealáhusvuođđu" "eallindiliváttisvuohta" "eanajuohkinsuohkan" "eanadoallobuvttadeapmi" "eanavuovdinkantuvra" "hálddašeapmi" "kultuvra" "matrihkal" "meahcceriggodat" "opmodat" "rádjemearka" "rádji" "rádjá" "resursageavaheapmi" "riektedilli" "riekteáddejupmi" "riddomearraguovlu" "sierraortnet" "stáhtaeana" "suodjalanguovlu" "váldi" "váldofierpmádat" "vearro#njuolggadus" "vuoigatvuođadilálašvuohta" "vuoigatvuohta" "vuovdeatnu" "vuovde#njuolggadus" "suverenitehta" "kulturdoarjja" ;
+LIST RIEKTEDILLI = "bajithearrávuohta" "bálvalusfálaldat" "čearddalašvuohta" "diggegirji" "dilálašvuohta" "ealáhusvuođđu" "eallindiliváttisvuohta" "eanajuohkinsuohkan" "eanadoallobuvttadeapmi" "eanavuovdinkantuvra" "hálddašeapmi" "kultuvra" "matrihkal" "meahcceriggodat" "opmodat" "rádjemearka" "rádji" "rádjá" "resursageavaheapmi" "riektedilli" "riekteáddejupmi" "riddomearraguovlu" "sierraortnet" "stáhtaeana" "suodjalanguovlu" "váldi" "váldofierpmádat" "vearro#njuolggadus" "vuoigatvuođadilálašvuohta" (".*vuoigatvuohta"r) "vuovdeatnu" "vuovde#njuolggadus" "suverenitehta" "kulturdoarjja" ;
 
 # FYLKA in front of the set is usually in Gen.
 
@@ -3306,6 +3306,8 @@ SELECT:vuovdiHumanActivity NomAg (0 ("vuovdi" Sg Nom) LINK *0 HUMAN-ACTIVITY-V +
 SELECT:vuovdiPlc Sem/Plc IF (*-1 MOVEMENT-V BARRIER NOT-ADV-PCLE)(0 ("vuovdi" Sg Ill)) ;
 	## Luonddufága láide dien guvlui ahte galgá váldit vuođu báikkálaš luonddus, muhto buot ovdamearkkat váldet gis vuođu máttanorgga diliin, oahppit galget mannat vuovdái geahččat giđđaliđiid ja čoaggit hasselnihtiid ja ruvsumurjjiid.
 	## Go Niillas olle vuovdái ja čuollá ovtta muora, de son oaidná ahte ii doppe nagot čuollat buot muoraid.
+
+SELECT:vuovdiPlc ("vuovdi" Sem/Plc) IF (0* RIEKTEDILLI BARRIER S-BOUNDARY) ;
 	
 SELECT:vuovdiPlc2 Sem/Plc IF (*-1 FOREST-ADJ + Attr BARRIER NOT-NPMODADV)(0 ("vuovdi" Sg Nom) OR ("vuovdi" Sg Ill)) ;
 	## Diekko galgá šaddat nu stuora ja suhkkes vuovdi ahte ii mihkkege beasa čađa.	
@@ -4907,6 +4909,9 @@ SELECT:killAllnotComp  @COMP-CS< ;
 #!! * __goCSbeforeComp__ Selects CS analysis in front of @COMP-CS<
 SELECT:goCSbeforeComp ("go" CS) IF (*1 @COMP-CS< BARRIER REAL-V OR CC) ;
 
+#!! * __ACompgo__ Selects Comp analysis in front of go and @COMP-CS<
+SELECT:ACompgo Comp IF (1 go LINK *1 @COMP-CS< BARRIER REAL-V OR CC)(NOT 0 ("dávji")) ;
+
 SECTION
 
 #!! !!!MAPPING OF CC AND CS
@@ -6414,10 +6419,9 @@ SELECT:DemAttr $$CASE + (Dem Sg) IF (0 DAT-PRON)(*1 $$CASE + (N Sg) BARRIER NOT-
 	#$  
 	#% Mun muitalin dan vielljasan. # Should not hit this one.
 
-SELECT:guhtege $$CASE IF (0 ("guhtege") OR ("goappašat") OR ("iešguhtege") OR ("guhte"))(*1 $$CASE + N BARRIER NOT-NPMOD OR Sem/Time OR Num LINK NOT 0 VFIN OR ("leat") OR (Actio Ess) OR Po) ;
+#!! * __IndefAgree__ guhtege goappašat iešguhtege guhte
 
-# (NEGATE 0 Acc LINK *-1 STRICT-TRANS-V BARRIER Acc LINK *1 Dem LINK NOT *1 Acc BARRIER NOT-NPMOD)  ;
-
+SELECT:IndefAgree $$CASE IF (0 ("guhtege") OR ("goappašat") OR ("iešguhtege") OR ("guhte"))(*1 $$CASE + N BARRIER NOT-NPMOD OR Sem/Time OR Num LINK NOT 0 VFIN OR ("leat") OR (Actio Ess) OR Po) ;
 
 #!! * __DemCASEPl__
 SELECT:DemCASEPl $$CASE + (Dem Pl) IF (0 DAT-PRON)(*1 $$CASE + (N Pl) BARRIER NOT-NPMOD) ; 
@@ -7446,11 +7450,11 @@ SELECT:SEMeallimamuorra Gen IF (0 ("eallin" Sg) LINK 1 ("muorra")) ;
 
 
 #!! * __ACRGen__ Selects genitive: NRK Sápmi
-SELECT:ACRGen (ACR Gen)(NOT 0 Attr)(1 Prop) ;
+SELECT:ACRGen (ACR Gen)(NOT 0 Attr)(1 (Prop Sem/Obj) OR (Prop Sem/Plc) OR (Prop Sem/Org)) ;
 	#$ NSR Lulli-Sámi sámediggeáirras, NRK Sápmi
 
 #!! * __ACRAttr__ Selects genitive: IL Nordlys
-SELECT:ACRAttr (ACR Attr)(1 Prop) ;
+SELECT:ACRAttr (ACR Attr)(1 (Prop Sem/Obj) OR (Prop Sem/Plc) OR (Prop Sem/Org)) ;
 	#$ IL Nordlys
 
 
@@ -8110,6 +8114,7 @@ REMOVE:AccEss Acc IF (0 SAPMI-N-HEAD LINK 1C (N Ess))(NEGATE 0 SAPMI-N-HEAD LINK
 REMOVE:topOBJPers Gen (0 Acc LINK 1 Pron LINK 1 TRANS-V)(-1 BOC) ;
 	#$ Gáhkuid mii goikadit geađggi alde.
 	
+#!! *__AccVAbess__
 SELECT:AccVAbess Acc (0 (N Gen) LINK 1 (TV VAbess))(NEGATE -1 Num) ;	
 
 #!! * __topOBJ1__ Selects accusative: when a Strict transitive verb to the right (topicalized object) ''beaskka geavahedje''
@@ -8428,7 +8433,7 @@ SELECT:ALU3 Acc IF (0 Num LINK 1 Num LINK 1 ALU);
 #Not-so-exceptional?
 
 #!! * __NewGen__ (complement of numerals) selects Gen Sg when Num Sg to the left ''guhtta kilu''
-SELECT:NewGen (Sg Gen) OR CURRENCY + Gen  IF (0 (N Acc) LINK *-1 NUM + Sg BARRIER NOT-A - (Pron Indef Attr) LINK 0 Nom OR Acc)(NEGATE -1 ("moadde")) ;
+SELECT:NewGen (Sg Gen) OR CURRENCY + Gen  IF (0 (N Acc) LINK *-1 NUM + Sg BARRIER NOT-A - (Pron Indef Attr) - Gen LINK 0 Nom OR Acc)(NEGATE -1 ("moadde") OR CURRENCY) ;
 	#$ Juohke heasta borrá sullii guhtta kilu suinniid beaivái.
 	#$ Dán skuvllas ledje jahkásaččat sullii 20 oahppi geat iešdáhtolaččat bohte deike, ja buohkat ledje lullisámit.
 	#$ Do bohtet guokte olbmo.
@@ -10769,7 +10774,19 @@ SELECT Adv IF (-1 N LINK -1 FMAINV)(0 A LINK 1 EOC) ;
 SELECT:ADV Adv IF (-1 FMAINV)(0 (A Comp) OR (A Pl) LINK *1 Acc - TIME BARRIER NOT-NPMOD LINK NEGATE 1 go + @CNP) ;
 	#$ Norgga láhkaaddit leat áigá jo suokkardan vuđolaččat kvenaid eamiálbmotstáhtusa gažaldaga.
 
-#REMOVE (A Pl) + $$CASE (0 (N Pl) + $$CASE) ;
+AFTER-SECTIONS
+
+
+LIST TYP-A = "árat" "buorre" "čeahppi" ;
+
+LIST A-PL-N = "bassi" "boaris" "buohcci" "duiskalaš" "duiska" "headju" "lagamuš" "lohkki" "njálggis" "norgalaš" "nuorra" "ovddasteaddji" "rikkis" "searra" "vašálaš" "velggolaš" ;
+SELECT:NPlwhenAPl (N Pl) + $$CASE (0 A + $$CASE LINK NOT 0 TYP-A) ;
+
+SELECT:NomCCNom Nom (-1 CC LINK -1C Nom) ;
+SELECT:AttrwhenAdv Attr (0 Adv - ("njuolga") LINK 1 N)(NEGATE -1 ("man") OR REAL-V)(NEGATE 0 ("veaháš") OR ("unnán") LINK 1 Prop) ;
+SELECT:PlNomwhenAdv (Pl Nom) (0 Adv)((*-1 (V Pl3) OR COPULAS + Inf BARRIER NOT-ADV-PCLE LINK NOT -1 (Nom Pl) OR (Nom Pl3)) OR (*1 (V Pl3) OR COPULAS + Inf BARRIER NOT-ADV-PCLE LINK NOT 1 (Nom Pl) OR (Nom Pl3)))(NEGATE -1 (Rel Pl))(NEGATE 0 ("eanebut")) ;
+
+SELECT:AdvwhenAPl Adv (A Pl) ;
 
 #!! * __cleanSemClass__ cleans up if a word has more semclasses. This is just a start.
 SELECT:cleanSemClass (Sem/Plc) (0 Sem/Org OR Sem/Sur OR FIRSTNAME) ;
