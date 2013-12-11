@@ -13,7 +13,9 @@ JSP_PAGES=root-morphology.jspwiki        \
 		  adjectives-affixes.jspwiki       \
 		  nouns-affixes.jspwiki          \
 		  verbs-affixes.jspwiki \
-		  disambiguation-syntax.jspwiki  
+		  disambiguation-syntax.jspwiki \
+		  functions-syntax.jspwiki \
+		  dependency-syntax.jspwiki  
 # clitics-morphology.jspwiki       \
 # compounding-morphology.jspwiki   \
 # abbreviations-stems.jspwiki      \
