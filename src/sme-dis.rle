@@ -7750,6 +7750,13 @@ SELECT:GenAPP Gen IF ((*-1C Pr BARRIER NOT-NPMOD) OR (*1C Po BARRIER WORD))(NEGA
 	#$ Beana goarjádii beavddi vuollái.
 	#$ Seammás sáhttet riikat nannet luohttámuša ođđa konvenšuvdnii ja nu hukset buori ovttasbarggu rastá riikarájiid.
 	#% Vuosttasnaššuvnnaid čoagganeapmi ovddasta badjel 300 indiánaservodaga miehtá Kanada ja gáibida dál iešstivrejumi Davvi-Amerihká buot eamiálbmogiidda.
+
+
+#!! * __NomIfPo__ removes Nom if sentence initial, because it modifies Gen
+#REMOVE:NomIfPo Nom IF (-1 BOS)(1 Gen LINK 1 Po)(3 COPULAS + FMAINV);
+	#$ Pippi viesu bálddas lei nubbi gárdin ja nubbi viessu.
+	#% Olmmái háma duohken hehtte suoládeami. 
+
 	
 #!! * __GenPoCoordPunct__ Selects genitive for coordinated postpositions: with PUNKT to the left 
 SELECT:GenPoCoordPunct Gen IF (1 PUNCT-RIGHT LINK *1 Gen BARRIER NOT-NPMOD LINK *1C Po BARRIER WORD) ;
@@ -8952,7 +8959,6 @@ SELECT:NDr2306 (N Nom) IF (*-1 ("okta" Nom) BARRIER NOT-NPMOD LINK NOT 0 Foc/ge)
 	# Nominative if two names in a row
 SELECT:NDr2308 Nom IF (*-1 PROP BARRIER REAL-WORD-NOT-ABBR)(0 PROP)(NEGATE 0 Gen LINK 1 N)(*1 SG3-V BARRIER VFIN); 
 	## Birasgáhttenminister Siri Bjerke dajai čielgasit ahte...
-
  
 	# Vocatives, subjects of sentence fragments
 	# - - - - - - - - - - - - - - - - - - - - - 
@@ -9821,6 +9827,7 @@ SELECT:AccEOS Acc IF (0 Acc OR Gen LINK NOT 0 Nom)((1 EOS) OR (1 Ger LINK NOT -1
 	#$ Nu ožžot sámi beroštumit mat ovddastuvvojit stuorát deattu deaivvadettiin riikkalaš ja stuorraservodaga beroštumiiguin.
 	#% Dat čohkkáiga oktii njuniid. <== Make a rule for this in the "acc/gen-section".
 	#% Mánná viehkalii olggos álás julggiid. <== Note that both are IV-verbs.
+	#Next: try making a negating restriction; if copulas is the mainv to the left. Shouldn't hit: Girji lea dušše Máreha.
 
 #!! * __genRel__ removes genitive if Rel to your right ''ožžot olbmot skoviid maid''
 REMOVE:genRel Gen (0 Acc - Sem/Time LINK *1C Rel OR @CVP BARRIER WORD)(NEGATE *-1 (Num Nom) OR (Num Acc) BARRIER NOT-NPMOD)(NEGATE *-1 Pr BARRIER NOT-A)  ;
@@ -9829,6 +9836,7 @@ REMOVE:genRel Gen (0 Acc - Sem/Time LINK *1C Rel OR @CVP BARRIER WORD)(NEGATE *-
 
 #!! * __genAcc__ selects Acc 
 SELECT:genAcc Acc (-1 BOC)(0 Nom)(1 Rel LINK *1 FMAINV LINK *1 TRANS-V BARRIER Nom LINK NOT *1 Acc) ;
+	#$
 
 #!! * __genNom__ removes Acc
 REMOVE:genNom Acc (-1 BOC)(0 Nom)((1 Rel LINK *1 FMAINV LINK NOT *1 TRANS-V) OR (1 Rel LINK *1 COMMA LINK *1 COPULAS BARRIER Nom));
@@ -9836,6 +9844,7 @@ REMOVE:genNom Acc (-1 BOC)(0 Nom)((1 Rel LINK *1 FMAINV LINK NOT *1 TRANS-V) OR 
 
 #!! * __DemAcc__ selects Den Acc after the last acc-disambiguation of nouns
 SELECT:DemAcc (Dem Acc)(0 Gen LINK 1C (N Acc)) ;
+	#$
 
 #!! * __KillAcc__ Removes Acc if you are Gen 
 REMOVE:KillAcc Acc IF (0 Gen) ;
