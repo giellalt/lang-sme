@@ -488,10 +488,9 @@ SET V-NOT-PL3 = VFIN-NOT-IMP - V-PL3 ;
 SET V-1-2 = V-SG1 OR V-SG2 OR V-DU1 OR V-DU2 OR V-PL1 OR V-PL2 ;
 SET V-3  = V-SG3 OR V-DU3 OR V-PL3 ;
 
-# Sets consisting of forms of "leat" (these ones need to be rewritten)
+# Sets consisting of forms of LEAT (these ones need to be rewritten)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LIST LEAT = "leat" "liehket" ;
-#("leat" V Ind Prs Pl1) ("leat" V Ind Prs Pl3) ("leat" V Ind Prs Sg2) ("leat" V Inf) ("leat" V Ind Prs ConNeg) ("liehket" V Ind PrsPl1) ("liehket" V Ind Prs Pl3) ("liehket" V Ind Prs Sg2) ("liehket" V Inf) ("liehket" V Ind Prs ConNeg);
 
 LIST LEAT-FIN-NOT-IMP = ("leat" V Ind) ("leat" V Cond) ("leat" V Pot) ("liehket" V Ind) ("liehket" V Cond) ("liehket" V Pot);
  
@@ -667,10 +666,10 @@ SET REAL-V = V - NOT-REAL-V  ;
             
  
  # The set REAL is smaller than COPULAS, made for verbs with PrfPrc complements: Seammás REAL-COPULAS son dovdan iežas...
-LIST REAL-COPULAS = "dáidit" "leat" "soaitit" "veadjit" ;
+LIST REAL-COPULAS = "dáidit" "leat" "soaitit" "veadjit" "liehket" ;
 
 #!! * The set COPULAS is for predicative constructions
-LIST COPULAS = "dáidit" "gártat" "leat" "soaitit" "šaddat" "orrut" "veadjit" ;
+LIST COPULAS = "dáidit" "gártat" "leat" "soaitit" "šaddat" "orrut" "veadjit" "liehket" "sjaddat" ;
  #  "bissut" ? 
  # 'Dáidit' can appear without 'leat'.
 
@@ -850,7 +849,7 @@ LIST BOUNDARYSYMBOLS =  "\;" ":" "-" "–" ;
 # This set if for disambiguating rules after mapping @CVP and @CNP to all CS and CC readings, therefore we cannot have @CVP in the set
 SET S-BOUNDARY-NOT-CVP = CP OR BOUNDARYSYMBOLS OR ("muhto") OR ("de" Adv) OR (Neg Sup) ;
 	
-SET S-BOUNDARY = CP OR BOUNDARYSYMBOLS OR ("muhto") OR ("de" Adv) OR (Neg Sup) OR (@CVP) OR ("vel" Adv Qst) ;
+SET S-BOUNDARY = CP OR BOUNDARYSYMBOLS OR ("muhto") OR ("de" Adv) OR (Neg Sup) OR @CVP OR ("vel" Adv Qst) ;
 	# does not include CS, because of "go" in questions, before it is disambugated.
 	# includes CP
 	# this one includes @CVP, the conjunction which actually connects two sentences (each with a finite verb) to each other, 
@@ -878,8 +877,6 @@ SET SVF-BOUNDARY = S-BOUNDARY OR VFIN ;
 # This set is ment to use in rules for disambiguating due to verbs or verbsets. 
 # Here we search for either an S-BOUNDARY or a finite verb, either aux or main.
 
-SET CCCOMMA = CC OR COMMA ;
-	# remember that those are potential sentence boundaries, too
 LIST ADVLCASE = Ill Loc Com Ess Ine Ela ;
 LIST CASE = Nom Acc Gen Ill Loc Com Ess Ine Ela ;
 
@@ -920,7 +917,7 @@ MAP:hab3 (@HAB>) TARGET HAB-ACTOR + HAB-CASE - Attr (NEGATE 0 Sem/Group OR Pl - 
 	
 
 
-MAP:habInf (@HAB>) TARGET HAB-ACTOR + HAB-CASE OR ("dat" Dem Loc) - Attr (1 ("leat" Sg3) LINK 1 Inf) ;
+MAP:habInf (@HAB>) TARGET HAB-ACTOR + HAB-CASE OR ("dat" Dem Loc) - Attr (1 LEAT + Sg3 LINK 1 Inf) ;
 	#$ Mis lea cahkkehit dola.
 
 #!! * __habNomLeft__ 
@@ -936,7 +933,7 @@ MAP:hab4 (@HAB>) TARGET HAB-ACTOR + HAB-CASE - Attr (NEGATE 0 HAB-ACTOR-NOT-HUMA
 
 
 #!! * __hab6__ 
-MAP:hab6 (@<HAB) TARGET HAB-ACTOR + HAB-CASE - Attr ((*-1 go BARRIER NOT-NPMOD LINK -1 LEAT + HAB-V-TAGS LINK -1 BOC) OR (*-1 ("leat" Qst) BARRIER NOT-NPMOD LINK -1 BOC));
+MAP:hab6 (@<HAB) TARGET HAB-ACTOR + HAB-CASE - Attr ((*-1 go BARRIER NOT-NPMOD LINK -1 LEAT + HAB-V-TAGS LINK -1 BOC) OR (*-1 LEAT + Qst BARRIER NOT-NPMOD LINK -1 BOC));
 	#$ Lea go dis ruhta?
 	#$ Leago sámeálbmogis vuoigatvuođat vai eai?
 
@@ -1015,13 +1012,13 @@ MAP:p< (@P<) Gen (*-1 Pr BARRIER NOT-NPMOD)(NEGATE 1 Gen) ;
 MAP:p<coor (@P<) Gen (-1 CRD OR COMMA LINK -1 @P<) ;
 	#$ Maŋŋegiđa ja árrageasi guohtu boazu lulábeali rámaid, čohkaid ja jekkiid.
 
+LIST JAHKI = "jahke" "jahki" ;
 
-
-MAP:num< (@Num<) TARGET (N Sg Gen)(*-1 NUM + (Sg Nom) OR NUM + (Sg Acc) BARRIER NOT-A LINK NOT -1 ("jahki")) ;
+MAP:num< (@Num<) TARGET (N Sg Gen)(*-1 NUM + (Sg Nom) OR NUM + (Sg Acc) BARRIER NOT-A LINK NOT -1 JAHKI) ;
 MAP:n< (@N<) TARGET (Sg Com)(-1 Coll) ;
 	#$ Mun oidnen Ándde-guovtto Ristiinnáin.
 
-MAP:n< (@N<) TARGET (Num Nom) (-1 ("jahki") OR ("diibmu")) ;
+MAP:n< (@N<) TARGET (Num Nom) (-1 JAHKI OR ("diibmu")) ;
 MAP:>nRCmpnd (@>N) TARGET RCmpnd ;
 
 MAP:>num (@>Num) TARGET DUSSE (1 Num) ;
@@ -1037,7 +1034,7 @@ MAP:>nAttr (@>A) TARGET (Indef Attr) (*1 A - Gen OR Ord - Gen BARRIER NOT-NPMOD 
 MAP:>nAttr (@>N) TARGET Attr (*1 N BARRIER Num OR A - Attr OR Pr OR Ord)  ;
 MAP:>nNum (@>N) TARGET Num - (Sg Nom) - (Sg Acc) - Sem/Date (*1 N BARRIER NOT-A OR Num)  ;
 
-MAP:>n (@>Num) TARGET Gen - ("jahki") (1 Num)(NEGATE 0 OKTA + Nom LINK *1 (N Pl Loc) BARRIER NOT-NPMOD)(NEGATE 0 Gen LINK 1 CC LINK 1 Gen LINK 1 Po) ;
+MAP:>n (@>Num) TARGET Gen - JAHKI (1 Num)(NEGATE 0 OKTA + Nom LINK *1 (N Pl Loc) BARRIER NOT-NPMOD)(NEGATE 0 Gen LINK 1 CC LINK 1 Gen LINK 1 Po) ;
 MAP:>n (@>Num) TARGET $$CASE (0 Dem OR OKTA OR ("buorre" A) LINK 1 $$CASE + Num) ;
 MAP:>a (@>A) TARGET Gen - TIME-N (1 A)(NEGATE 0 OKTA + Nom LINK *1 (N Pl Loc) BARRIER NOT-NPMOD)(NEGATE 0 Gen LINK 1 CC LINK 1 Gen LINK 1 Po) ;
 MAP:>n (@>N) TARGET Gen - TIME-N - Sem/Date (*1 N BARRIER NOT-NPMOD OR A)(NEGATE 0 OKTA + Nom LINK *1 (N Pl Loc) BARRIER NOT-NPMOD)(NEGATE 0 Gen LINK 1 CC LINK 1 Gen LINK 1 Po)(NEGATE 0 HUMAN LINK 1 (Actio Nom) LINK 1 N) ;
@@ -1054,9 +1051,10 @@ LIST PREGEN = "álggogeahčen" "beallemuttus" "beallemuddu" ("bealli" N Sg Loc) 
 MAP:>NTime (@>N) TARGET Gen IF (*-1 BOC BARRIER Pr)(NEGATE -1 Num)(0 TIME-N)(1 PREGEN);
 	#$ Gursa bistá miessemánu beallemuddui.	
 
+LIST MII = "mii" "mij" ;
+LIST GII = "guhti" "gii" ;
 
-
-MAP:pron< (@Pron<) (Pl Acc) (-1 ("mii" Pron) OR ("gii" Pron))(*1 ("?")) ;
+MAP:pron< (@Pron<) (Pl Acc) (-1 MII + Pron OR GII + Pron)(*1 ("?")) ;
 MAP:pron< (@Pron<) (Pl Acc) (-1 ("mihkkege" Pron) OR ("miige" Pron)) ;
 MAP:pron< (@Pron<) (Sg Com) (0 HUMAN LINK -1 (Pers Du1) OR (Pers Du2) OR (Pers Du1)) ;
 	#$ Moai Birehiin barggašeimme mánáidgárddis.
@@ -1298,9 +1296,9 @@ MAP:HABspredSg> (@SPRED>) TARGET Nom (1 @HAB> LINK 1 COPULAS) ;
 MAP:Gallespred> (@SPRED>) TARGET ("galle" Num Nom) (*-1 BOS BARRIER NOT-ADV) ;
 
 
-MAP:spredSg> (@SPRED>) TARGET ("mii" Sg Nom) (*1 (Sg Nom) BARRIER NOT-NPMOD LINK 1 COPULAS) ;
+MAP:spredSg> (@SPRED>) TARGET MII + (Sg Nom) (*1 (Sg Nom) BARRIER NOT-NPMOD LINK 1 COPULAS) ;
 
-MAP:r492 (@SPRED>) TARGET (Interr Gen) IF (NEGATE 0 ("mii"))(NEGATE *1 A OR N BARRIER NOT-NPMOD) (NEGATE *1 NOT-AUX-V BARRIER S-BOUNDARY);
+MAP:r492 (@SPRED>) TARGET (Interr Gen) IF (NEGATE 0 MII)(NEGATE *1 A OR N BARRIER NOT-NPMOD) (NEGATE *1 NOT-AUX-V BARRIER S-BOUNDARY);
 	#$ Gean dat lea?
 
 
