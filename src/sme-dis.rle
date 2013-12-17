@@ -1586,7 +1586,7 @@ LIST SHOE = "čázet" "gállot" "gálssot" "gáma" (".*gáma"r) "goikket" "gumme
 
     # anything that will go on feet. IV-verbs like "vázzit" can take these as objekt.
     
-LIST BEDCLOTHES = "beaska" "gávdni" "oađđádagat" "rátnu" "roavgu" "seaŋga";
+LIST BEDCLOTHES = "beaska" "gávnnit" "oađđádagat" "rátnu" "roavgu" "seaŋga";
 
     # anything that can be used as bedclothing. IV-verbs like "oađđit" can take these as objekt. 
     
@@ -3891,6 +3891,7 @@ REMOVE:NotImprtIfAttrLeft Imprt IF (NOT -1 BOC OR COMMA)(NEGATE -1 CC LINK -1 Im
 #!! * __NotImprtIfRel__ removes Imprt after Rel, unify this with other left context (r948)
 REMOVE:NotImprtIfRel Imprt IF (*-1C Rel BARRIER S-BOUNDARY OR CC OR COMMA);
 
+REMOVE:muhtoNotConNeg ConNeg IF (NEGATE *-1 Neg BARRIER ("muhto"));
 
 	#!! !Sg1 - early cycle, safe rules
 
@@ -4374,7 +4375,7 @@ SELECT:eanasAttr (A Attr) IF  (-1 V OR Acc)(0 ("eanas" A) OR ("eanaš" A))(1 N L
 SELECT:CompahteComp (A Comp) (-1 ("ahte") LINK -1 (A Comp)) ;     
 	#$ Dat šattai heajut ahte heajut.
     
-REMOVE:A A IF (*-1 IV BARRIER SV-BOUNDARY LINK NOT 0 COPULAS OR ("áibbas") OR Indef)(0 Adv)(1 EOC);
+REMOVE:A A IF (*-1 IV BARRIER SV-BOUNDARY OR CC LINK NOT 0 COPULAS OR ("áibbas") OR Indef)(0 Adv)(1 EOC);
 REMOVE:Amannit A IF (*-1 IV BARRIER SV-BOUNDARY LINK NOT 0 COPULAS)(0 ("maŋŋit" Adv))(1 Ill OR DOHKO)(2 EOC);    
 	#$ Boađán maŋŋeleappos.
 	#$ Eatnandoallu bođii maŋŋit Sápmái.
@@ -4384,6 +4385,9 @@ SELECT:gradeAdvA GRADE-ADV + Adv IF (0 A OR Indef LINK 1 (A Nom)) ;
 SELECT:gradAdvAdv MOD-ADV-ADV IF (1 Adv OR Indef LINK NOT 0 Po OR N) ;
 	#$ Dii uhccán oskkolaččat.
 	#$ Man uhccán osku dus lea!
+	
+SELECT:jogoAdv Adv (0 ("jogo") OR ("juogo"))(NEGATE *-1 VFIN BARRIER S-BOUNDARY) ;
+	#$ Jogo gikse dat guolit?	
 	
 #!! !!Disambiguating abbreviations
 
@@ -4960,7 +4964,7 @@ IFF:ahteCNP ("ahte" CC @CNP) IF (-1 COMPAR OR Comp)(0 ("ahte"))(1 COMPAR OR Comp
 #!! * __killAllahtenotCS__ All other occurrences of "ahte" are CSs.
 SELECT:killAllahtenotCS ("ahte" CS) ; 
 
-SELECT:degoCNP (@CNP) + XGO (*1 @COMP-CS< BARRIER NOT-NPMOD) ;
+SELECT:degoCNP (@CNP) + XGO ((*1 @COMP-CS< BARRIER NOT-NPMOD) OR (NEGATE *1 VFIN BARRIER S-BOUNDARY) OR (-1 COPULAS LINK 2 Inf) OR (-1 COPULAS LINK 2 ADVLCASE OR Adv LINK 1 Inf))(NOT *-1 BOS BARRIER WORD) ;
 	#$ Dat guhte ii biso mu siste, bálkestuvvo olggos dego oaksi ja son goldná.
 
 #!! * __vaiCCCNP__ vai as CC or CS
@@ -4981,10 +4985,11 @@ SELECT:vaiCCNegQst1_c (CC @CVP) IF (0 ("vai")) (1 VFIN LINK 1 ("go" Pcle));
 	#$ Dáhpáhuvvá go dat ođđa lágaid bokte, vai geahččaluvvogo gávdnat čovdosiid bissovaš rievttis? 
 
 #!! * __vaiCCNegQst2__ vai CC @CNP in question about two alternatives
-SELECT:vaiCCNegQst2 (CC @CNP) IF  (-1 N OR A OR Adv)(0 ("vai"))(*1 N OR A OR Adv BARRIER NOT-NPMOD LINK NOT *2C VFIN BARRIER S-BOUNDARY OR CS) (*1 ("?")); 
+SELECT:vaiCCNegQst2 (CC @CNP) IF  (-1 N OR A OR Adv)(0 ("vai"))(*1 N OR A OR Adv BARRIER NOT-NPMOD LINK NOT 0 VFIN LINK NOT *2C VFIN BARRIER S-BOUNDARY OR CS) ; # (*1 ("?")); 
 	#$ Leago nieida vai bárdni?
 	#$ Odne vai ihttin?
 	#$ ...čállogo journála elektrovnnalaččat vai báhpárii?
+	#$ Sámedikki eará orgánat mearridit ieža galget go čoahkkimat leat rabas vai gitta.
 
 #!! * __killAllvainotCSCVP__ Select all vai CS @CVP	
 SELECT:killAllvainotCSCVP (CS @CVP) IF (0 ("vai"));
@@ -4994,15 +4999,22 @@ REMOVE:dadeCNP (@CNP) IF (0 DADE) ;
 	#$ Mađe mielde oaivi, dađe mielde ságat. # ii leat VFIN   
 
 #!! * __CVPNPron__ No finite verb or verbalactivity in front N/Pron @CNP N/Pron	
-REMOVE:CVPNPron (CC @CVP)  IF ((-1 NP-HEAD-NOM OR (Pron Nom) LINK NOT *-1 REAL-V BARRIER S-BOUNDARY-NOT-CVP OR CS) OR (-1 NP-HEAD-NOM LINK *-1 VERBAL-ACTIVITY-V BARRIER NOT-NPMOD))(*1 NP-HEAD-NOM BARRIER NOT-NPMOD-ACC-ADV);
+REMOVE:CVPNPron (CC @CVP)  IF (
+(-1 NP-HEAD-NOM OR (Pron Nom) LINK NOT *-1 REAL-V BARRIER S-BOUNDARY-NOT-CVP OR CS) OR 
+(-1 NP-HEAD-NOM LINK *-1 VERBAL-ACTIVITY-V BARRIER NOT-NPMOD))
+(*1 NP-HEAD-NOM BARRIER NOT-NPMOD-ACC-ADV) (NEGATE -1 @COMP-CS<);
 	#$ Maid moarsi ja irgi leaba čiŋadan gávttiiguin.
 	#$ Mun ja mu ustibat manaimet kinoi geahččat buot ođđaseamos Harry Potter-filmma.
+	#% Dat guhte ii biso mu siste, bálkestuvvo olggos dego oaksi ja son goldná.
 
 
 #!! * __CVPnoVfin__ No potential finite verb following
 REMOVE:CVPnoVfinAttr (@CVP) IF (0 CC LINK -1 N) (1 Attr LINK 1 N LINK NOT 1* VFIN BARRIER S-BOUNDARY OR CS OR PUNCT-RIGHT)(NEGATE *1 ("leat" PrfPrc) BARRIER S-BOUNDARY-NOT-CVP OR PUNCT-RIGHT OR CCCOMMA LINK NOT *-1 PrfPrc BARRIER REAL-V)(NEGATE 1 MO - ("nugo") OR ("de") OR Rel LINK *1 VFIN)(NEGATE -1 BOS)  ; 
 
-REMOVE:CVPnoVfin1 (@CVP) IF (NOT *1 VFIN BARRIER S-BOUNDARY OR CS OR PUNCT-RIGHT)(NEGATE *1 ("leat" PrfPrc) BARRIER S-BOUNDARY-NOT-CVP OR PUNCT-RIGHT OR CCCOMMA LINK NOT *-1 PrfPrc BARRIER REAL-V)(NEGATE 1 MO - ("nugo") OR ("de") OR Rel LINK *1 VFIN)(NEGATE -1 BOS)(NEGATE 1 CC OR CS LINK *1 VFIN)(NEGATE *1 Inf BARRIER REAL-V OR S-BOUNDARY LINK *-2 Inf BARRIER REAL-V LINK *-1 MOD-ASP OR INF-V BARRIER REAL-V OR S-BOUNDARY)  ; 
+
+REMOVE:CVPnoVfin1 (@CVP) IF (NOT *1 VFIN BARRIER S-BOUNDARY OR CS OR PUNCT-RIGHT)
+(NEGATE 0 ("muhto") LINK *1 Rel BARRIER REAL-V OR SV-BOUNDARY LINK *1 VFIN LINK *1 VFIN)
+(NEGATE *1 ("leat" PrfPrc) BARRIER S-BOUNDARY-NOT-CVP OR PUNCT-RIGHT OR CCCOMMA LINK NOT *-1 PrfPrc BARRIER REAL-V)(NEGATE 1 MO - ("nugo") OR ("de") OR Rel LINK *1 VFIN)(NEGATE -1 BOS)(NEGATE 1 CC OR CS LINK *1 VFIN)(NEGATE *1 Inf BARRIER REAL-V OR S-BOUNDARY LINK *-2 Inf BARRIER REAL-V LINK *-1 MOD-ASP OR INF-V BARRIER REAL-V OR S-BOUNDARY)  ; 
 	#$ Mun máhtán láibut sihke šuhkoládagáhku ja lákcagáhku.
 	#$ Mii bidjat dávviriid skáhpiide ja lođáide.
 	#$ Mii vuolgit Londonii golmmain mánáin ja ovttain beatnagiin.
@@ -5013,7 +5025,7 @@ REMOVE:CVPnoVfin1 (@CVP) IF (NOT *1 VFIN BARRIER S-BOUNDARY OR CS OR PUNCT-RIGHT
 	#$ Ja nugo olmmoš gohčodii guđege ealli, nu dat šattai navdojuvvot.	
 	
 #!! * __CVPInfInf__ between to Inf
-REMOVE:CVPInfInf (@CVP) IF  (-1 Inf LINK NOT -1 N)(1 Inf); 
+REMOVE:CVPInfInf (@CVP) IF  ((-1 Inf LINK NOT -1 N) OR (-1 Inf LINK -1 Acc LINK -1 REAL-V))(1 Inf); 
 	#$ Dii oahppabehtet lohkat ja čállit sámegillii.
 
 #!! * __CVPInfInf__ between to Adv
@@ -5093,7 +5105,11 @@ REMOVE:CVPA (@CVP)  IF (-1C A)(1C A LINK *1 N BARRIER NOT-NPMOD);
 
 
 #!! * __CVPAccAdv__ Acc @CNP Adv Acc	
-REMOVE:CVPAccAdv (CC @CVP) IF  (-1 Acc)(*1 Acc BARRIER NOT-NPMODADV LINK NOT 0 VFIN);
+REMOVE:CVPAccAdv (CC @CVP) IF  (-1 Acc)(*1 Acc BARRIER NOT-NPMODADV LINK NOT 0 VFIN)(NEGATE 1 Num LINK 1 Gen LINK 1 VFIN);
+#REMOVE:CVPAccAdv (CC @CVP) IF (-1 Gen)(*1 Gen BARRIER NOT-NPMODADV LINK 1 Po OR ADVLCASE);
+	#$ Juos gorreválggain lea dárbbašlaš deavdit gáibádusa, man mielde lahtuid ja sadjásašlahtuid gaskkas galget leat sihke nissonat ja dievddut.
+	#% Beassášmárkaniin fitne sullii 9000 guossi ja 3500 guossi ledje čakčamárkaniin.
+
 
 SELECT:CVP (@CVP)  IF (*-1C VFIN BARRIER S-BOUNDARY)(*1C NP-HEAD-NOM BARRIER NOT-NPMOD LINK *1 VFIN BARRIER S-BOUNDARY)(NEGATE 0 go LINK *1 Inf BARRIER VFIN) ;
 	#$ Áhčči vulggii, ovdalgo mun bohten.
