@@ -3910,12 +3910,14 @@ SELECT:r950 (V Sg1) IF (*1 MUN BARRIER NOT-ADV-PCLE);
 	#!! !Sg2 - early cycle, safe rules
 
 
-#!! * __VSG2IfLeftDon__ selects Sg2 when "don" is to the right (r951)
+#!! * __VSG2IfLeftDon__ selects Sg2 when "don" is to the left (r951)
 SELECT:VSG2IfLeftDon SG2-V IF ((*-1 DON BARRIER SG2-V OR ConNeg OR S-BOUNDARY OR VFIN LINK NOT *-1 SG2-V BARRIER S-BOUNDARY) OR (-1 (Rel Nom) LINK -1 DON));
  	#$ ...jos don fal luoitádat ja gudnejahtát mu.
  	#$ Rohkadallet dasto ná: Áhččámet, don guhte leat almmis.
 
-#!! * __VSG2IfRightDon__ selects Sg2 when "don" is to the left (r952)
+
+
+#!! * __VSG2IfRightDon__ selects Sg2 when "don" is to the right (r952)
 SELECT:VSG2IfRightDon SG2-V IF (*1 DON BARRIER S-BOUNDARY);
  	#$ Leat go don dat guhte galgá boahtit? 
 
@@ -10298,14 +10300,14 @@ SELECT:r2975 PL3-V IF (*-1C NP-HEAD-PL-NOM BARRIER (V PrfPrc) OR PPRON-NOT-SII O
 SELECT:r2976 PL3-V IF (*1C NP-HEAD-PL-NOM BARRIER PPRON-NOT-SII OR S-BOUNDARY);
 
 
+#!! * __Sg2LeftDon__ selects Sg2 in Rel phrase if don to the left of it
+SELECT:Sg2LeftDon SG2-V IF (*-1 Rel - Nom BARRIER (Pers Nom) LINK *-1 DON BARRIER (Pers Nom));
+	#$ Don galggat doallat dan maid leat vurdnon Hearrái.
 
 # After everything has been done, we go for the third person.
 
 #!! * __allSg2leat__ removes Sg2 if leat Prs Pl3
 REMOVE:allSg2leat Sg2 IF (0 ("leat" Prs Pl3));
-
-#!! * __allPl1__ removes Pl1 if Pl3
-REMOVE:allPl1 Pl1 IF (0 (Prs Pl3) LINK NOT 0 Imprt);
 
 #!! * __allPrtSg2__ removes PrtSg2 if PrsPl3
 REMOVE:allPrtSg2 (Prt Sg2) IF (0 (Prs Pl3));
@@ -10895,7 +10897,12 @@ SELECT:SSg2Interr (V Sg2)(0 (V Pl1) LINK *-1 Interr) ;
 
 SELECT:SSg2Qst (V Sg2)(0 (V Pl1) LINK *-1 CS)(NEGATE *0 Pl1) ;
 SELECT:SSg2Pot (V Sg2)(0 (V Pot Pl1)) ;
-#SELECT:SSg2Pl1 (V Sg2)(0 (V Pl1) LINK NOT *0 Pl1) ;
+SELECT:Pl3Pot Pl1 IF (0 (Pot Pl3) LINK *0 Pl1 OR Sg1) ;
+SELECT:Pl3Pot Pl3 IF (0 (Pot Pl1) LINK *0 Pl3) ;
+REMOVE:Pl1 Pl1 IF (0 (Prs Pl3))((*-1 Loc OR (Pl Nom) OR (Sg Nom) OR Pl3 OR (Num Nom) BARRIER VFIN) OR (*1 ("?"))) ;
+SELECT (V Pl1) (0 (V Pl3) LINK NOT 0 Inf) ;
+
+
 
 SUBSTITUTE (A) (A <sme>) WORD ;
 SUBSTITUTE (N) (N <sme>) WORD ;
