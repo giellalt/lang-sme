@@ -117,7 +117,6 @@ GT_FILTER_TARGETS+=\
 					remove-lang_hom-tags.hfst        \
 					remove-mwe-strings.hfst          \
 					remove-semantic-tags.hfst        \
-					remove-semantic-tags-except-prop.hfst \
 					reorder-semantic-tags.hfst
 endif
 
@@ -149,7 +148,6 @@ GT_FILTER_TARGETS+=\
 					remove-lang_hom-tags.xfst        \
 					remove-mwe-strings.xfst          \
 					remove-semantic-tags.xfst        \
-					remove-semantic-tags-except-prop.xfst \
 					reorder-semantic-tags.xfst
 endif
 
