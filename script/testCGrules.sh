@@ -1,7 +1,7 @@
 # Skript for å teste analysen av testkorpus.txt og divgullkorpus.txt med sme.fst og sme-dis.rle opp mot gullversjon.
 
 # Analyserer testkorpusene:
-cat $GTBIG/gt/sme/corp/testkorpus.txt $GTBIG/gt/sme/corp/divgullkorpus.txt | preprocess --abbr=$GTHOME/gt/sme/bin/abbr.txt | $LOOKUP $GTHOME/gt/sme/bin/sme.fst | lookup2cg | vislcg3 -g $GTHOME/gt/sme/src/sme-dis.rle > $GTHOME/gt/sme/dev/testdis
+cat $GTBIG/gt/sme/corp/divgullkorpus.txt | preprocess --abbr=$GTHOME/gt/sme/bin/abbr.txt | $LOOKUP $GTHOME/gt/sme/bin/sme.fst | lookup2cg | vislcg3 -g $GTHOME/gt/sme/src/sme-dis.rle > $GTHOME/gt/sme/dev/testdis
 
 # Fjerner semantiske tagger, # osv:
 
@@ -11,7 +11,7 @@ cat $GTHOME/gt/sme/dev/testdis | perl -pe 's/(Sem\/Plc\-line|Sem\/Plc\-water|Sem
 perl $GTHOME/gt/script/sort-cg-cohort.pl $GTHOME/gt/sme/dev/cleantestdis | uniq > $GTHOME/gt/sme/dev/sortedtestdis
 
 # Henter gullstandarder, fjerner semantiske tagger, # osv :
-cat $GTBIG/gt/sme/corp/correct/testkorpus.N.corr.txt $GTBIG/gt/sme/corp/correct/divgullkorpus.N.corr.txt | perl -pe 's/(Sem\/Plc\-line|Sem\/Plc\-water|Sem\/Plc\-elevate|Sem\/Substnc|Sem\/Feat\-psych|Sem\/Body\-abstr|Sem\/Feat\-phys|Sem\/Feat|Sem\/Part|Sem\/Clth\-part|Sem\/State|Sem\/Perc\-Emo|Sem\/Build\-part|Sem\/Mat|Sem\/Emo|Sem\/Curr|Sem\/Clth\-jewl|Sem\/Obj\-el|Sem\/Obj\-clo|Sem\/Furn|Sem\/Lang|Sem\/Money|Sem\/Ani|Sem\/Body|Sem\/Build|Sem\/Clth|Sem\/Edu|Sem\/Event|Sem\/Fem|Sem\/Food|Sem\/Group|Sem\/Hum|Sem\/Mal|Sem\/Measr|Sem\/Obj|Sem\/Org|Sem\/Plant|Sem\/Plc|Sem\/Route|Sem\/Sur|Sem\/Time|Sem\/Txt|Sem\/Veh|Sem\/Wpn|Sem\/Wthr|Sem\/Mat|Sem\/Semcon|Sem\/Ctain|Sem\/Date|Sem\/Act|Sem\/AniProd|Allegro|v1|v2|v3|v4|v5|v6|v7|v8|<vdic>|<sme>) //g'  > $GTHOME/gt/sme/dev/cleangullkorpus.dis.corr.txt
+cat $GTBIG/gt/sme/corp/correct/divgullkorpus.N.corr.txt | perl -pe 's/(Sem\/Plc\-line|Sem\/Plc\-water|Sem\/Plc\-elevate|Sem\/Substnc|Sem\/Feat\-psych|Sem\/Body\-abstr|Sem\/Feat\-phys|Sem\/Feat|Sem\/Part|Sem\/Clth\-part|Sem\/State|Sem\/Perc\-Emo|Sem\/Build\-part|Sem\/Mat|Sem\/Emo|Sem\/Curr|Sem\/Clth\-jewl|Sem\/Obj\-el|Sem\/Obj\-clo|Sem\/Furn|Sem\/Lang|Sem\/Money|Sem\/Ani|Sem\/Body|Sem\/Build|Sem\/Clth|Sem\/Edu|Sem\/Event|Sem\/Fem|Sem\/Food|Sem\/Group|Sem\/Hum|Sem\/Mal|Sem\/Measr|Sem\/Obj|Sem\/Org|Sem\/Plant|Sem\/Plc|Sem\/Route|Sem\/Sur|Sem\/Time|Sem\/Txt|Sem\/Veh|Sem\/Wpn|Sem\/Wthr|Sem\/Mat|Sem\/Semcon|Sem\/Ctain|Sem\/Date|Sem\/Act|Sem\/AniProd|Allegro|v1|v2|v3|v4|v5|v6|v7|v8|<vdic>|<sme>) //g'  > $GTHOME/gt/sme/dev/cleangullkorpus.dis.corr.txt
 
 # Sorterer alfabetisk inne i cohortene
 perl $GTHOME/gt/script/sort-cg-cohort.pl $GTHOME/gt/sme/dev/cleangullkorpus.dis.corr.txt | uniq > $GTHOME/gt/sme/dev/sortedgullkorpus 
