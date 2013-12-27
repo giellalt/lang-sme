@@ -2243,7 +2243,7 @@ REMOVE:PropAttr (Prop Attr) IF (NEGATE *1 Prop OR Ord BARRIER NOT-INITIAL-CC);
 	#$ Dat lea dehálaš, lohká Svein Ottar Helander.
 
 # All these superseded by the remove rule above:
-SELECT:PropSur (Prop Sem/Sur) IF (*-1 VFIN BARRIER S-BOUNDARY) (1 FIRSTNAME LINK NOT 0 Sem/Sur) ;
+SELECT:PropSur (Prop Sem/Sur) IF (*-1 VFIN BARRIER S-BOUNDARY) (1 FIRSTNAME LINK NOT 0 Sem/Sur LINK NEGATE 1 Sem/Sur LINK 1 CRD) ;
 	#$ De vuolgá Biret Turi Lene Antonsen lusa.
 	#$ De vuolgá viimmat Biret Turi Lene Antonsen lusa.
 	#$ Dovdágo Biret Turi Lene Antonsen?
@@ -7310,7 +7310,7 @@ LIST SAPMI-PROP-HEAD = "allaskuvla" "bálvalusguovddáš" "cup" "dihtorlávdegod
 # HUMAN
 
 #!! * __SEMnotPossessor__ Removes Gen if you are not a possible possessor (a human) # HAB-ACTOR
-REMOVE:SEMnotPossessor Gen IF (0 (N Acc) or (Rel Gen) LINK NOT 0 HUMAN-INDIVIDUAL OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR HAB-ACTOR OR ABSTR-TEXT OR ANIMAL OR TIME OR TITLE OR NATION OR ("dállu") OR ("báiki") OR ORGANIZATION OR Prop)(NEGATE -1 Num OR Pr)(*1 FAMILY BARRIER NOT-NPMOD)(NEGATE 0 ANIMAL LINK *1 FAMILY-ALSO-ABSTRACT BARRIER NOT-NPMOD)(NEGATE 0 ("viidni") OR ("čáhci") OR ("illu") LINK -1 ("eallin")) ;
+REMOVE:SEMnotPossessor Gen IF (0 (N Acc) or (Rel Gen) LINK NOT 0 HUMAN-INDIVIDUAL OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR HAB-ACTOR OR ABSTR-TEXT OR ANIMAL OR TIME OR TITLE OR NATION OR ("dállu") OR ("báiki") OR ORGANIZATION OR Prop OR Sem/Hum)(NEGATE -1 Num OR Pr)(*1 FAMILY BARRIER NOT-NPMOD)(NEGATE 0 ANIMAL LINK *1 FAMILY-ALSO-ABSTRACT BARRIER NOT-NPMOD)(NEGATE 0 ("viidni") OR ("čáhci") OR ("illu") LINK -1 ("eallin")) ;
 	#$ Biret addá skeaŋkka Lemehii. 
 	#$ Moai oste bileahta Harry Potter-filbmii.
 	#% Abrama áhká namma lei Sarai, ja Nahora eamit lei Milka, Hanana nieida.
@@ -7318,7 +7318,7 @@ REMOVE:SEMnotPossessor Gen IF (0 (N Acc) or (Rel Gen) LINK NOT 0 HUMAN-INDIVIDUA
 	#% Hearrá guhte lea profehtaid vuoiŋŋa Ipmil, lea vuolggahan eŋgelis čájehit bálvaleddjiidasas dan mii fargga dáhpáhuvvá.
 
 
-#!! * __SEMnotHUM__ removes Gen. This is when an NP is thouht to be the OBJ, because it's not in the human sets and to the right is NON-FAMILY ''njálgáid mánáide''
+#!! * __SEMnotHUM__ removes Gen. This is when an NP is thought to be the OBJ, because it's not in the human sets and to the right is NON-FAMILY ''njálgáid mánáide''
 REMOVE:SEMnotHUM Gen IF (0 (N Acc) LINK NOT 0 (Prop Sem/Plc) OR HUMAN-INDIVIDUAL OR HUMAN-GROUP OR PROFESSION OR OFFICE OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ABSTR-TEXT OR PLACE OR NATION OR EDUCATION OR ORGANIZATION OR INSTITUTION OR INDUSTRY OR TIME OR Loc)(NEGATE 0 (NomAg Gen))(NEGATE -1 Num OR Ord OR Pr)(NEGATE -1 @CNP LINK -1 Gen)(*1 NON-FAMILY BARRIER NOT-A)(NEGATE 1 COMMA)(NEGATE *1 TRANS-V + FMAINV BARRIER S-BOUNDARY);
 	#$ Mun roggen ozastan njálgáid mánáide.
 	#$ Mun lean boahtán bidjat soahpameahttunvuođa bártni ja áhčis gaskii.
@@ -7782,7 +7782,13 @@ SELECT:topGEN Gen IF (-1 BOS)(0 Gen LINK 1 (@>N) + PrfPrc LINK 1 Nom)(NEGATE 0 A
 	#$ Skuvllaviesu báhcán fiellut ja ávdnasat dolvouvvojedje Goalsevuohpái ja adnoje doppe skuvlii.
 	#$ Plána celkojuvvon mihttomearri, juobe vuosttaš veršuvnnas, lei bajásgeassit ođđa sámebuolvvaid.
 	#% Ollesdálveskuvlla ožžon easka go jagi maŋŋeil mannen Kárášjohkii vázzit Sámi álbmotallaskuvlla.
-	
+
+#!! *__Genlassin__
+SELECT:Genlassin Gen (1 ("lassi" Ess)) ;
+	#$ Bargostipeanddaid lassin leat juolludan vel mátke-, lohkan- ja ávnnasstipeanddaid, sadjásaš stipeandda ja álggahanstipeanddaid oktiibuot 580 000 ruvnnu ovddas.
+SELECT:lassinIll Ill (-1 ("lassi" Ess) LINK NOT -1 Gen OR Ill) ;
+	#$ Lassin Sarai ožžot golmma jagi bargostipeandda girječálli Sara Margrethe Oskal, govvadáiddár Matti Aikio, hábmejeaddji Anne Berit Anti ja girječálli Sigbjørn Skåden.
+		
 #!! !Gen and preposition/postposition
 
 
@@ -8361,7 +8367,7 @@ SELECT:GenNP1 (Pron Pers Gen) IF (-1 NP-BOUNDARY - TRANS-V OR Acc OR (Sem/Plc Lo
 	#$ Gáivuonas su áhčis leat guokte oambeali ja guokte vilbeali.
 
 #!! * __GenNP2__ Selects Gen for N (modifier): if CC "ja" immediately to your left and accusative to your right ''ja sámi jurddašanvuogi''
-SELECT:GenNP2 (N Gen)  IF (-1 ("ja"))(1 (N Acc))(NEGATE 0 V OR ABBR OR Attr);
+SELECT:GenNP2 (N Gen)  IF (-1 ("ja"))(NEGATE 0 TITLE LINK 1 Prop)(1 (N Acc))(NEGATE 0 V OR ABBR OR Attr);
 	#$ Miššonbarggu álggu rájes juo Leem háliidii oahppat sámegiela ja sámi jurddašanvuogi.
 	#% Sii ožžot geavahit eatnama ja gáttiid ja elliideaset ja iežaset ealáhussii. # Deaivá dán vaikko eat hálit dan.
 
