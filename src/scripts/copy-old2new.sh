@@ -48,8 +48,6 @@ cp -f $OLDSRCDIR/verb-sme-lex.txt         $NEWSRCDIR/$STEMSDIR/verbs.lexc
 # syntax/ dir files
 echo "*** Copying syntax ***"
 cp -f $OLDSRCDIR/sme-dis.rle    $NEWSRCDIR/syntax/disambiguation.cg3
-cp -f $OLDCOMMONDIR/smi-dep.rle    $NEWCOMMONDIR/syntax/dependency.cg3
-cp -f $OLDSRCDIR/smi-syn.rle    $NEWCOMMONDIR/syntax/functions.cg3
 
 # phonology/ dir files
 echo "*** Copying phonology ***"
