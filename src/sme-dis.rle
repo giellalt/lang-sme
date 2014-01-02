@@ -275,6 +275,7 @@ LIST Sem/Sur = Sem/Sur ;	 #!! Sem/Sur
 LIST Sem/Time = Sem/Time ;	 #!! Sem/Time
 LIST Sem/Hum = Sem/Hum ;	 #!! Sem/Hum
 LIST Sem/Date = Sem/Date ;	 #!! Sem/Date
+LIST Sem/Year = Sem/Year ;	 #!! Sem/Year
 LIST Sem/Group = Sem/Group ; #!! Sem/Group
 LIST Sem/Route = Sem/Route ; #!! Sem/Route
 LIST Sem/Build = Sem/Build ; #!! Sem/Build
@@ -971,7 +972,7 @@ LIST COM-ADV = "fárrolaga" "oktan" "oktanaga" "ovttamielas" "ovttas" "ovttasrá
 # Other adverb sets
 # - - - - - - - - - 
 
-LIST GRADE-ADV =  "áibbas" "beare" ("duođaid" Adv) ("eanet" Adv) "erenoamán" "erenoamáš" "hirbmat" "hui" "ila" "issoras" ("man" Adv) ("mealgat" Adv) ("mearkkašahtti" Adv) "measta" "menddo" "muhtun_muddui" "nu" "oalle" "oba" ("oppa" Adv) "sakka" "seammá" ("veaháš" Adv) ("uhccán" Adv) ("unnán" Adv) "vehá" "veháš" "veahá" "veaháš" "viehka" ;
+LIST GRADE-ADV =  "áibbas" "beare" ("duođaid" Adv) ("eanet" Adv) "erenoamán" "erenoamáš" "hirbmat" "hui" "ila" "issoras" ("man" Adv) ("mealgat" Adv) ("mearkkašahtti" Adv) "measta" "menddo" "muhtun_muddui" "nu" "oalle" "oba" ("oppa" Adv) "sakka" ("seammá" Adv) ("veaháš" Adv) ("uhccán" Adv) ("unnán" Adv) "vehá" "veháš" "veahá" "veaháš" "viehka" ;
 
 LIST PLURALIZER = "buot" "buotlágan" "buotlágaš" "earálágan" "iežálágan" "gait" "gaitlágan" "goappeš" "goappašat" "máŋggalágan" "moattelágan" ;
     # Singular nouns can have a plural form combined with those
@@ -1144,8 +1145,6 @@ SET NOT-NAPrfCC = WORD - N - A - CC - PrfPrc ;
 
 SET NOT-NP = VFIN-NOT-NEG OR ConNeg OR Inf OR Pcle OR Interj OR CS ;
  # The set NP-BOUNDARY is bigger. 
-
-SET NPROP = N - PROP ;
 
 SET CLB_NOT-COMMA = CLB - COMMA OR PUNCT-LEFT OR PUNCT-RIGHT ;
 
@@ -1998,6 +1997,7 @@ BEFORE-SECTIONS
 SUBSTITUTE:Date1 (Num Sg) (Num Sg Sem/Date) TARGET ("<[0-3][0-9][.][0-2][0-9][.][1-2][0-9][0-9][0-9]>"r Num) ;
 SUBSTITUTE:Date1 (Num Sg) (Num Sg Sem/Date) TARGET ("<[0-9][.][0-9][.][1-2][0-9][0-9][0-9]>"r Num) ;
 SUBSTITUTE:Date1 (Num Sg) (Num Sg Sem/Date) TARGET ("<[0-3][0-9][.][0-2][0-9][.][0-9][0-9]>"r Num) ;
+SUBSTITUTE:Date1 (Num Sg) (Num Sg Sem/Year) TARGET ("<[1-2][0-9][0-9][0-9]>"r Num) ;
 
 #!! * Rule for adding <vdic> to verbs denoting verbal actions like: ... dadjá Aili Kestkitalo.
 
@@ -2145,6 +2145,16 @@ LIST NOT-PROP = "Vuoksá" "Heasta" "Stállu" "Guksi" "Gáldu" "Návet" "Náhkki"
 REMOVE:Prop=noun Prop IF (0 NOT-PROP) ;
 # Comment: Min Áigi is Prop but Áigi in the beginning of the sentence is not.
 
+#!! * Some propernouns have two parts and the first is not a genetive. We still have problems with abbr when these propernouns are inflected.
+
+LIST PROP-FIRST = "Soria" ;
+LIST PROP-SECOND = ("Moria.*"r) ;
+
+SUBSTITUTE:SoriaMoria (Sg Nom) (Attr) TARGET PROP-FIRST + Nom IF (1 PROP-SECOND) ;
+SELECT Attr (0 PROP-FIRST LINK 1 PROP-SECOND) ;
+	#$ Soria Moria-julggaštusas definerejuvvojedje davviguovllut Norgga deaŧaleamos nannensuorgin boahttevaš jagiid.
+
+
 #!! *Removes __PropPl__, but problems with names as Davviriikkaid Ráđi, there we want Prop Pl
 REMOVE:PropPl (Prop Pl) IF (0 COMMON-N LINK NOT 1 ("ráđđi"))(NEGATE 0 VGen); 
   	#$ Sápmelaččaide lea hui mávssolaš ahte sin dárbbut váldojit vuhtii. 
@@ -2202,7 +2212,7 @@ REMOVE:PropAttrIfPropx (Prop Attr) - Der/laš IF (NOT *1 Prop BARRIER REAL-WORD-
 	#$ Ášši 05/01 Ođđa áššiid dieđiheapmi.
 	
 #!! *Selects __Prop__ if capital letter inside clause
-SELECT:PropInside Prop IF (NEGATE *-1 BOS OR (":") BARRIER WORD - ("ášši") - Num)(0 N LINK NOT 0 (Der/t) OR (Der/laš));
+SELECT:PropInside Prop IF (NEGATE *-1 BOS OR (":") BARRIER WORD - Num)(0 N LINK NOT 0 (Der/t) OR (Der/laš));
 	#$
 	#% 
 
@@ -2267,6 +2277,10 @@ SELECT:PropAttrCoord (Prop Attr) IF (NEGATE -1 Prop)(1 CC LINK 1 (Prop Attr) LIN
 
 REMOVE:PropAttr1 (Prop Attr) IF (NEGATE 1 FIRSTNAME OR (Prop Sem/Sur) OR INITIAL OR Ord); 
 	#$ De vuolgá Biret Merete Trosterudii. #This one gets Sem/Sur
+
+SELECT:firstname FIRSTNAME (0 Sem/Plc)((1 FAMILY OR NON-FAMILY) OR (*1 ("gii") OR ("guhte") BARRIER WORD)) ;
+	#$ Salmai riegádii Boas, gean eadni lei Rahab.
+	#$ Rama bártnit ledje Saba ja Dedan.
 
 SELECT:PropAttr2 Attr IF (0 FIRSTNAME OR INITIAL)(NEGATE 0 Loc)(1 INITIAL LINK *1C (Prop Sem/Sur) BARRIER REAL-WORD-NOT-ABBR)(NEGATE 0 Acc LINK *1 Acc BARRIER NOT-NP LINK NOT 0 FIRSTNAME);
 
@@ -2798,11 +2812,11 @@ REMOVE:Killrecipr Recipr IF ;
  	#$ Jos dajan nubbái: Mana! de son manná.
 
 #!! !!Variant lemmas
-LIST LEMMA1 = "Annika" "álbmot" "árran" "bargi" "bealli" "beassážat" "boadnji" "boalvvir" ("boaris" A Comp) "buvssat" "čábmit" "čáppat" "čuohti" "dadjalit" "dahkamuš" "dálolaš"  ("dát" Pron Dem Pl Com) "dološ" "eanaláigo#boahtu" "Elle" "gámmir" (".*geaisár") (".*gursa"r) "Jovnna" "kaleandar" (".*keallir"r) "lávži"
+LIST LEMMA1 = "Annika" "álbmot" "árran" "bargi" "bealli" "beassážat" "boadnji" "boalvvir" ("boaris" A Comp) "buvssat" "čábmit" "čáppat" "čuohti" "dadjalit" "dahkamuš" "dálolaš"  ("dát" Pron Dem Pl Com) "dološ" "eanaláigo#boahtu" "Elle" "gámmir" (".*geaisár") (".*gursa"r) "Jáhkob" "Jovnna" "kaleandar" (".*keallir"r) "lávži"
 "lihpar" ("[0-9]*-lohku"r) "Máret" ("mieđihit") (".*mirko"r) "moattis" "motocrossa" "moraš" (".*muslima"r) (".*Norga"r) "oapman" "oasálaš" (".*rádji"r) "rájes" ("rikkis" A Comp Pl Nom) "ruošša#čuhti" "ruvdnu" "sáhpán" "smávvadálolaš" "speajal" "suoivva" "visot" "viššal" "vuollái" ;
     # first dictionary form
 
-LIST LEMMA2 = "Annik" "álbmut" "ára" "bargit" "bealle" ("beassi" Der/Dimin) "boadnjá" "boalvár" ("boaris" A* Comp Der/at Adv) "buksa" "čápmit" "čáppis" "čuođi" ("dadjat" V* TV Der/l) ("dahkat" V* TV* Der/muš) ("dáigut" V* IV* Der/NomAg N Sg Com) ("dállu" N* Der/laš) ("doallu" N* Der/Dimin) "eanaláigo#boađđu" "Elli"  "gámmár" (".*geaissir") (".*gurse"r) "Jovdna" "Jovna" "kaleanddar" (".*keallár"r) "lávžá"
+LIST LEMMA2 = "Annik" "álbmut" "ára" "bargit" "bealle" ("beassi" Der/Dimin) "boadnjá" "boalvár" ("boaris" A* Comp Der/at Adv) "buksa" "čápmit" "čáppis" "čuođi" ("dadjat" V* TV Der/l) ("dahkat" V* TV* Der/muš) ("dáigut" V* IV* Der/NomAg N Sg Com) ("dállu" N* Der/laš) ("doallu" N* Der/Dimin) "eanaláigo#boađđu" "Elli"  "gámmár" (".*geaissir") (".*gurse"r)  "Jáhkot" "Jovdna" "Jovna" "kaleanddar" (".*keallár"r) "lávžá"
 "libar" ("[0-9]*-loahku"r) ("[0-9]*-logus"r) "Máre" "mieđidit" (".*mirku"r) (".*mirkko"r) "moattes" "motocross" "mora" (".*muslim"r) (".*Norge"r) "oama" ("oassi" N* Der/laš) (".*rádjá"r) "rájis" ("rikkis" A* Comp Der/at Adv) "ruošša#čuđđi" "ruvdno" "sábin" ("smávvadállu" N* Der/laš) "speadjal" "suoivvan" "viso"  "viššalaš" "vuolli" ;
 
 #!! * Remove lemma2 if lemma 1
@@ -4385,7 +4399,7 @@ REMOVE:Amannit A IF (*-1 IV BARRIER SV-BOUNDARY LINK NOT 0 COPULAS)(0 ("maŋŋit
 	#$ Eatnandoallu bođii maŋŋit Sápmái.
 
 SELECT:gradeAdv GRADE-ADV IF (0 REAL-V LINK 1 A OR Adv) ;
-SELECT:gradeAdvA GRADE-ADV + Adv IF (0 A OR Indef LINK 1 (A Nom)) ;
+SELECT:gradeAdvA GRADE-ADV + Adv IF (0 A OR Indef LINK 1 (A Nom) OR (A Ess)) ;
 SELECT:gradAdvAdv MOD-ADV-ADV IF (1 Adv OR Indef LINK NOT 0 Po OR N) ;
 	#$ Dii uhccán oskkolaččat.
 	#$ Man uhccán osku dus lea!
@@ -7271,6 +7285,9 @@ SELECT:NumNomCoor (Num Sg Nom)(0 Num LINK *-1 CC BARRIER NOT-ADV LINK -1C (Num N
 SELECT:NumNomCop (Num Nom) IF ((*-1 COPULAS + FMAINV BARRIER NOT-ADV-PCLE LINK *-1 NP-HEAD-NOM BARRIER NOT-ADV-PCLE) OR (*-1 NP-HEAD-NOM BARRIER NOT-ADV-PCLE LINK *-1 COPULAS + FMAINV BARRIER NOT-A LINK -1 (CC @CVP) OR ("de") OR BOS))(1 (Sg Gen))(NEGATE 2 Po OR (A Nom) OR Pr) ;
 	#$ Ja go geassit eret dábálaš goluid, de lea buhtes sisaboahtu sullii 100 000 ruvnnu, muitala Eriksen.
 
+SELECT:NumNomYear (Num Nom) IF (0 Sem/Year LINK -1 Sem/Sur LINK 2 (":")) ;
+SELECT:NumNomPage (Num Nom) IF (-1 (":") LINK -1 Sem/Year LINK -1 Sem/Sur) ;
+
 
 #!! !!ACCUSATIVE-GENITIVE DISAMBIGUATION
 
@@ -7926,7 +7943,7 @@ SELECT:aigiAcc TIME + Acc IF (NEGATE -1 Num)(1 ("áigi" Adv)) ;
 
 
 #!! * __GenBeaivi2__ selects Gen if you are beaivi with the end of the sentence or comma to your right. Restrictions to the left ''riegádanbeaivvi,''
-SELECT:GenBeaivi2 Gen IF (NEGATE *-1 STRICT-TRANS-V OR DURATION-V BARRIER SV-BOUNDARY OR DURATION-A LINK NOT 0 ("leat"))(0 BEAIVI-REF)(1 EOS OR COMMA LINK NOT *1 REAL-V);	
+SELECT:GenBeaivi2 Gen IF (NEGATE *-1 STRICT-TRANS-V OR DURATION-V BARRIER SV-BOUNDARY OR DURATION-A LINK NOT 0 ("leat"))(0 BEAIVI-REF OR Sem/Year)(1 EOS OR COMMA LINK NOT *1 REAL-V);	
 	#$ Mii leimmet doppe mu riegádanbeaivvi, čakčamánu 3. b.
 	#$ Mun vuolggán ihttin, bearjadaga.
 	#$ Mun láven basadanlanja bassat juohke bearjadaga.
@@ -10834,8 +10851,11 @@ REMOVE ("gáfe") (0 ("gáffe") - Nom) ;
 SELECT (Num Nom)((-1 ("diibmu") OR Num) OR (-2 ("diibmu")) OR (1 Num))   ;
 	#$ Diibmu lea vihtta.
 
-
 #!! !!Case rules
+
+SELECT:NumGen (Num Gen) (-1 (Dem Gen)) ;
+	#$ Dán čieža oassálasti searvvis ii lean oktage boazodoalli, muhto kurssa oahpaheaddjis, Kjell Smestadas, lea doaivva ahte boazodolliide maid galgá gávdnot sierra heivehuvvon fálaldat.
+	
 #!! !!Other rules for nouns and pronouns
 
 #!! !!Determiners
@@ -10884,6 +10904,7 @@ SELECT:Attr (A Attr)(NOT 0 Adv OR DEHALAS LINK 1 N) ;
 SELECT:Nom Nom (0 DEHALAS + Attr LINK -1 COPULAS + FMAINV) ;
 
 #!! * __cleanSemClass__ cleans up if a word has more semclasses. This is just a start.
+SELECT:cleanSemClass FIRSTNAME (1 FAMILY OR NON-FAMILY) ;
 SELECT:cleanSemClass (Sem/Plc) (0 Sem/Org OR Sem/Sur OR FIRSTNAME) ;
 SELECT:cleanSemClass (Sem/Mal) (0 Sem/Sur) ;
 SELECT:cleanSemClass (Sem/Time) (0 (Sem/Measr) OR (Sem/Org)) ;
