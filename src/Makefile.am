@@ -28,7 +28,9 @@ endif # WANT_APERTIUM
 endif # CAN_HFST
 
 if CAN_XFST
-GT_ANALYSERS_XFST=analyser-gt-desc.xfst analyser-gt-norm.xfst
+GT_ANALYSERS_XFST=analyser-gt-desc.xfst \
+					analyser-gt-norm.xfst \
+					analyser-disamb-gt-desc.xfst
 GT_GENERATORS_XFST=generator-gt-desc.xfst generator-gt-norm.xfst
 GT_TRANSFORMERS_XFST=transcriptor-clock2text-desc.xfst \
 					 transcriptor-date2text-desc.xfst \
@@ -497,3 +499,5 @@ generator%.hfst: generator%.tmp.hfst
 	$(AM_V_GEN)cp -f $< $@
 
 include $(top_srcdir)/am-shared/topdir-include.am
+
+
