@@ -8,7 +8,9 @@ SUBDIRS = phonology morphology filters phonetics hyphenation orthography syntax 
 ####### Automake targets: ########
 
 if CAN_HFST
-GT_ANALYSERS_HFST=analyser-gt-desc.hfst analyser-gt-norm.hfst
+GT_ANALYSERS_HFST=analyser-gt-desc.hfst \
+				  analyser-gt-norm.hfst \
+				  analyser-disamb-gt-desc.hfst
 GT_GENERATORS_HFST=generator-gt-desc.hfst generator-gt-norm.hfst 
 GT_TRANSFORMERS_HFST=transcriptor-clock2text-desc.hfst \
 					 transcriptor-date2text-desc.hfst \
@@ -29,8 +31,8 @@ endif # CAN_HFST
 
 if CAN_XFST
 GT_ANALYSERS_XFST=analyser-gt-desc.xfst \
-					analyser-gt-norm.xfst \
-					analyser-disamb-gt-desc.xfst
+				  analyser-gt-norm.xfst \
+				  analyser-disamb-gt-desc.xfst
 GT_GENERATORS_XFST=generator-gt-desc.xfst generator-gt-norm.xfst
 GT_TRANSFORMERS_XFST=transcriptor-clock2text-desc.xfst \
 					 transcriptor-date2text-desc.xfst \
