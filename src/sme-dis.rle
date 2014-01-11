@@ -1387,7 +1387,7 @@ SET LOC-HEAD = LOC-V OR LOC-COMPL-N ;
 SET COM-HEAD = COM-V OR OKTII-V OR COM-COMPL-N ;
 
   
-LIST PREGEN = "álggogeahčen" "beallemuttus" "beallemuddu" ("bealli" N Sg Loc) "gaskamuddu" "gaskkamuddo" "gaskkamuddu" ("gaskavuohta" N Sg Loc) "loahpageahčen" "oktavuohta" "ovttasbargu" ;
+LIST PREGEN = "álggogeahčen" "beallemuttus" "beallemuddu" ("bealli" N Sg Loc) "gaskamuddu" "gaskkamuddo" "gaskkamuddu" ("gaskavuohta" N Sg Loc) "loahpageahčen" "loahpa#geahči" "oktavuohta" "ovttasbargu" ;
 
  # Nouns and adjectives that take a preceding genitive.
  
@@ -2372,7 +2372,7 @@ REMOVE:olgu ("olgu") IF (0 ("olgun")) ;
 #!! !!Adjectives or nouns, not adverbs
 
 #!! * __Aifeambbo__ selects A after eambbo
-SELECT:Aifeambbo A IF (-1 ("eambbo") OR ("eanet"))(NEGATE 0 Pl);
+SELECT:Aifeambbo A - Px IF (-1 ("eambbo") OR ("eanet"))(NEGATE 0 Pl);
 	#$ Muhto eambbo eahpidahtti lea čielggadusa s. 17 cealkámuš.
 
 SELECT:Aeambbo Attr IF (0 ("eanet") OR ("eambbo") LINK 1 N)(NEGATE -1 ("ahte"));
@@ -2852,6 +2852,7 @@ REMOVE:mánnatV V  (0 ("mánnat")) ((-1 OKTA) OR (*0 VFIN + Sg3 BARRIER REAL-V O
 	#$ Mii leimmet njeallje ollesolbmo ja okta mánná geat galggaimet orrut internáhtas juovllaid .
 	#$ Dasgo mánná mii lea su siste, lea sahkanan Bassi Vuoiŋŋa bokte.
 	#$ Guovllu ja agi mielde, hállá go mánná sámegiela vai ii.
+
 	
 #!! !Lexical selection - nouns
 
@@ -3398,13 +3399,21 @@ REMOVE ("mánus") (0 ("mánnu" Loc) LINK 0 Gen) ;
 #!! !Not noun
 
 
-#!! !!Not adposition
+#!! !!Adposition or not
 
 #!! * The rules __Pooaivai, Pogiedas__ removes oaivái and gieđas as Po
 REMOVE:Pooaivai Po IF (0 ("oaivái") LINK NOT -1 HUMAN) ;	
 	#$ Eksempel fra N/S som skal ha Po: Válden vealggi vielljan oaivái.
 REMOVE:Pogiedas Po IF (0 ("gieđas") LINK 1 ("eret")) ;	
 	#$ Eksempel fra N/S som skal ha Po: Go bohccot leat olbmuid gieđas.
+
+REMOVE:aldatV V IF (0 ("aldat") LINK 0 ("alde"))((-1 Gen) OR (-1 CC LINK -1 Po)) ;
+SELECT:Po Po IF (0 ("alde")) ((-1 Gen OR Acc) OR (-1 CC LINK -1 Po)) ;
+	#$ Doaibmabijut maid alde šiehtaduvvo , mearkkašit hui ollu sámi guovlluid eanadollui.	
+	#$ – Olbmot berrejit muitit ahte joga lahka dahje alde, berre leat hirbmat várrugas.
+
+REMOVE:aldatV ("aldat" V) ; #foreløpig regel til vi finner ut hva aldat betyr
+
 
 #!! !!Not Qst
 
@@ -3695,6 +3704,17 @@ SELECT:eanasPron Pron IF (0 ("eanaš") OR ("eanas"))(1 (Dem Loc) OR (Pers Loc));
 #!! !!Px constraints 
 #!! First select Px, then remove all remaining Px
 
+LIST ADJ-PX = "bahá" "boaris" "ipmilbalolaš" "nuorra" "ráhkis" "vistelágaš" ;
+
+REMOVE:APxifN A + Px (0 N LINK NOT 0 ADJ-PX) ;
+
+
+#!! * Remove A Px if Adv
+REMOVE:APxifAdv A + Px (0 Adv OR (A Ess) OR (A Attr) OR PrfPrc OR Loc)(NOT 0 ADJ-PX) ;
+	#$ Son čuoččastii ja geahčadii vehá	dobbelaččas	Sipirjá-Liissá českes goruda.
+	#$ Dáikkihin ahte lei juo golggotmánu loahpageahči, ja dat šlundudii ovddežisge.
+	#$ Rásit liđđot juogo geassit, čakčat dahje dálvit: dat ii mearkkaš olus , dasgo dain alddiineaset ii leat goiku iige nealgi, iige eallin.
+
 #!! * Nouns: __NomPxSg1__ (not Ess) as the only word in a sentence. Needs no disambiguation.
 SELECT:PxSg1Nom N-PX + (N Nom PxSg1) IF (-1 BOS)(NEGATE 0 VFIN)(*1 EOS OR VFIN - Der/Pass BARRIER WORD);  
 	#$ Ustibažžan! 
@@ -3727,10 +3747,10 @@ SELECT:PxSg1Acc (N Acc PxSg1) IF  (-1 TRANS-V - OPRED-V)((*-1 SG1-V BARRIER VFIN
 
 
 #!! * coordination __PxSg1coord__ 
-SELECT:PxSg1coord1 (PxSg1)  IF (*-1 SG1-V - ("leat"))(NEGATE 0 Dem)(1 CC OR COMMA LINK 1 PxSg1) ;
+SELECT:PxSg1coord1 (PxSg1)  IF (*-1 SG1-V - ("leat"))(NEGATE 0 Dem OR PrfPrc)(1 CC OR COMMA LINK 1 PxSg1) ;
 
 #!! * __PxSg1coordLast__ for the last word of a coordination
-SELECT:PxSg1coordLast (PxSg1)  IF (*-3 SG1-V - ("leat"))(-1 CC LINK -1 PxSg1)(NEGATE 0 Dem);
+SELECT:PxSg1coordLast (PxSg1)  IF (*-3 SG1-V - ("leat"))(-1 CC LINK -1C PxSg1)(NEGATE 0 Dem);
 	#$ Mun attán heaggan, áhkkán ja ruhtan sávzzaid ovddas.  
 
 #!! * __ReflPxSg1__ lean oahppan alddán
@@ -3739,8 +3759,9 @@ SELECT:ReflPxSg1 (Refl PxSg1)  IF (*0 Sg1 BARRIER VFIN)(0 Po); #Kanskje er denne
 
 
 #!! * Nouns: __PxSg2__ if SG2-V. The rule needs no disambiguation. The DON-constraint because of homonymi with (N Pl)
-SELECT:PxSg2 (PxSg2)  IF (-1 SG2-V - REAL-COPULAS LINK -1 DON)(NEGATE 0 Attr OR Adv LINK *1 N BARRIER NOT-PRE-A-N); 
+SELECT:PxSg2 (PxSg2)  IF (-1 SG2-V - REAL-COPULAS LINK -1 DON)(NEGATE 0 Attr OR Adv LINK *1 N BARRIER NOT-PRE-A-N)(NEGATE 0 VFIN + Sg2)(NEGATE 0 Acc LINK *-1 SG2-V + IV) ; 
 	#$ Don attát heakkat mu ovddas?
+	#% Don galggat mannat árkii, don ja du bártnit, du áhkká ja bártniidat áhkát oktan duinna.
 
 #!! * __PxSg2Acc__ if  TV to the right
 SELECT:PxSg2Acc (Acc PxSg2) IF (0 (N Pl Nom))((*-1 TRANS-V + Sg2 BARRIER SV-BOUNDARY OR COMMA OR Acc OR ADVLCASE LINK NOT 0 A OR Imprt OR Inf OR Pl3 LINK NOT *-1 Sg1 OR Pl1) OR (*-1 TRANS-V + ConNeg BARRIER NOT-A-ADV OR COMMA LINK -1 (Neg Sg2)) OR (*-1 TRANS-V + PrfPrc BARRIER NOT-A-ADV LINK *-1 COPULAS + Sg2 BARRIER NOT-ADV))(NEGATE 0 ("lohkat") + TV);
@@ -4104,7 +4125,7 @@ SELECT:VPl3jaPl3 (Prt Pl3) IF (*-2C (Prt Pl3) BARRIER VFIN)(-1 CC);
 #!! The following two may be joined:
 
 #!! * __VPl3IfPronRelLeft1__ selects Pl3 if -1 Rel is linked to -2 Pl (r979) - 7801
-SELECT:VPl3IfPronRelLeft1 (V Pl3) IF (-1 (Pron Rel Pl) OR MOVT)(-2 (N Pl));
+SELECT:VPl3IfPronRelLeft1 (V Pl3) IF (-1 (Pron Rel Pl Nom) OR MOVT)(-2 (N Pl));
 
 
 #!! * __VPl3IfPronRelLeft2__ selects Pl3 if -1 Rel is linked via COMMA to -3 Pl (r980) - 853
@@ -4275,7 +4296,7 @@ SELECT:maidAdv ("maid" Adv)  IF (*-1 COPULAS BARRIER NOT-ADV)(*1 PrfPrc OR (Acti
 
 
 #!! * __maidAdv3__ selects maid Adv even if there is a vfin to the right.
-SELECT:maidAdv ("maid" Adv)  IF (*-1 CS - go OR BOC OR Rel BARRIER VFIN OR CLB)(NEGATE -1 go)(NEGATE 0 Rel LINK -1 Acc LINK -1 BOS)((*1 VFIN - Pot LINK NOT *1 VFIN BARRIER CC OR COMMA) OR (NEGATE **1 TRANS-V BARRIER CC OR COMMA OR REAL-V) OR (*1 COPULAS BARRIER REAL-V LINK 1 PrfPrc OR (Actio Ess) LINK NOT *1 VFIN)) (NOT *1 ("?"));
+SELECT:maidAdv ("maid" Adv) IF (*-1 CS - go OR BOC OR Rel BARRIER VFIN OR CLB)(NEGATE -1 go)(NEGATE 0 Rel LINK -1 Acc LINK -1 BOS)(NEGATE 0 Rel LINK 1 Po)((*1 VFIN - Pot LINK NOT *1 VFIN BARRIER CC OR COMMA) OR (NEGATE **1 TRANS-V BARRIER CC OR COMMA OR REAL-V) OR (*1 COPULAS BARRIER REAL-V LINK 1 PrfPrc OR (Actio Ess) LINK NOT *1 VFIN)) (NOT *1 ("?"));
  	#$... nu ahte dat maid siskkilda ávnnaslaš kultureavttuid.  
    	#$ Maid moarsi lea borran.
    	#$ ... mat maid leat politihkalaš bellodagat.
@@ -4411,6 +4432,8 @@ SELECT:gradAdvAdv MOD-ADV-ADV IF (1 Adv OR Indef LINK NOT 0 Po OR N) ;
 	
 SELECT:jogoAdv Adv (0 ("jogo") OR ("juogo"))(NEGATE *-1 VFIN BARRIER S-BOUNDARY) ;
 	#$ Jogo gikse dat guolit?	
+SELECT:jogoAdv Adv (0 ("jogo") OR ("juogo"))(*1 ("dahje") BARRIER S-BOUNDARY) ;
+	#$ Rásit liđđot juogo geassit, čakčat dahje dálvit.
 	
 #!! !!Disambiguating abbreviations
 
@@ -4595,7 +4618,7 @@ SELECT:muitalitPo ("birra" Po) (-1 Gen LINK *-1 MUITALIT + REAL-V BARRIER SV-BOU
 	#$ Son muitala dás iežas skuvllafearaniid birra Buolbmát skuvllas. 
 
 #!! * __PoNomCompl__ removes Po if no possible complement to the left
-REMOVE:PoNoCompl Po IF (NEGATE *-1 NP-HEAD-GEN OR (A Gen) OR (Num Gen) OR (Actio Gen) BARRIER WORD)(NEGATE 0 ("gaskan"));
+REMOVE:PoNoCompl Po IF (NEGATE *-1 NP-HEAD-GEN OR (A Gen) OR (Num Gen) OR (Actio Gen) BARRIER WORD)(NEGATE 0 ("gaskan"))(NEGATE -1 CC LINK -1 Po LINK -1 Gen);
 	#$ Jus divššohas lea badjel 16 jagi boaris,... 
 	#$ Dat lea dušše badjelaš állanbeali guhku.
 	#$ Jesus manai fatnasii ja vulggii rastá jávrri iežas gávpogii.
@@ -7149,6 +7172,10 @@ MAP:-FMAINVPrfPrccoord (@-FMAINV) TARGET PrfPrc (*-1 CC BARRIER REAL-V OR S-BOUN
 	#$ ... dákkár orgánii leat boahtán dahje ovddiduvvon.
 	#$ Sápmelaččat ledje dohkkehuvvon Norgga álgoálbmogin ovdalgo konvenšuvnna ledje šiehtadan gárvásii ja dasa vuolláičállán.
 	#%  Jus lean váiban dahje ferten lihkkat árrat, de manan nohkkat oalle árrat.
+
+#!! * __-FMAINVPrfPrccoord__  to PrfPrc coordination	
+MAP:-FMAINVPrfPrccoord (@-FMAINV) TARGET PrfPrc (-1 CC LINK -1 @-FMAINV) ;
+	#$ Son lei vuolggahan mu dán máilbmái dáhpedorpmis geainna nu, riegádahttán ja guoddán mu heakkastis vahágis, biebman ja bivttastan dalle go muittii.
 
 #!! * __-FMAINVPrfbeforeAux__  to PrfPrc before the Aux	
 MAP:-FMAINVPrfbeforeAux (@-FMAINV) TARGET PrfPrc (*1 REAL-COPULAS + VFIN BARRIER NOT-ADV-PCLE LINK NOT *1 PrfPrc OR (Actio Ess) BARRIER NOT-ADV-PCLE)(NEGATE -1 BOC LINK 1 Der/Pass LINK 1 ("leat") LINK *2 NP-HEAD-NOM BARRIER NOT-NP);     
