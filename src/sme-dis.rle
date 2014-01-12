@@ -3407,12 +3407,13 @@ REMOVE:Pooaivai Po IF (0 ("oaivái") LINK NOT -1 HUMAN) ;
 REMOVE:Pogiedas Po IF (0 ("gieđas") LINK 1 ("eret")) ;	
 	#$ Eksempel fra N/S som skal ha Po: Go bohccot leat olbmuid gieđas.
 
-REMOVE:aldatV V IF (0 ("aldat") LINK 0 ("alde"))((-1 Gen) OR (-1 CC LINK -1 Po)) ;
-SELECT:Po Po IF (0 ("alde")) ((-1 Gen OR Acc) OR (-1 CC LINK -1 Po)) ;
+#!! *  __aldatV1, aldatPo, KillaldatV__ for the problem aldat V vs. alde Po
+REMOVE:aldatV1 V IF (0 ("aldat") LINK 0 ("alde"))((-1 Gen) OR (-1 CC LINK -1 Po)) ;
+SELECT:aldatPo Po IF (0 ("alde")) ((-1 Gen OR Acc) OR (-1 CC LINK -1 Po)) ;
 	#$ Doaibmabijut maid alde šiehtaduvvo , mearkkašit hui ollu sámi guovlluid eanadollui.	
 	#$ – Olbmot berrejit muitit ahte joga lahka dahje alde, berre leat hirbmat várrugas.
 
-REMOVE:aldatV ("aldat" V) ; #foreløpig regel til vi finner ut hva aldat betyr
+REMOVE:KillaldatV ("aldat" V) ; #foreløpig regel til vi finner ut hva aldat betyr
 
 
 #!! !!Not Qst
@@ -3704,13 +3705,15 @@ SELECT:eanasPron Pron IF (0 ("eanaš") OR ("eanas"))(1 (Dem Loc) OR (Pers Loc));
 #!! !!Px constraints 
 #!! First select Px, then remove all remaining Px
 
+#!! * Set with adjectives, which are documented to have Px in our corpus
 LIST ADJ-PX = "bahá" "boaris" "ipmilbalolaš" "nuorra" "ráhkis" "vistelágaš" ;
 
+#!! * __APxifN__ Remove A Px if N:
 REMOVE:APxifN A + Px (0 N LINK NOT 0 ADJ-PX) ;
 
 
-#!! * Remove A Px if Adv
-REMOVE:APxifAdv A + Px (0 Adv OR (A Ess) OR (A Attr) OR PrfPrc OR Loc)(NOT 0 ADJ-PX) ;
+#!! * __APx__ Remove A Px if Adv of A Ess og A Attr og PrfPrc or Loc
+REMOVE:APx A + Px (0 Adv OR (A Ess) OR (A Attr) OR PrfPrc OR Loc)(NOT 0 ADJ-PX) ;
 	#$ Son čuoččastii ja geahčadii vehá	dobbelaččas	Sipirjá-Liissá českes goruda.
 	#$ Dáikkihin ahte lei juo golggotmánu loahpageahči, ja dat šlundudii ovddežisge.
 	#$ Rásit liđđot juogo geassit, čakčat dahje dálvit: dat ii mearkkaš olus , dasgo dain alddiineaset ii leat goiku iige nealgi, iige eallin.
@@ -4429,7 +4432,8 @@ SELECT:gradeAdvA GRADE-ADV + Adv IF (0 A OR Indef LINK 1 (A Nom) OR (A Ess)) ;
 SELECT:gradAdvAdv MOD-ADV-ADV IF (1 Adv OR Indef LINK NOT 0 Po OR N) ;
 	#$ Dii uhccán oskkolaččat.
 	#$ Man uhccán osku dus lea!
-	
+
+#!! * __jogoAdv__ jogo and juoga as adverbs
 SELECT:jogoAdv Adv (0 ("jogo") OR ("juogo"))(NEGATE *-1 VFIN BARRIER S-BOUNDARY) ;
 	#$ Jogo gikse dat guolit?	
 SELECT:jogoAdv Adv (0 ("jogo") OR ("juogo"))(*1 ("dahje") BARRIER S-BOUNDARY) ;
