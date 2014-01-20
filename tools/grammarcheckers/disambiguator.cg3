@@ -4309,28 +4309,58 @@ SELECT:r870 MOAI IF ( *1 V-DU1);   	## Moai čilge dan ášši.
 	# - - - - - - - -
 
 	# Left conditions
-SELECT:r872 Pers IF (-3 BOC)(-2 V-PL1)(-1 go)(0 MII-PERS); 
-SELECT:r873 Pers IF (-1 (V Ind Prs Pl1 Qst))(0 MII-PERS);
-	## Eat go mii leat profehtastallan du nammii?
+	#Old rules
+#SELECT:r872 Pers IF (-3 BOC)(-2 V-PL1)(-1 go)(0 MII-PERS); 
+#SELECT:r873 Pers IF (-1 (V Ind Prs Pl1 Qst))(0 MII-PERS);
+#	## Eat go mii leat profehtastallan du nammii?
+#
+#SELECT:r874 Pers IF (-1 (V Neg Pl1))(0 MII-PERS);   
+#SELECT:r875 Pers IF (*-1 V-PL1 BARRIER NOT-ADV OR ("seamma"))(0 MII-PERS)(NEGATE 1 V-SG3);
+#	## Eat mii sáhte vuolgit.
+#	## Goas oinniimet mii du nelgon dahje goikan?
+#
+# # The last condition added because of the example below. Attempts to formulate 
+# # a negative condition on V-PL1 instead (e.g. LINK NOT 0 A) did not work.
+#	## Dat geaidnu lea govdat mii doalvu gáđohussii. 
+#
+#	# Right conditions
+#SELECT:r876 Pers IF (0 MII-PERS)(1C Rel);
+#SELECT:r877 Pers IF (0 MII-PERS)(1 COMMA)(2C Rel);
+#SELECT:r878 Pers IF (0 MII-PERS)(*1 V-PL1 BARRIER S-BOUNDARY OR VFIN LINK NOT 0 Adv);
+#	## .. de mii, guđet leat eatnagat, leat okta rumaš.
+#	## Dasgo mii oinniimet su násti badjáneamen.
+#
+#SELECT:r879 Pers IF (0 MII-PERS)(1 CC)(2 (N Nom));
+#	## Mii ja farisealaččat atnit borakeahttáivuođa.
 
-SELECT:r874 Pers IF (-1 (V Neg Pl1))(0 MII-PERS);   
-SELECT:r875 Pers IF (*-1 V-PL1 BARRIER NOT-ADV OR ("seamma"))(0 MII-PERS)(NEGATE 1 V-SG3);
-	## Eat mii sáhte vuolgit.
-	## Goas oinniimet mii du nelgon dahje goikan?
+#new rules
 
- # The last condition added because of the example below. Attempts to formulate 
- # a negative condition on V-PL1 instead (e.g. LINK NOT 0 A) did not work.
-	## Dat geaidnu lea govdat mii doalvu gáđohussii. 
+LIST PL1-V = (V Ind Prs Pl1)  (V Ind Prt Pl1) (V Cond Prs Pl1) 
+             (V Cond Prt Pl1) (V Pot Prs Pl1) (V Neg Ind Pl1);
 
-	# Right conditions
-SELECT:r876 Pers IF (0 MII-PERS)(1C Rel);
-SELECT:r877 Pers IF (0 MII-PERS)(1 COMMA)(2C Rel);
-SELECT:r878 Pers IF (0 MII-PERS)(*1 V-PL1 BARRIER S-BOUNDARY OR VFIN LINK NOT 0 Adv);
-	## .. de mii, guđet leat eatnagat, leat okta rumaš.
-	## Dasgo mii oinniimet su násti badjáneamen.
+LIST NOT-REAL-V = (Actio Nom) (Actio Gen) (Actio Loc) (Actio Com) PrsPrc ;
 
-SELECT:r879 Pers IF (0 MII-PERS)(1 CC)(2 (N Nom));
-	## Mii ja farisealaččat atnit borakeahttáivuođa.
+SET REAL-V = V - NOT-REAL-V  ;
+  #!! ** V is all readings with a V tag in them, REAL-V should
+  #!! be the ones without an N tag following the V.  
+  #!! The REAL-V set thus awaits a fix to the preprocess V ... N bug.
+
+SET TRANS-V = V-TRANS - Der/Pass + REAL-V ;
+
+#!! * __miiPersLeft1, miiPersLeft2, _miiPersRight__ select mii Pers 
+SELECT:miiPersLeft1 Pers IF (0 MII-PERS) ((-1 go LINK -1 PL1-V LINK -1 BOC) OR (-1 (V Ind Prs Pl1 Qst)) OR (-1 (V Neg Pl1))) ; 
+	#$ Eat go mii leat profehtastallan du nammii?
+	#$ Eat mii sáhte vuolgit.
+
+#SELECT:miiPersLeft2 Pers (*-1 PL1-V BARRIER NOT-ADV OR ("seammá"))(0 MII-PERS)(NEGATE 0 Rel LINK *1 SG3-V BARRIER NOT-ADV);
+SELECT:miiPersLeft2 Pers IF ((-1 PL1-V LINK -1 MO) OR (-1 ("go" Qst) LINK -1 PL1-V) OR (-1 PL1-V + TRANS-V LINK -1 Acc) OR (-1 PL1-V LINK -1 Acc LINK 3 PrfPrc + TRANS-V)) ;
+	#$ Goas oinniimet mii du nelgon dahje goikan?
+	#$ Dán leat mii bargan ovttas guoskevaš čearuid, boazoorohagaid, ja eiseválddiid áirasiiguin.
+
+SELECT:miiPersRight Pers IF (0 MII-PERS)((*1C Rel BARRIER WORD) OR (*1 PL1-V BARRIER S-BOUNDARY OR VFIN LINK NOT 0 Adv) OR (1 CC LINK 1 (N Nom))) ;
+	#$ .. de mii, guđet leat eatnagat, leat okta rumaš. #funker ikke pga 1C Rel
+	#$ Dasgo mii oinniimet su násti badjáneamen.
+	#$ Mii ja farisealaččat atnit borakeahttáivuođa.
 
 	# mis and sis
 	# - - - - - -
@@ -5142,9 +5172,11 @@ REMOVE:r1028 (A Pl Nom) IF (NEGATE *-1 VFIN)(0 (N Pl Nom))(*1 V-PL3 BARRIER NOT-
 REMOVE:r1029 Adv IF (NEGATE *-1 (Pl Nom) BARRIER S-BOUNDARY)(0 (N Pl Nom))(*1C V-PL3 BARRIER NOT-ADV-PCLE OR SV-BOUNDARY);
 	## ...ahte nuorat eai nagodan identifiseret iežaset kulturduogážiinniset.
 
-REMOVE:r1030 V IF (-1C Dem)(1 V-IND-FIN);	
+#REMOVE:r1030 V IF (-1C Dem)(1 V-IND-FIN);	
 	## Dán báhkis šaddá čáppa gohppu.
-
+	#GRAM: commented out. The example above works fine anyway.
+	#$ Muhto eai sii dan máhttán diehtit geat eai lean dárkilit čuvvon dievdduid vugiid.
+	
 REMOVE:r1031 V IF (-1 BOC)(0 N LINK NOT 0 ("leat") OR NOMAG)(1 ("go"))(2 VFIN LINK NOT 0 Adv OR Imprt);	
 	## Ádjás go lea ođđa fanas?
 
@@ -16700,9 +16732,11 @@ SELECT:r3306 (@APP-N<) IF (-1 MEASURE LINK -1 Num LINK *-1 V-TRANS-ACT-NOT-ACT B
 REMOVE:r3409 SUBJ IF (NEGATE *-1 VERB BARRIER S-BOUNDARY2)(0 Gen)(*1C SPRED BARRIER NPNH);
 	## Riektemetoda vuođđun lea našunálastáhtalaš riektaárbevieruid áddejupmi.
 
-REMOVE:r3410 SUBJ IF (*-1C V-1-2 BARRIER NOT-ADV-PCLE)(0 Sg OR Pl);
+#REMOVE:r3410 SUBJ IF (*-1C V-1-2 BARRIER NOT-ADV-PCLE)(0 Sg OR Pl);
 	## Mii leimmet viđas.
 	## Mun lean árgi.
+	#GRAM: outcommented, it works anyway
+	#$ Munnos lei nu olu hupmamuš ahte oalát vajálduvven jearrat mii dan báhka siste lei
 	
 REMOVE:r3412 SUBJ IF (0 TITLE LINK 0 (@>N))(*1 SUBJ BARRIER S-BOUNDARY2);
 	## Go gonagas Herodes gulai dan, de son suorganii.
