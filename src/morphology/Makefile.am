@@ -63,6 +63,6 @@ $(srcdir)/stems/smi-$(GTLANG)-propernouns.lexc: \
 	echo "" >> $@ && \
 	cat $< >> $@
 
-include $(top_srcdir)/am-shared/lexc-include.am
+include $(top_srcdir)/am-shared/src-morphology-dir-include.am
 
 # vim: set ft=automake:
