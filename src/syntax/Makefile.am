@@ -39,4 +39,4 @@ $(srcdir)/%.cg3: $(GTCORE)/gtdshared/smi/src/syntax/%.cg3
 #### END: Add local processing instructions ABOVE this line ######
 ##################################################################
 
-include $(top_srcdir)/am-shared/syntax-include.am
+include $(top_srcdir)/am-shared/src-syntax-dir-include.am
