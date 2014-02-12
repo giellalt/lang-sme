@@ -44,4 +44,4 @@ LINKS=Links.jspwiki
 
 endif # CAN_DOCC
 
-include $(top_srcdir)/am-shared/doc-include.am
+include $(top_srcdir)/am-shared/doc-dir-include.am
