@@ -364,6 +364,8 @@ analyser-mt-%.und.hfst: analyser-mt-%.tmp.hfst
 	$(AM_V_GEN)$(HFST_INVERT) $< \
 		| $(HFST_FST2FST) $(HFST_FLAGS) -t -o $@
 
+#			.o. @bin\"filters/extract-deriv-strings-MT-sma.hfst\"   
+
 analyser-mt-gt-desc.sma.hfst: analyser-mt-gt-desc.tmp.hfst \
 					filters/remove-dialect-tags.hfst \
 					filters/remove-semantic-tags-except-prop.hfst \
@@ -373,7 +375,6 @@ analyser-mt-gt-desc.sma.hfst: analyser-mt-gt-desc.tmp.hfst \
 	$(AM_V_GEN)$(PRINTF) \
 			   "@bin\"filters/remove-dialect-tags.hfst\"     \
 			.o. @bin\"filters/remove-semantic-tags-except-prop.hfst\"   \
-			.o. @bin\"filters/extract-deriv-strings-MT-sma.hfst\"   \
 			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
 			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
 			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
@@ -384,6 +385,8 @@ analyser-mt-gt-desc.sma.hfst: analyser-mt-gt-desc.tmp.hfst \
 		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
 		> $@
 
+#			.o. @bin\"filters/extract-deriv-strings-MT-sma.hfst\"   
+
 analyser-mt-gt-desc.smj.hfst: analyser-mt-gt-desc.tmp.hfst \
 					filters/remove-dialect-tags.hfst \
 					filters/remove-semantic-tags-except-prop.hfst \
@@ -393,7 +396,6 @@ analyser-mt-gt-desc.smj.hfst: analyser-mt-gt-desc.tmp.hfst \
 	$(AM_V_GEN)$(PRINTF) \
 			   "@bin\"filters/remove-dialect-tags.hfst\"     \
 			.o. @bin\"filters/remove-semantic-tags-except-prop.hfst\"   \
-			.o. @bin\"filters/extract-deriv-strings-MT-sma.hfst\"   \
 			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
 			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
 			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
