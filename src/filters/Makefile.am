@@ -48,7 +48,6 @@ GT_FILTER_TARGETS+=\
 				   remove-NA-strings.hfst                 \
 				   remove-NG-strings.hfst                 \
 				   remove-NGminip-strings.hfst            \
-				   remove-semantic-tags-except-prop.hfst  \
 				   remove-Orth_IPA-strings.hfst           \
 				   remove-Orth_Strd-strings.hfst          \
 				   remove-PUNCT-strings.hfst              \
@@ -90,6 +89,9 @@ GT_FILTER_TARGETS+=\
 				   remove-UseCirc-strings.xfst            \
 				   remove-variant-strings.xfst
 endif
+
+GENERATED_REGEXES=remove-semantic-tags.regex \
+                  make-optional-semantic-tags.regex
 
 # Add the target of local additions here:
 # HFST targets here:
