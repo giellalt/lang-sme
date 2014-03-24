@@ -43,10 +43,9 @@ GT_TRANSFORMERS_XFST=transcriptor-clock2text-desc.xfst \
 
 if WANT_DICTIONARIES
 GT_ANALYSERS_XFST+=analyser-dict-gt-desc.xfst \
-				    analyser-dict-gt-desc-mobile.xfst \
-					analyser-dict-gt-norm.xfst
-GT_GENERATORS_XFST+=generator-dict-gt-norm.xfst \
-					generator-dict-gt-desc.xfst
+				   analyser-dict-gt-desc-mobile.xfst
+GT_GENERATORS_XFST+=generator-dict-gt-norm.xfst
+
 endif # WANT_DICTIONARIES
 endif # CAN_XFST
 
@@ -440,22 +439,22 @@ generator-oahpa-gt-norm.xfst: generator-oahpa-gt-norm.tmp.xfst \
 # Dict-fst local modifications and language-specific changes:
 generator-dict-gt-norm.xfst: generator-dict-gt-norm.tmp.xfst \
 					filters/make-optional-semantic-tags.xfst
-	$(AM_V_GEN)$(PRINTF) "read regex                          \
+	$(XFST_verbose)$(PRINTF) "read regex                          \
 				@\"filters/make-optional-semantic-tags.xfst\" \
 			.o. @\"$<\".i                                     \
 			;\n\
 		 invert net\n\
 		 save stack $@\n\
-		 quit\n" | $(XFST)
+		 quit\n" | $(XFST) $(VERBOSITY)
 
 analyser-dict-gt-norm.xfst: analyser-dict-gt-norm.tmp.xfst \
 					filters/make-optional-semantic-tags.xfst
-	$(AM_V_GEN)$(PRINTF) "read regex                          \
+	$(XFST_verbose)$(PRINTF) "read regex                          \
 				@\"filters/make-optional-semantic-tags.xfst\" \
 			.o. @\"$<\"                                       \
 			;\n\
 		 save stack $@\n\
-		 quit\n" | $(XFST)
+		 quit\n" | $(XFST) $(VERBOSITY)
 
 # We need to add processing of language-specific tags in the generator:
 # HFST:
@@ -474,14 +473,14 @@ generator-gt-%.hfst: generator-gt-%.tmp.hfst \
 generator-gt-%.xfst: generator-gt-%.tmp.xfst \
 					 filters/make-optional-lang_hom-tags.xfst \
 					 filters/make-optional-semantic-tags.xfst
-	$(AM_V_GEN)$(PRINTF) "read regex                              \
+	$(XFST_verbose)$(PRINTF) "read regex                              \
 				@\"filters/make-optional-lang_hom-tags.xfst\"     \
 			.o. @\"filters/make-optional-semantic-tags.xfst\"     \
 			.o. @\"$<\".i                                         \
 			;\n\
 		 invert net\n\
 		 save stack $@\n\
-		 quit\n" | $(XFST)
+		 quit\n" | $(XFST) $(VERBOSITY)
 
 ##################################################################
 #### END: Add local processing instructions ABOVE this line ######
@@ -500,6 +499,6 @@ generator%.hfst: generator%.tmp.hfst
 
 #### Xerox transducer fallback target:
 %.xfst: %.tmp.xfst
-	$(AM_V_GEN)cp -f $< $@
+	$(AM_V_CP)cp -f $< $@
 
 include $(top_srcdir)/am-shared/src-dir-include.am
