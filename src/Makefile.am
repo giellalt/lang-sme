@@ -138,7 +138,7 @@ endif
 # source:
 generator-tts-gt-norm_nonum_noabbr_nohyph.hfst: \
 					generator-raw-gt-desc.hfst                     \
-					filters/remove-semantic-tags-except-prop.hfst  \
+					filters/remove-semantic-tags.hfst              \
 					filters/remove-homonymy-tags.hfst              \
 					filters/remove-variant-tags.hfst               \
 					filters/remove-derivation-position-tags.hfst   \
@@ -159,7 +159,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph.hfst: \
 					filters/remove-hyphenated-strings.hfst         \
 					filters/remove-mwe-strings.hfst
 	$(AM_V_GEN)$(PRINTF) \
-			   "@\"filters/remove-semantic-tags-except-prop.hfst\"  \
+			   "@\"filters/remove-semantic-tags.hfst\"              \
 			.o. @\"filters/remove-homonymy-tags.hfst\"              \
 			.o. @\"filters/remove-variant-tags.hfst\"               \
 			.o. @\"filters/remove-derivation-position-tags.hfst\"   \
@@ -188,7 +188,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph.hfst: \
 # Xerox version, mainly used for debugging
 analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst: \
 					analyser-raw-gt-desc.xfst                      \
-					filters/remove-semantic-tags-except-prop.xfst  \
+					filters/remove-semantic-tags.xfst              \
 					filters/remove-homonymy-tags.xfst              \
 					filters/remove-variant-tags.xfst               \
 					filters/remove-derivation-position-tags.xfst   \
@@ -209,7 +209,7 @@ analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst: \
 					filters/remove-hyphenated-strings.xfst         \
 					filters/remove-mwe-strings.xfst
 	$(AM_V_GEN)$(PRINTF) "read regex \
-				@\"filters/remove-semantic-tags-except-prop.xfst\"  \
+				@\"filters/remove-semantic-tags.xfst\"              \
 			.o. @\"filters/remove-homonymy-tags.xfst\"              \
 			.o. @\"filters/remove-variant-tags.xfst\"               \
 			.o. @\"filters/remove-derivation-position-tags.xfst\"   \
@@ -365,20 +365,20 @@ analyser-mt-%.und.hfst: analyser-mt-%.tmp.hfst
 
 #			.o. @bin\"filters/extract-deriv-strings-MT-sma.hfst\"   
 
-analyser-mt-gt-desc.sma.hfst: analyser-mt-gt-desc.tmp.hfst \
-					filters/remove-dialect-tags.hfst \
-					filters/remove-semantic-tags-except-prop.hfst \
-					filters/reorder-semantic-tags.hfst \
+analyser-mt-gt-desc.sma.hfst: analyser-mt-gt-desc.tmp.hfst   \
+					filters/remove-dialect-tags.hfst         \
+					filters/remove-semantic-tags.hfst        \
+					filters/reorder-semantic-tags.hfst       \
 					filters/remove-deriv-strings-MT-sma.hfst \
 					filters/remove-sub-forms.hfst
 	$(AM_V_GEN)$(PRINTF) \
-			   "@bin\"filters/remove-dialect-tags.hfst\"     \
-			.o. @bin\"filters/remove-semantic-tags-except-prop.hfst\"   \
-			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
-			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
-			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
-			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
-			.o. @bin\"filters/remove-sub-forms.hfst\"     \
+			   "@bin\"filters/remove-dialect-tags.hfst\"   \
+			.o. @bin\"filters/remove-semantic-tags.hfst\"  \
+			.o. @bin\"filters/reorder-semantic-tags.hfst\" \
+			.o. @bin\"filters/reorder-semantic-tags.hfst\" \
+			.o. @bin\"filters/reorder-semantic-tags.hfst\" \
+			.o. @bin\"filters/reorder-semantic-tags.hfst\" \
+			.o. @bin\"filters/remove-sub-forms.hfst\"      \
 			.o. @bin\"$<\" \
 			;" \
 		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
@@ -386,20 +386,20 @@ analyser-mt-gt-desc.sma.hfst: analyser-mt-gt-desc.tmp.hfst \
 
 #			.o. @bin\"filters/extract-deriv-strings-MT-sma.hfst\"   
 
-analyser-mt-gt-desc.smj.hfst: analyser-mt-gt-desc.tmp.hfst \
-					filters/remove-dialect-tags.hfst \
-					filters/remove-semantic-tags-except-prop.hfst \
-					filters/reorder-semantic-tags.hfst \
+analyser-mt-gt-desc.smj.hfst: analyser-mt-gt-desc.tmp.hfst   \
+					filters/remove-dialect-tags.hfst         \
+					filters/remove-semantic-tags.hfst        \
+					filters/reorder-semantic-tags.hfst       \
 					filters/remove-deriv-strings-MT-sma.hfst \
 					filters/remove-sub-forms.hfst
 	$(AM_V_GEN)$(PRINTF) \
-			   "@bin\"filters/remove-dialect-tags.hfst\"     \
-			.o. @bin\"filters/remove-semantic-tags-except-prop.hfst\"   \
-			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
-			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
-			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
-			.o. @bin\"filters/reorder-semantic-tags.hfst\"     \
-			.o. @bin\"filters/remove-sub-forms.hfst\"     \
+			   "@bin\"filters/remove-dialect-tags.hfst\"   \
+			.o. @bin\"filters/remove-semantic-tags.hfst\"  \
+			.o. @bin\"filters/reorder-semantic-tags.hfst\" \
+			.o. @bin\"filters/reorder-semantic-tags.hfst\" \
+			.o. @bin\"filters/reorder-semantic-tags.hfst\" \
+			.o. @bin\"filters/reorder-semantic-tags.hfst\" \
+			.o. @bin\"filters/remove-sub-forms.hfst\"      \
 			.o. @bin\"$<\" \
 			;" \
 		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
