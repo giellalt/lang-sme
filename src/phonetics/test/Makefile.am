@@ -22,8 +22,10 @@ TESTS=
 
 # The following test scripts depend on HFST being available:
 if CAN_HFST
+if WANT_PHONETIC
 TESTS+=test-triple-vowel-conversion.sh \
        test-stress-assignment.sh
+endif # WANT_PHONETIC
 endif # CAN_HFST
 
 # List tests that are presently (expected) failures here, ie things that should
