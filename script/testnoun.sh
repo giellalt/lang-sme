@@ -1,6 +1,6 @@
 # Dette skriptet tester at nesten alle lemmaene i noun-sme-lex.txt kan genereres. De som ikke kan genereres, kopieres til missingnounLemmas.txt
 
-grep ";" $GTHOME/gt/sme/src/noun-sme-lex.txt | grep -v "^\!" | egrep -v '(CmpN/Only|CmpN/Last|ShCmp|RCmpnd)' | sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > nouns
+grep ";" $GTHOME/gt/sme/src/noun-sme-lex.txt | grep -v "^\!" | egrep -v '(CmpN/Only|ShCmp|RCmpnd|\+V\+)' | sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > nouns
 cat nouns | sed 's/$/+N+Sg+Nom/' | $LOOKUP $GTHOME/gt/sme/bin/isme.fst | cut -f2 | grep -v "N+" | grep -v "^$" | sort -u > analnouns 
 cat nouns | sed 's/$/+N+Sg+Nom/' | $LOOKUP $GTHOME/gt/sme/bin/isme.fst | cut -f2 | grep "N+" | cut -d "+" -f1 | sed 's/$/+N+Pl+Nom/' | $LOOKUP $GTHOME/gt/sme/bin/isme.fst | cut -f2 | grep -v "^$" >> analnouns 
 grep ";" $GTHOME/gt/sme/src/noun-sme-lex.txt | grep -v "^\!" | grep -v ShCmp | egrep "( R | Rreal | Rnoun)" | tr ":+" " " | cut -d " " -f1 | sed 's/$/+N+Cmp#viessu+N+Sg+Nom/' | $LOOKUP $GTHOME/gt/sme/bin/isme.fst | cut -f2 | grep "\-" | grep -v "\-.*\-" | cut -d "-" -f1 >> analnouns
