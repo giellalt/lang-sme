@@ -19,14 +19,6 @@ GT_TRANSFORMERS_HFST=transcriptor-clock2text-desc.hfst \
 					 transcriptor-text2date-desc.hfst \
 					 transcriptor-text2numbers-desc.hfst
 
-if WANT_APERTIUM
-# This is just a generic analyser. You need to add pair-specific analysers to
-# the language-specific part further down.
-APERTIUM_ANALYSERS_HFST=analyser-mt-gt-desc.hfst
-APERTIUM_GENERATORS_HFST=generator-mt-gt-norm.hfst \
-						generator-mt-apertium-norm.hfst \
-						generator-mt-apertium-norm.att.gz
-endif # WANT_APERTIUM
 endif # CAN_HFST
 
 if CAN_XFST
@@ -108,14 +100,6 @@ GT_GENERATORS_HFST+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst \
 					generator-tts-gt-norm_nonum_noabbr_nohyph_nob.hfst
 endif # WANT_PHONETIC
 
-if WANT_APERTIUM
-APERTIUM_ANALYSERS_HFST+=analyser-mt-apertium-desc.sma.hfst \
-						 analyser-mt-apertium-desc.sma.att.gz \
-						 analyser-mt-apertium-desc.smj.hfst \
-						 analyser-mt-apertium-desc.smj.att.gz
-APERTIUM_GENERATORS_HFST+=
-
-endif
 endif
 
 #################################################
@@ -358,67 +342,11 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_nob.xfst: \
 		 save stack $@\n\
 		 quit\n" | $(XFST) -q
 
-# MT/Apertium-related language-specific targets - modify to suit each language:
-analyser-mt-%.und.hfst: analyser-mt-%.tmp.hfst
-	$(AM_V_GEN)$(HFST_INVERT) $< \
-		| $(HFST_FST2FST) $(HFST_FLAGS) -t -o $@
-
-#			.o. @bin\"filters/extract-deriv-strings-MT-sma.hfst\"   
-
-analyser-mt-gt-desc.sma.hfst: analyser-mt-gt-desc.tmp.hfst   \
-					filters/remove-dialect-tags.hfst         \
-					filters/remove-semantic-tags.hfst        \
-					filters/reorder-semantic-tags.hfst       \
-					filters/remove-deriv-strings-MT-sma.hfst \
-					filters/remove-sub-forms.hfst
-	$(AM_V_GEN)$(PRINTF) \
-			   "@bin\"filters/remove-dialect-tags.hfst\"   \
-			.o. @bin\"filters/remove-semantic-tags.hfst\"  \
-			.o. @bin\"filters/reorder-semantic-tags.hfst\" \
-			.o. @bin\"filters/reorder-semantic-tags.hfst\" \
-			.o. @bin\"filters/reorder-semantic-tags.hfst\" \
-			.o. @bin\"filters/reorder-semantic-tags.hfst\" \
-			.o. @bin\"filters/remove-sub-forms.hfst\"      \
-			.o. @bin\"$<\" \
-			;" \
-		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
-		> $@
-
-#			.o. @bin\"filters/extract-deriv-strings-MT-sma.hfst\"   
-
-analyser-mt-gt-desc.smj.hfst: analyser-mt-gt-desc.tmp.hfst   \
-					filters/remove-dialect-tags.hfst         \
-					filters/remove-semantic-tags.hfst        \
-					filters/reorder-semantic-tags.hfst       \
-					filters/remove-deriv-strings-MT-sma.hfst \
-					filters/remove-sub-forms.hfst
-	$(AM_V_GEN)$(PRINTF) \
-			   "@bin\"filters/remove-dialect-tags.hfst\"   \
-			.o. @bin\"filters/remove-semantic-tags.hfst\"  \
-			.o. @bin\"filters/reorder-semantic-tags.hfst\" \
-			.o. @bin\"filters/reorder-semantic-tags.hfst\" \
-			.o. @bin\"filters/reorder-semantic-tags.hfst\" \
-			.o. @bin\"filters/reorder-semantic-tags.hfst\" \
-			.o. @bin\"filters/remove-sub-forms.hfst\"      \
-			.o. @bin\"$<\" \
-			;" \
-		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
-		> $@
-
-generator-mt-gt-norm.hfst: generator-mt-gt-norm.tmp.hfst \
-					filters/make-optional-semantic-tags.hfst
-	$(AM_V_GEN)$(PRINTF) \
-			   "@bin\"filters/make-optional-semantic-tags.hfst\" \
-			.o. @bin\"$<\" \
-			;" \
-		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
-		> $@
-
 # Oahpa-related local modifications and language-specific changes:
 # HFST:
 generator-oahpa-gt-norm.hfst: generator-oahpa-gt-norm.tmp.hfst \
 					filters/make-optional-semantic-tags.hfst
-	$(AM_V_GEN)$(PRINTF) \
+	$(RGX2FST_verbose)$(PRINTF) \
 			   "@bin\"filters/make-optional-semantic-tags.hfst\" \
 			.o. @bin\"$<\" \
 			;" \
