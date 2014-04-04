@@ -3795,6 +3795,9 @@ SELECT:eanasPron Pron IF (0 ("eanaš") OR ("eanas"))(1 (Dem Loc) OR (Pers Loc));
 	#$ Eanaš dáin gálduin leat hui unnán dieđut.
 
 #!! !!Px constraints 
+
+SET NOTPXACC-V = LOC-V OR MUITALIT OR HUPMAT OR VERBAL-ACTIVITY-V OR ("bargat") ;
+
 #!! First select Px, then remove all remaining Px
 
 #!! * Set with adjectives, which are documented to have Px in our corpus
@@ -3887,7 +3890,7 @@ SELECT:PxSg2AccImprt (Acc PxSg2)  IF (*-1 (Imprt Sg2) - AUX BARRIER NOT-NPMODADV
 	#% Nuppi iđida ollii mánáidsuodjalus festii ja easka de besse nuorat guođđit dán ilgadis feastta.
 
 #!! * __PxSg2AccPrfPrc__ after PrfPrc 
-SELECT:PxSg2AccPrfPrc (Acc PxSg2)  IF (-1 PrfPrc + TRANS-V - LOC-V LINK *-1 SG2-V BARRIER NOT-AUX-V)(0 N-PX - Nom);
+SELECT:PxSg2AccPrfPrc (Acc PxSg2)  IF (-1 PrfPrc + TRANS-V - NOTPXACC-V LINK *-1 SG2-V BARRIER NOT-AUX-V)(0 N-PX - Nom);
 	#$ Leat go oaidnán oappát?
 
 #!! * __PxSg2GenPo__ if in front of Po, after til verb
@@ -3904,15 +3907,19 @@ REMOVE:atnitPx Px (0 Loc LINK 0 ("muitu") OR ("gudni") OR ("árvu") OR ("čalbmi
 REMOVE:doallatPx Px (0 Loc LINK 0 ("čalbmi") OR ("fápmu") OR ("dássedeaddu") OR ("guovddáš") OR ("árvu") OR ("sadji") OR ("salla") OR ("miella") LINK *0 ("doallat") BARRIER NOT-ADV) ;
 	#$ Go mánáid álo galgá čalmmis doallat, amaset eai šatta biilla vuollai, váidala Gerd ja Biret-Áhkku lea ovtta oaivilis.
 
+#!! * Nouns: __PxSg3Acc__ if Sg3 or Sg to the left
+SELECT:PxSg3Acc (Acc PxSg3) IF (0 HUMAN LINK *1 PrfPrc OR Inf BARRIER WORD - Pron - Acc - Gen)(-1 MUITALIT) ;
+	#$ Son logai oappás dan bargan.
+
 
 #!! * Nouns: __PxSg3Acc__ if Sg3 or Sg to the left
 SELECT:PxSg3Acc (Acc PxSg3) IF (
 (*-1 TRANS-V + Sg3 - AUX BARRIER Nom OR S-BOUNDARY OR CS OR Acc OR COPULAS LINK *-1 HUMAN + (Nom Sg) OR (Sg3 Nom) BARRIER NOT-ADV-PCLE LINK NOT *-1 Acc BARRIER S-BOUNDARY OR REAL-V OR CC) OR 
-(*-1 TRANS-V + ConNeg - AUX BARRIER HUMAN + Nom OR S-BOUNDARY OR Acc OR COPULAS OR CS LINK NOT 0 LOC-V LINK *-1 (Neg Sg3) BARRIER NOT-ADV LINK NOT *-1 Acc BARRIER S-BOUNDARY OR REAL-V OR CC) OR 
+(*-1 TRANS-V + ConNeg - AUX BARRIER HUMAN + Nom OR S-BOUNDARY OR Acc OR COPULAS OR CS LINK NOT 0 NOTPXACC-V LINK *-1 (Neg Sg3) BARRIER NOT-ADV LINK NOT *-1 Acc BARRIER S-BOUNDARY OR REAL-V OR CC) OR 
 (*-1 TRANS-V + Sg3 - AUX BARRIER Nom OR S-BOUNDARY OR Acc OR COPULAS OR CS LINK -1 go OR CC)
 )
 (0 Loc - PLACE - Sem/Org LINK NOT -1 Num)(NOT 0 Po)
-(NEGATE *-1 LOC-V BARRIER SV-BOUNDARY)
+(NEGATE *-1 NOTPXACC-V BARRIER SV-BOUNDARY)
 (NEGATE 0 Attr LINK *1 N - SAPMI BARRIER NOT-NPMOD)
 #(NEGATE 0 Attr LINK *1 SAPMI + Gen BARRIER NOT-A LINK 1 N)
 (NEGATE 0 (N Gen) LINK 1 (N Acc) - TIME-N - SAPMI LINK NOT 0 Po LINK NOT 1 Loc)
@@ -3920,7 +3927,6 @@ SELECT:PxSg3Acc (Acc PxSg3) IF (
 (NEGATE 0 TEXT OR ABSTR-TEXT LINK *-1 MUITALIT BARRIER REAL-V)
 (NEGATE *1 ("ahte") BARRIER N - ADVLCASE OR REAL-V)
 (NEGATE 0 Loc LINK 1C (Indef Acc)) ;
-	#$ Son logai oappás dan bargan.
 	#$ Son beastá álbmogis sin suttuin.
 	#$ Son hárve gullá eatnigielas. # This one needs verbdisambiguation of hárve
 	#$ Dat guhte ráhkista bártnis dahje nieiddas eanebut go mu, ii dohkke munnje.
@@ -3937,14 +3943,14 @@ SELECT:PxSg3Acc (Acc PxSg3) IF (
 	#% Muhto sárgu mielas dárbbaša sámi servvodat eambbo ironiija.
 
 #!! * Nouns: __PxSg3AccPrfPrc__ if PrfPrc and Sg3 to the left
-SELECT:PxSg3AccPrfPrcInf (N Acc PxSg3)  IF ((-1 PrfPrc + TRANS-V - LOC-V LINK *-1 SG3-V BARRIER NOT-AUX-V OR Nom OR Acc LINK *-1 (Sg Nom)) OR (-1 Inf + TRANS-V - LOC-V LINK *-1 SG3-V BARRIER NOT-AUX-V OR Nom OR Acc LINK *-1 (Sg Nom)) OR (-1 Inf + TRANS-V - LOC-V LINK -1 (Sg Nom) LINK *-1 SG3-V BARRIER NOT-AUX-V OR Nom OR Acc))(NEGATE 0 PLACE + Loc OR EVENT + Loc OR Adv)(NEGATE 0 Loc LINK 1 Acc - Sem/Time) ;
+SELECT:PxSg3AccPrfPrcInf (N Acc PxSg3)  IF ((-1 PrfPrc + TRANS-V - NOTPXACC-V LINK *-1 SG3-V BARRIER NOT-AUX-V OR Nom OR Acc LINK *-1 (Sg Nom)) OR (-1 Inf + TRANS-V - NOTPXACC-V LINK *-1 SG3-V BARRIER NOT-AUX-V OR Nom OR Acc LINK *-1 (Sg Nom)) OR (-1 Inf + TRANS-V - NOTPXACC-V LINK -1 (Sg Nom) LINK *-1 SG3-V BARRIER NOT-AUX-V OR Nom OR Acc))(NEGATE 0 PLACE + Loc OR EVENT + Loc OR Adv)(NEGATE 0 Loc LINK 1 Acc - Sem/Time) ;
 	#$ Nu geavai ovdal go Márjá lei riegádahttán bártnis.
 	#$ Gozihanlávdegoddi galgá čilget gozihandoaimmas, árvvoštallat stivrra jahkemuitalusa ja dilálašvuođaid maid dat siskkilda, ja árvvoštallat mo dát láhka doaibmá ja leago sávahahtti dan nuppástuhttit.
 	#$ Raporttas galgá gozihanlávdegoddi čilget gozihandoaimmas, árvvoštallat stivrra jahkemuitalusa ja dilálašvuođaid maid dat siskkilda, ja árvvoštallat mo dát láhka doaibmá ja leago sávahahtti dan nuppástuhttit.
 	#% UNTAK boahtá lávlut márkanšilljus ja Juhlsa silbarávddis beaivet, ovdalgo dollet konseartta kulturviesus.
 	#% Divvunprográmma ii máhte jorgalit , vaikko dan sihkkarit áiggi vuollái sáhttá oahpahit jorgalit sánis sátnái.
 
-SELECT:PxSg3AccPrfPrcInf (N Acc PxSg3)  IF (1 Inf + TRANS-V - LOC-V LINK NOT *1 Acc BARRIER REAL-V)(*-1 SG3-V + AUX - ("leat") BARRIER NOT-AUX-V OR Acc)(NEGATE -1 Num) ;
+SELECT:PxSg3AccPrfPrcInf (N Acc PxSg3)  IF (1 Inf + TRANS-V - NOTPXACC-V LINK NOT *1 Acc BARRIER REAL-V)(*-1 SG3-V + AUX - ("leat") BARRIER NOT-AUX-V OR Acc)(NEGATE -1 Num) ;
 	#$ Dalle fertejit buotlágan ávnnaslaš eavttut maid dárbbaša vai duođalaččat galgá sáhttit kultuvrras dikšut.
 
 
@@ -3981,7 +3987,7 @@ SELECT:PxSg3Nom (Nom PxSg3) IF  (-1 go LINK -1 Comp LINK *-1 NP-HEAD-NOM BARRIER
 	#% Mávssut leat adnon eambbo go bušeahtas.
 	
 #!! * __PxGenNorPo__  
-SELECT:PxGenNorPo (Gen PxSg3) IF (0 N OR A) (*-1 (Sg Nom) OR (Sg3 Nom) BARRIER Pers OR S-BOUNDARY OR LOC-V OR Num OR Dem LINK NOT 0 Attr)(NEGATE *-1 (Imprt Sg2) BARRIER SV-BOUNDARY)(NEGATE -1 (N Nom) OR (N Acc))(0 N-PX)(NEGATE 0 Loc LINK 1 (N Ill) OR ("leat") + VFIN)(1 N OR Po) ; # (NEGATE *-1C (V TV Ind) BARRIER SV-BOUNDARY)
+SELECT:PxGenNorPo (Gen PxSg3) IF (0 N OR A) (*-1 (Sg Nom) OR (Sg3 Nom) BARRIER Pers OR S-BOUNDARY OR NOTPXACC-V OR Num OR Dem LINK NOT 0 Attr)(NEGATE *-1 (Imprt Sg2) BARRIER SV-BOUNDARY)(NEGATE -1 (N Nom) OR (N Acc))(0 N-PX)(NEGATE 0 Loc LINK 1 (N Ill) OR ("leat") + VFIN)(1 N OR Po) ; # (NEGATE *-1C (V TV Ind) BARRIER SV-BOUNDARY)
 	#$ Nieida bođii ráhkkásis mielde.
 	#$ Son ii váiban goassege guldaleames áhčis muitalusaid.
 	#% Dat ferte addojuvvot dan dihte mánnái buoidi njammat, go ii eatnis leat mielki. 
