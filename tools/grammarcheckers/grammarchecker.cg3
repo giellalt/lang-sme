@@ -861,6 +861,7 @@ LIST DE-ALL = DE-ALL ;
     
 LIST &syn-finitev_missing-start = &syn-finitev_missing-start ;
 LIST &syn-gen-not-nom = &syn-gen-not-nom ;
+LIST &syn-nom-not-gen = &syn-nom-not-gen ;
 LIST &syn-finitev_missing-end = &syn-finitev_missing-end ;
 LIST &syn-conneg = &syn-conneg ;
 LIST &syn-not-aidna = &syn-not-aidna ;
@@ -4990,6 +4991,7 @@ COPY:syn-inf-after-soaitit (PrfPrc &SUGGEST) EXCEPT (Ind Prt Sg1 &syn-inf-after-
 	## Boahtte háve soaittán válddán govven- dahje filbmenbarggu. Boahtte háve soaittán váldit/váldán govven- dahje filbmenbarggu.
 	#TEST
 	#$ Eai dušše olggosoaidnit ráhkadettiin, muhto maiddai čácis ii galgan čohkamis oaidnit goal lea ealli loddi ja goal lea čohkanloddi, dahje hápma nu go muhtimat dadjet.
+	## Dát lea smávit mánáide ráhkaduvvon, danne leat dás lávlagat maidda mánát sáhttet doaškkut  gieđaid, ja maiddai  leat das lávlagat maidda mánát sáhttet lihkadit go gullet lávlagiid.
 	#$ Ferten jápmán áhkuid ja ádjáid geavahit gaskaoapmin vai beasan jienastit Sámediggái, jearrá Jorunn. 
 	# in errors.xml
 
@@ -5085,15 +5087,23 @@ COPY:syn-redundant_ahte (&DELETE) EXCEPT (&syn-redundant_ahte) TARGET (CC &syn-r
     # errors.xml
     
     
-    # nominative not genitive
+    # genitive not nominative
     # -----------------------
 
-LIST DOUBLE-CONSONANT-NOUNS = (".*nta"r N) (".*rri"r N) (".*stud"r N) ;
+LIST DOUBLE-CONSONANT-NOUNS = (".*nta"r N) (".*rri"r N) (".*stud"r N) (".*stu"r N);
 
 ADD:gen-not-nom (&syn-gen-not-nom) TARGET (N Sg Nom) IF (0 DOUBLE-CONSONANT-NOUNS + Sem/Hum)(1 ("namma")) ;
 COPY:syn-gen-not-nom (Gen &SUGGEST) EXCEPT (Nom &syn-gen-not-nom) TARGET (N &syn-gen-not-nom) ;
 	## Dáhttu diehtit ođđa várrepresideanta nama.
 	# generalize "namma"
+
+    # nominative not genitive
+    # -----------------------
+
+ADD:nom-not-gen (&syn-nom-not-gen) TARGET (N Sg Gen) IF (*-1 (Pron Dem Sg Nom) BARRIER NPNH)(*1 Der/Pass BARRIER GRAMCHK-S-BOUNDARY)(NEGATE 0 Sem/Time OR Sem/Route) ;
+COPY:syn-nom-not-gen (Nom &SUGGEST) EXCEPT (Gen &syn-nom-not-gen) TARGET (N &syn-nom-not-gen) ;	
+	## Dát lea smávit mánáide ráhkaduvvon, danne leat dás lávlagat maiet doaškkut  gieđaid, ja maiddai  leat das lávlagat maidda mánát sáhttet lihkadit go gullet lávlagiid.
+	# needs to be tested
 
     
     # time adverbial in accusative/genitive case
@@ -5483,6 +5493,13 @@ ADD:Pl3-not-Inf (&syn-Pl3-not-Inf) TARGET UT-VERBS IF (0 (V Inf) OR (V Imprt Pl1
 COPY:Pl3-not-Inf (Ind Prs Pl3 &SUGGEST) EXCEPT (Inf &syn-Pl3-not-Inf) OR (Imprt Pl1 &syn-Pl3-not-Inf) OR (Imprt Pl2 &syn-Pl3-not-Inf) OR (Ind Prs Pl1 &syn-Pl3-not-Inf) OR (Der/NomAg N Pl Nom &syn-Pl3-not-Inf) TARGET (&syn-Pl3-not-Inf) ;
 	## Dat áigut visot gáržžidit.
 	# needs more testing
+	
+	# -on vs. -un
+	# ------------
+	
+ADD:on-not-un (&syn-on-not-un) TARGET UT-VERBS IF (0 (Actio Gen) OR (Actio Nom) OR (Der/NomAct N Sg Gen) OR (Der/NomAct N Sg Nom) OR (Der/NomAg N Ess))(*-1 ("leat") + VFIN OR ("leat") + Inf BARRIER GRAMCHK-S-BOUNDARY OR PrfPrc) ;
+COPY:on-not-un (PrfPrc &SUGGEST) EXCEPT (Actio Gen &syn-on-not-un) OR (Actio Nom &syn-on-not-un) OR (Der/NomAct N Sg Gen &syn-on-not-un) OR (Der/NomAct N Sg Nom &syn-on-not-un) OR (Der/NomAg N Ess &syn-on-not-un) TARGET (&syn-on-not-un) ;
+	## Dát smávva čuvllat, leat maid gorrojuvvon biktasiin mat ledje nie baskun.
 	
 	
 	# Prt Sg3 vs. VGen
