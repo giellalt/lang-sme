@@ -105,6 +105,24 @@ endif
 #################################################
 #### Add language-specific build rules here: ####
 
+generator-raw-gt-desc.hfst: generator-raw-gt-desc.tmp.hfst \
+					filters/reorder-semantic-tags.hfst
+	$(AM_V_RGX2FST)$(PRINTF) "\
+				@\"filters/reorder-semantic-tags.hfst\"            \
+			.o. @\"$<\" \
+			;" \
+		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
+		> $@
+
+analyser-raw-gt-desc.xfst: analyser-raw-gt-desc.tmp.xfst \
+					filters/reorder-semantic-tags.xfst
+	$(AM_V_XFST)$(PRINTF) "read regex \
+				@\"filters/reorder-semantic-tags.xfst\"            \
+			.o. @\"$<\" \
+			;\n\
+		 save stack $@\n\
+		 quit\n" | $(XFST) $(VERBOSITY)
+
 # A generator for producing word forms suitable for tts:
 # * no circular constructions:
 # ** no (arabic) cardinals
