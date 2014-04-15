@@ -33,16 +33,32 @@ endif
 
 GENERATED_REGEXES=remove-derivation-strings.regex
 
+##################################################################
+#### BEGIN: Add local processing instructions BELOW this line ####
+##################################################################
+
+GENERATED_REGEXES+=remove-derivation-strings.nob.regex
+
 # Add the target of local additions here:
 # HFST targets here:
 if CAN_HFST
-GT_FILTER_TARGETS+=
+GT_FILTER_TARGETS+=remove-derivation-strings.nob.hfst
 endif
 
 # And Xerox targets here:
 if CAN_XFST
-GT_FILTER_TARGETS+=
+GT_FILTER_TARGETS+=remove-derivation-strings.nob.xfst
 endif
+
+# Add the build code of local additions here:
+remove-%-strings.nob.regex: %-tags.txt \
+						remove-%-strings-modifications.nob.regex
+	$(AM_V_GEN)$(GTCORE)/scripts/taglist2remove_$*_strings_regex.sh \
+		$@ $^
+
+##################################################################
+#### END: Add local processing instructions ABOVE this line ######
+##################################################################
 
 include $(top_srcdir)/am-shared/src-filters-dir-include.am
 
