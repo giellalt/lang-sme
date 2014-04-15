@@ -11,14 +11,18 @@ if CAN_YAML_TEST
 # Add your shell scripts for running python-based tests here:
 
 if WANT_APERTIUM
-TESTS+=run-mt-gt-desc-anayaml-testcases.sh
+TESTS+=run-mt-gt-desc-anayaml-testcases.sh \
+		run-mt-gt-desc.nob-anayaml-testcases.sh \
+		run-mt-apertium-desc.nob-anayaml-testcases.sh
 
 endif # WANT_APERTIUM
 endif # CAN_YAML_TEST
 
 # List tests that are presently (expected) failures here, ie things that should
 # be fixed *later*, but is not critical at the moment:
-XFAIL_TESTS=run-mt-gt-desc-anayaml-testcases.sh
+XFAIL_TESTS=run-mt-gt-desc-anayaml-testcases.sh \
+		run-mt-gt-desc.nob-anayaml-testcases.sh \
+		run-mt-apertium-desc.nob-anayaml-testcases.sh
 
 ####### Other targets: ###########
 clean-local:
