@@ -106,18 +106,18 @@ endif
 #### Add language-specific build rules here: ####
 
 generator-raw-gt-desc.hfst: generator-raw-gt-desc.tmp.hfst \
-					filters/reorder-semantic-tags.hfst
+					filters/reorder-subpos-tags.$(GTLANG).hfst
 	$(AM_V_RGX2FST)$(PRINTF) "\
-				@\"filters/reorder-semantic-tags.hfst\"            \
+				@\"filters/reorder-subpos-tags.$(GTLANG).hfst\" \
 			.o. @\"$<\" \
 			;" \
 		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
 		> $@
 
 analyser-raw-gt-desc.xfst: analyser-raw-gt-desc.tmp.xfst \
-					filters/reorder-semantic-tags.xfst
+					filters/reorder-subpos-tags.$(GTLANG).xfst
 	$(AM_V_XFST)$(PRINTF) "read regex \
-				@\"filters/reorder-semantic-tags.xfst\"            \
+				@\"filters/reorder-subpos-tags.$(GTLANG).xfst\" \
 			.o. @\"$<\" \
 			;\n\
 		 save stack $@\n\
