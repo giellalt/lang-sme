@@ -28,7 +28,6 @@ endif # CAN_YAML_TEST
 # be fixed *later*, but is not critical at the moment:
 XFAIL_TESTS=run-gt-norm-yaml-testcases.sh \
             run-gt-desc-yaml-testcases.sh \
-            run-gt-norm-anayaml-testcases.sh \
             run-lexc-testcases.sh
 
 ####### Other targets: ###########
