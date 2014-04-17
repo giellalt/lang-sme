@@ -9,7 +9,17 @@ SUBDIRS = filters tagsets .
 #### BEGIN: Add local processing instructions BELOW this line ####
 ##################################################################
 
-
+# We want to make semantic tags optional for the nob-targeted analyser:
+analyser-mt-gt-desc.nob.hfst: analyser-mt-gt-desc.nob.tmp.hfst \
+			$(top_builddir)/src/filters/make-optional-semantic-tags.hfst
+	$(AM_V_RGX2FST)$(PRINTF) "\
+		@\"$(top_builddir)/src/filters/make-optional-semantic-tags.hfst\" \
+   	.o. @\"$<\" \
+    	;" \
+		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
+		| $(HFST_INVERT) $(HFSTFLAGS) \
+		| $(HFST_FST2FST) $(HFSTFLAGS) -t \
+		-o $@
 
 ##################################################################
 #### END: Add local processing instructions ABOVE this line ######
