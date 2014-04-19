@@ -165,7 +165,7 @@ LIST IV = IV ; #!! IV
 LIST TV = TV ; #!! TV 
 LIST Prt = Prt;				   #!! Prt
 LIST Prs = Prs ;			   #!! Prs
-LIST Ind = Ind ;			   #!! Ind
+LIST Ind = Ind indic ;			   #!! Ind
 LIST Pot = Pot ;			   #!! Pot
 LIST Cond = Cond ;			   #!! Cond
 LIST Imprt = Imprt ;		   #!! Imprt
@@ -466,32 +466,23 @@ SET NOT-PRFPRC = WORD - PrfPrc ; #!! NOT-PRFPRC
 #!! !Sets for person
 # - - - - 
 
-LIST SG1-V = (V Ind Prs Sg1)  (V Ind Prt Sg1) (V Cond Prs Sg1) 
-             (V Cond Prt Sg1) (V Pot Prs Sg1) (V Neg Ind Sg1);
+LIST SG1-V = (V Sg1)  ;
  
-LIST SG2-V = (V Ind Prs Sg2)  (V Ind Prt Sg2) (V Cond Prs Sg2) 
-             (V Cond Prt Sg2) (V Pot Prs Sg2) (V Neg Ind Sg2);
+LIST SG2-V = (V Sg2) ;
  
-LIST SG3-V = (V Ind Prs Sg3)  (V Ind Prt Sg3) (V Cond Prs Sg3) 
-             (V Cond Prt Sg3) (V Pot Prs Sg3) (V Neg Ind Sg3);
+LIST SG3-V = (V Sg3) ;
  
-LIST DU1-V = (V Ind Prs Du1)  (V Ind Prt Du1) (V Cond Prs Du1) 
-     	     (V Cond Prt Du1) (V Pot Prs Du1) (V Neg Ind Du1);
+LIST DU1-V = (V Du1) ;
  
-LIST DU2-V = (V Ind Prs Du2)  (V Ind Prt Du2) (V Cond Prs Du2) 
-	         (V Cond Prt Du2) (V Pot Prs Du2) (V Neg Ind Du2);
+LIST DU2-V = (V Du2) ;
  
-LIST DU3-V = (V Ind Prs Du3)  (V Ind Prt Du3) (V Cond Prs Du3) 
-	         (V Cond Prt Du3) (V Pot Prs Du3) (V Neg Ind Du3);
+LIST DU3-V = (V Du3) ;
  
-LIST PL1-V = (V Ind Prs Pl1)  (V Ind Prt Pl1) (V Cond Prs Pl1) 
-             (V Cond Prt Pl1) (V Pot Prs Pl1) (V Neg Ind Pl1);
+LIST PL1-V = (V Pl1) ;
  
-LIST PL2-V = (V Ind Prs Pl2)  (V Ind Prt Pl2) (V Cond Prs Pl2) 
-             (V Cond Prt Pl2) (V Pot Prs Pl2) (V Neg Ind Pl2);
+LIST PL2-V = (V Pl2) ;
  
-LIST PL3-V = (V Ind Prs Pl3)  (V Ind Prt Pl3) (V Cond Prs Pl3) 
-             (V Cond Prt Pl3) (V Pot Prs Pl3) (V Neg Ind Pl3);
+LIST PL3-V = (V Pl3) ;
 
 SET POSITIVE-V = SG1-V OR SG2-V OR SG3-V OR DU1-V OR DU2-V OR DU3-V OR PL1-V OR PL2-V OR PL3-V ;  
 
@@ -509,11 +500,11 @@ SET 1-2-V = SG1-V OR SG2-V OR DU1-V OR DU2-V OR PL1-V OR PL2-V ;
 
 #!! !Sets consisting of forms of "leat" (these ones need to be rewritten)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-LIST LEAN = ("leat" V Ind Prs Sg1) ("leat" V Prt ConNeg);
-LIST LEAT = ("leat" V Ind Prs Pl1) ("leat" V Ind Prs Pl3) 
-      ("leat" V Ind Prs Sg2) ("leat" V Inf) ("leat" V Ind Prs ConNeg);
+SET LEAN = ("leat" Prs Sg1) + Ind OR ("leat" V Prt ConNeg);
+SET LEAT = ("leat" Prs Pl1) + Ind OR ("leat" V Prs Pl3) + Ind OR 
+ ("leat" V Prs Sg2) + Ind OR ("leat" V Inf) OR ("leat" V Prs ConNeg) + Ind ;
 
-LIST LEAT-FIN-NOT-IMPRT = ("leat" V Ind) ("leat" V Cond) ("leat" V Pot);
+SET LEAT-FIN-NOT-IMPRT = ("leat" V) - Imprt;
  
 LIST PRFPRC-V = (V PrfPrc) ;
 LIST LEATPRFPRC = ("leat" PrfPrc) ;
@@ -1085,7 +1076,7 @@ SET PRE-NP-HEAD = (Prop Attr) OR (Prop @>N) OR (A Attr) OR (ABBR Attr) OR ("buor
          (PrfPrc @>N) OR PrsPrc OR (A Ord) ;
          # The strict version of items that can only be premodifiers, not parts of the predicate
          
-SET PRE-NP-V = PrfPrc OR PrsPrc OR Der/NomAg OR Actio OR Der/NomAct OR (V A) OR (Ind Prs Sg3) OR (Ind Prs Sg1) OR (Imprt Du2) ;
+SET PRE-NP-V = PrfPrc OR PrsPrc OR Der/NomAg OR Actio OR Der/NomAct OR (V A) OR (Prs Sg3) + Ind OR (Prs Sg1) + Ind OR (Imprt Du2) ;
     # to be used together with PRE-NP-HEAD before @>N is disambiguated
          
 SET NP-MEMBER   = PRE-NP-HEAD OR N ;
@@ -2323,7 +2314,7 @@ REMOVE:XXPropAttr (Prop Attr) - Der/laš IF (NEGATE *1 Prop BARRIER REAL-WORD-NO
 #!! !MISC
 
 #!! * sutnje is not verb
-REMOVE ("suotnjat" Ind) IF (0 Pers LINK -1 VFIN) ;
+REMOVE ("suotnjat") + Ind IF (0 Pers LINK -1 VFIN) ;
 
 #!!  * __ABBR__ Removes ABBR in favour of Adv, Pcle or Pron, e.g. "dii" when there is no punctuation
 REMOVE:ABBR ABBR IF (0 Adv OR Pcle OR Pron) ;
@@ -2596,7 +2587,7 @@ REMOVE:buoretAdv ("buoret" Adv)(0 (A Comp) LINK 1 N) ;
 REMOVE:birrasii N IF (0 ("birrasii") LINK 1 Num)(NOT -1 Gen)  ;	
 
 #!! * __doarvaiAdv__ removes birrasii N
-SELECT:doarvaiAdv ("doarvái" Adv) IF  ((-1 COPULAS LINK 2 Nom OR CS) OR (-1 TRANS-V LINK 2 (N Acc)) OR (-1 (Ind Neg) LINK 2 Adv)) ;
+SELECT:doarvaiAdv ("doarvái" Adv) IF  ((-1 COPULAS LINK 2 Nom OR CS) OR (-1 TRANS-V LINK 2 (N Acc)) OR (-1 Neg + Ind LINK 2 Adv)) ;
 	#$ Vaikko mánáin lei doarvái bargu skuvllas ja bihtáidbargamiin beaivvi mielde, de berre liikká dál maŋŋá fuomášuhttit ahte máŋggaid jagiid ii lean makkárge lágiduvvon asttuáigefálaldat mánáide.	
 
 
@@ -3643,7 +3634,7 @@ SECTION
 	#$ Moai čilgejetne dan ášši.
 
 #!! * __miiPersLeft1, miiPersLeft2, _miiPersRight__ select mii Pers 
-SELECT:miiPersLeft1 Pers IF (0 MII-PERS) ((-1 go LINK -1 PL1-V LINK -1 BOC) OR (-1 (V Ind Prs Pl1 Qst)) OR (-1 (V Neg Pl1))) ; 
+SELECT:miiPersLeft1 Pers IF (0 MII-PERS) ((-1 go LINK -1 PL1-V LINK -1 BOC) OR (-1 (V Prs Pl1 Qst) + Ind) OR (-1 (V Neg Pl1))) ; 
 	#$ Eat go mii leat profehtastallan du nammii?
 	#$ Eat mii sáhte vuolgit.
 
@@ -3684,7 +3675,7 @@ SELECT:goson Pcle IF (NEGATE -2 CLB)(-1 Qst OR go)(0 ("son"))(1 Nom LINK NEGATE 
 
 #!! * __sutnje__ ( = forms of the verb "suotnjat")
 SELECT:sutnje_a (Pron Ill) IF (0 ("son"))(1 (Pron Rel Sg));
-SELECT:sutnje_b (Pron Ill) IF (0 ("son"))(*-1 (V Ind)); 
+SELECT:sutnje_b (Pron Ill) IF (0 ("son"))(*-1 V + Ind); 
 	#$ Dearvvašvuođabálvalus galgá addit sutnje gii ohcá ...
 	#$ Son galgá addit sutnje dárbbašlaš dieđuid.
 
@@ -3992,7 +3983,7 @@ SELECT:PxSg3Nom (Nom PxSg3) IF  (-1 go LINK -1 Comp LINK *-1 NP-HEAD-NOM BARRIER
 	#% Mávssut leat adnon eambbo go bušeahtas.
 	
 #!! * __PxGenNorPo__  
-SELECT:PxGenNorPo (Gen PxSg3) IF (0 N OR A) (*-1 (Sg Nom) OR (Sg3 Nom) BARRIER Pers OR S-BOUNDARY OR NOTPXACC-V OR Num OR Dem LINK NOT 0 Attr)(NEGATE *-1 (Imprt Sg2) BARRIER SV-BOUNDARY)(NEGATE -1 (N Nom) OR (N Acc))(0 N-PX)(NEGATE 0 Loc LINK 1 (N Ill) OR ("leat") + VFIN)(1 N OR Po) ; # (NEGATE *-1C (V TV Ind) BARRIER SV-BOUNDARY)
+SELECT:PxGenNorPo (Gen PxSg3) IF (0 N OR A) (*-1 (Sg Nom) OR (Sg3 Nom) BARRIER Pers OR S-BOUNDARY OR NOTPXACC-V OR Num OR Dem LINK NOT 0 Attr)(NEGATE *-1 (Imprt Sg2) BARRIER SV-BOUNDARY)(NEGATE -1 (N Nom) OR (N Acc))(0 N-PX)(NEGATE 0 Loc LINK 1 (N Ill) OR ("leat") + VFIN)(1 N OR Po) ; # (NEGATE *-1C (V TV) + Ind BARRIER SV-BOUNDARY)
 	#$ Nieida bođii ráhkkásis mielde.
 	#$ Son ii váiban goassege guldaleames áhčis muitalusaid.
 	#% Dat ferte addojuvvot dan dihte mánnái buoidi njammat, go ii eatnis leat mielki. 
@@ -4142,7 +4133,7 @@ REMOVE:r958 (V Pl3) IF (-1 (Pron Rel Sg))(0 (V Sg3));
  	#$ Kapihttalis mas čilge orrunlanjadagaid latnjačovdosa nannejuvvo ahte lanjadat leat plánejuvvon orruide geat dárbbašit divššu guhkit.
 
 #!! * __NegSg3BeforeFoc__ selects Neg before Foc/ge or ConNeg (r959)
-SELECT:NegSg3BeforeFoc (V IV Neg Ind Sg3) IF (0 ("ii"))(*1 Foc/ge OR ConNeg BARRIER COMMA OR PUNCT);
+SELECT:NegSg3BeforeFoc (V IV Neg Sg3) + Ind IF (0 ("ii"))(*1 Foc/ge OR ConNeg BARRIER COMMA OR PUNCT);
  	#$ Ii oktage lea boahtán.
 
 #!! * __vfin__ removes verb reading when the reading should be noun  
@@ -4305,13 +4296,13 @@ REMOVE:r983 (V Prt Sg2) IF (-1 CS LINK *-1 NP-HEAD-PL-NOM)(0 (V Pl3));
  	#$ Hálddašanásahusat maid várra fertejit dákkár deasttaid atnit rievttálaš árvvoštallamis go galget mearridit mii dan sisdoallu berrešii leat.
 
 #!! * __VPl3Lookalikes__ removes "verbs" like "manne" and "dušše" (r984) - 274
-REMOVE:VPl3Lookalikes (V Ind Pl3) IF (1C VFIN)(NEGATE 1 Pl3) ;
+REMOVE:VPl3Lookalikes (V Pl3) + Ind IF (1C VFIN)(NEGATE 1 Pl3) ;
  	#$ Manne ii leat áviisa boahtán?
  	#$ Máhtte manai čuoigga skuvlii.
  	#$ Vihtta bivdovuogi mun gal dušše namahin. 
 
 #!! * __VSg3Lookalikes__ removes "verbs" like "skuvlii" 
-REMOVE:VSg3Lookalikes (V Ind Sg3) IF ((*-1C VFIN BARRIER S-BOUNDARY OR REAL-V OR CC OR CS OR COMMA LINK NOT -1 Rel) OR (0 (N Ill) LINK -1 Gen - TIME))(NEGATE 1 (Nom Sg3) OR (N Nom Sg)) (NEGATE -1 (Nom Sg3) OR (Nom Sg)) ;
+REMOVE:VSg3Lookalikes (V Sg3) + Ind IF ((*-1C VFIN BARRIER S-BOUNDARY OR REAL-V OR CC OR CS OR COMMA LINK NOT -1 Rel) OR (0 (N Ill) LINK -1 Gen - TIME))(NEGATE 1 (Nom Sg3) OR (N Nom Sg)) (NEGATE -1 (Nom Sg3) OR (Nom Sg)) ;
 	#$ Moai vázze ruovttus skuvlii.
 	#% Vai bálvalusas lea buohccedikšofágalaš dássi eaktuduvvo ahte leat fágabargit geat virgáibiddjojit.
 
@@ -4941,7 +4932,7 @@ SELECT:iiQst Pcle IF (-1 Neg LINK -1 CS) ;
 	#$ Son de jearrá guovžžas , ahte ii go gille rastá eanu doalvut?
 
 #!! * __objQst__ selects Pcle in questions which function as object in the clause
-SELECT:objQst Pcle IF (**-2 VFIN BARRIER S-BOUNDARY-NOT-CVP LINK NOT 0 Inf)(-1 VFIN LINK NOT 0 Inf OR Comp LINK NOT -1 (Ind Neg))(0 go)(NEGATE *1 VFIN BARRIER S-BOUNDARY-NOT-CVP LINK NOT 0 Inf)(NEGATE 1 (A Nom) LINK NOT -2 COPULAS); 
+SELECT:objQst Pcle IF (**-2 VFIN BARRIER S-BOUNDARY-NOT-CVP LINK NOT 0 Inf)(-1 VFIN LINK NOT 0 Inf OR Comp LINK NOT -1 Neg + Ind)(0 go)(NEGATE *1 VFIN BARRIER S-BOUNDARY-NOT-CVP LINK NOT 0 Inf)(NEGATE 1 (A Nom) LINK NOT -2 COPULAS); 
 	#$ Dalle ferten iskat lea go dus feber.
 	#$ De oaidná olmmoš dárbbaša go oalgebáddi luoitiluvvot. 
 	#$ Dalle mun ferten iskat lea go dus feber, ja mihtidit dus varradeattu.
@@ -6349,7 +6340,7 @@ SELECT:ConNegPrfPrc ConNeg IF (*-1 PrfPrc BARRIER NOT-ADV-PCLE LINK *-1 Neg BARR
 SELECT:ConNegImpCC (Imprt ConNeg) IF (*-1 ("dahje") + CC BARRIER NOT-ADV LINK *-1C (Imprt ConNeg) BARRIER REAL-V);
 
 #!! * __ConNegIndCC__ catches the second ConNeg in cases like doesn't smile or laugh - 369
-SELECT:ConNegIndCC (Ind ConNeg) IF (*-1 ("dahje") + CC BARRIER NOT-ADV LINK *-1C (Ind ConNeg) BARRIER NOT-ADV);
+SELECT:ConNegIndCC Ind + ConNeg IF (*-1 ("dahje") + CC BARRIER NOT-ADV LINK *-1C Ind + ConNeg BARRIER NOT-ADV);
  	#$ Allet nappo moraš ja cealkke...
 
 #!! * __NotConNegII__ removes ConNegII if no Neg Imprt around. This is important, as the homonym forms are common. - 30850
@@ -6485,7 +6476,7 @@ SELECT:r1811 Inf IF (*-1 ("ii" Neg Sup) BARRIER REAL-V);
  	#$ ...amaset sin čalmmit oaidnit,... 
 
 # ! * __r1814__ 
-#SELECT:r1814 Inf IF (-1 BOS)(*1 ("ii" V IV Neg Ind Sg3) BARRIER V);
+#SELECT:r1814 Inf IF (-1 BOS)(*1 ("ii" V IV Neg Sg3) + Ind BARRIER V);
  	#$ Viežžat viervván rivgo čiektageregin ii leat ásti, iige sáváháhttin.
      
 #!! * __EssInf__
@@ -6698,7 +6689,7 @@ REMOVE:VFINAttr VFIN IF (-1C Attr LINK NOT 0 ("eanet"));
   	#$ Máhtte-vilbealle duddjui ođđa fatnasa.
 
 #!! * __NPlbuorit__  
-SELECT:NPlbuorit (N Pl) IF (-1 ("buorre" Pl Nom))(0 (V Ind));  
+SELECT:NPlbuorit (N Pl) IF (-1 ("buorre" Pl Nom))(0 V + Ind);  
 	#$ Das leat buorit lanjat čáppa guovllus.
 
 #!! * __ActioEssNum__	
@@ -7306,7 +7297,7 @@ MAP:-FAUXVConNegAux (@-FAUXV) TARGET ConNeg + AUX - ("leat") (*-1 REAL-NEG BARRI
 	
 
 
-MAP:-FAUXVConNegAuxNeg (@-FAUXV) TARGET ConNeg + AUX - ("leat") (*-1 REAL-NEG BARRIER S-BOUNDARY OR ConNeg)(1 (Ind Neg) LINK *1 Inf BARRIER REAL-V OR S-BOUNDARY);	
+MAP:-FAUXVConNegAuxNeg (@-FAUXV) TARGET ConNeg + AUX - ("leat") (*-1 REAL-NEG BARRIER S-BOUNDARY OR ConNeg)(1 Ind + Neg LINK *1 Inf BARRIER REAL-V OR S-BOUNDARY);	
 	#$ Lean diŋgaohcci ja in háliit in minuhta ge duššái golahit.
 
 #!! * __-FMAINVConNeg__  to ConNeg   
