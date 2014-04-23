@@ -33,10 +33,16 @@ GT_CG_LOCAL_NOINST_TARGETS=
 #################################################
 #### Add language-specific build rules here: ####
 $(srcdir)/%.cg3: $(GTCORE)/gtdshared/smi/src/syntax/%.cg3
-	$(AM_V_GEN)cp -f $< $@
+	$(AM_V_CP)cp -f $< $@
 
 ##################################################################
 #### END: Add local processing instructions ABOVE this line ######
 ##################################################################
+
+####### Other targets: ###########
+clean-local:
+	-rm -f *.bin
+
+####### Build rules via include: ########
 
 include $(top_srcdir)/am-shared/src-syntax-dir-include.am
