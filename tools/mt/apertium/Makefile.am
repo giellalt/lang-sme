@@ -29,6 +29,6 @@ analyser-mt-gt-desc.nob.hfst: analyser-mt-gt-desc.nob.tmp.hfst \
 
 # cleaning
 clean-local:
-	-rm -f *.hfst *.gz
+	-rm -f *.hfst *.gz *.cg3 *.bin
 
 include $(top_srcdir)/am-shared/tools-mt-apertium-dir-include.am
