@@ -1191,14 +1191,6 @@ LIST LAHKA-GEN-N = "§" "buohkaidvuoigatvuohta" "cealkka" ("fápmu" Ill)"hápmi"
 LIST LAHKA-ASAHUS = "alimusriekti" "Odeldiggi" "Stuoradiggi" "Stuorradiggi" "stuoradiggi" "stuorradiggi" "vuolleriekti" ;
 
 LIST LAHKA-POST = "bokte" "olis" "mielde" "vuođul" ;
-
-   
-LIST GIELDA = "fylkkagielda" "gielda" "guovddášgielda" "hálddašangielda" "riddogielda" "ruovttugielda" "sámegielda" "vuotnagielda" ;
- 
-  # We need this set because there is ambiguity between "gielda"+Gen/Acc and "gieldda"+Nom.
-
-LIST GIELDDA = "gieldda" ;
-
   
 #!! !Nominal sets defined according to their semantical properties
 # -------------------------------------------------------------
@@ -1682,7 +1674,7 @@ LIST NATION-NOT-NORGA = "Columbia" "Duiska" "Frankriika" "Guatemala" "Israel" "K
     
 SET NATION = NATION-NOT-NORGA OR NORGA ;
 
-SET POLITICAL-PLACE = NATION OR GEN-POLITICAL-PLACE OR FYLKA OR GIELDA ;
+SET POLITICAL-PLACE = NATION OR GEN-POLITICAL-PLACE OR FYLKA OR (".*gielda"r) ;
 
     # Can be an actor
 
@@ -2138,8 +2130,12 @@ REMOVE:LexSelbeassat ("besset") IF (0 ("beassat"))(*1 (V Actio Loc) OR Inf BARRI
 	#$  Mun bessen vuolgimis.
 	#$ Nuppi iđida ollii mánáidsuodjalus festii ja easka de besse nuorat guođđit dán ilgadis feastta.
 
+#!! * __LexSelgieldit__
+SELECT:LexSelgiedit ("gieldit") IF (0 ("gieldu" Ill))(*1 Inf OR (Actio Loc) BARRIER REAL-V) ;
+	#$ Go su áhčči jámii de gildui sámegiela hállat telefuvnnas.
+
 #!! * __LexSelollet__
-SELECT:__LexSelollet__ ("ollet") IF (0 ("olli"))(*1 Ill BARRIER SV-BOUNDARY OR CC) ;
+SELECT:LexSelollet ("ollet") IF (0 ("olli"))(*1 Ill BARRIER SV-BOUNDARY OR CC) ;
 	#$ Nuppi iđida ollii mánáidsuodjalus festii ja easka de besse nuorat guođđit dán ilgadis feastta.
 
 	
@@ -2189,7 +2185,7 @@ REMOVE:Der/NomAg Der/NomAg IF (0 PrsPrc LINK 1 N OR Attr LINK NOT 0 Prop) ;
 SELECT:SamediggiProp Prop IF (-2 ("ášši"))(-1 Num);
 	#$ Ášši 02/13 Sámedikki čoahkkinortnet.
 
-LIST NOT-PROP = "Vuoksá" "Heasta" "Stállu" "Guksi" "Gáldu" "Návet" "Náhkki" "Njunni" "Áigi" "Ohcan" "Ovdal" "Sieidi" "Profehta" "Muvra" "Gielda" ;
+LIST NOT-PROP = "Vuoksá" "Heasta" "Stállu" "Fiske" "Guksi" "Gáldu" "Jávregáddi" "Návet" "Náhkki" "Njunni" "Áigi" "Ohcan" "Ose" "Ovdal" "Sieidi" "Profehta" "Muvra" "Gielda" ;
   	
 #!! * Rules for removing some Props which are identical to common nouns
 REMOVE:Prop=noun Prop IF (0 NOT-PROP) ;
@@ -3045,15 +3041,17 @@ REMOVE NomAg (0 ("geassi")) ; #  This is preliminary
 
 	# gielda vs gieldda
 	# - - - - - - - - -
-SELECT:r681 GIELDA IF (NEGATE 0 GIELDDA);
-  	## Sosiála ja dearvvašvuođadepartemeanta lea dorjon Spesialistadoavtterguovddáža ja fylkkagieldda psykiatriija dearvvašvuođafuolahusa Kárášjogas.
+SELECT:LexSelgielda1 ("gielda") IF (-1 (Prop Sem/Plc));
+SELECT:LexSelgielda2 ("gielda") IF (1 ("ja") OR ("dahje") LINK 1 ACTOR-ROLE OR Prop);
+	#$ Gieldda ja Finnmárkkuopmodaga áššegieđahallamii gusto hálddašanláhka.
+  	#$ Deanu gieldda
 
 SELECT:r682 ("gielda") IF (-1 FYLKA + Gen);
 
      
 # gilvu vs. gilvvu Adv
 # - - - - - - - - - - 
-SELECT:r684 ("gilvu") (0 Adv LINK *0 ("vuoitit") BARRIER SV-BOUNDARY);
+SELECT:LexSelgilvu ("gilvu") (0 Adv LINK *0 ("vuoitit") BARRIER SV-BOUNDARY);
 
 
 	# guovddáš 
@@ -4102,7 +4100,7 @@ SELECT:VSG2IfLeftDon SG2-V IF ((*-1 DON BARRIER SG2-V OR ConNeg OR S-BOUNDARY OR
 
 
 #!! * __VSG2IfRightDon__ selects Sg2 when "don" is to the right (r952)
-SELECT:VSG2IfRightDon SG2-V IF (*1 DON BARRIER S-BOUNDARY);
+SELECT:VSG2IfRightDon SG2-V IF (NEGATE 0 Num)(*1 DON BARRIER S-BOUNDARY);
  	#$ Leat go don dat guhte galgá boahtit? 
 
 #!! * __VInfIfAhte__ removes Inf if there is no other VFIN between BOS and "ahte" (r953)
@@ -6448,9 +6446,10 @@ SELECT:r2974 PL3-V IF (*-1C SUBJECTHEAD + Pl + Nom BARRIER Pl3 OR Du3 LINK *-1 B
 	## Geafit gal leat álo din luhtte.
 
 #!! * __r2976__ was moved up to select PL3-V after N Pl, might be relaxed to REMOVE Inf
-SELECT:r2976 PL3-V IF (*1C NP-HEAD-PL-NOM BARRIER PPRON-NOT-SII OR S-BOUNDARY)(NOT *-1 POSITIVE-V BARRIER CS)(NEGATE 0 Inf LINK 1 COMMA LINK 1 Inf) ;
+SELECT:r2976 PL3-V IF ((*1C NP-HEAD-PL-NOM BARRIER PPRON-NOT-SII OR S-BOUNDARY) OR (*1C NUM LINK *1 (N Sg Gen) BARRIER NOT-A))(NOT *-1 POSITIVE-V BARRIER CS)(NEGATE 0 Inf LINK 1 COMMA LINK 1 Inf) ;
 	#$ Ohppiidráđis lea stuora fápmu skuvllas dan dihte go leat nu máŋggas geat hupmet ovttas áššiid birra.
 	#$ Dása gullet Sámi sierrabibliotehka, oahpahushálddašeami doaimmat ja sierra sámi mánáidgárdedoarjagat.	
+	#$ Dál leat sus 137 gáicca.
 	#% Diet vuoigatvuođat leat ráddjejuvvon guoskat dan vuoigatvuhtii ahte oamastit, atnit, ovddidit ja mearridit daid eatnamiid ja riggodagaid mat sis leat odne árbevirolaš čanastumi dihte.
 
 #!! * __r1809__ Not Pl1 (but Inf) if VFIN to the left, This is the basic Inf rule.
@@ -7515,6 +7514,9 @@ SELECT:Adv Adv (0 A LINK 1 @+FMAINV OR @+FAUXV)(-1 N) ;
 SELECT:NumNomSubj (Num Sg Nom)(0 NUM LINK -1 (V Pl3) LINK NOT 0 Imprt LINK NOT *-1 (N Pl Nom) OR (Pers Pl3) OR (Coll Nom) OR (Sem/Group Nom) OR NUM + Nom BARRIER SV-BOUNDARY) ; 
 SELECT:NumNomCoor (Num Sg Nom)(0 Num LINK *-1 ("ja") OR ("dahje") BARRIER NOT-ADV LINK -1C (Num Nom)) ;
 	#$ Juos evttohusa meahcceeatnamiid nuppástuvvan geavaheami birra, mii juogo gusto dušše Kárášjoga, Guovdageainnu, Unjárgga, Porsáŋggu ja Deanu gildii dahje gusto dušše restii Finnmárkkus, dorjot golbma ja dušše golbma stivrralahtu, de sáhttet golbma stivrralahtu ovtta oli gáibidit ášši gieđahallat oktii vel.
+
+SELECT:NumNomSubj (Num Sg Nom)(0 NUM LINK -1 Loc LINK -1 (V Pl3) LINK NOT 0 Imprt LINK NOT *-1 (N Pl Nom) OR (Pers Pl3) OR (Coll Nom) OR (Sem/Group Nom) OR NUM + Nom BARRIER SV-BOUNDARY) ; 
+	#$ Dál leat sus 137 gáicca.
 
 SELECT:NumNomCop (Num Nom) IF ((*-1 COPULAS + FMAINV BARRIER NOT-ADV-PCLE LINK *-1 NP-HEAD-NOM BARRIER NOT-ADV-PCLE) OR (*-1 NP-HEAD-NOM BARRIER NOT-ADV-PCLE LINK *-1 COPULAS + FMAINV BARRIER NOT-A LINK -1 (CC @CVP) OR ("de") OR BOS))(1 (Sg Gen))(NEGATE 2 Po OR (A Nom) OR Pr) ;
 	#$ Ja go geassit eret dábálaš goluid, de lea buhtes sisaboahtu sullii 100 000 ruvnnu, muitala Eriksen.
