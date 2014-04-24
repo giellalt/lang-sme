@@ -1,7 +1,7 @@
 # Skript for å teste analysen av testkorpus.txt og divgullkorpus.txt med sme.fst og sme-dis.rle opp mot gullversjon.
 
 # Analyserer testkorpusene:
-cat $GTBIG/gt/sme/corp/divgullkorpus.txt | preprocess --abbr=$GTHOME/gt/sme/bin/abbr.txt | $LOOKUP $GTHOME/gt/sme/bin/sme.fst | lookup2cg | vislcg3 -g $GTHOME/gt/sme/src/sme-dis.rle | vislcg3 -g $GTHOME/gtcore/gtdshared/smi/src/syntax/functions.cg3 > $GTHOME/gt/sme/dev/syntestdis
+cat $GTBIG/sme-goldcorpus.txt | preprocess --abbr=$GTHOME/gt/sme/bin/abbr.txt | $LOOKUP $GTHOME/gt/sme/bin/sme.fst | lookup2cg | vislcg3 -g $GTHOME/gt/sme/src/sme-dis.rle | vislcg3 -g $GTHOME/gtcore/gtdshared/smi/src/syntax/functions.cg3 > $GTHOME/gt/sme/dev/syntestdis
 
 
 # Fjerner semantiske tagger, # osv:
@@ -12,7 +12,7 @@ cat $GTHOME/gt/sme/dev/syntestdis | perl -pe 's/(Allegro|v1|v2|v3|v4|v5|v6|v7|v8
 perl $GTHOME/gt/script/sort-cg-cohort.pl $GTHOME/gt/sme/dev/syncleantestdis | uniq > $GTHOME/gt/sme/dev/synsortedtestdis
 
 # Henter gullstandarder, fjerner semantiske tagger, # osv :
-cat $GTBIG/gt/sme/corp/correct/divgullkorpus.dis.corr.txt | perl -pe 's/(Allegro|v1|v2|v3|v4|v5|v6|v7|v8|<vdic>) //g' | tr -d "#" > $GTHOME/gt/sme/dev/syncleangullkorpus.dis.corr.txt
+cat $GTBIG/correct/sme-goldcorpus.syn.corr.txt | perl -pe 's/(Allegro|v1|v2|v3|v4|v5|v6|v7|v8|<vdic>) //g' | tr -d "#" > $GTHOME/gt/sme/dev/syncleangullkorpus.dis.corr.txt
 
 # Sorterer alfabetisk inne i cohortene
 perl $GTHOME/gt/script/sort-cg-cohort.pl $GTHOME/gt/sme/dev/syncleangullkorpus.dis.corr.txt | uniq > $GTHOME/gt/sme/dev/synsortedgullkorpus 
