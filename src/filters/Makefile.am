@@ -135,6 +135,7 @@ GT_FILTER_TARGETS+=\
 					remove-nonfirst_infl_boundary-marks.hfst \
 					remove-lang_hom-tags.hfst        \
 					remove-mwe-strings.hfst          \
+					remove-mwe-tags.hfst             \
 					reorder-subpos-tags.$(GTLANG).hfst
 endif
 
@@ -164,6 +165,7 @@ GT_FILTER_TARGETS+=\
 					remove-nonfirst_infl_boundary-marks.xfst \
 					remove-lang_hom-tags.xfst        \
 					remove-mwe-strings.xfst          \
+					remove-mwe-tags.xfst             \
 					reorder-subpos-tags.$(GTLANG).xfst
 endif
 
