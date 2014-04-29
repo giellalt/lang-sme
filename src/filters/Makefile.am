@@ -126,7 +126,9 @@ GT_FILTER_TARGETS+=\
 					extract-OLang_NOB-strings.hfst   \
 					extract-OLang_SME-strings.hfst   \
 					extract-OLang_SWE-strings.hfst   \
+					make-optional-allegro-tags.hfst  \
 					make-optional-lang_hom-tags.hfst \
+					remove-allegro-tags.hfst         \
 					remove-CLB-strings.hfst          \
 					remove-Prop-strings.hfst         \
 					remove-RCmpnd-strings.hfst       \
@@ -156,7 +158,9 @@ GT_FILTER_TARGETS+=\
 					extract-OLang_NOB-strings.xfst   \
 					extract-OLang_SME-strings.xfst   \
 					extract-OLang_SWE-strings.xfst   \
+					make-optional-allegro-tags.xfst  \
 					make-optional-lang_hom-tags.xfst \
+					remove-allegro-tags.xfst         \
 					remove-CLB-strings.xfst          \
 					remove-Prop-strings.xfst         \
 					remove-RCmpnd-strings.xfst       \
