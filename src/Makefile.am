@@ -413,48 +413,6 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_nob.xfst: \
 		 save stack $@\n\
 		 quit\n" | $(XFST) $(VERBOSITY)
 
-# Oahpa-related local modifications and language-specific changes:
-# HFST:
-generator-oahpa-gt-norm.hfst: generator-oahpa-gt-norm.tmp.hfst \
-					filters/make-optional-semantic-tags.hfst
-	$(AM_V_RGX2FST)$(PRINTF) \
-			   "@bin\"filters/make-optional-semantic-tags.hfst\" \
-			.o. @bin\"$<\" \
-			;" \
-		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --harmonize-flags \
-		> $@
-
-# Xerox:
-generator-oahpa-gt-norm.xfst: generator-oahpa-gt-norm.tmp.xfst \
-					filters/make-optional-semantic-tags.xfst
-	$(AM_V_XFST)$(PRINTF) "read regex                          \
-				@\"filters/make-optional-semantic-tags.xfst\" \
-			.o. @\"$<\".i                                     \
-			;\n\
-		 invert net\n\
-		 save stack $@\n\
-		 quit\n" | $(XFST) $(VERBOSITY)
-
-# Dict-fst local modifications and language-specific changes:
-generator-dict-gt-norm.xfst: generator-dict-gt-norm.tmp.xfst \
-					filters/make-optional-semantic-tags.xfst
-	$(AM_V_XFST)$(PRINTF) "read regex                          \
-				@\"filters/make-optional-semantic-tags.xfst\" \
-			.o. @\"$<\".i                                     \
-			;\n\
-		 invert net\n\
-		 save stack $@\n\
-		 quit\n" | $(XFST) $(VERBOSITY)
-
-analyser-dict-gt-norm.xfst: analyser-dict-gt-norm.tmp.xfst \
-					filters/make-optional-semantic-tags.xfst
-	$(AM_V_XFST)$(PRINTF) "read regex                          \
-				@\"filters/make-optional-semantic-tags.xfst\" \
-			.o. @\"$<\"                                       \
-			;\n\
-		 save stack $@\n\
-		 quit\n" | $(XFST) $(VERBOSITY)
-
 # We need to add processing of language-specific tags in the generator:
 # HFST:
 generator-gt-%.hfst: generator-gt-%.tmp.hfst \
