@@ -446,24 +446,20 @@ analyser-dict-gt-norm.xfst: analyser-dict-gt-norm.tmp.xfst \
 # We need to add processing of language-specific tags in the generator:
 # HFST:
 generator-gt-%.hfst: generator-gt-%.tmp.hfst \
-					 filters/make-optional-lang_hom-tags.hfst \
-					 filters/make-optional-semantic-tags.hfst
-	$(AM_V_RGX2FST)$(PRINTF) \
-			   "@\"filters/make-optional-lang_hom-tags.hfst\"     \
-			.o. @\"filters/make-optional-semantic-tags.hfst\"     \
-			.o. @\"$<\"                                           \
+					 filters/make-optional-lang_hom-tags.hfst
+	$(AM_V_RGX2FST)$(PRINTF) "\
+				@\"filters/make-optional-lang_hom-tags.hfst\" \
+			.o. @\"$<\"                                       \
 			;" \
 		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --harmonize-flags \
 		> $@
 
 # Xerox:
 generator-gt-%.xfst: generator-gt-%.tmp.xfst \
-					 filters/make-optional-lang_hom-tags.xfst \
-					 filters/make-optional-semantic-tags.xfst
-	$(AM_V_XFST)$(PRINTF) "read regex                              \
-				@\"filters/make-optional-lang_hom-tags.xfst\"     \
-			.o. @\"filters/make-optional-semantic-tags.xfst\"     \
-			.o. @\"$<\".i                                         \
+					 filters/make-optional-lang_hom-tags.xfst
+	$(AM_V_XFST)$(PRINTF) "read regex                         \
+				@\"filters/make-optional-lang_hom-tags.xfst\" \
+			.o. @\"$<\".i                                     \
 			;\n\
 		 invert net\n\
 		 save stack $@\n\
