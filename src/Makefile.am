@@ -422,7 +422,7 @@ analyser-gt-norm.hfst: analyser-gt-norm.tmp.hfst \
 			.o. @\"$<\"                                       \
 			;" \
 		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --harmonize-flags \
-		| $(HFST_INVERT) $(VERBOSITY) $(HFST_FLAGS)
+		| $(HFST_INVERT) $(VERBOSITY) $(HFST_FLAGS) \
 		> $@
 
 # Xerox:
