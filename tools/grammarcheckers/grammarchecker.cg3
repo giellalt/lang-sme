@@ -20,8 +20,9 @@
 # ================================ #
 # TO CHECK THE GRAMMAR CHECKER DO! #
 # ================================ #
-# echo "Son ii odne." | preprocess | lookup -flags mbTT -utf8 ~/main/gt/sme/bin/sme-norm.fst | lookup2cg | vislcg3 -g ~/main/langs/sme/tools/grammarcheckers/disambiguator.cg3 -t | vislcg3 -g ~/main/langs/sme/src/syntax/valency.cg3 -t | vislcg3 -g ~/main/langs/sme/tools/grammarcheckers/grammarchecker.cg3 -t
+# echo "Son ii odne." | preprocess | lookup -flags mbTT -utf8 ~/main/gt/sme/bin/sme-norm.fst | lookup2cg | vislcg3 -g ~/main/langs/sme/src/syntax/valency.cg3 -t | vislcg3 -g ~/main/langs/sme/tools/grammarcheckers/disambiguator.cg3 -t | vislcg3 -g ~/main/langs/sme/tools/grammarcheckers/grammarchecker.cg3 -t
 
+# valency file needs to be before disambiguator
 # necessary: VISL CG-3 0.9.8.9406 version and higher
 
 # TO DO TAGS
@@ -999,6 +1000,8 @@ LIST &real-iežá = &real-iežá ;
 LIST &real-ihtit = &real-ihtit ;
 LIST &real-jáhkkit = &real-jáhkkit ;
 LIST &real-jámas = &real-jámas ;
+LIST &real-joatkkán = &real-joatkkán ;
+LIST &real-joatkán = &real-joatkán ;
 LIST &real-lahkalagaid = &real-lahkalagaid ;
 LIST &real-láse = &real-láse ;
 LIST &real-liikkastuvvat = &real-liikkastuvvat ;
@@ -4072,6 +4075,29 @@ COPY:real-jearrá ("jearrat" V TV Ind Prs Sg3 &SUGGEST) EXCEPT ("jeara" N Sg Gen
 	#$ Muhto 	jeara 	mus nuppe háve , de galggan máhttit vástidit .
 	## Buohkat dihtet ahte Jeppe juhká , muhto ii oktage jeara mánin son juhká , lea dovddus jearaldat .
 	
+	
+	# joatkkán ("joatkit" V+TV+Ind+Prs+Sg1) vs. joatkkan (joatkka N Ess)
+	# -------------------------------------------
+	
+ADD:real-joatkkán (&real-joatkkán) TARGET ("joatkka" N Ess) IF (*-1 (Pron Pers Sg1 Nom) BARRIER GRAMCHK-S-BOUNDARY OR <RO-Ess-Any> OR <TH-Acc-Any><RO-Ess-Any>) ;
+
+COPY:real-joatkkán ("joatkit" V TV Ind Prs Sg1 &SUGGEST) EXCEPT ("joatkka" N Ess &real-joatkkán) TARGET (&real-joatkkán) ;
+	## Go šie đđ aluvan , de dalle mun čohkkedan ja fas joatkkan 	mátki . 
+	
+	# joatkán	joatkit+V+TV+PrfPrc vs. joatkkan (joatkka N Ess)
+	# ----------------------------------------------------------
+	
+ADD:real-joatkán (&real-joatkán) TARGET ("joatkka" N Ess) IF (*-1 ("leat") + VFIN BARRIER GRAMCHK-S-BOUNDARY OR <RO-Ess-Any> OR <TH-Acc-Any><RO-Ess-Any>) ;
+COPY:real-joatkán ("joatkit" V TV Ind PrfPrc &SUGGEST) EXCEPT ("joatkka" N Ess &real-joatkán) TARGET (&real-joatkán) ;	
+	## Dattetge lei váttis áddet man láhkai Tsjekhov čájálmas lei 	joatkkan 	Internáhtta bihttái . 
+	## – NSR dulko dán 	joatkkan 	dološ koloniseren- ja dáruiduhttuin politihkkii , logai Aili Keskitalo earret eará dalle .  -- RITVA??
+	## Imaštan go dát bihttá lea oaivvilduvvon 	joatkkan 	« Internáhtta » čájálmassii maid teáhter ovdal lea čájehan .  --- RITVA??
+	## – NSR dulko dán 	joatkkan 	dološ koloniseren- ja dáruiduhttuin politihkkii , logai Aili Keskitalo earret eará dalle . -- RITVA ??
+	## Ođđa gávpi mii dál rahppo šaddá leat 	joatkkan 	dološ gávpái dás Gáregasnjárggas . #šaddá leat??? joatkán??
+	## WIVC gálgá leat 	joatkkan 	Arctic Youth Capmii maid Davvi Nuorra ja Riddu Riđđu leat lágidan 1999 rájes . 
+	## Ovdačielgadeapmi lea 	joatkkan 	prošektii , mii čađahuvvui Davimus Lappi Leader searvvi prošeaktan jagi 2006 loahpas . ???
+	# needs more testing
+	
     # sutnje (Pron) vs. suidne (suidnet)
     # ----------------------------------
     # condition: 
@@ -4114,11 +4140,12 @@ ADD:sárgon (&real-sárgon) TARGET ("sárgut" V* Der/NomAct N Sg Gen) OR ("sárg
 COPY:real-sárgon ("sárgut" V TV PrfPrc &SUGGEST) EXCEPT ("sárgu" N Ess &real-sárgon) OR ("sárgun" N Sg Gen &real-sárgon) OR ("sárgun" N Sg Nom &real-sárgon) OR ("sárgut" V* Der/NomAct N Sg Gen &real-sárgon) OR ("sárgut" V* IV* Der/NomAg N Ess &real-sárgon) OR ("sárgut" V IV Actio Nom &real-sárgon) OR ("sárgut" V IV Actio Gen &real-sárgon) OR ("sárgut" V* IV* Der/NomAct N Sg Nom &real-sárgon) TARGET (&real-sárgon) ;    
     ## Anne-Grethe Leine Bientie lea čállán teavstta ja su nieida Ellen Sara lea ges govaid sárgun
     
+	
     
     # gártan vs. gárttan (gártat V IV Ind Prs Sg1)
     # --------------------------------------------
     
-LIST DOUBLE-CONSONANT-AT-VERBS = (".*rtat"r V)  (".*skat"r V); #search for more examples
+LIST DOUBLE-CONSONANT-AT-VERBS = (".*rtat"r V)  (".*skat"r V) (".tkat"r V); # search for more examples # no it-verbs
 
 ADD:syn-prfprc-not-prssg1 (&syn-prfprc-not-prssg1) TARGET DOUBLE-CONSONANT-AT-VERBS IF (0 (Ind Prs Sg1)) (NEGATE *-1 ("mun" Pron Pers Sg1 Nom) BARRIER GRAMCHK-S-BOUNDARY)(*-1 ("leat") BARRIER GRAMCHK-S-BOUNDARY) ;	
 ADD:syn-prfprc-not-prssg1 (&syn-prfprc-not-prssg1) TARGET DOUBLE-CONSONANT-AT-VERBS IF (0 (Ind Prs Sg1)) (-1 (Pron Pers Acc) OR (Pron Refl Acc) LINK -1 LOC-ACTIO-ACC-V + VFIN);
@@ -4132,11 +4159,11 @@ COPY:syn-prfprc-not-prssg1 (PrfPrc &SUGGEST) EXCEPT (Ind Prs Sg1 &syn-prfprc-not
 	## Dán čavčča loahpahuvvo okta golbmajahkásaš našunála prošeakta gos dutkit leat lohkan rievssahiid ja 	iskkan 	makkár guovlluin leat hui unnán rievssahat .
 	## Okta sierraoahpaheaddji dajai ahte son ii álgge kártet oahppi ovdalgo ovtta áigodaga lea 	iskkan 	oahpahit su . 
 	## Báikki olbmuide lea vearrámus go eai leat goasse 	iskkan 	joavdá go várálaš suonjardeapmi sin gilážiidda . 
+    ## Ii sivalaš Dan botta SEFO 	dutkkan 	burginášši , de loahpahuvai diskeahtta suoládanášši dan dihte go ii gávdnon mihkke duođaštusaid dasa ahte Ánne Ristiinna bárdni lei diskeahtaid suoládan . #RITVA?
+
 
 	## SFT 	iskkan 	suohkaniid Stáda nuoskkidanbearráigeahčču ( SFT ) lea dán jagi iskkan mo suohkanat doaimmahit nuoskkidan ovddasvástádusa . -- not fixed yet Ritva
-	
-
-	
+		
 
 ADD:syn-inf-not-Der/h (&syn-inf-not-Der/h) TARGET DOUBLE-CONSONANT-AT-VERBS IF (0 (V TV Ind Prs Sg2))(NEGATE *-1 Pron + Sg2 BARRIER GRAMCHK-S-BOUNDARY) ;
 ADD:syn-inf-not-Der/h (&syn-inf-not-Der/h) TARGET DOUBLE-CONSONANT-AT-VERBS IF (0 (V* TV Der/d V Imprt ConNeg) OR (V* TV Der/d V Ind Prs ConNeg) OR (V* TV Der/h V TV Imprt ConNeg) OR (V* TV Der/h V TV Ind Prs ConNeg)) (NEGATE *-1 ("mun" Pron Pers Sg1 Nom) BARRIER GRAMCHK-S-BOUNDARY)(*-1 ("ii") BARRIER GRAMCHK-S-BOUNDARY) ;
