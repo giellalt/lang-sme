@@ -430,7 +430,7 @@ analyser-gt-norm.xfst: analyser-gt-norm.tmp.xfst \
 					filters/remove-allegro-tags.xfst
 	$(AM_V_XFST)$(PRINTF) "read regex                         \
 				@\"filters/remove-allegro-tags.xfst\" \
-			.o. @\"$<\".i                                     \
+			.o. @\"$<\"                                       \
 			;\n\
 		 save stack $@\n\
 		 quit\n" | $(XFST) $(VERBOSITY)
