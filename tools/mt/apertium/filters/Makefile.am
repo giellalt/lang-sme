@@ -51,7 +51,7 @@ endif
 
 # And Xerox targets here:
 if CAN_XFST
-GT_FILTER_TARGETS+=remove-derivation-strings.nob.xfst
+GT_FILTER_TARGETS+=remove-derivation-strings.nob.xfst modify-tagset.smn.xfst
 endif
 
 endif # WANT_APERTIUM
