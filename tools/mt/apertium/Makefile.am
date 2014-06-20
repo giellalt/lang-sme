@@ -21,20 +21,6 @@ analyser-mt-gt-desc.nob.hfst: analyser-mt-gt-desc.nob.tmp.hfst \
 		| $(HFST_FST2FST) $(HFSTFLAGS) -t \
 		-o $@
 
-# We want to make semantic tags optional for the nob-targeted analyser:
-analyser-mt-apertium-desc.smn.hfst: analyser-mt-apertium-desc.smn.tmp.hfst \
-			filters/modify-tagset.smn.hfst
-	$(HFST_INVERT) analyser-mt-apertium-desc.smn.tmp.hfst -o foo.tmp
-	$(AM_V_RGX2FST)$(PRINTF) "\
-		@\"filters/modify-tagset.smn.hfst\" \
-   	.o. @\"foo.tmp\" \
-    	;" \
-		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
-		| $(HFST_INVERT) $(HFSTFLAGS) \
-		| $(HFST_FST2FST) $(HFSTFLAGS) -t \
-		-o $@
-
-
 ##################################################################
 #### END: Add local processing instructions ABOVE this line ######
 ##################################################################
