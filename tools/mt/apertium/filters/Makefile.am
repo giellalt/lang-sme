@@ -36,7 +36,7 @@ endif # WANT_APERTIUM
 ##################################################################
 
 # List any local additions here:
-GT_FILTER_SRCS=
+GT_FILTER_SRCS=modify-tagset.smn.regex
 
 # Only build these things if apertium fst's are enabled:
 if WANT_APERTIUM
@@ -46,7 +46,7 @@ GENERATED_REGEXES+=remove-derivation-strings.nob.regex
 # Add the target of local additions here:
 # HFST targets here:
 if CAN_HFST
-GT_FILTER_TARGETS+=remove-derivation-strings.nob.hfst
+GT_FILTER_TARGETS+=remove-derivation-strings.nob.hfst modify-tagset.smn.hfst
 endif
 
 # And Xerox targets here:
