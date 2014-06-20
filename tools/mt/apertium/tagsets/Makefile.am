@@ -6,7 +6,8 @@
 TAGSET_SRCS=
 
 # List reorder regex source files here:
-REGEX_SRCS=
+REGEX_SRCS=modify-tags.smn.regex \
+           modify-tags.nob.regex
 
 # These will be included in the distribution:
 GT_REGEX_SRCS=$(TAGSET_SRCS) $(REGEX_SRCS) README.txt
