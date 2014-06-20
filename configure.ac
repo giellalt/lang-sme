@@ -66,7 +66,7 @@ AM_CONDITIONAL([HAVE_DIALECTS], [test "x$DIALECTS" != "x"])
 # Replace the language code 'und' (= undefined) with the language codes for the
 # machine translation target languages in apertium to be used together with
 # sme as the source language:
-AC_SUBST([MT_AP_TARGET_LANGS], ["nob sma smj"])
+AC_SUBST([MT_AP_TARGET_LANGS], ["nob sma smj smn"])
 
 # GTLANG is the language code used to identify this project; it should be same
 # as the directory name in gtsvn and same as ISO 639 three-letter code for the
