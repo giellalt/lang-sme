@@ -22,6 +22,7 @@ TESTS+=run-gt-norm-anayaml-testcases.sh
 if WANT_GENERATION
 TESTS+=run-gt-norm-yaml-testcases.sh \
        run-gt-desc-yaml-testcases.sh \
+       run-disamb-gt-desc-anayaml-testcases.sh \
        run-lexc-testcases.sh
 endif # WANT_GENERATION
 endif # WANT_MORPHOLOGY
