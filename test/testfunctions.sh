@@ -11,7 +11,7 @@ cat $GTHOME/langs/sme/test/data/functionstestoutput | perl -pe 's/(Allegro|<vdic
 perl $GTHOME/gt/script/sort-cg-cohort.pl $GTHOME/langs/sme/test/data/cleanfunctionstestoutput | uniq > $GTHOME/langs/sme/test/data/sortedfunctionstestoutput
 
 # There should be no difference
-diff -w $GTHOME/langs/sme/test/data/functionCG.corr.txt $GTHOME/langs/sme/test/data/sortedfunctionstestoutput > $GTHOME/langs/sme/test/data/functionstestresult
+diff -w $GTHOME/langs/sme/test/data/functionsCG.corr.txt $GTHOME/langs/sme/test/data/sortedfunctionstestoutput > $GTHOME/langs/sme/test/data/functionstestresult
 see $GTHOME/langs/sme/test/data/functionstestresult
 
 
