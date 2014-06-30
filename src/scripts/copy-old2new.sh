@@ -51,7 +51,7 @@ cp -f $OLDSRCDIR/sme-dis.rle    $NEWSRCDIR/syntax/disambiguation.cg3
 
 # phonology/ dir files
 echo "*** Copying phonology ***"
-cp -f $OLDSRCDIR/twol-sme.txt   $NEWSRCDIR/phonology/sme-phon.twolc
+cp -f $OLDSRCDIR/twol-sme.txt   $NEWSRCDIR/phonology/sme-phon-l1.twolc
 
 # transcriptions/ dir files
 echo "*** Copying transcriptions ***"
