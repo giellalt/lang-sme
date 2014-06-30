@@ -17,11 +17,28 @@
 
 ####### Source file defs: ########
 
+L2=
+
+if WANT_OAHPA 
+L2+=$(GTLANG)-phon-L2.twolc
+
+else
+L2+=$(GTLANG)-phon-L1.twolc
+endif # WANT_OAHPA
+
+
 #! @param GT_TWOLC_MAIN required, the source of phonology
 #! @param GT_TWOLC_SUPPLEMENTS optional, other sources to distribute and
 #! 		  compile for other things
 GT_PHONOLOGY_MAIN=$(GTLANG)-phon.twolc
 GT_PHONOLOGY_SUPPLEMENTS=
+
+$(GTLANG)-phon.twolc: $(GTLANG)-phon-L1.twolc
+	$(AM_V_GEN)cp -f $< $@
+
+$(GTLANG)-phon.twolc: $(GTLANG)-phon-L2.twolc
+	$(AM_V_GEN)cp -f $< $@
+
 
 include $(top_srcdir)/am-shared/src-phonology-dir-include.am
 
