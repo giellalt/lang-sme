@@ -20,6 +20,12 @@ GENERATOR=generator-gt-desc.xfst
 else
 if CAN_HFST
 GENERATOR=generator-gt-desc.hfst
+ANALYSER=analyser-gt-desc.hfst
+PMHFST=preprocessor-gt-desc.pmhfst
+
+hfstdatadir=$(datadir)/giella/$(GTLANG)
+hfstdata_DATA=$(PMHFST)
+
 else
 GENERATOR=false
 endif # CAN_HFST
@@ -33,6 +39,7 @@ ABBRSRCS:=$(subst $(space),$(comma),$(SRCS))
 
 SCRIPTDIR=$(GTCORE)/scripts
 
+# Build the abbr.txt file:
 abbr: abbr.txt
 abbr.txt: \
 		$(top_srcdir)/src/morphology/stems/abbreviations.lexc \
@@ -49,3 +56,18 @@ abbr.txt: \
 		--lex=$(ABBRSRCS)
 	$(AM_V_at)sed -e 's/\+MWE//' < $@.tmp | uniq > $@
 	$(AM_V_at)rm -f $@.tmp
+
+
+###############
+### Test builds for hfst-pmatch and a preprocessor based on it and the
+### regular, lexical fst.:
+
+$(ANALYSER): $(top_builddir)/src/$(ANALYSER)
+	$(AM_V_GEN)cp -f $< $@
+
+%.pmhfst: %.pmregex $(ANALYSER)
+	$(AM_V_GEN)hfst-pmatch2fst < $< > $@
+
+### Use the pmhfst file as follows:
+
+# echo "Mun ja son." | hfst-pmatch $(PMHFST)
