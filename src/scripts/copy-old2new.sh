@@ -7,8 +7,6 @@
 
 OLDSRCDIR=$GTHOME/gt/sme/src
 NEWSRCDIR=$GTHOME/langs/sme/src
-OLDCOMMONDIR=$GTHOME/gt/smi/src
-NEWCOMMONDIR=$GTHOME/gtcore/langs-templates/smi/src
 STEMSDIR=morphology/stems
 AFFIXDIR=morphology/affixes
 
@@ -51,7 +49,7 @@ cp -f $OLDSRCDIR/sme-dis.rle    $NEWSRCDIR/syntax/disambiguation.cg3
 
 # phonology/ dir files
 echo "*** Copying phonology ***"
-cp -f $OLDSRCDIR/twol-sme.txt   $NEWSRCDIR/phonology/sme-phon-l1.twolc
+cp -f $OLDSRCDIR/twol-sme.txt   $NEWSRCDIR/phonology/sme-phon-L1.twolc
 
 # transcriptions/ dir files
 echo "*** Copying transcriptions ***"
