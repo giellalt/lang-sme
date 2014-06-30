@@ -15,6 +15,28 @@
 ## You should have received a copy of the GNU General Public License
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+L2=
+
+if WANT_OAHPA 
+L2+=\
+			affixes/adjectives-L2.lexc  \
+			stems/adjectives-L2.lexc \
+			affixes/nouns-L2.lexc  \
+			stems/nouns-L2.lexc   \
+			affixes/verbs-L2.lexc  \
+			stems/verbs-L2.lexc
+
+else
+L2+=\
+			affixes/adjectives.lexc \
+			stems/adjectives.lexc   \
+			affixes/nouns.lexc      \
+			stems/nouns.lexc        \
+			affixes/verbs.lexc      \
+			stems/verbs.lexc
+endif # WANT_OAHPA
+
+
 # Set this to name of lexc file containing Multichar_Symbols and LEXICON Root
 GT_LEXC_ROOT=root.lexc
 
@@ -22,26 +44,21 @@ GT_LEXC_ROOT=root.lexc
 GT_LEXC_SRCS=\
 			clitics.lexc                     \
 			compounds.lexc                   \
-			affixes/adjectives.lexc          \
-			affixes/nouns.lexc               \
 			affixes/possessive-suffixes.lexc \
 			affixes/pronouns.lexc            \
 			affixes/propernouns.lexc         \
-			affixes/verbs.lexc               \
 			stems/abbreviations.lexc         \
 			stems/acronyms.lexc              \
-			stems/adjectives.lexc            \
 			stems/adpositions.lexc           \
 			stems/adverbs.lexc               \
 			stems/conjunctions.lexc          \
 			stems/interjections.lexc         \
-			stems/nouns.lexc                 \
 			stems/numerals.lexc              \
 			stems/particles.lexc             \
 			stems/pronouns.lexc              \
 			stems/punctuation.lexc           \
 			stems/subjunctions.lexc          \
-			stems/verbs.lexc
+			$(L2)
 
 # Set this to the names of all generated lexc files, if any
 GENERATED_LEXC_SRCS=$(srcdir)/stems/smi-$(GTLANG)-propernouns.lexc
