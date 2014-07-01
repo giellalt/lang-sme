@@ -39,6 +39,11 @@ TESTS+=run-dict-gt-desc-anayaml-testcases.sh \
        run-dict-gt-norm-genyaml-testcases.sh
 endif # WANT_DICTIONARIES
 
+if WANT_OAHPA
+TESTS+=run-oahpa-gt-desc-anayaml-testcases.sh \
+       run-oahpa-gt-norm-genyaml-testcases.sh
+endif # WANT_OAHPA
+
 endif # CAN_YAML_TEST
 
 # List tests that are presently (expected) failures here, ie things that should
