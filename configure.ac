@@ -60,7 +60,7 @@ AC_SUBST([LO_min_version], [3.6])
 
 # Specify the tags for all dialects in this variable, leave it empty if you do
 # support dialectal variant fst's. Use upper case, separate with space.
-AC_SUBST([DIALECTS], [""])
+AC_SUBST([DIALECTS], ["GG KJ GS"])
 AM_CONDITIONAL([HAVE_DIALECTS], [test "x$DIALECTS" != "x"])
 
 # Replace the language code 'und' (= undefined) with the language codes for the
