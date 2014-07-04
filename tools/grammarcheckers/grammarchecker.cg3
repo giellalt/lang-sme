@@ -5646,13 +5646,18 @@ COPY:syn-noun-not-nomag (N Sg Gen &SUGGEST) EXCEPT (N NomAg Sg Nom &syn-noun-not
     # -----------------------
 
 ADD:nom-not-gen (&syn-nom-not-gen) TARGET (N Sg Gen) IF (*-1 (Pron Dem Sg Nom) BARRIER NPNH)(*1 Der/Pass BARRIER GRAMCHK-S-BOUNDARY)(NEGATE 0 Sem/Time OR Sem/Route) ;
-COPY:syn-nom-not-gen (Nom &SUGGEST) EXCEPT (Gen &syn-nom-not-gen) TARGET (N &syn-nom-not-gen) ;	
 	## Dát lea smávit mánáide ráhkaduvvon, danne leat dás lávlagat maiet doaškkut  gieđaid, ja maiddai  leat das lávlagat maidda mánát sáhttet lihkadit go gullet lávlagiid.
 	# needs to be tested
 
 LIST DN-NOUNS = (".*dn.*"r N) ; # d/t-meattáhus
 ADD:nom-not-gen (&syn-nom-not-gen) TARGET DN-NOUNS IF (0 (N Sg Gen) OR (N Sg Acc) LINK 0 Sem/Hum) (1 Sem/Fem OR Sem/Mal)(*1 Sg3 + V BARRIER GRAMCHK-S-BOUNDARY) ;	
 	## Eatni Inger Anne Siri Triumf ii loga árvalusa ávkin su niidii gii vázzá priváhta joatkkaskuvlla.
+	
+ADD:nom-not-gen (&syn-nom-not-gen) TARGET DOUBLE-CONSONANT-NOUNS IF (0 (N Sg Gen) OR (N Sg Acc) LINK 0 Sem/Hum OR Sem/Org) (1 Sg3 + V)(-1 CS)(NEGATE *1 (N Sg Nom)) ;	
+	## Olli lohká Ávjováris válgaguovllus hálidan sámegielat presideantta ja lohká buorre go várrepresideantta hálddaša sámegiela.
+	# needs to be tested
+
+COPY:syn-nom-not-gen (Nom &SUGGEST) EXCEPT (Gen &syn-nom-not-gen) TARGET (N &syn-nom-not-gen) ;	
 
     
     # time adverbial in accusative/genitive case
@@ -5917,7 +5922,8 @@ ADD:wrong-valency-ill (&msyn-valency-ill) Acc IF (0 N - Sem/Route - Sem/Time)(*0
     #$ Áibbašan olles váimmuin
 	# in errors.xml
 	
-ADD:valency-ill (&msyn-valency-ill) TARGET Acc IF (0 Recipr + Px OR Sem/Hum OR Sem/Org OR Sem/Ani LINK NOT 0 Ill)(NEGATE *0 Ill + Sem/Hum OR Ill + Sem/Org OR Ill + Sem/Ani BARRIER GRAMCHK-VFIN OR GRAMCHK-S-BOUNDARY)(*0 <RE-Ill-Ani><TH-Acc-*Ani> BARRIER GRAMCHK-VFIN OR GRAMCHK-S-BOUNDARY LINK *0 OBJ - Sem/Hum - Sem/Ani - Sem/Org BARRIER GRAMCHK-VFIN OR GRAMCHK-S-BOUNDARY)(NOT 0 &real)(NEGATE *-1 &real);
+
+ADD:valency-ill (&msyn-valency-ill) TARGET Acc IF (0 Recipr + Px OR Sem/Hum OR Sem/Org OR Sem/Ani LINK NOT 0 Ill)(NEGATE *0 Ill + Sem/Hum OR Ill + Sem/Org OR Ill + Sem/Ani BARRIER GRAMCHK-VFIN OR GRAMCHK-S-BOUNDARY)(*0 <RE-Ill-Ani><TH-Acc-*Ani> - <TH-Acc-Any> BARRIER GRAMCHK-VFIN OR GRAMCHK-S-BOUNDARY OR CC LINK *0 OBJ - Sem/Hum - Sem/Ani - Sem/Org BARRIER GRAMCHK-VFIN OR GRAMCHK-S-BOUNDARY)(NOT 0 &real)(NEGATE *-1 &real);
 COPY:msyn-valency-ill (Ill &SUGGEST) EXCEPT (Acc &msyn-valency-ill) TARGET (Acc &msyn-valency-ill) ;
     ## Eai lean oainnat (nemlig) addán skeaŋkkaid nuppiideaset daid maŋimus juovllaid ja danin dat dovde ahte dál fertejit oastalit nu ollu go nagodit. - nubbi+Pron+Recipr+Pl+Gen+PxPl3  
     ## Gasku dehálaš guovddášbáikkiide. Gasku dehálaš guovddášbáikkiid. (gasku Pr? dahje V)
