@@ -907,6 +907,7 @@ LIST &syn-case_congruence = &syn-case_congruence ;
 LIST &syn-comp-part1 = &syn-comp-part1 ;
 LIST &syn-comp-part2 = &syn-comp-part2 ;
 LIST &syn-kon-not-kkun = &syn-kon-not-kkun ;
+LIST &syn-passprssg3-not-connegII = &syn-passprssg3-not-connegII ;
 LIST &syn-pred-not-attr = &syn-pred-not-attr ;
 LIST &syn-Pl3-not-Inf = &syn-Pl3-not-Inf ;
 LIST &syn-u-not-o = &syn-u-not-o ;
@@ -3255,8 +3256,8 @@ LIST ALL-LEMMA = ".*"r ;
 	
 LIST SENTENCE-MARKERS = \? \. \! \¶ ;
 	
-ADD:finitev_missing-end (&syn-finitev_missing-end) TARGET CLB IF (0 (".") OR ("?") OR ("!")) (NOT *-1 VFIN)(NEGATE -1 Interr OR MO-MANge LINK -1 BOS) ;
-ADD:finitev_missing-start (&syn-finitev_missing-start) TARGET WORD IF (*1 &syn-finitev_missing-end)(-1 BOS) ;
+ADD:finitev_missing-end (&syn-finitev_missing-end) TARGET CLB IF (0 (".")) (NOT *-1 VFIN)(NEGATE -1 Interr OR MO-MANge LINK -1 BOS)(NEGATE *-1 Interj OR (?)) ;
+ADD:finitev_missing-start (&syn-finitev_missing-start) TARGET WORD - Interj IF (*1 &syn-finitev_missing-end)(-1 BOS) ;
     #$ Gos?
     ## Gii ruoktot?
     # what about titles? - maybe reduce to sentences with \.
@@ -3426,7 +3427,7 @@ COPY:real-gierástallat ("gierástallat" V IV &SUGGEST) EXCEPT ("gierrat" V TV D
 	# bággehalai (bágget+V+TV+Der/h+V+Der/alla+V+Ind+Prt+Sg3) vs. bággehallui (bágget+V+TV+Der/h+V+Der/alla+V+Der/PassS+V+IV+Ind+Prt+Sg3)
 	# ------------------------------------------------------------------------
 
-ADD:bággehalai (&real-bággehalai) TARGET ("bágget" V* TV* Der/h V* Der/alla V* Der/PassS V IV Ind Prt Sg3) OR ("bággehit" V* TV* Der/alla V* Der/PassS V IV Ind Prt Sg3)(*0 (Nom) BARRIER GRAMCHK-S-BOUNDARY LINK 0 Sem/Hum OR Sem/Mal OR Sem/Fem OR Sem/Sur OR Sem/Org OR Pers OR Dem)  ;
+ADD:bággehalai (&real-bággehalai) TARGET ("bágget" V* TV* Der/h V* Der/alla V* Der/PassS V IV Ind Prt Sg3); # OR ("bággehit" V* TV* Der/alla V* Der/PassS V IV Ind Prt Sg3)(*0 (Nom) BARRIER GRAMCHK-S-BOUNDARY LINK 0 Sem/Hum OR Sem/Mal OR Sem/Fem OR Sem/Sur OR Sem/Org OR Pers OR Dem)  ;
 
 COPY:real-bággehalai ("bágget" V* TV* Der/h V Der/alla V Ind Prt Sg3 &SUGGEST) EXCEPT ("bágget" V* TV* Der/h V* Der/alla V* Der/PassS V IV Ind Prt Sg3 &real-bággehalai) OR ("bággehit" V* TV* Der/alla V* Der/PassS V IV Ind Prt Sg3 &real-bággehalai) TARGET (V &real-bággehalai) ;
 	## Maŋŋá go ráđđehus bággehallui guođđit Norgga geassemánus 1940, de jođihii son eksiilaráđđehusa Londonisitta 1945 giđa rádjai.	
@@ -3704,6 +3705,7 @@ COPY:compound-dihtii-not-dihti (&SUGGEST) EXCEPT (".*dihtti"r N Sg Gen) OR (".*d
 	## Sámediggeáirras Randi A. Skum ( NSR ) jearrá dasto odne gažaldagaid sámediggeráđđái ahte máid lea Sámediggeráđđi dássážii bargan čoavdindihti divatgažaldaga boazodoalus ja makkár strategiija lea Sámediggeráđis ovddasguvlui oažžun 	dihti 	vuoiggalaš divatortnega boazodollui .
 	#havent figured out yet how to suggest just the first part of the compound
 ADDCOHORT:compound-dihtii-not-dihti ("<dihtii>" "dihtii" Po &SUGGEST) AFTER (&real-compound-dihtii-not-dihti) ; 
+	# refer to Jussi (compounds including dihte)
 	
 	
 #	čoavdindihti
@@ -3869,10 +3871,11 @@ COPY:real-čohka ("čohkka" N Sg Gen &SUGGEST) EXCEPT ("čohkat" V TV Ind Prs Sg
 	# čohkket (Inf samle, montere) vs. čohket (čohkat - spisse)
 	# ---------------------------------------------------------
 
-ADD:čohkket (&real-čohkket) TARGET ("čohkkát") OR ("čohkat" V TV Ind Prs Pl3) OR ("čohkat" V TV Ind Prt Sg2) OR ("čohkat" V TV Imprt Pl2) IF (*-1 AUX LINK *-1 (N Nom) BARRIER GRAMCHK-NPNHA)(*0 Acc OR Gen BARRIER GRAMCHK-S-BOUNDARY) ;
-ADD:čohkket (&real-čohkket) TARGET ("čohkkát") OR ("čohkat" V TV Ind Prs Pl3) OR ("čohkat" V TV Ind Prt Sg2) OR ("čohkat" V TV Imprt Pl2) IF (*-1 COPULAS)(*0 Acc OR Gen BARRIER GRAMCHK-S-BOUNDARY) ;
+ADD:čohkket (&real-čohkket) TARGET ("čohkkát") OR ("čohkat" V TV Ind Prs Pl3) OR ("čohkat" V TV Ind Prt Sg2) OR ("čohkat" V TV Imprt Pl2) IF (*-1 AUX LINK *-1 (N Nom) BARRIER GRAMCHK-NPNHA)(*0 Acc OR Gen BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR Inf) ;
+ADD:čohkket (&real-čohkket) TARGET ("čohkkát") OR ("čohkat" V TV Ind Prs Pl3) OR ("čohkat" V TV Ind Prt Sg2) OR ("čohkat" V TV Imprt Pl2) IF (*-1 COPULAS)(*0 Acc OR Gen BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR Inf) ;
 	## Olbmot leat mannan feara guđe guvlui , iige daid leat álki 	čohket 	.
 	## Ja lea dehálaš čohket vuorrasut olbmuid lohkamin báikenama jietnabáddái vai dat lea gávdnomis maid čuovvovaš buolvvaide.
+	#$ Soai čohkkáiga litna stuoluin maid girjerájus-bargi lei bidjan vai olbmot besset čohkkát ja lohkat girjjiid.
 
 ADD:čohkket (&real-čohkket) TARGET ("čohkkát") OR ("čohkat" V TV Ind Prs Pl3) OR ("čohkat" V TV Ind Prt Sg2) OR ("čohkat" V TV Imprt Pl2) IF (NEGATE *0 VFIN)(*0 Acc OR Gen BARRIER GRAMCHK-S-BOUNDARY) ;
 	## DNA-ávdnasiid 	čohket.
@@ -4279,9 +4282,37 @@ COPY:syn-prfprc-not-prssg1 (PrfPrc &SUGGEST) EXCEPT (Ind Prs Sg1 &syn-prfprc-not
 	## Okta sierraoahpaheaddji dajai ahte son ii álgge kártet oahppi ovdalgo ovtta áigodaga lea 	iskkan 	oahpahit su . 
 	## Báikki olbmuide lea vearrámus go eai leat goasse 	iskkan 	joavdá go várálaš suonjardeapmi sin gilážiidda . 
     ## Ii sivalaš Dan botta SEFO 	dutkkan 	burginášši , de loahpahuvai diskeahtta suoládanášši dan dihte go ii gávdnon mihkke duođaštusaid dasa ahte Ánne Ristiinna bárdni lei diskeahtaid suoládan . #RITVA? Ritva: Yes, this sentence should be included (Note: "Ii sivalaš" is a headline). The sentence has multiple possibilities: Dan botta go SEFO dutká..."(dutkat+V+TV+Ind+Prs+Sg3), "Dan botta go SEFO lea dutkan..."(dutkat+V+TV+PrfPrc), "Dan botta go SEFO dutkkai...". 
+    
+	# daddjo vs. dadjo
+	# ----------------
+	
+LIST PASSIVE-DOUBLE-CONSONANT-AT-VERBS = (".*djat"r) ;
+	
+ADD:syn-passprssg3-not-connegII (&syn-passprssg3-not-connegII) TARGET PASSIVE-DOUBLE-CONSONANT-AT-VERBS IF (0 (TV ConNegII)) (NEGATE *-1 ("ii") BARRIER GRAMCHK-S-BOUNDARY) ;
 
-
+COPY:syn-passprssg3-not-connegII (Der/PassS V IV Ind Prs Sg3 &SUGGEST) EXCEPT (ConNegII
+dadjo &syn-passprssg3-not-connegII) OR (Imprt ConNegII &syn-passprssg3-not-connegII) TARGET (&syn-passprssg3-not-connegII) ;
+	## Ollu oktavuođain dadjo  ahte hálddašansuohkanat eai oaččo doarvái ruđaid nu ahte besset bearráigeahččat iežaset barggu go lea hálddašansuohkan, ja dat galgá dieđusge váldot duođalažžan, dadjá son.
+	
+		
 	## SFT 	iskkan 	suohkaniid Stáda nuoskkidanbearráigeahčču ( SFT ) lea dán jagi iskkan mo suohkanat doaimmahit nuoskkidan ovddasvástádusa . -- not fixed yet RITVA
+	
+#daddjo	dadjat+V+TV+Der/PassS+V+IV+VGen
+#daddjo	dadjat+V+TV+Der/PassS+V+IV+Imprt+ConNeg
+#daddjo	dadjat+V+TV+Der/PassS+V+IV+Imprt+Sg2
+#daddjo	dadjat+V+TV+Der/PassS+V+IV+Ind+Prs+Sg3
+#daddjo	dadjat+V+TV+Der/PassS+V+IV+Ind+Prs+ConNeg
+#daddjo	dadjat+V+TV+ConNegII
+#daddjo	dadjat+V+TV+Imprt+ConNegII
+#daddjo	dadjat+V+TV+Der/PassS+V+IV+VGen
+#daddjo	dadjat+V+TV+Der/PassS+V+IV+Imprt+ConNeg
+#daddjo	dadjat+V+TV+Der/PassS+V+IV+Imprt+Sg2
+#daddjo	dadjat+V+TV+Der/PassS+V+IV+Ind+Prs+Sg3
+#daddjo	dadjat+V+TV+Der/PassS+V+IV+Ind+Prs+ConNeg
+#
+#dadjo	dadjat+V+TV+ConNegII
+#dadjo	dadjat+V+TV+Imprt+ConNegII
+
 		
 
     # dahket vs. dahkket 
@@ -5459,7 +5490,7 @@ COPY:mii-not-gii ("mii" Sg &SUGGEST) EXCEPT ("gii" Pl &lex-mii-not-gii) TARGET (
 	
 	# missing conneg after neg
 	
-ADD:missing-conneg-after-neg (&missing-conneg-after-neg) TARGET	Neg - Foc/ge (NOT 1 EOS)(NEGATE 1 ("ge"))(NEGATE *2 Foc/ge BARRIER NOT-COMMA)(NEGATE *2 Neg BARRIER NOT-COMMA LINK 1 ("ge"))(NEGATE *1 ConNeg OR PrfPrc BARRIER Neg OR NOT-COMMA)(NEGATE *1 COMMA BARRIER NOT-COMMA) (NEGATE 1 (Pron Sg Nom) LINK *1 (A Sg Nom) BARRIER S-BOUNDARY OR VFIN LINK *2 VFIN BARRIER S-BOUNDARY OR VFIN) (NEGATE -1 ("ja") LINK 1 (Neg) LINK NOT *1 ConNeg OR PrfPrc BARRIER GRAMCHK-S-BOUNDARY) ;
+ADD:missing-conneg-after-neg (&missing-conneg-after-neg) TARGET	Neg - Foc/ge (NOT 1 EOS)(NEGATE 1 ("ge"))(NEGATE *2 Foc/ge BARRIER NOT-COMMA)(NEGATE *2 Neg BARRIER NOT-COMMA LINK 1 ("ge"))(NEGATE *1 ConNeg OR PrfPrc BARRIER Neg OR NOT-COMMA)(NEGATE *1 COMMA BARRIER NOT-COMMA) (NEGATE 1 (Pron Sg Nom) LINK *1 (A Sg Nom) BARRIER S-BOUNDARY OR VFIN LINK *2 VFIN BARRIER S-BOUNDARY OR VFIN) (NEGATE -1 ("ja") LINK 1 (Neg) LINK NOT *1 ConNeg OR PrfPrc BARRIER GRAMCHK-S-BOUNDARY)(NEGATE *0 ?)(NEGATE 1 ("mihkkege") OR Foc/ge);
 	#$ Imperatiivahápmi ale čuovvu njeallje mánu maŋŋel. #still not fixed
 	#$Ii makkárge riektiásahus leat gávnnahan su sivalažžan.XXX disamb
 	#$Ii stuora váttisvuohta.XXX
@@ -5509,11 +5540,12 @@ LIST INDIRECT-SPEECH-V = "dadjat" "diehtit" ; # Neg dahje/vai
 	# Mun in dieđe boađángo ihttin.  Neg
 	# Mun dieđán dál boađángo ihttin dahje odne.
 
-ADD:add-go (&syn-add-go) TARGET GRAMCHK-VFIN IF (*-1 INDIRECT-QST-V BARRIER GRAMCHK-S-BOUNDARY1 OR GRAMCHK-VFIN OR MO-MANge OR CC OR CS)(NOT 0 Qst) (NEGATE 1 ("go")) (NEGATE -*1 ("manin") OR ("manne") OR ("makkár") OR Rel BARRIER GRAMCHK-S-BOUNDARY);
+ADD:add-go (&syn-add-go) TARGET GRAMCHK-VFIN IF (*-1 INDIRECT-QST-V BARRIER GRAMCHK-S-BOUNDARY1 OR GRAMCHK-VFIN OR MO-MANge OR CC OR CS)(NOT 0 Qst) (NEGATE 1 ("go")) (NEGATE -*1 ("manin") OR ("manne") OR ("makkár") OR Rel BARRIER GRAMCHK-S-BOUNDARY)(NEGATE -1 SUBJ LINK -1 COMMA);
 	#$ Mon gal eahpidan, ahte ollen obban dohko beaivečuovggas.
 	## Fertejedjen jearrat lea dien olbmos veháge jearga báhcán.
 	#$ Mon gal jearan mo galggan boahtit.
 	#$ Go seamma gažaldagat jerrojuvvui jagis 1950, de vástidii dušše 13,6 % ahte sii geavahit sámegiela ruovttus.XXX
+	#$ Mana eatnis jearrat, son soaitá muitit man birra dat lea.
 	# in errors.xml
 	
 ADD:add-go (&syn-add-go) TARGET GRAMCHK-VFIN IF (*-1 INDIRECT-SPEECH-V BARRIER GRAMCHK-S-BOUNDARY1 OR GRAMCHK-VFIN OR MO-MANge OR CC OR CS LINK 0 ConNeg)(NOT 0 Qst) (NEGATE 1("go")) ;
@@ -5565,7 +5597,8 @@ ADD:pred-not-attr (&syn-pred-not-attr) TARGET (A Attr) IF (*-1 COPULAS BARRIER V
 COPY:syn-pred-not-attr (A Sg Nom &SUGGEST) EXCEPT (A Attr &syn-pred-not-attr) TARGET (A &syn-pred-not-attr) ;
     ## Spábba ii leat 	geahppa 	nu go láve .
     ## Dikšui gullet gárrenmirkováttut , 	geahppa 	psykalaš váttut , nugo deprešuvnnat ja ballu .
-    #$ Danne ávžžuhan buohkaid dan geavahit , go dat leat boares , 	geahppa 	ja oanehis sátni , lohká Sámedikki giellastivrra jođiheaddji Rolf Olsen .
+    #$ Danne ávžžuhan buohkaid dan geavahit , go dat leat boares , 	geahppa 	ja oanehis sátni , lohká Sámedikki giellastivrra jođiheaddji Rolf Olsen.
+    #$ Lárin lei stuorámus buot 10. luohká bártniin. --- is stuorámos wrong here Ritva?
     # needs to be tested
 	
 	# topicalization
@@ -5907,7 +5940,7 @@ ADD:wrong-valency-ill (&msyn-valency-ill) Acc IF (0 N + Sem/Plc)(*0 <TH-Acc-*Plc
 
 	## Ee. ON:a álgoálbmotraporterejeaddji James Anaya lea evttohan, ahte sámediggái sirdojuvvole ee. barggut, mat gusket sámegiela. Ee. ON:a álgoálbmotraporterejeaddji James Anaya lea evttohan, ahte sámediggái sirdojuvvole ee. barggut, mat gusket sámegillii. 
 	
-ADD:wrong-valency-ill (&msyn-valency-ill) Acc IF (0 N - Sem/Route - Sem/Time)(*0 V + <TH-Ill-Any> BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN OR CC OR (";") LINK NOT 0 DIA-DERIVATIONS OR <PA-Acc-Ani> OR <TH-Acc-Any> OR <IN-Acc-Any> OR <TH-Acc-*Plc>)(NEGATE *0 §TH OR (&corr-no-missing-argument))(NEGATE *1 Inf  OR (Prs Pl1) BARRIER NPNHA);
+ADD:wrong-valency-ill (&msyn-valency-ill) Acc IF (0 N - Sem/Route - Sem/Time)(*0 V + <TH-Ill-Any> BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN OR CC OR (";") LINK NOT 0 DIA-DERIVATIONS OR <PA-Acc-Ani> OR <TH-Acc-Any> OR <IN-Acc-Any> OR <TH-Acc-*Plc>)(NEGATE *0 §TH OR (&corr-no-missing-argument))(NEGATE *0 Inf  OR (Prs Pl1) BARRIER GRAMCHK-S-BOUNDARY);
 	## Hui ollu liikon bohccobierggu ja goikebierggu. Hui ollu liikon bohccobirgui ja goikebirgui.
 	#$ Son galgá julevsámi mánáid bajásšaddan diliin oahpásnuvvat.
 	#$ Dušše dien láhkái lea mis vejolašvuohta oahpahit nuoraid luohttit earáide ja dovdat ovttaárvosašvuođa singuin
@@ -6251,8 +6284,9 @@ ADD:ess-not-com  (&msyn-ess-not-com) TARGET (N Com) IF (-1 (Num Com))(*0 <XT-Com
 ADD:ess-not-com  (&msyn-ess-not-com) TARGET (N Prop Ess) IF (0 Sem/Sur)(NEGATE *0 <RO-Ess-Any> BARRIER GRAMCHK-S-BOUNDARY OR V LINK NOT 0 <Com-*Ani>); 
 
 
-ADD:ess-not-com  (&msyn-ess-not-com) TARGET (N Com) IF (NOT 0 Sem/Hum OR Sem/Org OR Sem/Ani LINK *-1 <TH-Acc-Any><RO-Ess-Any> BARRIER NPNH LINK NOT 0 <Com-*Ani>) 
+ADD:ess-not-com  (&msyn-ess-not-com) TARGET (N Com) IF (NOT 0 Sem/Hum OR Sem/Org OR Sem/Ani LINK *-1 <TH-Acc-Any><RO-Ess-Any> BARRIER NPNH LINK NOT 0 <Com-*Ani>)(NEGATE 0* <Com-*Ani> BARRIER GRAMCHK-S-BOUNDARY) 
 	##	NSR/SáB Nuortaguovllu válgabiire sámediggeáirras Trond Are Anti čilge ahte dát hástalus lea ovddiduvvon ođđa áššiin ja jerron ovdalis ráđis Sámedikki dievasčoahkkimis.
+	#$ Sii ledje beassan válljet makkár dujiin áigo bargat.
 	# needs testing
 
 COPY:msyn-ess-not-com (Sg Com &SUGGEST) EXCEPT (Ess &msyn-ess-not-com) TARGET (N &msyn-ess-not-com) ;
