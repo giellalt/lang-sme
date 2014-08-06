@@ -68,6 +68,7 @@ GT_XML_SRCS=
 
 generated_files/smi-propernouns.lexc: \
 			$(GTCORE)/gtdshared/smi/src/morphology/stems/smi-propernouns.lexc
+	$(AM_V_at)$(MKDIR_L) generated_files
 	$(AM_V_GEN)cp -f $< $@
 
 generated_files/smi-$(GTLANG)-propernouns.lexc: \
