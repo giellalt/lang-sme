@@ -133,6 +133,17 @@ endif # CAN_XFST
 
 #### Xerox transducers:
 if CAN_XFST
+
+if WANT_MORPHOLOGY
+GT_ANALYSERS_XFST+= analyser-nob-desc.xfst \
+					analyser-nob-norm.xfst 
+endif # WANT_MORPHOLOGY
+
+if WANT_GENERATION
+GT_GENERATORS_XFST+=generator-nob-desc.xfst \
+					generator-nob-norm.xfst 
+endif # WANT_GENERATION
+
 if WANT_PHONETIC
 GT_ANALYSERS_XFST+=
 GT_GENERATORS_XFST+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst \
@@ -144,6 +155,17 @@ endif # CAN_XFST
 
 #### HFST transducers
 if CAN_HFST
+
+if WANT_MORPHOLOGY
+GT_ANALYSERS_HFST+= analyser-nob-desc.hfstol \
+					analyser-nob-norm.hfstol
+endif # WANT_MORPHOLOGY
+
+if WANT_GENERATION
+GT_GENERATORS_HFST+=generator-nob-desc.hfstol \
+					generator-nob-norm.hfstol
+endif # WANT_GENERATION
+
 if WANT_PHONETIC
 GT_ANALYSERS_HFST+=
 GT_GENERATORS_HFST+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst \

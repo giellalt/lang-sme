@@ -20,7 +20,7 @@
 #! @param GT_TAGSET_SRCS - manually written tagset source files
 #! @param GT_GENERATED_TAGSET_SRCS - automatically generated tagset source files
 
-GT_TAGSET_SRCS=
+GT_TAGSET_SRCS=nob.regex
 GT_GENERATED_TAGSET_SRCS=
 
 ####### Automake targets: ########
@@ -29,7 +29,7 @@ GT_GENERATED_TAGSET_SRCS=
 GT_TAGSETS=
 
 if CAN_HFST
-GT_TAGSETS+=
+GT_TAGSETS+=nob.hfst
 
 if WANT_APERTIUM
 GT_GENERATED_TAGSET_SRCS+=apertium.relabel
@@ -37,7 +37,7 @@ endif WANT_APERTIUM
 endif # CAN_HFST
 
 if CAN_XFST
-GT_TAGSETS+=
+GT_TAGSETS+=nob.xfst
 endif # CAN_XFST
 
 ####### HFST build rules: ########
