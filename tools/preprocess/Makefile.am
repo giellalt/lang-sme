@@ -20,8 +20,12 @@ GENERATOR=generator-gt-desc.xfst
 else
 if CAN_HFST
 GENERATOR=generator-gt-desc.hfst
+
+# Only build the preprocessor if analysers are enabled.
+if WANT_MORPHOLOGY
 ANALYSER=analyser-gt-desc.hfst
 PMHFST=preprocessor-gt-desc.pmhfst
+endif # WANT_MORPHOLOGY
 
 hfstdatadir=$(datadir)/giella/$(GTLANG)
 hfstdata_DATA=$(PMHFST)
