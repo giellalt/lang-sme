@@ -499,6 +499,7 @@ LIST <BE-ovdii-Ani> = <BE-ovdii-Ani> ;
 LIST <CO-0> = <CO-0> ;
 LIST <CO-Acc-Ani> = <CO-Acc-Ani> ;
 LIST <CO-Com-Ani> = <CO-Com-Ani> ;
+LIST <CO-Com-Hum> = <CO-Com-Hum> ;
 LIST <CO-mielde-Ani> = <CO-mielde-Ani> ;
 LIST <CO-Com-Ani><TH-Loc-Any> = <CO-Com-Ani><TH-Loc-Any> ;
 LIST <CO-haga-Any> = <CO-haga-Any> ;
@@ -5314,8 +5315,11 @@ SETCHILD (V <TH-Ill-Any>) TO (2 PUNCT-LEFT-RIGHT OR EOS OR COMMA LINK -1 Ill) ;
 	## Dan dihte sii eai diehtán buorebu , ja sii 	liikojedje 	váhneneatnamii ( ) ja eallinvuohkái nu bures , ahte seammá vuostemielain sii dan guođáše go bahádahkki jápminduopmobáikái manašii ( Leem 1767 : 172 ).
 	## Guollebivdit eai 	liikon 	ruovdešákšii .
 	## Muhtumat maid eai 	liikon 	hávgii , juogo dainna go dat lea ropmi dahje mágu geažil , muhto eatnasat borre hávgga .
+
 SETCHILD (V <TH-Ill-Any>) TO (-2 BOS LINK 1 Ill) ;
 	## Nissubirgui 	liikojedje 	sihke sápmelaččat ja dáččat .
+SETCHILD (V <TH-Ill-Any>) TO (-3 BOS OR PUNCT LINK 1 @>N LINK 1 Ill) ;
+	## Makkár bargovugiide 	liikot 	?
 SETCHILD (V <TH-Ill-Any>) TO (0 ConNeg LINK -1 Neg LINK -1 Ill) ;
 	## Muhto dása eai 	liikon 	ámmátolbmot ja eanandoallobargit .
 SETCHILD (V <TH-Ill-Any>) TO (1 @>N OR @<SUBJ LINK 1 Ill) ;
@@ -5325,7 +5329,7 @@ SETCHILD (V <TH-Ill-Any>) TO (1 @>N OR @<SUBJ LINK 1 Ill) ;
 SETCHILD (V <TH-Acc-Any>) TO (-1 @OBJ>) ;
 	## Dan dihte sii eai diehtán buorebu , ja sii 	liikojedje 	váhneneatnamii ( ) ja eallinvuohkái nu bures , ahte seammá vuostemielain sii dan guođáše go bahádahkki jápminduopmobáikái manašii ( Leem 1767 : 172 ) .
 SETCHILD (V <TH-Acc-Any><LO-Ill-*Ani>) TO (-1 @OBJ> LINK *0 Ill + Sem/Plc) ;
-SETCHILD (V <TH-Acc-Any>) OR (V <PA-Acc-Any>) TO (1 @<OBJ) ;
+SETCHILD (V <TH-Acc-Any>) OR (V <PA-Acc-Any>) OR (V <IN-Acc-Any>) TO (1 @<OBJ) ;
 	## Dása eai 	liikon 	dan guovllu guollebivdit , juste seammá ákkaiguin go Finnmárkku guollebivdit nai vuosttaldedje fálesbivddu ( Nielsen 1992 : 60 ).
 	
 SETCHILD <TH-Acc-Any><RO-Ess-Any> TO (1 @<OBJ LINK *1 Ess LINK *-1 @<OBJ) ;
@@ -5334,7 +5338,32 @@ SETCHILD <TH-Acc-Any><RO-Ess-Any> TO (1 @<OBJ LINK *1 Ess LINK *-1 @<OBJ) ;
 SETCHILD <TH-ahte> TO (1 ("ahte") LINK *1 @FS-OBJ);
 	## Dát fas čájeha ahte geavahedje riggodagaid hui máŋgga ládje , seammás go máhku ja 	liikon 	rievddadii guovlluid mielde ja mearridii makkár buktagiid olbmot geavahedje .
 
-    
+SETCHILD <TH-go> TO (1 ("go") LINK *1 @+FAUXV OR @+FMAINV);
+	## 	Dát lea dehálaš ášši ja mun sakka 	liikon 	go mus lea nu buorre gulahallan komisearain Damanaki:n ja Eurohpá parlameantta guolástuskomitéain , dadjá Berg-Hansen .
+
+SETCHILD <TH-Inf> TO (1 Inf);
+	## • Maid don 	liikot 	bargat friddjabottuin ?
+
+SETCHILD <LO-Loc-Plc> TO (1 Sem/Plc + Loc);
+	## Rathke válddahallá sápmelaččaid liggosit ja 	liikomiin 	, maŋŋel go lea fitnan {Njávdámis} 1802:s .
+	
+	
+	# some noun rules??
+	
+SETPARENT Com TO (0* (N <CO-Com-Hum>)) ;
+	## Dát lea dehálaš ášši ja mun sakka 	liikon 	go mus lea nu buorre gulahallan komisearain Damanaki:n ja Eurohpá parlameantta guolástuskomitéain , dadjá Berg-Hansen .
+
+
+	# more global rules (apply after the local rules)
+	# -----------------------------------------------
+	
+SETPARENT Acc (NEGATE p V) TO (0* <TH-Acc-Any>) ;
+	## • Maid don 	liikot 	bargat friddjabottuin ?
+	# maybe this rule should actually be in the beginning?
+	
+SETPARENT Com - Sem/Hum - Sem/Ani (NEGATE p V) TO (*0 <TH-Com-*Ani>) ;
+    ## Guorahallojuvvon leat árgabeaidáhpá-husat , {maiguin} sii 	liikojit 	buđaldit , mo sin iežaset mielas lea sin dilli , ja mo sii vásihit almmolaš bálvalusaddima .
+	    
 	# "map" AGENT role
 	# ----------------
 
@@ -5361,7 +5390,7 @@ SUBSTITUTE Pron (§TH Pron) TARGET Pron IF (*0 (V <TH-Ill-Any>) BARRIER GRAMCHK-
 #SUBSTITUTE N (§TH N) TARGET N IF (*0 (V <TH-Acc-*Plc>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Acc LINK NOT 0 PLACE OR TIME OR Sem/Plc) ;
 #
 #SUBSTITUTE N (§TH N) TARGET N IF (*0 (V <TH-Acc-Edu>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Acc LINK 0 Sem/Edu or EDUCATION) ; 
-SUBSTITUTE N (§TH N) TARGET N IF (*0 (V <TH-Acc-Any>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Acc) ;
+SUBSTITUTE N (§TH N) TARGET N IF (*0 (V <TH-Acc-Any>) BARRIER GRAMCHK-S-BOUNDARY1 OR GRAMCHK-VFIN)(0 Acc) ;
 #SUBSTITUTE N (§TH N) TARGET N IF (*0 (V <TH-Acc-*Ani>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Acc LINK NOT 0 Sem/Ani OR Sem/Ani OR Sem/Mal OR Sem/Fem OR Sem/Sur) ;
 #SUBSTITUTE Pron (§TH Pron) TARGET Pron IF (*0 (V <TH-Acc-Impers>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Acc LINK 0 Dem OR ("dat")) ;
 #SUBSTITUTE Pron (§TH Pron) TARGET Pron (*0 (V <TH-Loc-Impers>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Loc LINK 0 Dem OR ("dat")) ;
@@ -5386,6 +5415,13 @@ SUBSTITUTE N (§TH N) TARGET N IF (*0 (V <TH-Acc-Any>) BARRIER GRAMCHK-S-BOUNDAR
 #
 SUBSTITUTE Inf (§TH Inf) TARGET V IF (*0 (V <TH-Inf>) BARRIER GRAMCHK-S-BOUNDARY1)(NOT 0 @SUBJ) ;
 
+SUBSTITUTE V (§TH V5) TARGET VFIN IF (0 @FS-OBJ LINK p (V <TH-ahte>)) ;
+	## Dát fas čájeha ahte geavahedje riggodagaid hui máŋgga ládje , seammás go máhku ja 	liikon 	rievddadii guovlluid mielde ja mearridii makkár buktagiid olbmot geavahedje .
+
+	# "map" INSTRUMENT role
+	# -----------------------
+SUBSTITUTE N (§IN N) TARGET N IF (*0 (V <IN-Acc-Any>) BARRIER GRAMCHK-S-BOUNDARY1 OR GRAMCHK-VFIN)(0 Acc) ;
+	
 	# "map" EXPERIENCER role
 	# -----------------------
 SUBSTITUTE N (§EX N) TARGET N IF (0 Sem/Animate + Nom) (*0 (V <EX-Nom-Ani>) BARRIER GRAMCHK-S-BOUNDARY1 OR (SUBJ §EX))(0 SUBJ); #(NEGATE 0* (SUBJ §EX)) ;
@@ -5556,6 +5592,7 @@ LIST COMPOUND = (".*#.*"r) ;
 
 ADD:compound-part1/wrong-case (&msyn-compound-part1/&msyn-wrong-case) TARGET CNOUN IF (0C (N Sg Nom) LINK NOT 0 ACR OR Der/NomAct LINK 1 CNOUN - ACR - NOMAG - OASSI) (NEGATE 0 SUBJ LINK NOT 1 SUBJ) (NEGATE 0 SPRED LINK 1 @<ADVL) (NEGATE 0 SPRED LINK NOT *0 SPRED)(NEGATE >*1 (&syn-finitev_missing) OR (&real-čohkkát))(NOT 0 REAL-W-ERROR)(NOT 0 (&corr-not-compound)) (NEGATE 1 Ess LINK *-2 ("leat") + Sg3  OR ("šaddat") + Sg3 OR ("gullat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 BARRIER GRAMCHK-NPNHA)(NEGATE 0 CNOUN LINK NOT *0 VFIN BARRIER GRAMCHK-S-BOUNDARY OR CLB) (NEGATE 1 Gen LINK 1 Po) (NEGATE 0 NomAg) (NEGATE 0 SPRED LINK 1 @<PPRED)(NEGATE 0 Sem/Act LINK 1 Sem/Body) ; 
 	## Easka de go Liná lohpidii berjadat eahket boahtit Mikku vissui, de son vulggii. #Ritva should it be bearjadateahket?
+	#$ Dát lea dehálaš ášši ja mun sakka 	liikon 	go mus lea nu buorre gulahallan komisearain Damanaki:n ja Eurohpá parlameantta guolástuskomitéain , dadjá Berg-Hansen .
 ADD:compound-part2 (&msyn-compound-part2) TARGET CNOUN IF (-1C (N Sg Nom) LINK NOT 0 ACR OR Der/NomAct LINK 1 CNOUN - ACR - NOMAG - OASSI) (NEGATE -1 SUBJ LINK NOT 1 SUBJ) (NEGATE -1 SPRED LINK 1 @<ADVL) (NEGATE -1 SPRED LINK NOT *0 SPRED)(NEGATE >*1 (&syn-finitev_missing) OR (&real-čohkkát))(NOT -1 REAL-W-ERROR)(NOT -1 (&corr-not-compound)) (NEGATE 0 Ess LINK *-1 ("leat") + Sg3  OR ("šaddat") + Sg3 OR ("gullat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 BARRIER GRAMCHK-NPNHA)(NEGATE 0 CNOUN LINK NOT *0 VFIN BARRIER GRAMCHK-S-BOUNDARY OR CLB) (NEGATE 0 Gen LINK 1 Po) (NEGATE -1 NomAg) (NEGATE -1 SPRED LINK 1 @<PPRED)(-1 &msyn-compound-part1/&msyn-wrong-case); 
 	## Dadjá Norgga eanandoallodutkan instituhtta ossodatdirektevra ja lávdegotti jođiheaddji, Lars Johan Rustad. 
 	# Tino: the penultimate condition does not work
@@ -6340,7 +6377,7 @@ ADD:msyn-missing-argument (&msyn-missing-argument) TH-ALL IF (NEGATE *0 §TH BAR
     ## Mun liikon dus.
     #$ Skábmamánus lágiduvvo Nilut Cup.
     
-ADD:wrong-valency-ill (&msyn-valency-ill) TARGET NP-HEAD IF (NOT 0 Ill OR §ANYROLE)(*0 <TH-Ill-Any> BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN OR Ill OR &msyn-valency-ill OR §TH OR (\?))(NEGATE 0* §TH OR (\?) BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN - Neg);
+ADD:wrong-valency-ill (&msyn-valency-ill) TARGET NP-HEAD IF (NOT 0 Ill OR §ANYROLE)(p <TH-Ill-Any>)(NEGATE 0* §TH OR (\?) BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN - Neg);
     # not inbetween the NP-HEAD and the verb: "=" PUNCT ,  """ PUNCT, "]" PUNCT RIGHT, ":" CLB, "(" PUNCT LEFT
     # only add it to one NP-HEAD per verb unless there is coordination
     # not if there is a  "čájálmasii" ? in the sentence
