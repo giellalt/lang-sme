@@ -13,7 +13,17 @@ REGEX_SRCS=modify-tags.smn.regex \
 GT_REGEX_SRCS=$(TAGSET_SRCS) $(REGEX_SRCS) README.txt
 
 # Automatically detect the targets to be built:
-GT_REGEX_TARGETS=$(patsubst %.regex,%.hfst,$(REGEX_SRCS))
+GT_REGEX_TARGETS=
+
+if WANT_APERTIUM
+if CAN_HFST
+GT_REGEX_TARGETS+=$(patsubst %.regex,%.hfst,$(REGEX_SRCS))
+endif # CAN_HFST
+
+if CAN_XFST
+GT_REGEX_TARGETS+=$(patsubst %.regex,%.xfst,$(REGEX_SRCS))
+endif # CAN_XFST
+endif # WANT_APERTIUM
 
 ####### Other targets: ###########
 
