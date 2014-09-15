@@ -3148,6 +3148,10 @@ SET NON-APP = ALLSYNTAG - (@APP);
         	# Compounds
 
 
+LIST HUM-PRON = "mun" "don" "son" ("mii" Pers) "dii" "sii" "gii" ;
+    
+SUBSTITUTE Pron (Pron Sem/Hum) TARGET HUM-PRON ; 
+
 
     # The section for popular rules
     # -----------------------------
@@ -8843,9 +8847,14 @@ REMOVE:r1911 Prop IF (0 ("ovdal"))(NEGATE 1 Sem/Sur);
 	# ---------------------------------------
 LIST VFIN-TAG = (V Ind Prs Sg1) (V Ind Prs Sg2) (V Ind Prs Sg3) (V Ind Prs Du1) (V Ind Prs Du2) (V Ind Prs Du3) (V Ind Prs Pl1) (V Ind Prs Pl2) (V Ind Prs Pl3) (V Ind Prt Sg1) (V Ind Prt Sg2) (V Ind Prt Sg3) (V Ind Prt Du1) (V Ind Prt Du2) (V Ind Prt Du3) (V Ind Prt Pl1) (V Ind Prt Pl2) (V Ind Prt Pl3) ;  
 
-SELECT $$VFIN-TAG (NEGATE *-2 VFIN BARRIER S-BOUNDARY)(-1 $$VFIN-TAG LINK NOT 0 AUX OR N)(NOT 0 N) ;	
-	## Mii borrat hapmat.	
+LIST BORRAT-HAPMAT-V-PART1 = "čállit" "borrat" "čierrut" "geahččat" "juhkat" "viehkat" ; 
+LIST BORRAT-HAPMAT-V-PART2 = "ruhcat" "hapmat" "ruččistit" "gaivát" "reavžut" "rinččistit" ;
 
+
+SELECT $$VFIN-TAG (NEGATE *-2 VFIN BARRIER S-BOUNDARY)(-1 $$VFIN-TAG LINK NOT 0 AUX OR N)(NOT 0 N)(0 BORRAT-HAPMAT-V-PART1) ;	
+	## Mii borrat hapmat.	
+    #$ GRAM: Guorahallojuvvon leat árgabeaidáhpá-husat , maiguin sii 	liikojit 	buđaldit , mo sin iežaset mielas lea sin dilli , ja mo sii vásihit almmolaš bálvalusaddima.
+    
 	# Neg
 	# ----
 #SELECT (Neg Imprt) IF (*-1 BOS BARRIER NOT-ADV)(*-1 ConNeg BARRIER NOT-ADV);	
@@ -9114,8 +9123,9 @@ REMOVE:r1854 PrfPrc IF (-1 COPULAS LINK NOT 0 VFIN)(0 N LINK NOT 0 N-DER OR Acti
 	# - - - - - - - - - -
 
 	#easy topicalized version:
-SELECT:r1855 PrfPrc IF (*-1 Nom BARRIER SV-BOUNDARY LINK *-1 REALCOPULAS BARRIER NOT-ADV-PCLE LINK NOT *-1 Nom BARRIER S-BOUNDARY2)(NEGATE 0 Ess LINK 1 (A Nom) OR PrfPrc)(NEGATE 0 Actio LINK 1 PrfPrc LINK 0 V-MAIN LINK NOT 0 VFIN)(NEGATE 1 ("veara"))(NEGATE 1 CC LINK 1 Actio LINK NOT 0 PrfPrc)(NEGATE 0 Actio OR N LINK *1 ("leat" PrfPrc) BARRIER COPULAS)(NEGATE 0 AUX);
+SELECT:r1855 PrfPrc IF (*-1 Nom BARRIER SV-BOUNDARY LINK *-1 REALCOPULAS BARRIER NOT-ADV-PCLE LINK NOT *-1 Nom BARRIER S-BOUNDARY2)(NEGATE 0 Ess LINK 1 (A Nom) OR PrfPrc)(NEGATE 0 Actio LINK 1 PrfPrc LINK 0 V-MAIN LINK NOT 0 VFIN)(NEGATE 1 ("veara"))(NEGATE 1 CC LINK 1 Actio LINK NOT 0 PrfPrc)(NEGATE 0 Actio OR N LINK *1 ("leat" PrfPrc) BARRIER COPULAS)(NEGATE 0 AUX)(NEGATE *-1 ("leat") + Sg3 LINK -1 Sem/Hum + Loc OR Sem/Org + Loc);
 	## Muhtin biirres leat gávcci áirasa leamaš nissonolbmot, ja eará biirres leat buohkat geat leat válljejuvvon leamaš dievddut.
+	##GRAM: Dát lea dehálaš ášši ja mun sakka 	liikon 	go mus lea nu buorre gulahallan komisearain Damanaki:n ja Eurohpá parlameantta guolástuskomitéain , dadjá Berg-Hansen .
 
 	#version where the subject is extended by partitive construction:		
 SELECT:r1856 PrfPrc IF (-1 Loc LINK -1C PrfPrc OR A LINK -1 Num LINK *-1 REALCOPULAS BARRIER SV-BOUNDARY)(NEGATE 0 Ess LINK 1 (A Nom) OR PrfPrc)(NEGATE 0 Actio LINK 1 PrfPrc LINK 0 V-MAIN LINK NOT 0 VFIN)(NEGATE 1 ("veara"))(NEGATE 1 CC LINK 1 Actio LINK NOT 0 PrfPrc)(NEGATE 0 Actio OR N LINK *1 ("leat" PrfPrc) BARRIER COPULAS);
@@ -9617,6 +9627,7 @@ MAP:r405 (@+FMAINV) TARGET VFIN IF (NEGATE *-1 Inf OR PrfPrc OR (Actio Ess) BARR
 MAP:r406 (@+FMAINV) TARGET VFIN-NOT-AUX ;
 	## Boađe boahtte vahku.
     ## Son lea oappáin náitalan.
+
 
 MAP:r393 (@-FAUXV) TARGET ConNeg IF (*-1 Neg BARRIER VERB)(0 COPULAS) (*1 PrfPrc BARRIER VERB OR S-BOUNDARY2);
 	## Muhto juos Kristus ii leat bajásčuožžilan, ..
