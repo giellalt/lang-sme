@@ -26,7 +26,8 @@ GT_FILTER_SRCS=
 if WANT_APERTIUM
 
 # List generated regexes here:
-GENERATED_REGEXES+=remove-derivation-strings.nob.regex
+GENERATED_REGEXES=remove-derivation-strings.nob.regex
+# E.g.: remove-derivation-strings.nob.regex
 
 endif # WANT_APERTIUM
 
