@@ -452,6 +452,7 @@ LIST Sem/Wpn = Sem/Wpn ; #oaggut oaggunstákkuin, goddit X+Com
 LIST Sem/Sur = Sem/Sur ;
 #LIST Tit = Tit ;
 
+LIST Sem/Human = Sem/Hum Sem/Sur Sem/Mal Sem/Fem Sem/Org ;
 LIST Sem/Animate = Sem/Hum Sem/Ani Sem/Sur Sem/Mal Sem/Fem Sem/Org ;
 LIST Sem/Concrete-NotAnimate-NotPlace = Sem/Clth Sem/Clth-jewl Sem/Clth-part Sem/Ctain Sem/Drink Sem/Food Sem/Food-med Sem/Mat Sem/Money Sem/Obj Sem/Obj-clo Sem/Obj-el Sem/Substnc Sem/Tool Sem/Tool-catch Sem/Tool-measr Sem/Tool-music  Sem/Tool-write  Sem/Txt  Sem/Veh Sem/Wpn ; 
 
@@ -2093,7 +2094,7 @@ SET ADJ_ATTR/NOM = ADJ_ATTR/NOM ;
 
 
 
-SET PRE-NP-HEAD = (Prop Attr) OR (Prop @>N) OR (A Attr) OR (ABBR Attr) OR ("buorre") OR (Pron Pers Gen) OR (N Gen) OR
+SET PRE-NP-HEAD = (Prop Attr) OR (Prop @>N) OR (A Attr) OR (ABBR Attr) OR ("buorre") OR (Pron Pers Gen) OR (N Gen) OR (Pron @>Pron) OR 
          Num OR RCmpnd OR CC OR (Pron Dem) OR (Pron Refl Gen) OR (Pron Indef) OR 
          (PrfPrc @>N) OR PrsPrc OR (A Ord) OR ("njiŋŋelas" Sg Nom) OR ("njiŋŋálas" Sg Nom) OR ("varis" Sg Nom) OR ("ollu" Sg Nom);
          # The strict version of items that can only be premodifiers, not parts of the predicate
@@ -5339,7 +5340,8 @@ SETCHILD (V <TH-Ill-Any>) TO (1 @>N OR @<SUBJ LINK 1 Ill) ;
 	## Novgoroda beales eai 	liikon 	dáčča sisabáhkkemii , dan dihte go sii atne dán iežaset vearro- ja vuollásašguovlun .
 
 SETCHILD (V <TH-Ill-Any>) TO (*1 Ill BARRIER NPNHA - Acc) ;
-		## Leat go dakkár gii 	liikot 	aivve seamma sohkabealát olbmuide , vai liikot go maiddái nuppi sohkabealát olbmuide.
+		## Leat go dakkár gii 	liikot 	aivve seamma sohkabealát olbmuide, vai liikot go maiddái nuppi sohkabealát olbmuide.
+		## Atle 	liiko 	hui bures dánset ja teáhteriin bargat .
 	
 SETCHILD (V <TH-Nom-Any><PO-Ill-Any>) TO (1 Ill) ;
 	## Lávdegotti lahtut , geat gullet Ovddádusbellodahkii , Olgežii ja Kristtalaš álbmotbellodahkii , eai 	liiko 	importasuodjái , mii livččii hatti vuođđun .
@@ -5374,7 +5376,18 @@ SETCHILD <TH-ahte> TO (1 ("ahte") LINK 1 VFIN);
 
 SETCHILD <TH-go> TO (1 ("go") LINK *1 @+FAUXV OR @+FMAINV);
 	## 	Dát lea dehálaš ášši ja mun sakka 	liikon 	go mus lea nu buorre gulahallan komisearain Damanaki:n ja Eurohpá parlameantta guolástuskomitéain , dadjá Berg-Hansen .
+	
+SETCHILD (V <BE-Acc-Ani>) TO (1 Sem/Hum + Acc OR Sem/Org + Acc) ;
+	## Oahpahus galgá veahkehit ohppiid 	liikot 	leat luonddus ja addit sidjiide vejolašvuođa ovdánahttit fantasiija , hábmengálgga ja beroštumi diđoštit birrasa .
 
+	
+	# this needs to go first so that it goes to the correct
+SETPARENT (V Inf) (NEGATE 0 @N<) TO (*-1 (Acc @-FSUBJ>) + Sem/Human LINK p (V <BE-Acc-Ani><TH-Inf>)) ; 
+	## Oahpahus galgá veahkehit ohppiid 	liikot 	leat luonddus ja addit sidjiide vejolašvuođa ovdánahttit fantasiija , hábmengálgga ja beroštumi diđoštit birrasa .
+
+SETCHILD <TH-Inf> TO (*1 Inf BARRIER NPNHA - Acc) ;
+		## Atle 	liiko 	hui bures dánset ja teáhteriin bargat .
+		
 SETCHILD <TH-Inf> TO (1 Inf);
 	## • Maid don 	liikot 	bargat friddjabottuin ?
 	
@@ -5388,7 +5401,7 @@ SETCHILD <TH-Inf> TO (*0 EOS LINK -1 ("?") LINK *-1 BOS LINK *1 Inf);
 
 SETCHILD <TH-Inf> TO (1 @>N LINK 1 @>P OR @>N LINK 1 @<ADVL LINK *1 Inf);	
 	## Luonddus leat hástalusat buohkaide, sihke sidjiide geat váivvahit alla rásiid siste gállit, ja sidjiide geat 	liikojit 	giccodit muorain .
-
+	
 SETCHILD <LO-Loc-Plc> TO (1 Sem/Plc + Loc);
 	## Rathke válddahallá sápmelaččaid liggosit ja 	liikomiin, maŋŋel go lea fitnan {Njávdámis} 1802:s .
 	
@@ -5416,6 +5429,7 @@ SETPARENT Acc (NEGATE p V)(NEGATE 0 @-FSUBJ>) TO (0* <TH-Acc-Any>) ;
 SETPARENT Com - Sem/Hum - Sem/Ani (NEGATE p V) TO (*0 <TH-Com-*Ani>) ;
     ## Guorahallojuvvon leat árgabeaidáhpá-husat , {maiguin} sii 	liikojit 	buđaldit , mo sin iežaset mielas lea sin dilli , ja mo sii vásihit almmolaš bálvalusaddima .
 	    
+
 	# "map" AGENT role
 	# ----------------
 
@@ -5491,6 +5505,16 @@ SUBSTITUTE N (§IN N) TARGET N IF (*0 (V <IN-Acc-Any>) BARRIER GRAMCHK-S-BOUNDAR
 SUBSTITUTE N (§PR N) TARGET N IF (p (V <PR-Acc-Any>))(0 Acc) ;
 	## Danne lea dárbu ásahit čielga {prinsihpaid} ja rievttálaš dásiid vaikke vel buohkat eai 	liikošege 	dasa .
 	
+	# "map" BENEFICIARY role
+	# ----------------------
+	
+SUBSTITUTE N (§BE N) TARGET N IF (p (V <BE-Acc-Ani>)) (0 Sem/Hum + Acc OR Sem/Org + Acc) ;
+	## Oahpahus galgá veahkehit ohppiid 	liikot 	leat luonddus ja addit sidjiide vejolašvuođa ovdánahttit fantasiija , hábmengálgga ja beroštumi diđoštit birrasa .
+	
+SUBSTITUTE V (§TH V) TARGET Inf IF (p (V <BE-Acc-Ani><TH-Inf>)) (s Sem/Hum + Acc OR Sem/Org + Acc) ;
+	## Oahpahus galgá veahkehit ohppiid 	liikot 	leat luonddus ja addit sidjiide vejolašvuođa ovdánahttit fantasiija , hábmengálgga ja beroštumi diđoštit birrasa .
+
+	
 	# "map" POSSESSOR role
 	# -----------------------
 SUBSTITUTE N (§PO N) TARGET N IF (p (V <TH-Nom-Any><PO-Ill-Any>))(0 Ill) ;
@@ -5524,6 +5548,7 @@ SUBSTITUTE N (§RE N) TARGET N IF (p (V <RE-Ill-Ani><TH-Acc-*Ani>))(0 Ill)(s Acc
 	 
 #SUBSTITUTE Po (§RE Po) TARGET Po IF (*0 (V <RE-Ill-WAni>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Ill LINK 0 Sem/Ani OR Sem/Ani OR ORGANIZATION OR Sem/Org) ;  
 #SUBSTITUTE Po (§RE Po) TARGET Po IF (*0 (V <RE-Loc-Ani>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Loc LINK 0 Sem/Ani OR Sem/Ani) ; 
+	
 #
 #	# "map" CO-Agent role
 #	# --------------------	
