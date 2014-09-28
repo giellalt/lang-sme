@@ -455,6 +455,7 @@ LIST Sem/Sur = Sem/Sur ;
 LIST Sem/Human = Sem/Hum Sem/Sur Sem/Mal Sem/Fem Sem/Org ;
 LIST Sem/Animate = Sem/Hum Sem/Ani Sem/Sur Sem/Mal Sem/Fem Sem/Org ;
 LIST Sem/Concrete-NotAnimate-NotPlace = Sem/Clth Sem/Clth-jewl Sem/Clth-part Sem/Ctain Sem/Drink Sem/Food Sem/Food-med Sem/Mat Sem/Money Sem/Obj Sem/Obj-clo Sem/Obj-el Sem/Substnc Sem/Tool Sem/Tool-catch Sem/Tool-measr Sem/Tool-music  Sem/Tool-write  Sem/Txt  Sem/Veh Sem/Wpn ; 
+LIST Sem/Place = Sem/Plc Sem/Plc-water Sem/Plc-elevate Sem/Plc-line Sem/Build Sem/Org ;
 
 #Sem/Plc-hole = ráigi, tunnela, ....
 
@@ -5427,12 +5428,15 @@ SETCHILD <TH-Inf> TO (*0 EOS LINK -1 ("?") LINK *-1 BOS LINK *1 Inf);
 SETCHILD <TH-Inf> TO (1 @>N LINK 1 @>P OR @>N LINK 1 @<ADVL LINK *1 Inf);	
 	## Luonddus leat hástalusat buohkaide, sihke sidjiide geat váivvahit alla rásiid siste gállit, ja sidjiide geat 	liikojit 	giccodit muorain .
 	
-SETCHILD <LO-Loc-Plc> TO (1 Sem/Plc + Loc);
-	## Rathke válddahallá sápmelaččaid liggosit ja 	liikomiin, maŋŋel go lea fitnan {Njávdámis} 1802:s .
+SETCHILD <LO-Loc-Plc> OR <LO-Loc-Any> TO (1 Sem/Place + Loc);
+	## Rathke válddahallá sápmelaččaid liggosit ja 	liikomiin, maŋŋel go lea fitnan {Njávdámis} 1802:s.
+	## 	Liiko 	go du // dudno mánná leat {mánáidgárddis}?
 	
 	
 SETCHILD (V <RE-Loc-Ani>) TO (-1 Loc + Sem/Animate) ;
 	## Visot journalisttat olles dán riikkas leat Børre Knudsenis ja Strandebarm báhpain jearran manne sii eai hálit homofiila olbmuid girkolaš virggiide , ja manne eai 	liiko 	abortii .
+SETCHILD (V <RE-Loc-Ani>) TO (*1 Loc + Sem/Animate BARRIER NPNH) ;
+	## Mihkkel Issát jearahallá áhkus 	liiko 	go lákca gáhkkui .
 	
 SETCHILD (V <RE-Ill-Ani><TH-Acc-*Ani>) (c Acc - Sem/Hum) TO (1 Ill + Sem/Ani OR Ill + Sem/Hum OR Ill + Sem/Org) ;
 	## Oahpahus galgá veahkehit ohppiid 	liikot 	leat luonddus ja addit sidjiide vejolašvuođa ovdánahttit fantasiija , hábmengálgga ja beroštumi diđoštit birrasa .
@@ -5569,7 +5573,11 @@ SUBSTITUTE Pron (§EX Pron) TARGET Pron IF (0 Acc) (p (V <EX-Acc-Any>)) ;
 #	# "map" LOCATION role
 #	# -------------------
 #	
-#SUBSTITUTE N (§LO N) TARGET N IF (*0 (V <LO-Loc-WPlc>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Loc LINK 0 PLACE OR Sem/Plc OR Sem/Veh OR VEHICLE OR Sem/Org) ;  
+SUBSTITUTE N (§LO N) TARGET N IF (p (V <LO-Loc-Plc>) OR (V <LO-Loc-Any>))(0 Loc + Sem/Place) ; 
+	## SETCHILD <LO-Loc-Plc> OR <LO-Loc-Any> TO (1 Sem/Place + Loc);
+	## Rathke válddahallá sápmelaččaid liggosit ja 	liikomiin, maŋŋel go lea fitnan {Njávdámis} 1802:s.
+	## 	Liiko 	go du // dudno mánná leat {mánáidgárddis}?
+ 
 #SUBSTITUTE Pron (§LO Pron) TARGET N IF (*0 (V <LO-Loc-WPlc>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Loc LINK NOT 0 Pers) ;
 #
 #SUBSTITUTE N (§LO N) TARGET N IF (*0 (V <LO-Loc-*Ani>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Loc LINK NOT 0 Sem/Ani OR Sem/Ani) ; 
@@ -6025,7 +6033,8 @@ ADD:lex-missing-conneg-after-neg (&missing-conneg-after-neg) TARGET	Neg - Foc/ge
 	# -----------------------
 	LIST SOAITIT = "soaitit" "dáidit" "veadjit" "sáhttit" "fertet" "galgat" ;
 	
-ADD:syn-inf-after-soaitit (&syn-inf-after-soaitit) TARGET GRAMCHK-VFIN IF (*-1 SOAITIT BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN OR FMAINV OR CLB OR Inf)(NOT 0 Inf OR PrfPrc)(NEGATE 0 MOVEMENT-V LINK 0 VGen OR (Imprt Sg2) OR (ConNeg));
+ADD:syn-inf-after-soaitit (&syn-inf-after-soaitit) TARGET GRAMCHK-VFIN IF (*-1 SOAITIT BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN OR FMAINV OR CLB OR Inf OR CC)(NOT 0 Inf OR PrfPrc)(NEGATE 0 MOVEMENT-V LINK 0 VGen OR (Imprt Sg2) OR (ConNeg));
+	#$ sáhttá ja dáhttu bargat ovttas nuppiiguin , geas lea buorre miella ja 	liikojit 	ovttas bargat
 COPY:syn-inf-after-soaitit (Inf &SUGGEST) EXCEPT (Ind Prs Sg1 &syn-inf-after-soaitit) OR (Ind Prs Sg2 &syn-inf-after-soaitit) OR (Ind Prs Sg3 &syn-inf-after-soaitit) OR (Ind Prs Du1 &syn-inf-after-soaitit) OR (Ind Prs Du2 &syn-inf-after-soaitit) OR (Ind Prs Du3 &syn-inf-after-soaitit) OR (Ind Prs Pl1 &syn-inf-after-soaitit) OR (Ind Prs Pl2 &syn-inf-after-soaitit) OR (Ind Prs Pl3 &syn-inf-after-soaitit) TARGET (Prs &syn-inf-after-soaitit)(NEGATE 0 ("leat" Ind Prs Sg1) LINK NEGATE *-1 ("mun")) ;
 COPY:syn-inf-after-soaitit (Prt ConNeg &SUGGEST) EXCEPT (Ind Prt Sg1 &syn-inf-after-soaitit) OR (Ind Prt Sg2 &syn-inf-after-soaitit) OR (Ind Prt Sg3 &syn-inf-after-soaitit) OR (Ind Prt Du1 &syn-inf-after-soaitit) OR (Ind Prt Du2 &syn-inf-after-soaitit) OR (Ind Prt Du3 &syn-inf-after-soaitit) OR (Ind Prt Pl1 &syn-inf-after-soaitit) OR (Ind Prt Pl2 &syn-inf-after-soaitit) OR (Ind Prt Pl3 &syn-inf-after-soaitit) TARGET (Prt &syn-inf-after-soaitit) ;
 COPY:syn-inf-after-soaitit (PrfPrc &SUGGEST) EXCEPT (Ind Prs Sg1 &syn-inf-after-soaitit) TARGET ("leat" Ind Prs Sg1 &syn-inf-after-soaitit)(NEGATE *-1 ("mun")) ;
@@ -6457,7 +6466,8 @@ ADD:msyn-wrong-valency-ill (&msyn-valency-ill) Acc IF (0 N + Sem/Plc)(*0 <TH-Acc
     #$ Áibbašan olles váimmuin
 	## Ee. ON:a álgoálbmotraporterejeaddji James Anaya lea evttohan, ahte sámediggái sirdojuvvole ee. barggut, mat gusket sámegiela. Ee. ON:a álgoálbmotraporterejeaddji James Anaya lea evttohan, ahte sámediggái sirdojuvvole ee. barggut, mat gusket sámegillii. 
 	
-ADD:msyn-wrong-valency-ill (&msyn-valency-ill) Acc IF (0 N - Sem/Route - Sem/Time)(*0 V + <TH-Ill-Any> BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN OR CC OR (";") OR Ill + Sem/Hum OR Ill + Sem/Org OR Ill + Sem/Ani LINK NOT 0 DIA-DERIVATIONS OR <PA-Acc-Ani> OR <TH-Acc-Any> OR <IN-Acc-Any> OR <TH-Acc-*Plc>)(NEGATE *0 §TH OR (&corr-no-missing-argument))(NEGATE *0 Inf  OR (Prs Pl1) BARRIER GRAMCHK-S-BOUNDARY)(NEGATE *0 V + <TH-AktioLoc> LINK 0* (Actio Loc))(NEGATE 1 Ill);
+ADD:msyn-wrong-valency-ill (&msyn-valency-ill) Acc IF (0 N - Sem/Route - Sem/Time)(p V + <TH-Ill-Any> LINK NOT 0 DIA-DERIVATIONS OR <PA-Acc-Ani> OR <TH-Acc-Any> OR <IN-Acc-Any> OR <TH-Acc-*Plc>)(NEGATE *0 §TH OR (&corr-no-missing-argument))(NEGATE *0 Inf  OR (Prs Pl1) BARRIER GRAMCHK-S-BOUNDARY)(NEGATE *0 V + <TH-AktioLoc> LINK 0* (Actio Loc))(NEGATE 1 Ill);
+	#$ Mihkkel Issát jearahallá áhkus 	liiko 	go lákca gáhkkui .
 	## Hui ollu liikon bohccobierggu ja goikebierggu. Hui ollu liikon bohccobirgui ja goikebirgui.
 	#$ Son galgá julevsámi mánáid bajásšaddan diliin oahpásnuvvat.
 	#$ Dušše dien láhkái lea mis vejolašvuohta oahpahit nuoraid luohttit earáide ja dovdat ovttaárvosašvuođa singuin
@@ -6522,7 +6532,9 @@ ADD:msyn-missing-argument (&msyn-missing-argument) TH-ALL IF (NEGATE *0 §TH BAR
     ## Mun liikon dus.
     #$ Skábmamánus lágiduvvo Nilut Cup.
     
-ADD:wrong-valency-ill (&msyn-valency-ill) TARGET NP-HEAD IF (NOT 0 Ill OR §ANYROLE)(p <TH-Ill-Any>)(NEGATE 0* §TH OR (\?) BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN - Neg);
+ADD:wrong-valency-ill (&msyn-valency-ill) TARGET NP-HEAD IF (NOT 0 Ill OR §ANYROLE)(p <TH-Ill-Any>)(NEGATE 0* §TH OR (\?) BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN - Neg)(NEGATE 0 Acc LINK p <TH-Acc-Any>)(NEGATE 0 Com LINK p <Com>);
+	#$ Jus eai leat álgán divodemiin ovdal geassemánu , de sáhttet manahit visot daid tippenruđaid , lohká Johansen , gii ii loga 	liikot 	dili nu go dál lea .
+	#$ Don 	liikot 	daid elliide , leat guhká daid kohkken ja dovddat daid . 
     # not inbetween the NP-HEAD and the verb: "=" PUNCT ,  """ PUNCT, "]" PUNCT RIGHT, ":" CLB, "(" PUNCT LEFT
     # only add it to one NP-HEAD per verb unless there is coordination
     # not if there is a  "čájálmasii" ? in the sentence
@@ -6795,11 +6807,11 @@ ADD:msyn-loc-not-guin  (&msyn-loc-not-guin) TARGET (Pl Com) IF (0 NP-HEAD LINK *
   	# ---------------------
 
 ADD:msyn-com-not-ess  (&msyn-com-not-ess) TARGET (N Ess) IF (-1 (Num Com))(*0 <XT-Com-Measure> OR <TH-Acc-Any><XT-Com-Measure> BARRIER GRAMCHK-S-BOUNDARY);  	
-ADD:msyn-com-not-ess  (&msyn-com-not-ess) TARGET (N Prop Ess) IF (0 Sem/Sur)(NEGATE *0 <RO-Ess-Any> BARRIER GRAMCHK-S-BOUNDARY OR V);  
+ADD:msyn-com-not-ess  (&msyn-com-not-ess) TARGET (N Prop Ess) IF (0 Sem/Sur LINK NOT 0 Com OR Nom)(NEGATE *0 <RO-Ess-Any> BARRIER GRAMCHK-S-BOUNDARY OR V);  
 COPY:msyn-com-not-ess (Sg Com &SUGGEST) EXCEPT (Ess &msyn-com-not-ess) TARGET (N &msyn-com-not-ess) ;
 	## Buvttadeapme lassána njeljiin proseantan dan jage, vaikko diibmá juo lei viehka buorre jahki.   % proseanttain Ess 
 	## Dan maŋŋel lei Gaupa ođđa prošeakta rešisseret NRK drámaráiddu  Irén Reppenin.
-ADD:msyn-com-not-ess  (&msyn-com-not-ess) TARGET (N Ess) IF (-1 (Pron Dem Sg Com) OR ("dainna" Adv));  
+ADD:msyn-com-not-ess  (&msyn-com-not-ess) TARGET (N Ess) IF (NOT 0 Com)(-1 (Pron Dem Sg Com) OR ("dainna" Adv));  
 COPY:msyn-com-not-ess (Sg Com &SUGGEST) EXCEPT (Ess &msyn-com-not-ess) TARGET (N &msyn-com-not-ess) ;
 	## Dát evttohus hilgojuvvui Sámedikki eanetlogus bušeahtta 2012 meannudeami vuolde juovlamánus diibmá, dainna ákkastallamin ahte ášši ii lean loahpalaččat meannudan Stuoradikkis.
 	# needs valency file to work
@@ -6810,8 +6822,8 @@ COPY:msyn-com-not-ess (Sg Com &SUGGEST) EXCEPT (Ess &msyn-com-not-ess) TARGET (N
 	# ---------------------
 	
 	
-ADD:msyn-ess-not-com  (&msyn-ess-not-com) TARGET (N Com) IF (-1 (Num Com))(*0 <XT-Com-Measure> OR <TH-Acc-Any><XT-Com-Measure> BARRIER GRAMCHK-S-BOUNDARY);  	
-ADD:msyn-ess-not-com  (&msyn-ess-not-com) TARGET (N Prop Ess) IF (0 Sem/Sur)(NEGATE *0 <RO-Ess-Any> BARRIER GRAMCHK-S-BOUNDARY OR V LINK NOT 0 <Com-*Ani>); 
+ADD:msyn-ess-not-com  (&msyn-ess-not-com) TARGET (N Com) IF (-1 (Num Com))(NOT 0 Ess)(*0 <XT-Com-Measure> OR <TH-Acc-Any><XT-Com-Measure> BARRIER GRAMCHK-S-BOUNDARY);  	
+ADD:msyn-ess-not-com  (&msyn-ess-not-com) TARGET (N Prop Ess) IF (0 Sem/Sur)(NOT 0 Ess)(NEGATE *0 <RO-Ess-Any> BARRIER GRAMCHK-S-BOUNDARY OR V LINK NOT 0 <Com-*Ani>); 
 
 
 ADD:msyn-ess-not-com  (&msyn-ess-not-com) TARGET (N Com) IF (NOT 0 Sem/Hum OR Sem/Org OR Sem/Ani LINK *-1 <TH-Acc-Any><RO-Ess-Any> BARRIER NPNH LINK NOT 0 <Com-*Ani>)(NEGATE 0* <Com-*Ani> BARRIER GRAMCHK-S-BOUNDARY) 
