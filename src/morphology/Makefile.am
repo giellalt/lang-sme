@@ -70,6 +70,12 @@ GENERATED_LEXC_SRCS=generated_files/smi-$(GTLANG)-propernouns.lexc
 # Set this to the names of all source xml files, if any
 GT_XML_SRCS=
 
+# Define any additional sources here (compiled on their own, or just included
+# in the distro):
+GT_LOCAL_SRCS=
+
+### BEGIN: Local processing: ###
+
 generated_files/smi-propernouns.lexc: \
 			$(GTCORE)/gtdshared/smi/src/morphology/stems/smi-propernouns.lexc
 	$(AM_V_at)$(MKDIR_P) generated_files
@@ -84,6 +90,8 @@ generated_files/smi-$(GTLANG)-propernouns.lexc: \
 	echo "! <--- Dump from SMI -->" >> $@ && \
 	echo "" >> $@ && \
 	cat $< >> $@
+
+### END: Local processing: ###
 
 include $(top_srcdir)/am-shared/src-morphology-dir-include.am
 
