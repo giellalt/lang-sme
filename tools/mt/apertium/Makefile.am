@@ -28,7 +28,7 @@ analyser-mt-gt-desc.nob.hfst: analyser-mt-gt-desc.nob.tmp.hfst \
 		@\"$(top_builddir)/src/filters/make-optional-semantic-tags.hfst\" \
    	.o. @\"$<\" \
     	;" \
-		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
+		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --xerox-composition=ON \
 		| $(HFST_INVERT) $(HFSTFLAGS) \
 		| $(HFST_FST2FST) $(HFSTFLAGS) -t \
 		-o $@

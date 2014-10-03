@@ -99,7 +99,7 @@ generator-raw-gt-desc.hfst: generator-raw-gt-desc.tmp.hfst \
 			.o. @\"filters/remove-mwe-tags.hfst\"               \
 			.o. @\"$<\" \
 			;" \
-		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --harmonize-flags \
+		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --xerox-composition=ON \
 		> $@
 
 analyser-raw-gt-desc.xfst: analyser-raw-gt-desc.tmp.xfst \
@@ -174,7 +174,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph.hfst: \
 			.o. @\"filters/remove-mwe-strings.hfst\"                \
 			.o. @\"filters/remove-hyphenated-strings.hfst\"         \
 			;" \
-		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --harmonize-flags \
+		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --xerox-composition=ON \
 		> $@
 
 # Xerox version, mainly used for debugging
@@ -250,7 +250,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst: \
 			.o. @\"$<\" \
 			.o. @\"filters/remove-infl_boundary-marks.hfst\" \
 			;" \
-		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --harmonize-flags \
+		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --xerox-composition=ON \
 		> $@
 
 generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst: \
@@ -291,7 +291,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst: \
 			.o. @bin\"$<\" \
 			.o. @bin\"filters/remove-nonfirst_infl_boundary-marks.hfst\" \
 			;" \
-		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --harmonize-flags \
+		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --xerox-composition=ON \
 		> $@
 
 generator-tts-gt-norm_nonum_noabbr_nohyph_fin.xfst: \
@@ -327,7 +327,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_nob.hfst: \
 			.o. @bin\"$<\" \
 			.o. @bin\"filters/remove-nonfirst_infl_boundary-marks.hfst\" \
 			;" \
-		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --harmonize-flags \
+		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --xerox-composition=ON \
 		> $@
 
 generator-tts-gt-norm_nonum_noabbr_nohyph_nob.xfst: \
@@ -358,7 +358,7 @@ analyser-gt-norm.hfst: analyser-gt-norm.tmp.hfst \
 				@\"filters/remove-allegro-tags.hfst\" \
 			.o. @\"$<\"                                       \
 			;" \
-		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --harmonize-flags \
+		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --xerox-composition=ON \
 		| $(HFST_INVERT) $(VERBOSITY) $(HFST_FLAGS) \
 		> $@
 
@@ -380,7 +380,7 @@ analyser-oahpa-gt-norm.hfst: analyser-gt-norm.tmp.hfst \
 				@\"filters/remove-allegro-tags.hfst\" \
 			.o. @\"$<\"                                       \
 			;" \
-		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --harmonize-flags \
+		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --xerox-composition=ON \
 		| $(HFST_INVERT) $(VERBOSITY) $(HFST_FLAGS)
 		> $@
 
@@ -404,7 +404,7 @@ generator-gt-%.hfst: generator-gt-%.tmp.hfst \
 			.o. @\"filters/make-optional-lang_hom-tags.hfst\" \
 			.o. @\"$<\"                                       \
 			;" \
-		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --harmonize-flags \
+		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --xerox-composition=ON \
 		> $@
 
 # Xerox:
