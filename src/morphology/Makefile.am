@@ -27,34 +27,31 @@ GT_LEXC_SRCS_L1_L2=\
 			affixes/propernouns.lexc         \
 			stems/abbreviations.lexc         \
 			stems/acronyms.lexc              \
+			stems/adjectives.lexc            \
 			stems/adpositions.lexc           \
 			stems/adverbs.lexc               \
 			stems/conjunctions.lexc          \
 			stems/interjections.lexc         \
+			stems/nouns.lexc                 \
 			stems/numerals.lexc              \
 			stems/particles.lexc             \
 			stems/pronouns.lexc              \
 			stems/punctuation.lexc           \
-			stems/subjunctions.lexc
+			stems/subjunctions.lexc          \
+			stems/verbs.lexc
 
 # If you are building an error-detecting L2 analyser, specify the lexc files
 # that differ between the regular L1 and the L2 analysers below, in L1 and
 # L2 respectively. L2 files must end in "*-L2.lexc". See SME for an example.
 L1=\
 			affixes/adjectives.lexc \
-			stems/adjectives.lexc   \
 			affixes/nouns.lexc      \
-			stems/nouns.lexc        \
-			affixes/verbs.lexc      \
-			stems/verbs.lexc
+			affixes/verbs.lexc
 
 L2=\
 			affixes/adjectives-L2.lexc  \
-			stems/adjectives-L2.lexc \
 			affixes/nouns-L2.lexc  \
-			stems/nouns-L2.lexc   \
-			affixes/verbs-L2.lexc  \
-			stems/verbs-L2.lexc
+			affixes/verbs-L2.lexc
 
 GT_LEXC_SRCS=\
 			$(GT_LEXC_SRCS_L1_L2) \
