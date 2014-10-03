@@ -49,13 +49,13 @@ cp -f $OLDSRCDIR/sme-dis.rle    $NEWSRCDIR/syntax/disambiguation.cg3
 
 # phonology/ dir files
 echo "*** Copying phonology ***"
-cp -f $OLDSRCDIR/twol-sme.txt   $NEWSRCDIR/phonology/sme-phon-L1.twolc
+cp -f $OLDSRCDIR/twol-sme.txt   $NEWSRCDIR/phonology/sme-phon.twolc
 
 # transcriptions/ dir files
 echo "*** Copying transcriptions ***"
-cp -f $OLDSRCDIR/clock-sme.lexc $NEWSRCDIR/transcriptions/clock.lexc
-cp -f $OLDSRCDIR/date-sme.lexc  $NEWSRCDIR/transcriptions/date.lexc
-cp -f $OLDSRCDIR/sme-num.txt    $NEWSRCDIR/transcriptions/numbers.lexc
+cp -f $OLDSRCDIR/clock-sme.lexc $NEWSRCDIR/transcriptions/transcriptor-clock-digit2text.lexc
+cp -f $OLDSRCDIR/date-sme.lexc  $NEWSRCDIR/transcriptions/transcriptor-date-digit2text.lexc
+cp -f $OLDSRCDIR/sme-num.txt    $NEWSRCDIR/transcriptions/transcriptor-numbers-digit2text.lexc
 
 # orthography/ dir files
 echo "*** Copying orthography ***"
