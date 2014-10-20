@@ -4,7 +4,7 @@
 cat $GTBIG/sme-goldcorpus.txt | preprocess --abbr=$GTHOME/gt/sme/bin/abbr.txt | $LOOKUP $GTHOME/gt/sme/bin/sme.fst | lookup2cg | vislcg3 -g $GTHOME/gt/sme/src/sme-dis.rle > $GTHOME/gt/sme/dev/testdis
 
 # Fjerner semantiske tagger, # osv:
-cat $GTHOME/gt/sme/dev/testdis | perl -pe 's/(Sem\/[^\s]+|Use\/[^\s]+|Allegro|v\d) //g' \
+cat $GTHOME/gt/sme/dev/testdis | perl -pe 's/ (Sem\/[^\s]+|Use\/[^\s]+|Allegro|v\d)//g' \
 | perl -pe 's/ <[^>]+>//g' | tr -d "#" > $GTHOME/gt/sme/dev/cleantestdis
 
 # Sorterer alfabetisk inne i cohortene
