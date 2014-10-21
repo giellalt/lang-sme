@@ -43,9 +43,6 @@ cp -f $OLDSRCDIR/punct-sme-lex.txt        $NEWSRCDIR/$STEMSDIR/punctuation.lexc
 cp -f $OLDSRCDIR/subjunction-sme-lex.txt  $NEWSRCDIR/$STEMSDIR/subjunctions.lexc
 cp -f $OLDSRCDIR/verb-sme-lex.txt         $NEWSRCDIR/$STEMSDIR/verbs.lexc
 
-# syntax/ dir files
-echo "*** Copying syntax ***"
-cp -f $OLDSRCDIR/sme-dis.rle    $NEWSRCDIR/syntax/disambiguation.cg3
 
 # phonology/ dir files
 echo "*** Copying phonology ***"
