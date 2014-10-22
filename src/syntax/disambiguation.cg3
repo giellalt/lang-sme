@@ -829,7 +829,9 @@ LIST OKTII-V = ("boallu" Der/huvva) "goallostit" "beaškkehit" "bidjat" "čatnat
  # Danger: This list could be too long, in certain respects. 
  # TODO: Think of counter examples, i.e. sentences where we have these verbs, but where oktii is not an adverbial.
  
-LIST VGEN-V = "bassit" "bivdit" "boahtit" "čierrut" "čuoigat" "čuoiggadit" "čuovvut" "fárret" "fitnat" "garrudit" "gálašit" "gállit" "gilljut" "girdit" "johtit" "jorgut" "luoibmat" "mannat" "mátkkoštit" "njahkalit" "njoammut" "riidet" "ruohttat" "sihkkelastit" "soabbut" "šloahtat" "váccašit" "vádjolit" "vájaldit" "vájuldit" "vánddardit" "vázzit" "viehkat" "viežžat" "vuodjat" "vuodjit" "vuojadit" "vuojašit" "vuolgit" "čilget" "čuorvut" "čurvet" "dadjat" "dárostit" "sámástit" "suomastit" "digáštallat" "hállat" "hoallat" "huikit" "hupmat" "juoigat" "lávlut" "logaldallat" "máidnut" "máinnašit" "muitalit" "savkalit" "skierbmut" "vástidit" "njurgut" "veahkehit" "vuoitit" "vuoššat" ;
+LIST VGEN-V-TRIGGER = "beassat" "bidjat" "bijadit" "bivdit" "boahtit" "buktit" "čohkket" "čuovvut" "doalvut" "duolmmadit" "fidnet" "fitnat" "galgat" "girdit" "gálašit" "goastit" "guođuhit" "gurgalit" "gárgidit" "jávkkihit" "joatkit" "johtit" "jorgut" "loahpahit" "luoibmat" "mannat" "mátkkoštit" "njahkalit"  "njoammut" "oasálastit" "rasttildit" "ruohttat" "sihkkelastit" "váccašit" "vájuldit" "vánddardit" "viehkat" "viehkalit" "viežžat" "vuodjit" "vuolgit" ;
+
+LIST VGEN-V = "bassit" "bárdnat" "boahtit" "borrat" "čierrut" "čuoigat" "čuorvut" "doarggistit" "duorrat" "fáiput" "garrudit" "gállit" "geargat" "geavzut" "gilljut" "girdit" "guoddit" "huikit" "hupmat" "jápmit" "johtit" "jorgut" "juoigat" "láddjet" "lávlut" "luoibmat" "njáhkat" "njoammut" "njurgut" "oaidnit" "riidet" "ruohttat" "sihkkelastit" "skierbmut" "soabbut" "suoibut" "šloahtat" "vázzit" "viehkat" "vuodjat" "vuodjit" "vuoitit" "vuoššat" ;
 
  
 LIST SOURCE-V = "gáibidit" ;
@@ -2042,8 +2044,10 @@ SECTION
 #!! !!Lexicalised derivations
 #     -----------------------
 
+
 LIST DYNCMP = (".*#.*"r) ;
 
+#!! * __eapmi__ compounds with eapmi if they have Der/NomAct analysis
 REMOVE:eapmi (".*#eapmi"r) (0 Der/NomAct) ;
 
 REMOVE:cmpDer/laš DYNCMP + Der/laš (0 Der/laš) ;
@@ -4070,9 +4074,9 @@ SELECT:ActioEss (Actio Ess) IF (0 (N Ess) LINK *-1 COPULAS OR ("fitnat") BARRIER
 	## 
 	
 #!! * __NotEmbeddedImprt__ removed Imprt after CS
-REMOVE:NotEmbeddedImprt Imprt IF (*-1 CS BARRIER ("de" Adv) OR (":") OR ("""));
+REMOVE:NotEmbeddedImprt Imprt IF (*-1 CS BARRIER ("de" Adv) OR (":") OR ("""))(NEGATE 0 ("geahččat") LINK -1 COMMA) ;
 	#$ Go ollet sáhpánvári ala, de muitte čuovvolit bálgá.
-	#$ 
+	#% Dán njuolggadusa deaŧalaš eaktu lea ahte ođđa siidaosiid ásaheapmi ii galgga dagahit ahte boazolohku šaddá alit go siidii mearriduvvon lohku, geahča dás maŋŋelis. 
 
 #" syntax couloring.
 	
@@ -4147,6 +4151,9 @@ REMOVE:VNotSg3When12Left (V Sg3) IF (-1 (Pron Nom))(NEGATE -1 Sg OR Sg3);
 REMOVE:VNotSg3IfCom (V Sg3) IF (-1 (Sg Com))(-2 (N Nom))(0 Du3);	
  	#$ Biret-guovttos Juffáin leaba čeahpit duddjot.
 
+#!! * __Sg3vdic__ selects Sg3 if VERBAL-ACTIVITY between comma and Nom
+SELECT:Sg3 (Ind Sg3)(-1 COMMA)(0 VERBAL-ACTIVITY)(*1 (N Nom Sg) BARRIER NOT-NPMOD) ;
+	#$ Dáinna galggat don vuodjit, čilge Vegard ja cuige skutterii.
 
 REMOVE:r958 (V Pl3) IF (-1 (Pron Rel Sg))(0 (V Sg3));
  	#$ Kapihttalis mas čilge orrunlanjadagaid latnjačovdosa nannejuvvo ahte lanjadat leat plánejuvvon orruide geat dárbbašit divššu guhkit.
@@ -6595,14 +6602,15 @@ SELECT:r1828 Inf IF (-1 ADVLCASE LINK *-1 (A Nom) BARRIER NOT-NPMOD LINK *-1 COP
 
 # 1. Looking for VGen.
 
-#!! * __VGen__ selects VGen  
-SELECT:VGen1 VGen IF (*-1 VGEN-V BARRIER Neg OR SV-BOUNDARY LINK 0 MAIN-V)(0 VGEN-V LINK NOT 0 Der/Pass OR Loc OR Inf OR ("mannat"));	
+#!! * __VGen__ selects VGen after VGEN-V-TRIGGER-verb
+SELECT:VGen1 VGen IF (*-1 VGEN-V-TRIGGER BARRIER Neg OR SV-BOUNDARY LINK 0 MAIN-V)(0 VGEN-V LINK NOT 0 Der/Pass OR Loc OR Inf);	
 
-#!! * __Gen2__	
-SELECT:VGen2 VGen IF (-1 ("gaskan"))(NEGATE 0 Der/Pass OR Loc OR Inf);
+#!! * __Gen2__	selects VGen after after gaskan and lahka
+SELECT:VGen2 VGen IF (-1 ("gaskan") OR ("lahka"))(NEGATE 0 Der/Pass OR Loc OR Inf);
 	## Gaskan bora viehkalin olggos.
-#!! * __VGen3__
-SELECT:VGen3 VGen IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(0 VGEN-V LINK NOT 0 Der/Pass OR Loc OR Inf);  
+
+#!! * __VGen3__ selects VGen after copulas
+SELECT:VGen3 VGen IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(0 VGEN-V LINK NOT 0 Der/Pass OR Loc OR Inf OR (N Nom));  
 	## Muhtumat ledje vácci, ja muhtumat ledje čuoigga. 
 
 #!! * __VGen4__
