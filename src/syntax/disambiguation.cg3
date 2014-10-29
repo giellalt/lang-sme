@@ -2044,6 +2044,11 @@ SECTION
 #!! !!Lexicalised derivations
 #     -----------------------
 
+#LIST Err/Sub = Err/Sub ;
+#
+#LIST WORDLEMMA = (".*"r) ;
+#
+#REMOVE:TEST $$WORDLEMMA + Err/Sub (0 $$WORDLEMMA - Err/Sub ) ;
 
 LIST DYNCMP = (".*#.*"r) ;
 
@@ -4027,6 +4032,8 @@ SELECT:PXAccCoor Px + Acc IF (-1 ("ja") OR ("dahje") LINK -1C Acc) ;
 SELECT:PxSg3CC (PxSg3)  IF (-1 ("ja") OR ("dahje") LINK -1C N-PX + Px + Sg);
 	#$ Mun lean boahtán bidjat soahpameahttunvuođa bártni ja áhčis gaskii.
 
+REMOVE:PxSg3Loc (PxSg3)  IF (0 (Sem/Plc Loc));
+	#$ Ruovttus hálaimet eanaš sámegiela, muhto mis ledje ollu dárogielat ránnját.
 
 #!! * __gaskaAcc__  
 REMOVE:gaskaEss ("gaska" Ess)(0 ("gaskan" Adv) + Px) ;
@@ -4605,6 +4612,10 @@ SELECT:jogoAdv Adv (0 ("jogo") OR ("juogo"))(NEGATE *-1 VFIN BARRIER S-BOUNDARY)
 	#$ Jogo gikse dat guolit?	
 SELECT:jogoAdv Adv (0 ("jogo") OR ("juogo"))(*1 ("dahje") BARRIER S-BOUNDARY) ;
 	#$ Rásit liđđot juogo geassit, čakčat dahje dálvit.
+
+#!! * __AdvPx__ selects Adv Px instead of N Px
+SELECT:AdvPx Adv + Px (0 N + Px) ;
+	#$ Atnet sálttiid duohkineattet, ja dollet ráfi gaskaneattet.
 	
 #!! !!Disambiguating abbreviations
 
@@ -7562,10 +7573,12 @@ SELECT:NumNomCop (Num Nom) IF ((*-1 COPULAS + FMAINV BARRIER NOT-ADV-PCLE LINK *
 SELECT:NumNomYear (Num Nom) IF (0 Sem/Year LINK -1 Sem/Sur LINK 2 (":")) ;
 SELECT:NumNomPage (Num Nom) IF (-1 (":") LINK -1 Sem/Year LINK -1 Sem/Sur) ;
 
+#!! * __DiminNomPxSg1__	
+SELECT:DiminNomPxSg1 Nom IF (0 (Der/Dimin PxSg1) OR (".*š"r PxSg1) LINK -1 COMMA OR BOC LINK 2 COMMA) ;
+	#$ Jurddaš, ustibažžan, don leat nu nuorra ja liekkus.
+
 
 #!! !!ACCUSATIVE-GENITIVE DISAMBIGUATION
-
-
 
 
 #!! !!Secure rules for choosing Acc
@@ -9328,6 +9341,7 @@ REMOVE:NAr2288 Nom IF (*-1 Acc BARRIER SV-BOUNDARY LINK *-1 ACC-INF-V BARRIER SV
 #!! * __NDnom__ Selects Nom
 SELECT:NDnom Nom IF (0 Coll + Loc LINK *0 Du3) ;
 	#$ Bođežeaba go Ánne-guovttos ovdal gaskaija?
+	
 
 #!! * __NDr2300__ Selects Nom if Gen immediately to the left. You are N-SG-NOM and to your right is SG3-V ''Du ášši lea dehálaš''
 SELECT:NDr2300 Nom IF ((-1 Gen) OR (-1 Po LINK -1 Gen))(NEGATE -1 (Pron Dem Gen))(0 N-SG-NOM LINK NOT 0 Loc)(NEGATE 0 PrfPrc OR Ill OR Po)(1 SG3-V);
