@@ -1,4 +1,5 @@
-# Dette skriptet tester at alle lemmaene i smi-sme-propernouns.lexc kan genereres. De som ikke kan genereres, kopieres til missingProperLemmas.txt
+# Kommando når man er i sme: sh test/src/morphology/testpropernounlemmas.sh
+# Dette skriptet tester at alle lemmaene i generated_files/smi-sme-propernouns.lexc kan genereres. De som ikke kan genereres, kopieres til missingProperLemmas.txt
 
 grep ";" $GTHOME/langs/sme/src/morphology/generated_files/smi-sme-propernouns.lexc | grep -v "^\!" | egrep -v '(Attr|FirstTag|-atr|LexSub)' | sed 's/% /€/g' | sed 's/%:/¢/g' | sed 's/%!/!/g' | tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > props
 cat props | sed 's/$/+N+Prop+Sg+Nom/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep -v "N+" | grep -v "^$" | sort -u > analprops 

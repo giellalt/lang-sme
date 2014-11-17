@@ -1,3 +1,4 @@
+# Kommando når man er i sme: sh test/src/morphology/testnounlemmas.sh
 # Dette skriptet tester at nesten alle lemmaene i nouns.lexc kan genereres. De som ikke kan genereres, kopieres til missingnounLemmas.txt
 
 grep ";" $GTHOME/langs/sme/src/morphology/stems/nouns.lexc | grep -v "^\!" | egrep -v '(CmpN/Only|ShCmp|RCmpnd| Rreal | R | Rnoun |\+V\+|LexSub)' | sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > nouns
