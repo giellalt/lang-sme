@@ -1,6 +1,6 @@
 # Dette skriptet tester at nesten alle lemmaene i nouns.lexc kan genereres. De som ikke kan genereres, kopieres til missingnounLemmas.txt
 
-grep ";" $GTHOME/langs/sme/src/morphology/stems/nouns.lexc | grep -v "^\!" | egrep -v '(CmpN/Only|ShCmp|RCmpnd| Rreal | R | Rnoun | GU| OVCCIS|\+V\+|LexSub)' | sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > nouns
+grep ";" $GTHOME/langs/sme/src/morphology/stems/nouns.lexc | grep -v "^\!" | egrep -v '(CmpN/Only|ShCmp|RCmpnd| Rreal | R | Rnoun |\+V\+|LexSub)' | sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > nouns
 grep ";" $GTHOME/langs/sme/src/morphology/stems/nouns.lexc | grep -v "^\!" | egrep -v '(ShCmp|LexSub)' |  egrep "( R | Rreal | Rnoun)" | tr ":+" " " | cut -d " " -f1 | sed 's/$/viessu/' >> nouns
 cat nouns | sed 's/$/+N+Sg+Nom/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep -v "N+" | grep -v "^$" | sort -u > analnouns 
 cat nouns | sed 's/$/+N+Sg+Nom/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep "N+" | cut -d "+" -f1 | sed 's/$/+N+Pl+Nom/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep -v "^$" >> analnouns 
