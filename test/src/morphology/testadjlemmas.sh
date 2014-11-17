@@ -1,3 +1,4 @@
+# Kommando når man er i sme: sh test/src/morphology/testadjlemmas.sh
 # Dette skriptet tester at nesten alle lemmaene i adjectives.lexc kan genereres. De som ikke kan genereres, kopieres til missingadjLemmas.txt
 
 #grep ";" $GTHOME/gt/sme/src/adj-sme-lex.txt | grep -v "^\!" | egrep -v "(LEXICON|ATTR|FINJU|Der|Attr| At |BBO |MUS |BUOREMUSS|OVDDIT |STUORIBUS|BUStem | K | Rreal | R )" | tr ":+" " " | cut -d " " -f1 | tr -d "%" | sort -u > adjs
