@@ -25,6 +25,6 @@ echo " " >> $GTHOME/langs/sme/test/data/disambiguationreport.txt
 echo "Den nye analysen inneholder analyser som ikke finnes i gullstandarden:" >> $GTHOME/langs/sme/test/data/disambiguationreport.txt
 cat $GTHOME/langs/sme/test/data/testdisambiguationresult.txt | grep '^>' | perl -pe 's/(TV|IV|G3|V\*|V\*\*) //' | cut -d '"' -f3 | rev | awk -F' ' '{print $1" "$2}' | rev | sort | uniq -c | sort -nr >> $GTHOME/langs/sme/test/data/disambiguationreport.txt
 see $GTHOME/langs/sme/test/data/disambiguationreport.txt
-#cat test/data/testdisambiguationresult.txt | sed 's/$/¢/' |sed 's/---¢/€/' | tr "\n" " " | sed 's/¢ €/€/g' |tr "¢" "\n" | grep € | rev | sort | rev
+#cat test/data/testdisambiguationresult.txt | sed 's/$/¢/' |sed 's/---¢/€/' | tr "\n" " " | sed 's/¢ €/€/g' |tr "¢" "\n" | grep € | rev | sort | rev | see
 
 
