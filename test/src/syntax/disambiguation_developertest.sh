@@ -8,13 +8,19 @@ cat $GTBIG/correct/sme-goldcorpus.dis.corr.txt | perl -pe 's/ (Sem\/[^\s]+|Use\/
 
 # Diff
 diff -w $GTHOME/langs/sme/test/data/sme-goldcorpus.dis.corr.txt $GTHOME/langs/sme/test/data/disambiguationtestoutput > $GTHOME/langs/sme/test/data/testdisambiguationresult.txt
+cat $GTHOME/langs/sme/test/data/sme-goldcorpus.dis.corr.txt |cut -d '@' -f1 | sed 's/ $//' > $GTHOME/langs/sme/test/data/sme-goldcorpus.onlydis.txt
+cat $GTHOME/langs/sme/test/data/disambiguationtestoutput |cut -d '@' -f1 | sed 's/ $//' > test/data/test.onlydis.txt
+diff -w $GTHOME/langs/sme/test/data/sme-goldcorpus.onlydis.txt $GTHOME/langs/sme/test/data/test.onlydis.txt > $GTHOME/langs/sme/test/data/testonlydisresult.txt
 
 # Rapport:
 # Antall ulike linjer:
 echo "Antall ord i gullkorpuset:" > $GTHOME/langs/sme/test/data/disambiguationreport.txt
 grep '"<' $GTHOME/langs/sme/test/data/sme-goldcorpus.dis.corr.txt | wc -l >> $GTHOME/langs/sme/test/data/disambiguationreport.txt
 echo " " >> $GTHOME/langs/sme/test/data/disambiguationreport.txt
-echo "Antall disambiguert annerledes enn gullstandard:" >> $GTHOME/langs/sme/test/data/disambiguationreport.txt
+echo "Antall disambiguert annerledes enn gullstandard, bare morfologi:" >> $GTHOME/langs/sme/test/data/disambiguationreport.txt
+cat $GTHOME/langs/sme/test/data/testonlydisresult.txt | grep '^<' | wc -l >> $GTHOME/langs/sme/test/data/disambiguationreport.txt
+echo " " >> $GTHOME/langs/sme/test/data/disambiguationreport.txt
+echo "Antall disambiguert annerledes enn gullstandard, inkl. noen syntagger:" >> $GTHOME/langs/sme/test/data/disambiguationreport.txt
 cat $GTHOME/langs/sme/test/data/testdisambiguationresult.txt | grep '^<' | wc -l >> $GTHOME/langs/sme/test/data/disambiguationreport.txt
 echo "Antall ikke disambiguert eller uriktig disambiguert:" >> $GTHOME/langs/sme/test/data/disambiguationreport.txt
 cat $GTHOME/langs/sme/test/data/testdisambiguationresult.txt | grep '^>' | wc -l >> $GTHOME/langs/sme/test/data/disambiguationreport.txt
