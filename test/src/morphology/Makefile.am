@@ -10,7 +10,11 @@ TESTS=
 
 if WANT_GENERATION
 # Add your shell scripts for running tests requiring only a generator:
-TESTS+=generate-noun-lemmas.sh
+TESTS+= \
+testadjlemmas.sh        \
+testnounlemmas.sh       \
+testpropernounlemmas.sh \
+testverblemmas.sh
 
 endif # WANT_GENERATION
 
