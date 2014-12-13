@@ -13,6 +13,7 @@ JSP_PAGES=root-morphology.jspwiki        \
 		  adjectives-affixes.jspwiki       \
 		  nouns-affixes.jspwiki          \
 		  verbs-affixes.jspwiki \
+		  adjectives-stems.jspwiki         \
 		  disambiguation-syntax.jspwiki \
 		  functions-syntax.jspwiki \
 		  dependency-syntax.jspwiki  
@@ -21,7 +22,6 @@ JSP_PAGES=root-morphology.jspwiki        \
 # abbreviations-stems.jspwiki      \
 # acronyms-stems.jspwiki           \
 # adjectives-oahpa-stems.jspwiki   \
-# adjectives-stems.jspwiki         \
 # adpositions-stems.jspwiki        \
 # adverbs-stems.jspwiki            \
 # conjunctions-stems.jspwiki       \
