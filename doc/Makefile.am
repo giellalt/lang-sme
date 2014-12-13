@@ -14,6 +14,7 @@ JSP_PAGES=root-morphology.jspwiki        \
 		  nouns-affixes.jspwiki          \
 		  verbs-affixes.jspwiki \
 		  adjectives-stems.jspwiki         \
+		  verbs-stems.jspwiki              \
 		  disambiguation-syntax.jspwiki \
 		  functions-syntax.jspwiki \
 		  dependency-syntax.jspwiki  
@@ -35,7 +36,6 @@ JSP_PAGES=root-morphology.jspwiki        \
 # punctuation-stems.jspwiki        \
 # smi-propernouns-stems.jspwiki    \
 # subjunctions-stems.jspwiki       \
-# verbs-stems.jspwiki              \
 # adjectives-oahpa-affixes.jspwiki \
 # propernouns-affixes.jspwiki      \
 ALLINONE_JSP_PAGE=$(srcdir)/$(GTLANG).jspwiki
