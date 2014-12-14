@@ -12,6 +12,7 @@ if CAN_DOCC
 JSP_PAGES=root-morphology.jspwiki        \
 		  adjectives-affixes.jspwiki       \
 		  nouns-affixes.jspwiki          \
+		  possessive-suffixes-affixes.jspwiki \
 		  verbs-affixes.jspwiki \
 		  abbreviations-stems.jspwiki      \
 		  acronyms-stems.jspwiki           \
