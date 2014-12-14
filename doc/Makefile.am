@@ -13,29 +13,29 @@ JSP_PAGES=root-morphology.jspwiki        \
 		  adjectives-affixes.jspwiki       \
 		  nouns-affixes.jspwiki          \
 		  verbs-affixes.jspwiki \
+		  abbreviations-stems.jspwiki      \
+		  acronyms-stems.jspwiki           \
 		  adjectives-stems.jspwiki         \
+		  adpositions-stems.jspwiki        \
+		  adverbs-stems.jspwiki            \
+		  conjunctions-stems.jspwiki       \
+		  nouns-stems.jspwiki              \
+		  numerals-stems.jspwiki           \
+		  particles-stems.jspwiki          \
+		  pronouns-stems.jspwiki           \
+		  sme-propernouns-stems.jspwiki        \
+		  subjunctions-stems.jspwiki       \
 		  verbs-stems.jspwiki              \
 		  disambiguation-syntax.jspwiki \
 		  functions-syntax.jspwiki \
 		  dependency-syntax.jspwiki  
 # clitics-morphology.jspwiki       \
 # compounding-morphology.jspwiki   \
-# abbreviations-stems.jspwiki      \
-# acronyms-stems.jspwiki           \
 # adjectives-oahpa-stems.jspwiki   \
-# adpositions-stems.jspwiki        \
-# adverbs-stems.jspwiki            \
-# conjunctions-stems.jspwiki       \
 # interjections-stems.jspwiki      \
 # nouns-oahpa-stems.jspwiki        \
-# nouns-stems.jspwiki              \
-# numerals-stems.jspwiki           \
-# particles-stems.jspwiki          \
-# pronouns-stems.jspwiki           \
-# propernouns-stems.jspwiki        \
 # punctuation-stems.jspwiki        \
 # smi-propernouns-stems.jspwiki    \
-# subjunctions-stems.jspwiki       \
 # adjectives-oahpa-affixes.jspwiki \
 # propernouns-affixes.jspwiki      \
 ALLINONE_JSP_PAGE=$(srcdir)/$(GTLANG).jspwiki
