@@ -618,8 +618,6 @@ LIST SII = ("son" Pron Pers Pl3 Nom);
 
 SET PPRON-NOM-NOT-DAT = MUN OR DON OR SON OR MOAI OR DOAI OR SOAI OR MII-PERS OR DII OR SII ;
 
-SET PPRON-NOT-DAT = (Pron Pers) - ("dat") ;
-
 SET PPRON-DU-PL = MOAI OR DOAI OR SOAI OR MII-PERS OR DII OR SII ;
 SET PPRON-PL = MII-PERS OR DII OR SII ;
 
@@ -1194,7 +1192,7 @@ SET PRE-APP   = COMMA OR PUNCT-LEFT OR PRE-NP-HEAD ;
 #!! meaning: Scan to the first noun, ignoring anything that can be
 #!! part of the noun phrase of that noun (i.e., "scan to the next NP head")
 
-SET NOT-NPMOD     = WORD - PRE-NP-HEAD OR ABBR ;                     
+SET NOT-NPMOD     = WORD - PRE-NP-HEAD OR ABBR OR @CVP ;                     
 # This is the previous NPNH (npnh) set.
 # NOT-NPMOD  = "NOT-PRE-NP-HEAD"
  
@@ -1405,6 +1403,8 @@ LIST NUMMAR = "identifiserennummar" "njuolggotlf" "nr" "nummar" "nummir" "tabeal
 LIST KLASS = "ášši" "bálkáceahkki" "čuokkis" "s" "siidu" "§" "§§" "paragráfa" "oassi" "kap" "kapihtal";
 
 LIST PEOPLE-NUM = "guovttis" "golmmas" "njealjis" "viđas" "guđas" "čiežas" "gávccis" "ovccis" "logis" ;
+
+LIST GUOVTTIS = "guovttos" "guovttis" ;
 
 #!! * Sets for nouns with morpho-syntactic preferences
 # ----------------------------------------
@@ -2087,7 +2087,7 @@ SUBSTITUTE:muitalit (V) (<vdic> V) TARGET MUITALIT (0 REAL-V LINK -1 COMMA LINK 
 	#$ – Ii leat duohta , lohká direktora Smuk.
 	#$ Mii fertet maiddái geahčadit makkár lassi guoimmuhemiid galgat fállat vai bohtet vel eanet olbmot boahtte jagi, loahpaha duhtavaš beaivválaš jođiheaddji Eriksen.
 
-#!! !Some propernouns have two parts and the first is not a genetive. We still have problems with abbr when these propernouns are inflected or are a part of a cmp. The copy rule adds Attr reading to names which not get it in the fst (Soria). The select rule selects Attr when the next word is e.g. Moria.
+#!! !Some propernouns have two parts and the first is not a genitive. We still have problems with abbr when these propernouns are inflected or are a part of a cmp. The copy rule adds Attr reading to names which not get it in the fst (Soria). The select rule selects Attr when the next word is e.g. Moria.
 
 LIST PROP-FIRST = "Harry" "Soria" "Stuorra" ;
 LIST PROP-SECOND = ("Moria.*"r) ("Potter.*"r) "Sarvvis" ;
@@ -3846,7 +3846,7 @@ SELECT:datSgRel (Pron Sg Nom) IF (*1 (Rel Sg) BARRIER WORD) ;
 	#$ Dat mii sáhttá háhkkojuvvot, lea ovdalis juo namuhuvvon..
 
 # selects dat Pl in front of Rel Pl
-SELECT:datPlRel (Pron Pl Nom) IF (*1 ("mii" Rel Pl) BARRIER WORD) ;
+SELECT:datPlRel (Pron Pl Nom) IF (*1 ("mii" Rel Pl) OR ("gii" Rel Pl) BARRIER WORD) ;
 	#$ Dat mat sáhttet háhkkojuvvot, leat ovdalis juo namuhuvvon..
 
 
@@ -7951,8 +7951,11 @@ SELECT:SEMr2084 Gen IF (0 ("hálddašanguovlu") OR ("hálddahusguovlu") LINK 0 A
 #SELECT:SEMr2086 Gen IF (0 NATION LINK 0 Acc)(1 MEDIA);
 	#$ Mediat Ruoŧa rádio, Oahpahusrádio ja Ruoŧa Televišuvdna, ožžot jagis 2002 ođđa sáddenlobiid.    
 
+#!! * __SEMguovttis__ selects genitive in front of guovttos and guovttis
+SELECT:SEMguovttis (N Gen)(0 HUMAN LINK 1 GUOVTTIS) ;
+	#$ Muhto loahpas nagodeigga nissoniid guovttos oažžut botnjiideaskka mielde.
     
-#!! * __SEMXr2087__ Selects Gen if you are a Prop/Plc followed by "gielda" or "suohkan"
+#!! * __SEMXr2087__ selects Gen if you are a Prop/Plc followed by "gielda" or "suohkan"
 SELECT:SEMXr2087 Gen IF (0 (Prop Sem/Plc Acc))(*1 ("suohkan") OR ("gielda") BARRIER NOT-NPMOD LINK 0 Pl); 
 	#$
 
@@ -8357,7 +8360,7 @@ REMOVE:SEMnom Acc IF (-1 Adv OR BOC OR S-BOUNDARY)(1C (N Nom))(2 TRANS-V + FMAIN
 	#$ Mánáidgirjjiin muitaluvvo dávjá govt olbmuid mánát deivet nuppi máilmmi ássiid.
 	#$ Boazodoallu gal lea dorvvastan suddjemiidda go dat oaidná movt eatnamat ja meahcci gáržžiduvvo go ruđa fápmu vuoitá.
 
-#!! * __deaivatGenlusa__ selects genetive when used like deaivat Gen lusa/lahkosii even if the verb deaivat belongs to the strict TV set.
+#!! * __deaivatGenlusa__ selects genitive when used like deaivat Gen lusa/lahkosii even if the verb deaivat belongs to the strict TV set.
 SELECT:deaivatGenlusa (N Gen)(-1 ("deaivat") + VFIN)(*1 ("lusa" Po) OR ("lahkosii" Po) BARRIER REAL-V); 
 	#$ Guhkes ja losses vuojeheame maŋŋá sii deive Davvinástti dahjege Almmi Návlli lusa.
 
@@ -8811,7 +8814,7 @@ SELECT:AccSTV Acc IF (*-1 STRICT-TRANS-V BARRIER SV-BOUNDARY - (N Ess) - (N Loc)
 
 
 #!! * __PronNP__ (removes Acc): selects Gen for Pron Pers if Acc or Ill to the right, given that there is a secure object or that no transitive verb is found ''bija ruđa mu kontoi''
-REMOVE:PronNP Acc IF (0 PPRON-NOT-DAT + Gen)(NEGATE 0* TRANS-V + FMAINV BARRIER Acc OR S-BOUNDARY)(*1 Acc OR Ill BARRIER NOT-Attr LINK NOT 1 Inf) ;
+REMOVE:PronNP Acc IF (0 Pers + Gen)(NEGATE 0* TRANS-V + FMAINV BARRIER Acc OR S-BOUNDARY)(*1 Acc OR Ill BARRIER NOT-Attr LINK NOT 1 Inf) ;
 	#$ Oinniide go Mihkkala, munno nuoramus bártni?
 	#$ Bija fal ruđa njuolgga mu kontui.
 	#$ Min márkanii lea ráhkaduvvon ođđa skuvla.
