@@ -1,4 +1,4 @@
-# Skript for å teste den disambiguerte analysen av sme-goldcorpus.txt. Testen kjøres i to deler, før og etter endringer av analyser-disamb-gt-desc.xfst. Den må kjøres 'make' før del to kjøres.
+# Skript for å teste den disambiguerte analysen av sme-goldcorpus.txt. Testen kjøres i to deler, før og etter endringer av analyser-disamb-gt-desc.xfst. Det må kjøres 'make' før morphology_aftertest.sh kjøres.
 # sh test/src/morphology/morphology_beforetest.sh 
 # sh test/src/morphology/morphology_aftertest.sh 
 
