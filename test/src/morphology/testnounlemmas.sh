@@ -10,7 +10,7 @@ grep ";" $GTHOME/langs/sme/src/morphology/stems/nouns.lexc | egrep -v "^(\!|\@|<
 grep ";" $GTHOME/langs/sme/src/morphology/stems/nouns.lexc | egrep -v "^(\!|\@|<)" | grep -v ShCmp | grep "RHyph" | tr ":+" " " | cut -d " " -f1 | sed 's/$/+N+Cmp-#viessu+N+Sg+Nom/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep "\-" | cut -d "-" -f1 >> analnouns
 sort -u -o nouns nouns 
 sort -u -o analnouns analnouns 
-comm -23 nouns analnouns > $GTHOME/langs/sme/test/data/missingnounLemmas.txt
+comm -23 nouns analnouns | sed 's/$/+N+Sg+Nom/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst > $GTHOME/langs/sme/test/data/missingnounLemmas.txt
 rm *nouns 
 see $GTHOME/langs/sme/test/data/missingnounLemmas.txt
 

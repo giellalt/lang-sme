@@ -15,6 +15,6 @@ cat compladjs | sed 's/$/+A+Comp+Sg+Nom/' | $LOOKUP $GTHOME/langs/sme/src/genera
 cat attradjs compladjs superladjs >> adjs
 sort -u -o adjs adjs 
 sort -u -o analadjs analadjs 
-comm -23 adjs analadjs > $GTHOME/langs/sme/test/data/missingadjLemmas.txt
+comm -23 adjs analadjs | grep -v '^$' | sed 's/$/+A+Sg+Nom/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst > $GTHOME/langs/sme/test/data/missingadjLemmas.txt
 rm *adjs
 see $GTHOME/langs/sme/test/data/missingadjLemmas.txt

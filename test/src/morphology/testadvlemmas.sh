@@ -9,6 +9,6 @@ cat compadverbs | sed 's/$/+Adv+Comp/' | $LOOKUP $GTHOME/langs/sme/src/generator
 cat supadverbs | sed 's/$/+Adv+Superl/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep -v "Adv+" | grep -v "^$" >> anadverbs 
 sort -u -o anadverbs anadverbs
 cat adverbs compadverbs supadverbs | sort -u > alladverbs
-comm -23 alladverbs anadverbs > $GTHOME/langs/sme/test/data/missingadverbLemmas.txt
+comm -23 alladverbs anadverbs | grep -v '^$' | sed 's/$/+Adv/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst > $GTHOME/langs/sme/test/data/missingadverbLemmas.txt
 rm *adverbs
 see $GTHOME/langs/sme/test/data/missingadverbLemmas.txt
