@@ -38,7 +38,7 @@ sort -u -o adjs adjs
 # Samle alle genererte former i en fil, sorter, unifiser
 sort -u -o analadjs analadjs 
 
-# Sammenlikne lista med adjektivlemmaer med den genererte lista med adjektiver. Formene som er i adjektivlemmalista, men ikke i den genererte lista, kopieres til missingadjLemmas.txt. 
+# Sammenlikne lista med adjektivlemmaer med den genererte lista med adjektiver. Formene som er i adjektivlemmalista, men ikke i den genererte lista, kopieres til missingadjLemmas.txt. Formene generes med  +A+Sg+Nom for enklere debugging. 
 comm -23 adjs analadjs | grep -v '^$' | sed 's/$/+A+Sg+Nom/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst > $GTHOME/langs/sme/test/data/missingadjLemmas.txt
 
 # Fjerne lister
