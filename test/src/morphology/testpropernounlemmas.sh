@@ -10,7 +10,7 @@ cat props | sed 's/$/+N+Prop+Sg+Nom/' | $LOOKUP $GTHOME/langs/sme/src/generator-
 # Generer grunnformen med +N+Prop+Pl+Nom, av props som ikke lar seg generere med +N+Prop+Sg+Nom, lagres i analprops
 cat props | sed 's/$/+N+Prop+Sg+Nom/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep "N+" | cut -d "+" -f1 | sed 's/$/+N+Prop+Pl+Nom/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep -v "^$" >> analprops 
 
-#Sorter, unifiser analprops
+# Sorter, unifiser analprops
 sort -u -o analprops analprops 
 
 # Alle former som ikke lar seg generere lagres i missingProperLemmas.txt
@@ -23,10 +23,10 @@ comm -23 props analprops | sed 's/$/+N+Prop+Sg+Nom/' | $LOOKUP $GTHOME/langs/sme
 # Hent ut lemmaer som krever +Attr for å genereres. Lagres som attrprops
 grep ";" $GTHOME/langs/sme/src/morphology/generated_files/smi-sme-propernouns.lexc | grep -v "^\!" | egrep '(Attr|-atr|FirstTag)' | grep -v 'LexSub' | sed 's/% /€/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " |  sort -u > attrprops
 
-#Generer attrprops med +N+Prop+Attr, lagre dem som ikke lar seg generere (de har N+ i output) i missingProperLemmas.txt
+# Generer attrprops med +N+Prop+Attr, lagre dem som ikke lar seg generere (de har N+ i output) i missingProperLemmas.txt
 cat attrprops | sed 's/$/+N+Prop+Attr/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep "N+" >> $GTHOME/langs/sme/test/data/missingProperLemmas.txt
 
-#Generer attrprops med +N+Prop+Attr, lagre formene i analattrprops
+# Generer attrprops med +N+Prop+Attr, lagre formene i analattrprops
 cat attrprops | sed 's/$/+N+Prop+Attr/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 |  grep -v "N+" | grep -v "^$" | sort -u > analattrprops  
 
 # Sammenlikne: Former som er i lemmalista med ikke i lista med genererte former, lagre i missingProperLemmas.txt
