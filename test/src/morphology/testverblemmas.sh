@@ -1,7 +1,7 @@
 # Kommando når man er i sme: sh test/src/morphology/testverblemmas.sh
 # Dette skriptet tester at nesten alle lemmaene i verbs.lexc kan genereres. De som ikke kan genereres, kopieres til missingverbLemmas.txt. 
 
-# Hent ut lemmaer, bortsett fra dem med hardkoding for spesielle former, eller negasjonsverbet (som ikke har infinitivform), lagres som verbs
+# Hent ut lemmaer, bortsett fra utkommmenterte (^\!),  dem med hardkoding for spesielle former (STRAYFORMS|ENDLEX), eller negasjonsverbet (+Neg, som ikke har infinitivform), LexSub (som blir filtrert bort fra normgenerator). Lemmaene lagres som verbs
 grep ";" $GTHOME/langs/sme/src/morphology/stems/verbs.lexc | grep -v "^\!" | egrep -v '(STRAYFORMS|ENDLEX|LexSub|\+Neg)' | tr ":+" " " | cut -d " " -f1 | tr -d "%" | sort -u > verbs
 
 # Generer infitivsformen av verblemmaene, fjern dem som ikke gir analyse (de har V+ i output), lagres som analverbs
