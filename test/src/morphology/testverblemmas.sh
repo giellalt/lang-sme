@@ -5,7 +5,7 @@
 grep ";" $GTHOME/langs/sme/src/morphology/stems/verbs.lexc | grep -v "^\!" | egrep -v '(STRAYFORMS|ENDLEX|LexSub|\+Neg)' | tr ":+" " " | cut -d " " -f1 | tr -d "%" | sort -u > verbs
 
 # Generer infitivsformen av verblemmaene, fjern dem som ikke gir analyse (de har V+ i output), lagres som analverbs
-cat verbs | sed 's/$/+V+Inf/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep -v "V+" | grep -v "^$" | sort -u > analverbs 
+sed 's/$/+V+Inf/' verbs | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep -v "V+" | grep -v "^$" | sort -u > analverbs 
 
 # Sammenlikne lista med verblemmaer med den genererte lista med infinitivsformer. Formene som er i verblemmalista, men ikke i den genererte lista, kopieres til missingverbLemmas.txt. Formene generes med  +V+Inf for lettere debugging.
 comm -23 verbs analverbs | grep -v '^$' | sed 's/$/+V+Inf/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst > $GTHOME/langs/sme/test/data/missingverbLemmas.txt
