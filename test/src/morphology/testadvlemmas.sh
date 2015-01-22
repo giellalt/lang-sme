@@ -25,7 +25,7 @@ sort -u -o anadverbs anadverbs
 # Alle adverblemmaer samles i ei fil
 cat adverbs compadverbs supadverbs | sort -u > alladverbs
 
-# Sammenlikne lista med adverblemmaer med den genererte lista med adverber. Adverblemmaer som ikke er i den genererte lista, kopieres til missingadverbLemmas.txt. 
+# Sammenlikne lista med adverblemmaer med den genererte lista med adverber. Adverblemmaer som ikke er i den genererte lista, kopieres til missingadverbLemmas.txt. Formene generes med  +Adv for enklere debugging. 
 comm -23 alladverbs anadverbs | grep -v '^$' | sed 's/$/+Adv/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst > $GTHOME/langs/sme/test/data/missingadverbLemmas.txt
 
 # Fjerne lister
