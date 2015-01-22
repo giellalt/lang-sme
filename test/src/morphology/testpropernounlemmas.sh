@@ -13,11 +13,8 @@ cat props | sed 's/$/+N+Prop+Sg+Nom/' | $LOOKUP $GTHOME/langs/sme/src/generator-
 # Sorter, unifiser analprops
 sort -u -o analprops analprops 
 
-# Alle former som ikke lar seg generere lagres i missingProperLemmas.txt
-cat props | sed 's/$/+N+Prop+Sg+Nom/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep "N+" | cut -d "+" -f1 | sed 's/$/+N+Prop+Pl+Nom/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep "N+" |sed 's/+Pl/+Sg/' |$LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst > $GTHOME/langs/sme/test/data/missingProperLemmas.txt
-
-# Sammenlikne: Former som er i lemmalista med ikke i lista med genererte former, lagre i missingProperLemmas.txt
-comm -23 props analprops | sed 's/$/+N+Prop+Sg+Nom/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst >> $GTHOME/langs/sme/test/data/missingProperLemmas.txt
+# Sammenlikne: Former som er i lemmalista med ikke i lista med genererte former, lagre i missingProperLemmas.txt. Formene generes med  +N+Prop+Sg+Nom for enklere debugging.
+comm -23 props analprops | sed 's/$/+N+Prop+Sg+Nom/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst > $GTHOME/langs/sme/test/data/missingProperLemmas.txt
 
 
 # Hent ut lemmaer som krever +Attr for å genereres. Lagres som attrprops
@@ -29,8 +26,8 @@ cat attrprops | sed 's/$/+N+Prop+Attr/' | $LOOKUP $GTHOME/langs/sme/src/generato
 # Generer attrprops med +N+Prop+Attr, lagre formene i analattrprops
 cat attrprops | sed 's/$/+N+Prop+Attr/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 |  grep -v "N+" | grep -v "^$" | sort -u > analattrprops  
 
-# Sammenlikne: Former som er i lemmalista med ikke i lista med genererte former, lagre i missingProperLemmas.txt
-comm -23 attrprops analattrprops >> $GTHOME/langs/sme/test/data/missingProperLemmas.txt
+# Sammenlikne: Former som er i lemmalista med ikke i lista med genererte former, lagre i missingProperLemmas.txt. Formene generes med  +N+Prop+Attr for enklere debugging.
+comm -23 attrprops analattrprops | sed 's/$/+N+Prop+Attr/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst >> $GTHOME/langs/sme/test/data/missingProperLemmas.txt
 
 # Fjerne lister
 rm *props
