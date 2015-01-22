@@ -9,9 +9,9 @@
 
 # To run this test script only, do:
 #
-# make check TESTS=generate-noun-lemmas.sh
+# make check TESTS=generate-verb-lemmas.sh
 
-# This test script will test that all noun lemmas do generate as themselves.
+# This test script will test that all verb lemmas do generate as themselves.
 # Extend as needed, and copy to new files to adapt to other parts of speech.
 # The changes usually needed are:
 #
@@ -22,13 +22,13 @@
 ###### Variables: #######
 ### in ###
 source_file=${srcdir}/../../../src/morphology/stems/verbs.lexc
-lemmas=./verbs.txt
 generator_file=./../../../src/generator-gt-norm
 
 ### out ###
-generated_lemmas=./gen-verbs
+lemmas=./filtered-verbs
+generated_lemmas=./generated-verbs
 failed_lemmas=./fail-lemmas
-result_file=lemma_gen_diff
+result_file=${srcdir}/../../data/missing_verb_lemmas.txt
 
 
 # FAIL if source file does not exist:
@@ -62,7 +62,7 @@ EXTEDITOR=@SEE@
 # ikke har infinitivform), LexSub (som blir filtrert bort fra normgenerator).
 # Lemmaene lagres som $lemmas.
 
-grep ";" $GTHOME/langs/sme/src/morphology/stems/verbs.lexc | \
+grep ";" $source_file | \
   grep -v "^\!" | egrep -v '(STRAYFORMS|ENDLEX|LexSub|\+Neg)' | \
   tr ":+" " " | cut -d " " -f1 | tr -d "%" | sort -u > $lemmas
 
@@ -87,24 +87,26 @@ for f in $fsttype; do
 	if [ -f "$generator_file.$suffix" ]; then
 		let "transducer_found += 1"
 
-###### Test non-comopunds: #######
-		# generate nouns in Singular, extract the resulting generated lemma,
+###### Test generation: #######
+		# generate verbs, extract the resulting generated lemma,
 		# store it:
-		sed 's/$/+N+Sg+Nom/' $lemmas | $lookuptool $generator_file.$suffix \
-			| cut -f2 | fgrep -v "+N+Sg" | grep -v "^$" | sort -u \
-			> $generated_lemmas.$f.txt 
-		# Generate nouns, extract those that do not generate in singular,
-		# generate the rest in plural:
-		sed 's/$/+N+Sg+Nom/' $lemmas | $lookuptool $generator_file.$suffix \
-			| cut -f2 | grep "N+" | cut -d "+" -f1 | sed 's/$/+N+Pl+Nom/' \
-			| $lookuptool $generator_file.$suffix | cut -f2 \
-			| grep -v "^$" >> $generated_lemmas.$f.txt 
+
+# Generer infitivsformen av verblemmaene, fjern dem som ikke gir analyse (de har V+ i output),
+# lagres som fil som har blitt deklarert oppe.
+		sed 's/$/+V+Inf/' $lemmas | $lookuptool $generator_file.$suffix \
+            | cut -f2 | grep -v "V+" | grep -v "^$" | sort -u > $generated_lemmas.$f.txt 
 
 ###### Collect results: #######
 		# Sort and compare original input with resulting output - the diff is
 		# stored and opened in SEE:
-		sort -u -o $generated_lemmas.$f.txt $generated_lemmas.$f.txt 
-		comm -23 $lemmas $generated_lemmas.$f.txt > $result_file.$f.txt
+		
+# Sammenlikne lista med verblemmaer med den genererte lista med infinitivsformer.
+# Formene som er i verblemmalista, men ikke i den genererte lista, kopieres til
+# missingverbLemmas.txt. Formene generes med  +V+Inf for lettere debugging.
+
+		comm -23 $lemmas $generated_lemmas.$f.txt \
+		     | grep -v '^$' | sed 's/$/+V+Inf/' \
+		     | $lookuptool $generator_file.$suffix > $result_file.$f.txt
 
 		# Open the diff file in SubEthaEdit (if there is a diff):
 		if [ -s $result_file.$f.txt ]; then
@@ -122,6 +124,7 @@ done
 
 # When done, remove the generated data file:
 rm -f $lemmas
+rm -f $generated_lemmas
 
 # At least one of the Xerox or HFST tests failed:
 if [ "$Fail" = "1" ]; then

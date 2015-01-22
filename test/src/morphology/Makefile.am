@@ -14,7 +14,8 @@ TESTS+= \
 testadjlemmas.sh        \
 testnounlemmas.sh       \
 testpropernounlemmas.sh \
-testverblemmas.sh
+testverblemmas.sh \
+generate-verb-lemmas.sh
 
 endif # WANT_GENERATION
 
