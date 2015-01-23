@@ -11,13 +11,13 @@ grep ";" $GTHOME/langs/sme/src/morphology/stems/adverbs.lexc | grep -v "^\!" | e
 grep ";" $GTHOME/langs/sme/src/morphology/stems/adverbs.lexc | grep -v "^\!" | egrep -v '(LexSub| Px|^adv |^adv-plc)' | egrep '(-sup| SUP)' |sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" > supadverbs
 
 # Generer adverbformen av lemmaene i adverbs
-cat adverbs | sed 's/$/+Adv/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep -v "Adv+" | grep -v "^$" > anadverbs 
+sed 's/$/+Adv/' adverbs | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep -v "Adv+" | grep -v "^$" > anadverbs 
 
 # Generer adverbformen av lemmaene i compadverbs med +Adv+Comp (se bz 1926)
-cat compadverbs | sed 's/$/+Adv+Comp/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep -v "Adv+" | grep -v "^$" >> anadverbs 
+sed 's/$/+Adv+Comp/' compadverbs | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep -v "Adv+" | grep -v "^$" >> anadverbs 
 
 # Generer adverbformen av lemmaene i supadverbs med +Adv+Superl (se bz 1926)
-cat supadverbs | sed 's/$/+Adv+Superl/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep -v "Adv+" | grep -v "^$" >> anadverbs 
+sed 's/$/+Adv+Superl/' supadverbs | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep -v "Adv+" | grep -v "^$" >> anadverbs 
 
 # Sorter og unifiser
 sort -u -o anadverbs anadverbs
