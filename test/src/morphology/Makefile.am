@@ -15,7 +15,9 @@ testadjlemmas.sh        \
 testnounlemmas.sh       \
 testpropernounlemmas.sh \
 testverblemmas.sh \
-generate-verb-lemmas.sh
+generate-verb-lemmas.sh \
+generate-adverb-lemmas.sh 
+
 
 endif # WANT_GENERATION
 
