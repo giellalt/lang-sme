@@ -3,22 +3,22 @@
 
 
 # Hent ut lemmaer, bortsett fra LexSub (som blir filtrert bort fra normgenerator) . Lemmaene lagres som adpos
-grep ";" $GTHOME/langs/sme/src/morphology/stems/adpositions.lexc | egrep -v "^(\!|\+)" | egrep -v 'LexSub' |sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > adpos
+grep ";" src/morphology/stems/adpositions.lexc | egrep -v "^(\!|\+)" | egrep -v 'LexSub' |sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > adpos
 
 # Generer lemmaer med +Po
-cat adpos | sed 's/$/+Po/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep -v "+Po" | grep -v "^$" > anadpos 
+cat adpos | sed 's/$/+Po/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep -v "+Po" | grep -v "^$" > anadpos 
 
 # Generer med +Pr for lemmaer som ikke lar seg genereres +Po
-cat adpos | sed 's/$/+Po/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep '+Po' |sed 's/+Po/+Pr/' | $LOOKUP $GTHOME/langs/sme/src/generator-gt-norm.xfst | cut -f2 | grep -v "+Pr" | grep -v "^$" >> anadpos 
+cat adpos | sed 's/$/+Po/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep '+Po' |sed 's/+Po/+Pr/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep -v "+Pr" | grep -v "^$" >> anadpos 
 
 # Sorter og unifiser
 sort -u -o anadpos anadpos
 
 # Sammenlikne lista med adposlemmaer med den genererte lista
-comm -23 adpos anadpos > $GTHOME/langs/sme/test/data/missingadposLemmas.txt# 
+comm -23 adpos anadpos > test/data/missingadposLemmas.txt# 
 
 # Fjerne filer
 rm *adpos
 
 # Åpne fila i see
-see $GTHOME/langs/sme/test/data/missingadposLemmas.txt
+see test/data/missingadposLemmas.txt
