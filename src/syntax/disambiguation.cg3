@@ -917,9 +917,9 @@ LIST OKTII-V = ("boallu" Der/huvva) "goallostit" "beaškkehit" "bidjat" "čatnat
  # Danger: This list could be too long, in certain respects. 
  # TODO: Think of counter examples, i.e. sentences where we have these verbs, but where oktii is not an adverbial.
  
-LIST VGEN-V-TRIGGER = "beassat" "bidjat" "bijadit" "bivdit" "boahtit" "buktit" "čohkket" "čuovvut" "doalvut" "duolmmadit" "fidnet" "fitnat" "galgat" "girdit" "gálašit" "goastit" "guođuhit" "gurgalit" "gárgidit" "jávkkihit" "joatkit" "johtit" "jorgut" "loahpahit" "mannat" "mátkkoštit" "njahkalit"  "njoammut" "oasálastit" "rasttildit" "ruohttat" "sihkkelastit" "váccašit" "vájuldit" "vánddardit" "viehkat" "viehkalit" "viežžat" "vuodjit" "vuolgit" ;
+LIST VGEN-V-TRIGGER = "beassat" "bidjat" "bijadit" "bivdit" "boahtit" "buktit" "čohkket" "čuovvut" "doalvut" "duolmmadit" "fidnet" "fitnat" "galgat" "girdit" "gálašit" "gávdnat" "goastit" "guođuhit" "gurgalit" "gárgidit" "jávkkihit" "joatkit" "johtit" "jorgut" "loahpahit" "mannat" "mátkkoštit" "njahkalit"  "njoammut" "oasálastit" "rasttildit" "ruohttat" "sihkkelastit" "váccašit" "vájuldit" "vánddardit" "viehkat" "viehkalit" "viežžat" "vuodjit" "vuolgit" ;
 
-LIST VGEN-V = "bassit" "bárdnat" "bealkit" "biškut" "boahtit" "borrat" "civkit" "čállit" "čeargut" "čierrut" "čuoigat" "čuorvut" "doarggistit" "duorrat" "fáiput" "garrudit" "gállit" "geargat" "geavzut" "gievvut" "gilljut" "girdit" "gullat" "guoddit" "hoigat" "holvut" "huikit" "hupmat" "jápmit" "johtit" "jorgut" "juoigat" "láddjet" "lávlut" "luoibmat" "murdit" "njáhkat" "njoammut" "njurgut" "oaidnit" "orrut" "reaškit" "riidet" "ruohttat" "sáđđat" "sihkkelastit" "skeaikit" "skierbmut" "soabbut" "speažžut" "suoibut" "šlivgut" "šloahtat" "šnjirgut" "vázzit" "viehkat" "vuodjat" "vuodjit" "vuohčut" "vuoitit" "vuoššat" ;
+LIST VGEN-V = "bassit" "bárdnat" "bealkit" "biškut" "boahtit" "borrat" "civkit" "čárvut" "čállit" "čeargut" "čierrut" "čuoigat" "čuorvut" "doarggistit" "duorrat" "fáiput" "garrudit" "gállit" "ohcat" "geargat" "geavzut" "gievvut" "gilljut" "girdit" "gullat" "guoddit" "heahpanaddat" "hoigat" "holvut" "huikit" "hupmat" "jápmit" "johtit" "jorgut" "juoigat" "láddjet" "lávlut" "luoibmat" "murdit" "njáhkat" "njoammut" "njurgut" "oađđit" "oahkut" "oaidnit" "orrut" "reaškit" "riidet" "ruohttat" "ruossut" "sáđđat" "sihkkelastit" "skeaikit" "skierbmut" "soabbut" "speažžut" "suhkat" "suoibut" "šlivgut" "šloahtat" "šnjirgut" "vázzit" "viehkat" "vuodjat" "vuodjit" "vuohčut" "vuoitit" "vuoššat" ;
 
  
 LIST SOURCE-V = "gáibidit" ;
@@ -2206,6 +2206,7 @@ REMOVE SgGenCmp (0 SgNomCmp) ;
 	
 #!! !Particular verbs
 
+
 LIST NOT-REAL-V-LEMMAS = "álbmotregistreret" ;
 
 #!! * __notRealV__ removes verb readings from verbs like álbmotregistreret
@@ -2437,8 +2438,11 @@ REMOVE:NotConNegII (ConNegII) IF (NEGATE *-1 (Neg Imprt) BARRIER SV-BOUNDARY);
 REMOVE:VerbIll VFIN (0 (N Ill) LINK -1 (Dem Ill)) ;
 	#$ Huksenteknihkalaš konstrukšuvnnat čatnasit njuolga elektrihkalaš rusttegiidda ja daidda doaimmaide.
 
+LIST UVVAT = (".*uvvat"r) ;
+
+
 #!! * __errsub_uvvo__ removes -uvvat Err/Sub Sg3 if Der/PassL, e.g. čujuhuvvo
-REMOVE:errsub_uvvo (Sg3 Err/Sub) IF (0 Der/PassL) ; 
+REMOVE:errsub_uvvo UVVAT + (Err/Sub) IF (0 Der/PassL) ; 
 	#$ Das čujuhuvvo lága doaibmaviidodaga máinnašupmái bajábealde.
 
 
@@ -6842,7 +6846,10 @@ REMOVE:TypoNotVGen VGen IF (0 ("mielddistit"))(1 ("buktit"));
 # 1. Looking for VGen.
 
 #!! * __VGen__ selects VGen after VGEN-V-TRIGGER-verb
-SELECT:VGen1 VGen IF (*-1 VGEN-V-TRIGGER BARRIER Neg OR SV-BOUNDARY LINK 0 MAIN-V)(0 VGEN-V LINK NOT 0 Der/Pass OR Loc OR Inf);	
+SELECT:VGen1 VGen IF (*0 VGEN-V-TRIGGER + MAIN-V BARRIER Neg OR SV-BOUNDARY)(0 VGEN-V LINK NOT 0 Der/Pass OR Loc OR Inf)(NEGATE 1 CC LINK 1 VGEN-V-TRIGGER) ;	
+	#$ Ii lean ávki geahččalit gávdnat čoavdaga oađi dahje oza.
+	#$ Suga láviime fitnat gitta Biessavvonis.
+
 
 #!! * __Gen2__	selects VGen after after gaskan and lahka
 SELECT:VGen2 VGen IF (-1 ("gaskan") OR ("lahka"))((NEGATE 0 Der/Pass OR Loc OR Inf OR (N Gen) - ("bora")) OR ((0 ("borrat"))));
@@ -6856,6 +6863,7 @@ SELECT:VGen3 VGen IF (*-1 COPULAS BARRIER NOT-ADV-PCLE)(0 VGEN-V LINK NOT 0 Der/
 SELECT:VGen4 VGen IF (-2 COPULAS)(-1 Indef OR Adv)(0 VGEN-V LINK NOT 0 Der/Pass OR Loc OR Inf);  	
 	## Dát ađa lea uhccán vuošša. 
 	
+
 
 # 2. Done that, now we remove whatever VGen was left.
 
@@ -7741,8 +7749,13 @@ MAP:<ADVLVAbess (@<ADVL) TARGET VAbess - Attr (*-1 VFIN BARRIER S-BOUNDARY)(NOT 
 MAP:ADVL>VAbess (@ADVL>) TARGET VAbess - Attr (*1 VFIN BARRIER S-BOUNDARY) ;
 
 #!! * __<ADVLVGen__ VGen ADVL
-MAP:<ADVLVGen (@<ADVL) TARGET VGen (*-1 VFIN BARRIER S-BOUNDARY) ;
+MAP:<ADVLVGen (@<ADVL) TARGET VGen (*-1 VFIN OR Inf BARRIER S-BOUNDARY) ;
 	#$ Máhtte manai čuoigga skuvlii.
+
+#!! * __ADVL>VGen__ VGen ADVL
+MAP:ADVL>VGen (@ADVL>) TARGET VGen (*1 VFIN OR Inf BARRIER S-BOUNDARY) ;
+	#$ Suga láviime fitnat gitta Biessavvonis.
+	
 MAP:ADVL>VGen (@ADVL>) TARGET VGen (*1 VFIN BARRIER S-BOUNDARY) ;
 
 #!! * __<ADVLGer__ Gerundium ADVL
