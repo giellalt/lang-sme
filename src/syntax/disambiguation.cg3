@@ -2093,20 +2093,10 @@ SUBSTITUTE:muitalit (V) (<vdic> V) TARGET MUITALIT (0 REAL-V LINK -1 COMMA LINK 
 	#$ – Ii leat duohta , lohká direktora Smuk.
 	#$ Mii fertet maiddái geahčadit makkár lassi guoimmuhemiid galgat fállat vai bohtet vel eanet olbmot boahtte jagi, loahpaha duhtavaš beaivválaš jođiheaddji Eriksen.
 
-#!! !Some propernouns have two parts and the first is not a genitive. We still have problems with abbr when these propernouns are inflected or are a part of a cmp. The copy rule adds Attr reading to names which not get it in the fst (Soria). The select rule selects Attr when the next word is e.g. Moria.
 
-LIST PROP-FIRST = "Harry" "Soria" "Stuorra" ;
-LIST PROP-SECOND = ("Moria.*"r) ("Potter.*"r) "Sarvvis" ;
-
-#!! * __Attr__
-COPY:Attr Attr EXCEPT (Nom Gen Acc Sg) TARGET PROP-FIRST (NOT 0 Attr)(1 PROP-SECOND) ;
-
-#!! * __SoriaMoria__
-SELECT:SoriaMoria Attr (0 PROP-FIRST LINK 1 PROP-SECOND) ;
-	#$ Soria Moria-julggaštusas definerejuvvojedje davviguovllut Norgga deaŧaleamos nannensuorgin boahttevaš jagiid.
 
 #!! *Substitute __PlcSur__ (Sem/Plc) (Sem/Sur) 
-SUBSTITUTE:PlcSur0 (Prop Sem/Plc) (Prop Sem/Sur) TARGET (Prop Sem/Plc Ill) IF (-1 FIRSTNAME + Attr)(*0 ("riŋget") OR ("čuojahit") BARRIER REAL-V OR S-BOUNDARY OR CC) ;
+SUBSTITUTE:PlcSur0 (Prop Sem/Plc) (Prop Sem/Sur) TARGET (Prop Sem/Plc Ill) IF (-1 FIRSTNAME)(*0 ("riŋget") OR ("čuojahit") BARRIER REAL-V OR S-BOUNDARY OR CC) ;
 	#$ Sárá riŋgii Trond Trosterudii.
 	#% Son riŋgii Kárášjohkii. 
 
@@ -2117,7 +2107,7 @@ SUBSTITUTE:PlcSur1 (Prop Sem/Plc) (Prop Sem/Sur) TARGET (Prop Sem/Plc) IF (*-1 F
   	#% 1980:s manai Anny Hámmárfestii vázzit buohccedivššárskuvlla.
 
 
-SUBSTITUTE:PlcSur2 (Prop Sem/Plc) (Prop Sem/Sur) TARGET (Prop Sem/Plc Com)IF (NEGATE 0 SAPMI OR SUOPMA)   ;
+SUBSTITUTE:PlcSur2 (Prop Sem/Plc) (Prop Sem/Sur) TARGET (Prop Sem/Plc Com) IF (NEGATE 0 SAPMI OR SUOPMA)   ;
   	#$ Mun bohten Trosterudain.
 
 SUBSTITUTE:PlcSur3 (Prop Sem/Plc) (Prop Sem/Sur) TARGET (Prop Sem/Plc Loc) IF (*0 ("jearrat") BARRIER (Prop Loc) OR REAL-V OR S-BOUNDARY OR CC) ;
@@ -2133,8 +2123,37 @@ SUBSTITUTE:PlcSur5 (Prop Sem/Plc) (Prop Sem/Sur) TARGET (Prop Sem/Plc Gen) IF (1
 	#$ Biret vuolgá Trosterud geahčai.
 	#$ Biret les Trosterud geahčen.
 
+#!! !Some propernouns have two parts and the first is not a genitive. We still have problems with abbr when these propernouns are inflected or are a part of a cmp. The copy rule adds Attr reading to names which not get it in the fst (Soria). The select rule selects Attr when the next word is e.g. Moria.
+
+
+LIST PROP-FIRST = "Harry" "Soria" "Stuorra"  ;
+LIST PROP-SECOND = ("Moria.*"r) ("Potter.*"r) "Sarvvis"  ;
+
+
+#!! * __SoriaAttr__  Soria Attr Moria, Harry Attr Potter-girji
+COPY:SoriaAttr Attr EXCEPT (Nom Gen Acc Sg) TARGET PROP-FIRST (NOT 0 Attr)(*1 PROP-SECOND BARRIER REAL-WORD-NOT-ABBR) ;
+
+#!! * __SoriaMoria__
+SELECT:SoriaMoria Attr (0 PROP-FIRST LINK 1 PROP-SECOND) ;
+	#$ Soria Moria-julggaštusas definerejuvvojedje davviguovllut Norgga deaŧaleamos nannensuorgin boahttevaš jagiid.
+
+#!! ! Rules for giving Attr to names, e.g. Ole Attr Kåven.
+
+
+LIST PROP-ATTR = Sem/Mal Sem/Sur Sem/Fem ;
+LIST PROP-SUR = Sem/Sur Sem/Mal Sem/Fem ;
+
+#!! * __PropAttr__ 
+SUBSTITUTE:PropAttr (Sg Nom) (Attr) PROP-ATTR + Nom (NOT 0 Attr LINK *1 PROP-SUR BARRIER REAL-WORD-NOT-ABBR OR COMMA)(NEGATE 0 Sem/Sur LINK -1 FIRSTNAME LINK 2 FIRSTNAME LINK 1 Sem/Sur) ;
+SUBSTITUTE:Attr (Sg Nom) (Attr) PROP-ATTR + Nom (NEGATE -1 Prop)(1 ("ja") OR ("dahje") OR ("dehe") LINK 1 (Prop Attr) LINK *1 (N Prop Sem/Sur)) ;
+SUBSTITUTE:Attr (Prop Sem/Mal Sg Nom) (Prop Sem/Mal Attr) ("Hearrá") (1 ("Ipmil")) ;
+	#$ Dá leaba Brita ja Ove Kåven.
+
+#!! Remove unwanted analyses
+REMOVE:divAttr (Prop Allegro Attr) OR (Prop Attr Gen) OR (Prop Attr Acc) OR (Prop Pl Attr) ;
 
 SECTION
+
 
 
 #!! !!Lexicalised derivations
