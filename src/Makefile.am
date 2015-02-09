@@ -389,7 +389,7 @@ analyser-oahpa-gt-norm.xfst: analyser-gt-norm.tmp.xfst \
 					filters/remove-allegro-tags.xfst
 	$(AM_V_XFST)$(PRINTF) "read regex                         \
 				@\"filters/remove-allegro-tags.xfst\" \
-			.o. @\"$<\".i                                     \
+			.o. @\"$<\"                                     \
 			;\n\
 		 save stack $@\n\
 		 quit\n" | $(XFST) $(VERBOSITY)
@@ -400,7 +400,7 @@ generator-gt-%.hfst: generator-gt-%.tmp.hfst \
 					 filters/make-optional-allegro-tags.hfst \
 					 filters/make-optional-lang_hom-tags.hfst
 	$(AM_V_RGX2FST)$(PRINTF) "\
-				@\"filters/make-optional-allegro-tags.hfst\" \
+				@\"filters/make-optional-allegro-tags.hfst\"  \
 			.o. @\"filters/make-optional-lang_hom-tags.hfst\" \
 			.o. @\"$<\"                                       \
 			;" \
@@ -412,9 +412,9 @@ generator-gt-%.xfst: generator-gt-%.tmp.xfst \
 					 filters/make-optional-allegro-tags.xfst \
 					 filters/make-optional-lang_hom-tags.xfst
 	$(AM_V_XFST)$(PRINTF) "read regex                         \
-				@\"filters/make-optional-allegro-tags.xfst\" \
+				@\"filters/make-optional-allegro-tags.xfst\"  \
 			.o. @\"filters/make-optional-lang_hom-tags.xfst\" \
-			.o. @\"$<\".i                                     \
+			.o. @\"$<\"                                       \
 			;\n\
 		 invert net\n\
 		 save stack $@\n\
