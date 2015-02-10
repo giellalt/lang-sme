@@ -420,6 +420,28 @@ generator-gt-%.xfst: generator-gt-%.tmp.xfst \
 		 save stack $@\n\
 		 quit\n" | $(XFST) $(VERBOSITY)
 
+# We need to add processing of language-specific tags for the Oahpa generators:
+# HFST:
+generator-oahpa-gt-norm.hfst: generator-oahpa-gt-norm.tmp.hfst \
+					 filters/make-optional-allegro-tags.hfst
+	$(AM_V_RGX2FST)$(PRINTF) "\
+				@\"filters/make-optional-allegro-tags.hfst\"  \
+			.o. @\"$<\"                                       \
+			;" \
+		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --xerox-composition=ON \
+		> $@
+
+# Xerox:
+generator-oahpa-gt-norm.xfst: generator-oahpa-gt-norm.tmp.xfst \
+					 filters/make-optional-allegro-tags.xfst
+	$(AM_V_XFST)$(PRINTF) "read regex                         \
+				@\"filters/make-optional-allegro-tags.xfst\"  \
+			.o. @\"$<\"                                       \
+			;\n\
+		 invert net\n\
+		 save stack $@\n\
+		 quit\n" | $(XFST) $(VERBOSITY)
+
 ##################################################################
 #### END: Add local processing instructions ABOVE this line ######
 ##################################################################
