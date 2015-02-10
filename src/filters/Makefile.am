@@ -20,14 +20,15 @@
 # List any local filter regex files here:
 GIELLA_FILTER_LOCAL_REGEX_SRCS=\
 					downcase_UCletters.regex \
-					remove-rel_focus-strings.regex \
-				    remove-illegal-derivation-strings.regex \
 					make-optional-allegro-tags.regex  \
+					make-optional-coll-tags.regex     \
 					make-optional-lang_hom-tags.regex \
 					remove-allegro-tags.regex         \
 					remove-lang_hom-tags.regex        \
 					remove-mwe-strings.regex          \
 					remove-mwe-tags.regex             \
+					remove-rel_focus-strings.regex    \
+				    remove-illegal-derivation-strings.regex \
 					reorder-subpos-tags.$(GTLANG).regex
 
 # List any local filter xfscript files here:

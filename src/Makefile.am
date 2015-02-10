@@ -394,9 +394,11 @@ analyser-oahpa-gt-norm.xfst: analyser-gt-norm.tmp.xfst \
 # HFST:
 generator-gt-%.hfst: generator-gt-%.tmp.hfst \
 					 filters/make-optional-allegro-tags.hfst \
+					 filters/make-optional-coll-tags.hfst    \
 					 filters/make-optional-lang_hom-tags.hfst
 	$(AM_V_RGX2FST)$(PRINTF) "\
 				@\"filters/make-optional-allegro-tags.hfst\"  \
+			.o. @\"filters/make-optional-coll-tags.hfst\"     \
 			.o. @\"filters/make-optional-lang_hom-tags.hfst\" \
 			.o. @\"$<\"                                       \
 			;" \
@@ -406,9 +408,11 @@ generator-gt-%.hfst: generator-gt-%.tmp.hfst \
 # Xerox:
 generator-gt-%.xfst: generator-gt-%.tmp.xfst \
 					 filters/make-optional-allegro-tags.xfst \
+					 filters/make-optional-coll-tags.xfst    \
 					 filters/make-optional-lang_hom-tags.xfst
 	$(AM_V_XFST)$(PRINTF) "read regex                         \
 				@\"filters/make-optional-allegro-tags.xfst\"  \
+			.o. @\"filters/make-optional-coll-tags.xfst\"     \
 			.o. @\"filters/make-optional-lang_hom-tags.xfst\" \
 			.o. @\"$<\"                                       \
 			;\n\
