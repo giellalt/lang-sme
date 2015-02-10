@@ -51,13 +51,13 @@ SCRIPTDIR=$(GTCORE)/scripts
 abbr: abbr.txt
 abbr.txt: \
 		$(top_srcdir)/src/morphology/stems/abbreviations.lexc \
-		$(top_srcdir)/data/paradigm.abbr.txt        \
-		$(top_srcdir)/data/korpustags.txt      \
+		$(top_srcdir)/tools/data/paradigm.abbr.txt        \
+		$(top_srcdir)/tools/data/korpustags.txt      \
 		$(STEMSRCS) $(AFFXSRCS) $(GENRSRCS) $(OTHRSRCS)       \
 		../../src/$(GENERATOR)
 	$(AM_V_GEN)perl -I $(SCRIPTDIR) $(SCRIPTDIR)/extract-abbr.pl  \
-		--paradigm=$(top_srcdir)/data/paradigm.abbr.txt \
-		--tags=$(top_srcdir)/test/data/korpustags.txt   \
+		--paradigm=$(top_srcdir)/tools/data/paradigm.abbr.txt \
+		--tags=$(top_srcdir)/tools/data/korpustags.txt   \
 		--fst=../../src/$(GENERATOR) \
 		--output=$@.tmp \
 		--abbr_lex=$< \
