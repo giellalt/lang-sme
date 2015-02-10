@@ -35,7 +35,7 @@ GENERATOR=false
 endif # CAN_HFST
 endif # CAN_XFST
 
-STEMSRCS:=$(wildcard $(top_srcdir)/src/morphology/stems/*.lexc)
+STEMSRCS:=$(filter-out %propernouns.lexc,$(wildcard $(top_srcdir)/src/morphology/stems/*.lexc))
 GENRSRCS:=$(wildcard $(top_builddir)/src/morphology/generated_files/smi-$(GTLANG)-*.lexc)
 OTHRSRCS:=$(filter-out %lexicon.lexc,$(wildcard $(top_srcdir)/src/morphology/*.lexc))
 
