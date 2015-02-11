@@ -34,8 +34,12 @@ endif # WANT_APERTIUM
 # Add the build code of local additions here:
 remove-%-strings.nob.regex: $(top_builddir)/src/filters/%-tags.txt \
 						remove-%-strings-modifications.nob.regex
-	$(AM_V_GEN)$(GTCORE)/scripts/taglist2remove_$*_strings_regex.sh \
-		$@ $^
+	$(AM_V_GEN)if test -e $(GTCORE)/scripts/taglist2remove_$*_strings_regex.sh;\
+		then \
+			$(GTCORE)/scripts/taglist2remove_$*_strings_regex.sh $@ $* $^ ; \
+		else \
+			$(GTCORE)/scripts/taglist2remove_strings_regex.sh $@ $* $^ ; \
+		fi
 
 ##################################################################
 #### END: Add local processing instructions ABOVE this line ######
