@@ -5159,10 +5159,10 @@ SELECT:r1002 N IF (-2 BOS)(-1C Gen)(1 EOS);
 #REMOVE:r1003 N IF (-1 (N Gen) OR (Pron Pers Gen))(NEGATE -1 Nom)(0 Po)(NEGATE 0 NOUN-PO); 
 	## Daid ovddas gal in máksán maidege.
 
-SELECT:r1004 N IF (*-1 (Dem Acc) BARRIER NPNH LINK *-1C VFIN BARRIER NOT-ADV-PCLE)(0 Acc)(0 VFIN)(NEGATE 0 PrfPrc LINK *-1 ("leat"))(NEGATE 0 ConNeg LINK *-1 ("ii") BARRIER ConNeg);
+SELECT:r1004 N IF (*-1 (Dem Acc) BARRIER NPNH LINK *-1C VFIN BARRIER NOT-ADV-PCLE)(0 Acc)(0 VFIN)(NEGATE 0 PrfPrc LINK *-1 ("leat"))(NEGATE 0 ConNeg LINK *-1 ("ii") BARRIER ConNeg)(NEGATE -1 CC LINK -1 (Dem Acc));
 	## Áhčči dagai dan fatnasa nu oanehačča.
 	#$ Ehpet go daid oahpa skuvllas?
-	#GRAM: (NEGATE 0 ConNeg LINK *-1 ("ii") BARRIER ConNeg)
+	#GRAM: (NEGATE 0 ConNeg LINK *-1 ("ii") BARRIER ConNeg)(NEGATE -1 CC LINK -1 (Dem Acc))
 
 REMOVE:r1005 PrsPrc IF (-1 A)(NEGATE -1 Adv)(NEGATE 1 Ess); 
 	## Dainnna ii leat vissis mearri galljodagas.
@@ -8979,11 +8979,12 @@ REMOVE:NotConNegIfNotNeg ConNeg IF (NEGATE *-1 (Neg) BARRIER NOT-COMMA)(NEGATE *
 	# ----------
 
 REMOVE:NotImprtGo Imprt IF (1 ("go" Pcle));
-REMOVE:NotImprtInd Imprt IF (*-1 (Neg Ind) BARRIER CLB OR V-IND-FIN);
+REMOVE:NotImprtInd Imprt IF (*-1 (Neg Ind) BARRIER CLB OR V-IND-FIN)(NOT 0 (Imprt ConNeg));
 REMOVE:NotImprtConNeg Imprt IF (*-1 ConNeg BARRIER COMMA OR SV-BOUNDARY);
 	## Go bohciida soahpameahttunvuohta das ahte galget go journála... 
 	## Mánát eai gillen dálu čorget.
 	## Na muhto don it leat dasa nama čállán!
+	#GRAMCHK: (NOT 0 (Imprt ConNeg))
 
 REMOVE:NotImprtA Imprt IF (-1 A LINK NOT 0 Ess);
 REMOVE:NotImprtN Imprt IF (-1 N OR Po LINK NOT 0 Acc);
@@ -8993,7 +8994,7 @@ REMOVE:NotImprtN Imprt IF (-1 N OR Po LINK NOT 0 Acc);
 	#GRAM: - Acc
  # This will work fine when headings no longer interfere.
 
-REMOVE:NotImprtVFIN Imprt IF (*1C VFIN BARRIER NOT-ADV-PCLE OR CLB);
+REMOVE:NotImprtVFIN Imprt IF (*1C VFIN BARRIER NOT-ADV-PCLE OR CLB)(NEGATE 0 Sg2 LINK 1 Sg2);
 	## Lágas ii duššaduvvo oktage bustávaš dahje čuoggáš, ovdal go...
 
 REMOVE:NotImprtSlash Imprt IF (*-1 ("\(") BARRIER ("\)"))(0 N);
@@ -9332,18 +9333,21 @@ REMOVE:r1883 Loc IF (*-1 ("leat") OR ("fitnat") OR ("orrut") or ("gávnnahallat"
 REMOVE:r2869 Imprt IF (-1 BOS)(0 Adv)(*1 ("?") BARRIER S-BOUNDARY2); 
 	## Gosa don dál?
 
-REMOVE:r2870 Imprt IF (*-1 S-BOUNDARY2 BARRIER PUNCT)(NEGATE -1 CLB OR ("de") OR ("nu"))(NEGATE -1 CC LINK -1 COMMA)(NEGATE -1 CC LINK *-1 Imprt BARRIER SV-BOUNDARY)(NEGATE 0 N LINK NEGATE 0* VFIN);
+REMOVE:r2870 Imprt IF (*-1 S-BOUNDARY2 BARRIER PUNCT)(NEGATE -1 CLB OR ("de") OR ("nu"))(NEGATE -1 CC LINK -1 COMMA)(NEGATE -1 CC LINK *-1 Imprt BARRIER SV-BOUNDARY)(NEGATE 0 N LINK NEGATE 0* VFIN BARRIER S-BOUNDARY OR Rel OR CC OR COMMA);
 	## Jus divššohas roasmmohuvvá dahje oažžu duođalaš váttisvuođaid,...
 	#$ - Jeara nieidda-guovttos.
-	#GRAM (NEGATE 0 (N Sg Nom) LINK NEGATE 0* VFIN)
+	#$ » 11 Ja Hearrá celkkii : « Mana Judasa vissui Njulgesgeainnus ja 	jeara 	Sávlosa gii lea Tarsosis eret .
+	#GRAM (NEGATE 0 (N Sg Nom) LINK NEGATE 0* VFIN BARRIER S-BOUNDARY OR Rel OR CC OR COMMA)
+	
 
  # Very unlikely that an imperative should show up in an embedded clause, 
  # except in quotations (...de son celkkii: Manni eret!). But it can be 
  # preceded by an embedded clause, for example a relative clause, in which 
  # case we normally find a comma in front of the imperative.
 
-REMOVE:r2871 Imprt IF (-1 Adv)(NEGATE -1 ("nu") OR ("de"));
+REMOVE:r2871 Imprt IF (-1 Adv)(NEGATE -1 ("nu") OR ("de") OR ("beare"));
 	## Dalle skáhppo buođđobiergasiid.
+	#GRAM: OR ("beare")
 
 REMOVE:r2872 Imprt IF (-1 Imprt)(NEGATE 0 ConNeg); 
 	## Geahča lagat Hálddašanjoavkku čielggadeami.
