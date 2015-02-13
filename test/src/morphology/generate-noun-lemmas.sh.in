@@ -100,7 +100,7 @@ for f in $fsttype; do
 # Generer lemmaer i nouns med +N+Sg+Nom, lagre i generated-nouns
 sed 's/$/+N+Sg+Nom/' $lemmas | $lookuptool $generator_file.$suffix | \
   cut -f2 | grep -v "N+" | grep -v "^$" | sort -u > $generated_lemmas.$f.txt		
-		
+
 # Generer plurale lemmaer i filtered-nouns med +N+Pl+Nom (som ikke lar seg generer med +N+Sg+Nom).
 # Lagre dem i generated-nouns
 sed 's/$/+N+Sg+Nom/' $lemmas | $lookuptool $generator_file.$suffix | \
@@ -111,7 +111,7 @@ sed 's/$/+N+Sg+Nom/' $lemmas | $lookuptool $generator_file.$suffix | \
 # Hent ut lemmaer fra nouns.lexc som krever sammensetning (Rreal | R | Rnoun),
 # legg til +N+Cmp#viessu+N+Sg+Nom og generer. Lagre i generated-nouns.
 
-grep ";" $lemmas | \
+grep ";" $source_file | \
   egrep -v "^(\!|\@|<)" | egrep -v '(ShCmp|LexSub)' |\
   egrep "( R | Rreal | Rnoun)" | tr ":+" " " | cut -d " " -f1 |\
   sed 's/$/+N+Cmp#viessu+N+Sg+Nom/' | $lookuptool $generator_file.$suffix |\
@@ -120,7 +120,8 @@ grep ";" $lemmas | \
 # Hent ut lemmaer fra nouns.lexc som krever sammensetning med bindestrek (RHyph),
 # legg til +N+Cmp-#viessu+N+Sg+Nom og generer. Lagre i generated-nouns.
 
-grep ";" $lemmas |\
+
+grep ";" $source_file |\
   egrep -v "^(\!|\@|<)" | grep -v '(ShCmp|LexSub)' | grep "RHyph" |\
   tr ":+" " " | cut -d " " -f1 | sed 's/$/+N+Cmp-#viessu+N+Sg+Nom/' |\
   $lookuptool $generator_file.$suffix |\
