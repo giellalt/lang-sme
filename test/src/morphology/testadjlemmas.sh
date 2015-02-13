@@ -42,7 +42,7 @@ sort -u -o analadjs analadjs
 comm -23 adjs analadjs | grep -v '^$' | sed 's/$/+A+Sg+Nom/' | $LOOKUP src/generator-gt-norm.xfst > test/data/missingadjLemmas.txt
 
 # Fjerne lister
-rm *adjs
+#rm *adjs
 
 # Åpne fila i see
-see test/data/missingadjLemmas.txt
+#see test/data/missingadjLemmas.txt
