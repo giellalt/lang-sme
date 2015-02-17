@@ -31,6 +31,7 @@ lemmas_pl=./filtered-pl_adjs.tmp
 lemmas_attr=./filtered-attr_adjs.tmp
 lemmas_super=./filtered-super_adjs.tmp
 lemmas_comp=./filtered-comp_adjs.tmp
+all_adjs=./all_adjs.tmp
 generated_lemmas=./generated-adjs.tmp
 result_file=${srcdir}/../../data/missing_adj_lemmas
 
@@ -142,13 +143,20 @@ for f in $fsttype; do
 ###### Collect results: #######
 		# Sort and compare original input with resulting output - the diff is
 		# stored and opened in SEE:
+
+# Samle alle lemmaer i en fil, sorter, unifiser
+cat $lemmas $lemmas_pl $lemmas_attr $lemmas_super $lemmas_comp > $all_adjs
+sort -u -o $all_adjs $all_adjs 
+
+# Alle genererte former sorteres og unifiseres.
+sort -u -o $generated_lemmas.$f.txt $generated_lemmas.$f.txt 
 		
 # Sammenlikne lista med verblemmaer med den genererte lista med infinitivsformer.
 # Formene som er i verblemmalista, men ikke i den genererte lista, kopieres til
 # missingverbLemmas.txt. Formene generes med  +V+Inf for lettere debugging.
 
 		comm -23 $lemmas $generated_lemmas.$f.txt \
-		     | grep -v '^$' | sed 's/$/+V+Inf/' \
+		     | grep -v '^$' | sed 's/$/+A+Sg+Nom/' \
 		     | $lookuptool $generator_file.$suffix > $result_file.$f.txt
 
 		# Open the diff file in SubEthaEdit (if there is a diff):
@@ -166,7 +174,7 @@ for f in $fsttype; do
 done
 
 # When done, remove the generated data file:
-rm -f $lemmas $generated_lemmas.$f.txt
+rm -f $lemmas $lemmas_pl $lemmas_attr $lemmas_super $lemmas_comp $all_adjs $generated_lemmas.$f.txt
 
 # At least one of the Xerox or HFST tests failed:
 if [ "$Fail" = "1" ]; then
