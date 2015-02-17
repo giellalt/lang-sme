@@ -22,12 +22,22 @@
 
 ###### Variables: #######
 ### in ###
-source_file=${srcdir}/../../../src/morphology/stems/verbs.lexc
+source_file=${srcdir}/../../../src/morphology/stems/adjectives.lexc
 generator_file=./../../../src/generator-gt-norm
 
 ### out ###
-lemmas=./filtered-verbs
-generated_lemmas=./generated-verbs
+lemmas=./filtered-adjs.tmp
+lemmas_pl=./filtered-pl_adjs.tmp
+lemmas_attr=./filtered-attr_adjs.tmp
+lemmas_super=./filtered-super_adjs.tmp
+lemmas_comp=./filtered-comp_adjs.tmp
+
+generated_lemmas=./generated-adjs.tmp
+generated_lemmas_pl=./generated-pl_adjs.tmp
+generated_lemmas_attr=./generated-attr_adjs.tmp
+generated_lemmas_super=./generated-super_adjs.tmp
+generated_lemmas_comp=./generated-comp_adjs.tmp
+
 result_file=${srcdir}/../../data/missing_verb_lemmas
 
 
@@ -56,14 +66,36 @@ EXTEDITOR=@SEE@
 
 ##### Extract lemmas #####
 ### don't use extract-lemmas.sh ###
-# Hent ut lemmaer, bortsett fra utkommmenterte (^\!),  dem med hardkoding
-# for spesielle former (STRAYFORMS|ENDLEX), eller negasjonsverbet (+Neg, som
-# ikke har infinitivform), LexSub (som blir filtrert bort fra normgenerator).
-# Lemmaene lagres som $lemmas.
 
-grep ";" $source_file | \
-  grep -v "^\!" | egrep -v '(STRAYFORMS|ENDLEX|LexSub|\+Neg)' | \
-  tr ":+" " " | cut -d " " -f1 | tr -d "%" | sort -u > $lemmas
+# Hent ut lemmaer, bortsett fra utkommmenterte (^\!):
+# 1. dem med hardkoding for spesielle former (K), LexSub (som blir filtrert bort fra normgenerator), adjektiver som bare har attributtform (ATTR|Attr| At ) , adjektiver som krever tagger for komparering (BBO |MUS |BUOREMUSS|OVDDIT |STUORIBUS|BUStem) og lemmaer som bare opptrer i sammensetninger (FINJU|Rreal | R) Lemmaene lagres som $lemmas
+grep ";" $source_file | grep -v "^\!" |\
+   egrep -v "(LEXICON|ATTR|FINJU|Der|Attr| At |BBO |MUS |BUOREMUSS|OVDDIT |STUORIBUS|BUStem | K | Rreal | R |LexSub)" |\
+   sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" |\
+   sort -u > $lemmas
+
+# 2. for plurale lemmaer (_PL). Lemmaene lagres som $lemmas_pl
+grep ";" $source_file | grep -v "^\!" |\
+  grep -v "+Gen" | grep -v LexSub | grep "_PL " | tr ":+" " " |\
+  cut -d " " -f1 | tr -d "%" | sort -u > $lemmas_pl
+
+# 3. som bare har attributtform. Lagres i $lemmas_attr
+grep ";" $source_file | grep -v "^\!" |\
+  grep -v "+Gen" | grep -v LexSub | egrep "(ATTR|Attr)" |\
+  sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 |\
+  tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > $lemmas_attr
+
+# 4. som krever superlativtagg. Lagres i $lemmas_super
+grep ";" $source_file | grep -v "^\!" |\
+  grep "BUOREMUSS" | grep -v LexSub | tr ":+" " " |\
+  cut -d " " -f1 | tr -d "%" | sort -u > $lemmas_super
+
+# 5. som krever komparativtagg. Lagres i $lemmas_comp
+grep ";" $source_file | grep -v "^\!" |\
+  egrep "(OVDDIT|BBO |BU/MUS|EABBO/EAMOS|STUORIBUS|BUStem)" |\
+  grep -v LexSub | tr ":+" " " | cut -d " " -f1 | tr -d "%" |\
+  sort -u > $lemmas_comp
+
 
 ###### Start testing: #######
 transducer_found=0
@@ -87,13 +119,13 @@ for f in $fsttype; do
 		let "transducer_found += 1"
 
 ###### Test generation: #######
-		# generate verbs, extract the resulting generated lemma,
+		# generate adjectives, extract the resulting generated lemma,
 		# store it:
 
-# Generer infitivsformen av verblemmaene, fjern dem som ikke gir analyse (de har V+ i output),
-# lagres som fil som har blitt deklarert oppe.
-		sed 's/$/+V+Inf/' $lemmas | $lookuptool $generator_file.$suffix \
-            | cut -f2 | grep -v "V+" | grep -v "^$" | sort -u > $generated_lemmas.$f.txt 
+# Generer former
+# 1.  med +A+Sg+Nom (grunnformen for de fleste). Lagres som analadjs
+		sed 's/$/+A+Sg+Nom/' $lemmas | $lookuptool $generator_file.$suffix \
+            | cut -f2 | grep -v "A+" | grep -v "^$" | sort -u > $generated_lemmas.$f.txt 
 
 ###### Collect results: #######
 		# Sort and compare original input with resulting output - the diff is
