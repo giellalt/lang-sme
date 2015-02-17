@@ -176,6 +176,8 @@ AC_CONFIG_FILES([test/src/morphology/generate-verb-lemmas.sh], \
       [chmod a+x test/src/morphology/generate-verb-lemmas.sh])
 AC_CONFIG_FILES([test/src/morphology/generate-adverb-lemmas.sh], \
       [chmod a+x test/src/morphology/generate-adverb-lemmas.sh])
+AC_CONFIG_FILES([test/src/morphology/generate-adj-lemmas.sh], \
+      [chmod a+x test/src/morphology/generate-adj-lemmas.sh])
 AC_CONFIG_FILES([tools/shellscripts/generate-ipa-lexicon.sh], \
       [chmod a+x tools/shellscripts/generate-ipa-lexicon.sh])
 AC_CONFIG_FILES([src/phonetics/test/test-ipa-conversion.sh], \
