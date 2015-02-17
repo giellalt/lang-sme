@@ -31,14 +31,8 @@ lemmas_pl=./filtered-pl_adjs.tmp
 lemmas_attr=./filtered-attr_adjs.tmp
 lemmas_super=./filtered-super_adjs.tmp
 lemmas_comp=./filtered-comp_adjs.tmp
-
 generated_lemmas=./generated-adjs.tmp
-generated_lemmas_pl=./generated-pl_adjs.tmp
-generated_lemmas_attr=./generated-attr_adjs.tmp
-generated_lemmas_super=./generated-super_adjs.tmp
-generated_lemmas_comp=./generated-comp_adjs.tmp
-
-result_file=${srcdir}/../../data/missing_verb_lemmas
+result_file=${srcdir}/../../data/missing_adj_lemmas
 
 
 # FAIL if source file does not exist:
@@ -68,6 +62,7 @@ EXTEDITOR=@SEE@
 ### don't use extract-lemmas.sh ###
 
 # Hent ut lemmaer, bortsett fra utkommmenterte (^\!):
+
 # 1. dem med hardkoding for spesielle former (K), LexSub (som blir filtrert bort fra normgenerator), adjektiver som bare har attributtform (ATTR|Attr| At ) , adjektiver som krever tagger for komparering (BBO |MUS |BUOREMUSS|OVDDIT |STUORIBUS|BUStem) og lemmaer som bare opptrer i sammensetninger (FINJU|Rreal | R) Lemmaene lagres som $lemmas
 grep ";" $source_file | grep -v "^\!" |\
    egrep -v "(LEXICON|ATTR|FINJU|Der|Attr| At |BBO |MUS |BUOREMUSS|OVDDIT |STUORIBUS|BUStem | K | Rreal | R |LexSub)" |\
@@ -122,10 +117,27 @@ for f in $fsttype; do
 		# generate adjectives, extract the resulting generated lemma,
 		# store it:
 
-# Generer former
-# 1.  med +A+Sg+Nom (grunnformen for de fleste). Lagres som analadjs
+# Generer former:
+
+# 1. med +A+Sg+Nom (grunnformen for de fleste). Lagres som $generated_lemmas.$f.txt
 		sed 's/$/+A+Sg+Nom/' $lemmas | $lookuptool $generator_file.$suffix \
-            | cut -f2 | grep -v "A+" | grep -v "^$" | sort -u > $generated_lemmas.$f.txt 
+            | cut -f2 | grep -v "A+" | grep -v "^$" | sort -u > $generated_lemmas.$f.txt
+
+# 2. med +A+Pl+Nom for plurale lemmaer. Lagres i $generated_lemmas.$f.txt
+		sed 's/$/+A+Pl+Nom/' $lemmas_pl | $lookuptool $generator_file.$suffix \
+            | cut -f2 | grep -v "A+" | grep -v "^$" | sort -u >> $generated_lemmas.$f.txt
+
+# 3. med +A+Attr lemmaer som bare har attributtform. Lagres i $generated_lemmas.$f.txt
+		sed 's/$/+A+Attr/' $lemmas_attr | $lookuptool $generator_file.$suffix \
+            | cut -f2 | grep -v "A+" | grep -v "^$" | sort -u >> $generated_lemmas.$f.txt
+
+# 4. for lemmaer lemmaer som krever superlativtagg, med +A+Superl+Sg+Nom. Lagres i $generated_lemmas.$f.txt
+		sed 's/$/+A+Superl+Sg+Nom/' $lemmas_super | $lookuptool $generator_file.$suffix \
+            | cut -f2 | grep -v "A+" | grep -v "^$" | sort -u >> $generated_lemmas.$f.txt
+
+# 5. for lemmaer lemmaer som krever komparativtagg, med +A+Comp+Sg+Nom. Lagres i $generated_lemmas.$f.txt
+		sed 's/$/+A+Comp+Sg+Nom/' $lemmas_comp | $lookuptool $generator_file.$suffix \
+            | cut -f2 | grep -v "A+" | grep -v "^$" | sort -u >> $generated_lemmas.$f.txt
 
 ###### Collect results: #######
 		# Sort and compare original input with resulting output - the diff is
