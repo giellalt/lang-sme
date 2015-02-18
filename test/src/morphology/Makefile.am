@@ -15,7 +15,8 @@ GENERATION_TESTS_IN=testadjlemmas.sh.in        \
 					testverblemmas.sh.in       \
 					generate-verb-lemmas.sh.in \
 					generate-adverb-lemmas.sh.in \
-					generate-adj-lemmas.sh.in
+					generate-adj-lemmas.sh.in \
+					generate-adpos-lemmas.sh.in
 
 GENERATION_TESTS=$(basename $(GENERATION_TESTS_IN))
 
