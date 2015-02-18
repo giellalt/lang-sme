@@ -61,7 +61,7 @@ EXTEDITOR=@SEE@
 # Hent ut lemmaer, bortsett fra LexSub (som blir filtrert bort fra normgenerator).
 # Lemmaene lagres som $lemmas.
 grep ";" $source_file | \
-  egrep -v "^(\!|\+)" | egrep -v 'LexSub' |\
+  egrep -v "^(\!|\+)" | egrep -v '(LexSub|NOTLEMMA)' |\
   sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " |\
   cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > $lemmas
 
@@ -92,15 +92,15 @@ for f in $fsttype; do
 
 # Generer lemmaer med +Po
 		sed 's/$/+Po/' $lemmas | $lookuptool $generator_file.$suffix \
-            | cut -f2 | grep -v "+Po" | grep -v "^$" | sort -u > $generated_lemmas.$f.tmp 
+            | grep -v "\?" | cut -f2 | grep -v "^$" | sort -u > $generated_lemmas.$f.tmp 
 
 # debugging demo for Lene
 # if [ "$debug" == "yes"]; then
 # Generer med +Pr for lemmaer som ikke lar seg genereres +Po
 		sed 's/$/+Po/' $lemmas | $lookuptool $generator_file.$suffix \
-            | cut -f2 | grep "+Po"\
+            | grep "\?" | cut -f1 \
             | sed 's/+Po/+Pr/' | $lookuptool $generator_file.$suffix \
-            | cut -f2 | grep -v "+Pr" |\
+            | cut -f2 | \
               grep -v "^$" | sort -u >> $generated_lemmas.$f.tmp 
 # debugging demo for Lene
 #fi
