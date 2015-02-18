@@ -2,7 +2,7 @@
 # Dette skriptet tester at nesten alle lemmaene i adverbs.lexc kan genereres. De som ikke kan genereres, kopieres til missingadverbLemmas.txt. 
 
 # Hent ut lemmaer, bortsett fra LexSub (som blir filtrert bort fra normgenerator), og lemmaer som som krever Px. Lemmaene lagres som adverbs
-grep ";" src/morphology/stems/adverbs.lexc | egrep -v "^(\!|\@|<|\()" | egrep -v '(LexSub| Px|^adv |^adv-)' |sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > adverbs
+grep ";" src/morphology/stems/adverbs.lexc | egrep -v "^(\!|\@|<|\()" | egrep -v '(LexSub| Px|NOTLEMMA)' |sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > adverbs
 
 # Generer adverbformen av lemmaene i adverbs
 sed 's/$/+Adv/' adverbs | $LOOKUP src/generator-gt-norm.xfst | grep -v "\?" | cut -f2  | grep -v "^$" | sort -u > anadverbs 
