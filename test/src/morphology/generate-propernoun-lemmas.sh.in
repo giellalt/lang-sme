@@ -57,14 +57,24 @@ EXTEDITOR=@SEE@
 
 ##### Extract lemmas #####
 ### don't use extract-lemmas.sh ###
-# Hent ut lemmaer, bortsett fra utkommmenterte (^\!),  dem med hardkoding
-# for spesielle former (STRAYFORMS|ENDLEX), eller negasjonsverbet (+Neg, som
-# ikke har infinitivform), LexSub (som blir filtrert bort fra normgenerator).
+
+# Hent ut lemmaer fra den genererte fila smi-sme-propernouns.lexc, bortsett fra utkommmenterte (^\!), 
+# dem som krever +Attr tag og hardkoding for spesielle former (Attr|FirstTag|-atr|),
+# LexSub (som blir filtrert bort fra normgenerator).
 # Lemmaene lagres som $lemmas.
 
-grep ";" $source_file | \
-  grep -v "^\!" | egrep -v '(STRAYFORMS|ENDLEX|LexSub|\+Neg)' | \
-  tr ":+" " " | cut -d " " -f1 | tr -d "%" | sort -u > $lemmas
+grep ";" $source_file |\
+  grep -v "^\!" | egrep -v '(Attr|FirstTag|-atr|LexSub)' |\
+  sed 's/% /€/g' | sed 's/%:/¢/g' | sed 's/%!/!/g' | tr ":+" " " |\
+  cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" |\
+  sort -u > $lemmas
+
+# Hent ut lemmaer som krever +Attr for å genereres. Lagres som $lemmas_attr
+grep ";" $source_file |\
+  grep -v "^\!" | egrep '(Attr|-atr|FirstTag)' |\
+  grep -v 'LexSub' | sed 's/% /€/g' |  tr ":+" " " |\
+  cut -d " " -f1 | tr -d "%" | tr "€" " " |  sort -u > $lemmas_attr
+
 
 ###### Start testing: #######
 transducer_found=0
@@ -91,10 +101,23 @@ for f in $fsttype; do
 		# generate verbs, extract the resulting generated lemma,
 		# store it:
 
-# Generer infitivsformen av verblemmaene, fjern dem som ikke gir analyse (de har V+ i output),
-# lagres som fil som har blitt deklarert oppe.
-		sed 's/$/+V+Inf/' $lemmas | $lookuptool $generator_file.$suffix \
-            | cut -f2 | grep -v "V+" | grep -v "^$" | sort -u > $generated_lemmas.$f.txt 
+# Generer grunnformen av props, med +N+Prop+Sg+Nom, fjern dem som ikke lar seg generere (de har N+ i output), lagres som analprops
+		sed 's/$/+N+Prop+Sg+Nom/' $lemmas | $lookuptool $generator_file.$suffix \
+            | cut -f2 | grep -v "N+" | grep -v "^$" | sort -u > $generated_lemmas.$f.tmp
+
+# Generer grunnformen med +N+Prop+Pl+Nom, av props som ikke lar seg generere med +N+Prop+Sg+Nom, lagres i analprops
+		sed 's/$/+N+Prop+Sg+Nom/' $lemmas | $lookuptool $generator_file.$suffix \
+            | cut -f2 | grep "N+" | cut -d "+" -f1 \
+            | sed 's/$/+N+Prop+Pl+Nom/' | $lookuptool $generator_file.$suffix \
+            | cut -f2 | grep -v "^$" >> $generated_lemmas.$f.tmp
+
+
+# Generer attrprops med +N+Prop+Attr, lagre dem som ikke lar seg generere (de har N+ i output) i missingProperLemmas.txt
+cat attrprops | sed 's/$/+N+Prop+Attr/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep "N+" >> test/data/missingProperLemmas.txt
+
+# Generer attrprops med +N+Prop+Attr, lagre formene i analattrprops
+cat attrprops | sed 's/$/+N+Prop+Attr/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 |  grep -v "N+" | grep -v "^$" | sort -u > analattrprops  
+
 
 ###### Collect results: #######
 		# Sort and compare original input with resulting output - the diff is
@@ -104,7 +127,7 @@ for f in $fsttype; do
 # Formene som er i verblemmalista, men ikke i den genererte lista, kopieres til
 # missingverbLemmas.txt. Formene generes med  +V+Inf for lettere debugging.
 
-		comm -23 $lemmas $generated_lemmas.$f.txt \
+		comm -23 $lemmas $generated_lemmas.$f.tmp \
 		     | grep -v '^$' | sed 's/$/+V+Inf/' \
 		     | $lookuptool $generator_file.$suffix > $result_file.$f.txt
 
@@ -123,7 +146,7 @@ for f in $fsttype; do
 done
 
 # When done, remove the generated data file:
-rm -f $lemmas $generated_lemmas.$f.txt
+rm -f $lemmas $generated_lemmas.$f.tmp
 
 # At least one of the Xerox or HFST tests failed:
 if [ "$Fail" = "1" ]; then
