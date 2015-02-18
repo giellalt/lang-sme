@@ -9,9 +9,9 @@
 
 # To run this test script only, do:
 #
-# make check TESTS=generate-verb-lemmas.sh
+# make check TESTS=generate-adpos-lemmas.sh
 
-# This test script will test that all verb lemmas do generate as themselves.
+# This test script will test that all adposition lemmas do generate as themselves.
 # Extend as needed, and copy to new files to adapt to other parts of speech.
 # The changes usually needed are:
 #
@@ -21,14 +21,16 @@
 
 ###### Variables: #######
 ### in ###
-source_file=${srcdir}/../../../src/morphology/stems/verbs.lexc
+source_file=${srcdir}/../../../src/morphology/stems/adpositions.lexc
 generator_file=./../../../src/generator-gt-norm
 
 ### out ###
-lemmas=./filtered-verbs
-generated_lemmas=./generated-verbs
-result_file=${srcdir}/../../data/missing_verb_lemmas
+lemmas=./filtered-adpos.tmp
+generated_lemmas=./generated-adpos
+result_file=${srcdir}/../../data/missing_adpos_lemmas
 
+# debugging demo for Lene
+#debug="no"
 
 # FAIL if source file does not exist:
 if [ ! -f $source_file ]; then
@@ -55,14 +57,13 @@ EXTEDITOR=@SEE@
 
 ##### Extract lemmas #####
 ### don't use extract-lemmas.sh ###
-# Hent ut lemmaer, bortsett fra utkommmenterte (^\!),  dem med hardkoding
-# for spesielle former (STRAYFORMS|ENDLEX), eller negasjonsverbet (+Neg, som
-# ikke har infinitivform), LexSub (som blir filtrert bort fra normgenerator).
-# Lemmaene lagres som $lemmas.
 
+# Hent ut lemmaer, bortsett fra LexSub (som blir filtrert bort fra normgenerator).
+# Lemmaene lagres som $lemmas.
 grep ";" $source_file | \
-  grep -v "^\!" | egrep -v '(STRAYFORMS|ENDLEX|LexSub|\+Neg)' | \
-  tr ":+" " " | cut -d " " -f1 | tr -d "%" | sort -u > $lemmas
+  egrep -v "^(\!|\+)" | egrep -v 'LexSub' |\
+  sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " |\
+  cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > $lemmas
 
 ###### Start testing: #######
 transducer_found=0
@@ -86,14 +87,23 @@ for f in $fsttype; do
 		let "transducer_found += 1"
 
 ###### Test generation: #######
-		# generate verbs, extract the resulting generated lemma,
+		# generate adpos, extract the resulting generated lemma,
 		# store it:
 
-# Generer infitivsformen av verblemmaene, fjern dem som ikke gir analyse (de har V+ i output),
-# lagres som fil som har blitt deklarert oppe.
-		sed 's/$/+V+Inf/' $lemmas | $lookuptool $generator_file.$suffix \
-            | cut -f2 | grep -v "V+" | grep -v "^$" | sort -u > $generated_lemmas.$f.txt 
+# Generer lemmaer med +Po
+		sed 's/$/+Po/' $lemmas | $lookuptool $generator_file.$suffix \
+            | cut -f2 | grep -v "+Po" | grep -v "^$" | sort -u > $generated_lemmas.$f.tmp 
 
+# debugging demo for Lene
+# if [ "$debug" == "yes"]; then
+# Generer med +Pr for lemmaer som ikke lar seg genereres +Po
+		sed 's/$/+Po/' $lemmas | $lookuptool $generator_file.$suffix \
+            | cut -f2 | grep -v "+Po"\
+            | sed 's/+Po/+Pr/' | $lookuptool $generator_file.$suffix \
+            | cut -f2 | grep -v "+Pr" |\
+              grep -v "^$" | sort -u > $generated_lemmas.$f.tmp 
+# debugging demo for Lene
+#fi
 ###### Collect results: #######
 		# Sort and compare original input with resulting output - the diff is
 		# stored and opened in SEE:
@@ -102,9 +112,15 @@ for f in $fsttype; do
 # Formene som er i verblemmalista, men ikke i den genererte lista, kopieres til
 # missingverbLemmas.txt. Formene generes med  +V+Inf for lettere debugging.
 
-		comm -23 $lemmas $generated_lemmas.$f.txt \
-		     | grep -v '^$' | sed 's/$/+V+Inf/' \
-		     | $lookuptool $generator_file.$suffix > $result_file.$f.txt
+# Sorter og unifiser
+        sort -u -o $generated_lemmas.$f.tmp $generated_lemmas.$f.tmp
+
+# Sammenlikne lista med adposlemmaer med den genererte lista
+#		comm -23 $lemmas $generated_lemmas.$f.tmp \
+#		     | grep -v '^$' | sed 's/$/+V+Inf/' \
+#		     | $lookuptool $generator_file.$suffix > $result_file.$f.txt
+# ask Lene about this command
+		comm -23 $lemmas $generated_lemmas.$f.tmp > $result_file.$f.txt
 
 		# Open the diff file in SubEthaEdit (if there is a diff):
 		if [ -s $result_file.$f.txt ]; then
@@ -121,7 +137,7 @@ for f in $fsttype; do
 done
 
 # When done, remove the generated data file:
-rm -f $lemmas $generated_lemmas.$f.txt
+rm -f $lemmas $generated_lemmas.$f.tmp
 
 # At least one of the Xerox or HFST tests failed:
 if [ "$Fail" = "1" ]; then
