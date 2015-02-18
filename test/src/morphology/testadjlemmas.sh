@@ -32,7 +32,7 @@ grep ";" src/morphology/stems/adjectives.lexc | grep -v "^\!" | egrep "(OVDDIT|B
 cat compladjs | sed 's/$/+A+Comp+Sg+Nom/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep -v "A+" | grep -v "^$" | sort -u >> analadjs 
 
 # Samle alle lemmaer i en fil, sorter, unifiser
-cat attradjs compladjs superladjs >> adjs
+cat attradjs compladjs superladjs pluradjs >> adjs
 sort -u -o adjs adjs 
 
 # Samle alle genererte former i en fil, sorter, unifiser

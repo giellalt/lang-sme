@@ -15,7 +15,7 @@ cat adpos | sed 's/$/+Po/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep
 sort -u -o anadpos anadpos
 
 # Sammenlikne lista med adposlemmaer med den genererte lista
-comm -23 adpos anadpos > test/data/missingadposLemmas.txt# 
+comm -23 adpos anadpos > test/data/missingadposLemmas.txt 
 
 # Fjerne filer
 rm *adpos
