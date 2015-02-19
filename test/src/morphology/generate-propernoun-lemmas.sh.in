@@ -26,8 +26,8 @@ generator_file=./../../../src/generator-gt-norm
 
 ### out ###
 lemmas=./filtered-pn.tmp
-generated_lemmas=./generated-pn
 lemmas_attr=./filtered-apn.tmp
+generated_lemmas=./generated-pn
 generated_lemmas_attr=./generated-apn
 result_file=${srcdir}/../../data/missing_propernouns_lemmas
 
@@ -101,37 +101,44 @@ for f in $fsttype; do
 		# generate verbs, extract the resulting generated lemma,
 		# store it:
 
-# Generer grunnformen av props, med +N+Prop+Sg+Nom, fjern dem som ikke lar seg generere (de har N+ i output), lagres som analprops
+# Generer grunnformen av props med +N+Prop+Sg+Nom, fjern dem som ikke lar seg generere (de har N+ i output)
+# Lagres som $generated_lemmas.$f.tmp
 		sed 's/$/+N+Prop+Sg+Nom/' $lemmas | $lookuptool $generator_file.$suffix \
-            | cut -f2 | grep -v "N+" | grep -v "^$" | sort -u > $generated_lemmas.$f.tmp
+            | cut -f2 | grep -v "N+" | grep -v "^$" > $generated_lemmas.$f.tmp
 
-# Generer grunnformen med +N+Prop+Pl+Nom, av props som ikke lar seg generere med +N+Prop+Sg+Nom, lagres i analprops
+# Generer grunnformen med +N+Prop+Pl+Nom av props som ikke lar seg generere med +N+Prop+Sg+Nom
+# Lagres i $generated_lemmas.$f.tmp
 		sed 's/$/+N+Prop+Sg+Nom/' $lemmas | $lookuptool $generator_file.$suffix \
             | cut -f2 | grep "N+" | cut -d "+" -f1 \
             | sed 's/$/+N+Prop+Pl+Nom/' | $lookuptool $generator_file.$suffix \
             | cut -f2 | grep -v "^$" >> $generated_lemmas.$f.tmp
 
+# Generer attrprops med +N+Prop+Attr
+# Lagre dem som ikke lar seg generere (de har N+ i output) i $result_file.$f.txt
+		sed 's/$/+N+Prop+Attr/' $lemmas_attr | $lookuptool $generator_file.$suffix \
+		    | cut -f2 | grep "N+" > $result_file.$f.txt
 
-# Generer attrprops med +N+Prop+Attr, lagre dem som ikke lar seg generere (de har N+ i output) i missingProperLemmas.txt
-cat attrprops | sed 's/$/+N+Prop+Attr/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep "N+" >> test/data/missingProperLemmas.txt
-
-# Generer attrprops med +N+Prop+Attr, lagre formene i analattrprops
-cat attrprops | sed 's/$/+N+Prop+Attr/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 |  grep -v "N+" | grep -v "^$" | sort -u > analattrprops  
-
+# Generer attrprops med +N+Prop+Attr
+# Lagre formene i $generated_lemmas_attr.$f.tmp
+		sed 's/$/+N+Prop+Attr/' $lemmas_attr | $lookuptool $generator_file.$suffix \
+		    | cut -f2 |  grep -v "N+" | grep -v "^$" | sort -u > $generated_lemmas_attr.$f.tmp
 
 ###### Collect results: #######
 		# Sort and compare original input with resulting output - the diff is
 		# stored and opened in SEE:
-		
-# Sammenlikne lista med verblemmaer med den genererte lista med infinitivsformer.
-# Formene som er i verblemmalista, men ikke i den genererte lista, kopieres til
-# missingverbLemmas.txt. Formene generes med  +V+Inf for lettere debugging.
 
-		comm -23 $lemmas $generated_lemmas.$f.tmp \
-		     | grep -v '^$' | sed 's/$/+V+Inf/' \
-		     | $lookuptool $generator_file.$suffix > $result_file.$f.txt
+# Sorter, unifiser dataene som ikke har vært sortert og unifisert
+		sort -u -o $generated_lemmas.$f.tmp $generated_lemmas.$f.tmp
 
-		# Open the diff file in SubEthaEdit (if there is a diff):
+# Sammenlikne: Former som er i lemmalista med ikke i lista med genererte former, lagre i missingProperLemmas.txt. Formene generes med  +N+Prop+Sg+Nom for enklere debugging.
+		comm -23 $lemmas $generated_lemmas.$f.tmp | sed 's/$/+N+Prop+Sg+Nom/' \
+		     | $lookuptool $generator_file.$suffix >> $result_file.$f.txt
+
+# Sammenlikne: Former som er i lemmalista med ikke i lista med genererte former, lagre i missingProperLemmas.txt. Formene generes med  +N+Prop+Attr for enklere debugging.
+		comm -23 $lemmas_attr $generated_lemmas_attr.$f.tmp | sed 's/$/+N+Prop+Attr/' \
+		     | $lookuptool $generator_file.$suffix >> $result_file.$f.txt
+
+# Open the diff file in SubEthaEdit (if there is a diff):
 		if [ -s $result_file.$f.txt ]; then
 			# Only open the failed lemmas in see if @SEE@ is defined:
 			if [ "$EXTEDITOR" ]; then
@@ -146,7 +153,7 @@ cat attrprops | sed 's/$/+N+Prop+Attr/' | $LOOKUP src/generator-gt-norm.xfst | c
 done
 
 # When done, remove the generated data file:
-rm -f $lemmas $generated_lemmas.$f.tmp
+rm -f $lemmas $lemmas $generated_lemmas.$f.tmp $generated_lemmas_attr.$f.tmp
 
 # At least one of the Xerox or HFST tests failed:
 if [ "$Fail" = "1" ]; then
