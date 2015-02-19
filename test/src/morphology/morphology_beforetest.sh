@@ -1,4 +1,4 @@
-# Skript for å teste den morfologiske analysen av sme-goldcorpus.txt. Testen kjøres i to deler, før og etter endringer av analyser-gt-desc.xfst. Det må kjøres 'make' før morphology_aftertest.sh kjøres.
+# Skript for å teste den morfologiske analysen av sme-goldcorpus.txt. Testen kjøres i to deler, før og etter endringer av analyser-gt-desc.xfst. Output kjøres via lookup2cg som rensker ut en del. Det må kjøres 'make' før morphology_aftertest.sh kjøres.
 # sh test/src/morphology/morphology_beforetest.sh 
 # sh test/src/morphology/morphology_aftertest.sh 
 
