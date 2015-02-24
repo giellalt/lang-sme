@@ -23,7 +23,8 @@ GENERATOR=generator-gt-desc.hfst
 
 # Only build the preprocessor if analysers are enabled.
 if WANT_MORPHOLOGY
-ANALYSER=analyser-gt-desc.hfst
+SRCANALYSER=analyser-disamb-gt-desc.hfstol
+ANALYSER=analyser-disamb-gt-desc.hfst
 PMHFST=preprocessor-gt-desc.pmhfst
 endif # WANT_MORPHOLOGY
 
@@ -69,8 +70,8 @@ abbr.txt: \
 ### Test builds for hfst-pmatch and a preprocessor based on it and the
 ### regular, lexical fst.:
 
-$(ANALYSER): $(top_builddir)/src/$(ANALYSER)
-	$(AM_V_GEN)cp -f $< $@
+$(ANALYSER): $(top_builddir)/src/$(SRCANALYSER)
+	$(AM_V_GEN)$(HFST_FST2FST) $(HFSTFLAGS) -t $< > $@
 
 %.pmhfst: %.pmregex $(ANALYSER)
 	$(AM_V_GEN)hfst-pmatch2fst < $< > $@
