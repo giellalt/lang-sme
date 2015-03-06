@@ -92,22 +92,18 @@ endif # CAN_HFST
 #### Add language-specific build rules here: ####
 
 generator-raw-gt-desc.hfst: generator-raw-gt-desc.tmp.hfst \
-					filters/remove-mwe-tags.hfst            \
 					filters/reorder-subpos-tags.$(GTLANG).hfst
 	$(AM_V_RGX2FST)$(PRINTF) "\
 				@\"filters/reorder-subpos-tags.$(GTLANG).hfst\" \
-			.o. @\"filters/remove-mwe-tags.hfst\"               \
 			.o. @\"$<\" \
 			;" \
 		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --xerox-composition=ON \
 		> $@
 
 analyser-raw-gt-desc.xfst: analyser-raw-gt-desc.tmp.xfst \
-					filters/remove-mwe-tags.xfst          \
 					filters/reorder-subpos-tags.$(GTLANG).xfst
 	$(AM_V_XFST)$(PRINTF) "read regex \
 				@\"filters/reorder-subpos-tags.$(GTLANG).xfst\" \
-			.o. @\"filters/remove-mwe-tags.xfst\"               \
 			.o. @\"$<\" \
 			;\n\
 		 save stack $@\n\
