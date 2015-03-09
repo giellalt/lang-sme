@@ -15,67 +15,11 @@
 ## You should have received a copy of the GNU General Public License
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-if CAN_XFST
-GENERATOR=generator-gt-desc.xfst
-else
-if CAN_HFST
-GENERATOR=generator-gt-desc.hfst
+# Set this variable to point to generated lexc source files, if any:
+GENRSRCS=
 
-# Only build the preprocessor if analysers are enabled.
-if WANT_MORPHOLOGY
-SRCANALYSER=analyser-disamb-gt-desc.hfstol
-ANALYSER=analyser-disamb-gt-desc.hfst
-PMHFST=preprocessor-gt-desc.pmhfst
-endif # WANT_MORPHOLOGY
+####### Other targets: ###########
+clean-local:
+	-rm -f *.hfst *.xfst abbr.txt *.pmhfst
 
-hfstdatadir=$(datadir)/giella/$(GTLANG)
-hfstdata_DATA=$(PMHFST)
-
-else
-GENERATOR=false
-endif # CAN_HFST
-endif # CAN_XFST
-
-STEMSRCS:=$(filter-out %propernouns.lexc,$(wildcard $(top_srcdir)/src/morphology/stems/*.lexc))
-GENRSRCS:=$(wildcard $(top_builddir)/src/morphology/generated_files/smi-$(GTLANG)-*.lexc)
-OTHRSRCS:=$(filter-out %lexicon.lexc,$(wildcard $(top_srcdir)/src/morphology/*.lexc))
-
-empty:=
-comma:=,
-space:=$(empty) $(empty)
-ABBRSRCS:=$(subst $(space),$(comma),$(strip $(STEMSRCS) $(GENRSRCS) $(OTHRSRCS)))
-
-SCRIPTDIR=$(GTCORE)/scripts
-
-# Build the abbr.txt file:
-abbr: abbr.txt
-abbr.txt: \
-		$(top_srcdir)/src/morphology/stems/abbreviations.lexc \
-		$(top_srcdir)/tools/data/paradigm.abbr.txt        \
-		$(top_srcdir)/tools/data/korpustags.txt      \
-		$(STEMSRCS) $(GENRSRCS) $(OTHRSRCS)       \
-		../../src/$(GENERATOR)
-	$(AM_V_GEN)perl -I $(SCRIPTDIR) $(SCRIPTDIR)/extract-abbr.pl  \
-		--paradigm=$(top_srcdir)/tools/data/paradigm.abbr.txt \
-		--tags=$(top_srcdir)/tools/data/korpustags.txt   \
-		--fst=../../src/$(GENERATOR) \
-		--output=$@.tmp \
-		--abbr_lex=$< \
-		--lex=$(ABBRSRCS)
-	$(AM_V_at)sed -e 's/\+MWE//' < $@.tmp | uniq > $@
-	$(AM_V_at)rm -f $@.tmp
-
-
-###############
-### Test builds for hfst-pmatch and a preprocessor based on it and the
-### regular, lexical fst.:
-
-$(ANALYSER): $(top_builddir)/src/$(SRCANALYSER)
-	$(AM_V_GEN)$(HFST_FST2FST) $(HFSTFLAGS) -t $< > $@
-
-%.pmhfst: %.pmregex $(ANALYSER)
-	$(AM_V_GEN)hfst-pmatch2fst < $< > $@
-
-### Use the pmhfst file as follows:
-
-# echo "Mun ja son." | hfst-pmatch $(PMHFST)
+include $(top_srcdir)/am-shared/tools-preprocess-dir-include.am
