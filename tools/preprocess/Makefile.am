@@ -16,7 +16,7 @@
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Set this variable to point to generated lexc source files, if any:
-GENRSRCS=
+GENRSRCS:=$(wildcard $(top_builddir)/src/morphology/generated_files/smi-$(GTLANG)-*.lexc)
 
 ####### Other targets: ###########
 clean-local:
