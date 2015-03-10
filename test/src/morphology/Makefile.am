@@ -15,11 +15,7 @@ GENERATION_TESTS_IN=generate-verb-lemmas.sh.in \
 					generate-adpos-lemmas.sh.in \
 					generate-propernoun-lemmas.sh.in
 
-GENERATION_TESTS=$(basename $(GENERATION_TESTS_IN)) \
-                 testadjlemmas.sh        \
-                 testnounlemmas.sh       \
-                 testpropernounlemmas.sh \
-                 testverblemmas.sh
+GENERATION_TESTS=$(basename $(GENERATION_TESTS_IN))
 
 if WANT_GENERATION
 TESTS+=$(GENERATION_TESTS)
@@ -30,11 +26,7 @@ endif # WANT_GENERATION
 XFAIL_TESTS=
 
 # Make sure all tests scripts are included in the distributed tarballs:
-EXTRA_DIST=$(TESTS) $(GENERATION_TESTS_IN) \
-           testadjlemmas.sh        \
-           testnounlemmas.sh       \
-           testpropernounlemmas.sh \
-           testverblemmas.sh
+EXTRA_DIST=$(TESTS) $(GENERATION_TESTS_IN)
 
 ####### Other targets: ###########
 clean-local:
