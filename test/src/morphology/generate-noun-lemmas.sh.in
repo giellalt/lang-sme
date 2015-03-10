@@ -27,7 +27,7 @@ generator_file=./../../../src/generator-gt-norm
 ### out ###
 lemmas=./filtered-nouns
 generated_lemmas=./generated-nouns
-result_file=${srcdir}/../../data/missing_noun_lemmas
+result_file=./missing_noun_lemmas
 
 # FAIL if source file does not exist:
 if [ ! -f $sourcefile ]; then
@@ -98,54 +98,54 @@ for f in $fsttype; do
 		# generate nouns in Singular, extract the resulting generated lemma,
 		# store it:
 # Generer lemmaer i nouns med +N+Sg+Nom, lagre i generated-nouns
-sed 's/$/+N+Sg+Nom/' $lemmas | $lookuptool $generator_file.$suffix | \
-  cut -f2 | grep -v "N+" | grep -v "^$" | sort -u > $generated_lemmas.$f.txt		
+        sed 's/$/+N+Sg+Nom/' $lemmas | $lookuptool $generator_file.$suffix \
+        | cut -f2 | grep -v "N+" | grep -v "^$" | sort -u \
+        > $generated_lemmas.$f.txt		
 
 # Generer plurale lemmaer i filtered-nouns med +N+Pl+Nom (som ikke lar seg generer med +N+Sg+Nom).
 # Lagre dem i generated-nouns
-sed 's/$/+N+Sg+Nom/' $lemmas | $lookuptool $generator_file.$suffix | \
-  cut -f2 | grep "N+" | cut -d "+" -f1 | sed 's/$/+N+Pl+Nom/' | \
-  $lookuptool $generator_file.$suffix | \
-  cut -f2 | grep -v "^$" >> $generated_lemmas.$f.txt 
+        sed 's/$/+N+Sg+Nom/' $lemmas | $lookuptool $generator_file.$suffix \
+        | cut -f2 | grep "N+" | cut -d "+" -f1 | sed 's/$/+N+Pl+Nom/' \
+        | $lookuptool $generator_file.$suffix \
+        | cut -f2 | grep -v "^$" >> $generated_lemmas.$f.txt 
 
 # Hent ut lemmaer fra nouns.lexc som krever sammensetning (Rreal | R | Rnoun),
 # legg til +N+Cmp#viessu+N+Sg+Nom og generer. Lagre i generated-nouns.
+        grep ";" $source_file \
+        | egrep -v "^(\!|\@|<)" | egrep -v '(ShCmp|LexSub)' \
+        | egrep "( R | Rreal | Rnoun)" | tr ":+" " " | cut -d " " -f1 \
+        | sed 's/$/+N+Cmp#viessu+N+Sg+Nom/' \
+        | $lookuptool $generator_file.$suffix \
+        | cut -f2 | grep -v '^$' >> $generated_lemmas.$f.txt
 
-grep ";" $source_file | \
-  egrep -v "^(\!|\@|<)" | egrep -v '(ShCmp|LexSub)' |\
-  egrep "( R | Rreal | Rnoun)" | tr ":+" " " | cut -d " " -f1 |\
-  sed 's/$/+N+Cmp#viessu+N+Sg+Nom/' | $lookuptool $generator_file.$suffix |\
-  cut -f2 | grep -v '^$' >> $generated_lemmas.$f.txt
-
-# Hent ut lemmaer fra nouns.lexc som krever sammensetning med bindestrek (RHyph),
-# legg til +N+Cmp-#viessu+N+Sg+Nom og generer. Lagre i generated-nouns.
-
-
-grep ";" $source_file |\
-  egrep -v "^(\!|\@|<)" | grep -v '(ShCmp|LexSub)' | grep "RHyph" |\
-  tr ":+" " " | cut -d " " -f1 | sed 's/$/+N+Cmp-#viessu+N+Sg+Nom/' |\
-  $lookuptool $generator_file.$suffix |\
-  cut -f2 | grep "\-" | cut -d "-" -f1 >> $generated_lemmas.$f.txt
+# Hent ut lemmaer fra nouns.lexc som krever sammensetning med bindestrek
+# (RHyph), legg til +N+Cmp-#viessu+N+Sg+Nom og generer. Lagre i generated-nouns.
+        grep ";" $source_file \
+        | egrep -v "^(\!|\@|<)" | grep -v '(ShCmp|LexSub)' | grep "RHyph" \
+        | tr ":+" " " | cut -d " " -f1 | sed 's/$/+N+Cmp-#viessu+N+Sg+Nom/' \
+        | $lookuptool $generator_file.$suffix \
+        | cut -f2 | grep "\-" | cut -d "-" -f1 >> $generated_lemmas.$f.txt
 
 ###### Collect results: #######
 		# Sort and compare original input with resulting output - the diff is
 		# stored and opened in SEE:
 
-# Sorter, unifiser
-sort -u -o $lemmas $lemmas 
-sort -u -o $generated_lemmas.$f.txt $generated_lemmas.$f.txt 
+        # Sorter, unifiser
+        sort -u -o $lemmas $lemmas 
+        sort -u -o $generated_lemmas.$f.txt $generated_lemmas.$f.txt 
 
 # Sammenlikne: Former som er i lemmalista med ikke i lista med genererte former,
-# lagre i missingnounLemmas.txt. Formene generes med  +N+Sg+Nom for enklere debugging.
-comm -23 $lemmas $generated_lemmas.$f.txt |\
-  grep -v '^$' | sed 's/$/+N+Sg+Nom/' |\
-  $lookuptool $generator_file.$suffix > $result_file.$f.txt
+# lagre i missingnounLemmas.txt. Formene generes med  +N+Sg+Nom for enklere
+# debugging.
+        comm -23 $lemmas $generated_lemmas.$f.txt \
+        | grep -v '^$' | sed 's/$/+N+Sg+Nom/' \
+        | $lookuptool $generator_file.$suffix > $result_file.$f.txt
 
 		# Open the diff file in SubEthaEdit (if there is a diff):
-		if [ -s $resultfile.$f.txt ]; then
+		if test -s $result_file.$f.txt ; then
 			# Only open the failed lemmas in see if @SEE@ is defined:
 			if [ "$EXTEDITOR" ]; then
-				$EXTEDITOR $resultfile.$f.txt
+				$EXTEDITOR $result_file.$f.txt
 			fi
 		    Fail=1
 		    echo "$f - FAIL"
