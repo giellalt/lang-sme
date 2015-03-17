@@ -915,6 +915,7 @@ LIST §TO = §TO ; #topic
 LIST §XT = §XT ; #extent "beahkit" "beassat" "boahtit" "borjjastit" "ciŋkut" "čáhpihit" "čierastit" "čuoigat" "čuoigalit" "čuovvut" "gakcut" "gállit" "gállilit"  "girdit" "gárrut" "goargŋut" "guokkardit" "goarbmot" "goastat" "hurgalit" "ihtit" "jávkkehit" "jávkkihit" "jorgalit" "jorggihit" "lávket" "lávkestit" "lávkut" "máhccat" "mannat" "mátkkoštit" "murdit" "murdilit" "njoammut" "haskat" "haskadit" "njuiket" "njuikut" "ollet" "ollit" "riidet" "ruohttat" "ruohtastit" "sihkkelastit" "skierbmut" "suhkat" "suobbulit" "soabbut" "šloahtat" "steavžut" "stávžut" "vázzit" "vázzilit" "viehkalit" "viehkat" "viežžat" "vuodjalit" "vuodjat" "vuodjit" "vuojistit" "vuolgit"  "sirdit";
 
 LIST §TIME-ADJUNCT = §TIME-ADJUNCT ;
+LIST §PART = §PART ;
 
 LIST §ANYROLE = §AG §AT §BE §CO §DE §EX §ID §IN §LO §MA §OR §PA §PO §PR §PU §PT §PV §RF §RE §RO §RS §SO §TH §TO §XT ;
  
@@ -4931,6 +4932,7 @@ LIST RÁĐĐI-ATTR = "ekonomálaš" "parlamentáralaš" "sosiála";
 ADD:real-ráđđi (&real-ráđđi) TARGET ("ráddi") IF (-1 RÁĐĐI-ATTR OR Sem/Plc + Gen) ;  
 	## Sámi Parlamentáralaš Ráddi.
 ADD:real-ráđđi (&real-ráđđi) TARGET ("ráddi") IF (-1 ("eará") OR ("iežá") LINK -1 ConNeg LINK *-1 Neg BARRIER GRAMCHK-S-BOUNDARY) ; 
+ADD:real-ráđđi (&real-ráđđi) TARGET ("ráddi") IF (*1 <AG-Nom-Ani> BARRIER VFIN);
 	## Váhnemiid mielan ii lean iežá ráddi.
 	#$ Sihkkaris gáldut geaiguin Nordlys aviisa lea hupman, lohket dievddu čukkohallan máŋgii rátti ja čoavjji bokte.
 	#$ De boahtigohte olbmot ja go olmmái dan fuobmái de gaccastii son muorrageahčái ja dearpagođii ráttis.
@@ -5811,13 +5813,18 @@ SUBSTITUTE N (§TIME-ADJUNCT N) TARGET N IF (0 ("hávvi" Gen) LINK -1 (Pron Dem 
 SUBSTITUTE N (§TIME-ADJUNCT N) TARGET N IF (0 Sem/Time + Gen LINK -1 (Pron Dem Gen) OR TIME-A) ;
 	## Norgalaččat 	liikojit 	pestoi , maŋemus jagiid lea pesto johtu loktanan 29 proseanttain Norggas .
 
-
+	# "map" PARTITIVE
+	# ---------------
+#SUBSTITUTE N (§PART N) TARGET (N Loc) IF (-1 OASSI OR HEADOFPARTS LINK -1 Num) ;
+	#$ Norgalaččat 	liikojit 	pestoi , maŋemus jagiid lea pesto johtu loktanan 29 proseanttain Norggas.
+SUBSTITUTE N (§PART N) TARGET (N Loc) IF (-1 (A Ord) LINK *-1 (Num Sg)) ;
+	## Jearahallamis čájehuvvo ahte okta juohke njealját olbmos ballá roasmmehuvvat rakeahtaid geažil . --- make a rule for juohke njealját olbmos...
 
 	# more global rules (apply after the local rules)
 	# -----------------------------------------------
 
 SETPARENT Acc (NEGATE p V)(-1 BOS LINK *0 ("?" CLB))(NEGATE 0 @-FSUBJ>) TO (0* <TH-Acc-Any> OR <IN-Acc-Any> LINK NEGATE c Acc) ;
-	## • Maid don 	liikot 	bargat friddjabottuin ?
+	## • Maid don 	liikot 	bargat friddjabottuin?
 	## – Čuojahin vuosttas geardde dán lávlaga Várjjat-festiválas mannan vahkkoloahpa ja ollosat 	liikojedje 	šuoŋa ja muitalusa , lohká Boine . <IN-Acc-Any> 
 	
 SETPARENT Acc (NEGATE p V)(-1 BOS LINK *0 ("?" CLB))(NEGATE 0 @-FSUBJ>) TO (0 Sem/Animate)(0* <CO-Acc-Ani> LINK NEGATE c Acc) ;
@@ -5885,7 +5892,7 @@ SUBSTITUTE Pron (§TH Pron) TARGET Pron IF (p (V <TH-Com-Any>))(0 Com) ;
 #SUBSTITUTE N (§TH N) TARGET N IF (*0 (V <TH-Com-Ani>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Com LINK 0 Sem/Ani OR Sem/Ani) ; 
 #SUBSTITUTE Pron (§TH Pron) TARGET Pron IF (*0 (V <TH-Com-Ani>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Com LINK 0 Pers) ; 
 #
-SUBSTITUTE N (§TH N) TARGET N IF (p (V <TH-Loc-Any>))(0 Loc) ;
+SUBSTITUTE N (§TH N) TARGET N IF (p (V <TH-Loc-Any>))(0 Loc)(NEGATE 0 §PART) ;
 SUBSTITUTE V (§TH V) TARGET V IF (p (V <TH-Loc-Any>))(0 (Actio Loc)) ;
 SUBSTITUTE Pron (§TH Pron) TARGET Pron IF (p (V <TH-Loc-Any>))(0 Loc) ;
 SUBSTITUTE Num (§TH Num) TARGET Num IF (p (V <TH-Loc-Any>))(0 Loc) ;
