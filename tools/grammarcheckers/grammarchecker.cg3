@@ -955,6 +955,7 @@ LIST &syn-passprssg3-not-connegII = &syn-passprssg3-not-connegII ;
 LIST &syn-pred-not-attr = &syn-pred-not-attr ;
 LIST &syn-Pl3-not-Inf = &syn-Pl3-not-Inf ;
 LIST &syn-u-not-o = &syn-u-not-o ;
+LIST &syn-uvvat-not-uvvot = &syn-uvvat-not-uvvot ;
 LIST &syn-super-part1 = &syn-super-part1 ;
 LIST &syn-super-part2 = &syn-super-part2 ;
 LIST &syn-redundant_ahte = &syn-redundant_ahte ;
@@ -1217,6 +1218,8 @@ LIST &DELETE = &DELETE ;
 # &orth-prop                    Proper nouns should begin with capital letter
 
 SET REAL-W-ERROR = &real-čohkka OR &real-čohkkát OR &real-almmaiduvvat OR &real-almmáiduvvat OR &real-ballán OR &real-bállen OR &real-beassat OR &real-buorránastit OR &real-buorranastit OR &real-buorraneastit OR &real-buorráneastit OR &real-buorranaddat OR &real-buorránaddat OR &real-dakko OR &real-duolmmastuvvat OR &real-duolmmástuvvat OR &real-eahkes OR &real-eallit OR &real-earret OR &real-givssastuvvat OR &real-givssástuvvat OR &real-gierástallat OR &real-gierastallat OR &real-gierástaddat OR &real-gierastaddat OR &real-guhká OR &real-guhkás OR &real-iežá OR &real-jáhkkit OR &real-lánjastuvvat OR &real-láse OR &real-liikkastuvvat OR &real-liikkástuvvat OR &real-luohte-compound OR &real-rikkastallat OR &real-rikkástallat OR &real-rikkastaddat OR &real-rikkástaddat OR &real-ráđastallat OR &real-rađastallat OR &real-ráđastaddat OR &real-rađastaddat OR &real-lohkat OR &real-lohkat OR &real-maŋŋit OR &real-oastit OR &real-orrut OR &real-ruovttoluotta OR &real-sádji OR &real-sáhkki OR &real-sáhttit OR &real-veahkki OR &real-valljái OR &real-várra OR &real-vuolgit  OR &real-vuosttaš ;
+
+SET SYN-ERROR = &syn-uvvat-not-uvvot ;
 
 # SEMANTIC ROLES
 # --------------
@@ -4453,6 +4456,16 @@ COPY:syn-prfprc-not-prssg1 (PrfPrc &SUGGEST) EXCEPT (Ind Prs Sg1 &syn-prfprc-not
 	## Báikki olbmuide lea vearrámus go eai leat goasse 	iskkan 	joavdá go várálaš suonjardeapmi sin gilážiidda . 
     ## Ii sivalaš Dan botta SEFO 	dutkkan 	burginášši , de loahpahuvai diskeahtta suoládanášši dan dihte go ii gávdnon mihkke duođaštusaid dasa ahte Ánne Ristiinna bárdni lei diskeahtaid suoládan . #RITVA? Ritva: Yes, this sentence should be included (Note: "Ii sivalaš" is a headline). The sentence has multiple possibilities: Dan botta go SEFO dutká..."(dutkat+V+TV+Ind+Prs+Sg3), "Dan botta go SEFO lea dutkan..."(dutkat+V+TV+PrfPrc), "Dan botta go SEFO dutkkai...". 
     
+    
+    # vaháhvvat (Inf) vs. vaháguvvot (Imprt Pl1)
+    # --------------------------------------------
+    
+LIST UVVAT-VERBS = (".*uvvat"r V) ; # search for more examples # no it-verbs
+
+ADD:syn-uvvat-not-uvvot (&syn-uvvat-not-uvvot) TARGET UVVAT-VERBS IF (0 (Imprt Pl1)) (NEGATE *1 EOS LINK -1 ("!")) ;	
+COPY:syn-uvvat-not-uvvot (Inf &SUGGEST) EXCEPT (Imprt Pl1 &syn-uvvat-not-uvvot) TARGET (V &syn-uvvat-not-uvvot);
+	## Dál 	ballá 	boazoisit Ánde Piera Valle Suoma beale badjeolbmuid vaháguvvot háddegáhččamiid dihte.
+    
 	# daddjo vs. dadjo
 	# ----------------
 	
@@ -7027,7 +7040,7 @@ ADD:wrong-valency-ahte-not-fs (&msyn-valency-ahte-not-fs) TARGET NP-HEAD - @>N I
 	
 LIST OTHER-VALENCY-DER = VAbess ;
 
-ADD:wrong-valency-ahte-not-fs (&msyn-valency-ahte-not-fs) TARGET NP-HEAD  - @>N IF (0 Nom LINK *1 VFIN BARRIER VFIN OR GRAMCHK-S-BOUNDARY)(*-1 <TH-ahte> BARRIER NPNHA LINK NOT 0 <TH-FS> OR OTHER-VALENCY-DER); # LINK NOT c §TH);
+ADD:wrong-valency-ahte-not-fs (&msyn-valency-ahte-not-fs) TARGET NP-HEAD  - @>N IF (0 Nom LINK *1 VFIN BARRIER VFIN OR GRAMCHK-S-BOUNDARY LINK NEGATE 0 REAL-W-ERROR OR SYN-ERROR LINK 0 (Inf &SUGGEST))(*-1 <TH-ahte> BARRIER NPNHA LINK NOT 0 <TH-FS> OR OTHER-VALENCY-DER); # LINK NOT c §TH);
 	## - 	Balan 	mii soaitit gártat vuos finadit duopmostuoluid ovddas moatte geardde ovdal go oktasaš orohagaide dohkkehuvvojit ođđa juohkimat ja rájit , lohká Heandarat .
 	#$ Su mielas rihkku dákkár álbmoga jearakeahttá láhttenvuohki, álbmoga luohttevašvuođa gildii ja 	ballá 	maid ain boahtteáiggis fuomášit dahkat.
 	
