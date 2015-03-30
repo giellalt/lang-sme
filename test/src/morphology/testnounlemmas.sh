@@ -1,11 +1,11 @@
 # Kommando når man er i sme: sh test/src/morphology/testnounlemmas.sh
 # Dette skriptet tester at nesten alle lemmaene i nouns.lexc kan genereres. De som ikke kan genereres, kopieres til missingnounLemmas.txt
 
-# Hent ut lemmaer fra den nouns.lexc, bortsett fra utkommmenterte (^\!),  dem som krever sammensetning (CmpN/Only|ShCmp|RCmpnd| Rreal | R | Rnoun) ,  LexSub (som blir filtrert bort fra normgenerator). Lemmaene lagres som nouns
-grep ";" src/morphology/stems/nouns.lexc | egrep -v "^(\!|\@|<)" | egrep -v '(CmpN/Only|ShCmp|RCmpnd| R|\+V\+|LexSub|CmpSub|HyphSub|NOT-TO-LEMMATEST)' | sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > nouns
+# Hent ut lemmaer fra den nouns.lexc, bortsett fra utkommmenterte (^\!),  dem som krever sammensetning (CmpN/Only|ShCmp|RCmpnd| Rreal | R | Rnoun) ,  Err/Lex (som blir filtrert bort fra normgenerator). Lemmaene lagres som nouns
+grep ";" src/morphology/stems/nouns.lexc | egrep -v "^(\!|\@|<)" | egrep -v '(CmpN/Only|ShCmp|RCmpnd| R|\+V\+|\+Err\/Lex|CmpSub|HyphSub|NOT-TO-LEMMATEST)' | sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > nouns
 
 # Legg substantivet viessu til lemmaer som krever sammensetning, lagres i nouns
-grep ";" src/morphology/stems/nouns.lexc | egrep -v "^(\!|\@|<)"  | egrep -v '(ShCmp|LexSub|CmpSub|HyphSub|NOT-TO-LEMMATEST)' |  egrep "(Rreal | Rnoun)" | tr ":+" " " | cut -d " " -f1 | sed 's/$/viessu/' >> nouns
+grep ";" src/morphology/stems/nouns.lexc | egrep -v "^(\!|\@|<)"  | egrep -v '(ShCmp|\+Err\/Lex|CmpSub|HyphSub|NOT-TO-LEMMATEST)' |  egrep "(Rreal | Rnoun)" | tr ":+" " " | cut -d " " -f1 | sed 's/$/viessu/' >> nouns
 
 # Generer lemmaer i nouns med +N+Sg+Nom, lagre i analnouns
 cat nouns | sed 's/$/+N+Sg+Nom/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep -v "N+" | grep -v "^$" | sort -u > analnouns 
@@ -14,10 +14,10 @@ cat nouns | sed 's/$/+N+Sg+Nom/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 
 cat nouns | sed 's/$/+N+Sg+Nom/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep "N+" | cut -d "+" -f1 | sed 's/$/+N+Pl+Nom/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep -v "^$" >> analnouns 
 
 # Hent ut lemmaer fra nouns.lexc som krever sammensetning (Rreal | R | Rnoun), legg til +N+Cmp#viessu+N+Sg+Nom og generer. Lagre i analnouns.
-grep ";" src/morphology/stems/nouns.lexc | egrep -v "^(\!|\@|<)"  | egrep -v '(ShCmp|LexSub|CmpSub|HyphSub|NOT-TO-LEMMATEST)' | egrep "(Rreal | Rnoun)" | tr ":+" " " | cut -d " " -f1 | sed 's/$/+N+Cmp#viessu+N+Sg+Nom/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep -v '^$' >> analnouns
+grep ";" src/morphology/stems/nouns.lexc | egrep -v "^(\!|\@|<)"  | egrep -v '(ShCmp|\+Err\/Lex|CmpSub|HyphSub|NOT-TO-LEMMATEST)' | egrep "(Rreal | Rnoun)" | tr ":+" " " | cut -d " " -f1 | sed 's/$/+N+Cmp#viessu+N+Sg+Nom/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep -v '^$' >> analnouns
 
 # Hent ut lemmaer fra nouns.lexc som krever sammensetning med bindestrek (RHyph), legg til +N+Cmp-#viessu+N+Sg+Nom og generer. Lagre i analnouns.
-grep ";" src/morphology/stems/nouns.lexc | egrep -v "^(\!|\@|<)" | grep -v '(ShCmp|LexSub|CmpSub|HyphSub|NOT-TO-LEMMATEST)' | grep "RHyph" | tr ":+" " " | cut -d " " -f1 | sed 's/$/+N+Cmp-#viessu+N+Sg+Nom/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep "\-" | cut -d "-" -f1 >> analnouns
+grep ";" src/morphology/stems/nouns.lexc | egrep -v "^(\!|\@|<)" | grep -v '(ShCmp|\+Err\/Lex|CmpSub|HyphSub|NOT-TO-LEMMATEST)' | grep "RHyph" | tr ":+" " " | cut -d " " -f1 | sed 's/$/+N+Cmp-#viessu+N+Sg+Nom/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep "\-" | cut -d "-" -f1 >> analnouns
 
 # Sorter, unifiser
 sort -u -o nouns nouns 
