@@ -64,32 +64,32 @@ EXTEDITOR=@SEE@
 
 # Hent ut lemmaer, bortsett fra utkommmenterte (^\!):
 
-# 1. dem med hardkoding for spesielle former (K), LexSub (som blir filtrert bort fra normgenerator), adjektiver som bare har attributtform (ATTR|Attr| At ) , adjektiver som krever tagger for komparering (BBO |MUS |BUOREMUSS|OVDDIT |STUORIBUS|BUStem) og lemmaer som bare opptrer i sammensetninger (FINJU|Rreal | R) Lemmaene lagres som $lemmas
+# 1. dem med hardkoding for spesielle former (K), LexErr/ (som blir filtrert bort fra normgenerator), adjektiver som bare har attributtform (ATTR|Attr| At ) , adjektiver som krever tagger for komparering (BBO |MUS |BUOREMUSS|OVDDIT |STUORIBUS|BUStem) og lemmaer som bare opptrer i sammensetninger (FINJU|Rreal | R) Lemmaene lagres som $lemmas
 grep ";" $source_file | grep -v "^\!" |\
-   egrep -v "(LEXICON|ATTR|FINJU|Der|Attr| At |BBO |MUS |BUOREMUSS|OVDDIT |STUORIBUS|BUStem | K | Rreal | R |LexSub)" |\
+   egrep -v "(LEXICON|ATTR|FINJU|Der|Attr| At |BBO |MUS |BUOREMUSS|OVDDIT |STUORIBUS|BUStem | K | Rreal | R |\+Err\/Lex)" |\
    sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" |\
    sort -u > $lemmas
 
 # 2. for plurale lemmaer (_PL). Lemmaene lagres som $lemmas_pl
 grep ";" $source_file | grep -v "^\!" |\
-  grep -v "+Gen" | grep -v LexSub | grep "_PL " | tr ":+" " " |\
+  grep -v "+Gen" | grep -v \+Err\/Lex | grep "_PL " | tr ":+" " " |\
   cut -d " " -f1 | tr -d "%" | sort -u > $lemmas_pl
 
 # 3. som bare har attributtform. Lagres i $lemmas_attr
 grep ";" $source_file | grep -v "^\!" |\
-  grep -v "+Gen" | grep -v LexSub | egrep "(ATTR|Attr)" |\
+  grep -v "+Gen" | grep -v \+Err\/Lex | egrep "(ATTR|Attr)" |\
   sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 |\
   tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > $lemmas_attr
 
 # 4. som krever superlativtagg. Lagres i $lemmas_super
 grep ";" $source_file | grep -v "^\!" |\
-  grep "BUOREMUSS" | grep -v LexSub | tr ":+" " " |\
+  grep "BUOREMUSS" | grep -v \+Err\/Lex | tr ":+" " " |\
   cut -d " " -f1 | tr -d "%" | sort -u > $lemmas_super
 
 # 5. som krever komparativtagg. Lagres i $lemmas_comp
 grep ";" $source_file | grep -v "^\!" |\
   egrep "(OVDDIT|BBO |BU/MUS|EABBO/EAMOS|STUORIBUS|BUStem)" |\
-  grep -v LexSub | tr ":+" " " | cut -d " " -f1 | tr -d "%" |\
+  grep -v \+Err\/Lex | tr ":+" " " | cut -d " " -f1 | tr -d "%" |\
   sort -u > $lemmas_comp
 
 

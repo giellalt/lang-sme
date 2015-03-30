@@ -60,11 +60,11 @@ EXTEDITOR=@SEE@
 
 # Hent ut lemmaer fra den genererte fila smi-sme-propernouns.lexc, bortsett fra utkommmenterte (^\!), 
 # dem som krever +Attr tag og hardkoding for spesielle former (Attr|FirstTag|-atr|),
-# LexSub (som blir filtrert bort fra normgenerator).
+# Err/Lex (som blir filtrert bort fra normgenerator).
 # Lemmaene lagres som $lemmas.
 
 grep ";" $source_file |\
-  grep -v "^\!" | egrep -v '(Attr|FirstTag|-atr|LexSub)' |\
+  grep -v "^\!" | egrep -v '(Attr|FirstTag|-atr|\+Err\/Lex)' |\
   sed 's/% /€/g' | sed 's/%:/¢/g' | sed 's/%!/!/g' | tr ":+" " " |\
   cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" |\
   sort -u > $lemmas
@@ -72,7 +72,7 @@ grep ";" $source_file |\
 # Hent ut lemmaer som krever +Attr for å genereres. Lagres som $lemmas_attr
 grep ";" $source_file |\
   grep -v "^\!" | egrep '(Attr|-atr|FirstTag)' |\
-  grep -v 'LexSub' | sed 's/% /€/g' |  tr ":+" " " |\
+  grep -v '\+Err\/Lex' | sed 's/% /€/g' |  tr ":+" " " |\
   cut -d " " -f1 | tr -d "%" | tr "€" " " |  sort -u > $lemmas_attr
 
 
