@@ -2,8 +2,8 @@
 # Dette skriptet tester at nesten alle lemmaene i adpositions.lexc kan genereres. De som ikke kan genereres, kopieres til missingadposLemmas.txt. 
 
 
-# Hent ut lemmaer, bortsett fra LexSub (som blir filtrert bort fra normgenerator) . Lemmaene lagres som adpos
-grep ";" src/morphology/stems/adpositions.lexc | egrep -v "^(\!|\+)" | egrep -v 'LexSub' |sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > adpos
+# Hent ut lemmaer, bortsett fra Err/Lex (som blir filtrert bort fra normgenerator) . Lemmaene lagres som adpos
+grep ";" src/morphology/stems/adpositions.lexc | egrep -v "^(\!|\+)" | egrep -v '\+Err\/Lex' |sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > adpos
 
 # Generer lemmaer med +Po
 cat adpos | sed 's/$/+Po/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep -v "+Po" | grep -v "^$" > anadpos 

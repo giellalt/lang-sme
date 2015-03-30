@@ -1,32 +1,32 @@
 # Kommando når man er i sme: sh test/src/morphology/testadjlemmas.sh
 # Dette skriptet tester at nesten alle lemmaene i adjectives.lexc kan genereres. De som ikke kan genereres, kopieres til missingadjLemmas.txt
 
-# Hent ut lemmaer, bortsett fra utkommmenterte (^\!),  dem med hardkoding for spesielle former (K), LexSub (som blir filtrert bort fra normgenerator), adjektiver som bare har attributtform (ATTR|Attr| At ) , adjektiver som krever tagger for komparering (BBO |MUS |BUOREMUSS|OVDDIT |STUORIBUS|BUStem) og lemmaer som bare opptrer i sammensetninger (FINJU|Rreal | R) Lemmaene lagres som adjs
-grep ";" src/morphology/stems/adjectives.lexc | grep -v "^\!" | egrep -v "(LEXICON|ATTR|FINJU|Der|Attr| At |BBO |MUS |BUOREMUSS|OVDDIT |STUORIBUS|BUStem | K | Rreal | R |LexSub)" | sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > adjs
+# Hent ut lemmaer, bortsett fra utkommmenterte (^\!),  dem med hardkoding for spesielle former (K), Err/Lex (som blir filtrert bort fra normgenerator), adjektiver som bare har attributtform (ATTR|Attr| At ) , adjektiver som krever tagger for komparering (BBO |MUS |BUOREMUSS|OVDDIT |STUORIBUS|BUStem) og lemmaer som bare opptrer i sammensetninger (FINJU|Rreal | R) Lemmaene lagres som adjs
+grep ";" src/morphology/stems/adjectives.lexc | grep -v "^\!" | egrep -v "(LEXICON|ATTR|FINJU|Der|Attr| At |BBO |MUS |BUOREMUSS|OVDDIT |STUORIBUS|BUStem | K | Rreal | R |\+Err\/Lex)" | sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > adjs
 
 # generer former med +A+Sg+Nom (grunnformen for de fleste). Lagres som analadjs
 cat adjs | sed 's/$/+A+Sg+Nom/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep -v "A+" | grep -v "^$" | sort -u > analadjs 
 
 # Hent ut lemmaer for plurale lemmaer (_PL). Lemmaene lagres som pluradjs
-grep ";" src/morphology/stems/adjectives.lexc | grep -v "^\!" | grep -v "+Gen" | grep -v LexSub | grep "_PL " | tr ":+" " " | cut -d " " -f1 | tr -d "%" | sort -u > pluradjs
+grep ";" src/morphology/stems/adjectives.lexc | grep -v "^\!" | grep -v "+Gen" | grep -v '\+Err\/Lex' | grep "_PL " | tr ":+" " " | cut -d " " -f1 | tr -d "%" | sort -u > pluradjs
 
 # generer former med +A+Pl+Nom for plurale lemmaer. Lagres i analadjs
 cat pluradjs | sed 's/$/+A+Pl+Nom/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep -v "A+" | grep -v "^$" | sort -u >> analadjs 
 
 # Hent ut lemmaer som bare har attributtform. Lagres i attradjs
-grep ";" src/morphology/stems/adjectives.lexc | grep -v "^\!" | grep -v "+Gen" | grep -v LexSub | egrep "(ATTR|Attr)" | sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > attradjs
+grep ";" src/morphology/stems/adjectives.lexc | grep -v "^\!" | grep -v "+Gen" | grep -v '\+Err\/Lex' | egrep "(ATTR|Attr)" | sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > attradjs
 
 # generer former med +A+Attr lemmaer som bare har attributtform. Lagres i analadjs
 cat attradjs | sed 's/$/+A+Attr/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep -v "A+" | grep -v "^$" | sort -u >> analadjs 
 
 # Hent ut lemmaer som krever superlativtagg. Lagres i superladjs
-grep ";" src/morphology/stems/adjectives.lexc | grep -v "^\!" | grep "BUOREMUSS" | grep -v LexSub | tr ":+" " " | cut -d " " -f1 | tr -d "%" | sort -u > superladjs
+grep ";" src/morphology/stems/adjectives.lexc | grep -v "^\!" | grep "BUOREMUSS" | grep -v '\+Err\/Lex' | tr ":+" " " | cut -d " " -f1 | tr -d "%" | sort -u > superladjs
 
 # generer former for lemmaer lemmaer som krever superlativtagg, med +A+Superl+Sg+Nom. Lagres i analadjs
 cat superladjs | sed 's/$/+A+Superl+Sg+Nom/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep -v "A+" | grep -v "^$" | sort -u >> analadjs 
 
 # Hent ut lemmaer som krever komparativtagg. Lagres i compladjs
-grep ";" src/morphology/stems/adjectives.lexc | grep -v "^\!" | egrep "(OVDDIT|BBO |BU/MUS|EABBO/EAMOS|STUORIBUS|BUStem)" | grep -v LexSub | tr ":+" " " | cut -d " " -f1 | tr -d "%" | sort -u > compladjs
+grep ";" src/morphology/stems/adjectives.lexc | grep -v "^\!" | egrep "(OVDDIT|BBO |BU/MUS|EABBO/EAMOS|STUORIBUS|BUStem)" | grep -v '\+Err\/Lex' | tr ":+" " " | cut -d " " -f1 | tr -d "%" | sort -u > compladjs
 
 # generer former for lemmaer lemmaer som krever komparativtagg, med +A+Comp+Sg+Nom. Lagres i analadjs
 cat compladjs | sed 's/$/+A+Comp+Sg+Nom/' | $LOOKUP src/generator-gt-norm.xfst | cut -f2 | grep -v "A+" | grep -v "^$" | sort -u >> analadjs 
