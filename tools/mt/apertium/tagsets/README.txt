@@ -11,14 +11,14 @@ are applied, are:
 apertium.relabel             - automatically generated, Giella -> Apertium
 modify-tags.regex            - general tagset changes, man. added/maintained
 apertium.postproc.relabel    - general relabelling, manually added/maintained
-modify-rags.TARGETLANG.regex - pair-specific changes using regex, manually m.
+modify-tags.TARGETLANG.regex - pair-specific changes using regex, manually m.
 apertium.TARGETLANG.relabel  - pair-specific relabelling, manually add/maint.
 
 Replace TARGETLANG with the language code of the actual target language you
 are building your Northern Sami apertium analyser for.
 
 
-The file apertium.postproc.relabel is added to all languages and contain some
+The file apertium.postproc.relabel is added to all languages and contains some
 default tag changes between the Giella and Apertium tag sets.
 
 The remaining files can be added as needed, and will be automatically picked up
