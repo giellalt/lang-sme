@@ -201,23 +201,25 @@ AC_CONFIG_FILES([test/src/phonology/pair-test-positive.sh], \
 AC_CONFIG_FILES([test/src/phonology/pair-test-negative.sh], \
       [chmod a+x test/src/phonology/pair-test-negative.sh])
 # Lemma generation tests, all languages:
+AC_CONFIG_FILES([test/src/morphology/generate-adjective-lemmas.sh], \
+      [chmod a+x test/src/morphology/generate-adjective-lemmas.sh])
 AC_CONFIG_FILES([test/src/morphology/generate-noun-lemmas.sh], \
       [chmod a+x test/src/morphology/generate-noun-lemmas.sh])
+AC_CONFIG_FILES([test/src/morphology/generate-propernoun-lemmas.sh], \
+      [chmod a+x test/src/morphology/generate-propernoun-lemmas.sh])
+AC_CONFIG_FILES([test/src/morphology/generate-verb-lemmas.sh], \
+      [chmod a+x test/src/morphology/generate-verb-lemmas.sh])
 # Shorthand shell scripts instead of the old-type aliases - all languages:
 AC_CONFIG_FILES([tools/shellscripts/usme-gt.sh], \
       [chmod a+x tools/shellscripts/usme-gt.sh])
 
 #### BEGIN: Add language-specific scripts below here: ####
-AC_CONFIG_FILES([test/src/morphology/generate-verb-lemmas.sh], \
-      [chmod a+x test/src/morphology/generate-verb-lemmas.sh])
 AC_CONFIG_FILES([test/src/morphology/generate-adverb-lemmas.sh], \
       [chmod a+x test/src/morphology/generate-adverb-lemmas.sh])
 AC_CONFIG_FILES([test/src/morphology/generate-adj-lemmas.sh], \
       [chmod a+x test/src/morphology/generate-adj-lemmas.sh])
 AC_CONFIG_FILES([test/src/morphology/generate-adpos-lemmas.sh], \
       [chmod a+x test/src/morphology/generate-adpos-lemmas.sh])
-AC_CONFIG_FILES([test/src/morphology/generate-propernoun-lemmas.sh], \
-      [chmod a+x test/src/morphology/generate-propernoun-lemmas.sh])
 AC_CONFIG_FILES([tools/shellscripts/generate-ipa-lexicon.sh], \
       [chmod a+x tools/shellscripts/generate-ipa-lexicon.sh])
 AC_CONFIG_FILES([src/phonetics/test/test-ipa-conversion.sh], \
