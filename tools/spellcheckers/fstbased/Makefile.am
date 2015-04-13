@@ -35,13 +35,13 @@ generator-fstspeller-gt-norm.tmp1.hfst: \
 # Remove improper derivations:
 generator-fstspeller-gt-norm.tmp.hfst: \
 		generator-fstspeller-gt-norm.tmp1.hfst \
-		$(top_builddir)/src/filters/remove-illegal-derivation-strings.hfst
-	$(AM_V_RGX2FST)$(PRINTF) "\
-	@\"$(top_builddir)/src/filters/remove-illegal-derivation-strings.hfst\"  \
-	.o. @\"$<\"                                       \
-	;" \
-	| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) \
-			-S --xerox-composition=ON \
-		> $@
+		filters/remove-illegal-derivation-strings.hfst
+	$(AM_V_HXFST)$(PRINTF) "read regex \
+			@\"filters/remove-illegal-derivation-strings.hfst\"  \
+			.o. @\"$<\"                                       \
+		; \n\
+		twosided flag-diacritics\n\
+		save stack $@\n\
+		quit\n" | $(HFST_XFST) -p $(VERBOSITY)
 
 include $(top_srcdir)/am-shared/tools-spellcheckers-fstbased-dir-include.am
