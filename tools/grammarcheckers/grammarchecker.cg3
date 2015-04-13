@@ -3244,7 +3244,7 @@ SET S-BOUNDARY2 = (Pron Interr) OR (Pron Rel) OR ("muhto") OR ("de" CC) OR MO OR
 # S-BOUNDARY2 is used as barrier. When used as target, rather than as barrier,
 # it includes BOS and EOS, and is given the names BOC and EOC (beginning and end of clause)
 
-SET GRAMCHK-S-BOUNDARY  = (Pron Interr) OR (Pron Rel) OR ("muhto") OR ("de" Adv) OR MO OR ("\;") OR (":") OR ("-") OR ("–") OR CS OR PUNCT-LEFT-RIGHT;
+SET GRAMCHK-S-BOUNDARY = (Pron Interr) OR (Pron Rel) OR ("muhto") OR ("de" Adv) OR MO OR ("\;") OR (":") OR ("-") OR ("–") OR CS OR PUNCT-LEFT-RIGHT;
 	# includes CP. Remember that (",") and CC are potential sentence boundaries, too
 
 SET GRAMCHK-S-BOUNDARY1  = (Pron Interr) OR (Pron Rel) OR ("muhto") OR ("de" CC) OR MO OR ("\;") OR (":") OR ("-") OR ("–") OR PUNCT-LEFT-RIGHT ;
@@ -5688,9 +5688,12 @@ SETCHILD (V <TH-Ill-Any>) TO (*-1 @SUBJ> BARRIER (*) - Adv - @ADVL LINK -1 Rel +
 SETCHILD (V <TH-Ill-Any>) TO (1 @>N OR @<SUBJ LINK 1 Ill) ;
 	## Novgoroda beales eai 	liikon 	dáčča sisabáhkkemii , dan dihte go sii atne dán iežaset vearro- ja vuollásašguovlun .
 
-SETCHILD (V <TH-Ill-Any>) TO (*1 Ill - @>N - @>A BARRIER NPNHA - Acc) ;
+SETCHILD (V <TH-Ill-Any>) TO (*1 @>N - @>A BARRIER NPNHA - Acc) ;
 		## Leat go dakkár gii 	liikot 	aivve seamma sohkabealát olbmuide, vai liikot go maiddái nuppi sohkabealát olbmuide.
 		## Atle 	liiko 	hui bures dánset ja teáhteriin bargat .
+		
+SETCHILD (V <TH-lusa-Any>) TO (*1 @>P BARRIER NPNHA LINK 1 ("lusa")) ;
+	## Lei nu buolaš ja soai áibbašeigga nu issorasat dan rukses cizáža lusa mii galggai oahpistit sudno Geassegieddái .
 		
 	# late rule
 	# ---------
@@ -6039,6 +6042,8 @@ SUBSTITUTE N (§TH N) TARGET N IF (p (V <TH-Loc-Any>))(0 Loc)(NEGATE 0 §PART) ;
 SUBSTITUTE V (§TH V) TARGET V IF (p (V <TH-Loc-Any>))(0 (Actio Loc)) ;
 SUBSTITUTE Pron (§TH Pron) TARGET Pron IF (p (V <TH-Loc-Any>))(0 Loc) ;
 SUBSTITUTE Num (§TH Num) TARGET Num IF (p (V <TH-Loc-Any>))(0 Loc) ;
+
+SUBSTITUTE Po (§TH Po) TARGET Po IF (p (V <TH-lusa-Any>))(0 ("lusa")) ;
 #
 #SUBSTITUTE N (§TH N) TARGET N IF (*0 (V <TH-Loc-WPlc>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Loc LINK 0 Sem/Plc OR PLACE OR ACTIVITY OR EVENT) ;
 #SUBSTITUTE Pron (§TH Pron) TARGET N IF (*0 (V <TH-Loc-WPlc>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Loc LINK NOT 0 Pers) ;
@@ -7144,8 +7149,9 @@ ADD:msyn-missing-argument (&msyn-missing-argument) TH-ALL IF (NEGATE *0 §TH BAR
 #ADD:add-ahte (&add-ahte) TARGET VFIN IF (*-1 PrfPrc BARRIER NOT-ADV LINK 0 LEAT-PRFPRC-V LINK -1 ("nu"));
 	## Sii ledje heajut nu 	ballan 	dušše doarggiste unna gorudaččat.
 
-ADD:wrong-valency-ahte-not-fs (&msyn-valency-ahte-not-fs) TARGET NP-HEAD - @>N IF (0 Nom LINK *1 VFIN BARRIER VFIN OR GRAMCHK-S-BOUNDARY LINK p <TH-ahte> LINK NOT 0 <TH-FS> LINK NOT c §TH);
+ADD:wrong-valency-ahte-not-fs (&msyn-valency-ahte-not-fs) TARGET NP-HEAD - @>N IF (0 Nom LINK *1 VFIN BARRIER VFIN OR GRAMCHK-S-BOUNDARY OR @CVP LINK p <TH-ahte> LINK NOT 0 <TH-FS> LINK NOT c §TH);
 ADDCOHORT:wrong-valency-ahte-not-fs ("<ahte>" "ahte" CS &SUGGEST) BEFORE &msyn-valency-ahte-not-fs ;
+	#$ – Mii sáhttit mieđihit ahte gávdno álo soahti ja liikka 	áibbašit 	ráfi .
 	#$ Mii 	ballat 	makkár signálaid dát sáhttá addit guovddáš eiseválddiide mat dál leat árvvoštallamin Deanu gieldda váidalusa fylkamanni guottu ektui .
 	## Lávdegoddi 	ballá 	boazologuovdáneapmi lihkkostuvva ja ahte boazoeaiggádat eai beasa njuovvat dan mađe ahte eastadit lassánemiid . 
 	## Lávdegoddi maid 	ballá 	dát bággonjuovvamat čuhcet eará boazoeaiggádiidda maid .
