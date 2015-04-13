@@ -7,7 +7,7 @@
 ##################################################################
 
 # List any local additions here:
-GT_LOCAL_FSTSPELLER_FILTER_SRCS=
+GT_LOCAL_FSTSPELLER_FILTER_SRCS=remove-illegal-derivation-strings.regex
 
 # Only build these things if speller fst's are enabled:
 if WANT_SPELLERS
