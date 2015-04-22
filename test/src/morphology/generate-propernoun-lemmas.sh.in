@@ -58,26 +58,22 @@ fi
 # Get external Mac editor for viewing failed results from configure:
 EXTEDITOR=@SEE@
 
-##### Extract lemmas #####
-### don't use extract-lemmas.sh ###
+##### Extract lemmas - add additional egrep pattern as parameters: #####
+##### --include "(pattern1|pattern2|...)"                          #####
+##### --exclude "(pattern1|pattern2|...)"                          #####
 
 # Hent ut lemmaer fra den genererte fila smi-sme-propernouns.lexc, bortsett fra utkommmenterte (^\!), 
 # dem som krever +Attr tag og hardkoding for spesielle former (Attr|FirstTag|-atr|),
 # Err/Lex (som blir filtrert bort fra normgenerator).
 # Lemmaene lagres som $lemmas.
-
-grep ";" $source_file |\
-  grep -v "^\!" | egrep -v '(Attr|FirstTag|-atr|\+Err\/Lex)' |\
-  sed 's/% /€/g' | sed 's/%:/¢/g' | sed 's/%!/!/g' | tr ":+" " " |\
-  cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" |\
-  sort -u > $lemmas
+@GTCORE@/scripts/extract-lemmas.sh \
+    --exclude "(Attr|-atr|FirstTag)" \
+    $source_file > $lemmas
 
 # Hent ut lemmaer som krever +Attr for å genereres. Lagres som $lemmas_attr
-grep ";" $source_file |\
-  grep -v "^\!" | egrep '(Attr|-atr|FirstTag)' |\
-  grep -v '\+Err\/Lex' | sed 's/% /€/g' |  tr ":+" " " |\
-  cut -d " " -f1 | tr -d "%" | tr "€" " " |  sort -u > $lemmas_attr
-
+@GTCORE@/scripts/extract-lemmas.sh \
+    --include "(Attr|-atr|FirstTag)" \
+    $source_file > $lemmas_attr
 
 ###### Start testing: #######
 transducer_found=0
@@ -144,18 +140,28 @@ for f in $fsttype; do
 # enklere debugging.
 		comm -23 $lemmas $generated_lemmas.$f.txt | sed 's/$/+N+Prop+Sg+Nom/' \
 		     | $lookup_tool $generator_file.$suffix >> $result_file.$f.txt
+		comm -23 $lemmas $generated_lemmas.$f.txt \
+		     | $lookup_tool $analyserr_file.$suffix > $ana_result_file.$f.txt
 
 # Sammenlikne: Former som er i lemmalista med ikke i lista med genererte former,
 # lagre i missingProperLemmas.txt. Formene generes med  +N+Prop+Attr for enklere
 # debugging.
 		comm -23 $lemmas_attr $generated_lemmas_attr.$f.txt | sed 's/$/+N+Prop+Attr/' \
 		     | $lookup_tool $generator_file.$suffix >> $result_file.$f.txt
+		comm -23 $lemmas_attr $generated_lemmas_attr.$f.txt \
+		     | $lookup_tool $analyserr_file.$suffix >> $ana_result_file.$f.txt
 
 # Open the diff file in SubEthaEdit (if there is a diff):
 		if [ -s $result_file.$f.txt ]; then
 			# Only open the failed lemmas in see if @SEE@ is defined:
 			if [ "$EXTEDITOR" ]; then
 				$EXTEDITOR $result_file.$f.txt
+				$EXTEDITOR $ana_result_file.$f.txt
+            # If you don't have see, print a message instead:
+            else
+                echo "There where problem lemmas. Details in:"
+                echo "* $result_file.$f.txt    "
+                echo "* $ana_result_file.$f.txt"
 			fi
 		    Fail=1
 		    echo "$f - FAIL"
