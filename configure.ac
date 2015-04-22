@@ -218,8 +218,6 @@ AC_CONFIG_FILES([tools/shellscripts/usme-gt.sh], \
 #### BEGIN: Add language-specific scripts below here: ####
 AC_CONFIG_FILES([test/src/morphology/generate-adverb-lemmas.sh], \
       [chmod a+x test/src/morphology/generate-adverb-lemmas.sh])
-AC_CONFIG_FILES([test/src/morphology/generate-adj-lemmas.sh], \
-      [chmod a+x test/src/morphology/generate-adj-lemmas.sh])
 AC_CONFIG_FILES([test/src/morphology/generate-adpos-lemmas.sh], \
       [chmod a+x test/src/morphology/generate-adpos-lemmas.sh])
 AC_CONFIG_FILES([tools/shellscripts/generate-ipa-lexicon.sh], \
