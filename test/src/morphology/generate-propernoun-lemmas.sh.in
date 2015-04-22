@@ -105,14 +105,14 @@ for f in $fsttype; do
 		# store it:
 
 # Generer grunnformen av props med +N+Prop+Sg+Nom, fjern dem som ikke lar seg
-# generere (de har N+ i output). Lagres som $generated_lemmas.$f.tmp
+# generere (de har N+ i output). Lagres som $generated_lemmas.$f.txt
 		sed 's/$/+N+Prop+Sg+Nom/'   $lemmas \
 			| $lookup_tool $generator_file.$suffix \
 			| fgrep -v "+?" | grep -v "^$" | cut -f2 \
             > $generated_lemmas.$f.txt
 
 # Generer grunnformen med +N+Prop+Pl+Nom av props som ikke lar seg generere med
-# +N+Prop+Sg+Nom. Lagres i $generated_lemmas.$f.tmp
+# +N+Prop+Sg+Nom. Lagres i $generated_lemmas.$f.txt
 		sed 's/$/+N+Prop+Sg+Nom/'   $lemmas \
 			| $lookup_tool $generator_file.$suffix \
 			| fgrep "+?" | cut -d "+" -f1 \
@@ -133,22 +133,22 @@ for f in $fsttype; do
 		sed 's/$/+N+Prop+Attr/' $lemmas_attr \
             | $lookup_tool $generator_file.$suffix \
 		    | cut -f2 |  grep -v "N+" | grep -v "^$" \
-		    | sort -u > $generated_lemmas_attr.$f.tmp
+		    | sort -u > $generated_lemmas_attr.$f.txt
 
 ###### Collect results: #######
 # Sorter, unifiser dataene som ikke har vært sortert og unifisert
-		sort -u -o $generated_lemmas.$f.tmp $generated_lemmas.$f.tmp
+		sort -u -o $generated_lemmas.$f.txt $generated_lemmas.$f.txt
 
 # Sammenlikne: Former som er i lemmalista men ikke i lista med genererte former,
 # lagre i missingProperLemmas.txt. Formene generes med  +N+Prop+Sg+Nom for
 # enklere debugging.
-		comm -23 $lemmas $generated_lemmas.$f.tmp | sed 's/$/+N+Prop+Sg+Nom/' \
+		comm -23 $lemmas $generated_lemmas.$f.txt | sed 's/$/+N+Prop+Sg+Nom/' \
 		     | $lookup_tool $generator_file.$suffix >> $result_file.$f.txt
 
 # Sammenlikne: Former som er i lemmalista med ikke i lista med genererte former,
 # lagre i missingProperLemmas.txt. Formene generes med  +N+Prop+Attr for enklere
 # debugging.
-		comm -23 $lemmas_attr $generated_lemmas_attr.$f.tmp | sed 's/$/+N+Prop+Attr/' \
+		comm -23 $lemmas_attr $generated_lemmas_attr.$f.txt | sed 's/$/+N+Prop+Attr/' \
 		     | $lookup_tool $generator_file.$suffix >> $result_file.$f.txt
 
 # Open the diff file in SubEthaEdit (if there is a diff):
