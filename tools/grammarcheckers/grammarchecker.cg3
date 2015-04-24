@@ -5971,8 +5971,11 @@ SETCHILD <LO-Loc-Plc> OR <LO-Loc-Any> TO (1 Sem/Place + Loc OR Loc + Sem/Furn OR
 SETCHILD <LO-Ill-Any> TO (1 Sem/Place + Ill OR Ill + Sem/Furn OR Ill + Sem/Build OR Ill + Sem/Org OR DE-ILL-ADV);
 	## 
 	
-SETCHILD <LO-Loc-Plc> OR <LO-Loc-Any> TO (-1 Sem/Place + Loc OR Loc + Sem/Furn OR Loc + Sem/Build OR Loc + Sem/Org);
+SETCHILD <LO-Loc-Plc> OR <LO-Loc-Any> TO (-1 Sem/Place + Loc OR Loc + Sem/Furn OR Loc + Sem/Build OR Loc + Sem/Org OR Rel + Loc - Sem/Hum);
 	## Mun nu 	liikon 	dán sugadanstuolus čohkkát.
+	
+SETCHILD <LO-Loc-Plc> OR <LO-Loc-Any> TO (-1 @SUBJ> LINK -1 Sem/Place + Loc OR Loc + Sem/Furn OR Loc + Sem/Build OR Loc + Sem/Org OR Rel + Loc - Sem/Hum);
+	## – Gal dat leat nu ollu áššit leamaš dán geasi maid mun gohčodan tulljan , inge 	liiko 	dilis mas mii leat .
 	
 	
 SETCHILD <LO-Ill-Any> TO (-1 Sem/Place + Ill OR Ill + Sem/Furn OR Ill + Sem/Build OR Ill + Sem/Org OR DE-ILL-ADV);
@@ -6252,8 +6255,10 @@ SUBSTITUTE N (§LO N) TARGET N IF (p (V <LO-Loc-Plc>) OR (V <LO-Loc-Any>))(0 Loc
 SUBSTITUTE N (§LO N) TARGET N IF (p (V <LO-Ill-Any>))(0 Ill + Sem/Place);
 	## Dan dihte sii eai diehtán buorebu , ja sii 	liikojedje 	váhneneatnamii ( ) ja eallinvuohkái nu bures , ahte seammá vuostemielain sii dan guođáše go bahádahkki jápminduopmobáikái manašii (Leem 1767 : 172).
 	
-SUBSTITUTE N (§LO Adv) TARGET Adv IF (p (V <LO-Loc-Plc>) OR (V <LO-Loc-Any>))(0 Adv + Sem/Place) ; 
+SUBSTITUTE Adv (§LO Adv) TARGET Adv IF (p (V <LO-Loc-Plc>) OR (V <LO-Loc-Any>))(0 Adv + Sem/Place) ; 
 	## Jos don it 	liiko 	, dus ii leat bággu leat doppe , don válljet ieš , dadjá Marita .
+	
+SUBSTITUTE Pron (§LO Pron) TARGET Pron IF (p (V <LO-Loc-Plc>) OR (V <LO-Loc-Any>))(0 Rel - Sem/Hum) ; 
  
 #SUBSTITUTE Pron (§LO Pron) TARGET N IF (*0 (V <LO-Loc-WPlc>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Loc LINK NOT 0 Pers) ;
 #
@@ -7179,7 +7184,7 @@ ADD:no-missing-argument (&corr-no-missing-argument) TH-ALL IF(*-1 CITATION LINK 
     #$ Skuvlla maŋŋái in gal nu olu báze áibbašit.
 
 
-ADD:msyn-wrong-valency-ill-acc (&msyn-valency-ill-acc) Acc IF (0 N + Sem/Plc)(*0 <TH-Acc-*Plc> + <TH-Ill-Any> - DIA-DERIVATIONS - <PA-Acc-Ani> - <TH-Acc-Any> - <IN-Acc-Any> BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN OR CC)(NEGATE *0 §TH OR (&corr-no-missing-argument))(NEGATE *1 Inf  OR (Prs Pl1) BARRIER NPNHA);
+#ADD:msyn-wrong-valency-ill-acc (&msyn-valency-ill-acc) Acc IF (0 N + Sem/Plc)(*0 <TH-Acc-*Plc> + <TH-Ill-Any> - DIA-DERIVATIONS - <PA-Acc-Ani> - <TH-Acc-Any> - <IN-Acc-Any> BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN OR CC)(NEGATE *0 §TH OR (&corr-no-missing-argument))(NEGATE *1 Inf  OR (Prs Pl1) BARRIER NPNHA);
     ## Mun áibbašan dan ustitlaš Galbára ja dan somás alitlágan ja nu geasuhahtti Guovdageainnu, gos riegádedjen muohtaborgan ovtta čoaskkes dálveeahkeda.
     #$ Áibbašan olles váimmuin
 	## Ee. ON:a álgoálbmotraporterejeaddji James Anaya lea evttohan, ahte sámediggái sirdojuvvole ee. barggut, mat gusket sámegiela. Ee. ON:a álgoálbmotraporterejeaddji James Anaya lea evttohan, ahte sámediggái sirdojuvvole ee. barggut, mat gusket sámegillii. 
@@ -7336,6 +7341,15 @@ ADD:wrong-valency-ill-acc (&msyn-valency-ill-acc) TARGET NP-HEAD IF (0 Acc OR Ge
     # e.g. Nissunbirgui liikojedje sihke sápmelaččat ja dáččat.
 	#$  Go son virgáiduvvui báhppan de justa dan jagi šattaiga Unjárga ja Deanu searvegottit oktan searvegoddin , mas máŋga {unjárgalačča} eai nu 	liikon 	, muitá son .
 	
+	# with inserted relative clauses
+	
+ADD:wrong-valency-ill-acc (&msyn-valency-ill-acc) TARGET NP-HEAD IF (0 Acc OR Gen LINK NOT 0 Ill OR §ANYROLE)(NEGATE 0 @>N OR @>A LINK *1 Gen OR Acc OR SUBJ OR @ADVL BARRIER NPNH OR @CVP)(*0 (V <TH-Ill-Any>) BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN-NOT-AUX OR Inf OR @CVP LINK NONE c §TH OR §IN OR (Acc §CO))(NEGATE p <TH-Acc-Any> OR <CO-Acc-Ani> OR <TH-Acc-Any><TH-Inf>)(NEGATE 0 @>N OR @>A LINK -1 @<OBJ)(NEGATE 0 @>P LINK *1 Po OR Pr BARRIER (*) - @CNP - @>P)(NEGATE 0 @Num<)(NEGATE 0 @-FSUBJ> OR @P<)(NEGATE 0 §TIME-ADJUNCT)(NEGATE 0 @>N OR @>A LINK 1 @<SPRED)(NEGATE *0 (V <TH-Ill-Any>) + REAL-W-ERROR OR (V <TH-Ill-Any>) + Der/Pass OR (V <TH-Ill-Any>) + @>N )(NEGATE 0* (V <TH-Ill-Any>) BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN-NOT-AUX OR Inf OR @CVP LINK 1 (".*i"r) + ?)(NEGATE *0 &msyn-valency-dasa-before-ahte)(NEGATE *0 (V <TH-Ill-Any>) + REAL-W-ERROR OR (V <TH-Ill-Any>) + Der/Pass OR (V <TH-Ill-Any>) + @>N)(NEGATE 0* (V <TH-Ill-Any>) + PrfPrc BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN-NOT-AUX OR Inf OR @CVP LINK *-1 ("leat") BARRIER NOT-ADV OR COMMA)(NEGATE 0* (V <TH-Ill-Any>) + PrfPrc BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN-NOT-AUX OR Inf OR @CVP LINK *-1 SUBJ BARRIER NOT-ADV OR COMMA LINK -1 ("leat"))(NEGATE *0 (V <TH-Ill-Any>) BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN-NOT-AUX OR Inf OR @CVP LINK 1 Loc LINK NOT 0 §ANYROLE OR §TIME-ADJUNCT LINK NONE p V);
+
+ADD:wrong-valency-add-leat (&msyn-valency-add-leat) TARGET ("gos") IF (NOT 0 Ill OR §ANYROLE)(*0 (V <TH-Ill-Any>) BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN-NOT-AUX OR Inf OR @CVP OR Loc LINK NOT 0 <TH-Loc-Any> LINK NONE c §TH OR §IN)(NEGATE p <TH-Loc-Any>)(NEGATE *0 &msyn-valency-ill-acc); 
+	## Juohke sorttas lea biras gos liiko 	buoremusat . ## needs work because its an adverb
+ADD:wrong-valency-add-leat (&msyn-valency-add-leat) TARGET Loc IF (0 Sem/Place)(NOT 0 Ill OR §ANYROLE)(*0 <TH-Ill-Any> BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN-NOT-AUX OR Inf OR @CVP LINK NONE c §TH OR §IN)(NEGATE p <TH-Loc-Any>)(NEGATE *0 &msyn-valency-ill-acc OR &msyn-valency-dasa-before-fs);
+	
+	
 LIST LOC-LIKES = ("dás" Adv) ;
 	# forms that are homonymous with locative forms
     
@@ -7362,10 +7376,6 @@ ADD:wrong-valency-dasa-before-ahte (&msyn-valency-dasa-before-ahte) TARGET ("aht
 	#$ Dát sáhttá maid váikkuhit nu ahte váhnemat válljejit sámegiela fága eret go 	ballet 	maid dat mielddisbuktá dárogieloahpahussii go doppe unnidit diimmuid .
 
 
-ADD:wrong-valency-add-leat (&msyn-valency-add-leat) TARGET ("gos") IF (NOT 0 Ill OR §ANYROLE)(*0 (V <TH-Ill-Any>) BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN-NOT-AUX OR Inf OR @CVP OR Loc LINK NOT 0 <TH-Loc-Any> LINK NONE c §TH OR §IN)(NEGATE p <TH-Loc-Any>)(NEGATE *0 &msyn-valency-ill-acc); 
-	## Juohke sorttas lea biras gos liiko 	buoremusat . ## needs work because its an adverb
-ADD:wrong-valency-add-leat (&msyn-valency-add-leat) TARGET Loc IF (0 Sem/Place)(NOT 0 Ill OR §ANYROLE)(*0 <TH-Ill-Any> BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN-NOT-AUX OR Inf OR @CVP LINK NONE c §TH OR §IN)(NEGATE p <TH-Loc-Any>)(NEGATE *0 &msyn-valency-ill-acc OR &msyn-valency-dasa-before-fs);
-	
 	
 #ADD:valency-locative (&msyn-valency-locative) TARGET NP-HEAD IF (0 HUMAN OR (Pers) LINK 0 NOT-ACC)(NOT 0 SUBJ)(*-1 BOS LINK *1 TV - Der/Pass BARRIER GRAMCHK-S-BOUNDARY2 OR GRAMCHK-VFIN OR Ill LINK NEGATE *0 OBJ BARRIER GRAMCHK-S-BOUNDARY2)(*-1 BOS LINK NEGATE *1 CS LINK *1 GRAMCHK-VFIN);    
     ## Mun boagustan dus. Mun boagustan du.
