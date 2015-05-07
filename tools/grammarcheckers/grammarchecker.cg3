@@ -4475,7 +4475,8 @@ COPY:real-sárgon ("sárgut" V TV PrfPrc &SUGGEST) EXCEPT ("sárgu" N Ess &real-
     # --------------------------------------------
     
 LIST DOUBLE-CONSONANT-AT-VERBS = (".*hk"r V) (".*rtat"r V)  (".*skat"r V) (".*tkat"r V); # search for more examples # no it-verbs
-LIST HIT-VERBS = (".*hit"r V) ;
+LIST HIT-VERBS = (".*hit"r V) (".*nit"r V);
+	#PrfPrc and Sg1 Prs are the same
 
 ADD:syn-prfprc-not-prssg1 (&syn-prfprc-not-prssg1) TARGET DOUBLE-CONSONANT-AT-VERBS OR HIT-VERBS IF (0 (Ind Prs Sg1)) (NEGATE *-1 ("mun" Pron Pers Sg1 Nom) BARRIER GRAMCHK-S-BOUNDARY)(*-1 ("leat") BARRIER GRAMCHK-S-BOUNDARY) ;	
 ADD:syn-prfprc-not-prssg1 (&syn-prfprc-not-prssg1) TARGET DOUBLE-CONSONANT-AT-VERBS IF (0 (Ind Prs Sg1)) (-1 (Pron Pers Acc) OR (Pron Refl Acc) LINK -1 LOC-ACTIO-ACC-V + VFIN);
@@ -6081,6 +6082,13 @@ SETCHILD <LO-Ill-Any> TO (-1 Sem/Place + Ill OR Ill + Sem/Furn OR Ill + Sem/Buil
 SETCHILD <TH-Acc-Any><LO-Ill-*Ani> TO (*0 Ill - Sem/Animate BARRIER NOT-ADV);
 	## Lea vejolašvuohta dalán go njuovvá bohcco , smávvet ruovjji dakkár bihtáide ahte jođánit máizet ja duššo šnjirahahttit báistos ja {dasa} vel lasiheastet juogalágan rutta máid 	liiko.
 	
+LIST MANNER-ADV = "boastut" "bures" "čábbát" ("fasti" Der/at Adv) "dainna_lágiin" "dearvan" "dievva" "doarvái" ("fuotni" Der/at Adv) "gallás" "galmmas" "gitta" "got" "govt" ("gárvvis" A Ess) ("headju" Der/at Adv) ("heittot" A* Der/at Adv) "jaska" "mo" "movt" "nu" "ná" "okto" "ovttas" "ovttaoaivilis" "siivvut" "vearrut" ; # should I use "galmmas"
+	
+SETCHILD (V <MA-Adv-Manner>) TO (1 MANNER-ADV) ;
+SETCHILD (V <MA-Adv-Manner>) TO (-1 MANNER-ADV) ;
+
+SETCHILD (V <MA-Adv-Manner>) TO (-1 <TH-Acc-Any><TH-Inf> LINK -1 ("nugo")) ;
+	
 	
 SETCHILD (V <RE-Loc-Ani>) TO (-1 Loc + Sem/Animate) ;
 	## Visot journalisttat olles dán riikkas leat Børre Knudsenis ja Strandebarm báhpain jearran manne sii eai hálit homofiila olbmuid girkolaš virggiide , ja manne eai 	liiko 	abortii .
@@ -6422,6 +6430,14 @@ SUBSTITUTE N (§CO N) TARGET N IF (p (V <CO-Com-Ani>))(0 Com + Sem/Animate) ;
 #SUBSTITUTE Po (§CO Po) TARGET Po IF (*0 (V <CO-Com-Ani>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Com LINK 0 Sem/Ani OR Sem/Ani) ; 
 #SUBSTITUTE Po (§CO Po) TARGET Po IF (*0 (V <CO-Acc-Ani>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Acc LINK 0 Sem/Ani OR Sem/Ani) ; 
 
+	# "map" MANNER role
+	# --------------------	
+	
+SUBSTITUTE Adv (§MA Adv) TARGET Adv IF (p (V <MA-Adv-Manner>))(0 MANNER-ADV)(NOT 0 §ANYROLE) ;
+	## 
+SUBSTITUTE CS (§MA CS) TARGET CS IF (p (V <MA-Adv-Manner>))(0 MANNER-ADV OR ("nugo"))(NOT 0 §ANYROLE) ;
+	#NOT SURE..
+	
 	# "map" EXTENT role
 	# --------------------	
 	
@@ -7438,6 +7454,8 @@ LIST Pl3-INF-V = (".*dit"r) (".*hit"r) "leat" (".*šit"r) (".*it"r) ;
 
 LIST PRTSG2-INF-V = (".*it"r) ;
 
+LIST 0-SUBJ-V = "dáhpáhuvvat" "geavvat" "šaddat" ;
+
 ADD:wrong-valency-inf-not-fs (&msyn-valency-inf-not-fs) TARGET VFIN IF (NOT 0 Inf LINK *-1 <TH-Inf> BARRIER NOT-ADV OR COMMA LINK NOT 0 <TH-FS> LINK NONE c §TH)(NEGATE -1 COMMA OR (":") LINK 1 <vdic> LINK *1 @<SUBJ BARRIER NPNH)(NEGATE 1 ("go"))(NOT 0 Pl3-INF-V + (Ind Prs Pl3) OR (Ind Prs Pl1) OR ("leat") + (Ind Prs Sg2) OR PRTSG2-INF-V + (Ind Prt Sg2))(NOT -1 BOS OR (":") OR ("–"))(NEGATE -1 Rel LINK -1 Ill OR Loc)(c (Pron Refl Acc));
 	## Son 	liiko 	gáhtet iežas .
 	
@@ -7619,18 +7637,18 @@ ADDCOHORT:wrong-valency-go-inf ("<go>" "go" CS &SUGGEST) AFTER (V <TH-go>) IF (*
 	## Soai leaigga sihke dolkan ja suhttan gullat olbmuid šláddariid sudno birra, ja bovdiiga.
 
 	
-ADD:wrong-valency-add-acc-inf (&msyn-valency-add-acc-inf) TARGET Inf IF (0 COPULAS)(NOT -1 COPULAS)(*0 (V <TH-Acc-Any><TH-Inf>) BARRIER GRAMCHK-S-BOUNDARY OR @CVP LINK NONE c §TH)(NEGATE p (V <TH-Inf>))(*0 (V <TH-AktioLoc>))(NOT 0 &msyn-valency-ahte-not-fs)(NOT -1 &msyn-valency-ahte-not-fs)(NOT 0 §ANYROLE) ;
+ADD:wrong-valency-add-acc-inf (&msyn-valency-add-acc-inf) TARGET Inf IF (0 COPULAS)(NOT -1 COPULAS)(*0 (V <TH-Acc-Any><TH-Inf>) BARRIER GRAMCHK-S-BOUNDARY OR @CVP LINK NONE c §TH)(NEGATE p (V <TH-Inf>))(*0 (V <TH-AktioLoc>))(NOT 0 &msyn-valency-ahte-not-fs)(NOT -1 &msyn-valency-ahte-not-fs)(NOT 0 §ANYROLE)(NEGATE 0 0-SUBJ-V LINK c §MA) ;
 ADDCOHORT:wrong-valency-add-acc-inf ("<dan>" "dat" Pron Dem Sg Acc &SUGGEST) AFTER (V <TH-ahte>) IF (*1 &msyn-valency-add-acc-inf BARRIER VFIN) ;
 	## Stáhtaministtar Jens Stoltenberg lea iežas mátkkis davvin cealkán ahte son ádde go finnmárkulaččat 	ballet 	šaddat oassin stuorra regiuvnnas Davvi-Norggas , muhto dát ii dárbbaš mearkkašit ahte dát lea seamma go lohpádus .
 	#$ - 	Balan 	mii soaitit gártat vuos finadit duopmostuoluid ovddas moatte geardde ovdal go oktasaš orohagaide dohkkehuvvojit ođđa juohkimat ja rájit , lohká Heandarat.
 	
-ADD:wrong-valency-aktioloc-aktioess (&msyn-valency-aktioloc-aktioess) TARGET (Actio Ess) IF (*0 (V <TH-Acc-Any><TH-AktioEss>) BARRIER GRAMCHK-S-BOUNDARY OR <mv> OR VFIN OR Inf - <aux> LINK NONE c §TH)(NEGATE p (V <TH-AktioEss>))(NOT 0 &msyn-valency-ahte-not-fs)(NOT -1 &msyn-valency-ahte-not-fs)(NEGATE *-1 <AktioEss> OR <PU-AktioEss> BARRIER V OR GRAMCHK-S-BOUNDARY)(NOT 0 §ANYROLE) ;
+ADD:wrong-valency-aktioloc-aktioess (&msyn-valency-aktioloc-aktioess) TARGET (Actio Ess) IF (*0 (V <TH-Acc-Any><TH-AktioEss>) BARRIER GRAMCHK-S-BOUNDARY OR <mv> OR VFIN OR Inf - <aux> LINK NONE c §TH)(NEGATE p (V <TH-AktioEss>))(NOT 0 &msyn-valency-ahte-not-fs)(NOT -1 &msyn-valency-ahte-not-fs)(NEGATE *-1 <AktioEss> OR <PU-AktioEss> BARRIER V OR GRAMCHK-S-BOUNDARY)(NOT 0 §ANYROLE)(NEGATE 0 0-SUBJ-V LINK c §MA) ;
 COPY:wrong-valency-aktioloc-aktioess (Actio Loc &SUGGEST) EXCEPT (Actio Ess &msyn-valency-aktioloc-aktioess) TARGET (&msyn-valency-aktioloc-aktioess);	
 	#$ Mu leat bidjan dego rievvárin máid 	ballet 	alccen háhkame ruđaid , lohká Olaf Eliassen ja lasiha : – Mun in leat dien ámmáhis ožžon buollán evrrege .
 	## Sámedikki politihkkárat eai galgga maid darbbašit ballat čalmmustahttimin fitnodagaid.
 	#$ – Orrot 	ballamin 	sámegielbáikenamaid geavaheamis , lohká Mathisen . 
 	
-ADD:wrong-valency-add-acc-prfprc (&msyn-valency-add-acc-prfprc) TARGET PrfPrc IF (*-1 (V <TH-Acc-Any><TH-PrfPrc>) BARRIER GRAMCHK-S-BOUNDARY OR <mv> OR VFIN LINK NONE c §TH)(NEGATE p (V <TH-PrfPrc>))(NOT 0 &msyn-valency-ahte-not-fs)(NOT -1 &msyn-valency-ahte-not-fs)(NEGATE *-1 @-FSUBJ> BARRIER NOT-ADV)(NEGATE 0 @>N)(NEGATE *-1 @SUBJ> + (Pers Sg1))(NEGATE 0 <TH-Inf> LINK *-1 (V <TH-Acc-Any><TH-PrfPrc>) + Inf BARRIER NOT-ADV-PCLE)(NEGATE -1 Acc OR Gen)(NEGATE -1 ("nu") LINK 2 ("ahte"))  ;
+ADD:wrong-valency-add-acc-prfprc (&msyn-valency-add-acc-prfprc) TARGET PrfPrc IF (*-1 (V <TH-Acc-Any><TH-PrfPrc>) BARRIER GRAMCHK-S-BOUNDARY OR <mv> OR VFIN LINK NONE c §TH)(NEGATE p (V <TH-PrfPrc>))(NOT 0 &msyn-valency-ahte-not-fs)(NOT -1 &msyn-valency-ahte-not-fs)(NEGATE *-1 @-FSUBJ> BARRIER NOT-ADV)(NEGATE 0 @>N)(NEGATE *-1 @SUBJ> + (Pers Sg1))(NEGATE 0 <TH-Inf> LINK *-1 (V <TH-Acc-Any><TH-PrfPrc>) + Inf BARRIER NOT-ADV-PCLE)(NEGATE -1 Acc OR Gen)(NEGATE -1 ("nu") LINK 2 ("ahte"))(NEGATE 0 0-SUBJ-V LINK c §MA)  ;
 	#$  nu PrfPrc ahte ..
 	## – Ledje garra sánit sátnejođiheaddjis , muhto moai letne čielggadan ášši ja ipmirdan dieđusge ahte son balai dán soardit suohkana álbmoga , dadjá Ellen Zahl Jonassen ja lohká gullan sátnejođiheaddjis ahte ii boađe danin go lea mátkkošteame . ---- should be iežas gullan FIX
 	#$ Skuohtanjárgga siidda boazodoalli Klemet Amund Eira 	ballá 	Boazodoallohálddahusa {divvon} Boazodoallostivrra čoahkkingirji . D: should be čoahkkingirjji
