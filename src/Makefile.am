@@ -8,10 +8,8 @@ SUBDIRS = phonology morphology filters phonetics hyphenation orthography syntax 
 ####### Automake targets: ########
 
 # Define target variables first, before assigning to them:
-GT_ANALYSERS_HFST=
-GT_GENERATORS_HFST=
-GT_ANALYSERS_XFST=
-GT_GENERATORS_XFST=
+GT_ANALYSERS=
+GT_GENERATORS=
 
 #### Local modifications in *fst processing: ####
 ####
@@ -26,7 +24,7 @@ GT_GENERATORS_XFST=
 #### relevant variable, e.g.:
 ####
 #### if CAN_HFST
-#### GT_GENERATORS_HFST+=generator-oahpa-gt-norm.hfst
+#### GT_GENERATORS+=generator-oahpa-gt-norm.hfst
 #### endif
 ####
 #### NB!!!! The HFST targets should get a hyphen after 'analyser'/'generator'
@@ -48,20 +46,20 @@ GT_GENERATORS_XFST=
 if CAN_XFST
 
 if WANT_MORPHOLOGY
-GT_ANALYSERS_XFST+= analyser-nob-desc.xfst \
-					analyser-nob-norm.xfst 
+GT_ANALYSERS+= analyser-nob-desc.xfst \
+			   analyser-nob-norm.xfst 
 endif # WANT_MORPHOLOGY
 
 if WANT_GENERATION
-GT_GENERATORS_XFST+=generator-nob-desc.xfst \
-					generator-nob-norm.xfst 
+GT_GENERATORS+=generator-nob-desc.xfst \
+			   generator-nob-norm.xfst 
 endif # WANT_GENERATION
 
 if WANT_PHONETIC
-GT_ANALYSERS_XFST+=
-GT_GENERATORS_XFST+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst \
-					generator-tts-gt-norm_nonum_noabbr_nohyph_fin.xfst \
-					generator-tts-gt-norm_nonum_noabbr_nohyph_nob.xfst
+GT_ANALYSERS+=
+GT_GENERATORS+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst \
+			   generator-tts-gt-norm_nonum_noabbr_nohyph_fin.xfst \
+			   generator-tts-gt-norm_nonum_noabbr_nohyph_nob.xfst
 endif # WANT_PHONETIC
 
 endif # CAN_XFST
@@ -70,23 +68,29 @@ endif # CAN_XFST
 if CAN_HFST
 
 if WANT_MORPHOLOGY
-GT_ANALYSERS_HFST+= analyser-nob-desc.hfstol \
-					analyser-nob-norm.hfstol
+GT_ANALYSERS+=analyser-nob-desc.hfstol \
+			  analyser-nob-norm.hfstol
 endif # WANT_MORPHOLOGY
 
 if WANT_GENERATION
-GT_GENERATORS_HFST+=generator-nob-desc.hfstol \
-					generator-nob-norm.hfstol
+GT_GENERATORS+=generator-nob-desc.hfstol \
+			   generator-nob-norm.hfstol
 endif # WANT_GENERATION
 
 if WANT_PHONETIC
-GT_ANALYSERS_HFST+=
-GT_GENERATORS_HFST+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst \
-					generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst \
-					generator-tts-gt-norm_nonum_noabbr_nohyph_nob.hfst
+GT_ANALYSERS+=
+GT_GENERATORS+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst \
+			   generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst \
+			   generator-tts-gt-norm_nonum_noabbr_nohyph_nob.hfst
 endif # WANT_PHONETIC
 
 endif # CAN_HFST
+
+#### FOMA transducers
+if CAN_FOMA
+GT_ANALYSERS+=
+GT_GENERATORS+=
+endif # CAN_FOMA
 
 #################################################
 #### Add language-specific build rules here: ####
@@ -441,26 +445,5 @@ generator-oahpa-gt-norm.xfst: generator-oahpa-gt-norm.tmp.xfst \
 ##################################################################
 #### END: Add local processing instructions ABOVE this line ######
 ##################################################################
-
-#### HFST transducer fallback target:
-#### - inversion is needed FOR THE ANALYSER because the hfst model is upside
-#### down compared to Xerox AT APPLICATION TIME.
-analyser%.hfst: analyser%.tmp.hfst
-	$(AM_V_INVERT)$(HFST_INVERT) -i $< -o $@
-
-generator%.hfst: generator%.tmp.hfst
-	$(AM_V_CP)cp -f $< $@
-
-#### Xerox transducer fallback target:
-#### - inversion is needed in the final step for the GENERATOR.
-analyser%.xfst: analyser%.tmp.xfst
-	$(AM_V_CP)cp -f $< $@
-
-generator%.xfst: generator%.tmp.xfst
-	$(AM_V_XFST)$(PRINTF) "\
-		 load stack $<\n\
-		 invert net\n\
-		 save stack $@\n\
-		 quit\n" | $(XFST) $(VERBOSITY)
 
 include $(top_srcdir)/am-shared/src-dir-include.am
