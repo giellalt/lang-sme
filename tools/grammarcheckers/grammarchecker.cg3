@@ -695,6 +695,7 @@ LIST <RO-Ill-Any> = <RO-Ill-Any> ;
 LIST <RS-Acc-Reason> = <RS-Acc-Reason> ;
 LIST <RS-Com-Any> = <RS-Com-Any> ;
 LIST <RS-Com-Clth> = <RS-Com-Clth> ;
+LIST <RS-Com-Impers> = <RS-Com-Impers> ;
 LIST <RS-Ill-Any> = <RS-Ill-Any> ;
 LIST <RS-Loc-Any> = <RS-Loc-Any> ;
 LIST <RS-alde-Any> = <RS-alde-Any> ;
@@ -6338,6 +6339,9 @@ SETCHILD (V <MA-Adv-Manner>) TO (-1 <TH-Acc-Any><TH-Inf> LINK -1 ("nugo")) ;
 
 SETCHILD (V <RS-Acc-Reason>) TO (-1 ("dušši" N Pl Acc)) ;
 SETCHILD (V <RS-Acc-Reason>) TO (*1 ("dušši" N Pl Acc) BARRIER NPNH) ;
+
+SETCHILD (V <RS-Com-Impers>) TO (-1 (Pron Com)) ;
+SETCHILD (V <RS-Com-Impers>) TO (*1 (Pron Com) BARRIER NPNHA) ;
 	
 	
 SETCHILD (V <RE-Loc-Ani>) TO (-1 Loc + Sem/Animate) ;
@@ -6503,7 +6507,9 @@ SUBSTITUTE Pron (§AG Pron) TARGET Pron IF (0 (Pl Nom)) (*0 (V <AG-Nom-Any>) + P
 	# ----------------
 	# needs to be before the TH rules
 
-SUBSTITUTE N (§RS N) TARGET N IF (0 Acc) (p (V <RS-Acc-Reason>))(0 ("dušši" N Pl Acc)); 	
+SUBSTITUTE N (§RS N) TARGET N IF (0 Acc) (p (V <RS-Acc-Reason>))(0 ("dušši" N Pl Acc));
+
+SUBSTITUTE Pron (§RS Pron) TARGET Pron IF (0 Com LINK NOT 0 Pers) (p (V <RS-Com-Impers>)); 	
     
 #	# "map" THEME role
 #	# ----------------
@@ -7810,7 +7816,8 @@ ADDCOHORT:wrong-valency-das-before-fs ("<das>" "dat" Pron Dem Sg Loc &SUGGEST) B
 	## Sii ledje heajut nu 	ballan 	dušše doarggiste unna gorudaččat.
 SET PERS = Sg1 OR Sg2 OR Sg3 OR Du1 OR Du2 OR Du3 OR Pl1 OR Pl2 OR Pl3 ;	
 
-ADD:wrong-valency-ahte-not-fs (&msyn-valency-ahte-not-fs) TARGET NP-HEAD - @>N OR @<ADVL OR (Adv &SUGGEST) OR (A Pl Nom) + @SUBJ> IF (*1 VFIN BARRIER VFIN OR Inf OR GRAMCHK-S-BOUNDARY OR @CVP LINK p <TH-ahte> LINK NOT 0 <TH-FS> LINK NONE c §TH)(*-1 <TH-ahte> LINK NEGATE c N)(NOT -1 &msyn-valency-ill-nom)(NEGATE *-1 @CVP OR (":") OR ("-") BARRIER NPNH)(NEGATE *-1 ("ahte") BARRIER V OR GRAMCHK-S-BOUNDARY)(NEGATE *-1 ("ahte") BARRIER V OR GRAMCHK-S-BOUNDARY)(NOT -1 BOS OR (":") OR ("–"))(NOT -1 Rel LINK -1 Ill OR Loc)(NEGATE 0 Rel LINK *1 VFIN);
+ADD:wrong-valency-ahte-not-fs (&msyn-valency-ahte-not-fs) TARGET NP-HEAD - @>N OR @<ADVL OR (Adv &SUGGEST) OR (A Pl Nom) + @SUBJ> IF (*1 VFIN BARRIER VFIN OR Inf OR GRAMCHK-S-BOUNDARY OR @CVP OR VAbess LINK p <TH-ahte> LINK NOT 0 <TH-FS> LINK NONE c §TH)(*-1 <TH-ahte> BARRIER VAbess LINK NEGATE c N)(NOT -1 &msyn-valency-ill-nom)(NEGATE *-1 @CVP OR (":") OR ("-") BARRIER NPNH)(NEGATE *-1 ("ahte") BARRIER V OR GRAMCHK-S-BOUNDARY)(NEGATE *-1 ("ahte") BARRIER V OR GRAMCHK-S-BOUNDARY)(NOT -1 BOS OR (":") OR ("–"))(NOT -1 Rel LINK -1 Ill OR Loc)(NEGATE 0 Rel LINK *1 VFIN);
+	#OR VAbess ok??
 	#$ – Go čájeha biktasiid gávppašeddjiide , {sii} álo 	liikojit 	guldalit duogáža birra , čilge Anton .
 	#$ Jos don it 	liiko 	, dus ii leat bággu leat doppe , don válljet ieš , dadjá Marita .
 	#$ – Mii sáhttit mieđihit ahte gávdno álo soahti ja liikka 	áibbašit 	ráfi .
@@ -7986,7 +7993,7 @@ COPY:wrong-valency-ill-ovddas (&DELETE) EXCEPT (&msyn-valency-ill-ovddas) TARGET
 LIST ACCPX-LOC-N = (".*ktu"r) ;
 	# nouns where Acc PxSg3 is homonymous with Sg Loc
     
-ADD:wrong-valency-loc-acc (&msyn-valency-loc-acc) TARGET NP-HEAD IF (NEGATE *0 (V <TH-Acc-Any>) BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR <mv> LINK NONE c §TH)(0 Acc OR Gen LINK NOT 0 Loc OR §ANYROLE)(NEGATE 0 @>N OR @>A LINK *1 Gen OR Acc OR SUBJ OR @ADVL BARRIER NPNH)(NEGATE 0 @Num< LINK -1 Num)(*0 (V <TH-Loc-Any>) BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR Inf OR @-FMAINV OR @CVP LINK NOT 0 <TH-Com-Any> LINK NONE c §TH OR §IN OR (Acc §CO))(NEGATE p <TH-Acc-Any>)(NEGATE 0 @>N OR @>A OR (Prop Gen) LINK 1 @<OBJ OR @<SUBJ)(NEGATE 0 @>P LINK 1 Po)(NEGATE 0 @P< LINK *-1 Pr BARRIER NPNH)(NEGATE *0 &msyn-valency-ill-acc OR &msyn-valency-dasa-before-ahte OR &msyn-valency-loc-acc OR &msyn-valency-loc-missing OR &msyn-valency-ahte-not-fs)(NEGATE 0 §TIME-ADJUNCT)(NEGATE 0 Loc LINK -1 (Num Gen) LINK -1 (Num Nom) OR (Coll Nom))(NEGATE 0* (V <TH-Loc-Any>) BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN-NOT-AUX OR Inf OR @CVP LINK 1 (".*s"r) + ?)(NEGATE *0 (V <TH-Loc-Any>) + REAL-W-ERROR OR (V <TH-Loc-Any>) + Der/Pass OR (V <TH-Loc-Any>) + @>N )(NEGATE 0* (V <TH-Loc-Any>) + PrfPrc BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN-NOT-AUX OR Inf OR @CVP LINK *-1 ("leat") BARRIER NOT-ADV)(NEGATE 0* (V <TH-Loc-Any>) + PrfPrc  BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN-NOT-AUX OR Inf OR @CVP LINK *-1 SUBJ BARRIER NOT-ADV LINK -1 ("leat"))(NEGATE 0 @-FMAINV + <TH-Loc-Any> OR @+FMAINV + <TH-Loc-Any> OR REAL-W-ERROR + V)(NEGATE 0 PxSg3 LINK 0 ACCPX-LOC-N); #(NEGATE 0 <vdic> LINK -1 COMMA LINK *-1 VFIN) ; 
+ADD:wrong-valency-loc-acc (&msyn-valency-loc-acc) TARGET NP-HEAD IF (NEGATE *0 (V <TH-Acc-Any>) BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR <mv> LINK NONE c §TH)(0 Acc OR Gen LINK NOT 0 Loc OR §ANYROLE)(NEGATE 0 @>N OR @>A LINK *1 Gen OR Acc OR SUBJ OR @ADVL BARRIER NPNH)(NEGATE 0 @Num< LINK -1 Num)(*0 (V <TH-Loc-Any>) BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR Inf OR @-FMAINV OR @CVP LINK NOT 0 <TH-Com-Any> LINK NONE c §TH OR §IN OR (Acc §CO))(NEGATE p <TH-Acc-Any>)(NEGATE 0 @>N OR @>A OR (Prop Gen) LINK 1 @<OBJ OR @<SUBJ)(NEGATE 0 @>P LINK 1 Po)(NEGATE 0 @P< LINK *-1 Pr BARRIER NPNH)(NEGATE *0 &msyn-valency-ill-acc OR &msyn-valency-dasa-before-ahte OR &msyn-valency-loc-acc OR &msyn-valency-loc-missing OR &msyn-valency-ahte-not-fs OR &msyn-valency-das-before-fs)(NEGATE 0 §TIME-ADJUNCT)(NEGATE 0 Loc LINK -1 (Num Gen) LINK -1 (Num Nom) OR (Coll Nom))(NEGATE 0* (V <TH-Loc-Any>) BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN-NOT-AUX OR Inf OR @CVP LINK 1 (".*s"r) + ?)(NEGATE *0 (V <TH-Loc-Any>) + REAL-W-ERROR OR (V <TH-Loc-Any>) + Der/Pass OR (V <TH-Loc-Any>) + @>N )(NEGATE 0* (V <TH-Loc-Any>) + PrfPrc BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN-NOT-AUX OR Inf OR @CVP LINK *-1 ("leat") BARRIER NOT-ADV)(NEGATE 0* (V <TH-Loc-Any>) + PrfPrc  BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN-NOT-AUX OR Inf OR @CVP LINK *-1 SUBJ BARRIER NOT-ADV LINK -1 ("leat"))(NEGATE 0 @-FMAINV + <TH-Loc-Any> OR @+FMAINV + <TH-Loc-Any> OR REAL-W-ERROR + V)(NEGATE 0 PxSg3 LINK 0 ACCPX-LOC-N); #(NEGATE 0 <vdic> LINK -1 COMMA LINK *-1 VFIN) ; 
 	#$ golbma miellahtu , 	ballet 	logi beaivve maŋŋil álggaheami bákkus šaddat heaittihit organisašuvnna unnán miellahtuid geažil . 
 	#$ – Mus goittot lea miellagiddevaš bargu gos ollu ođas dáhpáhuvva beaivvis beaivái , ja gos {leavttus} ii galgga 	ballat 	, dadjala Henriksen ovdal go doapmala muhtun čoahkkimii . 
 	#$ Muhto das eaba loga Lemte Ánte Buljo ja Thor Thrane galgat sámi artisttaid 	ballat.
@@ -8018,7 +8025,8 @@ ADD:wrong-valency-add-acc-to-ess (&msyn-valency-add-acc-to-ess) TARGET (A Ess) I
 	#NEEDS TESTING
 
 
-ADD:wrong-valency-aktioloc-inf (&msyn-valency-aktioloc-inf) TARGET Inf IF (*0 (V <TH-AktioLoc>) BARRIER GRAMCHK-S-BOUNDARY OR <mv> OR @CVP OR Inf - <aux> OR VFIN LINK NONE c §TH OR §BE)(NEGATE p (V <TH-Inf>) OR (V <TH-Acc-Any><TH-Inf>))(*0 (V <TH-AktioLoc>) BARRIER GRAMCHK-S-BOUNDARY)(NOT 0 COPULAS)(NOT *-1 COPULAS BARRIER NOT-ADV)(NEGATE *0 &msyn-valency-loc-missing OR &msyn-valency-acc-inf-not-nom-inf BARRIER GRAMCHK-S-BOUNDARY)(NEGATE 0 §TH)(NEGATE *-1 @SUBJ> + Pl1 BARRIER NOT-ADV-PCLE)(NEGATE *-1 <Inf> BARRIER NOT-ADV-PCLE);
+ADD:wrong-valency-aktioloc-inf (&msyn-valency-aktioloc-inf) TARGET Inf IF (*0 (V <TH-AktioLoc>) BARRIER GRAMCHK-S-BOUNDARY OR <mv> OR @CVP OR CC OR Inf - <aux> OR VFIN LINK NONE c §TH OR §BE)(NEGATE p (V <TH-Inf>) OR (V <TH-Acc-Any><TH-Inf>))(NOT 0 COPULAS)(NOT *-1 COPULAS BARRIER NOT-ADV)(NEGATE *0 &msyn-valency-loc-missing OR &msyn-valency-acc-inf-not-nom-inf BARRIER GRAMCHK-S-BOUNDARY)(NEGATE 0 §TH)(NEGATE *-1 @SUBJ> + Pl1 BARRIER NOT-ADV-PCLE)(NEGATE *-1 <Inf> BARRIER NOT-ADV-PCLE);
+	## Muhto ii ábut gal 	ballat 	ja heaitit duvdimis sámi áššiid ovddos , logai Ole Henrik Magga .
 	#$ Go lea buorre sadji iige nu hušša , de bisánit olbmot dávjjibut vai besset dárkileappot \textit{geahčadit} gálvvuid ja oastit buktagiid maidda 	liikojit.
 	#$ Guokte lábbá ain váilot, ja maid Berit Anna ballá leat gáskkahallon ja ain leat meahcis.
 	## Jearahallamis čájehuvvo ahte okta juohke njealját olbmos ballá roasmmehuvvat rakeahtaid geažil . --- make a rule for juohke njealját olbmos...
