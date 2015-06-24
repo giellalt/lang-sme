@@ -22,8 +22,8 @@ APERTIUM_TARGET_LANG_NAME=apertium-sme-sma \
 #### BEGIN: Add local processing instructions BELOW this line ####
 ##################################################################
 
-# We want to make semantic tags optional for the nob-targeted analyser:
-analyser-mt-gt-desc.nob.hfst: analyser-mt-gt-desc.nob.tmp.hfst \
+# We want to make semantic tags optional for the apertium-targeted analyser:
+analyser-mt-gt-desc.%.hfst: analyser-mt-gt-desc.%.tmp.hfst \
 			$(top_builddir)/src/filters/make-optional-semantic-tags.hfst
 	$(AM_V_RGX2FST)$(PRINTF) "\
 		@\"$(top_builddir)/src/filters/make-optional-semantic-tags.hfst\" \
