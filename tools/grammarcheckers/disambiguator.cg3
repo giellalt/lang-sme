@@ -1606,6 +1606,18 @@ SET V-TRANS-ACT-NOT-ACT = V-TRANS - Der/Pass - Der/NomAct - Actio - NOMAG - PrsP
 
 SET V-TRANS-ACT-NOT-ACT-NOT-AUX = V-TRANS - Der/Pass - Der/NomAct - Actio - NOMAG - AUX OR (Actio Ess) ;
 
+LIST PL1-V = (V Ind Prs Pl1)  (V Ind Prt Pl1) (V Cond Prs Pl1) 
+             (V Cond Prt Pl1) (V Pot Prs Pl1) (V Neg Ind Pl1);
+
+LIST NOT-REAL-V = (Actio Nom) (Actio Gen) (Actio Loc) (Actio Com) PrsPrc ;
+
+SET REAL-V = V - NOT-REAL-V  ;
+  #!! ** V is all readings with a V tag in them, REAL-V should
+  #!! be the ones without an N tag following the V.  
+  #!! The REAL-V set thus awaits a fix to the preprocess V ... N bug.
+
+SET TRANS-V = V-TRANS - Der/Pass + REAL-V ;
+
 
 # Sets for verbs choosing oblique objects or adverbials
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -3683,16 +3695,116 @@ REMOVE:r594 (N Ess) IF (*-1 ("dahkat") BARRIER SV-BOUNDARY)(0 (A Ess) LINK NOT 0
 
 	# Nouns, not verbs
 	# ----------------
+#!! * __álbmotN__, ii V.
 
+SELECT:álbmotN ("álbmot" N) (0 V)(-1 Gen) ;
+	#fromdisambiguation.cg3
+	
+#!! * __headisge__, ii heađisge.
+SELECT:headisge ("heahti" Loc Foc/ge) IF (0 ("heahtit")) ;
+	## ii heađisge
+	#fromdisambiguation.cg3
+	
+#!! * __loahppa__ after TIME Gen.
+SELECT:loahppa ("loahppa") IF (0 REAL-V LINK -1 TIME + Gen) ;
+	#fromdisambiguation.cg3
+	
 REMOVE:r595 VAbess IF (0 ("orohat") OR ("vuojahat"));
 	## Guovlu lea orohaga olggobealde.
 	#fromdisambiguation.cg3
 	
-REMOVE:r596 ("fatnasit" Sg2) IF (0 ("fanas"));	
+REMOVE:r596 ("fatnasit" Sg2) IF (0 ("fanas"));
+
+LIST FIRSTPERS = Du1 Sg1 Pl1 ;
+
+
+REMOVE:Imprt1p Imprt + FIRSTPERS (0 (N Nom) LINK NOT 1 Inf OR Adv)(NEGATE 0 TRANS-V LINK 1 Acc) ;
+	#$ Giitu mu oasis!
+	#$ Gilvu golmma joavkku gaskka
+	#$ Bivdu ja guollebivdu
+	#% Váldot beatnaga mielde!
+	#% Gárvodeahkku ja mannu geahččat dien nieidda, gii váccii stuora gápmagiiguin.
+	#fromdisambiguation.cg3
+
+REMOVE:vfin VFIN ((0 (N Nom) LINK 1 (":") OR Rel LINK -2 BOS) OR (0 (N Gen) LINK 1 ("guovttos"))) ;
+	#$ Ohcci: Per M. Buljo , Guovdageaidnu
+	#$ Ohcci geas lea earenoamáš gelbbolašvuohta sáhttá árvvoštallojuvvot seniorráđđeaddin.
+	#$ Ohcci guovttos áigguiga ovdánahttit áibbas ođđa ja konkrehta buktagiid .
+	#$ Álbmot mii ballá ii leat friija álbmot.
+	#% Ohcci áhči!
+	#fromdisambiguation.cg3
+
+
+LIST N-NOT-V = "deasta" "viessu" "giella" "lávlla" "muddu" "nieida" "skuvla" ;
+
+REMOVE Imprt (0 N LINK *1 ("leat") - Imprt BARRIER REAL-V OR S-BOUNDARY)  ;
+	#$ Giela boahtteáigái lea erenoamáš dehálaš ahte nuorain stuorát proseantaoassi go gaskaleamos buolvvas máhttet hállat kymrigiela .
+	#fromdisambiguation.cg3
+	
+REMOVE (Imprt Sg2) (-1 BOC LINK 2 (Pers Nom) LINK NOT 0 Sg2) ;
+	#$ Giela sii gal besse gullat dievva beljiid .
+	#fromdisambiguation.cg3
+
+REMOVE Imprt (0 N-NOT-V LINK -1 BOC)(1 VFIN) ;
+	#$ Giela oahpat go guldalat, humat, čálát, neavttát ja ovttastalat earáiguin, lohkaba girječállit.
+	#fromdisambiguation.cg3
+
+SELECT:Vgielaheapme ("giellat" V) (0 ("gielaheapme")) ;
+	#fromdisambiguation.cg3
+
+SELECT:Vnotverb1 N-NOT-V IF (0 V LINK -1 HUMAN + Gen OR (Pron Gen) OR SAPMI + Gen OR PLACE + Gen OR Attr OR ("buorre" A) OR PrsPrc OR PrfPrc) ;
+	#$ Geafes olbmá viessu.
+	#$ Ođđa viessu boahtte jagi.
+	#$ Seamma ládje lea maiddái go Kristus hábme máhttájeddjiid vuoiŋŋalaš viessun ja ealli tempelin.
+	#$ – Mu	niidii Sire .
+	#fromdisambiguation.cg3
+
+SELECT:Vnotverb2 N-NOT-V IF (0 V LINK -1 go LINK -1 VFIN) ;
+	#$ Iskka massá go viessu ollu lieggasa.
+	#fromdisambiguation.cg3
+
+SELECT:Vnotverb3 N-NOT-V + Sg IF (0 V LINK -1 VFIN + Sg3) ;
+	#$ NVE lea geavahan viesu go leat barggus Kárášjogas dahje Deanus , ja maŋemus lei viessu anus mannan čavčča go Válljoga guovllus ledje barggus.
+	#fromdisambiguation.cg3
+
+SELECT:Vnotverb4 N-NOT-V IF (0 $$CASE LINK 0 N OR Pron)(*-1 ("ja") OR ("dahje") OR ("dehe") OR COMMA OR NEGFOC BARRIER NPNH LINK -1 N + $$CASE) ;
+SELECT:Vnotverb4 N-NOT-V IF (0 $$CASE LINK 0 N OR Pron)(1 ("ja") OR ("dahje") OR ("dehe") OR COMMA OR NEGFOC LINK *1 N + $$CASE BARRIER NPNH) ;
+	#$ Dákkár guovlluin ii galgga álggahit doaibmabijuid mat sakka sáhttet muhttit eanadaga hámi dahje mihtilmasvuođa , numo omd. viesut, rusttegat, geainnut ja čievravieččahagat.
+	#$ Lean čuoldán searrobáttiid sihke gándii ja niidii.
+	#$ Alcces ja niidii, čieža jahkásaš Sarai, ii astta báljo goarrut šat maidege .
+	#fromdisambiguation.cg3
+
+SELECT:Vnotverb6 N-NOT-V IF (0 V LINK 1 ("vuovdimassii") OR Rel OR MO OR Po) ;
+	#$ Viessu vuovdemassii Kárášjogas.
+	#$ Viesus gos jápmán dievdu gávdnui galge lean eambbo olbmot , muhto Guovdageainnu leansmánni Klemetsen ii hálit duođaštit ledje go olbmot viesus ii ge gallis de livčče leamaš.
+	#$ Giela dáfus maid leat beahtahallan.
+	#fromdisambiguation.cg3
+	
+SELECT:Vnotverb6 N-NOT-V IF (0 N + Ess LINK -1 Ess) ;	
+	#$ Lea go dus leamaš sámegiella nubbin giellan skuvllas álggo rájes?
+	#fromdisambiguation.cg3
+	
+SELECT:Nniidii N (0 ("nieida") OR ("skuvla")) (0 Ill LINK *0 ILL-V OR ("addit") BARRIER REAL-V OR Ill) ;	
+	#fromdisambiguation.cg3
+	
 
 REMOVE:PrsPrc PrsPrc IF (0 LEX-N + Sg)(NEGATE -1 ("nu") LINK 2 go)(NEGATE *1 Acc BARRIER NOT-A-ADV)(NEGATE -1 PLACE + Loc OR Adv OR Po)(NEGATE -1 ("leat") LINK 2 N) ;
 	#$ Dainna ii leat vissis mearri galljodagas.
 	# Should not hit cealkkavástaga with PrsPrc + Obj.
+	#fromdisambiguation.cg3
+
+REMOVE:NomcopNom V - AUX (0 (N Sg Nom) LINK NOT 0 VFIN LINK 1 COPULAS LINK 1 (Sg Nom))(NEGATE 0 PrfPrc LINK *-1 ("leat") BARRIER NOT-ADV-PCLE) ;
+	#$ Ii ge ságastallan leat vejolaš jus eai leat journalisttat geat máhttet sámegiela bures.
+	#% Mun livččen sáhttán leat dronnet.
+	#% Dán jagi ii sáhttán leahkit buoret vuoiti Min Áiggi lihkkoluossa gilvvus.
+	#fromdisambiguation.cg3
+	
+REMOVE:mánnatV V  (0 ("mánnat")) ((-1 OKTA) OR (*0 VFIN + Sg3 BARRIER REAL-V OR (N Sg3)) OR (1 Inf OR Rel)) ;
+	#$ Agivuloš mánná gean váhnemat eai eale ovttas, oažžu almmotge eaiggáduššat bohccuid siidaoasis sihke eatni ja áhči bealde .
+	#$ Ja de gávnnahin ahte dán ii galgga munno mánná vásihit.
+	#$ Mii leimmet njeallje ollesolbmo ja okta mánná geat galggaimet orrut internáhtas juovllaid .
+	#$ Dasgo mánná mii lea su siste, lea sahkanan Bassi Vuoiŋŋa bokte.
+	#$ Guovllu ja agi mielde, hállá go mánná sámegiela vai ii.
 	#fromdisambiguation.cg3
 		
 REMOVE:r598 Imprt IF (0 ("fápmudus"));	
@@ -4540,17 +4652,6 @@ SELECT:r870 MOAI IF ( *1 V-DU1);   	## Moai čilge dan ášši.
 
 #new rules
 
-LIST PL1-V = (V Ind Prs Pl1)  (V Ind Prt Pl1) (V Cond Prs Pl1) 
-             (V Cond Prt Pl1) (V Pot Prs Pl1) (V Neg Ind Pl1);
-
-LIST NOT-REAL-V = (Actio Nom) (Actio Gen) (Actio Loc) (Actio Com) PrsPrc ;
-
-SET REAL-V = V - NOT-REAL-V  ;
-  #!! ** V is all readings with a V tag in them, REAL-V should
-  #!! be the ones without an N tag following the V.  
-  #!! The REAL-V set thus awaits a fix to the preprocess V ... N bug.
-
-SET TRANS-V = V-TRANS - Der/Pass + REAL-V ;
 
 #!! * __miiPersLeft1, miiPersLeft2, _miiPersRight__ select mii Pers 
 SELECT:miiPersLeft1 Pers IF (0 MII-PERS) ((-1 go LINK -1 PL1-V LINK -1 BOC) OR (-1 (V Ind Prs Pl1 Qst)) OR (-1 (V Neg Pl1))) ; 
