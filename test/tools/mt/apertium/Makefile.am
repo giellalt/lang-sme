@@ -13,7 +13,8 @@ if CAN_YAML_TEST
 if WANT_APERTIUM
 TESTS+=run-mt-gt-desc-anayaml-testcases.sh \
 		run-mt-gt-desc.nob-anayaml-testcases.sh \
-		run-mt-apertium-desc.nob-anayaml-testcases.sh
+		run-mt-apertium-desc.nob-anayaml-testcases.sh \
+		run-mt-gt-norm-genyaml-testcases.sh
 
 endif # WANT_APERTIUM
 endif # CAN_YAML_TEST
