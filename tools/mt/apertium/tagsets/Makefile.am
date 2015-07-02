@@ -7,7 +7,7 @@ TAGSET_SRCS=
 
 # List reorder regex source files here:
 REGEX_SRCS=modify-tags.smn.regex \
-           modify-tags.nob.regex
+		   modify-tags.regex
 
 ####### Other targets: ###########
 
