@@ -102,6 +102,8 @@ generator-raw-gt-desc.hfst: generator-raw-gt-desc.tmp.hfst \
 			.o. @\"$<\" \
 			;" \
 		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --xerox-composition=ON \
+		| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
+			-S '+Cmp' -a 10 --arcs-only \
 		> $@
 
 analyser-raw-gt-desc.xfst: analyser-raw-gt-desc.tmp.xfst \
