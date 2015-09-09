@@ -70,20 +70,26 @@ Fail=0
 
 # The script tests both Xerox and Hfst transducers if available:
 for f in $fsttype; do
-	if [ $f == "xfst" ]; then
-		lookuptool="@LOOKUP@ -q -flags mbTT"
-		suffix="xfst"
-	elif [ $f == "hfst" ]; then
-		lookuptool="@HFST_LOOKUP@ -q"
-		suffix="hfstol"
-	else
-	    Fail=1
-		printf "ERROR: Unknown fst type! "
-	    echo "$f - FAIL"
-	    continue
-	fi
-	if [ -f "$generator_file.$suffix" ]; then
-		let "transducer_found += 1"
+    if [ $f == "xfst" ]; then
+        lookup_tool="@LOOKUP@ -flags mbTT"
+        suffix="xfst"
+        # Does lookup support -q / quiet mode?
+        lookup_quiet=$($lookup_tool -q 2>&1 | grep USAGES)
+        if ! [[ $lookup_quiet == *"USAGES"* ]] ; then
+            # it does support quiet mode, add the -q flag:
+            lookup_tool="@LOOKUP@ -q -flags mbTT"
+        fi
+    elif [ $f == "hfst" ]; then
+        lookup_tool="@HFST_OPTIMIZED_LOOKUP@ -q"
+        suffix="hfstol"
+    else
+        Fail=1
+        printf "ERROR: Unknown fst type! "
+        echo "$f - FAIL"
+        continue
+    fi
+    if [ -f "$generator_file.$suffix" ]; then
+        let "transducer_found += 1"
 
 ###### Test generation: #######
 		# generate verbs, extract the resulting generated lemma,
@@ -91,7 +97,7 @@ for f in $fsttype; do
 
 # Generer infitivsformen av verblemmaene, fjern dem som ikke gir analyse (de har V+ i output),
 # lagres som fil som har blitt deklarert oppe.
-		sed 's/$/+V+Inf/' $lemmas | $lookuptool $generator_file.$suffix \
+		sed 's/$/+V+Inf/' $lemmas | $lookup_tool $generator_file.$suffix \
             | cut -f2 | grep -v "V+" | grep -v "^$" | sort -u > $generated_lemmas.$f.txt 
 
 ###### Collect results: #######
@@ -104,7 +110,7 @@ for f in $fsttype; do
 
 		comm -23 $lemmas $generated_lemmas.$f.txt \
 		     | grep -v '^$' | sed 's/$/+V+Inf/' \
-		     | $lookuptool $generator_file.$suffix > $result_file.$f.txt
+		     | $lookup_tool $generator_file.$suffix > $result_file.$f.txt
 
 		# Open the diff file in SubEthaEdit (if there is a diff):
 		if [ -s $result_file.$f.txt ]; then
