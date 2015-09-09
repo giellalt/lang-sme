@@ -105,20 +105,26 @@ Fail=0
 
 # The script tests both Xerox and Hfst transducers if available:
 for f in $fsttype; do
-	if [ $f == "xfst" ]; then
-		lookuptool="@LOOKUP@ -q -flags mbTT"
-		suffix="xfst"
-	elif [ $f == "hfst" ]; then
-		lookuptool="@HFST_LOOKUP@ -q"
-		suffix="hfstol"
-	else
-	    Fail=1
-		printf "ERROR: Unknown fst type! "
-	    echo "$f - FAIL"
-	    continue
-	fi
-	if [ -f "$generator_file.$suffix" ]; then
-		let "transducer_found += 1"
+    if [ $f == "xfst" ]; then
+        lookup_tool="@LOOKUP@ -flags mbTT"
+        suffix="xfst"
+        # Does lookup support -q / quiet mode?
+        lookup_quiet=$($lookup_tool -q 2>&1 | grep USAGES)
+        if ! [[ $lookup_quiet == *"USAGES"* ]] ; then
+            # it does support quiet mode, add the -q flag:
+            lookup_tool="@LOOKUP@ -q -flags mbTT"
+        fi
+    elif [ $f == "hfst" ]; then
+        lookup_tool="@HFST_OPTIMIZED_LOOKUP@ -q"
+        suffix="hfstol"
+    else
+        Fail=1
+        printf "ERROR: Unknown fst type! "
+        echo "$f - FAIL"
+        continue
+    fi
+    if [ -f "$generator_file.$suffix" ]; then
+        let "transducer_found += 1"
 
 ###### Test generation: #######
 		# generate adjectives, extract the resulting generated lemma,
@@ -128,32 +134,32 @@ for f in $fsttype; do
 
 # 1. med +A+Sg+Nom (grunnformen for de fleste).
 # Lagres som $generated_lemmas.$f.txt
-		sed 's/$/+A+Sg+Nom/' $lemmas | $lookuptool $generator_file.$suffix \
+		sed 's/$/+A+Sg+Nom/' $lemmas | $lookup_tool $generator_file.$suffix \
             | cut -f2 | grep -v "A+" | grep -v "^$" | sort -u \
             > $generated_lemmas.$f.txt
 
 # 2. med +A+Pl+Nom for plurale lemmaer. Lagres i $generated_lemmas.$f.txt
-		sed 's/$/+A+Pl+Nom/' $lemmas_pl | $lookuptool $generator_file.$suffix \
+		sed 's/$/+A+Pl+Nom/' $lemmas_pl | $lookup_tool $generator_file.$suffix \
             | cut -f2 | grep -v "A+" | grep -v "^$" | sort -u \
             >> $generated_lemmas.$f.txt
 
 # 3. med +A+Attr lemmaer som bare har attributtform.
 # Lagres i $generated_lemmas.$f.txt
-		sed 's/$/+A+Attr/' $lemmas_attr | $lookuptool $generator_file.$suffix \
+		sed 's/$/+A+Attr/' $lemmas_attr | $lookup_tool $generator_file.$suffix \
             | cut -f2 | grep -v "A+" | grep -v "^$" | sort -u \
             >> $generated_lemmas.$f.txt
 
 # 4. for lemmaer lemmaer som krever superlativtagg, med +A+Superl+Sg+Nom.
 # Lagres i $generated_lemmas.$f.txt
 		sed 's/$/+A+Superl+Sg+Nom/' $lemmas_super \
-			| $lookuptool $generator_file.$suffix \
+			| $lookup_tool $generator_file.$suffix \
 			| cut -f2 | grep -v "A+" | grep -v "^$" | sort -u \
 			>> $generated_lemmas.$f.txt
 
 # 5. for lemmaer lemmaer som krever komparativtagg, med +A+Comp+Sg+Nom.
 # Lagres i $generated_lemmas.$f.txt
 		sed 's/$/+A+Comp+Sg+Nom/' $lemmas_comp \
-			| $lookuptool $generator_file.$suffix \
+			| $lookup_tool $generator_file.$suffix \
 			| cut -f2 | grep -v "A+" | grep -v "^$" | sort -u \
 			>> $generated_lemmas.$f.txt
 
@@ -175,9 +181,9 @@ sort -u -o $generated_lemmas.$f.txt $generated_lemmas.$f.txt
 
         comm -23 $lemmas $generated_lemmas.$f.txt > $result_file.$f.txt
 		grep -v '^$' $result_file.$f.txt | sed 's/$/+A+Sg+Nom/' \
-		     | $lookuptool $generator_file.$suffix > $gen_result_file.$f.txt
+		     | $lookup_tool $generator_file.$suffix > $gen_result_file.$f.txt
 		grep -v '^$' $result_file.$f.txt \
-		     | $lookuptool $analyser_file.$suffix > $ana_result_file.$f.txt
+		     | $lookup_tool $analyser_file.$suffix > $ana_result_file.$f.txt
 
 		# If there is a $result_file, open the $result_file in SubEthaEdit:
 		if [ -s $result_file.$f.txt ]; then
