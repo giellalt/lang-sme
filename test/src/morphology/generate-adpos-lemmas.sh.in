@@ -72,10 +72,16 @@ Fail=0
 # The script tests both Xerox and Hfst transducers if available:
 for f in $fsttype; do
 	if [ $f == "xfst" ]; then
-		lookuptool="@LOOKUP@ -q -flags mbTT"
-		suffix="xfst"
+        lookup_tool="@LOOKUP@ -flags mbTT"
+        suffix="xfst"
+        # Does lookup support -q / quiet mode?
+        lookup_quiet=$($lookup_tool -q 2>&1 | grep USAGES)
+        if ! [[ $lookup_quiet == *"USAGES"* ]] ; then
+            # it does support quiet mode, add the -q flag:
+            lookup_tool="@LOOKUP@ -q -flags mbTT"
+        fi
 	elif [ $f == "hfst" ]; then
-		lookuptool="@HFST_LOOKUP@ -q"
+		lookup_tool="@HFST_LOOKUP@ -q"
 		suffix="hfstol"
 	else
 	    Fail=1
@@ -91,15 +97,15 @@ for f in $fsttype; do
 		# store it:
 
 # Generer lemmaer med +Po
-		sed 's/$/+Po/' $lemmas | $lookuptool $generator_file.$suffix \
+		sed 's/$/+Po/' $lemmas | $lookup_tool $generator_file.$suffix \
             | grep -v "\?" | cut -f2 | grep -v "^$" | sort -u > $generated_lemmas.$f.tmp 
 
 # debugging demo for Lene
 # if [ "$debug" == "yes"]; then
 # Generer med +Pr for lemmaer som ikke lar seg genereres +Po
-		sed 's/$/+Po/' $lemmas | $lookuptool $generator_file.$suffix \
+		sed 's/$/+Po/' $lemmas | $lookup_tool $generator_file.$suffix \
             | grep "\?" | cut -f1 \
-            | sed 's/+Po/+Pr/' | $lookuptool $generator_file.$suffix \
+            | sed 's/+Po/+Pr/' | $lookup_tool $generator_file.$suffix \
             | cut -f2 | \
               grep -v "^$" | sort -u >> $generated_lemmas.$f.tmp 
 # debugging demo for Lene
