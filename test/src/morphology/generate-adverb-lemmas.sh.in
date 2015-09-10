@@ -86,10 +86,16 @@ Fail=0
 # The script tests both Xerox and Hfst transducers if available:
 for f in $fsttype; do
 	if [ $f == "xfst" ]; then
-		lookuptool="@LOOKUP@ -q -flags mbTT"
-		suffix="xfst"
+        lookup_tool="@LOOKUP@ -flags mbTT"
+        suffix="xfst"
+        # Does lookup support -q / quiet mode?
+        lookup_quiet=$($lookup_tool -q 2>&1 | grep USAGES)
+        if ! [[ $lookup_quiet == *"USAGES"* ]] ; then
+            # it does support quiet mode, add the -q flag:
+            lookup_tool="@LOOKUP@ -q -flags mbTT"
+        fi
 	elif [ $f == "hfst" ]; then
-		lookuptool="@HFST_LOOKUP@ -q"
+		lookup_tool="@HFST_LOOKUP@ -q"
 		suffix="hfstol"
 	else
 	    Fail=1
@@ -105,15 +111,15 @@ for f in $fsttype; do
 		# store it:
 
 # Generer adverbformen av lemmaene i adverbs
-sed 's/$/+Adv/' $padv_lemmas | $lookuptool $generator_file.$suffix | \
+sed 's/$/+Adv/' $padv_lemmas | $lookup_tool $generator_file.$suffix | \
     cut -f2 | grep -v "Adv+" | grep -v "^$" > $generated_lemmas.$f.txt  
 
 # Generer adverbformen av lemmaene i compadverbs med +Adv+Comp (se bz 1926)
-sed 's/$/+Adv+Comp/' $cadv_lemmas | $lookuptool $generator_file.$suffix | \
+sed 's/$/+Adv+Comp/' $cadv_lemmas | $lookup_tool $generator_file.$suffix | \
     cut -f2 | grep -v "Adv+" | grep -v "^$" >> $generated_lemmas.$f.txt  
 
 # Generer adverbformen av lemmaene i supadverbs med +Adv+Superl (se bz 1926)
-sed 's/$/+Adv+Superl/' $sadv_lemmas | $lookuptool $generator_file.$suffix | \
+sed 's/$/+Adv+Superl/' $sadv_lemmas | $lookup_tool $generator_file.$suffix | \
     cut -f2 | grep -v "Adv+" | grep -v "^$" >> $generated_lemmas.$f.txt  
 
 
@@ -134,7 +140,7 @@ cat $padv_lemmas $cadv_lemmas $sadv_lemmas | sort -u > $all_adv
 
 		comm -23 $all_adv $generated_lemmas.$f.txt \
 		     | grep -v '^$' | sed 's/$/+Adv/' \
-		     | $lookuptool $generator_file.$suffix > $result_file.$f.txt
+		     | $lookup_tool $generator_file.$suffix > $result_file.$f.txt
 
 		# Open the diff file in SubEthaEdit (if there is a diff):
 		if [ -s $result_file.$f.txt ]; then
