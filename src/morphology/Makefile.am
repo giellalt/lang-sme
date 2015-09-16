@@ -76,7 +76,7 @@ GT_DISTRO_SRCS=stems/$(GTLANG)-propernouns.lexc
 ### BEGIN: Local processing: ###
 
 generated_files/smi-propernouns.lexc: \
-			$(GTCORE)/gtdshared/smi/src/morphology/stems/smi-propernouns.lexc
+			$(GTCORE)/giella-shared/smi/src/morphology/stems/smi-propernouns.lexc
 	$(AM_V_at)$(MKDIR_P) generated_files
 	$(AM_V_GEN)cp -f $< $@
 
