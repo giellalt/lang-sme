@@ -20,7 +20,8 @@
 ##################################################################
 
 # List any local additions here:
-GT_FILTER_SRCS=
+GT_MT_FILTER_SRCS=remove-derivation-strings-modifications.nob.regex \
+	    		  remove-derivation-strings-modifications.sma.regex
 
 # Only build these things if apertium fst's are enabled:
 if WANT_APERTIUM
