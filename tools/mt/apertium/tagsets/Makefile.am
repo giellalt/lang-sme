@@ -3,7 +3,7 @@
 ## Licence: GPL v3+
 
 # List relabel source files here:
-TAGSET_SRCS=apertium-postproc.relabel
+TAGSET_SRCS=apertium.postproc.relabel
 
 # List reorder regex source files here:
 REGEX_SRCS=modify-tags.smn.regex \
