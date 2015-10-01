@@ -16,7 +16,7 @@
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # This is the default weight for all editing operations in the error model:
-DEFAULT_WEIGHT=2
+DEFAULT_WEIGHT=10
 
 # Default edit distanse for the generated, alphabet-based error model:
 DEFAULT_EDIT_DIST=2
@@ -30,7 +30,7 @@ DEFAULT_EDIT_DIST=2
 ####### NB! This variable has no effect for the time being!!! First letters are
 ####### modified as part of the regular error model until we are able to formu-
 ####### late a better way of handling edits to the initial letter(s).
-ALLOW_INITIAL_EDITS=no
+ALLOW_INITIAL_EDITS=yes
 
 include $(top_srcdir)/am-shared/tools-spellcheckers-fstbased-hfst-dir-include.am
 
