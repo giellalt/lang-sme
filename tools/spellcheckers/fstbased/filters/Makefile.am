@@ -9,7 +9,8 @@
 # List any local additions here:
 GT_LOCAL_FSTSPELLER_FILTER_SRCS=\
     remove-illegal-derivation-strings.regex \
-    insert-default-compounding-tags.regex
+    insert-default-compounding-tags.regex \
+    split-CmpN-tags.regex
 
 # Only build these things if speller fst's are enabled:
 if WANT_SPELLERS
