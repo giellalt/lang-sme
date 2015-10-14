@@ -30,9 +30,11 @@ CORPUS_SIZE=29090
 # 4. Make flags two-sided
 generator-fstspeller-gt-norm-comp_restricted.hfst: \
 		generator-fstspeller-gt-norm-comp_restricted.tmp.hfst \
-		filters/insert-default-compounding-tags.hfst
+		filters/insert-default-compounding-tags.hfst \
+		filters/split-CmpN-tags.hfst
 	$(AM_V_HXFST)$(PRINTF) "read regex                        \
-			@\"filters/insert-default-compounding-tags.hfst\" \
+			@\"filters/split-CmpN-tags.hfst\"                 \
+		.o. @\"filters/insert-default-compounding-tags.hfst\" \
 		.o. @\"$<\"                                           \
 		; \n\
 		 twosided flag-diacritics\n\
