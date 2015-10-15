@@ -9,6 +9,7 @@
 # List any local additions here:
 GT_LOCAL_FSTSPELLER_FILTER_SRCS=\
     remove-illegal-derivation-strings.regex \
+    block-illegal_compound-strings.regex  \
     insert-default-compounding-tags.regex \
     split-CmpN-tags.regex
 
