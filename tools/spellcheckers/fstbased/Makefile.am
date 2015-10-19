@@ -32,12 +32,14 @@ generator-fstspeller-gt-norm-comp_restricted.hfst: \
 		generator-fstspeller-gt-norm-comp_restricted.tmp.hfst \
 		filters/insert-default-compounding-tags.hfst \
 		filters/block-illegal_compound-strings.hfst  \
+		filters/remove-Use_Minus_PLX-tags.hfst       \
 		filters/split-CmpN-tags.hfst
 	$(AM_V_HXFST)$(PRINTF) "\
 		read regex                        \
 			@\"filters/block-illegal_compound-strings.hfst\"  \
 		.o. @\"filters/split-CmpN-tags.hfst\"                 \
 		.o. @\"filters/insert-default-compounding-tags.hfst\" \
+		.o. @\"filters/remove-Use_Minus_PLX-tags.hfst\"       \
 		.o. @\"$<\"                                           \
 		; \n\
 		 twosided flag-diacritics\n\
