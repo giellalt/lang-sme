@@ -23,6 +23,9 @@ CORPUS_SIZE=29090
 
 ### BEGIN: Local build rules: *.hfst: *.tmp.hfst ###
 
+# Remove improper derivations by turning the DerN tags into flag
+# diacritics blocking wrong order derivations.
+#
 # Remove ungrammatical compounds by turning tags into flags:
 # 1. Insert tags for default compounding
 # 2. Split multiple tags into separate paths
@@ -31,34 +34,23 @@ CORPUS_SIZE=29090
 generator-fstspeller-gt-norm-comp_restricted.hfst: \
 		generator-fstspeller-gt-norm-comp_restricted.tmp.hfst \
 		filters/insert-default-compounding-tags.hfst \
+		filters/insert-default_left_compounding-tags.hfst \
 		filters/block-illegal_compound-strings.hfst  \
+		filters/remove-illegal-derivation-strings.hfst \
 		filters/remove-Use_Minus_PLX-tags.hfst       \
 		filters/split-CmpN-tags.hfst
 	$(AM_V_HXFST)$(PRINTF) "\
-		read regex                        \
-			@\"filters/block-illegal_compound-strings.hfst\"  \
-		.o. @\"filters/split-CmpN-tags.hfst\"                 \
-		.o. @\"filters/insert-default-compounding-tags.hfst\" \
-		.o. @\"filters/remove-Use_Minus_PLX-tags.hfst\"       \
-		.o. @\"$<\"                                           \
+		read regex                                                 \
+			@\"filters/block-illegal_compound-strings.hfst\"       \
+		.o. @\"filters/split-CmpN-tags.hfst\"                      \
+		.o. @\"filters/insert-default-compounding-tags.hfst\"      \
+		.o. @\"filters/remove-illegal-derivation-strings.hfst\"    \
+		.o. @\"filters/remove-Use_Minus_PLX-tags.hfst\"            \
+		.o. @\"$<\"                                                \
 		; \n\
 		 twosided flag-diacritics\n\
 		 save stack $@\n\
 		 quit\n" | $(HFST_XFST) -p $(VERBOSITY)
-
-# Remove improper derivations:
-generator-fstspeller-gt-norm.hfst: \
-		generator-fstspeller-gt-norm.tmp.hfst \
-		filters/remove-illegal-derivation-strings.hfst
-	$(AM_V_HXFST)$(PRINTF) "\
-		set encode-weights ON \n\
-		read regex \
-			@\"filters/remove-illegal-derivation-strings.hfst\"  \
-			.o. @\"$<\"                                       \
-		; \n\
-		twosided flag-diacritics\n\
-		save stack $@\n\
-		quit\n" | $(HFST_XFST) -p $(VERBOSITY)
 
 #### END: Local build rules: *.hfst: *.tmp.hfst ####
 
