@@ -50,6 +50,15 @@ generator-fstspeller-gt-norm-comp_restricted.hfst: \
 		; \n\
 		 twosided flag-diacritics\n\
 		 eliminate flag CmpN \n\
+		 eliminate flag NeedsVowRed \n\
+		 eliminate flag Der1 \n\
+		 eliminate flag Der2 \n\
+		 eliminate flag Der3 \n\
+		 eliminate flag Der4 \n\
+		 eliminate flag Der5 \n\
+		 eliminate flag Der_PassL \n\
+		 eliminate flag Der_PassS \n\
+		 eliminate flag CmpHyph \n\
 		 save stack $@\n\
 		 quit\n" | $(HFST_XFST) -p $(VERBOSITY)
 
