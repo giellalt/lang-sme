@@ -49,6 +49,7 @@ generator-fstspeller-gt-norm-comp_restricted.hfst: \
 		.o. @\"$<\"                                                \
 		; \n\
 		 twosided flag-diacritics\n\
+		 eliminate flag CmpN \n\
 		 save stack $@\n\
 		 quit\n" | $(HFST_XFST) -p $(VERBOSITY)
 
