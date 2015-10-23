@@ -50,7 +50,6 @@ generator-fstspeller-gt-norm-comp_restricted.hfst: \
 		; \n\
 		 twosided flag-diacritics\n\
 		 eliminate flag CmpN \n\
-		 eliminate flag NeedsVowRed \n\
 		 eliminate flag Der1 \n\
 		 eliminate flag Der2 \n\
 		 eliminate flag Der3 \n\
