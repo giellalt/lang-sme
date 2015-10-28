@@ -50,6 +50,8 @@ generator-fstspeller-gt-norm-comp_restricted.hfst: \
 		.o. @\"$<\"                                                \
 		; \n\
 		 twosided flag-diacritics\n\
+		 eliminate flag CmpN \n\
+		 eliminate flag CmpN_Def \n\
 		 eliminate flag Der1 \n\
 		 eliminate flag Der2 \n\
 		 eliminate flag Der3 \n\
@@ -61,7 +63,6 @@ generator-fstspeller-gt-norm-comp_restricted.hfst: \
 		 save stack $@\n\
 		 quit\n" | $(HFST_XFST) -p $(VERBOSITY)
 
-#		 eliminate flag CmpN \n\
 #### END: Local build rules: *.hfst: *.tmp.hfst ####
 
 include $(top_srcdir)/am-shared/tools-spellcheckers-fstbased-dir-include.am
