@@ -75,6 +75,16 @@ GT_DISTRO_SRCS=stems/$(GTLANG)-propernouns.lexc
 
 ### BEGIN: Local processing: ###
 
+if CAN_FOMA
+lexicon.hfst: lexicon.foma
+	$(AM_V_FOMA)$(PRINTF) "\
+		load $<\n\
+		write prolog > $@.prolog\n\
+		quit\n" | $(FOMA) $(VERBOSITY)
+	$(AM_V_TXT2FST)$(HFST_TXT2FST) --prolog -i $@.prolog -o $@
+#	$(AM_V_at)rm -f $@.prolog
+endif # CAN_FOMA
+
 generated_files/smi-propernouns.lexc: \
 			$(GTCORE)/giella-shared/smi/src/morphology/stems/smi-propernouns.lexc
 	$(AM_V_at)$(MKDIR_P) generated_files
