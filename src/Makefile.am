@@ -115,6 +115,15 @@ analyser-raw-gt-desc.xfst: analyser-raw-gt-desc.tmp.xfst \
 		 save stack $@\n\
 		 quit\n" | $(XFST) $(VERBOSITY)
 
+analyser-raw-gt-desc.foma: analyser-raw-gt-desc.tmp.foma \
+					filters/reorder-subpos-tags.$(GTLANG).foma
+	$(AM_V_XFST)$(PRINTF) "read regex \
+				@\"filters/reorder-subpos-tags.$(GTLANG).foma\" \
+			.o. @\"$<\" \
+			;\n\
+		 save stack $@\n\
+		 quit\n" | $(FOMA) -p $(VERBOSITY)
+
 # A generator for producing word forms suitable for tts:
 # * no circular constructions:
 # ** no (arabic) cardinals
