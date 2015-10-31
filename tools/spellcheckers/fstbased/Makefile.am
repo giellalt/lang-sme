@@ -53,31 +53,33 @@ generator-fstspeller-gt-norm-comp_restricted.tmp1.hfst: \
 		 save stack $@\n\
 		 quit\n" | $(HFST_XFST) -p $(VERBOSITY)
 
-## Use Foma to eliminate flags if available:
-#if CAN_FOMA
-#
-#generator-fstspeller-gt-norm-comp_restricted.hfst: \
-#		generator-fstspeller-gt-norm-comp_restricted.tmp1.hfst
-#	$(AM_V_FST2TXT)$(HFST_FST2TXT) --do-not-print-weights --format=att -i $< \
-#		-o $<.att
-#	$(AM_V_FOMA)$(PRINTF) "\
-#		read att $<.att \n\
-#		eliminate flag CmpN\n\
+# Use Foma to eliminate flags if available:
+if CAN_FOMA
+
+generator-fstspeller-gt-norm-comp_restricted.hfst: \
+		generator-fstspeller-gt-norm-comp_restricted.tmp1.hfst
+	$(AM_V_FST2TXT)$(HFST_FST2TXT) --do-not-print-weights --format=att -i $< \
+		-o $<.att
+	$(AM_V_FOMA)$(PRINTF) "\
+		read att $<.att \n\
+		eliminate flag NeedsVowRed\n\
+		eliminate flag Der1\n\
+		eliminate flag Der2\n\
+		eliminate flag Der3\n\
+		eliminate flag Der4\n\
+		eliminate flag Der5\n\
+		eliminate flag Der_PassL\n\
+		eliminate flag Der_PassS\n\
+		eliminate flag CmpHyph\n\
+		eliminate flag CmpN\n\
+		eliminate flag Want_Left\n\
+		write att $@.att\n\
+		quit\n" | $(FOMA) $(VERBOSITY)
+	$(AM_V_TXT2FST)$(HFST_TXT2FST) -i $@.att -o $@
+
 #		eliminate flag CmpN_Def\n\
-#		eliminate flag Der1\n\
-#		eliminate flag Der2\n\
-#		eliminate flag Der3\n\
-#		eliminate flag Der4\n\
-#		eliminate flag Der5\n\
-#		eliminate flag Der_PassL\n\
-#		eliminate flag Der_PassS\n\
-#		eliminate flag CmpHyph\n\
-#		write att $@.att\n\
-#		quit\n" | $(FOMA) $(VERBOSITY)
-#	$(AM_V_TXT2FST)$(HFST_TXT2FST) -i $@.att -o $@
-#
-## Else fall back to Hfst, but skip buggy eliminations:
-#else
+# Else fall back to Hfst, but skip buggy eliminations:
+else
 
 generator-fstspeller-gt-norm-comp_restricted.hfst: \
 		generator-fstspeller-gt-norm-comp_restricted.tmp1.hfst
@@ -94,7 +96,7 @@ generator-fstspeller-gt-norm-comp_restricted.hfst: \
 		save stack $@\n\
 		quit\n" | $(HFST_XFST) -p $(VERBOSITY)
 
-#endif
+endif
 
 #### END: Local build rules: *.hfst: *.tmp.hfst ####
 
