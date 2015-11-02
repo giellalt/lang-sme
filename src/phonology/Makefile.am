@@ -21,7 +21,10 @@
 #! @param GT_TWOLC_SUPPLEMENTS optional, other sources to distribute and
 #! 		  compile for other things
 GT_PHONOLOGY_MAIN=$(GTLANG)-phon.twolc
-GT_PHONOLOGY_SUPPLEMENTS=$(GTLANG)-phon-L2.twolc
+GT_PHONOLOGY_SUPPLEMENTS=
+if WANT_L2
+GT_PHONOLOGY_SUPPLEMENTS+=$(GTLANG)-phon-L2.twolc
+endif # WANT_L2
 
 include $(top_srcdir)/am-shared/src-phonology-dir-include.am
 
