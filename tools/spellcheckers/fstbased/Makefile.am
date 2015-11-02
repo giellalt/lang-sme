@@ -56,6 +56,8 @@ generator-fstspeller-gt-norm-comp_restricted.tmp1.hfst: \
 # Use Foma to eliminate flags if available:
 if CAN_FOMA
 
+# Do not change or add the flags eliminated without thoroughly testing the
+# effect on fst file size (including the acceptor file) and speller speed:
 generator-fstspeller-gt-norm-comp_restricted.hfst: \
 		generator-fstspeller-gt-norm-comp_restricted.tmp1.hfst
 	$(AM_V_FST2TXT)$(HFST_FST2TXT) --do-not-print-weights --format=att -i $< \
@@ -81,6 +83,9 @@ generator-fstspeller-gt-norm-comp_restricted.hfst: \
 # Else fall back to Hfst, but skip buggy eliminations:
 else
 
+# Do not change or add the flags eliminated without thoroughly testing the
+# effect on fst file size (including the acceptor file), speller speed and
+# linguistic correctness (run the yaml tests):
 generator-fstspeller-gt-norm-comp_restricted.hfst: \
 		generator-fstspeller-gt-norm-comp_restricted.tmp1.hfst
 	$(AM_V_HXFST)$(PRINTF) "\
