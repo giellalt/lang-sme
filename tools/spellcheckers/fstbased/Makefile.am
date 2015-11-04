@@ -98,13 +98,14 @@ generator-fstspeller-gt-norm-comp_restricted.hfst: \
 		eliminate flag Der_PassL\n\
 		eliminate flag Der_PassS\n\
 		eliminate flag CmpHyph\n\
-		eliminate flag CmpN\n\
-		eliminate flag NeedNoun\n\
 		save stack $@\n\
 		quit\n" | $(HFST_XFST) -p $(VERBOSITY)
 
 endif
 
+#		eliminate flag CmpN\n\
+#		eliminate flag NeedNoun\n\
+#		eliminate flag NeedsVowRed\n\
 #### END: Local build rules: *.hfst: *.tmp.hfst ####
 
 include $(top_srcdir)/am-shared/tools-spellcheckers-fstbased-dir-include.am
