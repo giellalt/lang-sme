@@ -232,6 +232,10 @@ AC_CONFIG_FILES([tools/shellscripts/generate-ipa-lexicon.sh], \
       [chmod a+x tools/shellscripts/generate-ipa-lexicon.sh])
 AC_CONFIG_FILES([src/phonetics/test/test-ipa-conversion.sh], \
       [chmod a+x src/phonetics/test/test-ipa-conversion.sh])
+AC_CONFIG_FILES([test/tools/spellcheckers/run-spellers-gt-norm-anayaml-testcases.sh], \
+      [chmod a+x test/tools/spellcheckers/run-spellers-gt-norm-anayaml-testcases.sh])
+AC_CONFIG_FILES([test/tools/spellcheckers/run-spellers-gt-norm-genyaml-testcases.sh], \
+      [chmod a+x test/tools/spellcheckers/run-spellers-gt-norm-genyaml-testcases.sh])
 
 ############ END: Language-specific scripts. #############
 
