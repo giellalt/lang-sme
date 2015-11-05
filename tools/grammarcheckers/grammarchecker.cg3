@@ -1738,7 +1738,9 @@ SET LEX-V = VERB - V-DER;
        # VERB but not V-DER
  
  # The set REALCOPULAS is smaller than COPULAS, made for verbs with PrfPrc complements: Seammás REALCOPULAS son dovdan iežas...
-LIST REALCOPULAS = "dáidit" "leahkit" "leat" "soaitit" "veadjit" ;
+LIST REALCOPULAS = "dáidit" "leahkit" "leat" "orrut" "soaitit" "veadjit" ; 
+	#added orrut because of the following example:
+	# Rissiid , dakŋasa ja lasttaid gal orrot eambbo soaitimis 	čohkken, ja dárbu rievddadii jagis jahkái . 
 
 # The set COPULAS is for predicative constructions
 LIST COPULAS = "dáidit" "gártat" "leahkit" "leat" "orrut" "soaitit" "šaddat" "veadjit" ;
@@ -4248,15 +4250,23 @@ COPY:real-čohkket ("čohkket" &SUGGEST) EXCEPT ("čohkkát" V IV &real-čohkket
 	#$ Justa dát sátni 	čohkalahttá 	buot olbmo beljiid ja áinnas go dakkár árvvusadnon almmái dákkáriid cealká .
 	## Fágabargi sáhttá ohcat čohket 3 jagi DOB-barggu ovtta áigodahkii. 
 	
-ADD:čohkken (&real-čohkken) TARGET ("čohkat" Ind Prt Sg1) IF (*-1 ("leat") OR ("ii"))(*0 Acc OR Gen OR ("máid") OR ("maid") OR (".*id"r ?) BARRIER GRAMCHK-S-BOUNDARY) ;
+ADD:čohkken (&real-čohkken) TARGET ("čohkat" Ind Prt Sg1) IF (*-1 REALCOPULAS OR ("ii") BARRIER NPNHA - @<ADVL - @ADVL>)(*0 Acc OR Gen OR ("máid") OR ("maid") OR (".*id"r ?) BARRIER GRAMCHK-S-BOUNDARY) ;
 	## Girjji vuođđun lea statistihkka maid Statistihkalaš guovddášdoaimmahat jo lea 	čohken 	ja almmuhan , dahje ávdnasat maid sierranas sámi ásahusat leat diktán geavahit .
-ADD:čohkken (&real-čohkken) TARGET ("čohkat" Ind Prt Sg1) IF (-1 ("leat") OR ("ii"));
+	## Rissiid , dakŋasa ja lasttaid gal orrot eambbo soaitimis 	čohkken, ja dárbu rievddadii jagis jahkái. 
+	
+ADD:čohkken (&real-čohkken) TARGET ("čohkat" Ind Prt Sg1) IF (-1 Adv LINK *-1 REALCOPULAS OR ("ii") BARRIER NPNHA - @<ADVL - @ADVL>)(*0 Acc OR Gen OR ("máid") OR ("maid") OR (".*id"r ?) BARRIER GRAMCHK-S-BOUNDARY) ;	
+	## Biilaluottat leat gáfadit 	čohken 	bivdiid bivnnuhis guovlluide , ja dakkár guovllut mat eai leat nu bivnnuhat , geavahuvvojit unnit. 
+	
+ADD:čohkken (&real-čohkken) TARGET ("čohkat" Ind Prt Sg1) IF (*-1 CC BARRIER NPNH LINK -1 PrfPrc);
+	## Jus boazu ii leat buidon ja 	čohken 	doarvái bibmosiid geasset , de das lea unnit mainna birge dálvet , ja dat lasiha boazojámu.
+ADD:čohkken (&real-čohkken) TARGET ("čohkat" Ind Prt Sg1) IF (*-1 ("leat") OR ("ii") OR Sg3 BARRIER NPNHA - Gen - Acc);
 	## 1969:s eai 	čohken 
+	## Muhtun báikkiin , ee. Sállanis , nohkagođii meahccefuođđariid 	čohken 	1930 jagiid loahpas . 
 ADD:čohkken (&real-čohkken) TARGET ("čohkat" Ind Prt Sg1) IF (1 CC LINK 1 (Sg Nom) LINK NEGATE *-1 ("leat") BARRIER GRAMCHK-S-BOUNDARY OR COMMA);	
 	## Boazobargu Johtin , 	{čohken} 	ja guođoheapmi sáhttet muosehuhttojuvvot , dehe ájihuvvot , jus areálat adnojit eará doaimmaide dehe eará doaimmat leat jođus seammá guovllus .
 
 ADD:čohkken (&real-čohkken) TARGET ("čohkat" Ind Prt Sg1) IF (1 (V Sg3) LINK NEGATE *-1 Rel BARRIER GRAMCHK-S-BOUNDARY); #čohkken as a noun	
-	## Go doappar 	čohken 	lea sajáiduvvon ovtta báikkái de birasvahagat leat sakka unnit ja obalohkkái leat golut dušše oasáš dan ektui movt livčče jus sii ieža livčče šaddan hukset ja doaimmahit sierra doapparbáikki . 
+	## Go doappar 	{čohken} 	lea sajáiduvvon ovtta báikkái de birasvahagat leat sakka unnit ja obalohkkái leat golut dušše oasáš dan ektui movt livčče jus sii ieža livčče šaddan hukset ja doaimmahit sierra doapparbáikki . 
 COPY:real-čohkken ("čohkket" V TV PrfPrc &SUGGEST) EXCEPT ("čohkat" Ind Prt Sg1 &real-čohkken) TARGET (V &real-čohkken) ;	
 	## Duvka lei čohken arvečázi , ja dát golggai oaivejietnabeavddi ala .
 	
@@ -9213,7 +9223,8 @@ ADD:syn-number_congruence (&syn-number_congruence) TARGET VFIN + Du3 OR VFIN + D
 
 LIST 1FORM = ("vuostá") ;
 
-ADD:syn-number_congruence (&syn-number_congruence) TARGET (@<SPRED) - Num - ("veara") - ("juoga") + $$NUM IF (*-1 (@SUBJ>)  BARRIER GRAMCHK-S-BOUNDARY OR @HAB OR CLB OR CC OR NP-HEAD + (Loc) LINK NOT 0 GROUP-WORDS OR VFIN LINK 0 NUM - $$NUM)(NOT 0 GROUP-WORDS) (NEGATE 0 (@<SPRED) + $$NUM LINK *-1 (@SUBJ>) BARRIER GRAMCHK-S-BOUNDARY LINK 0 Num - ("okta")) (NEGATE 0 (@<SPRED) + $$NUM LINK *-1 (@SUBJ>) BARRIER GRAMCHK-S-BOUNDARY LINK 0 NUM - $$NUM  LINK *-1 (@SUBJ>) + $$NUM BARRIER NOT-NP-HEAD-COMMA-CC) (NEGATE *-1 @SUBJ> BARRIER GRAMCHK-S-BOUNDARY LINK -*1 ("ja") BARRIER GRAMCHK-NPNHA) (NEGATE 0 (Pl Acc) OR (Pl Gen) LINK -*1 ("mii" Sg Nom) OR ("gii" Sg Nom)) (NEGATE 0 Pl LINK -*1 ADJ_ATTR/NOM BARRIER GRAMCHK-NPNHA) (NEGATE 0 1FORM) (NEGATE 0 Comp LINK 0 (Pl Nom) LINK *-1 (@SUBJ>) BARRIER GRAMCHK-S-BOUNDARY OR @HAB OR CLB OR CC OR NP-HEAD + (Loc) LINK NOT 0 GROUP-WORDS LINK 0 (Pl Nom))(NOT 0 Ess)(NEGATE 0 Inf)(NEGATE 0 Pl LINK 0 (Sg Nom &SUGGEST))(NEGATE 0 &real LINK 0 (Adv &SUGGEST))  ;
+ADD:syn-number_congruence (&syn-number_congruence) TARGET (@<SPRED) - Num - ("veara") - ("juoga") + $$NUM IF (*-1 (@SUBJ>)  BARRIER GRAMCHK-S-BOUNDARY OR @HAB OR CLB OR CC OR NP-HEAD + (Loc) LINK NOT 0 GROUP-WORDS OR VFIN LINK 0 NUM - $$NUM)(NOT 0 GROUP-WORDS) (NEGATE 0 (@<SPRED) + $$NUM LINK *-1 (@SUBJ>) BARRIER GRAMCHK-S-BOUNDARY LINK 0 Num - ("okta")) (NEGATE 0 (@<SPRED) + $$NUM LINK *-1 (@SUBJ>) BARRIER GRAMCHK-S-BOUNDARY LINK 0 NUM - $$NUM  LINK *-1 (@SUBJ>) + $$NUM BARRIER NOT-NP-HEAD-COMMA-CC) (NEGATE *-1 @SUBJ> BARRIER GRAMCHK-S-BOUNDARY LINK -*1 ("ja") BARRIER GRAMCHK-NPNHA) (NEGATE 0 (Pl Acc) OR (Pl Gen) LINK -*1 ("mii" Sg Nom) OR ("gii" Sg Nom)) (NEGATE 0 Pl LINK -*1 ADJ_ATTR/NOM BARRIER GRAMCHK-NPNHA) (NEGATE 0 1FORM) (NEGATE 0 Comp LINK 0 (Pl Nom) LINK *-1 (@SUBJ>) BARRIER GRAMCHK-S-BOUNDARY OR @HAB OR CLB OR CC OR NP-HEAD + (Loc) LINK NOT 0 GROUP-WORDS LINK 0 (Pl Nom))(NOT 0 Ess)(NEGATE 0 Inf)(NEGATE 0 Pl LINK 0 (Sg Nom &SUGGEST))(NEGATE 0 &real LINK 0 (Adv &SUGGEST))(NEGATE 0 Adv LINK *1 PrfPrc BARRIER GRAMCHK-S-BOUNDARY)  ;
+	#$ Biilaluottat leat {gáfadit} 	čohken 	bivdiid bivnnuhis guovlluide , ja dakkár guovllut mat eai leat nu bivnnuhat , geavahuvvojit unnit.
 	#$ Áilu lei čáhppes-vuovttat ja ii lahka ge nu stuoris šaddui go Lárin.
 	#$ Giella lea šaddan oahppangiellan, ja jus dán guovllu sápmelaččat fas galget šaddat oadjebas gielladillái, de ferte oalle stuora doaimmaid dohko álggahit.XXX
 	#$ Dát muitala ahte Olav Berg Lyngmos leat unnit bealušteaddjit go muhtimat doivo
