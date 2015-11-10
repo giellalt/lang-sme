@@ -53,8 +53,9 @@ generator-fstspeller-gt-norm-comp_restricted.tmp1.hfst: \
 		 save stack $@\n\
 		 quit\n" | $(HFST_XFST) -p $(VERBOSITY)
 
-# Use Foma to eliminate flags if available:
-if CAN_FOMA
+# Always use Foma to eliminate flags if available, independently of
+# configuration:
+if HAS_FOMA
 
 # Do not change or add the flags eliminated without thoroughly testing the
 # effect on fst file size (including the acceptor file) and speller speed:
