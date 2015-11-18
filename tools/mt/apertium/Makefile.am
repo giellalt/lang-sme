@@ -21,9 +21,11 @@ APERTIUM_TARGET_LANG_NAME=apertium-sme-sma \
 ##################################################################
 #### Specify CG3 source files, main and included ones:        ####
 ##################################################################
-APERTIUM_CG_SRC=
+APERTIUM_CG_SRC=disambiguation-mt-gt.cg3
 
-APERTIUM_CG_INCLUDE_SRC=
+APERTIUM_CG_INCLUDE_SRC=\
+                introdisambiguation.cg3 \
+                coredisambiguation.cg3
 
 ##################################################################
 #### BEGIN: Add local processing instructions BELOW this line ####
