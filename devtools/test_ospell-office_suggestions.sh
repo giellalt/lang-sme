@@ -81,7 +81,7 @@ rm -f "$speller_results"
 
 # Convert to xml:
 $GTCORE/scripts/speller-testres.pl \
-		--engine=hu \
+		--engine=to \
 		--lang=$GTLANG2 \
 		--input="$SCRIPT_DIR/speller_test_data.txt" \
 		--output="$SCRIPT_DIR/speller_output.txt" \
