@@ -80,7 +80,6 @@ generator-fstspeller-gt-norm-comp_restricted.hfst: \
 		quit\n" | $(FOMA) $(VERBOSITY)
 	$(AM_V_TXT2FST)$(HFST_TXT2FST) -i $@.att -o $@
 
-#		eliminate flag CmpN_Def\n\
 # Else fall back to Hfst, but skip buggy eliminations:
 else
 
