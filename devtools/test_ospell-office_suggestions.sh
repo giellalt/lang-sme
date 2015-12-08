@@ -17,9 +17,14 @@ builddir="."
 spellerdir=tools/spellcheckers/fstbased/hfst
 
 # File variables:
+engine=to
 typos_file="$top_srcdir/test/data/typos.txt"
 file_spesifier="$(basename ${typos_file} .txt)"
-speller_results="$SCRIPT_DIR/speller_result_${file_spesifier}.ospell_office.xml"
+speller_test_data=speller_test_data.txt
+speller_input=speller_input.${engine}.txt
+speller_output=speller_output.${engine}.txt
+speller_timeusage=speller_timeusage.${engine}.txt
+speller_results="$SCRIPT_DIR/speller_result_${file_spesifier}.${engine}.xml"
 
 # Other variables:
 DATE=$(date +%Y%m%d)
@@ -61,37 +66,39 @@ done
 # Set the top build dir after parameter parsing:
 top_builddir="$top_srcdir/$builddir"
 
-echo "nuvviDspeller	Divvun" > $SCRIPT_DIR/speller_test_data.txt
+# Add easter egg version info trigger:
+echo "nuvviDspeller	Divvun" > $SCRIPT_DIR/$speller_test_data
 # Extract the typos, skipping input strings with space(s) in them:
 grep -v '^[!#]' "$typos_file" | grep -v '^$' \
 	| egrep -v '^[[:graph:]]+ [[:graph:]]' \
-	>> $SCRIPT_DIR/speller_test_data.txt
+	>> $SCRIPT_DIR/$speller_test_data
 
-cut -f1 $SCRIPT_DIR/speller_test_data.txt | sed 's/^/5 /' \
-	> $SCRIPT_DIR/speller_input.txt
+# Extract the actual test data:
+cut -f1 $SCRIPT_DIR/$speller_test_data | sed 's/^/5 /' \
+	> $SCRIPT_DIR/$speller_input
 
 # Run the speller;
-$GTCORE/scripts/run_ospell-office_speller.sh $SCRIPT_DIR/speller_input.txt \
-                                      $SCRIPT_DIR/speller_output.txt \
-                                      $SCRIPT_DIR/spellertimeusage.txt \
+$GTCORE/scripts/run_ospell-office_speller.sh $SCRIPT_DIR/$speller_input \
+                                      $SCRIPT_DIR/$speller_output \
+                                      $SCRIPT_DIR/$speller_timeusage \
                                       $GTLANG2 \
                                       "$top_builddir/$spellerdir"
 
 rm -f "$speller_results"
 
-# Convert to xml:
+# Convert speller output to common xml:
 $GTCORE/scripts/speller-testres.pl \
-		--engine=to \
+		--engine=${engine} \
 		--lang=$GTLANG2 \
-		--input="$SCRIPT_DIR/speller_test_data.txt" \
-		--output="$SCRIPT_DIR/speller_output.txt" \
+		--input="$SCRIPT_DIR/$speller_test_data" \
+		--output="$SCRIPT_DIR/$speller_output" \
 		--document=$(basename "$typos_file") \
 		--date=$DATE-$TESTTIME \
 		--version="n/a" \
 		--toolversion="n/a" \
 		--corpusversion="n/a" \
 		--memoryuse="n/a" \
-		--timeuse="$SCRIPT_DIR/spellertimeusage.txt" \
+		--timeuse="$SCRIPT_DIR/$speller_timeusage" \
 		--xml="$speller_results" \
 		--corrsugg
 
