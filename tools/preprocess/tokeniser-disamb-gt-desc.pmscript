@@ -13,7 +13,20 @@
 ! Define word @bin"analyser-gt-desc.hfst";
 ! Define TOP Ins(word) EndTag(w) ;
 
-Define TOP @bin"analyser-disamb-gt-desc.hfst" EndTag(token);
+Define morphology @bin"analyser-disamb-gt-desc.hfst" ;
+
+Define nonword Whitespace | Punct ;
+
+!Define ruleword LC([nonword | #]) [\nonword]+ RC([[nonword - "'"] | # ]) ;
+
+Define morphoword morphology RC([[nonword - "'"] | # ]);
+
+Define token [ morphoword | Punct ];
+
+regex token;
+
+! Usage test:
+! echo "Juos gorreválggain lea (dárbbašlaš) deavdit gáibádusa boasttu olmmoš, man mielde lahtuid." | hfst-proc2 --xerox -w tokeniser-disamb-gt-desc.pmhfst | cg-conv -f 
 
 !Compile, usage:
 
