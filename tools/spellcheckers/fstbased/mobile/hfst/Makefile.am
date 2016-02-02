@@ -32,6 +32,6 @@ DEFAULT_EDIT_DIST=2
 ####### late a better way of handling edits to the initial letter(s).
 ALLOW_INITIAL_EDITS=no
 
-include $(top_srcdir)/am-shared/tools-spellcheckers-fstbased-hfst-dir-include.am
+include $(top_srcdir)/am-shared/tools-spellcheckers-fstbased-mobile-hfst-dir-include.am
 
 # vim: set ft=automake:
