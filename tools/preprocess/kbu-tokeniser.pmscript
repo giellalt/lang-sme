@@ -1,0 +1,71 @@
+!! Docs:
+!! https://kitwiki.csc.fi/twiki/bin/view/KitWiki/HfstPmatch
+
+!! Use with:
+! git clone -b hfst-tokenise-fixes git@github.com:unhammer/hfst3.git
+
+! hfst-pmatch2fst -i kbu-tokeniser.pmscript -o kbu-tokeniser.pmhfst
+
+
+!! Issues:
+!! - [X] Ambiguous input
+!!   - Seems to work fine
+!! - [ ] Ambiguous multiword expessions with ambiguous tokenisation
+!!   - Very much TODO
+!! - [X] Unknown words
+!!   - The set-difference method only works for words without
+!!     flag diacritics (even though we should be working only on the form-side?)
+!!     and leads to binary blow-up: With only lower unknowns, we get 45M;
+!!     lower+upper gives 67M, while no unknowns gives 27M
+!!   - Fixed instead by treating empty analyses as unknown-tokens in
+!!     hfst-tokenise, and outputting unmatched strings with a prefix
+
+! Define morphology @bin"analyser-gt-desc.hfst";
+Define morphology @bin"analyser-disamb-gt-desc.hfst" ;
+! Define morphology @bin"trimmed-analyser.hfst" ;
+
+Define incondform      Punct | {…} ;
+
+Define blank           Whitespace | incondform ;
+
+Define incondword      morphology & [ incondform 0:?* ] ;
+Define morphoword      morphology LC([blank | #]) RC([blank | # ]);
+
+!! TODO: this matches compound space errors, but needs mwe-dis +
+!! post-processing for when it's not an error:
+! Define morphowords     morphology % :%# morphology LC([blank | #]) RC([blank | # ]);
+
+!! Apart from what's in our morphology, there are
+!! 1) unknown word-like forms, and
+!! 2) unmatched strings
+!! We want to give 1) a match, but let 2) be treated specially by hfst-tokenise -a
+Define alphabet "a-z" | {á}|{š}|{ž}|{č}|{đ}|{ŋ}|{æ}|{ø}|{å} | "A-Z" | {Á}|{Š}|{Ž}|{Č}|{Đ}|{Ŋ}|{Æ}|{Ø}|{Å} ;
+Define alphaword alphabet+;
+!! TODO: Could use something like this, but built-in's don't include šžđčŋ:
+! Define MixCase(X) [OptCap(X) | UpCase(X)];
+! Define alphaword MixCase(alphabet+);
+
+!! TODO: fails to exclude words with flag diacritics, why?
+Define unknownform [ [alphaword].u - [morphology].u];
+! Define unknownword unknownform 0:{ %?} LC([blank | #]) RC([[blank ] | # ]);
+!! Also gives huge binary.
+
+!! A simpler, smaller (30M) alternative is to simply give an empty
+!! reading; this is legal in CG, and gives a default baseform equal to
+!! the wordform, but no tag:
+Define unknownwordEmpty unknownform:0 LC([blank | #]) RC([[blank ] | # ]);
+!! Having no tag means there's currently no safe way inside CG to check
+!! if something is unknown (safest being /^[^"]/r which checks for the
+!! existence of a non-wordform tag).
+!! But it's easy to let hfst-tokenise treat empty analyses as
+!! unknowns, and remove empty analyses from other readings -- this
+!! works, and intuitively makes sense to me at least.
+
+Define token [ morphoword | unknownwordEmpty | incondword ];
+regex token ;
+
+!! Usage test:
+! echo "Juos gorreválggain lea (dárbbašlaš) deavdit gáibádusa boasttu olmmoš, man mielde lahtuid." | ~/src/git-apertium/hfst3/tools/src/hfst-tokenize --cg -kawu: tokeniser-disamb-gt-desc.pmhfst
+
+! echo "(gáfe) 'ja' ja 3. ja? ц jaja ukjend \"ukjend\"" | ~/src/git-apertium/hfst3/tools/src/hfst-tokenize --cg -kawu: tokeniser-disamb-gt-desc.pmhfst
+! echo "márffibiillagáffe" | ~/src/git-apertium/hfst3/tools/src/hfst-tokenize --cg -kawu: tokeniser-disamb-gt-desc.pmhfst
