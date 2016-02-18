@@ -139,319 +139,169 @@ analyser-raw-gt-desc.foma: analyser-raw-gt-desc.tmp.foma \
 # First we build a general-purpose fst with the above things removed, but
 # with all lexical content retained, irrespective of orthography/loan word
 # source:
-generator-tts-gt-norm_nonum_noabbr_nohyph.hfst: \
-					generator-raw-gt-desc.hfst                     \
-					filters/remove-semantic-tags.hfst              \
-					filters/remove-homonymy-tags.hfst              \
-					filters/remove-variant-tags.hfst               \
-					filters/remove-derivation-position-tags.hfst   \
-					filters/remove-dialect-tags.hfst               \
-					filters/remove-norm-comp-tags.hfst             \
-					filters/remove-usage-tags.hfst                 \
-					filters/remove-ABBR-strings.hfst               \
-					filters/remove-ACR-strings.hfst                \
-				    filters/remove-derivation-strings.hfst         \
-					filters/remove-error-strings.hfst              \
-					filters/remove-PUNCT-strings.hfst              \
-					filters/remove-UseCirc-strings.hfst            \
-					filters/remove-RCmpnd-strings.hfst             \
-					filters/remove-orthography-tags.hfst           \
-					filters/remove-Orth_Strd-strings.hfst          \
-					filters/remove-CLB-strings.hfst                \
-					filters/remove-hyphenated-strings.hfst         \
-					filters/remove-mwe-strings.hfst
-	$(AM_V_RGX2FST)$(PRINTF) \
-			   "@\"filters/remove-semantic-tags.hfst\"              \
-			.o. @\"filters/remove-homonymy-tags.hfst\"              \
-			.o. @\"filters/remove-variant-tags.hfst\"               \
-			.o. @\"filters/remove-derivation-position-tags.hfst\"   \
-			.o. @\"filters/remove-dialect-tags.hfst\"               \
-			.o. @\"filters/remove-norm-comp-tags.hfst\"             \
-			.o. @\"filters/remove-usage-tags.hfst\"                 \
-			.o. @\"filters/remove-ABBR-strings.hfst\"               \
-			.o. @\"filters/remove-ACR-strings.hfst\"                \
-			.o. @\"filters/remove-derivation-strings.hfst\"         \
-			.o. @\"filters/remove-PUNCT-strings.hfst\"              \
-			.o. @\"filters/remove-UseCirc-strings.hfst\"            \
-			.o. @\"filters/remove-RCmpnd-strings.hfst\"             \
-			.o. @\"filters/remove-Orth_Strd-strings.hfst\"          \
-			.o. @\"filters/remove-CLB-strings.hfst\"                \
-			.o. @\"filters/remove-error-strings.hfst\"              \
-			.o. @\"filters/remove-orthography-tags.hfst\"           \
-			.o. @\"filters/remove-Orth_Strd-strings.hfst\"          \
+analyser-tts-gt-norm_nonum_noabbr_nohyph.%: \
+					analyser-raw-gt-desc.%                      \
+					filters/remove-semantic-tags.%              \
+					filters/remove-homonymy-tags.%              \
+					filters/remove-variant-tags.%               \
+					filters/remove-derivation-position-tags.%   \
+					filters/remove-dialect-tags.%               \
+					filters/remove-norm-comp-tags.%             \
+					filters/remove-usage-tags.%                 \
+					filters/remove-ABBR-strings.%               \
+					filters/remove-ACR-strings.%                \
+				    filters/remove-derivation-strings.%         \
+					filters/remove-error-strings.%              \
+					filters/remove-PUNCT-strings.%              \
+					filters/remove-UseCirc-strings.%            \
+					filters/remove-RCmpnd-strings.%             \
+					filters/remove-orthography-tags.%           \
+					filters/remove-Orth_Strd-strings.%          \
+					filters/remove-CLB-strings.%                \
+					filters/remove-hyphenated-strings.%         \
+					filters/remove-mwe-strings.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+			   "@\"filters/remove-semantic-tags.$*\"              \
+			.o. @\"filters/remove-homonymy-tags.$*\"              \
+			.o. @\"filters/remove-variant-tags.$*\"               \
+			.o. @\"filters/remove-derivation-position-tags.$*\"   \
+			.o. @\"filters/remove-dialect-tags.$*\"               \
+			.o. @\"filters/remove-norm-comp-tags.$*\"             \
+			.o. @\"filters/remove-usage-tags.$*\"                 \
+			.o. @\"filters/remove-ABBR-strings.$*\"               \
+			.o. @\"filters/remove-ACR-strings.$*\"                \
+			.o. @\"filters/remove-derivation-strings.$*\"         \
+			.o. @\"filters/remove-PUNCT-strings.$*\"              \
+			.o. @\"filters/remove-UseCirc-strings.$*\"            \
+			.o. @\"filters/remove-RCmpnd-strings.$*\"             \
+			.o. @\"filters/remove-Orth_Strd-strings.$*\"          \
+			.o. @\"filters/remove-CLB-strings.$*\"                \
+			.o. @\"filters/remove-error-strings.$*\"              \
+			.o. @\"filters/remove-orthography-tags.$*\"           \
+			.o. @\"filters/remove-Orth_Strd-strings.$*\"          \
 			.o. @\"$<\" \
-			.o. @\"filters/remove-mwe-strings.hfst\"                \
-			.o. @\"filters/remove-hyphenated-strings.hfst\"         \
-			;" \
-		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --xerox-composition=ON \
-		> $@
-
-# Xerox version, mainly used for debugging
-analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst: \
-					analyser-raw-gt-desc.xfst                      \
-					filters/remove-semantic-tags.xfst              \
-					filters/remove-homonymy-tags.xfst              \
-					filters/remove-variant-tags.xfst               \
-					filters/remove-derivation-position-tags.xfst   \
-					filters/remove-dialect-tags.xfst               \
-					filters/remove-norm-comp-tags.xfst             \
-					filters/remove-usage-tags.xfst                 \
-					filters/remove-ABBR-strings.xfst               \
-					filters/remove-ACR-strings.xfst                \
-				    filters/remove-derivation-strings.xfst         \
-					filters/remove-error-strings.xfst              \
-					filters/remove-PUNCT-strings.xfst              \
-					filters/remove-UseCirc-strings.xfst            \
-					filters/remove-RCmpnd-strings.xfst             \
-					filters/remove-orthography-tags.xfst           \
-					filters/remove-Orth_Strd-strings.xfst          \
-					filters/remove-CLB-strings.xfst                \
-					filters/remove-hyphenated-strings.xfst         \
-					filters/remove-mwe-strings.xfst
-	$(AM_V_XFST)$(PRINTF) "read regex \
-				@\"filters/remove-semantic-tags.xfst\"              \
-			.o. @\"filters/remove-homonymy-tags.xfst\"              \
-			.o. @\"filters/remove-variant-tags.xfst\"               \
-			.o. @\"filters/remove-derivation-position-tags.xfst\"   \
-			.o. @\"filters/remove-dialect-tags.xfst\"               \
-			.o. @\"filters/remove-norm-comp-tags.xfst\"             \
-			.o. @\"filters/remove-usage-tags.xfst\"                 \
-			.o. @\"filters/remove-ABBR-strings.xfst\"               \
-			.o. @\"filters/remove-ACR-strings.xfst\"                \
-			.o. @\"filters/remove-derivation-strings.xfst\"         \
-			.o. @\"filters/remove-PUNCT-strings.xfst\"              \
-			.o. @\"filters/remove-UseCirc-strings.xfst\"            \
-			.o. @\"filters/remove-RCmpnd-strings.xfst\"             \
-			.o. @\"filters/remove-Orth_Strd-strings.xfst\"          \
-			.o. @\"filters/remove-CLB-strings.xfst\"                \
-			.o. @\"filters/remove-error-strings.xfst\"              \
-			.o. @\"filters/remove-orthography-tags.xfst\"           \
-			.o. @\"filters/remove-Orth_Strd-strings.xfst\"          \
-			.o. @\"$<\" \
-			.o. @\"filters/remove-mwe-strings.xfst\"                \
-			.o. @\"filters/remove-hyphenated-strings.xfst\"         \
+			.o. @\"filters/remove-mwe-strings.$*\"                \
+			.o. @\"filters/remove-hyphenated-strings.$*\"         \
 			;\n\
 		 save stack $@\n\
-		 quit\n" | $(XFST) $(VERBOSITY)
+		 quit\n" | $(XFST_TOOL)
 
 # The second step, to extract the strings that only (or mostly) follow
 # SME orthographic conventions.
-generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst: \
-					generator-tts-gt-norm_nonum_noabbr_nohyph.hfst \
-					filters/remove-OLang_ENG-strings.hfst          \
-					filters/remove-OLang_FIN-strings.hfst          \
-					filters/remove-OLang_NNO-strings.hfst          \
-					filters/remove-OLang_NOB-strings.hfst          \
-					filters/remove-OLang_SWE-strings.hfst          \
-					filters/remove-OLang_UND-strings.hfst          \
-					filters/remove-orig_lang-tags.hfst             \
-					filters/remove-infl_boundary-marks.hfst
-	$(AM_V_RGX2FST)$(PRINTF) \
-			   "@\"filters/remove-orig_lang-tags.hfst\"     \
-			.o. @\"filters/remove-OLang_ENG-strings.hfst\"  \
-			.o. @\"filters/remove-OLang_FIN-strings.hfst\"  \
-			.o. @\"filters/remove-OLang_NNO-strings.hfst\"  \
-			.o. @\"filters/remove-OLang_NOB-strings.hfst\"  \
-			.o. @\"filters/remove-OLang_SWE-strings.hfst\"  \
-			.o. @\"filters/remove-OLang_UND-strings.hfst\"  \
+generator-tts-gt-norm_nonum_noabbr_nohyph_sme.%: \
+					analyser-tts-gt-norm_nonum_noabbr_nohyph.% \
+					filters/remove-OLang_ENG-strings.%          \
+					filters/remove-OLang_FIN-strings.%          \
+					filters/remove-OLang_NNO-strings.%          \
+					filters/remove-OLang_NOB-strings.%          \
+					filters/remove-OLang_SWE-strings.%          \
+					filters/remove-OLang_UND-strings.%          \
+					filters/remove-orig_lang-tags.%             \
+					filters/remove-infl_boundary-marks.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+			   "@\"filters/remove-orig_lang-tags.$*\"     \
+			.o. @\"filters/remove-OLang_ENG-strings.$*\"  \
+			.o. @\"filters/remove-OLang_FIN-strings.$*\"  \
+			.o. @\"filters/remove-OLang_NNO-strings.$*\"  \
+			.o. @\"filters/remove-OLang_NOB-strings.$*\"  \
+			.o. @\"filters/remove-OLang_SWE-strings.$*\"  \
+			.o. @\"filters/remove-OLang_UND-strings.$*\"  \
 			.o. @\"$<\" \
-			.o. @\"filters/remove-infl_boundary-marks.hfst\" \
-			;" \
-		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --xerox-composition=ON \
-		> $@
-
-generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst: \
-					analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst \
-					filters/remove-OLang_ENG-strings.xfst         \
-					filters/remove-OLang_FIN-strings.xfst         \
-					filters/remove-OLang_NNO-strings.xfst         \
-					filters/remove-OLang_NOB-strings.xfst         \
-					filters/remove-OLang_SWE-strings.xfst         \
-					filters/remove-OLang_UND-strings.xfst         \
-					filters/remove-orig_lang-tags.xfst            \
-					filters/remove-infl_boundary-marks.xfst
-	$(AM_V_XFST)$(PRINTF) "read regex \
-			    @\"filters/remove-orig_lang-tags.xfst\"     \
-			.o. @\"filters/remove-OLang_ENG-strings.xfst\"  \
-			.o. @\"filters/remove-OLang_FIN-strings.xfst\"  \
-			.o. @\"filters/remove-OLang_NNO-strings.xfst\"  \
-			.o. @\"filters/remove-OLang_NOB-strings.xfst\"  \
-			.o. @\"filters/remove-OLang_SWE-strings.xfst\"  \
-			.o. @\"filters/remove-OLang_UND-strings.xfst\"  \
-			.o. @\"$<\" \
-			.o. @\"filters/remove-infl_boundary-marks.xfst\" \
+			.o. @\"filters/remove-infl_boundary-marks.$*\" \
 			;\n\
-		 invert net\n\
+		 $(INVERT_XFST)$(INVERT_FOMA)\
 		 save stack $@\n\
-		 quit\n" | $(XFST) $(VERBOSITY)
+		 quit\n" | $(XFST_TOOL)
 
 # The second step, to extract the strings that follow
 # FIN orthographic conventions for the stem (and SME in the inflections):
-generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst: \
-					generator-tts-gt-norm_nonum_noabbr_nohyph.hfst \
-					filters/extract-OLang_FIN-strings.hfst         \
-					filters/remove-orig_lang-tags.hfst             \
-					filters/remove-nonfirst_infl_boundary-marks.hfst
-	$(AM_V_RGX2FST)$(PRINTF) \
-			   "@bin\"filters/remove-orig_lang-tags.hfst\"     \
-			.o. @bin\"filters/extract-OLang_FIN-strings.hfst\"   \
+generator-tts-gt-norm_nonum_noabbr_nohyph_fin.%: \
+					analyser-tts-gt-norm_nonum_noabbr_nohyph.% \
+					filters/extract-OLang_FIN-strings.%         \
+					filters/remove-orig_lang-tags.%             \
+					filters/remove-nonfirst_infl_boundary-marks.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+			   "@bin\"filters/remove-orig_lang-tags.$*\"     \
+			.o. @bin\"filters/extract-OLang_FIN-strings.$*\"   \
 			.o. @bin\"$<\" \
-			.o. @bin\"filters/remove-nonfirst_infl_boundary-marks.hfst\" \
-			;" \
-		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --xerox-composition=ON \
-		> $@
-
-generator-tts-gt-norm_nonum_noabbr_nohyph_fin.xfst: \
-					analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst  \
-					filters/extract-OLang_FIN-strings.xfst         \
-					filters/remove-orig_lang-tags.xfst             \
-					filters/remove-nonfirst_infl_boundary-marks.xfst
-	$(AM_V_XFST)$(PRINTF) "read regex \
-			    @\"filters/remove-orig_lang-tags.xfst\"     \
-			.o. @\"filters/extract-OLang_FIN-strings.xfst\" \
-			.o. @\"$<\" \
-			.o. @\"filters/remove-nonfirst_infl_boundary-marks.xfst\" \
+			.o. @bin\"filters/remove-nonfirst_infl_boundary-marks.$*\" \
 			;\n\
-		 invert net\n\
+		 $(INVERT_XFST)$(INVERT_FOMA)\
 		 save stack $@\n\
-		 quit\n" | $(XFST) $(VERBOSITY)
+		 quit\n" | $(XFST_TOOL)
 
 # The second step, to extract the strings that follow
 # NOB (and NNO + SWE) orthographic conventions for the stem::
-generator-tts-gt-norm_nonum_noabbr_nohyph_nob.hfst: \
-					generator-tts-gt-norm_nonum_noabbr_nohyph.hfst \
-					filters/extract-OLang_NOB-strings.hfst         \
-					filters/extract-OLang_NNO-strings.hfst         \
-					filters/extract-OLang_SWE-strings.hfst         \
-					filters/remove-orig_lang-tags.hfst             \
-					filters/remove-nonfirst_infl_boundary-marks.hfst
-	$(AM_V_RGX2FST)$(PRINTF) \
-			   "@bin\"filters/remove-orig_lang-tags.hfst\"     \
+generator-tts-gt-norm_nonum_noabbr_nohyph_nob.%: \
+					analyser-tts-gt-norm_nonum_noabbr_nohyph.% \
+					filters/extract-OLang_NOB-strings.%         \
+					filters/extract-OLang_NNO-strings.%         \
+					filters/extract-OLang_SWE-strings.%         \
+					filters/remove-orig_lang-tags.%             \
+					filters/remove-nonfirst_infl_boundary-marks.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+			   "@bin\"filters/remove-orig_lang-tags.$*\"     \
 			.o. \
-			  [ @bin\"filters/extract-OLang_NOB-strings.hfst\"   \
-			  | @bin\"filters/extract-OLang_NNO-strings.hfst\"   \
-			  | @bin\"filters/extract-OLang_SWE-strings.hfst\" ] \
+			  [ @bin\"filters/extract-OLang_NOB-strings.$*\"   \
+			  | @bin\"filters/extract-OLang_NNO-strings.$*\"   \
+			  | @bin\"filters/extract-OLang_SWE-strings.$*\" ] \
 			.o. @bin\"$<\" \
-			.o. @bin\"filters/remove-nonfirst_infl_boundary-marks.hfst\" \
-			;" \
-		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --xerox-composition=ON \
-		> $@
-
-generator-tts-gt-norm_nonum_noabbr_nohyph_nob.xfst: \
-					analyser-tts-gt-norm_nonum_noabbr_nohyph.xfst  \
-					filters/extract-OLang_NOB-strings.xfst         \
-					filters/extract-OLang_NNO-strings.xfst         \
-					filters/extract-OLang_SWE-strings.xfst         \
-					filters/remove-orig_lang-tags.xfst             \
-					filters/remove-nonfirst_infl_boundary-marks.xfst
-	$(AM_V_XFST)$(PRINTF) "read regex \
-			    @\"filters/remove-orig_lang-tags.xfst\"     \
-			.o. \
-			  [ @\"filters/extract-OLang_NOB-strings.xfst\"   \
-			  | @\"filters/extract-OLang_NNO-strings.xfst\"   \
-			  | @\"filters/extract-OLang_SWE-strings.xfst\" ] \
-			.o. @\"$<\" \
-			.o. @\"filters/remove-nonfirst_infl_boundary-marks.xfst\" \
+			.o. @bin\"filters/remove-nonfirst_infl_boundary-marks.$*\" \
 			;\n\
-		 invert net\n\
+		 $(INVERT_XFST)$(INVERT_FOMA)\
 		 save stack $@\n\
-		 quit\n" | $(XFST) $(VERBOSITY)
+		 quit\n" | $(XFST_TOOL)
 
 # We need to add processing of language-specific tags in the analyser:
-# HFST:
-analyser-gt-norm.hfst: analyser-gt-norm.tmp.hfst \
-					 filters/remove-allegro-tags.hfst
-	$(AM_V_RGX2FST)$(PRINTF) "\
-				@\"filters/remove-allegro-tags.hfst\" \
-			.o. @\"$<\"                                       \
-			;" \
-		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --xerox-composition=ON \
-		| $(HFST_INVERT) $(VERBOSITY) $(HFST_FLAGS) \
-		> $@
-
-# Xerox:
-analyser-gt-norm.xfst: analyser-gt-norm.tmp.xfst \
-					filters/remove-allegro-tags.xfst
-	$(AM_V_XFST)$(PRINTF) "read regex                         \
-				@\"filters/remove-allegro-tags.xfst\" \
+analyser-gt-norm.%: analyser-gt-norm.tmp.% \
+					filters/remove-allegro-tags.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+				@\"filters/remove-allegro-tags.$*\" \
 			.o. @\"$<\"                                       \
 			;\n\
+		 $(INVERT_HFST)\
 		 save stack $@\n\
-		 quit\n" | $(XFST) $(VERBOSITY)
+		 quit\n" | $(XFST_TOOL)
 
 # ... and also in the Oahpa analyser:
-# HFST:
-analyser-oahpa-gt-norm.hfst: analyser-gt-norm.tmp.hfst \
-					 filters/remove-allegro-tags.hfst
-	$(AM_V_RGX2FST)$(PRINTF) "\
-				@\"filters/remove-allegro-tags.hfst\" \
-			.o. @\"$<\"                                       \
-			;" \
-		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --xerox-composition=ON \
-		| $(HFST_INVERT) $(VERBOSITY) $(HFST_FLAGS)
-		> $@
-
-# Xerox:
-analyser-oahpa-gt-norm.xfst: analyser-gt-norm.tmp.xfst \
-					filters/remove-allegro-tags.xfst
-	$(AM_V_XFST)$(PRINTF) "read regex                         \
-				@\"filters/remove-allegro-tags.xfst\" \
+analyser-oahpa-gt-norm.%: analyser-gt-norm.tmp.% \
+					filters/remove-allegro-tags.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+				@\"filters/remove-allegro-tags.$*\" \
 			.o. @\"$<\"                                     \
 			;\n\
+		 $(INVERT_HFST)\
 		 save stack $@\n\
-		 quit\n" | $(XFST) $(VERBOSITY)
+		 quit\n" | $(XFST_TOOL)
 
 # We need to add processing of language-specific tags in the generator:
-# HFST:
-generator-gt-%.hfst: generator-gt-%.tmp.hfst \
-					 filters/make-optional-allegro-tags.hfst \
-					 filters/make-optional-coll-tags.hfst    \
-					 filters/make-optional-lang_hom-tags.hfst
-	$(AM_V_RGX2FST)$(PRINTF) "\
-				@\"filters/make-optional-allegro-tags.hfst\"  \
-			.o. @\"filters/make-optional-coll-tags.hfst\"     \
-			.o. @\"filters/make-optional-lang_hom-tags.hfst\" \
-			.o. @\"$<\"                                       \
-			;" \
-		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --xerox-composition=ON \
-		> $@
-
-# Xerox:
-generator-gt-%.xfst: generator-gt-%.tmp.xfst \
-					 filters/make-optional-allegro-tags.xfst \
-					 filters/make-optional-coll-tags.xfst    \
-					 filters/make-optional-lang_hom-tags.xfst
-	$(AM_V_XFST)$(PRINTF) "read regex                         \
-				@\"filters/make-optional-allegro-tags.xfst\"  \
-			.o. @\"filters/make-optional-coll-tags.xfst\"     \
-			.o. @\"filters/make-optional-lang_hom-tags.xfst\" \
-			.o. @\"$<\"                                       \
+define giella_generators
+generator-gt-%.$(1): generator-gt-%.tmp.$(1) \
+					 filters/make-optional-allegro-tags.$(1) \
+					 filters/make-optional-coll-tags.$(1)    \
+					 filters/make-optional-lang_hom-tags.$(1)
+	$$(AM_V_XFST_TOOL)$$(PRINTF) "read regex \
+				@\"filters/make-optional-allegro-tags.$(1)\"  \
+			.o. @\"filters/make-optional-coll-tags.$(1)\"     \
+			.o. @\"filters/make-optional-lang_hom-tags.$(1)\" \
+			.o. @\"$$<\"                                      \
 			;\n\
-		 invert net\n\
-		 save stack $@\n\
-		 quit\n" | $(XFST) $(VERBOSITY)
+		 $$(INVERT_XFST)$$(INVERT_FOMA)\
+		 save stack $$@\n\
+		 quit\n" | $$(XFST_TOOL)
+endef
+$(foreach fst,hfst xfst foma,$(eval $(call giella_generators,$(fst))))
 
 # We need to add processing of language-specific tags for the Oahpa generators:
-# HFST:
-generator-oahpa-gt-norm.hfst: generator-oahpa-gt-norm.tmp.hfst \
-					 filters/make-optional-allegro-tags.hfst
-	$(AM_V_RGX2FST)$(PRINTF) "\
-				@\"filters/make-optional-allegro-tags.hfst\"  \
-			.o. @\"$<\"                                       \
-			;" \
-		| $(HFST_REGEXP2FST) $(VERBOSITY) $(HFST_FLAGS) -S --xerox-composition=ON \
-		> $@
-
-# Xerox:
-generator-oahpa-gt-norm.xfst: generator-oahpa-gt-norm.tmp.xfst \
-					 filters/make-optional-allegro-tags.xfst
-	$(AM_V_XFST)$(PRINTF) "read regex                         \
-				@\"filters/make-optional-allegro-tags.xfst\"  \
+generator-oahpa-gt-norm.%: generator-oahpa-gt-norm.tmp.% \
+					 filters/make-optional-allegro-tags.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+				@\"filters/make-optional-allegro-tags.$*\"  \
 			.o. @\"$<\"                                       \
 			;\n\
-		 invert net\n\
+		 $(INVERT_XFST)$(INVERT_FOMA)\
 		 save stack $@\n\
-		 quit\n" | $(XFST) $(VERBOSITY)
+		 quit\n" | $(XFST_TOOL)
 
 ##################################################################
 #### END: Add local processing instructions ABOVE this line ######
