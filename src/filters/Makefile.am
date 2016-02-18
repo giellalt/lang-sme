@@ -26,8 +26,10 @@ GIELLA_FILTER_LOCAL_REGEX_SRCS=\
 					remove-allegro-tags.regex         \
 					remove-lang_hom-tags.regex        \
 					remove-rel_focus-strings.regex    \
-				    remove-illegal-derivation-strings.regex \
-					reorder-subpos-tags.$(GTLANG).regex
+					remove-illegal-derivation-strings.regex \
+					reorder-subpos-tags.$(GTLANG).regex \
+					remove-derivation-position-tags.regex \
+					rename-POS_before_Der-tags.regex
 
 # List any local filter xfscript files here:
 GIELLA_FILTER_LOCAL_XFSCRIPT_SRCS=
