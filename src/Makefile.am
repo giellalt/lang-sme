@@ -95,6 +95,7 @@ endif # CAN_FOMA
 #################################################
 #### Add language-specific build rules here: ####
 
+# Hfst - add weights to compounds:
 generator-raw-gt-desc.hfst: generator-raw-gt-desc.tmp.hfst \
 					filters/reorder-subpos-tags.$(GTLANG).hfst
 	$(AM_V_RGX2FST)$(PRINTF) "\
@@ -106,23 +107,15 @@ generator-raw-gt-desc.hfst: generator-raw-gt-desc.tmp.hfst \
 			-S '+Cmp' -a 10 --arcs-only \
 		> $@
 
-analyser-raw-gt-desc.xfst: analyser-raw-gt-desc.tmp.xfst \
-					filters/reorder-subpos-tags.$(GTLANG).xfst
-	$(AM_V_XFST)$(PRINTF) "read regex \
-				@\"filters/reorder-subpos-tags.$(GTLANG).xfst\" \
+# Xerox & Foma:
+analyser-raw-gt-desc.%: analyser-raw-gt-desc.tmp.% \
+					filters/reorder-subpos-tags.$(GTLANG).%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+				@\"filters/reorder-subpos-tags.$(GTLANG).$*\" \
 			.o. @\"$<\" \
 			;\n\
 		 save stack $@\n\
-		 quit\n" | $(XFST) $(VERBOSITY)
-
-analyser-raw-gt-desc.foma: analyser-raw-gt-desc.tmp.foma \
-					filters/reorder-subpos-tags.$(GTLANG).foma
-	$(AM_V_XFST)$(PRINTF) "read regex \
-				@\"filters/reorder-subpos-tags.$(GTLANG).foma\" \
-			.o. @\"$<\" \
-			;\n\
-		 save stack $@\n\
-		 quit\n" | $(FOMA) -p $(VERBOSITY)
+		 quit\n" | $(XFST_TOOL)
 
 # A generator for producing word forms suitable for tts:
 # * no circular constructions:
