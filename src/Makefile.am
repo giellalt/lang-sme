@@ -141,6 +141,7 @@ analyser-raw-gt-desc.foma: analyser-raw-gt-desc.tmp.foma \
 # source:
 analyser-tts-gt-norm_nonum_noabbr_nohyph.%: \
 					analyser-raw-gt-desc.%                      \
+					filters/remove-derivation-position-tags.%   \
 					filters/remove-semantic-tags.%              \
 					filters/remove-homonymy-tags.%              \
 					filters/remove-variant-tags.%               \
@@ -178,6 +179,7 @@ analyser-tts-gt-norm_nonum_noabbr_nohyph.%: \
 			.o. @\"filters/remove-CLB-strings.$*\"                \
 			.o. @\"filters/remove-error-strings.$*\"              \
 			.o. @\"filters/remove-orthography-tags.$*\"           \
+			.o. @\"filters/remove-derivation-position-tags.$*\"   \
 			.o. @\"filters/remove-Orth_Strd-strings.$*\"          \
 			.o. @\"$<\" \
 			.o. @\"filters/remove-mwe-strings.$*\"                \
@@ -253,10 +255,22 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_nob.%: \
 		 quit\n" | $(XFST_TOOL)
 
 # We need to add processing of language-specific tags in the analyser:
+analyser-gt-desc.%: analyser-gt-desc.tmp.% \
+					filters/remove-derivation-position-tags.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+			    @\"filters/remove-derivation-position-tags.$*\" \
+			.o. @\"$<\"                                       \
+			;\n\
+		 $(INVERT_HFST)\
+		 save stack $@\n\
+		 quit\n" | $(XFST_TOOL)
+
 analyser-gt-norm.%: analyser-gt-norm.tmp.% \
+					filters/remove-derivation-position-tags.% \
 					filters/remove-allegro-tags.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/remove-allegro-tags.$*\" \
+			.o. @\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"$<\"                                       \
 			;\n\
 		 $(INVERT_HFST)\
@@ -265,9 +279,24 @@ analyser-gt-norm.%: analyser-gt-norm.tmp.% \
 
 # ... and also in the Oahpa analyser:
 analyser-oahpa-gt-norm.%: analyser-gt-norm.tmp.% \
+					filters/remove-derivation-position-tags.% \
 					filters/remove-allegro-tags.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/remove-allegro-tags.$*\" \
+			.o. @\"filters/remove-derivation-position-tags.$*\" \
+			.o. @\"$<\"                                     \
+			;\n\
+		 $(INVERT_HFST)\
+		 save stack $@\n\
+		 quit\n" | $(XFST_TOOL)
+
+# ... as well as in the disambiguation analyser:
+analyser-disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.% \
+					filters/remove-derivation-position-tags.% \
+					filters/rename-POS_before_Der-tags.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+				@\"filters/remove-derivation-position-tags.$*\" \
+			.o. @\"filters/rename-POS_before_Der-tags.$*\" \
 			.o. @\"$<\"                                     \
 			;\n\
 		 $(INVERT_HFST)\
@@ -277,6 +306,7 @@ analyser-oahpa-gt-norm.%: analyser-gt-norm.tmp.% \
 # We need to add processing of language-specific tags in the generator:
 define giella_generators
 generator-gt-%.$(1): generator-gt-%.tmp.$(1) \
+					 filters/remove-derivation-position-tags.$(1) \
 					 filters/make-optional-allegro-tags.$(1) \
 					 filters/make-optional-coll-tags.$(1)    \
 					 filters/make-optional-lang_hom-tags.$(1)
@@ -284,6 +314,7 @@ generator-gt-%.$(1): generator-gt-%.tmp.$(1) \
 				@\"filters/make-optional-allegro-tags.$(1)\"  \
 			.o. @\"filters/make-optional-coll-tags.$(1)\"     \
 			.o. @\"filters/make-optional-lang_hom-tags.$(1)\" \
+			.o. @\"filters/remove-derivation-position-tags.$(1)\" \
 			.o. @\"$$<\"                                      \
 			;\n\
 		 $$(INVERT_XFST)$$(INVERT_FOMA)\
@@ -294,9 +325,11 @@ $(foreach fst,hfst xfst foma,$(eval $(call giella_generators,$(fst))))
 
 # We need to add processing of language-specific tags for the Oahpa generators:
 generator-oahpa-gt-norm.%: generator-oahpa-gt-norm.tmp.% \
-					 filters/make-optional-allegro-tags.%
+					filters/remove-derivation-position-tags.% \
+					filters/make-optional-allegro-tags.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/make-optional-allegro-tags.$*\"  \
+			.o. @\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"$<\"                                       \
 			;\n\
 		 $(INVERT_XFST)$(INVERT_FOMA)\
