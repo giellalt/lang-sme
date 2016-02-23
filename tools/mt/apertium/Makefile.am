@@ -37,6 +37,7 @@ analyser-mt-gt-desc.%.hfst: analyser-mt-gt-desc.%.tmp.hfst \
 		| $(HFST_FST2FST) $(HFSTFLAGS) -t \
 		-o $@
 
+# We want to rename the POS tags in front of derivations:
 analyser-mt-gt-desc.hfst: analyser-mt-gt-desc.tmp.hfst \
 			$(top_builddir)/src/filters/remove-derivation-position-tags.hfst \
 			$(top_builddir)/src/filters/rename-POS_before_Der-tags.hfst
