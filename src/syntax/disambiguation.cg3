@@ -140,7 +140,7 @@ LIST Ess = Ess ; #!! Ess
 LIST Sg = Sg ;   #!! Sg
 LIST Du = Du ;   #!! Du
 LIST Pl = Pl ;   #!! Pl
-LIST RCmpnd = RCmpnd ;	   #!! RCmpnd
+LIST Cmp/SplitR = Cmp/SplitR ;	   #!! Cmp/SplitR
 LIST Cmpnd = Cmpnd ;	   #!! Cmpnd
 LIST SgNomCmp = SgNomCmp ; #!! SgNomCmp
 LIST SgGenCmp = SgGenCmp ; #!! SgGenCmp
@@ -1145,21 +1145,21 @@ LIST PROP = (N Prop);
 
 SET COMMON-N = N - Prop;
 
-SET HEAD-N = N - RCmpnd ;
+SET HEAD-N = N - Cmp/SplitR ;
 
-SET HEAD-N-NOM = (N Nom) - RCmpnd ;
+SET HEAD-N-NOM = (N Nom) - Cmp/SplitR ;
 
 SET SUBJECTHEAD = N OR A OR Pron - Refl ; # These, can be subject heads
 
 SET NP = N OR A ;                      # anything that can take except numerals
 SET NP-HEAD        = Pron OR HEAD-N - ("buorre") ;
-SET NP-HEAD-SG     = SG-PRON OR (N Sg) OR (A Sg) - RCmpnd  - Dem - ("buorre");
-SET NP-HEAD-PL     = PL-PRON OR (N Pl) OR (A Pl) - RCmpnd  - Dem - ("buorre");
-SET NP-HEAD-SG-NOM = SG-PRON + Nom OR (N Sg Nom) OR (A Sg Nom) - ("buorre") - RCmpnd ;
-SET NP-HEAD-PL-NOM = PL-PRON + Nom OR (N Pl Nom) OR (A Pl Nom) - RCmpnd  - ("buorre");
+SET NP-HEAD-SG     = SG-PRON OR (N Sg) OR (A Sg) - Cmp/SplitR  - Dem - ("buorre");
+SET NP-HEAD-PL     = PL-PRON OR (N Pl) OR (A Pl) - Cmp/SplitR  - Dem - ("buorre");
+SET NP-HEAD-SG-NOM = SG-PRON + Nom OR (N Sg Nom) OR (A Sg Nom) - ("buorre") - Cmp/SplitR ;
+SET NP-HEAD-PL-NOM = PL-PRON + Nom OR (N Pl Nom) OR (A Pl Nom) - Cmp/SplitR  - ("buorre");
 SET NP-HEAD-NOM    = NP-HEAD-SG-NOM OR NP-HEAD-PL-NOM ;
-SET NP-HEAD-ACC    = (Pron Acc) OR (N Acc) OR (A Acc) - RCmpnd - (Dem Attr) - ("buorre");
-SET NP-HEAD-GEN    = (Pron Gen) OR (N Gen) OR (A Gen) - Der/NomAct - RCmpnd - (Dem Attr) - ("buorre")   ;
+SET NP-HEAD-ACC    = (Pron Acc) OR (N Acc) OR (A Acc) - Cmp/SplitR - (Dem Attr) - ("buorre");
+SET NP-HEAD-GEN    = (Pron Gen) OR (N Gen) OR (A Gen) - Der/NomAct - Cmp/SplitR - (Dem Attr) - ("buorre")   ;
 
 #!! !The PRE-NP-HEAD family of sets
 
@@ -1170,7 +1170,7 @@ SET NP-HEAD-GEN    = (Pron Gen) OR (N Gen) OR (A Gen) - Der/NomAct - RCmpnd - (D
 
 SET PRE-NP-HEAD = (Prop Attr) OR (Prop @>N) OR (A Attr) OR (ABBR Attr) OR ("buorre") 
          OR (Pron Pers Gen) OR (N Gen) OR BUOT OR
-         Num OR RCmpnd OR CC OR (Pron Dem) OR (Pron Refl Gen) OR (Indef Attr) OR 
+         Num OR Cmp/SplitR OR CC OR (Pron Dem) OR (Pron Refl Gen) OR (Indef Attr) OR 
          (PrfPrc @>N) OR PrsPrc OR (A Ord) ;
          # The strict version of items that can only be premodifiers, not parts of the predicate
          
@@ -2533,7 +2533,7 @@ REMOVE:derST Der/st IF (0 Der/ahtti) ;
 #!! * __derVuohta__ removes A Attr Der/vuota if A Der/vuota.	
 REMOVE:derVuohta Attr IF (0 Der/vuota) ; 
 
-REMOVE (Der/heapmi A Comp Attr) ;
+REMOVE (A Comp Attr) IF (0 Der/heapmi OR (".*heapme"r))(0 N) ; ;
 REMOVE:ihttin ("ihtit") IF (0 ("ihttin")) ;
 REMOVE:olgu ("olgu") IF (0 ("olgun")) ;
 
@@ -3877,7 +3877,7 @@ SELECT:sonSG3V (Pron Pers Sg3 Nom) IF (0 ("son"))(NEGATE -1 Qst OR go) ((*-1 SG3
 SELECT:sonRel Pers IF (0 ("son" Pron Pers Sg3 Nom))(1 (Pron Rel Sg));
 	#$ Son gii addá veahki galgá mearridit.
 
-SELECT:goson Pcle IF (NEGATE -2 CLB)(-1 Qst OR go)(0 ("son"))(1 Nom LINK NEGATE 0 Refl OR Inf OR RCmpnd);
+SELECT:goson Pcle IF (NEGATE -2 CLB)(-1 Qst OR go)(0 ("son"))(1 Nom LINK NEGATE 0 Refl OR Inf OR Cmp/SplitR);
 	#$ Lea go son Máret boahtán?
 
 SELECT:nuPlce Pcle IF (-1 ("mii" Indef) OR ("gii") OR ("gos"))(0 ("nu")) ;  #because of Apertium
@@ -5657,8 +5657,8 @@ REMOVE:CVPoppramsing (@CVP) IF  (-1 Nom LINK *-1 COMMA BARRIER NOT-NPMOD LINK -1
 	#  "Lásse" also have VFIN reading.
 
 
-#!! *__CVPRCmpnd__ RCmpnd @CNP
-REMOVE:CVPRCmpnd (@CVP) IF  (-1 RCmpnd);
+#!! *__CVPCmp/SplitR__ Cmp/SplitR @CNP
+REMOVE:CVPCmp/SplitR (@CVP) IF  (-1 Cmp/SplitR);
 	#$ Ulbmil seammádássásaš bohtosiid juksamis galgá gustot álo beroškeahttá makkár giella- dahje kulturduogáš dárbbašeaddjis lea.
 
 #!! * __CVPwrongCmpnd__ wrongly formatted compounds
@@ -6337,16 +6337,16 @@ SELECT:AttrIllCop Attr IF (-1 (N Nom) LINK *-1 COPULAS LINK -1 HUMAN + Ill OR (P
 	#$ Sidjiide lei maid liegga Ruija geasuheaddji guovlu.
 
 #!! * __AttrAdv__ 
-SELECT:AttrAdv (A Attr) IF (-1 Adv LINK NOT 0 GRADE-ADV)(NEGATE 0 Inf OR VFIN OR RCmpnd)(*1C N BARRIER NOT-A)(NEGATE 1 CLB LINK 1 N)(NEGATE 1 Prop)(NEGATE 0 (A Pl) LINK *-1 PL-V OR DU-V BARRIER NOT-ADV-PCLE);
+SELECT:AttrAdv (A Attr) IF (-1 Adv LINK NOT 0 GRADE-ADV)(NEGATE 0 Inf OR VFIN OR Cmp/SplitR)(*1C N BARRIER NOT-A)(NEGATE 1 CLB LINK 1 N)(NEGATE 1 Prop)(NEGATE 0 (A Pl) LINK *-1 PL-V OR DU-V BARRIER NOT-ADV-PCLE);
 	#$ Mánná viehkalii olggos álás julggiid.
 	#$ Universitehtas lea maiddái čielga nášunála ovddasvástádus...
 	#$ Dalle sáhttá beaktilit háhkat guovtte ja maiddái golmmagielat (maiddái suomagielat) gelbbolašvuođa.Gonagas sáhttá mearridit dábálaš njuolggadusaid báikkálaš dilálašvuođaid ektui.
 
 REMOVE:AttrVejolaš ("vejolaš" Attr)  IF (*-1 COPULAS)(1 REAL-V) ;
-REMOVE:RCmpndA  (RCmpnd A) IF (0 (RCmpnd N)) ;
+REMOVE:Cmp/SplitRA  (Cmp/SplitR A) IF (0 (Cmp/SplitR N)) ;
  
 #!! * __ANom__  removes A Nom
-REMOVE:ANom (A Nom) IF (NEGATE -1 COPULAS LINK 1 DEHALAS LINK *1 ADVLCASE BARRIER NOT-NPMOD)(0 (A Attr))(NEGATE 0 (Pl Nom) LINK *-1 PL-V OR DU-V BARRIER NOT-ADV-PCLE OR CS LINK NEGATE *-1 (Pl Nom) BARRIER S-BOUNDARY)(NEGATE 0 (Pl Nom) LINK *-1 COPULAS BARRIER NOT-ADV-PCLE LINK 0 Pl3)(NEGATE *1 NP-HEAD-NOM OR Ess BARRIER NOT-A-ADV)(NEGATE *-1 (Refl Acc) BARRIER NOT-ADV)(*1C N OR RCmpnd BARRIER NOT-NPMOD OR (PUNCT RIGHT) OR CC LINK NOT 1 Po OR PREGEN)(NEGATE 1 Prop OR Ill)(NEGATE 1 COMMA LINK 1 N)(NEGATE 1 Gen LINK *1 Po OR PREGEN BARRIER NP-BOUNDARY)(NEGATE 0 Pl LINK *-1 Pl3 BARRIER VFIN) ;
+REMOVE:ANom (A Nom) IF (NEGATE -1 COPULAS LINK 1 DEHALAS LINK *1 ADVLCASE BARRIER NOT-NPMOD)(0 (A Attr))(NEGATE 0 (Pl Nom) LINK *-1 PL-V OR DU-V BARRIER NOT-ADV-PCLE OR CS LINK NEGATE *-1 (Pl Nom) BARRIER S-BOUNDARY)(NEGATE 0 (Pl Nom) LINK *-1 COPULAS BARRIER NOT-ADV-PCLE LINK 0 Pl3)(NEGATE *1 NP-HEAD-NOM OR Ess BARRIER NOT-A-ADV)(NEGATE *-1 (Refl Acc) BARRIER NOT-ADV)(*1C N OR Cmp/SplitR BARRIER NOT-NPMOD OR (PUNCT RIGHT) OR CC LINK NOT 1 Po OR PREGEN)(NEGATE 1 Prop OR Ill)(NEGATE 1 COMMA LINK 1 N)(NEGATE 1 Gen LINK *1 Po OR PREGEN BARRIER NP-BOUNDARY)(NEGATE 0 Pl LINK *-1 Pl3 BARRIER VFIN) ;
 	#$ Dat lea čuovvovaš sajis.
 	#$ Ánne-Sofe buvttii varas biergguid.
 	#$ Mun čállen romit reivve go don.	
@@ -7095,8 +7095,8 @@ SELECT:GenIfPo Gen (1C Po) ;
 #!! The rules are no documented yet
 
 #!! * __DemAttr__
-SELECT:DemAttr $$CASE + (Dem Sg) IF (0 DAT-PRON)(*1 $$CASE + (N Sg) BARRIER NOT-NPMOD OR TIME-N OR Num LINK NOT 0 VFIN OR ("leat") OR (Actio Ess) OR Po)(NEGATE 0 Acc LINK *-1 STRICT-TRANS-V BARRIER Acc LINK *1 Dem LINK NEGATE *1 Acc BARRIER NOT-NPMOD)  ;
-	#$  
+SELECT:DemAttr $$CASE + (Dem Sg) IF (0 DAT-PRON)(*1 $$CASE + (N Sg) BARRIER NOT-NPMOD OR TIME-N OR Num LINK NOT 0 VFIN OR ("leat") OR (Actio Ess) OR Po)(NEGATE 0 Acc LINK *-1 STRICT-TRANS-V BARRIER Acc LINK NOT -1 Acc LINK *2 Dem LINK NEGATE *1 Acc BARRIER NOT-NPMOD)  ;
+	#$ Dalle galgá beare uhccán ovddastuvvon sohkabeali evttohasaid loktet badjeliidda dan listtas.
 	#% Mun muitalin dan vielljasan. # Should not hit this one.
 
 #!! * __IndefAgree__ guhtege goappašat iešguhtege guhte
@@ -7990,7 +7990,7 @@ SELECT:vuoiAcc Acc IF ((*-1 ("vuoi") BARRIER NOT-NPMODADV) OR (*-1 ("surgat") BA
 	#$ Vuoi surgat dan gándda!
 
 	
-LIST SAPMI-N-HEAD =  "álbmot" "álbmotbeaivi" "álbmotdálkkodeapmi" "álbmotjoavku" "árbevierru" "ássanguovlu" "ássi" "áviisa" "beales" "beroštupmi" "boaris" ("boazodoallu" Nom) ("boazodoallu" Loc) "byråkratgiella" "diehtobáŋku" ("dearvvašvuohta" RCmpnd) "dievdu" "doaibma" "eamiálbmotdutkan" ("dutkan" Sg) "ealáhus" "fágabiras" "fierpmádat" "giella" "gilli" "gili#ássi" ("guovlu" Pl) "kulturovdáneapmi" "kulturviessu" "plána" "doaibmaplána" "geavaheaddji" "gelbbolašvuođadoaibma" "giellaláhka" "girjjálašvuohta" "guolásteapmi" "guovddášguovlu" "hálddašanguovlu" "iešdovdu" ("nuoraidsearvi" Pl) "oahppoplána" "oktasaš" "perspektiiva" "mánná" "nisu" "álbmot" "bargi" "geavaheaddji" "jienastuslohku" "kulturmuitu" "kulturmuitohálddašeapmi" "kulturmuitosuodjalus" "kultuvra" "náhkkegálvu" "nuorra" "oktavuohta" "resursageavaheapmi" "riggodat" "riikkajoavku" "searvevuohta" "searvi" "servodat" ("siida" Pl) "siseana" "siseatnansiida" "sisafárren" "sosiáladutkan" "strategiijaplána" "valáštallan" "vierru" "vuohki" "vuoigatvuohta" "vuoigatvuođabargu" (PUNCT LEFT) ;
+LIST SAPMI-N-HEAD =  "álbmot" "álbmotbeaivi" "álbmotdálkkodeapmi" "álbmotjoavku" "árbevierru" "ássanguovlu" "ássi" "áviisa" "beales" "beroštupmi" "boaris" ("boazodoallu" Nom) ("boazodoallu" Loc) "byråkratgiella" "diehtobáŋku" ("dearvvašvuohta" Cmp/SplitR) "dievdu" "doaibma" "eamiálbmotdutkan" ("dutkan" Sg) "ealáhus" "fágabiras" "fierpmádat" "giella" "gilli" "gili#ássi" ("guovlu" Pl) "kulturovdáneapmi" "kulturviessu" "plána" "doaibmaplána" "geavaheaddji" "gelbbolašvuođadoaibma" "giellaláhka" "girjjálašvuohta" "guolásteapmi" "guovddášguovlu" "hálddašanguovlu" "iešdovdu" ("nuoraidsearvi" Pl) "oahppoplána" "oktasaš" "perspektiiva" "mánná" "nisu" "álbmot" "bargi" "geavaheaddji" "jienastuslohku" "kulturmuitu" "kulturmuitohálddašeapmi" "kulturmuitosuodjalus" "kultuvra" "náhkkegálvu" "nuorra" "oktavuohta" "resursageavaheapmi" "riggodat" "riikkajoavku" "searvevuohta" "searvi" "servodat" ("siida" Pl) "siseana" "siseatnansiida" "sisafárren" "sosiáladutkan" "strategiijaplána" "valáštallan" "vierru" "vuohki" "vuoigatvuohta" "vuoigatvuođabargu" (PUNCT LEFT) ;
 
 LIST SAPMI-PROP-HEAD = "allaskuvla" "bálvalusguovddáš" "cup" "dihtorlávdegoddi" "dearvvašvuođadutkanguovddáš" "doavttersearvi" "ealáhusfoanda" "eanahálddahus" "giellaláhka" "giellalávdegoddi" "giellaráđđi" "guovddáš" ("joatkka" SgNomCmp) "kulturmuitoráđđi" "l" "L-97" "leatna" "meašttirgilvu" "ossodat" "ovdanahttinfoanda" "parlamentáralaš" ("riddu" SgNomCmp) "sátnevuorká" "sierrabiblioteahka" ("siida" Sg)"teáhter" "valáštallanlihttu" "válgalávdegoddi" "válgalihttu" "vuoigatvuođalávdegoddi" "vuoigatvuođalávdegoddi" ;
 
@@ -9454,7 +9454,7 @@ SELECT:NumOkta Acc IF (*-1 TRANS-V + FMAINV BARRIER SV-BOUNDARY)(0 ("okta" Num S
 	## Joavkkus leat vihtta oahppi Kárášjogas, vihtta oahppi Muosáhis ja vihtta Bearalvágis.
  
 #!! * __QUANgenCoord__ Selects Gen for coordinated complement of a numeral
-SELECT:QUANgenCoord Gen IF (-1 ("ja") OR ("dahje"))(-2 RCmpnd)(*-3 NUM + Acc BARRIER NOT-NPMOD OR PUNCT)(NEGATE 0 NUM);
+SELECT:QUANgenCoord Gen IF (-1 ("ja") OR ("dahje"))(-2 Cmp/SplitR)(*-3 NUM + Acc BARRIER NOT-NPMOD OR PUNCT)(NEGATE 0 NUM);
 	#$ Máŋga sámi dearvvašvuođa- ja sosiálabargi vásihit dan. 
 
 #!! * __QUANgen1__ Selects Gen if a numeral with Nom-case to the left and 3Pl-verb to the right
@@ -10185,7 +10185,7 @@ SELECT:NDr2399 Nom IF (*-1 CRD BARRIER NOT-NPMODADV LINK -1 Nom LINK NOT 0 Acc L
 	#$  Divššohas dahje su ovddasteaddji gii oaivvilda ahte... Comment: Please add the whole sentence in stead of "..."!
 
 #!! * __NDr2400__ Selects Nom
-SELECT:NDr2400 Nom IF (-2C HEAD-N-NOM)(-1 CRD)(NEGATE 0 RCmpnd OR Der/NomAg OR Adv)(NEGATE 0 Attr OR Gen LINK 1 (N Nom))(NEGATE 0 PrfPrc LINK -1 CC LINK *-1 PrfPrc BARRIER REAL-V)(NEGATE 0 VFIN);
+SELECT:NDr2400 Nom IF (-2C HEAD-N-NOM)(-1 CRD)(NEGATE 0 Cmp/SplitR OR Der/NomAg OR Adv)(NEGATE 0 Attr OR Gen LINK 1 (N Nom))(NEGATE 0 PrfPrc LINK -1 CC LINK *-1 PrfPrc BARRIER REAL-V)(NEGATE 0 VFIN);
 	#$  Eamiálbmogat ja riekti - muhtun prinsihpalaš vuolggasajit.
 
 #!! * __NDr2401__ Selects Nom
