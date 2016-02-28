@@ -9,8 +9,9 @@ SUBDIRS = filters tagsets .
 #### Specify target languages and corresponding file names:   ####
 ##################################################################
 
-# Specify the list of target languages and their corresponding
-# Apertium directory names in these two variables (replace und):
+# Earlier, we pecified the list of target languages and their 
+# corresponding Apertium directory names in these two variables. 
+# Now, we only use und (the unspecified language tag).
 APERTIUM_TARGET_LANGS=und
 APERTIUM_TARGET_LANG_NAME=apertium-und
 
