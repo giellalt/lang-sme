@@ -20,7 +20,7 @@ APERTIUM_TARGET_LANG_NAME=apertium-und
 ##################################################################
 APERTIUM_CG_SRC=disambiguation-mt-gt.cg3
 
-APERTIUM_CG_INCLUDE_SRC=disambiguation.cg3
+APERTIUM_CG_INCLUDE_SRC=
 
 ##################################################################
 #### BEGIN: Add local processing instructions BELOW this line ####
