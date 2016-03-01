@@ -2083,9 +2083,7 @@ SUBSTITUTE:muitalit (V) (<vdic> V) TARGET MUITALIT (0 REAL-V LINK -1 COMMA LINK 
 	#$ – Ii leat duohta , lohká direktora Smuk.
 	#$ Mii fertet maiddái geahčadit makkár lassi guoimmuhemiid galgat fállat vai bohtet vel eanet olbmot boahtte jagi, loahpaha duhtavaš beaivválaš jođiheaddji Eriksen.
 
-
-
-#!! *Substitute __PlcSur__ (Sem/Plc) (Sem/Sur) 
+#!! *Select __PlcSur__ (Sem/Plc) (Sem/Sur) 
 SELECT:PlcSur0 (Sem/Sur) IF (0 (Prop Sem/Plc Ill)) (-1 FIRSTNAME)(*0 ("riŋget") OR ("čuojahit") BARRIER REAL-V OR S-BOUNDARY OR CC) ;
 	#$ Sárá riŋgii Trond Trosterudii.
 	#% Son riŋgii Kárášjohkii. 
@@ -6775,7 +6773,7 @@ SELECT:ImprtComma Imprt IF (-1 COMMA LINK -1 Imprt LINK *-1 BOS BARRIER NOT-ADV)
 REMOVE:ImprtNotVGen VGen IF (-1 BOS OR PUNCT OR REAL-CLB)(0 Imprt)(NEGATE *1C VFIN BARRIER NOT-ADV-PCLE);
 
 #!! * __NotImprtInd__ 
-REMOVE:NotImprtInd Imprt IF (*-1 REAL-NEG BARRIER CLB OR Ind);
+REMOVE:NotImprtInd Imprt IF (*-1/* (neg) OR Neg  BARRIER CLB OR Ind);
 
 #!! * __NotImprtConNeg__ 
 REMOVE:NotImprtConNeg Imprt IF (*-1 ConNeg BARRIER COMMA OR SV-BOUNDARY);
@@ -11274,8 +11272,14 @@ SELECT:Sg2LeftDon SG2-V IF (*-1 Rel - Nom BARRIER (Pers Nom) LINK *-1 DON BARRIE
 #!! * __allSg2leat__ removes Sg2 if leat Prs Pl3
 REMOVE:allSg2leat Sg2 IF (0 ("leat" Prs Pl3));
 
+
+#!! * __allPrsPl3__ removes PrsPl3 if PrtSg2 initially
+REMOVE:allPrsPl3 (Prs Pl3) IF (0 (Prt Sg2) LINK *-1 BOS BARRIER NOT-ADV);
+REMOVE:allPrsPl1 (Prs Pl1) IF (0 (Prt Sg2) LINK *-1 BOS BARRIER NOT-ADV)(*1 ("?"));
+	#$ Oidnet go dan?
+
 #!! * __allPrtSg2__ removes PrtSg2 if PrsPl3
-REMOVE:allPrtSg2 (Prt Sg2) IF (0 (Prs Pl3));
+REMOVE:allPrtSg2 (Prt Sg2) IF (0 (Prs Pl3) OR (Prs Pl1) OR (Imprt Pl2));
 
 
 #!! !!Rules for a special infinitive construction
@@ -11924,7 +11928,6 @@ LIST Err/Orth = Err/Orth ;
 LIST WORDLEMMA = (".*"r) ;
 
 REMOVE:errsub $$WORDLEMMA + Err/Orth (0 $$WORDLEMMA - Err/Orth ) ;
-
 
 
 SUBSTITUTE (A) (A <sme>) WORD ; #RemoveFromApertium
