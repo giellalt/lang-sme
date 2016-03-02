@@ -2063,9 +2063,9 @@ SET NON-APP = ALLSYNTAG - (@APP); #!! NON-APP
 BEFORE-SECTIONS
 
 #!! !!Guessing: Rule for adding Sem/Date as a tag to readings which looks like dates
-SUBSTITUTE:Date1 (Num) (Num Sem/Date Sg) TARGET ("<[0-3][0-9][.][0-2][0-9][.][1-2][0-9][0-9][0-9]>"r) + Num ;
-SUBSTITUTE:Date1 (Num) (Num Sem/Date Sg) TARGET ("<[0-9][.][0-9][.][1-2][0-9][0-9][0-9]>"r) + Num ;
-SUBSTITUTE:Date1 (Num) (Num Sem/Date Sg) TARGET ("<[0-3][0-9][.][0-2][0-9][.][0-9][0-9]>"r) + Num ;
+SUBSTITUTE:Date1 (Num) (Num Sem/Date) TARGET ("<[0-3][0-9][.][0-2][0-9][.][1-2][0-9][0-9][0-9]>"r) + Num ;
+SUBSTITUTE:Date1 (Num) (Num Sem/Date) TARGET ("<[0-9][.][0-9][.][1-2][0-9][0-9][0-9]>"r) + Num ;
+SUBSTITUTE:Date1 (Num) (Num Sem/Date) TARGET ("<[0-3][0-9][.][0-2][0-9][.][0-9][0-9]>"r) + Num ;
 SUBSTITUTE:Date1 (Num) (Num Sem/Year) TARGET ("<[1-2][0-9][0-9][0-9]>"r) + Num ;
 
 #!! !!Guessing: Rule for adding Adv Sem/Adr as a tag to readings which looks addresses
@@ -3754,9 +3754,6 @@ SELECT:vfingo VFIN IF (-1 BOC)(NEGATE 0 OLLU OR Adv)(1 go + Qst LINK NOT 1 VFIN)
 #!! * __buoritV__ removes buorit as V
 REMOVE:buoritV V IF (0 ("buorre" Pl Nom) LINK 1 (N Pl)) ;
 	#$ Das leat buorit lanjat.
-
-#!! * __NotImprtInd__ 
-REMOVE:NotImprtInd Imprt IF (*-1/* Neg  BARRIER CLB OR Ind);
 
 	
 #!! * Some brave rules for removing Imprt
@@ -6777,7 +6774,7 @@ SELECT:ImprtComma Imprt IF (-1 COMMA LINK -1 Imprt LINK *-1 BOS BARRIER NOT-ADV)
 REMOVE:ImprtNotVGen VGen IF (-1 BOS OR PUNCT OR REAL-CLB)(0 Imprt)(NEGATE *1C VFIN BARRIER NOT-ADV-PCLE);
 
 #!! * __NotImprtInd__ 
-#REMOVE:NotImprtInd Imprt IF (*-1/* (neg) OR Neg  BARRIER CLB OR Ind);
+REMOVE:NotImprtInd Imprt IF (*-1/* (neg) OR Neg  BARRIER CLB OR Ind);
 
 #!! * __NotImprtConNeg__ 
 REMOVE:NotImprtConNeg Imprt IF (*-1 ConNeg BARRIER COMMA OR SV-BOUNDARY);
@@ -9428,10 +9425,11 @@ SELECT:NumAge Acc (0 NUM + Sg LINK NOT 0 NUMUNIT)(1 TIME-UNIT + Gen LINK 1 ("boa
 # PLURAL 
  
 #!! * __NumAccPlRight__ Selects Acc when transitive verb to the left. You are Num Pl and to your right is Acc ''goarui viđaid gápmagiid''
-SELECT:NumAccPlRight Acc IF (*-1 TRANS-V BARRIER SV-BOUNDARY)(0 Num + Pl)(1 Acc) ;
+SELECT:NumAccPlRight Acc IF (*-1 TRANS-V BARRIER SV-BOUNDARY)(0 Num + Pl OR Indef + Pl + Foc/ge)(1 Acc) ;
 	#$ Máret goarui viđaid gápmagiid.
 	#$ Mun osten guvttiid buvssaid ja ovtta jáhka.
 	#$ Mun osten dušše ovttaid sabehiid.
+	#$ Son ii fuola ovttaidge sabehiid.
 	#? Sin jahkásaš johtolagat sáhtte leat čuđiidge kilomehteriid, ja olle dálá Suomabeale vuovdeguovlluid dálveorohagain Jiekŋameara rittu geasseorohagaide.
 
 #!! * __NumAccPlLeft__ Selects Acc when tranistive verb to the right (same as the previous. Only differs in which direction the verb is found). ''galliid sabehiid don ostet''	
@@ -9451,7 +9449,7 @@ SELECT:NumAccPl Acc IF (-1 (Num Acc Pl))(0 (N Acc Pl)) ;
 # OKTA
 
 #!! * __NumOkta__ Selects Acc if 0 okta followed by a noun. Transitive verb to the left ''oidnen ovtta nieidda''
-SELECT:NumOkta Acc IF (*-1 TRANS-V + FMAINV BARRIER SV-BOUNDARY)(0 ("okta" Num Sg))(1 N LINK NEGATE 0 Gen LINK 1C Acc) ;
+SELECT:NumOkta Acc IF (*-1 TRANS-V + FMAINV BARRIER SV-BOUNDARY)(0 ("okta" Sg))(1 N LINK NEGATE 0 Gen LINK 1C Acc) ;
 	#$ Mun oidnen dušše ovtta nieidda.
 	#$ Árvaluvvon juohkin dáhpáhuvvá dáinnalágiin ahte juohke suohkan beassá vuos árvalit ovtta evttohusa stipendii.
 	#% Dan eatnamis oažžu ovtta gusa fuođđara.
