@@ -2067,6 +2067,7 @@ SUBSTITUTE:Date1 (Num) (Num Sem/Date) TARGET ("<[0-3][0-9][.][0-2][0-9][.][1-2][
 SUBSTITUTE:Date1 (Num) (Num Sem/Date) TARGET ("<[0-9][.][0-9][.][1-2][0-9][0-9][0-9]>"r) + Num ;
 SUBSTITUTE:Date1 (Num) (Num Sem/Date) TARGET ("<[0-3][0-9][.][0-2][0-9][.][0-9][0-9]>"r) + Num ;
 SUBSTITUTE:Date1 (Num) (Num Sem/Year) TARGET ("<[1-2][0-9][0-9][0-9]>"r) + Num ;
+SUBSTITUTE:Date1 (Num) (Num Sem/Year) TARGET ("<[1-2][0-9][0-9][0-9][-][0-9][0-9]>"r) + Num ;
 
 #!! !!Guessing: Rule for adding Adv Sem/Adr as a tag to readings which looks addresses
 SUBSTITUTE (?) (Adv Sem/Adr) TARGET ("<www[.].*>"r ?) OR ("http.*"r ?) OR ("<[A-Za-z].*[@][a-z].*"r ?) OR ("<[A-Za-z].*[(][a][t][)][a-z].*"r ?) ;
@@ -5855,7 +5856,7 @@ SELECT:WWNumOrdIllAttr (Ill Attr) IF (0 Num OR Ord) (*1 (N Ill) OR (Num Ill) BAR
 	#$ Spábba guoskkai ovtta Snøgga čiekčái ja manai mollii.
 	#Comment: We are lacking some rules for: 'Skuvlaáigi lei gáržžiduvvon 3 vahkkui.' and also: 'Skuvlaáigi lei gáržžiduvvon guovtti dahje golmma vahkkui, jus juo obanassiige čađahuvvui oahpahus.' the last one beeing a coordinated sentence.
 SELECT:WWNumOrdIllAttr (Ill Attr) IF (0 NUM OR Ord) (1 (N Gen) LINK *1 (N Ill) BARRIER NOT-A)(NEGATE 0 (Num Nom) LINK 1 (N Sg Gen));	
-SELECT:WWNumOrdLocAttr (Loc Attr) IF (0 Num OR Ord)(*1 (N Sg Loc) BARRIER NOT-A - Indef OR Ord) ;	
+SELECT:WWNumOrdLocAttr (Loc Attr) IF (0 Num - Sem/Date OR Ord)(*1 (N Sg Loc) BARRIER NOT-A - Indef OR Ord) ;	
 	## Ovtta ovddasteaddjis divššohasa ovddas lea vuoigatvuohta...
 	## Na gal don dal oaččut dan beannot čuohtái, go juo válddežat.	
 REMOVE:WWNumOrdAttr (Num Attr) + ADVLCASE OR Indef + Attr + ADVLCASE   IF (NEGATE *1 ADVLCASE + N BARRIER NOT-NPMOD-ACC OR Ord) ;	
@@ -8656,13 +8657,17 @@ SELECT:GenBeaivi2 Gen IF (NEGATE *-1 STRICT-TRANS-V OR DURATION-V BARRIER SV-BOU
 	#$ Mun láven basadanlanja bassat juohke bearjadaga.
 
 #!! * __GenBeaivi3__ selects Gen if you are beaivi with the beginning of the sentence to your right ''Bearjadaga mii vuolgit''
-SELECT:GenBeaivi3 Gen IF (-1 BOC OR NP-BOUNDARY)(0 BEAIVI-REF LINK NOT 0 ("beaivi"));
+SELECT:GenBeaivi3 Gen IF (*-1 BOC OR NP-BOUNDARY BARRIER NOT-ADV-PCLE)(0 BEAIVI-REF LINK NOT 0 ("beaivi") LINK NOT 1 COPULAS + FMAINV) ;
 	#$ Bearjadaga mii vuolgit oaggut.
 	#$ Mánnodagaid gehčče vel Sámi mánáid-TV ovttas mánáiguin.
 	#$ Giellatekno álggahuvvui 1.8.2001 prošeaktan ráhkadit sámegiela grammatihkalaš analysa.
 
 #!! * __GenBeaivi4__ selects Gen if you are beaivi with a NP-boundary to your right
-SELECT:GenBeaivi4 Gen IF (-1 NP-BOUNDARY)(0 BEAIVI-REF - ("beaivi")); #Not in use?
+SELECT:GenBeaivi4 Gen IF (-1 NP-BOUNDARY)(0 BEAIVI-REF - ("beaivi") LINK NOT 1 COPULAS + FMAINV); #Not in use?
+
+#!! * __GenDate__ selects Gen if you are Sem/Date
+SELECT:GenDate Gen IF (0 Sem/Date LINK NOT 1 COPULAS + FMAINV); 
+
 
 #!! * __GenJuohke__ selects Gen if juohke or seamma to the left ''juohke dálvvi''
 SELECT:GenJuohke Gen IF (-1 ("juohke") OR ("seammá") OR ("seamma"))(0 TIME); 
