@@ -190,17 +190,19 @@ LIST VAbess = VAbess ;		   #!!
 # The ("ge" Pcle) etc. are used in Apertium
 
 #!! !Tags for clitic particles
-LIST Foc/ge = Foc/ge ("ge" Pcle) ;	   #!! Foc/ge
-LIST Foc/gen = Foc/gen ("gen" Pcle) ;  #!! Foc/gen
-LIST Foc/ges = Foc/ges ("ges" Pcle) ;  #!! Foc/ges
-LIST Foc/gis = Foc/gis ("gis" Pcle) ;  #!! Foc/gis
-LIST Foc/naj = Foc/naj ("naj" Pcle) ;  #!! Foc/naj
-LIST Foc/ba = Foc/ba ("ba" Pcle) ;	   #!! Foc/ba
-LIST Foc/be = Foc/be ("be" Pcle) ;	   #!! Foc/be
-LIST Foc/hal = Foc/hal ("hal" Pcle) ;  #!! Foc/hal
-LIST Foc/han = Foc/han ("han" Pcle) ;  #!! Foc/han
-LIST Foc/bat = Foc/bat ("bat" Pcle) ;  #!! Foc/bat
-LIST Foc/son = Foc/son ("son" Pcle) ;  #!! Foc/son
+LIST Foc/Neg-ge = Foc/Neg-ge   ;	   #!! Foc/ge
+LIST Foc/Pos-ge = Foc/Pos-ge   ;	   #!! Foc/ge
+LIST Foc/ge = Foc/Pos-ge Foc/Neg-ge   ;	   #!! Foc/ge
+LIST Foc/gen = Foc/gen   ;  #!! Foc/gen
+LIST Foc/ges = Foc/ges  ;  #!! Foc/ges
+LIST Foc/gis = Foc/gis  ;  #!! Foc/gis
+LIST Foc/naj = Foc/naj   ;  #!! Foc/naj
+LIST Foc/ba = Foc/ba   ;	   #!! Foc/ba
+LIST Foc/be = Foc/be   ;	   #!! Foc/be
+LIST Foc/hal = Foc/hal   ;  #!! Foc/hal
+LIST Foc/han = Foc/han   ;  #!! Foc/han
+LIST Foc/bat = Foc/bat   ;  #!! Foc/bat
+LIST Foc/son = Foc/son   ;  #!! Foc/son
 
 
 #!! !Derivation tags
@@ -708,7 +710,7 @@ LIST DOHKO = "bajás" "báldii" "deike" "diehke" "diehko" "dohko" "duohko" "gask
 # ------------
 SET Foc = Foc/ge  OR Foc/gen  OR Foc/ges  OR Foc/gis  OR Foc/naj OR Foc/ba  OR Foc/be  OR Foc/hal  OR Foc/han  OR Foc/bat OR Foc/son ;
 
-LIST NEGFOC = (Neg Foc/ge) ;
+LIST NEGFOC = (Neg Foc/Neg-ge) ;
 
 LIST XGO = "dego" "dugo" "nugo" "seammaládjego" "seammaláhkáigo" ;
   # Compounds
@@ -2484,6 +2486,11 @@ REMOVE:Focba Foc/ba IF (0 Du3 OR ("juo") OR Prop) ;
 #!! * __Focge__ removes Foc/ge when Adv like dieđusge
 REMOVE:Focge Foc/ge IF (0 ("dieđusge")) ;
 
+#!! * __Focge-dis__ disambiguation Foc/Neg-ge and Foc/Pos-ge
+REMOVE:Foc-dis1 Foc/Pos-ge IF (0 Foc/Neg-ge LINK *-1 Neg BARRIER S-BOUNDARY) ;
+REMOVE:Foc-dis2 Foc/Pos-ge IF (0 Foc/Neg-ge LINK *1 Neg BARRIER NOT-ADV) ;
+REMOVE:Foc-dis3 Foc/Neg-ge ;
+
 
 #!! !!!ONE-COHORT DISAMBIGUATION - CYCLE 0
 
@@ -2641,7 +2648,7 @@ SELECT:viimmatAdv ("viimmat" Adv) IF  (NEGATE 1 Inf);
 SELECT:dalleAdv ("dalle" Adv);
 
 #!! *  __dusseAdv__ 
-SELECT:dusseAdv1 ("dušše" Adv) IF ((*-1 VFIN OR (Neg Foc/ge) BARRIER NOT-ADV) OR (*-1 go BARRIER REAL-V OR S-BOUNDARY LINK -1 VFIN LINK -1 BOC) OR (-1 NP-BOUNDARY OR S-BOUNDARY LINK 2 Num LINK *1 N BARRIER NOT-A-ADV LINK 1 VFIN) OR (*1 Num BARRIER NOT-ADV LINK *-2 VFIN BARRIER S-BOUNDARY)) ; # OR (1 N OR Pron LINK 1 Rel) OR (1 Nom - Pl - Pl3));
+SELECT:dusseAdv1 ("dušše" Adv) IF ((*-1 VFIN OR (Neg Foc/Neg-ge) BARRIER NOT-ADV) OR (*-1 go BARRIER REAL-V OR S-BOUNDARY LINK -1 VFIN LINK -1 BOC) OR (-1 NP-BOUNDARY OR S-BOUNDARY LINK 2 Num LINK *1 N BARRIER NOT-A-ADV LINK 1 VFIN) OR (*1 Num BARRIER NOT-ADV LINK *-2 VFIN BARRIER S-BOUNDARY)) ; # OR (1 N OR Pron LINK 1 Rel) OR (1 Nom - Pl - Pl3));
 	#$ Dan mun muitalan dušše dutnje.
 	#$ Áiggun geahččat dušše moadde filmma. # This function because geahččat is homonym to VFIN
 	#$ Lea go dus dušše okta mánná?
@@ -2660,8 +2667,8 @@ SELECT:dusseAdv5 ("dušše" Adv) IF ((1 VFIN + Pl3) OR (-1 Inf OR PrfPrc)) ;
 	# Buohkat dušše hállet ahte Liissá lei diekkáraš ja diekkáraš, dajai Soldatkin ja moaráhuvai iežas sániin.
 
 
-LIST NEG-ADV-PRON = "gostege" "goassege" "mihkkege" "giige" (Adv Foc/ge) ;
-SELECT:negadvpron (Indef Foc/ge) OR ("goste" Foc/ge) IF (-1 Neg - Sup) ;
+LIST NEG-ADV-PRON = "gostege" "goassege" "mihkkege" "giige" (Adv Foc/Neg-ge) ;
+SELECT:negadvpron Indef + Foc/ge OR ("goste" Foc/Neg-ge) IF (-1 Neg - Sup) ;
 	#$ ii maninge
 
 
@@ -3042,7 +3049,7 @@ REMOVE:derHeapmi (Der/heapmi) IF (0 Der/NomAct) ;
 SELECT:álbmotN ("álbmot" N) (0 V)(-1 Gen) ;
 
 #!! * __headisge__, ii heađisge.
-SELECT:headisge ("heahti" Loc Foc/ge) IF (0 ("heahtit")) ;
+SELECT:headisge ("heahti" Loc) + Foc/ge IF (0 ("heahtit")) ;
 	## ii heađisge
 
 #!! * __loahppa__ after TIME Gen.
@@ -6142,7 +6149,7 @@ SELECT:DemSgNom (Dem Sg)  IF (*-1 VFIN + Sg3 BARRIER NOT-ADV-PCLE)(NOT 0 Pers LI
 #REMOVE:DemMeasure Dem (0 Pers)(1 (Num Gen))(2 MEASURE + Ill OR NUMUNIT + Ill) ; 
 	#$ Na gal don dal oaččut dan beannot čuohtái, go juo válddežat.
 
-SELECT:Attr Attr IF (*-1 Neg OR Qst OR ("go" Pcle))(0 (Pron Attr Foc/ge))(*1 N - Prop BARRIER NOT-NPMOD); # In use?
+SELECT:Attr Attr IF (*-1 Neg OR Qst OR ("go" Pcle))(0 (Pron Attr) + Foc/ge)(*1 N - Prop BARRIER NOT-NPMOD); # In use?
 
 LIST MAKKAR = "makkár" "dakkár" "dákkár" "diekkár" ;
 
@@ -9098,7 +9105,7 @@ SELECT:AccTV3 Acc IF (*-1 TRANS-V BARRIER COMMA OR Num OR REAL-V OR Ess OR S-BOU
 
 
 #!! * __OLDr2466__ Selects accusative: when transitive verb to the left, but not if the TV is FAUX OR LOC-V
-SELECT:OLDr2466 Acc IF (*-1C TRANS-V - Imprt BARRIER SV-BOUNDARY OR NOT-NPMODADV OR XGO LINK NOT 0 FAUXV OR LOC-V LINK NEGATE *-1 Acc BARRIER SV-BOUNDARY OR (Neg Foc/ge))(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY)(NEGATE -1 PrfPrc LINK NEGATE *-1 REAL-COPULAS BARRIER SV-BOUNDARY)(NEGATE *-1 NUM BARRIER NOT-Attr LINK NOT 0 NUMUNIT)(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc LINK NOT 0 Px)(*1C NP-BOUNDARY OR S-BOUNDARY OR TIME-N + Ill BARRIER WORD - (N Ess) - (A Ess) LINK NOT 0 Actio OR Inf);
+SELECT:OLDr2466 Acc IF (*-1C TRANS-V - Imprt BARRIER SV-BOUNDARY OR NOT-NPMODADV OR XGO LINK NOT 0 FAUXV OR LOC-V LINK NEGATE *-1 Acc BARRIER SV-BOUNDARY OR (Neg Foc/Neg-ge))(NEGATE 0 (Sg Nom) LINK NOT 0 Px LINK *-1 (V Sg3) BARRIER SV-BOUNDARY)(NEGATE -1 PrfPrc LINK NEGATE *-1 REAL-COPULAS BARRIER SV-BOUNDARY)(NEGATE *-1 NUM BARRIER NOT-Attr LINK NOT 0 NUMUNIT)(NEGATE 0 PrfPrc OR Adv OR VFIN OR Loc LINK NOT 0 Px)(*1C NP-BOUNDARY OR S-BOUNDARY OR TIME-N + Ill BARRIER WORD - (N Ess) - (A Ess) LINK NOT 0 Actio OR Inf);
 	#$ Sus báhkkanii olles gorut go oinnii Lárina čuvges vuovttaid.
 	#$ Easkka 1968:s oaččui vejolašvuođa vázzit jahkebeallásaš gávpeskuvlla Romssas, ja 1972:s lohkagođii gymnásafágaid privatistan.
 
@@ -10372,7 +10379,7 @@ REMOVE:LocPlur (Sg Com)  IF (*-1 OASSI BARRIER S-BOUNDARY OR Loc)(0 (Pl Loc) - S
 	#$ Nuba áddjá árvala ahte eiseválddit galggaše bálkáhit baicce vuorrolohkkiid, vai rehkenasto vuorruid mearri maiddái, iige dušše dat mearri guliin mii goddo deanus.
 
 #!! * __Locgoabbat__ selects Pl Loc after goabbat Foc/ge
-SELECT:Locgoabbat (Pl Loc)  IF (-1 ("goabbat" Foc/ge))(0 (Sg Com)) ;
+SELECT:Locgoabbat (Pl Loc)  IF (-1 ("goabbat") + Foc/ge)(0 (Sg Com)) ;
 	#$ Goabbatge joavkkuin lonuhit čikčiid juohke viđát minuvttas.
 
 #!! * __NumCom__ selects Num Com: guvttiin nieiddain if not plural-noun like: guvttiin heajain
@@ -10802,7 +10809,7 @@ SELECT:ComealihitR- (Sg Com) IF (0 (Der/NomAct Pl Loc))(1 NP-HEAD-NOM LINK 1 ("e
 	#$ Sii ealihit sin heakkaset vuodjimiin ja geasehemiin.
 	
 #!! * ipmirdit / áddet
-SELECT:Comipmirdit (Sg Com) IF (0 (Pl Loc Foc/ge))(1 ("ipmirdit") OR ("áddet") OR ("fáhtet"));	
+SELECT:Comipmirdit (Sg Com) IF (0 (Pl Loc) + Foc/ge)(1 ("ipmirdit") OR ("áddet") OR ("fáhtet"));	
 	#$ In vel čilgemiinge ipmirdan.	 
 	# It should be possible to claim that 0 has to be Der/NomAct , but the tags are not there because of lexical baseform:
   
@@ -10833,7 +10840,7 @@ SECTION
 
 # Accusatives
 
-SELECT:miiPlAcc (N Pl Acc) OR (A Pl Acc) IF (-1 ("mii") OR ("gii") OR ("mihkke" Foc/ge) OR ("mii" Foc/ge) OR ("guhte" Pl))(1 NP-BOUNDARY OR Adv); 
+SELECT:miiPlAcc (N Pl Acc) OR (A Pl Acc) IF (-1 ("mii") OR ("gii") OR ("mihkke" Foc/Neg-ge) OR ("mii" Foc/Neg-ge) OR ("guhte" Pl))(1 NP-BOUNDARY OR Adv); 
 	#$ Maid ipmašiid doppe dagat?
 	#$ Buot álbmogiid hearvásvuođat ja riggodagat buktojuvvojit gávpogii , muhto ii mihkkege buhtismeahttumiid beasa sisa.
 	#$ Guđiid biktasiid mun galggan bassat?
