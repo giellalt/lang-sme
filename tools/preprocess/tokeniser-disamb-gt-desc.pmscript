@@ -1,66 +1,84 @@
+!! Docs:
+!! https://kitwiki.csc.fi/twiki/bin/view/KitWiki/HfstPmatch
 
-! First go at fst-based preprocessor
+!! Use with:
+! git clone -b tokenise-as-gtdivvun-lookup git@github.com:unhammer/hfst.git
 
-! original documentation
-! https://kitwiki.csc.fi/twiki/bin/view/KitWiki/HfstPmatch
-! Define CapWord UppercaseAlpha Alpha* ;
-! Define StreetWordFr [{avenue} | {boulevard} | {rue}] ;
-! Define DeFr [ [{de} | {du} | {des} | {de la}] Whitespace ] | [{d'} | {l'}] ;
-! Define StreetFr StreetWordFr (Whitespace DeFr) CapWord+ ;
-! Define TOP StreetFr EndTag(FrenchStreetName) ;
-
-! First experimental code (note path to hfst file)
-! Define word @bin"analyser-gt-desc.hfst";
-! Define TOP Ins(word) EndTag(w) ;
+!! Issues:
+!! - [X] Ambiguous input
+!!   - Seems to work fine
+!! - [X] Ambiguous multiword expessions with ambiguous tokenisation
+!!   - Seems to work; hfst-tokenise also supports forms on the analyses now
+!! - [ ] Ambiguous multiword expessions need reorganising after CG
+!!   - We need a module that takes wordforms from readings and turns them into
+!!     new cohorts
+!! - [X] Unknown words
+!!   - The set-difference method only works for words without
+!!     flag diacritics (even though we should be working only on the form-side?)
+!!     and leads to binary blow-up: With only lower unknowns, we get 45M;
+!!     lower+upper gives 67M, while no unknowns gives 27M
+!!   - Fixed instead by treating empty analyses as unknown-tokens in
+!!     hfst-tokenise, and outputting unmatched strings with a prefix
+!! - [ ] Treat input that's within superblanks as unmatched
+!! - [ ] Try >1 space for ambiguous MWE's?
+!! - [ ] Try set-difference-unknowns method with regular hfst commands?
 
 Define morphology @bin"analyser-disamb-gt-desc.hfst" ;
+Define repeated @bin"repeated-analyser-disamb-gt-desc.hfst" ;
 
-Define nonword Whitespace | Punct ;
+Define incondform      Punct | {…} ;
 
-!Define ruleword LC([nonword | #]) [\nonword]+ RC([[nonword - "'"] | # ]) ;
+Define blank           Whitespace | incondform ;
 
-Define morphoword morphology RC([[nonword - "'"] | # ]);
+Define incondword       morphology & [ incondform 0:?* ] ;
+Define morphoword       morphology                   LC([blank | #]) RC([blank | # ]);
+Define morpho2word      repeated                   LC([blank | #]) RC([blank | # ]);
 
-Define token [ morphoword | Punct ];
-
-regex token;
-
-! Usage test:
-! echo "Juos gorreválggain lea (dárbbašlaš) deavdit gáibádusa boasttu olmmoš, man mielde lahtuid." | hfst-proc2 --xerox -w tokeniser-disamb-gt-desc.pmhfst | cg-conv -f 
-
-!Compile, usage:
-
-! Kitwiki example:
-! hfst-pmatch2fst < streets.txt > streets.hfst
-! echo "Je marche seul dans l'avenue des Ternes" | hfst-pmatch -v streets.hfst 
-! Je marche seul dans l'<FrenchStreetName>avenue des Ternes</FrenchStreetName>
-
-! The code above:
-! $ hfst-pmatch2fst < test.pregex > test.hfst
-! $ echo "Mun ja son." | hfst-pmatch test.hfst 
-!
-! Expected result at present:
-! <w>mun+Pron+Pers+Sg1+Nom</w> <w>ja+CC</w> <w>son+Pron+Pers+Sg3+Nom</w><w>.+CLB</w>
+!! Apart from what's in our morphology, there are
+!! 1) unknown word-like forms, and
+!! 2) unmatched strings
+!! We want to give 1) a match, but let 2) be treated specially by hfst-tokenise -a
+Define alphabet "a-z" | {á}|{š}|{ž}|{č}|{đ}|{ŋ}|{æ}|{ø}|{å} | "A-Z" | {Á}|{Š}|{Ž}|{Č}|{Đ}|{Ŋ}|{Æ}|{Ø}|{Å} ;
+Define alphaword alphabet+;
+!! TODO: Could use something like this, but built-in's don't include šžđčŋ:
+! Define MixCase(X) [OptCap(X) | UpCase(X)];
+! Define alphaword MixCase(alphabet+);
 
 
-! Targeted result at present:
-! <w>mun+Pron+Pers+Sg1+Nom</w> <w>ja+CC</w> <w>son+Pron+Pers+Sg3+Nom</w><w>.+CLB</w>
+!!! Unknown handling:
+!! TODO: fails to exclude words with flag diacritics, why?
+Define unknownform [ [alphaword].u - [morphology].u];
+! Define unknownword unknownform 0:{ %?} LC([blank | #]) RC([[blank ] | # ]);
+!! Also gives huge binary.
 
-! Targeted result: To have a preprocessor which works as the present
-! $GTHOME/gt/scripts/preprocess,
-! and, combined with the transducer of the language in question gives output
-! like the following:
-!
-! Mun	mun+Pron+Pers+Sg1+Nom
-! 
-! ja	ja+CC
-! 
-! son	son+Pron+Pers+Sg3+Nom
-! son	son+Pcle
-! 
-! .	.+CLB
+!! A simpler, smaller (30M) alternative is to simply give an empty
+!! reading; this is legal in CG, and gives a default baseform equal to
+!! the wordform, but no tag:
+Define unknownwordEmpty unknownform:0 LC([blank | #]) RC([[blank ] | # ]);
+!! Having no tag means there's currently no safe way inside CG to check
+!! if something is unknown (safest being /^[^"]/r which checks for the
+!! existence of a non-wordform tag).
+!! But it's easy to let hfst-tokenise treat empty analyses as
+!! unknowns, and remove empty analyses from other readings -- this
+!! works, and intuitively makes sense to me at least.
 
-! Issues:
-! Ambiguous input
-! Ambiguous multiword expessions with ambiguous tokenisation
-! Unknown words
+
+!!! Superblank handling (TODO):
+! Define anyExceptEsc [ ? - [ %\ ] ];
+! Define unescaped [ anyExceptEsc | %\ ? | # ]+;
+! Define anyExceptSuperendEsc [ ? - [ %\ | %] ] ];
+! Define notSuperend [ %\ ? | anyExceptSuperendEsc ];
+! Define superblank %[ notSuperend* %] EndTag(superblank) LC(unescaped) ;
+! Define tokenOrBlank [ token | superblank ];
+!! Needs hfst-tokenise to output things differently depending on the tag they get
+
+
+Define token [ morphoword | morpho2word | unknownwordEmpty | incondword ] EndTag(token);
+
+regex token ;
+
+!! Usage test:
+!! echo "Juos gorreválggain lea (dárbbašlaš) deavdit gáibádusa boasttu olmmoš, man mielde lahtuid." | ~/src/git-apertium/hfst3/tools/src/hfst-tokenize -wacku: tokeniser-disamb-gt-desc.pmhfst
+
+!! echo "(gáfe) 'ja' ja 3. ja? ц jaja ukjend \"ukjend\"" | ~/src/git-apertium/hfst3/tools/src/hfst-tokenize -wacku: tokeniser-disamb-gt-desc.pmhfst
+!! echo "márffibiillagáffe" | ~/src/git-apertium/hfst3/tools/src/hfst-tokenize -wacku: tokeniser-disamb-gt-desc.pmhfst

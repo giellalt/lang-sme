@@ -18,6 +18,22 @@
 # Set this variable to point to generated lexc source files, if any:
 GENRSRCS:=$(wildcard $(top_builddir)/src/morphology/generated_files/smi-$(GTLANG)-*.lexc)
 
+tokeniser-disamb-gt-desc.pmhfst: tokeniser-disamb-gt-desc.pmscript analyser-disamb-gt-desc.hfst repeated-analyser-disamb-gt-desc.hfst
+	$(AM_V_GEN)hfst-pmatch2fst < $< > $@
+
+space.hfst:
+	echo '% :"@PMATCH_INPUT_MARK@"' | hfst-regexp2fst -o $@
+
+# TODO: clean up the intermediates
+repeated-%.hfst: %.hfst space.hfst
+	hfst-concatenate -1 $< -2 space.hfst -o analyser-space.hfst
+	hfst-concatenate -F -1 analyser-space.hfst -2 $< -o analyser-space-analyser.hfst
+	hfst-invert analyser-space-analyser.hfst -o generator-space-generator.hfst
+	hfst-project -p upper $< -o forms.hfst
+	hfst-compose-intersect -1 generator-space-generator.hfst -2 forms.hfst -o generator-repeated.hfst
+	hfst-invert generator-repeated.hfst -o $@
+
+
 ####### Other targets: ###########
 clean-local:
 	-rm -f *.hfst *.xfst abbr.txt *.pmhfst
