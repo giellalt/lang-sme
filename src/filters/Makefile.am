@@ -29,7 +29,8 @@ GIELLA_FILTER_LOCAL_REGEX_SRCS=\
 					remove-illegal-derivation-strings.regex \
 					reorder-subpos-tags.$(GTLANG).regex \
 					remove-derivation-position-tags.regex \
-					rename-POS_before_Der-tags.regex
+					rename-POS_before_Der-tags.regex \
+					remove-Err_SpaceCmp-strings.regex
 
 # List any local filter xfscript files here:
 GIELLA_FILTER_LOCAL_XFSCRIPT_SRCS=

@@ -41,10 +41,12 @@ analyser-mt-gt-desc.%.hfst: analyser-mt-gt-desc.%.tmp.hfst \
 # We want to rename the POS tags in front of derivations:
 analyser-mt-gt-desc.hfst: analyser-mt-gt-desc.tmp.hfst \
 			$(top_builddir)/src/filters/remove-derivation-position-tags.hfst \
-			$(top_builddir)/src/filters/rename-POS_before_Der-tags.hfst
+			$(top_builddir)/src/filters/rename-POS_before_Der-tags.hfst \
+					filters/remove-Err_SpaceCmp-strings.hfst
 	$(AM_V_RGX2FST)$(PRINTF) "\
 		@\"$(top_builddir)/src/filters/remove-derivation-position-tags.hfst\" \
 	.o. @\"$(top_builddir)/src/filters/rename-POS_before_Der-tags.hfst\" \
+	.o. @\"filters/remove-Err_SpaceCmp-strings.hfst\"   \
    	.o. @\"$<\" \
     	;" \
 		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --xerox-composition=ON \
