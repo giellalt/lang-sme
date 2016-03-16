@@ -142,9 +142,9 @@ LIST Du = Du ;   #!! Du
 LIST Pl = Pl ;   #!! Pl
 LIST Cmp/SplitR = Cmp/SplitR ;	   #!! Cmp/SplitR
 LIST Cmpnd = Cmpnd ;	   #!! Cmpnd
-LIST SgNomCmp = SgNomCmp ; #!! SgNomCmp
-LIST SgGenCmp = SgGenCmp ; #!! SgGenCmp
-LIST ShCmp = ShCmp ;	   #!! ShCmp
+LIST Cmp/SgNom = Cmp/SgNom ; #!! Cmp/SgNom Cmp/SgGen
+LIST Cmp/SgGen = Cmp/SgGen ; #!! Cmp/SgGen
+LIST Cmp/Sh = Cmp/Sh ;	   #!! Cmp/Sh
 LIST PxSg1 = PxSg1 ;	   #!! PxSg1
 LIST PxSg2 = PxSg2 ;	   #!! PxSg2
 LIST PxSg3 = PxSg3 ;	   #!! PxSg3
@@ -1941,7 +1941,7 @@ LIST WEATHER-SITUATION = "beaivvádat" "bievla" "buolaš" "dálki" "dálkedilál
 
 SET SITUATION = DILLI OR WEATHER-SITUATION ;
 
-SET ACTOR-ROLE = HUMAN OR ORGANIZATION OR POLITICAL-PLACE OR EDUCATION ;
+SET ACTOR-ROLE = HUMAN OR ORGANIZATION OR POLITICAL-PLACE OR EDUCATION OR Sem/Org ;
  # Institution: Restricting possible actor subjects.
 
 LIST EVENT-TOOL-ACTIVITY = Der/NomAct "addin" "dearvvašvuođaiskkadeapmi" "goddin" "hárjehallan" "jápmin" "ráđđádallan" "šiehtadallan" "vázzin" ;
@@ -2212,7 +2212,6 @@ REMOVE:derPassActio Der/Pass + Actio IF (0 PrfPrc) ;
 REMOVE:derPassActio Der/Pass + Der/NomAct IF (0 PrfPrc) ;
 	#$ Dalle galget miesit leat merkejuvvon eaiggáda merkii.
 	
-REMOVE SgGenCmp (0 SgNomCmp) ;	
 	
 #!! !Particular verbs
 
@@ -3131,9 +3130,12 @@ SELECT:Nniidii N (0 ("nieida") OR ("skuvla")) (0 Ill LINK *0 ILL-V OR ("addit") 
 SELECT:LexSelgullat ("gullat") IF (0 ("gullát") OR ("gullet"))(*1 Ill OR ("vuollai") BARRIER SV-BOUNDARY LINK NOT 0 SOUND) ;
 	#$ Redaktevrapláhkát gieldá váldodoaimmaheddjiid diktimis eaiggádiid stivret iežaset, ja eanaš friddja áviisat gullet dán šiehtadussii.
 
-REMOVE:PrsPrc PrsPrc IF (0 LEX-N + Sg)(NEGATE -1 ("nu") LINK 2 go)(NEGATE *1 Acc BARRIER NOT-A-ADV)(NEGATE -1 PLACE + Loc OR Adv OR Po)(NEGATE -1 ("leat") LINK 2 N) ;
+REMOVE:PrsPrcProp PrsPrc IF (0 N LINK 1 Prop) ;
+
+REMOVE:PrsPrc PrsPrc IF (0 LEX-N + Sg)(NEGATE -1 ("nu") LINK 2 go)(NEGATE *1 Acc BARRIER NOT-A-ADV)(NEGATE -1 PLACE + Loc OR Adv OR Po)(NEGATE -1 ("leat") LINK 2 N)(NEGATE 1 CC LINK 1 Attr LINK 1 N) ;
 	#$ Dainna ii leat vissis mearri galljodagas.
 	# Should not hit cealkkavástaga with PrsPrc + Obj.
+	#% Son láhčá diliid nu ahte mis lea ealli ja girjás sámi kultureallin mas lea buorre dássi.
 
 REMOVE:NomcopNom V - AUX (0 (N Sg Nom) LINK NOT 0 VFIN LINK 1 COPULAS LINK 1 (Sg Nom))(NEGATE 0 PrfPrc LINK *-1 ("leat") BARRIER NOT-ADV-PCLE) ;
 	#$ Ii ge ságastallan leat vejolaš jus eai leat journalisttat geat máhttet sámegiela bures.
@@ -3922,10 +3924,11 @@ SELECT:datPlIll Ill IF (0 ("dáidda"))((-1 NP-HEAD-NOM OR ("lassi")) OR (*1 (N P
 	#$ Lassin dáidda lea Sámi vuoigatvuođalávdegotti ovdaolmmoš...
 
 #!! * __daiddaVerb__ removes dáidda N Sg Nom 
-REMOVE:daiddaVerb Nom IF (0 ("dáidda"))((*-1 TRANS-V OR ILL-V BARRIER SV-BOUNDARY) OR (*1 ("bidjat") OR ("lasihit") BARRIER NOT-AUX-V)) ;
+REMOVE:daiddaVerb Nom IF (0 ("dáidda"))((*-1 TRANS-V OR ILL-V BARRIER SV-BOUNDARY OR CS) OR (*1 ("bidjat") OR ("lasihit") BARRIER NOT-AUX-V)) ;
 	#$ ...lea čađahan iskamiid muhtun orohagain ja ávžžuhan boazologu dáidda.
 	#$ ...mat gullet dáidda 1972-konvenšuvnna mielde.
 	#$ Ferte mearridit makkár deattu dáidda galgá bidjat.
+	#% Guovlulaš ja báikkálaš eiseválddiin lea maiddái ovddasvástádus váikkuhit dan ahte sámi dáidda, kultureallin ja sámi ásahusat ovddiduvvojit ovttas.
 
 
 #!! * __dasaVGen, dasaLassin dasa,datSg3, datSg3PrfPrc__ ( = forms of the verb "dassat"): 
@@ -4624,7 +4627,7 @@ REMOVE Du2 IF (0 ("goahti") LINK NEGATE *-1 (Nom Du2)) ;
 	# - - - -
 
 #!! * __PrsPrc__ selects PrsPrc if coordinated with A - 10
-SELECT:PrsPrcA PrsPrc IF ((-1 GRADE-ADV LINK 2 N) OR (1 ("ja") OR ("dahje") OR ("dehe") OR COMMA LINK 1 A LINK 1 N));
+SELECT:PrsPrcA PrsPrc - ("oahpahit") IF ((-1 GRADE-ADV LINK 2 N) OR (1 ("ja") OR ("dahje") OR ("dehe") OR COMMA LINK 1 A LINK 1 N));
  	#$ Soahpamušas váilot njuolggadusat smávit vahágahtti ja geavatlaš bággolonistemiide. 
  	#$ Mearridanváldi berre leat nu čadni go vejolaš.
  	#$ Mudden ferte dagahit janza ja hui vahágahtti meassamiid.
@@ -5322,12 +5325,13 @@ SELECT:vaiQst Pcle IF (-2 ("vai"))(0 go);
 	#$ Dárbbahat go dálkasa vai hálidat go doaktáriin sárdnut?
 
 #!! * __auxQst__ selects Pcle in questions as subordinated clause, starting with AUX
-SELECT:auxQst Pcle IF (-1 (V Neg) OR MOD-ASP OR COPULAS)((*-2 Ger OR ConNeg OR VFIN BARRIER WORD LINK NEGATE *-1 Rel BARRIER COMMA) OR (*-2 (Refl Nom) LINK *-1 ConNeg OR VFIN BARRIER WORD))(0 go LINK *1 PrfPrc OR Inf OR ConNeg BARRIER AUX);  
+SELECT:auxQst Pcle IF (-1 (V Neg) OR MOD-ASP OR COPULAS)((*-2 Ger OR ConNeg OR VFIN BARRIER WORD LINK NEGATE *-1 Rel BARRIER COMMA) OR (*-2 (Refl Nom) LINK *-1 ConNeg OR VFIN BARRIER WORD))(0 go LINK *1 PrfPrc OR Inf OR ConNeg BARRIER AUX) (NEGATE *-2 Neg BARRIER NOT-V ) ;  
 	#$ Árvvoštaladettiin galgá go addit lobi lea dattege gažaldat das,... 
 	#$ In mun gal dieđe sáhtežit go vuolgit dál.      
 	#$ Son jearrá it go boađe?
 	#$ Sámedikki eará orgánat mearridit ieža galget go čoahkkimat leat rabas vai gitta.
 	#$ Dan ferte oaidnit makkár diliin guovllut leat, leat go áitojuvvon dakkár stuorát sisabáhkkemiin.
+	#% Eará molssaeaktuhan mis ii leat leamašge go ceavzit.
 
 #!! * __refQst__ selects Pcle in two main clauses, the first one a question which is referred to in the second.
 SELECT:refQst Pcle IF (-1 VFIN LINK -1 BOS OR REAL-CLB OR PUNCT OR COMMA)(0 go)(*1 COMMA BARRIER VFIN LINK 1 ("dat" Pers));	
@@ -6678,8 +6682,9 @@ SELECT:HeadlinerInf Inf (NEGATE *-1 VFIN)(NOT 0 ("leat"))(NEGATE *-1 (Nom Pl1))(
 	#$ Áigemearri váidalusa buktit. 
 	#$ Vuoigatvuohta journála geahččat.  
 
-SELECT:Pl1coord (V Pl1) IF (0 Pl1 OR Inf LINK -1 CC OR ("de") LINK *-1C (V Pl1) BARRIER VFIN OR Inf) ;
+SELECT:Pl1coord (V Pl1) IF (0 Pl1 OR Inf LINK *-1 CC OR ("de") BARRIER NOT-ADV LINK *-1C (V Pl1) BARRIER VFIN OR Inf) ;
 	#$ Go bassat lihtiid dahje málestit siiddas, de sáhttit seammás guldalit radio.
+	#$ Sámi servodat lea vuos ain huksemin servodagas, ja mii leat vuoruhan ja ain fertet vuoruhit kultuvrra ja giela vuođđoosiid.
 
 SELECT:Imprtmat Imprt IF (1 ("mat")) ;
 	#$ Dán mii gávnnaimet, dutkka mat leago dat du bártni gákti.
@@ -8024,7 +8029,7 @@ SELECT:vuoiAcc Acc IF ((*-1 ("vuoi") BARRIER NOT-NPMODADV) OR (*-1 ("surgat") BA
 	
 LIST SAPMI-N-HEAD =  "álbmot" "álbmotbeaivi" "álbmotdálkkodeapmi" "álbmotjoavku" "árbevierru" "ássanguovlu" "ássi" "áviisa" "beales" "beroštupmi" "boaris" ("boazodoallu" Nom) ("boazodoallu" Loc) "byråkratgiella" "diehtobáŋku" ("dearvvašvuohta" Cmp/SplitR) "dievdu" "doaibma" "eamiálbmotdutkan" ("dutkan" Sg) "ealáhus" "fágabiras" "fierpmádat" "giella" "gilli" "gili#ássi" ("guovlu" Pl) "kulturovdáneapmi" "kulturviessu" "plána" "doaibmaplána" "geavaheaddji" "gelbbolašvuođadoaibma" "giellaláhka" "girjjálašvuohta" "guolásteapmi" "guovddášguovlu" "hálddašanguovlu" "iešdovdu" ("nuoraidsearvi" Pl) "oahppoplána" "oktasaš" "perspektiiva" "mánná" "nisu" "álbmot" "bargi" "geavaheaddji" "jienastuslohku" "kulturmuitu" "kulturmuitohálddašeapmi" "kulturmuitosuodjalus" "kultuvra" "náhkkegálvu" "nuorra" "oktavuohta" "resursageavaheapmi" "riggodat" "riikkajoavku" "searvevuohta" "searvi" "servodat" ("siida" Pl) "siseana" "siseatnansiida" "sisafárren" "sosiáladutkan" "strategiijaplána" "valáštallan" "vierru" "vuohki" "vuoigatvuohta" "vuoigatvuođabargu" (PUNCT LEFT) ;
 
-LIST SAPMI-PROP-HEAD = "allaskuvla" "bálvalusguovddáš" "cup" "dihtorlávdegoddi" "dearvvašvuođadutkanguovddáš" "doavttersearvi" "ealáhusfoanda" "eanahálddahus" "giellaláhka" "giellalávdegoddi" "giellaráđđi" "guovddáš" ("joatkka" SgNomCmp) "kulturmuitoráđđi" "l" "L-97" "leatna" "meašttirgilvu" "ossodat" "ovdanahttinfoanda" "parlamentáralaš" ("riddu" SgNomCmp) "sátnevuorká" "sierrabiblioteahka" ("siida" Sg)"teáhter" "valáštallanlihttu" "válgalávdegoddi" "válgalihttu" "vuoigatvuođalávdegoddi" "vuoigatvuođalávdegoddi" ;
+LIST SAPMI-PROP-HEAD = "allaskuvla" "bálvalusguovddáš" "cup" "dihtorlávdegoddi" "dearvvašvuođadutkanguovddáš" "doavttersearvi" "ealáhusfoanda" "eanahálddahus" "giellaláhka" "giellalávdegoddi" "giellaráđđi" "guovddáš" ("joatkka" Cmp/SgNom) "kulturmuitoráđđi" "l" "L-97" "leatna" "meašttirgilvu" "ossodat" "ovdanahttinfoanda" "parlamentáralaš" ("riddu" Cmp/SgNom) "sátnevuorká" "sierrabiblioteahka" ("siida" Sg)"teáhter" "valáštallanlihttu" "válgalávdegoddi" "válgalihttu" "vuoigatvuođalávdegoddi" "vuoigatvuođalávdegoddi" ;
 
 
 # Gen MODIFIERS; most are kalled SEM+
@@ -11945,6 +11950,7 @@ SELECT (V Pl1) (0 (V Pl3) LINK NOT 0 Inf) ;
 REMOVE:ImprtifVFIN Imprt (0 VFIN LINK NOT -1 BOS)(NEGATE 0 Pl2 LINK -1 ("de") LINK *-1 Pl2)  ;
 
 SELECT:dan-sadjái-go-sáddet (V Inf) (-3 ("<dan>")) (-2 ("<sadjái>")) (-1 ("<go>")) (0C V) ;
+REMOVE Cmp/SgGen (0 Cmp/SgNom) ;	
 
 
 #!! !!!Removing Err/Orth
