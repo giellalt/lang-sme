@@ -13,7 +13,7 @@ modify-tags.regex            - general tagset changes, man. added/maintained
 apertium.postproc.relabel    - general relabelling, manually added/maintained DEPRECATED
 modify-tags.TARGETLANG.regex - pair-specific changes using regex, manually m.
 apertium.TARGETLANG.relabel  - pair-specific relabelling, manually add/maint.
-gt2apertium.cg3relabel       - to be documented
+gt2apertium.cg3relabel       - tag conversion, manually maintained (to be documented)
 
 Replace TARGETLANG with the language code of the actual target language you
 are building your Northern Sami apertium analyser for.
