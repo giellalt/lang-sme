@@ -8,6 +8,9 @@ TAGSET_SRCS=apertium.postproc.relabel
 # List reorder regex source files here:
 REGEX_SRCS=modify-tags.regex
 
+clean-local:
+	rm -f *.hfst
+
 ####### Other targets: ###########
 
 include $(top_srcdir)/am-shared/tools-mt-apertium-tagsets-dir-include.am
