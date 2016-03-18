@@ -443,7 +443,9 @@ LIST Ord = Ord ;
  
 LIST Qst = Qst ;
  
-LIST Foc/ge = Foc/ge ;
+LIST Foc/Neg-ge = Foc/Neg-ge ; 
+LIST Foc/Pos-ge = Foc/Pos-ge ;
+LIST Foc/ge = Foc/Neg-ge Foc/Pos-ge ;
 LIST Foc/gen = Foc/gen ;
 LIST Foc/ges = Foc/ges ;
 LIST Foc/gis = Foc/gis ;
@@ -1480,7 +1482,7 @@ SET NOT-ADVL-PCLE-NEG  = WORD - @ADVL - @P< - Pcle - Neg ;
 
 LIST MO-MANge = "goas" "gokko" "gos" "gosa" "govt" ("got" Adv) "makkár" "man" "manne" "mo" "mot" "mov" "movt" ("nugo" @CVP) (V Qst);
  
-SET MO = MO-MANge - ("man" Foc/ge) ; 
+SET MO = MO-MANge - ("man" Foc/Neg-ge) ; 
  
  # Introduce finite clauses.
  
@@ -1496,9 +1498,9 @@ LIST DOHKO = "bajás" "deike" "diehke" "diehko" "dohko" "duohko" "lulás" "olggo
 
 # Coordinators
 # ------------
-SET Foc = Foc/ge  OR Foc/gen  OR Foc/ges  OR Foc/gis  OR Foc/naj OR Foc/ba  OR Foc/be  OR Foc/hal  OR Foc/han  OR Foc/bat OR Foc/son ;
+SET Foc = Foc/Neg-ge OR Foc/Pos-ge  OR Foc/gen  OR Foc/ges  OR Foc/gis  OR Foc/naj OR Foc/ba  OR Foc/be  OR Foc/hal  OR Foc/han  OR Foc/bat OR Foc/son ;
 
-LIST NEGFOC = (Neg Foc/ge) ;
+LIST NEGFOC = (Neg Foc/Neg-ge) ;
 
 LIST XGO = "dego" "dugo" "nugo" "seammaládjego" "seammaláhkaigo" ;
   # Compounds
@@ -3717,7 +3719,7 @@ SELECT:álbmotN ("álbmot" N) (0 V)(-1 Gen) ;
 	#fromdisambiguation.cg3
 	
 #!! * __headisge__, ii heađisge.
-SELECT:headisge ("heahti" Loc Foc/ge) IF (0 ("heahtit")) ;
+SELECT:headisge ("heahti" Loc Foc/Neg-ge) OR ("heahti" Loc Foc/Pos-ge) IF (0 ("heahtit")) ;
 	## ii heađisge
 	#fromdisambiguation.cg3
 	
@@ -6780,7 +6782,7 @@ SELECT:r1268 Adv IF (-1 CC)(0 ADV-NOT-NOUN)(NEGATE *1 VFIN);
 	## árvvoštallama mielde mearridit. 
 	## Dás lea unnimus 150 jagis sáhka ja várra 200 jagis.
 
-SELECT:r1269 Adv IF (NEGATE 0 ("okta" Ess))(0 Ess LINK NOT 0 ("danin"))(NEGATE 0 ("mii" Foc/ge));
+SELECT:r1269 Adv IF (NEGATE 0 ("okta" Ess))(0 Ess LINK NOT 0 ("danin"))(NEGATE 0 ("mii" Foc/Neg-ge) OR ("mii" Foc/Pos-ge));
 	## Eatnagat bohtet nuortan ja oarjin.
 	## ...amadet gaikut nisuid bajás oktan árvvohis rásiiguin.
  # This rule also hits "ihttin", "guhkkin", "muhtumin", "iehčanassii", "muhtumin"
@@ -8158,8 +8160,8 @@ REMOVE:r1572 Attr IF (0 Pron)(1 (Pron Rel));
 REMOVE:r1573 (Indef Attr) IF (1 (Pron Pers Loc));
   	## Ja muhtun sis viegai dakkaviđe su lusa.    
 
-SELECT:r1574 Indef IF (*-1 Neg)(0 (Interr Foc/ge)); 
-SELECT:r1575 Indef IF (-1 Indef)(0 (Interr Foc/ge));
+SELECT:r1574 Indef IF (*-1 Neg)(0 (Interr Foc/Neg-ge)); 
+SELECT:r1575 Indef IF (-1 Indef)(0 (Interr Foc/Neg-ge));
 	## Ale divtte geange badjelgehččat du.
 	## Várut dadjamis maidege geasage dan birra! 
 
@@ -8167,7 +8169,7 @@ SELECT:r1576 Indef IF (*-1 ("jus") OR ("jos") OR ("juos") OR ("joas") BARRIER S-
 	## Jus guhtege dadjá áhččásis dahje eadnásis:...
 	## ...ahte doaimmat eai juogaduvvo menddo ollugiidda.
 
-SELECT:r1578 Indef IF (0 (Interr Foc/ge))(NEGATE *1 VFIN);
+SELECT:r1578 Indef IF (0 (Interr Foc/Neg-ge) OR (Interr Foc/Pos-ge))(NEGATE *1 VFIN);
 	## Dat oste guđege sabehiid.
 
 #SELECT:r1579 Indef IF (*-1 BOC2 BARRIER NOT-ADV)(*1 N BARRIER NPNH);
@@ -8358,7 +8360,7 @@ REMOVE Dem IF (0 Pers)(1 (Num Gen))(2 MEASURE OR NUMUNIT LINK 0 Ill) ;
 # makkár (Negative polarity demonstratives)
 # - - - 
 
-SELECT:r1623 Attr IF (*-1 Neg OR Qst OR ("go" Pcle))(0 (Pron Attr Foc/ge))(*1 N BARRIER NPNH);
+SELECT:r1623 Attr IF (*-1 Neg OR Qst OR ("go" Pcle))(0 (Pron Attr) LINK 0 Foc/ge)(*1 N BARRIER NPNH);
 
 	# DP-internal number concord
 	# --------------------------
@@ -13073,7 +13075,7 @@ SELECT:r2643 (Pl Loc) IF (0 ILLNESS OR BODY)(*1 ("dikšu") BARRIER S-BOUNDARY2 L
 
     # goabbatge
     # - - - - - 
-SELECT (Pl Loc) (-1 ("goabbat" Foc/ge))(0 (Sg Com)) ;
+SELECT (Pl Loc) (-1 ("goabbat" Foc/Neg-ge) OR ("goabbat" Foc/Pos-ge))(0 (Sg Com)) ;
 	## Goabbatge joavkkuin lonuhit čikčiid juohke viđát minuvttas.
 
 	# lassáneapmi
@@ -13517,7 +13519,7 @@ SELECT:r2766 (Sg Com) IF (0 (Der/NomAct Pl Loc))(1 NP-HEAD-NOM LINK 1 ("ealihit"
 	
 	# ipmirdit / áddet
 	# - - - - - - - - - 
-SELECT:r2767 (Sg Com) IF (0 (Pl Loc Foc/ge))(1 ("ipmirdit") OR ("áddet") OR ("fáhtet"));	
+SELECT:r2767 (Sg Com) IF (0 (Pl Loc) LINK 0 Foc/ge)(1 ("ipmirdit") OR ("áddet") OR ("fáhtet"));	
 	## In vel čilgemiinge ipmirdan.	 
 	# It should be possible to claim that 0 has to be Der/NomAct or Der/NomAct, but the tags are not there because of lexical baseform:
  
@@ -14028,7 +14030,7 @@ REMOVE:r2904 (V Sg1) IF (*-1 CC BARRIER VERB OR Rel LINK NOT *-1 V-SG1);
 	#$ – Mánát ja olbmot gean govven eai 	liiko 	man láhkái media govve sin . 
 	#$GRAMval OR Rel
 
-REMOVE:r2905 V-SG1 IF (0 PrfPrc OR Actio)(*1C VFIN - (Neg Foc/ge) BARRIER S-BOUNDARY2)(NOT 0 <TH-Inf>)(NEGATE *-1 Rel BARRIER NOT-ADV);
+REMOVE:r2905 V-SG1 IF (0 PrfPrc OR Actio)(*1C VFIN - (Neg Foc/Neg-ge) BARRIER S-BOUNDARY2)(NOT 0 <TH-Inf>)(NEGATE *-1 Rel BARRIER NOT-ADV);
 	## Dálá fiinnuhan riektejurddašanvuogi mielde ii eahpiduvvo ahte 
 	## dán livččii galgan dahkat.
 	#GRAMval Dasalassin leat mus skihppárat dáppe geaiguin 	{liikon} 	leat fárrolagaid , muitala Lásse . 
@@ -14088,7 +14090,7 @@ SELECT:r2916 (V Sg2) IF (0 Pl1)(*1C (V Sg2) OR PxSg2 BARRIER VFIN);
 SELECT:r2917 V-SG3 IF (*-1 (Sg Nom) BARRIER NOT-ADV-PCLE)(*1 (Neg Sg3) BARRIER VFIN LINK 1 ("ge"));
 	## Rakel čierru mánáidis dihtii ii ge beroš jeđđehusas.
 
-SELECT:r2918 V-SG3 IF (*-1 (Sg Nom) BARRIER NOT-ADV-PCLE)(*1 (Neg Sg3 Foc/ge) BARRIER VFIN);
+SELECT:r2918 V-SG3 IF (*-1 (Sg Nom) BARRIER NOT-ADV-PCLE)(*1 (Neg Sg3 Foc/Neg-ge) BARRIER VFIN);
 	## Rakel čierru mánáidis dihtii iige beroš jeđđehusas.
 
 REMOVE:r2919 (V Sg3) IF (0 (Sg Nom) LINK NEGATE *-1 Rel BARRIER VFIN)(*1C (V Sg3) BARRIER SV-BOUNDARY2 OR Nom LINK NOT 1 go);	
@@ -17093,7 +17095,7 @@ MAP:r3395 (@SPRED>) TARGET Ess IF (*-1 REALCOPULAS BARRIER VERB LINK 0 FMAINV)(N
 MAP:r3398 (@SPRED>) TARGET Ess IF (NEGATE *-1 VERB BARRIER S-BOUNDARY2)(*1 Der/Pass BARRIER VERB LINK *1 NP-HEAD-NOM BARRIER SV-BOUNDARY2);
 	## Noađđeheargin dárbbašuvvojit sakka lojit hearggit go geresgeassin.
 
-MAP:r3399 (@<SPRED) TARGET Nom IF (*-1C SUBJ BARRIER go OR ("dego") OR ("dugo") OR CC OR (Neg Foc/ge) OR CLB OR CP OR CS OR PUNCT LINK NOT 0 Interr)(NEGATE -1 NP-HEAD-NOM)(0C (N Sg Nom));
+MAP:r3399 (@<SPRED) TARGET Nom IF (*-1C SUBJ BARRIER go OR ("dego") OR ("dugo") OR CC OR (Neg Foc/Neg-ge) OR CLB OR CP OR CS OR PUNCT LINK NOT 0 Interr)(NEGATE -1 NP-HEAD-NOM)(0C (N Sg Nom));
 	## Sámi dutkan ii leat dan dihte soaittáhagas válljejuvvon dutkansuorgi.
  # If -1 is SUBJ we probably have apposition.
  
