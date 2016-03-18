@@ -238,8 +238,10 @@ LIST Attr = Attr ;
 LIST Ord = Ord ;
  
 LIST Qst = Qst ;
- 
-LIST Foc/ge = Foc/ge ;
+
+LIST Foc/Neg-ge = Foc/Neg-ge ; 
+LIST Foc/Pos-ge = Foc/Pos-ge ;
+LIST Foc/ge = Foc/Neg-ge Foc/Pos-ge ;
 LIST Foc/gen = Foc/gen ;
 LIST Foc/ges = Foc/ges ;
 LIST Foc/gis = Foc/gis ;
@@ -772,6 +774,8 @@ LIST <RE-Ill-Ani><TH-FS> = <RE-Ill-Ani><TH-FS> ;
 LIST <RE-Ill-Ani><TH-ahte> = <RE-Ill-Ani><TH-ahte> ;
 LIST <RE-Ill-ieš> = <RE-Ill-ieš> ;
 LIST <RE-Loc-Ani> = <RE-Loc-Ani> ;
+LIST <RE-Loc-Ani><TH-FS-Qst> = <RE-Loc-Ani><TH-FS-Qst> ;
+LIST <RE-Loc-Ani><TH-FS-Qpron> = <RE-Loc-Ani><TH-FS-Qpron> ;
 LIST <RE-Loc-Ani><TH-ahte> = <RE-Loc-Ani><TH-ahte> ;
 LIST <RF-Ill-Any> = <RF-Ill-Any> ;
 LIST <RF-Loc-Any> = <RF-Loc-Any> ;
@@ -7926,6 +7930,14 @@ SETCHILD (V <RE-Loc-Ani>) TO (-1 Loc + Sem/Animate) ;
 SETCHILD (V <RE-Loc-Ani>) TO (*1 Loc + Sem/Animate BARRIER NPNH) ;
 	## Mihkkel Issát jearahallá áhkus 	liiko 	go lákca gáhkkui .
 	
+SETCHILD (V <RE-Loc-Ani><TH-FS-Qst>) TO (*1 Loc + Sem/Human BARRIER NPNHA LINK 1 VFIN + Qst);
+
+SETCHILD (V <RE-Loc-Ani><TH-FS-Qst>) TO (*1 Loc + Sem/Human BARRIER NPNHA - (Pron Acc) LINK 2 ("go") LINK -1 VFIN - Qst);
+SETCHILD (V <RE-Loc-Ani><TH-FS-Qst>) TO (*1 Loc + Sem/Human BARRIER NPNHA - (Pron Acc) LINK *1 (Prop Sem/Sur) OR (Prop Sem/Mal) OR (Prop Sem/Fem) BARRIER  (*) - (Prop Sem/Sur) - (Prop Sem/Mal) - (Prop Sem/Fem) LINK *1  ("go") LINK -1 VFIN - Qst);	
+	## BUL spábbačiekčan ossodaga stivrajođiheaddji Gunn Heidi Henriksen lei   čohken  stivrra ikte go BUL-čiekči Matti Eira lei jearran iežas joavkku hárjeheaddjis Tomas Johannesson beassá go son mátkkoštit Sámi riikkajoavkkuin Itáliai .
+	
+SETCHILD (V <RE-Loc-Ani><TH-FS-Qst>)(c VFIN) TO (*1 Loc + Sem/Human BARRIER NPNHA - (Pron Acc));	
+	
 SETCHILD (V <RE-Ill-Ani><TH-Acc-*Ani>) (c Acc - Sem/Hum) TO (1 Ill + Sem/Ani OR Ill + Sem/Hum OR Ill + Sem/Org) ;
 	## Oahpahus galgá veahkehit ohppiid 	liikot 	leat luonddus ja addit sidjiide vejolašvuođa ovdánahttit fantasiija , hábmengálgga ja beroštumi diđoštit birrasa .
 	
@@ -9211,7 +9223,8 @@ COPY:msyn-gen-before-postp (Pron Pl Gen &SUGGEST) EXCEPT (Pron Pl Nom &msyn-gen-
     #$ Vaikko namahuvvon olbmot eai oro veara váldit duođalaččat, de lea dát vuohki dovddus ovdalaččas
 	#$ Vuosttaš oassi lea áigodat 1751 gitta 1860 rádjái. XXX
     
-ADD:msyn-gen-after-prep (&msyn-gen-after-prep) TARGET Pron OR ("buorre") - Superl - Comp IF (NOT 0 Gen LINK *-1 Pr BARRIER GRAMCHK-NPNH OR COMMA OR ADJ_ATTR/NOM LINK NEGATE c Gen)(NEGATE 0 ADVLCASE)(NEGATE 0 ANTI-CONFUSION) ;
+ADD:msyn-gen-after-prep (&msyn-gen-after-prep) TARGET Pron OR ("buorre") - Superl - Comp IF (NOT 0 Gen LINK *-1 Pr BARRIER GRAMCHK-NPNH OR COMMA OR ADJ_ATTR/NOM LINK NOT 0 CS LINK NEGATE c Gen)(NEGATE 0 ADVLCASE OR Foc/Neg-ge)(NEGATE 0 ANTI-CONFUSION) ;
+	#$ – Ferte         čohket  buot loguid ja dieđuid , daid analyseret ja oaidnit makkár dilis gielda lea , ovdalgo {maidege} mearreda , lohká Sæther ja sus lea buorre doaivva ahte olmmošlohku fas lassána .
 
 ADD:msyn-gen-after-prep (&msyn-gen-after-prep) TARGET Num (NOT 0 Gen LINK *-1 Pr BARRIER GRAMCHK-NPNH OR COMMA OR ADJ_ATTR/NOM LINK NEGATE c Gen)(NEGATE 0 ADVLCASE)(NEGATE 0 NUMBERS)(NEGATE 0 ANTI-CONFUSION);
 
@@ -10185,7 +10198,8 @@ SET LOC_BIRRA = LOC_BIRRA-V OR LOC_BIRRA-N ;
 ADD:msyn-loc-not-guin  (&msyn-loc-not-guin) TARGET (Pl Com) IF (0 Sem/Hum LINK *-1 ("muhtin" Pl) OR ("soamis" Pl) OR ("ollus" Pl) OR ("olus" Pl) OR ("olugat" Pl) OR ("ollugat" Pl)  BARRIER GRAMCHK-NPNHA LINK 0 Nom);
 	## Muhtimat olggobeale olbmuiguin dadjet ahte ii leat dárbu loddet. Muhtimat olggobeale olbmuin dadjet ahte ii leat dárbu loddet.
 
-ADD:msyn-loc-not-guin  (&msyn-loc-not-guin) TARGET (Pl Com) IF (0 NP-HEAD LINK *-1 OASSI OR (Num Sg Nom) OR (Num Sg Acc) OR LOC_BIRRA OR ("ollu") BARRIER GRAMCHK-NPNHA OR MO-MANge OR (":") OR (";") OR (",")) (NEGATE 0 ("dat" Attr)) ;
+ADD:msyn-loc-not-guin  (&msyn-loc-not-guin) TARGET (Pl Com) IF (0 NP-HEAD LINK *-1 OASSI OR (Num Sg Nom) OR (Num Sg Acc) OR LOC_BIRRA OR ("ollu") BARRIER GRAMCHK-NPNHA OR MO-MANge OR (":") OR (";") OR (",") OR Adv) (NEGATE 0 ("dat" Attr)) ;
+	#$ GARRA BARGU : Nils Evald Biti lea 10 jagi       čohken  dieđuid sámiid birra geat dollejedje Alaskai 100 jagi dassái bohccuiguin ja bearrašiiguin. 
 	## Dat sáhttet leat oassin árvvoštallamiiguin.
 	## Muhtin biirres leat gávcci obbalaččat 12 válljejuvvon áirasiiguin leamaš nissonolbmot, ja eará biirres leat buohkat geat leat válljejuvvon leamaš dievddut.
 	## Sámediggi sáhttá maid buktit cealkámušaid guovlluid dearvvašvuođafitnodagaid jahkedieđáhusaiguin ja plánaárvalusaiguin
