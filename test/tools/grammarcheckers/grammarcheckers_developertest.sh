@@ -8,14 +8,20 @@
 # take away everything but lemma, form and error detection tags, and put several lines of a cohort onto one line
 cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.txt | preprocess --abbr=$GTHOME/langs/sme/tools/preprocess/abbr.txt | $LOOKUP $GTHOME/langs/sme/src/analyser-disamb-gt-desc.xfst | lookup2cg | vislcg3 -g $GTHOME/langs/sme/src/syntax/valency.cg3 | vislcg3 -g $GTHOME/langs/sme/tools/grammarcheckers/disambiguator.cg3 | vislcg3 -g $GTHOME/langs/sme/tools/grammarcheckers/grammarchecker.cg3 | perl -pe 's/\#[0-9]*-\>[0-9]*//g' | perl -pe 's/" /"& /g' | cut -d"&" -f1,3 | perl -pe 's/"&/" &/g' | perl $GTHOME/gt/script/sort-cg-cohort.pl | uniq | sed 's/$/#/g' | perl -p -i -e 's/"</\n"</g' | perl -p -i -e 's/#\n/ /g' | perl -pe 's/  / /g'  > $GTHOME/langs/sme/test/data/grammarcheckertestoutput
 
+# take away everything also lemma, form and error detection tags, and put several lines of a cohort onto one line,
+cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.txt | preprocess --abbr=$GTHOME/langs/sme/tools/preprocess/abbr.txt | $LOOKUP $GTHOME/langs/sme/src/analyser-disamb-gt-desc.xfst | lookup2cg | vislcg3 -g $GTHOME/langs/sme/src/syntax/valency.cg3 | vislcg3 -g $GTHOME/langs/sme/tools/grammarcheckers/disambiguator.cg3 | vislcg3 -g $GTHOME/langs/sme/tools/grammarcheckers/grammarchecker.cg3 | perl -pe 's/\#[0-9]*-\>[0-9]*//g' | perl -pe 's/" /"& /g' | cut -d"&" -f1,3 | perl -pe 's/"&/" &/g' | perl $GTHOME/gt/script/sort-cg-cohort.pl | uniq | sed 's/$/#/g' | perl -p -i -e 's/"</\n"</g' | perl -p -i -e 's/#\n/ /g' | perl -pe 's/"[a-z|á|š|ž|č|ŧ|ŋ|đ|å|ø|æ|ä|ö|A-Z|Á|Š|Ž|Č|Ŧ|Ŋ|Đ|Å|Æ|Ä|Ø|0-9].*" / /g' | perl -pe 's/\#[0-9]*-\>[0-9]*//g'  > $GTHOME/langs/sme/test/data/grammarcheckertestoutputwithoutlemma
+
 
 # Henter gullstandard, take away everything but lemma, form and error detection tags, and put several lines of a cohort onto one line :
 cat $GTHOME/langs/sme/test/data/correct/sme-gram-goldcorpus.gram.corr.txt | perl -pe 's/\#[0-9]*-\>[0-9]*//g' | perl -pe 's/" /"& /g' | cut -d"&" -f1,3 | perl -pe 's/"&/" &/g' | perl $GTHOME/gt/script/sort-cg-cohort.pl | uniq | sed 's/$/#/g' | perl -p -i -e 's/"</\n"</g' | perl -p -i -e 's/#\n/ /g' | perl -pe 's/  / /g' > $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt
 
+
+&SUGGEST &[a-z]
+
 # Diff
 diff -w $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt $GTHOME/langs/sme/test/data/grammarcheckertestoutput > $GTHOME/langs/sme/test/data/testgrammarcheckerresult.txt
-cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.corr.txt |cut -d '&' -f1 | sed 's/ $//' > $GTHOME/langs/sme/test/data/sme-goldcorpus.onlygram.txt
-cat $GTHOME/langs/sme/test/data/grammarcheckertestoutput |cut -d '&' -f1 | sed 's/ $//' > test/data/test.onlygram.txt
+cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.corr.txt | cut -d '&' -f1 | sed 's/ $//' > $GTHOME/langs/sme/test/data/sme-goldcorpus.onlygram.txt
+cat $GTHOME/langs/sme/test/data/grammarcheckertestoutput | cut -d '&' -f1 | sed 's/ $//' > test/data/test.onlygram.txt
 diff -w $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.onlygram.txt $GTHOME/langs/sme/test/data/test.onlygram.txt > $GTHOME/langs/sme/test/data/testonlygramresult.txt
 
 # Rapport:
