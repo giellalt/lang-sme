@@ -54,7 +54,7 @@ echo "Antall forskjellige feiltagger i gullkorpus og i testanalysen:" >> $GTHOME
 cat $GTHOME/langs/sme/test/data/testgrammarcheckerresult-oneline.txt | grep  '\&.*€' |  grep '€ > .* \&' | wc -l >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
 echo " " >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt #empty line
 
-echo "Forskjellige feiltagger og antall:" >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
+echo "Forskjellige feiltagger og antall (inkludert flere feiltagger per lemma etc.) :" >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
 cat $GTHOME/langs/sme/test/data/testgrammarcheckerresult-oneline.txt |  perl -p -i -e 's/ /\n/g' | grep '\&' | grep -v '&SUGGEST' | sort | uniq -c | sort -r >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
 echo " " >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt #empty line
 see $GTHOME/langs/sme/test/data/grammarcheckerreport.txt #open output in see
