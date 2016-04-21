@@ -106,7 +106,7 @@ generator-raw-gt-desc.hfst: generator-raw-gt-desc.tmp.hfst \
 		| $(HFST_REGEXP2FST) $(HFST_FLAGS) \
 			-S --xerox-composition=ON $(HFST_FORMAT) \
 		| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
-			-S '+Cmp' -a 10 --arcs-only $(HFST_FORMAT) \
+			-S '+Cmp' -a 10 --arcs-only \
 		> $@
 else
 generator-raw-gt-desc.hfst: generator-raw-gt-desc.tmp.hfst \
