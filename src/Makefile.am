@@ -288,7 +288,7 @@ analyser-gt-norm.%: analyser-gt-norm.tmp.% \
 		 quit\n" | $(XFST_TOOL)
 
 # ... and also in the Oahpa analyser:
-analyser-oahpa-gt-norm.%: analyser-gt-norm.tmp.% \
+analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 					filters/remove-derivation-position-tags.% \
 					filters/remove-allegro-tags.% \
 					filters/remove-Err_SpaceCmp-strings.%
