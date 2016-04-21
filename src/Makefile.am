@@ -96,16 +96,29 @@ endif # CAN_FOMA
 #### Add language-specific build rules here: ####
 
 # Hfst - add weights to compounds:
+if WITH_OFST_TROPICAL
 generator-raw-gt-desc.hfst: generator-raw-gt-desc.tmp.hfst \
 					filters/reorder-subpos-tags.$(GTLANG).hfst
 	$(AM_V_RGX2FST)$(PRINTF) "\
 				@\"filters/reorder-subpos-tags.$(GTLANG).hfst\" \
 			.o. @\"$<\" \
 			;" \
-		| $(HFST_REGEXP2FST) $(HFST_FLAGS) -S --xerox-composition=ON \
+		| $(HFST_REGEXP2FST) $(HFST_FLAGS) \
+			-S --xerox-composition=ON $(HFST_FORMAT) \
 		| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
-			-S '+Cmp' -a 10 --arcs-only \
+			-S '+Cmp' -a 10 --arcs-only $(HFST_FORMAT) \
 		> $@
+else
+generator-raw-gt-desc.hfst: generator-raw-gt-desc.tmp.hfst \
+					filters/reorder-subpos-tags.$(GTLANG).hfst
+	$(AM_V_RGX2FST)$(PRINTF) "\
+				@\"filters/reorder-subpos-tags.$(GTLANG).hfst\" \
+			.o. @\"$<\" \
+			;" \
+		| $(HFST_REGEXP2FST) $(HFST_FLAGS) \
+			-S --xerox-composition=ON $(HFST_FORMAT) \
+		> $@
+endif
 
 # Xerox & Foma:
 analyser-raw-gt-desc.%: analyser-raw-gt-desc.tmp.% \
