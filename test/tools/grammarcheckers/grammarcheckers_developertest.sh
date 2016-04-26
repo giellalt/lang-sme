@@ -3,14 +3,14 @@
 
 # Analyserer testkorpus:
 # take away everything but lemma, form and error detection tags, and put several lines of a cohort onto one line
-#cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.txt | preprocess --abbr=$GTHOME/langs/sme/tools/preprocess/abbr.txt | $LOOKUP $GTHOME/langs/sme/src/analyser-disamb-gt-desc.xfst | lookup2cg | vislcg3 -g $GTHOME/langs/sme/src/syntax/valency.cg3 | vislcg3 -g $GTHOME/langs/sme/tools/grammarcheckers/disambiguator.cg3 | vislcg3 -g $GTHOME/langs/sme/tools/grammarcheckers/grammarchecker.cg3 | perl -pe 's/\#[0-9]*-\>[0-9]*//g' | perl -pe 's/" /"& /g' | cut -d"&" -f1,3 | perl -pe 's/"&/" &/g' | perl $GTHOME/gt/script/sort-cg-cohort.pl | uniq | sed 's/$/#/g' | perl -p -i -e 's/"</\n"</g' | perl -p -i -e 's/#\n/ /g' | perl -pe 's/  / /g'  > $GTHOME/langs/sme/test/data/grammarcheckertestoutput
+#cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.txt | preprocess --abbr=$GTHOME/langs/sme/tools/preprocess/abbr.txt | $LOOKUP $GTHOME/langs/sme/src/analyser-disamb-gt-desc.xfst | lookup2cg | vislcg3 -g $GTHOME/langs/sme/src/syntax/valency.cg3 | vislcg3 -g $GTHOME/langs/sme/tools/grammarcheckers/disambiguator.cg3 | vislcg3 -g $GTHOME/langs/sme/tools/grammarcheckers/grammarchecker.cg3 | perl -pe 's/\#[0-9]*-\>[0-9]*//g' | perl -pe 's/" /"& /g' | cut -d"&" -f1,3 | perl -pe 's/"&/" &/g' | perl $GTHOME/gt/script/sort-cg-cohort.pl | uniq | sed 's/$/#/g' | perl -p  -e 's/"</\n"</g' | perl -p  -e 's/#\n/ /g' | perl -pe 's/  / /g'  > $GTHOME/langs/sme/test/data/grammarcheckertestoutput
 
 # take away everything also lemma except for error annotated forms, and put several lines of a cohort onto one line,
-cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.txt | preprocess --abbr=$GTHOME/langs/sme/tools/preprocess/abbr.txt | $LOOKUP $GTHOME/langs/sme/src/analyser-disamb-gt-desc.xfst | lookup2cg | vislcg3 -g $GTHOME/langs/sme/src/syntax/valency.cg3 | vislcg3 -g $GTHOME/langs/sme/tools/grammarcheckers/disambiguator.cg3 | vislcg3 -g $GTHOME/langs/sme/tools/grammarcheckers/grammarchecker.cg3 | perl -pe 's/\#[0-9]*-\>[0-9]*//g' | perl -pe 's/" /"& /g' | cut -d"&" -f1,3 | perl -pe 's/"&/" &/g' | grep -E "<|&" | uniq | sed 's/$/#/g' | perl -p -i -e 's/"</\n"</g' | perl -p -i -e 's/#\n/ /g' > $GTHOME/langs/sme/test/data/grammarcheckertestoutput
+cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.txt | preprocess --abbr=$GTHOME/langs/sme/tools/preprocess/abbr.txt | $LOOKUP $GTHOME/langs/sme/src/analyser-disamb-gt-desc.xfst | lookup2cg | vislcg3 -g $GTHOME/langs/sme/src/syntax/valency.cg3 | vislcg3 -g $GTHOME/langs/sme/tools/grammarcheckers/disambiguator.cg3 | vislcg3 -g $GTHOME/langs/sme/tools/grammarcheckers/grammarchecker.cg3 | perl -pe 's/\#[0-9]*-\>[0-9]*//g' | perl -pe 's/" /"& /g' | cut -d"&" -f1,3 | perl -pe 's/"&/" &/g' | grep -E "<|&" | uniq | sed 's/$/#/g' | perl -p  -e 's/"</\n"</g' | perl -p  -e 's/#\n/ /g' > $GTHOME/langs/sme/test/data/grammarcheckertestoutput
 
 
 # Henter gullstandard, take away everything also lemma, except for error annotated forms, and put several lines of a cohort onto one line :
-cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.corr.txt | perl -pe 's/\#[0-9]*-\>[0-9]*//g' | perl -pe 's/" /"& /g' | cut -d"&" -f1,3 | perl -pe 's/"&/" &/g' | grep -E "<|&" | uniq | sed 's/$/#/g' | perl -p -i -e 's/"</\n"</g' | perl -p -i -e 's/#\n/ /g' > $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt
+cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.corr.txt | perl -pe 's/\#[0-9]*-\>[0-9]*//g' | perl -pe 's/" /"& /g' | cut -d"&" -f1,3 | perl -pe 's/"&/" &/g' | grep -E "<|&" | uniq | sed 's/$/#/g' | perl -p  -e 's/"</\n"</g' | perl -p  -e 's/#\n/ /g' > $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt
 
 
 # Diff
@@ -55,7 +55,7 @@ cat $GTHOME/langs/sme/test/data/testgrammarcheckerresult-oneline.txt | grep  '\&
 echo " " >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt #empty line
 
 echo "Forskjellige feiltagger og antall (inkludert flere feiltagger per lemma etc.) :" >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
-cat $GTHOME/langs/sme/test/data/testgrammarcheckerresult-oneline.txt |  perl -p -i -e 's/ /\n/g' | grep '\&' | grep -v '&SUGGEST' | sort | uniq -c | sort -r >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
+cat $GTHOME/langs/sme/test/data/testgrammarcheckerresult-oneline.txt |  perl -p  -e 's/ /\n/g' | grep '\&' | grep -v '&SUGGEST' | sort | uniq -c | sort -r >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
 echo " " >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt #empty line
 
 #cat $GTHOME/langs/sme/test/data/testgrammarcheckerresult.txt | grep '^>' | perl -pe 's/(TV|IV|G3|V\*|V\*\*) //' | cut -d '"' -f3 | rev | awk -F' ' '{print $1" "$2}' | rev | sort | uniq -c | sort -nr >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
