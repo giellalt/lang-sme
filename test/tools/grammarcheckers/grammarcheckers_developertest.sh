@@ -57,8 +57,12 @@ echo " " >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt #empty line
 echo "Forskjellige feiltagger og antall (inkludert flere feiltagger per lemma etc.) :" >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
 cat $GTHOME/langs/sme/test/data/testgrammarcheckerresult-oneline.txt |  perl -p -i -e 's/ /\n/g' | grep '\&' | grep -v '&SUGGEST' | sort | uniq -c | sort -r >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
 echo " " >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt #empty line
-see $GTHOME/langs/sme/test/data/grammarcheckerreport.txt #open output in see
 
 #cat $GTHOME/langs/sme/test/data/testgrammarcheckerresult.txt | grep '^>' | perl -pe 's/(TV|IV|G3|V\*|V\*\*) //' | cut -d '"' -f3 | rev | awk -F' ' '{print $1" "$2}' | rev | sort | uniq -c | sort -nr >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
 #see $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
 #--- which of each, statistics
+
+#echo "De 30 mest frekvente feiltagga :" >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
+#cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt | grep '&[^ ]*' -o | sort | uniq -c | sort -nr | grep -v "&SUGGEST" | head -30 >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
+echo " " >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt #empty line
+see $GTHOME/langs/sme/test/data/grammarcheckerreport.txt #open output in see
