@@ -16,7 +16,7 @@ cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.corr.txt | perl -pe 's/
 # Diff
 diff -w $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt $GTHOME/langs/sme/test/data/grammarcheckertestoutput > $GTHOME/langs/sme/test/data/testgrammarcheckerresult.txt
 
-cat $GTHOME/langs/sme/test/data/testgrammarcheckerresult.txt | sed 's/$/¢/' |sed 's/---¢/€/' | tr "\n" " " | sed 's/¢ €/€/g' |tr "¢" "\n" | grep € | rev | sort | rev > $GTHOME/langs/sme/test/data/testgrammarcheckerresult-oneline.txt
+cat $GTHOME/langs/sme/test/data/testgrammarcheckerresult.txt | sed 's/$/¢/' |sed 's/---¢/€/' | tr "\n" " " | sed 's/¢ €/€/g' | perl -pe 's/¢/\n/g' | grep € | rev | sort | rev > $GTHOME/langs/sme/test/data/testgrammarcheckerresult-oneline.txt
 
 #cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt | cut -d '&' -f1 | sed 's/ $//' > $GTHOME/langs/sme/test/data/sme-goldcorpus.onlygram.txt
 #
