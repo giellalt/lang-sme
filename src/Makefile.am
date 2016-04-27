@@ -263,10 +263,12 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_nob.%: \
 # We need to add processing of language-specific tags in the analyser:
 analyser-gt-desc.%: analyser-gt-desc.tmp.% \
 					filters/remove-derivation-position-tags.% \
-					filters/remove-Err_SpaceCmp-strings.%
+					filters/remove-Err_SpaceCmp-strings.% \
+					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 			    @\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"   \
+			.o. @\"filters/remove-Use_Disamb-strings.$*\"     \
 			.o. @\"$<\"                                       \
 			;\n\
 		 $(INVERT_HFST)\
@@ -276,11 +278,13 @@ analyser-gt-desc.%: analyser-gt-desc.tmp.% \
 analyser-gt-norm.%: analyser-gt-norm.tmp.% \
 					filters/remove-derivation-position-tags.% \
 					filters/remove-allegro-tags.% \
-					filters/remove-Err_SpaceCmp-strings.%
+					filters/remove-Err_SpaceCmp-strings.% \
+					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/remove-allegro-tags.$*\" \
 			.o. @\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"   \
+			.o. @\"filters/remove-Use_Disamb-strings.$*\"     \
 			.o. @\"$<\"                                       \
 			;\n\
 		 $(INVERT_HFST)\
@@ -291,12 +295,14 @@ analyser-gt-norm.%: analyser-gt-norm.tmp.% \
 analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 					filters/remove-derivation-position-tags.% \
 					filters/remove-allegro-tags.% \
-					filters/remove-Err_SpaceCmp-strings.%
+					filters/remove-Err_SpaceCmp-strings.% \
+					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/remove-allegro-tags.$*\" \
 			.o. @\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"   \
-			.o. @\"$<\"                                     \
+			.o. @\"filters/remove-Use_Disamb-strings.$*\"     \
+			.o. @\"$<\"                                       \
 			;\n\
 		 $(INVERT_HFST)\
 		 save stack $@\n\
@@ -306,11 +312,12 @@ analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 # (keep the Err/SpaceCmp strings here)
 analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
                 filters/remove-derivation-position-tags.hfst \
-                filters/rename-POS_before_Der-tags.hfst
+                filters/rename-POS_before_Der-tags.hfst \
+				filters/remove-Use_Disamb-tags.hfst
 	$(AM_V_HXFST)$(PRINTF) "read regex \
             @\"filters/remove-derivation-position-tags.hfst\" \
         .o. @\"filters/rename-POS_before_Der-tags.hfst\" \
-        .o. @\"$<\"                                     \
+        .o. @\"$<\"                                      \
         ;\n\
      invert net\n\
      save stack $@\n\
@@ -321,11 +328,13 @@ analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
 analyser-disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.% \
 					filters/remove-derivation-position-tags.% \
 					filters/rename-POS_before_Der-tags.% \
-					filters/remove-Err_SpaceCmp-strings.%
+					filters/remove-Err_SpaceCmp-strings.% \
+					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/rename-POS_before_Der-tags.$*\"  \
 			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\" \
+			.o. @\"filters/remove-Use_Disamb-strings.$*\"   \
 			.o. @\"$<\"                                     \
 			;\n\
 		 $(INVERT_HFST)\
@@ -339,14 +348,16 @@ generator-gt-%.$(1): generator-gt-%.tmp.$(1) \
 					 filters/make-optional-allegro-tags.$(1) \
 					 filters/make-optional-coll-tags.$(1)    \
 					 filters/make-optional-lang_hom-tags.$(1) \
-					filters/remove-Err_SpaceCmp-strings.$(1)
+					 filters/remove-Err_SpaceCmp-strings.$(1) \
+					 filters/remove-Use_Disamb-strings.$(1)
 	$$(AM_V_XFST_TOOL)$$(PRINTF) "read regex \
 				@\"filters/make-optional-allegro-tags.$(1)\"  \
 			.o. @\"filters/make-optional-coll-tags.$(1)\"     \
 			.o. @\"filters/make-optional-lang_hom-tags.$(1)\" \
 			.o. @\"filters/remove-derivation-position-tags.$(1)\" \
 			.o. @\"filters/remove-Err_SpaceCmp-strings.$(1)\"   \
-			.o. @\"$$<\"                                      \
+			.o. @\"filters/remove-Use_Disamb-strings.$(1)\"     \
+			.o. @\"$$<\"                                        \
 			;\n\
 		 $$(INVERT_XFST)$$(INVERT_FOMA)\
 		 save stack $$@\n\
@@ -358,11 +369,13 @@ $(foreach fst,hfst xfst foma,$(eval $(call giella_generators,$(fst))))
 generator-oahpa-gt-norm.%: generator-oahpa-gt-norm.tmp.% \
 					filters/remove-derivation-position-tags.% \
 					filters/make-optional-allegro-tags.% \
-					filters/remove-Err_SpaceCmp-strings.%
+					filters/remove-Err_SpaceCmp-strings.% \
+					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/make-optional-allegro-tags.$*\"  \
 			.o. @\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"   \
+			.o. @\"filters/remove-Use_Disamb-strings.$*\"     \
 			.o. @\"$<\"                                       \
 			;\n\
 		 $(INVERT_XFST)$(INVERT_FOMA)\
