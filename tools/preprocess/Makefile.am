@@ -18,12 +18,14 @@
 # Set this variable to point to generated lexc source files, if any:
 GENRSRCS:=$(wildcard $(top_builddir)/src/morphology/generated_files/smi-$(GTLANG)-*.lexc)
 
-tokeniser-disamb-gt-desc.pmhfst: tokeniser-disamb-gt-desc.pmscript pmatch-analyser-disamb-gt-desc.hfst
+tokeniser-disamb-gt-desc.pmhfst: tokeniser-disamb-gt-desc.pmscript relabelled-analyser-disamb-gt-desc.hfst
 	$(AM_V_GEN)hfst-pmatch2fst < $< > $@
 
-pmatch-analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.hfst
-	$(AM_V_GEN)hfst-substitute -f '@P.Pmatch.Loc@:@P.Pmatch.Loc@' -t ':@PMATCH_INPUT_TOKEN@' $< -o $@
+relabelled-analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.hfst relabeller.hfst
+	$(AM_V_GEN)hfst-substitute -f '@P.Pmatch.Loc@' -T relabeller.hfst $< -o $@
 
+relabeller.hfst:
+	$(AM_V_GEN)printf '0\t1\t@0@\t@PMATCH_INPUT_MARK@\n1\n' | hfst-txt2fst -e '@0@' -o $@
 
 ####### Other targets: ###########
 clean-local:
