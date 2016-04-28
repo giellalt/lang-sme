@@ -22,7 +22,7 @@ tokeniser-disamb-gt-desc.pmhfst: tokeniser-disamb-gt-desc.pmscript pmatch-analys
 	$(AM_V_GEN)hfst-pmatch2fst < $< > $@
 
 pmatch-analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.hfst
-	$(AM_V_GEN)hfst-substitute -f "@P.Pmatch.Loc@" -t "@PMATCH_INPUT_TOKEN@" $< -o $@
+	$(AM_V_GEN)hfst-substitute -f '@P.Pmatch.Loc@:@P.Pmatch.Loc@' -t ':@PMATCH_INPUT_TOKEN@' $< -o $@
 
 
 ####### Other targets: ###########
