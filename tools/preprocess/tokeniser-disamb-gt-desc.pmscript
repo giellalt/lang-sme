@@ -1,16 +1,16 @@
-!! Docs:
-!! https://kitwiki.csc.fi/twiki/bin/view/KitWiki/HfstPmatch
-
-!! Use with:
-! git clone -b tokenise-as-gtdivvun-lookup git@github.com:unhammer/hfst.git
+!! Requires a recent version of HFST (3.10.0 / git revision>=3aecdbc)
+!! Then just:
+!! $ make
+!! $ echo "ja, ja" | hfst-tokenise --gtd tokeniser-disamb-gt-desc.pmhfst
 
 !! Issues:
 !! - [X] Ambiguous input
 !!   - Seems to work fine
 !! - [X] Ambiguous multiword expessions with ambiguous tokenisation
-!!   - Seems to work; hfst-tokenise also supports forms on the analyses now
-!! - [ ] Ambiguous multiword expessions need reorganising after CG
-!!   - We need a module that takes wordforms from readings and turns them into
+!!   - Seems to work – represented within lexc now; hfst-tokenise also
+!!     supports forms on the analyses now
+!! - [X] Ambiguous multiword expessions need reorganising after CG
+!!   - The module cg-mwesplit takes wordforms from readings and turns them into
 !!     new cohorts
 !! - [X] Unknown words
 !!   - The set-difference method only works for words without
@@ -20,8 +20,17 @@
 !!   - Fixed instead by treating empty analyses as unknown-tokens in
 !!     hfst-tokenise, and outputting unmatched strings with a prefix
 !! - [ ] Treat input that's within superblanks as unmatched
-!! - [ ] Try >1 space for ambiguous MWE's?
+!!   - probably requires a change in hfst-tokenise itself
+!! - [X] Try >1 space for ambiguous MWE's? – represented within lexc now
 !! - [ ] Try set-difference-unknowns method with regular hfst commands?
+
+!! More usage examples:
+!! $ echo "Juos gorreválggain lea (dárbbašlaš) deavdit gáibádusa boasttu olmmoš, man mielde lahtuid." | hfst-tokenise --gtd tokeniser-disamb-gt-desc.pmhfst
+!! $ echo "(gáfe) 'ja' ja 3. ja? ц jaja ukjend \"ukjend\"" | hfst-tokenise --gtd tokeniser-disamb-gt-desc.pmhfst
+!! $ echo "márffibiillagáffe" | hfst-tokenise --gtd tokeniser-disamb-gt-desc.pmhfst
+
+!! Pmatch documentation:
+!! https://kitwiki.csc.fi/twiki/bin/view/KitWiki/HfstPmatch
 
 Define morphology @bin"withrepeats-analyser-disamb-gt-desc.hfst" ;
 
@@ -44,21 +53,13 @@ Define alphaword alphabet+;
 
 
 !!! Unknown handling:
-!! TODO: fails to exclude words with flag diacritics, why?
 Define unknownform [ [alphaword].u - [morphology].u];
-! Define unknownword unknownform 0:{ %?} LC([blank | #]) RC([[blank ] | # ]);
-!! Also gives huge binary.
-
-!! A simpler, smaller (30M) alternative is to simply give an empty
-!! reading; this is legal in CG, and gives a default baseform equal to
-!! the wordform, but no tag:
+!! Simply give an empty reading when something is unknown:
 Define unknownwordEmpty unknownform:0 LC([blank | #]) RC([[blank ] | # ]);
-!! Having no tag means there's currently no safe way inside CG to check
-!! if something is unknown (safest being /^[^"]/r which checks for the
-!! existence of a non-wordform tag).
-!! But it's easy to let hfst-tokenise treat empty analyses as
-!! unknowns, and remove empty analyses from other readings -- this
-!! works, and intuitively makes sense to me at least.
+!! hfst-tokenise --gtd will treat such empty analyses as unknowns, and
+!! remove empty analyses from other readings. Empty readings are also
+!! legal in CG, they get a default baseform equal to the wordform, but
+!! no tag to check, so it's safer to let hfst-tokenise handle them.
 
 
 !!! Superblank handling (TODO):
@@ -74,9 +75,3 @@ Define unknownwordEmpty unknownform:0 LC([blank | #]) RC([[blank ] | # ]);
 Define token [ morphoword | unknownwordEmpty | incondword ] EndTag(token);
 
 regex token ;
-
-!! Usage test:
-!! echo "Juos gorreválggain lea (dárbbašlaš) deavdit gáibádusa boasttu olmmoš, man mielde lahtuid." | ~/src/git-apertium/hfst3/tools/src/hfst-tokenize -wacku: tokeniser-disamb-gt-desc.pmhfst
-
-!! echo "(gáfe) 'ja' ja 3. ja? ц jaja ukjend \"ukjend\"" | ~/src/git-apertium/hfst3/tools/src/hfst-tokenize -wacku: tokeniser-disamb-gt-desc.pmhfst
-!! echo "márffibiillagáffe" | ~/src/git-apertium/hfst3/tools/src/hfst-tokenize -wacku: tokeniser-disamb-gt-desc.pmhfst
