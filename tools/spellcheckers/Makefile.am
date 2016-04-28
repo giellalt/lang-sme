@@ -10,12 +10,32 @@ SUBDIRS = . fstbased listbased
 #
 # Target template:
 #
-# generator-speller-gt-norm.hfst: generator-speller-gt-norm.tmp.hfst
-#	build rules
-#
-# analyser-speller-gt-norm.xfst: analyser-speller-gt-norm.tmp.xfst
+# analyser-speller-gt-norm.%: analyser-speller-gt-norm.tmp.%
 #	build rules
 
+analyser-speller-gt-norm.%: analyser-speller-gt-norm.tmp.% \
+			$(top_builddir)/src/filters/remove-hyphenation-marks.%  \
+			$(top_builddir)/src/filters/remove-infl_deriv-borders.% \
+			$(top_builddir)/src/filters/remove-Use_Disamb-strings.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+			@\"filters/remove-Use_Disamb-strings.$*\"   \
+    	.o. @\"$<\"                                     \
+		.o. @\"$(top_builddir)/src/filters/remove-hyphenation-marks.$*\"    \
+		.o. @\"$(top_builddir)/src/filters/remove-infl_deriv-borders.$*\"   \
+			;\n\
+		 $(INVERT_HFST)\
+		 save stack $@\n\
+		 quit\n" | $(XFST_TOOL)
+
+generator-speller-gt-norm.%: analyser-speller-gt-norm.tmp.% \
+					filters/remove-Use_Disamb-strings.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+				@\"filters/remove-Use_Disamb-strings.$*\"   \
+			.o. @\"$<\"                                     \
+			;\n\
+		 $(INVERT_XFST)$(INVERT_FOMA)\
+		 save stack $@\n\
+		 quit\n" | $(XFST_TOOL)
 
 # END: Local processing
 #########################################
