@@ -18,28 +18,11 @@
 # Set this variable to point to generated lexc source files, if any:
 GENRSRCS:=$(wildcard $(top_builddir)/src/morphology/generated_files/smi-$(GTLANG)-*.lexc)
 
-tokeniser-disamb-gt-desc.pmhfst: tokeniser-disamb-gt-desc.pmscript \
-								 analyser-disamb-gt-desc.hfst \
-								 withrepeats-analyser-disamb-gt-desc.hfst
+tokeniser-disamb-gt-desc.pmhfst: tokeniser-disamb-gt-desc.pmscript pmatch-analyser-disamb-gt-desc.hfst
 	$(AM_V_GEN)hfst-pmatch2fst < $< > $@
 
-# TODO: clean up the intermediates
-space.hfst:
-	$(AM_V_GEN)echo '% :"@PMATCH_INPUT_MARK@"' | hfst-regexp2fst -o $@
-
-unmin-withrepeats-%.hfst: repeated-%.hfst %.hfst
-	$(AM_V_GEN)hfst-union $^ -o $@
-
-withrepeats-%.hfst: unmin-withrepeats-%.hfst
-	$(AM_V_GEN)hfst-minimise $< -o $@
-
-repeated-%.hfst: %.hfst space.hfst
-	hfst-concatenate -1 $< -2 space.hfst -o analyser-space.hfst
-	hfst-concatenate -F -1 analyser-space.hfst -2 $< -o analyser-space-analyser.hfst
-	hfst-invert analyser-space-analyser.hfst -o generator-space-generator.hfst
-	hfst-project -p upper $< -o forms.hfst
-	hfst-compose-intersect -1 generator-space-generator.hfst -2 forms.hfst -o generator-repeated.hfst
-	hfst-invert generator-repeated.hfst -o $@
+pmatch-analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.hfst
+	$(AM_V_GEN)hfst-substitute -f "@P.Pmatch.Loc@" -t "@PMATCH_INPUT_TOKEN@" $< -o $@
 
 
 ####### Other targets: ###########
