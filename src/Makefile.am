@@ -68,6 +68,7 @@ endif # CAN_XFST
 if CAN_HFST
 
 if WANT_MORPHOLOGY
+GT_ANALYSERS+=analyser-gt-norm.hfst
 #GT_ANALYSERS+=analyser-nob-desc.hfstol \
 #			  analyser-nob-norm.hfstol
 endif # WANT_MORPHOLOGY
