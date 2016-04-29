@@ -8211,25 +8211,25 @@ SETPARENT ("ovttas")  TO (*0 Com LINK 0* <ovttas><CO-Com-Ani>)  ;
 	# ----------------
 SET NUMBER = Sg1 OR Du1 OR Pl1 OR Sg2 OR Du2 OR Pl2 OR Sg3 OR Du3 OR Pl3;
 
-SUBSTITUTE N (§AG N) TARGET N IF (0 Nom + Pl) (*0 (V <AG-Nom-Any>) + Pl BARRIER GRAMCHK-S-BOUNDARY1 OR (SUBJ §AG))(0 SUBJ); #(NEGATE 0* (SUBJ §EX)) ;
-SUBSTITUTE N (§AG N) TARGET N IF (0 Nom + Sg) (*0 (V <AG-Nom-Any>) + Sg BARRIER GRAMCHK-S-BOUNDARY1 OR (SUBJ §AG))(0 SUBJ);
-SUBSTITUTE Pron (§AG Pron) TARGET Pron IF (0 Pers LINK 0 Nom + $$NUMBER) (*0 (V <AG-Nom-Any>) + $$NUMBER BARRIER GRAMCHK-S-BOUNDARY1 OR (SUBJ §AG))(0 SUBJ);
+SUBSTITUTE N (§AG N) TARGET N IF (0 Nom + Pl) (*0 (V <AG-Nom-Any>) + Pl BARRIER GRAMCHK-S-BOUNDARY1 OR (SUBJ §AG))(0 SUBJ)(NEGATE 0 §AG); #(NEGATE 0* (SUBJ §EX)) ;
+SUBSTITUTE N (§AG N) TARGET N IF (0 Nom + Sg) (*0 (V <AG-Nom-Any>) + Sg BARRIER GRAMCHK-S-BOUNDARY1 OR (SUBJ §AG))(0 SUBJ)(NEGATE 0 §AG);
+SUBSTITUTE Pron (§AG Pron) TARGET Pron IF (0 Pers LINK 0 Nom + $$NUMBER) (*0 (V <AG-Nom-Any>) + $$NUMBER BARRIER GRAMCHK-S-BOUNDARY1 OR (SUBJ §AG))(0 SUBJ)(NEGATE 0 §AG);
 
-SUBSTITUTE Pron (§AG Pron) TARGET Pron IF (0 (Sg Nom)) (*0 (V <AG-Nom-Any>) + Sg3 BARRIER GRAMCHK-S-BOUNDARY1 OR (SUBJ §AG))(0 SUBJ);
-SUBSTITUTE Pron (§AG Pron) TARGET Pron IF (0 (Pl Nom)) (*0 (V <AG-Nom-Any>) + Pl3 BARRIER GRAMCHK-S-BOUNDARY1 OR (SUBJ §AG))(0 SUBJ); 
+SUBSTITUTE Pron (§AG Pron) TARGET Pron IF (0 (Sg Nom)) (*0 (V <AG-Nom-Any>) + Sg3 BARRIER GRAMCHK-S-BOUNDARY1 OR (SUBJ §AG))(0 SUBJ)(NEGATE 0 §AG);
+SUBSTITUTE Pron (§AG Pron) TARGET Pron IF (0 (Pl Nom)) (*0 (V <AG-Nom-Any>) + Pl3 BARRIER GRAMCHK-S-BOUNDARY1 OR (SUBJ §AG))(0 SUBJ)(NEGATE 0 §AG); 
 
 	# "map" REASON role
 	# ----------------
 	# needs to be before the TH rules
 
-SUBSTITUTE N (§RS N) TARGET N IF (0 Acc) (p (V <RS-Acc-Reason>))(0 ("dušši" N Pl Acc));
+SUBSTITUTE N (§RS N) TARGET N IF (0 Acc) (p (V <RS-Acc-Reason>))(0 ("dušši" N Pl Acc))(NEGATE 0 §RS);
 
-SUBSTITUTE N (§RS N) TARGET N IF (0 Loc) (p (V <RS-Loc-Any>));
-SUBSTITUTE N (§RS N) TARGET Pron IF (0 Loc) (p (V <RS-Loc-Any>));
+SUBSTITUTE N (§RS N) TARGET N IF (0 Loc) (p (V <RS-Loc-Any>))(NEGATE 0 §RS);
+SUBSTITUTE N (§RS N) TARGET Pron IF (0 Loc) (p (V <RS-Loc-Any>))(NEGATE 0 §RS);
 
-SUBSTITUTE Pron (§RS Pron) TARGET Pron IF (0 Com LINK NOT 0 Pers) (p (V <RS-Com-Impers>)); 
+SUBSTITUTE Pron (§RS Pron) TARGET Pron IF (0 Com LINK NOT 0 Pers) (p (V <RS-Com-Impers>))(NEGATE 0 §RS); 
 
-SUBSTITUTE Po (§RS Po) TARGET Po IF (0 ("dihte") OR ("dihtii")) (p (V <RS-dihte-Any>));
+SUBSTITUTE Po (§RS Po) TARGET Po IF (0 ("dihte") OR ("dihtii")) (p (V <RS-dihte-Any>))(NEGATE 0 §RS);
     
 #	# "map" THEME role
 #	# ----------------
@@ -8381,10 +8381,10 @@ SUBSTITUTE N (§IN N) TARGET N IF (p (V <IN-Ill-Lang>))(0 Ill + Sem/Lang);
 
 	# "map" PRODUCT role
 	# -----------------------
-SUBSTITUTE N (§PR N) TARGET N IF (p (V <PR-Acc-Any>))(0 Acc) ;
+SUBSTITUTE N (§PR N) TARGET N IF (p (V <PR-Acc-Any>))(0 Acc)(NEGATE 0 §PR) ;
 	## Danne lea dárbu ásahit čielga {prinsihpaid} ja rievttálaš dásiid vaikke vel buohkat eai 	liikošege 	dasa .
 	
-SUBSTITUTE Pron (§PR Pron) TARGET Pron IF (p (V <PR-Acc-Any>))(0 Acc) ;
+SUBSTITUTE Pron (§PR Pron) TARGET Pron IF (p (V <PR-Acc-Any>))(0 Acc)(NEGATE 0 §PR) ;
 	## Son vel vuittii lasi 11.000 ruvnnu ja Márjá-Liissá lea hui movtta go lea vuoitán ja ahte olbmot 	liikojit 	maid son lea designen.
 	
 	# "map" BENEFICIARY role
@@ -10118,8 +10118,11 @@ ADD:syn-case-congruence-loc-part2 (&syn-case-congruence-loc-part2) TARGET (Loc P
 	
 ADD:syn-case-congruence-moanat (&syn-case-congruence-moanat) TARGET ("moanat") + Nom  IF (*1 (Pl Acc) OR (Pl Gen) OR (Pl Ill) OR (Pl Loc) OR (Pl Com) BARRIER GRAMCHK-NPNHA) (NEGATE 0 Gen + Cmp/SplitR) ;
 
-COPY:syn-case-congruence-moanat (Acc &SUGGEST) EXCEPT (Nom &syn-case-congruence-moanat) TARGET (Nom &syn-case-congruence-moanat) OR (Gen &syn-case-congruence-moanat) (*1 (Pl Acc) OR (Pl Gen) OR (Pl Ill) OR (Pl Com) BARRIER GRAMCHK-NPNHA) ;
-COPY:syn-case-congruence-moanat (Loc &SUGGEST) EXCEPT (Nom &syn-case-congruence-moanat) TARGET (Nom &syn-case-congruence-moanat) OR (Gen &syn-case-congruence-moanat) (*1 (Pl Loc) BARRIER GRAMCHK-NPNHA) ;
+COPY:syn-case-congruence-moanat (Acc &SUGGEST) EXCEPT (Nom &syn-case-congruence-moanat) TARGET (Nom &syn-case-congruence-moanat) (*1 (Pl Acc) OR (Pl Gen) OR (Pl Ill) OR (Pl Com) BARRIER GRAMCHK-NPNHA) ;
+
+    ## Moanat skuvlainternáhtaid huksejedje Finnmárkui maid ulbmil lei sirret ohppiid ruohttasiinniset
+
+COPY:syn-case-congruence-moanat (Loc &SUGGEST) EXCEPT (Nom &syn-case-congruence-moanat) TARGET (Nom &syn-case-congruence-moanat) (*1 (Pl Loc) BARRIER GRAMCHK-NPNHA) ;
 
 ADD:syn-case-congruence-moanat (&syn-case-congruence-moanat) TARGET ("moanat") + Acc OR ("moanat") + Gen  IF (*1  (Pl Loc) BARRIER GRAMCHK-NPNHA) ;
 COPY:syn-case-congruence-moanat (Loc &SUGGEST) EXCEPT (Acc &syn-case-congruence-moanat) TARGET (Acc &syn-case-congruence-moanat) OR (Gen &syn-case-congruence-moanat) (*1 (Pl Loc)) ;
@@ -10134,7 +10137,7 @@ COPY:syn-case-congruence-moanat (Pl &SUGGEST) EXCEPT (Sg &syn-number_congruence-
     ## Moai fidniime {moanat} mánáidgirjjiid máddin, máŋggat ledje klassihkkarat, maid moai dovddaime iežame mánnávuođas, muhto moai osttiime maiddái ođđasut girjjiid ja geahččaleimme ohppiidgirjerádjosa ráhkadit
     ## Dás serve oahppit {moanat} riikaviidosaš miellačájáhusaide, maid báidne sámi dovdomearkkaiguin
     ## Moanat jagiid maŋŋá álggaheimmet buđaldandiimmuid lágideami ohppiide, ee. giehtaduodjedoaimmaid
-    ## Moanat skuvlainternáhtaid huksejedje Finnmárkui maid ulbmil lei sirret ohppiid ruohttasiinniset
+
 
     
     # báhčán vs. báhččán
