@@ -46,13 +46,13 @@ GT_GENERATORS=
 if CAN_XFST
 
 if WANT_MORPHOLOGY
-GT_ANALYSERS+= analyser-nob-desc.xfst \
-			   analyser-nob-norm.xfst 
+#GT_ANALYSERS+= analyser-nob-desc.xfst \
+#			   analyser-nob-norm.xfst 
 endif # WANT_MORPHOLOGY
 
 if WANT_GENERATION
-GT_GENERATORS+=generator-nob-desc.xfst \
-			   generator-nob-norm.xfst 
+#GT_GENERATORS+=generator-nob-desc.xfst \
+#			   generator-nob-norm.xfst 
 endif # WANT_GENERATION
 
 if WANT_PHONETIC
@@ -68,13 +68,13 @@ endif # CAN_XFST
 if CAN_HFST
 
 if WANT_MORPHOLOGY
-GT_ANALYSERS+=analyser-nob-desc.hfstol \
-			  analyser-nob-norm.hfstol
+#GT_ANALYSERS+=analyser-nob-desc.hfstol \
+#			  analyser-nob-norm.hfstol
 endif # WANT_MORPHOLOGY
 
 if WANT_GENERATION
-GT_GENERATORS+=generator-nob-desc.hfstol \
-			   generator-nob-norm.hfstol
+#GT_GENERATORS+=generator-nob-desc.hfstol \
+#			   generator-nob-norm.hfstol
 endif # WANT_GENERATION
 
 if WANT_PHONETIC
