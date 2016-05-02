@@ -1212,6 +1212,7 @@ LIST &lex-badjelii-not-badjel = &lex-badjelii-not-badjel ;
 LIST &lex-mielde-not-rastá = &lex-mielde-not-rastá ;
 LIST &lex-ollis-not-miehtá = &lex-ollis-not-miehtá ;
 LIST &lex-guorrasit-not-guorralit = &lex-guorrasit-not-guorralit ;
+LIST &lex-valjit-not-valji = &lex-valjit-not-valji ;
 
 LIST &real-ádde = &real-ádde ;
 LIST &real-ádden = &real-ádden ;
@@ -1471,6 +1472,8 @@ SET &real = &real-ádden OR &real-áddet OR &real-ádde OR &real-addit OR &real-
 &real-uhccon OR &real-vahku OR &real-vahkku OR &real-varat OR &real-veahkki OR &real-veallát OR &real-valljái OR &real-várra OR &real-viđa OR &real-vuodjit OR &real-vuolgit OR &real-vuostá OR &real-vuosttaš OR &real-vuovttat OR &real-vuvdii ;
 
 SET &real-ADV = &real-sakka ;
+
+SET &lex = &lex-acc-not-badjel OR &lex-badjelii-not-badjel OR &lex-bokte-not-badjel OR &lex-guorrasit-not-guorralit OR &lex-maŋis-not-maŋŋelis OR &lex-mielde-not-rastá OR &lex-ollis-not-miehtá OR &lex-ollugat-not-máŋggas OR &lex-not-maŋga OR &lex-rastá-not-badjel OR &lex-valjit-not-valji ;
 
 SET SYN-ERROR = &syn-uvvat-not-uvvot ;
 
@@ -4336,14 +4339,32 @@ ADDCOHORT:compound-dihtii-not-dihti ("<dihtii>" "dihtii" Po &SUGGEST) AFTER (&re
 #dihtii
 #dihtii	dihtii+Po
 
+	# valjit not valji 
+	# ----------------
+ADD:lex-valjit-not-valji (&lex-valjit-not-valji) TARGET (".*vallji"r N Sg Nom) IF (*-1 ("leat") BARRIER NOT-ADV-PCLE LINK *-1 (Dem Loc) OR @HAB BARRIER NOT-ADV-PCLE)(1 N) ;
+#COPY:lex-valjit-not-valji ("valljái" A Attr &SUGGEST) EXCEPT ("vallji" N Sg Nom &lex-valjit-not-valji) TARGET (&lex-valjit-not-valji) ;		
+	## Vaikko diein leat vallji bohccot . Vaikko diein leat valjit bohccot. (nok reinsdyr vs. rike reinsdyr)
+
+
 	# vallji compounds
 	# ----------------
 	
-ADD:compound-vallji-or-valljás (&compound-vallji-or-valljás) TARGET (".*vallji"r N Sg Nom) IF (1 N) ;
-COPY:compound-vallji-or-valljás ("valljái" A Attr &SUGGEST) EXCEPT ("vallji" N Sg Nom &compound-vallji-or-valljás) OR (N Sg Nom &compound-vallji-or-valljás)) TARGET (&compound-vallji-or-valljás) ;
+ADD:compound-vallji-or-valljás (&compound-vallji-or-valljás) TARGET (".*vallji"r N Sg Nom) IF (1 N)(NEGATE 0 &real OR &lex) ;
+COPY:compound-vallji-or-valljás ("valljái" A Attr &SUGGEST) EXCEPT ("vallji" N Sg Nom &compound-vallji-or-valljás) OR (N Sg Nom &compound-vallji-or-valljás) TARGET (&compound-vallji-or-valljás) ;
 	## Liikká orrot sii bures birgemin stuorát ja olmmošvallji birrasiin .
 	## Dasa lea sivvan ahte Josef Stalin siđai atnit ávkin davviguovlluid vallji luondduriggodagaid ja ásahii danin gulag-leairraid dohko .
 	## Eallámušvallji eanan šaddá go gehppesmolláneaddji báktešlájat , ábaida kálkavallji šlájat , váikkuhuvvojit ja nu háddjanit ( golladuvvojit ) .
+	## Seamulvallji // urtavallji goahccevuovdi
+	#$ Dološ vallji dealljá ja čeavrá bivddus Oarje-Finnmárkku sulluin ledje dušše bázahusat vel báhcán . 
+	#$ Eai sii oro oaidnime máid boraspirevallji dagaha ealáhusaide , eaige oainne máid boraspirevallji dagaha boraspiriide maid , oaivvilda NBR jođiheaddji Niillas Heandarat Sara , iige áiggo muitalit máid NBR stivra lea evttohan riikačoahkkimii dán áššis .
+	#$ Dálkkádatrievdama geažil liegga mearra ja mielddisbuktá mearehis olu dorskevallji Barentsábis .
+	#$ Albmái báhtara rastá jávrri áibbas álás ja su oaguhit olmmošvallji sáittiin . --- a crowd of people  oaguhit su with sáittiin
+	#$ Kulturbirrasiid vallji Davvin
+	
+
+
+	
+
 	
 	# dohko vs. dohkko (doahkkut - klumpen)
 	# -------------------------------------
@@ -8746,7 +8767,7 @@ LIST COMPOUND = (".*#.*"r) ;
     
     
 
-ADD:compound-part1/wrong-case (&msyn-compound-part1/&msyn-wrong-case) TARGET CNOUN IF (0C (N Sg Nom) LINK NOT 0 ACR OR Der/NomAct LINK 1 CNOUN - ACR - NOMAG - OASSI) (NEGATE 0 SUBJ LINK NOT 1 SUBJ) (NEGATE 0 SPRED LINK 1 @<ADVL) (NEGATE 0 SPRED LINK NOT *0 SPRED)(NEGATE >*1 (&syn-finitev_missing) OR (&real-čohkkát))(NOT 0 &real)(NOT 0 (&corr-not-compound)) (NEGATE 1 Ess LINK *-2 ("leat") + Sg3  OR ("šaddat") + Sg3 OR ("gullat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 BARRIER GRAMCHK-NPNHA)(NEGATE 0 CNOUN LINK NOT *0 VFIN BARRIER GRAMCHK-S-BOUNDARY OR CLB) (NEGATE 1 Gen LINK 1 Po) (NEGATE 0 NomAg) (NEGATE 0 SPRED LINK 1 @<PPRED)(NEGATE 0 Sem/Act LINK 1 Sem/Body)(NONE c §ANYROLE)(NEGATE 0 <PV-Loc-Any> LINK *1 Loc BARRIER NPNH - Acc) ;
+ADD:compound-part1/wrong-case (&msyn-compound-part1/&msyn-wrong-case) TARGET CNOUN IF (0C (N Sg Nom) LINK NOT 0 ACR OR Der/NomAct LINK 1 CNOUN - ACR - NOMAG - OASSI) (NEGATE 0 SUBJ LINK NOT 1 SUBJ) (NEGATE 0 SPRED LINK 1 @<ADVL) (NEGATE 0 SPRED LINK NOT *0 SPRED)(NEGATE >*1 (&syn-finitev_missing) OR (&real-čohkkát))(NOT 0 &real)(NOT 0 (&corr-not-compound)) (NEGATE 1 Ess LINK *-2 ("leat") + Sg3  OR ("šaddat") + Sg3 OR ("gullat") + Sg3 OR Der/Pass + Sg3 OR BASSO + Sg3 BARRIER GRAMCHK-NPNHA)(NEGATE 0 CNOUN LINK NOT *0 VFIN BARRIER GRAMCHK-S-BOUNDARY OR CLB) (NEGATE 1 Gen LINK 1 Po) (NEGATE 0 NomAg) (NEGATE 0 SPRED LINK 1 @<PPRED)(NEGATE 0 Sem/Act LINK 1 Sem/Body)(NONE c §ANYROLE)(NEGATE 0 <PV-Loc-Any> LINK *1 Loc BARRIER NPNH - Acc)(NEGATE 0 &lex) ;
 	#$ UniReg lea {oassi} universitehtaid našuvnnalaš prošeavttas , mas lea ulbmil       čohket  dieđuid vuorkkán dihtormášiidnii .
 	## Du eallimis manná bures dál , Vaikko dálki ii leat nu heitot , de don 	áibbašat 	liegga riikii . 
 	## – Mun lean álo 	liikon 	Hermann Rorschacha bleahkkareiddet jurddašan vuohkái , mo olbmot láhttegohtet go oidnet bleahkkafiguvrraid , ja dat oidno dan bihttás go mii leat gráfalaččat rahkadan dákkár bleahkkahámiid mat oidnojit čájálmasas ja jurdda lea gávdnat olbmuid duohtavuođa daiguin bleahkka hámiiguin , čilge Skåden .
