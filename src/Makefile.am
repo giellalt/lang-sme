@@ -310,8 +310,23 @@ analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 		 quit\n" | $(XFST_TOOL)
 
 # ... as well as in the HFST disambiguation analyser:
-# (keep the Err/SpaceCmp strings here)
 analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
+                filters/remove-derivation-position-tags.hfst \
+                filters/rename-POS_before_Der-tags.hfst \
+		filters/remove-Err_SpaceCmp-strings.hfst
+	$(AM_V_HXFST)$(PRINTF) "read regex \
+            @\"filters/remove-derivation-position-tags.hfst\" \
+	.o. @\"filters/remove-Err_SpaceCmp-strings.hfst\"   \
+        .o. @\"filters/rename-POS_before_Der-tags.hfst\" \
+        .o. @\"$<\"                                      \
+        ;\n\
+     invert net\n\
+     save stack $@\n\
+     quit\n" | $(HFST_XFST) -p $(MORE_VERBOSITY)
+
+# ... as well as in the HFST Grammar Checker analyser:
+# (keep the Err/SpaceCmp strings here)
+analyser-gc-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
                 filters/remove-derivation-position-tags.hfst \
                 filters/rename-POS_before_Der-tags.hfst \
 				filters/remove-Use_Disamb-tags.hfst
