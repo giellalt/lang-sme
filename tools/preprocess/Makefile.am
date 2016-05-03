@@ -18,10 +18,24 @@
 # Set this variable to point to generated lexc source files, if any:
 GENRSRCS:=$(wildcard $(top_builddir)/src/morphology/generated_files/smi-$(GTLANG)-*.lexc)
 
+
+if WANT_GRAMCHECK
+tokeniser-gc-gt-desc.pmhfst: tokeniser-gc-gt-desc.pmscript relabelled-analyser-gc-gt-desc.hfst
+	$(AM_V_GEN)hfst-pmatch2fst < $< > $@
+
+hfstdatadir=$(datadir)/giella/$(GTLANG)
+hfstdata_DATA=$(PMHFST) $(ABBR) tokeniser-gc-gt-desc.pmhfst
+
+analyser-gc-gt-desc.hfst: $(top_builddir)/src/analyser-gc-gt-desc.hfstol
+	$(AM_V_FST2FST)$(HFST_FST2FST) $(HFSTFLAGS) -t $< > $@
+endif # WANT_GRAMCHECK
+
+
 tokeniser-disamb-gt-desc.pmhfst: tokeniser-disamb-gt-desc.pmscript relabelled-analyser-disamb-gt-desc.hfst
 	$(AM_V_GEN)hfst-pmatch2fst < $< > $@
 
-relabelled-analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.hfst relabeller.hfst
+
+relabelled-%.hfst: %.hfst relabeller.hfst
 	$(AM_V_GEN)hfst-substitute -f '@P.Pmatch.Loc@' -T relabeller.hfst $< -o $@
 
 relabeller.hfst:
@@ -32,3 +46,4 @@ clean-local:
 	-rm -f *.hfst *.xfst abbr.txt *.pmhfst
 
 include $(top_srcdir)/am-shared/tools-preprocess-dir-include.am
+
