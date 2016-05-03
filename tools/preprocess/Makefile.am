@@ -20,13 +20,13 @@ GENRSRCS:=$(wildcard $(top_builddir)/src/morphology/generated_files/smi-$(GTLANG
 
 
 if WANT_GRAMCHECK
-tokeniser-gc-gt-desc.pmhfst: tokeniser-gc-gt-desc.pmscript relabelled-analyser-gc-gt-desc.hfst
+tokeniser-gramcheck-gt-desc.pmhfst: tokeniser-gramcheck-gt-desc.pmscript relabelled-analyser-gramcheck-gt-desc.hfst
 	$(AM_V_GEN)hfst-pmatch2fst < $< > $@
 
 hfstdatadir=$(datadir)/giella/$(GTLANG)
-hfstdata_DATA=$(PMHFST) $(ABBR) tokeniser-gc-gt-desc.pmhfst
+hfstdata_DATA=$(PMHFST) $(ABBR) tokeniser-gramcheck-gt-desc.pmhfst
 
-analyser-gc-gt-desc.hfst: $(top_builddir)/src/analyser-gc-gt-desc.hfstol
+analyser-gramcheck-gt-desc.hfst: $(top_builddir)/src/analyser-gramcheck-gt-desc.hfstol
 	$(AM_V_FST2FST)$(HFST_FST2FST) $(HFSTFLAGS) -t $< > $@
 endif # WANT_GRAMCHECK
 
