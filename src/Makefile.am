@@ -326,7 +326,7 @@ analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
 
 # ... as well as in the HFST Grammar Checker analyser:
 # (keep the Err/SpaceCmp strings here)
-analyser-gramcheck-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
+analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
                 filters/remove-derivation-position-tags.hfst \
                 filters/rename-POS_before_Der-tags.hfst \
 				filters/remove-Use_Disamb-tags.hfst
