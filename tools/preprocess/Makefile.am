@@ -15,31 +15,23 @@
 ## You should have received a copy of the GNU General Public License
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+##################################################################
+#### BEGIN: Add local processing instructions BELOW this line ####
+##################################################################
+
+########################################################
+#### Add language-specific transducer targets here: ####
+
 # Set this variable to point to generated lexc source files, if any:
 GENRSRCS:=$(wildcard $(top_builddir)/src/morphology/generated_files/smi-$(GTLANG)-*.lexc)
 
-
-if WANT_GRAMCHECK
-tokeniser-gramcheck-gt-desc.pmhfst: tokeniser-gramcheck-gt-desc.pmscript relabelled-analyser-gramcheck-gt-desc.hfst
-	$(AM_V_GEN)hfst-pmatch2fst < $< > $@
-
-hfstdatadir=$(datadir)/giella/$(GTLANG)
-hfstdata_DATA=$(PMHFST) $(ABBR) tokeniser-gramcheck-gt-desc.pmhfst
-
-analyser-gramcheck-gt-desc.hfst: $(top_builddir)/src/analyser-gramcheck-gt-desc.hfstol
-	$(AM_V_FST2FST)$(HFST_FST2FST) $(HFSTFLAGS) -t $< > $@
-endif # WANT_GRAMCHECK
+#################################################
+#### Add language-specific build rules here: ####
 
 
-tokeniser-disamb-gt-desc.pmhfst: tokeniser-disamb-gt-desc.pmscript relabelled-analyser-disamb-gt-desc.hfst
-	$(AM_V_GEN)hfst-pmatch2fst < $< > $@
-
-
-relabelled-%.hfst: %.hfst relabeller.hfst
-	$(AM_V_GEN)hfst-substitute -f '@P.Pmatch.Loc@' -T relabeller.hfst $< -o $@
-
-relabeller.hfst:
-	$(AM_V_GEN)printf '0\t1\t@0@\t@PMATCH_INPUT_MARK@\n1\n' | hfst-txt2fst -e '@0@' -o $@
+##################################################################
+#### END: Add local processing instructions ABOVE this line ######
+##################################################################
 
 ####### Other targets: ###########
 clean-local:
