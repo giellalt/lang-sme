@@ -316,7 +316,7 @@ analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
 		filters/remove-Err_SpaceCmp-strings.hfst
 	$(AM_V_HXFST)$(PRINTF) "read regex \
             @\"filters/remove-derivation-position-tags.hfst\" \
-	.o. @\"filters/remove-Err_SpaceCmp-strings.hfst\"   \
+		.o. @\"filters/remove-Err_SpaceCmp-strings.hfst\"   \
         .o. @\"filters/rename-POS_before_Der-tags.hfst\" \
         .o. @\"$<\"                                      \
         ;\n\
