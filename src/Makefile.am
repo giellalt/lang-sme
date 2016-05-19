@@ -96,40 +96,13 @@ endif # CAN_FOMA
 #################################################
 #### Add language-specific build rules here: ####
 
-# Hfst - add weights to compounds:
+# Hfst - add weights to compounds if using tropical-semiring fst format:
 if WITH_OFST_TROPICAL
-generator-raw-gt-desc.hfst: generator-raw-gt-desc.tmp.hfst \
-					filters/reorder-subpos-tags.$(GTLANG).hfst
-	$(AM_V_RGX2FST)$(PRINTF) "\
-				@\"filters/reorder-subpos-tags.$(GTLANG).hfst\" \
-			.o. @\"$<\" \
-			;" \
-		| $(HFST_REGEXP2FST) $(HFST_FLAGS) \
-			-S --xerox-composition=ON $(HFST_FORMAT) \
-		| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
-			-S '+Cmp' -a 10 --arcs-only \
-		> $@
-else
-generator-raw-gt-desc.hfst: generator-raw-gt-desc.tmp.hfst \
-					filters/reorder-subpos-tags.$(GTLANG).hfst
-	$(AM_V_RGX2FST)$(PRINTF) "\
-				@\"filters/reorder-subpos-tags.$(GTLANG).hfst\" \
-			.o. @\"$<\" \
-			;" \
-		| $(HFST_REGEXP2FST) $(HFST_FLAGS) \
-			-S --xerox-composition=ON $(HFST_FORMAT) \
+generator-raw-gt-desc.hfst: generator-raw-gt-desc.tmp.hfst
+	$(AM_V_REWEIGHT)$(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
+			-S '+Cmp' -a 10 --arcs-only -i $< \
 		> $@
 endif
-
-# Xerox & Foma:
-analyser-raw-gt-desc.%: analyser-raw-gt-desc.tmp.% \
-					filters/reorder-subpos-tags.$(GTLANG).%
-	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-				@\"filters/reorder-subpos-tags.$(GTLANG).$*\" \
-			.o. @\"$<\" \
-			;\n\
-		 save stack $@\n\
-		 quit\n" | $(XFST_TOOL)
 
 # A generator for producing word forms suitable for tts:
 # * no circular constructions:

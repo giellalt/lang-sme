@@ -23,13 +23,13 @@ GIELLA_FILTER_LOCAL_REGEX_SRCS=\
 					make-optional-allegro-tags.regex  \
 					make-optional-coll-tags.regex     \
 					make-optional-lang_hom-tags.regex \
+					reorder-tags.$(GTLANG).regex \
+					rename-POS_before_Der-tags.regex \
 					remove-allegro-tags.regex         \
 					remove-lang_hom-tags.regex        \
 					remove-rel_focus-strings.regex    \
 					remove-illegal-derivation-strings.regex \
-					reorder-subpos-tags.$(GTLANG).regex \
 					remove-derivation-position-tags.regex \
-					rename-POS_before_Der-tags.regex \
 					remove-Err_SpaceCmp-strings.regex \
 					remove-Use_Disamb-tags.regex \
 					remove-Use_Disamb-strings.regex
