@@ -302,11 +302,14 @@ analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
 analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
                 filters/remove-derivation-position-tags.hfst \
                 filters/rename-POS_before_Der-tags.hfst \
-				filters/remove-Use_Disamb-tags.hfst
+				filters/remove-Use_Disamb-tags.hfst \
+				filters/remove-word-boundary.hfst
 	$(AM_V_HXFST)$(PRINTF) "read regex \
             @\"filters/remove-derivation-position-tags.hfst\" \
-        .o. @\"filters/rename-POS_before_Der-tags.hfst\" \
-        .o. @\"$<\"                                      \
+        .o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
+        .o. @\"filters/rename-Use_Disamb-tags.hfst\"          \
+        .o. @\"$<\"                                           \
+		.o. @\"filters/remove-word-boundary.hfst\"            \
         ;\n\
      invert net\n\
      save stack $@\n\
