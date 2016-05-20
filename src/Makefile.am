@@ -3,7 +3,8 @@
 ## Licence: GPL v3+
 
 # always build . last here, and tagsets have to be built after morphology
-SUBDIRS = phonology morphology filters phonetics hyphenation orthography syntax transcriptions tagsets .
+SUBDIRS = phonology morphology filters phonetics hyphenation orthography \
+          syntax transcriptions tagsets .
 
 ####### Automake targets: ########
 
@@ -298,7 +299,7 @@ analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
 		    @\"filters/remove-derivation-position-tags.hfst\" \
 		.o. @\"filters/rename-POS_before_Der-tags.hfst\"  \
 		.o. @\"filters/remove-Err_SpaceCmp-strings.hfst\" \
-		.o. @\"filters/remove-Use_GC-strings.$*\"         \
+		.o. @\"filters/remove-Use_GC-strings.hfst\"       \
 		.o. @\"$<\"                                       \
 		;\n\
 	invert net\n\
@@ -311,6 +312,7 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 				filters/remove-derivation-position-tags.hfst \
 				filters/rename-POS_before_Der-tags.hfst      \
 				filters/remove-Use_Disamb-tags.hfst          \
+				filters/remove-Use_GC-tags.hfst              \
 				filters/remove-word-boundary.hfst            \
 				orthography/spellrelax-with-flagtags.compose.hfst
 	$(AM_V_HXFST)$(PRINTF) "\
@@ -319,9 +321,10 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 		    @\"filters/remove-derivation-position-tags.hfst\" \
 		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
 		.o. @\"filters/remove-Use_Disamb-tags.hfst\"          \
+		.o. @\"filters/remove-Use_GC-tags.hfst\"              \
 		.o. @\"$<\"                                           \
-		.o. @\"filters/remove-word-boundary.hfst\"            \
 		.o. @\"orthography/spellrelax-with-flagtags.compose.hfst\" \
+		.o. @\"filters/remove-word-boundary.hfst\"            \
 		;\n\
 	twosided flag-diacritics\n\
 	invert net\n\
