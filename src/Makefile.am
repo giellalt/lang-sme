@@ -319,10 +319,10 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 	$(AM_V_HXFST)$(PRINTF) "\
 	set encode-weights ON\n\
 	read regex \
-		    @\"filters/remove-derivation-position-tags.hfst\" \
-		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
-		.o. @\"filters/remove-Use_Disamb-tags.hfst\"          \
+		    @\"filters/remove-Use_Disamb-tags.hfst\"          \
 		.o. @\"filters/remove-Use_GC-tags.hfst\"              \
+		.o. @\"filters/remove-derivation-position-tags.hfst\" \
+		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
 		.o. @\"$<\"                                           \
 		.o. @\"orthography/spellrelax-with-flagtags.compose.hfst\" \
 		.o. @\"orthography/comprelax-with-flagtags.compose.hfst\" \
