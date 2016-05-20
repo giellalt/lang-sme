@@ -314,7 +314,8 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 				filters/remove-Use_Disamb-tags.hfst          \
 				filters/remove-Use_GC-tags.hfst              \
 				filters/remove-word-boundary.hfst            \
-				orthography/spellrelax-with-flagtags.compose.hfst
+				orthography/spellrelax-with-flagtags.compose.hfst \
+				orthography/comprelax-with-flagtags.compose.hfst
 	$(AM_V_HXFST)$(PRINTF) "\
 	set encode-weights ON\n\
 	read regex \
@@ -324,6 +325,7 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 		.o. @\"filters/remove-Use_GC-tags.hfst\"              \
 		.o. @\"$<\"                                           \
 		.o. @\"orthography/spellrelax-with-flagtags.compose.hfst\" \
+		.o. @\"orthography/comprelax-with-flagtags.compose.hfst\" \
 		.o. @\"filters/remove-word-boundary.hfst\"            \
 		;\n\
 	twosided flag-diacritics\n\
