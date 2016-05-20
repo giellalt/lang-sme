@@ -33,7 +33,8 @@ GIELLA_FILTER_LOCAL_REGEX_SRCS=\
 					remove-Err_SpaceCmp-strings.regex \
 					remove-Use_Disamb-tags.regex \
 					remove-Use_Disamb-strings.regex \
-					remove-Use_GC-strings.regex
+					remove-Use_GC-strings.regex \
+					remove-Use_GC-tags.regex
 
 # List any local filter xfscript files here:
 GIELLA_FILTER_LOCAL_XFSCRIPT_SRCS=
