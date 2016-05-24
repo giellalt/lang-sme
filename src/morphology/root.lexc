@@ -65,6 +65,7 @@ Multichar_Symbols
  +Err/CmpSub      !!≈ * __@CODE@__ substandard for compounding, not in normative fst (wrong form or POS in first part)
  +Err/HyphSub     !!≈ * __@CODE@__ substandard for compounding, not in normative fst (needs hyph)
  +Err/SpaceCmp    !!≈ * __@CODE@__ used for compounds written apart - only retained in the HFST Grammar Checker disambiguation analyser
+ +Err/Spellrelax  !!≈ * __@CODE@__ used to tag spellrelaxed typos (tag is inserted via flag diacritics)
 ! The above tag names ending in Sub are bad - they are all sub by definition,
 ! as indicated by the prefix +Err - no need for further 'sub-ing'. Instead we
 ! might need other names: +Err/NoHyph (when there is no hyphen where it should
@@ -930,8 +931,20 @@ LEXICON ENDLEX
 
 LEXICON ENDLEX2
  @R.SpellRlx.ON@+Err/Spellrelax@C.SpellRlx@:@R.SpellRlx.ON@@C.SpellRlx@ ENDLEX3 ;
- @D.SpellRlx.ON@@C.SpellRlx@                                             ENDLEX3 ;
+ @D.SpellRlx.ON@@C.SpellRlx@                                            ENDLEX3 ;
 
 LEXICON ENDLEX3
- @R.SpaceCmp.ON@+Err/SpaceCmp@C.SpaceCmp@:@R.SpaceCmp.ON@@C.SpaceCmp@ # ;
- @D.SpaceCmp.ON@@C.SpaceCmp@                                           # ;
+ @R.SpaceCmp.ON@+Err/SpaceCmp@C.SpaceCmp@:@R.SpaceCmp.ON@@C.SpaceCmp@  ENDLEX4 ;
+ @D.SpaceCmp.ON@@C.SpaceCmp@                                           ENDLEX4 ;
+
+LEXICON ENDLEX4
+ #                  ;
+ @P.CmpFrst.FALSE@@P.CmpPref.FALSE@@D.CmpLast.TRUE@@D.CmpNone.TRUE@@U.CmpNone.FALSE@@P.CmpOnly.TRUE@ GramCheckStartOver ;
+
+LEXICON GramCheckStartOver
+ +Use/GC+Tok/EndOfWord@P.Pmatch.Loc@:% @P.Pmatch.Loc@ StartOver ;
+
+LEXICON StartOver
+  Adjective ; ! These 3 cases add a space
+  Noun      ; ! as if it was the end of one
+  Verb      ; ! noun followed by another non-compound noun
