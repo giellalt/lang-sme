@@ -28,7 +28,7 @@ analyser-speller-gt-norm.%: analyser-speller-gt-norm.tmp.% \
 		 quit\n" | $(XFST_TOOL)
 
 generator-speller-gt-norm.%: analyser-speller-gt-norm.tmp.% \
-					filters/remove-Use_Disamb-strings.%
+				$(top_builddir)/src/filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"$(top_builddir)/src/filters/remove-Use_Disamb-strings.$*\" \
 			.o. @\"$<\"                                                       \
