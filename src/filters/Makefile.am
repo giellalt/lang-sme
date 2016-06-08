@@ -33,6 +33,8 @@ GIELLA_FILTER_LOCAL_REGEX_SRCS=\
 					remove-Err_SpaceCmp-strings.regex \
 					remove-Use_Disamb-tags.regex \
 					remove-Use_Disamb-strings.regex \
+					remove-Use_minus_PMatch-tags.regex \
+					remove-Use_minus_PMatch-strings.regex \
 					remove-Use_GC-strings.regex \
 					remove-Use_GC-tags.regex
 
