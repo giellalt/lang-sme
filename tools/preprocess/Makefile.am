@@ -28,6 +28,56 @@ GENRSRCS:=$(wildcard $(top_builddir)/src/morphology/generated_files/smi-$(GTLANG
 #################################################
 #### Add language-specific build rules here: ####
 
+# ... as well as in the HFST disambiguation analyser:
+analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
+			$(top_builddir)/src/filters/remove-derivation-position-tags.hfst \
+			$(top_builddir)/src/filters/rename-POS_before_Der-tags.hfst \
+			$(top_builddir)/src/filters/remove-Use_Disamb-tags.hfst          \
+			$(top_builddir)/src/filters/remove-Use_GC-strings.hfst \
+			$(top_builddir)/src/filters/remove-Use_minus_PMatch-strings.hfst \
+			$(top_builddir)/src/filters/remove-Err_SpaceCmp-strings.hfst
+	$(AM_V_HXFST)$(PRINTF) "read regex \
+		    @\"$(top_builddir)/src/filters/remove-derivation-position-tags.hfst\" \
+		.o. @\"$(top_builddir)/src/filters/remove-Use_Disamb-tags.hfst\"          \
+		.o. @\"$(top_builddir)/src/filters/rename-POS_before_Der-tags.hfst\"      \
+		.o. @\"$(top_builddir)/src/filters/remove-Use_minus_PMatch-strings.hfst\" \
+		.o. @\"$(top_builddir)/src/filters/remove-Err_SpaceCmp-strings.hfst\" \
+		.o. @\"$(top_builddir)/src/filters/remove-Use_GC-strings.hfst\"       \
+		.o. @\"$<\" \
+		;\n\
+	invert net\n\
+	save stack $@\n\
+	quit\n" | $(HFST_XFST) -p $(MORE_VERBOSITY)
+
+# ... as well as in the HFST Grammar Checker analyser:
+# (keep the Err/SpaceCmp strings here)
+analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
+			$(top_builddir)/src/filters/remove-derivation-position-tags.hfst \
+			$(top_builddir)/src/filters/rename-POS_before_Der-tags.hfst      \
+			$(top_builddir)/src/filters/remove-Use_Disamb-tags.hfst          \
+			$(top_builddir)/src/filters/remove-Use_GC-tags.hfst              \
+			$(top_builddir)/src/filters/remove-Use_minus_PMatch-strings.hfst \
+			$(top_builddir)/src/filters/remove-word-boundary.hfst            \
+			$(top_builddir)/src/orthography/spellrelax-with-flagtags.compose.hfst \
+			$(top_builddir)/src/orthography/comprelax-with-flagtags.compose.hfst
+	$(AM_V_HXFST)$(PRINTF) "\
+	set encode-weights ON\n\
+	read regex \
+		    @\"$(top_builddir)/src/filters/remove-Use_Disamb-tags.hfst\"          \
+		.o. @\"$(top_builddir)/src/filters/remove-Use_GC-tags.hfst\"              \
+		.o. @\"$(top_builddir)/src/filters/remove-derivation-position-tags.hfst\" \
+		.o. @\"$(top_builddir)/src/filters/rename-POS_before_Der-tags.hfst\"      \
+		.o. @\"$(top_builddir)/src/filters/remove-Use_minus_PMatch-strings.hfst\" \
+		.o. @\"$<\"                                                               \
+		.o. @\"$(top_builddir)/src/orthography/spellrelax-with-flagtags.compose.hfst\" \
+		.o. @\"$(top_builddir)/src/orthography/comprelax-with-flagtags.compose.hfst\" \
+		.o. @\"$(top_builddir)/src/filters/remove-word-boundary.hfst\"            \
+		;\n\
+	twosided flag-diacritics\n\
+	invert net\n\
+	save stack $@\n\
+	quit\n" | $(HFST_XFST) -p $(MORE_VERBOSITY)
+
 
 ##################################################################
 #### END: Add local processing instructions ABOVE this line ######
