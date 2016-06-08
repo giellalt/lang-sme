@@ -297,16 +297,18 @@ analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 
 # ... as well as in the HFST disambiguation analyser:
 analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
-				filters/remove-derivation-position-tags.hfst \
-				filters/rename-POS_before_Der-tags.hfst \
-				filters/remove-Use_GC-strings.hfst \
+				filters/remove-derivation-position-tags.hfst   \
+				filters/rename-POS_before_Der-tags.hfst        \
+				filters/remove-Use_GC-strings.hfst             \
+				filters/remove-Use_minus_PMatch-tags.hfst      \
 				filters/remove-Err_SpaceCmp-strings.hfst
 	$(AM_V_HXFST)$(PRINTF) "read regex \
 		    @\"filters/remove-derivation-position-tags.hfst\" \
-		.o. @\"filters/rename-POS_before_Der-tags.hfst\"  \
-		.o. @\"filters/remove-Err_SpaceCmp-strings.hfst\" \
-		.o. @\"filters/remove-Use_GC-strings.hfst\"       \
-		.o. @\"$<\"                                       \
+		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
+		.o. @\"filters/remove-Use_minus_PMatch-tags.hfst\"      \
+		.o. @\"filters/remove-Err_SpaceCmp-strings.hfst\"     \
+		.o. @\"filters/remove-Use_GC-strings.hfst\"           \
+		.o. @\"$<\"                                           \
 		;\n\
 	invert net\n\
 	save stack $@\n\
@@ -319,6 +321,7 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 				filters/rename-POS_before_Der-tags.hfst      \
 				filters/remove-Use_Disamb-tags.hfst          \
 				filters/remove-Use_GC-tags.hfst              \
+				filters/remove-Use_minus_PMatch-tags.hfst    \
 				filters/remove-word-boundary.hfst            \
 				orthography/spellrelax-with-flagtags.compose.hfst \
 				orthography/comprelax-with-flagtags.compose.hfst
@@ -329,6 +332,7 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 		.o. @\"filters/remove-Use_GC-tags.hfst\"              \
 		.o. @\"filters/remove-derivation-position-tags.hfst\" \
 		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
+		.o. @\"filters/remove-Use_minus_PMatch-tags.hfst\"    \
 		.o. @\"$<\"                                           \
 		.o. @\"orthography/spellrelax-with-flagtags.compose.hfst\" \
 		.o. @\"orthography/comprelax-with-flagtags.compose.hfst\" \
