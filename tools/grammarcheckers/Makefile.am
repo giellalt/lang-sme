@@ -13,3 +13,6 @@ GT_GC_DISTRO=gramchk.bin
 GT_GC_ZDISTRO=grammarchecker.zhfst
 
 include $(top_srcdir)/am-shared/tools-grammarcheckers-dir-include.am
+
+modes/smegram.mode: modes.xml
+	apertium-gen-modes modes.xml
