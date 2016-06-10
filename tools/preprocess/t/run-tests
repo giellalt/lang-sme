@@ -1,0 +1,15 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"
+
+declare -i fail
+for input in *.input; do
+    base=${input%%input}
+    hfst-tokenize --gtd ../tokeniser-gramcheck-gt-desc.pmhfst < "${input}" > "${base}"output 2>"${base}"err_output
+    if ! diff "${base}"expected "${base}"output; then
+        echo "stdout differs for ${base}"
+        (( fail++ ))
+    fi
+done
+
+exit ${fail}
