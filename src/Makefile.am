@@ -414,6 +414,19 @@ generator-oahpa-gt-norm.%: generator-oahpa-gt-norm.tmp.% \
 		 save stack $@\n\
 		 quit\n" | $(XFST_TOOL)
 
+# morpher is a morph segmenting variant: taloautoissani -> talo#auto>i>ssa>ni
+morpher-gt-desc.%: morpher-gt-desc.tmp.% \
+					filters/remove-dynamic_compound-char.% \
+					filters/simplify-triple-der-borders.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+			    @\"filters/remove-dynamic_compound-char.$*\".i  \
+			.o. @\"filters/simplify-triple-der-borders.$*\".i  \
+			.o. @\"$<\" \
+			;\n\
+		 $(INVERT_HFST)\
+		 save stack $@\n\
+		 quit\n" | $(XFST_TOOL)
+
 ##################################################################
 #### END: Add local processing instructions ABOVE this line ######
 ##################################################################

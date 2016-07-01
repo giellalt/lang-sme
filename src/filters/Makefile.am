@@ -36,7 +36,9 @@ GIELLA_FILTER_LOCAL_REGEX_SRCS=\
 					remove-Use_minus_PMatch-tags.regex \
 					remove-Use_minus_PMatch-strings.regex \
 					remove-Use_GC-strings.regex \
-					remove-Use_GC-tags.regex
+					remove-Use_GC-tags.regex \
+					remove-dynamic_compound-char.regex \
+					simplify-triple-der-borders.regex
 
 # List any local filter xfscript files here:
 GIELLA_FILTER_LOCAL_XFSCRIPT_SRCS=
