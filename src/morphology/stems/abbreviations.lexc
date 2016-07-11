@@ -1314,11 +1314,45 @@ LEXICON NUMNOAB   !!= * __@CODE@__ su, dii
 !! This class contains homonyms, which are both abbrs for 
 !! which numerals are complements and normal words. The abbreviation usage
 !! is less common and thus only the occurences in the middle of
-!! the sentnece can be considered as true cases.
+!! the sentence can be considered as true cases.
 
 su ab-dot-adv ; !La stå!
 dii ab-adv ; !diibmu, La stå!
 
 LEXICON DOT   !!= * __@CODE@__ - Adds the dot to dotted abbreviations.
-               :%.                           # ;
-< "+Use/Disamb":0   "@P.Pmatch.Loc@" 0:"." > # ;
+
+! This one should create a new backtrack-point before the dot, but no sub-reading:
+< "@P.Pmatch.Backtrack@" 0:{.} > # ;
+! This one should create an mwe sub-reading:
+< "@P.Pmatch.Loc@" {.} "+PUNCT":0 "+Use/Disamb":0 > # ;
+
+! Gives:
+!"<su.>"
+!	"." PUNCT "<.>"
+!		"su" Adv Abbr "<su>"
+!	"su" Adv Abbr
+!	"." PUNCT "<.>"
+!		"su" Pron Pers Sg3 Acc "<su>"
+!	"." PUNCT "<.>"
+!		"su" Pron Pers Sg3 Gen "<su>"
+
+! TODO: Split DOT into ABBRDOT, NOUNDOT etc where we expect there to
+! be no tags added yet, so we can add the dot the lemma in ABBRDOT like
+! < "@P.Pmatch.Backtrack@" {.} "+ABBR":0 > # ;
+! < "@P.Pmatch.Loc@"     {.}:0 "+ABBR":0 {.} "+PUNCT":0 "+Use/Disamb":0 > # ;
+!
+! That should give:
+!"<su.>"
+!	"." PUNCT "<.>"
+!		"su." Adv Abbr "<su>"
+!	"su." Adv Abbr
+!	"." PUNCT "<.>"
+!		"su" Pron Pers Sg3 Acc "<su>"
+!	"." PUNCT "<.>"
+!		"su" Pron Pers Sg3 Gen "<su>"
+
+
+
+! Local Variables:
+! hfst-mode-root-lexc: "../root.lexc"
+! End:
