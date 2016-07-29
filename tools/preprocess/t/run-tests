@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -u
+
 cd "$(dirname "$0")"
 
 sort_cg_cohorts () {
@@ -24,11 +26,11 @@ NR>1{ printf("\n\"") }
 }'
 }
 
-declare -i fail
+declare -i fail=0
 for input in *.input; do
     base=${input%%input}
     analyser=${base%%-*}
-    hfst-tokenize --gtd -l1 ../tokeniser-"${analyser}"-gt-desc.pmhfst < "${input}" 2>"${base}"err_output \
+    hfst-tokenize --gtd -l1 ../tokeniser-"${analyser}"-gt-desc.pmhfst < "${input}" \
                   | sort_cg_cohorts > "${base}"output
     if ! diff "${base}"expected "${base}"output; then
         echo "stdout differs for ${base}"
