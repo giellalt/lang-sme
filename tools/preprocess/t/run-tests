@@ -2,11 +2,34 @@
 
 cd "$(dirname "$0")"
 
+sort_cg_cohorts () {
+    LC_ALL=C gawk '
+BEGIN{ RS="\n\"" }
+NR>1{ printf("\n\"") }
+{
+  split($0,rs,"\n[^\t\n][^\n]*|\n$|\n\t\"", seps)
+  printf "%s", rs[1]
+  delete rs[1]
+  PROCINFO["sorted_in"] = "@val_str_desc"
+  postsep = ""
+  for(i in rs) {
+    if(seps[i]!="\n\t\"")  {
+      postsep = postsep seps[i]
+    }
+    if(rs[i]) {
+      printf "\n\t\"%s", rs[i]
+    }
+  }
+  printf "%s", postsep
+}'
+}
+
 declare -i fail
 for input in *.input; do
     base=${input%%input}
     analyser=${base%%-*}
-    hfst-tokenize --gtd -l1 ../tokeniser-"${analyser}"-gt-desc.pmhfst < "${input}" > "${base}"output 2>"${base}"err_output
+    hfst-tokenize --gtd -l1 ../tokeniser-"${analyser}"-gt-desc.pmhfst < "${input}" 2>"${base}"err_output \
+                  | sort_cg_cohorts > "${base}"output
     if ! diff "${base}"expected "${base}"output; then
         echo "stdout differs for ${base}"
         (( fail++ ))
