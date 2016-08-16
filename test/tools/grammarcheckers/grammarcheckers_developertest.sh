@@ -66,3 +66,12 @@ echo "De 30 mest frekvente feiltagga :" >> $GTHOME/langs/sme/test/data/grammarch
 cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt | grep '&[^ ]*' -o | sort | uniq -c | sort -nr | grep -v "&SUGGEST" | head -30 >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
 echo " " >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt #empty line
 see $GTHOME/langs/sme/test/data/grammarcheckerreport.txt #open output in see
+
+
+# things that need to be fixed:
+# i.e. order of tags shouldn't be of importance:
+# 236c236
+# < "<virggiin>" 	"viergi" &syn-case-congruence-loc-part2  	"virgi" &syn-case-congruence-loc-part2  	"viergi" &syn-case-congruence-loc-part2  	"virgi" &syn-case-congruence-loc-part2  	"viergi" &SUGGEST  	"virgi" &SUGGEST  	"viergi" &SUGGEST  	"virgi" &SUGGEST  
+# ---
+# > "<virggiin>" 	"virgi" &syn-case-congruence-loc-part2  	"viergi" &syn-case-congruence-loc-part2  	"virgi" &SUGGEST  	"viergi" &SUGGEST  
+# 244c244
