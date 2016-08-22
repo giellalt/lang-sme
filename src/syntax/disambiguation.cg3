@@ -1394,7 +1394,7 @@ LIST AMOUNT = "uhcánaš" "unnánaš" ;
 LIST TIME-UNIT = (".*jahki"r) "minuhtta" "sekunda" "vahkku" "mánnu" "diibmu" "beaivi" ;
 	# For use for rules hitting "maŋŋel" as Adv instead of Po. Also in MEASURE-set.
 
-SET MEASURE = VOLUME OR WEIGHT OR LENGTH OR AMOUNT OR TEMPERATURE OR TIME-UNIT ;
+SET MEASURE = VOLUME OR WEIGHT OR LENGTH OR AMOUNT OR TEMPERATURE OR TIME-UNIT OR ("m2") ;
 
 LIST CURRENCY = "denára" "dollár" "euro" "kruvdnu" "kr" "ru" "rubel" "ruvdno" "ruvdnu" "¢" "€" "$";
 
@@ -2580,9 +2580,12 @@ SELECT:NomPunctRight ABBR + Nom IF (-1 BOS)(1 (PUNCT RIGHT)) ;
 SELECT:NomFragm KLASS + Nom IF (-1 BOS)(1 ACR OR Num OR PUNCT) ;
 	#$ Ášši DC 002/12.
 
-SELECT:NomKlass Nom IF (0 ACR OR Num)((-1 ACR OR Num LINK -1 KLASS + Nom LINK -1 BOS) OR  (-1 KLASS)) ;
+SELECT:NomKlass Nom IF (0 ACR OR Num)((-1 ACR OR Num LINK -1 KLASS + Nom LINK -1 BOS) OR  (-1 KLASS) ) ;
 SELECT:NomKlass Nom IF (0 ACR OR ABBR)(-1 Num LINK -1 KLASS) ;
 	#$ Ášši DC 002/12.
+REMOVE:NomACR Acc IF (0 ACR OR ABBR)(-1 BOS) ;
+SELECT:NomACR Nom IF (0 ACR OR ABBR)(-1 BOS)(1 PUNCT) ;
+	#$ Ovttas.no - Sámi oahpponeavvut neahtas
 
 
 #!! !!Adjectives or nouns, not adverbs
@@ -3009,7 +3012,7 @@ SELECT:ollasitAdv1 ("ollásit" Adv) IF ((-1 REAL-V - INF-V) OR (*1 Loc OR Ill BA
 	#$ ...ahte historjjálaš ovdáneapmi čielggaduvvo ollásit. 
 
 #!! * __radjaiPo__ selects
-SELECT:radjaiAdv Po IF (-1 Num)(0 ("rádjai"));
+SELECT:radjaiAdv Po IF (-1 Num)(0 ("rádjai") OR ("rájes"));
 	#$ Njuolggadusat nággolága § 204:s § 209 rádjái ožžot seammá geavahusa.
 # # This rule should be extended to all postpositions likely to occur after
 # # number expressions. Todo: Make a set.
