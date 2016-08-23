@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Skript for å teste analysen av sme-gram-goldcorpus.txt med grammarchecker.cg3 opp mot gullversjon som er basert på versjon r132198 av grammarchecker.cg3, versjon r131257 av disambiguator.cg3 og versjon r131758 av valency.cg3.
 # sh $GTHOME/langs/sme/test/tools/grammarcheckers/grammarcheckers_developertest.sh
 
