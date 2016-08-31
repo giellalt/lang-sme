@@ -21,7 +21,8 @@
 
 # List any local additions here:
 GT_MT_FILTER_SRCS=remove-derivation-strings-modifications.nob.regex \
-	    		  remove-derivation-strings-modifications.sma.regex
+	    		  remove-derivation-strings-modifications.sma.regex \
+	    		  make-optional-Attr_before_dervuota-tags.regex
 
 # Only build these things if apertium fst's are enabled:
 if WANT_APERTIUM

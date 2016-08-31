@@ -77,9 +77,11 @@ generator-mt-gt-norm.hfst: generator-mt-gt-norm.tmp.hfst \
 			$(top_builddir)/src/filters/remove-Err_SpaceCmp-strings.hfst     \
 			$(top_builddir)/src/filters/remove-Use_minus_PMatch-tags.hfst    \
 			$(top_builddir)/src/filters/remove-Use_Disamb-strings.hfst       \
-			$(top_builddir)/src/filters/remove-Use_GC-strings.hfst
+			$(top_builddir)/src/filters/remove-Use_GC-strings.hfst \
+			filters/make-optional-Attr_before_dervuota-tags.hfst
 	$(AM_V_RGX2FST)$(PRINTF) "\
-		@\"$(top_builddir)/src/filters/remove-derivation-position-tags.hfst\" \
+		@\"filters/make-optional-Attr_before_dervuota-tags.hfst\"             \
+	.o. @\"$(top_builddir)/src/filters/remove-derivation-position-tags.hfst\" \
 	.o. @\"$(top_builddir)/src/filters/remove-dialect-tags.hfst\"             \
 	.o. @\"$(top_builddir)/src/filters/remove-Use_minus_PMatch-tags.hfst\"    \
 	.o. @\"$(top_builddir)/src/filters/remove-Err_SpaceCmp-strings.hfst\"     \
