@@ -8139,7 +8139,7 @@ REMOVE:SEMnotPossessor Gen IF (0 (N Acc) or (Rel Gen) LINK NOT 0 HUMAN-INDIVIDUA
 
 
 #!! * __SEMnotHUM__ removes Gen. This is when an NP is thought to be the OBJ, because it's not in the human sets and to the right is NON-FAMILY ''njálgáid mánáide''. 
-REMOVE:SEMnotHUM Gen IF (0 (N Acc) LINK NOT 0 (Prop Sem/Plc) OR HUMAN-INDIVIDUAL OR HUMAN-GROUP OR Prop OR PROFESSION OR OFFICE OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ABSTR-TEXT OR PLACE OR NATION OR EDUCATION OR ORGANIZATION OR INSTITUTION OR INDUSTRY OR TIME OR Loc)(NEGATE 0 (NomAg Gen))(NEGATE -1 Num OR Ord OR Pr)(NEGATE -1 @CNP LINK -1 Gen)(*1 NON-FAMILY BARRIER NOT-A)(NEGATE 1 COMMA)(NEGATE *1 TRANS-V + FMAINV BARRIER S-BOUNDARY);
+REMOVE:SEMnotHUM Gen IF (0 (N Acc) LINK NOT 0 (Prop Sem/Plc) OR HUMAN-INDIVIDUAL OR HUMAN-GROUP OR Prop OR PROFESSION OR OFFICE OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ABSTR-TEXT OR PLACE OR NATION OR EDUCATION OR ORGANIZATION OR INSTITUTION OR INDUSTRY OR TIME OR Sem/Domain OR Loc)(NEGATE 0 (NomAg Gen))(NEGATE -1 Num OR Ord OR Pr)(NEGATE -1 @CNP LINK -1 Gen)(*1 NON-FAMILY BARRIER NOT-A)(NEGATE 1 COMMA)(NEGATE *1 TRANS-V + FMAINV BARRIER S-BOUNDARY);
 	#$ Mun roggen ozastan njálgáid mánáide.
 	#$ Mun lean boahtán bidjat soahpameahttunvuođa bártni ja áhčis gaskii.
 	#$ Lei hui vuogas boahtit Kárášjohkii nuppiid badjemánáid lusa, dáppe in dárbbašan doarrut ja cielauhuvvot ja doaruhuvvot go ledjen badjeolbmuid mánná.
@@ -8189,7 +8189,7 @@ REMOVE:SEMXxrPropOrg Gen IF (NEGATE -1 Num)(0 (N Acc) LINK NOT 0 NATION OR TIME)
 #!! * __SEMdep__ Select Gen if main-organization in front of department   
 SELECT:SEMdep Gen IF (0 MAIN-ORGANIZATION OR EDUCATION)(1 DEPARTMENT) ;	
 #!! * __SEMorghum__ select gen if organization or education in front of human   
-SELECT:SEMorghum Gen IF (0 ORGANIZATION OR EDUCATION - ("oahpahus"))(1 HUMAN - Sem/Sur OR TEXT LINK NOT 0 Ess)(NEGATE 1 ("norgalaš")) ;	
+SELECT:SEMorghum Gen IF (0 ORGANIZATION OR EDUCATION - ("oahpahus") - ("fálaldat"))(1 HUMAN - Sem/Sur OR TEXT LINK NOT 0 Ess)(NEGATE 1 ("norgalaš")) ;	
 	#$ gaskadási ohppiid
     
     
@@ -8447,7 +8447,7 @@ SELECT:SEMxr2107 Acc IF (*-1 ("fáktemuš") BARRIER NOT-NPMOD)(0 (N Gen))(NEGATE
 	#Comment:Subjeaktapredikatiiva objeakta @SPRED<OBJ. Gávdnošiigo dáidde oktasaš njuolggadus?
  
 # egentlig laga for njuolggadus, men tester med et sett
-REMOVE:SEMlahka-n Gen IF (0 LAHKA-N + Acc LINK 1 Gen LINK NOT 0 TEXT OR ABSTR-TEXT OR SATNI OR KLASS OR Der/NomAct)(*-1 TRANS-V BARRIER SV-BOUNDARY) ;
+REMOVE:SEMlahka-n Gen IF (0 LAHKA-N + Acc LINK 1 Gen LINK NOT 0 TEXT OR ABSTR-TEXT OR SATNI OR KLASS OR Der/NomAct OR Sem/Act)(*-1 TRANS-V BARRIER SV-BOUNDARY) ;
 	#$ Finnmárkkuopmodat sáhttá addit dárkilet njuolggadusaid luondduvalljodagaid ávkkástallamii iežas eatnamiin, earret eará ferte olbmos lohpi dasa.
 
 # SÁPMI 
@@ -8758,6 +8758,8 @@ SELECT:GenGuhte Gen IF (-1 ("guhte" Gen))(0 VAHKKU LINK 0 Acc);
 SELECT:GenMen Gen IF (0 ("mii") LINK 1 (A Attr));	
 	#$ Mii háliidit maiddái diehtit man guhkes áiggi don geavahat jorgalit dan guokte teavstta.
 
+REMOVE:guovllu Acc IF (-1 TRANS-V)(0 (N Gen)) (*1 (N Acc) BARRIER NOT-NPMOD LINK 1 Inf) ; 
+	#$ Sáhttá maiddá veahkehit guovllu eará boazoeaiggádiid buoridit dietnasa.
 
 #!! * __Nom_b_1__ selects Nom if you are b/beaivi with a numeral/Ord to your left and a mannu to the left of that. To your right a finite verb čuovvut
 SELECT:Nom_b_1 Nom IF (-2 Gen LINK 0 MANNU)(-1 Num OR Ord)(0 ("b"))(*1 VFIN + Sg3 BARRIER REAL-WORD-NOT-ABBR LINK 0 ("čuovvut"));
@@ -9522,9 +9524,11 @@ REMOVE:NumJahki Acc IF (-1 JAHKI-NUM LINK NOT -1 (PrfPrc @>N) OR Attr OR Dem)(0 
 	#Comment: what's the difference between this one and XXr2006 (put it the other way: why wasn't XXr2006 chosen over this?)
 	
 #!! * __NomIfNum__ Removes Acc if Gen to the right (because you are Nom). Transitive verb with an Acc to the right ''máŋga gávpeolbmá lonuhedje fáhcaid''
-REMOVE:NomIfNum Acc IF (1 (N Gen))(2 NOT-FAUXV + TRANS-V)(*3 (N Acc) BARRIER NOT-NPMOD);
+REMOVE:NomIfNum (Num Acc) IF (1 (N Gen))(2 NOT-FAUXV + TRANS-V)(*3 (N Acc) BARRIER NOT-NPMOD);
 	#$ Máŋga gávpeolbmá lonuhedje fáhcaid gálvvuiguin.
 	#Comment: The subject is a numeral.
+
+
 
 #!! * __NumAcc2__ Selects Acc for singular numerals if there is a transitive verb somewhere in the sentence and the numeral is followed by a noun ''logi báhkkoma'' OBS
 SELECT:NumAcc2 Acc IF (0* NOT-FAUXV + TRANS-V BARRIER SV-BOUNDARY)(0 NUM + Sg LINK NOT 0 NUMUNIT OR Sem/Year)(*1 (N Acc) OR (N Gen) BARRIER NOT-Attr LINK NOT 0 Ill)(NEGATE *-1 COPULAS + FMAINV BARRIER SV-BOUNDARY)(NEGATE *-1 Der/Pass OR (Dem Nom) BARRIER NOT-ADV)(NEGATE *1 COPULAS + FMAINV BARRIER COMMA OR SV-BOUNDARY)(NEGATE -1 NUMMAR);
@@ -11002,8 +11006,9 @@ SELECT:AccEOS Acc IF (0 Acc OR Gen LINK NOT 0 Nom)((1 EOS LINK *-1 TRANS-V) OR (
 	#% Dat čohkkáiga oktii njuniid. <== Make a rule for this in the "acc/gen-section".
 	#% Mánná viehkalii olggos álás julggiid. <== Note that both are IV-verbs.
 
-#!! * __genRel__ removes genitive if Rel to your right ''ožžot olbmot skoviid maid''
-REMOVE:genRel Gen ((0 Acc - TIME-N LINK *1C Rel OR @CVP BARRIER WORD) OR (0 Acc - TIME-N LINK 1 COMMA LINK 1 Nom))(NEGATE *-1 (Num Nom) OR (Num Acc) BARRIER NOT-NPMOD)(NEGATE *-1 Pr BARRIER NOT-A)  ;
+#!! * __genRel__ removes genitive if Rel OR @CVPg to your right ''ožžot olbmot skoviid maid''
+REMOVE:genRel Gen ((0 Acc - TIME-N LINK *1C Rel OR @CVP BARRIER WORD) OR (0 Acc - TIME-N LINK 1 ("dalle") LINK 1C Rel OR @CVP) OR (0 Acc - TIME-N LINK 1 COMMA LINK 1 Nom))(NEGATE *-1 (Num Nom) OR (Num Acc) BARRIER NOT-NPMOD)(NEGATE *-1 Pr BARRIER NOT-A)  ;
+# dalle go @CVP is not MWE in Apertium
 	#$ Dan maid dalle dárbbaša fievrridit, ferte olmmoš noađuhit.
 	#$ Juohke gielddas ožžot olbmot skoviid maid sii galget deavdit ja sii jearahallet maiddái olbmuid, muhto Isaksen imašta kommišuvnna bargovugiid
 
