@@ -470,7 +470,7 @@ LIST @X = @X ;    #!! @X
 #!! !Sets for Single-word sets
 
 #!! OKTA and go, and the set INITIAL for initial letters 
-LIST OKTA = "okta"; #!! OKTA
+LIST OKTA = "okta" "akta"; #!! OKTA
 LIST go = "go" ; #!! go
 LIST INITIAL = "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m"
         "n" "o" "p" "q" "r" "s" "t" "u" "v" "w" "x" "y" "z"
@@ -2985,7 +2985,7 @@ SELECT:oktanAdv Adv IF (0 ("ovttas") OR ("oktan"))(*1 Com BARRIER NP-BOUNDARY);
 
 #!! * __ovttasAdv__
 REMOVE:ovttasColl ("ovttas" Coll) ;
-REMOVE:oktaLoc ("okta" Num Loc) - Attr IF (NEGATE 1 COPULAS + Pl3 OR COPULAS + Sg3) ; 
+REMOVE:oktaLoc OKTA + Loc - Attr IF (NEGATE 1 COPULAS + Pl3 OR COPULAS + Sg3) ; 
 
 SELECT:ovttasAdv1 ("ovttas" Adv) IF (-1 (Pl Nom))(1 PL3-V);
 	#$ Ferte oaidnit ollislaš gova maid soahpamušat ovttas vuođđudit.
@@ -3803,6 +3803,11 @@ SET INTERJ-LEMMA = (".*"r) + Interj ;
 SELECT:Interjlemma_a $$INTERJ-LEMMA IF (1 $$INTERJ-LEMMA);
 SELECT:Interjlemma_b $$INTERJ-LEMMA IF (-1 $$INTERJ-LEMMA) ;
 	#$ Guohttehehket dál dearvan mu bohccuid, nana nana voja voja.
+SELECT:vuoi ("vuoi" Interj) IF (*-1 BOS OR ("vuoi") OR (":") BARRIER WORD)(1 Acc OR ("surgat") OR COMMA) ;
+
+#!! * __Interj__ or not
+IFF:Interj Interj  IF (*-1 BOS BARRIER WORD LINK *1 Interj LINK 1 COMMA OR EOS);
+ 	#$ Maid, iigo leat boahtán?
 
 
 #!! !!Southern Locative vs. Essive
@@ -4810,11 +4815,6 @@ SELECT:miiPllAcc ("mii") + Indef OR ("gii") + Indef  IF (1 N + Pl + Acc) ;
 #!! * __giitu__ or not
 REMOVE:giituV VFIN (0 ("giitu")) ;
 
-SELECT:vuoi ("vuoi" Interj) IF (*-1 BOS OR ("vuoi") BARRIER WORD)(1 Acc OR ("surgat") OR COMMA) ;
-
-#!! * __Interj__ or not
-IFF:Interj Interj  IF (*-1 BOS BARRIER WORD LINK *1 Interj LINK 1 COMMA OR EOS);
- 	#$ Maid, iigo leat boahtán?
 
 #!! * __AdvPx__
 SELECT:AdvPx Adv + Acc IF (0 Px LINK -1 ADV-PX-V) ;
@@ -5909,7 +5909,7 @@ REMOVE:NifNum N IF (0 Num)(*1 (N Sg Gen) BARRIER NOT-A)(NEGATE 0 (N ACR))(NEGATE
 
 	
 #!! * __AdvOvtta__ 
-REMOVE:AdvOvtta Adv IF (0 OKTA + Acc)(1 (Sg Acc)); 
+REMOVE:AdvOvtta Adv IF ((0 OKTA + Acc LINK 1 (Sg Acc)) OR (0 OKTA + Attr LINK *1 N + Sg + Loc OR N + Sg + Ill BARRIER NOT-A)); 
 	#$ Soai vácciiga ovtta gaskka.
 	
 #!! * __AdvNumEss__ 
@@ -6570,6 +6570,9 @@ SELECT:SeLocAgrBuorre (Pl Loc) IF (0 ("buorre") OR OKTA OR Dem) (*1 (Pl Loc) BAR
 	#$ Báhppa fertii dávjá konfirmeret sin dáiguin unnán dieđuiguin mat sis ledje.
 
 SELECT:SeCaseHalfagrBuorre (A Gen) IF (0 ("buorre") OR OKTA OR Dem) (*1 CASE-HALFAGREEMENT + N BARRIER NOT-NPMOD);
+
+SELECT:ovttaAgreem OKTA + Attr IF (1 N + Sg + Loc OR N + Sg + Ill);
+
 
 SECTION
 
@@ -8738,7 +8741,7 @@ SELECT:deaivatGenlusa (N Gen)(-1 ("deaivat") + VFIN)(*1 ("lusa" Po) OR ("lahkosi
 #!! !Genitive in place adverbials ROUTE
 
 #!! * __GenPlc__ Selects genitive if you are ROUTE, and there is a MOVEMENT-V to your left or right ''boahtiba dán geainnu''
-SELECT:GenRoute Gen IF (*0 MOVEMENT-V BARRIER SV-BOUNDARY OR COMMA OR NP-HEAD-ACC - (Pron Dem))(0 ROUTE)(NEGATE -1 ("okta"))(NEGATE *-1 JOHTIT + IV BARRIER SV-BOUNDARY LINK *1 ROUTE BARRIER NOT-NPMOD) ;
+SELECT:GenRoute Gen IF (*0 MOVEMENT-V BARRIER SV-BOUNDARY OR COMMA OR NP-HEAD-ACC - (Pron Dem))(0 ROUTE)(NEGATE -1 OKTA)(NEGATE *-1 JOHTIT + IV BARRIER SV-BOUNDARY LINK *1 ROUTE BARRIER NOT-NPMOD) ;
 	#$ Soai boahtiba dán geainnu.
 	#$ Fertiimet vázzit bálgáid geasset ja Deanu mielde dálvet.
 	#$ Mii vujiimet duon luotta. 
@@ -9636,7 +9639,7 @@ SELECT:NumAccPl Acc IF (-1 (Num Acc Pl))(0 (N Acc Pl)) ;
 # OKTA
 
 #!! * __NumOkta__ Selects Acc if 0 okta followed by a noun. Transitive verb to the left ''oidnen ovtta nieidda''
-SELECT:NumOkta Acc IF (*-1 TRANS-V + FMAINV BARRIER SV-BOUNDARY)(0 ("okta" Sg))(1 N LINK NEGATE 0 Gen LINK 1C Acc) ;
+SELECT:NumOkta Acc IF (*-1 TRANS-V + FMAINV BARRIER SV-BOUNDARY)(0 OKTA + Sg)(1 N LINK NEGATE 0 Gen LINK 1C Acc) ;
 	#$ Mun oidnen dušše ovtta nieidda.
 	#$ Árvaluvvon juohkin dáhpáhuvvá dáinnalágiin ahte juohke suohkan beassá vuos árvalit ovtta evttohusa stipendii.
 	#% Dan eatnamis oažžu ovtta gusa fuođđara.
@@ -9984,7 +9987,7 @@ SELECT:CollNomEllipse (Coll Nom) IF (*-1 (Coll Nom) BARRIER Nom) ;
 	#$ Guovttis bohte Finnmárkkus, guovttis Romssas, golmmas Nordlánddas, okta Davvi-Trøndelágas ja okta Lulli-Trøndelágas.
 
 #!! * __NDr2306__ Selects Nom for (N Nom) if to the left is "okta" or "nubbi" ''okta lihtter''
-SELECT:NDr2306 (N Nom) IF (*-1 ("okta" Nom) OR ("nubbi" Nom) BARRIER NOT-NPMOD LINK NOT 0 Foc/ge);
+SELECT:NDr2306 (N Nom) IF (*-1 OKTA + Nom OR ("nubbi" Nom) BARRIER NOT-NPMOD LINK NOT 0 Foc/ge);
 	#$ Málli vuššojuvvui okta lihtter.
 
 
