@@ -8,12 +8,14 @@ manually written files can either be general or language-pair specific.
 The recognised filenames and filename patterns, and their use in the order they
 are applied, are:
 
-apertium.relabel             - automatically generated, Giella -> Apertium
-modify-tags.regex            - general tagset changes, man. added/maintained
-apertium.postproc.relabel    - general relabelling, manually added/maintained DEPRECATED
-modify-tags.TARGETLANG.regex - pair-specific changes using regex, manually m.
-apertium.TARGETLANG.relabel  - pair-specific relabelling, manually add/maint.
-gt2apertium.cg3relabel       - tag conversion, manually maintained (to be documented)
+apertium.relabel             - automatically generated, converts all tags in src/morphology/root.lexc
+                               to apertium format
+modify-tags.regex            - general changes of fst tags, input = apertium.relabel format: All tags you
+			       want CHANGED from gt to apertium format you change (or delete) here
+apertium.postproc.relabel    - general relabelling, manually added/maintained DEPRECATED FILE, DO NOT USE
+modify-tags.TARGETLANG.regex - language-pair-specific changes using regex, ma
+apertium.TARGETLANG.relabel  - language-pair-specific relabelling, manually add/maint.
+gt2apertium.cg3relabel       - tag conversion to CG, manually maintained (to be documented)
 
 Replace TARGETLANG with the language code of the actual target language you
 are building your Northern Sami apertium analyser for.
