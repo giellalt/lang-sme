@@ -1528,7 +1528,7 @@ SET HUMAN-INDIVIDUAL = HUMAN-LIKE OR FAMILY OR NON-FAMILY OR Sem/Hum - SAPMI OR 
 LIST HUMAN-GROUP =  "álbmot" (".*álbmot"r) (".*bearaš"r) (".*čearda"r) "delegašuvdna" "gázzi" (".*guovttis"r) (".*guovttos"r) (".*joavku"r) (".*kommišuvdna"r) (".*komiteá"r) "ráidu" "ráđđi" ("sápmi" N Pl) "unnitlohku" (".*veahka"r) (Sem/Group_Hum) ;
   ## group of humans that connot be a building at the same time
  
-LIST PROFESSION1 = (".*advokáhta"r) (".*advokáhtta"r) (".*duopmár"r) "arkeologa" (".*artista"r) (".*assisteanta"r) (".*áittardeaddji"r) "ákšoalmmái" (".*bargi"r) "buorideaddji" "ámmátolmmái" "ámmátolmmoš" (".*mánni"r) (".*hoavda"r) (".*meannudeaddji"r)  (".*ámmát"r)
+LIST PROFESSION1 = (".*advokáhta"r) (".*advokáhtta"r) (".*duopmár"r) "arkeologa" (".*artista"r) (".*assisteanta"r) (".*áittardeaddji"r) "ákšoalmmái" (".*bargi"r) "buorideaddji" "ámmátolmmái" "ámmátolmmoš" (".*mánni"r) (".*hoavda"r) (".*meannudeaddji"r)  (".*ámmát"r) "boazoeaiggát"
 (".*geahčči"r) (".*bagadalli"r) (".*bagadeaddji"r) (".*konsuleanta"r) "bargoveahka" "bassaleaddji" "bassi" "báhkár" "báhppa" "bálvaleaddji" (".*čálli"r) "bearremánni" "bibliotekára" (".*biigá"r) ("biila#divvut" Der/NomAg) (".*vuovdi"r) "birasgáhttenráđđeaddi" (".*terapevta"r)  (".*terapeuta"r) "bisma" "bismá" "bispa" (".*bivdi"r) (".*hábmejeaddji"r) "boanda" "boazodoalli" "boazosápmelaš" "boazosápmi" "bolesmeašttir" (".*vuoddji"r) "buvttadeaddji" 
 "čalbmeáhkku" "čalbmeeadni" "čálaoahppavaš" "čiekči" "čorgejeaddji" (".*čuojaheaddji"r) 
 "dáidár" (".*dáiddár"r) "dálon" "dálueamit" "dáluisit" "dárkkisteaddji" "davvisápmi" (".*dikšu"r) (".*direktevra"r) (".*dirigeanta"r) (".*divššár"r) (".*doaimmaheaddji"r) (".*doavttir"r) "dulka" "duojár" (".*duopmar"r) (".*dutki"r) 
@@ -10065,7 +10065,7 @@ SELECT:NDr2319 Nom IF (-2 BOS)(-1 Gen)(0C N)(1 EOS);
 
 	# A title is nominative if it has a Nom reading at all.
 #!! * __NDr2320__ Selects Nom: A title is nominative if it has a Nom reading at all
-SELECT:NDr2320 Nom IF (0 TITLE LINK NOT 0 ABBR LINK 1 Sem/Fem OR Sem/Mal OR Sem/Sur);
+SELECT:NDr2320 Nom IF (0 TITLE OR Sem/Hum LINK NOT 0 ABBR LINK 1 Sem/Fem OR Sem/Mal OR Sem/Sur);
 	#$ Stuorra giitu maiddái professor Birger Stuevold Lassenii. # in this case the title of a person is meant, not a sentence fragment
  
 	# An NP head with an Attr modifier is nominative.
@@ -12172,7 +12172,13 @@ REMOVE SUB:1 (cmp_sggen) (0/* (cmp_sgnom)) ;	#This for Apertium
 
 LIST WORDLEMMA = (".*"r) ;
 
-REMOVE:errsub $$WORDLEMMA + Err/Orth (0 $$WORDLEMMA - Err/Orth ) ;
+REMOVE:errsub $$WORDLEMMA + Err/Orth (0 $$WORDLEMMA - Err/Orth ) ; #this one does not function in Apertium because there are no err_orth tags. Alternative rules:
+
+REMOVE:alt_errsub1 $$WORDLEMMA + (allegro) (0 $$WORDLEMMA - (allegro) ) ;
+SELECT:alt_errsub2 $$WORDLEMMA + (nom) (0 $$WORDLEMMA - (nom)) ((1 COPULAS) OR (-1 COPULAS)) ; #for apertium
+REMOVE:alt_errsub2 $$WORDLEMMA + Gen + Ord (0 $$WORDLEMMA + Nom ) ;
+SELECT:alt_errsub2 $$WORDLEMMA + (nom) + (np) (0 $$WORDLEMMA - (nom) LINK 1 CC ) ; #for apertium
+SELECT:alt_errsub2 Prop + Attr (1 Prop OR (np) ) ; 
 
 SUBSTITUTE (A) (A <sme>) WORD ; #RemoveFromApertium
 SUBSTITUTE (N) (N <sme>) WORD ; #RemoveFromApertium
