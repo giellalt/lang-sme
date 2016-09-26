@@ -59,11 +59,11 @@ cat $GTHOME/langs/sme/test/data/testgrammarcheckerresult.txt| grep "\-\-\-" | wc
 echo " " >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt #empty line
 
 
-echo "Antall potentielle falske negativer (dvs. feilanalyse i gullstandard men ikkje i testanalysen):" >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
+echo "Antall potensielle falske negativer (dvs. feilanalyse i gullstandard men ikkje i testanalysen):" >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
 cat $GTHOME/langs/sme/test/data/testgrammarcheckerresult-oneline.txt | grep '\&.*€' |  grep -v '€ > .* \&' | wc -l >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
 echo " " >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt #empty line
 
-echo "Antall potentielle falske positiver (dvs. ingen feilanalyse i gullstandard men i testanalysen):" >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
+echo "Antall potensielle falske positiver (dvs. ingen feilanalyse i gullstandard men i testanalysen):" >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
 cat $GTHOME/langs/sme/test/data/testgrammarcheckerresult-oneline.txt | grep -v '\&.*€' |  grep '€ > .* \&' | wc -l >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt
 echo " " >> $GTHOME/langs/sme/test/data/grammarcheckerreport.txt #empty line
 
