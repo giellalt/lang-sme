@@ -20,11 +20,12 @@ cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.txt | preprocess --abbr=$GTH
 
 
 # Henter gullstandard, take away everything also lemma, except for error annotated forms, and put several lines of a cohort onto one line :
-#cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.corr.txt | perl -pe 's/\#[0-9]*-\>[0-9]*//g' | perl -pe 's/" /"& /g' | cut -d"&" -f1,3 | perl -pe 's/"&/" &/g' | grep -E "<|&" | uniq | sed 's/$/#/g' | perl -p -e 's/"</\n"</g' | perl -p -e 's/#\n/ /g' > $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt
+cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.corr.txt | perl -pe 's/\#[0-9]*-\>[0-9]*//g' | perl -pe 's/" /"& /g' | cut -d"&" -f1,3 | perl -pe 's/"&/" &/g' | grep -E "<|&" | uniq | sed 's/$/#/g' | perl -p -e 's/"</\n"</g' | perl -p -e 's/#\n/ /g' | $GTHOME/giella-core/scripts/sort-gramcheck-cohort.pl > $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt
 
-#cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt | $GTHOME/giella-core/scripts/sort-cg-cohort.pl > $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt
+#> $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt
+#cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt | $GTHOME/giella-core/scripts/sort-gramcheck-cohort.pl > $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt
 
-cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.corr.cohortsort.txt | perl -pe 's/\#[0-9]*-\>[0-9]*//g' | perl -pe 's/" /"& /g' | cut -d"&" -f1,3 | perl -pe 's/"&/" &/g' | grep -E "<|&" | uniq | sed 's/$/#/g' | perl -p -e 's/"</\n"</g' | perl -p -e 's/#\n/ /g' | $GTHOME/giella-core/scripts/sort-gramcheck-cohort.pl > $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt
+#cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.corr.cohortsort.txt | perl -pe 's/\#[0-9]*-\>[0-9]*//g' | perl -pe 's/" /"& /g' | cut -d"&" -f1,3 | perl -pe 's/"&/" &/g' | grep -E "<|&" | uniq | sed 's/$/#/g' | perl -p -e 's/"</\n"</g' | perl -p -e 's/#\n/ /g' | $GTHOME/giella-core/scripts/sort-gramcheck-cohort.pl > $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt
 
 
 # Diff
@@ -32,7 +33,7 @@ cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.corr.cohortsort.txt | p
 
 diff -w $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt $GTHOME/langs/sme/test/data/grammarcheckertestoutput > $GTHOME/langs/sme/test/data/testgrammarcheckerresult.txt
 
-cat $GTHOME/langs/sme/test/data/testgrammarcheckerresult.txt | sed 's/$/¢/' |sed 's/---¢/€/' | tr "\n" " " | sed 's/¢ €/€/g' | perl -pe 's/¢/\n/g' | grep € | rev | sort | rev > $GTHOME/langs/sme/test/data/testgrammarcheckerresult-oneline.txt
+cat $GTHOME/langs/sme/test/data/testgrammarcheckerresult.txt | sed 's/$/¢/' | sed 's/---¢/€/' | tr "\n" " " | sed 's/¢ €/€/g' | perl -pe 's/¢/\n/g' | grep € | rev | sort | rev > $GTHOME/langs/sme/test/data/testgrammarcheckerresult-oneline.txt
 
 #cat $GTHOME/langs/sme/test/data/sme-gram-goldcorpus.gram.only.corr.txt | cut -d '&' -f1 | sed 's/ $//' > $GTHOME/langs/sme/test/data/sme-goldcorpus.onlygram.txt
 #
