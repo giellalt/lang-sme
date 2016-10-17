@@ -8,7 +8,7 @@
 
 # List any local additions here:
 GT_LOCAL_FSTSPELLER_FILTER_SRCS=\
-    remove-illegal-derivation-strings.regex \
+    remove-illegal-derivation-strings-flagbased.regex \
     block-illegal_compound-strings.regex    \
     insert-default-compounding-tags.regex   \
     insert-default_left_compounding-tags.regex \
@@ -24,6 +24,9 @@ GENERATED_REGEXES=
 endif # WANT_SPELLERS
 
 # Add the build code of local additions here:
+
+%.regex: $(top_srcdir)/src/filters/%.regex
+	$(AM_V_CP)cp -f $< $@
 
 ##################################################################
 #### END: Add local processing instructions ABOVE this line ######
