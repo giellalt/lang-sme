@@ -47,7 +47,7 @@ analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
 		;\n\
 	invert net\n\
 	save stack $@\n\
-	quit\n" | $(HFST_XFST) -p $(MORE_VERBOSITY)
+	quit\n" | $(HFST_XFST) -p $(MORE_VERBOSITY) $(HFST_FORMAT)
 
 # ... as well as in the HFST Grammar Checker analyser:
 # (keep the Err/SpaceCmp strings here)
@@ -76,7 +76,7 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 	twosided flag-diacritics\n\
 	invert net\n\
 	save stack $@\n\
-	quit\n" | $(HFST_XFST) -p $(MORE_VERBOSITY)
+	quit\n" | $(HFST_XFST) -p $(MORE_VERBOSITY) $(HFST_FORMAT)
 
 
 ##################################################################
