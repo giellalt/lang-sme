@@ -15,6 +15,14 @@ GT_LOCAL_FSTSPELLER_FILTER_SRCS=\
     remove-Use_Minus_PLX-tags.regex         \
     split-CmpN-tags.regex
 
+# Filter source files copied from src/filters/:
+GT_LOCAL_COPY_FILTER_SRCS=\
+    remove-illegal-derivation-strings-flagbased.regex \
+    block-illegal_compound-strings.regex    \
+    insert-default-compounding-tags.regex   \
+    insert-default_left_compounding-tags.regex \
+    split-CmpN-tags.regex
+
 # Only build these things if speller fst's are enabled:
 if WANT_SPELLERS
 
@@ -25,6 +33,7 @@ endif # WANT_SPELLERS
 
 # Add the build code of local additions here:
 
+# Some source files are maintained in src/filters/, and just copied here:
 %.regex: $(top_srcdir)/src/filters/%.regex
 	$(AM_V_CP)cp -f $< $@
 
@@ -34,6 +43,6 @@ endif # WANT_SPELLERS
 
 ####### Other targets: ###########
 clean-local:
-	-rm -f *.hfst *.xfst
+	-rm -f *.hfst *.xfst $(GT_LOCAL_COPY_FILTER_SRCS)
 
 include $(top_srcdir)/am-shared/tools-spellcheckers-fstbased-filters-dir-include.am
