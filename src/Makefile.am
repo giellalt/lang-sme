@@ -260,20 +260,33 @@ analyser-gt-norm.%: analyser-gt-norm.tmp.% \
 					filters/remove-Err_SpaceCmp-strings.% \
 					filters/remove-Use_GC-strings.% \
 					filters/remove-Use_minus_PMatch-tags.% \
-					filters/remove-Use_Disamb-strings.%
+					filters/remove-Use_Disamb-strings.% \
+					filters/remove-illegal-derivation-strings-flagbased.% \
+					filters/insert-default-compounding-tags.hfst \
+					filters/insert-default_left_compounding-tags.hfst \
+					filters/block-illegal_compound-strings.hfst  \
+					filters/split-CmpN-tags.hfst
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/remove-allegro-tags.$*\" \
-			.o. @\"filters/remove-derivation-position-tags.$*\" \
-			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"   \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"   \
-			.o. @\"filters/remove-Use_GC-strings.$*\"         \
-			.o. @\"filters/remove-Use_Disamb-strings.$*\"     \
+			.o. @\"filters/remove-derivation-position-tags.$*\"        \
+			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"           \
+			.o. @\"filters/block-illegal_compound-strings.hfst\"       \
+			.o. @\"filters/split-CmpN-tags.hfst\"                      \
+			.o. @\"filters/insert-default_left_compounding-tags.hfst\" \
+			.o. @\"filters/insert-default-compounding-tags.hfst\"      \
+			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"            \
+			.o. @\"filters/remove-Use_GC-strings.$*\"                  \
+			.o. @\"filters/remove-Use_Disamb-strings.$*\"              \
+			.o. @\"filters/remove-illegal-derivation-strings-flagbased.$*\" \
 			.o. @\"$<\"                                       \
 			;\n\
+		 twosided flag-diacritics\n\
 		 $(INVERT_HFST)\
 		 save stack $@\n\
 		 quit\n" | $(XFST_TOOL)
 
+# The operation 'twosided flag-diacritics" crashes Xerox badly, so we do with
+# a simpler, less restrictive normative fst when building with Xerox:
 analyser-gt-norm.xfst: analyser-gt-norm.tmp.xfst \
 					filters/remove-derivation-position-tags.xfst \
 					filters/remove-illegal-derivation-strings.xfst \
