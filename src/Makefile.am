@@ -274,6 +274,27 @@ analyser-gt-norm.%: analyser-gt-norm.tmp.% \
 		 save stack $@\n\
 		 quit\n" | $(XFST_TOOL)
 
+analyser-gt-norm.xfst: analyser-gt-norm.tmp.xfst \
+					filters/remove-derivation-position-tags.xfst \
+					filters/remove-illegal-derivation-strings.xfst \
+					filters/remove-allegro-tags.xfst \
+					filters/remove-Err_SpaceCmp-strings.xfst \
+					filters/remove-Use_GC-strings.xfst \
+					filters/remove-Use_minus_PMatch-tags.xfst \
+					filters/remove-Use_Disamb-strings.xfst
+	$(AM_V_XFST)$(PRINTF) "read regex \
+				@\"filters/remove-allegro-tags.xfst\" \
+			.o. @\"filters/remove-derivation-position-tags.xfst\" \
+			.o. @\"filters/remove-Use_minus_PMatch-tags.xfst\"    \
+			.o. @\"filters/remove-illegal-derivation-strings.xfst\" \
+			.o. @\"filters/remove-Err_SpaceCmp-strings.xfst\"   \
+			.o. @\"filters/remove-Use_GC-strings.xfst\"         \
+			.o. @\"filters/remove-Use_Disamb-strings.xfst\"     \
+			.o. @\"$<\"                                         \
+			;\n\
+		 save stack $@\n\
+		 quit\n" | $(XFST) $(VERBOSITY)
+
 # ... and also in the Oahpa analyser:
 analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 					filters/remove-derivation-position-tags.% \
@@ -299,13 +320,15 @@ analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
 				filters/remove-derivation-position-tags.hfst   \
 				filters/rename-POS_before_Der-tags.hfst        \
+				filters/remove-Use_Disamb-tags.hfst            \
 				filters/remove-Use_GC-strings.hfst             \
 				filters/remove-Use_minus_PMatch-tags.hfst      \
 				filters/remove-Err_SpaceCmp-strings.hfst
 	$(AM_V_HXFST)$(PRINTF) "read regex \
 		    @\"filters/remove-derivation-position-tags.hfst\" \
+		.o. @\"filters/remove-Use_Disamb-tags.hfst\"          \
 		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
-		.o. @\"filters/remove-Use_minus_PMatch-tags.hfst\"      \
+		.o. @\"filters/remove-Use_minus_PMatch-tags.hfst\"    \
 		.o. @\"filters/remove-Err_SpaceCmp-strings.hfst\"     \
 		.o. @\"filters/remove-Use_GC-strings.hfst\"           \
 		.o. @\"$<\"                                           \
@@ -355,7 +378,7 @@ analyser-disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.% \
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/rename-POS_before_Der-tags.$*\"  \
-			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"   \
+			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\" \
 			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\" \
 			.o. @\"filters/remove-Use_GC-strings.$*\"       \
 			.o. @\"filters/remove-Use_Disamb-strings.$*\"   \
