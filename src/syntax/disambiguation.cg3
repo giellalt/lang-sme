@@ -2149,6 +2149,16 @@ LIST PROP-SUR = Sem/Sur Sem/Mal Sem/Fem ;
 #!! Remove unwanted analyses
 REMOVE:divAttr (Prop Allegro Attr) OR (Prop Attr Gen) OR (Prop Attr Acc) OR (Prop Pl Attr) ;
 
+
+#!! !!Southern Locative vs. Essive
+
+#!! * __SouthLoc__ removes Southern Locative vs. Essive
+REMOVE:SouthLoc (South) ;
+#REMOVE:SouthLoc (N Sg Loc South) OR (A Sg Loc) IF (0 Ess)(NEGATE -1 CC LINK -1 Loc LINK NOT 0 Ess);
+#REMOVE:SouthLoc (N Sg Loc South) OR (A Sg Loc) IF (0 Ess)(NEGATE 0 Actio LINK NOT 0 ESS-ADVL-N)(NEGATE -1 CC LINK -1 Loc LINK NOT 0 Ess);
+ 	#$ girkun # This is a rule that prevents southern dialectal forms to destroy the rest of the # parser. It should be commented out whenever analysing texts with Locative -n only. # All words with Cg will avoid this rule, since e.g. várin is southern Loc only.
+	#$ Luossa-bivdin joddu-buođuin deanus.  
+
 SECTION
 
 
@@ -2467,7 +2477,7 @@ SELECT:PropAttr2 Attr IF (0 Sem/Fem OR Sem/Mal OR INITIAL)(NEGATE 0 Loc)(1 INITI
 	#$ Áirras nr. 17 Randi S. Pedersen oaččui permišuvnna.
 	#$ Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna. # Two rules in order to avoid Sem/Sur Attr to Sem/Fem OR Sem/Mal.
   	
-SELECT:PropGen_a Gen IF (0C Prop LINK NEGATE 0 Sem/Fem OR Sem/Mal)(1 ORGANIZATION - Prop); #Lene: la inn C for å unngå at den treffer Lea osv.
+SELECT:PropGen_a Gen IF (0C Prop LINK NEGATE 0 Sem/Fem OR Sem/Mal)(1 ORGANIZATION - Prop - ("stuorradiggi")); #Lene: la inn C for å unngå at den treffer Lea osv.
 SELECT:PropGen_b Gen IF (0C Prop LINK NEGATE 0 Sem/Fem OR Sem/Mal)(1 PROFESSION OR SAPMI LINK 1 ORGANIZATION); #Lene: la inn C for å unngå at den treffer Lea osv.
 	#$ Oslo universiteahta namas Oslo namma lea genitiivvas.
 	#$ 1982:s gitta 1993 rádjái jođihii son Norgga Álbmotmusea sámi ossodaga Oslos.
@@ -3827,14 +3837,6 @@ IFF:Interj Interj  IF (*-1 BOS BARRIER WORD LINK *1 Interj LINK 1 COMMA OR EOS);
  	#$ Maid, iigo leat boahtán?
 
 
-#!! !!Southern Locative vs. Essive
-
-#!! * __SouthLoc__ removes Southern Locative vs. Essive
-REMOVE:SouthLoc (South) ;
-#REMOVE:SouthLoc (N Sg Loc South) OR (A Sg Loc) IF (0 Ess)(NEGATE -1 CC LINK -1 Loc LINK NOT 0 Ess);
-#REMOVE:SouthLoc (N Sg Loc South) OR (A Sg Loc) IF (0 Ess)(NEGATE 0 Actio LINK NOT 0 ESS-ADVL-N)(NEGATE -1 CC LINK -1 Loc LINK NOT 0 Ess);
- 	#$ girkun # This is a rule that prevents southern dialectal forms to destroy the rest of the # parser. It should be commented out whenever analysing texts with Locative -n only. # All words with Cg will avoid this rule, since e.g. várin is southern Loc only.
-	#$ Luossa-bivdin joddu-buođuin deanus.  
 
 #!! !!Px-rules for special nouns
 
@@ -8686,7 +8688,7 @@ SELECT:SEMfylka2 Gen IF (0 FYLKA + Acc)(1 CC)(2 FYLKA + Gen);
 	#$ Giellanjuolggadusat leat váikkuhan vaikkoba Finnmárkku ja Romssa fylkkagielddaide nu, ahte leat váldigoahtán ovdan dákkár áššiid.
    
 #!! * __SEMfylka3__ Gen if FYLKA and some place or org to the right ''Finnmárkku ássiide''
-SELECT:SEMfylka3 Gen IF (0 FYLKA + Acc)(*1 GEOGRAPHICAL-PLACE OR GEN-POLITICAL-PLACE OR HUMAN OR DILLI OR INDUSTRY OR RIEKTEDILLI OR ORGANIZATION BARRIER NOT-NPMODADVII); # NPNHAI
+SELECT:SEMfylka3 Gen IF (0 FYLKA + Acc)(*1 GEOGRAPHICAL-PLACE OR GEN-POLITICAL-PLACE OR HUMAN OR DILLI OR INDUSTRY OR RIEKTEDILLI OR ORGANIZATION BARRIER NOT-NPMODADVII LINK NOT 0 ("stuorradiggi")); # NPNHAI
 	#$ Prinsihppa ahte láhka ii lihkahala sajáiduvvan vuoigatvuođaid gusto maiddái dážaide, kvenaide ja eará Finnmárkku ássiide.
 	#$ Álbmotrievttálaš ja historjjálaš ođđa riektegáldoosiid ferte árvvoštallat stáhta dálá geavada ja riikka lágaid ektui, erenoamážit Finnmárkku eatnamiid vuoigatvuođaid deasttas.
 
@@ -11433,7 +11435,7 @@ SELECT:r2910 (V Sg2) IF (*-2C (V Sg2) BARRIER VFIN)(-1 CS)(NEGATE *1 PxPl3);
 	#$  Don it beasa doppe olggos ovdal go leat máksán.
 #fk 498
 
-REMOVE:CopNotPl ("leat" Pl1) OR ("leat" Pl3) IF (*1 (Sg Nom) - Coll OR ("okto") BARRIER NOT-ADV-PCLE LINK NOT 0 NUM LINK NOT 1 CC OR COMMA);
+REMOVE:CopNotPl ("leat" Pl1) OR ("leat" Pl3) IF (*1 (Sg Nom) - Coll - Indef OR ("okto") BARRIER NOT-ADV-PCLE LINK NOT 0 NUM OR Pl1 LINK NOT 1 CC OR COMMA)(NEGATE -1 Pl);
 	#$ Leatgo árgi bajándálkkis?
 	#$ Leat go árgi bajándálkkis?
 	#$ Leat go okto áigume herskkostallat? 
