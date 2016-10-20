@@ -15,7 +15,8 @@ GT_LOCAL_FSTSPELLER_FILTER_SRCS=\
     remove-Use_Minus_PLX-tags.regex         \
     split-CmpN-tags.regex
 
-# Filter source files copied from src/filters/:
+# Source files copied from src/filters/ OR from
+# $(GIELLA_SHARED)/all_langs/tools/spellcheckers/fstbased/filters:
 GT_LOCAL_COPY_FILTER_SRCS=\
     remove-illegal-derivation-strings-flagbased.regex \
     block-illegal_compound-strings.regex    \
