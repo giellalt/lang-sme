@@ -8,12 +8,7 @@
 
 # List any local additions here:
 GT_LOCAL_FSTSPELLER_FILTER_SRCS=\
-    remove-illegal-derivation-strings-flagbased.regex \
-    block-illegal_compound-strings.regex    \
-    insert-default-compounding-tags.regex   \
-    insert-default_left_compounding-tags.regex \
-    remove-Use_Minus_PLX-tags.regex         \
-    split-CmpN-tags.regex
+    remove-Use_Minus_PLX-tags.regex
 
 # Source files copied from src/filters/ OR from
 # $(GIELLA_SHARED)/all_langs/tools/spellcheckers/fstbased/filters:
@@ -33,10 +28,6 @@ GENERATED_REGEXES=
 endif # WANT_SPELLERS
 
 # Add the build code of local additions here:
-
-# Some source files are maintained in src/filters/, and just copied here:
-%.regex: $(top_srcdir)/src/filters/%.regex
-	$(AM_V_CP)cp -f $< $@
 
 ##################################################################
 #### END: Add local processing instructions ABOVE this line ######
