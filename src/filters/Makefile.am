@@ -40,10 +40,10 @@ GIELLA_FILTER_LOCAL_REGEX_SRCS=\
 					remove-dynamic_compound-char.regex \
 					simplify-triple-der-borders.regex \
 					remove-illegal-derivation-strings-flagbased.regex \
-					insert-default-compounding-tags.hfst \
-					insert-default_left_compounding-tags.hfst \
-					block-illegal_compound-strings.hfst  \
-					split-CmpN-tags.hfst
+					insert-default-compounding-tags.regex \
+					insert-default_left_compounding-tags.regex \
+					block-illegal_compound-strings.regex  \
+					split-CmpN-tags.regex
 
 # List any local filter xfscript files here:
 GIELLA_FILTER_LOCAL_XFSCRIPT_SRCS=
