@@ -51,6 +51,7 @@ analyser-mt-gt-desc.%.hfst: analyser-mt-gt-desc.%.tmp.hfst \
 
 # We want to rename the POS tags in front of derivations:
 analyser-mt-gt-desc.hfst: analyser-mt-gt-desc.tmp.hfst \
+			$(top_builddir)/src/filters/remove-norm-comp-tags.hfst           \
 			$(top_builddir)/src/filters/remove-derivation-position-tags.hfst \
 			$(top_builddir)/src/filters/rename-POS_before_Der-tags.hfst      \
 			$(top_builddir)/src/filters/remove-Err_SpaceCmp-strings.hfst     \
@@ -59,6 +60,7 @@ analyser-mt-gt-desc.hfst: analyser-mt-gt-desc.tmp.hfst \
 			$(top_builddir)/src/filters/remove-Use_GC-strings.hfst
 	$(AM_V_RGX2FST)$(PRINTF) "\
 		@\"$(top_builddir)/src/filters/remove-derivation-position-tags.hfst\" \
+	.o. @\"$(top_builddir)/src/filters/remove-norm-comp-tags.hfst\"           \
 	.o. @\"$(top_builddir)/src/filters/rename-POS_before_Der-tags.hfst\"      \
 	.o. @\"$(top_builddir)/src/filters/remove-Use_minus_PMatch-tags.hfst\"    \
 	.o. @\"$(top_builddir)/src/filters/remove-Err_SpaceCmp-strings.hfst\"     \
@@ -72,6 +74,7 @@ analyser-mt-gt-desc.hfst: analyser-mt-gt-desc.tmp.hfst \
 		-o $@
 
 generator-mt-gt-norm.hfst: generator-mt-gt-norm.tmp.hfst \
+			$(top_builddir)/src/filters/remove-norm-comp-tags.hfst           \
 			$(top_builddir)/src/filters/remove-derivation-position-tags.hfst \
 			$(top_builddir)/src/filters/remove-dialect-tags.hfst             \
 			$(top_builddir)/src/filters/remove-Err_SpaceCmp-strings.hfst     \
@@ -82,6 +85,7 @@ generator-mt-gt-norm.hfst: generator-mt-gt-norm.tmp.hfst \
 	$(AM_V_RGX2FST)$(PRINTF) "\
 		@\"filters/make-optional-Attr_before_dervuota-tags.hfst\"             \
 	.o. @\"$(top_builddir)/src/filters/remove-derivation-position-tags.hfst\" \
+	.o. @\"$(top_builddir)/src/filters/remove-norm-comp-tags.hfst\"           \
 	.o. @\"$(top_builddir)/src/filters/remove-dialect-tags.hfst\"             \
 	.o. @\"$(top_builddir)/src/filters/remove-Use_minus_PMatch-tags.hfst\"    \
 	.o. @\"$(top_builddir)/src/filters/remove-Err_SpaceCmp-strings.hfst\"     \
