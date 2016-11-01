@@ -238,17 +238,19 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_nob.%: \
 # We need to add processing of language-specific tags in the analyser:
 analyser-gt-desc.%: analyser-gt-desc.tmp.% \
 					filters/remove-derivation-position-tags.% \
+					filters/remove-norm-comp-tags.%             \
 					filters/remove-Err_SpaceCmp-strings.% \
 					filters/remove-Use_GC-strings.% \
 					filters/remove-Use_minus_PMatch-tags.% \
 					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 			    @\"filters/remove-derivation-position-tags.$*\" \
-			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"   \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"   \
-			.o. @\"filters/remove-Use_GC-strings.$*\"         \
-			.o. @\"filters/remove-Use_Disamb-strings.$*\"     \
-			.o. @\"$<\"                                       \
+			.o. @\"filters/remove-norm-comp-tags.$*\"           \
+			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"    \
+			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"     \
+			.o. @\"filters/remove-Use_GC-strings.$*\"           \
+			.o. @\"filters/remove-Use_Disamb-strings.$*\"       \
+			.o. @\"$<\"                                         \
 			;\n\
 		 $(INVERT_HFST)\
 		 save stack $@\n\
@@ -288,15 +290,17 @@ analyser-gt-norm.%: analyser-gt-norm.tmp.% \
 # The operation 'twosided flag-diacritics" crashes Xerox badly, so we do with
 # a simpler, less restrictive normative fst when building with Xerox:
 analyser-gt-norm.xfst: analyser-gt-norm.tmp.xfst \
-					filters/remove-derivation-position-tags.xfst \
+					filters/remove-norm-comp-tags.xfst             \
+					filters/remove-derivation-position-tags.xfst   \
 					filters/remove-illegal-derivation-strings.xfst \
-					filters/remove-allegro-tags.xfst \
-					filters/remove-Err_SpaceCmp-strings.xfst \
-					filters/remove-Use_GC-strings.xfst \
-					filters/remove-Use_minus_PMatch-tags.xfst \
+					filters/remove-allegro-tags.xfst               \
+					filters/remove-Err_SpaceCmp-strings.xfst       \
+					filters/remove-Use_GC-strings.xfst             \
+					filters/remove-Use_minus_PMatch-tags.xfst      \
 					filters/remove-Use_Disamb-strings.xfst
 	$(AM_V_XFST)$(PRINTF) "read regex \
-				@\"filters/remove-allegro-tags.xfst\" \
+				@\"filters/remove-allegro-tags.xfst\"             \
+			.o. @\"filters/remove-norm-comp-tags.xfst\"           \
 			.o. @\"filters/remove-derivation-position-tags.xfst\" \
 			.o. @\"filters/remove-Use_minus_PMatch-tags.xfst\"    \
 			.o. @\"filters/remove-illegal-derivation-strings.xfst\" \
@@ -310,6 +314,7 @@ analyser-gt-norm.xfst: analyser-gt-norm.tmp.xfst \
 
 # ... and also in the Oahpa analyser:
 analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
+					filters/remove-norm-comp-tags.%             \
 					filters/remove-derivation-position-tags.% \
 					filters/remove-allegro-tags.% \
 					filters/remove-Err_SpaceCmp-strings.% \
@@ -318,6 +323,7 @@ analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/remove-allegro-tags.$*\" \
+			.o. @\"filters/remove-norm-comp-tags.$*\"             \
 			.o. @\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"   \
 			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"   \
@@ -331,6 +337,7 @@ analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 
 # ... as well as in the HFST disambiguation analyser:
 analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
+				filters/remove-norm-comp-tags.%                \
 				filters/remove-derivation-position-tags.hfst   \
 				filters/rename-POS_before_Der-tags.hfst        \
 				filters/remove-Use_Disamb-tags.hfst            \
@@ -339,6 +346,7 @@ analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
 				filters/remove-Err_SpaceCmp-strings.hfst
 	$(AM_V_HXFST)$(PRINTF) "read regex \
 		    @\"filters/remove-derivation-position-tags.hfst\" \
+		.o. @\"filters/remove-norm-comp-tags.$*\"             \
 		.o. @\"filters/remove-Use_Disamb-tags.hfst\"          \
 		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
 		.o. @\"filters/remove-Use_minus_PMatch-tags.hfst\"    \
@@ -353,6 +361,7 @@ analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
 # ... as well as in the HFST Grammar Checker analyser:
 # (keep the Err/SpaceCmp strings here)
 analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
+				filters/remove-norm-comp-tags.%              \
 				filters/remove-derivation-position-tags.hfst \
 				filters/rename-POS_before_Der-tags.hfst      \
 				filters/remove-Use_Disamb-tags.hfst          \
@@ -365,6 +374,7 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 	set encode-weights ON\n\
 	read regex \
 		    @\"filters/remove-Use_Disamb-tags.hfst\"          \
+		.o. @\"filters/remove-norm-comp-tags.$*\"             \
 		.o. @\"filters/remove-Use_GC-tags.hfst\"              \
 		.o. @\"filters/remove-derivation-position-tags.hfst\" \
 		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
@@ -382,6 +392,7 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 # ... as well as in the XEROX/FOMA disambiguation analyser
 # (remove the Err/SpaceCmp thing here):
 analyser-disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.% \
+					filters/remove-norm-comp-tags.%             \
 					filters/remove-derivation-position-tags.% \
 					filters/rename-POS_before_Der-tags.% \
 					filters/remove-Err_SpaceCmp-strings.% \
@@ -390,6 +401,7 @@ analyser-disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.% \
 					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/remove-derivation-position-tags.$*\" \
+			.o. @\"filters/remove-norm-comp-tags.$*\"             \
 			.o. @\"filters/rename-POS_before_Der-tags.$*\"  \
 			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\" \
 			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\" \
@@ -404,6 +416,7 @@ analyser-disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.% \
 # We need to add processing of language-specific tags in the generator:
 define giella_generators
 generator-gt-%.$(1): generator-gt-%.tmp.$(1) \
+					 filters/remove-norm-comp-tags.$(1)             \
 					 filters/remove-derivation-position-tags.$(1) \
 					 filters/make-optional-allegro-tags.$(1) \
 					 filters/make-optional-coll-tags.$(1)    \
@@ -416,6 +429,7 @@ generator-gt-%.$(1): generator-gt-%.tmp.$(1) \
 				@\"filters/make-optional-allegro-tags.$(1)\"  \
 			.o. @\"filters/make-optional-coll-tags.$(1)\"     \
 			.o. @\"filters/make-optional-lang_hom-tags.$(1)\" \
+			.o. @\"filters/remove-norm-comp-tags.$(1)\"           \
 			.o. @\"filters/remove-derivation-position-tags.$(1)\" \
 			.o. @\"filters/remove-Use_minus_PMatch-tags.$(1)\"   \
 			.o. @\"filters/remove-Err_SpaceCmp-strings.$(1)\"   \
@@ -431,6 +445,7 @@ $(foreach fst,hfst xfst foma,$(eval $(call giella_generators,$(fst))))
 
 # We need to add processing of language-specific tags for the Oahpa generators:
 generator-oahpa-gt-norm.%: generator-oahpa-gt-norm.tmp.% \
+					filters/remove-norm-comp-tags.%             \
 					filters/remove-derivation-position-tags.% \
 					filters/make-optional-allegro-tags.% \
 					filters/remove-Err_SpaceCmp-strings.% \
@@ -439,6 +454,7 @@ generator-oahpa-gt-norm.%: generator-oahpa-gt-norm.tmp.% \
 					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/make-optional-allegro-tags.$*\"  \
+			.o. @\"filters/remove-norm-comp-tags.$*\"             \
 			.o. @\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"   \
 			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"   \
