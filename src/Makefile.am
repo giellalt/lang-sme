@@ -264,10 +264,12 @@ analyser-gt-norm.%: analyser-gt-norm.tmp.% \
 					filters/remove-Use_minus_PMatch-tags.% \
 					filters/remove-Use_Disamb-strings.% \
 					filters/remove-illegal-derivation-strings-flagbased.% \
-					filters/insert-default-compounding-tags.hfst \
-					filters/insert-default_left_compounding-tags.hfst \
-					filters/block-illegal_compound-strings.hfst  \
-					filters/split-CmpN-tags.hfst
+					filters/insert-default-compounding-tags.% \
+					filters/insert-default_left_compounding-tags.% \
+					filters/block-illegal_compound-strings.%  \
+					filters/split-CmpN-tags.% \
+					filters/convert_to_flags-CmpNP-tags.% \
+					filters/split-CmpNP-tags.hfst
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/remove-allegro-tags.$*\" \
 			.o. @\"filters/remove-derivation-position-tags.$*\"        \
@@ -280,7 +282,9 @@ analyser-gt-norm.%: analyser-gt-norm.tmp.% \
 			.o. @\"filters/remove-Use_GC-strings.$*\"                  \
 			.o. @\"filters/remove-Use_Disamb-strings.$*\"              \
 			.o. @\"filters/remove-illegal-derivation-strings-flagbased.$*\" \
-			.o. @\"$<\"                                       \
+			.o. @\"filters/convert_to_flags-CmpNP-tags.$*\"            \
+			.o. @\"filters/split-CmpNP-tags.$*\"                       \
+			.o. @\"$<\"                                                \
 			;\n\
 		 twosided flag-diacritics\n\
 		 $(INVERT_HFST)\
