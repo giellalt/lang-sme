@@ -22,7 +22,9 @@ generator-fstspeller-gt-norm.hfst: \
 		filters/block-illegal_compound-strings.hfst  \
 		filters/remove-illegal-derivation-strings-flagbased.hfst \
 		filters/remove-Use_Minus_PLX-tags.hfst       \
-		filters/split-CmpN-tags.hfst
+		filters/split-CmpN-tags.hfst \
+		filters/convert_to_flags-CmpNP-tags.hfst \
+		filters/split-CmpNP-tags.hfst
 	$(AM_V_HXFST)$(PRINTF) "\
 		read regex                                                 \
 			@\"filters/block-illegal_compound-strings.hfst\"       \
@@ -31,6 +33,8 @@ generator-fstspeller-gt-norm.hfst: \
 		.o. @\"filters/insert-default-compounding-tags.hfst\"      \
 		.o. @\"filters/remove-illegal-derivation-strings-flagbased.hfst\" \
 		.o. @\"filters/remove-Use_Minus_PLX-tags.hfst\"            \
+		.o. @\"filters/convert_to_flags-CmpNP-tags.hfst\" \
+		.o. @\"filters/split-CmpNP-tags.hfst\"            \
 		.o. @\"$<\"                                                \
 		; \n\
 		 twosided flag-diacritics\n\
