@@ -44,7 +44,9 @@ GIELLA_FILTER_LOCAL_REGEX_SRCS=\
 					insert-default-compounding-tags.regex \
 					insert-default_left_compounding-tags.regex \
 					block-illegal_compound-strings.regex  \
-					split-CmpN-tags.regex
+					split-CmpN-tags.regex \
+					split-CmpNP-tags.regex \
+					convert_to_flags-CmpNP-tags.regex
 
 # List any local filter xfscript files here:
 GIELLA_FILTER_LOCAL_XFSCRIPT_SRCS=
