@@ -269,15 +269,15 @@ analyser-gt-norm.%: analyser-gt-norm.tmp.% \
 					filters/block-illegal_compound-strings.%  \
 					filters/split-CmpN-tags.% \
 					filters/convert_to_flags-CmpNP-tags.% \
-					filters/split-CmpNP-tags.hfst
+					filters/split-CmpNP-tags.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/remove-allegro-tags.$*\" \
 			.o. @\"filters/remove-derivation-position-tags.$*\"        \
 			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"           \
-			.o. @\"filters/block-illegal_compound-strings.hfst\"       \
-			.o. @\"filters/split-CmpN-tags.hfst\"                      \
-			.o. @\"filters/insert-default_left_compounding-tags.hfst\" \
-			.o. @\"filters/insert-default-compounding-tags.hfst\"      \
+			.o. @\"filters/block-illegal_compound-strings.$*\"       \
+			.o. @\"filters/split-CmpN-tags.$*\"                      \
+			.o. @\"filters/insert-default_left_compounding-tags.$*\" \
+			.o. @\"filters/insert-default-compounding-tags.$*\"      \
 			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"            \
 			.o. @\"filters/remove-Use_GC-strings.$*\"                  \
 			.o. @\"filters/remove-Use_Disamb-strings.$*\"              \
