@@ -33,8 +33,8 @@ generator-fstspeller-gt-norm.hfst: \
 		.o. @\"filters/insert-default-compounding-tags.hfst\"      \
 		.o. @\"filters/remove-illegal-derivation-strings-flagbased.hfst\" \
 		.o. @\"filters/remove-Use_Minus_PLX-tags.hfst\"            \
-		.o. @\"filters/convert_to_flags-CmpNP-tags.hfst\" \
-		.o. @\"filters/split-CmpNP-tags.hfst\"            \
+		.o. @\"filters/convert_to_flags-CmpNP-tags.hfst\"          \
+		.o. @\"filters/split-CmpNP-tags.hfst\"                     \
 		.o. @\"$<\"                                                \
 		; \n\
 		 twosided flag-diacritics\n\
