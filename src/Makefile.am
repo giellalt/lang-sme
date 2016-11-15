@@ -372,7 +372,6 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 				filters/remove-Use_GC-tags.hfst              \
 				filters/remove-Use_minus_PMatch-tags.hfst    \
 				filters/remove-word-boundary.hfst            \
-				orthography/spellrelax-with-flagtags.compose.hfst \
 				orthography/comprelax-with-flagtags.compose.hfst
 	$(AM_V_HXFST)$(PRINTF) "\
 	set encode-weights ON\n\
@@ -384,7 +383,6 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
 		.o. @\"filters/remove-Use_minus_PMatch-tags.hfst\"    \
 		.o. @\"$<\"                                           \
-		.o. @\"orthography/spellrelax-with-flagtags.compose.hfst\" \
 		.o. @\"orthography/comprelax-with-flagtags.compose.hfst\" \
 		.o. @\"filters/remove-word-boundary.hfst\"            \
 		;\n\
