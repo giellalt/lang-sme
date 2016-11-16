@@ -365,7 +365,7 @@ analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
 # ... as well as in the HFST Grammar Checker analyser:
 # (keep the Err/SpaceCmp strings here)
 analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
-				filters/remove-norm-comp-tags.%              \
+				filters/remove-norm-comp-tags.hfst           \
 				filters/remove-derivation-position-tags.hfst \
 				filters/rename-POS_before_Der-tags.hfst      \
 				filters/remove-Use_Disamb-tags.hfst          \
@@ -377,7 +377,7 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 	set encode-weights ON\n\
 	read regex \
 		    @\"filters/remove-Use_Disamb-tags.hfst\"          \
-		.o. @\"filters/remove-norm-comp-tags.$*\"             \
+		.o. @\"filters/remove-norm-comp-tags.hfst\"           \
 		.o. @\"filters/remove-Use_GC-tags.hfst\"              \
 		.o. @\"filters/remove-derivation-position-tags.hfst\" \
 		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
