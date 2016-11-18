@@ -22,7 +22,7 @@ ENABLE_CORPUS_WEIGHTS=yes
 # tools/spellcheckers/fstbased/desktop/spellercorpus.uniq.txt
 # and look for a relevant cut-off line, typically somewhere in the two occurence
 # section.
-CORPUS_SIZE=118890
+CORPUS_SIZE=
 
 ### BEGIN: Local build rules: *.hfst: *.tmp.hfst ###
 
