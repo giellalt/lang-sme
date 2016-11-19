@@ -89,6 +89,7 @@ generator-mt-gt-norm.hfst: generator-mt-gt-norm.tmp.hfst \
 	.o. @\"$(top_builddir)/src/filters/remove-dialect-tags.hfst\"             \
 	.o. @\"$(top_builddir)/src/filters/remove-Use_minus_PMatch-tags.hfst\"    \
 	.o. @\"$(top_builddir)/src/filters/remove-Err_SpaceCmp-strings.hfst\"     \
+	.o. @\"$(top_builddir)/src/filters/remove-all_dialects_but_GG-strings.hfst\"     \
 	.o. @\"$(top_builddir)/src/filters/remove-Use_Disamb-strings.hfst\"       \
 	.o. @\"$(top_builddir)/src/filters/remove-Use_GC-strings.hfst\"           \
    	.o. @\"$<\" \
