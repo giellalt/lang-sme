@@ -65,7 +65,7 @@ generator-fstspeller-gt-norm.hfst: \
 #		eliminate flag NeedNoun\n\
 #		eliminate flag NeedsVowRed\n\
 #		eliminate flag Want_Left\n\
-
+#
 #### END: Local build rules: *.hfst: *.tmp.hfst ####
 
 include $(top_srcdir)/am-shared/tools-spellcheckers-fstbased-dir-include.am
