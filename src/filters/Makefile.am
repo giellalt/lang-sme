@@ -19,33 +19,34 @@
 ############## BEGIN: Local modifications ###############
 # List any local filter regex files here:
 GIELLA_FILTER_LOCAL_REGEX_SRCS=\
-					downcase_UCletters.regex \
-					remove-norm-comp-tags.regex \
-					make-optional-allegro-tags.regex  \
-					make-optional-coll-tags.regex     \
-					make-optional-lang_hom-tags.regex \
-					reorder-tags.$(GTLANG).regex \
-					rename-POS_before_Der-tags.regex \
-					remove-allegro-tags.regex         \
-					remove-lang_hom-tags.regex        \
-					remove-rel_focus-strings.regex    \
-					remove-illegal-derivation-strings.regex \
-					remove-derivation-position-tags.regex \
-					remove-Err_SpaceCmp-strings.regex \
-					remove-Use_Disamb-tags.regex \
-					remove-Use_Disamb-strings.regex \
-					remove-Use_minus_PMatch-tags.regex \
-					remove-Use_minus_PMatch-strings.regex \
-					remove-Use_GC-strings.regex \
-					remove-Use_GC-tags.regex \
-					remove-dynamic_compound-char.regex \
-					simplify-triple-der-borders.regex \
+					downcase_UCletters.regex                          \
+					remove-norm-comp-tags.regex                       \
+					make-optional-allegro-tags.regex                  \
+					make-optional-coll-tags.regex                     \
+					make-optional-lang_hom-tags.regex                 \
+					reorder-tags.$(GTLANG).regex                      \
+					rename-POS_before_Der-tags.regex                  \
+					rename_optional-POS_before_Der-tags.regex         \
+					remove-allegro-tags.regex                         \
+					remove-lang_hom-tags.regex                        \
+					remove-rel_focus-strings.regex                    \
+					remove-illegal-derivation-strings.regex           \
+					remove-derivation-position-tags.regex             \
+					remove-Err_SpaceCmp-strings.regex                 \
+					remove-Use_Disamb-tags.regex                      \
+					remove-Use_Disamb-strings.regex                   \
+					remove-Use_minus_PMatch-tags.regex                \
+					remove-Use_minus_PMatch-strings.regex             \
+					remove-Use_GC-strings.regex                       \
+					remove-Use_GC-tags.regex                          \
+					remove-dynamic_compound-char.regex                \
+					simplify-triple-der-borders.regex                 \
 					remove-illegal-derivation-strings-flagbased.regex \
-					insert-default-compounding-tags.regex \
-					insert-default_left_compounding-tags.regex \
-					block-illegal_compound-strings.regex  \
-					split-CmpN-tags.regex \
-					split-CmpNP-tags.regex \
+					insert-default-compounding-tags.regex             \
+					insert-default_left_compounding-tags.regex        \
+					block-illegal_compound-strings.regex              \
+					split-CmpN-tags.regex                             \
+					split-CmpNP-tags.regex                            \
 					convert_to_flags-CmpNP-tags.regex
 
 # List any local filter xfscript files here:
