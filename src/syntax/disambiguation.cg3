@@ -2107,6 +2107,33 @@ ADD:muitalit <vdic> TARGET MUITALIT (0 REAL-V LINK -1 COMMA LINK 2 HUMAN-INDIVID
 	#$ – Ii leat duohta , lohká direktora Smuk.
 	#$ Mii fertet maiddái geahčadit makkár lassi guoimmuhemiid galgat fállat vai bohtet vel eanet olbmot boahtte jagi, loahpaha duhtavaš beaivválaš jođiheaddji Eriksen.
 	#$ Dat čájeha ahte sámi guovllut leat geasuheaddjit ealáhusovdáneapmái, dadjá sámediggeráđđi Silje Karine Muotka.
+
+#!! ! Removing or selecting proper nouns that are lookalikes
+
+#!! * __AvvilProp__ selects Prop for Avvil
+SELECT:AvvilProp Prop IF (0 ("Avvil")) ;
+	#$ Avvila dulvesuodjalan áššedovdibargojoavku.
+
+
+#!! * __SamediggiProp__ selects Prop after Ášši 01/12
+SELECT:SamediggiProp Prop IF (-2 ("ášši"))(-1 Num);
+	#$ Ášši 02/13 Sámedikki čoahkkinortnet.
+
+LIST NOT-PROP = "Vuoksá" "Áddjá" "Álgu" "Dronnet" "Heasta" "Stállu" "Fiske" "Guksi" "Gáldu" "Jávregáddi" "Návet" "Náhkki" "Njunni" "Áigi" "Ohcan" "Ose" "Ovdal" "Sieidi" "Profehta" "Muvra" "Náhkki" "Nuora" "Gielda" "Vuotna" "Vuoigŋa" "Vággi" "Skávžá" "Jávri" "Riidi" ;
+
+LIST PROP-ATTR = Sem/Mal Sem/Sur Sem/Fem (ant m)  (ant f) ;
+LIST PROP-SUR = Sem/Sur Sem/Mal Sem/Fem  (ant m)  (ant f) cog ;
+  	
+#!! * Rules for removing some Props which are identical to common nouns
+REMOVE:Prop=noun Prop IF (0 NOT-PROP OR PROP-ATTR + Pl OR PROP-SUR + Pl LINK *-1 BOS OR (":") BARRIER WORD) ;
+# Comment: Min Áigi is Prop but Áigi in the beginning of the sentence is not. Unnit is not Unni+Pl
+
+
+#!! *Removes __PropPl__, but problems with names as Davviriikkaid Ráđi, there we want Prop Pl
+REMOVE:PropPl (Prop Pl) IF (0 COMMON-N LINK NEGATE 1 ("ráđđi"))(NEGATE 0 VGen); 
+  	#$ Sápmelaččaide lea hui mávssolaš ahte sin dárbbut váldojit vuhtii. 
+  	#% Davviriikkaid Ráđi - It should not hit this 
+	
 	
 #!! *Select __PlcSur__ (Sem/Plc) (Sem/Sur) 
 SELECT:PlcSur0 Sem/Sur IF (0 (Prop Sem/Plc Ill)) (-1 Prop + Sem/Fem OR Prop + Sem/Mal)(*0 ("riŋget") OR ("čuojahit") BARRIER REAL-V OR S-BOUNDARY OR CC) ;
@@ -2153,8 +2180,6 @@ SELECT:SoriaMoria Attr (0 PROP-FIRST LINK 1 PROP-SECOND) ;
 #!! ! Rules for giving Attr to names, e.g. Ole Attr Kåven.
 
 
-LIST PROP-ATTR = Sem/Mal Sem/Sur Sem/Fem (ant m)  (ant f) ;
-LIST PROP-SUR = Sem/Sur Sem/Mal Sem/Fem  (ant m)  (ant f) cog ;
 
 #!! * __PropAttr__ 
 #SUBSTITUTE:PropAttr (Sg Nom) (Attr) PROP-ATTR + Nom (NOT 0 Attr LINK *1 PROP-SUR BARRIER REAL-WORD-NOT-ABBR OR COMMA)(NEGATE 0 Sem/Sur LINK -1 Sem/Fem OR Sem/Mal LINK 2 Sem/Fem OR Sem/Mal LINK 1 Sem/Sur) ;
@@ -2362,28 +2387,6 @@ REMOVE:Der/NomAg Der/NomAg IF (0 PrsPrc LINK 1 N LINK NEGATE 0 Prop)(NEGATE 1 (N
 
 #!! !!Propernouns
 
-#!! ! Removing or selecting proper nouns that are lookalikes
-
-#!! * __AvvilProp__ selects Prop for Avvil
-SELECT:AvvilProp Prop IF (0 ("Avvil")) ;
-	#$ Avvila dulvesuodjalan áššedovdibargojoavku.
-
-
-#!! * __SamediggiProp__ selects Prop after Ášši 01/12
-SELECT:SamediggiProp Prop IF (-2 ("ášši"))(-1 Num);
-	#$ Ášši 02/13 Sámedikki čoahkkinortnet.
-
-LIST NOT-PROP = "Vuoksá" "Áddjá" "Álgu" "Dronnet" "Heasta" "Stállu" "Fiske" "Guksi" "Gáldu" "Jávregáddi" "Návet" "Náhkki" "Njunni" "Áigi" "Ohcan" "Ose" "Ovdal" "Sieidi" "Profehta" "Muvra" "Náhkki" "Nuora" "Gielda" "Vuotna" "Vuoigŋa" "Vággi" "Skávžá" "Jávri" "Riidi" ;
-  	
-#!! * Rules for removing some Props which are identical to common nouns
-REMOVE:Prop=noun Prop IF (0 NOT-PROP OR PROP-ATTR + Pl OR PROP-SUR + Pl) ;
-# Comment: Min Áigi is Prop but Áigi in the beginning of the sentence is not. Unnit is not Unni+Pl
-
-
-#!! *Removes __PropPl__, but problems with names as Davviriikkaid Ráđi, there we want Prop Pl
-REMOVE:PropPl (Prop Pl) IF (0 COMMON-N LINK NEGATE 1 ("ráđđi"))(NEGATE 0 VGen); 
-  	#$ Sápmelaččaide lea hui mávssolaš ahte sin dárbbut váldojit vuhtii. 
-  	#% Davviriikkaid Ráđi - It should not hit this 
 
 #!! * __PropVfin__ selects propernouns which can be Vfin in the beginning of a sentence
 SELECT:PropVfin_a Prop IF (0 VFIN - Qst LINK *-1 BOS BARRIER WORD)((1 VFIN + Sg3) OR (1 COMMA LINK 1 Imprt + Sg2)) ;
