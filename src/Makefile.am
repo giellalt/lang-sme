@@ -423,6 +423,7 @@ generator-gt-%.$(1): generator-gt-%.tmp.$(1) \
 					 filters/make-optional-allegro-tags.$(1) \
 					 filters/make-optional-coll-tags.$(1)    \
 					 filters/make-optional-lang_hom-tags.$(1) \
+					 filters/rename_optional-POS_before_Der-tags.$(1) \
 					 filters/remove-Err_SpaceCmp-strings.$(1) \
 					 filters/remove-Use_GC-strings.$(1) \
 					 filters/remove-Use_minus_PMatch-tags.$(1) \
@@ -431,6 +432,7 @@ generator-gt-%.$(1): generator-gt-%.tmp.$(1) \
 				@\"filters/make-optional-allegro-tags.$(1)\"  \
 			.o. @\"filters/make-optional-coll-tags.$(1)\"     \
 			.o. @\"filters/make-optional-lang_hom-tags.$(1)\" \
+			.o. @\"filters/rename_optional-POS_before_Der-tags.$(1)\" \
 			.o. @\"filters/remove-norm-comp-tags.$(1)\"           \
 			.o. @\"filters/remove-derivation-position-tags.$(1)\" \
 			.o. @\"filters/remove-Use_minus_PMatch-tags.$(1)\"   \
@@ -450,12 +452,14 @@ generator-oahpa-gt-norm.%: generator-oahpa-gt-norm.tmp.% \
 					filters/remove-norm-comp-tags.%             \
 					filters/remove-derivation-position-tags.% \
 					filters/make-optional-allegro-tags.% \
+					 filters/rename_optional-POS_before_Der-tags.% \
 					filters/remove-Err_SpaceCmp-strings.% \
 					filters/remove-Use_GC-strings.% \
 					filters/remove-Use_minus_PMatch-tags.% \
 					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/make-optional-allegro-tags.$*\"  \
+			.o. @\"filters/rename_optional-POS_before_Der-tags.$*\" \
 			.o. @\"filters/remove-norm-comp-tags.$*\"             \
 			.o. @\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"   \
