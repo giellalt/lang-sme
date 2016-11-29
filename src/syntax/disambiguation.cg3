@@ -565,23 +565,23 @@ SET NOT-PRFPRC = WORD - PrfPrc ; #!! NOT-PRFPRC
 #!! !Sets for person
 # - - - - 
 
-LIST SG1-V = (V Sg1)  ;
+LIST SG1-V = (V Sg1) (v p1 sg)  ;
  
-LIST SG2-V = (V Sg2) ;
+LIST SG2-V = (V Sg2) (v p2 sg) ;
  
-LIST SG3-V = (V Sg3) ;
+LIST SG3-V = (V Sg3) (v p3 sg) ;
  
-LIST DU1-V = (V Du1) ;
+LIST DU1-V = (V Du1) (v p1 du) ;
  
-LIST DU2-V = (V Du2) ;
+LIST DU2-V = (V Du2) (v p2 du) ;
  
-LIST DU3-V = (V Du3) ;
+LIST DU3-V = (V Du3) (v p3 du) ;
  
-LIST PL1-V = (V Pl1) ;
+LIST PL1-V = (V Pl1) (v p1 pl) ;
  
-LIST PL2-V = (V Pl2) ;
+LIST PL2-V = (V Pl2) (v p2 pl) ;
  
-LIST PL3-V = (V Pl3) ;
+LIST PL3-V = (V Pl3) (v p3 pl) ;
 
 #SET POSITIVE-V = SG1-V OR SG2-V OR SG3-V OR DU1-V OR DU2-V OR DU3-V OR PL1-V OR PL2-V OR PL3-V ;  This set doesn't function in Apertium
 
@@ -2638,8 +2638,9 @@ SELECT:NomACR Nom IF (0 ACR OR ABBR)(-1 BOS)(1 PUNCT) ;
 #!! * __Aifeambbo__ selects A after eambbo
 SELECT:Aifeambbo A - Px IF (-1 ("eambbo") OR ("eanet"))(NEGATE 0 Pl);
 	#$ Muhto eambbo eahpidahtti lea čielggadusa s. 17 cealkámuš.
+	
 
-#SELECT:Aeambbo Attr IF (0 ("eanet") OR ("eambbo") LINK 1 N)(NEGATE -1 ("ahte"));
+#SELECT:Aeambbo (Comp Attr) IF (0 ("eanet") OR ("eambbo") LINK 1 N)(NEGATE -1 ("ahte"));
 	#$ Diŋgojitgo eambbo biergu?
 
 #SELECT:r1306 Adv IF (0 ("eambbo"));
@@ -4753,7 +4754,7 @@ REMOVE:VSg3Lookalikes (V Sg3) + Ind IF ((*-1C VFIN BARRIER S-BOUNDARY OR REAL-V 
 
 
 #!! * __VPl3NotSg2BefPassive__ removes Sg2 for Pl3 and Inf before passive (r985)
-REMOVE:r985 (Prt Sg2) IF (NEGATE *-1 (Pron Pers Sg2))(0 (Prs Pl3))(*1 Der/Pass BARRIER NOT-ADV);
+REMOVE:r985 Prt + Sg2 IF (NEGATE *-1 (Pron Pers Sg2))(0 Prs + Pl3 )(*1 Der/Pass BARRIER NOT-ADV);
  	#$ Reivelonuhallan sámi institušuvnnaiguin galgá dahkkot sáme- ja dárogillii. 
 	# Probably not prodrop if passivized Sg2.
 
@@ -5047,8 +5048,16 @@ SELECT:eanasAdv Adv IF (-1 COPULAS)(0 ("eanas") OR ("eanaš"))(1 N)(NEGATE 1 TIM
 	
 SELECT:eanasAttr (A Attr) IF  (-1 V OR Acc)(0 ("eanas" A) OR ("eanaš" A))(1 N LINK NOT 0 Ill);
 	#$ Ná sáhttá geavvat eanas geasi.
+
+#SET A-COMP = ("unni") + Comp ;	#doesn't funcion
+#
+#SELECT:Aeambbo Attr IF (0 $$A-COMP LINK -1 ("ahte") OR ("ja") LINK -1 $$A-COMP) ;
+#SELECT:Aeambbo Attr IF (0 $$A-COMP LINK 1 ("ahte") OR ("ja") LINK 1 $$A-COMP) ;
+#
+
     
-SELECT:CompahteComp (A Comp) (-1 ("ahte") LINK -1 (A Comp)) ;     
+SELECT:CompahteComp (A Comp) (-1 ("ahte") OR ("ja") LINK -1 (A Comp)) ;     
+SELECT:CompahteComp (A Comp) (1 ("ahte") OR ("ja") LINK 1 (A Comp)) ;     
 	#$ Dat šattai heajut ahte heajut.
     
 REMOVE:A A IF (*-1 IV BARRIER SV-BOUNDARY OR CC LINK NOT 0 COPULAS OR ("áibbas") OR Indef)(0 Adv)(1 EOC);
@@ -8177,7 +8186,7 @@ SELECT:TEST OBJ + V OR SUBJ + V OR V + @>N ;
 #!! * __X__
 REMOVE:X (@X) ;
 
-#SELECT:Sg2 (V Prt Sg2) IF (0 (Prs Pl3) LINK *-1 BOS BARRIER WORD)(NEGATE 1 go LINK 1 HAB-ACTOR + Loc) ;
+#SELECT:Sg2 (V Prt Sg2) IF (0 Prs + Pl3  LINK *-1 BOS BARRIER WORD)(NEGATE 1 go LINK 1 HAB-ACTOR + Loc) ;
 
 SELECT:Adv Adv (0 A LINK 1 @+FMAINV OR @+FAUXV)(-1 N) ;
 	#$ Tommi ja Annika dárkilit geahččaba Pippi oaidnin dihte mo diŋggaohccit barget.
@@ -11490,7 +11499,7 @@ REMOVE:r2905 SG1-V IF (0 PrfPrc OR Actio)(*1C VFIN BARRIER S-BOUNDARY);
 SELECT:r2907_Pl3 (Prt Pl3) IF (*0 Pl)(*1 PAST-MARKER BARRIER SV-BOUNDARY);
 
 #!! * --r2907__Sg2__ Prt Sg2 if ikte etc.
-SELECT:r2907_Sg2 (Prt Sg2) IF (NOT *0 Nom + Pl)(*1 PAST-MARKER BARRIER SV-BOUNDARY);
+SELECT:r2907_Sg2 Prt + Sg2 IF (NOT *0 Nom + Pl)(*1 PAST-MARKER BARRIER SV-BOUNDARY);
 	#$  Vulget go ikte?
 
 
@@ -11502,7 +11511,7 @@ SELECT:r2909 SG2-V IF (*-1 CC BARRIER NOT-ADV LINK *-1 CP LINK *-1C SG2-V BARRIE
 	#$  Don oainnát mo olbmot bahkkejit du birra, ja de jearat vel...
 #fk 16
 
-SELECT:r2910 (V Sg2) IF (*-2C (V Sg2) BARRIER VFIN)(-1 CS)(NEGATE *1 PxPl3);
+SELECT:r2910 (V Sg2) IF (*-2C V + Sg2 BARRIER VFIN)(-1 CS)(NEGATE *1 PxPl3);
 	#$  Don it beasa doppe olggos ovdal go leat máksán.
 #fk 498
 
@@ -11512,20 +11521,20 @@ REMOVE:CopNotPl ("leat" Pl1) OR ("leat" Pl3) IF (*1 (Sg Nom) - Coll - Indef OR (
 	#$ Leat go okto áigume herskkostallat? 
 #fk 3152 
 
-REMOVE:r2912 (Prs Pl1) IF (-2 BOS)(-1 ("jus") OR ("jos") OR ("juos") OR ("joas"))(0 (Prs Sg2))(*1 ("de") BARRIER (Sg2 Nom));
+REMOVE:r2912 Prs + Pl1  IF (-2 BOS)(-1 ("jus") OR ("jos") OR ("juos") OR ("joas"))(0 (Prs Sg2))(*1 ("de") BARRIER (Sg2 Nom));
 	#$  Jus leat buohcamin, de fertet...
 #fk 135
 
-REMOVE:r2913 (V Sg2) IF (1 CC)(2 VFIN)(NEGATE 2 Sg2);
+REMOVE:r2913 V + Sg2 IF (1 CC)(2 VFIN)(NEGATE 2 Sg2);
 	#$  Buođđomuoraid maid ráhkadit olbmot gárvvisin dassá go deatnu leahkkasa, čuolddaid čohket ja ráhkadit oar-julggiid.
 
-REMOVE:r2914 (V Sg2) IF (0 COPULAS)(*1 (Pl Nom) BARRIER NOT-ADV-PCLE);
+REMOVE:r2914 V + Sg2 IF (0 COPULAS)(*1 (Pl Nom) BARRIER NOT-ADV-PCLE);
 	#$  Leatgo doppe olu gávppit?
 
-REMOVE:r2915 (V Sg2) IF (*-1 (Num Nom) BARRIER NOT-NPMOD);
+REMOVE:r2915 V + Sg2 IF (*-1 (Num Nom) BARRIER NOT-NPMOD);
 	#$  Gitta guhtta hearggi sáhttet leat ovtta ráiddus.
 	
-SELECT:r2916 (V Sg2) IF (0 Pl1 OR Pl3)(*1C (V Sg2) OR PxSg2 BARRIER VFIN OR (":"));	
+SELECT:r2916 V + Sg2 IF (0 Pl1 OR Pl3)(*1C V + Sg2 OR PxSg2 BARRIER VFIN OR (":"));	
 	#$  Jus dulvvi niegadat, de boađát gullat unohis šlárvaságaid.
 
 
@@ -11550,10 +11559,10 @@ SELECT:r2916 (V Sg2) IF (0 Pl1 OR Pl3)(*1C (V Sg2) OR PxSg2 BARRIER VFIN OR (":"
  # Prs Du1 = Prt Pl3 (even syllable verbs); also similar to Prs Sg3 of other verbs.
 
 #!! * __MunJaDonDu__ selects Du1 if Mon V ja don V de V-Du2
-SELECT:MunJaDonDu (V Du1) IF (*-1 CC OR ("de") BARRIER VFIN LINK *-1C (V Sg2) BARRIER VFIN LINK *-1C (V Sg1) BARRIER VFIN);
+SELECT:MunJaDonDu (V Du1) IF (*-1 CC OR ("de") BARRIER VFIN LINK *-1C V + Sg2 BARRIER VFIN LINK *-1C (V Sg1) BARRIER VFIN);
 
 #!! * __DonJaMunDu__ selects Du1 if Don V ja mun V de V-Du2
-SELECT:DonJaMunDu (V Du1) IF (*-1 CC OR ("de") BARRIER VFIN LINK *-1C (V Sg1) BARRIER VFIN LINK *-1C (V Sg2) BARRIER VFIN);
+SELECT:DonJaMunDu (V Du1) IF (*-1 CC OR ("de") BARRIER VFIN LINK *-1C (V Sg1) BARRIER VFIN LINK *-1C V + Sg2 BARRIER VFIN);
 	#$  Jus lean váiban ja don maid leat váiban, de manne nohkkat hui árrat.
 	
 #!! The previous two rules look marginal.	
@@ -11612,12 +11621,12 @@ REMOVE:allSg2leat Sg2 IF (0 ("leat" Prs Pl3));
 
 
 #!! * __allPrsPl3__ removes PrsPl3 if PrtSg2 initially
-REMOVE:allPrsPl3 (Prs Pl3) IF (0 (Prt Sg2) LINK *-1 BOS BARRIER NOT-ADV);
-REMOVE:allPrsPl1 (Prs Pl1) IF (0 (Prt Sg2) LINK *-1 BOS BARRIER NOT-ADV)(*1 ("?"));
+REMOVE:allPrsPl3 Prs + Pl3  IF (0 Prt + Sg2 LINK *-1 BOS BARRIER NOT-ADV);
+REMOVE:allPrsPl1 Prs + Pl1  IF (0 Prt + Sg2 LINK *-1 BOS BARRIER NOT-ADV)(*1 ("?"));
 	#$ Oidnet go dan?
 
 #!! * __allPrtSg2__ removes PrtSg2 if PrsPl3
-REMOVE:allPrtSg2 (Prt Sg2) IF (0 (Prs Pl3) OR (Prs Pl1) OR (Imprt Pl2));
+REMOVE:allPrtSg2 Prt + Sg2 IF (0 Prs + Pl3 OR Prs + Pl1 OR Imprt + Pl2);
 
 
 #!! !!Rules for a special infinitive construction
@@ -12262,16 +12271,16 @@ SELECT:cleanSemClass Sem/Ani (0 Sem/Hum) ;
 #!! !!!VERBS
 #REMOVE:InfifVFIN Inf (0 VFIN + FMAINV LINK NOT 0 SUBJ OR OBJ LINK NEGATE *-1 AUX - Inf OR PrfPrc)(*0 REAL-V BARRIER S-BOUNDARY) ;
 
-SELECT:SSg2Qst (V Sg2)(0 (V Pl1))((0 Qst) OR (1 Qst)) ;
-SELECT:SSg2Interr (V Sg2)(0 (V Pl1) LINK *-1 Interr) ;
+SELECT:SSg2Qst V + Sg2 (0 (V Pl1))((0 Qst) OR (1 Qst)) ;
+SELECT:SSg2Interr V + Sg2 (0 (V Pl1) LINK *-1 Interr) ;
 	#$ Makkár musihka guldalat millosepmosit?
 
-SELECT:SSg2Qst (V Sg2)(0 (V Pl1) LINK *-1 CS)(NEGATE *0 Pl1) ;
-SELECT:SSg2Pot (V Sg2)(0 (V Pot Pl1)) ;
+SELECT:SSg2Qst V + Sg2 (0 (V Pl1) LINK *-1 CS)(NEGATE *0 Pl1) ;
+SELECT:SSg2Pot V + Sg2 (0 (V Pot Pl1)) ;
 SELECT:Pl3Pot Pl1 IF (0 (Pot Pl3) LINK *0 Pl1 OR Sg1) ;
 SELECT:Pl3Pot Pl3 IF (0 (Pot Pl1) LINK *0 Pl3) ;
 SELECT:Pl1 Pl1 IF (*-1C Pl1 LINK NOT 0 Loc) ;
-REMOVE:Pl1 Pl1 IF (0 (Prs Pl3))((*-1 Loc OR (Pl Nom) OR (Sg Nom) OR Pl3 OR (Num Nom) BARRIER VFIN) OR (*1 ("?"))) ;
+REMOVE:Pl1 Pl1 IF (0 Prs + Pl3 )((*-1 Loc OR (Pl Nom) OR (Sg Nom) OR Pl3 OR (Num Nom) BARRIER VFIN) OR (*1 ("?"))) ;
 SELECT (V Pl1) (0 (V Pl3) LINK NOT 0 Inf) ;
 REMOVE:ImprtifVFIN Imprt (0 VFIN LINK NOT -1 BOS)(NEGATE 0 Pl2 LINK -1 ("de") LINK *-1 Pl2)  ;
 
