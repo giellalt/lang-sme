@@ -2154,9 +2154,10 @@ SELECT:PlcSur1 Sem/Sur  IF (0 Sem/Plc LINK *-1 Sem/Fem OR Sem/Mal OR <vdic> BARR
 SELECT:PlcSur2 Sem/Sur IF (0 (Prop Sem/Plc Com)) (NEGATE 0 SAPMI OR SUOPMA)   ;
   	#$ Mun bohten Trosterudain.
 
-SELECT:PlcSur3 Sem/Sur IF (0 (Prop Sem/Plc Loc)) (*0 ("jearrat") BARRIER Loc OR REAL-V OR S-BOUNDARY OR CC) ;
+SELECT:PlcSur3 Sem/Sur IF (0 (Prop Sem/Plc Loc)) (*0 ("jearrat") BARRIER Loc OR REAL-V OR S-BOUNDARY OR CC LINK NEGATE 0 ("jearahit")) ;
 	#$ Mun jerren juoidá eksámena birra Trosterudas.
   	#$ Mun jerren juoidá eksámena birra Trosterudas Guovdageainnus.
+  	#% Mátkkálaččat Norggas jearahit dákkár vásáhusaid.
 
 SELECT:PlcSur4 Sem/Sur IF (0 (Prop Sem/Plc Ill) LINK NOT 0 Pron)(*0 VERBAL-ACTIVITY-V OR ACC-ILL-V BARRIER REAL-V OR S-BOUNDARY OR CC) ;
 	#$ Atte reivve Trosterudii.
@@ -2175,10 +2176,10 @@ LIST PROP-SECOND = ("Moria.*"r) ("Potter.*"r) "Sarvvis" "Ipmil"  ;
 
 
 #!! * __SoriaAttr__  Soria Attr Moria, Harry Attr Potter-girji
-COPY:SoriaAttr Attr EXCEPT (Nom Gen Acc Sg) TARGET PROP-FIRST (NOT 0 Attr)(*1 PROP-SECOND BARRIER REAL-WORD-NOT-ABBR) ;
+COPY:SoriaAttr Attr EXCEPT (Nom Gen Acc Sg) TARGET PROP-FIRST (NOT 0 (Prop Attr))(*1 PROP-SECOND BARRIER REAL-WORD-NOT-ABBR) ;
 
 #!! * __SoriaMoria__
-SELECT:SoriaMoria Attr (0 PROP-FIRST LINK 1 PROP-SECOND) ;
+SELECT:SoriaMoria PROP-FIRST + Attr IF (1 PROP-SECOND) ;
 	#$ Soria Moria-julggaštusas definerejuvvojedje davviguovllut Norgga deaŧaleamos nannensuorgin boahttevaš jagiid.
 
 #!! ! Rules for giving Attr to names, e.g. Ole Attr Kåven.
@@ -2203,6 +2204,14 @@ REMOVE:SouthLoc (South) ;
 #REMOVE:SouthLoc (N Sg Loc South) OR (A Sg Loc) IF (0 Ess)(NEGATE 0 Actio LINK NOT 0 ESS-ADVL-N)(NEGATE -1 CC LINK -1 Loc LINK NOT 0 Ess);
  	#$ girkun # This is a rule that prevents southern dialectal forms to destroy the rest of the # parser. It should be commented out whenever analysing texts with Locative -n only. # All words with Cg will avoid this rule, since e.g. várin is southern Loc only.
 	#$ Luossa-bivdin joddu-buođuin deanus.  
+
+
+#!! * __Apertium-rule__ we want Num as alternativ to Ord reading  
+#COPY:Apertium (Num Arab Sg Nom addsent) EXCEPT (A Ord Attr) TARGET (ord) ;
+#COPY:Apertium (Num Sem/Year Sg Nom) EXCEPT (A Ord Attr) TARGET (ord) ;
+#REMOVE:TestNum (ord) IF (1 ("[a-z].*"r)) ;
+#
+#ADDCOHORT ("<.>" "." sent) AFTER (Num Arab Sg Nom addsent) ;
 
 SECTION
 
@@ -2918,8 +2927,14 @@ SELECT:eanetAdv3 Adv IF (0 ("uhcit") OR ("unnit") OR ("eanet")) (1 go LINK 1 Num
 	#$ Go eaiggát eanet unnit čielgasit dasa lea miehtan.
 	#$ Mearrádusaid gittaopmodaga luobaheamis, mat leat dahkkojuvvon uhcit go njealji stivrralahtu doarjagiin, ferte Sámediggi ja Finnmárkku fylkkadiggi dohkkehit.
 
-SELECT:eanetAdv3 ("eanet" Adv) IF (1 A-CASE OR REAL-V - ("leat") LINK NEGATE *1 N BARRIER NOT-A-ADV) ;
+SELECT:eanetAdv3 ("eanet" Adv) IF (1 A-CASE OR REAL-V - ("leat") LINK *1 N BARRIER NOT-A-ADV)(NEGATE 1 (N Pl)) ;
 	#$ Báhkkodeamis ferte leat sáhka geavaheamis mii lea oktoráđđejeaddji dahje ainjuo čielgasit eanemus čalbmáičuohcci.
+	#% 2010 rájes leat ceggejuvvon eanet sajit go dan mii lei vurdojuvvon.
+SELECT:eanetAdv4 ("eanet" Adv) IF (1 Inf LINK NEGATE 1 N)(NEGATE 0 (A Pl) OR (Pron Pl) LINK 1 VFIN + Pl3) ;
+
+REMOVE:eanetAdv3 ("eanet" Adv) IF (*1 (N Pl) BARRIER NOT-A) ;
+	#$ 2010 rájes leat ceggejuvvon eanet bargosajit go dan mii lei vurdojuvvon.
+
 	
 REMOVE:eanetV V IF (0 ("eanet" Adv))((*0 COPULAS BARRIER S-BOUNDARY) OR (*1 N BARRIER NOT-A-ADV LINK *-1 ("eanet") LINK -1 VFIN)) ;	
 	#$ Dál go ruhtadilli lea buoret go ovdal, de leat gávttis eanet čiŋat.
@@ -10984,7 +10999,7 @@ SELECT:LocdynamicVR (Pl Loc) IF  (*-1 DYNAMIC-V - ABSTR-ENTITY-COM-V OR ("dahkat
 	#$ Oahppit bohte dábálaččat vuođđoealáhusain.
  # ABSTR-ENTITY-COM-V
 
-SELECT:LocdynamicVL (Pl Loc) IF (0 (Sg Com) LINK NOT 0 TOOL OR ABSTR-TOOL OR WRITING-TOOL OR CONCEPT OR HUMAN OR VEHICLE OR BODY)(*1 DYNAMIC-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf);
+SELECT:LocdynamicVL (Pl Loc) IF (0 (Sg Com) LINK NOT 0 TOOL OR PROSEANTA OR ABSTR-TOOL OR WRITING-TOOL OR CONCEPT OR HUMAN OR VEHICLE OR BODY)(*1 DYNAMIC-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf);
 	#$ Sámi guovlluin ožžo Sámeparlameantta Suoma beallái jagi 1976. 
   	#$ Mánáidgirjjiin muitaluvvo dávjá govt olbmuid mánát deivet nuppi máilmmi ássiid.
 	#$ Guovlluid dearvvašvuođafitnodagain gáibiduvvojit dakkár rutiinnat.
@@ -11281,7 +11296,7 @@ SELECT:NoVerbCom (Sg Com) IF (0 (Pl Loc) LINK *-1 ("mii" Interr Acc) BARRIER VFI
 
 
 
-REMOVE:KillLocPl (Pl Loc) IF (0 (Sg Com) LINK 0 TOOL OR Sem/Clth OR Sem/Body OR Sem/Money OR Sem/Sign OR Sem/Perc-emo OR Sem/Lang OR Sem/Domain - ("ealáhus") OR VEHICLE OR Sem/Feat-phys OR Sem/State-sick OR ("lasáhus") OR ("tihttel") LINK NOT 0 ("čalbmi") OR ("suotna")) (NEGATE -1 (Dem Pl Loc))(NEGATE 0 (Pl Loc) LINK *-1 OKTA BARRIER NOT-NPMOD)  ;
+REMOVE:KillLocPl (Pl Loc) IF (0 (Sg Com) LINK 0 TOOL OR Sem/Clth OR Sem/Body OR Sem/Money OR Sem/Sign OR Sem/Perc-emo OR Sem/Lang OR Sem/Domain - ("ealáhus") OR VEHICLE OR PROSEANTA OR Sem/Feat-phys OR Sem/State-sick OR ("lasáhus") OR ("tihttel") LINK NOT 0 ("čalbmi") OR ("suotna")) (NEGATE -1 (Dem Pl Loc))(NEGATE 0 (Pl Loc) LINK *-1 OKTA BARRIER NOT-NPMOD)  ;
 
 REMOVE:KillComSg (Sg Com) IF (0 (Pl Loc)) ;
 	#$ Giellakantuvrras ii leat formála váldi álggahit gielladoaimmaid etáhtain, muhto veahkehit.
