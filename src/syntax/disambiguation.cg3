@@ -49,7 +49,7 @@
 #!! !!!DELIMITERS 
 # =============== #
 
-DELIMITERS = "<.>" "<!>" "<?>" "<...>" "<¶>" "<..>" "<!.>" "<?.>" "<¶.>"  sent  ; 
+DELIMITERS = "<.>" "<!>" "<?>" "<...>" "<¶>" "<..>" "<!.>" "<?.>" "<¶.>" (sent) sent  ; 
 #!! Sentence delimiters are the following: <.> <!> <?> <...> <¶>
 
 #PARENTHESES = "<$(>" "<$)>" "<$[>" "<$]>" "<${>" "<$}>" "<$«>" "<$»>" ;
@@ -4054,6 +4054,7 @@ SELECT:goson Pcle IF (NEGATE -2 CLB)(-1 Qst OR go)(0 ("son"))(1 Nom LINK NEGATE 
 SELECT:nuPlce Pcle IF (-1 ("mii" Indef) OR ("gii") OR ("gos"))(0 ("nu")) ;  #because of Apertium
 REMOVE:nuPlce Pcle IF (0 ("nu")) ; 
 	
+IFF:dePcle ("de" Pcle) IF (-1 N LINK NOT *-1 REAL-V) ;
 
 #!! * __sutnje__ ( = forms of the verb "suotnjat")
 SELECT:sutnje_a (Pron Ill) IF (0 ("son"))(1 (Pron Rel Sg));
@@ -4827,7 +4828,7 @@ SELECT:PrsPrcA PrsPrc - ("oahpahit") IF ((-1 GRADE-ADV LINK 2 N) OR (1 ("ja") OR
  	#$ Mudden ferte dagahit janza ja hui vahágahtti meassamiid.
 #!! Early rule since many PrsPrc readings are removed later.
 
-SELECT:PrsPrcAdvl PrsPrc IF ((-1 PLACE + Loc) OR (-1 PLACE-PO LINK -1 Gen))(NEGATE 0 VFIN LINK *-1 (Nom Sg)) (1 N);
+SELECT:PrsPrcAdvl PrsPrc IF ((-1 PLACE + Loc) OR (-1 PLACE-PO LINK -1 Gen) OR (-1 Adv LINK *-1 BOS OR (":") BARRIER NOT-ADV-PCLE))(NEGATE 0 VFIN LINK *-1 (Nom Sg)) (1 N);
 	#$ Finnmárkkus ássi olbmuid divat ii galgga leat alit go guovtti dan mađe go gielddas ássi olbmuid divat.
 	#$ Uvnna duohken orru sáhpánat rikkerejit beaivvi.
 	#$ Guhkkelis boaittobeale orru mánát bohte Gárdima ja Mollešjoga, Šuoššjávrri ja Iešjohleagi duoddarstobuin.
@@ -7395,7 +7396,7 @@ SELECT:ActEssIfSensationv (Actio Ess)  IF (-1 Acc LINK *-1 PERCEPTION-V OR DADJA
 	#$ Go gulan olbmuid sámásteame, de lea dego doložii máhccat, go mánnán gullen áhči, eagi ja Ristiinna-imi humadeame.
 
 #!! * __NoActorIfSg3__
-REMOVE:NoActorIfSg3 Actor IF (0 VFIN + Sg3)(NEGATE 0 Gen LINK 1 Po) ;
+REMOVE:NoActorIfSg3 Actor IF (0 VFIN + Sg3)(NEGATE 0 Gen LINK 1 Po OR N) ;
 	#$ Heasta čuožžu golmma juolggi nalde.
 	#$ Dat orru buorre fanas.
 	#% Muhto sárgu mielas dárbbaša sámi servvodat eambbo ironiija.
@@ -12333,9 +12334,10 @@ SELECT:Nom Nom (0 DEHALAS + Attr LINK -1 COPULAS + FMAINV) ;
 REMOVE:GenAllegro Allegro IF (0 Gen - Allegro)  ;
 SELECT:NvsA1 A + Com (0 N)(1 N + Com) ;
 SELECT:NvsA2 N (0 A + Sg) (*-1 Pl3 OR Sem/Rule BARRIER VFIN OR N) ;
-
-SELECT:NvsA3 A (0 N)((1 CC LINK 1 A) OR (-1 CC LINK -1 A)) ;
-SELECT:NvsA4 A (0 N)((*-1 Ill OR ("orrut") OR COPULAS BARRIER SV-BOUNDARY OR N) OR (1 Ill))(NOT 1 Inf) ;
+SELECT:NvsA3 N (0 A LINK -1 N + Gen OR Pron + Gen)  ;
+SELECT:NvsA4 A (0 N)((1 CC LINK 1 A) OR (-1 CC LINK -1 A)) ;
+SELECT:NvsA5 A (0 N)((*-1 Ill OR ("orrut") OR COPULAS BARRIER SV-BOUNDARY OR N) OR (1 Ill))(NOT 1 Inf) ;
+SELECT:NvsA6 N (0 A) ; 
 
 #!! * __cleanSemClass__ cleans up if a word has more semclasses. This is just a start.
 SELECT:cleanSemClass Sem/Fem OR Sem/Mal (1 FAMILY OR NON-FAMILY) ;
