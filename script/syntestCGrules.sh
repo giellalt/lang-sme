@@ -1,7 +1,7 @@
 # Skript for å teste analysen av testkorpus.txt og divgullkorpus.txt med sme.fst og sme-dis.rle opp mot gullversjon.
 
 # Analyserer testkorpusene:
-cat $GTBIG/sme-goldcorpus.txt | preprocess --abbr=$GTHOME/gt/sme/bin/abbr.txt | $LOOKUP $GTHOME/gt/sme/bin/sme.fst | lookup2cg | vislcg3 -g $GTHOME/gt/sme/src/sme-dis.rle | vislcg3 -g $GTHOME/gtcore/gtdshared/smi/src/syntax/functions.cg3 > $GTHOME/gt/sme/dev/syntestdis
+cat $GTBIG/sme-goldcorpus.txt | preprocess --abbr=$GTHOME/gt/sme/bin/abbr.txt | $LOOKUP $GTHOME/gt/sme/bin/sme.fst | lookup2cg | vislcg3 -g $GTHOME/gt/sme/src/sme-dis.rle | vislcg3 -g $GTHOME/giella-shared/smi/src/syntax/functions.cg3 > $GTHOME/gt/sme/dev/syntestdis
 
 
 # Fjerner semantiske tagger, # osv:
