@@ -1892,6 +1892,8 @@ LIST MONEY = "ánsu" "árvu" (".*bálká"r) (".*bušeahtta"r) (".*buhtadus"r) "d
 
 SET ABSTR-ENTITY = MONEY OR STATE OR OTHER-ABSTR-ENTITY ;
 
+LIST MEASUREADJS = "ruvdnosaš" "kruvdnosaš" ; # more adjs denoting measure in here, blocking Num + Gen (Ožžon 10 ruvdnnosaš buhtadusa)
+
  
 LIST GEN-CONCEPT = "anistupmi" "álgu" "áŋgirvuohta" "áigumuš" "árbevierru" "ávžžuhus" 
 "ballu" "bálvaleapmi" "bálvaluskvaliteahtta" "bargomálle" "boađus" "dárbu" "dássi" "doaibma" "duođaštangeatnegasvuohta" "duogáš" "eaiggátvuohta" "eallinvuohki" "erohus" "evttohus" 
@@ -3076,7 +3078,7 @@ SELECT:maninAdv ("manin" Adv) IF (NEGATE *-1 REAL-V BARRIER S-BOUNDARY)(NEGATE 0
 	#% Manin don geavahat dan?
 
 #!! * __manneAdv__
-SELECT:manneAdv1 ("manne" Adv)  IF (*-1 BOC OR PUNCT BARRIER NOT-ADV-PCLE)(*1 VFIN BARRIER S-BOUNDARY OR CC LINK NOT 0 N)(NEGATE 0 Qst)(NEGATE 1 Qst)(NEGATE -1 ("de")); 
+SELECT:manneAdv1 ("manne" Adv)  IF (*-1 BOC OR PUNCT OR COMMA BARRIER NOT-ADV-PCLE)(*1 VFIN BARRIER S-BOUNDARY OR CC LINK NOT 0 N)(NEGATE 0 Qst)(NEGATE 1 Qst)(NEGATE -1 ("de")); 
 	#$ Ja manne moraštehpet biktasiid dihtii? 
 	#$ Naba dii, manne dii ieža rihkkubehtet Ipmila báhkkomiid?
 	#$ Manne dis leat diekkár bahás jurdagat din váimmuin?
@@ -9761,7 +9763,7 @@ SELECT:ALU3 Acc IF (0 Num LINK 1 Num LINK 1 ALU);
 #Not-so-exceptional?
 
 #!! * __NewGen__ (complement of numerals) Selects Gen Sg when Num Sg to the left ''guhtta kilu''
-SELECT:NewGen (Sg Gen) OR CURRENCY + Gen  IF (0 (N Acc) LINK *-1 NUM + Sg BARRIER NOT-A - (Pron Indef Attr) - Gen OR COMMA OR (":") LINK 0 Nom OR Acc)(NEGATE -1 ("moadde") OR CURRENCY) ;
+SELECT:NewGen (Sg Gen) OR CURRENCY + Gen  IF (0 (N Acc) LINK *-1 NUM + Sg BARRIER MEASUREADJS OR NOT-A - (Pron Indef Attr) - Gen OR COMMA OR (":") LINK 0 Nom OR Acc)(NEGATE -1 ("moadde") OR CURRENCY) ;
 	#$ Juohke heasta borrá sullii guhtta kilu suinniid beaivái.
 	#$ Dán skuvllas ledje jahkásaččat sullii 20 oahppi geat iešdáhtolaččat bohte deike, ja buohkat ledje lullisámit.
 	#$ Do bohtet guokte olbmo.
@@ -9852,10 +9854,14 @@ REMOVE:NomIfNum (Num Acc) IF (1 (N Gen))(2 NOT-FAUXV + TRANS-V)(*3 (N Acc) BARRI
 	#$ Máŋga gávpeolbmá lonuhedje fáhcaid gálvvuiguin.
 	#Comment: The subject is a numeral.
 
+#!! __NumGenMeasure__ Genitive numerals in front of ruvdnosaš with friends
+SELECT:NumGenMeasure (Num Gen) IF (1 MEASUREADJS)(2 N);
+	#$ Lágamánneriekti maid dubmii dievddu máksit 130 000 kruvdnosaš buhtadusa gillájeaddjái.
+	#Comment: Goldcorpus has Gen on the numeral, hence Gen.
 
 
 #!! * __NumAcc2__ Selects Acc for singular numerals if there is a transitive verb somewhere in the sentence and the numeral is followed by a noun ''logi báhkkoma'' OBS
-SELECT:NumAcc2 Acc IF (0* NOT-FAUXV + TRANS-V BARRIER SV-BOUNDARY)(0 NUM + Sg LINK NOT 0 NUMUNIT OR Sem/Year)(*1 (N Acc) OR (N Gen) BARRIER NOT-Attr LINK NOT 0 Ill)(NEGATE *-1 COPULAS + FMAINV BARRIER SV-BOUNDARY)(NEGATE *-1 Der/Pass OR (Dem Nom) BARRIER NOT-ADV)(NEGATE *1 COPULAS + FMAINV BARRIER COMMA OR SV-BOUNDARY)(NEGATE -1 NUMMAR);
+SELECT:NumAcc2 Acc IF (0* NOT-FAUXV + TRANS-V BARRIER SV-BOUNDARY)(0 NUM + Sg LINK NOT 0 NUMUNIT OR Sem/Year)(*1 (N Acc) OR (N Gen) BARRIER NOT-Attr LINK NOT 0 Ill)(NEGATE *-1 COPULAS + FMAINV BARRIER SV-BOUNDARY)(NEGATE *-1 Der/Pass OR (Dem Nom) BARRIER NOT-ADV)(NEGATE *1 COPULAS + FMAINV BARRIER COMMA OR SV-BOUNDARY)(NEGATE -1 NUMMAR)(NOT 1 MEASUREADJS);
 	#$ Sii máhtte áddekeahttá bajillohkat logi báhkkoma ja Áhččámet.
 	#$ Áiggun dušše geahččat moadde filmma.
 	#$ Dákkár dáhpáhusat, ja máŋga iežá dáhpáhusa ja digaštallama dahke munnje persovnnalaččat váttisin dáid gažaldagaid mat bohciidedje Gáivuonas. 
@@ -9873,7 +9879,7 @@ SELECT:§Attr Attr (0 ("§") LINK 1 Num) ;
 	#$ Njuolggadusat nággolága § 204:s § 209 rádjái ožžot seammá geavahusa.
 
 #!! * __GenIfNum__ (complement of numerals) Selects Gen Sg if there is a Num Sg to your left ''guđa geardde'' 
-SELECT:GenIfNum (Gen Sg) OR CURRENCY + Gen  IF (*-1 NUM + Sg BARRIER NOT-A OR (":") LINK NOT 0 NUMUNIT OR Sem/Year)(0 (N Gen))(NEGATE 1 Po)(NEGATE -1 CC) ;
+SELECT:GenIfNum (Gen Sg) OR CURRENCY + Gen  IF (*-1 NUM + Sg BARRIER MEASUREADJS OR NOT-A OR (":") LINK NOT 0 NUMUNIT OR Sem/Year)(0 (N Gen))(NEGATE 1 Po)(NEGATE -1 CC) ;
 	#$ Mii finaimet doppe guđa geardde.
 	#$ Sii geat máhtte dušše moadde luođi, ohppe máŋga ođđa luođi internáhtas orodettiin.
 	#$ Viđa máná biktasat ledje jávkan.
@@ -11377,6 +11383,9 @@ SELECT:makkárAcc Acc (0 Gen LINK -1 MAKKAR)(NOT 0 TIME OR ROUTE) ;
 #!! * __DemAcc__ selects Den Acc after the last acc-disambiguation of nouns
 SELECT:DemAcc (Dem Acc)(0 Gen LINK 1C (N Acc)) ;
 	#$
+
+SELECT:MeasureAndAcc Acc (*-3 TRANS-V BARRIER NOT-NPMODADV)(-2 Num)(-1 MEASUREADJS);
+	#$ Lágamánneriekti maid dubmii dievddu máksit 130 000 kruvdnosaš buhtadusa gillájeaddjái.
 
 #!! * __KillAcc__ Removes Acc if you are Gen 
 REMOVE:KillAcc Acc IF (0 Gen) ;
