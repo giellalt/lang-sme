@@ -9,7 +9,7 @@ smecorp="$GTBIG"
 cat $smecorp/sme-goldcorpus.txt |\
     preprocess --abbr=$GTHOME/langs/sme/tools/preprocess/abbr.txt |\
     $LOOKUP $GTHOME/langs/sme/src/analyser-disamb-gt-desc.xfst |\
-    lookup2cg | vislcg3 -g /Users/ttr000/main/langs/sme/src/syntax/disambiguation.cg3 | \
+    lookup2cg | vislcg3 -g $GTHOME/langs/sme/src/syntax/disambiguation.cg3 | \
     perl -pe 's/ (Sem\/[^\s]+|Use\/[^\s]+|Allegro|Err\/Lex|Err\/Orth-\S+|Err\/Orth|Err\/UnspaceCmp|v\d)//g' | \
     perl -pe 's/ <[^>]+>//g' | \
     tr -d "#" | \
