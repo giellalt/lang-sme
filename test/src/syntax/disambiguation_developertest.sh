@@ -1,10 +1,26 @@
 # Skript for å teste analysen av testkorpus.txt og divgullkorpus.txt med sme.fst og sme-dis.rle opp mot gullversjon.
 
+# Lenes oppsett
+smecorp="$GTBIG"
+# Tronds oppsett
+#smecorp="$GTBIG/gt/sme/corp"
+
 # Analyserer testkorpus:
-cat $GTBIG/sme-goldcorpus.txt | preprocess --abbr=$GTHOME/langs/sme/tools/preprocess/abbr.txt | $LOOKUP $GTHOME/langs/sme/src/analyser-disamb-gt-desc.xfst | lookup2cg | vislcg3 -g $GTHOME/langs/sme/src/syntax/disambiguation.cg3 | perl -pe 's/ (Sem\/[^\s]+|Use\/[^\s]+|Allegro|Err\/Lex|Err\/Orth-\S+|Err\/Orth|v\d)//g' | perl -pe 's/ <[^>]+>//g' | tr -d "#" | perl $GTHOME/gt/script/sort-cg-cohort.pl | uniq > $GTHOME/langs/sme/test/data/disambiguationtestoutput
+cat $smecorp/sme-goldcorpus.txt |\
+    preprocess --abbr=$GTHOME/langs/sme/tools/preprocess/abbr.txt |\
+    $LOOKUP $GTHOME/langs/sme/src/analyser-disamb-gt-desc.xfst |\
+    lookup2cg | vislcg3 -g /Users/ttr000/main/langs/sme/src/syntax/disambiguation.cg3 | \
+    perl -pe 's/ (Sem\/[^\s]+|Use\/[^\s]+|Allegro|Err\/Lex|Err\/Orth-\S+|Err\/Orth|Err\/UnspaceCmp|v\d)//g' | \
+    perl -pe 's/ <[^>]+>//g' | \
+    tr -d "#" | \
+    perl $GTHOME/gt/script/sort-cg-cohort.pl |\
+    uniq > $GTHOME/langs/sme/test/data/disambiguationtestoutput
 
 # Henter gullstandard, fjerner semantiske tagger, # osv :
-cat $GTBIG/correct/sme-goldcorpus.dis.corr.txt | perl -pe 's/ (Sem\/[^\s]+|Use\/[^\s]+|Allegro|Err\/Orth|v\d)//g' | perl -pe 's/ <[^>]+>//g' | perl $GTHOME/gt/script/sort-cg-cohort.pl > $GTHOME/langs/sme/test/data/sme-goldcorpus.dis.corr.txt
+cat $smecorp/correct/sme-goldcorpus.dis.corr.txt |\
+    perl -pe 's/ (Sem\/[^\s]+|Use\/[^\s]+|Allegro|Err\/Orth|v\d)//g' |\
+    perl -pe 's/ <[^>]+>//g' | perl $GTHOME/gt/script/sort-cg-cohort.pl \
+    > $GTHOME/langs/sme/test/data/sme-goldcorpus.dis.corr.txt
 
 # Diff
 diff -w $GTHOME/langs/sme/test/data/sme-goldcorpus.dis.corr.txt $GTHOME/langs/sme/test/data/disambiguationtestoutput > $GTHOME/langs/sme/test/data/testdisambiguationresult.txt
