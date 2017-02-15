@@ -24,7 +24,8 @@ generator-fstspeller-gt-norm.hfst: \
 		filters/remove-Use_Minus_PLX-tags.hfst       \
 		filters/split-CmpN-tags.hfst \
 		filters/convert_to_flags-CmpNP-tags.hfst \
-		filters/split-CmpNP-tags.hfst
+		filters/split-CmpNP-tags.hfst \
+		filters/remove-spellerunwanted-strings.hfst
 	$(AM_V_HXFST)$(PRINTF) "\
 		read regex                                                 \
 			@\"filters/block-illegal_compound-strings.hfst\"       \
@@ -35,6 +36,7 @@ generator-fstspeller-gt-norm.hfst: \
 		.o. @\"filters/remove-Use_Minus_PLX-tags.hfst\"            \
 		.o. @\"filters/convert_to_flags-CmpNP-tags.hfst\"          \
 		.o. @\"filters/split-CmpNP-tags.hfst\"                     \
+		.o. @\"filters/remove-spellerunwanted-strings.hfst\"       \
 		.o. @\"$<\"                                                \
 		; \n\
 		twosided flag-diacritics\n\
