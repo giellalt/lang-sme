@@ -44,6 +44,7 @@ analyser-mt-gt-desc.%.hfst: analyser-mt-gt-desc.%.tmp.hfst \
     	;" \
 		| $(HFST_REGEXP2FST) $(HFST_FLAGS) $(HFST_FORMAT) \
 			-S --xerox-composition=ON \
+		| hfst-compose-intersect -1 - -2 $(top_builddir)/src/orthography/spellrelax.compose.hfst \
 		| $(HFST_INVERT) $(HFSTFLAGS) \
 		| $(HFST_FST2FST) $(HFSTFLAGS) -t \
 		-o $@
