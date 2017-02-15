@@ -8,7 +8,8 @@
 
 # List any local additions here:
 GT_LOCAL_FSTSPELLER_FILTER_SRCS=\
-    remove-Use_Minus_PLX-tags.regex
+    remove-Use_Minus_PLX-tags.regex \
+    remove-spellerunwanted-strings.regex
 
 # Source files copied from src/filters/ OR from
 # $(GIELLA_SHARED)/all_langs/tools/spellcheckers/fstbased/filters:
