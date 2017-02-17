@@ -49,6 +49,7 @@ generator-fstspeller-gt-norm.hfst: \
 		eliminate flag Der5\n\
 		eliminate flag Der_PassL\n\
 		eliminate flag Der_PassS\n\
+		eliminate flag NeedNoun\n\
 		save stack $@\n\
 		quit\n" | $(HFST_XFST) -p $(MORE_VERBOSITY) $(HFST_FORMAT)
 
