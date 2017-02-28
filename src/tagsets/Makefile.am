@@ -20,7 +20,7 @@
 #! @param GT_TAGSET_RGX_SRCS     - manually written regex tagset source files
 #! @param GT_TAGSET_RELABEL_SRCS - manually written hfst-relabel tagset sources
 
-GT_TAGSET_RGX_SRCS=nob.regex
+GT_TAGSET_RGX_SRCS=nob.regex sme.regex
 GT_TAGSET_RELABEL_SRCS=
 
 ####### Other targets: ###########
