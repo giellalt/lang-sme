@@ -1,0 +1,354 @@
+#!/usr/bin/make
+#
+# This is a makefile to automatise most of the testing.
+# It is language independent within the framework of the Sámi language
+# technology project. See further user documentation (and technical as well)
+# in $CVSROOT/gt/doc/ling/docu-testing.html
+# 
+# test the generation of a single lemma:
+# make -f make-gen-dict paradigm POS=a WORD=ođas PARATYPE=dict
+
+# VARIABLE DEFINITIONS
+# ====================
+
+null      :=
+SPACE     := $(null) $(null)
+
+# Tools used when compiling
+XFST = xfst -utf8
+
+# Where all the perl scripts are:
+BINDIR = ../../script/testing
+
+# Directory where all the compiled fst's are:
+FSTDIR = ../bin
+
+DIALOGUE = GG
+
+# Directory for the source files (which compile into fst's):
+# Changed this to point into the directory where the common makefile is:
+SRCDIR = ../../
+
+# The temp directory:
+TEMP = ../../tmp
+
+# We define the default paradigm generation type:
+PARATYPE=default
+
+# Default POS:
+POS=n
+
+# The temp directories for the generated paradigms:
+GEN_TMP = Gen_tmp
+PARA_TMP = Para_tmp
+
+PARATYPE=default
+
+ifeq ($(strip $(PARATYPE)),dict)
+TYPEPREF = dict-
+endif
+
+ifeq ($(strip $(PARATYPE)),oahpa)
+TYPEPREF = oahpa-
+endif
+
+ifeq ($(strip $(PARATYPE)),default)
+TYPEPREF = 
+endif
+
+# This variable is holding the filename of the save file:
+# (makes the Makefile truly language independent for
+# the Sami languages)
+
+SAVEFILE = $(wildcard $(FSTDIR)/$(TYPEPREF)is??-norm.fst)
+
+# The savetarget is derived from the savefile:
+SAVETARGET=`basename $(SAVEFILE)`
+
+# Where to find the paradigm codes:
+codesdir=codes/$(PARATYPE)
+
+# Copied from old LS makefile:
+# Bond, James Bond
+UMASK=umask 007
+
+# Empty variable to be overridden by the user when
+# generating paradigms:
+WORD =
+
+# These variables define  the relationship between the source files
+# and the final output files (the reports), such that one can con-
+# struct a list of targets for the main target
+NGenFiles := $(patsubst %.txt,%.greport,$(wildcard n-*.txt))
+NAnaFiles := $(patsubst %.txt,%.areport,$(wildcard n-*.txt))
+VGenFiles := $(patsubst %.txt,%.greport,$(wildcard v-*.txt))
+VAnaFiles := $(patsubst %.txt,%.areport,$(wildcard v-*.txt))
+AGenFiles := $(patsubst %.txt,%.greport,$(wildcard a-*.txt))
+AAnaFiles := $(patsubst %.txt,%.areport,$(wildcard a-*.txt))
+
+
+# MAJOR TARGETS, HOUSEKEEPING TARGETS
+# ===================================
+
+# Default target:
+# Remove the comments in front of the verb and adjective
+# targets when you have codes and test cases for them
+.PHONY: all
+
+all: twol-test
+
+#all: n-g.summary \
+#	 n-a.summary \
+#	 v-g.summary \
+#	 v-a.summary \
+#	 num-a.summary \
+#	 num-g.summary
+#	 a-g.summary \
+#	 a-a.summary
+
+# If you only want to test nouns:
+.PHONY: all-n
+all-n: POS=n
+all-n: n-g.summary n-a.summary
+
+# If you only want to test verbs:
+.PHONY: all-v
+all-v: v-g.summary v-a.summary
+
+# If you only want to test adjectives:
+.PHONY: all-a
+all-a: a-g.summary a-a.summary
+
+# If you only want to test numerals:
+.PHONY: all-num
+all-num: num-g.summary num-a.summary
+
+paradigm: $(POS)-paradigm
+
+# If you only want to test verbal generation, use v-g.summary
+# as target. Etc. for the other cases. And do you only want to
+# test a specific word or inflection class, type the name of
+# the file containing the infl. word, but replace the suffix
+# .txt with .greport for generation, and .areport for analysis.
+
+
+# POS SPECIFIC SECTIONS
+# =====================
+
+# NOUNS
+# =====
+
+# Create all the POS test file bases:
+$(POS)-%.testbase: $(POS)-%.txt $(codesdir)/$(POS)-codes.txt
+	@echo
+	@echo "*** Creating the test base for $(POS)-$*.txt ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNforms.pl $(codesdir)/$(POS)-codes.txt $< > $@
+	@chmod 660 $@
+
+# Finally, we concatenate all *.greports
+$(POS)-g.summary: $(NGenFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All $(POS) word form generation testing is done.      ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# Finally, we concatenate all *.areports:
+$(POS)-a.summary: $(NAnaFiles)
+	@cat $^ > $@
+	@echo
+	@echo "*** All $(POS) word form analysis testing is done.        ***"
+	@echo "*** The concatenated reports are stored in $@. ***"
+	@echo
+#	@less $@
+
+# Create POS paradigm generation input file:
+$(POS)-para.ptest: $(codesdir)/$(POS)-codes.txt
+	@echo
+	@echo "*** Creating the $(POS) paradigm input file for '$(WORD)' ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/merge-codesNword.pl $< '$(WORD)' > $@
+	@chmod 660 $@
+
+# Paradigm generation:
+.PHONY: $(POS)-paradigm
+$(POS)-paradigm: $(POS)-para.ptest savefile
+	@echo
+	@echo "*** Running the paradigm generator for '$(WORD)' ***"
+	@echo
+	@if [ ! -d "$(GEN_TMP)/$(PARA_TMP)/" ]; then mkdir -p "$(GEN_TMP)/$(PARA_TMP)"; fi
+	@printf "load $(SAVEFILE) \n\
+	apply up < $< \n\
+	quit \n" > $(TEMP)/$@-gtest-script
+	$(XFST) < $(TEMP)/$@-gtest-script > $(GEN_TMP)/$(PARA_TMP)/$(subst $(SPACE),_,$(WORD))_$(POS).paradigm
+	@rm -f $(TEMP)/$@-gtest-script
+	@rm -f $<
+#	@less $(GEN_TMP)/$(PARA_TMP)/$(WORD)_n.paradigm
+
+
+# Make sure there is an available smX.save in the parallel bin directory:
+savefile:
+	@cd $(SRCDIR)/ && $(MAKE) $(SAVETARGET) GTLANG=sme
+#	@cd $(SRCDIR)/ && $(MAKE) ifst-restr GTLANG=sme
+#	@cd $(SRCDIR)/ && $(MAKE) ifst GTLANG=sme
+# Harmonize the choice here with the choice of SAVEFILE at appr line 30
+
+# Word form generation:
+# ---------------------
+
+# Make test cases for word form generation tests,
+# based on the test file bases:
+$(POS)-%.gtest: $(POS)-%.testbase
+	@echo
+	@echo "*** Creating test cases for word form generation for $*.txt ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/make-gen-test.pl $< > $@
+	@chmod 660 $@
+
+# Make facit files containing the expected output from the
+# word form generation test run:
+$(POS)-%.gfacit: $(POS)-%.testbase
+	@echo
+	@echo "*** Creating facit file for word form generation for $*.txt ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/make-gen-test-facit.pl $< > $@
+	@chmod 660 $@
+
+# Here we run the actual generation test:
+$(POS)-%.gresult: $(POS)-%.gtest savefile
+	@echo
+	@echo "*** Running the word form generator test for $*.txt ***"
+	@echo
+	@printf "load $(SAVEFILE) \n\
+	apply up < $< \n\
+	quit \n" > $(TEMP)/$*-gtest-script
+	$(XFST) < $(TEMP)/$*-gtest-script > $@
+	@rm -f $(TEMP)/$*-gtest-script
+
+# Then we compare with the facit, and report any differences:
+$(POS)-%.greport: $(POS)-%.gresult $(POS)-%.gfacit
+	@echo
+	@echo "*** Diffing the test result and the facit file for   ***"
+	@echo "*** word form generation for $*.txt ***"
+	@echo "*** \"Error 1 (ignored)\" means that there were diffs. ***"
+	@echo
+	@rm -f $@
+	-$(UMASK) && \
+	diff --side-by-side --width=70 $^ > $@
+	@chmod 660 $@
+
+
+# Word form analysis:
+# -------------------
+
+# First, create the needed test file
+# NB! The sorting specified does not work completely as intended!
+# This will lead to small differences between the facit file and
+# the analysis output. This happens when one input string gives
+# more than one analysis. The expected output is according to the
+# order in the inflection lexicon, but the tags in the facit file
+# are sorted alphabetically (due to the way sorting is performed -
+# there is no way to tell GNU sort to ONLY sort on a specified key).
+# For a completely satisfactory result we need a different solution.
+# The present solution will have to be good enough for now.
+$(POS)-%.atest: $(POS)-%.testbase
+	@echo
+	@echo "*** Creating test cases for word form analysis for $*.txt ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/make-ana-test.pl $< \
+	| sort -t '\t' -k 1 | cut -f 1 | uniq > $@
+	@chmod 660 $@
+
+# Make facit files containing the expected output from the
+# word form analysis test run:
+$(POS)-%.afacit: $(POS)-%.testbase
+	@echo
+	@echo "*** Creating facit file for word form analysis for $*.txt ***"
+	@echo
+	@rm -f $@
+	$(UMASK) && \
+	$(BINDIR)/make-ana-test.pl $< \
+	| sort -t '\t' -k 1 | cut -f 2 > $@
+	@chmod 660 $@
+
+# Here we run the actual analysis test:
+$(POS)-%.aresult: $(POS)-%.atest savefile
+	@echo
+	@echo "*** Running the word form analysis test ***"
+	@echo
+	@printf "load $(SAVEFILE) \n\
+	apply down < $< \n\
+	quit \n" > $(TEMP)/$*-atest-script
+	$(XFST) < $(TEMP)/$*-atest-script > $@
+	@rm -f $(TEMP)/$*-atest-script
+
+# Finally, we compare with the facit, and report any differences:
+# Due to the sorting problems mentioned above, there will always (?)
+# be (small) differences.
+$(POS)-%.areport: $(POS)-%.aresult $(POS)-%.afacit
+	@echo
+	@echo "*** Diffing the test result and the facit file for ***"
+	@echo "*** word form analysis for $*.txt       ***"
+	@echo "*** \"Error 1 (ignored)\" means that there were diffs.   ***"
+	@echo
+	-@diff --side-by-side --width=70 $^ > $@
+
+
+# Clean up all the mess created during a test pass, to prepare for new tests:
+#		  *.tgz	\	# just to remove archive files used for file transfering
+#		  *~		# to remove backup copies that may clutter the directory
+.PHONY: clean
+clean:
+	@echo
+	@echo "*** Now deleting ALL the generated files ***"
+	@echo
+	@rm -f *.testbase \
+		  *.gtest \
+		  *.atest \
+		  *.gfacit \
+		  *.afacit \
+		  *.greport \
+		  *.areport \
+		  *.gresult \
+		  *.aresult \
+		  *.summary \
+		  *.ptest \
+#		  paradigm* \
+		  *.tgz	\
+		  *~ \
+		  *.in \
+		  *.out \
+		  $(TEMP)/*test-script
+
+.PHONY: almost-clean
+almost-clean:
+	@echo
+	@echo "*** Now deleting all generated files but the summary & parad. files ***"
+	@echo
+	@rm -f *.testbase \
+		  *.gtest \
+		  *.atest \
+		  *.gfacit \
+		  *.afacit \
+		  *.greport \
+		  *.areport \
+		  *.gresult \
+		  *.aresult \
+		  *.ptest \
+		  *.tgz	\
+		  *~ \
+		  *.in \
+		  *.out \
+		  $(TEMP)/*test-script
