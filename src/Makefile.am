@@ -217,10 +217,10 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_fin.%: \
 # NOB (and NNO + SWE) orthographic conventions for the stem::
 generator-tts-gt-norm_nonum_noabbr_nohyph_nob.%: \
 					analyser-tts-gt-norm_nonum_noabbr_nohyph.% \
-					filters/extract-OLang_NOB-strings.%         \
-					filters/extract-OLang_NNO-strings.%         \
-					filters/extract-OLang_SWE-strings.%         \
-					filters/remove-orig_lang-tags.%             \
+					filters/extract-OLang_NOB-strings.%        \
+					filters/extract-OLang_NNO-strings.%        \
+					filters/extract-OLang_SWE-strings.%        \
+					filters/remove-orig_lang-tags.%            \
 					filters/remove-nonfirst_infl_boundary-marks.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 			   "@bin\"filters/remove-orig_lang-tags.$*\"     \
@@ -237,11 +237,12 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_nob.%: \
 
 # We need to add processing of language-specific tags in the analyser:
 analyser-gt-desc.%: analyser-gt-desc.tmp.% \
+					morphology/url.%                          \
 					filters/remove-derivation-position-tags.% \
-					filters/remove-norm-comp-tags.%             \
-					filters/remove-Err_SpaceCmp-strings.% \
-					filters/remove-Use_GC-strings.% \
-					filters/remove-Use_minus_PMatch-tags.% \
+					filters/remove-norm-comp-tags.%           \
+					filters/remove-Err_SpaceCmp-strings.%     \
+					filters/remove-Use_GC-strings.%           \
+					filters/remove-Use_minus_PMatch-tags.%    \
 					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 			    @\"filters/remove-derivation-position-tags.$*\" \
@@ -252,6 +253,8 @@ analyser-gt-desc.%: analyser-gt-desc.tmp.% \
 			.o. @\"filters/remove-Use_Disamb-strings.$*\"       \
 			.o. @\"$<\"                                         \
 			;\n\
+		 $(INVERT_HFST)\
+		 load stack morphology/url.$*\n\
 		 $(INVERT_HFST)\
 		 save stack $@\n\
 		 quit\n" | $(XFST_TOOL)
@@ -341,6 +344,7 @@ analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 
 # ... as well as in the HFST disambiguation analyser:
 analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
+				morphology/url.hfst                            \
 				filters/remove-norm-comp-tags.hfst             \
 				filters/remove-derivation-position-tags.hfst   \
 				filters/rename-POS_before_Der-tags.hfst        \
@@ -358,6 +362,8 @@ analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
 		.o. @\"filters/remove-Use_GC-strings.hfst\"           \
 		.o. @\"$<\"                                           \
 		;\n\
+	invert net\n\
+	load stack morphology/url.$*\n\
 	invert net\n\
 	save stack $@\n\
 	quit\n" | $(HFST_XFST) -p $(MORE_VERBOSITY)
