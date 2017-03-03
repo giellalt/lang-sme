@@ -344,7 +344,6 @@ analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 
 # ... as well as in the HFST disambiguation analyser:
 analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
-				morphology/url.hfst                            \
 				filters/remove-norm-comp-tags.hfst             \
 				filters/remove-derivation-position-tags.hfst   \
 				filters/rename-POS_before_Der-tags.hfst        \
@@ -362,8 +361,6 @@ analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
 		.o. @\"filters/remove-Use_GC-strings.hfst\"           \
 		.o. @\"$<\"                                           \
 		;\n\
-	invert net\n\
-	load stack morphology/url.$*\n\
 	invert net\n\
 	save stack $@\n\
 	quit\n" | $(HFST_XFST) -p $(MORE_VERBOSITY)
