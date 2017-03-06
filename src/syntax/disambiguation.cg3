@@ -2435,7 +2435,7 @@ REMOVE:r551anotv (VV) - Der/NomAct IF (0 A-NOT-V - Px) ;
 	
 REMOVE:A A IF (0 ("suoma")) ;	
 
-REMOVE:A A IF (0 ("náitalan") LINK *-1 ("leat") BARRIER REAL-V) ;	
+REMOVE:A A IF (0 PrfPrc LINK *-1 ("leat") BARRIER REAL-V) ;	
 
 
 REMOVE:Der/NomAg Der/NomAg IF (0 PrsPrc LINK 1 N LINK NEGATE 0 Prop)(NEGATE 1 (N Gen) LINK 1 N) ;
@@ -3482,7 +3482,12 @@ LIST EANAN = "eana"  ;
 REMOVE:r677 Sg IF (*-1 ("stáhta") OR ("priváhta") OR ("matrikuleret"))(0 EANAN + (Pl Loc));
 	#$ Stáhta eatnamiin.
 SELECT ("eana") (0 EANAN) ; 
-   
+ 
+	# fálli
+	# - - - 	
+SELECT:LexSelfálli ("fálli" NomAg) IF (*0 ("fitnodat"));
+SELECT:LexSelfálli ("fálli" NomAg) IF (-1 ("vulobeale"));
+	#$ Sis leat olu Finnmárkku fitnodagat fárus vulobeale fállin.
 
     # geassi vs. geasis vs. geassi
     # - - - - - - - - -
@@ -3837,6 +3842,8 @@ SELECT:r818 ("virgi") IF (0 ("viergi" Loc) LINK 1 COPULAS LINK 1 VIRGI);
 	
 	# vuorru
 	# - - - -
+REMOVE G3 (0 (".*#vuorru"r))	; 
+REMOVE G3 (0 ("vuorru") LINK -1 (cmp_sgnom))	; #apertium
 REMOVE G3 (0 ("vuorru") LINK -1 HAB-ACTOR + Gen)	;
 	## Odne lea mu vuorru.
 	## Vuorru lea leamaš jagi jogas.
@@ -4050,7 +4057,7 @@ SELECT:buresboahtinIll Ill IF (*-1 ("boahtin" Nom) BARRIER REAL-V OR S-BOUNDARY 
 	#$ Bures boahtin Čáhppes Bearralii.
 
 
-SELECT:VFINSg3TEST VFIN-NOT-IMPRT + Sg3 IF (*-1 NP-HEAD-SG-NOM BARRIER NOT-NPMODADV LINK NOT 0 VFIN LINK NEGATE *-1 VFIN BARRIER S-BOUNDARY)(NEGATE *1 VFIN BARRIER S-BOUNDARY OR Nom)(NEGATE 0 Pl3 LINK *-1 NP-HEAD-PL-NOM)(NEGATE 0 Gen LINK 1 Po) ;
+SELECT:VFINSg3TEST VFIN-NOT-IMPRT + Sg3 IF (*-1 NP-HEAD-SG-NOM BARRIER NOT-NPMODADV LINK NOT 0 VFIN LINK NEGATE *-1 VFIN BARRIER S-BOUNDARY)(NEGATE *1 VFIN BARRIER S-BOUNDARY)(NEGATE 0 Pl3 LINK *-1 NP-HEAD-PL-NOM)(NEGATE 0 Gen LINK 1 Po) ;
 
 	#$ Fápmu čiehká iežas luottaid.
 	#$ Go čálalaš kultuvra lea eahpedábálaš minoritehtaid gaskkas ja go oskkáldasvuohta ja heahpu lea leamaš dábálaš, de sáhttá dás oaidnit ráhkadusdovdomearkka, nammalassii ahte fápmu čiehká iežas luottaid.
@@ -4928,6 +4935,10 @@ SELECT:PrsPrcAdvl PrsPrc IF ((-1 PLACE + Loc) OR (-1 PLACE-PO LINK -1 Gen) OR (-
 #SELECT:PrsPrcAdv2 PrsPrc IF (-1 COPULAS)((-2 PLACE + Loc OR Adv) OR (-2 Po LINK -1 Gen))(1 N);
 	#$ Muđui ledje johtti oahpaheaddjit, muhto eai doarvái.
 REMOVE:NomAgPrsPrc PrsPrc IF (0 NomAg LINK NOT 0 ("johtti") OR ("ealli") OR ("orru")) ;
+
+SELECT:PrsPrcealli PrsPrc IF (0 ("eallit") LINK 1 Sem/Org) ;  
+	#$ báikkit gos lea ealli álbmotstivra
+	
 	
 
 SELECT:PrsPrcImprt PrsPrc IF (0 (Imprt Du2) LINK 2 (Neg Pl3)) ;  # Bør utvides
@@ -5187,7 +5198,7 @@ SELECT:ovttasAdv Adv IF (-1 REAL-V OR Com)(0 COM-ADV)(NEGATE 0 Foc/ge OR Num);
  	#$ Bátnedoavttir galgá ovttas eará bargiiguin mearridit.
 
 #!! * __olluAdv__
-SELECT:olluAdv1 OLLU + Adv IF ((-1 AUX LINK 2 Inf OR PrfPrc) OR (1 Adv LINK NOT 0 N) OR (1 go LINK 1 (A Nom) OR VFIN) OR (-1 REAL-V LINK NEGATE 2 A OR N OR Pron)) ;
+SELECT:olluAdv1 OLLU + Adv IF ((-1 AUX LINK 2 Inf OR PrfPrc) OR (1 Adv LINK NOT 0 N) OR (1 go LINK 1 (A Nom) OR VFIN) OR (-1 REAL-V LINK NEGATE 2 A OR N)) ;
 	#$ Dolin olbmot lávejedje ollu dulkot nieguid.
 	#% Dát dieđusge mearkkaša ollu dan olbmui gii lea vuoitán.
 	
@@ -6720,7 +6731,7 @@ SELECT:AAttrN (A Attr) IF (NEGATE *-1 COPULAS BARRIER NP-HEAD-NOM OR NOT-AUX-V)(
 	#% Sii lohket iežaset leat oalle duhtavaččat dán jagáš básárdoaluin.
 
 #!! * __AAttrCop__  copulas close to the left
-SELECT:AAttrCop (A Attr) IF (*-1 COPULAS BARRIER NOT-NPMOD)(NEGATE 0 Adv LINK 1 A) 
+SELECT:AAttrCop (A Attr) IF (*-1 COPULAS BARRIER NOT-NPMODADV)(NEGATE 0 Adv LINK 1 A) 
 (NEGATE 0 (A Pl) LINK *-1 COPULAS LINK -1 Pl OR Pl1 OR Pl2 OR Pl3)
 (1 A OR N LINK NOT 0 Superl OR Ord)
 (NEGATE 1 Gen LINK *1 Po OR Loc OR Inf BARRIER NP-BOUNDARY OR Indef)(NEGATE 1 Adv OR REAL-V OR ADVLCASE)(*2 go OR EOC OR Neg BARRIER NOT-NP);
