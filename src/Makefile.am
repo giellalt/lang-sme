@@ -237,7 +237,6 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_nob.%: \
 
 # We need to add processing of language-specific tags in the analyser:
 analyser-gt-desc.%: analyser-gt-desc.tmp.% \
-					morphology/url.%                          \
 					filters/remove-derivation-position-tags.% \
 					filters/remove-norm-comp-tags.%           \
 					filters/remove-Err_SpaceCmp-strings.%     \
@@ -253,8 +252,6 @@ analyser-gt-desc.%: analyser-gt-desc.tmp.% \
 			.o. @\"filters/remove-Use_Disamb-strings.$*\"       \
 			.o. @\"$<\"                                         \
 			;\n\
-		 $(INVERT_HFST)\
-		 load stack morphology/url.$*\n\
 		 $(INVERT_HFST)\
 		 save stack $@\n\
 		 quit\n" | $(XFST_TOOL)
