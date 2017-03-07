@@ -1056,7 +1056,7 @@ SET N-TIMEOBJECT-V = MOVEMENT-V OR ACTIVITY-V OR VERBAL-ACTIVITY-V OR INTELLECTU
     # Those verb sets in addition to TIMEADVERBIAL-V do not take TIME expressions as objects
 
 
-LIST MUITALIT = "árvalit" "bivdit" "boagustit" "cealkit" "cuoigut" "čilget" "čurvet" "čuorvut" "dadjat" "dahkaluddat" "deattastit" "deattuhit" "doaivut" "eahpidit" "geardduhit" "geažuhit" "gielistit" "gilljut" "hállat" "hoallat" "huikit" "huikkádit" "imaštallat" "jearrat" "jievžat" "juoigat" "jurdilit" "jurddašit" "kommenteret" "lávlut" "lasihit" "loahpahit" "lohkat" "lohpidit" "máidnut" "máinnašit" "muitalit" "muittuhit" "nágget" "njávggádit" "oaivvildit" "rávvet" "savkalit" "sárdnidit" "šuohkihit" "váidalit" "váruhit" "vástidit" ;
+LIST MUITALIT = "árvalit" "árvidit" "bivdit" "boagustit" "cealkit" "cuoigut" "čilget" "čurvet" "čuorvut" "dadjat" "dahkaluddat" "deattastit" "deattuhit" "doaivut" "eahpidit" "geardduhit" "geažuhit" "gielistit" "gilljut" "hállat" "hoallat" "huikit" "huikkádit" "imaštallat" "jearrat" "jievžat" "juoigat" "jurdilit" "jurddašit" "kommenteret" "lávlut" "lasihit" "loahpahit" "lohkat" "lohpidit" "máidnut" "máinnašit" "muitalit" "muittuhit" "nágget" "njávggádit" "oaivvildit" "rávvet" "savkalit" "sárdnidit" "šuohkihit" "váidalit" "váruhit" "vástidit" ;
 	#$ Deaŧalaš lea sihkkarastit eamiálbmogiid ovddastusa dákkár čállingottis, dadjá Keskitalo.
 
 
@@ -2562,16 +2562,19 @@ SELECT:PropGen_b Gen IF (0C Prop LINK NEGATE 0 Sem/Fem OR Sem/Mal)(1 PROFESSION 
 	#$ 1982:s gitta 1993 rádjái jođihii son Norgga Álbmotmusea sámi ossodaga Oslos.
 	#% Mávsseža go Ánde aviissa ihttin?
 
-#!! *Removes __PropAttr__ if no Prop on the right side
+#!! * Removes __PropAttr__ if no Prop on the right side
 REMOVE:XXPropAttr (Prop Attr) - Der/lasj IF (NEGATE *1 Prop BARRIER REAL-WORD-NOT-ABBR) ;
 
-#!! *Removes __PropEss__ if no Der/lasj
-REMOVE:__PropEss__ (Prop Ess) - Der/lasj  ;
+#!! * Removes __PropEss__ if no Der/lasj
+REMOVE:PropEss (Prop Ess) - Der/lasj  ;
 	#$ Tveiten
 
-#!! *Removes __HearránEss__ we want Px for Voc (we should we add it to the Prop version)
-REMOVE:__HearránEss__ Ess IF (0  ("Hearrá" Prop))  ;
+#!! * Removes __HearránEss__ we want Px for Voc (we should we add it to the Prop version)
+REMOVE:HearránEss Ess IF (0  ("Hearrá" Prop))  ;
 	
+#!! * Selects __PropNom__ 
+SELECT:PropNom Nom IF (0 Sem/Sur LINK 1 Sem/Hum LINK 1 EOS)(NEGATE *-1 REAL-V BARRIER (":"))  ;
+	#$ Govven: Inga Marie Guttorm Journalista
 
 
 #!! !MISC
@@ -6141,13 +6144,15 @@ REMOVE:SgPl3V (Pron Sg Nom) IF  (*1C PL3-V BARRIER NOT-ADV-PCLE);
 
 #!! * __Interr__ selects interrogative pronouns in questions
 
-SELECT:Interr Interr IF ((-1 COMMA LINK *-1 CS LINK *-1 BOS BARRIER NOT-PCLE) OR (*-1 BOC OR LEFT BARRIER NOT-PCLE LINK NOT 0 ("maid") OR Interr) OR
-(-1 COMMA LINK -1 HUMAN + Nom LINK *-1 BOC BARRIER WORD))(0 Rel OR Indef LINK NOT 0 ("man" Adv) LINK *1 ("?"));
+SELECT:Interr Interr IF ((-1 COMMA LINK *-1 CS LINK *-1 BOS BARRIER NOT-PCLE) OR (*-1 BOC OR LEFT BARRIER NOT-PCLE LINK NOT 0 ("maid") OR Interr) OR (-1 COMMA LINK -1 HUMAN + Nom LINK *-1 BOC BARRIER WORD))(0 Rel OR Indef LINK NOT 0 ("man" Adv) LINK *1 ("?"));
 	#$ Juos Ipmil lea min beale, gii lea min vuostái?
 	#$ Maid don doaivvut, mun gielistan?
 	#$ Na maid don diŋgojit?
 	#$ - Áhčči, mii lea duot čáppa alit násti doppe guhkkelis?
 	#% Maid mii dál vihtaniiguin?
+
+SELECT:Interr Interr IF (-1 MUITALIT)(0 Rel OR Indef LINK *1 VFIN);
+
 
 #!! * __InterrIfPot__ selects interrogative pronouns in potential sentences, and after that we remove the remaining Interr
 SELECT:InterrIfPot Interr IF (*-1 BOC BARRIER NOT-PCLE)(0 Rel)(*1 TRANS-V + Pot BARRIER S-BOUNDARY OR VFIN-POS);
@@ -11489,6 +11494,8 @@ REMOVE:KillAcc Acc IF (0 Gen) ;
 
 	#$ Mii leat geardumiin juo álgán, nággestii unna vieljaš.
 	#$ Ehpet dii leat ieža sárdnumin, muhto Áhčádet Vuoigŋa sárdnu din bokte. 
+
+SELECT:Po Po IF (-1 Gen)(0 Adv OR Pr) ;
 
 
 
