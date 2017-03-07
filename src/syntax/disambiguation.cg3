@@ -961,7 +961,7 @@ LIST HANDICRAFT-ACTIVITY-V = "buddet" "botnit" "goarrut" "hervet" "vadjat" "vik�
 
 SET ACTIVITY-V = BODY-ACTIVITY-V OR WRITING-ACTIVITY-V OR PLACING-ACTIVITY-V OR HUMAN-ACTIVITY-V OR HANDICRAFT-ACTIVITY-V ;
 
-LIST DADJAT = "čuoččuhit" "dadjat" "láhttestit" "lohkat" "muitalit" ;
+LIST DADJAT = "čuoččuhit" "dadjat" "jáhkkit" "láhttestit" "lohkat" "muitalit" ;
 # This set is for  cealkkavástta: DADJAT + Acc + Inf or PrfPrc
 
 LIST HUPMAT = "dáikit" "dárostit" "digaštallat" "digaštit" "duoldat" "háladit" "háleštit" "hállat" "hoallat" "humadit" "hupmat" "logaldallat" "máidnut" "máinnašit" "muitaladdat" "njurgut" "oaivvildit" "savkalit" "ságastaddat" "ságastallat" "ságastit" "sámástit" "sámistit" "sárdnidit" "sárdnut" "sártnodit" "solžat" "suomastit" ;
@@ -2699,6 +2699,9 @@ SELECT:NomKlass Nom IF (0 ACR OR ABBR)(-1 Num LINK -1 KLASS) ;
 REMOVE:NomACR Acc IF (0 ACR OR ABBR)(-1 BOS) ;
 SELECT:NomACR Nom IF (0 ACR OR ABBR)(-1 BOS)(1 PUNCT) ;
 	#$ Ovttas.no - Sámi oahpponeavvut neahtas
+
+SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 BOS)(1 (":") OR EOS) ;
+
 
 SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 (N Nom) LINK -1 BOS)(1 CC OR EOS) ;
 	#$ Sámekonvenšuvdna almmuhuvvon ja gaskaboddosaččat dohkkehuvvon
@@ -4622,6 +4625,12 @@ REMOVE:NotImprtIfAttrLeft Imprt IF (NEGATE -1 BOC OR COMMA)(NEGATE -1 CC LINK -1
 
 #!! * __NotImprtIfRel__ removes Imprt after Rel, unify this with other left context (r948)
 REMOVE:NotImprtIfRel Imprt IF (*-1C Rel BARRIER S-BOUNDARY OR CC OR COMMA);
+
+#!! * __ImprtDADJAT__ removes DADJAT
+REMOVE:ImprtDADJAT Imprt IF (0 DADJAT + VFIN LINK *1 HUMAN + Acc LINK 1 Inf) ;
+REMOVE:Sg2DADJAT Sg2 IF (0 DADJAT + Pl3 LINK *1 HUMAN + Acc LINK 1 Inf)(*-1 BOS BARRIER WORD) ;
+	#$ Jáhkket Elin Kåvena vuoitit
+
 
 REMOVE:muhtoNotConNeg ConNeg IF (NEGATE *-1 Neg BARRIER ("muhto"));
 
@@ -7933,7 +7942,7 @@ MAP:<ADVLInfReksj2 (@<ADVL) TARGET Inf (-1 CC LINK *-1 Inf BARRIER REAL-V LINK *
 	#$ Go beassážiid leat čáppa dálkkit ja beaivvádat, de olbmot liikojit čuoigat meahcis dahje vuodjit mohtorgielkkáin. 
 
 #!!	* __<ADVLInfReksj3__
-MAP:<ADVLInfReksj3 (@<ADVL) TARGET Inf (-1 Acc LINK *-1 REKS-V BARRIER NOT-NPMOD) ; 
+MAP:<ADVLInfReksj3 (@<ADVL) TARGET Inf (-1 Acc LINK NOT 0 HUMAN LINK *-1 REKS-V BARRIER NOT-NPMOD) ; 
 	#$ Son lea dakkár mii ii beroš lága čuovvut!
 
 #!! * __ADVLActioEss__ Inf 		
@@ -8401,6 +8410,10 @@ MAP:>AActioGen_b (@>A) TARGET (Actio Gen) (1 CC LINK 1 Gen LINK 1 ("veara")) ;
 
 
 #!! !And then we remove the verbs which didn't get any syntactic tag, in favour of verbs with syntactic tags.
+
+MAP:fragmverb (@-FMAINV) TARGET PrfPrc (0C PrfPrc)  ;
+	#$ Ođastuvvon: 07.03.2017 - 16:29
+
 
 #!! * __realverbX__
 MAP:realverbX (@X) TARGET REAL-V  ;
