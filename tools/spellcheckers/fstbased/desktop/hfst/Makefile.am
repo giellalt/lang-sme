@@ -58,6 +58,31 @@ FINAL_STRING_EDITS=txt
 # - no
 WORD_REPLACEMENTS=yes
 
+### BEGIN: Local build rules: *.hfst: *.tmp.hfst ###
+
+analyser.%.hfst: ../analyser-desktopspeller-gt-norm.hfst \
+				 easteregg.%.hfst
+	$(AM_V_HFST2FST)cat $< \
+		| $(HFST_MINIMIZE_SPELLER) $(HFST_FLAGS)        \
+		| $(HFST_DISJUNCT) - easteregg.$*.hfst          \
+		| $(HFST_FST2FST) $(HFST_FLAGS) -f olw          \
+		-o $@
+
+se-cg.zhfst: $(srcdir)/index.xml \
+					 $(GT_ERRMODELS) \
+					 analyser.default.hfst
+	$(AM_V_at)rm -f $@
+	$(AM_V_at)$(MKDIR_P) build/$@
+	$(AM_V_at)rm -f build/$@/*
+	$(AM_V_at)cp $(srcdir)/index.xml build/$@/index.xml
+	$(AM_V_at)cp analyser.default.hfst build/$@/$(GT_SPELLER_ACCEPTOR)
+	$(AM_V_at)cp $(GT_ERRMODELS) build/$@/$(GT_ERRMODELS)
+	$(AM_V_GEN)cd build/$@/ && $(ZHFST_COMPRESSION)
+	$(AM_V_at)$(MKDIR_P) 3
+	$(AM_V_at)cp -f $@ 3/
+
+#### END: Local build rules: *.hfst: *.tmp.hfst ####
+
 include $(top_srcdir)/am-shared/tools-spellcheckers-fstbased-desktop-hfst-dir-include.am
 
 # vim: set ft=automake:
