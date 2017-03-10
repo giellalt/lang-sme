@@ -60,7 +60,8 @@ EXTEDITOR=@SEE@
 
 # Hent ut lemmaer, bortsett fra Err/Lex (som blir filtrert bort fra normgenerator).
 # Lemmaene lagres som $lemmas.
-grep ";" $source_file | \
+grep ";" $source_file | cut -d '!' -f1 |  \
+         egrep -v "^(\!|\@|\+|<|\()|$" | \
   egrep -v "(^\!|\+Err\/Lex|NOTLEMMA)" |\
   sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " |\
   cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > $lemmas
@@ -116,7 +117,7 @@ for f in $fsttype; do
 		
 # Sammenlikne lista med verblemmaer med den genererte lista med infinitivsformer.
 # Formene som er i verblemmalista, men ikke i den genererte lista, kopieres til
-# missingverbLemmas.txt. Formene generes med  +V+Inf for lettere debugging.
+# missingverbLemmas.txt. Formene generes med  +Po / +Pr for lettere debugging.
 
 # Sorter og unifiser
         sort -u -o $generated_lemmas.$f.tmp $generated_lemmas.$f.tmp
