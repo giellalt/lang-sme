@@ -2127,6 +2127,10 @@ SELECT:SamediggiProp Prop IF (-2 ("ášši"))(-1 Num);
 	#$ Ášši 02/13 Sámedikki čoahkkinortnet.
 	
 REMOVE:finnmárku ("finnmárku") IF (0 ("Finnmárku")) ;	
+REMOVE:Johan ("Jo") IF (0 ("Johan")) ;	
+
+REMOVE:PropACR Prop IF (0 ACR - Prop) ;	
+
 
 #!! we don't want propernoun analysis of these words, initially in sentences
 LIST NOT-PROP = "Árran" "Beaivváš" "Vuoksá" "Áddjá" "Álgu" "Dávgi" "Dieđut" "Dronnet" "Duodji" "Heasta" "Stállu" "Fiske" "Li" "Guksi" "Gáldu" "Jávregáddi" "Just" "Márkan" "Návet" "Náhkki" "Njunni" "Áigi" "Ohcan" "Ose" "Ovdal" "Sieidi" "Sámeskuvla" "Sápmelaš" "Sápmi" "Sokki" "Profehta" "Muvra" "Náhkki" "Nuora" "Jo" "Gielda" "Girjjis" "Vuotna" "Vuoigŋa" "Vággi" "Skávžá" "Jávri" "Riidi" ;
@@ -5171,7 +5175,7 @@ IFF:matPcle ("mat" Pcle) IF (-1 Imprt LINK *-1 BOC OR COMMA BARRIER WORD) ;
  	#$ Lea registreren maid ja man ollu lea borran. 
 
 
-SELECT:manAdv ("man" Adv) IF (1 (A Nom) OR ("uhcán") OR ("unnán") OR PrfPrc OR OLLU LINK NOT 0 Der/sasj);
+SELECT:manAdv ("man" Adv) IF (1 (A Nom) OR ("uhcán") OR ("unnán") OR PrfPrc OR OLLU LINK NOT 0 Der/sasj) (NEGATE 1 Nom LINK 1 VFIN) ;
  	#$ Man stuoris mánná lea? 
 	#$ Man ollu sudnos lea alddiska ruhta?
 	#$ Girkonjárggas fuomášin man ollu negatiiva oainnut dan áigge ledje sámiid vuostá.
@@ -5186,7 +5190,7 @@ SELECT:olluNom OLLU + Nom IF ((0 Qst) OR (1 go))(*1 COPULAS)(NOT -1 ("nu") OR ("
 	#$ Bargiid guottut mearkkašit seamma ollu go fáktadieđut.
 
 
-REMOVE:manV-N V OR N IF (-1 ("man" Adv) OR ("mihá"))(NEGATE 0 Po);
+REMOVE:manV-N V OR N IF (-1 ("man" Adv) OR ("mihá"))(NEGATE 0 Po)(NEGATE 0 N LINK 1 VFIN);
 	#$ Man guhkki lea girkui?
 	#$ In dieđe man buorit dat leat.
 	#$ Muhtun riggodagaid geavahit mihá unnit dál.
@@ -5199,7 +5203,7 @@ SELECT:vissásit Adv (0 ("vissásit") LINK NEGATE 1 N) ;
  	#$ Muhto ii goassege dieđe vissásit
 
 
-REMOVE:NgradeAdv N IF (-1 GRADE-ADV - Foc)(0 Adv OR A OR PrfPrc);
+REMOVE:NgradeAdv N IF (-1 GRADE-ADV - Foc)(0 Adv OR A OR PrfPrc)(NEGATE 0 N LINK 1 VFIN);
  	#$ Mun lean nu suhttan. 
  	#$ Lea hui easkka čuožžilan gažaldat.
 
@@ -6794,7 +6798,7 @@ REMOVE:AttrVejolaš ("vejolaš" Attr)  IF (*-1 COPULAS)(1 REAL-V) ;
 REMOVE:Cmp/SplitRA  (Cmp/SplitR A) IF (0 (Cmp/SplitR N)) ;
 
 #!! * __Cop__ 
-SELECT:CopANom (A Nom) (-1 COPULAS LINK -1 HUMAN + Nom OR Pers + Nom)(0 Attr)(NEGATE 1 Nom OR Loc OR Cmp/SplitR) ;	
+SELECT:CopANom (A Nom) (-1 COPULAS LINK -1 HUMAN + Nom OR Pers + Nom)(0 Attr)(NEGATE 1 Nom OR Loc OR Gen OR Cmp/SplitR) ;	
 	#$ Son lei suollemas dainna doaivvuin ahte galgá leat nu..
 
  
@@ -6880,7 +6884,8 @@ SELECT:ACoordPrfPrc (A Attr) IF (NEGATE -1 ("leat"))(1 ("ja") OR ("dahje") OR CO
 SELECT:AAttrContra (A Attr) IF (*-1 Neg BARRIER S-BOUNDARY OR VFIN)(*1 CONTRA BARRIER WORD LINK 1C Attr);
 	#$ ILO-konvenšuvdna nr 169 ii vuođđuduva formála, muhto funktionála oamastanvuoigatvuođa doahpagii.
 
-IFF:sapmelas ("sápmelaš" A) IF (0 Attr LINK *1 N) ;	
+IFF:sapmelas ("sápmelaš") + A IF (0 Attr LINK 1 N LINK NOT 0 VFIN) ;	
+
 	#$ Dušše inuihtat ja sápmelaččat sáhttet adnojuvvot Davviriikkaid eamiálbmogin. 
 
 #!! !Special rules for 'buorre' (the only adjective showing case agreement)
@@ -7664,7 +7669,7 @@ MAP:-FMAINVPrfPrc (@-FMAINV) TARGET PrfPrc + PASS (*-1 REAL-COPULAS + VFIN + Sg3
 #!! !!Verbs as prenominal participles (@>N):
 
 #!! * Some verbs will not be @>N
-LIST NOT-@>N = "báhcit" "boahtit" "buollát" "čadnot" "eallit"  "fitnat" "galbet" "lebbet" "logaldallat" "náđđut" "ihtit" "unnut" "vuodjit" "vuodjat" Der/InchL ;
+LIST NOT-@>N = "báhcit" "boahtit" "buollát" "čadnot" "eallit"  "fitnat" "galbet" "lebbet" "logaldallat" "náđđut" "ihtit" "rahčat" "unnut" "vuodjit" "vuodjat" Der/InchL ;
 
 #!! * __NPrfPrc1__ with 1C N Nom
 MAP:>NPrfPrc1 (@>N) TARGET PrfPrc - NOT-@>N (NEGATE *-1 Neg BARRIER REAL-V)(NEGATE -1 COPULAS LINK *-1 Ill BARRIER NOT-A)(NEGATE 0 AUX)(NEGATE 0 TRANS-V LINK *1 Acc BARRIER NOT-NPMOD)(NEGATE 0 MOVEMENT-V LINK *1 Ill OR DOHKO OR ("lusa") BARRIER NOT-NPMOD)(NEGATE 0 PrfPrc LINK NOT 0 Der/Pass LINK 1 Attr)(*1 (N Nom) - Prop BARRIER NOT-A OR COMPAR LINK NEGATE 0 TITLE LINK 1 Sem/Fem OR Sem/Mal OR Sem/Sur);
