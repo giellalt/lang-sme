@@ -29,6 +29,7 @@ analyser_file=./../../../src/analyser-gt-norm
 ### out ###
 lemmas=./filtered-${POS}
 comp_lemmas=./filtered-comp-${POS}
+allguovt_lemmas=./filtered-comp-${POS}
 hycomp_lemmas=./filtered-hycomp-${POS}
 all_lemmas=./all-${POS}
 generated_lemmas=./generated-${POS}
@@ -63,7 +64,7 @@ EXTEDITOR=@SEE@
 ##### --include "(pattern1|pattern2|...)"                          #####
 ##### --exclude "(pattern1|pattern2|...)"                          #####
 @GTCORE@/scripts/extract-lemmas.sh \
-    --exclude "(CmpN/Only|ShCmp|\+Cmp\/SplitR| Rreal | R | RHyph | Rnoun |\+V\+| AGAdj| AHKASAS |NOT-TO-LEMMATEST)" \
+    --exclude "(CmpN/Only|ShCmp|\+Cmp\/SplitR| Rreal | R | RHyph | Rnoun |\+V\+| AGAdj| AHKASAS |NOT-TO-LEMMATEST| ALLGUOVT)" \
     $source_file > $lemmas
 
 ## Legg substantivet viessu til lemmaer som krever sammensetning, lagres i nouns
@@ -75,15 +76,22 @@ EXTEDITOR=@SEE@
 
 # Hent ut lemmaer fra nouns.lexc som krever sammensetning (Rreal | R | Rnoun)
 @GTCORE@/scripts/extract-lemmas.sh \
-    --exclude "(CmpN/Only|ShCmp|\+Cmp\/SplitR|NOT-TO-LEMMATEST)" \
+    --exclude "(CmpN/Only|ShCmp|\+Cmp\/SplitR|NOT-TO-LEMMATEST| ALLGUOVT)" \
     --include "( Rreal | R | Rnoun )" \
     $source_file > $comp_lemmas
 
 # Hent ut lemmaer fra nouns.lexc som krever sammensetning med bindestrek (RHyph)
 @GTCORE@/scripts/extract-lemmas.sh \
-    --exclude "(ShCmp|\+Cmp\/SplitR|NOT-TO-LEMMATEST)" \
+    --exclude "(ShCmp|\+Cmp\/SplitR|NOT-TO-LEMMATEST| ALLGUOVT)" \
     --include "( RHyph )" \
     $source_file > $hycomp_lemmas
+
+# Hent ut lemmaer fra nouns.lexc som krever guovttis (ALLGUOVT)
+@GTCORE@/scripts/extract-lemmas.sh \
+    --exclude "(NOT-TO-LEMMATEST)" \
+    --include "( ALLGUOVT )" \
+    $source_file > $allguovt_lemmas
+
 
 ###### Start testing: #######
 transducer_found=0
@@ -135,6 +143,12 @@ for f in $fsttype; do
         sed 's/$/+N+Cmp\/SgNom+Cmp-#viessu+N+Sg+Nom/' $hycomp_lemmas \
         | $lookup_tool $generator_file.$suffix \
         | cut -f2 | grep "\-" | cut -d "-" -f1 >> $generated_lemmas.$f.txt
+
+        # legg til  guovttis+v2+N+Coll+Sg+Nom og generer. Lagre i generated-nouns.
+        sed 's/$/% guovttis+N+Coll+Sg+Nom/' $allguovt_lemmas \
+        | $lookup_tool $generator_file.$suffix \
+        | cut -f2 | grep "\-" | cut -d "-" -f1 >> $generated_lemmas.$f.txt
+
 
 ###### Collect results: #######
 		# Sort and compare original input with resulting output - the diff is
