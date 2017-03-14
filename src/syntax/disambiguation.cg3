@@ -2129,7 +2129,7 @@ SELECT:SamediggiProp Prop IF (-2 ("ášši"))(-1 Num);
 REMOVE:finnmárku ("finnmárku") IF (0 ("Finnmárku")) ;	
 REMOVE:Johan ("Jo") IF (0 ("Johan")) ;	
 
-REMOVE:PropACR Prop IF (0 ACR - Prop) ;	
+#REMOVE:PropACR Prop IF (0 ACR - Prop) ;	
 
 
 #!! we don't want propernoun analysis of these words, initially in sentences
@@ -2530,7 +2530,7 @@ REMOVE:PropAttr Attr IF (-1 VFIN + Sg3 LINK NOT -1 (Nom Sg))(0 Sem/Fem OR Sem/Ma
 
 
 #!! * __PropAttr1__ Selects Attr if you are Sem/Fem OR Sem/Mal, Sem/Sur or INITIAL and to your right is Prop which is Sem/Fem OR Sem/Mal or Sem/Sur 
-SELECT:PropAttr1 Attr IF (0 Sem/Fem OR Sem/Mal OR Sem/Sur OR INITIAL)(NEGATE 0 Loc)(*1C Prop BARRIER REAL-WORD-NOT-ABBR OR COMMA OR PUNCT LINK 0 Sem/Sur OR Sem/Fem OR Sem/Mal) (NEGATE 1 Sem/Plc + Ill OR Sem/Plc + Loc LINK -2 VFIN + Sg3) ; # LINK NEGATE 0 ADVLCASE LINK -1 Nom LINK NEGATE *-1 Nom BARRIER S-BOUNDARY); #(NEGATE 0 Acc LINK *1 Acc BARRIER NOT-NP LINK NEGATE 0 Sem/Fem OR Sem/Mal) ; Lene: kommenterte ut denne fordi den hindret regelen i å fungere på alle setninger, vi får se på hva slags constraint det bør være. 
+SELECT:PropAttr1 Attr IF (0 Sem/Fem OR Sem/Mal OR Sem/Sur OR INITIAL - Loc) (*1C Prop BARRIER REAL-WORD-NOT-ABBR OR COMMA OR PUNCT LINK 0 Sem/Sur OR Sem/Fem OR Sem/Mal) (NEGATE 1 Sem/Plc + Ill OR Sem/Plc + Loc LINK -2 VFIN + Sg3) ; # LINK NEGATE 0 ADVLCASE LINK -1 Nom LINK NEGATE *-1 Nom BARRIER S-BOUNDARY); #(NEGATE 0 Acc LINK *1 Acc BARRIER NOT-NP LINK NEGATE 0 Sem/Fem OR Sem/Mal) ; Lene: kommenterte ut denne fordi den hindret regelen i å fungere på alle setninger, vi får se på hva slags constraint det bør være. 
 	#$ Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna.
 	#$ Dat lea dehálaš, lohká Svein Ottar Helander.
 	#$ Do boahtá Biret Turi Sara.
@@ -2678,7 +2678,7 @@ REMOVE (A Comp Attr) IF (0 Der/Car OR (".*heapme"r))(0 N OR V) ;
 REMOVE:ihttin ("ihtit") IF (0 ("ihttin")) ;
 REMOVE:olgu ("olgu") IF (0 ("olgun")) ;
 
-#!! !!Fragments
+#!! !!Fragments and headliners
 
 #!! * __foto__ 
 SELECT:foto1 PrfPrc IF (0 ("čállit") OR ("govvet") OR ("filbmet") OR ("čuohppat") LINK 1 (":")) ;
@@ -2690,6 +2690,15 @@ SELECT:Sem/Act Sem/Act + Nom IF (-1 BOS)(NEGATE *1 WORD) ;
 SELECT:Sem/Act Sem/Act + Nom IF (-1 BOS)(1 CC LINK *1 (N Nom) BARRIER NOT-NPMOD LINK NEGATE *1 WORD) ;
 	#$ Dutkan  # dutkan has Err/Orth reading as VFIN
 	#$ Dutkan ja alit oahpahus  # dutkan has Err/Orth reading as VFIN
+
+#!! * __NotGen__ 
+SELECT:NotGen N + Nom IF (-1 BOS)(0 Gen LINK 1 Sem/Time LINK NOT *1 REAL-V) ;
+	#$ Giđđajohtin minuvttas minuktii.
+
+#!! * __compgo__ 
+SELECT:compgo A + Comp IF (*-1 BOS BARRIER WORD)(1 go) ;
+	#$ Buoret go goassege ovdal.
+
 	
 SELECT:NomPunctRight ABBR + Nom IF (-1 BOS)(1 (PUNCT RIGHT)) ;
 	#$ a) Álgogursa 1 sámegielas
@@ -8155,9 +8164,10 @@ MAP:-FMAINVAux2 (@-FMAINV) TARGET ConNeg + ("leat") (*1 (N Nom) BARRIER NOT-NPMO
 	#$ Muhto dus ii leat riekti dearpat su beare dan dihte.
 		
 #!! * __+FAUXVCop__  copulas coming after the mainverb
-MAP:+FAUXVCop (@+FAUXV) TARGET VFIN-NOT-IMPRT + COPULAS (*-1 PrfPrc OR (Actio Ess) BARRIER NOT-ADV-PCLE LINK NOT 0 SYN-V OR (@>N)) ;
+MAP:+FAUXVCop (@+FAUXV) TARGET VFIN-NOT-IMPRT + COPULAS (*-1 PrfPrc OR (Actio Ess) BARRIER NOT-ADV-PCLE LINK NOT 0 SYN-V OR (@>N) OR (N Nom))
+ ;
 	#$ Ja boahtán ledje su gudnejahttit.
-		
+ 	#% Lonohallan lea čatnon Barents regiovdnii, dát mearkkaša ahte lonohallan lea Ruššii.		
   
 #!! * __+FAUXVboahtit__  boahtit coming before the mainverb
 MAP:+FAUXVboahtit (@+FAUXV) TARGET VFIN-NOT-IMPRT + ("boahtit") (NOT 0 Imprt LINK *1 AUX + Inf OR PERCEPTION-V + Inf OR MOVEMENT-V + Inf BARRIER NOT-ADV) ;
@@ -8331,7 +8341,7 @@ MAP:-FMAINVPrfPrccoord (@-FMAINV) TARGET PrfPrc (-1 CC LINK -1 @-FMAINV) ;
 	#$ Son lei vuolggahan mu dán máilbmái dáhpedorpmis geainna nu, riegádahttán ja guoddán mu heakkastis vahágis, biebman ja bivttastan dalle go muittii.
 
 #!! * __-FMAINVPrfbeforeAux__  to PrfPrc before the Aux	
-MAP:-FMAINVPrfbeforeAux (@-FMAINV) TARGET PrfPrc (*1 REAL-COPULAS + VFIN BARRIER NOT-ADV-PCLE LINK NEGATE *1 PrfPrc OR (Actio Ess) BARRIER NOT-ADV-PCLE)(NEGATE -1 BOC LINK 1 Der/Pass LINK 1 ("leat") LINK *2 NP-HEAD-NOM BARRIER NOT-NP);     
+MAP:-FMAINVPrfbeforeAux (@-FMAINV) TARGET PrfPrc (*1 REAL-COPULAS + FAUXV BARRIER NOT-ADV-PCLE LINK NEGATE *1 PrfPrc OR (Actio Ess) BARRIER NOT-ADV-PCLE)(NEGATE -1 BOC LINK 1 Der/Pass LINK 1 ("leat") LINK *2 NP-HEAD-NOM BARRIER NOT-NP);     
 	#$ Ja boahtán ledje su gudnejahttit.
 
 #!! * __-FMAINVPrfafterMan__  to PrfPrc before the Aux	
