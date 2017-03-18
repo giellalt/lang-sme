@@ -2696,8 +2696,9 @@ SELECT:AnomInf Inf IF (NOT 0 COPULAS LINK -1 A + Nom LINK *-1 BOS BARRIER WORD)(
 	#$ Váttis goastadit buot vuoittuid.
 
 #!! * __NotGen__ 
-SELECT:NotGen N + Nom IF (-1 BOS)(0 Gen LINK 1 Sem/Time LINK NOT *1 REAL-V) ;
+SELECT:NotGen N + Nom IF (-1 BOS)(0 Gen LINK NOT 0 PrfPrc LINK 1 Sem/Time LINK NOT *1 REAL-V) ;
 	#$ Giđđajohtin minuvttas minuktii.
+	#% Mannan ija dáhpáhusat.
 
 #!! * __compgo__ 
 SELECT:compgo A + Comp IF (*-1 BOS BARRIER WORD)(1 go) ;
@@ -2722,6 +2723,12 @@ SELECT:NomACR Nom IF (0 ACR OR ABBR)(-1 BOS)(1 PUNCT) ;
 	#$ Ovttas.no - Sámi oahpponeavvut neahtas
 
 SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 BOS)(1 (":") OR EOS) ;
+SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 Nom LINK -1 BOS)(1 (":") OR EOS) ;
+SELECT:PrfPrcFragm PrfPrc (0 Der/NomAct LINK -1 Nom LINK -1 BOS)(1 (":") OR EOS) ;
+SELECT:PrfPrcFragm PrfPrc (0 Der/NomAct LINK -1 Nom LINK -1 CC LINK -1 N LINK -1 BOS)(1 (":") OR EOS) ;
+SELECT:N N + Nom (0 Der/NomAct LINK -1 CC LINK -1 N LINK -1 BOS)(1 PrfPrc LINK 1 (":") OR EOS) ;
+	#$ Gásttašeapmi njiedjan.
+	#$ Gásttašeapmi ja konfirmeren njiedjan.
 
 
 SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 (N Nom) LINK -1 BOS)(1 CC OR EOS) ;
@@ -6197,7 +6204,7 @@ SELECT:Interr Interr IF ((-1 COMMA LINK *-1 CS LINK *-1 BOS BARRIER NOT-PCLE) OR
 	#$ - Áhčči, mii lea duot čáppa alit násti doppe guhkkelis?
 	#% Maid mii dál vihtaniiguin?
 
-SELECT:Interr Interr IF (-1 MUITALIT)(0 Rel OR Indef LINK *1 VFIN);
+SELECT:Interr Interr IF (-1 MUITALIT OR ("mearridit"))(0 Rel OR Indef LINK *1 VFIN);
 
 
 #!! * __InterrIfPot__ selects interrogative pronouns in potential sentences, and after that we remove the remaining Interr
@@ -6811,6 +6818,9 @@ REMOVE:Xr1719 VFIN IF (NEGATE *-2 Rel OR CS BARRIER S-BOUNDARY)(-1C VFIN)(NEGATE
  # adverbial reading. It comes here because this is where it is first needed.
 	
 #!! * __AdvManimus__ 
+SELECT:AdvManimus Sem/Plc + Adv IF (NEGATE *0 VFIN)(-1 N)(1 EOS) ;
+	#$ NSR-Henrik bajimusas.
+	
 REMOVE:AdvManimus Adv IF (NEGATE *-1 REAL-V BARRIER S-BOUNDARY)(0 A)(NEGATE 1C A OR Dem)(NEGATE *1 REAL-V BARRIER S-BOUNDARY); # This rule makes sense to this sentence.
 	#$ Maŋimus maid Will Turneris oinniimet lei go son vuojui meara bodnái.
 
@@ -7743,6 +7753,11 @@ MAP:>NPrfPrcPo (@>N) TARGET PrfPrc - NOT-@>N (*1 (N Gen) BARRIER NOT-A LINK 1 Po
 #!! * __NPrfPrcGen__ after Gen
 MAP:>NPrfPrcGen (@>N) TARGET PrfPrc - NOT-@>N (-1 Gen LINK *-1 REAL-V - COPULAS BARRIER S-BOUNDARY)(NEGATE 0 AUX)(1 N - ADVLCASE)(NEGATE 0 TRANS-V LINK 1 Acc) ;
 	#$ Juos ášši gusto restii Finnmárkku meahcceeatnamiid nuppástuvvan geavaheamis, de ii searvit Sámedikki válljen maŋimuš stivrralahttu gii ii ovddas boazodoalu.  
+
+
+#!! * __NPrfPrc__ between aux and prfprc
+MAP:>Nbetween (@>N) TARGET PrfPrc - NOT-@>N (-1 VFIN + ("leat"))(1 N LINK *1 PrfPrc BARRIER NOT-ADV-PCLE) ;
+	#$ Son lea mannan áigodaga leamaš Sámediggeráđis ja sus lei ovddasvástádus kultuvrra ja dearvvašvuođa ovddas.
 
 
 #!! * __NPrfPrc6__ the verb can be to the right
