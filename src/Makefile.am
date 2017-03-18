@@ -102,20 +102,21 @@ if WITH_OFST_TROPICAL
 generator-raw-gt-desc.hfst: generator-raw-gt-desc.tmp.hfst
 	$(AM_V_REWEIGHT)$(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
 			-S '+Cmp' -a 10 --arcs-only -i $< \
-		| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
-			-S '+Der'  -a 5 --arcs-only \
-		| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
-			-S '+Der1' -a 5 --arcs-only \
-		| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
-			-S '+Der2' -a 5 --arcs-only \
-		| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
-			-S '+Der3' -a 5 --arcs-only \
-		| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
-			-S '+Der4' -a 5 --arcs-only \
-		| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
-			-S '+Der5' -a 5 --arcs-only \
 		> $@
 endif
+
+#		| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
+#			-S '+Der'  -a 5 --arcs-only \
+#		| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
+#			-S '+Der1' -a 5 --arcs-only \
+#		| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
+#			-S '+Der2' -a 5 --arcs-only \
+#		| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
+#			-S '+Der3' -a 5 --arcs-only \
+#		| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
+#			-S '+Der4' -a 5 --arcs-only \
+#		| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
+#			-S '+Der5' -a 5 --arcs-only 
 
 # A generator for producing word forms suitable for tts:
 # * no circular constructions:
