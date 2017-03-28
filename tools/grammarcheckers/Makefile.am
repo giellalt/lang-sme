@@ -20,4 +20,4 @@ modes/%.mode: modes.xml
 	apertium-gen-modes modes.xml
 
 checkxml:
-	xmllint --noout --dtdvalid errors.dtd errors.xml
+	divvun-validate-suggest errors.xml
