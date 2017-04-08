@@ -2130,11 +2130,6 @@ SELECT:SamediggiProp Prop IF (-2 ("ášši"))(-1 Num);
 REMOVE:finnmárku ("finnmárku") IF (0 ("Finnmárku")) ;	
 REMOVE:Johan ("Jo") IF (0 ("Johan")) ;	
 
-#REMOVE:AdvSubqst Adv + Subqst ((0 Foc/Neg-ge OR Foc/Pos-ge) OR (-1 ("nu")) OR (0 ("man"))) ;	
-#SELECT:AdvSubqst Adv + Subqst  ;	
-
-SELECT:AdvSubqst Adv + Subqst IF (NEGATE 0 Pron) ;	
-SELECT:AdvSubqst Adv + Subqst IF (0 Pron LINK 1 A + Attr OR A + Nom) ;	
 
 REMOVE:PropACR (Dyn) IF (0 Prop) ;	
 
@@ -2627,6 +2622,7 @@ REMOVE:Vbearaš Pot (0 ("bearaš"))  ;
 REMOVE ("suotnjat") + Ind IF (0 Pers LINK -1 VFIN) ;
 
 #!!  * __ABBR__ Removes ABBR in favour of Adv, Pcle or Pron, e.g. "dii" when there is no punctuation
+REMOVE:Badv ABBR + Adv IF ( 0 ("b") LINK -1 Sem/Fem OR Sem/Mal) ;
 REMOVE:ABBR ABBR IF (0 Adv OR Pcle OR Pron) ;
 
 #!! * __ollit__ removes ollit when ollu - move this one?
@@ -2734,6 +2730,7 @@ SELECT:NotGen N + Nom IF (-1 BOS)(0 Gen LINK NOT 0 PrfPrc LINK 1 Sem/Time LINK N
 SELECT:PassPrfPrc PrfPrc IF (-1 PrfPrc + Der/Pass LINK -1 BOS)(1 EOS OR ("–")) ;
 SELECT:PassPrfPrc PrfPrc IF (0 Sg1 + Der/Pass LINK NEGATE *-1 Sg1) ;
 SELECT:PrfPrc PrfPrc IF (-1 Nom LINK -1 BOS) (1 Acc OR Adv LINK *1 ("❡")) ;
+SELECT:PrfPrc PrfPrc IF (-1 Nom LINK -2 BOS) (1 ADVLCASE LINK *1 ("❡")) ;
 SELECT:PrfPrc PrfPrc IF (-1 BOS) (1 Attr LINK 1 Acc LINK *1 EOS BARRIER WORD) ;
 SELECT:PrfPrc PrfPrc IF (-1 Gen LINK -1 Num LINK *-1 BOS BARRIER WORD) (*1 EOS BARRIER REAL-V) ;
 	#$ Dieđihuvvon láhppon – gávdnon dearvan. 
@@ -10108,7 +10105,7 @@ SELECT:NumGenMeasure (Num Gen) IF (1 MEASUREADJS)(2 N);
 
 
 #!! * __NumAcc2__ Selects Acc for singular numerals if there is a transitive verb somewhere in the sentence and the numeral is followed by a noun ''logi báhkkoma'' OBS
-SELECT:NumAcc2 Acc IF (0* NOT-FAUXV + TRANS-V BARRIER SV-BOUNDARY)(0 NUM + Sg LINK NOT 0 NUMUNIT OR Sem/Year)(*1 (N Acc) OR (N Gen) BARRIER NOT-Attr LINK NOT 0 Ill)(NEGATE *-1 COPULAS + FMAINV BARRIER SV-BOUNDARY)(NEGATE *-1 Der/Pass OR (Dem Nom) BARRIER NOT-ADV)(NEGATE *1 COPULAS + FMAINV BARRIER COMMA OR SV-BOUNDARY)(NEGATE -1 NUMMAR)(NOT 1 MEASUREADJS);
+SELECT:NumAcc2 Acc IF (*-1 NOT-FAUXV + TRANS-V BARRIER SV-BOUNDARY)(0 NUM + Sg LINK NOT 0 NUMUNIT OR Sem/Year)(*1 (N Acc) OR (N Gen) BARRIER NOT-Attr LINK NOT 0 Ill)(NEGATE *-1 COPULAS + FMAINV BARRIER SV-BOUNDARY)(NEGATE *-1 Der/Pass OR (Dem Nom) BARRIER NOT-ADV)(NEGATE *1 COPULAS + FMAINV BARRIER COMMA OR SV-BOUNDARY)(NEGATE -1 NUMMAR)(NOT 1 MEASUREADJS);
 	#$ Sii máhtte áddekeahttá bajillohkat logi báhkkoma ja Áhččámet.
 	#$ Áiggun dušše geahččat moadde filmma.
 	#$ Dákkár dáhpáhusat, ja máŋga iežá dáhpáhusa ja digaštallama dahke munnje persovnnalaččat váttisin dáid gažaldagaid mat bohciidedje Gáivuonas. 
@@ -12665,6 +12662,12 @@ REMOVE:derNEss DER-N IF (0 DER-N LINK 0 Ess)(0 LEX-N LINK 0 Ess)(NEGATE 0 (NomAg
 REMOVE:EssProNom Ess IF (0 (N Nom)) ; 
 	#$ Su háliidusa mielde dollojuvvui Suonjila dálvesiiddas čoahkkin cuoŋománus 1938.
 
+REMOVE:AdvSubqst Adv + Subqst + Foc/Neg-ge ; #((0 Foc/Neg-ge OR Foc/Pos-ge) OR (-1 ("nu")) OR (0 ("man"))) ;	
+REMOVE:AdvSubqst Adv + Subqst + Foc/Pos-ge ; 
+#SELECT:AdvSubqst Adv + Subqst  ;	
+
+SELECT:AdvSubqst Adv + Subqst IF (NEGATE 0 Pron)(NEGATE 0 Sem/Sur LINK -1 ABBR OR Sem/Mal OR Sem/Fem) ;	
+SELECT:AdvSubqst Adv + Subqst IF (0 Pron LINK 1 A + Attr OR A + Nom) ;	
 
 SELECT:daninAdv ("danin" Adv) ; 
 
