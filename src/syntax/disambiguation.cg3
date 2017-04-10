@@ -2707,8 +2707,8 @@ SELECT:čállit N + Nom - Der/NomAg IF (0 Inf OR Imprt LINK 1 EOS)(-1 BOS) ;
 
 
 #!! * __Sem/Act__ selects lexicalised NomAct in fragments (instead of looking for VFIN). 
-SELECT:Sem/Act Sem/Act + Nom IF (-1 BOS)(NOT 0 Prop)(NEGATE *1 WORD) ;
-SELECT:Sem/Act Sem/Act + Nom IF (-1 BOS)(1 CC LINK *1 (N Nom) BARRIER NOT-NPMOD LINK NEGATE *1 WORD) ;
+SELECT:Sem/Act Sem/Act + Nom IF (*-1 BOS BARRIER WORD)(NOT 0 Prop)(NEGATE *1 WORD) ;
+SELECT:Sem/Act Sem/Act + Nom IF (*-1 BOS BARRIER WORD)(1 CC LINK *1 (N Nom) BARRIER NOT-NPMOD LINK NEGATE *1 WORD) ;
 	#$ Dutkan  # dutkan has Err/Orth reading as VFIN
 	#$ Dutkan ja alit oahpahus  # dutkan has Err/Orth reading as VFIN
 
@@ -2723,14 +2723,14 @@ SELECT:ACompPl Pl + Nom IF (0 DEHALAS LINK -1 Nom)(NEGATE *0 VFIN) ;
 
 
 #!! * __NotGen__ 
-SELECT:NotGen N + Nom IF (-1 BOS)(0 Gen LINK NOT 0 PrfPrc LINK 1 Sem/Time LINK NOT *1 REAL-V) ;
+SELECT:NotGen N + Nom IF (*-1 BOS BARRIER WORD)(0 Gen LINK NOT 0 PrfPrc LINK 1 Sem/Time LINK NOT *1 REAL-V) ;
 	#$ Giđđajohtin minuvttas minuktii.
 	#% Mannan ija dáhpáhusat.
 
-SELECT:PassPrfPrc PrfPrc IF (-1 PrfPrc + Der/Pass LINK -1 BOS)(1 EOS OR ("–")) ;
+SELECT:PassPrfPrc PrfPrc IF (-1 PrfPrc + Der/Pass LINK *-1 BOS BARRIER WORD)(1 EOS OR ("–")) ;
 SELECT:PassPrfPrc PrfPrc IF (0 Sg1 + Der/Pass LINK NEGATE *-1 Sg1) ;
-SELECT:PrfPrc PrfPrc IF (-1 Nom LINK -1 BOS) (1 Acc OR Adv LINK *1 ("❡")) ;
-SELECT:PrfPrc PrfPrc IF (-1 Nom LINK -2 BOS) (1 ADVLCASE LINK *1 ("❡")) ;
+SELECT:PrfPrc PrfPrc IF (-1 Nom LINK *-1 BOS BARRIER WORD) (1 Acc OR Adv LINK *1 ("❡")) ;
+SELECT:PrfPrc PrfPrc IF (-1 Nom LINK *-2 BOS BARRIER WORD) (1 ADVLCASE LINK *1 ("❡")) ;
 SELECT:PrfPrc PrfPrc IF (-1 BOS) (1 Attr LINK 1 Acc LINK *1 EOS BARRIER WORD) ;
 SELECT:PrfPrc PrfPrc IF (-1 Gen LINK -1 Num LINK *-1 BOS BARRIER WORD) (*1 EOS BARRIER REAL-V) ;
 	#$ Dieđihuvvon láhppon – gávdnon dearvan. 
@@ -2739,33 +2739,37 @@ SELECT:PrfPrc PrfPrc IF (-1 Gen LINK -1 Num LINK *-1 BOS BARRIER WORD) (*1 EOS B
 
 SELECT:PrfPrc PrfPrc IF (0 ("giddet") LINK 1 ("luodda") OR Sem/Route) ;
 
-SELECT:PrfPrcHealiner PrfPrc IF (-1 BOS)(0 PrfPrc LINK *1 ("❡") BARRIER VFIN) ; #TEST
-SELECT:PrfPrcHealiner PrfPrc IF (-1 BOS)(0 PrfPrc LINK *1 Rel OR CS BARRIER VFIN LINK *1 ("❡")) ; #TEST
+SELECT:PrfPrcHealiner PrfPrc IF (*-1 BOS BARRIER WORD)(0 PrfPrc LINK *1 ("❡") BARRIER VFIN) ; #TEST
+SELECT:PrfPrcHealiner PrfPrc IF (*-1 BOS BARRIER WORD)(0 PrfPrc LINK *1 Rel OR CS OR CC BARRIER VFIN LINK *1 ("❡")) ; #TEST
 	#$ Čavgen gearggusvuođa uđasvára geažil.
+
+SELECT:PrfPrcHealiner PrfPrc IF (-1 CC LINK *-1 BOS BARRIER VFIN)(0 PrfPrc LINK *1 ("❡") BARRIER VFIN) ; #TEST
+	#$ Gidden sisabuktinvejolašvuođa ja maŋidan áigemeari.
+
 
 #!! * __compgo__ 
 SELECT:compgo A + Comp IF (*-1 BOS BARRIER WORD)(1 go) ;
 	#$ Buoret go goassege ovdal.
 
 	
-SELECT:NomPunctRight ABBR + Nom IF (-1 BOS)(1 (PUNCT RIGHT)) ;
+SELECT:NomPunctRight ABBR + Nom IF (*-1 BOS BARRIER WORD)(1 (PUNCT RIGHT)) ;
 	#$ a) Álgogursa 1 sámegielas
 
-SELECT:NomFragm KLASS + Nom IF (-1 BOS)(1 ACR OR Num OR PUNCT) ;
+SELECT:NomFragm KLASS + Nom IF (*-1 BOS BARRIER WORD)(1 ACR OR Num OR PUNCT) ;
 	#$ Ášši DC 002/12
 
-REMOVE:NotVfinFragm VFIN (0 PrfPrc LINK -1 BOS)(*1 EOS BARRIER REAL-V OR Adv) ;
+REMOVE:NotVfinFragm VFIN (0 PrfPrc LINK *-1 BOS BARRIER WORD)(*1 EOS BARRIER REAL-V OR Adv) ;
 	#$ Čuvvon ášši.
 
 
 SELECT:NomKlass Nom IF (0 ACR OR Num)((-1 ACR OR Num LINK -1 KLASS + Nom LINK -1 BOS) OR  (-1 KLASS) ) ;
 SELECT:NomKlass Nom IF (0 ACR OR ABBR)(-1 Num LINK -1 KLASS) ;
 	#$ Ášši DC 002/12.
-REMOVE:NomACR Acc IF (0 ACR OR ABBR)(-1 BOS) ;
-SELECT:NomACR Nom IF (0 ACR OR ABBR)(-1 BOS)(1 PUNCT) ;
+REMOVE:NomACR Acc IF (0 ACR OR ABBR)(*-1 BOS BARRIER WORD) ;
+SELECT:NomACR Nom IF (0 ACR OR ABBR)(*-1 BOS BARRIER WORD)(1 PUNCT) ;
 	#$ Ovttas.no - Sámi oahpponeavvut neahtas
 
-SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 BOS)(1 (":") OR EOS) ;
+SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK *-1 BOS BARRIER WORD)(1 (":") OR EOS) ;
 SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 Nom LINK -1 BOS)(1 (":") OR EOS) ;
 SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 Gen LINK -1 Num LINK -1 BOS)(1 (":") OR EOS) ;
 SELECT:PrfPrcFragm PrfPrc (0 Der/NomAct LINK -1 Nom LINK -1 BOS)(1 (":") OR EOS) ;
@@ -11408,6 +11412,10 @@ SELECT:HumPxComFamily (Sg Com) IF (*-1 VFIN + Sg3 BARRIER VFIN)(0 (Pl Loc) + FAM
 	#$ Sáriggá jugada káfe etniinis.
 	#% Giellabargu mánáidgárddis gáibida ollu barggu sihke bargiin ja vánhemiin.
 #SELECT:HumPxComXGOFamily (Sg Com) IF (-1 HUMAN LINK -1 XGO LINK *-1 VFIN + Sg3 BARRIER VFIN)(0 (Pl Loc) + FAMILY);
+
+#!! * __HumPxComPlaceV__  
+SELECT:HumPxComPlaceV (Sg Com)  IF (0 (Pl Loc) + FAMILY LINK -1 Sem/Time + Gen);
+	#$ vihtta vahku vieljain.
 
   	
 #!! * __LocInstitution__ select Loc INSTITUTION if there is a ABSTR-PLACE-V
