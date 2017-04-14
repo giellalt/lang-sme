@@ -859,7 +859,7 @@ LIST LOC-V = "ávkkástallat" "ballat" "beassat" "beroštit" "biehttalit" "bihti
 		#Note that "fuolahit" obviously has two homonymous variants: 
 		#fuolahit1+Acc, fuolahit2+Loc
 
-LIST COM-V = "álggahit" "álgit" "árvalit" "árvvohuššat" "ávkašuvvat" "bálddastahttit" "bálddalastit" "bártašuvvat" "birgehallat" "birget" "bivvat" "buohtastahttit" "čoahkkinastit" "deaivvadit" "deavdit" "digaštallat" "doarrut" "duhkoraddat" "ealihit" "flirtet" "gávnnadit" "gárvodit" "giksašuvvat" "gilvalit" "gulahallat" "gulaskuddat" "hilbošit" "joatkit" "juogadit" "juohkit" "láhttet" "leaikkastallat" "lohpádaddat" "lohpádallat" "lonuhit" "meannudit" "malssidit" "molssodit" "náitalit" "oastit" "oktiibidjat" "oahpásmuvvat" "ovttasbargat" "ovttasdoaibmat" "ovttastahttit" "rahčat" "ráđđádallat" "reivvestaddat" "riidalit" "riiddáskit" "rohcošit" "ságastit" "seaguhit" "servvoštallat" "servvoštaddat" "soabadit" "soahpat" "soahtat" "soardit" "stálostallat" "stoahkat" "šiehtadallat" "šiehtadit" "šiehttat" "veahkehit" "veardidit" "viiddidit" "vrd" "vuogáiduvvat" ; # vuogáiduvvat : when the choice is between Com and Loc, then it is Com
+LIST COM-V = "álggahit" "álgit" "árvalit" "árvvohuššat" "ávkašuvvat" "bálddastahttit" "bálddalastit" "bártašuvvat" "birgehallat" "birget" "bivvat" "buohtastahttit" "čoahkkinastit" "deaivvadit" "deavdit" "digaštallat" "doarrut" "duhkoraddat" "ealihit" "flirtet" "gávnnadit" "gárvodit" "giksašuvvat" "gilvalit" "gulahallat" "gulaskuddat" "hilbošit" "joatkit" "juogadit" "juohkit" "kombineret" "láhttet" "leaikkastallat" "lohpádaddat" "lohpádallat" "lonuhit" "meannudit" "malssidit" "molssodit" "náitalit" "oastit" "oktiibidjat" "oahpásmuvvat" "ovttasbargat" "ovttasdoaibmat" "ovttastahttit" "rahčat" "ráđđádallat" "reivvestaddat" "riidalit" "riiddáskit" "rohcošit" "ságastit" "seaguhit" "servvoštallat" "servvoštaddat" "soabadit" "soahpat" "soahtat" "soardit" "stálostallat" "stoahkat" "šiehtadallat" "šiehtadit" "šiehttat" "veahkehit" "veardidit" "viiddidit" "vrd" "vuogáiduvvat" ; # vuogáiduvvat : when the choice is between Com and Loc, then it is Com
  
 		#Note that "leaikkastallat" has two homonymous variants:
 		#leaikkastallat1 (IV), leaikkastallat2+Com
@@ -2287,6 +2287,8 @@ REMOVE:derN DER-N IF (0 LEX-N LINK NEGATE 0 Ess OR ("dahkat"));
 REMOVE:semAct N + Der/NomAct IF (0 N + Sem/Act - N + Der/NomAct); 
 REMOVE:semNomAg Der/NomAg IF (0 NomAg);
 
+REMOVE:modasp-derNomAg Der/NomAg IF (0 MOD-ASP);
+
  
 #!! * __derNEss__ removes DER-N if lexicalised essives (revise this) - flytter denne til slutten av fila
 #REMOVE:derNEss DER-N IF (0 DER-N LINK 0 Ess)(0 LEX-N LINK 0 Ess)(NEGATE 0 (NomAg Ess) OR (Der/NomAg Ess));
@@ -2508,7 +2510,9 @@ REMOVE:NeverAdv Adv IF (0 ("nuorra" Adv) ) ;
 
 #!! !Rules for Prop Attr, Sem/Sur and Plc
 
-SELECT:Pro (Prop Attr) IF (0 Sem/Org LINK 1 ("oasseváldi"));
+SELECT:ProLiet ("Liet") IF (0 ("Lie"));
+
+SELECT:Pro (Prop Attr) IF (0 Sem/Org LINK 1 ("oasseváldi") OR ("finála") OR ("gilvu") OR ("loahppagilvu"));
 
 
 #!! * __PropAttrIfPropx__ removes Attr if no Prop on the right side
@@ -2730,6 +2734,7 @@ SELECT:NotGen N + Nom IF (*-1 BOS BARRIER WORD)(0 Gen LINK NOT 0 PrfPrc LINK 1 S
 	#$ Giđđajohtin minuvttas minuktii.
 	#% Mannan ija dáhpáhusat.
 
+SELECT:duššeAdv Adv IF (0 ("dušše"))(1 Num LINK *1 PrfPrc BARRIER REAL-V) ;
 SELECT:PassPrfPrc PrfPrc IF (-1 PrfPrc + Der/Pass LINK *-1 BOS BARRIER WORD)(1 EOS OR ("–")) ;
 SELECT:PassPrfPrc PrfPrc IF (0 Sg1 + Der/Pass LINK NEGATE *-1 Sg1) ;
 SELECT:PrfPrc PrfPrc IF (-1 Nom LINK *-1 BOS BARRIER WORD) (1 Acc OR Adv LINK *1 ("❡")) ;
@@ -4117,7 +4122,7 @@ SELECT:RelVFIN VFIN (0 Pl3 OR Du3 LINK -1 (Rel Pl Nom)) ;
 REMOVE:ImprtCase Imprt IF (0 $$CASE LINK -1 COMMA OR CC LINK -1 $$CASE)(NEGATE 0 (Imprt Sg3))(NEGATE -2 Imprt LINK -1 BOS) ;
 REMOVE:ImprtNomAg Imprt IF (0 Actor LINK 1 PROP-SUR) ; # PROP-SUR has also Mal and Fem
 
-REMOVE:ImprtCoor Imprt IF (-1 ("ja") OR ("dahje") OR ("dehe") LINK -1 ConNeg OR VGen) ; 
+#REMOVE:ImprtCoor Imprt IF (-1 ("ja") OR ("dahje") OR ("dehe") LINK -1 ConNeg OR VGen) ; 
 #
 
 
@@ -11173,7 +11178,9 @@ SELECT:ComIllness (Sg Com) IF  (*-1 ILLNESS-V BARRIER SV-BOUNDARY)(0 ILLNESS);
 
 
 #!! * __vuoitit__ select Com Sem/Time
-SELECT:Comvuoitit (Sg Com) IF (0 Sem/Time)((-1 ("vuoitit")) OR (-1 Num LINK -1 ("vuoitit")));
+SELECT:ComvuoititTime (Sg Com) IF (0 Sem/Time)((-1 ("vuoitit")) OR (-1 Num LINK -1 ("vuoitit")));
+SELECT:ComvuoititAni (Sg Com) IF (0 (Sem/Ani-fish))((-1 ("vuoitit")) OR (-1 Num LINK -1 ("vuoitit"))  OR (1 ("vuoitit")) );
+	#$ Gilosaš njágáin vuittii 15 000,-
 
 SELECT:guovttis Com IF (0 HUMAN + (Pl Loc) LINK -1 GUOVTTIS) ;
 	#$ Dát ordnašuvai, ja vuosttaš beaivve rájes leigga Sissel-guovttos Uhcaoappáin priváhtaoahpaheaddjin nubbi nubbái.
@@ -12452,7 +12459,7 @@ LIST JUOHKIN-PASS-SUBJ = "gávdnoštupmi" "eana" "čázádat" "vuoigatvuohta" ;
 
 
 SELECT:LexSel ("juohkit") IF (0 ("juhkat"))(*0 Ill BARRIER Loc OR SV-BOUNDARY LINK NOT 0 TIME-N) ;	
-SELECT:LexSel ("juohkit") IF (0 ("juhkat"))(*0 ("diehtu") OR TEXT OR ABSTR-TEXT OR CURRENCY BARRIER NOT-NPMOD) ;		
+SELECT:LexSel ("juohkit") IF (0 ("juhkat"))(*0 ("diehtu") OR TEXT OR ABSTR-TEXT OR CURRENCY OR Sem/Measr BARRIER NOT-NPMOD) ;		
 SELECT:LexSel ("juohkit") IF (0 ("juhkat"))(*1 Ess BARRIER NOT-A-PCLE) ;	
 SELECT:LexSel ("juohkit") IF (0 ("juhkat"))(*1 ("mielde") OR ("ektui") OR ("gaskkas") OR ("ovddas") OR ("gaskka") BARRIER NOT-NPMOD) ;	
 SELECT:LexSel ("juohkit") IF (0 ("juhkat"))(*0 JUOHKIN-ADV BARRIER REAL-V) ;
