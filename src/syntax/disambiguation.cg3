@@ -285,7 +285,7 @@ LIST Sem/Date = Sem/Date ;
 LIST Sem/Dance = Sem/Dance Sem/Dance_Org Sem/Dance_Prod-audio ; #Ollugat dánso swinga lávddi ovddabeale.
 LIST Sem/Dir = Sem/Dir ;
 LIST Sem/Domain = Sem/Domain Sem/Domain_Food-med Sem/Domain_Hum Sem/Domain_Prod-audio;
-LIST Sem/Drink = Sem/Drink ;
+LIST Sem/Drink = Sem/Drink Sem/Drink_Plant ;
 LIST Sem/Edu = Sem/Build_Edu_Org Sem/Edu Sem/Edu_Event Sem/Edu_Group_Hum Sem/Edu_Hum Sem/Edu_Mat Sem/Edu_Org ; # vázzit X-Acc. addit X-Acc. X:s lea beroštupmi.
 LIST Sem/Event = Sem/Build_Event_Org Sem/Edu_Event Sem/Event Sem/Event_Food Sem/Event_Hum Sem/Event_Plc Sem/Event_Plc-elevate Sem/Event_Time ; # X maŋŋel mun ferten vuolgit. X:s leat ollu olbmot. *Lean leamaš doppe X:Gen.
 #LIST Sem/Feat-cogn = Sem/Feat-cogn ; # oaidnu, oamedovdu, viissisvuohta
@@ -326,7 +326,7 @@ LIST Sem/Perc-emo = Sem/Perc-emo ; #Sem not touchable, not countable ("ballu" "s
 LIST Sem/Perc-phys = Sem/Aniprod_Perc-phys Sem/Food_Perc-phys Sem/Perc-phys Sem/Perc-emo_Wthr ; # anistupmi, oaidnu
 LIST Sem/Perc-psych = Sem/Perc-psych ;
 LIST Sem/Phonenr = Sem/Phonenr ;
-LIST Sem/Plant = Sem/Clth-jewl_Plant Sem/Ctain-clth_Plant Sem/Feat_Plant Sem/Food_Plant Sem/Hum_Plant Sem/Mat_Plant Sem/Plant Sem/Plant_Tool Sem/Plant_Tool-measr ; #čáhccet X-Acc #X-Nom šaddet
+LIST Sem/Plant = Sem/Clth-jewl_Plant Sem/Ctain-clth_Plant Sem/Drink_Plant Sem/Feat_Plant Sem/Food_Plant Sem/Hum_Plant Sem/Mat_Plant Sem/Plant Sem/Plant_Tool Sem/Plant_Tool-measr ; #čáhccet X-Acc #X-Nom šaddet
 LIST Sem/Plant-part = Sem/Plant_Plant-part Sem/Plant-part ; #čáhccet X-Acc #X-Nom šaddet
 LIST Sem/Plc = Sem/Act_Plc Sem/Ani_Hum_Plc Sem/Ani_Plc Sem/Ani_Plc_Txt Sem/Aniprod_Plc Sem/Aniprod_Plc_Route Sem/Body_Plc Sem/Build-part_Plc Sem/Cat_Group_Hum_Plc Sem/Ctain_Plc Sem/Event_Plc Sem/Event_Plc-elevate Sem/Feat-measr_Plc Sem/Group_Hum_Plc Sem/Hum_Lang_Plc Sem/Hum_Plc Sem/Plc Sem/Plc_Pos Sem/Plc_Route Sem/Plc_State Sem/Plc_Substnc Sem/Plc_Substnc_Wthr Sem/Plc_Time Sem/Plc_Time_Wthr Sem/Plc_Tool-catch Sem/Plc_Wthr ;
 LIST Sem/Plc-abstr = Sem/Plc-abstr Sem/Plc-abstr_Rel_State Sem/Plc-abstr_Route ;
@@ -12104,6 +12104,12 @@ SELECT:Sg2LeftDon SG2-V IF (*-1 Rel - Nom BARRIER (Pers Nom) LINK *-1 DON BARRIE
 
 # After everything has been done, we go for the third person.
 
+#!! * __groupPl3__ selects Prs Pl3
+SELECT:groupPl3 Pl3 IF (0 VFIN LINK -1 Nom LINK 0 Sem/Group OR Sem/Org);
+SELECT:NomgroupPl3 Nom IF (0 Sem/Group OR Sem/Org LINK 1 VFIN + Pl3);
+	#$ Hakso ahte FeFo leat alcceseaset eanet ruđaid háhpohallame.
+
+
 #!! * __allSg2leat__ removes Sg2 if leat Prs Pl3
 REMOVE:allSg2leat Sg2 IF (0 ("leat" Prs Pl3));
 
@@ -12689,7 +12695,7 @@ SELECT:propBOC Prop (-1 BOC) ;
 	#$ Girjjis leat boares govat.
 
 REMOVE (Pl Nom) (1 VFIN + Sg3) ;
-REMOVE (Sg Nom) (1 VFIN + Pl3) ;
+REMOVE (Sg Nom) (1 VFIN + Pl3)(NEGATE 0 Sem/Org OR Sem/Group) ;
 
 REMOVE (A @HAB>) (0 N) ;
 SELECT A (0 Attr LINK 0 N LINK 1 N) ;
