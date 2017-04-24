@@ -148,6 +148,7 @@ LIST Cmpnd = Cmpnd ;	   #!! Cmpnd
 LIST Cmp/SgNom = Cmp/SgNom ; #!! Cmp/SgNom Cmp/SgGen
 LIST Cmp/SgGen = Cmp/SgGen ; #!! Cmp/SgGen
 LIST Cmp/Sh = Cmp/Sh ;	   #!! Cmp/Sh
+LIST Cmp = Cmp ;	   #!! Cmp
 LIST PxSg1 = PxSg1 ;	   #!! PxSg1
 LIST PxSg2 = PxSg2 ;	   #!! PxSg2
 LIST PxSg3 = PxSg3 ;	   #!! PxSg3
@@ -2140,7 +2141,6 @@ LIST NOT-PROP = "Árran" "Beaivváš" "Vuoksá" "Áddjá" "Álgu" "Dávgi" "Die�
 LIST PROP-ATTR = Sem/Mal Sem/Sur Sem/Fem (ant m)  (ant f) ;
 LIST PROP-SUR = Sem/Sur Sem/Mal Sem/Fem  (ant m)  (ant f) cog ;
 
-
 REMOVE:InitialSapmiNoun Prop IF (0 ("Sápmi") + Sg + Nom)(1 CC)(2 N + HUMAN OR N + Sem/Lang) ;
 #$ Sápmi ja dárru galgaba báldalagaid oččodit givvuid Romssa gávpogii.
 
@@ -2387,6 +2387,7 @@ SELECT:LexSelmuohttit ("muohttit") IF (0 ("muhttit"))(NEGATE *-1 Nom) ;
 
 #!! * LexSelvuhttot
 SELECT:LexSelvuhttot ("vuhttot") IF (0 ("vuohttut"))(-1 Loc) ;
+SELECT:LexSelvuhttot ("vuhttot") IF (0 ("vuohttut"))(NEGATE *0 ("geahttu")) ;
 
 
 #!! * __LexSelollet__
@@ -3274,9 +3275,10 @@ SELECT:oktiiAdv5 OKTII-ADV IF (-1 ("vel") OR REAL-V) ;
 REMOVE:oktiiAdv Num IF (0 ("oktii")) ; #waitingfor examples of Num Ill
 
 #!! * __ollasitAdv__ selects
-SELECT:ollasitAdv1 Adv IF (0 ("ollásit" V))((-1 REAL-V - INF-V) OR (*1 Loc OR Ill BARRIER NOT-A-ADV) OR (*1 NP-HEAD-GEN BARRIER NOT-A-ADV LINK 1 Po) OR (-1 MOD-ADV-ADV LINK 2 Adv OR ADVLCASE) OR (1 REAL-V)) ;
+SELECT:ollasitAdv1 Adv IF (0 ("ollásit" V))((*-1 REAL-V - INF-V BARRIER SV-BOUNDARY) OR (*1 Loc OR Ill BARRIER NOT-A-ADV) OR (*1 NP-HEAD-GEN BARRIER NOT-A-ADV LINK 1 Po) OR (-1 MOD-ADV-ADV LINK 2 Adv OR ADVLCASE) OR (1 REAL-V)) ;
 	#$ ...ahte historjjálaš ovdáneapmi čielggaduvvo ollásit. 
 	#$ Nu  leatge geasseguohtumat, mat leat váris, measta ollásii norggabealde.
+	#$ Gaup gal devddii dán rolla ollásit.
 
 #!! * __radjaiPo__ selects
 SELECT:radjaiAdv Po IF (-1 Num)(0 ("rádjai") OR ("rájes"));
@@ -4179,6 +4181,9 @@ SELECT:Včiehká (V TV)  IF (*-1 (N Nom) BARRIER SV-BOUNDARY OR NP-BOUNDARY)(0 (
 #!! * __bealisPo__ removes imperatives when Po lookalikes
 REMOVE:bealisPo Imprt IF (-1 Gen)(0 Po);
 	## Dan bealis.
+
+SELECT:ektuiPo Po IF (-1 ("diibmá"))(0 ("ektui")) ;
+	#$ Sámi allaskuvlla ohcciidlogut leat lassánan 37 proseanttain diimmá ektui.
 	
 
 
@@ -6250,6 +6255,10 @@ REMOVE:Prop (@CVP)  IF (-1 Prop + Gen)(1 Prop + Gen LINK 1 Po) ;
 	#$ Sotnabeaivve guolddut dagahedje bárttiid, Šuoššjávrre ja Gievdneguoikka gaskkas ledje máŋga biilla darvánan.
 
 
+REMOVE:ja (@CVP)  IF (-1 Num LINK -1 Pr)(1 Num) ;
+	#$ Sihke ovdal ja maŋŋil dan leat gaskkal vihtta ja logi olbmo ožžon dávdda jagis.
+
+
 #!! * __killAllCNP__ removes all remaining @CNP
 REMOVE:killAllCNP @CNP IF (0 @CVP) ;
 
@@ -6904,8 +6913,9 @@ REMOVE:Xr1719 VFIN IF (NEGATE *-2 Rel OR CS BARRIER S-BOUNDARY)(-1C VFIN)(NEGATE
 SELECT:AdvManimus Sem/Plc + Adv IF (NEGATE *0 VFIN)(-1 N)(1 EOS) ;
 	#$ NSR-Henrik bajimusas.
 	
-REMOVE:AdvManimus Adv IF (NEGATE *-1 REAL-V BARRIER S-BOUNDARY)(0 A)(NEGATE 1C A OR Dem)(NEGATE *1 REAL-V BARRIER S-BOUNDARY); # This rule makes sense to this sentence.
+REMOVE:AdvManimus Adv IF (NEGATE *-1 REAL-V BARRIER S-BOUNDARY)(0 A LINK 1 Rel)(NEGATE 1C A OR Dem)(NEGATE *1 REAL-V BARRIER S-BOUNDARY); # This rule makes sense to this sentence.
 	#$ Maŋimus maid Will Turneris oinniimet lei go son vuojui meara bodnái.
+	#% Unnimusat 90 oahppočuoggá ovtta fágasuorggis.
 
 #!! * __AttrIllCop__ 
 SELECT:AttrIllCop Attr IF (-1 (N Nom) LINK *-1 COPULAS LINK -1 HUMAN + Ill OR (Pers Ill))(0 A)(1 (Nom)) ;	
@@ -7797,7 +7807,7 @@ MAP:-FMAINVPrfPrc (@-FMAINV) TARGET PrfPrc + PASS (*-1 REAL-COPULAS + VFIN + Sg3
 #!! !!Verbs as prenominal participles (@>N):
 
 #!! * Some verbs will not be @>N
-LIST NOT-@>N = "bargat" "báhcit" ("beahttit" Der/PassS) "boahtit" "buollát" "buohcat" "čadnot" "eallit"  "fitnat" "galbet" "hárjehallat" "leat" "lebbet" "logaldallat" "náđđut" "oaidnit" "oažžut" "orrot" "orrut"  "ihtit" "rahčat" "unnut" "vuodjit" "vuodjat" Der/InchL ;
+LIST NOT-@>N = "bargat" "báhcit" ("beahttit" Der/PassS) "boahtit" "buollát" "buohcat" "čadnot" "eallit"  "fitnat" "galbet" "hárjehallat" "johtit" "leat" "lebbet" "logaldallat" "náđđut" "oaidnit" "oažžut" "orrot" "orrut"  "ihtit" "rahčat" "unnut" "vuodjit" "vuodjat" Der/InchL ;
 
 #!! * __NPrfPrc1__ with 1C N Nom
 MAP:>NPrfPrc1 (@>N) TARGET PrfPrc - NOT-@>N (NEGATE *-1 Neg BARRIER REAL-V)(NEGATE -1 COPULAS LINK *-1 Ill BARRIER NOT-A)(NEGATE 0 AUX)(NEGATE 0 TRANS-V LINK *1 Acc BARRIER NOT-NPMOD)(NEGATE 0 MOVEMENT-V LINK *1 Ill OR DOHKO OR ("lusa") BARRIER NOT-NPMOD)(NEGATE 0 PrfPrc LINK NOT 0 Der/Pass LINK 1 Attr)(*1 (N Nom) - Prop BARRIER NOT-A OR COMPAR LINK NEGATE 0 TITLE LINK 1 Sem/Fem OR Sem/Mal OR Sem/Sur);
@@ -8242,8 +8252,6 @@ MAP:+FAUXVCop (@+FAUXV) TARGET VFIN-NOT-IMPRT + COPULAS (*1 PrfPrc OR (Actio Ess
 	#$ Son lea leamaš oahpaheaddji maŋimuš 15-20 jagi, sihke mánáidskuvllas ja joatkkaskuvllas.
 	#% Mun, Johanas, lean dat guhte lean gullan ja oaidnán buot dán .
 	#% Eará guovlluin gos leat vel unnit sámit go Finnmárkkus, leamaš dákkár ákkain vel stuorát deaddu almmolaš ságastallamis.
-
-
 
 
 #!! * __+FAUXVCop__  copulas coming before the mainverb, relative clause inbetween
@@ -8958,12 +8966,13 @@ REMOVE:SEMXr2096 Gen IF (NEGATE -1 Num)(0 Acc LINK 0 TEXT OR ABSTR-TEXT OR ABSTR
 
 #Xx
 #!! * __SEMGenORG__ selects Gen (modifier): in front of an organization ''Stáhta Oahpahuskantuvra''
-SELECT:SEMGenORG Gen IF (0 NATION LINK 0 Acc)(*1 ORGANIZATION OR INSTITUTION OR EDUCATION OR INDUSTRY BARRIER NOT-NPMOD OR CC LINK NOT 0 ("skuvla"))(NEGATE *-1 STRICT-TRANS-V BARRIER SV-BOUNDARY OR Acc) ; 
+SELECT:SEMGenORG Gen IF (0 NATION LINK 0 Acc)(*1 ORGANIZATION OR INSTITUTION OR EDUCATION OR INDUSTRY BARRIER NOT-NPMOD OR CC LINK NOT 0 ("skuvla"))(NEGATE *-1 STRICT-TRANS-V BARRIER SV-BOUNDARY OR Acc)(NEGATE -1 Gen LINK -1 CC LINK -1 Acc LINK *-1 STRICT-TRANS-V BARRIER SV-BOUNDARY OR Acc) ; 
 	#$ Artihkal maid dás almmuhat, lea logaldallan maid son doalai internáhttakonfereanssas maid Stáhta Oahpahuskantuvra Finnmárkkus lágidii Guovdageainnus 1999:s.
 	#$ 80-logu beallemuttus ásahuvvojedje sámi organisašuvnnat.
 	#$ Norgga ja Ruoŧa ráđđehusaide kommišuvdna lea jagi 1997 cuoŋománu rájis bargan doaimmaiguin mat dasa ledje biddjon ja ela odne, čoahkkimis Helssegis, loahpahan barggu ovttahienalaš evttohusain.
 	#% 1970-1980 jagiid ásahedje maiddái sámi kulturguovddážiid dáid skuvllaid olis, ja maid stáhta ja fylkkagielda ruhtadedje.
 	#% Deanu vuoigatvuođaid oamasteaddjit stevdnejit Suoma stáhta diggái.
+	#%  Deanu vuoigatvuođaid oamasteaddjit stevdnejit Suoma ja Norgga stáhtaid diggái.
 
 
 #!! * __SEMGenORG__ selects Gen (modifier): in front of an organization ''Stáhta Oahpahuskantuvra''
@@ -12105,9 +12114,13 @@ SELECT:Sg2LeftDon SG2-V IF (*-1 Rel - Nom BARRIER (Pers Nom) LINK *-1 DON BARRIE
 # After everything has been done, we go for the third person.
 
 #!! * __groupPl3__ selects Prs Pl3
-SELECT:groupPl3 Pl3 IF (0 VFIN LINK -1 Nom LINK 0 Sem/Group OR Sem/Org);
+SELECT:groupPl3 Pl3 IF (0 VFIN LINK -1 Nom LINK 0 HUMAN-GROUP OR Sem/Org);
 SELECT:NomgroupPl3 Nom IF (0 Sem/Group OR Sem/Org LINK 1 VFIN + Pl3);
 	#$ Hakso ahte FeFo leat alcceseaset eanet ruđaid háhpohallame.
+	
+
+SELECT:groupPl3 Pl3 IF (0 VFIN LINK 1 Pr LINK 1 Num + Nom LINK NOT 0 OKTA);
+	#$ Sihke ovdal ja maŋŋil dan leat gaskkal vihtta ja logi olbmo ožžon dávdda jagis.
 
 
 #!! * __allSg2leat__ removes Sg2 if leat Prs Pl3
