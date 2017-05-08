@@ -2640,6 +2640,15 @@ REMOVE:ollit ("ollit" V) IF (0 OLLU) ;
 #!! * __FocbaDu3__ removes Foc/ba when Du3 verbs like máhttiba and Adv like juoba and Prop like Jáhkoba (Acc) 
 REMOVE:Focba Foc/ba IF (0 Du3 OR ("juo") OR Prop) ;
 
+#!! * __Focmis__ removes Foc/mis when Loc  
+REMOVE:Focmis Foc/mis IF (0 Loc) ;
+	#$ ruovttubuohccedikšumis
+
+#!! * __Focbe__ removes Foc/be when juobe Adv  
+REMOVE:Focbe Foc/be IF (0 ("juobe")) ;
+	#$ juobe
+
+
 #!! * __Focge__ removes Foc/ge when Adv like dieđusge
 REMOVE:Focge Foc/ge IF (0 ("dieđusge")) ;
 
@@ -3120,7 +3129,8 @@ SELECT:eanemusatAdv ("eanemusat" Adv) (1 Num) ;
 	# Ambiguous: 	## ...hálida universitehta almmuhit eanet dieđalaš artihkkaliid sámegillii. #- hence the condition (NEGATE 1 A).
 
 #!! * __easkkaAdv__  
-SELECT:easkkaAdv1 EASKKA + Adv IF (0 EASKKA)(1 ("dalle") OR go OR ("de"));   
+SELECT:easkkaAdv1 EASKKA + Adv IF (0 EASKKA)(1 ("dalle") OR go OR ("de") OR Num OR MANNEL);   
+	#$ ...easkka maŋŋel 1529 ásaiduvve olbmot duođas báikkiide.
 
 SELECT:easkkaAdv2 Adv IF (0 EASKKA)(*1 TIME BARRIER NOT-A-ADV);
 	#$ ...mii easkka maŋimuš áiggiid lea jávkágoahtán. 
@@ -3128,8 +3138,9 @@ SELECT:easkkaAdv2 Adv IF (0 EASKKA)(*1 TIME BARRIER NOT-A-ADV);
 	#$ Muhto easkka 1898:s dovdagohte Láhppiolbmot dan mii maŋŋelis bođii.
  # Ambiguous: 	## Dat čielgá dálá oasálaččaide easkka proseassas. 
 
-SELECT:easkkaAdv3 Adv IF (0 EASKKA)(1 Num OR MANNEL);
-	#$ ...easkka maŋŋel 1529 ásaiduvve olbmot duođas báikkiide.
+SELECT:easkkaAdv3 Adv IF (0 EASKKA)(-1 MOD-ADV-ADV);
+ 	#$ Lea hui easkka čuožžilan gažaldat.
+
 
 LIST CUT-V = "boatkanaddat" "botket" "boatkanit" "oažžut" "gáskkistit" "čuohpastit" "čuolastit" "dodjit" "doadjit" "čuohppat" "gáskit" "mannat" ;
 
@@ -5323,9 +5334,6 @@ SELECT:vissásit Adv (0 ("vissásit") LINK NEGATE 1 N) ;
  	#$ Muhto ii goassege dieđe vissásit
 
 
-REMOVE:NgradeAdv N IF (-1 GRADE-ADV - Foc)(0 Adv OR A OR PrfPrc)(NEGATE 0 N LINK 1 VFIN)(NEGATE 0 ("bealli") LINK 1 Loc) ;
- 	#$ Mun lean nu suhttan. 
- 	#$ Lea hui easkka čuožžilan gažaldat.
 
 SELECT:AdvPrfPrc Indef IF (0 ("olus") LINK -1 COPULAS + Pl3)(1 PrfPrc);
 	#$ Guovdageainnus leat olus čadnon gillii ja kultuvrii.
@@ -8750,7 +8758,7 @@ REMOVE:SEMgenEss Acc IF (0 PLACE LINK 0 Gen)(1 HUMAN LINK 0 Ess);
 	#$ Máret beasai dálu eamidin.
 
 
-REMOVE:SEMTr Gen IF (0 (N Acc) - TIME-N - Sem/Route LINK *1 TIME-N + Gen BARRIER NOT-NPMOD OR CC)(*-1 STRICT-TV-V BARRIER SV-BOUNDARY OR Num) ;
+#REMOVE:SEMTr Gen IF (0 (N Acc) - TIME-N - Sem/Route LINK *1 TIME-N + Gen BARRIER NOT-NPMOD OR CC)(*-1 STRICT-TV-V BARRIER SV-BOUNDARY OR Num) ; #not a good rule
 	#$ Vuojadansearvi váldá din fitnodagain oktavuođa vahkku 20:s, gullat mo dii sáhttibehtet veahkehit.
 
 #REMOVE:SEMr2070 Gen IF (0 SINGLE-SOUND)(1 ROUTE);
@@ -8778,6 +8786,9 @@ SELECT:SEMdep Gen IF (0 MAIN-ORGANIZATION OR EDUCATION)(1 DEPARTMENT) ;
 #!! * __SEMorghum__ select gen if organization or education in front of human   
 SELECT:SEMorghum Gen IF (0 ORGANIZATION OR EDUCATION - ("oahpahus") LINK NOT 0 Attr)(1 HUMAN - Sem/Sur OR TEXT LINK NOT 0 Ess)(NEGATE 1 ("norgalaš")) ;	
 	#$ gaskadási ohppiid
+
+SELECT:SEMedu Acc IF (-1 ORGANIZATION OR EDUCATION - ("oahpahus") OR Sem/Edu LINK NOT 0 Attr)(0 Sem/Edu + Acc OR ("master") + Acc LINK NOT 1 N OR @CNP) ;	
+	#$ NOKUT lea dohkkehan Sámi allaskuvlla viđa jagi oahpaheaddjeoahpuid masteriid vissis eavttuiguin.
     
     
 #!! * __SEMXr2073__ Remove Gen: Accusative in front of a human group ''loktema sámiid buorrin''
@@ -9584,13 +9595,13 @@ REMOVE:NotGenitive Gen IF (NEGATE *-1 Pr OR Num BARRIER NOT-NPMOD)(0 NOTIME OR P
 	#$ Jos sámegiela universitehta eksámen (vuođđofága dahje gaskafága) ii adnojuvvo bálkábajidanfágan, de mii evttohat ahet sáthta juolluda stipeanddaid oahpaheddjiide geat váldet dán eksámena.
 	#$ Huitfeldt - fidnii munnje olles govvaalbuma maid su eadni lei govvidan Finnmárkku-mátkkis iežas vánhemiiguin 1901:s.
 
-REMOVE:TESTr2026 Gen - Dem IF (*-2 TRANS-V BARRIER S-BOUNDARY OR Pr OR Acc)(NEGATE *-1 Pr OR CC OR (Num Nom) BARRIER NOT-NPMOD)(-1 Gen)(0 NOTIME OR Pron)(NEGATE 0 ALU)((*1 CLB BARRIER NOT-ADV-PCLE) OR (*1 TIME BARRIER NOT-NPMOD OR Num OR CRD) OR (1 Adv LINK 1 COMMA OR EOS))
-(NEGATE 1 COMMA LINK 1 Gen LINK *1 Po OR (N Ill) OR (N Loc) BARRIER V)(NEGATE -1 Gen LINK -1 CC LINK -1 Gen);
+REMOVE:TESTr2026 Gen - Dem IF (*-2 TRANS-V BARRIER S-BOUNDARY OR Pr OR Acc)(NEGATE *-1 Pr OR CC OR (Num Nom) BARRIER NOT-NPMOD)(-1 Gen)(0 NOTIME OR Pron)(NEGATE 0 ALU)((*1 CLB BARRIER NOT-ADV-PCLE) OR (*1 TIME BARRIER NOT-NPMOD OR Num OR CRD) OR (1 Adv LINK 1 COMMA OR EOS)) (NEGATE 1 COMMA LINK 1 Gen LINK *1 Po OR (N Ill) OR (N Loc) BARRIER V)(NEGATE -1 Gen LINK -1 CC LINK -1 Gen);
 	#$ ...ahte vuhtiiváldit divššohasa dárbbuid, beroštumiid ja riektesihkarvuođa dearvvašvuođabálvalusa ektui. 
 	#$ Sámi servodat dárbbaša dárbbašlaš veahki hukset min iežamet oahpahusvuogádaga guhkit áiggi boahtteáiggis. 
 	#% Danne lea ráđđehussii deaŧalaš sápmelaččaid oassálastin dálkkádatáššiid bargui ja lea maid deaŧalaš ahte sámit ásahusaideaset bokte sáhttet leat mielde ásaheamen máhttovuođu luonddu, birrasa ja dálkkádatrievdamiid oktavuođas. # oktavuođas is N Loc
 	#% Juos mearriduvvo meahcceeatnamiid nuppástuvvan geavaheapmi golmma ja dušše golmma stivrralahtu doarjagiin ja olles uhcitlohku vuođđudallá oainnus sámi kultuvrra, boazodoalu, meahcásteami, ealáhusdoaimmaheami ja servodateallima destii mii lea árvvoštallojuvvon Sámedikki válddahusaid vuođul, de sáhttá uhcitlohku ovtta oli stivrračoahkkima áigge gáibidit ášši Sámedikki gieđahallamii. # destii is N Ill
 	#% Mun lean lohkan ollu girjjiid dán dálvvi.
+
 
 REMOVE:TESTr2027 Gen IF (*-1 TRANS-V)(0 ("dat" Acc))(1 CC OR CS);		
 	## Šloahtta dieđiha gait suohkaniidda gos kruvdnoprinsabárra manná guossis dan ahte sii geat sihtet govvet mannet dohko gos preassagovvejeaddjit leat. 
