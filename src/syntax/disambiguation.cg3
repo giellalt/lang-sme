@@ -299,6 +299,7 @@ LIST Sem/Feat-psych = Sem/Feat-psych Sem/Feat-psych_Hum ; #not touchable, not co
 LIST Sem/Fem = Sem/Fem  (ant f) ;
 LIST Sem/Food = Sem/Body_Food Sem/Event_Food Sem/Food Sem/Food_Perc-phys Sem/Food_Plant ; #Syn: bassit/borrat/sohpat X-Acc. mon im læk borram dam guolest. mun boran iđitbiepmu. mus lea iđitbiebmu fárus. birgui borastuvvat
 LIST Sem/Food-med = Sem/Domain_Food-med Sem/Food-med ;
+LIST Sem/Fruit = Sem/Fruit Sem/Fruit_Hum ;
 LIST Sem/Furn = Sem/Ctain_Furn Sem/Furn ; #Syn: bidjat X vissui: čohkkedit X ala
 LIST Sem/Game = Sem/Game Sem/Game_Obj-play ;
 LIST Sem/Geom = Sem/Geom Sem/Geom_Obj ;
@@ -1717,7 +1718,7 @@ LIST PLANT = "alášbađverássi" "alitdiehpperássi" "ávža" "báhpačehporaš
 LIST FURNITURE = "áltár" "beavdi" "hildu" "ildu" "seaŋga" "skáhppe" "soffá" "stuollu" ;
 
 #!! * Sets for things such that people can be inside them:
-LIST SPACIOUS-VEHICLE = (".*fanas"r) (".*biila"r) "báska" "borjjasvanca" (".*busse"r) "čáhcegirdi" "dámpa" "drošša" "drošše" "fievru" "gádjunhelikopter" "geaksu" "girdi" "helikopter" "láivi" "mohtorfievru" "mohtorvanca" "njealjit" "njealjejuvllat" "ruvttobiila" (".*sáhttu"r) "skuvla#biila" "suhkkivanca" "tákse" "táksi" "toga" "tráktor" "vanas" "vanca";
+LIST SPACIOUS-VEHICLE = (".*fanas"r) (".*biila"r) "báska" "borjjasvanca" (".*busse"r) "čáhcegirdi" "dámpa" "drošša" "drošše" "fievru" "gádjunhelikopter" "geaksu" "girdi" "heargeráidu" "helikopter" "láivi" "mohtorfievru" "mohtorvanca" "njealjit" "njealjejuvllat" "ruvttobiila" (".*sáhttu"r) "skuvla#biila" "suhkkivanca" "tákse" "táksi" "toga" "tráktor" "vanas" "vanca";
 
 #!! * Sets for things such that people cannot be inside them:
 LIST SMALL-VEHICLE = "ásen" "beana" "fievrošibit" "heargi" "heasta" (".*sáhttu"r) (".*sihkkel"r) "mohtorgielká" "mopeda" "njealjejuvllat" "skohter" "spárka" "skuter" "sykkel" "njealjejuvlageassi" "vuoksá" ;
@@ -2744,6 +2745,10 @@ SELECT:AnomInf Inf IF (NOT 0 COPULAS LINK -1 A + Nom LINK -1 Adv LINK *-1 BOS BA
 SELECT:ACompPl Pl + Nom IF (0 DEHALAS LINK -1 Nom)(NEGATE *0 VFIN) ;
 	#$ – Eanandoallu ja boazodoallu dehálaččat mátkeealáhussii.
 
+REMOVE:bárdnat V  IF (0 ("bárdni")) ;
+ 	#$ bárdni joavkkuinis ráhkadan Formel 1 gilvobiilla
+
+
 
 #!! * __NotGen__ 
 SELECT:NotGen N + Nom IF (*-1 BOS BARRIER WORD)(0 Gen LINK NOT 0 PrfPrc LINK 1 Sem/Time LINK NOT *1 REAL-V) ;
@@ -2757,9 +2762,14 @@ SELECT:PrfPrc PrfPrc IF (-1 Nom LINK *-1 BOS BARRIER WORD) (1 Acc OR Adv LINK *1
 SELECT:PrfPrc PrfPrc IF (-1 Nom LINK *-2 BOS BARRIER WORD) (1 ADVLCASE OR A OR Adv LINK *1 ("❡")) ;
 SELECT:PrfPrc PrfPrc IF (-1 BOS) (1 Attr LINK 1 Acc LINK *1 EOS BARRIER WORD) ;
 SELECT:PrfPrc PrfPrc IF (-1 Gen LINK -1 Num LINK *-1 BOS BARRIER WORD) (*1 EOS BARRIER REAL-V) ;
+SELECT:PrfPrc PrfPrc IF (-1 Com LINK -1 Nom LINK -1 Attr OR Gen LINK *-1 BOS BARRIER WORD)(1 Acc LINK *1 ("❡")) ;
+SELECT:PrfPrc PrfPrc IF (-1 ADVLCASE LINK *-1 BOS BARRIER WORD)(1 ADVLCASE LINK *1 ("❡")) ;
+
 	#$ Dieđihuvvon láhppon – gávdnon dearvan. 
 	#$ Olgeš čohkken olbmuid buot válgabiriin.
 	#$ Golbma olbmo duššan biilalihkohisvuođain dán rádjái.
+	#$ Sámi bárdni joavkkuinis ráhkadan Formel 1 gilvobiilla.
+	#$ Heargeráidduin vuoddján soagŋuide.
 
 SELECT:PrfPrc PrfPrc IF (0 ("giddet") LINK 1 ("luodda") OR Sem/Route) ;
 
@@ -2862,6 +2872,10 @@ SELECT:aiddo ("aiddo" Adv) (0 ("áidu")) ((1 CC LINK 1 ("áidu") OR ("aiddo")) O
 #!! *__bealisAdv__ 
 SELECT:bealisAdv ("bealis" Adv) IF (0 ("bealli")) ;
 	#$ Bargiidebellodaga joavkojođiheaddji Magnhild Mathisen fas bealistis doarju ollásit ráđđehusa ekonomalaš politihka . 
+
+#!! *__ilusAdv__ 
+SELECT:ilusAdv ("ilus" Adv) IF (0 ("illu")) ;
+SELECT:balusAdv ("balus" Adv) IF (0 ("ballu")) ;
 
 
 #!! * __mannelTimeAdv__ golbma jagi maŋŋel
@@ -6313,7 +6327,7 @@ SELECT:Interr Interr IF ((-1 COMMA LINK *-1 CS LINK *-1 BOS BARRIER NOT-PCLE) OR
 	#$ - Áhčči, mii lea duot čáppa alit násti doppe guhkkelis?
 	#% Maid mii dál vihtaniiguin?
 
-SELECT:Interr Interr IF (-1 MUITALIT OR ("mearridit"))(0 Rel OR Indef LINK *1 VFIN);
+SELECT:Interr Interr IF (-1 MUITALIT OR ("mearridit") OR PERCEPTION-V)(0 Rel OR Indef LINK *1 VFIN);
 SELECT:Interr Interr IF (0 ("goabbá") + Sg)(NOT 0 Foc/Pos-ge) ;
 
 
@@ -6373,6 +6387,12 @@ SELECT:iesDu Du IF (*0 DU-V OR MOAI OR DOAI OR SOAI BARRIER SV-BOUNDARY OR PUNCT
 #!! * __NifNum__ 
 REMOVE:NifNum N IF (0 Num)(*1 (N Sg Gen) OR Superl + Gen  BARRIER NOT-A)(NEGATE 0 (N ACR))(NEGATE 0 Nom LINK *1 VFIN BARRIER NOT-A);
 	#$ Mii finaimet doppe guđa geardde.
+
+SELECT:Num1 Num IF (0 Loc LINK 1 Num + Ill) ;
+SELECT:Num2 Num IF (0 Loc LINK 1 Num + Gen LINK 1 ("rádjai")) ;
+SELECT:Num3 Num IF (0 Ill LINK -1 Num + Loc) ;
+SELECT:Num4 Num IF (0 Gen LINK 1 ("rádjai")) ;
+	#$ Nullas čuođi rádjai, de galgá ádjánit sullii 2,1 sekundda.
 
 	
 #!! * __AdvOvtta__ 
@@ -7829,7 +7849,7 @@ MAP:-FMAINVPrfPrc (@-FMAINV) TARGET PrfPrc + PASS (*-1 REAL-COPULAS + VFIN + Sg3
 #!! !!Verbs as prenominal participles (@>N):
 
 #!! * Some verbs will not be @>N
-LIST NOT-@>N = "bargat" "báhcit" ("beahttit" Der/PassS) "boahtit" "buollát" "buohcat" "čadnot" "eallit"  "fitnat" "galbet" "hárjehallat" "johtit" "leat" "lebbet" "logaldallat" "náđđut" "oaidnit" "oažžut" "orrot" "orrut"  "ihtit" "rahčat" "unnut" "vuodjit" "vuodjat" Der/InchL ;
+LIST NOT-@>N = "bargat" "báhcit" ("beahttit" Der/PassS) "boahtit" "buollát" "buohcat" "čadnot" "eallit"  "fitnat" "galbet" "hálbut" "hárjehallat" "johtit" "leat" "lebbet" "logaldallat" "náđđut" "oaidnit" "oažžut" "orrot" "orrut"  "ihtit" "rahčat" "unnut" "vuodjit" "vuodjat" Der/InchL ;
 
 #!! * __NPrfPrc1__ with 1C N Nom
 MAP:>NPrfPrc1 (@>N) TARGET PrfPrc - NOT-@>N (NEGATE *-1 Neg BARRIER REAL-V)(NEGATE -1 COPULAS LINK *-1 Ill BARRIER NOT-A)(NEGATE 0 AUX)(NEGATE 0 TRANS-V LINK *1 Acc BARRIER NOT-NPMOD)(NEGATE 0 MOVEMENT-V LINK *1 Ill OR DOHKO OR ("lusa") BARRIER NOT-NPMOD)(NEGATE 0 PrfPrc LINK NOT 0 Der/Pass LINK 1 Attr)(*1 (N Nom) - Prop BARRIER NOT-A OR COMPAR LINK NEGATE 0 TITLE LINK 1 Sem/Fem OR Sem/Mal OR Sem/Sur);
@@ -9540,7 +9560,7 @@ SELECT:timeADVL3 TIME + Gen IF (*-1 TIME-ADVL-V OR N-TIMEOBJECT-V BARRIER SV-BOU
 	#% Girjjis leat boares govat ja ođđa lyrihkka mat čatnet oktii doloža ja dálá áiggi.
 	#% Ovddemus galge nannet dárogieloahpahusa juogidettiin vuosttaš ja nuppi jagi goabbat sadjái.
 
-SELECT:timeADVL4 TIME + Gen IF (**-1 Acc BARRIER SV-BOUNDARY LINK -1 TRANS-V + FMAINV)(NEGATE 0 Acc LINK *-1 CC BARRIER NOT-NPMOD LINK -1 Acc OR Attr LINK *-1 STRICT-TRANS-V) ;
+SELECT:timeADVL4 TIME + Gen IF (**-1 Acc BARRIER SV-BOUNDARY LINK -1 TRANS-V + FMAINV)(NEGATE 0 Acc LINK *-1 CC BARRIER NOT-NPMOD LINK -1 Acc OR Attr LINK *-1 STRICT-TRANS-V)(NEGATE 0 Pl LINK -1 Num + Pl) ;
 	#$ Ja don ii dahkan maidege dan jagi, muhto bođii fas nuppi jagi, ja de ledje sus guoimmit mielde.
 
 SELECT:timeADVL2 TIME + Gen IF (*1 FMAINV - ("golahit") BARRIER SV-BOUNDARY)(NEGATE 0 Nom LINK *1 FMAINV + COPULAS OR FMAINV + DURATION-V BARRIER SV-BOUNDARY)(NEGATE 1 MANNEL)(NEGATE 0 Prop)  ;	
@@ -11312,7 +11332,7 @@ SELECT:PropFamily (Sg Com)  IF (0 N-PX OR ("joavku") OR ("bearaš") OR ("veahka"
 	#$ Biehtar-Uvllá nieiddainis.
       
 #!! * __ComHumanOrg__ selects HUMAN Sg Com after HUMAN, ORGANIZATION, INSTITUTION
-SELECT:ComHumanOrg (Sg Com) IF (*-1 HUMAN OR ORGANIZATION OR INSTITUTION BARRIER NOT-NPMOD LINK 0 Nom LINK NOT 0 LOC-HEAD OR A)(0 (Pl Loc) + HUMAN)(*1 VFIN BARRIER WORD);
+SELECT:ComHumanOrg (Sg Com) IF (*-1 HUMAN OR ORGANIZATION OR INSTITUTION BARRIER NOT-NPMOD LINK 0 Nom LINK NOT 0 LOC-HEAD OR A)(0 (Pl Loc) + HUMAN)(*1 VFIN OR PrfPrc BARRIER WORD);
 	#$ Norgga delegašuvdna, várrepresideanttain, doalai sártni dievasčoahkkimii čoahkkima loahpahettiin, mas doarjjui WHO boahtteáiggi barggu dearvvasvuođain.
   	
 #!! !Animate nouns
