@@ -103,7 +103,7 @@ LIST LEFT = LEFT ;	    #!! LEFT
 LIST RIGHT = RIGHT ;    #!! RIGHT
 LIST WEB = WEB ;	    #!! WEB
 LIST QMARK = """ ;
-LIST PPUNCT = PUNCT ;   #!! PUNCT 
+LIST PPUNCT = LEFT RIGHT ;   #!! LEFT RIGHT because of apertium
 SET PUNCT = PPUNCT - QMARK ;
 
 LIST COMMA = "," ;
@@ -2775,6 +2775,7 @@ SELECT:PrfPrc PrfPrc IF (-1 ADVLCASE LINK *-1 BOS BARRIER WORD)(1 ADVLCASE LINK 
 SELECT:PrfPrc PrfPrc IF (0 ("giddet") LINK 1 ("luodda") OR Sem/Route) ;
 
 SELECT:PrfPrcHealiner PrfPrc IF (*-1 BOS BARRIER WORD)(0 PrfPrc LINK *1 ("❡") BARRIER VFIN) ; #TEST
+SELECT:PrfPrcHealiner PrfPrc IF (*-1 BOS BARRIER WORD)(0 PrfPrc LINK *1 ("–") BARRIER VFIN LINK *1 ("❡")) ; 
 SELECT:PrfPrcHealiner PrfPrc IF (*-1 BOS BARRIER WORD)(0 PrfPrc LINK *1 Rel OR CS OR CC BARRIER VFIN LINK *1 ("❡")) ; #TEST
 	#$ Čavgen gearggusvuođa uđasvára geažil.
 
@@ -9284,7 +9285,7 @@ SELECT:lassinIll Ill (-1 ("lassi" Ess) LINK NOT -1 Gen OR Ill) ;
 
 
 #!! * __GenAPP__ Selects genitive when a preposition to the left, or when a postposition to the right ''rastá riikarájiid''
-SELECT:GenAPP Gen IF ((*-1C Pr BARRIER NOT-NPMOD) OR (*1C Po BARRIER WORD))(NEGATE 0 NUM + (Sg Acc) LINK -1 Pr LINK 2 Gen) ;
+SELECT:GenAPP Gen IF ((*-1C Pr BARRIER NOT-NPMOD) OR (*1C Po BARRIER WORD))(NEGATE 0 NUM + (Sg Acc) LINK -1 Pr LINK 2 Gen)(NOT 0 Ess) ;
 	#$ Beana goarjádii beavddi vuollái.
 	#$ Seammás sáhttet riikat nannet luohttámuša ođđa konvenšuvdnii ja nu hukset buori ovttasbarggu rastá riikarájiid.
 	#$ Gánda: "Birra buot oppa máilmmi."
@@ -10203,13 +10204,14 @@ SELECT:NumGenMeasure (Num Gen) IF (1 MEASUREADJS)(2 N);
 
 
 #!! * __NumAcc2__ Selects Acc for singular numerals if there is a transitive verb somewhere in the sentence and the numeral is followed by a noun ''logi báhkkoma'' OBS
-SELECT:NumAcc2 Acc IF (*-1 NOT-FAUXV + TRANS-V BARRIER SV-BOUNDARY)(0 NUM + Sg LINK NOT 0 NUMUNIT OR Sem/Year)(*1 (N Acc) OR (N Gen) BARRIER NOT-Attr LINK NOT 0 Ill)(NEGATE *-1 COPULAS + FMAINV BARRIER SV-BOUNDARY)(NEGATE *-1 Der/Pass OR (Dem Nom) BARRIER NOT-ADV)(NEGATE *1 COPULAS + FMAINV BARRIER COMMA OR SV-BOUNDARY)(NEGATE -1 NUMMAR)(NOT 1 MEASUREADJS);
+SELECT:NumAcc2 Acc IF (*-1 NOT-FAUXV + TRANS-V BARRIER SV-BOUNDARY)(0 NUM + Sg LINK NOT 0 NUMUNIT OR Sem/Year)(*1 N + Sg + Acc BARRIER NOT-Attr LINK NOT 0 Ill)(NEGATE *-1 COPULAS + FMAINV BARRIER SV-BOUNDARY)(NEGATE *-1 Der/Pass OR (Dem Nom) BARRIER NOT-ADV)(NEGATE *1 COPULAS + FMAINV BARRIER COMMA OR SV-BOUNDARY)(NEGATE -1 NUMMAR)(NOT 1 MEASUREADJS);
 	#$ Sii máhtte áddekeahttá bajillohkat logi báhkkoma ja Áhččámet.
 	#$ Áiggun dušše geahččat moadde filmma.
 	#$ Dákkár dáhpáhusat, ja máŋga iežá dáhpáhusa ja digaštallama dahke munnje persovnnalaččat váttisin dáid gažaldagaid mat bohciidedje Gáivuonas. 
 	#% Oarje-Finnmárkkus leat dál registrerejuvvon 8.500 muohtaskohtera.
 	#% Buot njeallje máná ledje náđđon eagi vuostá.
 	#% Áirras nr. 10 Ole Henrik Magga oaččui permišuvnna.
+	#% Son lea čohkken 14 eamiálbmoga biepmuid ovtta girjái.
 	#Comment: Is intended to work with GenIfNum (or NewGen in some cases.)
 	
 # Missing rule for coordination: 
