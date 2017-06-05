@@ -25,7 +25,7 @@ cat $smecorp/correct/sme-goldcorpus.dis.corr.txt |\
 # Diff
 diff -w $GTHOME/langs/sme/test/data/sme-goldcorpus.dis.corr.txt $GTHOME/langs/sme/test/data/disambiguationtestoutput > $GTHOME/langs/sme/test/data/testdisambiguationresult.txt
 cat $GTHOME/langs/sme/test/data/sme-goldcorpus.dis.corr.txt |cut -d '@' -f1 | sed 's/ $//' > $GTHOME/langs/sme/test/data/sme-goldcorpus.onlydis.txt
-cat $GTHOME/langs/sme/test/data/disambiguationtestoutput |cut -d '@' -f1 | sed 's/ $//' > test/data/test.onlydis.txt
+cat $GTHOME/langs/sme/test/data/disambiguationtestoutput |cut -d '@' -f1 | sed 's/ $//' > $GTHOME/langs/sme/test/data/test.onlydis.txt
 diff -w $GTHOME/langs/sme/test/data/sme-goldcorpus.onlydis.txt $GTHOME/langs/sme/test/data/test.onlydis.txt > $GTHOME/langs/sme/test/data/testonlydisresult.txt
 
 # Rapport:
