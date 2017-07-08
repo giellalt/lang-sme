@@ -2105,7 +2105,7 @@ SELECT:Arab1 (Arab Nom)(0 ("1")) ;
 	#$ a) Álgogursa 1 sámegielas
 SELECT:ArabNomPlc (Arab Nom) (-1 Sem/Plc)(NEGATE 1 Po) ;
 
-SELECT:Arab Arab  ; # In Apertium we get analysis both with and without the tag.
+SELECT:Arab Arab IF (NOT 0 Ord) ; # In Apertium we get analysis both with and without the tag.
 
 
 #!! * Rule for adding <vdic> to verbs denoting verbal actions like: ... dadjá Aili Kestkitalo.
@@ -3273,6 +3273,10 @@ SELECT:oddasitAdv2 ("ođđasit" Adv) IF (*-1 Nom BARRIER S-BOUNDARY)(*1 NOT-AUX-
 #!! * __oktanAdv__
 SELECT:oktanAdv Adv IF (0 ("ovttas") OR ("oktan"))(*1 Com BARRIER NP-BOUNDARY);
 	## Divššohasas lea vuoigatvuohta iežas journála geahččat oktan mildosiiguin. 
+
+#!! * __ollengeAdv__i
+SELECT:ollengeAdv ("ollenge" Adv) IF (*-1 Neg);
+        #$ Ii mus lean gal ollinge jurdda searvat juoiganoassái.
 
 #!! * __ovttasAdv__
 REMOVE:ovttasColl ("ovttas" Coll) ;
@@ -9376,11 +9380,11 @@ SELECT:deaivatGenlusa (N Gen)(-1 ("deaivat") + VFIN)(*1 ("lusa" Po) OR ("lahkosi
 #!! !Genitive in place adverbials ROUTE
 
 #!! * __GenPlc__ Selects genitive if you are ROUTE, and there is a MOVEMENT-V to your left or right ''boahtiba dán geainnu''
-SELECT:GenRoute Gen IF (*0 MOVEMENT-V BARRIER SV-BOUNDARY OR COMMA OR NP-HEAD-ACC - (Pron Dem))(0 ROUTE)(NEGATE -1 OKTA)(NEGATE *-1 JOHTIT + IV BARRIER SV-BOUNDARY LINK *1 ROUTE BARRIER NOT-NPMOD) ;
+SELECT:GenRoute Gen IF (*0 MOVEMENT-V BARRIER SV-BOUNDARY OR COMMA OR NP-HEAD-ACC - (Pron Dem))(0 ROUTE)(NOT 0 ("mátki"))(NEGATE -1 OKTA)(NEGATE *-1 JOHTIT + IV BARRIER SV-BOUNDARY LINK *1 ROUTE BARRIER NOT-NPMOD) ;
 	#$ Soai boahtiba dán geainnu.
 	#$ Fertiimet vázzit bálgáid geasset ja Deanu mielde dálvet.
 	#$ Mii vujiimet duon luotta. 
-
+# the NOT "mátki" is there since the mátki form was Err/Orth Gen/Acc, and gave Gen to sentences like "Mátki lei buorre"
 	 
 #!! * Selects accusative if you are ROUTE, and the verb čuovvut to the left. 
 SELECT:AccRoute ROUTE + Acc IF (*-1 ("čuovvut") BARRIER SV-BOUNDARY OR (N Acc) LINK 0 FMAINV OR Inf) ;
