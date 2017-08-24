@@ -36,5 +36,4 @@ GENRSRCS:=$(wildcard $(top_builddir)/src/morphology/generated_files/smi-$(GTLANG
 clean-local:
 	-rm -f *.hfst *.xfst abbr.txt *.pmhfst
 
-include $(top_srcdir)/am-shared/tools-preprocess-dir-include.am
-
+include $(top_srcdir)/am-shared/tools-tokenisers-dir-include.am
