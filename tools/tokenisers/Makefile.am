@@ -15,15 +15,17 @@
 ## You should have received a copy of the GNU General Public License
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+SUBDIRS = filters .
+
 ##################################################################
 #### BEGIN: Add local processing instructions BELOW this line ####
 ##################################################################
 
-########################################################
-#### Add language-specific transducer targets here: ####
-
 # Set this variable to point to generated lexc source files, if any:
 GENRSRCS:=$(wildcard $(top_builddir)/src/morphology/generated_files/smi-$(GTLANG)-*.lexc)
+
+########################################################
+#### Add language-specific transducer targets here: ####
 
 #################################################
 #### Add language-specific build rules here: ####
