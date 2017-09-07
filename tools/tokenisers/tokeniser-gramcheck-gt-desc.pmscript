@@ -1,7 +1,7 @@
 !! Requires a recent version of HFST (3.10.0 / git revision>=3aecdbc)
 !! Then just:
 !! $ make
-!! $ echo "ja, ja" | hfst-tokenise --gtd tokeniser-disamb-gt-desc.pmhfst
+!! $ echo "ja, ja"|hfst-tokenise --gtd tokeniser-disamb-gt-desc.pmhfst
 
 !! Issues:
 !! - [X] Ambiguous input
@@ -25,9 +25,9 @@
 !! - [ ] Try set-difference-unknowns method with regular hfst commands?
 
 !! More usage examples:
-!! $ echo "Juos gorreválggain lea (dárbbašlaš) deavdit gáibádusa boasttu olmmoš, man mielde lahtuid." | hfst-tokenise --gtd tokeniser-disamb-gt-desc.pmhfst
-!! $ echo "(gáfe) 'ja' ja 3. ja? ц jaja ukjend \"ukjend\"" | hfst-tokenise --gtd tokeniser-disamb-gt-desc.pmhfst
-!! $ echo "márffibiillagáffe" | hfst-tokenise --gtd tokeniser-disamb-gt-desc.pmhfst
+!! $ echo "Juos gorreválggain lea (dárbbašlaš) deavdit gáibádusa boasttu olmmoš, man mielde lahtuid."|hfst-tokenise --gtd tokeniser-disamb-gt-desc.pmhfst
+!! $ echo "(gáfe) 'ja' ja 3. ja? ц jaja ukjend \"ukjend\""|hfst-tokenise --gtd tokeniser-disamb-gt-desc.pmhfst
+!! $ echo "márffibiillagáffe"|hfst-tokenise --gtd tokeniser-disamb-gt-desc.pmhfst
 
 !! Pmatch documentation:
 !! https://kitwiki.csc.fi/twiki/bin/view/KitWiki/HfstPmatch
@@ -38,30 +38,32 @@ Define morphology @bin"analyser_relabelled-gramcheck-gt-desc.hfst" ;
 
 Define url @bin"../../src/morphology/url.hfst".i ;
 
-Define incondform      Punct | {“} | {”} | {…} | {’} | {­} ;
+Define incondform      Punct|{“}|{”}|{…}|{’}|{–}|{—}|{­}|{_}|{<}|{>}|{■}|{«}|{»} ;
 
-Define blank           Whitespace | incondform ;
+Define blank           Whitespace|incondform ;
 
 Define incondword       morphology & [ incondform 0:?* ] ;
-Define morphoword       morphology                   LC([blank | #]) RC([blank | # ]);
-Define urlword          url                          LC([blank | #]) RC([blank | # ]);
+Define morphoword       morphology                   LC([blank|#]) RC([blank|# ]);
+Define urlword          url                          LC([blank|#]) RC([blank|# ]);
 
 !! Apart from what's in our morphology, there are
 !! 1) unknown word-like forms, and
 !! 2) unmatched strings
 !! We want to give 1) a match, but let 2) be treated specially by hfst-tokenise -a
-Define alphabet "a-z" | {á}|{š}|{ž}|{č}|{đ}|{ŋ}|{ŧ}|{æ}|{ä}|{ø}|{ö}|{å} | "0-9" | {-}
-              | "A-Z" | {Á}|{Š}|{Ž}|{Č}|{Đ}|{Ŋ}|{Ŧ}|{Æ}|{Ä}|{Ø}|{Ö}|{Å} | {_} ;
+Define alphabet "a-z"|{á}|{š}|{ž}|{č}|{đ}|{í}|{ŋ}|{ň}|{ŧ}|{æ}|{ä}|{ø}|{ö}|{å}|{ü}|"0-9"|{-}|{'}|{°}|{«}|{»} 
+               |"A-Z"|{Á}|{Š}|{Ž}|{Č}|{Đ}|{Í}|{Ŋ}|{Ň}|{Ŧ}|{Æ}|{Ä}|{Ø}|{Ö}|{Å}|{Ü}|{_}  |{–}|{<}|{>}|{ü}|{§}
+               |{ě}|{ň}
+               |{Ě}|{Ň} ;
 Define alphaword alphabet+;
 !! TODO: Could use something like this, but built-in's don't include šžđčŋ:
-! Define MixCase(X) [OptCap(X) | UpCase(X)];
+! Define MixCase(X) [OptCap(X)|UpCase(X)];
 ! Define alphaword MixCase(alphabet+);
 
 
 !!! Unknown handling:
 Define unknownform [alphaword].u ;
 !! Simply give an empty reading when something is unknown:
-Define unknownwordEmpty unknownform:0 LC([blank | #]) RC([[blank ] | # ]);
+Define unknownwordEmpty unknownform:0 LC([blank|#]) RC([[blank ]|# ]);
 !! hfst-tokenise --gtd will treat such empty analyses as unknowns, and
 !! remove empty analyses from other readings. Empty readings are also
 !! legal in CG, they get a default baseform equal to the wordform, but
@@ -70,14 +72,14 @@ Define unknownwordEmpty unknownform:0 LC([blank | #]) RC([[blank ] | # ]);
 
 !!! Superblank handling (TODO):
 ! Define anyExceptEsc [ ? - [ %\ ] ];
-! Define unescaped [ anyExceptEsc | %\ ? | # ]+;
-! Define anyExceptSuperendEsc [ ? - [ %\ | %] ] ];
-! Define notSuperend [ %\ ? | anyExceptSuperendEsc ];
+! Define unescaped [ anyExceptEsc|%\ ?|# ]+;
+! Define anyExceptSuperendEsc [ ? - [ %\|%] ] ];
+! Define notSuperend [ %\ ?|anyExceptSuperendEsc ];
 ! Define superblank %[ notSuperend* %] EndTag(superblank) LC(unescaped) ;
-! Define tokenOrBlank [ token | superblank ];
+! Define tokenOrBlank [ token|superblank ];
 !! Needs hfst-tokenise to output things differently depending on the tag they get
 
 
-Define token [ morphoword | unknownwordEmpty | incondword | Ins(urlword) ] EndTag(token);
+Define token [ morphoword|unknownwordEmpty|incondword|Ins(urlword) ] EndTag(token);
 
 regex token ;
