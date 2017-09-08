@@ -1,0 +1,15 @@
+set need-separators off
+
+Define morphology       @bin"RC-with-flags.hfst" ;
+
+Define incondform       Punct | {“} | {”} | {…} | {­} ;
+Define blank            Whitespace | incondform ;
+
+Define wordIsErr        [morphology].with(SpaceCmp = Yes)       ;
+Define wordNoErr        [morphology].with(SpaceCmp = No)        ;
+Define twoWordsNoErr    wordNoErr " ":{#} wordNoErr             ;
+Define wordOrTwo        [ Ins(wordNoErr) | Ins(wordIsErr) | RC(wordIsErr) Ins(twoWordsNoErr) ] LC([blank | # ]) RC([blank | # ]);
+
+Define token            [ wordOrTwo ] EndTag(token);
+
+regex token ;
