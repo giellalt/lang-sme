@@ -14,10 +14,13 @@ GT_GC_ZDISTRO=grammarchecker.zhfst
 
 include $(top_srcdir)/am-shared/tools-grammarcheckers-dir-include.am
 
-dev: modes/$(GTLANG)gram.mode checkxml
+dev: modes/$(GTLANG)gram.mode checkxml schemas.xml
 
 modes/%.mode: modes.xml
 	apertium-gen-modes modes.xml
+
+schemas.xml:
+	divvun-gen-xmlschemas >$@
 
 checkxml:
 	divvun-validate-suggest errors.xml
