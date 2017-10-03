@@ -3,6 +3,6 @@
 ## Licence: GPL v3+
 
 # If valency is used, define it here:
-GIELLA_GC_VALENCY=
+GIELLA_GC_VALENCY=valency.bin
 
 include $(top_srcdir)/am-shared/tools-grammarcheckers-dir-include.am
