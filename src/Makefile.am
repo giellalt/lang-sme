@@ -356,14 +356,12 @@ analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 analyser-dict-gt-norm.%: analyser-dict-gt-norm.tmp.% \
 					filters/remove-norm-comp-tags.%             \
 					filters/remove-derivation-position-tags.% \
-					filters/remove-allegro-tags.% \
 					filters/remove-Err_SpaceCmp-strings.% \
 					filters/remove-Use_GC-strings.% \
 					filters/remove-Use_minus_PMatch-tags.% \
 					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-				@\"filters/remove-allegro-tags.$*\" \
-			.o. @\"filters/remove-norm-comp-tags.$*\"             \
+	   		  @\"filters/remove-norm-comp-tags.$*\"             \
 			.o. @\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"   \
 			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"   \
@@ -527,15 +525,13 @@ morpher-gt-desc.%: morpher-gt-desc.tmp.% \
 generator-dict-gt-norm.%: generator-dict-gt-norm.tmp.% \
 					filters/remove-norm-comp-tags.%           \
 					filters/remove-derivation-position-tags.% \
-					filters/make-optional-allegro-tags.% \
 					 filters/rename_optional-POS_before_Der-tags.% \
 					filters/remove-Err_SpaceCmp-strings.% \
 					filters/remove-Use_GC-strings.% \
 					filters/remove-Use_minus_PMatch-tags.% \
 					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-				@\"filters/make-optional-allegro-tags.$*\"  \
-			.o. @\"filters/rename_optional-POS_before_Der-tags.$*\" \
+			 @\"filters/rename_optional-POS_before_Der-tags.$*\" \
 			.o. @\"filters/remove-norm-comp-tags.$*\"             \
 			.o. @\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"   \
