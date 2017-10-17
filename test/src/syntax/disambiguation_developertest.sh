@@ -1,9 +1,9 @@
 # Skript for å teste analysen av testkorpus.txt og divgullkorpus.txt med sme.fst og sme-dis.rle opp mot gullversjon.
 
 # Lenes oppsett
-smecorp="$GTBIG"
+#smecorp="$GTBIG"
 # Tronds oppsett
-#smecorp="$GTBIG/gt/sme/corp"
+smecorp="$GTBIG/trunk/gt/sme/corp"
 
 # Analyserer testkorpus:
 cat $smecorp/sme-goldcorpus.txt |\
