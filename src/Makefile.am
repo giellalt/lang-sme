@@ -353,7 +353,23 @@ analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 		 quit\n" | $(XFST_TOOL)
 
 # ... and also in the dict analyser:
-analyser-dict-gt-norm.%: analyser-dict-gt-norm.tmp.% \
+analyser-dict-gt-norm.%: analyser-raw-gt-desc.%      \
+					filters/make-optional-hyph-tags.%          \
+					filters/make-optional-transitivity-tags.%  \
+					filters/make-optional-semantic-tags.%      \
+					filters/make-optional-v1-tags.%            \
+					filters/make-optional-adv_comp-tags.%      \
+					filters/remove-area-tags.%                 \
+					filters/remove-dialect-tags.%              \
+					filters/remove-orig_lang-tags.%            \
+					filters/remove-usage_except_NGminip-tags.% \
+					filters/remove-orthography-tags.%          \
+					filters/remove-Orth_IPA-strings.%          \
+					filters/remove-error-strings.%             \
+					filters/remove-hyphenation-marks.%         \
+					filters/remove-infl_deriv-borders.%        \
+					filters/remove-word-boundary.%             \
+					orthography/$(DEFAULT_ORTH)-to-%.compose.% \
 					filters/remove-norm-comp-tags.%             \
 					filters/remove-derivation-position-tags.% \
 					filters/remove-Err_SpaceCmp-strings.% \
@@ -361,7 +377,23 @@ analyser-dict-gt-norm.%: analyser-dict-gt-norm.tmp.% \
 					filters/remove-Use_minus_PMatch-tags.% \
 					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-	   		  @\"filters/remove-norm-comp-tags.$*\"             \
+			.o. filters/make-optional-hyph-tags.$*          \
+			.o. filters/make-optional-transitivity-tags.$*  \
+			.o. filters/make-optional-semantic-tags.$*      \
+			.o. filters/make-optional-v1-tags.$*            \
+			.o. filters/make-optional-adv_comp-tags.$*      \
+			.o. filters/remove-area-tags.$*                 \
+			.o. filters/remove-dialect-tags.$*              \
+			.o. filters/remove-orig_lang-tags.$*            \
+			.o. filters/remove-usage_except_NGminip-tags.$* \
+			.o. filters/remove-orthography-tags.$*          \
+			.o. filters/remove-Orth_IPA-strings.$*          \
+			.o. filters/remove-error-strings.$*             \
+			.o. filters/remove-hyphenation-marks.$*         \
+			.o. filters/remove-infl_deriv-borders.$*        \
+			.o. filters/remove-word-boundary.$*             \
+			.o. orthography/$(DEFAULT_ORTH)-to-$*.compose.$* \
+			.o.   @\"filters/remove-norm-comp-tags.$*\"             \
 			.o. @\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"   \
 			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"   \
