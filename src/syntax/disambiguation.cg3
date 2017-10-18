@@ -260,6 +260,8 @@ LIST Der/seagat = Der/seagat ;			 #!! Der/seagat
 LIST Der/suttat = Der/suttat ;			 #!! Der/suttat
 LIST Der/ár = Der/ár ;			 #!! Der/ár 
 LIST <vdic> = <vdic> ;				 #!! <vdic>
+LIST Cmp/Hyph = Cmp/Hyph ;
+
 
 LIST Err/Orth = Err/Orth Err/Lex Err/Orth-a-á Err/Orth-nom-gen Err/Orth-nom-acc Err/DerSub Err/CmpSub Err/UnspaceCmp Err/HyphSub Err/SpaceCmp Err/Spellrelax err_orth_mt ;
 LIST Err/Orth-spes = Err/Orth-a-á Err/Orth-nom-gen Err/Orth-nom-acc Err/DerSub Err/CmpSub Err/UnspaceCmp Err/HyphSub Err/SpaceCmp Err/Spellrelax err_orth_a_á_mt err_orth_nom_acc_mt err_orth_nom_gen_mt  ;
@@ -599,6 +601,9 @@ SET DU-PL-V = DU1-V OR DU2-V OR DU3-V OR PL1-V OR PL2-V OR PL3-V ;
 
 SET 1-2-V = SG1-V OR SG2-V OR DU1-V OR DU2-V OR PL1-V OR PL2-V ;
 
+SET 2-V = SG2-V OR DU2-V OR PL2-V ;
+
+
 #!! !Sets consisting of forms of "leat" (these ones need to be rewritten)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SET LEAN = ("leat") + Prs + Sg1 + Ind OR ("leat") + V + Prt + ConNeg ;
@@ -920,7 +925,7 @@ LIST ACC-INF-V = "bivdit" "čuorvut" "dagahit" "diktit" "gohččut" "movttiidaht
  # a subset of INF-V.
  	#$ Ii suova nieiddas náitalit.
 
-LIST OPRED-V = "alidit" "atnit" "álggahit" "ásahit" "bargat" "bidjat" "ceavzit" "dadjat" "dahkaluddat" "dahkat" "doalahit" "dovdat" "dulkot" "gártat" "geavahit" "geahččat" "gohčodit" "gohččut" "kvalifiseret" "málet" "meroštallat" "navdit" "oaidnit" "oaivvildit" "sihkkarastit" "váldit" "válljet" "rábmot" "vihahit" ;
+LIST OPRED-V = "alidit" "atnit" "álggahit" "ásahit" "bargat" "bidjat" "ceavzit" "dadjat" "dahkaluddat" "dahkat" "doalahit" "dovdat" "dulkot" "gártat" "geavahit" "geahččat" "gohčodit" "gohččut" "kvalifiseret" "málet" "meroštallat" "nammadit" "navdit" "oaidnit" "oaivvildit" "sihkkarastit" "váldit" "válljet" "virgádit" "rábmot" "vihahit" ;
 
  # Verbs that occur with objects that have secondary predicates.
  
@@ -2584,6 +2589,10 @@ REMOVE:confProp Prop IF (0 CONF-PROP LINK 0 Adv OR Pron OR V) ;
 #!!  * __Dert__ Rule for removing Der/t Prop when there are other analysis
 REMOVE:Dert (Der/t) IF (0 Prop) ;
 
+#SELECT (org) ; # IF (0 Cmp/Hyph) ; # apertium
+SELECT (org) + Cmp/Hyph ; # apertium
+REMOVE Attr IF (0 Cmp/Hyph) ; # apertium
+
 
 REMOVE (Der/t) IF (0 Prop) ;
 REMOVE Prop IF (0 Pron) ;
@@ -2744,6 +2753,9 @@ REMOVE:Focmis Foc/mis IF (0 Loc) ;
 REMOVE:Focmat Foc/mat IF (0 N) ;
 	#$ Veahá doarrumat, muhto muđuid oalle jaskes idja.
 
+#!! * __Fochan__ removes Foc/han when adp  
+REMOVE:Fochan Foc/han IF (0 Pr OR Po OR Adv) ;
+	#$ čađahan
 
 
 #!! * __Focbe__ removes Foc/be when juobe Adv  
@@ -3727,7 +3739,7 @@ SELECT:r626 ("goddin#áitit") IF (0 ("goddi#náitit"));
     # bassi vs bassi N G3
     # - - - - - - - - -
 REMOVE:bassiEss NomAg OR Der/NomAct IF (0 ("bassi" Ess) LINK 1 VFIN);    
-REMOVE:bassi1 N IF (0 (A Ess) LINK NOT 0 Der/NomAct LINK *0 OPRED-V)(NEGATE 0 ("siessái")) ;  
+REMOVE:bassi1 N IF (0 (A Ess) LINK NOT 0 Der/NomAct LINK *0 OPRED-V)(0 ("bassi")) ;  
 	## Maŋŋá jápmimis de aliduvvui Gonagas Olav bassin. 
 	#% Son atná iežas sápmelažžan. #Needs one for N Ess aswell?  
 	# Try to make a general rule.
@@ -5340,6 +5352,11 @@ SECTION
 SELECT:NCoor (N Nom) (0 VFIN LINK -1 ("ja") OR ("dahje") OR ("dehe") OR COMMA LINK -1 (N Sg Nom))((1 EOS) OR (1 ("ja") OR ("dahje") OR ("dehe") LINK 1 (N Sg Nom))) ;
 	#$ Seamma gusto uhcit fuđđožiidda nu go neahti, čeavrris, mievri ja rieban.
 
+LIST NAMMADIT = "nammadit" "válljet" "virgádit" ;
+
+SELECT:Prof N + Ess IF (0 PROFESSION LINK *-1 OPRED-V BARRIER SV-BOUNDARY) ;  
+	#$ Sámediggepresideanta Aili Keskitalo nammadii bearjadaga Guovddášbellodaga Anne Toril Eriksen Balto (40) ođđa politihkalaš ráđđeaddin.
+
 
 SELECT:NounNotEará N IF (-1 (A Attr) OR (Indef Attr))(NEGATE -1 Adv OR Interr)(NEGATE 0 Inf OR VFIN OR Der/veara OR ("veara") OR ("leat" PrfPrc) OR Indef OR Foc/gis)(1 NP-BOUNDARY);  
 	#$ Dat lea čuovvovaš sajis.
@@ -5484,7 +5501,7 @@ SELECT ("máŋgii" Adv) ;
 
 #!! * __mielasAdv__ 
 REMOVE:mielasAdv ("mielas" Adv)(-1 Gen) ;
-SELECT:mielasAdv ("mielas" Adv)(1 Ill) ;
+SELECT:mielasAdv ("mielas" Adv)(1 Ill OR VFIN - COPULAS) ;
 
 
 #!! __matPcle__
@@ -6007,8 +6024,9 @@ REMOVE:vaikkoAdv Adv IF (0 ("vaikko") LINK NOT 0 Foc/ba) ;
 #!! !!go as CS and Qst Pcle
 #!! First select all "go" Qst Pcle, then remove them so the rest will be "go" CS
 
-#!! * __standQst__ selects Pcle in standard questions
+#!! * __standQst__ selects Pcle in standard questions with question mark. Also without question mark if the verb is in 2. person.
 SELECT:standQst Pcle IF (-1 VFIN LINK -1 BOC OR CLB OR PUNCT)(0 go LINK *1 ("?")); 
+SELECT:standQst Pcle IF (-1 VFIN + 2-V LINK -1 BOC OR CLB OR PUNCT)(0 go); 
 	#$ Muhto boađát go?                         
 	#$ Eai go báhkinat ge daga aiddo nu?
 	#$ Judas, beahtát go Olbmobártni cummáin?
@@ -9434,7 +9452,7 @@ SELECT:SEMstahta Gen IF (-1 FYLKA LINK 0 Gen)(0 ("stáhta") LINK 0 Acc)(1 ("oahp
 	#$ Sámediggi lea geigen jahkedieđáhusas departementii Sámedikki doaimmas 2005.
 
 #!! * __SEMstahta1__ Gen if 0 stáhta 1 org etc.
-SELECT:SEMstahta1 Gen IF (0 ("stáhta") OR ORGANIZATION LINK 0 Acc)(*1 STAHTA-GEN OR ORGANIZATION OR TEXT OR ABSTR-TEXT OR INSTITUTION OR RIEKTEDILLI BARRIER NOT-NPMOD OR COMMA OR CC OR (":") OR Dem LINK NOT 0 Ess)(NEGATE *-1 STRICT-TRANS-V BARRIER SV-BOUNDARY OR Acc) ; 
+SELECT:SEMstahta1 Gen IF (0 ("stáhta") OR ORGANIZATION LINK 0 Acc)(*1 STAHTA-GEN OR ORGANIZATION OR TEXT OR ABSTR-TEXT OR INSTITUTION OR RIEKTEDILLI BARRIER NOT-NPMOD OR COMMA OR CC OR (":") OR Dem LINK NOT 0 Ess OR ("Norga"))(NEGATE *-1 STRICT-TRANS-V BARRIER SV-BOUNDARY OR Acc) ; 
 	# TEXT and ABSTR-TEXT are perhaps too big.
 	#$ Heiveheami ovddidit ovttas Sámedikkiin ja Davvi-Norgga spesiálapedagogalaš birrasiiguin, stáhta spesiálapedagogalaš doarjjavuogádagain ja Læringssenteret:iin.
 	#% Deanu vuoigatvuođaid oamasteaddjit stevdnejit Suoma stáhta diggái.
