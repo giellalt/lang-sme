@@ -354,11 +354,11 @@ analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 
 # ... and also in the dict analyser:
 analyser-dict-gt-norm.%: analyser-raw-gt-desc.%      \
-					filters/make-optional-hyph-tags.%          \
-					filters/make-optional-transitivity-tags.%  \
-					filters/make-optional-semantic-tags.%      \
-					filters/make-optional-v1-tags.%            \
-					filters/make-optional-adv_comp-tags.%      \
+					filters/remove-hyph-tags.%          \
+					filters/remove-transitivity-tags.%  \
+					filters/remove-semantic-tags.%      \
+					filters/remove-v1-tags.%            \
+					filters/remove-adv_comp-tags.%      \
 					filters/remove-area-tags.%                 \
 					filters/remove-dialect-tags.%              \
 					filters/remove-orig_lang-tags.%            \
@@ -377,11 +377,11 @@ analyser-dict-gt-norm.%: analyser-raw-gt-desc.%      \
 					filters/remove-Use_minus_PMatch-tags.% \
 					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-			.o. filters/make-optional-hyph-tags.$*          \
-			.o. filters/make-optional-transitivity-tags.$*  \
-			.o. filters/make-optional-semantic-tags.$*      \
-			.o. filters/make-optional-v1-tags.$*            \
-			.o. filters/make-optional-adv_comp-tags.$*      \
+			.o. filters/remove-hyph-tags.$*          \
+			.o. filters/remove-transitivity-tags.$*  \
+			.o. filters/remove-semantic-tags.$*      \
+			.o. filters/remove-v1-tags.$*            \
+			.o. filters/remove-adv_comp-tags.$*      \
 			.o. filters/remove-area-tags.$*                 \
 			.o. filters/remove-dialect-tags.$*              \
 			.o. filters/remove-orig_lang-tags.$*            \
@@ -393,7 +393,7 @@ analyser-dict-gt-norm.%: analyser-raw-gt-desc.%      \
 			.o. filters/remove-infl_deriv-borders.$*        \
 			.o. filters/remove-word-boundary.$*             \
 			.o. orthography/$(DEFAULT_ORTH)-to-$*.compose.$* \
-			.o.   @\"filters/remove-norm-comp-tags.$*\"             \
+			.o. @\"filters/remove-norm-comp-tags.$*\"             \
 			.o. @\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"   \
 			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"   \
