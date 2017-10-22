@@ -74,7 +74,7 @@ SETS
 
 #!! !Beginning and end of sentence
 LIST BOS = (>>>) (<s>) (sent) ;  #!! BOS 
-LIST EOS = (<<<) (</s>) (sent) ; #!! EOS
+LIST EOS = (<<<) (</s>) (sent) ("❡") ; #!! EOS
 
 # We define end of clause and beginning of clause in a way so that the file
 # may be read both by the CG-2 and the vislcg formalisms.
@@ -2840,9 +2840,13 @@ REMOVE:olgu ("olgu") IF (0 ("olgun")) ;
 #!! * __foto__ 
 SELECT:foto1 PrfPrc IF (0 ("čállit") OR ("govvet") OR ("filbmet") OR ("čuohppat") LINK 1 (":")) ;
 SELECT:foto2 PrfPrc IF (0 ("čállit") OR ("govvet") OR ("filbmet") OR ("čuohppat") LINK 1 ("ja") LINK 2 (":")) ;
+SELECT:foto3 PrfPrc IF (0 ("čállit") OR ("govvet") OR ("filbmet") OR ("čuohppat") LINK 1 EOS LINK -2 HUMAN + Nom LINK NOT 0 Sg1) ;
 	#$ Filbmen ja čuohppan: Bengt Roger Kåven
 
 SELECT:čállit N + Nom - Der/NomAg IF (0 Inf OR Imprt LINK 1 EOS)(-1 BOS) ;
+
+SELECT:imprt N + Nom (0 Der/NomAg OR NomAg)(1 PrfPrc + ("gávdnot")) ;
+	#$ Goargŋu gávdnon jápmán.
 
 
 #!! * __Sem/Act__ selects lexicalised NomAct in fragments (instead of looking for VFIN). 
@@ -3497,6 +3501,10 @@ SELECT:radjaiAdv Po IF (-1 Num)(0 ("rádjai") OR ("rájes"));
 #!! * __rabasAdv__ selects
 SELECT:rabasAdv Adv IF (-1 COPULAS)(0 ("rabas") LINK NEGATE *1 N BARRIER NOT-ADV);
 	#$ Guktot uvssat leat rabas.
+
+#!! * __rabasA__ selects
+SELECT:rabasA A IF (0 ("rabas") LINK 1 Sem/Event);
+	#$ rabas seminára
 
 #!! * __soaittáhagasAdv__ selects
 SELECT:soaittáhagasAdv Adv IF (0 ("soaittáhagas"));
@@ -8000,6 +8008,11 @@ REMOVE:NoActorIfSg3 Actor IF (0 VFIN + Sg3)(NEGATE 0 Gen LINK 1 Po OR N) ;
 SELECT:GenIfPo Gen (1C Po OR ("gaskasaš")) ;	
 	#$ Soames muitalii oktii ahte son muitalii lulli dážaide ahte sus gal lea lávvu mas lea golbma gearddi , parabola ja vuojadanálddis vel árrana bálddas.
 
+#!! * __semináraNOM__
+SELECT:semináraNOM Nom (0 Sem/Event LINK 0 Gen)(*1 Gen BARRIER NOT-A LINK 1 ("birra")) ;	
+	#$ Seminára vieruid birra čohkkii birrasit 100 olbmo.
+
+
 SECTION
 
 #!! !!Demonstrative pronouns, agreement in DP - should it be moved to after verbmappings? 
@@ -11538,6 +11551,10 @@ SELECT:ComInstr (Sg Com) IF (0  Pl + Loc LINK 0 MUSIC-INSTRUMENT OR ("joavku") O
 
 SELECT:com-head (Sg Com)(0 TOOL)((1 COM-HEAD) OR (-1 COM-HEAD)) ;
 	#$ Lei álfárot gildojuvvon dolain duhkoraddamis, muhto moai ean goassege duostan luohttit dasa ahte oahppit čuvvo dán gildosa.
+
+#!! * __comheaitit__ select Sg Com if heaitit
+SELECT:comheaitit (Sg Com)  IF (*-1 ("heaitit") BARRIER SV-BOUNDARY) ;
+
 
 #!! * __LocLocVL1, LocLocVR__ select Pl Loc if there is a LOC-V
 SELECT:LocLocVL1 (Pl Loc) - VEHICLE - Sem/Act  IF (*-1 LOC-V - ("heaitit") BARRIER SV-BOUNDARY OR COM-HEAD OR Loc - Attr LINK NOT 0 Adv)(NEGATE *-1 CC BARRIER S-BOUNDARY LINK -1 LOC-V)(NEGATE 0 Num OR Pron LINK *1C (N Com) BARRIER NOT-NPMOD)(0 Com OR Px) ;
