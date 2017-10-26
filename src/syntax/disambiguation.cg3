@@ -2570,7 +2570,9 @@ SELECT:PropVfin_e Prop IF (0 VFIN - Qst LINK *-1 BOS BARRIER WORD)(1 CC OR COMMA
  	#$ Máhtte ja Ánne eaba sáhttán boahtit ovdal.
  	#$ Sáhtán, gáidda eret!
 
-REMOVE:pcle (pcle) (0 (np) OR (n)) ; #for apertium
+REMOVE:pcle (pcle) OR ("dot") (0 (np) OR (n)) ; #for apertium
+
+
 
 LIST CONF-PROP = "Lea" "Lassi" "Dan" "Hu" "Goa" "Mo" "Moa" "Man" "Naba" ;
 
@@ -2843,6 +2845,8 @@ REMOVE:olgu ("olgu") IF (0 ("olgun")) ;
 SELECT:foto1 PrfPrc IF (0 ("čállit") OR ("govvet") OR ("filbmet") OR ("čuohppat") LINK 1 (":")) ;
 SELECT:foto2 PrfPrc IF (0 ("čállit") OR ("govvet") OR ("filbmet") OR ("čuohppat") LINK 1 ("ja") LINK 2 (":")) ;
 SELECT:foto3 PrfPrc IF (0 ("čállit") OR ("govvet") OR ("filbmet") OR ("čuohppat") LINK 1 EOS LINK -2 HUMAN + Nom LINK NOT 0 Sg1) ;
+SELECT:foto4 N IF (0 ("govva") + Loc LINK 1 (":")) ;
+
 	#$ Filbmen ja čuohppan: Bengt Roger Kåven
 
 SELECT:čállit N + Nom - Der/NomAg IF (0 Inf OR Imprt LINK 1 EOS)(-1 BOS) ;
@@ -2950,7 +2954,7 @@ SELECT:NomACR Nom IF (0 ACR OR ABBR)(*-1 BOS BARRIER WORD)(1 PUNCT) ;
 	#$ Ovttas.no - Sámi oahpponeavvut neahtas
 
 SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK *-1 BOS BARRIER WORD)(1 (":") OR EOS) ;
-SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 Nom LINK -1 BOS)(1 (":") OR EOS) ;
+SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 Nom LINK *-1 BOS OR LEFT BARRIER WORD)(1 (":") OR RIGHT OR EOS) ;
 SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 Gen LINK -1 Num LINK -1 BOS)(1 (":") OR EOS) ;
 SELECT:PrfPrcFragm PrfPrc (0 Der/NomAct LINK -1 Nom LINK -1 BOS)(1 (":") OR EOS) ;
 SELECT:PrfPrcFragm PrfPrc (0 Der/NomAct LINK -1 Nom LINK -1 CC LINK -1 N LINK -1 BOS)(1 (":") OR EOS) ;
@@ -3208,6 +3212,9 @@ SELECT:dakkoAdv ("dákko" Adv)  IF (*0 VFIN BARRIER S-BOUNDARY) ;
 	#$ Hammerfeastta suohkanbáhppa Harboe lea dákko maid, nu go eará oktavuođain, buorre gáldu.
 
 
+#!! * __jusCS__  
+SELECT:jusCS ("jus" CS)  IF (NEGATE 1 COMMA OR EOS);
+	#$ jus, 
 
 
 #!! * __duoAdv__  
@@ -3641,6 +3648,9 @@ REMOVE (Imprt Sg2) (-1 BOC LINK 2 (Pers Nom) LINK NOT 0 Sg2) ;
 	#$ Giela sii gal besse gullat dievva beljiid .
 
 REMOVE Imprt (0 Pron)(1 CS) ;
+
+REMOVE Imprt (0 ("bargi") LINK 1 Sem/Org + Loc) ;
+	#$ Bargit Dutkanhálddahusas.
 
 
 REMOVE Imprt (0 N-NOT-V LINK -1 BOC)(1 VFIN) ;
@@ -4340,6 +4350,7 @@ SELECT:gaskaneaset Po IF (0 ("gaskan") + Px)(NEGATE 1 VGen);
 
 #!! * __vfingo__ selects VFIN in front of go Qst
 SELECT:vfingo VFIN IF (-1 BOC)(NEGATE 0 OLLU OR Adv)(1 go + Qst LINK NOT 1 VFIN) ; 
+SELECT:vfingo VFIN - ConNeg IF (-1 BOS)(NEGATE 0 OLLU OR Adv)(0 Qst) ; 
 	#$ Dáhtut go min gaikut dan eret?
 	#$ Lea go dus ruhta?
 
@@ -5365,7 +5376,9 @@ SELECT:ENInfcoor1 Inf IF (*-1 INF-V + V BARRIER SV-BOUNDARY OR Neg OR CS OR COMM
 SELECT:ENInfcoor2 Inf IF (-1 CC OR COMMA LINK *-1 Inf BARRIER SV-BOUNDARY OR REAL-V OR CS OR CC OR COMMA)(0 AUX OR INF-V + V LINK 1 Inf) ;
 	#$ Seammás bohte eanet ja eanet gáibádusat dasa ahte boazosápmelaš galggai dovdat lágaid, máhttit doaimmahit rehketdoalu ja eará báberbargguid ja čállit reivve.
 
-
+#!! *__listInf__ in lists
+SELECT:listInf Inf (0 COPULAS LINK *-1 BOS BARRIER WORD)(1 Nom OR Ess) ;
+	#$ Leat diehtoguovddáš studeanttaide.
 
 #!! !!!Section 4: CYCLE 1B: REMOVING THE READINGS THAT WERE LEFT FROM THE 1A RULES 
 # =====================================================================
@@ -7136,7 +7149,7 @@ SELECT:dovddusEss (A Nom) IF (0 ("dovddus") OR ("beakkan") OR ("deaŧalaš"))(1 
 	#$ Son lea dovddus sánálaš ja girjjálaš nissonin.
 	#$ Dovddus juoigi váldoartistan.
 
-SELECT:ANomCop (A Nom) IF (*-1 COPULAS BARRIER NOT-ADV LINK *-1 BOS BARRIER Nom)(0 DEHALAS + Attr LINK 1 N - Nom - Gen LINK NEGATE *1 REAL-V BARRIER S-BOUNDARY) ;
+SELECT:ANomCop (A Nom) IF (*-1 COPULAS BARRIER NOT-ADV LINK *-1 BOC BARRIER Nom)(0 DEHALAS + Attr LINK 1 N - Nom - Gen LINK NEGATE *1 REAL-V BARRIER S-BOUNDARY) ;
 	#$ Lea suohtas kurssas.
 SELECT:ANomCop (A Nom) IF (*-1 COPULAS BARRIER NOT-ADV LINK *-1 BOS BARRIER Nom)(0 DEHALAS + Attr LINK 1 N + Gen LINK 1 Ill) ;
 	#$ Lea dárbbašlaš sámegiela boahtteáigái ahte sámegielagiid lohku lassána.
@@ -7229,6 +7242,9 @@ REMOVE:ANom (A Nom) IF (NEGATE -1 COPULAS LINK 1 DEHALAS LINK *1 ADVLCASE BARRIE
 	#$ Vuoigatvuohta leat Sámedikkiid jienastusloguin lea lassin dábálaš jienastanvuoigatvuođa eavttuide.
 	#% Dálut eai lean nu ráhpadat ođđasishuksenáigge.
 	#% Suoma Sámedikki presideanta, Tiina Sanila-Aikio lea duhtavaš konvenšuvnnain.
+
+REMOVE:AifProf (A Attr) IF (0 PROFESSION LINK 1 PROP-SUR) ;
+	#$ Várrelahttu: Ráđđeaddi Berit Ellen J. Eira
 
 #!! * __AAttr__  selects A Attr
 SELECT:AAttr (A Attr) - ("nubbi") IF (NOT 0 (Ex/V A) OR Adv - Superl OR Inf)(NEGATE 0 PrfPrc OR DEHALAS LINK *-1 REAL-COPULAS BARRIER REAL-V)(NEGATE 1 PREGEN)(NEGATE *-1 COPULAS BARRIER NOT-A-ADV-PCLE) (*1 N - Ess BARRIER NOT-NPMOD OR Dem OR Indef OR Num LINK NOT 1 Po)(NEGATE 0 Gen LINK -1 (Dem Gen))(NEGATE 1 CC LINK 1 Num OR N)(NEGATE 0 (Pl Nom) LINK 1 VFIN + Pl3) (NEGATE 0 (Neg Sup) LINK 1 Inf) ;
@@ -7923,6 +7939,9 @@ SELECT:Yr1853 PrfPrc IF (*-1C Rel LINK -1 Pron OR N LINK *-1 REAL-COPULAS BARRIE
 ##! * __PrfPrcModA__ selects PrfPrc as modifier to an adjective
 SELECT:PrfPrcModA PrfPrc IF (1 A)(NOT 2 N);
 
+SELECT:PrfPrcModN PrfPrc IF (-1 VFIN)(*1 N BARRIER WORD - Attr) ;
+	#$ Sámi servodat dárbbaša oahppan sámegielat journalisttaid.
+
 #!! !Topicalized version
 #   - - - - - - - - - -
 
@@ -8123,6 +8142,9 @@ MAP:>NPrfPrc1 (@>N) TARGET PrfPrc - NOT-@>N (NEGATE *-1 Neg BARRIER REAL-V)(NEGA
 	#$ Sus leat hervejuvvon gálssohat main heaŋgájit čáppa diehpit. 
   	#$ Sieiddi bálvalemiin sturron eallu gohčoduvvui bálvvoseallun, mii sáhtii jávkat, go oamasteaddji jámii dahje go sieidi ii bálvaluvvon.
 	#$ Ruonáeana lea čielgasit ráddjejuvvon geográfalaš guovlu. 
+
+MAP:>NPrfPrc (@>N) TARGET PrfPrc - NOT-@>N (-1 VFIN)(0 ("oahppat"))(*1 PROFESSION BARRIER WORD - Attr) ;
+	#$ Sámi servodat dárbbaša oahppan sámegielat journalisttaid.
 
 
 #!! * __NPrfPrc2__ with -1C Dem or Num or Attr or Indef
@@ -9076,7 +9098,7 @@ REMOVE:SEMNation Gen IF (0 (N Acc) + Prop)(1 NATION + Prop);
 #!! * __SEMdep__ Select Gen if main-organization in front of department   
 SELECT:SEMdep Gen IF (0 MAIN-ORGANIZATION OR EDUCATION)(1 DEPARTMENT) ;	
 #!! * __SEMorghum__ select gen if organization or education in front of human   
-SELECT:SEMorghum Gen IF (0 ORGANIZATION OR EDUCATION - ("oahpahus") LINK NOT 0 Attr)(1 HUMAN - Sem/Sur OR TEXT LINK NOT 0 Ess)(NEGATE 1 ("norgalaš")) ;	
+SELECT:SEMorghum Gen IF (0 ORGANIZATION OR EDUCATION - ("oahpahus") LINK NOT 0 Attr)(1 HUMAN - Sem/Sur OR TEXT LINK NOT 0 Ess)(NEGATE 1 ("norgalaš"))(NOT 0 Nom) ;	
 	#$ gaskadási ohppiid
 
 SELECT:SEMedu Acc IF (-1 ORGANIZATION OR EDUCATION - ("oahpahus") OR Sem/Edu LINK NOT 0 Attr)(0 Sem/Edu + Acc OR ("master") + Acc LINK NOT 1 N OR @CNP) ;	
