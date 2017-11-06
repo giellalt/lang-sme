@@ -1646,7 +1646,7 @@ LIST PROFESSION1 = (".*advokáhta"r) (".*advokáhtta"r) (".*duopmár"r) "arkeolo
 "rádjefákta" "rádjesoalddát" "ráđđeaddi" "ráđđeolmmái" "reainnár" "rávdi" "reaŋga" "redaktevra" "rehketdoallodárkkisteaddji" "rehketdoalli" "rektor" "ruhttejeaddji" "ruvdnaprinsa" ("ruvvet" Der/NomAg)
 "sámediggeráđđi" "sámeduojár" "sárdnideaddji" "sávzadoalli" "sealgeeadni" "sester" "silbarávdi" "snihkkár" "soalddát" "sosionoma" "spábbačiekčanhárjeheaddji" "spábbačiekči" "stipendiáhta" "studeanta" "sundi" "suohkanbáhppa" "suohkan#plánejeaddji" 
 "šibitdoalli" "táksevuoddji" "telefonvástideaddji" "tuollár" "turistaofelaš" "uksafákta" "universitehtalektor"  
-"váldodoaimmaheaddji" "viessohoiddár" "vuoktačuohppi" ;
+"váldodoaimmaheaddji" "váldodoaimm" "viessohoiddár" "vuoktačuohppi" ;
 
 SET PROFESSION = PROFESSION1 - Prop ;
 
@@ -2177,6 +2177,7 @@ SELECT:SemYear Sem/Year (0 Num)(1 ("jahki") + Pl) ; #apertium
 REMOVE:SemYear Sem/Year (0 Num) ((-1 CURRENCY) OR (1 CURRENCY OR MEASURE)) ;
 REMOVE:SemPhonenr Sem/Phonenr (0 Num) ; #vi fjerner alle inntil videre
 
+SELECT:Sem/DateGen  Sem/Date + Gen ((1 Po) OR (-1 Pr)) ; #foreløpig, for MT 
 SELECT:Sem/Date  Sem/Date + Nom ; #foreløpig, for MT 
 SELECT:clock Sem/Time-clock + Nom  ;
 
@@ -10644,11 +10645,12 @@ SELECT:NumAccPl Acc IF (-1 (Num Acc Pl))(0 (N Acc Pl)) ;
 
 # OKTA
 
-#!! * __NumOkta__ Selects Acc if 0 okta followed by a noun. Transitive verb to the left ''oidnen ovtta nieidda''
-SELECT:NumOkta Acc IF (*-1 TRANS-V + FMAINV BARRIER SV-BOUNDARY)(0 OKTA + Sg)(1 N LINK NEGATE 0 Gen LINK 1C Acc) ;
+#!! * __NumOktaAcc__ Selects Acc if 0 okta followed by a noun. Transitive verb to the left ''oidnen ovtta nieidda''
+SELECT:NumOktaAcc Acc IF (*-1 TRANS-V + FMAINV BARRIER SV-BOUNDARY)(0 OKTA + Sg)(1 N LINK NEGATE 0 Gen LINK 1C Acc) ;
 	#$ Mun oidnen dušše ovtta nieidda.
 	#$ Árvaluvvon juohkin dáhpáhuvvá dáinnalágiin ahte juohke suohkan beassá vuos árvalit ovtta evttohusa stipendii.
 	#% Dan eatnamis oažžu ovtta gusa fuođđara.
+
 	
 # Genitive after quantifier
 
@@ -11307,8 +11309,9 @@ SELECT:NDr2373 Nom IF (*-1C PL3-V BARRIER NOT-ADV-PCLE OR MO LINK *-1 BOC BARRIE
 	#% Arkiivaávdnasat galget sáddejuvvot go leat sullii 25-30 jagi boarrásat. #Comment: Why is this marked? 
 
 #!! * __NDr2375__ Selects Nom
-SELECT:NDr2375 Nom IF (*-1 COMMA BARRIER NOT-NPMOD LINK NEGATE *-1 MAIN-V BARRIER S-BOUNDARY)(NEGATE *1 VFIN BARRIER S-BOUNDARY)(NEGATE 0 Adv OR ("leat" PrfPrc) OR Imprt OR Po OR VFIN)(NEGATE 0 Actio LINK 1 ("veara")) ;#(NEGATE 0 PrfPrc LINK *-1 MOVT LINK -1 ("nu") LINK -1 ("leat"));
+SELECT:app Nom IF (*-1 COMMA OR LEFT BARRIER NOT-NPMOD LINK NEGATE *-1 MAIN-V BARRIER S-BOUNDARY)(NEGATE *1 VFIN BARRIER S-BOUNDARY)(NEGATE 0 Adv OR ("leat" PrfPrc) OR Imprt OR Po OR VFIN)(NEGATE 0 Actio LINK 1 ("veara")) ;#(NEGATE 0 PrfPrc LINK *-1 MOVT LINK -1 ("nu") LINK -1 ("leat"));
 	#$ Dá dat leat, 350 ruvnno.
+	#$ Solveig Joks (váldodoaimm.)
 	#% Eará guovlluin gos leat vel unnit sámit go Finnmárkkus, leamaš dákkár ákkain vel stuorát deaddu almmolaš ságastallamis.  # It should not take the latter one.
 
 #!! * __NDr2376__ Selects Nom
@@ -12178,6 +12181,9 @@ REMOVE:KillAcc Acc IF (0 Gen) ;
 
 SELECT:Po Po IF (-1 Gen)(0 Adv OR Pr) ;
 
+#!! * __NumOktaGen__ Selects Gen after okta gen 
+SELECT:NumOktaGen Gen IF (-1 OKTA + Gen)(1 N) ;
+	#$ Mo davvisámegiela aspektuála vearbasuorgásat geavahuvvojit ovtta máinnasteaddji idioleavttas?
 
 
 SECTION 
