@@ -6533,7 +6533,7 @@ REMOVE:CVPnoVfinAdvl (@CVP) IF  (-1C ADVLCASE OR Adv - ("easka") LINK NEGATE *-1
 	#$ Grammatihkkavuđot giellateknologalaš reaiddut teakstaanalyseremii ja giellaoahpahussii ja digitálalaš sátnegirjjit leat buot gielaide eaktun.	#% Dállu lea divrras midjiide danne go dat vuosiha govt mearrasámit elle ovdal ja makkár viesut sis ledje.	
 
 
-LIST MIELLA = "áigi" "áigumuš" "árbevierru" "bággu" "dárbu" "dilli"  "doarjja" "ealjárvuohta" "gelbbolašvuohta" "geatnegahtton" "geatnegasvuohta" "hállu" "lohpi" "miella" "ovddasvástádus" "plána" "resursa" "riekti" "sávaldat" "váldi" "vejolašvuohta" "vuođđu" "vuohki" "vuoigatvuohta" "vuorru" ;
+LIST MIELLA = "áigi" "áigumuš" "árbevierru" "bággu" "dárbu" "dilli"  "doarjja" "ealjárvuohta" "gelbbolašvuohta" "geatnegahtton" "geatnegasvuohta" "gudni" "hállu" "lohpi" "miella" "ovddasvástádus" "plána" "resursa" "riekti" "sávaldat" "váldi" "vejolašvuohta" "vuođđu" "vuohki" "vuoigatvuohta" "vuorru" ;
 # These give Inf @N< instead of @ADVL (like more concrete nouns: ruhta, bileahta, dálki ...)
 
 
@@ -6598,6 +6598,10 @@ REMOVE:Prop (@CVP)  IF (-1 Prop + Gen)(1 Prop + Gen LINK 1 Po) ;
 
 REMOVE:ja (@CVP)  IF (-1 Num LINK -1 Pr)(1 Num) ;
 	#$ Sihke ovdal ja maŋŋil dan leat gaskkal vihtta ja logi olbmo ožžon dávdda jagis.
+
+REMOVE:ja (@CVP) IF (-1 Prop + Gen LINK -1 Inf OR (Actio Ess) LINK -1 AUX) (1 Prop + Gen LINK 1 N) ;
+REMOVE:ja (@CVP) IF (-1 Prop + Gen LINK -1 VFIN) (1 Prop + Gen LINK 1 N) ;
+	#$ Guovdageainnu suohkan áigu ovttasbargat Eanodaga ja Álttá suohkaniiguin, ovdánahttit mátkkoštanealáhusa.
 
 
 #!! * __killAllCNP__ removes all remaining @CNP
@@ -8067,7 +8071,7 @@ REMOVE:PrfPrcifN PrfPrc IF (0 N LINK -1 Dem + Attr)(NEGATE *1 N BARRIER NOT-NPMO
 LIST JAHKKIT = "jáhkkit" "sávvat" "vuordit" "beassat" ;
 
 #!! * __ActioLoc__ is an IFF rule, we also need rule for 'leat', like in lea go bieru oastimis
-IFF:ActioLoc (Actio Loc) - JAHKKIT IF  (0 (N Loc) LINK *-1 ("ceavzit") OR ("heaitit") OR ("geargat") OR ("gieldit") OR ("váibat") OR ("dolkat") OR ("ádjánit") OR ("beassat") OR ("vajálduhttit") OR ("hehttet") OR ("biehttalit") BARRIER REAL-V OR S-BOUNDARY) ; 
+IFF:ActioLoc (Actio Loc) - JAHKKIT IF  (0 (N Loc) LINK *-1 ("ceavzit") OR ("heaitit") OR ("geargat") OR ("gieldit") OR ("váibat") OR ("dolkat") OR ("ádjánit") OR ("beassat") OR ("vajálduhttit") OR ("hehttet") OR ("biehttalit") OR ("ballat") BARRIER REAL-V OR S-BOUNDARY) ; 
 	#Lene: removed "leat"
 	#% Dáruiduhttin lea hearkkes ášši, danne leat nu olu dovddut dán digaštallamis.
 
@@ -8473,6 +8477,10 @@ MAP:N<Inf1 (@N<) TARGET Inf (-1 MIELLA + Nom OR MIELLA + Ess LINK NOT 0 PrfPrc L
 	#$ Dál lea Bireha vuorru geahččat sávzzaid.
 	#$ Sis lea nana árbevierru veahkehit ieš iežas persovnnalaš fierpmádagaid vehkiin.
 	#$ Lea geatnegasvuohta ovddidit buot mánáid beroštumiid servodagas.
+
+MAP:N<Infheadliner (@N<) TARGET Inf (-1 MIELLA) (*1 ("❡")) (NEGATE 0 TRANS-V LINK -1 NP-HEAD-NOM LINK NOT 0 GEN-CONCEPT LINK *-1 COPULAS BARRIER NOT-NPMOD LINK -1 Loc LINK 0 HUMAN OR Pers LINK *-1 BOS BARRIER NOT-NPMOD);	
+	#$ Stuora gudni oažžut dán bálkkašumi ❡ .
+
 
 #!!	* __N<Inf2__	
 MAP:N<Inf2 (@N<) TARGET Inf (-1 NP-HEAD-ACC LINK -1 MIELLA + Nom LINK NOT 0 REAL-V LINK *-1 ("leat") BARRIER REAL-V LINK *-1 NP-HEAD-NOM OR PRESENT-MARKER OR PAST-MARKER OR Loc BARRIER VFIN-NOT-AUX OR S-BOUNDARY);	
@@ -9911,6 +9919,11 @@ REMOVE:GenDURadj2 TIME + Gen IF (*-1 DURATION-A BARRIER NOT-NPMOD OR Num)(NEGATE
 	#$ Doai leahppi áŋgirit lohkan sámegiela olles dálvvi.
 
 #Time-accusative:
+#!! * __accgenbeaivi__ ávvudit riegádanbeaivvi
+SELECT:accgenbeaivi Acc (0 GEN-BEAIVI LINK *-1 ("ávvudit") BARRIER SV-BOUNDARY) ;
+	#$ Mii ávvudit Sámi allaskuvlla vuosttaš professora ja Sámedikki vuosttaš presideantta Ole Henrik Magga 70. riegádanbeaivvi seminárain.
+
+
 #!! * __GenDURNumPl__ duháhiid jagiid
 REMOVE:GenDURNumPl Gen IF (*0 PLACE-V OR DURATION-V BARRIER SV-BOUNDARY)(0 (Num Pl) OR ("moanat" Pl) LINK *1 VAHKKU-DUR + (Pl Gen) BARRIER NOT-A LINK NOT 1 Ill OR TIME OR Po OR PREGEN LINK NEGATE 0 Nom LINK 1 EOS)(NEGATE *-1 Dem OR TIME-A OR Ord OR Indef OR PREGEN OR Pr BARRIER NOT-NPMOD)(NOT 1 ("biras" Pl Loc));
 	#$ Sápmelaččaid historjá álbmogin lea duháhiid jagiid boaris, muhto dálá ássanguovlluin sápmelaččat eai leat ássan nu guhká.
@@ -10737,6 +10750,10 @@ SELECT:COMPInfAcc Acc IF (0 Gen LINK *-1 (Inf TV @COMP-CS<) BARRIER SV-BOUNDARY)
 #!! * __NomInf__ Selects Nom
 SELECT:NomInf Nom IF (-1 FAUXV LINK *-1 Acc)(NOT 0 Adv)(1 FMAINV + TV) ;
 	#$ Muhto sámediggepresideantta ii hálit giellaguovddášjođiheaddji cuiggodit dan dihtii go presideanta ii sámástan ođđajagisártnistis.
+	
+#!! * __NomInf__ Selects Nom
+SELECT:NomInf Nom IF (*-1 BOS OR COPULAS + FMAINV BARRIER NOT-NPMOD)(0 MIELLA LINK 1 Inf) ;
+	#$ – Stuora gudni oažžut dán bálkkašumi ❡ .
 
   
 #!! * __AccInf2__ Selects Acc if Inf immediately to the RIGHT ''guliid čoallut''
@@ -11814,6 +11831,7 @@ SELECT:LocHab2 (Pl Loc)  IF (*-1 (Pron Rel) BARRIER NOT-NPMOD LINK -1 NP-HEAD-NO
 
 #!! * __LocHab1, LocHab2__ select Pl when HAB-ACTOR
 SELECT:LocGenerell (Pl Loc) IF (0 (N Sg Com)) ((*1 LEAT-FIN-NOT-IMPRT BARRIER SV-BOUNDARY LINK *1 NP-HEAD-NOM BARRIER NOT-NPMODADV) OR (*1 Neg BARRIER NOT-ADV-PCLE LINK 1 ("leat" ConNeg) + FMAINV LINK *1 NP-HEAD-NOM BARRIER NOT-NPMODADV) OR (*-1 go + Qst LINK -1 AUX LINK *1 HAB-ACTOR LINK 1 ("leat" Inf)))(NEGATE *0 COM-V BARRIER S-BOUNDARY)(NEGATE 0 TOOL LINK *0 HUMAN-ACTIVITY-V BARRIER S-BOUNDARY) ;
+SELECT:LocGenerell (Pl Loc) IF (0 (N Sg Com)) (*-1 LEAT-FIN-NOT-IMPRT BARRIER NOT-NPMOD)(*1 NP-HEAD-NOM BARRIER NOT-NPMODADV)(NEGATE *0 COM-V BARRIER S-BOUNDARY)(NEGATE 0 TOOL LINK *0 HUMAN-ACTIVITY-V BARRIER S-BOUNDARY) ;
 	#$ Divššohasain lea vuoigatvuohta dearvvašvuođaveahkkái dan áigodagas. 
 	#$ Searvegottiin lei dál ráfi miehtá Judea ja Galilea ja Samaria.
 	#$ Galgá go báikkálaš olbmuin leat vuosttašvuoigatvuohta luondduriggodagaide?
@@ -12125,8 +12143,8 @@ SELECT:Comruhta2- Com IF (0 HEADOFPARTS LINK 0 Com LINK *1 ("ruhta" Loc) BARRIER
   	#$ Osiin gelbbolašvuođaguovddážiidda juolluduvvon ruđain sáhttá maid ruhtadit sadjásašgoluid hospiterema oktavuođas dahje lassigoluid, mat Kárášjogas / Leavnnjas šaddet joatkkaoahpus.
   
 #!! * ávvudit
-SELECT:Comávvudit- Com IF (0 Sem/Food LINK NEGATE *-1 HEADOFPARTS BARRIER SV-BOUNDARY)(*-1 ("ávvudit") BARRIER SV-BOUNDARY);
-SELECT:Comávvudit- Com IF (0 Sem/Food LINK NEGATE *-1 HEADOFPARTS BARRIER SV-BOUNDARY)(*1 ("ávvudit") BARRIER SV-BOUNDARY);
+SELECT:Comávvudit- Com IF (0 Sem/Food OR Sem/Event LINK NEGATE *-1 HEADOFPARTS BARRIER SV-BOUNDARY)(*-1 ("ávvudit") BARRIER SV-BOUNDARY);
+SELECT:Comávvudit- Com IF (0 Sem/Food OR Sem/Event LINK NEGATE *-1 HEADOFPARTS BARRIER SV-BOUNDARY)(*1 ("ávvudit") BARRIER SV-BOUNDARY);
   
  
 #!! * suokkardit and čielggadit
