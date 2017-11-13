@@ -1,0 +1,23 @@
+set need-separators off
+
+Define morphology       @bin"spacetag.hfst" ;
+
+Define incondform       Punct | {“} | {”} | {…} | {­} ;
+Define multiblanks      "  " | "( " | " )" | "\n\n" ;
+Define blank            Whitespace | incondform | multiblanks ;
+
+Define incondword       morphology & [ incondform 0:?* ] ;
+
+Define morphoword       [ Ins(morphology) ]      LC([blank | #  ]) RC([blank | # ]) EndTag(word);
+
+Define spaceafterparenTagged [ "( ":["( " %+SpaceAfterParen ] ];
+
+Define word             [ incondword | morphoword | spaceafterparenTagged ]               EndTag(word) ;
+Define spaceafterparen  [ "( " ]                                  EndTag(spaceafterparen);
+Define spacebeforeparen [ " )" ]                                  EndTag(spacebeforeparen);
+Define doublespaced     [ "  " ]                                  EndTag(doublespaced);
+! Eventuelt kan me tagga ordet før med feilen:
+! Define doublespaced     [ Ins(morphology) "  " ] LC([blank | # ]) EndTag(doublespaced);
+Define doublenewline    [ "\n\n" ]                                EndTag(doublenewline);
+
+regex word | incondword | doublespaced | spacebeforeparen | spaceafterparen | doublenewline ;
