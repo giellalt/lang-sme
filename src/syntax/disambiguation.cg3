@@ -2294,6 +2294,9 @@ SELECT:PlcSur5 Sem/Sur IF (0 (Prop Sem/Plc Gen)) (1 ("lusa") OR ("luhtte") OR ("
 	#$ Biret vuolgá Trosterud geahčai.
 	#$ Biret les Trosterud geahčen.
 
+SELECT:PlcSur6 Sem/Sur IF (0 (Prop Sem/Plc)) (-1 PROFESSION + Nom + Sg);
+
+
 #!! !Some propernouns have two parts and the first is not a genitive. We still have problems with abbr when these propernouns are inflected or are a part of a cmp. The copy rule adds Attr reading to names which not get it in the fst (Soria). The select rule selects Attr when the next word is e.g. Moria.
 
 
@@ -2904,6 +2907,7 @@ SELECT:duššeAdv2 Adv IF (*-1 VFIN)(0 ("dušše"))(1 Num);
 SELECT:PassPrfPrc PrfPrc IF (-1 PrfPrc + Der/Pass LINK *-1 BOS BARRIER WORD)(1 EOS OR ("–")) ;
 SELECT:PassPrfPrc PrfPrc IF (0 Sg1 + Der/Pass LINK NEGATE *-1 Sg1 OR Neg BARRIER SV-BOUNDARY) ;
 SELECT:PrfPrc PrfPrc IF (-1 Nom LINK *-1 BOS BARRIER WORD) (1 Acc OR Adv LINK *1 ("❡")) ;
+SELECT:PrfPrc PrfPrc IF (-1 Nom LINK -1 Attr OR Gen LINK *-1 BOS BARRIER WORD) (1 Acc OR Adv LINK *1 ("❡")) ;
 SELECT:PrfPrc PrfPrc IF (-1 Nom LINK *-2 BOS BARRIER WORD) (1 ADVLCASE OR A OR Adv LINK *1 ("❡")) ;
 SELECT:PrfPrc PrfPrc IF (-1 BOS) (1 Attr LINK 1 Acc LINK *1 EOS BARRIER WORD) ;
 SELECT:PrfPrc PrfPrc IF (-1 Gen LINK -1 Num LINK *-1 BOS BARRIER NOT-NPMODADV)(*1 ("❡") OR EOS OR (":") BARRIER REAL-V) ;
@@ -2925,6 +2929,11 @@ REMOVE:adv Adv IF (0 (A Pl) LINK *1 ("❡") BARRIER V) (-1 Pl LINK *-1 BOS BARRI
 	#$ Sámi bárdni joavkkuinis ráhkadan Formel 1 gilvobiilla.
 	#$ Heargeráidduin vuoddján soagŋuide.
 	#$ Terminologiijadieđa ja sámi fágagielaid dutkan ❡ .
+
+SELECT:Sem/Act  Nom IF (*-1 BOS BARRIER WORD)(0 Sem/Act) (0 PrfPrc LINK 1 CC LINK 1 Sem/Act LINK 1 Ill LINK 1 ("❡")) ; #TEST
+SELECT:Sem/Act  Nom IF (-1 CC LINK -1C Nom LINK *-1 BOS BARRIER WORD)(0 PrfPrc LINK *1 ("❡")) ; #TEST
+	#$ Ovtta­stallan ja suohta­stallan nuoraide ❡ .
+
 
 SELECT:PrfPrc PrfPrc IF (0 ("giddet") LINK 1 ("luodda") OR Sem/Route) ;
 
@@ -5870,6 +5879,10 @@ SELECT:muitalitPo ("birra" Po) (-1 Gen LINK *-1 MUITALIT + REAL-V BARRIER SV-BOU
 	#$ Dattetge ii leat muitaluvvon makkárge namahan veara geavahanriiddu birra dálolaččaid ja boazodoalu gaskkas. 
 
 
+REMOVE:searvvis Po IF (0 ("searvvis") LINK -1 NATION + Gen)  ;
+	#$ E-boasta lea hui álkes ja jođánis vuohki sáddet reivviid birra máilmmi.
+
+
 SELECT:birraPr ("birra" Pr) IF (1 ("máilbmi" Gen))  ;
 	#$ E-boasta lea hui álkes ja jođánis vuohki sáddet reivviid birra máilmmi.
 
@@ -6708,12 +6721,12 @@ SELECT:iesDu Du IF (*0 DU-V OR MOAI OR DOAI OR SOAI BARRIER SV-BOUNDARY OR PUNCT
 
 
 #!! * __NifNum__ 
-REMOVE:NifNum N IF (0 Num)(*1 (N Sg Gen) OR Superl + Gen BARRIER NOT-A - Indef)(NEGATE 0 (N ACR))(NEGATE 0 Coll LINK 1 PrfPrc)(NEGATE 0 Nom LINK *1 VFIN BARRIER NOT-A);
+REMOVE:NifNum N IF (0 Num)(*1 (N Sg Gen) OR Superl + Gen BARRIER NOT-A - Indef)(NEGATE 0 (N ACR))(NEGATE 0 Coll LINK 1 PrfPrc OR Num)(NEGATE 0 Nom LINK *1 VFIN BARRIER NOT-A);
 	#$ Mii finaimet doppe guđa geardde.
 
-SELECT:Num1 Num IF (0 Loc LINK 1 Num + Ill) ;
+SELECT:Num1 Num IF (0 Loc LINK 1 Num + Ill - Attr) ;
 SELECT:Num2 Num IF (0 Loc LINK 1 Num + Gen LINK 1 ("rádjai")) ;
-SELECT:Num3 Num IF (0 Ill LINK -1 Num + Loc) ;
+SELECT:Num3 Num IF (0 Ill LINK -1 Num + Loc - Attr) ;
 SELECT:Num4 Num IF (0 Gen LINK 1 ("rádjai")) ;
 	#$ Nullas čuođi rádjai, de galgá ádjánit sullii 2,1 sekundda.
 
@@ -7618,8 +7631,10 @@ SELECT:AdvModA4 Adv IF (0 A LINK 1 CC LINK 1 Adv);
 	## Maŋŋá soađi lea sámi álbmot rahčan ollu vai dat adnojuvvošii seammá dássásažžan, sihke duođalaččat ja rievttálaččat.
 	#$ Sámedikki eará orgánat mearridit ieža galget go čoahkkimat leat rabas vai gitta.
 
-SELECT:InfMiella Inf IF (-1 MIELLA LINK *-1 VFIN) ;
+SELECT:InfMiella Inf IF (-1 MIELLA LINK *-1 VFIN)(NEGATE 0 COPULAS) ;
 	#$ Ferte dasto sihkkarastojuvvot dárbbašlaš gelbbolašvuohta čuovvolit dan sámepolitihka maid stáhta, guovlulaš ja báikkálaš hálddahusdásit hábmejit.
+	#% Sivvan dasa lea go ođđa stivra ii nagot rehketdoalus lohkat gosa doarjagat leat mannan.
+
 
 #This rule comes ones more
 SELECT:SECr2996b PL3-V IF (NEGATE *-1 VFIN BARRIER CS OR CC)((*1 (Pl Nom) BARRIER NOT-NPMODADV LINK NOT 0 Adv OR Inf) OR (1 ("leat" PrfPrc) LINK *1 (Pl Nom) BARRIER NOT-NPMODADV LINK NOT 0 Adv OR Inf)) (NEGATE 0 ("leat" Imprt Pl2))(NEGATE 0 Inf LINK -1 MOVT)(NEGATE 0 Imprt LINK -1 CC OR BOS OR COMMA OR (":") OR ("de") OR PUNCT)(NEGATE 0 Sg3 LINK -1 Nom + Sg);
@@ -8033,7 +8048,7 @@ SELECT:Yr1853 PrfPrc IF (*-1C Rel LINK -1 Pron OR N LINK *-1 REAL-COPULAS BARRIE
 	 	
 
 ##! * __PrfPrcModA__ selects PrfPrc as modifier to an adjective
-SELECT:PrfPrcModA PrfPrc IF (1 A)(NOT 2 N);
+SELECT:PrfPrcModA PrfPrc IF (1 A LINK NOT 0 N)(NOT 2 N);
 
 SELECT:PrfPrcModN PrfPrc IF (-1 VFIN)(*1 N BARRIER WORD - Attr) ;
 	#$ Sámi servodat dárbbaša oahppan sámegielat journalisttaid.
@@ -9079,11 +9094,11 @@ REMOVE A + $$CASE IF (NOT -1 ("leat"))(0 N + $$CASE) (1 V) ;
 #!! !!!CASE DISAMBIGUATION
 
 #!! !!Num as subject, tricky cases - the rule should be here because of the verbdisambiguation
-SELECT:NumNomSubj (Num Sg Nom)(0 NUM LINK -1 V + Pl3  LINK NOT 0 Imprt LINK NEGATE *-1 (N Pl Nom) OR (Pers Pl3) OR (Coll Nom) OR Sem/Group + Nom OR NUM + Nom BARRIER SV-BOUNDARY) ; 
-SELECT:NumNomCoor (Num Sg Nom)(0 Num LINK *-1 ("ja") OR ("dahje") BARRIER NOT-ADV LINK -1C (Num Nom)) ;
+SELECT:NumNomSubj (Num Sg Nom)(0 NUM LINK -1 V + Pl3  LINK NOT 0 Imprt LINK NEGATE *-1 (N Pl Nom) OR (Pers Pl3) OR (Coll Nom) OR Sem/Group + Nom OR NUM + Nom BARRIER SV-BOUNDARY)(NEGATE 1 Gen LINK 1 Po) ; 
+SELECT:NumNomCoor (Num Sg Nom)(0 Num LINK *-1 ("ja") OR ("dahje") BARRIER NOT-ADV LINK -1C (Num Nom))(NEGATE 1 Gen LINK 1 Po) ;
 	#$ Juos evttohusa meahcceeatnamiid nuppástuvvan geavaheami birra, mii juogo gusto dušše Kárášjoga, Guovdageainnu, Unjárgga, Porsáŋggu ja Deanu gildii dahje gusto dušše restii Finnmárkkus, dorjot golbma ja dušše golbma stivrralahtu, de sáhttet golbma stivrralahtu ovtta oli gáibidit ášši gieđahallat oktii vel.
 
-SELECT:NumNomSubj (Num Sg Nom)(0 NUM LINK -1 Loc LINK -1 V + Pl3  LINK NOT 0 Imprt LINK NEGATE *-1 (N Pl Nom) OR (Pers Pl3) OR (Coll Nom) OR Sem/Group + Nom OR NUM + Nom BARRIER SV-BOUNDARY) ; 
+SELECT:NumNomSubj (Num Sg Nom)(0 NUM LINK -1 Loc LINK -1 V + Pl3  LINK NOT 0 Imprt LINK NEGATE *-1 (N Pl Nom) OR (Pers Pl3) OR (Coll Nom) OR Sem/Group + Nom OR NUM + Nom BARRIER SV-BOUNDARY)(NEGATE 1 Gen LINK 1 Po) ; 
 	#$ Dál leat sus 137 gáicca.
 
 SELECT:NumNomCop (Num Nom) IF ((*-1 COPULAS + FMAINV BARRIER NOT-ADV-PCLE LINK *-1 NP-HEAD-NOM BARRIER NOT-ADV-PCLE) OR (*-1 NP-HEAD-NOM BARRIER NOT-ADV-PCLE LINK *-1 COPULAS + FMAINV BARRIER NOT-A LINK -1 (CC @CVP) OR ("de") OR BOS))(1 (Sg Gen))(NEGATE 2 Po OR (A Nom) OR Pr) ;
@@ -10766,7 +10781,7 @@ SELECT:QUANgen1 Gen IF (*-1 (Num Nom) BARRIER NOT-NP OR CLB)(NEGATE -1 CC)(*1 PL
 	
 #!! !Leftover accusatives
 
-REMOVE:AccErrSub Acc + Err/Orth (0 Nom) ;
+REMOVE:AccErrSub Acc + Err/Orth OR Acc + Err/Orth-spes (0 Nom) ;
 
 #!! *__COMPInfAcc__ Selects Acc if you are Gen and to the left is an Inf TV @COMP-CS<
 SELECT:COMPInfAcc Acc IF (0 Gen LINK *-1 (Inf TV @COMP-CS<) BARRIER SV-BOUNDARY) ;
