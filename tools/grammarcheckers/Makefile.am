@@ -15,7 +15,7 @@ blanktagger.hfst: blanktagger.regex
 
 # If there are additional, language specific files used in the GC archive,
 # specify here:
-LOCAL_GC_ZIP_FILES=blanktagger.hfst
+LOCAL_GC_ZIP_FILES=
 
 # Do not edit below here:
 include $(top_srcdir)/am-shared/tools-grammarcheckers-dir-include.am
