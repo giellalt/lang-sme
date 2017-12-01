@@ -23,7 +23,7 @@
 # third is email address for bug reports
 # fourth is name of packages made by make dist, excluding .tar.gz
 # fifth is the project web address
-AC_INIT([Giella sme], [20150917], [feedback@divvun.no], [giella-sme],
+AC_INIT([Giella sme], [0.1], [feedback@divvun.no], [giella-sme],
         [http://divvun.no])
 # AC_REVISION is used to get SVN revision into bug reports
 AC_REVISION([$Revision$])
@@ -47,7 +47,7 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 ### Speller release version (usually different from the package version,
 ### typically spellers are released more often than the language package):
-AC_SUBST([SPELLERVERSION], [0.1])
+AC_SUBST([SPELLERVERSION], [4.1])
 
 ########## LANGUAGE DEFINITIONS ##########
 # GLANG is the language code used to identify this project; it should be the
