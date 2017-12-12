@@ -2560,9 +2560,10 @@ REMOVE:Der/A Der/A IF ((0 PrsPrc LINK 1 N) OR (0 (".*#.*"r)));
 REMOVE:r550 PrsPrc IF (0 A);
 	## Áššis biddjui mearrideaddji deaddu dasa ahte... 
 
-REMOVE:r551anotv (Ex/V) - Der/NomAct IF (0 A-NOT-V - Px) ;  
+#REMOVE:r551anotv (Ex/V) - Der/NomAct IF (0 A-NOT-V - Px) ;  
 	#$ Dat lea seammá guhkki go govdat.
-	#% Prošeakta lea beroštahttán riikkalaččat ja guovdilis politihkárat leat jo fitnan galledeamen skuvlla oažžun dihtii eambbo dieđuid lážáldaga birra .
+	#% Prošeakta lea beroštahttán riikkalaččat ja guovdilis politihkárat leat jo fitnan galledeamen skuvlla oažžun dihtii eambbo dieđuid lážáldaga birra.
+	#% Son fuomášii ahte čoarveeallit johtilit iežaset luottaid mielde.
 	
 REMOVE:A A IF (0 ("suoma")) ;	
 
@@ -3602,6 +3603,11 @@ SELECT:varraAdv3 ADV-NOT-N + Adv IF ((1 Adv LINK 1 ("ahte")) OR (1 ("nu ahte")))
 	#$ Dat lea várra nu ahte ...
 
 
+#!! * __valjisAdv__ selects
+SELECT:valjisAdv ("valjis" Adv) IF (1 N + Pl + Nom) ;
+	#$ Čáziin bákŋe valjis guolit.
+
+
 #!! * __vehaziidAdv__ selects
 SELECT:vehaziidAdv ("vehážiid" Adv) IF ((-1 ("vehážiid")) OR (1 ("vehážiid"))) ;
 	#$ ...mii easkka maŋimuš áiggiid lea vehážiid vehážiid jávkagoahtán.
@@ -4433,11 +4439,14 @@ SELECT:vfingo VFIN - ConNeg IF (-1 BOS)(NEGATE 0 OLLU OR Adv)(0 Qst) ;
 REMOVE:buoritV V IF (0 ("buorre" Pl Nom) LINK 1 (N Pl)) ;
 	#$ Das leat buorit lanjat.
 
+REMOVE:muhtoNotConNeg ConNeg IF (NEGATE *-1 Neg BARRIER ("muhto"));
+
 	
 #!! * Some brave rules for removing Imprt
 REMOVE:TESTImprt Imprt - ConNeg - Neg IF (NEGATE -1 CC OR BOS OR COMMA OR (":") OR (";") OR ("de") OR PUNCT OR ("""))(NEGATE 0 (Imprt Sg3) LINK -1 (Pron Sg3) OR (N Sg) OR ("nu"))(NEGATE 0 (Imprt Sg3) LINK 1 (Pron Sg3) OR (N Sg));
 	#% Geas ležžet bealjit, son gullos!
 	#% Nu báitos din čuovggas ge olbmuide.
+	#% Na čájet mat.
 
 REMOVE:ImprtInf Imprt IF (-1 BOS)(NEGATE 0 INF-V) (1 Inf) ;
 	#$ Govas oaidnit bátnedivššáriid Marit ja Inger.
@@ -5066,7 +5075,6 @@ REMOVE:Sg2DADJAT Sg2 IF (0 DADJAT + Pl3 LINK *1 HUMAN + Acc LINK 1 Inf)(*-1 BOS 
 	#$ Jáhkket Elin Kåvena vuoitit
 
 
-REMOVE:muhtoNotConNeg ConNeg IF (NEGATE *-1 Neg BARRIER ("muhto"));
 
 	#!! !Sg1 - early cycle, safe rules
 
@@ -5353,6 +5361,7 @@ REMOVE:Sg2 Prs + Sg2 IF (0 (N Pl Nom) LINK *-1 CC BARRIER NOT-A LINK -1 Nom + Pl
 	#% Lávet go vuovdit guliidat?
 
 #!! * __johtilit og bastilit__ removed johtit + Der/l 
+SELECT:Vjohtilit VFIN + Pl3 IF (0 Adv) (-1 N + Nom + Pl)(NEGATE *1 REAL-V BARRIER SV-BOUNDARY) ;
 REMOVE:johtit Der/l IF (0 ("johtilit") + Adv OR ("bastilit") + Adv OR ("ceavzilit") + Adv OR ("spáitilit") + Adv OR ("bahččagit") + Adv) ;
 	#$  Maŋŋá bohten diehtit athe son lei ieš cealkán iežas eret barggus ja vuolgán nu johtilit ahte ii Ullage lean gullan maidige.
 REMOVE:johtit Der/l + Inf IF (0 Adv) ((-1 Inf OR VFIN) OR (-1 Acc LINK -1 Inf + TV OR VFIN + TV)) ;
@@ -5626,7 +5635,7 @@ SELECT:mielasAdv Adv IF (0 ("mielas")) (*-1 REAL-V BARRIER Gen OR Attr OR S-BOUN
 
 
 #!! __matPcle__
-IFF:matPcle ("mat" Pcle) IF (-1 Imprt LINK *-1 BOC OR COMMA BARRIER WORD) ;
+IFF:matPcle ("mat" Pcle) IF (-1 Imprt OR ("gea") OR ("dego") OR ("gal") LINK *-1 BOC OR COMMA BARRIER WORD - Pcle - Adv) ;
 	#$ Dán mii gávnnaimet, dutkka mat leago dat du bártni gákti.
 
 #!! The following two rules are omitted. They only inflect on the disambiguation of mat pcle, a wackernagel, which is done in the rule over here, I think.
@@ -13325,7 +13334,8 @@ REMOVE:LexSel Err/Orth-spes IF (0 ("vuodjat") LINK 0 ("vuodjit")) ;
 REMOVE:LexSel ("vuodjat") IF (0 ("vuojašit")) ;
 #SELECT:LexSel VUODJIN-WORD IF (0 VUODJIN-WORD) ;
 SELECT:LexSel ("vuodjat") IF (0 ("vuodjit"))(*0 WATER BARRIER SV-BOUNDARY LINK 0 Loc) ;
-SELECT:LexSel ("vuodjat") IF (*-1 FISH BARRIER NOT-AUX-V LINK 0 Nom OR Ess) ;
+SELECT:LexSel ("vuodjat") IF (*-1 FISH OR ("vuogga") BARRIER NOT-AUX-V LINK 0 Nom OR Ess) ;
+SELECT:LexSel ("vuodjat") IF (*0 ("beahcet") + Com) ;
 	#$  Hálidatgo gullat go vudjen stuora sáhpana iežan sykkeliin?
 	#$  Okta nubbi vuodjá tráktor máđiiráigge.
 	#$  Ivdni lea deaŧalaš, muhto buot deaŧaleamos lea movt dat vuodjá čázis.
