@@ -415,13 +415,13 @@ analyser-dict-gt-norm.%: analyser-raw-gt-desc.%      \
 			.o. filters/remove-infl_deriv-borders.$*        \
 			.o. filters/remove-word-boundary.$*             \
 			.o. orthography/$(DEFAULT_ORTH)-to-$*.compose.$* \
-			.o. @\"filters/remove-norm-comp-tags.$*\"             \
+			.o. @\"filters/remove-norm-comp-tags.$*\"           \
 			.o. @\"filters/remove-derivation-position-tags.$*\" \
-			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"   \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"   \
-			.o. @\"filters/remove-Use_GC-strings.$*\"         \
-			.o. @\"filters/remove-Use_Disamb-strings.$*\"     \
-			.o. @\"$<\"                                       \
+			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"    \
+			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"     \
+			.o. @\"filters/remove-Use_GC-strings.$*\"           \
+			.o. @\"filters/remove-Use_Disamb-strings.$*\"       \
+			.o. @\"$<\"                                         \
 			;\n\
 		 $(INVERT_HFST)\
 		 save stack $@\n\
@@ -431,6 +431,7 @@ analyser-dict-gt-norm.%: analyser-raw-gt-desc.%      \
 
 # ... as well as in the HFST disambiguation analyser:
 analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
+				filters/remove-dialect-tags.hfst               \
 				filters/remove-norm-comp-tags.hfst             \
 				filters/remove-derivation-position-tags.hfst   \
 				filters/rename-POS_before_Der-tags.hfst        \
@@ -440,6 +441,7 @@ analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
 				filters/remove-Err_SpaceCmp-strings.hfst
 	$(AM_V_HXFST)$(PRINTF) "read regex \
 		    @\"filters/remove-derivation-position-tags.hfst\" \
+		.o. @\"filters/remove-dialect-tags.hfst\"             \
 		.o. @\"filters/remove-norm-comp-tags.hfst\"           \
 		.o. @\"filters/remove-Use_Disamb-tags.hfst\"          \
 		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
@@ -455,6 +457,7 @@ analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
 # ... as well as in the HFST Grammar Checker analyser:
 # (keep the Err/SpaceCmp strings here)
 analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
+				filters/remove-dialect-tags.hfst             \
 				filters/remove-norm-comp-tags.hfst           \
 				filters/remove-derivation-position-tags.hfst \
 				filters/rename-POS_before_Der-tags.hfst      \
@@ -467,6 +470,7 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 	set encode-weights ON\n\
 	read regex \
 		    @\"filters/remove-Use_Disamb-tags.hfst\"          \
+		.o. @\"filters/remove-dialect-tags.hfst\"             \
 		.o. @\"filters/remove-norm-comp-tags.hfst\"           \
 		.o. @\"filters/remove-Use_GC-tags.hfst\"              \
 		.o. @\"filters/remove-derivation-position-tags.hfst\" \
@@ -483,23 +487,25 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 
 # ... as well as in the XEROX/FOMA disambiguation analyser
 # (remove the Err/SpaceCmp thing here):
-analyser-disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.% \
-					filters/remove-norm-comp-tags.%             \
+analyser-disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.%      \
+					filters/remove-norm-comp-tags.%           \
+					filters/remove-dialect-tags.%             \
 					filters/remove-derivation-position-tags.% \
-					filters/rename-POS_before_Der-tags.% \
-					filters/remove-Err_SpaceCmp-strings.% \
-					filters/remove-Use_GC-strings.% \
-					filters/remove-Use_minus_PMatch-tags.% \
+					filters/rename-POS_before_Der-tags.%      \
+					filters/remove-Err_SpaceCmp-strings.%     \
+					filters/remove-Use_GC-strings.%           \
+					filters/remove-Use_minus_PMatch-tags.%    \
 					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/remove-derivation-position-tags.$*\" \
-			.o. @\"filters/remove-norm-comp-tags.$*\"             \
-			.o. @\"filters/rename-POS_before_Der-tags.$*\"  \
-			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\" \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\" \
-			.o. @\"filters/remove-Use_GC-strings.$*\"       \
-			.o. @\"filters/remove-Use_Disamb-strings.$*\"   \
-			.o. @\"$<\"                                     \
+			.o. @\"filters/remove-dialect-tags.$*\"             \
+			.o. @\"filters/remove-norm-comp-tags.$*\"           \
+			.o. @\"filters/rename-POS_before_Der-tags.$*\"      \
+			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"    \
+			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"     \
+			.o. @\"filters/remove-Use_GC-strings.$*\"           \
+			.o. @\"filters/remove-Use_Disamb-strings.$*\"       \
+			.o. @\"$<\"                                         \
 			;\n\
 		 $(INVERT_HFST)\
 		 save stack $@\n\
