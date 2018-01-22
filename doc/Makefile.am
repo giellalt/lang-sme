@@ -27,7 +27,7 @@ JSP_PAGES=root-morphology.jspwiki        \
 		  sme-propernouns-stems.jspwiki        \
 		  subjunctions-stems.jspwiki       \
 		  verbs-stems.jspwiki              \
-		  disambiguation-syntax.jspwiki \
+		  disambiguator-syntax.jspwiki \
 		  functions-syntax.jspwiki \
 		  dependency-syntax.jspwiki  
 # clitics-morphology.jspwiki       \
