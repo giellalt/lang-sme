@@ -2253,9 +2253,12 @@ SELECT:InitialSapmiProp Prop IF (0 ("Sápmi") + Sg + Ill LINK *-1 BOS OR (":") B
 #Lene: I added + Sg, but still this one is too strong, and needs some constraints, so I commented it out. There are several examples counterexamples in the goldcorpus.
 #Trond: New try: demanding Nom or Loc, thereby getting correct goldcorpus. Especially Gen implies non-Prop.
 
+SELECT:Girjjás ("Girjjás") + Gen (1 ("čearru")) ;
+
 #!! * Rules for removing some Props which are identical to common nouns
-REMOVE:Prop=noun Prop IF (0 NOT-PROP OR PROP-ATTR + Pl OR PROP-SUR + Pl LINK *-1 BOS OR (":") BARRIER WORD)(NOT 0 ("soggi")) ;
+REMOVE:Prop=noun Prop IF (0 NOT-PROP OR PROP-ATTR + Pl OR PROP-SUR + Pl LINK *-1 BOS OR (":") BARRIER WORD)(NOT 0 ("soggi"))(NEGATE 0 ("Girjjás") LINK 1 VFIN + Sg3) ;
 # Comment: Min Áigi is Prop but Áigi in the beginning of the sentence is not. Unnit is not Unni+Pl
+
 
 REMOVE:PropPl (Prop Pl) IF (0 Sem/Mal OR Sem/Fem LINK 0 Sg); 
 
@@ -2523,6 +2526,10 @@ SELECT:LexSelollet ("ollet") IF (0 ("olli"))(*1 Ill BARRIER SV-BOUNDARY OR CC) ;
 
 #!! * __Lexdiehttelasaid__ diehttelasaid Adv
 SELECT:Lexdiehttelasaid ("diehttelasaid" Adv) ;
+
+#!! * __Lexmearajiekŋa__ 
+SELECT:Lexmearajiekŋa ("jiekŋa")(-1 Cmp) ;
+
 
 #!! * __Lexgeassit__ geassit Adv vs geassit V
 SELECT:Lexgeassit ("geassit" Adv)(*0 GEASSET)  ;
@@ -3725,7 +3732,7 @@ REMOVE:Imprt1p Imprt + FIRSTPERS (0 (N Nom) LINK NOT 1 Inf OR Adv)(NEGATE 0 TRAN
 	#% Váldot beatnaga mielde!
 	#% Gárvodeahkku ja mannu geahččat dien nieidda, gii váccii stuora gápmagiiguin.
 
-REMOVE:vfin VFIN ((0 (N Nom) LINK 1 (":") OR Rel LINK -2 BOS) OR (0 (N Gen) LINK 1 ("guovttos"))) ;
+REMOVE:vfin VFIN IF (0 N + Nom) ((1 (":") OR Rel OR EOS OR ("❡") LINK -2 BOS) OR (0 (N Gen) LINK 1 ("guovttos"))) ;
 	#$ Ohcci: Per M. Buljo , Guovdageaidnu
 	#$ Ohcci geas lea earenoamáš gelbbolašvuohta sáhttá árvvoštallojuvvot seniorráđđeaddin.
 	#$ Ohcci guovttos áigguiga ovdánahttit áibbas ođđa ja konkrehta buktagiid .
@@ -7269,6 +7276,9 @@ REMOVE:AttrnotNAx Attr - DAT-PRON IF (NOT 0 Indef OR Num OR ABBR)(NEGATE *1 N OR
 #!! * __AttrnotNA__ removes Attr when no N or A to the right
 REMOVE:AnomInf Attr IF (0 DEHALAS + Nom LINK 1 Acc LINK 1 TRANS-V LINK 1 Inf)(*-1 BOS BARRIER WORD) ;
 	#$ Váttis dievdoolbmuid oažžut bargat dásseárvoáššiiguin.
+REMOVE:AnomInf Attr IF (0 DEHALAS + Nom LINK 1 Prop) ;
+REMOVE:AnomInf Attr IF (0 DEHALAS + Nom LINK *1 Inf + COPULAS BARRIER SV-BOUNDARY OR AUX) ;
+	#$ Dehálaš Sámediggái leat mielde nannemis heargegilvvuid dál.
 
 	
 #!! * __ANomILLA__ selects Nom when ILL-A	
@@ -7433,7 +7443,7 @@ REMOVE:ASup A + Attr IF (0 Superl LINK 1 Sem/Plc + Loc) ;
 
 
 #!! * __AAttr__  selects A Attr
-SELECT:AAttr (A Attr) - ("nubbi") IF (NOT 0 (Ex/V A) OR Adv - Superl OR Inf)(NEGATE 0 PrfPrc OR DEHALAS LINK *-1 REAL-COPULAS BARRIER REAL-V)(NEGATE 1 PREGEN)(NEGATE *-1 COPULAS BARRIER NOT-A-ADV-PCLE) (*1 N - Ess BARRIER NOT-NPMOD OR Dem OR Indef OR Num LINK NOT 1 Po)(NEGATE 0 Gen LINK -1 (Dem Gen))(NEGATE 1 CC LINK 1 Num OR N)(NEGATE 0 (Pl Nom) LINK 1 VFIN + Pl3) (NEGATE 0 (Neg Sup) LINK 1 Inf)(NEGATE 0 N LINK 1 REAL-V) ;
+SELECT:AAttr (A Attr) - ("nubbi") IF (NOT 0 (Ex/V A) OR Adv - Superl OR Inf)(NEGATE 0 PrfPrc OR DEHALAS LINK *-1 REAL-COPULAS BARRIER REAL-V)(NEGATE 1 PREGEN)(NEGATE *-1 COPULAS BARRIER NOT-A-ADV-PCLE) (*1 N - Ess BARRIER NOT-NPMOD OR Dem OR Indef OR Num LINK NOT 1 Po)(NEGATE 0 Gen LINK -1 (Dem Gen))(NEGATE 1 CC LINK 1 Num OR N)(NEGATE 0 (Pl Nom) LINK 1 VFIN + Pl3) (NEGATE 0 (Neg Sup) LINK 1 Inf)(NEGATE 0 N LINK 1 REAL-V)(NEGATE 0 DEHALAS LINK *1 Inf BARRIER REAL-V) ;
 	#$ Máttimus sápmelaččat eahpidedje dáža dutkiid eanet go davit sápmelaččat. # davit
 	#$ ...main leat mielde dušše priváhta oasálaččat, ii leat...
 	#$ Sámedikki ásaheapmi lea eanet ideologalaš go čielga mearrádus. # čielga
