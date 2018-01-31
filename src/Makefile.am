@@ -290,6 +290,27 @@ analyser-dict-gt-desc.%: analyser-dict-gt-desc.tmp.% \
 		 save stack $@\n\
 		 quit\n" | $(XFST_TOOL)
 
+# We need to add processing of language-specific tags in the analyser:
+analyser-dict-gt-desc-mobile.%: analyser-dict-gt-desc-mobile.tmp.% \
+					filters/remove-derivation-position-tags.% \
+					filters/remove-norm-comp-tags.%           \
+					filters/remove-Err_SpaceCmp-strings.%     \
+					filters/remove-Use_GC-strings.%           \
+					filters/remove-Use_minus_PMatch-tags.%    \
+					filters/remove-Use_Disamb-strings.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+			    @\"filters/remove-derivation-position-tags.$*\" \
+			.o. @\"filters/remove-norm-comp-tags.$*\"           \
+			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"    \
+			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"     \
+			.o. @\"filters/remove-Use_GC-strings.$*\"           \
+			.o. @\"filters/remove-Use_Disamb-strings.$*\"       \
+			.o. @\"$<\"                                         \
+			;\n\
+		 $(INVERT_HFST)\
+		 save stack $@\n\
+		 quit\n" | $(XFST_TOOL)
+
 
 analyser-gt-norm.%: analyser-gt-norm.tmp.% \
 					filters/remove-derivation-position-tags.% \
