@@ -64,7 +64,7 @@ AC_SUBST([GLANG2], [se])
 AC_SUBST([GTLANG2], $GLANG2)
 # GLANGUAGE is the full language name as given by the ISO 639-3 file.
 # GTLANGUAGE is deprecated, defined for backwards compatibility.
-AC_SUBST([GLANGUAGE], ["Northern Sami"])
+AC_SUBST([GLANGUAGE], ["North Sami"])
 AC_SUBST([GTLANGUAGE], $GLANGUAGE)
 
 # Alternate writing system(s) should be listed here using the ISO 15924 code.
