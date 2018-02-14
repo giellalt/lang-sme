@@ -94,6 +94,18 @@ GT_ANALYSERS+=
 GT_GENERATORS+=
 endif # CAN_FOMA
 
+
+#if WANT_DICTIONARIES
+#if CAN_HFST
+#GT_ANALYSERS+=analyser-dict-gt-norm.hfstol
+#endif # CAN_HFST
+
+#if CAN_XFST
+#GT_ANALYSERS+=analyser-dict-gt-norm.xfst
+#endif # CAN_XFST
+#endif # WANT_DICTIONARIES
+
+
 #################################################
 #### Add language-specific build rules here: ####
 
