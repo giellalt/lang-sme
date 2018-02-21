@@ -95,15 +95,15 @@ GT_GENERATORS+=
 endif # CAN_FOMA
 
 
-#if WANT_DICTIONARIES
-#if CAN_HFST
-#GT_ANALYSERS+=analyser-dict-gt-norm.hfstol
-#endif # CAN_HFST
+if WANT_DICTIONARIES
+if CAN_HFST
+GT_ANALYSERS+=analyser-dict-gt-norm.hfstol
+endif # CAN_HFST
 
-#if CAN_XFST
-#GT_ANALYSERS+=analyser-dict-gt-norm.xfst
-#endif # CAN_XFST
-#endif # WANT_DICTIONARIES
+if CAN_XFST
+GT_ANALYSERS+=analyser-dict-gt-norm.xfst
+endif # CAN_XFST
+endif # WANT_DICTIONARIES
 
 
 #################################################
@@ -408,23 +408,8 @@ analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 		 quit\n" | $(XFST_TOOL)
 
 # ... and also in the dict analyser:
-analyser-dict-gt-norm.%: analyser-raw-gt-desc.%      \
-					filters/remove-hyph-tags.%          \
-					filters/remove-transitivity-tags.%  \
-					filters/remove-semantic-tags.%      \
-					filters/remove-v1-tags.%            \
-					filters/remove-adv_comp-tags.%      \
-					filters/remove-area-tags.%                 \
-					filters/remove-dialect-tags.%              \
-					filters/remove-orig_lang-tags.%            \
-					filters/remove-usage_except_NGminip-tags.% \
-					filters/remove-orthography-tags.%          \
-					filters/remove-Orth_IPA-strings.%          \
-					filters/remove-error-strings.%             \
-					filters/remove-hyphenation-marks.%         \
-					filters/remove-infl_deriv-borders.%        \
-					filters/remove-word-boundary.%             \
-					orthography/$(DEFAULT_ORTH)-to-%.compose.% \
+
+analyser-dict-gt-norm.%: analyser-gt-norm.tmp.% \
 					filters/remove-norm-comp-tags.%             \
 					filters/remove-derivation-position-tags.% \
 					filters/remove-Err_SpaceCmp-strings.% \
@@ -432,33 +417,18 @@ analyser-dict-gt-norm.%: analyser-raw-gt-desc.%      \
 					filters/remove-Use_minus_PMatch-tags.% \
 					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-			.o. filters/remove-hyph-tags.$*          \
-			.o. filters/remove-transitivity-tags.$*  \
-			.o. filters/remove-semantic-tags.$*      \
-			.o. filters/remove-v1-tags.$*            \
-			.o. filters/remove-adv_comp-tags.$*      \
-			.o. filters/remove-area-tags.$*                 \
-			.o. filters/remove-dialect-tags.$*              \
-			.o. filters/remove-orig_lang-tags.$*            \
-			.o. filters/remove-usage_except_NGminip-tags.$* \
-			.o. filters/remove-orthography-tags.$*          \
-			.o. filters/remove-Orth_IPA-strings.$*          \
-			.o. filters/remove-error-strings.$*             \
-			.o. filters/remove-hyphenation-marks.$*         \
-			.o. filters/remove-infl_deriv-borders.$*        \
-			.o. filters/remove-word-boundary.$*             \
-			.o. orthography/$(DEFAULT_ORTH)-to-$*.compose.$* \
-			.o. @\"filters/remove-norm-comp-tags.$*\"           \
+	   		  @\"filters/remove-norm-comp-tags.$*\"             \
 			.o. @\"filters/remove-derivation-position-tags.$*\" \
-			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"    \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"     \
-			.o. @\"filters/remove-Use_GC-strings.$*\"           \
-			.o. @\"filters/remove-Use_Disamb-strings.$*\"       \
-			.o. @\"$<\"                                         \
+			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"   \
+			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"   \
+			.o. @\"filters/remove-Use_GC-strings.$*\"         \
+			.o. @\"filters/remove-Use_Disamb-strings.$*\"     \
+			.o. @\"$<\"                                       \
 			;\n\
 		 $(INVERT_HFST)\
 		 save stack $@\n\
 		 quit\n" | $(XFST_TOOL)
+
 
 
 
