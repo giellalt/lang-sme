@@ -103,6 +103,10 @@ endif # CAN_HFST
 if CAN_XFST
 GT_ANALYSERS+=analyser-dict-gt-norm.xfst
 endif # CAN_XFST
+
+if CAN_FOMA
+GT_ANALYSERS+=analyser-dict-gt-norm.foma
+endif # CAN_FOMA
 endif # WANT_DICTIONARIES
 
 
