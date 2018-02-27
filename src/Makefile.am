@@ -415,7 +415,7 @@ analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 analyser-dict-gt-norm.%: generator-dict-gt-norm.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "\
 		 load stack $<\n\
-		 $(INVERT_HFST)\
+		 $(INVERT_XFST)$(INVERT_FOMA)\
 		 save stack $@\n\
 		 quit\n" | $(XFST_TOOL)
 
