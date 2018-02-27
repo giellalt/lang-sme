@@ -412,28 +412,12 @@ analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 		 quit\n" | $(XFST_TOOL)
 
 # ... and also in the dict analyser:
-
-analyser-dict-gt-norm.%: analyser-gt-norm.tmp.% \
-					filters/remove-norm-comp-tags.%             \
-					filters/remove-derivation-position-tags.% \
-					filters/remove-Err_SpaceCmp-strings.% \
-					filters/remove-Use_GC-strings.% \
-					filters/remove-Use_minus_PMatch-tags.% \
-					filters/remove-Use_Disamb-strings.%
-	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-	   		  @\"filters/remove-norm-comp-tags.$*\"             \
-			.o. @\"filters/remove-derivation-position-tags.$*\" \
-			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"   \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"   \
-			.o. @\"filters/remove-Use_GC-strings.$*\"         \
-			.o. @\"filters/remove-Use_Disamb-strings.$*\"     \
-			.o. @\"$<\"                                       \
-			;\n\
+analyser-dict-gt-norm.%: generator-dict-gt-norm.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "\
+		 load stack $<\n\
 		 $(INVERT_HFST)\
 		 save stack $@\n\
 		 quit\n" | $(XFST_TOOL)
-
-
 
 
 # ... as well as in the HFST disambiguation analyser:
