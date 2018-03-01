@@ -336,6 +336,7 @@ analyser-gt-norm.%: analyser-gt-norm.tmp.% \
 					filters/remove-Use_minus_PMatch-tags.% \
 					filters/remove-Use_Disamb-strings.% \
 					filters/remove-illegal-derivation-strings-flagbased.% \
+					filters/remove-MinusSpell-strings.% \
 					filters/insert-default-compounding-tags.% \
 					filters/insert-default_left_compounding-tags.% \
 					filters/block-illegal_compound-strings.%  \
@@ -356,6 +357,7 @@ analyser-gt-norm.%: analyser-gt-norm.tmp.% \
 			.o. @\"filters/remove-illegal-derivation-strings-flagbased.$*\" \
 			.o. @\"filters/convert_to_flags-CmpNP-tags.$*\"            \
 			.o. @\"filters/split-CmpNP-tags.$*\"                       \
+			.o. @\"filters/remove-MinusSpell-strings.$*\"              \
 			.o. @\"$<\"                                                \
 			;\n\
 		 twosided flag-diacritics\n\
