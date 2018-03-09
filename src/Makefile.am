@@ -414,13 +414,16 @@ analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 		 quit\n" | $(XFST_TOOL)
 
 # ... and also in the dict analyser:
+# Needed to write a static pattern rule to avoid it also hitting *.hfstol files.
+analyser-dict-gt-norm.hfst \
+analyser-dict-gt-norm.xfst \
+analyser-dict-gt-norm.foma: \
 analyser-dict-gt-norm.%: generator-dict-gt-norm.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "\
-		 load stack $<\n\
-		 $(INVERT_XFST)$(INVERT_FOMA)\
-		 save stack $@\n\
-		 quit\n" | $(XFST_TOOL)
-
+		load stack $< \n\
+		invert net \n\
+		save stack $@ \n\
+		quit \n" | $(XFST_TOOL)
 
 # ... as well as in the HFST disambiguation analyser:
 analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
