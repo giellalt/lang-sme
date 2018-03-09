@@ -42,8 +42,7 @@ TESTS+=run-dict-gt-desc-anayaml-testcases.sh \
 endif # WANT_DICTIONARIES
 
 if WANT_OAHPA
-TESTS+=run-oahpa-gt-desc-anayaml-testcases.sh \
-       run-oahpa-gt-norm-genyaml-testcases.sh
+TESTS+=run-oahpa-gt-norm-genyaml-testcases.sh
 endif # WANT_OAHPA
 
 endif # CAN_YAML_TEST
