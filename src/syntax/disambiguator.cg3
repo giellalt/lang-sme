@@ -4325,8 +4325,8 @@ SELECT:r818 ("virgi") IF (0 ("viergi" Loc) LINK 1 COPULAS LINK 1 VIRGI);
 	# vuorru
 	# - - - -
 REMOVE G3 (0 (".*#vuorru"r))	; 
-REMOVE G3 (0 ("vuorru") LINK 0 (<cmp>) OR Cmp)	; 
-REMOVE G3 (0 ("vuorru") LINK -1 (<cmp_sgnom>))	; #apertium
+#REMOVE G3 (0 ("vuorru") LINK 0 (<cmp>) OR Cmp)	; 
+#REMOVE G3 (0 ("vuorru") LINK SUB:1 (<cmp>))	; #apertium 
 REMOVE G3 (0 ("vuorru") LINK -1 HAB-ACTOR + Gen)	;
 	## Odne lea mu vuorru.
 	## Vuorru lea leamaš jagi jogas.
@@ -5957,7 +5957,7 @@ SELECT:rastaPr Pr IF (0 ("rastá") OR ("badjel"))(1 ("rádji" Gen) OR ("rádjá"
 
 
 #!! ** __sisaAdv__   sisa
-SELECT:sisaAdv Adv IF (0 ("sisa"))(-1 Acc LINK *-1 ("viežžat") OR ("guoddit") BARRIER NOT-NPMODADV) ;
+SELECT:sisaAdv Adv IF (0 ("sisa"))(-1 Acc LINK *-1 ("viežžat") OR ("guoddit") OR ("oažžut") BARRIER REAL-V) ;
 	#$  vižžen vel muoraid sisa
 
 
@@ -7912,7 +7912,8 @@ SELECT:ImprtComma Imprt IF (-1 COMMA LINK -1 Imprt LINK *-1 BOS BARRIER NOT-ADV)
 	#% Huikkádallet, šuhkket, boagustit, snuđđot.
 
 #!! * __ImprtNotVGen__
-REMOVE:ImprtNotVGen VGen IF (-1 BOS OR PUNCT OR REAL-CLB)(0 Imprt)(NEGATE *1C VFIN BARRIER NOT-ADV-PCLE);
+REMOVE:ImprtNotVGen VGen IF (*-1 BOS OR PUNCT OR REAL-CLB BARRIER WORD)(0 Imprt)(NEGATE *1C VFIN BARRIER NOT-ADV-PCLE);
+REMOVE:ImprtNotVGenOza VGen IF (0 ("ohcat") LINK 1 Ill) (NOT -1 ("ohcat"));
 
 #!! * __NotImprtInd__ 
 REMOVE:NotImprtInd Imprt IF (*-1/* (neg) OR Neg  BARRIER CLB OR Ind);
@@ -9606,7 +9607,7 @@ REMOVE:SEMgen1 Acc IF (-1 BUOT OR ("buohkat"))(0 (Sg Gen) LINK *1 (N Pl) BARRIER
     
 # "bargat" + object: X
 #!! * __SEMgen2__ removes Acc if bargat or dihte are FMAINV or Inf and are found somewhere to the left of a Gen, which is followed by a noun ''bargame boazodoallolága ođastemiin''
-REMOVE:SEMgen2 Acc IF (*-1 ("bargat") BARRIER SV-BOUNDARY OR ("dihte") LINK 0 FMAINV OR Inf)(NEGATE -1 Pr)(0 Gen LINK NOT 0 TEXT OR ("bargu") OR Refl LINK *1 N BARRIER VFIN); 
+REMOVE:SEMgen2 Acc IF (*-1 ("bargat") BARRIER SV-BOUNDARY OR ("dihte") LINK 0 FMAINV OR Inf)(NEGATE -1 Pr)(0 Gen LINK NOT 0 TEXT OR ("bargu") OR Refl LINK *1 N BARRIER VFIN)(NOT -1 Num + Acc) ; 
 	#$ Leat maid bargame dálá boazodoallolága ođastemiin.
 	#$ Dán leat mii bargan ovttas guoskevaš čearuid, boazoorohagaid, ja eiseválddiid áirasiiguin.
 	#$ Almmatge lea jáhkkimis ahte boahtteáiggis bargojuvvo dáiguin jurdagiiguin, dannego kommišuvnna oaivila mielde eai boađe makkárge eará čovdosat nu bures buorrin buohkaide.
@@ -10144,19 +10145,20 @@ REMOVE:AccBeaivi Acc IF (0 (Pron Rel) LINK 1 GEN-BEAIVI) ;
 	#$ Dieđátgo guđe beaivvi mis lea čoahkkin?
 
 #!! * __timeADVL__ selects Gen for time: when perfectum participle or infinitive to the left are time adverbial verbs or not time object verbs, to the left of this there shall be an auxiliary ''lean čoavdán cealkagiid maŋimuš áiggi''
-SELECT:timeADVL1 TIME + Gen IF (*-1 TIME-ADVL-V OR N-TIMEOBJECT-V BARRIER SV-BOUNDARY LINK 0 (PrfPrc) OR (Inf) LINK *-1 AUX BARRIER SV-BOUNDARY) ;
+SELECT:timeADVL1 TIME + Gen IF (*-1 TIME-ADVL-V OR N-TIMEOBJECT-V BARRIER SV-BOUNDARY LINK 0 (PrfPrc) OR (Inf) LINK *-1 AUX BARRIER SV-BOUNDARY)(NEGATE -1 Attr LINK -1 Num + Acc)(NEGATE -1 Num + Acc) ;
 	#$ Skuvllas mun lean čoavdán ollu cealkagiid maŋimuš áiggi.
 	#$ Sápmelaččat ledje orron dáin guovlluin 1600-logu birrasiin.
 
-SELECT:timeADVL3 TIME + Gen IF (*-1 TIME-ADVL-V OR N-TIMEOBJECT-V BARRIER SV-BOUNDARY)(NEGATE 0 Acc LINK *-1 CC BARRIER NOT-NPMOD LINK -1 Acc OR Attr LINK *-1 STRICT-TRANS-V) ;
+SELECT:timeADVL3 TIME + Gen IF (*-1 TIME-ADVL-V OR N-TIMEOBJECT-V BARRIER SV-BOUNDARY)(NEGATE 0 Acc LINK *-1 CC BARRIER NOT-NPMOD LINK -1 Acc OR Attr LINK *-1 STRICT-TRANS-V)(NEGATE -1 Attr LINK -1 Num + Acc)(NEGATE -1 Num + Acc) ;
 	#$ Jugaheadnu sutnje viinni maiddái dán ija, ja mana don gis ja veallá suinna.
 	#% Girjjis leat boares govat ja ođđa lyrihkka mat čatnet oktii doloža ja dálá áiggi.
 	#% Ovddemus galge nannet dárogieloahpahusa juogidettiin vuosttaš ja nuppi jagi goabbat sadjái.
+	#% De fárrejin ruoktot ja vázzen guokte maŋimus jagi dáppe.
 
-SELECT:timeADVL4 TIME + Gen IF (**-1 Acc BARRIER SV-BOUNDARY LINK -1 TRANS-V + FMAINV)(NEGATE 0 Acc LINK *-1 CC BARRIER NOT-NPMOD LINK -1 Acc OR Attr LINK *-1 STRICT-TRANS-V)(NEGATE 0 Pl LINK -1 Num + Pl) ;
+SELECT:timeADVL4 TIME + Gen IF (**-1 Acc BARRIER SV-BOUNDARY LINK -1 TRANS-V + FMAINV)(NEGATE 0 Acc LINK *-1 CC BARRIER NOT-NPMOD LINK -1 Acc OR Attr LINK *-1 STRICT-TRANS-V)(NEGATE 0 Pl LINK -1 Num + Pl)(NEGATE -1 Attr LINK -1 Num + Acc)(NEGATE -1 Num + Acc) ;
 	#$ Ja don ii dahkan maidege dan jagi, muhto bođii fas nuppi jagi, ja de ledje sus guoimmit mielde.
 
-SELECT:timeADVL2 TIME + Gen IF (*1 FMAINV - ("golahit") BARRIER SV-BOUNDARY)(NEGATE 0 Nom LINK *1 FMAINV + COPULAS OR FMAINV + DURATION-V BARRIER SV-BOUNDARY)(NEGATE 1 MANNEL)(NEGATE 0 Prop)  ;	
+SELECT:timeADVL2 TIME + Gen IF (*1 FMAINV - ("golahit") BARRIER SV-BOUNDARY)(NEGATE 0 Nom LINK *1 FMAINV + COPULAS OR FMAINV + DURATION-V BARRIER SV-BOUNDARY)(NEGATE 1 MANNEL)(NEGATE 0 Prop)(NEGATE -1 Attr LINK -1 Num + Acc)(NEGATE -1 Num + Acc)  ;	
 	#$ Dán geasi áiggun bargat.
 	#% Eahket gollá jođánit.
 	#% In háliit in minuhta ge duššái golahit.
@@ -10457,7 +10459,7 @@ SELECT:dahkatGen Gen IF (-1 ("dahkat") OR ("bargat"))(0 Acc + HUMAN OR Pron + Ac
 SELECT:r2206 Gen IF (*-1 VFIN BARRIER N OR (Pers Pron) OR CLB)(0 N OR Pron LINK NOT 0 ("buorre") OR VFIN)
 (*1 (N Nom) OR (N Acc) BARRIER NOT-NPMOD OR PrfPrc OR CC OR PUNCT OR ("ollis") OR Pron LINK NOT 0 Prop OR Loc OR PrfPrc)(NEGATE 0 Num OR Dem OR VGen OR PrfPrc OR PrsPrc OR Indef OR Interr OR (Pron Rel) OR Adv OR TIME-N OR Loc OR (Actio Ess) OR Nom)(NEGATE *-1 TRANS-V + FMAINV BARRIER NOT-NPMOD LINK *1 (Pron Refl Acc) BARRIER NOT-NPMOD LINK 1 Ess)
 (NEGATE 1 CLB)
-(NEGATE *1 Po OR V-TRANS BARRIER SV-BOUNDARY)(NEGATE *-1 PrfPrc + FMAINV BARRIER SV-BOUNDARY LINK *1 ANIMATE + Acc BARRIER NOT-NPMOD LINK 1 Gen);
+(NEGATE *1 Po OR V-TRANS BARRIER SV-BOUNDARY)(NEGATE *-1 PrfPrc + FMAINV BARRIER SV-BOUNDARY LINK *1 ANIMATE + Acc BARRIER NOT-NPMOD LINK 1 Gen)(NOT *-1 Num + Acc BARRIER NOT-Attr) ;
 	#$ Soai lohkaba su girjji eaŋgalasgillii.
 	#$ De son ohcá stálu silbbaid.
 	#$ Beana lea olbmo buoremus ustit.
@@ -10725,6 +10727,13 @@ LIST PROS-ARAB = (".*%"r)  ;
 #!! * __arabpros__ Selects Nom
 SELECT:arabpros Nom IF (0 N LINK *-1 PROS-ARAB BARRIER NOT-A);
 
+#!! * __NumNom__ Selects Nom
+SELECT:NumNom Nom IF (0 Num LINK 1 N - TIME)(*-1 FMAINV - TRANS-V BARRIER SV-BOUNDARY)  ;
+
+
+#!! * __NumComplAcc__ (complement of numerals) Selects Acc Sg when Num Sg to the left is Acc
+SELECT:NumComplAcc (Sg Acc) OR CURRENCY + Acc  IF (0 (N Gen) LINK *-1 NUM + Sg - Sem/Year BARRIER MEASUREADJS OR NOT-A - (Pron Indef Attr) - Gen OR COMMA OR (":") LINK 0 Acc)(NEGATE -1 ("moadde") OR CURRENCY)(NEGATE 0 Nom + Sg LINK -1 Sem/Time-clock LINK *2 VFIN + Sg3) ;
+	#% Orohagas leat maid guokte luonddureserváhta hui lahkalaga, Sørlenangsbottena ja Jægervassbottena gaskkas.
 
 #!! * __NewGen__ (complement of numerals) Selects Gen Sg when Num Sg to the left ''guhtta kilu''
 SELECT:NewGen (Sg Gen) OR CURRENCY + Gen  IF (0 (N Acc) LINK *-1 NUM + Sg - Sem/Year BARRIER MEASUREADJS OR NOT-A - (Pron Indef Attr) - Gen OR COMMA OR (":") LINK 0 Nom OR Acc)(NEGATE -1 ("moadde") OR CURRENCY)(NEGATE 0 Nom + Sg LINK -1 Sem/Time-clock LINK *2 VFIN + Sg3) ;
@@ -10740,7 +10749,7 @@ SELECT:NewGen (Sg Gen) OR CURRENCY + Gen  IF (0 (N Acc) LINK *-1 NUM + Sg - Sem/
 
 
 #!! * __NewGenCo__ (coordinated complement of numerals) Selects Gen if Num Acc + NewGen found to the left of "ja" ''máŋga dáhpáhusa ja digaštallama''
-SELECT:NewGenCo (Sg Gen) OR CURRENCY + Gen  IF (0 (N Acc)) (-1 ("ja"))(-2C Gen)(*-3C NUM + (Acc Sg) BARRIER NOT-A - (Pron Indef Attr)) ; 
+SELECT:NewGenCo (Sg Acc) OR CURRENCY + Acc  IF (0 (N Acc)) (-1 ("ja"))(-2C Acc)(*-3C NUM + (Acc Sg) BARRIER NOT-A - (Pron Indef Attr)) ; 
 	#$ Dákkár dáhpáhusat, ja máŋga iežá dáhpáhusa ja digaštallama dahke munnje persovnnalaččat váttisin dáid gažaldagaid mat bohciidedje Gáivuonas.
 	#% Go duiskalaččat válde Finnmárkku vuolláseaset 1940 giđa ja geasi, de váldigohte sii skuvllaid ja internáhtaid soalddáhiid ásodahkan ja eará geavahussii.
 
