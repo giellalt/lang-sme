@@ -2196,7 +2196,7 @@ COPY:NNom (N Nom) EXCEPT Adv TARGET (Sem/Adr)  ;
 SELECT:ArabNom (Arab Nom) (-1 BOS)(NEGATE 1 Po)(NEGATE 1 Sem/Time LINK 1 ("áigi") + Adv) ;
 SELECT:Arab1 (Arab Nom)(0 ("1")) ;
 	#$ a) Álgogursa 1 sámegielas
-SELECT:ArabNomPlc (Arab Nom) (-1 Sem/Plc)(NEGATE 1 Po) ;
+#SELECT:ArabNomPlc (Arab Nom) (-1 Sem/Plc)(NEGATE 1 Po) ;
 
 SELECT:Arab Arab IF (NOT 0 Ord) ; # In Apertium we get analysis both with and without the tag.
 
@@ -2337,6 +2337,9 @@ SELECT:SoriaMoria PROP-FIRST + Attr IF (1 PROP-SECOND) ;
 #!! Remove unwanted analyses
 REMOVE:divAttr (Prop Allegro Attr) OR (Prop Attr Gen) OR (Prop Attr Acc) OR (Prop Pl Attr) ;
 
+
+SELECT:PropHyph  ("[A-Z].*-#.*"r) IF (0 Sem/Hum) ;
+	#$ Máhtte-vilbealle
 
 #!! !!Southern Locative vs. Essive
 
@@ -5011,7 +5014,7 @@ SELECT:PxGenNorPo (Gen PxSg3) IF (0 N OR A) (-1 Adv LINK *-1 (Sg Nom) OR (Sg3 No
 	#% Dat ferte addojuvvot dan dihte mánnái buoidi njammat, go ii eatnis leat mielki. 
 
 #!! * __PxGenNum__  
-SELECT:PxGenNum (Gen PxSg3) IF (0 N OR A) (-1 Num LINK *-1 (Sg Nom) OR (Sg3 Nom) OR (Sg3 V)  BARRIER Pers OR S-BOUNDARY OR NOTPXACC-V OR Num OR Dem LINK NOT 0 Attr) (NEGATE *-1 (Imprt Sg2) BARRIER SV-BOUNDARY)(NEGATE -1 (N Nom) OR (N Acc))(0 N-PX)(NEGATE 0 Loc LINK 1 (N Ill) OR ("leat") + VFIN) ; #(1 N OR Po)  ;
+SELECT:PxGenNum (Acc PxSg3) IF (0 N OR A) (-1 Num LINK *-1 (Sg Nom) OR (Sg3 Nom) OR (Sg3 V)  BARRIER Pers OR S-BOUNDARY OR NOTPXACC-V OR Num OR Dem LINK NOT 0 Attr) (NEGATE *-1 (Imprt Sg2) BARRIER SV-BOUNDARY)(NEGATE -1 (N Nom) OR (N Acc))(0 N-PX)(NEGATE 0 Loc LINK 1 (N Ill) OR ("leat") + VFIN) ; #(1 N OR Po)  ;
 	#$ Son vulggii árra iđit meahccái ja čurvii vel golbma beatnagis fárrui.
 
 #!! * __PxGenPr__  
@@ -6376,6 +6379,8 @@ MAP:Compadvlcase (@COMP-CS<) TARGET $$ADVLCASE (*-1 ("go" CS) BARRIER NOT-NPMOD 
 MAP:CompadvlcaseNum (@COMP-CS<) TARGET ADVLCASE + N (*-1 Num BARRIER NP-BOUNDARY LINK -1 ("go" CS) LINK -1 Comp) ;
 	#$ Mearrádusaid gittaopmodaga luobaheamis, mat leat dahkkojuvvon uhcit go njealji stivrralahtu doarjagiin, ferte Sámediggi ja Finnmárkku fylkkadiggi dohkkehit.
 
+MAP:CompAccNum (@COMP-CS<) TARGET Acc + N (*-1 Num + Acc BARRIER NP-BOUNDARY LINK -1 ("go" CS) LINK -1 Comp) ;
+
 #!! * __CompNumP__ numerals
 MAP:CompNomNum (@COMP-CS<) TARGET Num + Nom (-1 ("go" CS) LINK -1 ConNeg)(1 Gen) ;
 	#$ Máilmmis leat máŋga duhát giela, ja dat lohku sorjá das maid mii oaivvildit gielain, ja stáhtat eai leat go guokte čuođi. 
@@ -6743,7 +6748,7 @@ REMOVE (@X) ;
 REMOVE:PlSg3V NP-HEAD-PL-NOM IF (0 (Inf) OR NP-HEAD-SG-NOM)(*1C SG3-V BARRIER NOT-ADV-PCLE);
 	## Dát lei deháleamos ágga.
 
-REMOVE:SgPl3V (Pron Sg Nom) IF  (*1C PL3-V BARRIER NOT-ADV-PCLE);
+REMOVE:SgPl3V (Pron Sg Nom) IF  (*1C PL3-V OR DU3-V BARRIER NOT-ADV-PCLE);
 	## Dát lei deháleamos ágga.
 	#$ Dathan han gal leat buorit guolit.
 
@@ -6851,7 +6856,7 @@ SELECT:NumDassa (Num Nom) (1 TIME-N + (Sg Gen) LINK 1 ("dassá") OR ("dassái"))
 	#$ 
 
 #!! * __NumAccCurrency__ Selects (Num Acc)	
-SELECT:NumAccCurrency (Num Acc) IF (NEGATE *-1 COPULAS BARRIER NOT-ADV - CLB)(NEGATE -1 CC LINK -1 N LINK *-1 COPULAS BARRIER NOT-ADV - CLB)(NEGATE *-1 Nom BARRIER NOT-ADV LINK *-1 COPULAS BARRIER NOT-NPMOD)(NOT -1 Num)(1 CURRENCY + Acc OR MEASURE + Acc LINK NEGATE 0 Gen LINK 1 COPULAS OR Po) ;
+SELECT:NumAccCurrency (Num Acc) IF (NEGATE *-1 COPULAS OR Der/Pass BARRIER NOT-ADV - CLB)(NEGATE -1 CC LINK -1 N LINK *-1 COPULAS BARRIER NOT-ADV - CLB)(NEGATE *-1 Nom BARRIER NOT-ADV LINK *-1 COPULAS BARRIER NOT-NPMOD)(NOT -1 Num)(1 CURRENCY + Acc OR MEASURE + Acc LINK NEGATE 0 Gen LINK 1 COPULAS OR Po) ;
 	#$ 
 	#% Ráhkkásiiddán, allet vajáldahte ahte Hearrái lea okta beaivi dego duhát jagi ja duhát jagi dego okta beaivi.
 
@@ -10661,7 +10666,7 @@ SELECT:CoAccEss Acc IF (-1 CC LINK -1 (N Ess) LINK -1 (N Acc) LINK -1 OPRED-V)(0
 #!! !Intransitive verbs can sometimes be transitive
 
 #!! * __IVasTV__ Selects Acc if you are GEOGRAPHICAL-PLACE, ABSTR-ROUTE or EDUCATION and somewhere in the sentence is a intransitive verb acting as a transitive verb ''sii vázzet skuvlla''
-SELECT:IVasTV Acc IF ((*-1 JOHTIT + IV BARRIER SV-BOUNDARY OR Pr LINK 0 IV) OR (*1 MOVEMENT-V + IV - ("beassat") OR JOHTIT + IV BARRIER SV-BOUNDARY LINK NOT 0 ("mannat") OR ("vuolgit") OR ("boahtit")))(0 GEOGRAPHICAL-PLACE OR ROUTE OR EDUCATION)(NEGATE 1 Po OR ROOM) ; #(NEGATE -1 CC LINK *1 VFIN) ;
+SELECT:IVasTV Acc IF ((*-1 JOHTIT + IV BARRIER SV-BOUNDARY OR Pr LINK 0 IV) OR (*1 MOVEMENT-V + IV - ("beassat") OR JOHTIT + IV BARRIER SV-BOUNDARY LINK NOT 0 ("mannat") OR ("vuolgit") OR ("boahtit")))(0 GEOGRAPHICAL-PLACE OR ROUTE OR EDUCATION OR Sem/Measr)(NEGATE 1 Po OR ROOM) ; #(NEGATE -1 CC LINK *1 VFIN) ;
 #SELECT:IVasTV EDUCATION + Acc IF (*0 ("vázzit") BARRIER SV-BOUNDARY)(NEGATE 1 Po OR ROOM) ;
 	#$ Čuoigat vári.
 	#$ Mun váccán vákkiid, vuvddiid ja váriid.	
@@ -10727,13 +10732,19 @@ LIST PROS-ARAB = (".*%"r)  ;
 #!! * __arabpros__ Selects Nom
 SELECT:arabpros Nom IF (0 N LINK *-1 PROS-ARAB BARRIER NOT-A);
 
+#!! * __NumAcc__ Selects Acc
+SELECT:NumAcc Acc IF (0 Num LINK 1 N + Sem/Measr + Acc) ;
+SELECT:NumAcc Acc IF (0 Num LINK 1 N + ("siidu") + Acc)((2 Adv + Sem/Plc) OR (2 Gen LINK 1 Po)) ;
+
 #!! * __NumNom__ Selects Nom
 SELECT:NumNom Nom IF (0 Num LINK 1 N - TIME)(*-1 FMAINV - TRANS-V BARRIER SV-BOUNDARY)  ;
 
 
 #!! * __NumComplAcc__ (complement of numerals) Selects Acc Sg when Num Sg to the left is Acc
-SELECT:NumComplAcc (Sg Acc) OR CURRENCY + Acc  IF (0 (N Gen) LINK *-1 NUM + Sg - Sem/Year BARRIER MEASUREADJS OR NOT-A - (Pron Indef Attr) - Gen OR COMMA OR (":") LINK 0 Acc)(NEGATE -1 ("moadde") OR CURRENCY)(NEGATE 0 Nom + Sg LINK -1 Sem/Time-clock LINK *2 VFIN + Sg3) ;
+SELECT:NumComplAcc (Sg Acc) OR CURRENCY + Acc  IF (0 (N Gen) LINK *-1 NUM + Sg - Sem/Year BARRIER MEASUREADJS OR NOT-A - (Pron Indef Attr) - Gen OR COMMA OR (":") LINK 0 Acc)(NEGATE -1 CURRENCY)(NEGATE 0 Nom + Sg LINK -1 Sem/Time-clock LINK *2 VFIN + Sg3)(NEGATE 0 N - Sem/Time LINK 1 V + Pl3) ;
+	#$ Go máŋga vahkku eai leat beassan olbmuid bániid divvut ja dikšu.
 	#% Orohagas leat maid guokte luonddureserváhta hui lahkalaga, Sørlenangsbottena ja Jægervassbottena gaskkas.
+	#% Dušše 24 hearggi leat kvalifiseren iežaset finálii.
 
 #!! * __NewGen__ (complement of numerals) Selects Gen Sg when Num Sg to the left ''guhtta kilu''
 SELECT:NewGen (Sg Gen) OR CURRENCY + Gen  IF (0 (N Acc) LINK *-1 NUM + Sg - Sem/Year BARRIER MEASUREADJS OR NOT-A - (Pron Indef Attr) - Gen OR COMMA OR (":") LINK 0 Nom OR Acc)(NEGATE -1 ("moadde") OR CURRENCY)(NEGATE 0 Nom + Sg LINK -1 Sem/Time-clock LINK *2 VFIN + Sg3) ;
