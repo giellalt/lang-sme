@@ -791,7 +791,7 @@ SETS
 #!! !Sets for verbs
 # -----
 
-LIST NOT-REAL-V = (Actio Nom) (Actio Gen) (Actio Loc) (Actio Com) PrsPrc ;
+LIST NOT-REAL-V = (Actio Nom) (Actio Gen) (Actio Loc) (Actio Com) PrsPrc Ger ;
 
 SET REAL-V = V - NOT-REAL-V  ;
 	#!! V is all readings with a V tag in them, REAL-V should
@@ -2234,7 +2234,7 @@ REMOVE:PropACR (Dyn) IF (0 Prop) ;
 
 
 #!! we don't want propernoun analysis of these words, initially in sentences
-LIST NOT-PROP = "Ai" "Ain" "Árran" "Beaska" "Bierdna" "Vuoksá" "Áddjá" "Áigi" "Álgu" "Barta" "Čeabet" "Dalan" "Dan" "Dávgi" "Dieđut" "Dronnet" "Duodji" "Duolba" "Fiervá" "Fiske" "Gáldu" "Gahpir" "Galle" "Gámas" "Geassebáiki" "Giđđa" "Gieddi" "Gielas" "Gielda" "Girjjis" "Guksi" "Gulli" "Guoika" "Guovssahas" "Heasta" "In" "Internáhtta" "Jávregáddi" "Jávri" "Jo" "Johka" "Just" "Háhtta" "Li" "Márkan" "Miestta" "Muvra" "Náhkki" "Nuora" "Návet" "Náhkki" "Njunni" "Ob" "Ohcan" "Oja" "Olle" "Ose" "Ovdal" "Profehta" "Ra" "Riidi" "Sámeskuvla" "Sápmelaš" "Sápmi" "Sieidi" "Sisa" ("Siv" Loc) ("Siva" Loc) "Skávžá" "Stállu" "Varis" "Vággi" "Váldi" "Visti" "Vuotna" "Vuoigŋa" ;
+LIST NOT-PROP = "Ai" "Ain" "Árran" "Beaska" "Bierdna" "Vuoksá" "Áddjá" "Áigi" "Álgu" "Barta" "Čeabet" "Dalan" "Dan" "Dávgi" "Dieđut" "Dronnet" "Duodji" "Duolba" "Fiervá" "Fiske" "Gáldu" "Gahpir" "Galle" "Gámas" "Geassebáiki" "Giđđa" "Gieddi" "Gielas" "Gielda" "Girjjis" "Guksi" "Gulli" "Guoika" "Guovssahas" "Heasta" "In" "Internáhtta" "Jávregáddi" "Jávri" "Jo" "Johka" "Just" "Háhtta" "Li" "Márkan" "Miestta" "Muvra" "Náhkki" "Návet" "Náhkki" "Njunni" "Nuora" "Ob" "Ohcan" "Oja" "Olle" "Ose" "Ovdal" "Profehta" "Ra" "Riidi" "Sámeskuvla" "Sápmelaš" "Sápmi" "Sieidi" "Sisa" ("Siv" Loc) ("Siva" Loc) "Skávžá" "Stállu" "Varis" "Vággi" "Váldi" "Visti" "Vuotna" "Vuoigŋa" ;
 
 LIST PROP-ATTR = Sem/Mal Sem/Sur Sem/Fem (ant m)  (ant f) ;
 LIST PROP-SUR = Sem/Sur Sem/Mal Sem/Fem  (ant m)  (ant f) cog ;
@@ -3848,12 +3848,12 @@ SELECT:LexSel ("čilget") IF (0 ("čielgat"))((1 Acc OR ("makkár")) OR (1 CC LI
     # ambigous with respect to case, in which case one should not simply remove lemma2 (such as AMB-LEMMA2 Nom could be AMB-LEMMA1 Gen/Acc)
             
 LIST AMB-LEMMA1 =  (".*Afrihká"r) (".*Amerihká"r) (".*bearal"r) (".*bovra"r) 
-(".*fenomena"r) (".*gámmir"r)  (".*guolbba"r)
+(".*fenomena"r) (".*gámmir"r)  (".*guolbba"r) ("Juhán")
 (".*kaleandar"r) "keaissir" "lassá" (".*lassá"r) (".*kapihtal"r)(".*meašttir"r) 
 (".*partihkal"r) "savu" "skážir" (".*skibir"r) (".*speajal"r) (".*spigir"r) "varis" (".*varis"r)  ;
 
 LIST AMB-LEMMA2 =  (".*Afrihkká"r) (".*Amerihkká"r) (".*bearral"r)  (".*bovrra"r) 
-(".*fenomen"r) (".*gámmár"r)  (".*guolban"r) 
+(".*fenomen"r) (".*gámmár"r)  (".*guolban"r)  ("Juhá")
 (".*kaleanddar"r) (".*kapihtal"r) "keaisár" "lasá" (".*lasá"r) (".*meaštár"r) 
 (".*partihkkal"r) "savvon" (".*skihpár"r) "skáhčir" (".*spihkár"r) (".*speadjal"r) "varris" (".*varris"r) ;
 
@@ -4518,6 +4518,7 @@ SELECT:RelVFIN VFIN (0 Pl3 OR Du3 LINK -1 (Rel Pl Nom)) ;
 
 
 REMOVE:ImprtCase Imprt IF (0 $$CASE - Px LINK -1 COMMA OR CC LINK -1 $$CASE - Px )(NEGATE 0 (Imprt Sg3))(NEGATE -2 Imprt LINK -1 BOS) ;
+REMOVE:ImprtCase Imprt IF (0 A + Nom OR Ess LINK -1 COMMA OR CC LINK -1 A + Nom OR Ess)(NEGATE 0 (Imprt Sg3))(NEGATE -2 Imprt LINK -1 BOS) ;
 	#% Fina iežat báikkálaš báŋkkus dahje huma minguin telefuvnnas de beasat eambbo diehtit.
 	
 REMOVE:ImprtNomAg Imprt IF (0 Actor LINK 1 PROP-SUR) ; # PROP-SUR has also Mal and Fem
@@ -8912,13 +8913,16 @@ MAP:+FMAINVCop (@+FMAINV) TARGET VFIN + COPULAS (NEGATE *-1 Inf OR PrfPrc OR (Ac
 
     
 #!! * __+FMAINV__  to the remaining finite verbs which are not AUX    
-MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX (NOT 0 V + OBJ OR V + SUBJ OR V + ADVL OR (V @>N) OR (V @N<)) (NEGATE *0 VFIN-NOT-AUX OR @+FMAINV BARRIER S-BOUNDARY OR COMMA OR LEFT OR RIGHT)(NEGATE *-1 (V @>N) BARRIER NOT-A OR LEFT) (NEGATE *-1 REAL-V - @>N BARRIER S-BOUNDARY OR COMMA OR LEFT)(NEGATE *1 VFIN OR PrfPrc - @>N BARRIER S-BOUNDARY OR COMMA OR RIGHT)(NEGATE 0 Inf LINK -1 CC LINK *-1 Inf BARRIER REAL-V LINK -1 AUX) ;
+MAP:+FMAINV (@+FMAINV) TARGET VFIN-NOT-AUX (NOT 0 V + OBJ OR V + SUBJ OR V + ADVL OR (V @>N) OR (V @N<)) (NEGATE *0 VFIN-NOT-AUX OR @+FMAINV BARRIER S-BOUNDARY OR COMMA OR LEFT OR RIGHT) (NEGATE *-1 (V @>N) BARRIER NOT-A OR LEFT) 
+(NEGATE *-1 REAL-V - @>N BARRIER S-BOUNDARY OR COMMA OR LEFT)
+(NEGATE *1 VFIN OR PrfPrc - @>N BARRIER S-BOUNDARY OR COMMA OR RIGHT)(NEGATE 0 Inf LINK -1 CC LINK *-1 Inf BARRIER REAL-V LINK -1 AUX) ;
 	#$ Boađe boahtte vahku.
 	#$ Son lea oappáin náitalan.
 	#$ Mánná čohkána láhttái.
 	#$ Son gii oažžu lobi, galgá vuostáiváldit goartta dahje sullasačča, mii čájeha ahte sus lea lohpi.
-	#% Mun lean ráhkkásisttán ožžon cummá.
 	#$ Ovdal go čielggadan dan lagabui,...
+	#$ Gal mun birgen, Gállá dajai, go manadettiin deaddilii uvssa gitta.
+	#% Mun lean ráhkkásisttán ožžon cummá.
 
 MAP:+FMAINVinfv (@+FMAINV) TARGET VFIN-NOT-AUX + INF-V (1 Inf) ;
 	#$ Liná liikui sárgut ja tennjet.
@@ -11081,7 +11085,7 @@ REMOVE:Gerundium1 Gen (*-1 TRANS-V + VFIN BARRIER SV-BOUNDARY OR Acc LINK NEGATE
 	#$ Mun gal ohppen vuođđofága logadettiinan bargodisipliinna ja diekkáriid, maid in goassege lean dárbbašan oahppat oahpaheaddji skuvllas. Note! Questionable..
  
 #!! * __Gerundium2__ Selects Acc in front of Ger, but not if it is not HAB-ACTOR/Pron Pers. No transitive verb allowed to the left, exept it it has an object of its own.
-SELECT:Gerundium2 Acc (0 Acc OR Gen)(1 Ger)(NEGATE 0 HAB-ACTOR OR (Pron Pers))(NEGATE *-1 TRANS-V + FMAINV BARRIER Acc LINK NEGATE *-1 Acc BARRIER S-BOUNDARY)  ;
+SELECT:Gerundium2 Acc (0 Acc OR Gen)(1 Ger)(NEGATE 0 HUMAN OR (Pron Pers))(NEGATE *-1 TRANS-V + FMAINV BARRIER Acc LINK NEGATE *-1 Acc BARRIER S-BOUNDARY)  ;
 	#$ Konvenšuvdnaevttohusa ráhkadettiin delegašuvnnat leat váldán vuhtii Ruoŧa ođđa boazodoallolága.
 	#$ Norgga delegašuvdna, várrepresideanttain, doalai sártni dievasčoahkkimii čoahkkima loahpahettiin, mas doarjjui WHO boahtteáiggi barggu dearvvasvuođain.
 	#% Báhpa boradettiin biigá lei bassaladdame.
@@ -13558,7 +13562,7 @@ REMOVE:AdvSubqst Adv + Subqst + Foc/Pos-ge ;
 SELECT:AdvSubqst Adv + Subqst IF (NEGATE 0 Pron)(NEGATE 0 Sem/Sur LINK -1 ABBR OR Sem/Mal OR Sem/Fem) ;	
 SELECT:AdvSubqst Adv + Subqst IF (0 Pron LINK 1 A + Attr OR A + Nom) ;	
 
-SELECT:daninAdv ("danin" Adv) ; 
+IFF:daninAdv ("danin" Adv)(NEGATE *0 OPRED-V BARRIER SV-BOUNDARY) ; 
 
 SELECT Adv IF (-1 N LINK -1 FMAINV)(0 A LINK 1 EOC) ;
 SELECT:ADV Adv IF (-1 FMAINV)(0 (A Comp) OR (A Pl) LINK *1 Acc - TIME BARRIER NOT-NPMOD LINK NEGATE 1 go + @CNP) ;
