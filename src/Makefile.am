@@ -484,6 +484,7 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 # ... as well as in the XEROX/FOMA disambiguation analyser
 # (remove the Err/SpaceCmp thing here):
 analyser-disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.%      \
+					filters/remove-orig_lang-tags.%           \
 					filters/remove-norm-comp-tags.%           \
 					filters/remove-dialect-tags.%             \
 					filters/remove-derivation-position-tags.% \
@@ -496,6 +497,7 @@ analyser-disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.%      \
 				@\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-dialect-tags.$*\"             \
 			.o. @\"filters/remove-norm-comp-tags.$*\"           \
+			.o. @\"filters/remove-orig_lang-tags.$*\"           \
 			.o. @\"filters/rename-POS_before_Der-tags.$*\"      \
 			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"    \
 			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"     \
