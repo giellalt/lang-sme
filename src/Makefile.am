@@ -543,24 +543,24 @@ $(foreach fst,hfst xfst foma,$(eval $(call giella_generators,$(fst))))
 
 # We need to add processing of language-specific tags for the Oahpa generators:
 generator-oahpa-gt-norm.%: generator-oahpa-gt-norm.tmp.% \
-					filters/remove-norm-comp-tags.%             \
-					filters/remove-derivation-position-tags.% \
-					filters/make-optional-allegro-tags.% \
-					 filters/rename_optional-POS_before_Der-tags.% \
-					filters/remove-Err_SpaceCmp-strings.% \
-					filters/remove-Use_GC-strings.% \
-					filters/remove-Use_minus_PMatch-tags.% \
+					filters/remove-norm-comp-tags.%               \
+					filters/remove-derivation-position-tags.%     \
+					filters/make-optional-allegro-tags.%          \
+					filters/rename_optional-POS_before_Der-tags.% \
+					filters/remove-Err_SpaceCmp-strings.%         \
+					filters/remove-Use_GC-strings.%               \
+					filters/remove-Use_minus_PMatch-tags.%        \
 					filters/remove-Use_Disamb-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/make-optional-allegro-tags.$*\"  \
 			.o. @\"filters/rename_optional-POS_before_Der-tags.$*\" \
-			.o. @\"filters/remove-norm-comp-tags.$*\"             \
-			.o. @\"filters/remove-derivation-position-tags.$*\" \
-			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"   \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"   \
-			.o. @\"filters/remove-Use_GC-strings.$*\"         \
-			.o. @\"filters/remove-Use_Disamb-strings.$*\"     \
-			.o. @\"$<\"                                       \
+			.o. @\"filters/remove-norm-comp-tags.$*\"               \
+			.o. @\"filters/remove-derivation-position-tags.$*\"     \
+			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"        \
+			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"         \
+			.o. @\"filters/remove-Use_GC-strings.$*\"               \
+			.o. @\"filters/remove-Use_Disamb-strings.$*\"           \
+			.o. @\"$<\"                                             \
 			;\n\
 		 $(INVERT_XFST)$(INVERT_FOMA)\
 		 save stack $@\n\
