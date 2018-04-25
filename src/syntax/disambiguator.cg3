@@ -48,7 +48,7 @@
 #!! !!!DELIMITERS 
 # =============== #
 
-DELIMITERS = "<.>" "<!>" "<?>" "<...>" "<¶>" "<..>" "<!.>" "<?.>" "<¶.>" "<❡>" (sent) sent  ; 
+DELIMITERS = "<.>" "<_DDC_>" "<!>" "<?>" "<...>" "<¶>" "<..>" "<!.>" "<?.>" "<¶.>" "<❡>" (sent) sent  ; 
 #!! Sentence delimiters are the following: <.> <!> <?> <...> <¶>
 
 #PARENTHESES = "<$(>" "<$)>" "<$[>" "<$]>" "<${>" "<$}>" "<$«>" "<$»>" ;
@@ -407,8 +407,6 @@ LIST @>ADVL = @>ADVL ;               #!! * @>ADVL
 LIST @ADVL< = @ADVL< ;               #!! * @ADVL<
 LIST @<ADVL = @<ADVL ;               #!! * @<ADVL
 LIST @ADVL> = @ADVL> ;               #!! * @ADVL>
-LIST @HAB> = @HAB> ;                    #!! * @HAB>
-LIST @<HAB = @<HAB ;                    #!! * @<HAB
 LIST @>N = @>N ;		      #!! * @>N
 LIST @Interj = @Interj ;    #!! * @Interj
 LIST @N< = @N< ;		      #!! * @N<
@@ -453,7 +451,6 @@ LIST ADVL = @ADVL @ADVL> @ADVL< @<ADVL @>ADVL @-F<ADVL @-FADVL> ;
 SET SUBJ = @<SUBJ OR @SUBJ> OR @SUBJ ;
 SET SPRED = @<SPRED OR @SPRED> OR @SPRED ;
 SET OPRED = @<OPRED OR @OPRED> OR @OPRED ;
-SET @HAB = @<HAB OR @HAB> ;
 SET FOBJ = @-F<OBJ OR @-FOBJ> ; 
 SET FMAINV = @-FMAINV OR @+FMAINV ;
 SET FAUXV = @-FAUXV OR @+FAUXV ;
@@ -2162,7 +2159,7 @@ SET CCCOMMA = CC OR COMMA ;
 #!! !Syntactic sets
 # --------------
 
-LIST ALLSYNTAG = (@+FAUXV) (@+FMAINV) (@-FAUXV) (@-FMAINV) (@-FSUBJ>)(@-FOBJ)(@-F<ADVL)(@-FADVL>)(@>A) (@>ADVL) (@ADVL<) (@<ADVL) (@ADVL>) (@ADVL) (@HAB>) (@<HAB) (@>N) (@APP) (@APP-N<) (@APP-Pron<) (@APP>Pron) (@APP-Num<) (@APP-ADVL<) (@VOC) (@CNP) (@CVP) (@P<) (@>P) (@HNOUN) (@INTERJ) (@Pron<) (@OBJ) (@OBJ>) (@<OBJ) (@OPRED) (@<OPRED) (@OPRED>) (@SPRED<OBJ) (@PCLE) (@COMP-CS<) (@N<) (@SPRED) (@<SPRED) (@SPRED>) (@PPRED) (@Num<) (@SUBJ) (@<SUBJ) (@SUBJ>) (@X); #!! ALLSYNTAG
+LIST ALLSYNTAG = (@+FAUXV) (@+FMAINV) (@-FAUXV) (@-FMAINV) (@-FSUBJ>)(@-FOBJ)(@-F<ADVL)(@-FADVL>)(@>A) (@>ADVL) (@ADVL<) (@<ADVL) (@ADVL>) (@ADVL)  (@>N) (@APP) (@APP-N<) (@APP-Pron<) (@APP>Pron) (@APP-Num<) (@APP-ADVL<) (@VOC) (@CNP) (@CVP) (@P<) (@>P) (@HNOUN) (@INTERJ) (@Pron<) (@OBJ) (@OBJ>) (@<OBJ) (@OPRED) (@<OPRED) (@OPRED>) (@SPRED<OBJ) (@PCLE) (@COMP-CS<) (@N<) (@SPRED) (@<SPRED) (@SPRED>) (@PPRED) (@Num<) (@SUBJ) (@<SUBJ) (@SUBJ>) (@X); #!! ALLSYNTAG
 SET NON-APP = ALLSYNTAG - (@APP); #!! NON-APP
 
 #!! ''These were the set types.''
@@ -12199,6 +12196,10 @@ SELECT:ComAbstract (Sg Com)  IF (*0 ABSTR-ENTITY-COM-V BARRIER SV-BOUNDARY)(0 (P
 SELECT:ComOnlyPlaceV (Sg Com) IF (0 (Pl Loc) LINK NOT 0 PLACE OR ORGANIZATION OR HUMAN OR MATERIAL)(*0 ONLY-PLACE-LOC-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf);
 	#$ ...go sápmelaččat duođas álge eanadoaluin bargat.
     # It can be ambiguity with ORGANIZATION.
+ 
+#!! * __ComMaterial__ selects Com Sem/Mat when some verbs 
+SELECT:ComMaterial (Sg Com)  IF (0 Sem/Mat OR Sem/Substnc) (*-1 ("loavdit") OR ("gokčat") BARRIER VFIN OR LOC-HEAD)(0 (Pl Loc)) ;
+	#$ Dan sáhttá maid loavdit bessiin ja darffiin.
   
 
 LIST SEAHKKA = (".*seahkka"r) "lávka" (".*lásta"r) "rehppo" ;
@@ -12222,6 +12223,7 @@ SELECT:LocdynamicVR (Pl Loc) IF  (*-1 DYNAMIC-V - ABSTR-ENTITY-COM-V OR ("dahkat
 	#$ Sii máinnašuvvojedje vearrologahallamiin earáid maŋŋá. 
 	#$ Dálvet golggadettiin lea guovttegeardán skoađas birra gietkama, vuohččan lea sisti birra, mii gal adnojuvvo geasset ja dálvet, muhto dálvet adnojuvvo nubbi skoađas nalde, mii lea dahkkojuvvon gápmasiin. 
 	#$ Oahppit bohte dábálaččat vuođđoealáhusain.
+	#% Dan sáhttá maid hukset bessiin ja darffiin.
  # ABSTR-ENTITY-COM-V
 
 SELECT:LocdynamicVL (Pl Loc) IF (0 (Sg Com) LINK NOT 0 TOOL OR PROSEANTA OR ABSTR-TOOL OR WRITING-TOOL OR CONCEPT OR HUMAN OR VEHICLE OR BODY)(*1 DYNAMIC-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf);
@@ -13579,7 +13581,6 @@ SELECT:propBOC Prop (-1 BOC) ;
 REMOVE (Pl Nom) (1 VFIN + Sg3) ;
 REMOVE (Sg Nom) (1 VFIN + Pl3)(NEGATE 0 Sem/Org OR Sem/Group) ;
 
-REMOVE (A @HAB>) (0 N) ;
 SELECT A (0 Attr LINK 0 N LINK 1 N) ;
 	#$ Lea suohtas kurssas. <= her er ikke Attr analysen riktig
 
