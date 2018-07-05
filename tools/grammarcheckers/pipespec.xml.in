@@ -1,7 +1,7 @@
 <pipespec language="@GLANG2@"
           developer="Divvun"
           copyright=""
-          version="0.42"
+          version="0.43"
           contact="Divvun divvun@uit.no"
           depversions="vislcg3 >=1.1.2.12361
                        hfst >= 3.13.0
@@ -28,7 +28,7 @@
 
   <pipeline name="@GLANG@gram"
             language="@GLANG2@"
-            type="Grammar error">
+            type="Spelling and grammar error">
     <tokenize><tokenizer n="tokeniser-gramcheck-gt-desc.pmhfst"/></tokenize>
     <cg><grammar n="valency.bin"/></cg>
     <cg><grammar n="mwe-dis.bin"/></cg>
@@ -72,7 +72,7 @@
   </pipeline>
 
 
-  <!-- This one does only disambiguation and spelling: -->
+  <!-- This one does only (disambiguation and) spelling: -->
   <!-- This is the one used by Ávvir -->
   <pipeline name="@GLANG@spell"
             language="@GLANG2@"
@@ -108,6 +108,32 @@
     </cgspell>
     <cg><grammar n="disambiguator.cg3"/></cg>
     <cg><grammar n="spellchecker.cg3"/></cg>
+    <suggest>
+      <generator n="generator-gramcheck-gt-norm.hfstol"/>
+      <messages n="errors.xml"/>
+    </suggest>
+  </pipeline>
+
+  <!-- This pipeline is the one used by Linda for development work. It
+       corresponds to the smegram pipeline above, except that it uses
+       cg3 source files instead of the compiled cg3 bin files. -->
+  <pipeline name="@GLANG@gramspell-linda"
+            language="@GLANG2@"
+            type="Spelling and grammar error, Linda version">
+    <tokenize><tokenizer n="tokeniser-gramcheck-gt-desc.pmhfst"/></tokenize>
+    <cg><grammar n="../../src/syntax/valency.cg3"/></cg>
+    <cg><grammar n="../tokenisers/mwe-dis.cg3"/></cg>
+    <mwesplit/>
+    <blanktag>
+      <blanktagger n="analyser-gt-whitespace.hfst"/>
+    </blanktag>
+    <cgspell>
+      <lexicon n="acceptor.default.hfst"/>
+      <errmodel n="errmodel.default.hfst"/>
+    </cgspell>
+    <cg><grammar n="disambiguator.cg3"/></cg>
+    <cg><grammar n="spellchecker.cg3"/></cg>
+    <cg><grammar n="grammarchecker.cg3"/></cg>
     <suggest>
       <generator n="generator-gramcheck-gt-norm.hfstol"/>
       <messages n="errors.xml"/>
