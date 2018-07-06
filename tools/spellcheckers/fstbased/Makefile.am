@@ -17,6 +17,7 @@ SUBDIRS = filters . desktop mobile
 # 4. Make flags two-sided
 generator-fstspeller-gt-norm.hfst: \
 		generator-fstspeller-gt-norm.tmp.hfst \
+		filters/rename-POS_before_Der-tags.hfst        \
 		filters/insert-default-compounding-tags.hfst \
 		filters/insert-default_left_compounding-tags.hfst \
 		filters/block-illegal_compound-strings.hfst  \
@@ -28,7 +29,8 @@ generator-fstspeller-gt-norm.hfst: \
 		filters/remove-spellerunwanted-strings.hfst
 	$(AM_V_HXFST)$(PRINTF) "\
 		read regex                                                 \
-			@\"filters/block-illegal_compound-strings.hfst\"       \
+			@\"filters/rename-POS_before_Der-tags.hfst\"           \
+		.o. @\"filters/block-illegal_compound-strings.hfst\"       \
 		.o. @\"filters/split-CmpN-tags.hfst\"                      \
 		.o. @\"filters/insert-default_left_compounding-tags.hfst\" \
 		.o. @\"filters/insert-default-compounding-tags.hfst\"      \

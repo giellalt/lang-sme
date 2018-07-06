@@ -20,7 +20,8 @@ GT_LOCAL_COPY_FILTER_SRCS=\
     insert-default_left_compounding-tags.regex \
     split-CmpN-tags.regex \
 	convert_to_flags-CmpNP-tags.regex \
-	split-CmpNP-tags.regex
+	split-CmpNP-tags.regex \
+	rename-POS_before_Der-tags.regex
 
 # Only build these things if speller fst's are enabled:
 if WANT_SPELLERS
