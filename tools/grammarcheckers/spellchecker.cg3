@@ -507,6 +507,13 @@ LIST Sem/Wthr = Sem/Feat-phys_Wthr Sem/Hum_Wthr Sem/Perc-emo_Wthr Sem/Plc_Substn
 LIST Sem/Wpn = Sem/Wpn ; #oaggut oaggunstákkuin, goddit X+Com
 LIST Sem/Year = Sem/Year ;
 
+LIST Year_Date = Sem/Date Sem/Year ;
+
+SET TIME-N-SET = N + Sem/Time ;
+LIST NOT-TIME = "dulvi" "lohpi" "vuorru" ;
+SET TIME-N = TIME-N-SET - NOT-TIME ;
+
+SET Sem/Place = Sem/Plc OR Sem/Plc-water OR Sem/Plc-elevate OR Sem/Plc-line OR Sem/Build OR Sem/Build-part OR Sem/Org ;
 
 
 
@@ -966,11 +973,196 @@ LIST Err/Orth-any       = Err/Orth Err/Orth-a-á Err/Orth-nom-gen Err/Orth-nom-a
 # Has to be LIST, so ensure this contains all the Err/Orth-any tags:
 LIST Err/Orth-any_OR_Ex = Err/Orth Err/Orth-a-á Err/Orth-nom-gen Err/Orth-nom-acc Ex/N Ex/V Ex/A Ex/IV Ex/TV ;
 
+# Other tags
+# ----------
 
-# Tag sets
-# ========
-  SETS
-# ========
+LIST ABBR = ABBR ;
+LIST ACR = ACR ;
+LIST CLB = CLB ;
+
+LIST QMARK = """ ; # ADD " FOR SYNTAX COLOURING.
+LIST PPUNCT  = PUNCT ;
+SET PUNCT = PPUNCT - QMARK ;
+
+
+# Single-word sets
+# ----------------
+ 
+LIST COMMA = "," ;
+LIST ¶ = ¶;
+LIST SLASH = "/" ;
+
+LIST OKTA = "akta" "okta";
+LIST go = "go" ;
+
+
+
+# Sets of elements with common syntactic behaviour
+# ================================================
+
+SETS
+
+# Word or not
+# -----------
+LIST WORD = N A Adv V Pron CS CC Po Pr Interj Pcle Num ABBR ACR  \? ;
+ # any word
+
+SET REAL-WORD = WORD - Num - Ord ;
+
+SET REAL-WORD-NOT-ABBR = WORD - Num - Ord - ABBR ;
+
+SET WORD-NOTDE = WORD - ("de"); 
+
+LIST ? = ? ;
+
+
+# Derivational affixes
+# --------------------
+
+LIST V-DER = Der/adda Der/alla Der/asti Der/d Der/g Der/h Der/halla Der/hudda Der/huhtti Der/huvva Der/j Der/l Der/ahtti Der/st Der/stuvva Der/InchL ;
+
+LIST N-DER = Der/eaddji Der/Dimin Der/eamoš Der/NomAct Der/heapmi Der/NomAct Der/š Der/muš Der/upmi Der/us Der/vuota (Ex/V NOMAG);
+ # Actio ;
+
+LIST A-DER = Der/diibmosaš Der/dássásaš Der/eaddji Der/geahtes Der/keahtes Der/heapmi Der/lágan Der/lasj Der/meahttun Der/lágán (Ex/V A);
+
+LIST A-V = (Ex/V A);
+
+SET A-NOT-V = A - A-V ;
+
+LIST Der1 = Der1 ;
+LIST Der2 = Der2 ;
+LIST Der3 = Der3 ;
+
+SET V-ACT = V - Der/Pass ;
+
+# Case sets
+# ---------
+
+LIST ADVLCASE = Ill Loc Com Ess ;
+
+# Sg Nom - Sg Nom | Pl Nom - Pl Nom
+# Sg Acc - Sg Acc | Pl Acc - Pl Acc
+# Sg Gen - Sg Gen | Pl Gen - Pl Gen
+# Sg Gen - Sg Ill | Pl Gen/Ill - Pl Ill 
+# Sg Gen - Sg Loc | Pl Loc - Pl Loc
+# Sg Com - Sg Com | Pl Gen/Com - Pl Com
+# Ess - Ess
+
+LIST CASE-HALFAGREEMENT = Ill (Sg Loc) (Pl Com) Ess ;
+LIST CASE-AGREEMENT = Nom Acc Gen (Pl Ill) Loc Com Ess ;
+LIST CASE = Nom Acc Gen Ill Loc Com Ess ;
+
+SET NOT-NOM = CASE - Nom ;
+SET NOT-GEN = CASE - Gen ;
+SET NOT-ACC = CASE - Acc ;
+SET NOT-ACC-GEN = CASE - Acc - Gen ;
+
+LIST MEASUREADJS = "ruvdnosaš" "kruvdnosaš" ;
+
+LIST MEASR-N-SET = (N Sem/Measr) (N Sem/Money) (N Sem/Time) ;
+
+SET MEASR-N = MEASR-N-SET - NOT-TIME ;
+
+
+# Verbs and their complements
+# - - - - - - - - - - - - - -
+
+SET NOT-VERB = WORD - V ;
+
+
+# Finiteness and mood
+# - - - - - - - - - -
+
+SET V-IND-FIN = Prs OR Prt ;
+ # Problem: "In boahtán" is an invisible indicative
+
+SET V-MOOD = Ind OR Pot OR Imprt OR ImprtII OR Cond OR (Neg Sup);
+
+LIST GC = ("gč");
+
+SET VFIN = GC OR V-MOOD - ConNeg ;
+
+SET VFIN-POS = V-MOOD - ConNeg - Neg ;
+
+SET VFIN-NOT-IMP = VFIN - Imprt ;
+
+SET VFIN-NOT-NEG = VFIN - Neg ;
+  # this might be to strict, besides, "iige" can be written "ii ge"
+
+SET NOT-PRFPRC = WORD - PrfPrc ;
+
+
+# Verbs
+# -----
+
+SET VERB = V - (V N);
+  # V is all readings with a V tag in them, VERB should
+            # be the ones without an N tag following the V  
+SET VERB-NOT-ACTIO = V - (V N) - Actio ;
+            
+SET LEX-V = VERB - V-DER;
+       # VERB but not V-DER
+ 
+ # The set REALCOPULAS is smaller than COPULAS, made for verbs with PrfPrc complements: Seammás REALCOPULAS son dovdan iežas...
+LIST REALCOPULAS = "dáidit" "leat" "soaitit" "veadjit"  ;
+
+# The set COPULAS is for predicative constructions
+LIST COPULAS = "dáidit" "gártat" "leat" "orrut" "soaitit" "šaddat" "veadjit"  ;
+ #  "bissut" ?
+ # 'Dáidit' can appear without 'leat'.
+
+SET V-NOT-COP = V - COPULAS ;
+
+LIST MOD-ASP = "bállet" "berret" "dáidit" "fertet" "galgat" "gillet" "lávet"  "sáhttit" "seahtit" "soaitit" "viggat" ;
+
+ # Verbs that never have arguments of their own - so we leave out "áigut", for ex.
+
+LIST AUX-OR-MAIN = "áigut" "álgit" "beassat" "galgat" "háliidit" "máhttit" "nagadit" "nagodit" "ollit" "orrut" "sihtat" "veadjit";
+
+ # These verbs can take arguments, so they do not belong in the AUX group, 
+ # but they are nevertheless mapped to (@+FAUXV). 
+ # Added "álgit" to the group (Lene) - Made rules for "boahtit" which  sometimes can be AUX
+ # Magga (1982: 120): áigut, dáidit, deaivat, fertet, galgat, lávet, máhttit, oažžut, sáhttit, soaitit, veadjit - in some of the meanings 
+ # Halvhjelpeverb: álgit, berret, dohkket, gártat, heivet, liigut, šaddat - in some of the meanings 
+ 
+SET AUX = COPULAS OR Neg OR MOD-ASP OR AUX-OR-MAIN ;
+ 
+
+SET V-NOT-AUX = V - AUX ;
+ # The set of verbs that cannot be auxiliaries. 
+			  # Does not include AUX-OR-MAIN.
+SET VFIN-NOT-AUX = VFIN - AUX ;
+
+SET V-MAIN = V - COPULAS - Neg - MOD-ASP OR ("orrut");
+ 
+# The set of verbs that can be main verbs. Includes AUX-OR-MAIN.
+SET V-DER-PASS = V OR V-DER OR Der/Pass;
+  # OR is intersection, this should work
+				   # The set is used in one rule with no hits.
+LIST V-TRANS = TV (IV Der/ahtti) (IV Der/h);
+# This is only a tool for making the following sets, bacause of that the symbols (|) and (-) in the set don´t function as one had expected.
+SET V-TRANS-ACT = V-TRANS - (TV Der/PassS) - (TV Der/PassL);
+ #XXX Never acc-obj for a.l. or actor?
+ # All active verbs with a TV tag, including AUX-OR-MAIN.
+ 
+SET V-TRANS-ACT-NOT-AUX = V-TRANS - Der/Pass - AUX ;
+
+SET V-TRANS-ACT-NOT-ACT = V-TRANS - Der/Pass - Der/NomAct - Actio - NOMAG - PrsPrc - Attr OR (TV Actio Ess);
+
+SET V-TRANS-ACT-NOT-ACT-NOT-AUX = V-TRANS - Der/Pass - Der/NomAct - Actio - NOMAG - AUX OR (Actio Ess);
+
+LIST PL1-V = (V Ind Prs Pl1)  (V Ind Prt Pl1) (V Cond Prs Pl1) 
+             (V Cond Prt Pl1) (V Pot Prs Pl1) (V Neg Ind Pl1);
+
+LIST NOT-REAL-V = (Actio Nom) (Actio Gen) (Actio Loc) (Actio Com) PrsPrc ;
+
+SET REAL-V = V - NOT-REAL-V  ;
+  #!! ** V is all readings with a V tag in them, REAL-V should
+  #!! be the ones without an N tag following the V.  
+  #!! The REAL-V set thus awaits a fix to the preprocess V ... N bug.
+
+SET TRANS-V = V-TRANS - Der/Pass + REAL-V ;
 
 
 # RULES
@@ -1000,6 +1192,10 @@ SELECT (Prop Sem/Sur) IF (-1 Sem/Sur OR Sem/Mal OR Sem/Fem)(0 <spelled>);
 	
 	
 	   ## Olbmot leat sajáiduvvan sihke [ceaggumus] vákkiide ja {eanemus} geađgái vuonaide, ja sáhttá juohkit suohkana 3 ássánguvlui.
+	   
+
+SELECT COPULAS IF (1 Inf)(0 <spelled>);	   
+	   ## Na dát ii leat gal bahá ge, logai Birger maŋŋel go lei ruđaid ožžon gihtii ja daiddii leat dat eanemus movttegis meahccemánni dan beaivvi.
 
 
 #TESTSENTENCES:
