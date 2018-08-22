@@ -15,7 +15,7 @@ GIELLA_GC_WHSPACE_ANAL_SRC=analyser-gt-whitespace.regex
 
 # Will by default use the one in src/syntax/disambiguator.cg3. To use a
 # different file, specify anther filename here:
-GIELLA_GC_DISAMBIGUATOR_SRC=disambiguator.cg3
+GIELLA_GC_DISAMBIGUATOR_SRC=grc-disambiguator.cg3
 
 # If a valency file is used, specify its name here:
 GIELLA_GC_VALENCY=valency.bin
