@@ -11,7 +11,7 @@ GIELLA_LOCAL_FSTHYPHENATOR_FILTER_SRCS=
 
 # Source files copied from src/filters/ OR from
 # $(GIELLA_SHARED)/all_langs/tools/spellcheckers/fstbased/filters:
-GT_LOCAL_COPY_FILTER_SRCS=
+GT_LOCAL_COPY_FILTER_SRCS=remove-dynamic_compound-char.regex
 
 # Only build these things if fst-based hyphenators are enabled:
 if WANT_FST_HYPHENATOR
