@@ -430,6 +430,7 @@ analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
 				filters/remove-dialect-tags.hfst               \
 				filters/remove-norm-comp-tags.hfst             \
 				filters/remove-derivation-position-tags.hfst   \
+				filters/remove-orig_lang-tags.hfst             \
 				filters/rename-POS_before_Der-tags.hfst        \
 				filters/remove-Use_Disamb-tags.hfst            \
 				filters/remove-Use_GC-strings.hfst             \
@@ -440,6 +441,7 @@ analyser-disamb-gt-desc.hfst: analyser-disamb-gt-desc.tmp.hfst \
 		.o. @\"filters/remove-dialect-tags.hfst\"             \
 		.o. @\"filters/remove-norm-comp-tags.hfst\"           \
 		.o. @\"filters/remove-Use_Disamb-tags.hfst\"          \
+		.o. @\"filters/remove-orig_lang-tags.hfst\"           \
 		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
 		.o. @\"filters/remove-Use_minus_PMatch-tags.hfst\"    \
 		.o. @\"filters/remove-Err_SpaceCmp-strings.hfst\"     \
