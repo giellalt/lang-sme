@@ -20,34 +20,22 @@
 ##################################################################
 
 # List any local additions here:
-GT_MT_FILTER_SRCS=remove-derivation-strings-modifications.nob.regex \
-	    		  remove-derivation-strings-modifications.sma.regex \
-	    		  make-optional-Attr_before_dervuota-tags.regex
+GT_MT_FILTER_SRCS=
 
 # Only build these things if apertium fst's are enabled:
 if WANT_APERTIUM
 
 # List generated regexes here:
-GENERATED_REGEXES=remove-derivation-strings.nob.regex \
-				  remove-derivation-strings.sma.regex
-# E.g.: remove-derivation-strings.nob.regex
+GENERATED_REGEXES=
 
 endif # WANT_APERTIUM
 
 # Add the build code of local additions here:
-remove-derivation-strings.%.regex: \
-			$(top_builddir)/src/filters/derivation-tags.txt \
-			remove-derivation-strings-modifications.%.regex
-	$(AM_V_GEN)$(GTCORE)/scripts/taglist2remove_strings_regex.sh \
-		$@ derivation $^
 
 ##################################################################
 #### END: Add local processing instructions ABOVE this line ######
 ##################################################################
 
-##########################################
-# General build rules included from here:#
-
-include $(top_srcdir)/am-shared/tools-mt-apertium-filters-dir-include.am
+include $(top_srcdir)/am-shared/tools-mt-filters-dir-include.am
 
 # vim: set ft=automake:
