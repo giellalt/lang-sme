@@ -3817,13 +3817,6 @@ LIST XT-FREQUENCY-ADV = "máŋgii" "hárve" ;
 
 LIST Pl3-INF-V = "leat" (".*it"r) ;
 
-	# Round from the spellchecker
-	# ===========================
-	
-ADD:spelled (&typo &SUGGESTWF) (<spelled>) ;
-ADD:Err/Orth-any (&typo) Err/Orth-any (NOT 0 (*) - Err/Orth-any) ;
-COPY:Err/Orth-any (&SUGGEST) EXCEPT Err/Orth-any TARGET Err/Orth-any + (&typo) ;
-
 	# Very local errors (where right and left context does not matter)
 	# ================================================================
 
@@ -3964,8 +3957,6 @@ LIST UNLIKELY-REAL-A = ("čáskat" V IV Der/h V Der/alla) ;
 
 #DELETE?LIST UNLIKELY-REAL-DOUBLE-CONS = ".*addimiss"r ".*molsumiss"r;
 
-# Speller suggestions rule - make sure the suggestions survive the cg mangling:
-ADD:spelled (&typo &SUGGESTWF) (<spelled>) ;
 
     # EARLY REALWORD ERROR RULES
     # ----------------------------------
@@ -13054,12 +13045,14 @@ ADDRELATION (LEFT) (&double-space-before) TO (-1 (&LINK) LINK 0 (&double-space-b
 # Fallback for Err/Orth – want to underline these too, and preferably generate
 # TODO: Different error tag for these? Currently the same as dynamically <spelled> errors.
 
-ADD:Err/Orth (&typo) (Err/Orth) (NEGATE 0 (*) - Err/Orth - Err/Orth-a-á - Err/Orth-nom-acc - Err/Orth-nom-gen) ;
-	#$ Dat beare guhkká doppe, iige {daga} maidege iežá. 
-ADD:Err/Orth (&typo) (Err/Orth-a-á) (NEGATE 0 (*) - Err/Orth - Err/Orth-a-á - Err/Orth-nom-acc - Err/Orth-nom-gen) ;
-ADD:Err/Orth (&typo) (Err/Orth-nom-acc) (NEGATE 0 (*) - Err/Orth - Err/Orth-a-á - Err/Orth-nom-acc - Err/Orth-nom-gen) ;
-ADD:Err/Orth (&typo) (Err/Orth-nom-gen) (NEGATE 0 (*) - Err/Orth - Err/Orth-a-á - Err/Orth-nom-acc - Err/Orth-nom-gen) ;
+# Speller suggestions rule - make sure the suggestions survive the cg mangling:
+ADD:spelled (&typo &SUGGESTWF) (<spelled>) ;
+ADD:Err/Orth-any (&typo) Err/Orth-any (NOT 0 (*) - Err/Orth-any) ;
+COPY:Err/Orth-any (&SUGGEST) EXCEPT Err/Orth-any TARGET Err/Orth-any + (&typo) ;
 
+#$ Dat beare guhkká doppe, iige {daga} maidege iežá.
+
+# TODO: Examples where the below rule works, while the above COPY:Err/Orth-any does not:
 COPY:Err/Orth (&SUGGEST) EXCEPT (Ex/N Ex/V Ex/A Ex/IV Ex/TV Err/Orth) OR (South Err/Orth) OR (Err/Orth Err/SpaceCmp) OR (Err/Orth) OR (Err/Orth-a-á) OR (Err/Orth-nom-acc) OR (Err/Orth-nom-gen) TARGET (Err/Orth &typo) OR (Err/Orth-a-á &typo) OR (Err/Orth-nom-acc &typo) OR (Err/Orth-nom-gen &typo);
 	#$ Muhto dalle gártá maiddái {čielgaseappon} man_láhkái mearrideaddjit stuorát servvodagas , go sin fápmu lea gártan dego semeantan , dagahit láhttenvuođu muhtinlágan eahpealbma bivdui ja gilvui , gos vel diehta ge gártá hiŋgálastojuvvot dego čájáhussan meassuin ja eiseválddiid bušeahtain .
 	#$ Ii buot dáfus gal, muhto juste das {mainna lágiin} olmmoš láhtte ja makkár gova čájeha earáide lei sutnje hui deaŧalaš.
