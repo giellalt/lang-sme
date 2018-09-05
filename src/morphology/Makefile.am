@@ -121,6 +121,7 @@ generated_files/smi-$(GTLANG)-propernouns.lexc: \
 # easily get updates from the template dir through svn merge.
 clean-local:
 	-rm -f *.all.* *fst *.foma *.script generated_files/*.lexc lexicon.*
+	-rm -f url.lexc
 
 include $(top_srcdir)/am-shared/src-morphology-dir-include.am
 
