@@ -145,9 +145,11 @@ LIST Du = Du ;   #!! Du
 LIST Pl = Pl ;   #!! Pl
 LIST Cmp/SplitR = Cmp/SplitR ;	   #!! Cmp/SplitR
 LIST Cmp/Attr = Cmp/Attr ;	   #!! Cmp/Attr
+LIST Cmp/Cit = Cmp/Cit ;	   #!! Cmp/Cit
 LIST Cmpnd = Cmpnd ;	   #!! Cmpnd
 LIST Cmp/SgNom = Cmp/SgNom ; #!! Cmp/SgNom Cmp/SgGen
 LIST Cmp/SgGen = Cmp/SgGen ; #!! Cmp/SgGen
+LIST Cmp/PlGen = Cmp/PlGen ; #!! Cmp/PlGen
 LIST Cmp/Sh = Cmp/Sh ;	   #!! Cmp/Sh
 LIST Cmp = Cmp ;	   #!! Cmp
 LIST PxSg1 = PxSg1 ;	   #!! PxSg1
@@ -5674,6 +5676,9 @@ SELECT:lasiAdv Adv IF (0 ("lasi") LINK 1 N + Pl OR ("gáffe") OR Sem/Drink OR Se
 IFF:loanasAdv ("loanas") IF (0 Adv LINK *-1 ("oažžut") OR ("váldit") OR ("jearrat") OR ("addit") BARRIER SV-BOUNDARY);
 	#$ don oaččut loanas ...
 
+#!! * __oaivvisAdv__
+IFF:loanasAdv ("oaivvis") IF (0 Adv LINK -1 ("leat"));
+
 
 #!! * __AdvinfrontofPrfPrc__
 SELECT:AdvinfrontofPrfPrc Adv IF (0 A LINK 1 PrfPrc - COPULAS LINK NOT 0 N)(NEGATE 0 Po LINK -1 Gen) ;
@@ -5858,7 +5863,7 @@ SELECT:olluAdv3 OLLU + Adv IF (-1 GRADE-ADV LINK -1 REAL-V - AUX) (1 N + ADVLCAS
 SELECT:olluAdv4 OLLU + Adv IF (-1 GRADE-ADV)(1 REAL-V - AUX)  ;
 	#$ Maŋimuš jagiid áigge lea almmuhusdienas mearihis olu njiedjan.
 
-IFF:ruovttusAdv ("ruoktu" Sg Loc)((*1 Ill BARRIER NOT-NPMOD) OR (-1 Gen)) ;
+IFF:ruovttusAdv ("ruoktu" Sg Loc)((*1 Ill BARRIER NOT-NPMOD) OR (-1 Gen LINK NEGATE -1 TRANS-V)) ;
 	## Adv
 
 REMOVE:sajisAdv ("sajis") IF (0 ("sadji") LINK *-1 Num BARRIER NOT-A-ADV);
@@ -6578,6 +6583,11 @@ MAP:compCoordAttr (@COMP-CS<) TARGET NP-HEAD-NOM (-1 Attr LINK -1 CRD LINK -1 (@
 MAP:compInf (@COMP-CS<) TARGET Inf (-1 ("go" CS) LINK -1 Nom LINK -1 Comp OR COMPAR) ;
 	#$ Ja de son riegádahtii máná jođidettiin, ja de ii lean iežá dorvu go coggat ohcii máná ja vuojehit ein bohccuid.
 
+#!! * __compInf__ 
+MAP:compInf (@COMP-CS<) TARGET Inf (-1 ("go" CS) LINK -1 ConNeg LINK -1 Neg) ;
+	#$ Ledje láikkes olbmot geat eai veadján go bargat oasi jagis, ja muđui oaggut, bivdit ja murjet.
+
+
 #!! * __compInfCoor__ 
 MAP:compInfCoor (@COMP-CS<) TARGET Inf (-1 ("ja") OR ("dahje") LINK *-1 @COMP-CS< BARRIER Nom OR REAL-V) ;
 	#$ Ja de son riegádahtii máná jođidettiin, ja de ii lean iežá dorvu go coggat ohcii máná ja vuojehit ein bohccuid.
@@ -6866,6 +6876,7 @@ SELECT:Interr Interr IF (0 ("goabbá") + Sg)(NOT 0 Foc/Pos-ge) ;
 SELECT:InterrIfPot Interr IF (*-1 BOC BARRIER NOT-PCLE)(0 Rel)(*1 TRANS-V + Pot BARRIER S-BOUNDARY OR VFIN-POS);
 	#$ Na maid dal juo dagažat ja maid it dagaš.
 
+REMOVE:KillInterr Interr ;
 
 #!! * __munPl3__ removes Pron Pers Pl3 if there is no verb agreement
 REMOVE:munPl3 Pers IF (NEGATE *-1 PL1-V BARRIER NOT-ADV-PCLE)(0 ("mii"))(*1 SG3-V BARRIER PL1-V OR SV-BOUNDARY LINK NOT 0 Pl1);
@@ -7542,6 +7553,7 @@ SELECT:AttrAdv (A Attr) IF (-1 Adv LINK NOT 0 GRADE-ADV)(NEGATE 0 Inf OR VFIN OR
 
 REMOVE:AttrVejolaš ("vejolaš" Attr)  IF (*-1 COPULAS)(1 REAL-V) ;
 REMOVE:Cmp/SplitRA  (Cmp/SplitR A) IF (0 (Cmp/SplitR N)) ;
+REMOVE:Cmp/SplitR_Cit  Cmp/SplitR + Cmp/Cit IF (0 Cmp/SgNom OR Cmp/SgGen OR Cmp/PlGen) ;
 
 #!! * __Cop__ 
 SELECT:CopANom (A Nom) (-1 COPULAS LINK -1 HUMAN + Nom OR Pers + Nom)(0 Attr)(NEGATE 1 Nom OR Loc OR Gen OR Cmp/SplitR) ;	
@@ -8562,7 +8574,7 @@ MAP:>NPrfPrc6 (@>N) TARGET PrfPrc - NOT-@>N (*0 VFIN BARRIER S-BOUNDARY OR (Refl
 #MAP:>NPrfPrc7 (@>N) TARGET PrfPrc - NOT-@>N IF (*-1 S-BOUNDARY BARRIER NOT-NPMODADV)(0 Der/Pass)(*1 N BARRIER NOT-A LINK NOT 0 TIME);
 
 #!! * __NPrfPrcCoor__ coordination
-MAP:>NPrfPrcCoor (@>N) TARGET PrfPrc - NOT-@>N (1 ("ja") OR ("dahje") LINK 1 PrfPrc - NOT-@>N LINK *1 N BARRIER NOT-NPMOD)(NEGATE -1 Adv LINK -1 (Refl Acc) LINK *-1 MUITALIT) ;
+MAP:>NPrfPrcCoor (@>N) TARGET PrfPrc - NOT-@>N (1 ("ja") OR ("dahje") LINK 1 PrfPrc - NOT-@>N LINK *1 N BARRIER NOT-NPMOD)(NEGATE -1 Adv LINK -1 (Refl Acc) LINK *-1 MUITALIT) (NEGATE *-1 ("leat") BARRIER REAL-V OR S-BOUNDARY) ;
 	#$ Ja de lei álgit fas álggus, bráhkáin ja eará gaskaboddosaš lanjain dahje báhcán ja mieskan ja bombejuvvon skuvlavisttiin.
 
 #!! !(@+FAUXV) and (@+FMAINV) target Neg, orrut
