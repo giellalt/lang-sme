@@ -38,11 +38,29 @@ Define morphology @bin"analyser_relabelled-disamb-gt-desc.hfst" ;
 
 Define url @bin"analyser-url-gt-desc.hfst" ;
 
+Define flags [          ! explicit list since `?` does not match flags
+      "@D.CmpOnly.FALSE@"
+    | "@D.CmpPref.TRUE@"
+    | "@D.NeedNoun.ON@"
+    | "@D.SpellRlx.ON@"
+    | "@C.SpellRlx@"
+    | "@D.SpaceCmp.ON@"
+    | "@C.SpaceCmp@"
+];
+Define inputmark    [ 0:"@PMATCH_INPUT_MARK@" ];
+
 Define incondform      Punct|{“}|{”}|{…}|{‚}|{‘}|{’}|{–}|{-}|{—}|{­}|{_}|{<}|{>}|{■}|{«}|{»}|{�}|{@}|{'}|{} ;
 
 Define blank           Whitespace | incondform ;
 
-Define incondword       morphology & [ incondform:?* 0:?* ] ;
+Define nonprintable [ 0:? | inputmark | flags ];
+Define any          [ ? | nonprintable ];
+
+Define incondword       morphology & [ any* incondform:[?*] nonprintable* ] ; ! Ends in punctuation – no context condition
+!! TODO: Why does this never match:
+! Define incondright      morphology & [ any* incondform:[?*] nonprintable* ] LC([blank | #]); ! Ends in punctuation, only left context
+! Define incondleft       morphology & [ nonprintable* incondform:[?*] any* ] RC([blank | #]); ! Starts with punctuation, only right context
+
 Define morphoword       morphology                   LC([blank | #]) RC([blank | # ]);
 Define urlword          url                          LC([blank | #]) RC([blank | # ]);
 
