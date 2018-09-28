@@ -25,6 +25,7 @@ GT_LEXC_ROOT=$(srcdir)/root.lexc
 GT_LEXC_SRCS_L1_L2=\
 			clitics.lexc                     \
 			compounding.lexc                 \
+			affixes/abbreviations.lexc         \
 			affixes/possessive-suffixes.lexc \
 			affixes/pronouns.lexc            \
 			affixes/propernouns.lexc         \
