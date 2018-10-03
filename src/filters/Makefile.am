@@ -32,7 +32,6 @@ GIELLA_FILTER_LOCAL_REGEX_SRCS=\
 					remove-rel_focus-strings.regex                    \
 					remove-illegal-derivation-strings.regex           \
 					remove-derivation-position-tags.regex             \
-					remove-Err_SpaceCmp-strings.regex                 \
 					remove-dynamic_compound-char.regex                \
 					simplify-triple-der-borders.regex                 \
 					remove-illegal-derivation-strings-flagbased.regex \
