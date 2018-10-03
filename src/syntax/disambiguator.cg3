@@ -265,7 +265,8 @@ LIST Der/suttat = Der/suttat ;			 #!! Der/suttat
 LIST Der/ár = Der/ár ;			 #!! Der/ár 
 LIST <vdic> = <vdic> ;				 #!! <vdic>
 LIST Cmp/Hyph = Cmp/Hyph ;
-
+LIST <subqst> = <subqst> ;
+LIST <ind> = <ind> ;
 
 LIST Err/Orth = Err/Orth Err/Lex Err/Orth-a-á Err/Orth-nom-gen Err/Orth-nom-acc Err/DerSub Err/CmpSub Err/UnspaceCmp Err/HyphSub Err/SpaceCmp Err/Spellrelax err_orth_mt ;
 LIST Err/Orth-spes = Err/Orth-a-á Err/Orth-nom-gen Err/Orth-nom-acc Err/DerSub Err/CmpSub Err/UnspaceCmp Err/HyphSub Err/SpaceCmp Err/Spellrelax err_orth_a_á_mt err_orth_nom_acc_mt err_orth_nom_gen_mt  ;
@@ -2217,6 +2218,8 @@ SELECT:Arab Arab IF (NOT 0 Ord OR Prop) ; # In Apertium we get analysis both wit
 REMOVE:diNom Coll (-1 ("dii") OR ("diibmu")) ;
 
 
+REMOVE:dyn  Arab (0 Prop) ; # foreløpig løsning, til vi har ny løsning for numerals.lexc
+
 #!! * Rule for adding <vdic> to verbs denoting verbal actions like: ... dadjá Aili Kestkitalo.
 
 
@@ -2248,6 +2251,7 @@ SELECT:SamediggiProp Prop IF (-2 ("ášši"))(-1 Num);
 REMOVE:finnmárku ("finnmárku") IF (0 ("Finnmárku")) ;	
 REMOVE:Johan ("Jo") IF (0 ("Johan")) ;	
 
+#ADD:subqst (<subqst>) TARGET V ; # IF (0 @+FMAINV OR @+FAUXV LINK -1 @+FMAINV OR @-FMAINV) ;
 
 REMOVE:PropACR (Dyn) IF (0 Prop OR Adv) ;	
 REMOVE:Prop Prop IF (0 ("Ai") LINK 0 Adv) ;	
@@ -2995,7 +2999,7 @@ REMOVE:attrNum Attr IF (0 ("miljovdna") LINK 1 Ill LINK *1 ("❡"))(-1 Num) ;
 REMOVE:áddjá A IF (0 ("áddjá")  LINK *1 ("❡")) ;
 REMOVE:attrA (A Attr) IF (1 PrfPrc LINK *1 ("❡") BARRIER V) ;
         #$ Son muitalii maid ahte sin fanashoteallas leamašan dán jagi dušše vihtta guossi
-REMOVE:adv Adv IF (0 (A Pl) LINK *1 ("❡") BARRIER V) (-1 Pl LINK *-1 BOS BARRIER V) ;
+REMOVE:adv Adv IF (0 (A Pl) LINK *1 ("❡") BARRIER V) (-1 Pl + N LINK *-1 BOS BARRIER V) ;
 REMOVE:ImprtDu2 Du2 (0 Imprt LINK 0 PrsPrc LINK 1 N LINK *1 ("❡"))  ;
 
 	#$ Dieđihuvvon láhppon – gávdnon dearvan. 
@@ -3675,7 +3679,7 @@ SELECT:soaittáhagasAdv Adv IF (0 ("soaittáhagas"));
 
 
 #!! * __seahkáPl__ selects Pl
-SELECT:seahkáPl Pl (1 ("seahká"));
+SELECT:seahkáPl N + Pl (1 ("seahká"));
 	#$ Ja soames báikkiin lea smávva sieđga, muhto jos eai leat goikesieđggat, de lea headju buollit, muhto go leat goikan sieđggat seahká, de lea buorre buollit.
 
 
@@ -4826,7 +4830,7 @@ SELECT:PersAcc (Pers Acc)  IF (-1 Acc LINK *-1 VERBAL-ACTIVITY-V BARRIER NOT-A-A
 	#$ Aiddo sii movttidahttojuvvojit daid buot smiehttat sámegillii.
  
 #!! * __datDemSg__ selects Dem from Pron Pers Sg3 Gen
-#SELECT:datDemSg (Dem Sg)  IF (NEGATE *-1 STRICT-TRANS-V LINK NEGATE *2C Acc BARRIER N)(0 (Pron Pers Sg3 Gen))(NEGATE 1 Po)(NEGATE *1 STRICT-TRANS-V BARRIER S-BOUNDARY OR Acc)(NEGATE *1 Pl OR Ess OR Com BARRIER N)(NEGATE -1 BOS LINK 2 Prop) ;
+#SELECT:datDemSg (Dem Sg)  IF (NEGATE *-1 STRICT-TRANS-V LINK NEGATE *2C Acc BARRIER N)(0 (Pron Pers Sg3 Gen))(NEGATE 1 Po)(NEGATE *1 STRICT-TRANS-V BARRIER S-BOUNDARY OR Acc)(NEGATE *1 Pl + N OR Ess OR Com BARRIER N)(NEGATE -1 BOS LINK 2 Prop) ;
 	#$
 	#% Nubbi noađđeheargi goallostuvvo giehtahearggi lávžái ja goalmmát fas dan nuppi lávžái. #It shouldn´t take this one.
 	#% Jearahallan ii goassege deaddiluvvon áviissas, daningo daláš doaimmaheaddji Bjarne Store Jakobsen biehttalii dan deaddileames.
@@ -8516,6 +8520,8 @@ MAP:opredPrfPrc (@<OPRED) TARGET PrfPrc (*-1 COMMA BARRIER NP OR S-BOUNDARY LINK
 LIST PASS = Der/PassS Der/PassL "botnjasit" ;
 
 MAP:-FMAINVPrfPrc (@-FMAINV) TARGET PrfPrc + PASS (*-1 REAL-COPULAS + VFIN + Sg3 OR REAL-COPULAS + ConNeg BARRIER NOT-ADV-PCLE LINK NEGATE -1 Nom)(NEGATE *-1C PrfPrc BARRIER REAL-V OR N) (*1 (N Sg Nom) BARRIER NOT-A) ; 
+
+MAP:-FMAINVPrfPrcbisanit (@-FMAINV) TARGET PrfPrc + ("bisánit") (1 Sem/Route) ; 
 
 
 #!! !!Verbs as prenominal participles (@>N):
@@ -13833,6 +13839,7 @@ SELECT:cleanSemClass Sem/Ani (0 Sem/Hum) ;
 
 #!! !!!VERBS
 #REMOVE:InfifVFIN Inf (0 VFIN + FMAINV LINK NOT 0 SUBJ OR OBJ LINK NEGATE *-1 AUX - Inf OR PrfPrc)(*0 REAL-V BARRIER S-BOUNDARY) ;
+
 
 SELECT:SSg2Qst V + Sg2 (0 V + Pl1 )((0 Qst) OR (1 Qst)) ;
 SELECT:SSg2Interr V + Sg2 (0 V + Pl1  LINK *-1 Interr) ;
