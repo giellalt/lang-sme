@@ -266,12 +266,10 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_nob.%: \
 # We need to add processing of language-specific tags in the analyser:
 analyser-gt-desc.%: analyser-gt-desc.tmp.% \
 					filters/remove-derivation-position-tags.% \
-					filters/remove-norm-comp-tags.%           \
-					filters/remove-Err_SpaceCmp-strings.%
+					filters/remove-norm-comp-tags.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 			    @\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-norm-comp-tags.$*\"           \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"     \
 			.o. @\"$<\"                                         \
 			;\n\
 		 $(INVERT_HFST)\
@@ -281,12 +279,10 @@ analyser-gt-desc.%: analyser-gt-desc.tmp.% \
 # We need to add processing of language-specific tags in the analyser:
 analyser-dict-gt-desc.%: analyser-dict-gt-desc.tmp.% \
 					filters/remove-derivation-position-tags.% \
-					filters/remove-norm-comp-tags.%           \
-					filters/remove-Err_SpaceCmp-strings.%
+					filters/remove-norm-comp-tags.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 			    @\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-norm-comp-tags.$*\"           \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"     \
 			.o. @\"$<\"                                         \
 			;\n\
 		 $(INVERT_HFST)\
@@ -296,12 +292,10 @@ analyser-dict-gt-desc.%: analyser-dict-gt-desc.tmp.% \
 # We need to add processing of language-specific tags in the analyser:
 analyser-dict-gt-desc-mobile.%: analyser-dict-gt-desc-mobile.tmp.% \
 					filters/remove-derivation-position-tags.% \
-					filters/remove-norm-comp-tags.%           \
-					filters/remove-Err_SpaceCmp-strings.%
+					filters/remove-norm-comp-tags.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 			    @\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-norm-comp-tags.$*\"           \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"     \
 			.o. @\"$<\"                                         \
 			;\n\
 		 $(INVERT_HFST)\
@@ -312,7 +306,6 @@ analyser-dict-gt-desc-mobile.%: analyser-dict-gt-desc-mobile.tmp.% \
 analyser-gt-norm.%: analyser-gt-norm.tmp.% \
 					filters/remove-derivation-position-tags.% \
 					filters/remove-allegro-tags.% \
-					filters/remove-Err_SpaceCmp-strings.% \
 					filters/remove-illegal-derivation-strings-flagbased.% \
 					filters/remove-MinusSpell-strings.% \
 					filters/insert-default-compounding-tags.% \
@@ -328,7 +321,6 @@ analyser-gt-norm.%: analyser-gt-norm.tmp.% \
 			.o. @\"filters/split-CmpN-tags.$*\"                      \
 			.o. @\"filters/insert-default_left_compounding-tags.$*\" \
 			.o. @\"filters/insert-default-compounding-tags.$*\"      \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"            \
 			.o. @\"filters/remove-illegal-derivation-strings-flagbased.$*\" \
 			.o. @\"filters/convert_to_flags-CmpNP-tags.$*\"            \
 			.o. @\"filters/split-CmpNP-tags.$*\"                       \
@@ -346,14 +338,12 @@ analyser-gt-norm.xfst: analyser-gt-norm.tmp.xfst \
 					filters/remove-norm-comp-tags.xfst             \
 					filters/remove-derivation-position-tags.xfst   \
 					filters/remove-illegal-derivation-strings.xfst \
-					filters/remove-allegro-tags.xfst               \
-					filters/remove-Err_SpaceCmp-strings.xfst
+					filters/remove-allegro-tags.xfst
 	$(AM_V_XFST)$(PRINTF) "read regex \
 				@\"filters/remove-allegro-tags.xfst\"             \
 			.o. @\"filters/remove-norm-comp-tags.xfst\"           \
 			.o. @\"filters/remove-derivation-position-tags.xfst\" \
 			.o. @\"filters/remove-illegal-derivation-strings.xfst\" \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.xfst\"   \
 			.o. @\"$<\"                                         \
 			;\n\
 		 save stack $@\n\
@@ -363,13 +353,11 @@ analyser-gt-norm.xfst: analyser-gt-norm.tmp.xfst \
 analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 					filters/remove-norm-comp-tags.%           \
 					filters/remove-derivation-position-tags.% \
-					filters/remove-allegro-tags.%             \
-					filters/remove-Err_SpaceCmp-strings.%
+					filters/remove-allegro-tags.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/remove-allegro-tags.$*\" \
 			.o. @\"filters/remove-norm-comp-tags.$*\"           \
 			.o. @\"filters/remove-derivation-position-tags.$*\" \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"     \
 			.o. @\"$<\"                                         \
 			;\n\
 		 $(INVERT_HFST)\
@@ -399,15 +387,13 @@ analyser-disamb-gt-desc.hfst: \
 				filters/remove-norm-comp-tags.hfst             \
 				filters/remove-derivation-position-tags.hfst   \
 				filters/remove-orig_lang-tags.hfst             \
-				filters/rename-POS_before_Der-tags.hfst        \
-				filters/remove-Err_SpaceCmp-strings.hfst
+				filters/rename-POS_before_Der-tags.hfst
 	$(AM_V_HXFST)$(PRINTF) "read regex \
 		    @\"filters/remove-derivation-position-tags.hfst\" \
 		.o. @\"filters/remove-dialect-tags.hfst\"             \
 		.o. @\"filters/remove-norm-comp-tags.hfst\"           \
 		.o. @\"filters/remove-orig_lang-tags.hfst\"           \
 		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
-		.o. @\"filters/remove-Err_SpaceCmp-strings.hfst\"     \
 		.o. @\"$<\"                                           \
 		;\n\
 	invert net\n\
@@ -446,15 +432,13 @@ analyser-disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.%      \
 					filters/remove-norm-comp-tags.%           \
 					filters/remove-dialect-tags.%             \
 					filters/remove-derivation-position-tags.% \
-					filters/rename-POS_before_Der-tags.%      \
-					filters/remove-Err_SpaceCmp-strings.%
+					filters/rename-POS_before_Der-tags.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-dialect-tags.$*\"             \
 			.o. @\"filters/remove-norm-comp-tags.$*\"           \
 			.o. @\"filters/remove-orig_lang-tags.$*\"           \
 			.o. @\"filters/rename-POS_before_Der-tags.$*\"      \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"     \
 			.o. @\"$<\"                                         \
 			;\n\
 		 $(INVERT_HFST)\
@@ -469,8 +453,7 @@ generator-gt-%.$(1): generator-gt-%.tmp.$(1) \
 					 filters/make-optional-allegro-tags.$(1)          \
 					 filters/make-optional-coll-tags.$(1)             \
 					 filters/make-optional-lang_hom-tags.$(1)         \
-					 filters/rename_optional-POS_before_Der-tags.$(1) \
-					 filters/remove-Err_SpaceCmp-strings.$(1)
+					 filters/rename_optional-POS_before_Der-tags.$(1)
 	$$(AM_V_XFST_TOOL)$$(PRINTF) "read regex \
 				@\"filters/make-optional-allegro-tags.$(1)\"          \
 			.o. @\"filters/make-optional-coll-tags.$(1)\"             \
@@ -478,7 +461,6 @@ generator-gt-%.$(1): generator-gt-%.tmp.$(1) \
 			.o. @\"filters/rename_optional-POS_before_Der-tags.$(1)\" \
 			.o. @\"filters/remove-norm-comp-tags.$(1)\"               \
 			.o. @\"filters/remove-derivation-position-tags.$(1)\"     \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.$(1)\"         \
 			.o. @\"$$<\"                                              \
 			;\n\
 		 $$(INVERT_XFST)$$(INVERT_FOMA)\
@@ -492,14 +474,12 @@ generator-oahpa-gt-norm.%: generator-oahpa-gt-norm.tmp.% \
 					filters/remove-norm-comp-tags.%               \
 					filters/remove-derivation-position-tags.%     \
 					filters/make-optional-allegro-tags.%          \
-					filters/rename_optional-POS_before_Der-tags.% \
-					filters/remove-Err_SpaceCmp-strings.%
+					filters/rename_optional-POS_before_Der-tags.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/make-optional-allegro-tags.$*\"  \
 			.o. @\"filters/rename_optional-POS_before_Der-tags.$*\" \
 			.o. @\"filters/remove-norm-comp-tags.$*\"               \
 			.o. @\"filters/remove-derivation-position-tags.$*\"     \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"         \
 			.o. @\"$<\"                                             \
 			;\n\
 		 $(INVERT_XFST)$(INVERT_FOMA)\
@@ -523,13 +503,11 @@ morpher-gt-desc.%: morpher-gt-desc.tmp.% \
 generator-dict-gt-norm.%: generator-dict-gt-norm.tmp.%             \
 					filters/remove-norm-comp-tags.%                \
 					filters/remove-derivation-position-tags.%      \
-					 filters/rename_optional-POS_before_Der-tags.% \
-					filters/remove-Err_SpaceCmp-strings.%
+					 filters/rename_optional-POS_before_Der-tags.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 			 @\"filters/rename_optional-POS_before_Der-tags.$*\" \
 			.o. @\"filters/remove-norm-comp-tags.$*\"            \
 			.o. @\"filters/remove-derivation-position-tags.$*\"  \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"      \
 			.o. @\"$<\"                                          \
 			;\n\
 		 $(INVERT_XFST)$(INVERT_FOMA)\
