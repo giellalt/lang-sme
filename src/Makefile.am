@@ -376,13 +376,10 @@ analyser-dict-gt-norm.%: generator-dict-gt-norm.%
 		save stack $@ \n\
 		quit \n" | $(XFST_TOOL)
 
-# We have two different disamb targets, one for use with pmatch/hfst-tokenise,
-# and one for the traditional preprocess + analyse + lookup2cg pipeline. The
-# two variants share the filtering - the split is done in the tmp file process-
-# ing. Thus we do it as follows:
-analyser-pmatchdisamb-gt-desc.hfst \
-analyser-disamb-gt-desc.hfst: \
-%-disamb-gt-desc.hfst: %-disamb-gt-desc.tmp.hfst \
+# We need special treatment of the disamb fst going to further pmatch processing
+# mainly due to the target pattern, thus listed here. The rule body and the
+# dependencies should be the same as the regular disamb analysers below:
+analyser-pmatchdisamb-gt-desc.hfst: analyser-pmatchdisamb-gt-desc.tmp.hfst \
 				filters/remove-dialect-tags.hfst               \
 				filters/remove-norm-comp-tags.hfst             \
 				filters/remove-derivation-position-tags.hfst   \
@@ -400,8 +397,26 @@ analyser-disamb-gt-desc.hfst: \
 	save stack $@\n\
 	quit\n" | $(HFST_XFST) -p $(MORE_VERBOSITY)
 
-# ... as well as in the HFST Grammar Checker analyser:
-# (keep the Err/SpaceCmp strings here)
+# Regular disamb analysers here, all formats:
+analyser-disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.%      \
+					filters/remove-orig_lang-tags.%           \
+					filters/remove-norm-comp-tags.%           \
+					filters/remove-dialect-tags.%             \
+					filters/remove-derivation-position-tags.% \
+					filters/rename-POS_before_Der-tags.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+				@\"filters/remove-derivation-position-tags.$*\" \
+			.o. @\"filters/remove-dialect-tags.$*\"             \
+			.o. @\"filters/remove-norm-comp-tags.$*\"           \
+			.o. @\"filters/remove-orig_lang-tags.$*\"           \
+			.o. @\"filters/rename-POS_before_Der-tags.$*\"      \
+			.o. @\"$<\"                                         \
+			;\n\
+		 $(INVERT_HFST)\
+		 save stack $@\n\
+		 quit\n" | $(XFST_TOOL)
+
+# The HFST Grammar Checker analyser (keep the Err/SpaceCmp strings):
 analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 				filters/remove-dialect-tags.hfst             \
 				filters/remove-norm-comp-tags.hfst           \
@@ -424,26 +439,6 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 	invert net\n\
 	save stack $@\n\
 	quit\n" | $(HFST_XFST) -p $(MORE_VERBOSITY)
-
-# ... as well as in the XEROX/FOMA disambiguation analyser
-# (remove the Err/SpaceCmp thing here):
-analyser-disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.%      \
-					filters/remove-orig_lang-tags.%           \
-					filters/remove-norm-comp-tags.%           \
-					filters/remove-dialect-tags.%             \
-					filters/remove-derivation-position-tags.% \
-					filters/rename-POS_before_Der-tags.%
-	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-				@\"filters/remove-derivation-position-tags.$*\" \
-			.o. @\"filters/remove-dialect-tags.$*\"             \
-			.o. @\"filters/remove-norm-comp-tags.$*\"           \
-			.o. @\"filters/remove-orig_lang-tags.$*\"           \
-			.o. @\"filters/rename-POS_before_Der-tags.$*\"      \
-			.o. @\"$<\"                                         \
-			;\n\
-		 $(INVERT_HFST)\
-		 save stack $@\n\
-		 quit\n" | $(XFST_TOOL)
 
 # We need to add processing of language-specific tags in the generator:
 define giella_generators
