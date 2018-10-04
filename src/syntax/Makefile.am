@@ -8,7 +8,7 @@
 
 #############################################
 #### Add language-specific sources here: ####
-GT_CG_LOCAL_SRCS=semanticroles.cg3 valency.cg3
+GT_CG_LOCAL_SRCS=semanticroles.cg3 valency.cg3 korp.cg3
 
 #############################################################
 #### Add language-specific targets to be installed here: ####
@@ -33,7 +33,7 @@ endif # WANT_SYNTAX
 
 ####### Other targets: ###########
 clean-local:
-	-rm -f *.bin
+	-rm -f *.bin functions.cg3 dependency.cg3 korp.cg3
 
 ####### Build rules via include: ########
 
