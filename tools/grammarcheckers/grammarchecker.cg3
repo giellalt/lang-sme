@@ -13053,17 +13053,21 @@ ADD (&punct-end) TARGET Nom (-1 (\n));
     # Spacing errors
     # --------------
 
-ADD (&double-space-before)     (<doubleSpaceBefore>);
 ADD (&space-after-paren-beg)   (<spaceAfterParenBeg>);
 ADD (&space-before-paren-end)  (<spaceBeforeParenEnd>);
 ADD (&space-before-punct-mark) (<SpaceBeforePunctMark>);
-ADD (&no-space-after-punct-mark) (<NoSpaceAfterPunctMark>);
 
 # Expand the underline to the word before
 # (actually adding the correction TODO)
+ADD (&double-space-before)     (<doubleSpaceBefore>);
 ADD (&double-space-before &LINK) TARGET (*) IF  (1 (<doubleSpaceBefore>));
 ADDRELATION (LEFT) (&double-space-before) TO (-1 (&LINK) LINK 0 (&double-space-before)) ;
-    
+
+ADD (&no-space-after-punct-mark) (<NoSpaceAfterPunctMark>);
+ADD (&no-space-after-punct-mark &LINK) TARGET (*) IF (-1 (<NoSpaceAfterPunctMark>));
+ADDRELATION (RIGHT) (&no-space-after-punct-mark) TO (1 (&LINK) LINK 0 (&no-space-after-punct-mark)) ;
+COPY:no-space-after-punct ("<$1 $2>"v &SUGGESTWF) TARGET ("<(.*)>"r &no-space-after-punct-mark) IF (1 ("<(.*)>"r));
+
     # style error
     # -----------
  #DELETE style is hard   
@@ -13096,5 +13100,5 @@ COPY:Err/Orth (&SUGGEST) EXCEPT (Ex/N Ex/V Ex/A Ex/IV Ex/TV Err/Orth) OR (South 
 	
 # (setq cg-pre-pipe "./my-cg-post.mode")
 # Local Variables:
-# cg-pre-pipe: "sh modes/smegram6-disam.mode"
+# cg-pre-pipe: "sh modes/smegram7-cg.mode"
 # End:
