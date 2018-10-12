@@ -23,9 +23,11 @@ LIST EOS = (<<<) (</s>);
 # Parts of speech
 # ---------------
 
-LIST ITRAB = ITRAB ;
-LIST TRAB = TRAB ;
-LIST NUMTRAB = NUMTRAB ;
+LIST Gram/IAbbr = Gram/IAbbr ;
+LIST Gram/TAbbr = Gram/TAbbr ;
+LIST Gram/NoAbbr = Gram/NoAbbr ;
+LIST Gram/TNumAbbr = Gram/TNumAbbr ;
+LIST Gram/TIAbbr = Gram/TIAbbr ;
 
 LIST N = N ;
 LIST A = A ;
@@ -1446,6 +1448,17 @@ LIST QMARK = """ ; # ADD " FOR SYNTAX COLOURING.
 LIST PPUNCT = PUNCT ;
 SET PUNCT = PPUNCT - QMARK ;
 
+# Whitespace tags
+# ---------------
+
+LIST <doubleSpaceBefore> = <doubleSpaceBefore> ;
+LIST <firstWordOfPragraph> = <firstWordOfPragraph> ;
+LIST <spaceAfterParenBeg> = <spaceAfterParenBeg> ;
+LIST <spaceBeforeParenEnd> = <spaceBeforeParenEnd> ;
+LIST <SpaceBeforePunctMark> = <SpaceBeforePunctMark> ;
+LIST <NoSpaceAfterPunctMark> = <NoSpaceAfterPunctMark> ;
+
+
 
 # Single-word sets
 # ----------------
@@ -1872,9 +1885,12 @@ SECTION
 
 # Preprocessing (testing for now)
 
-SELECT:itrab PUNCT IF (0 ITRAB)(1 Prop);
-REMOVE:trab PUNCT IF (0 TRAB)(1 Prop);
+SELECT:iabbr PUNCT IF (0 Gram/IAbbr)(1 Prop);
 
+REMOVE:tabbr PUNCT IF (0 Gram/TAbbr)(1 Prop);
+
+	# Merethe A. Hanssen lea boahtán.
+	# Bođii Merethe A. Hansen lea boahtán.
 
 
 # #######################################
@@ -2174,6 +2190,9 @@ REMOVE (A Ord Attr) IF (-1 CC LINK -1 (Num Arab) LINK -1 CC OR (",") LINK -1 (Nu
 # Ruđalaččat lea dus buorre dilli , ja oaččut áinnas udno alccet juoidá maid guhká leat áibbašan
 REMOVE (Err/SpaceCmp) (0/1 ("buorre") + $$CASE)(0 $$CASE);
 REMOVE (Err/SpaceCmp) (0/1 ("buorre"));
+
+SELECT ("." CLB) IF (2*> <firstWordOfPragraph>);
+	## Dat lea eanet go 10.  <linjeshift> Dat lei boahtán.
 
 	# Default rule
 	# ------------
