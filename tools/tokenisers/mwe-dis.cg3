@@ -2225,12 +2225,21 @@ REMOVE Adv (0/0 ("jahki") + Gen OR Acc LINK 0/1 (Num Attr));
 
 	# ABBR
 	#
-		
-SELECT:sentenceboundary ("." CLB) IF (0 ABBR OR Num)(2*> ("<[A-ZČŠÁ].*>"r));
+
+#
+# You can't use window spanning without star, but if you want to match
+# the first word of the following sentence, you can use this handy
+# trick, courtery of Tino:
+#
+#   (1*> (>>>) BARRIER (>>>) LINK 1 firstWordOfFollowingSentence)
+#
+SELECT:sentenceboundary ("." CLB) IF (0 ABBR OR Num) (1*> (>>>) BARRIER (>>>) LINK 1 ("<[A-ZČŠÁ].*>"r));
 	## Siemens mobiltelefuvdna láhppon Rypai bearj. Čoahkkin
 	## Čoahkkin lea bearj. dii. 11 - 16.
-	## “Joatkka” oktavuođas bohte guossit Sámi Oahpahusguovddážis Anáris 16.-19.5. Mis lei prográmma mas min rávis oahppit ledje ovttas singuin: oahpisteapmi, liidnabivdu, guolleslájaid dovdat, fiervvás vázzit ja váras guliid vuoššat.  
-		
+	## “Joatkka” oktavuođas bohte guossit Sámi Oahpahusguovddážis Anáris 16.-19.5. Mis lei prográmma mas min rávis oahppit ledje ovttas singuin: oahpisteapmi, liidnabivdu, guolleslájaid dovdat, fiervvás vázzit ja váras guliid vuoššat.
+        # BUT NOT: Bohcco guomočoavjebaktearat dárbbašit dađistaga ee. proteiinnat. Boazu deahkkehuvvagoahtá dakkaviđe go boahtá jeagelguohtumii.
+
+
 #REMOVE SUB:1 ABBR (0 ("." CLB))(*1W ("<\\p{Lu}.*>"r) (*) - BOS);
 	## Mun liikon du. Son boahtá. 
 	
