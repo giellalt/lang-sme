@@ -52,10 +52,7 @@ L1=\
 			affixes/nouns.lexc      \
 			affixes/verbs.lexc
 
-L2=\
-			affixes/adjectives-L2.lexc  \
-			affixes/nouns-L2.lexc  \
-			affixes/verbs-L2.lexc
+L2=
 
 GT_LEXC_SRCS=\
 			$(GT_LEXC_SRCS_L1_L2) \
