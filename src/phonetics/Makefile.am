@@ -23,8 +23,9 @@ SUBDIRS=. test
 #! @param GT_PHONETICS_SUPPLEMENTS optional, other sources to distribute and
 #! 		  compile for other things
 GT_PHONETICS_MAIN=text2ipa-$(GTLANG).xfscript
-GT_PHONETICS_SUPPLEMENTS=text2ipa-fin.xfscript \
-						 text2ipa-nob.xfscript
+GT_PHONETICS_SUPPLEMENTS=text2tts-$(GTLANG).xfscript \
+						 text2tts-fin.xfscript \
+						 text2tts-nob.xfscript
 
 ##########################################
 # General build rules included from here:#
