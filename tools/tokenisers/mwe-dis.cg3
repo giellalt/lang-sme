@@ -1962,15 +1962,6 @@ SET V-TRANS-ACT-NOT-ACT-NOT-AUX = V-TRANS - Der/Pass - Der/NomAct - Actio - NOMA
 SECTION
 
 
-# Preprocessing (testing for now)
-
-SELECT:iabbr PUNCT IF (0 Gram/IAbbr)(1 Prop);
-
-REMOVE:tabbr PUNCT IF (0 Gram/TAbbr)(1 Prop);
-
-	# Merethe A. Hanssen lea boahtán.
-	# Bođii Merethe A. Hansen lea boahtán.
-
 
 # #######################################
 
@@ -2116,7 +2107,8 @@ LIST SAFE-MULTIWORDS = ("loahpaloahppa" N Sem/Time Sg Loc Err/SpaceCmp) ;
 SET PX-NONHUM = Px - Sem/Human ;
 
 
-REMOVE:GenFirst (Err/SpaceCmp) (0/1 Gen - Allegro - Err/Orth-nom-acc - Err/Orth-nom-gen - PX-NONHUM)(NEGATE O/1 Actio OR GENFIRST-EXCEPTIONS OR (Gen Err/Orth-nom-gen))(NOT 0 ("loahpaloahppa" N Sem/Time Sg Loc Err/SpaceCmp) OR ("máŋggalágan")) ;
+REMOVE:GenFirst (Err/SpaceCmp) (0/1 Gen - Allegro - Err/Orth-nom-acc - Err/Orth-nom-gen - PX-NONHUM)(NEGATE O/1 Actio OR GENFIRST-EXCEPTIONS OR (Gen Err/Orth-nom-gen))(NOT 0 ("loahpaloahppa" N Sem/Time Sg Loc Err/SpaceCmp) OR ("máŋggalágan"))(NEGATE 0/1 ABBR LINK 0 CLB) ;
+	#$ Čujuhus lea maid árvalussii S. nr. 110 (2002 – 2003), čuoggái 5.2.1 iešmearrideami doahpaga birra.
     #$ Gaskavahkku eahkeda čielggai ahte guokte Guovdageainnu boazodoalli bidjoba guovtti vahkkui {rájus giddagassii}, go politiiját navdet sutno suoladan ollu bohccuid.
 	## Vuostáiváldinbáikkit fertejit ovddiduvvot vai sáhttet báikkálaččat  doaimmahit {máŋgga lágan} buvttadeami guolleávdnasiin vai sihkkarastá vel buoret vejolašvuođa ceavzit konjunkturrievddademiid oktavuođas.
 	## Ovttasbargu Sámi Oahppolávdegottiin (SOL) ja ruhtadoarjja sis gurssaide (37 000,-) dahká vejolažžan bidjat nu olu návccaid {rávisolbmuid oahpahussii} go leat dahkan.
@@ -2139,6 +2131,9 @@ REMOVE:TH-val (Err/SpaceCmp) (0/1 (<TH-Ill-Any>)) (0/0 (Ill)) (NEGATE *0 (V <TH-
 
 REMOVE:TH-val (Err/SpaceCmp) (0/1 (<TH-AktioLoc>)) (0/0 (Actio Loc));
 	## Sámediggeráđđi lea danne biehttalan váldimis vuostá dán bovdejumi .
+	
+	
+	## Buorre gulahallan departemeanttaiguin TH-Com
 	
 REMOVE:illu-beaivvis (Err/SpaceCmp) (0/0 Sem/Time OR Sem/Plc OR Sem/Org LINK 0 Loc LINK NOT 0/1 Sem/Org) (*-1 VFIN BARRIER NOT-ADV-PCLE LINK 0 COPULAS LINK 0 Sg3);
 	## Movttegis eamit lea illu beaivvis.
@@ -2250,16 +2245,21 @@ REMOVE Adv (0/0 ("jahki") + Gen OR Acc LINK 0/1 (Num Attr));
 #   (1*> (>>>) BARRIER (>>>) LINK 1 firstWordOfFollowingSentence)
 #
 SELECT:sentenceboundary ("." CLB) IF (0 ABBR OR Num) (1*> (>>>) BARRIER (>>>) LINK 1 ("<[A-ZČŠÁ].*>"r) LINK NOT 0 Prop);
+	#$ Go dohkkeha iešmearridanrievtti sámiide, de dat čuovvu dan oainnu mii Norggas lea leamaš máŋga jagi, {ee.} guovtti ovddit váldo stuoradiggedieđáhusas sámepolitihka birra (Sd.dieđ. nr. 55 (2000 – 2001) ja Sd.dieđ. nr. 33 (2001 – 2002)).
 	## Siemens mobiltelefuvdna láhppon Rypai bearj. Čoahkkin
 	## Čoahkkin lea bearj. dii. 11 - 16.
 	## “Joatkka” oktavuođas bohte guossit Sámi Oahpahusguovddážis Anáris 16.-19.5. Mis lei prográmma mas min rávis oahppit ledje ovttas singuin: oahpisteapmi, liidnabivdu, guolleslájaid dovdat, fiervvás vázzit ja váras guliid vuoššat.
         # BUT NOT: Bohcco guomočoavjebaktearat dárbbašit dađistaga ee. proteiinnat. Boazu deahkkehuvvagoahtá dakkaviđe go boahtá jeagelguohtumii.
+        
+
+REMOVE:ee ("." CLB) IF (0 ABBR LINK 0 ("ee")) (NEGATE 1*> (>>>) BARRIER (>>>) LINK 1 ("<[A-ZČŠÁ].*>"r) LINK NOT 0 Prop);        
+	## Das leat ee. dieđut guovddáža ja dan doaimma ja čielggademiid birra, ja raporttat ja artihkkalat álgoál-bmotvuoigatvuođaid birra.
 
 
 #REMOVE SUB:1 ABBR (0 ("." CLB))(*1W ("<\\p{Lu}.*>"r) (*) - BOS);
 	## Mun liikon du. Son boahtá. 
 	
-	## Fágalávdegotti  vuosttaš  čoahkkin lei  čakčamánu  {1.beaivvi}  1998.
+	## Fágalávdegotti vuosttaš čoahkkin lei čakčamánu {1.beaivvi} 1998.
 	
 	
 REMOVE ("." CLB) IF (0 Sem/Org + ABBR)(1*> Sem/Sur OR Sem/Fem OR Sem/Mal); 	
@@ -2271,6 +2271,9 @@ REMOVE ("." CLB) IF (0 Sem/Edu + Sem/Hum + ABBR)(1*> Sem/Sur OR Sem/Fem OR Sem/M
 	
 REMOVE ("." CLB) IF (0 ("omd"))(1*> N LINK *0 ("."))(NEGATE -1 N);	
 	## Praktihkálaš oahpahussii láigohit lanjaid doppe gos heive, omd. Duodjeservviin.
+	
+	
+	## Čujuhus lea maid árvalussii S. nr. 110 (2002 – 2003), čuoggái 5.2.1 iešmearrideami doahpaga birra.
 
 	
 	
@@ -2307,6 +2310,17 @@ REMOVE (Err/SpaceCmp) (0/1 ("buorre"));
 
 SELECT:before-paragraph ("." CLB) IF (1*> (>>>) BARRIER (>>>) LINK 1 <firstWordOfParagraph>);
 	## Dat lea eanet go 10.  <linjeshift> Dat lei boahtán.
+
+
+# Preprocessing (testing for now)
+
+SELECT:iabbr PUNCT IF (0 Gram/IAbbr)(1 Prop);
+
+REMOVE:tabbr PUNCT IF (0 Gram/TAbbr)(1 Prop);
+
+	# Merethe A. Hanssen lea boahtán.
+	# Bođii Merethe A. Hansen lea boahtán.
+
 	
 
 	# Default rule
