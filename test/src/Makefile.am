@@ -8,7 +8,7 @@ SUBDIRS = phonology orthography morphology syntax
 
 # List here (space separated) all test scripts that should be run
 # _unconditionally_:
-TESTS=
+TESTS=tag_test.sh
 
 if CAN_YAML_TEST
 # Add your shell scripts for running python-based tests below here, so that
