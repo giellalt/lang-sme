@@ -221,33 +221,23 @@ LEXICON dot-nomaccgen-infl   !!= * __@CODE@__
 
 LEXICON DOT   !!= * __@CODE@__ - Adds the dot to dotted abbreviations.
 
- :. # ; ! We need the dot here, both for regular fsts and as default analysis in
-        ! the pmatch fst in addition to the split analysis below.
-! This one should create a backtracking split point, + a .+CLB reading for the
-! full stop at the end.
+ +Use/-PMatch:%. # ; ! We need the dot here for regular fsts
+! Split the abbr + full stop in two segments, but only when using pmatch:
 < "@P.Pmatch.Loc@" {.} "+CLB":0 "+Use/PMatch":0 > # ;
+! Make a regular ABBR analysis AND backtrack to find alternative analyses:
+< "+Use/PMatch":0 "@P.Pmatch.Backtrack@" 0:%. > # ;
 
 ! Gives:
+!$ echo 'su.' \
+!| hfst-tokenise -g tools/tokenisers/tokeniser-gramcheck-gt-desc.pmhfst 
 !"<su.>"
-!	"." PUNCT "<.>"
-!		"su" Adv Abbr "<su>"
-!	"su" Adv Abbr
-!	"." PUNCT "<.>"
-!		"su" Pron Pers Sg3 Acc "<su>"
-!	"." PUNCT "<.>"
-!		"su" Pron Pers Sg3 Gen "<su>"
-
-! TODO: Split DOT into ABBRDOT, NOUNDOT etc where we expect there to
-! be no tags added yet, so we can add the dot the lemma in ABBRDOT like
-! < "@P.Pmatch.Backtrack@" {.} "+ABBR":0 > # ;
-! < "@P.Pmatch.Loc@"     {.}:0 "+ABBR":0 {.} "+PUNCT":0 "+Use/PMatch":0 > # ;
+!	"." CLB <W:0.0> "<.>"
+!		"su" Adv ABBR Gram/NumNoAbbr <W:0.0> "<su>"
+!	"su" Adv ABBR Gram/NumNoAbbr <W:0.0>
+!	"." CLB <W:0.0> "<.>"
+!		"son" Pron Pers Sg3 Gen <W:0.0> "<su>"
+!	"." CLB <W:0.0> "<.>"
+!		"son" Pron Pers Sg3 Acc <W:0.0> "<su>"
+!:\n
 !
-! That should give:
-!"<su.>"
-!	"." PUNCT "<.>"
-!		"su." Adv Abbr "<su>"
-!	"su." Adv Abbr
-!	"." PUNCT "<.>"
-!		"su" Pron Pers Sg3 Acc "<su>"
-!	"." PUNCT "<.>"
-!		"su" Pron Pers Sg3 Gen "<su>"
+! which is exactly what we want.
