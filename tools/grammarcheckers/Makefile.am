@@ -26,6 +26,13 @@ LOCAL_GC_ZIP_FILES=
 
 #### BEGIN: Local build targets: ####
 
+# Copy the standard disambiguator file as the grc version, but without
+# protecting the speller suggestions. This one is applied after the regular
+# disambiguation, and will disambiguate the suggestions _after_ the rest of
+# the sentence is disambiguated.
+after-speller-disambiguator.cg3: grc-disambiguator.cg3
+	$(AM_V_GEN)grep -v 'PROTECT' $< > $@
+
 #### END: Local build targets:   ####
 
 #### Do NOT edit below here: ####
