@@ -668,7 +668,7 @@ SET NOT-SG-PRON = DU-PRON OR PL-PRON ;
 
 LIST DAT-PRON = ("dat") ("dát") ("diet") ("duot") ("dot") ;
 
-LIST QUANT-PRON = "ollu" "olu" "unnán" "váháš" "veaháš" "veháš" ;
+LIST QUANT-PRON = "ollu" "olu" "unnán" "uhccán" "uhcán" "váháš" "veaháš" "veháš" ;
 # This set is for choosing between Adv and Pron Indef.
 
 
@@ -1180,6 +1180,8 @@ LIST PLURALIZER = "buot" "buotlágan" "buotlágaš" "earálágan" "iežálágan"
     # Singular nouns can have a plural form combined with those
   
 LIST BUOT = "buot" "gait" "gaitin" "gaitdivnnat" ;
+
+LIST UNNAN = "unnán" "uhcán" "uhccán" ;
 
 #!! !Adjective sets
 # ----------
@@ -3410,6 +3412,8 @@ SELECT:dieđus  ("dieđus") + Adv  ;
 #!! * __sávvamis__ chooses adv
 SELECT:sávvamis ("sávvamis") + Adv  ;	
 
+
+
 #!! * __beali__ chooses adv
 SELECT:beali ("beali") + Adv (1 Comp)  ;	
 
@@ -3692,10 +3696,15 @@ SELECT:seammaAdv ("seammá" Adv) IF (1 OLLU OR go);
 	#$ Seamma go ovdalis namahuvvon riektehistorjjálaš ovdanbuktimis...
 
 #!! * __unnanAdv__ selects
-SELECT:unnanAdv ("unnán" Adv) IF (1 VFIN OR PrfPrc LINK NEGATE 0 N);
-REMOVE:unnanV V IF (0 ("unnán") LINK *-1 BOC BARRIER WORD);
+SELECT:unnanAdv UNNAN + Adv IF (1 VFIN OR PrfPrc LINK NEGATE 0 N);
+REMOVE:unnanV V IF (0 UNNAN + Adv LINK *-1 BOC BARRIER WORD);
 	#$ Eanaš duopmárat unnán dovdet eamiálbmogiid historjjá.
 	#$ Dat orru oppanassii unnán čilgejuvvon 1800-logu gaskamuttu.
+SELECT:unnánAdv Adv IF (-1 MOD-ADV-ADV)(0 UNNAN)((1 REAL-V) OR (-2 REAL-V)) ;
+SELECT:unnánAdv Adv IF (-1 COPULAS)(0 UNNAN)(1 PrfPrc) ;
+	#$ Sii leat hui unnán dahkan guorahallat "sámi vieruid ja riekteáddejumiid".
+	#$ Eanetlohku lea menddo unnán bidjan Finnmárkku mihtilmas diliid vuođđun.
+
 
 #!! * __varraAdv__ selects
 SELECT:varraAdv1 ADV-NOT-N + Adv IF (*0 (N Nom) BARRIER S-BOUNDARY OR CC);
@@ -5734,8 +5743,11 @@ SELECT:viidáseappotAdv Adv IF (0 ("viidáset") LINK 1 ("gilvu")) ;
 
 
 #!! * __vuostálagaAdv__
-SELECT:vuostálagaAdv Adv IF (0 ("vuostálaga") OR ("vuostálagaid") LINK *0 ("gilvalit") OR ("bargat") OR ("bidjat") BARRIER SV-BOUNDARY) ;
+SELECT:vuostálagaAdv Adv IF (0 ("vuostálaga") OR ("vuostálagaid")) ; # LINK *0 ("gilvalit") OR ("bargat") OR ("bidjat") BARRIER SV-BOUNDARY) ;
 	#$ Márjjábeivviid oktavuođas lágiduvvo njoarostangilvu, ja dán jagi galget sihke mánát, nuorat, nissonolbmot ja almmáiolbmot gilvalit vuostálaga.
+	#$ Birasgáhttenlihkadus ja álgoálbmogat – ovttasbargit vai vuostálagaid ?
+	#$ Nugo oalle máŋgga eará gilisge, de leat Kárášjogasge leamaš sogat geat árbevirolaččat leat leamaš vuostálagaid.
+
 
 
 #!! * __maidAdv1__ selects maid Adv when there is no vfin to the right.
@@ -5847,7 +5859,7 @@ IFF:matPcle ("mat" Pcle) IF (-1 Imprt OR ("gea") OR ("dego") OR ("gal") LINK *-1
  	#$ Lea registreren maid ja man ollu lea borran. 
 
 
-SELECT:manAdv ("man" Adv) IF (1 (A Nom) OR ("uhcán") OR ("unnán") OR PrfPrc OR OLLU LINK NOT 0 Der/sasj) (NEGATE 1 Nom LINK 1 VFIN) ;
+SELECT:manAdv ("man" Adv) IF (1 (A Nom) OR UNNAN OR PrfPrc OR OLLU LINK NOT 0 Der/sasj) (NEGATE 1 Nom LINK 1 VFIN) ;
  	#$ Man stuoris mánná lea? 
 	#$ Man ollu sudnos lea alddiska ruhta?
 	#$ Girkonjárggas fuomášin man ollu negatiiva oainnut dan áigge ledje sámiid vuostá.
@@ -7295,13 +7307,8 @@ SELECT:r1611 Attr IF (0 ("seammá"))(1 Adv OR OLLU + Pron)(NEGATE 1 REAL-V OR ("
 
 # unnán
 # - - -
-SELECT:unnánAdv Adv IF (-1 MOD-ADV-ADV)(0 ("unnán"))((1 REAL-V) OR (-2 REAL-V)) ;
-SELECT:unnánAdv Adv IF (-1 COPULAS)(0 ("unnán"))(1 PrfPrc) ;
-	#$ Sii leat hui unnán dahkan guorahallat "sámi vieruid ja riekteáddejumiid".
-	#$ Eanetlohku lea menddo unnán bidjan Finnmárkku mihtilmas diliid vuođđun.
 
-
-SELECT:r1612 Indef IF (*-1 COPULAS BARRIER NOT-AUX-V)(0 ("unnán"))(NEGATE 1 PrfPrc LINK *1 NP-HEAD-ACC BARRIER NOT-NPMOD);
+SELECT:r1612 Indef IF (*-1 COPULAS BARRIER NOT-AUX-V)(0 UNNAN)(NEGATE 1 PrfPrc LINK *1 NP-HEAD-ACC BARRIER NOT-NPMOD);
 	## Dat gal lei beare unnán.
   
 
@@ -8769,9 +8776,10 @@ MAP:-f<ADVLInf (@-F<ADVL) TARGET Inf - ("leat") (*-1 MOVEMENT-V - AUX OR ("atnit
 
 
 #!!	* __ADVLInf__ Inf
-MAP:<ADVLInf (@<ADVL) TARGET Inf (-1 ADVLCASE LINK -1 REAL-V - AUX)(NEGATE 0 ("leat")) ;
+MAP:<ADVLInf (@<ADVL) TARGET Inf (-1 ADVLCASE LINK -1 REAL-V - AUX - @>N)(NEGATE 0 ("leat")) ;
 	#$ Veahkehit miljovdnabeliin bosádit heakka ásaheapmái.
 	#% – Ii sáhte guođohemiin eastadit goaskinvahágiid. 
+	#% Finnmárkkuopmodat sáhttá dárkileappot albmaduvvon guovlluide mearridit gáržžádusaid.
 
 
 #!!	* __ADVLInf__ Inf in questions
@@ -8779,7 +8787,7 @@ MAP:<ADVLInf (@<ADVL) TARGET Inf (-1 Nom LINK *-1 MOVEMENT-V BARRIER NOT-PCLE LI
 	#$ Manaigo Biret-Elle viežžat boastta? 
 
 #!!	* __r360x__
-MAP:r360x (@<ADVL) TARGET Inf IF (-1 ADVLCASE LINK NOT 0 NP-HEAD-NOM LINK *-1 NOT-AUX-V BARRIER NOT-NPMOD LINK NOT 0 TRANS-V)(NEGATE 0 ("leat"))(*-2 VFIN BARRIER S-BOUNDARY);
+MAP:r360x (@<ADVL) TARGET Inf IF (-1 ADVLCASE LINK NOT 0 NP-HEAD-NOM LINK *-1 NOT-AUX-V BARRIER NOT-NPMOD LINK NOT 0 TRANS-V OR @>N)(NEGATE 0 ("leat"))(*-2 VFIN BARRIER S-BOUNDARY);
 
 MAP:veahkkiF<ADVL (@-F<ADVL) TARGET Inf (-1 ("veahkki" Acc) LINK -1 (TV Inf @<SUBJ)) ;
 
@@ -13844,7 +13852,7 @@ SELECT:NPlwhenAPl (N Pl) + $$CASE (0 A + $$CASE LINK NOT 0 TYP-A) ;
 SELECT:APlwhenNPl (A Pl) + $$CASE (0 N + $$CASE LINK 0 TYP-A) ;
 
 SELECT:NomCCNom Nom (-1 CC LINK -1C Nom) ;
-SELECT:AttrwhenAdv Attr (0 Adv - ("njuolga") LINK 1 N)(NEGATE -1 ("man") OR REAL-V)(NEGATE 0 ("veaháš") OR ("unnán") LINK 1 Prop)(NEGATE 0 DEHALAS LINK *0 COPULAS + FMAINV BARRIER SV-BOUNDARY) ;
+SELECT:AttrwhenAdv Attr (0 Adv - ("njuolga") LINK 1 N)(NEGATE -1 ("man") OR REAL-V)(NEGATE 0 ("veaháš") OR UNNAN LINK 1 Prop)(NEGATE 0 DEHALAS LINK *0 COPULAS + FMAINV BARRIER SV-BOUNDARY) ;
 SELECT:PlNomwhenAdv (N Pl Nom) (0 Adv)((*-1 V + Pl3  OR COPULAS + Inf BARRIER NOT-ADV-PCLE LINK NOT -1 (Nom Pl) OR (Nom Pl3)) OR (*1 V + Pl3  OR COPULAS + Inf BARRIER NOT-ADV-PCLE LINK NOT 1 (Nom Pl) OR (Nom Pl3)))(NEGATE -1 (Rel Pl))(NEGATE 0 ("eanebut")) ;
 	#% Muhto beatnagat harre ja fáhkka čiellagohte issorasat.
 
