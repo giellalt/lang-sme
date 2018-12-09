@@ -1,0 +1,1997 @@
+#!/usr/bin/perl -w
+use utf8;
+use IPC::Run qw( start pump finish ); # interprocess communication
+
+#########################################################################
+#### genmorf_no: Morphological generator script after smecg.norsyn.cg
+#### © GrammarSoft ApS 2018; contact: eckhard.bick @ mail.dk
+#########################################################################
+#
+# input:
+# 	cat sme.dep | cg3 -g ~/parsers/sme/etc/smecg.nor.cg | niceline.perl
+#       | sme2nor --l
+#
+# Input format is cg dependency.
+#
+# The program looks up translation equivalents in sme.nor.dict, using in-file selection rules for chosing a translation and performing substitutions and other modifications linked to that choice. In the output, the original reading line is kept after the word form, and a new one is created with the target language lemma. If no selection rules are found in sme.nor.dict for the word in question, an ambiguous cohort is created with one line per reading.
+#
+#
+#########################################################################
+
+my ($binDir, $sep) = $0 =~ /^(.*)(\\|\/).*/;
+$ENV{SMEGRAM_BIN} = "$binDir";
+$ENV{SMEGRAM_LEX} = $lexDir = "$binDir/../lex";
+#$ENV{SMEGRAM_USEDB} =0; 
+#$ENV{SMEGRAM_USEDB} =1; 
+
+my $lexDir_nor = $lexDir;
+$lexDir_nor =~ s/sme/nor/;
+my $binDir_nor = $lexDir_nor;
+$binDir_nor =~ s/lex/bin/;
+
+
+my $countwords = 0;
+my $dontusedb = 0;
+
+use Getopt::Long;
+my $rop = GetOptions(
+	"countwords|c" => \$countwords,
+	"dontusedb|l" => \$dontusedb,
+	"noprop" => \$noprop,
+	"domain|d=s" => \$domain, # string variable
+	);
+
+$ARG0 =$ARGV[0];
+
+
+if ($dontusedb || $ARG0 && $ARG0 =~ /^--.*l/) {$ENV{SMEGRAM_USEDB} =0;} # read lexicon from file (not db)
+else {$ENV{SMEGRAM_USEDB} =1;}
+
+sub LoadSmeNorDict() {
+  my $trad;
+  open(FH, "<$lexDir/sme.nor.dict");
+  while (<FH>) {
+    if (! /^#/) {s/ VR / D=(<refl>)_nil /g;}
+    if (! /^\#/ && ! /^[^:]+ XXX/ && /^(.*?) (.*)$/) {
+      $word =$1;
+      $translation =$2;
+      $translation =~ s/[ \t]+\#.*//g;
+      $translation =~ s/ =/ :=/;
+      $translation =~ s/:\?[^ ,;]+[,;] //g; # remove unchecked firsties
+#      $translation =~ s/\) +([GDP]?[DHSPBM]\-?[0-9]?\??\!?=\(|:)/\)_ $1/g;
+      $translation =~ s/\) +([GDP]?[DHSPBM]\-?[0-9]?[\?\!\*]*=\(|:)/\)_ $1/g;
+      $translation =~ s/^([^:])/ $1/; # so initial <vr> can be found
+      $translation =~ s/\[g\]//g; # kingorn[g]a
+
+      $translation =~ s/(\('[^ =]+)=([^ &]+'\))/$1'&'$2/g;
+      $translation =~ s/(\('[^ =]+)=([^ &]+'\))/$1'&'$2/g;
+      $translation =~ s/(\('[^ =]+)=([^ &]+'\))/$1'&'$2/g;
+
+      $translation =~ s/\[([^>&\+]*?)\]/[<ø>-><$1>]/g;
+      $translation =~ s/__/^/g;
+      
+#      if (/^lohkat_V/) {print "--$word -- $translation\n";}
+	#	$translation =~ s/\"([^ ]+)\"/\[$1\]/g; # base forms
+      if (! $trad{$word}) {
+	$trad{$word} =$translation;
+      }
+      else {
+	if ($translation =~ /^[^=]*:/ && $trad{$word} !~ /^[^:]*\(1\)/) {
+	  $trad{$word} = $translation . "; " . $trad{$word}; # prefix translation alternative to others, because it is without D= etc. conditions, and hence designed to come first. However, respect another translation without D= etc., if it is explicitly marked as first (1)
+	}
+	else {
+	  $trad{$word} .= "; " . $translation;
+	}
+#      $trad{$word} =$translation;
+      }
+    }
+  }
+  return $trad;
+}
+
+sub LoadSmeNorBaselex() {
+  my $basetrad;
+  open(FH, "<$lexDir/sme.nor.baselex");
+  while (<FH>) {
+    if (! /^\#/ && /^(.*?) (.*)$/) {
+      $word =$1;
+      $translation =$2;
+      $translation =~ s/[ \t]+\#.*//g;
+      $basetrad{$word} =$translation; # inactive
+    }
+  }
+  return $basetrad;
+}
+
+
+sub LoadSmeNorMemory() {
+  my $memotrad;
+  open(FH, "<$lexDir/sme.nor.memory");
+  while (<FH>) {
+    if (! /^\#/ && /^(.*?) +:(.*)$/) {
+      $from ="\l$1"; $to =$2;
+      $from =~ s/[\[\]]//g;
+      $to =~ s/ /=/g;
+      $memotrad{$from} =$to;
+    }
+  }
+  return $memotrad;
+}
+
+
+
+use DB_File;
+use DBM_Filter;
+use Encode;
+
+
+if ($ENV{SMEGRAM_USEDB} == 1) {
+  my $lexDir = $ENV{SMEGRAM_LEX} || "/usr/local/visl/lex/";
+
+  my $Ttrad = 	tie %trad, "DB_File", "$lexDir/sme.nor.dict.db", O_RDONLY;
+  $Ttrad->Filter_Push('utf8');
+  my $Tbasetrad = 	tie %basetrad, "DB_File", "$lexDir/sme.nor.baselex.db", O_RDONLY;
+  $Tbasetrad->Filter_Push('utf8');
+  my $Tmemotrad = 	tie %memotrad, "DB_File", "$lexDir/sme.nor.memory.db", O_RDONLY;
+  $Tmemotrad->Filter_Push('utf8');
+} 
+else {
+  $trad = LoadSmeNorDict();
+  $basetrad = LoadSmeNorBaselex();
+  $memotrad = LoadSmeNorMemory();
+}
+
+
+$pospref ="_F";
+$posadj ="_ADJ";
+$posadv ="_ADV";
+$posn ="_N";
+$posv ="_V";
+$posart = "_ART";
+#$posdet = "_DET";
+$posnum = "_NUM";
+$posprp = "_PRP";
+$poskc = "_KC";
+$posprop = "_PROP";
+
+$increment = 0;
+
+# $num=0;
+
+while (<STDIN>) {
+
+  s/(\t *\[.*)\t *.+( \#[0-9])/$1$2/; # only one morph-reading
+  s/ (\#[^ ]+) (\@.*)/ $2 $1/; # dep after syn
+  
+  s/(\#[0-9]+)-> *$/$1->0/; # missing head
+  if (/^(.*?)[\t ]+\#([0-9]+)\->([0-9]+)/) {
+    $linetext =$1;
+    $self =$2;
+    $mother =$3;
+
+    if ($mother ==0 && /\@/ && ! /\@PU/ || (/\@(FS|ICL)/ && ! /\@ICL-AUX</)) {$vnode=$self;}
+    elsif ($vnode && $mother < $vnode && $self > $vnode && ! /\@<</) {$mother =0;} # don't allow left crossing over V node (right crossing does happen: @>>P) ... this precaution prevents weird syntactic movements
+    if ($domain) {$linetext =~ s/\] /\] <D:$domain> /;}
+    if ($linetext =~ s/<DL:(.*?)>/<D:$1>/g) {$domain_local = $1;}
+    if ($num && $self == 1) {
+      if ($line[$num+1]) {$num++;} # fx s-passives may be last in sentence, and need a place to put the main verb
+
+      &assign;
+      &addtrad;
+      &generator;
+#	    &syntrans;
+      &print;
+
+      $increment =0;
+      $sentcase ="";
+      $i_text_init =1;
+      $vnode =0;
+      @M=();
+      @DM=();
+      @relM=();
+      @incs=();
+      @reduce=();
+      @line =();
+      @prop2n =();
+      @ambitrad=();
+      $wordnumber =0; $sourcetext ="";
+      $domain_local ="";
+    }
+
+
+    $wordnumber++;
+    $linetext =~ s/\] /\] <$wordnumber> /; # add source language word number to tag line
+    if (/\[([^ ]+)\] /) {
+      $word =$1;
+      while ($word =~ m/=/g) {$wordnumber++;}
+    }
+
+    if ($printsourcetext) {
+      if ($countwords) {$sourcetext .= "[$wordnumber] ";}
+      $linetext =~ m/^\$?([^ \t\n]+)/;
+      $sourceform = $1;
+      if ($linetext =~ /<allupper>/) {$sourceform = "\U$sourceform";}
+      $sourcetext .= "$sourceform ";
+    }
+    $incs[$self] =$increment; # so later num's know how much to increase their head-id
+    $num =$self + $increment;
+    if ($linetext =~ /^\w.*\] / && ! $sentcase) {
+
+      if ($linetext =~ /^[A-ZÆØÅÉ]/) {$sentcase = "u";}
+      else {$sentcase = "l";}
+      $i_text_init =$num;
+    }
+    if ((! /\@/ || /\@PU/) && ! $mother && $self >1) {
+      $mother =$self-1; #	punctuation chunked onto last element before, rather than head=0
+    }
+    $M[$num] =$mother;
+    $line[$num] ="$linetext ";
+    $line[$num] =~ s/^(\$[^ \t0-9]+)([^A-Z0-9]* )/$1$2$1 /g; # space also around punctuation, now working for punctuation both with and without tags
+    if ($line[$num] =~ s/(\@(ICL-|[AF]S-|[FSR]-|-F)?)[<←]+(SUBJ|ACC|OBJ|DAT|PIV|ADVL|PRED|SC|OC|SA|OA|[SO]PRED)/$1$3/g || $line[$num] =~ /\@MV</) {
+      $line[$num] =~ s/\] /\] <right> /;
+    }
+    elsif ($line[$num] =~ s/(\@(ICL-|[AF]S-|[FSR]-|-F)?)(SUBJ|ACC|OBJ|DAT|PIV|ADVL|PRED|SC|OC|SA|OA|[SO]PRED)[>→]+/$1$3/g) {
+      $line[$num] =~ s/\] /\] <left> /;
+    }
+    $line[$num] =~ s/^([^ \t]+?)[\t ]+\[(.*?)\] / \'$1\' \"$2\" /g;
+#	print "--num =$num line=$line[$num]\n";
+
+### s-passives
+    if ($line[$num] =~ /\"(.*?)\" .* (PR|IMPF|INF).* PAS / && ! ($line[$num] =~ /<nospass>/)) {
+      $base =$1;
+#	  print "--base=$base\n";
+      if ($base =~ /s$/) {}
+      elsif ($trad{$base . "s_V"}) {$line[$num] =~ s/\" /s" /;}
+      else {
+	$line[$num] =~ s/^(.*?\" .*)( V .*\@[^ \n]+)/ \'xxx\' \"blive\" <aux>$2/;
+#	  print "---found passive for $line[$num]\n";
+	$tags =$1;
+	$line[$num] =~ s/ PAS/ AKT/;
+	if ($tags =~ s/<will> //) {
+	  $line[$num] =~ s/ V / <will> V /; # to make 'will be sold' possible
+	}
+	if ($num ==1) {
+	  $line[$num] =~ s/xxx/Xxx/; # upper case at sentence start
+	  $tags =~ s/ \'(.)/ \'\l$1/; # lower case at ex-start
+	}
+	$line[$num+1] = "$tags V PCP2 PAS \@ICL-AUX< ";
+	$M[$num+1] =$self;
+	$reduce[$num+1]++; # helps correct the only remaining link to the old V-token
+	$increment++; # helps adjust id's later in the num-loop
+	$incs[$self] =$increment;
+      }
+    }
+
+    if ($line[$num] =~/xxx/ && $line[$num+1] =~ s/<(cjt|cjt-head)> //) {
+      $cjt=$1; $line[$num] =~ s/\" /\" <$cjt> /;
+    }
+  }
+  if (/^</) {print;}
+#    elsif (! /<\/?s>/) {print;}
+}
+&assign;
+&addtrad;
+&generator;
+
+&print;
+
+sub assign {
+ $line[0] = " >>> ";
+ @relM=();
+ $newi =$num+1;
+ for ($i = 1; $i <= $num; $i++) {
+#	print "$i $words[$i] $M[$i]\n";
+   if ($M[$i]) {$M[$i] += $incs[$M[$i]];}
+   if ($reduce[$i]) {
+#	    $M[$i]--;
+     $M[$i] =$M[$i] - $reduce[$i];
+   }
+   if ($DM[$i]) {
+     $DM[$i] += $incs[$DM[$i]];
+     if ($reduce[$i]) {$DM[$i]--;}
+   }
+   else {$DM[$i] =$M[$i];} # default DM=M, if vp consists of one verb only, changed later to auxiliary for complex vp's
+
+#	print "--- $i $line[$i] #$i->$M[$i]\n";
+ }
+
+### raising conjuncts
+
+ for ($i = 1; $i <= $num; $i++) {
+   if ($line[$i] =~ /<cjt>/) {
+     $DM[$i] =$M[$i]; # pure dependency mother (coordination, e.g. second SUBJ on first
+     $M[$i] =$M[$M[$i]]; # link 2nd conjunct to mother of first, this is semantically necessary to do differentiation in sme.nor.dict
+   }
+   elsif ($line[$i] =~ /\@FOC/ && $line[$M[$i]] =~ /\@CO/) { # making 'både' dependent of first CJT, for the sake of movement rules
+#	  print "--raising $line[$i]\n";
+     $DM[$i] =$M[$M[$i]];
+     $M[$i] =$DM[$i];
+   }
+ }
+
+ @words =();
+ @D = ();
+ @daughters = ();
+ $line[$num+3] = " <left> <H> \@SUBJ ";
+ for ($i = 1; $i <= $num; $i++) {
+#	print "assigning $i $line[$i] head $M[$i]\n";
+   if (! $M[$i]) {$M[$i]=0;}
+   if ($line[$i] =~ /<vHe>/) {$daughters[$i] .= "," . ($num+3);}
+   if ($line[$i] =~ /\@SUB / && $M[$i] && $line[$M[$i]] =~ /AUX</ && $M[$M[$i]]) {
+#	    print "---now SUB $i -> $M[$i] -> $M[$M[$i]]\n";
+     $M[$i] =$M[$M[$i]]; # subordinators as head of aux
+   }
+   $daughters[$M[$i]] .= ",$i";
+   if (($line[$i] =~ /<cjt>.*<mv>/ || $line[$i] =~ /<mv>.*<cjt>/) && $line[$i] =~ /<(nosubj|vpcjt)>/) {
+#	    print "---co-ordinated main verb found: $i $line[$i]\n";
+     for ($k = 1; $k <= $num; $k++) {
+       if ($line[$k] =~ /\@SUBJ/ && defined $M[$k] && defined $M[$M[$k]] && $M[$M[$k]] == $M[$i]) { #  && $M[$M[$k]] can not be if-queried, since M[k] legally can be zero!! --> use defined
+#		    print "subject found: $k with head $M[$k]\n";
+	 $daughters[$i] .= ",$k"; # add SUBJ to daughters of co-ordinated verb
+       }
+     }
+   }
+   if ($line[$i] =~ /<cjt>/ && $line[$i] =~ / (PR|IMPF) /&& $line[$i] =~ /<(nosubj|vpcjt)>/) { # propagagtin person/number between verb from first to second conjunct
+     if ($line[$DM[$i]] =~ /<cjt-head>.* ([123][SP]) /) {
+       $persnum =$1;
+       $line[$i] =~ s/ [123][SP]//g;
+       $line[$i] =~ s/ (PR|IMPF)/ $1 $persnum/;
+#         print "--$i $persnum $line[$i]\n";
+     }
+   }
+   if ($line[$i] =~ /(\@([FSR]|ICL|FS)?-?SUBJ| KS )/ && $line[$M[$i]] && $line[$M[$i]] =~ /<aux>/) { # raising subject and KS to main verb
+     if (! $DM[$i]) {
+       $DM[$i] =$M[$i]; # remember "true" dependency mother of SUBJ (i.e. the finite auxiliary)
+     }
+     $j=$M[$i]+1;
+     while ($line[$j] && ! ($line[$j] =~ /<mv>/) && $j <= $num) {
+       $j++;
+     }
+     $daughters[$j] .= ",$i"; # subject dependency propagation to main verb
+     if ($line[$i] =~ /SUBJ/) { # for KS, only make it daughte of main verb, but leave its mother as the finite verb (otherwise sve2dan can't fint KS as GD from an FS daughter
+       $M[$i] =$j; # possibly risky at link subject to main verb rather than finite verbs, but here done for the sake of semantic matching in .dict
+     }
+#	    print "++++++++raised subject $i-$j, $daughters[$j] true head=$DM[$i]\n";
+   }
+   if ($line[$i] =~ /\@([FSR]|ICL|FS)?-?SUBJ / && ($line[$M[$i]] =~ /<cjt-head>/ ||  $line[$DM[$i]] && $line[$DM[$i]] =~ /<cjt-head>/)) {
+#	  print "---$i->$M[$i]\n";
+     $j=$M[$i]+1;
+     $cofound =0;
+   findnextmother:
+     while ($line[$j] && ! ($line[$j] =~ /<cjt>.*(PR|IMPF)/) && $j <= $num) {
+       if ($line[$j] =~ / KC /) {$cofound =1;}
+       $j++;
+     }
+     if ($line[$j] && $line[$j] =~ /<nosubj>.*(PR|IMPF)/) {
+       if (! ($line[$j] =~ /[123][SP]/) && $line[$i] =~ / ([123][SP]|S) /) {
+	 $persnum=$1; $persnum =~ s/^S$/3S/; # adding person-number for coordinated finite verbs
+	 $line[$j] =~ s/ (PR|IMPF) / $1 $persnum /;
+       }
+       while (! ($line[$j] =~ /<mv>/) && $j < $num) {$j++;}
+       if ($line[$j] && $line[$j] =~ /<mv>/) {
+	 $daughters[$j] .= ",$i"; # allow more than one main verb to have the same (shared) subject, but not that subject to have more than one head (per default it gets the first main verb as head, while objects get the last of coordinated main verbs as head)
+#	      print "-------$i added to cjt head $j\n";
+	 if (! $cofound && $j < $num) {
+	   $j++; goto findnextmother;
+	 }
+       }
+     }
+   }
+   if ($line[$M[$i]] && $line[$M[$i]] =~ /<pass>/ && $line[$M[$M[$i]]] =~ / PAS /) {
+     $daughters[$M[$M[$i]]] .= ",$i" ; # passive agent propagation to main verb
+     $M[$i]=$M[$M[$i]];
+     $line[$i] =~ s/\@P</\@PASS/g;
+#	    print "++++++++pass_daughter =$i pass_mother =$M[$M[$i]] line=$line[$i]\n";
+   }
+ }
+
+ for ($i = 1; $i <= $num; $i++) {
+#	print "assigning dependents $i->$M[$i] $line[$i]\n";
+   $j =$i;
+   $D[$i] .= ",$i";
+   while ($DM[$j] && ! ($D[$j] =~ /,$DM[$j](,.*)?$/) && ! ($D[$j] =~ /(,[0-9]+)\1(,.*)?$/) && ! ($DM[$j] && $j == $DM[$j])) { # avoid circular dependencies
+#	while ($M[$j] && ! ($D[$j] =~ /,$M[$j](,.*)?$/) && ! ($D[$j] =~ /(,[0-9]+)\1/) && ! ($DM[$j] && $j == $DM[$j])) { # avoid circular dependencies
+
+#		print "... $i $j M(j)=$M[$j] D(j)=$D[$j] $line[$j]\n";
+     if ($DM[$j]) {
+       $D[$DM[$j]] .= ",$i";
+#		print "assigning D $i to $DM[$j]\n";
+       $j =$DM[$j];
+     }
+     else {
+       $D[$M[$j]] .= ",$i";
+#		print "------ NO DM!! assigning D $i to $M[$j]\n";
+       $j =$M[$j];
+     }
+   }
+   if ($line[$i] =~ m/\'(.*?)\' /) {
+     $words[$i] = "$1";
+     $words[$i] =~ s/^\$//;
+   }
+   else {
+     $words[$i] =$line[$i];
+     $words[$i] =~ s/^\$//;
+     $words[$i] =~ s/ .*//;
+   }
+   if ($line[$i] =~ m/\"(.*?)\" /) {
+     $bases[$i] = "$1";
+   }
+   else {
+     $bases[$i] =$line[$i];
+     $bases[$i] =~ s/^\$//;
+   }
+
+#	print "******$i $words[$i]\n";
+#	print "$M[$i]-$words[$M[$i]] daughters[$M[$i]] = $daughters[$M[$i]]\n";
+ }
+ foreach(@daughters) {
+   if ($_) {
+#	    print "---$_\n";
+     s/^,//;
+   }
+ }
+ foreach(@D) {
+   if ($_) {
+#	  print "----$_\n";
+     s/$/,/;
+   }
+ }
+
+ for ($i = 1; $i <= $num; $i++) { ### relative clause referents (has to come after $D, so as not to influence movement rules
+   if ($line[$i] =~ /<aci-subj>.*\@ACC/) {
+     @daughterlist =split /,/, $daughters[$M[$i]];
+     foreach (@daughterlist) {
+       if ($line[$_] =~ /ICL-<?OA/) {
+	 $line[$num+$i] =$line[$i];
+	 $line[$num+$i] =~ s/(\@<?)ACC/$1SUBJ/;
+	 $line[$num+$i] =~ s/<right>/<left>/;
+	 $daughters[$_] .= "," . ($num+$i); # adding fictive <H> subject 
+#	    print "--aci-subj: $i $num $daughters[$M[$i]]\n";
+       }
+     }
+   }
+
+### icl-subject
+
+   if ($line[$i] =~ /<icl-subj>/) {
+     $j =$i;
+     while ($j < $num && $line[$j] !~ / INF /) {$j++;}
+     while ($j < $num && $line[$j] !~ /<mv>/) {$j++;}
+     $line[$num+$j] =$line[$i]; # $num+$i maybe not high enough to be safe
+     $line[$num+$j] =~ s/(\@)[^ ]+/$1SUBJ/;
+     $line[$num+$j] =~ s/<right>/<left>/;
+     $daughters[$j] .= "," . ($num+$j); # adding fictive <H> subject
+#	    print "--icl-subj: $i $j $num\n";
+   }
+
+   if ($line[$i] =~ /\@FS-N</ && $line[$M[$i]] && ! ($line[$M[$i]] =~ /<(aux|mv)>/)) {
+     if ($line[$i] =~ /<aux>/) {
+       $j=$M[$i]+1;
+       while ($line[$j] && ! ($line[$j] =~ /<mv>/) && $j <= $num) {
+	 $j++;
+       }
+     }
+     else {$j =$i;}
+     @daughterlist = split /,/, $daughters[$j];
+     $fullsubject =0;
+     $strayprp =0;
+     $icloa =0;
+     $reladv =0;
+     $nonrel =0;
+     $accinrel =0;
+#	if ($daughters[$i]) {print "** $i - $daughters[$i]\n";}
+     foreach(@daughterlist) {
+       if ($_) {
+	 if ($line[$_] =~ /\@[FSR]?-?SUBJ/ && ! ($line[$_] =~ /<rel>/)) {$fullsubject =1;}
+	 elsif ($line[$_] =~ /<prp-(stray|strand)>/) {$strayprp =1;}
+	 elsif ($daughters[$_]) { # prp-stray one down: a situation they have got bored with
+	   @daughterlist2 = split /,/, $daughters[$_];
+	   foreach(@daughterlist2) {
+	     if ($line[$_] =~ /<prp-(stray|strand)>/) {$strayprp =1;}
+	   }
+	 }
+	 if ($line[$_] =~ /ICL-OA/) {$icloa =$_;}
+	 elsif ($line[$_] =~ /ACC/ && $line[$_] !~ /<rel>/) {$accinrel =$_;}
+	 if ($line[$_] =~ /<rel>.* ADV/ || $line[$_] =~ /<left>.* PRP/ && $line[$_+1] =~ /<rel>/) {$reladv =$_;}
+	 #	      if ($line[$_] =~ /<rel>.* ADV/) {$reladv =$_;}
+	 elsif ($line[$_] =~ / KS/) {$nonrel =1;}
+#	      print "---daughter: $_ fullsubject=$fullsubject\n";
+       }
+     }
+     if (! $strayprp && $fullsubject && ! $reladv && ! $nonrel) { 
+       $relM[$M[$i]] = $j; # relative anchor gets mv in rel-clause as rel-mother
+#	    print "---assigning relM between $M[$i] and $j\n";
+     }
+     if ($fullsubject && ! $strayprp && ! $reladv && ! $nonrel && ! $accinrel) {
+       $newi++;
+       $line[$newi] = $line[$M[$i]];
+       if (! ($line[$i] =~ /<vk/)) {$line[$newi] =~ s/\@[^ ]+/\@ACC/;}  # add relative referent as accusative object of verb in relative clause
+       else {$line[$newi] =~ s/\@[^ ]+/\@SC/;} # add relative referent as subject complement of verb in relative clause
+       if ($icloa) {$daughters[$icloa] .= ",$newi";}
+       else {$daughters[$j] .= ",$newi";}
+#	    print "---$j/$newi:     $line[$newi] \n";
+     }
+     elsif (! $fullsubject) {
+       $newi++;
+       $line[$newi] = $line[$M[$i]];
+       $line[$newi] =~ s/\@[^ ]+/\@SUBJ/; # add relative referent as subject of verb in relative clause
+       $daughters[$j] .= ",$newi";
+     }
+   }
+   if ($line[$i] =~ /<prp-(stray|strand)>/ && $line[$DM[$i]] =~ /\@FS-N</) {
+     $newi++;
+     $line[$newi] = $line[$M[$DM[$i]]];
+     $line[$newi] =~ s/\@[^ ]+/\@P</;
+     $daughters[$i] .= ",$newi"; # add relative referent as daughter of stray preposition
+#	  print "---$i/$DM[$i]/$M[$DM[$i]] --- $newi: $line[$newi]\n";
+   }
+ }
+#    $z=-1; foreach(@D) {$z++; print "$z descendents $_\n";}
+# if ($line[$num] =~ /^\$[^\w]/) { }
+ $line[$num+1] = " <<< ";
+
+}
+
+sub addtrad {
+
+  @norbases =();
+  @addword =();
+  for ($i = 1; $i <= $num; $i++) {
+    $posfirst ="";
+    $possecond ="";
+    $first =""; $second =""; $tradpropfirst ="";
+    $fuge ="";
+#    print "--$line[$i]\n";
+#    print "--$i $norbases[$i]\n";
+    if (! $norbases[$i] && $line[$i] =~ /^ *\'?(.+?)\'?[ \t]+\"(.*?)\"(.*?) ([A-Z]+) (.*)/ && $4 ne "PU") {
+      $word =$1; $base =$2; $pos ="_$4"; $tags ="$3 $5";
+      $pos =~ s/PREF/F/;
+      $nortrad ="";
+#      print "--word=$word, base=$base, pos=$pos\n";
+      if ($word =~ /^[A-ZÆØÅÄÖÜ]/) {$majuskel =1;}
+      else {$majuskel =0;}
+
+      if ($i+5 <= $num && ($chunk = "\l$word $words[$i+1] $words[$i+2] $words[$i+3] $words[$i+4] $words[$i+5]") && ($chunk =~ s/[= ]+/ /g) && $memotrad{$chunk}) {$chunk_nor =$memotrad{$chunk}; $m_max=5;}
+      elsif ($i+4 <= $num && ($chunk = "\l$word $words[$i+1] $words[$i+2] $words[$i+3] $words[$i+4]") && ($chunk =~ s/[= ]+/ /g) && $memotrad{$chunk}) {$chunk_nor =$memotrad{$chunk}; $m_max=4;}
+      elsif ($i+3 <= $num && ($chunk = "\l$word $words[$i+1] $words[$i+2] $words[$i+3]") && ($chunk =~ s/[= ]+/ /g) && $memotrad{$chunk}) {$chunk_nor =$memotrad{$chunk}; $m_max=3;}
+      elsif ($i+2 <= $num && ($chunk = "\l$word $words[$i+1] $words[$i+2]") && ($chunk =~ s/[= ]+/ /g) && $memotrad{$chunk}) {$chunk_nor =$memotrad{$chunk}; $m_max=2;}
+      elsif ($i+1 <= $num && ($chunk = "\l$word $words[$i+1]") && ($chunk =~ s/[= ]+/ /g) && $memotrad{$chunk}) {$chunk_nor =$memotrad{$chunk}; $m_max=1;}	    
+      elsif (($chunk = "\l$word") && ($chunk =~ s/[= ]+/ /g) && $memotrad{$chunk}) {$chunk_nor =$memotrad{$chunk}; $m_max=0;} # this line captures PROP's in sme.nor.memory
+
+### sme.nor.polylexicals
+
+      elsif ($i+3 <= $num && ($chunk = "\l$word $words[$i+1] $words[$i+2] $bases[$i+3]") && ($chunk =~ s/[= ]+/=/g) && $trad{"$chunk$posn"} && $line[$i+3] =~ / N /) {
+	$chunk_nor =$trad{"$chunk$posn"}; $m_max=3;
+      } 
+      elsif ($i+3 <= $num && ($chunk = "$word $words[$i+1] $words[$i+2] $bases[$i+3]") && ($chunk =~ s/[= ]+/=/g) && ($trad{"$chunk$posprop"} || ($chunk = "\l$chunk") && $trad{"$chunk$posprop"})) {
+	$chunk_nor =$trad{"$chunk$posprop"}; $m_max=3;
+      } 
+      elsif ($i+2 <= $num && ($chunk = "\l$word $words[$i+1] $bases[$i+2]") && ($chunk =~ s/[= ]+/=/g) && $trad{"$chunk$posn"} && $line[$i+2] =~ / N /) {
+	$chunk_nor =$trad{"$chunk$posn"}; $m_max=2;
+      } 
+      elsif ($i+2 <= $num && ($chunk = "$word $words[$i+1] $bases[$i+2]") && ($chunk =~ s/[= ]+/=/g) && ($trad{"$chunk$posprop"} || ($chunk = "\l$chunk") && $trad{"$chunk$posprop"})) {
+	$chunk_nor =$trad{"$chunk$posprop"}; $m_max=2;
+      } 
+      elsif ($i+1 <= $num && ($chunk = "\l$word $bases[$i+1]") && ($chunk =~ s/[= ]+/=/g) && $trad{"$chunk$posn"} && $line[$i+1] =~ / N /) {
+	$chunk_nor =$trad{"$chunk$posn"}; $m_max=1;
+      } 
+      elsif ($i+1 <= $num && ($chunk = "$word $bases[$i+1]") && ($chunk =~ s/[= ]+/=/g) && ($trad{"$chunk$posprop"} || ($chunk = "\l$chunk") && $trad{"$chunk$posprop"}) && $line[$i+1] =~ / (PROP|N) /) {
+	$chunk_nor =$trad{"$chunk$posprop"}; $m_max=1;
+      } 
+
+
+
+      else {$chunk =""; $chunk_nor ="";}
+
+#      print "CHUNK $i/$num--$chunk--$chunk_nor ::: $word,$words[$i+1],$words[$i+2],$words[$i+3]\n";
+      if ($chunk_nor) {
+	$chunk_nor =~ s/^.*?://;
+	$chunk_nor =~ s/[ ,;\(].*//;
+	if ($majuskel) {$chunk_nor = "\u$chunk_nor";}
+	for ($m=1; $m <= $m_max; $m++) {
+	  $norbases[$i+$m] ="nil";
+	  if ($M[$i] == $i+$m) {
+	    $M[$i] =$M[$i+$m];
+	    $line[$i+$m] =~ /(\@[^ ]+)/;
+	    $movefunc =$1;
+	    if ($line[$i+$m] =~ /(<(right|left)>)/) {
+	      $movefunc = "$1 " . $movefunc;
+	    }
+	    $DM[$i] =$DM[$i+$m];
+	    $line[$i] =~ s/<(right|left)> //;
+	    $line[$i] =~ s/\@[^ ]+/$movefunc/; # to allow e.g. PRP casing
+#	    print "--assigning new M to $i->$M[$i], from $i+$m\n";
+	  }
+	  $M[$i+$m] =$i;
+	  $DM[$i+$m] =$i;
+	  $line[$i+$m] =~ s/\@[^ ]+/\@X</;
+	}
+	if ($trad{"$chunk$posn"} || $chunk_nor =~ /(X|_[A-Z]+)=/) {
+	  if ($chunk_nor =~ /^[^=]+(X|_[A-Z]+)=/) { # type blaX=of=bla (1.-part-inflected and @func-carrying)
+	    if ($chunk_nor =~ s/(_[A-Z]+)=(.+)$/$1=$2$1/) {
+#	      print "--$chunk_nor $maxspecifics\n";
+	    }
+	    $norbases[$i] = $chunk_nor;
+	    $pos = "_N";
+	    if ($line[$i] =~ /(PROP|GEN|DEF)/) {$def ="DEF";}
+	    else {$def ="IDF";}
+	    $line[$i] =~ s/ (PROP|N|ADJ)[ A-Zn]+/ N nG S $def NOM /;
+	    goto sluttrad;
+	  }
+	  else { # type bla=bla=bla N chain (last part inflected and @func-carrying)
+		  #	    $norbases[$i+$m_max] = $chunk_nor;
+	    $norbase =$chunk_nor;
+	    $i = $i+$m_max;
+	    goto sluttrad;
+	  }
+	} 
+	else {
+	  $norbases[$i] = "SIC-$chunk_nor";
+	  $i=$i+$m_max;
+	  goto sluttradloop;
+	}
+      }
+
+      $baseorig =$base; # because it is changed in a couple of elsif's and will have to be normalised hereafter
+      $tags =~ s/(<[A-Z]+:[0-9]+)-/$1\+/g; # normalising <L:11-års+alder> into <L:11+års+alder>
+      $line[$i] =~ s/(<[A-Z]+:[0-9]+)-/$1\+/g; # normalising <L:11-års+alder> into <L:11+års+alder>
+#	    print "$tags\n$line[$i]\n"; #¤¤¤
+
+      if ($base eq "nil") {$norbase ="nil"; goto sluttrad;}
+#	    print "--her $word $base $pos\n";
+      if ($pos =~ /_ADV/ && $trad{"\l$word$pos"}) {
+	$base = "\l$word"; # lonor <deadj> -> lonort, så det kan slås op i lexikon
+	$nortrad =$trad{"\l$word$pos"};
+	$line[$i] =~ s/ (COM|SUP)/ EX$1/g; # if the whole, inflected form in the lexicon, don't over-inflect ... e.g. 'lettere beskadiget'
+	$tags =~  s/ (COM|SUP)//g;
+      }
+      elsif ($pos =~ /ADJ/ && $tags =~ / (SUP)/ && ($adjword =$word) && $adjword =~ s/ste?s?$/st/ && $trad{"\l$adjword$posadj"}) {
+	$base = $adjword;
+	$nortrad =$trad{"\l$adjword$pos"};
+	$tags =~  s/ SUP//g;
+	$line[$i] =~ s/ SUP/ EXSUP/g;
+#		print "--her $trans $norbase $word XXX\n";
+      }
+
+      elsif ($basetrad{$word}) {
+#		print "--her $basetrad{$word}\n";
+	$norbase ="BASE-$basetrad{$word}";
+	goto sluttrad;
+      }
+      elsif ($basetrad{"\l$word"} && ! ($base =~ /^(De|I)$/)) {
+	$norbase = "BASE-" . $basetrad{"\l$word"};
+	goto sluttrad;
+      }
+#	    elsif (1==1) {$xxx = $trad{"\l$base$posn"}; print "---------$word--$base--$pos--" . $daughters[$i] . "\l$base$posn $xxx\n";}
+      elsif (($line[$i] =~ /(ADJ|STA|PCP1) .*\@(SUBJ|ACC|DAT|P<|>>P)/ || $line[$i] =~ /(ADJ|STA|PCP1) .* P .*\@(NPHR)/ || $line[$i] =~ /(ADJ|STA|PCP1) / && $line[$i] !~ / (COM|SUP)/ && ($firstd = $daughters[$i]) && ($firstd =~ s/,.*//) && ($lastd = $daughters[$i]) && ($lastd =~ s/^.*,//) && ($line[$firstd] =~ /\@(>N)/ || $line[$lastd] =~ /\@(N<|FS-N<)/)) && ($trad{"\l$word$posn"} && $line[$i] =~ / (STA|PCP1)/ || $trad{"$base$posn"} && $line[$i] =~ /ADJ.* (UTR|P) / || ($base2 ="\l$word") && ($base2 =~ s/(des?|tes?)$/t/) && $trad{"$base2$posn"})) { # 'der var mange boligsøgende'
+#		print "her $word .........$line[$i]\n";
+	$pos =$posn;
+	if ($trad{"\l$word$posn"} && $line[$i] =~ /STA|PCP1/) {
+	  $base ="\l$word";
+	}
+	elsif ($line[$i] =~ / V /) {
+	  $base ="\l$word";
+	  $base =~ s/tes?$/t/;
+	  $base =~ s/edes?$/et/; # ikke -ende (boligsøgende)
+	}
+
+	$line[$i] =~ s/(V (PCP1 *|PCP2 STA[ A-Z]*)|ADJ )/N /;
+	$line[$i] =~ s/ \".*?\" / \"\l$word\" /;
+	$nortrad =$trad{"$base$pos"};
+      }
+      elsif (($line[$i] =~ / STA/ || $line[$i] =~ /PCP1 .*\@(>N|SC|OC|PRED|P<|SUBJ|ACC|DAT)/) && (($newbase="\l$word") && $trad{"$newbase$posadj"} || $line[$i] =~/(S DEF|P (nD|IDF|DEF))/ && ($newbase=~s/ede$/et/ || $newbase=~s/e$//) && $trad{"\l$newbase$posadj"})) {
+#		print "her $word .........$line[$i]\n";
+	$pos =$posadj;
+	$base =$newbase;
+	$line[$i] =~ s/V (PCP1 *|PCP2 STA[ A-Z]*)/ADJ /;
+	$line[$i] =~ s/ \".*?\" / \"\l$base\" /;
+	$nortrad =$trad{"$base$pos"};
+      }
+      elsif ($line[$i] =~ /PCP1 .*\@(>A|ADVL|SA|OA)/ && ($newbase="\l$word") && $trad{"$newbase$posadv"}) {
+#		print "her $word .........$line[$i]\n";
+	$pos =$posadv;
+	$base =$newbase;
+	$line[$i] =~ s/V (PCP1 )/ADV /;
+	$line[$i] =~ s/ \".*?\" / \"\l$word\" /;
+	$nortrad =$trad{"$base$pos"};
+      }
+
+### normal translations from .dict (ordinary translations)
+
+#     elsif (1==1) {print "--" . $trad{"lohkat_V"} . "\n";}
+      elsif (! ($pos =~ /_[VN]$/) && $trad{"\l$word$pos"} && ! ($base =~ /^(De|I)$/)) {
+#	print "........i=$i word=$word$pos " . $trad{"\l$word$pos"} . "\n";
+	$nortrad =$trad{"\l$word$pos"};
+      }
+
+      elsif ($line[$i] =~ /<n-prop>/ && $trad{$word . "_PROP"} && ($pos = "_PROP")) { # Citroën Berlingo
+	$nortrad =$trad{"$word$pos"};
+      }
+#      elsif (1==1) {print "---------$word--$base--$pos--\n";}
+      elsif ($pos eq "_N" && $trad{$word . "_PROP"}) {
+	$nortrad = $trad{$word . "_PROP"};
+	$pos = "_PROP"; $line[$i] =~ s/ N / PROP /;
+      }
+      elsif ($trad{"$base$pos"}) {
+	$nortrad =$trad{"$base$pos"};
+      } 
+      elsif ($trad{$base . "." . $pos}) { #??
+	$nortrad =$trad{$base . "." . $pos};
+      } 
+	elsif ($line[$i] =~ /<allupper>.*PROP/ && $trad{"\u\L$base" . $pos}) {
+	$nortrad =$trad{"\u\L$base" . $pos};
+      }
+#      elsif (1==1) {print "--------- $word -- $base \u\L$base -- $pos --\n";}
+      elsif ($pos eq "_N" && $trad{"\u$word" . "_PROP"}) { # "storebælt" in lower case
+	$nortrad = $trad{"\u$word" . "_PROP"};
+	$pos = "_PROP"; 
+	$base = "\u$base";
+	$line[$i] =~ s/ N / PROP /;
+      }
+      elsif ($pos eq "_PROP" && $word !~ /[=\-]/ && $base =~ /^(Central|Mellem|Nordvest|Nordøst|Sydvest|Sydøst|Nord|Vest|Syd|Øst)(...+)$/ && $trad{"\u$2" . "_PROP"}) {
+	$first ="\l$1";
+	$nortrad =$trad{"\u$2" . "_PROP"};
+	$nortrad =~ s/^.*?:([\wæøåÆØÅ=\-]+).*/$1/;
+	if ($trad{$first . "_F"}) {$tradfirst = $trad{$first . "_F"};}
+	elsif ($trad{$first . "_ADV"}) {$tradfirst = $trad{$first . "_ADV"};}
+	elsif ($trad{$first . "_ADJ"}) {$tradfirst = $trad{$first . "_ADJ"};}
+	$tradfirst =~ s/^.*?:([\wæøåÆØÅ]+).*/$1/;
+	$nortrad = ":\u$tradfirst" . "\l$nortrad";
+#	      print "--$first -- $tradfirst -- $nortrad\n";
+      }
+      elsif ($pos eq "_F" && $trad{$base . "_N"}) {
+	$nortrad =$trad{$base . "_N"};
+      }
+     elsif ($pos eq "_F" && $base =~ /^(.+)[se]$/ &&$trad{$1 . "_N"}) {
+        $nortrad =$trad{$1 . "_N"}; # den danske velfærdsstats og arbejdsmarkedsmodel
+     }
+      elsif (($newbase =$base) && $word =~ /^.(.+)-/ && ($newbase =~ s/^(.\Q$1\E)/$1-/) && $trad{$newbase . $pos}) {
+	$nortrad =$trad{$newbase . $pos}; # nå-generation
+	$base =$newbase;
+      } 
+      elsif (($newbase =$base) && ($newbase =~ s/-/=/g) && $trad{"$newbase$pos"} || ($newbase =$base) && ($newbase =~ s/=/-/g) && $trad{"$newbase$pos"} || ($newbase =$base) && $newbase =~ s/-//g && $trad{"$newbase$pos"}) {
+	$nortrad =$trad{"$newbase$pos"};
+	$base =$newbase;
+      }
+      elsif ($trad{"\l$base$pos"} || ($base =~ s/-[0-9]$// || $base =~ s/-//g) && $trad{"\l$base$pos"}) {
+	$nortrad =$trad{"\l$base$pos"};
+      }
+      elsif ($pos =~ /_N$/ && $line[$i] =~ /\"(.*?)n\" .*<vn>/ && ($vbase =$1) && $trad{"\l$vbase$posv"}) {
+#		print "........word=$word$pos " . $trad{"\l$word$pos"} . "\n";
+	$nortrad =$trad{"\l$vbase$posv"};
+      }
+
+##### composita ########
+#	    elsif (1==1) {print "---------$word--$base--$pos--$tags" . $daughters[$i] .  $trad{"$base$pos"} . " nortrad=$nortrad adjtrad=" . $trad{"\l$base$posadj"} . "--\n";}
+
+      elsif ((! ($pos =~ /ADV/) || ! $trad{"\l$base$posadj"}) && $tags =~ /<([A-Z]+):([\w0-9=\-]+)(~.?[EIesn\-])?\+([\w0-9\-]+)>/ && ! ($tags =~ /PROP.*<Ltop>/)) { # this line also used to reestablish original $base
+#		print "---her $pos $tags\n";
+	$posfirst ="_$1"; $first=$2; $second=$4; $possecond =$pos;
+	if ($3) {$fuge =$3;}
+	else {$fuge ="";}
+	$line[$i] =~ s/\" /\" <c-trad> /;
+	if ($fuge && $fuge =~ /~(.?[EI])/) {$first .= "\L$1";}
+	if ($second =~ /-[0-9]$/ && ! $trad{"$second$possecond"}) {
+	  $second =~ s/-[0-9]$//;
+	}
+	if ($trad{"$first$pospref"}) {$posfirst =$pospref;}
+	if ($first =~ /-[0-9]$/ && ! $trad{"$first$posfirst"}) {
+	  $first =~ s/-[0-9]$//;
+	}
+	if ($possecond =~ /ADV/ && ! $trad{"$second$possecond"} && $trad{"$second$posadj"}) {
+	  $possecond = "_ADJ";
+	}
+	if (! $trad{"$first$posfirst"} && $posfirst =~ /^_(PROP|L)$/ && $trad{"$second$possecond"}) { # L = Latinid
+#		    print "---her $first $posfirst\n";
+	  $deffirst =$first;
+	  if (($deffirst .= "en") && $trad{"$deffirst$posfirst"} || ($deffirst =~ s/en$/et/) && $trad{"$deffirst$posfirst"} || ($deffirst =~ s/et$/erne/) && $trad{"$deffirst$posfirst"} || ($deffirst =~ s/erne$/ene/) && $trad{"$deffirst$posfirst"}) {
+	    $tradfirst =$trad{"$deffirst$posfirst"};
+	    if ($tradfirst =~ /=> +([^ \n]+)/) {$tradfirst = $trad{"$1"};}
+	    $tradfirst =~ s/^.*?S=\(<first&$possecond>\)// || $tradfirst =~ s/^.*?S=\(<first>\)//; # finds (first) specific translation for compound's first part, if any
+	    $tradfirst =~ s/^[^:]*?:([\w=\-\)\(\'\.\/\+]+?)(_?\[.*?\])?([ ,;\n].*)?$/$1/;
+	    $tradfirst =~ s/^:?[Tt]he=//;
+	    $tradpropfirst =$tradfirst;
+#		      print "---tradfirst =$tradfirst -- $tradpropfirst\n";
+	  }
+	  else {
+	    $tradpropfirst =$first;
+	    $tradpropfirst =~ s/-og-/-and-/; # Hebrion-og-Wye-aftalen
+	  }
+	  $nortrad =$trad{"$second$possecond"}; # komposita
+	  if ($nortrad =~ / => +([^ \n]+)/) {$nortrad = $trad{"$1"};}
+	  $nortrad =~ s/^.*?S=\(<second>\)//; # finds specific translation for compound's second part, if any
+	  $norbase =$nortrad;
+	}
+	
+	elsif ($trad{"$first$posfirst"} && $trad{"$second$possecond"}) {
+
+	  $tradfirst =$trad{"$first$posfirst"};
+	  $tradsecond =$trad{"$second$possecond"};
+	  if ($tradfirst =~ /=> +([^ \n]+)/) {$tradfirst = $trad{"$1"};}
+	  if ($tradsecond =~ /=> +([^ \n]+)/) {$tradsecond = $trad{"$1"};}
+
+	  $tradfirst =~ s/^.*?S=\(<first&$possecond>\)// || $tradfirst =~ s/^.*?S=\(<first>\)//; # finds (first) specific translation for compound's first part, if any
+	  if ($posfirst eq "_F") {
+	    if ($tags =~ /(PCP2|INF|GER)/) {
+	      $posmatch =$1;
+	    }
+	    else {
+	      $posmatch = $possecond; $posmatch =~ s/_//;
+	    }
+	    $tradfirst =~ s/^.*?S=\($posmatch\)//; # checks compositum word class
+#		      print "first=$first$posfirst second=$second$pos posmatch=$posmatch tradfirst=$tradfirst tradsecond=$tradsecond\n";
+	  }
+	  $tradsecond =~ s/^.*?S=\(<second>\)//; # finds (first) specific translation for compound's second part, if any
+
+
+	  $tradfirst =~ s/^[^:]*?:([\w=\-\)\(\'\.\/\+]+?)(_?\[.*?\])?([ ,;\n].*)?$/$1/;
+	  if ($tradsecond =~ s/^([^;,]*) \(\!pl\)/$1/) {
+	    $line[$i] =~ s/ P / nN /; # sikkerhedspolitifolk
+	  }
+	  $tradsecond =~ s/^[^:]*?:([\w=\-\)\(\'\.\/\+]+?)(_?\[.*?\])?([ ,;\n].*)?$/$1/;
+
+#		    print "***$nortrad\n";
+	  if (! $nortrad) {
+	    $tradfirst =~ s/_[A-Z]+//;
+	    if ($posfirst =~ /_V/) {
+	      $tradfirst =~ s/e?n$//;
+	    }
+	    if ($fugeadd{"\u$tradfirst"}) {
+	      $tradfirst .= $fugeadd{"\u$tradfirst"}; # hareavl -> HaseN+Zucht
+	    }
+#		      print "--$tradfirst $tradsecond\n";
+	    if ($line[$i] =~ /\".*?([\-=]).*\" /) {
+	      $linkchar =$1;
+	      $nortrad = "$tradfirst" . $linkchar . "$tradsecond"; # hyphenated komposita
+	    }
+	    else {
+	      $nortrad = "$tradfirst\+$tradsecond"; # komposita
+	    }
+	    if ($posfirst eq "_F") {$nortrad =~ s/=-/\+/;}
+	  }
+	  $norbase =$nortrad;
+#		    print "first=$first$posfirst second=$second$possecond $nortrad\n";
+	  goto sluttrad;
+	}
+	else {$nortrad ="";}
+
+      }
+      if ($nortrad) {goto nortradfound;} # to allow new set of if-loops
+#	    elsif (1==1) {print "---------$word--$base--$pos--" . $daughters[$i] .  $trad{"$base$pos"} . " nortrad=$nortrad adjtrad=" . $trad{"\l$base$posadj"} . "-- $tags\n";}
+      $base =$baseorig;
+      if ((! ($pos =~ /ADV/) || ! $trad{"\l$base$posadj"}) && ($tags =~/(<part-e>|PROP:)/ && $base =~ /^([\w\.\/\&\=]+)[\-\+]([\w]+)$/ || $base =~ /^([0-9]+\.?)[\-\+]([\w]+)$/) && ! ($tags =~ /(PROP.*<Ltop>|<[A-Z]+:[0-9]+[\-\+][^>]+\+)/)) {
+	$first=$1; $second=$2;
+#		print "***her $tags\n";
+	if ($trad{"$second$pos"}) {
+	  if ($trad{"$first$posprop"}) {
+	    $tradpropfirst = $trad{"$first$posprop"};
+	    if ($tradpropfirst =~ /:([^ ;,_\[]+)/) { # only if :, not for basetrad
+	      $tradpropfirst =$1;
+	    }
+	  }
+	  else {$tradpropfirst =$first;}
+	  $nortrad =$trad{"$second$pos"}; # komposita
+	  if ($nortrad =~ /=> +([^ \n]+)/) {$nortrad = $trad{"$1"};}
+	  $norbase =$nortrad;
+	  #		    print "--------first=$first second=$second $nortrad\n";
+	}
+	else {$nortrad ="";}
+      }
+      elsif ($base =~ /^(.*)=([^=]+)$/ && ($second =$2) && $memotrad{"%=$second"}) {
+	$first =$1;
+	$nortrad =$first . '=' . $memotrad{"%=$second"} ;
+#		print "--------first=$first second=$second $nortrad\n";
+	$norbase =$nortrad;
+	goto sluttrad;
+      }
+      elsif ($pos =~ /PROP/ && $trad{"\l$base$posn"} && ! $noprop) {
+	$nortrad =$trad{"\l$base$posn"}; # nouns used as propria, e.g. parts of only partially recognised long name chains: 'Transport og Turisme'
+	if ($nortrad =~ /=> +([^ \n]+)/) {$nortrad = $trad{"$1"};}
+	$norbase =$nortrad;	
+#		    print "--$pos $norbase majuskel=$majuskel\n";
+	$prop2n[$i] =1;
+      }
+
+
+### long names and other more-than-two-part words in parts, e.g. Den Uafhængige Ekspertgruppe
+
+#	    elsif (1==1) {print "--$line[$i]\n";}
+      elsif ((! ($pos =~ /ADV/) || ! $trad{"\l$base$posadj"}) && ($pos =~ /PROP/ && ($base =~ /De[nt]?=/ || $base =~ /-(DM|OL|VM)$/) || $line[$i] =~ /<[A-Z]+:([^> ]+((~.?[einEI])?\+[^> ]+)+)>/ && ($base =$1) && $line[$i] !~ /<(Ltop|asisprop)>.*PROP/ || ! ($pos =~ /(PROP|NUM)/) && $base =~ /[=\-]/) || $line[$i] =~ /\"mellem=/) { # også: tre=til=fem, mellem=en=halv=og=en ...  || $base =~ /=(for|til|og|eller|en|et|to)=/ removed, Kalman is too hard to inflect and it's might be irritating for PROPs anyway ...
+#	      print "***her $word $base\n";
+	$line[$i] =~ s/\" /\" <c-trad> /;
+	if (! ($word =~ /-[0-4]/)) {
+	  $base =~ s/-([0-4])/¤$1/g; # prevents sense-index-hyphen to be used for splitting
+	}
+
+### check if 1-2 or 2-3 part-combinations are listed in lexicon separately
+	if ($base =~ /^(.*?\+.*?)\+/) {
+	  $basefirst =$1;
+	  $formfirst =$1;
+	  $basefirst =~ s/~[^\+]+$//g; # only remove last fuge, for internal ones only remove ~
+	  $basefirst =~ s/[\+~]//g;
+	  $formfirst =~ s/[\+~]//g;
+	  if ($trad{"\l$formfirst" . "_F"}) {
+	    $base =~ s/^.*?\+.*?\+/$formfirst\+/; $firstpos = "F";
+	  }
+	  elsif (() && $trad{"\l$basefirst" . "_N"}) {
+	    $base =~ s/^.*?\+.*?\+/$basefirst\+/; $firstpos = "N";
+	  }
+	  elsif ($trad{"\l$formfirst" . "_ADJ"}) {
+	    $base =~ s/^.*?\+.*?\+/$formfirst\+/; $firstpos = "F";
+	  }
+	  elsif ($trad{"\l$basefirst" . "_$firstpos"}) {
+	    $base =~ s/^.*?\+.*?\+/$basefirst\+/;
+	  }
+#               print "--base=$base, basefirst=$basefirst\n";
+	}
+	if ($base =~ /^.*?[\+\-](.*\+.*)$/) {
+	  $basesecond =$1;
+	  $basesecond =~ s/[\+~]//g;
+	  if ($trad{"\l$basesecond" . "$pos"}) {
+	    $base =~ s/^(.*?[\+\-]).*$/$1$basesecond/;
+	  }
+
+#              print "--base=$base, basesecond=$basesecond -- $pos -- " . $trad{"lysstoflampe_N"} . "\n";
+	}
+
+	$partnr=0;
+	$base =~ s/([0-9])-([0-9])/$1¤$2/; # 2-1-förlust
+	
+	@parts = split /[=\-\+]/, $base;
+	$nortrad= "";
+	$joiner ="";
+	$partnum =@parts;
+	foreach (@parts) {
+	  $partnr++;
+	  if ($word =~ /([=\-\+])/ || $base =~ /([=\-\+])/) {
+	    $joiner =$1;
+	  }
+	  else {$joiner ="";}
+	  s/¤/-/g;
+	lookupagain:
+	  s/~.?[ein]//;
+	  s/~(.?[EI])/\L$1/; # <V:tag~E+ning>
+	  $rawpart =$_;
+	  if (/^[A-ZÆØÅÄÖÜ]/) {$majpart=1;}
+	  else {$majpart =0;}
+	  $majnor =0;
+	  $_ = "\l$_";
+#		    print "--now part $_ pos=$pos majpart=$majpart joiner=$joiner word=$word\n";
+	  $parttrad ="";
+	  if ($basetrad{$_}) {
+	    $parttrad = $basetrad{$_};
+	    #			print "**** $basetrad{$_}\n";
+	  }
+	  elsif (/^[0-9]+/) {$parttrad = $_;}
+	  elsif ($partnr == $partnum && $trad{"$_$pos"}) {
+	    $parttrad =$trad{"$_$pos"};
+	  }
+	  elsif ($trad{"$_$pospref"} && $base =~ /^$_/ && $partnr < $partnum) {
+	    $parttrad = $trad{"$_$pospref"};
+	    $posmatch =$pos; $posmatch =~ s/_//;
+	    $parttrad =~ s/^.*?S=\($posmatch\)_? .*?:/:/; # checks compositum word class
+	    while ($parttrad =~ s/ S=\((.*?)\)_? .*?:/:xxx/ && ($linecond =$1)) {
+	      $linecond =~ s/ /( | .+ )/g;
+	      if ($line[$i] =~ / $linecond /) {
+		$parttrad =~ s/^.*:xxx([^,; ]+).*$/:$1/; # pro-Communist
+	      }
+	    }
+#		    print "--now part $_ pos=$pos majpart=$majpart parttrad=$parttrad\n";
+	  }
+	  elsif ($trad{"$_$posart"} && $partnr < $partnum) {
+	    $parttrad = $trad{"$_$posart"};
+	    if ($line[$i] =~ /<tit>/) {$majnor =1;} # some PROP have 'The', some don't (e.g. titles: "The Unusual Cat", but "the Danish Parliament", and 'the Danish Bank'?
+	  }
+	  elsif ($trad{"$_$posprp"} && $partnr < $partnum) {$parttrad = $trad{"$_$posprp"};}
+	  elsif ($trad{"$_$poskc"}) {$parttrad = $trad{"$_$poskc"};}
+	  elsif ($trad{"$_$posnum"}) {$parttrad = $trad{"$_$posnum"};}
+	  elsif ($majpart && $trad{"\u$_$posprop"}) {$parttrad = $trad{"\u$_$posprop"};}
+	  elsif ($majpart && $trad{"\u$_$posn"}) {$parttrad = $trad{"\u$_$posn"};}
+	  elsif ($trad{"$_$posn"}) {
+	    $parttrad = $trad{"$_$posn"};
+	    $majnor =1;
+	    if ($parttrad =~ /=> (.+?)( \(Y\))? *$/) {
+	      if($trad{$1}) {$parttrad = $trad{$1}}
+	    }
+	    $parttrad =~ s/=(of|for|at)=([a-zé])/=$1=\u$2/; # group=of=experts
+	  }
+	  elsif ($trad{"$_$posadj"}) {
+	    $parttrad = $trad{"$_$posadj"};
+	    $majnor =1;
+	  }
+	  elsif ($trad{"$_$posadv"}) {$parttrad = $trad{"$_$posadv"};}
+	  elsif ($trad{"$_$posv"}) {$parttrad = $trad{"$_$posv"};}
+	  elsif (/^(.*(.))\2?[et]$/ && ($adjroot =$1) && $trad{"$adjroot$posadj"}) {
+	    s/^(.*(.))\2?[et]$/$1/; # ..iske, ige
+	    $parttrad = $trad{"$_$posadj"};
+	    $majnor =1;
+	  }
+	  elsif ($trad{"$_$pospref"} && $partnr < $partnum) { # second try with _F, without $base =~ /^$_/ condition
+	    $parttrad = $trad{"$_$pospref"};
+	    $posmatch =$pos; $posmatch =~ s/_//;
+	    $parttrad =~ s/^.*?S=\($posmatch\).*?:/:/; # checks compositum word class
+	  }
+#		    print "--now part $_/$base pos=$pos majpart=$majpart parttrad=$parttrad\n";
+	  if ($parttrad) {
+	    if ($parttrad =~ /=> (.+?)( \(Y\))? *$/) {
+	      if($trad{$1}) {$parttrad = $trad{$1}}
+	    }
+	    if ($partnr ==1) {$parttrad =~ s/^.*?S=\(<first&$pos>\)// || $parttrad =~ s/^.*S=\(<first>\)//;} # ???? check what happens without if $partnr
+	    else {$parttrad =~ s/^.*S=\(<second>\)//;}
+	    $parttrad =~ s/^.*S=\(<(part)>\)//; # to avoid rare N/ADJ problems, e.g. 'ny'
+	    if ($parttrad =~ /:([^ ;,_\[]+(_N[MFN]+)?)/) { # only if :, not for basetrad
+	      $parttrad =$1;
+	    }
+	    if ($majnor && $pos =~ /PROP/ && (! $nortrad || $joiner eq "=")) {
+	      $parttrad = "\u$parttrad";
+	      $parttrad =~ s/=(.)/=\u$1/g;
+	    }
+	    if ($majpart) {$parttrad = "\u$parttrad";}
+	    #		      print "--$nortrad\n";
+	    $nortrad =~ s/_[A-Z]+//;
+	    if ($joiner && $nortrad) {$nortrad .= $joiner . $parttrad;}
+	    else {$nortrad .= "=" . $parttrad;}
+	  }
+	  elsif (s/([a-zA-Z])-[0-4]$/$1/) {
+	    goto lookupagain;
+	  }
+	  else {
+#		    print "---no translation for $_\n";
+	    if ($joiner) {$nortrad .= $joiner . $rawpart;}
+	    else {$nortrad .= "=" . $rawpart;}
+	  }
+	}
+
+	$nortrad =~ s/^[=\-]//;
+	$nortrad =~ s/-=/-/g; # trans-platin-complexer
+	$nortrad =~ s/=-/=/g; # femetanorshus -> five-floored hous
+	$nortrad =~ s/==+/=/g; # second '=' may stem from _F translations (prefixes)
+	if ($pos =~ /PROP/ && ! $trad{"$base$posprop"}) {
+	  $nortrad =~ s/^(Institute)=for=/the=$1=of=/;
+	}
+	$norbase =$nortrad;
+#		print "****$nortrad\n";
+	goto sluttrad;
+      }
+      elsif ($base =~ /^(.+)([=\-\+])([^=]+)$/ && ($second =$3) && $trad{"$second$pos"}) {
+	$first =$1;
+	$fuse =$2;
+	if ($first =~ s/^([0-9]+[\.\-\+]*)//) {
+	  $predigits =$1;
+	  $predigits =~ s/\+/\-/;
+	}
+	else {$predigits ="";}
+	$nortrad =$trad{"$second$pos"} ;
+	if ($trad{"$first$posn"}) {
+	  $firsttrad =$trad{"$first$posn"};
+	  $firsttrad =~ s/^.*?S=\(<(part|first)>\)//;
+	  if ($firsttrad =~ /:([^ ;,_\[]+)/) { # only if :, not for basetrad
+	    $firsttrad =$1;
+	  }
+	}
+	else {$firsttrad =$first;}
+	
+	if ($nortrad =~ /=> +([^ \n]+)/) {$nortrad = $trad{"$1"};}
+	$nortrad =~ s/^.*?S=\(<(part|second)>\)//; # finds (first) specific translation for compound's second part, if any		$nortrad =$first . $fuse . $nortrad;
+	if ($nortrad =~ /:([^ ;,_\[]+(_N[MFN]+)?)/) { # only if :, not for basetrad
+	  $nortrad =$1;
+	}
+#		$fuse =~ s/\+/=/; # only for English, not Norwegian
+	$nortrad = $firsttrad . $fuse . $nortrad;
+	if ($predigits) {$nortrad = $predigits . $nortrad;}
+	$norbase = $nortrad;
+#		print "--------first=$first second=$second pos=$pos $nortrad predigits=$predigits\n";
+	goto sluttrad;
+
+      }
+      else {
+#	      print "********her2 base=$base pos=$pos\n";
+	$nortrad ="";
+      }
+
+    nortradfound:
+#	    if ($tags =~ /<part-e>/) {print "-----------$base---$tags\n";}
+#	    print "-----nortrad now: $i=$nortrad\n";
+### referred translations ####
+
+#	    print "now base=$base$pos trad=" . $trad{"$base$pos"} . " nortrad=$nortrad tradpropfirst =$tradpropfirst\n";
+      if ($nortrad && $nortrad =~ /=> (.+?)( \(Y\))? *$/) {
+	if($trad{$1}) {$nortrad = $trad{$1}}
+	else {$nortrad = $trad{"$1$pos"};}
+#		print "********nowchanged nortrad=$nortrad\n";
+      }
+
+      if ($nortrad && $line[$i] =~ /<hyfen>/) {
+	$nortrad =~ s/^.*?S=\(<first.*?>\)//; # finds (first) specific translation for first part, if any, e.g. 'jyske hede- og skovbilleder' -> 'Jutlandic moor- and forest pictures'
+      }
+
+###### adverbs #########
+
+      if ($pos =~ /ADV/ && ! $nortrad) { # adverb base without -t (<deadj>), but possibly in lex wiht -t
+	if ($trad{"\l$word$pos"}) {
+	  $nortrad =$trad{"\l$word$pos"}; # det faldt heldigt ud -> it turned out well
+	  $nortrad =~ s/S=\(<first.*?>\)//g; # to allow for matching of later <first> alternatives
+	}
+      }
+
+      if ($pos =~ /ADV/ && ! $nortrad) { # adverb not in lex
+#		$posnew = "_ADJ";
+	$basenew =$base;
+	$basenew =~ s/t$//;
+	if ($trad{"$base$posadj"}) {$nortrad =$trad{"$base$posadj"};}
+	elsif ($trad{"$basenew$posadj"}) {$nortrad =$trad{"$basenew$posadj"};}
+	else {$nortrad = ":DAN-\l$base";}
+	#		print "---found adverb $nortrad\n";
+	if ($nortrad && $nortrad =~ /=> (.+?)( \(Y\))? *$/) {
+	  if($trad{$1}) {$nortrad = $trad{$1}}
+	}
+	$nortrad =~ s/^.*?:([^ ,;\n]+).*/$1/; # only use the first translation
+
+	if ( ! ($tags =~ /\@(APHR|SA|OA)/)) { # cave: 'det er koldt her' -> 'it is cold here'
+	  $norbase ="ADV-$nortrad";
+	}
+	else {$norbase =$nortrad;}
+	goto sluttrad;
+      }
+
+#	    if (! $nortrad) {goto sluttrad;}
+#      print "--$pos, $nortrad\n";
+
+
+      if ($nortrad !~ / [GDP]?[DHSPBM]\-?[0-9]?[\?\!\*]*=\(/) {
+
+	$ambitrad[$i] = $nortrad;
+	$norbase = "ambitrad";
+#	print "--no discriminators for $i - keep all\n";
+	goto sluttrad;
+      }
+
+      ### imperative adaptation
+
+      if ($tags =~ / IMP /) {
+	$nortrad =~ s/(D[0-9]?=\(<H> \@SUBJ\)_)( :[^ ,;]+)/S=(IMP)_$2; $1$2/;
+      }
+
+      ### PCP1 subject adaptation
+
+      if ($tags =~ / PCP1 .*\@(>N|SC)/) {
+	$nortrad =~ s/D[0-9\!\?]*=([^_]*?) ?\@SUBJ/H=$1/g; # skrattende solsort
+      }
+
+      ### passive adaptation
+      if ($tags =~ / STA /) {
+	$nortrad =~ s/(;[^;]+?)D[0-9]?(=\([^_]+?) \@ACC(\)_)(( [^:;]+)? :[^ ,;]+)/$1H$2$3 S=(STA)_$4/g; # subject condition repeated without PAS/STA to cover also ergative use: 'open the door' -> 'the door opened' ... is this the true reason for the SUBJ repetition, is it meaningful for Danish, and could it be superfluous? ... made a distinction between PAS and STA, the latter added with H condition rather than subject (fx 'af de opnåede karakterer' -> of the achieved (NOT gained) grades'
+      }
+      if ($tags =~ / PAS /) {
+	$nortrad =~ s/(D[0-9\!\?]*=[^_]*? ?)\@SUBJ/$1\@PASS/g;
+	      #	$nortrad =~ s/(D[0-9]?=\(\@ACC\)_)( :[^ ,;]+)/S=(PAS|STA)_$2; $1$2/;
+	      
+	if (! ($nortrad =~ / (D[0-9]?)=\(\@[FSICL\-]*ACC\)[^=]* G\1=/)) {$nortrad =~ s/(;[^;]+?)(D[0-9]?=\(\@[FSICL\-]*ACC\)_)(( [^:;]+)? :[^ ,;]+)/$1S=(PAS|STA)_$3$1$2$3/g;} #
+	$nortrad =~ s/(;[^;]+)(D[0-9]?=\([^_]+? )\@ACC(\)_)(( [^:;]+)? :[^ ,;]+)/$1$2\@SUBJ$3 S=(PAS|STA)_$4$1$2\@SUBJ$3$4/g;
+	$nortrad =~ s/(;[^;]+?)(D[0-9]?=\([^_]+? )\@FS-ACC(\)_)(( [^:;]+)? :[^ ,;]+)/$1$2\@FS-SUBJ$3 S=(PAS|STA)_$4$1$2\@FS-SUBJ$3$4/g; #FS-ACC-> FS-SUBJ
+	      
+	$nortrad =~ s/([A-Z0-9]+)(=\([^_]+? ?\@PASS)/$1\?$2/g; # passive argument always optional
+	if ($tags =~ /\@ICL-OC/) {
+	  $nortrad =~ s/D([\?\!\*]*=[^_]+? ?\@(ACC|SUBJ))/B$1/; # de forlangte barnet @<ACC udskrevet @ICL-<OC
+	}
+
+	elsif ($daughters[$i]) {
+	  @daughterlist = split /,/, $daughters[$i];
+	  $found =0;
+	  foreach (@daughterlist) {
+	    if ($line[$_] =~ /\@ACC/) {$found =1;}
+	    elsif ($line[$_] =~ /\@DAT/) {$found =2;}
+	  }
+	  if ($found != 1) {
+	    $nortrad =~ s/\@ACC/\@SUBJ/g;
+	  }
+	  elsif ($found ==1) {
+	    $nortrad =~ s/\@DAT/\@SUBJ/g;
+	  }
+	}
+	$nortrad =~ s/\@OC/\@SC/g;
+      }
+      $nortrad =~ s/(;[^;]* S=\([^\),;]*?)\@ACC([^ ]*\)+)([^;]*)/$1\@ACC$2$3$1\@SUBJ$2_ H=(PAS)$3/g; # H=("(stage|watch|write)") S=(@ACC) :prezentajzo
+      $nortrad =~ s/\@PAS-(SUBJ|ACC|DAT)/\@$1/g;
+      $nortrad =~ s/(D!=\(\@ACC\))/S!=(<acc-ellipsis>)_ $1/; # relative clauses with elliptic @ACC
+#	    if ($line[$i] =~ /<acc-ellipsis>/) {
+#	      $svetrad =~ s/D(\??=\([^_:,;]+?) *\@ACC/H$1/g; # The games spies play (De spil spionerne spiller - ikke lenor)
+#	    }
+#	    print "---$i $base=" . $nortrad . "\n";
+
+      $nortrad =~ s/(;[^:=]+) :/$1 S=('xxx') :/g; # adding dummy contexts to make conditionless translations fail, if they occur in later than first position (this is an "artefact" caused by the fact that sme.nor.dict doesn't have alle translations for the same lemma on one line
+      
+### choose translation
+#	    if ($daughters[$i]) {print "****** $i $daughters[$i]\n";}
+      @trads = split /;/, $nortrad;
+      $rank =0; $matchmax =0; $norbase ="";
+      $specifics =""; $max_specifics="";
+      $valsection =0;
+      foreach (@trads) {
+	if (/\@PASS/ && /D!=\(\@SUBJ\)/) {goto endcheck;}
+	if ($rank ==0) {s/, :[^; ,]+//g;} # remove synym alternatives
+	s/<([A-Z]+):/<$1./g; # otherwise the ':' disturbes complex matches involving :trad 
+	s/ \([^\!][^\|]*?\)//g; # fagged (out)
+#	print "......$i $_\n";
+	$rank++;
+	s/ \{.*?\}//g; # remove meta, e.g. {IF}
+	s/ *(:[^ \)]+) ([GD]?[SBDHGPM][0-9\-]*)(=\([^_\;]*\)\_[^ ]+)/ $2\?$3 $1/; # moves optional conditions from right to left, adds optionality marker \? -- has to come before removal of second and later synonyms (they might "eat" the postpositioned D=..., too)
+	s/^([^:]*?:)([^ ,]+( .*)?),.*/$1$2/; # only use the first synonym
+	s/ *(:[^ \)]+) ([GD]?[SBDHGPM][0-9\-]*)(=\([^_\;]*\)\_[^ ]+)/ $2\?$3 $1/;
+
+	if (! /\?=\(/ || / [GD]?[SBDHGPM][0-9\-]*\!?=/ || $rank ==1) {$match =1/$rank;} # has to come AFTER movement of right-optional conditions, so non-first only-right-optional trads-blocks don't get unfair high match-count later on for "all matched"
+	else {$match =0;}
+
+	s/__+/_/g;
+	s/([^\)])_/$1/g;
+	s/\'([a-zæøåé])([^ \)\(]*?\')/\'[$1\u$1]$2/g; # 'det' -> '[dD]et'
+#		print "---$i $_\n";
+#		print "match=$match $_\n";
+	$found =0;
+	if (s/ (<¤vr>) / /) { # instantiated valency, so far only reflexive
+	  if ($line[$i] =~ /$1/) {
+	    if (! $valsection) {
+	      $matchmax =0; # zeroes all possibilities found before <vr> - otherwise readings may win that come before <vr> but have many conditions matched
+	      $valsection =1;
+	    }
+	    $match =$match +1.01; # so pure <vr> can be first in <vr> list, but stil outperform the default (first translation equivalent of all, which is worth 1)
+	    if ($line[$i] =~ /<¤vr>/) {
+	      $nexti =$i+1; # reflexive pronoun always right of verb NEJ: 'derfor trækker skyen sig sammen'
+	      while (! ($line[$nexti] =~ /(ACC|<refl>)/) && ! ($nexti > $num-1)) {
+		$nexti++
+	      }
+	      $specifics .= "," . $nexti . ":nil";
+	    }
+#	    print "--$_, specifics =$specifics $match/$matchmax\n";	    
+	  }
+	  else {$match =0; goto endcheck;}
+	}
+#	print "----$_\n";
+	while (s/ P(\-?[1-9]+)(\??)(\!?)=(\(.*?\))_([^ ]+)? / /) { # neighbour-check
+	  $dist =$1;
+	  $optional =$2;
+	  if (! $optional) {$found =0;}
+	  $negated =$3;
+	  $conditions = " " . $4; 
+	  $specific =$5;
+	  $conditions =~ s/ /( | .+ )/g;
+
+	  $mwe_rest ="";
+	  $conditions_equal = $conditions; ### also try '=' instead of '&'
+	  $conditions_equal =~ s/[\"\']&[\"\']/=/g;
+	  if ($line[$i+$dist] && $line[$i+$dist] =~ /$conditions_equal /) {
+	    $conditions = $conditions_equal;
+	  }
+	  if ($conditions =~ s/&(.+)\)$/\)/) {
+	    $mwe_rest =$1;
+	  }
+#		    print "---checking $i-place $dist for $conditions, line= $line[$i+$dist]--\n";
+	  if ($line[$i+$dist] && $line[$i+$dist] =~ /$conditions /) {
+	    $found =1;
+#			print "P found for $i at $i+$dist\n";
+
+##################################### chained positions ############
+	    if ($mwe_rest) {
+	      $position=1;
+	      @nextwords = split /&/, $mwe_rest;
+	      foreach (@nextwords) {
+		if ($position <= $num) {
+		  $nextword =$_;
+		  if (! ($line[$i+$dist+$position] =~ /$nextword /)) {
+		    $found =0;
+		  }
+#		  print "-----next match: $nextword found=$found focusdaughter=$focusdaughter position=$position $line[$focusdaughter+$position]\n";
+		  $position++;
+		} else {
+		  $found =0;
+		}
+	      }
+	      if ($found) {
+		for ($nilling=$i+$dist+1; $nilling <= $i+$dist+$position-1; $nilling++) {
+		  $specifics .= "," . $nilling . ":nil";
+#		  $norbases[$nilling] ="nil";
+#		  print "--nilling $nilling\n";
+		}
+	      }
+	    }
+####################
+	    if ($specific) {
+	      $specifics .= "," . ($i+$dist) . ":$specific";
+	      
+	    }
+	  }
+
+############### dependents of positions ###############
+
+	  if ($found && s/ PD$dist(\??)(\!?)=(\(.*?\))_([^ ]+)? / /) { # positiondaughtercheck
+#	      print "-----$i now checking daughters of position P$dist\n";
+	    $optional =$1;
+	    $negated =$2;
+	    if (! $daughters[$i+$dist] && ! $optional && ! $negated) {
+	      $match =0; goto endcheck;
+	    }
+	    $conditions = " " . $3;
+	    $specific=$4;
+	    $conditions =~ s/ /( | .+ )/g;
+#	      print "---$i PD-conditions =$conditions specifics=$specific\n";
+	    if (! $optional) {
+	      $found =0;
+	    }
+	    if ($daughters[$i+$dist]) {
+	      @daughterlist = split /,/, $daughters[$i+$dist];
+	      foreach (@daughterlist) {
+		  #		print "word =$word, daughter $_ daughtertags =$line[$_]\n";
+		if ($line[$_] =~ /$conditions /) {
+		  $found =1;
+		    #		  print "---PD found: $condition specifics=$specifics\n";
+		  if ($specific) {
+		    $specifics .= ",$_:$specific";
+		  }
+		}
+	      }
+	    }
+	  }
+###############
+
+	  if ($negated && ! $found) {$found =1;}
+	  elsif (! $found && ! $negated && ! $optional || $found && $negated && ! $optional) {$match =0; goto endcheck;}
+	}
+	while (s/ S(\!?)=(\(.*?\))_ / /) { # self-check
+#		    print ".---checking self $i for $conditions\n";
+	  $found =0;
+	  $negated =$1;
+	  $conditions = " " . $2; 
+	  $conditions =~ s/ /( | .+ )/g;
+	  if ($line[$i] =~ /($conditions) / && ($domain || $domain_local || ! ($1 =~ /<D:/ && $conditions =~ /<D\.[a-z]+>/))) {
+#			print "....found self $i for $conditions\n";
+	    $found =1;
+	  }
+	  if ($negated && ! $found) {$found =1;}
+	  elsif (! $found && ! $negated) {$match =0; goto endcheck;}
+	  elsif ($found && $negated) {$match =0; goto endcheck;}
+	}
+	while (s/ P(-?[01])\*(\!?)=(\(.*?\))_ / /) { # right-looking check, right check, unbounded right search, unbounded search
+	  $found =0;
+	  $dist =$1;
+	  $negated =$2;
+	  $conditions = " " . $3;
+	  $conditions =~ s/ /( | .+? )/g;
+	  if ($conditions =~ s/&!\((.*?)\)//) {
+	    $barrier = $1;
+	  }
+	  else {$barrier = "xxx";}
+	  if ($dist =~ /^0$/) {
+	    $dist =1;
+	    $alternate = 1;
+	  }
+	  else {$alternate =0;}
+#	  print "----checking right context of $i for $conditions, ... $_\n";
+	  $j = $i;
+	checkglobalcontext:
+	  while ($line[$j+$dist]) {
+	    $j = $j + $dist;
+	    if ($line[$j] =~ /($conditions) /) { #
+#	      print "......found right/left context ($dist) for i=$i for $conditions, negated=$negated\n";
+	      $found =1;
+	      $j =1000;
+	    }
+	    elsif ($line[$j] =~ /($barrier) /) {
+	      if ($alternate ==1) {
+		$j =$i; $dist =-1; $alternate =-1;
+		goto checkglobalcontext;
+	      }
+	      $j =1000; # barrier found, forcing en of while loop
+	    }
+	  }
+	  if ($alternate ==1) {
+	    $j =$i; $dist =-1; $alternate =-1;
+	    goto checkglobalcontext;
+	  }
+	  if ($negated && ! $found) {$found =1;}
+	  elsif (! $found && ! $negated) {$match =0; goto endcheck;}
+	  elsif ($found && $negated) {$match =0; goto endcheck;}
+	}
+	while (s/ H(\??)(\!?)=(\(.*?\))_([^ ]+)? / /) { # head-check
+	  $optional =$1;
+	  if (! $optional) {$found =0;}
+	  $negated =$2;
+	  $pureconditions =$3;
+	  $conditions = " " . $3; 
+	  $specific=$4;
+	  $conditions =~ s/ /( | .+ )/g;
+#		    print "... now checking head $M[$i] for $i: $conditions found=$found match=$match\n";
+	  if ($line[$M[$i]] && $line[$M[$i]] =~ /$conditions /) {
+	    $found =1;
+	    if ($specific) {$specifics .= ",$M[$i]:$specific";}
+#			print "... found head for $i, $conditions\n";
+	  }
+	  elsif (! $negated && $line[$i] =~ / (ADJ|STA) .*\@<?SC/) { # transfer SC-semantics to SUBJ-"head"
+	    $conditions =$pureconditions;
+	    if ($conditions =~ /\@/) {$conditions =~ s/\@[A-Z\|\@]+/\@SUBJ/;}
+	    else {$conditions =~ s/\)$/.*\@SUBJ\)/;}
+	    $conditions .= "_";
+	    s/^/ B$optional=$conditions /;
+	    #			print "---$line[$i]....$_\n";
+	    goto brothercheck;
+	  }
+	  elsif (! $negated && $relM[$i] && $line[$relM[$i]] && $line[$relM[$i]] =~ /$conditions /) { # transfer OC-semantics to ACC-"head"
+	    $found =1;
+	    if ($specific) {
+	      $specifics .= ",$relM[$i]:$specific";
+	    }
+	  } 
+	  elsif (! $negated && $line[$i] =~ / (ADJ|STA) .*\@<?OC/) { # transfer OC-semantics to ACC-"head"
+	    $conditions =$pureconditions;
+	    if ($conditions =~ /\@/) {$conditions =~ s/\@[A-Z\|\@]+/\@ACC/;}
+	    else {$conditions =~ s/\)$/.*\@ACC\)/;}
+	    $conditions .= "_";
+	    s/^/ B$optional=$conditions /;
+#			print "...$line[$i]....$_\n";
+	    goto brothercheck;
+	  }
+	  if ($negated && ! $found) {$found =1;}
+	  elsif (! $found && ! $negated && ! $optional || $found && $negated && ! $optional) {$match =0; goto endcheck;}
+#		    elsif (! $optional && ! $negated || $negated && ! $optional) {$match =0; goto endcheck;}
+	}
+	if (s/ GM(\!?)=(\(.*?\))_([^ ]+)? / /) { # grandmother-check
+	  $found =0;
+	  $negated =$1;
+	  $conditions = " " .$2; 
+#		    print "---checking grandmother $1\n";
+	  $specific=$3;
+	  $conditions =~ s/ /( | .+ )/g;
+	  if ($M[$M[$i]] && $line[$M[$M[$i]]] && $line[$M[$M[$i]]] =~ /$conditions /) {
+	    if (! $negated) {
+	      $found =1;
+	      if ($specific) {$specifics .= ",$M[$M[$i]]:$specific";}
+		      #			print ".........GM-specifics: $specifics\n";
+	    }
+	  }
+	  elsif ($negated) {
+	    $found =1;
+	  }
+	  else {$match =0; goto endcheck;}
+	}
+      brothercheck:
+#		print "now conditions $_*\n";      
+	while (s/ B[0-9]?(\??)(\!?)=(\(.*?\))_([^ ]+)? / /) { # brother/sister-check
+	  $optional =$1;
+	  $negated =$2;
+	  if (! $optional) {$found =0;}
+	  $conditions = " " . $3; 
+	  $specific=$4;
+	  $conditions =~ s/ /( | .+ )/g;
+#		    print "---B-conditions for $i =$conditions $daughters[$M[$i]]\n";
+	  @daughterlist = split /,/, $daughters[$M[$i]];
+	  
+	  foreach (@daughterlist) {
+#			print "word =$word, brother $_ daughtertags =$line[$_]\n";
+	    if ($line[$_] =~ /$conditions / && ! ($_ == $i)) {
+	      $found =1;
+	      if ($specific) {$specifics .= ",$_:$specific";}
+#			    print "... found brother for $i with mother $M[$i], $conditions\n";
+	    }
+	  }
+	  if ($negated && ! $found) {$found =1;}
+	  elsif (! $found && ! $optional || $found && $negated && ! $optional) {$match =0; goto endcheck;}
+#		    if (! $found) {$match =0; goto endcheck;}
+	}
+
+	while (s/ D([0-9]?)(\??)(\!?)=(\(.*?\))_([^ ]+)? / /) { # daughtercheck
+	  $D_number ="";
+	  $optional =$2;
+	  $negated =$3;
+	  if (! $daughters[$i] && ! $optional && ! $negated) {$match =0; goto endcheck;}
+	  $conditions = " " . $4;
+	  $specific=$5;
+	  if (! $negated) {$D_number =$1;}
+	  $conditions =~ s/ /( | .+ )/g;
+
+### new from here, testing = as & and vice versa, finding both first (pp) or last (np) element as daughter
+	  $mwe_rest =""; $conditionslast ="";
+	  $conditions_equal = $conditions; ### also try '=' instead of '&'
+	  if ($conditions =~ /&/) {
+	    $conditions_equal =~ s/[\"\']&[\"\']/=/g;
+	  }
+
+	testdaughters:
+	  if ($conditions =~ s/^.*?\(([\"\'].+?)(&(.*&)?)(.+?[\'\"])\)$/\)/) {
+	    $conditions =$1; $mwe_rest =$2 . $4;
+	    $conditionslast =$4; $mwe_rest_first =$1 . $2;
+	    $mwe_rest =~ s/^&//; $mwe_rest_first =~ s/&$//;
+#	    print "--$conditions - $conditionslast\n";
+	  }
+	  if (! $optional) {
+	    $found =0;
+	  }
+#	  print "---$i D-conditions =$conditions optional=$optional found=$found mwe_rest=$mwe_rest\n";
+	  if ($daughters[$i]) {
+	    $position =1;
+	    @daughterlist = split /,/, $daughters[$i];
+	    foreach (@daughterlist) {
+#	      print "------- word =$word, daughter $_ daughtertags =$line[$_]\n";
+# print "----daughter $_, mwe_rest=$mwe_rest ($mwe_rest_first), conditions=$conditions, conditions_equal=$conditions_equal, conditionslast=$conditionslast\n";
+	      if ((! $specifics || $specifics !~ /,$_:/) && ($mwe_rest && $line[$_] =~ /$conditions_equal / || $line[$_] =~ /$conditions / || $line[$_] =~ / N / && $line[$_+1] && $line[$_+1] =~ /N .*\@N</ && $line[$_+1] =~ /$conditions / || $conditionslast && $line[$_] =~/$conditionslast / && ($position = 3) && ($mwe_rest = $mwe_rest_first))) { # også: en masse kul, en kop te .. position has to be 3, -1 stays 1, 0 blocks whole block???
+		if ($mwe_rest && $line[$_] =~ /$conditions_equal /) {$mwe_rest = "";}
+		$focusdaughter =$_;
+		$found =1;
+#		print "-----found $focusdaughter for $conditions\n";
+		if ($mwe_rest) {
+		  @nextwords = split /&/, $mwe_rest;
+
+		  if ($position == 3) {$position = - @nextwords;}
+#		  print "-----$position\n";
+		  if ($position > 0) {$nilstart =$focusdaughter+1;}
+		  else {$nilstart = $focusdaughter + $position;}
+		  foreach (@nextwords) {
+		    if ($position <= $num) {
+		      $nextword =$_;
+		      if (! ($line[$focusdaughter+$position] =~ /$nextword /)) {
+			$found =0;
+		      }
+#		      print "-----next match: $nextword found=$found focusdaughter=$focusdaughter position=$position $line[$focusdaughter+$position]\n";
+		      $position++;
+		    }
+		    else {
+		      $found =0;
+		    }
+		  }
+		  if ($found) {
+		    for ($nilling=$nilstart; $nilling <= $focusdaughter+$position-1; $nilling++) {
+		      $specifics .= "," . $nilling . ":nil";
+#		      $smebases[$nilling] ="nil";
+		    }
+		  }
+		}
+#		print "--found=$found, specifics=$specifics, nilling from $nilstart to $focusdaughter + $position-1\n";
+		if ($found && $specific) {
+		  $specifics .= ",$focusdaughter:$specific";
+		}
+#		print "---D ($i/$_) found: $conditions specifics=$specifics match=$match\n";
+	      }
+	    }
+	  }
+	  if (! $found && $conditions =~ /\(["\'][\w&]+[\"\']\)$/ && $conditions =~ s/=/\'&\'/g) { # check also with &
+	    $conditions =~ s/\"/\'/g;
+#	    print "--retrying: $conditions\n";
+	    goto testdaughters;
+	  }
+#### end of new version
+
+#	  if ($found) {goto negatecheck;} # not necessary, if old version (below) is removed. Done in sme2nor, but sme2ger still has it --> backup there, if anything untoward happens
+	  
+	negatecheck:
+	  if ($negated && ! $found) {$found =1;}
+	  elsif (! $found && ! $optional || $found && $negated && ! $optional) {$match =0; goto endcheck;}
+	  elsif (! $found && $optional) {;} # 'elsif' is fine, since it blocks GD instantiation
+	  elsif (($D_number || /^ +GD/) && s/ GD$D_number(\??)(\!?)=(\(.*?\))_([^ ]+)? / /) { # granddaughtercheck
+	    $optional =$1;
+	    $negated =$2;
+	    if (! $daughters[$focusdaughter] && ! $optional && ! $negated) {$match =0; goto endcheck;}
+	    $conditions = " " . $3; 
+	    $specific=$4;
+	    $conditions =~ s/ /( | .+ )/g;
+#	    print "---GD-conditions =$conditions specifics=$specific, $D_number, $_\n";
+	    if (! $optional) {$found =0;}
+	    if ($daughters[$focusdaughter]) {
+	      @daughterlist = split /,/, $daughters[$focusdaughter];
+	      foreach (@daughterlist) {
+		#			      print "word =$word, daughter $_ daughtertags =$line[$_]\n";
+		if ($line[$_] =~ /$conditions /) {
+		  $found =1;
+#			    print "---GD found: $condition specifics=$specifics\n";
+		  if ($specific) {$specifics .= ",$_:$specific";}
+		}
+	      }
+	    }
+	    if (! $found && ! $optional && ! $negated || $found && $negated && ! $optional) {$match =0; goto endcheck;}
+	    if ($negated && ! $found) {$found =1;}
+	  }
+
+### positions relative to dependents
+#	  elsif (1==1) {print "--focusdaughter = $focusdaughter, D_number = $D_number\n";}
+	  elsif (($D_number || /^ +DP/) && s/ D$D_number?P(-?[0-9])(\??)(\!?)=(\(.*?\))_([^ ]+)? / /) { # granddaughtercheck
+	    $d_position = $focusdaughter + $1;
+	    $optional =$2;
+	    $negated =$3;
+	    $conditions = " " . $4; 
+	    $specific=$5;
+	    $conditions =~ s/ /( | .+ )/g;
+#	    print "---rel.position=$d_position, DP-conditions =$conditions specifics=$specific\n";
+	    if (! $optional) {$found =0;}
+	    if ($line[$d_position] =~ /$conditions /) {
+	      $found =1;
+	      if ($specific) {$specifics .= ",$d_position:$specific";}
+#	      print "---DP found: $condition specifics=$specifics\n";
+	    }
+	    if (! $found && ! $optional && ! $negated || $found && $negated && ! $optional) {
+#	      print "---bailing out, found=$found\n";
+	      $match =0; goto endcheck;
+	    }
+	    if ($negated && ! $found) {$found =1;}
+	  }
+	}
+#		goto daughtercheck; CAVE: PERL HANGS UP BECAUSE OF GOTO (NOT LOOP!! THE WHOLE PROGRAM FREEZES!!)
+
+	if ($found && $rank > 1) {$match =$match +1;} # bonus for matching all conditions (i.e. not get sent to endcheck
+#		print "*****match for $i $_ =$match (max=$matchmax) specifics=$specifics\n";
+	if ($match > $matchmax) {
+	  $matchmax =$match;
+	  if (/ :([^ ]+)/ || /:([^ ]+)/) {
+	    $norbase =$1;
+	    if (/\!pl/) {
+	      $line[$i] =~ s/ P / nN /g;
+	    }
+	    $max_specifics =$specifics;
+	  }
+	}
+      endcheck:
+	$specifics ="";
+      }
+#      print "*******$word - norbase =$norbase, $matchmax pos=$pos max_specifics=$max_specifics\n";
+      if ($norbase =~ s/(\[.*\])$//) {$max_specifics .= ",$i:$1";} # because of combination of SIC and specifics in target word: folk -> SIC-man[P->S]
+
+
+      if ($max_specifics) {
+	$max_specifics =~ s/^,//;
+	$max_specifics =~ s/±/ /g;
+	@tochange = split /,/,$max_specifics;
+	foreach (@tochange) {
+	  ($at,$attrad) = split /:/;
+	  if (! $norbases[$at] || ! ($norbases[$at] eq "nil")) {
+#	    print "******$at $attrad $line[$at] $norbases[$at]\n";
+	    if (! ($attrad =~ /\[/)) { # kun til højre er ikke nok: han kom til klarhed over sin skæbne - he realized his fate
+	      $norbases[$at] =$attrad;
+	    }
+	    $atorig =$at;
+	    if ($attrad =~ /(NOM|GEN|DAT|ACC)->(NOM|GEN|DAT|ACC)/ && $line[$at] =~ /<quantdep:([0-9]+)>/) {$at =$1;}
+	    while ($attrad =~ s/\[([^\]]*)->([^\]]*)\]//) {
+	      $from =$1; $to =$2;
+	      $from =~ s/CASE/(ACC|DAT|NOM|GEN)/;
+	      if ($to =~ /^(ACC|DAT|GEN)/) {
+		$newcase = $1;
+		$line[$at] =~ s/\@(ACC|DAT|GEN)/\@$newcase/;
+		$newcase ="";
+	      }
+	      if ($to =~ s/ *& *(.*)//) {
+		$attrad = "[" . $1 . "]";
+	      }
+	      #			$addword[$at] =$1;
+	      if (! $from) {$line[$at] =~ s/\@/$to \@/;}
+	      elsif ($from eq "\@FUNC") {$line[$at] =~ s/\@[^ \n]+/$to \@/;}
+	      elsif ($to =~ /[123][SP]/ && $line[$at] =~ /ICL-AUX</) {
+		$line[$M[$at]] =~ s/ $from / $to /; # make changes at the finite auxiliary instead
+	      }
+	      else {
+		$line[$at] =~ s/ $from / $to /; # morphological replacement without a translation only for words later in the sentence
+	      }
+#			print "her: at=$at, attrad=$attrad, from=$from, to=$to - $line[$at]\n";
+	      if ($line[$at] =~ /\@SUBJ/) {
+#			  print "........self=$line[$at]...mother=$line[$DM[$at]]\n";
+		if ($from =~ /S/ && $to =~ /P/) {
+		  $line[$DM[$at]] =~ s/ 3S//;
+		}
+			  # substitution-only-plural sujects have to have their finite verb adapted with regard to person-number
+		elsif ($from =~ /P/ && $to =~ /S/) {
+		  $line[$DM[$at]] =~ s/ 3P/ 3S/; # substitution-only-plural sujects have to have their finite verb adapted with regard to person-number
+		}
+		elsif ($from =~ /S/ && $to =~ /P/) {
+		  $line[$DM[$at]] =~ s/ 3S/ 3P/; # substitution-only-plural sujects have to have their finite verb adapted with regard to person-number
+		}
+	      }
+	      if ($from =~ /S/ && $to =~ /P/) {
+		my @daughterlist =split /,/,$daughters[$at];
+		foreach (@daughterlist) {
+		  #				print "---her ... $_\n";
+		  if ($line[$_] =~ /ART.*IDF/) {
+		    $norbases[$_] ="nil";
+		  }
+		}
+	      }
+	    }
+	    $at =$atorig;
+	    if ($attrad =~ s/\[([^\]]+\+)\]// || $attrad =~ s/^\[(\+[^\]]+)\]//) {
+	      $prefix =$1;
+	      $addword[$at] .= "¤" . $prefix;
+	      $addword[$at] =~ s/(.)(\+¤|¤\+)/$1=/g; # if therea are two pre-adds or post adds .... and let's hope there are in the right order. Example: 'elect pal of the year' --> 'vælge til årets kammerat'
+#			print "---adding prefix $prefix to $at : $addword[$at]\n";
+	    }
+	    if ($attrad) {
+	      $norbases[$at] =$attrad;
+	    }
+	  }
+	}
+      }
+    sluttrad:
+      
+      if ($norbase eq "=") {$norbase =$base;}
+
+      if (! $norbase) {
+	$norbases[$i] = $base;
+	$norbases[$i] =~ s/^([\w])/DAN-$1/;
+      }
+      elsif (! $norbases[$i]) {
+	$norbase =~ s/±/ /g;
+	if ($norbase =~ s/_?\[(.*)->(.*)\]$//) { # morph-cat changes
+	  $from =$1; $to=$2;
+	  $line[$i] =~ s/ $from / $to /g;
+	  
+	  if ($from =~ /S/ && $to =~ /P/ && $daughters[$i]) {
+	    my @daughterlist =split /,/,$daughters[$i];
+	    foreach (@daughterlist) {
+	      #			    print "her ... $_\n";
+	      if ($line[$_] =~ /ART.*IDF/) {
+		$norbases[$_] ="nil";
+	      }
+	    }
+	  }
+	}
+#		print "tradpropfirst =$tradpropfirst norbase=$norbase i=$i first=$first\n";
+	if (! $tradpropfirst && $line[$i] =~ /:0\+/) { # otherwise '0-meridian' doesn't work
+	  $tradpropfirst = "0SIC0";
+	}
+	if ($tradpropfirst) {
+	  $norbase = $tradpropfirst . "-" . $norbase;
+	  $norbase =~ s/0SIC0/0/;
+	  $tradpropfirst ="";
+	}
+	$norbases[$i] =$norbase;
+#		print "tradpropfirst =$tradpropfirst norbase=$norbase i=$i\n";
+      }
+    sluttradloop:
+    }
+#	print "norbases $i $norbases[$i] -- $line[$i]\n";
+  }
+}
+
+sub generator {
+  @nor =();
+
+
+### ordinary iteration
+
+  for ($i = 1; $i <= $num; $i++) {
+    if (! $nor[$i] && $line[$i] && $line[$i] =~ /^ *\'?(.+?)\'?[ \t]+\"(.*?)\"(.*?) ([A-Z]+) (.*)/ && $4 ne "PU") {
+      $word =$1; $base =$2; $pos ="_$4"; $tags ="$3 $5";
+      $morf = "$4 $5";
+      &build;
+    }
+  }
+}
+
+sub build {
+#	    if ($word =~ /^[A-ZÆØÅ]/ || $majuskel ==1 && $nor[$i-1] && $nor[$i-1] eq "nil") {
+  if ($word =~ /^[A-ZÆØÅÄÖÜ]/) {
+    $majuskel =1;
+  }
+  else {
+    $majuskel =0;
+  }
+
+  $trans =""; $restfirst =""; $restsecond ="";
+  if ($norbases[$i] =~ /^[0-9]+\-/ && $tags =~ /IDF GEN/) {
+    $norbases[$i] = "SIC-" . $norbases[$i];
+  }
+#	    print "norbases...$i $norbases[$i] word=$word majuskel=$majuskel\n";
+  if ($norbases[$i] =~ /^(SIC|BASE)-/ || $norbases[$i] =~ /(SIC|BASE)-[^ =\-]+$/ || $norbases[$i] eq "nil") { # baselx and memory-lex translations are not to be touched morphologically
+    $nor[$i] =$norbases[$i];
+    if ($majuskel) {$nor[$i] =~ s/^(BASE|DAN|SIC)([:\-])(.)/$1$2\u$3/;}
+    goto sluttradloop;
+  }
+  else {
+    $norbase =$norbases[$i];
+#		if ($norbase =~ s/\[(.*)->(.*)\]$//) { # morph-cat changes
+#		    $from =$1; $to=$2;
+#		    $tags =~ s/ $from / $to /g;
+#		}
+  }
+  if ($word =~ /\+/) {$norbase =~ s/\+/XXXPLUSXXX/;} # protecting original +
+
+  if ($norbase =~ /^DAN-/) {
+    if ( ! ($word =~ /-/)) {$norbase =~ s/\+//;} # Kirkholm
+    else {$norbase =~ s/\+/\-/;} # P-plads
+  }
+  $trans =$norbase;
+
+  $pos =~ s/^_//;
+  
+  if ($fuge && $fuge =~ /~([sen])/) {
+    $trans =~ s/\+/$fuge\+/; 
+    $trans =~ s/(.)~\1\+/$1/; # cave utviklings~s+direktør
+  } ## pass fuge to the Norwegian generator
+
+#	    print "-----$i trans=$trans word=$word lex=$trans pos=$pos line=$line[$i]\n"; if ($fuge) {print "-----fuge=$fuge\n";}
+#	    print "---------- $norbases[$M[$i]] --- $line[$M[$i]]\n";
+
+######################### normorf ################
+  if (! ($trans =~ /^(SIC|DAN|BASE)-/) || $pos eq "PROP" && $trans =~ /^DAN-/) {
+    if ($pos eq "V" && $line[$i] =~ / (PR|IMPF) /) { #dependency person
+      my @daughterlist =split /,/,$daughters[$i];
+      foreach (@daughterlist) {
+	#		  print "-- daughter of $i: $_\n";
+	if ($line[$_] =~ / ([1-3]?[SP]) .*\@([FS]-)?SUBJ/) {
+	  $person =$1;
+	  $person =~ s/^([SP])$/3$1/;
+	  if ($line[$_] =~ /BASE[SP]/) {
+	    $line[$i] =~ s/3[SP] //;
+	  }
+	  if (! ($line[$i] =~ /[123][SP]/)) {
+	    $line[$i] =~ s/ (PR|IMPF) / $1 $person /;
+	  }
+	}
+      }
+      if ($line[$i] =~ /<cjt>/ && ! ($line[$i] =~ /[123][SP]/) && $line[$DM[$i]] =~ / V .*([123][SP])/) { # coordinated verbs
+	$person =$1;
+	$line[$i] =~ s/ (PR|IMPF) / $1 $person /;
+      }
+    }
+    $transline = $line[$i];
+    $transline =~ s/\"(.*?)\" /\"$trans\" <DABASE:$1> /; # insert base translation
+#	      print "--transline=$transline\n";
+    if ($morf =~ /^V / && $trans =~ s/^(.+)=(.+?)$/$2/) {
+      $restfirst =$1;
+      $transline =~ s/\".*?\" /\"$trans\" /;
+      $joiner ="=";
+    }
+    elsif ($trans =~ s/^(.+?)([\+\-])(.+)$/$3/) {
+      $restfirst =$1;
+      $joiner ="$2";
+      $transline =~ s/\".*?\" /\"$trans\" /;
+#		print "--$trans -- $transline\n";
+    }
+    elsif ($trans =~ s/^(.+?)X=(.+)$/$1/) {
+      $restsecond =$2;
+      $joiner ="=";
+      $transline =~ s/\".*?\" /\"$restsecond\" /;
+      #		$restmorf = normorf($transline, $morflex, $val, $fugeadd);
+      if ($restmorf) {$restsecond =$restmorf;}
+      $transline =~ s/\".*?\" /\"$trans\" /;
+      $transline =~ s/ N / ADJ /;
+      $morfold =$morf;
+      $morf =~ s/^N /ADJ /;
+    }
+    elsif ($trans =~ s/^(.+?)_[A-Z]+=(.+)$/$1/) {
+      $restsecond =$2;
+      $joiner ="=";
+      $transline =~ s/\".*?\" /\"$trans\" /;
+    }
+    else {
+      $restfirst =""; 
+#		$restsecond =""; # can also be set earlier during gender check
+    }
+#	      print "--trans=$trans\n";
+    if ($restfirst) {
+      if ($joiner eq "+") {$trans = "\l$trans";}
+      $trans = $restfirst . "$joiner$trans";
+      if ($morfold) {$morf =$morfold;}
+      $restfirst = "";
+    }
+    if ($restsecond) {
+      $trans .= "$joiner$restsecond";
+      if ($morfold) {$morf =$morfold;}
+      $restsecond = "";
+    }
+    if ($line[$i] =~ /<aux>/) {
+      $trans =~ s/^geworden/worden/;
+    }
+    if ($pos =~ /^(PROP)$/) {
+#      if ($trans =~ s/^([dD][eia][rsnme]=)(.)/$1\u$2/ || $trans =~ /=[A-ZÄÖÜ]/) {$majuskel =0;} # cave ready compounds from sme.nor.dict: "regenerative=Energie"
+#      else {}
+	
+      $trans =~ s/^(.)/\u$1/;
+    }
+#	      print "--i=$i pos=$pos $trans $_\n";
+  }
+
+###################################################
+
+  if ($trans) {
+    $nor[$i] =$trans;
+#		print "--assigning $trans to nor($i)\n";
+  }
+
+ sluttradloop:
+  if ($line[$i] =~ /<hyfen>/ && $nor[$i] && ! ($nor[$i] =~ /-$/)) { # skummet-, kærne- og letmælk --- risky, Norlish might express the polylexicals in question without a hyphen ...
+    $nor[$i] =~ s/$/-/;
+  }
+
+
+######## add extra-words from .dict differentiation, e.g. tildele ngn. ngt -> impose s.th. on s.b.
+
+  if ($addword[$i]) {
+    $addword[$i] .= "¤";
+#	      print "---i=$i addword=$addword[$i] nor=$nor[$i]\n";
+    if ($addword[$i] =~ /¤([^¤]+)\+¤/) {
+      $preadd=$1;
+      if ($i ==1 && ! ($line[$i] =~ / PROP /)) {$nor[$i] =~ s/^(SIC-|DAN-|ADV-|BASE-)?(.)/$1\l$2/;}
+      $nor[$i] = $preadd . "=\+" . $nor[$i];
+    }
+    elsif ($addword[$i] =~ /¤\+([^¤]+)¤/) {$nor[$i] .= "\+=" . $1;}
+#	      print "---i=$i addword=$addword[$i] nor=$nor[$i]\n";
+  }
+
+### propagating KS across coordinated fs
+
+  if ($pos =~ /KS/ && $M[$i] && $line[$M[$i]] =~ /<cjt>/) {
+    if ($M[$M[$i]] && $line[$DM[$M[$i]]] =~ / (PR|IMPF) /) {
+      $daughters[$DM[$M[$i]]] =~ /([0-9]+)/;
+      $firstks =$1;
+      if ($firstks < $DM[$M[$i]] && $firstks < $i && $nor[$firstks] && $line[$firstks] =~ /KS/) {
+	if ($line[$firstks] =~ /"(.*?)" / && ($firstbase =$1) && $line[$i] =~ /"\Q$firstbase\E"/) {
+	  $nor[$i] =$nor[$firstks];
+	}
+      }
+    }
+  }
+}
+
+
+sub frontmaj {
+  if ($j ==1 && $nor[$j] =~ /^[^=]+=([A-Z])/) {
+    if (! ($line[$j] =~ /PROP/)) {
+      s/=([A-Z][a-z])/=\l$1/;
+    }
+#    $nor[$j] = "\u$nor[$j]"; # ... now done in a general way in &print
+  }
+}
+
+
+sub print {
+  @oriline =();
+  for ($i = 1; $i <= $num; $i++) {
+#      print "--$i $nor[$i]\n";
+    if ($nor[$i]) {$nor[$i] =~ s/==/=/;}
+
+    if ($line[$i] =~ /<([0-9]+)>/) {
+      if ($oriline[$1]) {$nor[$i] ="nil";}
+      else {$oriline[$1]=1;} # registering the used lines, to prevent shadows
+    }
+    
+
+
+
+##################
+
+    $line[$i] =~ s/<%.*?> //g; # remove on-the-fly sets from smecg.nor
+    $line[$i] =~ s/<ø>//;
+
+    ### version with "translation readings" (not really subreadings?)CG output
+    
+    $line[$i] =~ s/^ *\'(.*)\' +/"<$1>" /;
+    $line[$i] .= " #$i->$M[$i]";
+    $line[$i] =~ s/\^/__/g;
+    print "$line[$i]\n";
+    $line[$i] =~ s/^[^ ]+ /\t/;
+    if (! $ambitrad[$i] && (! $norbases[$i] || $norbases[$i] eq "ambitrad")) {
+#      print "--missing translation: $_\n";
+      if ($line[$i] =~ /"([^<]*?)" / || $line[$i] =~ /"<(.*)>"/) {
+	$ambitrad[$i] = ":$1";
+      }
+    }
+    if ($ambitrad[$i]) {
+      @ambitrads = split /; */, $ambitrad[$i];
+      foreach (@ambitrads) {
+	s/^.*?://;
+	$subtrad = $_;
+	$copyline = $line[$i];
+	if ($subtrad =~ s/_\[(<ø>->)?(<.*?>)\]//) {
+	  $pardef =$2;
+	  $copyline =~ s/" /" $pardef /;
+	}
+	$copyline =~ s/".*" /"$subtrad" /;
+	print "$copyline\n";
+      }
+    }
+    
+    elsif ($norbases[$i]) {
+      $copyline = $line[$i];
+      $copyline =~ s/".*" /"$norbases[$i]" /;
+
+      if ($nor[$i]) {
+	$nor[$i] =~ s/^=//;
+	$copyline  =~ s/" /" <NO:$nor[$i]> /;
+      }
+      print "$copyline\n";
+    }
+  }
+}
