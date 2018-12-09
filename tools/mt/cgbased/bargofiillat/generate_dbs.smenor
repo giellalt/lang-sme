@@ -1,0 +1,115 @@
+#!/usr/bin/perl -w
+use utf8;
+use DB_File;
+use DBM_Filter;
+use Encode;
+
+my ($bindir, $sep) = $0 =~ /^(.*)(\\|\/).*/;
+$binDir = $bindir;
+
+$ENV{PATH} = "$bindir:$bindir$sep../../bin:$ENV{PATH}";
+$ENV{SMEGRAM_BIN} = "$bindir";
+$ENV{SMEGRAM_ETC} = $etcdir = $etcDir = "$bindir$sep../etc";
+$ENV{SMEGRAM_LEX} = $lexdir = $lexDir = "$bindir$sep../lex";
+
+#print "--lexDir=$lexDir\n";
+
+sub LoadSmeNorDict() {
+  my $trad;
+  my $TA = tie %trad, "DB_File", "$lexDir/sme.nor.dict.db", O_CREAT|O_RDWR|O_TRUNC|O_EXCL;
+  $TA->Filter_Push('utf8');
+  open(FH, "<$lexDir/sme.nor.dict") || open(FH, "<\/home\/eckhard\/parsers\/sme\/lex\/sme.nor.dict");
+  while (<FH>) {
+    if (! /^\#/) {s/ VR / D=(<refl>)_nil /g;}
+    if (! /^\#/ && /^(.*?) (.*)$/) {
+      $word =$1;
+      $translation =$2;
+#      if (! $trad{$word}) { no, so far the last of multiple entries is the one that was first in daka, i.e. most general
+      $translation =~ s/[ \t]+\#.*//g;
+      $translation =~ s/ =/ :=/;
+      $translation =~ s/:\?[^ ,;]+[,;] //g; # remove unchecked firsties
+#      $translation =~ s/\) +([GDP]?[DHSPBM]\-?[0-9]?\??\!?=\(|:)/\)_ $1/g;
+      $translation =~ s/\) +([GDP]?[DHSPBM]\-?[0-9]?[\?\!\*]*=\(|:)/\)_ $1/g;
+      $translation =~ s/^([^:])/ $1/; # so initial <vr> can be found
+      $translation =~ s/\[g\]//g; # kingorn[g]a
+
+      $translation =~ s/(\('[^ =]+)=([^ &]+'\))/$1'&'$2/g;
+      $translation =~ s/(\('[^ =]+)=([^ &]+'\))/$1'&'$2/g;
+      $translation =~ s/(\('[^ =]+)=([^ &]+'\))/$1'&'$2/g;
+
+      $translation =~ s/\[([^>&\+]*?)\]/[<ø>-><$1>]/g;
+      $translation =~ s/__/^/g;
+
+      if (! $trad{$word}) {
+	$trad{$word} =$translation;
+      }
+      else {
+	if ($translation =~ /^[^=]*:/ && $trad{$word} !~ /^[^:]*\(1\)/) {
+	  $trad{$word} = $translation . "; " . $trad{$word}; # prefix translation alternative to others, because it is without D= etc. conditions, and hence designed to come first. However, respect another translation without D= etc., if it is explicitly marked as first (1)
+	}
+	else {
+	  $trad{$word} .= "; " . $translation;
+	}
+      }
+#      }
+      @alternatives = split /;/, $translation;
+      foreach (@alternatives) {
+	while (s/ [A-Z]+(\-?[0-9]?)(\??)(\!?)=(\(.*?\))_([^ ]+)? / /) { # daughtercheck
+		    #		  $optional =$2;
+		    #		  $negated =$3;
+	  $conditions = " " . $4;
+		    #		  $specific=$5;
+	  eval {
+	    "xxx" =~ /$conditions/;
+	  };
+	  if ($@) {
+	    print "------reg.ex. error in $word: $@\n";
+	  }
+	}
+      }
+    }
+    if (/^have_/) {print "*** $word --- $trad{$word}\n";}
+  }
+  $TA->sync();
+}
+
+
+sub LoadSmeNorBaselex() {
+  my $basetrad;
+  my $TA = tie %basetrad, "DB_File", "$lexDir/sme.nor.baselex.db", O_CREAT|O_RDWR|O_TRUNC|O_EXCL;
+$TA->Filter_Push('utf8');
+  open(FH, "<$lexDir/sme.nor.baselex");
+  while (<FH>) {
+    if (! /^\#/ && /^(.*?) (.*)$/) {
+      $word =$1;
+      $translation =$2;
+      $translation =~ s/[ \t]+\#.*//g;
+      $basetrad{$word} =$translation;
+    }
+	#    print "*** $word --- $basetrad{$word}\n";
+  }
+  $TA->sync();
+}
+
+
+sub LoadSmeNorMemory() {
+  my $memotrad;
+  my $TA = tie %memotrad, "DB_File", "$lexDir/sme.nor.memory.db", O_CREAT|O_RDWR|O_TRUNC|O_EXCL;
+$TA->Filter_Push('utf8');
+  open(FH, "<$lexDir/sme.nor.memory");
+  while (<FH>) {
+    if (! /^\#/ && /^(.*?) +:(.*)$/) {
+      $from ="\l$1"; $to =$2;
+      $from =~ s/[\[\]]//g;
+      $to =~ s/ /=/g;
+      $memotrad{$from} =$to;
+    }
+	#    if (/sidst pï¿½)    {print "*** $from --- $memotrad{$from}\n";}
+  }
+  $TA->sync();
+}
+
+LoadSmeNorDict();
+LoadSmeNorBaselex();
+LoadSmeNorMemory();
+

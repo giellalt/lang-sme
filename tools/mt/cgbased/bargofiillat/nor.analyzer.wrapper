@@ -1,0 +1,31 @@
+#!/usr/bin/env perl
+# -*- mode: cperl; indent-tabs-mode: nil; tab-width: 3; cperl-indent-level: 3; -*-
+BEGIN { $| = 1; }
+use strict;
+use warnings;
+use utf8;
+
+sub explode_utf8 {
+    my ($line) = @_;
+    while ($line =~ m@([^\x{00}-\x{7E}])@) {
+        my $code = $1;
+        my $ord = ord($1);
+        $line =~ s/\Q$code\E/\\u{$ord}/g;
+    }
+
+    return $line;
+}
+
+my $lexdir = $ENV{KALGRAM_LEX} || '.';
+my $fst = $lexdir.'/analyser-disamb-gt-desc.hfstol';
+if (! -s $fst) {
+   $fst = '/usr/share/giella/nob/analyser-disamb-gt-desc.hfstol';
+}
+
+my $cmdline = 'utf8_implode.pl | hfst-optimized-lookup -p '.$fst;
+open PIPE, "$cmdline|" or die $!;
+while (<PIPE>) {
+	$_ = explode_utf8($_);
+	print;
+}
+close PIPE;
