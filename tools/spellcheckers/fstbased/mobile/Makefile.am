@@ -11,7 +11,7 @@ CORPUSNAME=spellercorpus
 # Specify whether to use corpus weights for frequency ranking of suggestions.
 # Make sure you test the suggestion quality both before and after changing this
 # setting.
-ENABLE_CORPUS_WEIGHTS=no
+ENABLE_CORPUS_WEIGHTS=yes
 
 # Use this as the source lexical fst for unit weighting, it contains correct
 # surface forms except for the word boundary #, which is still present, and
@@ -28,8 +28,8 @@ CORPUS_SIZE=
 
 ### BEGIN: Local build rules: *.hfst: *.tmp.hfst ###
 
-generator-desktopspeller-gt-norm.hfst: \
-			generator-desktopspeller-gt-norm.tmp.hfst \
+generator-mobilespeller-gt-norm.hfst: \
+			generator-mobilespeller-gt-norm.tmp.hfst \
 			$(top_builddir)/src/filters/remove-derivation-position-tags.hfst
 	$(AM_V_HXFST)$(PRINTF) "\
 	set encode-weights ON \n\
