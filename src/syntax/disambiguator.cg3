@@ -1155,7 +1155,7 @@ SET N-TIMEOBJECT-V = MOVEMENT-V OR ACTIVITY-V OR VERBAL-ACTIVITY-V OR INTELLECTU
 LIST MUITALIT = "árvalit" "árvidit" "bivdit" "boagustit" "cealkit" "cuoigut" "čilget" "čurvet" "čuorvut" "dadjat" "dahkaluddat" "deattastit" "deattuhit" "diehtit" "doaivut" "eahpidit" "geardduhit" "geažuhit" "gielistit" "gilljut" "hállat" "hoallat" "huikit" "huikkádit" "imaštallat" "jearrat" "jievžat" "juoigat" "jurdilit" "jurddašit" "kommenteret" "lávlut" "lasihit" "loahpahit" "lohkat" "lohpidit" "máidnut" "máinnašit" "muitalit" "muittuhit" "nágget" "njávggádit" "oaivvildit" "rávvet" "savkalit" "sárdnidit" "šuohkihit" "váidalit" "váruhit" "vástidit" ;
 	#$ Deaŧalaš lea sihkkarastit eamiálbmogiid ovddastusa dákkár čállingottis, dadjá Keskitalo.
 
-LIST JEARRAT = "diehtit" "jearrat" "mearridit" "iskat"  "imaštallat"  "imaštit" ;
+LIST JEARRAT = "dárkkistit" "diehtit" "jearrat" "mearridit" "iskat"  "imaštallat"  "imaštit" ;
 	# verbs which makes the rel/interr pron  to an Interr and go to Qst: Son jearai gii boahtá odne. Isket leat go duhtavaš kollektiiva­fálaldagain.
 
 #!! !Adverb sets
@@ -2075,7 +2075,7 @@ LIST ILLNESS = "albmasuoigi" "allergiija" "anemiija" "báhti" "bátnevárka" "b�
 # LIST ANIMAL-ILLNESS = "luossadávda" "vuorri" ;
 
 
-LIST MIELLA = "áigi" "áigumuš" "árbevierru" "bággu" "dárbu" "diehtu" "dilli"  "doarjja" "ealjárvuohta" (".*gelbbolašvuohta"r) "geatnegahtton" "geatnegasvuohta" "gudni" "hállu" (".*lohpi"r) "miella" "ovddasvástádus" "plána" "resursa" "riekti" "sávaldat" "váldi" "vejolašvuohta" "vuođđu" "vuohki" "vuoigatvuohta" "vuorru" ;
+LIST MIELLA = "áigi" "áigumuš" "árbevierru" "bággu" "dárbu" "diehtu" "dilli"  "doarjja" "ealjárvuohta" (".*gelbbolašvuohta"r) "geatnegahtton" "geatnegasvuohta" "gudni" "hállu" "hárjáneapmi" (".*lohpi"r) "miella" "niehku" "ovddasvástádus" "plána" "resursa" "riekti" "sávaldat" "váldi" "vejolašvuohta" "vuođđu" "vuohki" "vuoigatvuohta" "vuorru" ;
 # These give Inf @N< instead of @ADVL (like more concrete nouns: ruhta, bileahta, dálki ...)
 
 
@@ -2984,9 +2984,10 @@ SELECT ("duddjon") + Nom IF (-1 ("DUO"));
 
 
 #!! * __NotGen__ 
-SELECT:NotGen N + Nom IF (*-1 BOS BARRIER WORD)(0 Gen LINK NOT 0 PrfPrc LINK 1 Sem/Time LINK NOT *1 REAL-V) ;
+SELECT:NotGen N + Nom IF (*-1 BOS BARRIER WORD)(0 Gen LINK NOT 0 PrfPrc OR Attr LINK 1 Sem/Time LINK NOT *1 REAL-V) ;
 	#$ Giđđajohtin minuvttas minuktii.
 	#% Mannan ija dáhpáhusat.
+	#% Vuosttáš báddenbeaivi.
 
 SELECT:duššeAdv Adv IF (0 ("dušše"))(1 Num LINK *1 PrfPrc BARRIER REAL-V) ;
 SELECT:duššeAdv2 Adv IF (*-1 VFIN)(0 ("dušše"))(1 Num);
@@ -3193,7 +3194,7 @@ SELECT:AdvSTV2 Adv IF (-1 Acc LINK -1 (Pron Gen) LINK *-1 ("váldit") OR ("oahpp
 SELECT:mieldeAdv Adv IF (0 ("mielde") LINK 1 (Actio Ess)) ; 
 	#$ Sanila-Aikio mielde ođasmahttimin sámediggelága.	
 
-SELECT:Advleat2 Adv IF (*-1 ("leat") BARRIER SV-BOUNDARY LINK -1 Loc + HAB-ACTOR) (0 Po LINK 0 ("mielde") LINK NEGATE -1 Sem/Time + Gen); 	
+SELECT:Advleat2 Adv IF (*-1 ("leat") BARRIER SV-BOUNDARY OR Nom LINK -1 Loc + HAB-ACTOR) (0 Po LINK 0 ("mielde") LINK NEGATE -1 Sem/Time + Gen); 	
 SELECT:AdvNum3 Adv IF (-1 N + Gen LINK *-1 MEASURE + Gen BARRIER NOT-A LINK -1 Num + Nom LINK NOT 0 Sem/Year) (0 Po LINK 0 ("mielde") LINK NEGATE -1 Sem/Time + Gen); 
 	#$ golbma kilo hášša mielde	
 
@@ -5846,7 +5847,7 @@ SELECT:maidAdv13 ("maid" Adv) IF  (1 MIELLA LINK 1 Inf)(-1 VFIN) ;
 
 
 #!! * __AdvPlc__ selects Adv for 
-REMOVE:AdvPlc N IF  (0 PLACE-ADV) ;
+REMOVE:AdvPlc N IF  (0 PLACE-ADV)(NEGATE 0 ("olggobealli") + Gen LINK 1 Sem/Hum) ; ;
 REMOVE:Po Po IF (0 PLACE-ADV LINK NOT -1 Gen) ;
 
 
@@ -8348,6 +8349,10 @@ REMOVE:KillAllVGen VGen IF (0 (VGen));
 
 #!! !!Perfect Participle
 
+REMOVE:inCoor PrfPrc IF (-1 CCCOMMA OR JA/DAHJE LINK -1 N + Nom)(0 N + Nom LINK 1 CCCOMMA OR JA/DAHJE LINK 1 N + Nom);
+	#$ Sámi mánáidgárdeoahpaheaddjeoahppu, MOA 2017 joavkku, lea odne čájehan Duodji, Juoigan ja Hutkáivuohta (DJH) máhttoviidodaga joavkoeksámena.
+
+
 REMOVE PrfPrc IF (0 N LINK 1 ("/") LINK 1 N);
 	#$ Dát ruhta galgá juhkkot njealji sadjái, namalassii čuoigan/luođovaláštallamii ja golmma spábbačiekčanjovkui.
 
@@ -10035,7 +10040,7 @@ REMOVE:SEMlang Gen IF (0 N LINK NOT 0 ACTOR-ROLE OR ABSTR-PLACE OR TIME OR TEXT 
 	#% Mun ohppen sin áddestalladettiin máttanorgga suopmana hállat.
 
 #!! * __SEMlang2__ Gen if you are LANGUAGE with 1 N: You are only a modifier in a sentence with a TV-verb, if there is an Acc or Com between you, or if the Obj is topicalized ''ráhkadii sámegiela Áppesa''
-SELECT:SEMlang2 Gen IF (0 LANGUAGE + Gen)(*1 N BARRIER NOT-A)(NEGATE *1 TIME-N BARRIER NOT-Attr)(NEGATE *-1 TRANS-V CBARRIER Acc OR Com LINK NEGATE *-1 Acc BARRIER S-BOUNDARY)(NEGATE 1 COMMA LINK 1 Acc);
+SELECT:SEMlang2 Gen IF (0 LANGUAGE + Gen)(*1 N BARRIER NOT-A OR ("vissis"))(NEGATE *1 TIME-N BARRIER NOT-Attr)(NEGATE *-1 TRANS-V CBARRIER Acc OR Com LINK NEGATE *-1 Acc BARRIER S-BOUNDARY)(NEGATE 1 COMMA LINK 1 Acc);
 	#$ Báhpaeamit, Margrethe Wiig, gii lei gasku giellamoivvi, ráhkadii iežas sárgumiiguin sámegiela Áppesa, mii lei stuorra ávkin sámegiela oahpahusas.
 	#$ Doaibmaplána lea bidjan buori vuođu ja leamaš mielde rievdadeame miellaguottuid sámegiela geavaheami ja oainnusin dahkama ektui.
 	#% Moai hálidetne oahppat sámegiela universitehtas.
@@ -12792,7 +12797,11 @@ SELECT:TopObj Acc (*-1 BOC BARRIER NOT-NPMODADVIIP)(0 Gen)(1 MOD-ASP)(2 Inf + TV
 
 SELECT:TopObjNegLeat Acc (*-1 BOC BARRIER NOT-NPMODADVIIP)(0 Gen)(1 Neg + Sg3)(2 ("leat"))(3 A OR N)(4 Inf + TV) ;
 SELECT:TopObjLeat Acc (*-1 BOC BARRIER NOT-NPMODADVIIP)(0 Gen)(1 ("leat") + Sg3)(2 A OR N)(3 Inf + TV) ;
-#$ Erenoamážit muslimanissoniid ii leat lohpi govvet.
+	#$ Erenoamážit muslimanissoniid ii leat lohpi govvet.
+	#$ Árbevirolaš sosiolingvisttalaš oainnu mielde, de giela lea vejolaš dutkat.
+
+SELECT:TopObjLeat Acc (-1C Po)(0 Gen)(1 ("leat") + Sg3)(2 A OR N)(3 Inf + TV) ;
+	#$ Árbevirolaš sosiolingvisttalaš oainnu mielde giela lea vejolaš dutkat ovttadahkan mii geavahuvvo dihto hálliidjoavkku gaskkas.
 
 #!! * __genNom__ removes Acc
 REMOVE:genNom Acc (-1 BOC)(0 Nom)((1 Rel LINK *1 FMAINV LINK NEGATE *1 TRANS-V) OR (1 Rel LINK *1 COMMA LINK *1 COPULAS BARRIER Nom));
