@@ -13104,12 +13104,19 @@ COPY:space-before-punct-mark-sugg ("<$2$1>"v &SUGGESTWF) TARGET ("<(.*)>"r &spac
 ADD:double-space-before (&double-space-before)     (<doubleSpaceBefore>);
 
 ADD:double-space-before-link-nospan (&double-space-before &LINK) TARGET (*) IF (1 (<doubleSpaceBefore>));
-ADD:double-space-before-link-span   (&double-space-before &LINK) TARGET (*) IF (1 (<<<)) (2> (>>> <doubleSpaceBefore>)) ;
+ADD:double-space-before-link-span   (&double-space-before &LINK) TARGET (*) IF
+        (0 (<<<))              # this is the last word of the sentence
+        (1> (>>>) BARRIER (>>>) LINK 1 (<doubleSpaceBefore>)) # first word of the following sentence is tagged <doubleSpaceBefore>
+        ;
 
-ADDRELATION:double-space-before-rel-nospan (LEFT) (&double-space-before) TO (-1 (&LINK) LINK 0 (&double-space-before)) ;
+ADDRELATION:double-space-before-rel-nospan (LEFT) (&LINK) FROM (-1 (<doubleSpaceBefore>)) ;
 ADDRELATION:double-space-before-rel-span   (LEFT) (&LINK) FROM (2> (>>> <doubleSpaceBefore>)) ;
 
 COPY:double-space-before ("<$2 $1>"v &SUGGESTWF) TARGET ("<(.*)>"r &double-space-before) IF (-1 ("<(.*)>"r)) (NOT 0 (&LINK));
+COPY:double-space-before ("<$2 $1>"v &SUGGESTWF) TARGET ("<(.*)>"r &double-space-before) IF
+        (-2< (<<< "<(.*)>"r))
+        (NOT 0 (&LINK))
+        ;
 
 # Test sentence: 'Sanner,gii ráđđehusas.gii lávvardaga?Bonju dán!Lassin.'
 ## Sanner,gii                       - works
