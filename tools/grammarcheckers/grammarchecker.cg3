@@ -13097,18 +13097,18 @@ COPY:double-space-before ("<$2 $1>"v &SUGGESTWF) TARGET ("<(.*)>"r &double-space
 ## lávvardaga?Bonju                 - does not work
 ## ráidovázzimis!Lassin             - does not work
 # 1. Add error tag on punctuation
-ADD:no-space-after-punct1                (&no-space-after-punct-mark)       TARGET (<NoSpaceAfterPunctMark>) IF ( 1> (*) );
+ADD:no-space-after-punct        (&no-space-after-punct-mark)       TARGET (<NoSpaceAfterPunctMark>) IF ( 1> (*) );
 # 2. Add error tag + &LINK on the following word (extends the blue underline to the following word):
-ADD:no-space-after-punct2                (&no-space-after-punct-mark &LINK) TARGET (*) IF (-1 (<NoSpaceAfterPunctMark>) );
-ADD:no-space-after-punct3                (&no-space-after-punct-mark &LINK) TARGET (*) IF
+ADD:no-space-after-punct-nospan (&no-space-after-punct-mark &LINK) TARGET (*) IF (-1 (<NoSpaceAfterPunctMark>) );
+ADD:no-space-after-punct-span   (&no-space-after-punct-mark &LINK) TARGET (*) IF
         (-1 (>>>)) # Only run this rule if we're the first word of the sentence
-        (-1*< (<<<) BARRIER (<<<) LINK 0 (<NoSpaceAfterPunctMark>))
+        (-2< (<<< <NoSpaceAfterPunctMark>))
         ;
 # 3. Add RIGHT relation on the punctuation:
-ADDRELATION:no-space-after-punct4 (RIGHT) (&no-space-after-punct-mark) TO (>1 (&LINK) LINK 0 (&no-space-after-punct-mark)) ;
-ADDRELATION:no-space-after-punct5 (RIGHT) (&no-space-after-punct-mark) TO (>2 (&LINK) LINK 0 (&no-space-after-punct-mark)) ;
+ADDRELATION:no-space-after-punct-nospan (RIGHT) (&LINK) FROM (-1 (<NoSpaceAfterPunctMark>)) ;
+ADDRELATION:no-space-after-punct-span   (RIGHT) (&LINK) FROM (-2< (<<< <NoSpaceAfterPunctMark>)) ;
 # 4. Add suggestions 
-COPY:no-space-after-punct6 ("<$1 $2>"v &SUGGESTWF) TARGET ("<(.*)>"r &no-space-after-punct-mark) IF (*>1 ("<(.*)>"r)) (NOT 0 (&LINK));
+COPY:no-space-after-punct-sugg ("<$1 $2>"v &SUGGESTWF) TARGET ("<(.*)>"r &no-space-after-punct-mark) IF (*>1 ("<(.*)>"r)) (NOT 0 (&LINK));
 
     # style error
     # -----------
