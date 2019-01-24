@@ -21,6 +21,8 @@ Beahcevuovdi ja gulluluvvan šattut leat ritnon ja eana bihcon Kárášjogas. Ea
   => galgá: både &real-galgá og "&double-space-before &LINK"
   => forslag til løysing: velja den eine (alfabetisk?) og vis den, deretter køyr på nytt
 
+
+
 FIXED:
 * få vekk blåstrek for manglande mellomrom etter punktum, når punktumet står sist i avsnittet
 * robuste forslag, ikkje ekstra ord:
