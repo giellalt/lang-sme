@@ -13077,8 +13077,33 @@ ADD:punct-aistton (&punct-aistton) TARGET ("«") OR (""") OR ("»") OR ("“");
 
 ADD (&punct-end) TARGET Nom (-1 (\n)); 
 
+
     # Spacing errors
     # --------------
+
+# Note that some of these rules some times have to span windows – but
+# still go exactly one word – which is a little complicated in
+# CG. Therefore, we define some templates for going exactly one word
+# to the left/right:
+TEMPLATE prevWordCrossSent = (-1 (*)) OR (-1 (>>>) LINK *-2< (<<<) BARRIER (<<<)) ;
+TEMPLATE nextWordCrossSent = (1 (*))  OR (0  (<<<) LINK *1>  (>>>) BARRIER (>>>) LINK 1 (*)) ;
+# In the above template, the first test is the regular, non-spanning
+# case – it just goes exactly one word to the right and matches
+# anything.
+#
+# The second test, if the first one didn't match, will only run from
+# the last cohort of a window, and will link to the first word of the
+# following window. The "0 (<<<)" means "we're the last word", while
+# the (>>>) matches the invisible first cohort of the following window
+# (and the BARRIER ensures we only cross exactly one window
+# boundary). Then we match anything on the following cohort, which is
+# the first real cohort of the window.
+#
+# See http://beta.visl.sdu.dk/cg3/single/#test-spanning for some
+# documentation on the < and > modifiers, and
+# http://beta.visl.sdu.dk/cg3/single/#templates on templates. The
+# below rules use these templates like
+# (T:nextWordCrossSent LINK 0 (<someTag>))
 
 ## ( áddejumi
 ADD:space-after-paren-beg      (&space-after-paren-beg)       TARGET (<spaceAfterParenBeg>) ;
@@ -13102,21 +13127,9 @@ COPY:space-before-punct-mark-sugg ("<$2$1>"v &SUGGESTWF) TARGET ("<(.*)>"r &spac
 ## álgit gaikut.  Stoagus joatká
 ## maid lea bargu.  – Mun barggan
 ADD:double-space-before (&double-space-before)     (<doubleSpaceBefore>);
-
-ADD:double-space-before-link-nospan (&double-space-before &LINK) TARGET (*) IF (1 (<doubleSpaceBefore>));
-ADD:double-space-before-link-span   (&double-space-before &LINK) TARGET (*) IF
-        (0 (<<<))              # this is the last word of the sentence
-        (1> (>>>) BARRIER (>>>) LINK 1 (<doubleSpaceBefore>)) # first word of the following sentence is tagged <doubleSpaceBefore>
-        ;
-
-ADDRELATION:double-space-before-rel-nospan (LEFT) (&LINK) FROM (-1 (<doubleSpaceBefore>)) ;
-ADDRELATION:double-space-before-rel-span   (LEFT) (&LINK) FROM (2> (>>> <doubleSpaceBefore>)) ;
-
-COPY:double-space-before ("<$2 $1>"v &SUGGESTWF) TARGET ("<(.*)>"r &double-space-before) IF (-1 ("<(.*)>"r)) (NOT 0 (&LINK));
-COPY:double-space-before ("<$2 $1>"v &SUGGESTWF) TARGET ("<(.*)>"r &double-space-before) IF
-        (-2< (<<< "<(.*)>"r))
-        (NOT 0 (&LINK))
-        ;
+ADD:double-space-before-link (&double-space-before &LINK) TARGET (*) IF (T:nextWordCrossSent LINK 0 (<doubleSpaceBefore>)) ;
+ADDRELATION:double-space-before-rel   (LEFT) (&LINK) FROM (T:nextWordCrossSent LINK 0 (<doubleSpaceBefore>)) ;
+COPY:double-space-before ("<$2 $1>"v &SUGGESTWF) TARGET ("<(.*)>"r &double-space-before) IF (T:prevWordCrossSent LINK 0 ("<(.*)>"r)) (NOT 0 (&LINK)) ;
 
 # Test sentence: 'Sanner,gii ráđđehusas.gii lávvardaga?Bonju dán!Lassin.'
 ## Sanner,gii                       - works
@@ -13124,19 +13137,14 @@ COPY:double-space-before ("<$2 $1>"v &SUGGESTWF) TARGET ("<(.*)>"r &double-space
 ## lávvardaga?Bonju                 - does not work
 ## ráidovázzimis!Lassin             - does not work
 # 1. Add error tag on punctuation
-ADD:no-space-after-punct        (&no-space-after-punct-mark)       TARGET (<NoSpaceAfterPunctMark>) IF ( 1> (*) );
+ADD:no-space-after-punct      (&no-space-after-punct-mark)       TARGET (<NoSpaceAfterPunctMark>) IF (T:nextWordCrossSent);
 # 2. Add error tag + &LINK on the following word (part 1 of extending the blue underline to the following word):
-ADD:no-space-after-punct-link-nospan (&no-space-after-punct-mark &LINK) TARGET (*) IF (-1 (<NoSpaceAfterPunctMark>) );
-ADD:no-space-after-punct-link-span   (&no-space-after-punct-mark &LINK) TARGET (*) IF
-        (-1 (>>>)) # Only run this rule if we're the first word of the sentence
-        (-2< (<<< <NoSpaceAfterPunctMark>))
-        ;
+ADD:no-space-after-punct-link (&no-space-after-punct-mark &LINK) TARGET (*) IF (T:prevWordCrossSent LINK 0 (<NoSpaceAfterPunctMark>));
 # 3. Add RIGHT relation on the punctuation (part 2 of extending the blue underline to the following word,
 #    also ensures that the correction will replace the word, not be appended to it):
-ADDRELATION:no-space-after-punct-rel-nospan (RIGHT) (&LINK) FROM (-1 (<NoSpaceAfterPunctMark>)) ;
-ADDRELATION:no-space-after-punct-rel-span   (RIGHT) (&LINK) FROM (-2< (<<< <NoSpaceAfterPunctMark>)) ;
-# 4. Add suggestions 
-COPY:no-space-after-punct-sugg ("<$1 $2>"v &SUGGESTWF) TARGET ("<(.*)>"r &no-space-after-punct-mark) IF (*>1 ("<(.*)>"r)) (NOT 0 (&LINK));
+ADDRELATION:no-space-after-punct-rel (RIGHT) (&LINK) FROM (T:prevWordCrossSent LINK 0 (<NoSpaceAfterPunctMark>)) ;
+# 4. Add suggestions
+COPY:no-space-after-punct-sugg ("<$1 $2>"v &SUGGESTWF) TARGET ("<(.*)>"r &no-space-after-punct-mark) IF (T:nextWordCrossSent LINK 0 ("<(.*)>"r)) (NOT 0 (&LINK));
 
     # style error
     # -----------
