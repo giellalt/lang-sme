@@ -1,6 +1,5 @@
 # Grammatikkontrollting som må rettast før lansering
 
-* forslag til retting for blankteiknsfeil (set inn/ta vekk blankteiknet)
 * feilmeldingane må vera forståelege (ikkje: syn-inf-not-Der/h)
 * vi må slå saman feilkategoriar til logiske grupper, så folk har noko overskodeleg å halda seg til (ikkje tusen kategoriar som no)
 * manglande blåstrek ved (feil) høgre hermeteikn:
@@ -35,3 +34,4 @@
 
 * blå bylgjeline under blankteiknsfeil (må dekkja ordet før eller etter, ev begge)
 * ved manglande mellomrom kring punktum osb, må blåstreken strekkja seg til både ordet før og ordet etter, og vi må generera forslag
+* forslag til retting for blankteiknsfeil (set inn/ta vekk blankteiknet)
