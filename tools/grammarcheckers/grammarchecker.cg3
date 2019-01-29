@@ -1661,6 +1661,7 @@ LIST &corr-no-missing-argument = &corr-no-missing-argument ;
 LIST &SUGGEST = &SUGGEST ;
 LIST &SUGGESTWF = &SUGGESTWF ; #Suggestion from the speller
 LIST &DELETE = &DELETE ;
+LIST &LINK = &LINK ;
 
 
 SET &real = &real-ádden OR &real-áddet OR &real-ádde OR &real-addet OR &real-addit OR &real-akto OR &real-áktit/áktet OR &real-áiggi OR &real-atte OR &real-ádjáid OR &real-áibbas OR &real-áibbas OR &real-ale OR &real-álo OR &real-alu OR &real-allet OR &real-állut OR &real-almmaiduvvat OR &real-almmáiduvvat OR &real-bahča OR  &real-Ballo OR &real-ballán OR &real-bállen OR &real-bággehalai OR &real-bargat OR &real-beasadit OR &real-beassat OR &real-biddjui OR &real-bidjui OR &real-biddjon OR &real-billahuvvat OR &real-boahtá OR &real-boahtit OR &real-bokte OR &real-buorránastit OR &real-buorranastit OR &real-buorraneastit OR &real-buorráneastit OR &real-buorranaddat OR &real-buorránaddat OR &real-čohkkáde OR &real-čohkaide OR &real-čohkká OR &real-čohkkáiga OR &real-čohkkát OR &real-čohkkáme OR &real-čohkkán OR &real-čohkka OR &real-čohka OR &real-čohkas OR &real-čohkat OR &real-čohkket  OR &real-čohkke OR &real-čohkken OR &real-čohkkii OR &real-dahkkon OR &real-dakko OR &real-dassá OR &real-dassái OR &real-dássái OR &real-dáhto OR &real-dassážii OR &real-dáruiduhttin OR &real-diehtit OR &real-dihtii OR &real-compound-dihtii-not-dihti OR &real-dohko OR &real-duolmmastuvvat OR &real-duolmmástuvvat OR &real-eahkes OR &real-eallit OR &real-eanet OR &real-earret OR &real-fáhtet OR &real-fidnet OR &real-gaskii OR &real-gáskit OR &real-galgá OR &real-geahččalin OR &real-geahččalit OR &real-geahpis OR &real-geatnegahttit OR &real-geažes OR &real-geatnegáhttá OR &real-geatnegahtton OR &real-geatnegahtton3 OR &real-geatnegahtton2 OR &real-geatnegahttán OR &real-givssástuvvat OR &real-givssastuvvat OR &real-gierástallat OR &real-gierastallat OR &real-gierástaddat OR &real-gierastaddat OR &real-girjjiide OR &real-gohččon OR &real-guhká OR &real-guhká2 OR &real-guhkás OR &real-guhkit OR &real-hallan OR &real-heaŋgát OR &real-iežá OR &real-ihtit OR &real-jáhkkit OR &real-jámas OR &real-jearrá OR &real-jearran OR &real-joatkkán OR &real-joatkán OR &real-johtui OR &real-lahkalagaid OR &real-láse OR &real-liikkastuvvat OR &real-liikkástuvvat OR &real-lánjastuvvat OR &real-láse OR &real-logát OR &real-lohkan OR &real-lohkat OR &real-lohká OR &real-luohte-compound OR &real-luohte-hyph-compound OR &real-luohti OR &real-mahká OR &real-mannan OR  &real-manná OR &real-mánnán OR &real-maŋimuš OR &real-maŋŋit OR &real-measta OR &real-mobiilatelefovdna OR &real-muhtumin OR  &real-muoŧás OR &real-njaŋgát OR &real-nuppádassii OR &real-nuorain OR &real-nuorran OR &real-oainnat OR &real-oaččut OR &real-oažžut OR &real-oastit OR &real-oktage OR &real-orrut OR &real-ožžot OR &real-ollesšattot OR &real-raddi OR &real-ráđđi OR &real-ragada OR &real-rahčá OR &real-ráhkadit OR &real-rikkastallat OR &real-rikkástallat OR &real-rikkastaddat OR &real-rikkástaddat OR &real-ráđastallat OR &real-rađastallat OR &real-ráđástallat OR &real-ráđastaddat OR &real-rađastaddat OR &real-ruovttoluotta OR &real-sárgon OR &real-sutnje OR &real-sádji OR &real-sakka OR &real-sámediggedievasčoahkkin OR &real-sáhkki OR &real-sáhtaš OR &real-sáhtáš OR &real-stánže-compound OR &real-sidjiide OR &real-sihkkarastit OR &real-uhccon OR &real-vahku OR &real-vahkku OR &real-varat OR &real-veahkki OR &real-veallát OR &real-valljugas OR &real-várra OR &real-viđa OR &real-vuodjit OR &real-vuolgit OR &real-vuostá OR &real-vuosttaš OR &real-vuovttat OR &real-vuvdii ;
@@ -13095,9 +13096,12 @@ COPY:punct-aistton ("”" &SUGGEST) EXCEPT ("»" &punct-aistton) TARGET ("»" &p
 
 ADD:punct-aistton (&punct-aistton) TARGET ("«") OR (""") OR ("»") OR ("“"); 
 	## Subjeakta don ii kontrollere dilálašvuođa masa 	DOES NOT WORK YET
-
+	
 ADD:punct-aistton-link (&punct-aistton &LINK ) TARGET (*) IF (1 (&punct-aistton) ) ;
-COPY:punct-aistton (&SUGGESTWF) EXCEPT ("»" &punct-aistton) TARGET (*) IF (1 (&punct-aistton) );
+COPY:punct-aistton ("<$2$1>"v &SUGGESTWF) TARGET ("<(.*)>"r &punct-aistton) IF (0 &punct-aistton + &LINK);
+
+
+#COPY:space-before-paren-end-sugg ("<$2$1>"v &SUGGESTWF) TARGET ("<(.*)>"r &space-before-paren-end) IF (-1 ("<(.*)>"r)) (NOT 0 (&LINK)) ;
 
 ADDRELATION:punct-aistton-rel (LEFT) (&punct-aistton) TO (-1 (&LINK) LINK 0 (&punct-aistton) );
 
