@@ -13081,33 +13081,43 @@ ADDCOHORT:punct-rihkku ("<,>" "," CLB &ADDED-BEFORE-BLANK &punct-rihkku) BEFORE 
 
 ADDRELATION (LEFT) (&punct-rihkku) TO (-1 (&ADDED-BEFORE-BLANK)) ;
 
+
+
     # Áisttonmearkkat
     # ----------------
 
 ADD:punct-aistton (&punct-aistton) TARGET ("«") OR ("»") OR ("“") OR (""") ;
 
 # Generer forslag for hermeteikn på _venstre_ side:
-COPY:punct-aistton ("”" RIGHT &SUGGEST) EXCEPT ("«" LEFT  &punct-aistton) OR ("“" LEFT &punct-aistton) OR (""" &punct-aistton)  TARGET (&punct-aistton) IF (NOT 0 ("»")) ;
-# Generer forslag for hermeteikn på _høgre_ side:
-COPY:punct-aistton ("”" RIGHT &SUGGEST) EXCEPT ("»" RIGHT &punct-aistton) OR ("”" LEFT &punct-aistton) OR (""" &punct-aistton)  TARGET (&punct-aistton) IF (NOT 0 ("«")) ;
+COPY:punct-aistton-suggleft ("”" RIGHT &SUGGEST) EXCEPT ("«" LEFT &punct-aistton) OR ("“" LEFT &punct-aistton) OR (""" &punct-aistton) TARGET (&punct-aistton) IF (NOT 0 ("»")) ;
 
-COPY:punct-aistton ("”" &SUGGEST) EXCEPT ("»" &punct-aistton) TARGET ("»" &punct-aistton) ;
+
+
+# Generer forslag for hermeteikn på _høgre_ side:
+#COPY:punct-aistton ("”" RIGHT &SUGGEST) EXCEPT ("»" RIGHT &punct-aistton) OR ("”" LEFT &punct-aistton) OR (""" &punct-aistton) TARGET (&punct-aistton) IF (NOT 0 ("«")) ;
+#COPY:punct-aistton ( &SUGGEST) TARGET ( &punct-aistton) IF (0 &punct-aistton + &LINK);
+
+COPY:punct-aistton-suggright ("<$1”>"v &SUGGESTWF ) TARGET (&punct-aistton) IF (-1 &punct-aistton +  &LINK) (-1 ("<(.*)>"r ));
+
+
+
+# COPY:punct-aistton ("”" &SUGGEST) EXCEPT ("»" &punct-aistton) TARGET ("»" &punct-aistton) ;
 	## Doarjja addo vuosttažettiin «Sámi dutkama prográmmii» (2001–05). 
 
-ADD:punct-aistton (&punct-aistton) TARGET ("«") OR (""") OR ("»") OR ("“"); 
+# Identical to line 13089 above, thus commented out (SNM 29.1.2019):
+# ADD:punct-aistton (&punct-aistton) TARGET ("«") OR (""") OR ("»") OR ("“"); 
 	## Subjeakta don ii kontrollere dilálašvuođa masa 	DOES NOT WORK YET
 	
 ADD:punct-aistton-link (&punct-aistton &LINK ) TARGET (*) IF (1 (&punct-aistton) ) ;
-COPY:punct-aistton ("<$2$1>"v &SUGGESTWF) TARGET ("<(.*)>"r &punct-aistton) IF (0 &punct-aistton + &LINK);
 
-
-#COPY:space-before-paren-end-sugg ("<$2$1>"v &SUGGESTWF) TARGET ("<(.*)>"r &space-before-paren-end) IF (-1 ("<(.*)>"r)) (NOT 0 (&LINK)) ;
-
-ADDRELATION:punct-aistton-rel (LEFT) (&punct-aistton) TO (-1 (&LINK) LINK 0 (&punct-aistton) );
+ADDRELATION:punct-aistton-rel (LEFT) (&punct-aistton) TO (-1 &LINK LINK 0 (&punct-aistton) );
 
 # ADD (&keep-your-voice-down) ("^[A-ZÆØÅÁŠŽĐŊ]+$"r) (NOT (0 (<firstWordOfParagraph>)));
 
 ADD (&punct-end) TARGET Nom (-1 (\n)); 
+
+## «Čohkken áiggiid čađa buoremus sámi artisttaid»
+
 
 
     # Spacing errors
