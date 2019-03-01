@@ -1454,6 +1454,8 @@ LIST &lex-guorrasit-not-guorralit = &lex-guorrasit-not-guorralit ;
 LIST &lex-valjit-not-valji = &lex-valjit-not-valji ;
 
 LIST &punct-aistton = &punct-aistton ;
+LIST &punct-aistton-left = &punct-aistton-left ;
+LIST &punct-aistton-right = &punct-aistton-right ;
 LIST &punct-rihkku = &punct-rihkku ;
 
 LIST &real-ádde = &real-ádde ;
@@ -6635,27 +6637,27 @@ COPY:real-gohččon ("gohččut" V TV PrfPrc &SUGGEST) EXCEPT ("gohččun" N Sg 
 #DELETE SECOND ROUND
 
 #ADD:sárgon (&real-sárgon) TARGET 
-("sárgut" Ex/V Der/NomAct N Sg Nom) OR 
-("sárgut" Ex/V Ex/TV Der/NomAg N Ess) OR 
-("sárgut" V TV Actio Nom) OR 
-("sárgut" V IV Actio Gen) OR 
-("sárgun" N Sem/Act Sg Gen Allegro) OR
-("sárgut" Ex/V Ex/TV Der/NomAct N Sg Nom) OR 
-("sárgun" N Sg Gen) OR 
-("sárgun" N Sg Nom) OR 
-("sárgu" N Ess) OR 
-	("sárgu" N NomAg Ess) OR 
-	("sárgu" N NomAg Sg Loc South Err/Orth) IF (*-1 ("leat") + VFIN BARRIER V OR GRAMCHK-S-BOUNDARY);
-
-COPY:real-sárgon ("sárgut" V TV PrfPrc &SUGGEST) EXCEPT ("sárgu" N Ess &real-sárgon) OR 
-("sárgun" N Sg Gen &real-sárgon) OR 
-("sárgun" N Sg Nom &real-sárgon) OR 
-("sárgun" N Sem/Act Sg Gen Allegro) OR 
-("sárgut" Ex/V Der/NomAct N Sg Nom &real-sárgon) OR 
-("sárgut" Ex/V Ex/TV Der/NomAg N Ess &real-sárgon) OR 
-("sárgut" V TV Actio Nom &real-sárgon) OR 
-("sárgut" V TV Actio Gen &real-sárgon) OR 
-("sárgut" Ex/V Ex/TV Der/NomAct N Sg Nom &real-sárgon) OR ("sárgu" N NomAg Ess &real-sárgon) OR ("sárgu" N NomAg Sg Loc South Err/Orth &real-sárgon) TARGET (&real-sárgon) ;    
+# ("sárgut" Ex/V Der/NomAct N Sg Nom) OR 
+# ("sárgut" Ex/V Ex/TV Der/NomAg N Ess) OR 
+# ("sárgut" V TV Actio Nom) OR 
+# ("sárgut" V IV Actio Gen) OR 
+# ("sárgun" N Sem/Act Sg Gen Allegro) OR
+# ("sárgut" Ex/V Ex/TV Der/NomAct N Sg Nom) OR 
+# ("sárgun" N Sg Gen) OR 
+# ("sárgun" N Sg Nom) OR 
+# ("sárgu" N Ess) OR 
+# 	("sárgu" N NomAg Ess) OR 
+# 	("sárgu" N NomAg Sg Loc South Err/Orth) IF (*-1 ("leat") + VFIN BARRIER V OR GRAMCHK-S-BOUNDARY);
+# 
+# COPY:real-sárgon ("sárgut" V TV PrfPrc &SUGGEST) EXCEPT ("sárgu" N Ess &real-sárgon) OR 
+# ("sárgun" N Sg Gen &real-sárgon) OR 
+# ("sárgun" N Sg Nom &real-sárgon) OR 
+# ("sárgun" N Sem/Act Sg Gen Allegro) OR 
+# ("sárgut" Ex/V Der/NomAct N Sg Nom &real-sárgon) OR 
+# ("sárgut" Ex/V Ex/TV Der/NomAg N Ess &real-sárgon) OR 
+# ("sárgut" V TV Actio Nom &real-sárgon) OR 
+# ("sárgut" V TV Actio Gen &real-sárgon) OR 
+# ("sárgut" Ex/V Ex/TV Der/NomAct N Sg Nom &real-sárgon) OR ("sárgu" N NomAg Ess &real-sárgon) OR ("sárgu" N NomAg Sg Loc South Err/Orth &real-sárgon) TARGET (&real-sárgon) ;    
     ## Anne-Grethe Leine Bientie lea čállán teavstta ja su nieida Ellen Sara lea ges govaid sárgun
     
 	
@@ -13561,20 +13563,31 @@ ADDRELATION (LEFT) (&punct-rihkku) TO (-1 (&ADDED-BEFORE-BLANK)) ;
     # Áisttonmearkkat
     # ----------------
 
-#DELETE SECOND ROUND
+# 1. Add error tags:
+# ADD:punct-aistton       (&punct-aistton)       TARGET (""") ;  # Delayed till later
+ADD:punct-aistton-left  (&punct-aistton-left)  TARGET ("«" PUNCT LEFT)  OR ("“" PUNCT LEFT) ;
+#ADD:punct-aistton-right (&punct-aistton-right) TARGET ("»" PUNCT RIGHT) ;
 
-#ADD:punct-aistton (&punct-aistton) TARGET ("«") OR ("»") OR ("“") OR (""") ;
+# 2. Add &LINK tags to the preceding/following word (depending on LEFT or RIGHT quotation marks), to handle overlapping errors:
+ADD:punct-aistton-left-link  (&punct-aistton-left &LINK )  TARGET (*) IF (-1 (&punct-aistton-left) ) ;
+#ADD:punct-aistton-right-link (&punct-aistton-right &LINK ) TARGET (*) IF (1 (&punct-aistton-right) ) ;
 
+# 3. Add relation RIGHT/LEFT from the sentral cohort to the LINKed cohort for extended underline:
+ADDRELATION:punct-aistton-left-rel  (RIGHT) (&punct-aistton-left)  TO (1  &LINK LINK 0 (&punct-aistton-left) );
+#ADDRELATION:punct-aistton-right-rel (LEFT)  (&punct-aistton-right) TO (-1 &LINK LINK 0 (&punct-aistton-right) );
+
+# 4. Generate suggestions including the following/preceeding word (ie matching underline):
 # Generer forslag for hermeteikn på _venstre_ side:
-COPY:punct-aistton-suggleft ("”" RIGHT &SUGGEST) EXCEPT ("«" LEFT &punct-aistton) OR ("“" LEFT &punct-aistton) OR (""" &punct-aistton) TARGET (&punct-aistton) IF (NOT 0 ("»")) ;
-
-
+COPY:punct-aistton-left-sugg ("<”$1>" &SUGGESTWF)
+            TARGET (&punct-aistton-left)
+            IF (1   &punct-aistton-left + &LINK) (1 ("<(.*)>"r )) ;
 
 # Generer forslag for hermeteikn på _høgre_ side:
 #COPY:punct-aistton ("”" RIGHT &SUGGEST) EXCEPT ("»" RIGHT &punct-aistton) OR ("”" LEFT &punct-aistton) OR (""" &punct-aistton) TARGET (&punct-aistton) IF (NOT 0 ("«")) ;
 #COPY:punct-aistton ( &SUGGEST) TARGET ( &punct-aistton) IF (0 &punct-aistton + &LINK);
-
-COPY:punct-aistton-suggright ("<$1”>"v &SUGGESTWF ) TARGET (&punct-aistton) IF (-1 &punct-aistton +  &LINK) (-1 ("<(.*)>"r ));
+#COPY:punct-aistton-right-sugg ("<$1”>"v &SUGGESTWF )
+#            TARGET (&punct-aistton-right)
+#            IF (-1  &punct-aistton-right + &LINK) (-1 ("<(.*)>"r ));
 
 
 
@@ -13582,12 +13595,10 @@ COPY:punct-aistton-suggright ("<$1”>"v &SUGGESTWF ) TARGET (&punct-aistton) IF
 	## Doarjja addo vuosttažettiin «Sámi dutkama prográmmii» (2001–05). 
 
 # Identical to line 13089 above, thus commented out (SNM 29.1.2019):
-# #ADD:punct-aistton (&punct-aistton) TARGET ("«") OR (""") OR ("»") OR ("“"); 
+# ADD:punct-aistton (&punct-aistton) TARGET ("«") OR (""") OR ("»") OR ("“"); 
 	## Subjeakta don ii kontrollere dilálašvuođa masa 	DOES NOT WORK YET
 	
-#ADD:punct-aistton-link (&punct-aistton &LINK ) TARGET (*) IF (1 (&punct-aistton) ) ;
 
-ADDRELATION:punct-aistton-rel (LEFT) (&punct-aistton) TO (-1 &LINK LINK 0 (&punct-aistton) );
 
 # ADD (&keep-your-voice-down) ("^[A-ZÆØÅÁŠŽĐŊ]+$"r) (NOT (0 (<firstWordOfParagraph>)));
 
