@@ -2075,7 +2075,7 @@ LIST ILLNESS = "albmasuoigi" "allergiija" "anemiija" "báhti" "bátnevárka" "b�
 # LIST ANIMAL-ILLNESS = "luossadávda" "vuorri" ;
 
 
-LIST MIELLA = "áigi" "áigumuš" "árbevierru" "bággu" "beroštupmi" "dárbu" "diehtu" "dilli"  "doarjja" "ealjárvuohta" (".*gelbbolašvuohta"r) "geatnegahtton" "geatnegasvuohta" "gudni" "hállu" "hárjáneapmi" (".*lohpi"r) "miella" "niehku" "ovddasvástádus" "plána" "resursa" "riekti" "searat" "sávaldat" "váldi" "vejolašvuohta" "vuođđu" "vuohki" "vuoigatvuohta" "vuorru" ;
+LIST MIELLA = "áigi" "áigumuš" "árbevierru" "bággu" "beroštupmi" "dárbu" "diehtu" "dilli"  "doarjja" "ealjárvuohta" "fápmu" (".*gelbbolašvuohta"r) "geatnegahtton" "geatnegasvuohta" "gudni" "hállu" "hárjáneapmi" (".*lohpi"r) "miella" "niehku" "ovddasvástádus" "plána" "resursa" "riekti" "searat" "sávaldat" "váldi" "vejolašvuohta" "vuođđu" "vuohki" "vuoigatvuohta" "vuorru" ;
 # These give Inf @N< instead of @ADVL (like more concrete nouns: ruhta, bileahta, dálki ...)
 
 
@@ -2648,7 +2648,7 @@ REMOVE:r550 PrsPrc IF (0 A);
 	
 REMOVE:A A IF (0 ("suoma")) ;	
 
-REMOVE:A A IF (0 PrfPrc LINK *-1 ("leat") BARRIER REAL-V) ;	
+REMOVE:A A IF (0 PrfPrc LINK *-1 ("leat") BARRIER REAL-V)(NEGATE 0 Der/Pass) ;	
 
 
 REMOVE:Der/NomAg Der/NomAg IF (0 PrsPrc LINK 1 N LINK NEGATE 0 Prop)(NEGATE 1 (N Gen) LINK 1 N) ;
@@ -3005,8 +3005,8 @@ SELECT:NotGen N + Nom IF (*-1 BOS BARRIER WORD)(0 Gen LINK NOT 0 PrfPrc OR Attr 
 
 SELECT:duššeAdv Adv IF (0 ("dušše"))(1 Num LINK *1 PrfPrc BARRIER REAL-V) ;
 SELECT:duššeAdv2 Adv IF (*-1 VFIN)(0 ("dušše"))(1 Num);
-SELECT:PassPrfPrc PrfPrc IF (-1 PrfPrc + Der/Pass LINK *-1 BOS BARRIER WORD)(1 EOS OR ("–")) ;
-SELECT:PassPrfPrc PrfPrc IF (0 Sg1 + Der/Pass LINK NEGATE *-1 Sg1 OR Neg BARRIER SV-BOUNDARY)(NEGATE 0 A + Attr LINK 1 N) ;
+SELECT:PassPrfPrc PrfPrc IF (-1 PrfPrc + Der/Pass LINK *-1 BOS BARRIER WORD)(1 EOS OR ("–"))(NEGATE 0 A) ;
+SELECT:PassPrfPrc PrfPrc IF (0 Sg1 + Der/Pass LINK NEGATE *-1 Sg1 OR Neg BARRIER SV-BOUNDARY)(NEGATE 0 A + Attr LINK 1 N)(NEGATE 0 A) ;
 SELECT:PrfPrc PrfPrc IF (-1 Nom LINK *-1 BOS BARRIER NOT-NPMODADV) (1 Acc OR Adv LINK *1 ("❡")) ;
 SELECT:PrfPrc PrfPrc IF (-1 Nom LINK -1 Attr OR Gen LINK *-1 BOS BARRIER WORD) (1 Acc OR Adv LINK *1 ("❡")) ;
 SELECT:PrfPrc PrfPrc IF (-1 Nom LINK *-2 BOS BARRIER WORD) (1 ADVLCASE OR A OR Adv LINK *1 ("❡")) ;
@@ -4695,7 +4695,7 @@ SELECT:Včiehká (V TV)  IF (*-1 (N Nom) BARRIER SV-BOUNDARY OR NP-BOUNDARY)(0 (
 	#$ Go čálalaš kultuvra lea eahpedábálaš minoritehtaid gaskkas ja go oskkáldasvuohta ja heahpu lea leamaš dábálaš, de sáhttá dás oaidnit ráhkadusdovdomearkka, nammalassii ahte fápmu čiehká iežas luottaid.
 
 
-
+REMOVE NomAg (0 ("veahkaváldi")) ;
 
 #!! !!Adpositions
 
@@ -5642,7 +5642,7 @@ SELECT PL3-V IF (NEGATE *-1 VFIN BARRIER CS OR CC)(1 Loc OR DOPPE LINK *1 NUM + 
 	#$ Dál leat 28 jagi vássán ja 2017 čavčča leat Sámi allaskuvllas 270 studeantta.
 
 
-SELECT:ENleatPl3Rel ("leat" Pl3)  IF (*-1 PL3-V BARRIER VFIN OR S-BOUNDARY LINK -1 (Rel Nom Pl) LINK -1 NP-HEAD-PL-NOM) (*1 NP-HEAD-PL-NOM BARRIER NOT-NPMODADV) ;
+SELECT:ENleatPl3Rel ("leat" Pl3) IF (*-1 PL3-V - Neg BARRIER VFIN OR S-BOUNDARY LINK -1 (Rel Nom Pl) LINK -1 NP-HEAD-PL-NOM) (*1 NP-HEAD-PL-NOM BARRIER NOT-NPMODADV) ;
 	#$ Oahpaheaddjit geat leat leamaš dán suorggis leat sihke sámit ja dážat, muhto dat geat bohte olggobealde ledje ovdal bargan dearvvašvuođabálvalusas sámi guovlluin ja ledje integrerejuvvon sosiálalaččat ja dađistaga maiddái gielalaččat. # leat sihke
 
 #!! * __BeallileatPl3__ when bealli or oassi + Pl Loc
@@ -5870,7 +5870,7 @@ SELECT:maidAdv12 ("maid" Adv) IF  (-2 BOS)(-1 ("leat") + Sg3)(1 A)( 2 Inf OR ("a
 	#$ Lea maid vejolaš oastit liegga  borramušaid ja bruvssa.
 
 #!! * __maidAdv13__ selects maid Adv for 
-SELECT:maidAdv13 ("maid" Adv) IF  (1 MIELLA LINK 1 Inf)(-1 VFIN) ;
+SELECT:maidAdv13 ("maid" Adv) IF  (*1 MIELLA BARRIER NOT-A LINK 1 Inf)(-1 VFIN) ;
 	#$ Lea maid vejolaš oastit liegga  borramušaid ja bruvssa.
  	#$ Oahpaheaddjeoahppu addá maid vejolašvuođa oažžut gitta 60 000 ruvnno stipeandda Sámedikkis.
 
@@ -7128,7 +7128,7 @@ REMOVE:Illattr (Num Ill Attr) IF (NEGATE *1 (N Ill) OR Num + Ill BARRIER NOT-NPM
 REMOVE:LocIllattr NUM + (Loc Attr) OR NUM + (Ill Attr) IF (1 (N Gen)) ;
 SELECT:numPlAccn (Num Pl Acc)(1 MEASURE + Pl) ;
 
-SELECT:WWNumOrdGen Gen IF (0 Num OR Ord LINK NOT 0 Acc)(1 (N Gen) LINK *1 (N Acc) OR (N Gen) OR (N Nom) BARRIER NOT-A)(NEGATE -1 TRANS-V LINK NEGATE *3 Acc)(NEGATE -1 TRANS-V LINK *3 Acc LINK 1 Po);
+SELECT:WWNumOrdGen Gen IF (0 Num OR Ord LINK NOT 0 Acc)(1 (N Gen) - PROSEANTA LINK *1 (N Acc) OR (N Gen) OR (N Nom) BARRIER NOT-A)(NEGATE -1 TRANS-V LINK NEGATE *3 Acc)(NEGATE -1 TRANS-V LINK *3 Acc LINK 1 Po);
 	## Dan eatnamis oažžu ovtta gusa fuođđara.
 
 SELECT:nubbiAttr Ord + Attr (0 ("nubbi") LINK 1 ("jođiheaddji")) ; # vanlig med særskriving
@@ -9831,7 +9831,7 @@ REMOVE:SEMplcGen3 Gen IF (0 ABSTR-TEXT OR TEXT LINK NEGATE *-1 Pr BARRIER NOT-NP
 	#$ Sámediggi sáhttá maid buktit cealkámušaid guovlluid dearvvašvuođafitnodagaid jahkedieđáhusain ja plánaárvalusain.
 
 #!! * __SEMXr2079__ Removes Gen if you are Acc in front of MANNU ''guđii virggi skábmanánu 1. b.''
-REMOVE:SEMXr2079 Gen IF (0 Acc LINK NOT 0 ("jahki") OR LAHKA OR ("Sámediggi") OR Sem/Year)(NEGATE *-1 Num OR Pr BARRIER NOT-NPMOD)(1 MANNU);
+REMOVE:SEMXr2079 Gen IF (0 Acc LINK NOT 0 ("jahki") OR Sem/Time OR LAHKA OR ("Sámediggi") OR Sem/Year)(NEGATE *-1 Num OR Pr BARRIER NOT-NPMOD)(1 MANNU);
 	#$ Carsten Smith guđii Sámi vuoigatvuođalávdegotti ovdaolbmo virggi skábmamánu 1. b. 1985.	
 
 # Genitive in front of ''virgi''
@@ -11126,7 +11126,7 @@ SELECT:NumNom Nom IF (*-1 COPULAS OR (IV) BARRIER NOT-ADV-PCLE)(0 NUM)(1 ("ruvdn
 	#$  Doaibmabiju jahkásaš bušeahttarámma lea: 380.000 ruvnno.
 
 #!! * __NumComplAcc__ (complement of numerals) Selects Acc Sg when Num Sg to the left is Acc
-SELECT:NumComplAcc (Sg Acc) OR CURRENCY + Acc  IF (0 (N Gen) LINK *-1 NUM + Sg + Acc BARRIER MEASUREADJS OR NOT-A - (Pron Indef Attr) - Gen OR COMMA OR (":") LINK NOT 0 Sem/Year)(NEGATE -1 CURRENCY)(NEGATE 0 Nom + Sg LINK -1 Sem/Time-clock LINK *2 VFIN + Sg3)(NEGATE 0 N LINK NOT 0 Sem/Time LINK 1 V + Pl3)(NEGATE 0 Gen LINK 1 N + Acc) ;
+SELECT:NumComplAcc (Sg Acc) OR CURRENCY + Acc  IF (0 (N Gen) LINK *-1C NUM + Sg + Acc BARRIER MEASUREADJS OR NOT-A - (Pron Indef Attr) - Gen OR COMMA OR (":") LINK NOT 0 Sem/Year)(NEGATE -1 CURRENCY)(NEGATE 0 Nom + Sg LINK -1 Sem/Time-clock LINK *2 VFIN + Sg3)(NEGATE 0 N LINK NOT 0 Sem/Time LINK 1 V + Pl3)(NEGATE 0 Gen LINK 1 N + Acc) ;
 	#$ Go máŋga vahkku eai leat beassan olbmuid bániid divvut ja dikšu.
 	#% Orohagas leat maid guokte luonddureserváhta hui lahkalaga, Sørlenangsbottena ja Jægervassbottena gaskkas.
 	#% Dušše 24 hearggi leat kvalifiseren iežaset finálii.
