@@ -4899,8 +4899,13 @@ REMOVE:r847 (".*girje"r) (0 (".*girji"r));
 	# ---------
 
 
-REMOVE:r849 Cmp/SgNom IF (0 Cmp/SgGen); 
+#REMOVE:r849 Cmp/SgNom IF (0 Cmp/SgGen); 
 
+#causes gramchk to mark "nisson-" because analyzer chooses SgGen that is Err/Orth:
+    #$GRAM Čieža nisson- ja čieža dievdojoavkku ledje mielde dán jagi ja ná olu nissonjoavkkut eai leat goassege leamaš mielde dáin čiekčamiin.
+    
+    
+    
   	## Sosiála- ja dearvvašvuođadepartemeanta.
 	# This is a mystery. The second rule is the one we want to work, but it only works
 	# if 
@@ -13668,12 +13673,13 @@ SELECT:r1634 (Dem Pl Nom) IF (0 DAT-PRON)(1 NUM LINK 0 Nom);
 
 SELECT:r1635 (Dem Pl Nom) IF (1 Nom)(2 (Pron Rel Pl));
 	## No examples in corpus? Have changed Interr to Rel!
-SELECT:r1636 Gen IF (*-1 (Dem Gen) BARRIER NOT-A OR ("eanet") OR ("eambbo"))(1 (N Acc) LINK NOT 0 Prop)(NEGATE 0 Num);
+SELECT:r1636 Gen IF (*-1 (Dem Gen) BARRIER NOT-A OR ("eanet") OR ("eambbo"))(1 (N Acc) LINK NOT 0 Prop)(NEGATE 0 Num)(NEGATE 0 Err/Orth-any LINK 0 Attr);
 	## 	## Ovddádusbellodat lea negatiiva dán ovdáneapmái mii duhtada dušše DAID eanemus {radikála} sápmelaččaid.
   	## SDD áigu suokkardit Sámedikkiin, sáhttágo dán plána doaimmaid čađaheami delegeret Helse Nordii.
   # This is a rule disambiguating between nominative and genitive/accusative
   # Only a couple of words in Northern Sámi need to be disambiguated with respect to that.
   #$GRAM Son jearrala dan {guovtti} njuvččas ahte diehtiba soai gos Soria-Moria sloahtta lea.
+  #$GRAM Ingerid Marianne Gaup logaldalai movt oahpahit sámi- ja dárumánáide dan dološ verddevuođa.(NEGATE 0 Err/Orth-any LINK 0 Attr)
 
 	# Accusative
 
@@ -16182,8 +16188,10 @@ REMOVE:r2006 Gen IF (0 Num)(1 ("ruvdnu") OR ("ru"));
 SELECT:r2007 Acc IF (0 Num)(1 ("gitta"))(2 (Num Acc));
 	## Dát ledje gáddenuohtit mat ledje 180 gitta 200 sala guhku, ja 15 gitta 20 sala čieŋu.
 
-SELECT:NewGen (Sg Gen) (0 (N Acc) LINK *-1 NUM + Sg BARRIER NOT-A LINK 0 Nom OR Acc)(NEGATE 0 Prop + Nom);
+SELECT:NewGen (Sg Gen) (0 (N Acc) LINK *-1 NUM + Sg BARRIER NOT-A LINK 0 Nom OR Acc)(NEGATE 0 Prop + Nom)(NEGATE 0 Cmp/SgGen LINK 0 Err/Orth-any) ;
 	#$GRAMval govva 2 : Ella , 5 jagi , 	liiko 	nu bures Sámis ahte iiba hálitge vuolgit .
+    #$ Čieža nisson- ja čieža dievdojoavkku ledje mielde dán jagi ja ná olu nissonjoavkkut eai leat goassege leamaš mielde dáin čiekčamiin.
+
 
 SELECT:r2008 Acc IF (*-1 V-TRANS-ACT-NOT-ACT BARRIER S-BOUNDARY2 LINK 0 FMAINV OR Inf)(NEGATE -1 N LINK 2 VFIN)(NEGATE -1 CS OR ("jahki"))(0 Num LINK NOT 0 Adv)(NEGATE *1 Acc BARRIER SV-BOUNDARY2)(NEGATE *1 Ill OR Loc BARRIER NPNHA - @>N - Attr)(NEGATE 0 Gen LINK 1C Po);
 	#$GRAMval ovtta dan guovtti olbmái
@@ -16725,8 +16733,9 @@ SELECT:r2134 Gen IF (0 FYLKA + Acc)(*1 GEOGRAPHICAL-PLACE OR GEN-POLITICAL-PLACE
 	# Genitive after quantifier
 	# - - - - - - - - - - - - - 
 
-SELECT:r2135 Gen IF (*-1C (Num Nom Sg) BARRIER NPNH OR Gen OR CC OR PUNCT OR REALCLB OR Ord LINK NOT 0 OKTA OR Ord OR (Num A) LINK NOT -1 ("jahki"))(0 N)(NEGATE 0 VERB OR ("nr") OR ("nummar") OR ("s"));
+SELECT:r2135 Gen IF (*-1C (Num Nom Sg) BARRIER NPNH OR Gen OR CC OR PUNCT OR REALCLB OR Ord LINK NOT 0 OKTA OR Ord OR (Num A) LINK NOT -1 ("jahki"))(0 N)(NEGATE 0 VERB OR ("nr") OR ("nummar") OR ("s"))(NEGATE 0 Cmp/SgGen LINK 0 Err/Orth-any);
 	## Golbma čáppa, doaimmalaš nieidda livžo áhčiset riegádanbeaivve.
+    #$ Čieža nisson- ja čieža dievdojoavkku ledje mielde dán jagi ja ná olu nissonjoavkkut eai leat goassege leamaš mielde dáin čiekčamiin.
 
 #OBS	
 #SELECT:r2136 Gen IF (-1 (@>N) LINK -1C Num LINK NOT 0 OKTA OR Ord OR (Num A) LINK NOT -1 ("jahki"))(0 N)(NEGATE 0 VERB OR ("nr") OR ("nummar") OR ("s"));
@@ -16750,8 +16759,10 @@ SELECT:r2140 Gen IF (-1 CC)(-2 Cmp/SplitR)(*-3 NUM + Nom BARRIER NPNH OR PUNCT L
 SELECT:r2141 Gen IF (*-1 (Num Nom) BARRIER NOT-NP OR CLB)(NEGATE -1 CC)(*1 V-PL3 BARRIER NOT-ADV-PCLE);
 	## Máŋga Romssa universitehta dutkanbirrasa leat ásahan ovttasbargguid...
 
-SELECT:r2142 Gen IF (*-1 NUM BARRIER CC OR CLB OR NPNH OR PUNCT OR ("ruvdnu") OR HEADOFPARTS LINK 0 Nom LINK NOT -1 ABBR OR CLB)(NEGATE *-1 (Num Acc) BARRIER NPNH LINK *-1 Nom BARRIER S-BOUNDARY2 OR CC)(NEGATE *-1 V-TRANS-ACT BARRIER SV-BOUNDARY2)(*1 Gen BARRIER NPNH);
+SELECT:r2142 Gen IF (*-1 NUM BARRIER CC OR CLB OR NPNH OR PUNCT OR ("ruvdnu") OR HEADOFPARTS LINK 0 Nom LINK NOT -1 ABBR OR CLB)(NEGATE *-1 (Num Acc) BARRIER NPNH LINK *-1 Nom BARRIER S-BOUNDARY2 OR CC)(NEGATE *-1 V-TRANS-ACT BARRIER SV-BOUNDARY2)(*1 Gen BARRIER NPNH)(NEGATE 0 Cmp/SgGen LINK 0 Err/Orth-any);
 	## Máŋga Romssa universitehta dutkanbirrasa leat ásahan ovttasbargguid...
+    #$ Čieža nisson- ja čieža dievdojoavkku ledje mielde dán jagi ja ná olu nissonjoavkkut eai leat goassege leamaš mielde dáin čiekčamiin.
+
 
 	# Genitive in front of postposition
 	# - - - - - - - - - - - - - - - - - 
@@ -17043,12 +17054,13 @@ REMOVE:r2202 (Pron Pers Acc) IF (-1 NP-BOUNDARY)(*1 N BARRIER NOT-Attr LINK *1 V
 REMOVE:r2203 Acc IF (-1 ("oppa"))(0 (Pron Pers Gen))(*1 (N Acc) BARRIER NOT-Attr);
 	## Ja farao gohčui olbmáidis doalvut Abrama, su áhká ja oppa su opmodaga eatnamis eret.
 
-SELECT:r2204 Gen IF (*-1 BOS BARRIER NPNHA)(NEGATE 0 Adv OR ("mii" Interr) OR Dem OR Attr OR PrsPrc OR PrfPrc OR VFIN OR Actio)(NEGATE 0 TITLE LINK 1 Prop)(NEGATE 0 PxSg2 OR Loc)(NEGATE 0 Num LINK *1 (N Acc) BARRIER NOT-A)(1C (N Nom) OR (N Acc))(NEGATE 0 (Gen Err/Orth) LINK 0 (Nom))(NEGATE 0 (Err/Lex Prop))(NEGATE 0 (".*beale"r) LINK -1 (Gen Prop Sem/Plc) LINK 2 W-NOT-ACC-GEN OR <NomGenSg>)(NEGATE 0 Sem/Group LINK 1 (Sem/Hum Sg Nom) OR (Sem/Org Sg Nom));
+SELECT:r2204 Gen IF (*-1 BOS BARRIER NPNHA)(NEGATE 0 Adv OR ("mii" Interr) OR Dem OR Attr OR PrsPrc OR PrfPrc OR VFIN OR Actio)(NEGATE 0 TITLE LINK 1 Prop)(NEGATE 0 PxSg2 OR Loc)(NEGATE 0 Num LINK *1 (N Acc) BARRIER NOT-A)(1C (N Nom) OR (N Acc))(NEGATE 0 (Gen Err/Orth) LINK 0 (Nom))(NEGATE 0 (Err/Lex Prop))(NEGATE 0 (".*beale"r) LINK -1 (Gen Prop Sem/Plc) LINK 2 W-NOT-ACC-GEN OR <NomGenSg>)(NEGATE 0 Sem/Group LINK 1 (Sem/Hum Sg Nom) OR (Sem/Org Sg Nom))(NEGATE 0 Err/Orth-any LINK 0 <NomGenSg>);
 	## Sámi parlamentáralaš ráđi doaibmaáigi čuovvu Sámedikki válgaáigodaga.
 	##GRAM-DESDIS Eanas {luosat} 	varra 	manne Beahcánklosterii , dasto Guoládahkii ( vrd. Leem 1767 : 350 ff. ) . 
 	#$ Muhto Báhčaveaisápmelaččaid Norgga beale vuoigatvuođat sihkkarastojuvvojedje buoremuddui , go doalahedje mearaluossabivdorievtti Báhčaveaivuonas ja Ruovdavuonas , vaikko ieža válljejedje šaddat Ruošša stáhtaborgárin ( Andresen 1989 : 47 ff. ) .
     #$ Eamiálbmot maya lea vealahuvvon ja badjelgehččojuvvon.
     #$ Eamiálbmot geasseleaira Olmmáivákkis:..
+    #$GRAM Kárášjoga Sámiálbmot listu/NSR - sámediggelistu
 
 
 SELECT:r2205 Gen IF (*-1 Num BARRIER NPNHA LINK *-1 BOC2 BARRIER NOT-ADV-PCLE)(*1 (Pl Loc) BARRIER NPNH OR Dem LINK NOT 0 Interr);
@@ -17808,7 +17820,7 @@ SELECT:r2391 Nom IF (*-1 Loc BARRIER SV-BOUNDARY2 OR Nom LINK *-1 COPULAS BARRIE
 REMOVE:r2392 Acc IF (*-1 COPULAS BARRIER PrfPrc OR Inf OR (Actio Ess) OR SV-BOUNDARY2)(NEGATE 0 Sem/Time OR MEASURE)(1 CS OR EOS);
 	## Dain áššiin lea Ruonáeatnama ruovttustivrras ráđđeaddi váldi. 
 
-REMOVE:r2393 Nom IF (NEGATE 0 Dem)(1C (N Nom))(NEGATE 1 PUNCT OR Num OR Interr)(NEGATE *-1 COPULAS BARRIER SV-BOUNDARY2)(NEGATE 0 ("son"))(NEGATE *1 COPULAS BARRIER SV-BOUNDARY2 LINK NEGATE *1 V-NOT-AUX BARRIER S-BOUNDARY2)(NEGATE -1 Gen LINK 1 Actio LINK 1 N)(NEGATE 0 (Prop Ess))(NEGATE 0 (Sem/Org PxSg2) LINK 1 (Sg Nom) LINK 1 CC LINK 1 (Sg Nom))(NEGATE 0 (Gen Err/Orth) LINK 0 (Nom))(NEGATE 0 Sem/Sur OR Sem/Fem OR Sem/Mal LINK 0 Sg LINK -1 (V Sg3))(NEGATE 0 Sem/Group LINK 1 (Sem/Hum Sg Nom) OR (Sem/Org Sg Nom));
+REMOVE:r2393 Nom IF (NEGATE 0 Dem)(1C (N Nom))(NEGATE 1 PUNCT OR Num OR Interr)(NEGATE *-1 COPULAS BARRIER SV-BOUNDARY2)(NEGATE 0 ("son"))(NEGATE *1 COPULAS BARRIER SV-BOUNDARY2 LINK NEGATE *1 V-NOT-AUX BARRIER S-BOUNDARY2)(NEGATE -1 Gen LINK 1 Actio LINK 1 N)(NEGATE 0 (Prop Ess))(NEGATE 0 (Sem/Org PxSg2) LINK 1 (Sg Nom) LINK 1 CC LINK 1 (Sg Nom))(NEGATE 0 (Gen Err/Orth) LINK 0 (Nom))(NEGATE 0 Sem/Sur OR Sem/Fem OR Sem/Mal LINK 0 Sg LINK -1 (V Sg3))(NEGATE 0 Sem/Group LINK 1 (Sem/Hum Sg Nom) OR (Sem/Org Sg Nom))(NEGATE 0 <NomGenSg> LINK 0 Acc OR Gen LINK 0 Err/Orth-any);
 	#$Gram Jagi 2004:is  ráhkadii Gaup {goansta} mii lea ain dál okta dan goansttain FMX:s.
 	## Divššohasjournála láhkaásahus.
 	## ...maid buot journála geavaheaddji dearvvašvuođabargit áddejit.
@@ -17816,6 +17828,8 @@ REMOVE:r2393 Nom IF (NEGATE 0 Dem)(1C (N Nom))(NEGATE 1 PUNCT OR Num OR Interr)(
 	##GRAM-DESDIS Eanas {luosat} 	varra 	manne Beahcánklosterii , dasto Guoládahkii ( vrd. Leem 1767 : 350 ff. ) . 
 	#$ Eamiálbmot maya lea vealahuvvon ja badjelgehččojuvvon.
     #$ Eamiálbmot geasseleaira Olmmáivákkis:..
+    #$GRAM Kárášjoga Sámiálbmot listu/NSR - sámediggelistu
+
 
 
 SELECT:r2394 (Pl Nom) IF (*-1 COPULAS BARRIER SV-BOUNDARY2 OR go OR Nom LINK 0 Pl3)(1 EOS);
@@ -23388,11 +23402,14 @@ SELECT:r3287 Gen IF (0 Acc)(NEGATE 0 Sem/Time OR Sem/Route)(1C Loc)(2C Gen)(3C G
 # If the previous rules have functioned as they should, then we find the last genitives.
 
 SELECT:r3291 (@>N) IF (0 ("dušše"))(*1 N BARRIER NOT-A); 
-SELECT:r3288 (@>A) IF (*1 A BARRIER NOT-QMARK LINK NOT 0 Po OR Inf OR DURATION-A) (NEGATE 0 ("eanet") LINK *1 ("uhcit") OR ("unnit") BARRIER NOT-QMARK)(NEGATE 0 SPRED LINK *-1 COPULAS BARRIER NPNH LINK *-1 SUBJ BARRIER S-BOUNDARY2)(NEGATE 0 Sem/Sur LINK -1 Sem/Mal OR Sem/Fem)(NEGATE 0 Rel)(NEGATE 0 Acc LINK *-1 STV-NOT-ACT BARRIER SV-BOUNDARY2)(NEGATE -1 TV);
+SELECT:r3288 (@>A) IF (*1 A BARRIER NOT-QMARK LINK NOT 0 Po OR Inf OR DURATION-A) (NEGATE 0 ("eanet") LINK *1 ("uhcit") OR ("unnit") BARRIER NOT-QMARK)(NEGATE 0 SPRED LINK *-1 COPULAS BARRIER NPNH LINK *-1 SUBJ BARRIER S-BOUNDARY2)(NEGATE 0 Sem/Sur LINK -1 Sem/Mal OR Sem/Fem)(NEGATE 0 Rel)(NEGATE 0 Acc LINK *-1 STV-NOT-ACT BARRIER SV-BOUNDARY2)(NEGATE -1 TV)(NEGATE 0 <NomGenSg> LINK 0 Err/Orth-any LINK 1 Ord);
 	#GRAMval (NEGATE -1 TV)
 	#$GRAMval Čájáhusa birra čálle ná : Son 	liiko 	álo {hirpmástuhttit} olbmuid ođđa dáidagiin , ja seammás ii oktage eahpit gii dáiddár lea .
+	#$GRAM Ole Gaup, Buolbmát 7.
+	
 SELECT:r3289 (@>ADVL) IF (*1 @ADVL BARRIER NOT-QMARK LINK NOT 0 Po OR Inf OR N) (NEGATE 0 ("eanet") LINK *1 ("uhcit") OR ("unnit") BARRIER NOT-QMARK);
 SELECT:r3290 (@>Pron) IF (*1 Pron BARRIER NOT-QMARK LINK NOT 0 Po OR Inf) (NEGATE 0 ("eanet") LINK *1 ("uhcit") OR ("unnit") BARRIER NOT-QMARK);
+
 
 LIST INF-DERHEAMPI = ("veahkehit" TV Inf) ("veahkki" Der/heapmi A Comp Attr);
 
@@ -23801,9 +23818,11 @@ SELECT:r3520 (Gen @Num<) IF (-1 CARDINALS LINK NOT 0 Acc)(0 KLASS OR PROSEANTA O
 SELECT:r3521 (Gen @Num<) IF (-1 CARDINALS)(0 (Gen @>N))(1 Prop);
 	## Fylkadiggi galgá beassat nammadit vihtta lahtu Finnmárkku Opodahkii.
 
-IFF (Gen @Num<)(*-1 Num BARRIER NOT-A)(NOT 0 (N Pl));
+IFF (Gen @Num<)(*-1 Num BARRIER NOT-A)(NOT 0 (N Pl))(NEGATE 0 Cmp/SgGen LINK 0 Err/Orth-any);
   	## Skuvlajagis 2001/2002 leat oktiibuot 469 oahppi suohkana vuođđoskuvllain.
   # We could get problems if the numeral wants to stand on its own.
+    #$ Čieža nisson- ja čieža dievdojoavkku ledje mielde dán jagi ja ná olu nissonjoavkkut eai leat goassege leamaš mielde dáin čiekčamiin.
+
 
 REMOVE:r3524 @SUBJ IF (-1 N)(0 (Num @N<))(NEGATE *1 N BARRIER NOT-A-COMMA);
 	## 
