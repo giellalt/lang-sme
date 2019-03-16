@@ -5599,6 +5599,9 @@ REMOVE:NomAgPrsPrc PrsPrc IF (0 NomAg LINK NOT 0 ("johtti") OR ("ealli") OR ("or
 
 SELECT:PrsPrcealli PrsPrc IF (0 ("eallit") LINK 1 Sem/Org) ;  
 	#$ báikkit gos lea ealli álbmotstivra
+
+SELECT:gradeadv Adv IF (0 GRADE-ADV LINK 1 PrfPrc) ;  
+	#$ Ballagohten, muitala Astrid Johnskareng ja lohká iežas mealgat váfon go šattai geahpedit lášmmohallama.
 	
 	
 
@@ -5691,13 +5694,14 @@ SELECT:Prof N + Ess IF (0 PROFESSION LINK *-1 OPRED-V BARRIER SV-BOUNDARY OR COM
 	#$ Sámediggepresideanta Aili Keskitalo nammadii bearjadaga Guovddášbellodaga Anne Toril Eriksen Balto (40) ođđa politihkalaš ráđđeaddin.
 
 
-SELECT:NounNotEará N IF (-1 (A Attr) OR (Indef Attr) LINK NOT 0 OLLU)(NEGATE -1 Adv OR Interr)(NEGATE 0 Inf OR VFIN OR Der/veara OR ("veara") OR ("leat" PrfPrc) OR Indef OR Foc/gis)(1 NP-BOUNDARY);  
+SELECT:NounNotEará N IF (-1 (A Attr) OR (Indef Attr) LINK NOT 0 OLLU)(NEGATE -1 Adv OR Interr)(NEGATE 0 Inf OR VFIN OR Der/veara OR ("veara") OR ("leat" PrfPrc) OR Indef OR Foc/gis)(1 NP-BOUNDARY)(NEGATE 0 PrfPrc LINK -1 GRADE-ADV);  
 	#$ Dat lea čuovvovaš sajis.
 	#$ Áhku vuostá lea buoremus vuostá maid mun dieđán.
 	#$ Jáhkán livččii váddáseabbu leamaš jus ii livčče juogalágan bearašoktavuohta, lohká Budeaju nieida gii lea bajásšaddan gávpogis. 
 	# It should not take the latter one.
 	#% Maŋimuš jagiid áigge lea almmuhusdienas mearihis olu njiedjan
 	#% Sii leat hui unnán dahkan guorahallat "sámi vieruid ja riekteáddejumiid".
+	#% Ballagohten, muitala Astrid Johnskareng ja lohká iežas mealgat váfon go šattai geahpedit lášmmohallama.
 
 
 #!! * __NnotAcoord__ removes A instead of N (earlier: selects N instead of A), based on coordination with N, and a vfin-verb
@@ -10221,7 +10225,15 @@ OR (1 JA/DAHJE OR ("dahjege") LINK 1 Gen LINK *1C Gen BARRIER NOT-NPMOD LINK *1C
 	#% Lávdegoddi lea maiddái atnán áiggi ságastallat davviruoŧa čearuid ja Romssa boazoorohagaid gaskaneas váttisvuođaid birra.
 	#% Olmmoš galgá čuovvut iežas guovllu gáktemálle, muhto sáhttá válljet liinni ja ivnni miela mielde.
 	#% Mun attán heaggan, áhkkán ja ruhtan sávzzaid ovddas.
-	
+
+
+SELECT:GenPoCoord Gen IF ((1 COMMA LINK 1 Gen LINK 1 JA/DAHJE OR ("dahjege") LINK *1C Gen BARRIER NOT-NPMOD LINK *1C Po OR ("gaskasaš") BARRIER NP-BOUNDARY OR Nom) 
+OR (1 COMMA LINK 1 Gen LINK 1 JA/DAHJE OR ("dahjege") LINK 1 Gen LINK *1C Gen BARRIER NOT-NPMOD LINK *1C Po BARRIER NP-BOUNDARY OR Nom)
+)
+(NEGATE -1 Gen LINK 2 JA/DAHJE LINK 1 Gen LINK 1 Acc)(NEGATE -1 FMAINV + STRICT-TRANS-V)
+(NEGATE 0 Cmp/SplitR) ; 
+	#$ Dáruiduhttináiggis Anders Larsen geahččalii kultuvrra, politihka ja dáidaga vehkiin sámiálbmoga árvvu loktet.	
+
 #SELECT:GenPoCoord2 Gen 
 	#%Vuosttaš láđđasis njealját lađđasii gustojit seamma láhkai áššiide meahcceeatnamiid dahje vuoigatvuođaid meahcceeatnamiin luobaheami ja láigoheami birra.
 	#$ Goalmmát oasis lea bargosajiid ja bargoeallima eavttuid birra, njealját oasis lea fidnooahpuid, giehtaduoji ja boaittobeali báikkiid ealáhusaid birra.
@@ -11249,11 +11261,11 @@ SELECT:NumAcc2 Acc IF (*-1 NOT-FAUXV + TRANS-V BARRIER SV-BOUNDARY)(0 NUM + Sg L
 
 
 #!! * __GenIfNum__ (complement of numerals) Selects Gen Sg if there is a Num Sg to your left ''guđa geardde'' 
-SELECT:GenIfNum (Gen Sg) OR CURRENCY + Gen  IF (*-1 NUM + Sg BARRIER MEASUREADJS OR NOT-A OR (":") LINK NOT 0 NUMUNIT OR Sem/Year OR Sem/Time-clock)(0 (N Gen))(NEGATE 1 Po)(NEGATE -1 CC) ;
+SELECT:GenIfNum (Gen Sg) OR CURRENCY + Gen  IF (*-1 NUM + Sg + Gen OR NUM + Sg + Nom BARRIER MEASUREADJS OR NOT-A OR (":") LINK NOT 0 NUMUNIT OR Sem/Year OR Sem/Time-clock)(0 (N Gen))(NEGATE 1 Po)(NEGATE -1 CC) ;
 	#$ Mii finaimet doppe guđa geardde.
-	#$ Sii geat máhtte dušše moadde luođi, ohppe máŋga ođđa luođi internáhtas orodettiin.
 	#$ Viđa máná biktasat ledje jávkan.
-	#$ De ohccu moadde girjji.
+	#% Sii geat máhtte dušše moadde luođi, ohppe máŋga ođđa luođi internáhtas orodettiin.
+	#% De ohccu moadde girjji.
 	#Comment: GenIfNum always pics genitiv for the noun that follows a Sg Num. There are two varieties, depending on whether preceded by TV (a transitive verb) = akk+gen or IV (intransitive verb) = gen+gen.
 
 #!! * __NumAccCo__ (coordinated num) Selects Acc if you are Num Sg and to your right: CC with a Num to the right ''guokte ja eanemusat golbma''
