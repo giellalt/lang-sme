@@ -1,7 +1,5 @@
 # Grammatikkontrollting som må rettast før lansering
 
-* feilmeldingane må vera forståelege (ikkje: syn-inf-not-Der/h)
-* vi må slå saman feilkategoriar til logiske grupper, så folk har noko overskodeleg å halda seg til (ikkje tusen kategoriar som no)
 * manglande blåstrek ved (feil) høgre hermeteikn:
   > «Čohkken áiggiid čađa buoremus sámi artisttaid»
   - her får fyrste hermeteikn blåstrek under både seg sjølv og dei to neste orda (hadde klart seg med det fyrste :), medan siste hermeteikn berre får blåstrek under seg sjølv - burde ha vore under føregåande ord
@@ -18,9 +16,8 @@
   > De galgá  fas cegget skáluid ja álgit gaikut.
   * => galgá: både &real-galgá og "&double-space-before &LINK"
   * => forslag til løysing: velja den eine (alfabetisk?) og vis den, deretter køyr på nytt
-* alle «[SE]»-merka tilbameldingar til brukarane må omsetjast
 * vi må sjå over alle tilbakemeldingane, sjekka at dei er gode, saklege og ikkje for lange
-* forenkla lista med feilkategoriar
+* fiksa alle feil melde i Bugzilla og andre stader
 
 
 # FIXED
@@ -35,3 +32,7 @@
 * blå bylgjeline under blankteiknsfeil (må dekkja ordet før eller etter, ev begge)
 * ved manglande mellomrom kring punktum osb, må blåstreken strekkja seg til både ordet før og ordet etter, og vi må generera forslag
 * forslag til retting for blankteiknsfeil (set inn/ta vekk blankteiknet)
+* feilmeldingane må vera forståelege (ikkje: syn-inf-not-Der/h)
+* vi må slå saman feilkategoriar til logiske grupper, så folk har noko overskodeleg å halda seg til (ikkje tusen kategoriar som no)
+* alle «[SE]»-merka tilbameldingar til brukarane må omsetjast
+* forenkla lista med feilkategoriar
