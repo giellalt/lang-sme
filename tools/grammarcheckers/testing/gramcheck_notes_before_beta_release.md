@@ -16,7 +16,6 @@
   > De galgá  fas cegget skáluid ja álgit gaikut.
   * => galgá: både &real-galgá og "&double-space-before &LINK"
   * => forslag til løysing: velja den eine (alfabetisk?) og vis den, deretter køyr på nytt
-* vi må sjå over alle tilbakemeldingane, sjekka at dei er gode, saklege og ikkje for lange
 * fiksa alle feil melde i Bugzilla og andre stader
 
 
@@ -36,3 +35,4 @@
 * vi må slå saman feilkategoriar til logiske grupper, så folk har noko overskodeleg å halda seg til (ikkje tusen kategoriar som no)
 * alle «[SE]»-merka tilbameldingar til brukarane må omsetjast
 * forenkla lista med feilkategoriar
+* vi må sjå over alle tilbakemeldingane, sjekka at dei er gode, saklege og ikkje for lange
