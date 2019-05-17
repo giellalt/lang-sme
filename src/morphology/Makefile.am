@@ -32,7 +32,6 @@ GT_LEXC_SRCS_L1_L2=\
 			affixes/propernouns.lexc         \
 			affixes/symbols.lexc             \
 			stems/abbreviations.lexc         \
-			stems/acronyms.lexc              \
 			stems/adjectives.lexc            \
 			stems/adpositions.lexc           \
 			stems/adverbs.lexc               \
@@ -65,6 +64,7 @@ GT_LEXC_L2_SRCS=\
 
 # Set this to the names of all generated lexc files, if any
 GENERATED_LEXC_SRCS=generated_files/smi-$(GTLANG)-propernouns.lexc \
+                   generated_files/smi-$(GTLANG)-acronyms.lexc \
                    generated_files/punctuation.lexc \
                    generated_files/symbols.lexc
 
@@ -78,7 +78,8 @@ GT_LOCAL_SRCS=
 GT_LOCAL_XFSCRIPT_SRCS=
 
 # Define here any additional sources just included in the distro:
-GT_DISTRO_SRCS=stems/$(GTLANG)-propernouns.lexc
+GT_DISTRO_SRCS=stems/$(GTLANG)-propernouns.lexc \
+			   stems/$(GTLANG)-acronyms.lexc
 
 ### BEGIN: Local processing: ###
 
@@ -114,6 +115,22 @@ generated_files/smi-$(GTLANG)-propernouns.lexc: \
 	echo "! <--- Dump from SMI -->" >> $@ && \
 	echo "" >> $@ && \
 	cat $< >> $@
+
+generated_files/smi-acronyms.lexc: \
+			$(GIELLA_SHARED)/smi/src/morphology/stems/smi-acronyms.lexc
+	$(AM_V_at)$(MKDIR_P) generated_files
+	$(AM_V_GEN)cp -f $< $@
+
+generated_files/smi-$(GTLANG)-acronyms.lexc: \
+		generated_files/smi-acronyms.lexc \
+		$(srcdir)/stems/$(GTLANG)-acronyms.lexc
+	$(AM_V_GEN)rm -f $@ && \
+	cp -f $(srcdir)/stems/$(GTLANG)-acronyms.lexc $@ && \
+	echo "" >> $@ && \
+	echo "! <--- Dump from SMI -->" >> $@ && \
+	echo "" >> $@ && \
+	cat $< >> $@
+
 
 ### END: Local processing: ###
 
