@@ -18,7 +18,7 @@ if [[ $1 == "-v" ]]; then
     echo "$0: Are there tags not declared in root.lexc or misspelled?"
 fi
 
-cat src/morphology/clitics.lexc src/morphology/compounding.lexc src/morphology/affixes/*lexc src/morphology/stems/*lexc \
+cat src/morphology/clitics.lexc src/morphology/compounding.lexc src/morphology/affixes/*lexc src/morphology/stems/*lexc  ../../giella-shared/smi/src/morphology/stems/*lexc \
     | cut -d '!' -f1                                                                                                    \
     | grep ' ;'                                                                                                         \
     | cut -d ':' -f1                                                                                                    \
