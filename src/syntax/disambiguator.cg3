@@ -3964,7 +3964,9 @@ SELECT:ealliPrsPrc PrsPrc IF (0 ("ealli") LINK 1 Sem/Lang OR Sem/Org OR Sem/Plc)
 
 REMOVE:PrsPrcProp PrsPrc IF (0 N LINK 1 Prop) ;
 
-REMOVE:PrsPrc PrsPrc IF (0 LEX-N + Sg)(NEGATE -1 ("nu") LINK 2 go)(NEGATE *1 Acc BARRIER NOT-A-ADV)(NEGATE -1 PLACE + Loc OR Adv OR Po)(NEGATE -1 ("leat") OR BUOT LINK 2 N)(NEGATE 1 CC LINK 1 Attr LINK 1 N)(NOT 0 ("gullat")) ;
+REMOVE:PrsPrc PrsPrc IF (0 LEX-N + Sg)(NEGATE -1 ("nu") LINK 2 go)(NEGATE *1 Acc BARRIER NOT-A-ADV)(NEGATE -1 PLACE + Loc OR Adv OR Po)(NEGATE -1 ("leat") OR BUOT LINK 2 N)(NOT 0 ("gullat")) ;
+#(NEGATE 1 CC LINK 1 Attr LINK 1 N)
+
 SELECT:PrsPrc PrsPrc IF (0 LEX-N + Sg)((-1 ("nu") LINK 2 go) OR (-1 ("leat") OR BUOT LINK 2 N) OR (1 CC LINK 1 Attr LINK 1 N) OR (0 ("gullat") LINK *1 N BARRIER NOT-A)) ;
 	#$ Dat mearkkaša ahte badjelaš bealli buot oassálasti ohppiin hállet, gullet ja geavahit sámegiela boarrásut olbmuiguin ságastallamis.
 	#$ Dainna ii leat vissis mearri galljodagas.
@@ -6598,6 +6600,7 @@ SELECT:ConNegIfNeg ConNeg IF (*-1 REAL-NEG BARRIER ConNeg OR PrfPrc OR SV-BOUNDA
  	
  	#$ Iige njuovvan ja bierggu rádjan leat mihkkege dearvvašvuođaváttisvuođaid.Lea erenoamáš dehálaš movttiidahttit doaktáriid bargat gielddain.
 
+REMOVE:ConNeg ConNeg IF (-1 ConNeg + LEAT) (0 PrfPrc);
 
 
 #!! !!!Section 9 WORD-SPECIFIC RULES
@@ -12906,14 +12909,17 @@ SELECT:miiPlAcc (N Pl Acc) OR (A Pl Acc) IF (-1 ("mii") OR ("gii") OR ("mihkke" 
 SELECT:AccTV1NoC Acc IF (*-1 STRICT-TRANS-V BARRIER NOT-NPMODADV LINK NEGATE *-1 Acc BARRIER S-BOUNDARY OR CC)(0 NP-HEAD-ACC LINK NEGATE *1 Acc - Pron BARRIER S-BOUNDARY)(NEGATE *-1 NUM BARRIER NOT-Attr LINK NOT 0 NUMUNIT)(NEGATE 0 TIME)(NEGATE 0 ANIMATE + Gen OR Pron + Gen + Sg LINK *1 Ill + Sg BARRIER NOT-NPMOD)(NEGATE 0 (Pron Refl) LINK 1 (N Ess))(NEGATE 0 (Pron Refl) LINK 1 Gen LINK 1 Po)(NEGATE 1 (N Nom) OR Ger)(NEGATE -1 <vdic>) ; 
 
 #!! * __AccEOS__ is The Dangerous Rule: it is one of the last rules before removing all leftover Acc. It only selects Acc if Nom is not an option, dont change this btw, and the end of the sentence is the next one to the right
-SELECT:AccEOS Acc IF (0 Acc OR Gen LINK NOT 0 Nom)((1 EOS LINK *-1 TRANS-V) OR (1 Ger OR VAbess LINK NOT -1 HUMAN) OR (1 COMMA LINK *1 Nom BARRIER NOT-Attr LINK NOT 0 Acc LINK 1 EOS))(NEGATE 0 TIME OR TIME-N OR Adv OR ("bassi" A))
+SELECT:AccEOS Acc IF (0 Acc OR Gen LINK NOT 0 Nom)((1 EOS OR Dem + Gen LINK *-1 TRANS-V) OR (1 Ger OR VAbess LINK NOT -1 HUMAN) OR (1 COMMA LINK *1 Nom BARRIER NOT-Attr LINK NOT 0 Acc LINK 1 EOS))(NEGATE 0 TIME OR TIME-N OR Adv OR ("bassi" A))
 (NEGATE -1 Pr)(NEGATE -1 Num LINK *-1 TRANS-V + FMAINV BARRIER SV-BOUNDARY) ;
 	#$ Unná mánážat dulbmet eatni askki, stuora mánát fas váimmu.
 	#$ Nu ožžot sámi beroštumit mat ovddastuvvojit stuorát deattu deaivvadettiin riikkalaš ja stuorraservodaga beroštumiiguin.
 	#$ Don ráhkistat bilideaddji sárdnuma, behtolaš njuovčča.
 	#$ Dán artihkkalis mun čájehan ahte málle sáhttá geavahit maiddái unnitlogugiela čálamáhtu konteavsttaid govvideamis vearditkeahttá nu ollu.
+ 	#$ Hástalussan šaddá ásahit buriid hálddašanstivrraid mat sihkkarastet resurssaid ceavzilis ávkkástallama dan ovdáneami ektui mii lea sávahahtti sámi servodahkii.
 	#% Dat čohkkáiga oktii njuniid. <== Make a rule for this in the "acc/gen-section".
 	#% Mánná viehkalii olggos álás julggiid. <== Note that both are IV-verbs.
+
+
 
 #!! * __AccEllipse__ 
 SELECT:AccEllipse Acc IF (0 Acc OR Gen LINK NOT 0 Nom)(*-1 CC OR COMMA BARRIER NOT-ADV-PCLE LINK *-1C Acc BARRIER NOT-ADV-PCLE - CC - COMMA)(1 EOS OR CC OR COMMA OR Adv) ;  
@@ -12925,6 +12931,8 @@ REMOVE:genRel Gen ((0 Acc LINK NOT 0 TIME-N LINK *1C Rel OR @CVP BARRIER WORD) O
 # dalle go @CVP is not MWE in Apertium
 	#$ Dan maid dalle dárbbaša fievrridit, ferte olmmoš noađuhit.
 	#$ Juohke gielddas ožžot olbmot skoviid maid sii galget deavdit ja sii jearahallet maiddái olbmuid, muhto Isaksen imašta kommišuvnna bargovugiid
+
+
 
 #!! * __genAcc__ selects Acc 
 SELECT:genAcc Acc (-1 BOC)(0 Nom)(1 Rel LINK *1 FMAINV LINK *1 TRANS-V BARRIER Nom LINK NEGATE *1 Acc) ;
@@ -13980,6 +13988,10 @@ SELECT:LexSel ("vuodjat") IF (*0 ("beahcet") + Com) ;
 	#$  Sii vudjet bálgá mielde.
 	#$  Sii vudjet Romsii.
 	#$  Muhto min guovlluin eatnasat veajehin ja vudjet merrii maŋŋel go leat leamaš jagi jogas.
+
+
+SELECT:default ("vuodjit") IF (0 ("vuodjat")) ;
+
 
 	# vuohttit vs. vuohttát
 	# ---------------------
