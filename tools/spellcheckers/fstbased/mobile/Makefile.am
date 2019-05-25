@@ -30,11 +30,11 @@ CORPUS_SIZE=
 
 generator-mobilespeller-gt-norm.hfst: \
 			generator-mobilespeller-gt-norm.tmp.hfst \
-			$(top_builddir)/src/filters/remove-derivation-position-tags.hfst
+			filters/remove-derivation-position-tags.hfst
 	$(AM_V_HXFST)$(PRINTF) "\
 	set encode-weights ON \n\
 	read regex \
-		@\"$(top_builddir)/src/filters/remove-derivation-position-tags.hfst\" \
+		@\"filters/remove-derivation-position-tags.hfst\" \
 	.o. @\"$<\" \
 	; \n\
 	save stack $@\n\
