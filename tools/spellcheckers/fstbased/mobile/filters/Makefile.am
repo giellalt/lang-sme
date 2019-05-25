@@ -11,7 +11,7 @@ GIELLA_LOCAL_DESKTOPSPELLER_FILTER_SRCS=
 
 # Source files copied from src/filters/ OR from
 # $(GIELLA_SHARED)/all_langs/tools/spellcheckers/fstbased/filters:
-GT_LOCAL_COPY_FILTER_SRCS=
+GT_LOCAL_COPY_FILTER_SRCS=remove-derivation-position-tags.regex
 
 # Only build these things if speller fst's are enabled:
 if WANT_SPELLERS
