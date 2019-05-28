@@ -18,7 +18,7 @@ APERTIUM_TARGET_LANG_NAME=apertium-und
 ##################################################################
 #### Specify CG3 source files, main and included ones:        ####
 ##################################################################
-APERTIUM_CG_SRC=disambiguation-mt-gt.cg3
+APERTIUM_CG_SRC=disambiguation-mt-gt.cg3 semsets.cg3
 
 APERTIUM_CG_INCLUDE_SRC=
 
