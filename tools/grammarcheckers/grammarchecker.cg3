@@ -1454,6 +1454,7 @@ LIST &lex-guorrasit-not-guorralit = &lex-guorrasit-not-guorralit ;
 LIST &lex-valjit-not-valji = &lex-valjit-not-valji ;
 
 LIST &punct-aistton = &punct-aistton ;
+LIST &punct-aistton-both = &punct-aistton-both ;
 LIST &punct-aistton-left = &punct-aistton-left ;
 LIST &punct-aistton-right = &punct-aistton-right ;
 LIST &punct-rihkku = &punct-rihkku ;
@@ -13573,18 +13574,29 @@ ADDRELATION (LEFT) (&punct-rihkku) TO (-1 (&ADDED-BEFORE-BLANK)) ;
 
 # 1. Add error tags:
 # ADD:punct-aistton       (&punct-aistton)       TARGET (""") ;  # Delayed till later
+MAP:punct-aistton-both  (&punct-aistton-both)  TARGET ("«" PUNCT LEFT)  OR ("“" PUNCT LEFT) IF (2 ("»") OR ("“")) ;
 ADD:punct-aistton-left  (&punct-aistton-left)  TARGET ("«" PUNCT LEFT)  OR ("“" PUNCT LEFT) ;
 ADD:punct-aistton-right (&punct-aistton-right) TARGET ("»" PUNCT RIGHT) ;
 
 # 2. Add &LINK tags to the preceding/following word (depending on LEFT or RIGHT quotation marks), to handle overlapping errors:
+MAP:punct-aistton-both-link  (&punct-aistton-both &LINK )  TARGET (*) IF (-2 (&punct-aistton-both) LINK NOT 0 (&LINK)) ;
 ADD:punct-aistton-left-link  (&punct-aistton-left &LINK )  TARGET (*) IF (-1 (&punct-aistton-left) LINK NOT 0 (&LINK)) ;
 ADD:punct-aistton-right-link (&punct-aistton-right &LINK ) TARGET (*) IF (1 (&punct-aistton-right) LINK NOT 0 (&LINK)) ;
 
 # 3. Add relation RIGHT/LEFT from the sentral cohort to the LINKed cohort for extended underline:
+ADDRELATION:punct-aistton-both-rel  (RIGHT) (&punct-aistton-both)  TO (2  &LINK LINK 0 (&punct-aistton-both) );
 ADDRELATION:punct-aistton-left-rel  (RIGHT) (&punct-aistton-left)  TO (1  &LINK LINK 0 (&punct-aistton-left) );
 ADDRELATION:punct-aistton-right-rel (LEFT)  (&punct-aistton-right) TO (-1 &LINK LINK 0 (&punct-aistton-right) );
 
 # 4. Generate suggestions including the following/preceeding word (ie matching underline):
+# Generer forslag for hermeteikn på _begge_ sider viss me har feilen på eitt og same ord:
+COPY:punct-aistton-both-sugg ("<”$1”>"v &SUGGESTWF) TARGET (&punct-aistton-both) IF
+        (NOT 0 (&LINK))
+        (2 &punct-aistton-both)
+        (2 &LINK)
+        (1 ("<(.*)>"r))
+        ;
+
 # Generer forslag for hermeteikn på _venstre_ side:
 COPY:punct-aistton-left-sugg ("<”$1>"v &SUGGESTWF) TARGET (&punct-aistton-left) IF
         (NOT 0 (&LINK))
