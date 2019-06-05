@@ -119,35 +119,12 @@ generated_files/smi-$(GTLANG)-propernouns.lexc: \
 	echo "" >> $@ && \
 	cat $< >> $@
 
-generated_files/smi-acronyms.lexc: \
-			$(GIELLA_SHARED)/smi/src/morphology/stems/smi-acronyms.lexc
-	$(AM_V_at)$(MKDIR_P) generated_files
-	$(AM_V_GEN)cp -f $< $@
-
-generated_files/smi-$(GTLANG)-acronyms.lexc: \
-		generated_files/smi-acronyms.lexc \
-		$(srcdir)/stems/$(GTLANG)-acronyms.lexc
-	$(AM_V_GEN)rm -f $@ && \
-	cp -f $(srcdir)/stems/$(GTLANG)-acronyms.lexc $@ && \
-	echo "" >> $@ && \
-	echo "! <--- Dump from SMI -->" >> $@ && \
-	echo "" >> $@ && \
-	cat $< >> $@
 
 generated_files/%.lexc: \
 			$(GIELLA_SHARED)/smi/src/morphology/stems/%.lexc
 	$(AM_V_at)$(MKDIR_P) generated_files
 	$(AM_V_GEN)cp -f $< $@
 
-generated_files/smi-$(GTLANG)-numerals.lexc: \
-		generated_files/arabic_roman_digits.lexc \
-		$(srcdir)/stems/numerals.lexc
-	$(AM_V_GEN)rm -f $@ && \
-	cp -f $(srcdir)/stems/numerals.lexc $@ && \
-	echo "" >> $@ && \
-	echo "! <--- Dump from SMI -->" >> $@ && \
-	echo "" >> $@ && \
-	cat $< >> $@
 
 
 
