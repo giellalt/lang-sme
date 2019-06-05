@@ -67,6 +67,7 @@ GENERATED_LEXC_SRCS=generated_files/smi-$(GTLANG)-propernouns.lexc \
                    generated_files/smi-$(GTLANG)-acronyms.lexc \
                    generated_files/smi-$(GTLANG)-numerals.lexc \
                    generated_files/punctuation.lexc \
+                   generated_files/smi-digits.lexc \
                    generated_files/symbols.lexc
 
 # Set this to the names of all source xml files, if any
@@ -133,8 +134,8 @@ generated_files/smi-$(GTLANG)-acronyms.lexc: \
 	echo "" >> $@ && \
 	cat $< >> $@
 
-generated_files/arabic_roman_digits.lexc: \
-			$(GIELLA_SHARED)/smi/src/morphology/stems/arabic_roman_digits.lexc
+generated_files/%.lexc: \
+			$(GIELLA_SHARED)/smi/src/morphology/stems/%.lexc
 	$(AM_V_at)$(MKDIR_P) generated_files
 	$(AM_V_GEN)cp -f $< $@
 
