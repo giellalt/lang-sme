@@ -39,8 +39,10 @@ GT_LEXC_SRCS_L1_L2=\
 			stems/conjunctions.lexc          \
 			stems/interjections.lexc         \
 			stems/nouns.lexc                 \
+			stems/numerals.lexc                 \
 			stems/particles.lexc             \
 			stems/pronouns.lexc              \
+			stems/sme-acronyms.lexc         \
 			stems/subjunctions.lexc          \
 			stems/verbs.lexc
 
@@ -64,8 +66,8 @@ GT_LEXC_L2_SRCS=\
 
 # Set this to the names of all generated lexc files, if any
 GENERATED_LEXC_SRCS=generated_files/smi-$(GTLANG)-propernouns.lexc \
-                   generated_files/smi-$(GTLANG)-acronyms.lexc \
-                   generated_files/smi-$(GTLANG)-numerals.lexc \
+                   generated_files/smi-acronyms.lexc \
+                   generated_files/arabic_roman_digits.lexc \
                    generated_files/punctuation.lexc \
                    generated_files/smi-digits.lexc \
                    generated_files/symbols.lexc
@@ -80,9 +82,7 @@ GT_LOCAL_SRCS=
 GT_LOCAL_XFSCRIPT_SRCS=
 
 # Define here any additional sources just included in the distro:
-GT_DISTRO_SRCS=stems/$(GTLANG)-propernouns.lexc \
-			   stems/$(GTLANG)-acronyms.lexc \
-			   stems/numerals.lexc
+GT_DISTRO_SRCS=stems/$(GTLANG)-propernouns.lexc 
 
 ### BEGIN: Local processing: ###
 
