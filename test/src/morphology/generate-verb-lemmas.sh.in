@@ -24,11 +24,16 @@ POS=verbs
 ### in ###
 source_file=${srcdir}/../../../src/morphology/stems/${POS}.lexc
 generator_file=./../../../src/generator-gt-norm
+analyser_file=./../../../src/analyser-gt-norm
 
 ### out ###
-lemmas=filtered-${POS}
-generated_lemmas=generated-${POS}
+# Temporary files:
+lemmas=./filtered-${POS}.txt
+# Result files, will get filename suffix programmatically further down:
+generated_lemmas=./generated-${POS}
 result_file=missing_${POS}_lemmas
+gen_result_file=generated_missing_${POS}_lemmas
+ana_result_file=analysed_missing_${POS}_lemmas
 
 # SKIP if source file does not exist (works with both single and
 # multiple files):
@@ -54,16 +59,12 @@ fi
 # Get external Mac editor for viewing failed results from configure:
 EXTEDITOR=@SEE@
 
-##### Extract lemmas #####
-### don't use extract-lemmas.sh ###
-# Hent ut lemmaer, bortsett fra utkommmenterte (^\!),  dem med hardkoding
-# for spesielle former (STRAYFORMS|ENDLEX), eller negasjonsverbet (+Neg, som
-# ikke har infinitivform), Err/Lex (som blir filtrert bort fra normgenerator).
-# Lemmaene lagres som $lemmas.
-
-grep ";" $source_file | \
-  grep -v "^\!" | egrep -v '(STRAYFORMS|ENDLEX|\+Err\/Lex|\+Neg|\@)' | \
-  tr ":+" " " | cut -d " " -f1 | tr -d "%" | sort -u > $lemmas
+##### Extract lemmas - add additional egrep pattern as parameters: #####
+##### --include "(pattern1|pattern2|...)"                          #####
+##### --exclude "(pattern1|pattern2|...)"                          #####
+@GTCORE@/scripts/extract-lemmas.sh \
+    --exclude "(STRAYFORMS|ENDLEX|+Neg)" \
+    $source_file > $lemmas
 
 ###### Start testing: #######
 transducer_found=0
@@ -129,7 +130,7 @@ done
 
 # At least one of the Xerox or HFST tests failed:
 if [ "$Fail" = "1" ]; then
-	exit 1
+    exit 1
 fi
 
 if [ $transducer_found -eq 0 ]; then
