@@ -10,7 +10,7 @@ SUBDIRS = filters .
 
 GIELLA_GC_MWEDIS_SRC=mwe-dis.cg3
 GIELLA_GC_SPELLER_CG_SRC=spellchecker.cg3
-GIELLA_GC_GRAMCHECKER_SRC=grammarchecker.cg3
+GIELLA_GC_GRAMCHECKER_SRC=grammarchecker-release.cg3
 GIELLA_GC_WHSPACE_ANAL_SRC=analyser-gt-whitespace.regex
 
 # Will by default use the one in src/syntax/disambiguator.cg3. To use a
