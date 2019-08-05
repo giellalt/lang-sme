@@ -103,7 +103,7 @@ LIST LEFT = LEFT ;	    #!! LEFT
 LIST RIGHT = RIGHT ;    #!! RIGHT
 LIST WEB = WEB ;	    #!! WEB
 LIST QMARK = """ ;      # "  syntax colouring reset.
-LIST PPUNCT = LEFT RIGHT ;   #!! LEFT RIGHT because of apertium
+LIST PPUNCT = LEFT RIGHT PUNCT ;   #!! LEFT RIGHT because of apertium
 SET PUNCT = PPUNCT - QMARK ;
 
 LIST COMMA = "," ;
@@ -2181,6 +2181,9 @@ LIST NOT-PROP = "Ai" "Ain" "Áigi" "Árran" "Beaska" "Bierdna" "Vuoksá" "Áddj�
 REMOVE:InitialSapmiNoun Prop IF (0 ("Sápmi") + Sg + Nom)(1 CC)(2 N + HUMAN OR N + Sem/Lang) ;
 	#$ Sápmi ja dárru galgaba báldalagaid oččodit givvuid Romssa gávpogii.
 
+SELECT:InitialÁlletNoun Neg IF (0 ("Állet") + Sg + Nom)(1 ConNeg) ;
+
+
 REMOVE:Sokki Prop IF (0 ("Sokki") LINK *-1 BOS BARRIER WORD)(NEGATE 0 Loc LINK 1 HUMAN + Nom) ;
 	#$ Sokkis sii seailluhit diŋggaid, muhto go lávus leat ollu olbmot, de sáhttet soggái maid nohkkat.
 
@@ -2308,10 +2311,10 @@ REMOVE:abbr (ABBR) (NOT 0 Ord) ;
 
 #For apertium:
 #!! * __IINeg__  Rom, not Neg (for apertium)
-REMOVE:IINeg Neg (0 Rom LINK NEGATE 1 ConNeg) ;
+REMOVE:IINeg Neg (0 Rom LINK NEGATE *1 ConNeg BARRIER Neg) ;
 
 #!! * __NumRom__ in beginning of sentence
-SELECT:NumRom (Num Rom) (0 ACR OR ABBR LINK -1 BOS)(NOT 0 Sem/Obj-el ) ;
+SELECT:NumRom (Num Rom) (0 ACR OR ABBR LINK -1 BOS)(NOT 0 Sem/Obj-el) (NEGATE *1 ConNeg BARRIER Neg ) ;
 	#$ I Áššebáhpirat
 	#% CD máksá 160 ruvnnu.
 
@@ -2778,8 +2781,8 @@ REMOVE:Fochan Foc/han IF (0 Pr OR Po OR Adv) ;
 
 
 #!! * __Focbe__ removes Foc/be when juobe Adv  
-REMOVE:Focbe Foc/be IF (0 ("juobe")) ;
-	#$ juobe
+REMOVE:Focbe Foc/be IF (0 ("juobe") OR ("healbat")) ;
+	#$ juobe, Helbe
 
 
 #!! * __Focge__ removes Foc/ge when Adv like dieđusge
@@ -2889,6 +2892,7 @@ SELECT:AnomInf Inf IF (0 TRANS-V LINK -1 Acc LINK -1 A + Nom - OLLU OR ("bággu"
 	#$ Ain vejolaš ohcat Sámi allaskuvlii
 	#$ Bággu beassat hivssegii.
 	#$ Váttis dievdoolbmuid oažžut bargat dásseárvoáššiiguin.
+	#% Davviriikkalaš dearvvašvuođadirektevrrat galledit Sámi ja Sámedikki.
 
 #!! * __ACompPl__ adjective plural nomitative, not comp sg nor adv
 SELECT:ACompPl Pl + Nom IF (0 DEHALAS LINK -1 Nom)(NEGATE *0 VFIN) ;
@@ -2922,7 +2926,7 @@ SELECT:PrfPrc PrfPrc IF (-1 Nom LINK -1 Attr OR Gen LINK *-1 BOS BARRIER WORD) (
 SELECT:PrfPrc PrfPrc IF (-1 Nom LINK *-2 BOS BARRIER WORD) (1 ADVLCASE OR A OR Adv LINK *1 ("❡")) ;
 SELECT:PrfPrc PrfPrc IF (-1 BOS) (1 Attr LINK 1 Acc LINK *1 EOS BARRIER WORD) ;
 SELECT:PrfPrc PrfPrc IF (-1 Gen LINK -1 Num LINK *-1 BOS BARRIER NOT-NPMODADV)(*1 ("❡") OR EOS OR (":") BARRIER REAL-V) ;
-SELECT:PrfPrc PrfPrc IF (-1 Com LINK -1 Nom LINK -1 Attr OR Gen LINK *-1 BOS BARRIER WORD)(1 Acc LINK *1 ("❡")) ;
+SELECT:PrfPrc PrfPrc IF (-1 Com LINK -1 Nom LINK *-1 BOS BARRIER Sg1)(*1 ("❡") BARRIER Sg1) ;
 SELECT:Nom Nom IF (-1 Gen LINK -1 Gen LINK -1 CC LINK -1 Nom LINK *-1 BOS BARRIER WORD)(1 ("❡")) ;
 SELECT:PrfPrc PrfPrc IF (-1 ADVLCASE LINK *-1 BOS BARRIER WORD)(1 ADVLCASE LINK *1 ("❡")) ;
 SELECT:Pl Pl IF (0 A + Comp LINK 0 Sem/Hum)(1 ADVLCASE LINK *1 ("❡")) ;
@@ -3005,7 +3009,7 @@ SELECT:NomACR Nom IF (0 ACR OR ABBR)(*-1 BOS BARRIER WORD)(1 PUNCT) ;
 	#$ Ovttas.no - Sámi oahpponeavvut neahtas
 
 SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK *-1 BOS BARRIER WORD)(1 (":") OR EOS) ;
-SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 Nom LINK *-1 BOS OR LEFT BARRIER WORD)(1 (":") OR RIGHT OR EOS) ;
+SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 Nom - Sg1 LINK *-1 BOS OR LEFT BARRIER WORD)(1 (":") OR RIGHT OR EOS) ;
 SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 Gen LINK -1 Num LINK -1 BOS)(1 (":") OR EOS) ;
 SELECT:PrfPrcFragm PrfPrc (0 Der/NomAct LINK -1 Nom LINK -1 BOS)(1 (":") OR EOS) ;
 SELECT:PrfPrcFragm PrfPrc (0 Der/NomAct LINK -1 Nom LINK -1 CC LINK -1 N LINK -1 BOS)(1 (":") OR EOS) ;
@@ -3196,7 +3200,7 @@ SELECT:dusseAdv2 ("dušše" Adv) IF (1 (N Pl) LINK *1 VFIN + Pl3 BARRIER S-BOUND
 SELECT:dusseAdv3 ("dušše" Adv) IF (-1 COMMA LINK *-1 ConNeg BARRIER (Pl Nom)) ;
 	#$ Čilgehusat eai gávdnon, dušše sámegiel giehtačállosiid kopiijat.
 
-SELECT:dusseAdv4 ("dušše" Adv) IF (NEGATE *-1 ANIMATE + (Pl Nom) BARRIER VFIN OR S-BOUNDARY OR COMMA)(NEGATE *1 ANIMATE + (Pl Nom) OR (A Pl Nom) BARRIER NOT-ADV-PCLE LINK NOT 1 VFIN + Pl3)(NEGATE -1 Coll LINK 2 ("johtolat")) ;
+SELECT:dusseAdv4 ("dušše" Adv) IF (NEGATE *-1 ANIMATE + (Pl Nom) BARRIER VFIN OR S-BOUNDARY OR COMMA)(NEGATE *-1 ANIMATE + (Sg Gen) BARRIER VFIN OR S-BOUNDARY OR COMMA LINK -1 Num)(NEGATE *1 ANIMATE + (Pl Nom) OR (A Pl Nom) BARRIER NOT-ADV-PCLE LINK NOT 1 VFIN + Pl3)(NEGATE -1 Coll LINK 2 ("johtolat")) ;
 #(NEGATE *1 (Num Nom) BARRIER NOT-ADV-PCLE LINK 1 ANIMATE + (N Sg Gen)) ;
 	#% 13:s dušše johtolagas.
 
@@ -4040,7 +4044,7 @@ SELECT:LexSelgilvu ("gilvu") (0 Adv LINK *0 ("vuoitit") BARRIER SV-BOUNDARY);
 
 	# guovddáš 
 	# - - - - -
-SELECT:r693 Attr IF (0 ("guovddáš"))(1 N LINK NOT 0 TIME OR PLACE); 
+SELECT:r693 Attr IF (0 ("guovddáš"))(1 N LINK NOT 0 TIME OR PLACE OR VFIN); 
 	## Guovddáš doaibmabidju lea vuođđudit sámegiela álgooahpahusa.
 REMOVE:guovddasAttr Attr IF (0 ("guovddáš") LINK -1 Attr) ; 
 	#$ Ođđa alit guovddáš Romsii.
@@ -8018,7 +8022,7 @@ REMOVE:oza N IF (0 ("ohcat") LINK 0 (vblex)) ; #foreløpig regel for apertium, f
 	#% Áigemearri váidalusa buktit.
 	#% Duššan skohtervuoddji gullevaš boazodollui.
 
-SELECT:HeadlinerInf Inf (NEGATE *-1 VFIN)(NOT 0 ("leat"))(NEGATE *-1 (Nom Pl1))((1 EOS - ("?")) OR (NEGATE *1 WORD)) ;
+SELECT:HeadlinerInf Inf (NEGATE *-1 VFIN)(NOT 0 ("leat"))(NEGATE *-1 (Nom Pl1))(NEGATE 0 Pl3 LINK *-1 (Nom Pl))((1 EOS - ("?")) OR (NEGATE *1 WORD)) ;
 	#$ Áigemearri váidalusa buktit. 
 	#$ Vuoigatvuohta journála geahččat. 
 	#% Bohccot livvadit. 
@@ -8610,13 +8614,14 @@ MAP:-FMAINVPrfPrcbisanit (@-FMAINV) TARGET PrfPrc + ("bisánit") (1 Sem/Route) ;
 LIST NOT-@>N = "bargat" "báhcit" "bálkestit" ("beahttit" Der/PassS) "beroštit" "boahtit" "buollát" "buohcat" "čadnot" "čuolastit" "eallit"  "fitnat" "galbet" "gearggus" "hálbut" "hárjehallat" "juhkan" "johtit" "leat" "lebbet" "logaldallat" "náđđut" "oaidnit" "oažžut" "orrot" "orrut"  "ihtit" "rahčat" "suhtadit" "unnut" "vuodjit" "váldot" "vuodjat" Der/InchL ;
 
 #!! * __NPrfPrc1__ with 1C N Nom
-MAP:>NPrfPrc1 (@>N) TARGET PrfPrc - NOT-@>N (NEGATE *-1 Neg BARRIER REAL-V)(NEGATE -1 COPULAS LINK *-1 Ill BARRIER NOT-A)(NEGATE 0 AUX)(NEGATE 0 TRANS-V LINK *1 Acc BARRIER NOT-NPMOD)(NEGATE 0 MOVEMENT-V LINK *1 Ill OR DOHKO OR ("lusa") BARRIER NOT-NPMOD)(NEGATE 0 PrfPrc LINK NOT 0 Der/Pass LINK 1 Attr)(*1 (N Nom) - Prop BARRIER NOT-A OR COMPAR LINK NEGATE 0 TITLE LINK 1 Sem/Fem OR Sem/Mal OR Sem/Sur);
+MAP:>NPrfPrc1 (@>N) TARGET PrfPrc - NOT-@>N (NEGATE *-1 Neg BARRIER REAL-V)(NEGATE -1 COPULAS LINK *-1 Ill BARRIER NOT-A)(NEGATE 0 AUX)(NEGATE 0 TRANS-V LINK *1 Acc BARRIER NOT-NPMOD)(NEGATE 0 MOVEMENT-V LINK *1 Ill OR DOHKO OR ("lusa") BARRIER NOT-NPMOD)(NEGATE 0 PrfPrc LINK NOT 0 Der/Pass LINK 1 Attr)(*1 (N Nom) - Prop BARRIER NOT-A OR COMPAR OR PUNCT); # LINK NEGATE 0 TITLE LINK 1 Sem/Fem OR Sem/Mal OR Sem/Sur);
 	#$ Son lea oahppan olmmoš.
 	#$ .. maid almmolaš dohkkehuvvon dearvvašvuođabargit addet, ..
 	#$ Mearrasápmelaččat ledje áŋgiris ja oahppan bivdit.
 	#$ Sus leat hervejuvvon gálssohat main heaŋgájit čáppa diehpit. 
   	#$ Sieiddi bálvalemiin sturron eallu gohčoduvvui bálvvoseallun, mii sáhtii jávkat, go oamasteaddji jámii dahje go sieidi ii bálvaluvvon.
 	#$ Ruonáeana lea čielgasit ráddjejuvvon geográfalaš guovlu. 
+	#% Dieđihuvvon láhppon – gávdnon dearvan.
 
 MAP:>NPrfPrc (@>N) TARGET PrfPrc - NOT-@>N (-1 VFIN OR PrfPrc)(0 ("oahppat") OR ("duššat"))(*1 PROFESSION OR HUMAN BARRIER WORD - Attr) ;
 	#$ Sámi servodat dárbbaša oahppan sámegielat journalisttaid.
