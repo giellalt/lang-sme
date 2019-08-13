@@ -2128,6 +2128,8 @@ SELECT:Arab1 (Arab Nom)(0 ("1")) ;
 	#$ a) Álgogursa 1 sámegielas
 #SELECT:ArabNomPlc (Arab Nom) (-1 Sem/Plc)(NEGATE 1 Po)(NOT 0 Prop) ;
 
+SELECT:Sem/ID Sem/ID IF (-1 ("§")) ; 
+
 SELECT:Arab Arab IF (NOT 0 Ord OR Prop) ; # In Apertium we get analysis both with and without the tag.
 
 REMOVE:diNom Coll (-1 ("dii") OR ("diibmu")) ;
@@ -2917,18 +2919,24 @@ SELECT:NotGen N + Nom IF (*-1 BOS BARRIER WORD)(0 Gen LINK NOT 0 PrfPrc OR Attr 
 	#% Mannan ija dáhpáhusat.
 	#% Vuosttáš báddenbeaivi.
 
+#Trying out generalisations:
+SELECT:XXPrfPrc PrfPrc IF (0 Sg1 LINK NEGATE -1 Pers + Sg1 OR PUNCT)(*1 ("❡")) ;
+SELECT:XXPrfPrcSg1Acc PrfPrc IF (0 Sg1 LINK 1 Pers + Sg1 + Acc) ;
+
+SELECT:XXInfmearridit Inf IF (-1 ("mearridit") + PrfPrc) ;
+
 SELECT:duššeAdv Adv IF (0 ("dušše"))(1 Num LINK *1 PrfPrc BARRIER REAL-V) ;
 SELECT:duššeAdv2 Adv IF (*-1 VFIN)(0 ("dušše"))(1 Num);
-SELECT:PassPrfPrc PrfPrc IF (-1 PrfPrc + Der/Pass LINK *-1 BOS BARRIER WORD)(1 EOS OR ("–"))(NEGATE 0 A) ;
-SELECT:PassPrfPrc PrfPrc IF (0 Sg1 + Der/Pass LINK NEGATE *-1 Sg1 OR Neg BARRIER SV-BOUNDARY)(NEGATE 0 A + Attr LINK 1 N)(NEGATE 0 A) ;
-SELECT:PrfPrc PrfPrc IF (-1 Nom LINK *-1 BOS BARRIER NOT-NPMODADV) (1 Acc OR Adv LINK *1 ("❡")) ;
-SELECT:PrfPrc PrfPrc IF (-1 Nom LINK -1 Attr OR Gen LINK *-1 BOS BARRIER WORD) (1 Acc OR Adv LINK *1 ("❡")) ;
-SELECT:PrfPrc PrfPrc IF (-1 Nom LINK *-2 BOS BARRIER WORD) (1 ADVLCASE OR A OR Adv LINK *1 ("❡")) ;
-SELECT:PrfPrc PrfPrc IF (-1 BOS) (1 Attr LINK 1 Acc LINK *1 EOS BARRIER WORD) ;
-SELECT:PrfPrc PrfPrc IF (-1 Gen LINK -1 Num LINK *-1 BOS BARRIER NOT-NPMODADV)(*1 ("❡") OR EOS OR (":") BARRIER REAL-V) ;
-SELECT:PrfPrc PrfPrc IF (-1 Com LINK -1 Nom LINK *-1 BOS BARRIER Sg1)(*1 ("❡") BARRIER Sg1) ;
+#SELECT:PassPrfPrc PrfPrc IF (-1 PrfPrc + Der/Pass LINK *-1 BOS BARRIER WORD)(1 EOS OR ("–"))(NEGATE 0 A) ;
+#SELECT:PassPrfPrc PrfPrc IF (0 Sg1 + Der/Pass LINK NEGATE *-1 Sg1 OR Neg BARRIER SV-BOUNDARY)(NEGATE 0 A + Attr LINK 1 N)(NEGATE 0 A) ;
+#SELECT:PrfPrc PrfPrc IF (-1 Nom LINK *-1 BOS BARRIER NOT-NPMODADV) (1 Acc OR Adv LINK *1 ("❡")) ;
+#SELECT:PrfPrc PrfPrc IF (-1 Nom LINK -1 Attr OR Gen LINK *-1 BOS BARRIER WORD) (1 Acc OR Adv LINK *1 ("❡")) ;
+#SELECT:PrfPrc PrfPrc IF (-1 Nom LINK *-2 BOS BARRIER WORD) (1 ADVLCASE OR A OR Adv LINK *1 ("❡")) ;
+#SELECT:PrfPrc PrfPrc IF (-1 BOS) (1 Attr LINK 1 Acc LINK *1 EOS BARRIER WORD) ;
+#SELECT:PrfPrc PrfPrc IF (-1 Gen LINK -1 Num LINK *-1 BOS BARRIER NOT-NPMODADV)(*1 ("❡") OR EOS OR (":") BARRIER REAL-V) ;
+#SELECT:PrfPrc PrfPrc IF (-1 Com LINK -1 Nom LINK *-1 BOS BARRIER Sg1)(*1 ("❡") BARRIER Sg1) ;
+#SELECT:PrfPrc PrfPrc IF (-1 ADVLCASE LINK *-1 BOS BARRIER WORD)(1 ADVLCASE LINK *1 ("❡")) ;
 SELECT:Nom Nom IF (-1 Gen LINK -1 Gen LINK -1 CC LINK -1 Nom LINK *-1 BOS BARRIER WORD)(1 ("❡")) ;
-SELECT:PrfPrc PrfPrc IF (-1 ADVLCASE LINK *-1 BOS BARRIER WORD)(1 ADVLCASE LINK *1 ("❡")) ;
 SELECT:Pl Pl IF (0 A + Comp LINK 0 Sem/Hum)(1 ADVLCASE LINK *1 ("❡")) ;
 REMOVE:Sg1 Sg1 IF (0 N OR PrfPrc LINK 1 ("❡")) ;
 SELECT:CopAdvPrfPrc Adv IF (1 PrfPrc - ("leat") LINK *1 ("❡"))(NEGATE 0 Po) ;
@@ -2952,14 +2960,14 @@ SELECT:Sem/Act  Nom IF (-1 CC LINK -1C Nom LINK *-1 BOS BARRIER WORD)(0 PrfPrc L
 	#$ Ovtta­stallan ja suohta­stallan nuoraide ❡ .
 
 
-SELECT:PrfPrc PrfPrc IF (0 ("giddet") LINK 1 ("luodda") OR Sem/Route) ;
-
-SELECT:PrfPrcHealiner PrfPrc IF (*-1 BOS BARRIER WORD)(0 PrfPrc LINK *1 ("❡") BARRIER VFIN) ; #TEST
-SELECT:PrfPrcHealiner PrfPrc IF (*-1 BOS BARRIER WORD)(0 PrfPrc LINK *1 ("–") BARRIER VFIN LINK *1 ("❡")) ; 
-SELECT:PrfPrcHealiner PrfPrc IF (*-1 BOS BARRIER WORD)(0 PrfPrc LINK *1 Rel OR CS OR CC BARRIER VFIN LINK *1 ("❡")) ; #TEST
+#SELECT:PrfPrc PrfPrc IF (0 ("giddet") LINK 1 ("luodda") OR Sem/Route) ;
+#
+#SELECT:PrfPrcHealiner PrfPrc IF (*-1 BOS BARRIER WORD)(0 PrfPrc LINK *1 ("❡") BARRIER VFIN) ; #TEST
+#SELECT:PrfPrcHealiner PrfPrc IF (*-1 BOS BARRIER WORD)(0 PrfPrc LINK *1 ("–") BARRIER VFIN LINK *1 ("❡")) ; 
+#SELECT:PrfPrcHealiner PrfPrc IF (*-1 BOS BARRIER WORD)(0 PrfPrc LINK *1 Rel OR CS OR CC BARRIER VFIN LINK *1 ("❡")) ; #TEST
 	#$ Čavgen gearggusvuođa uđasvára geažil.
 
-SELECT:PrfPrcHealiner PrfPrc IF (-1 CC LINK *-1 BOS BARRIER VFIN)(0 PrfPrc LINK *1 ("❡") BARRIER VFIN) ; #TEST
+#SELECT:PrfPrcHealiner PrfPrc IF (-1 CC LINK *-1 BOS BARRIER VFIN)(0 PrfPrc LINK *1 ("❡") BARRIER VFIN) ; #TEST
 	#$ Gidden sisabuktinvejolašvuođa ja maŋidan áigemeari.
 
 SELECT:Inf Inf IF (-1 Acc LINK -1 TRANS-V + PrfPrc LINK *-1 BOS BARRIER WORD)(*1 ("❡") BARRIER VFIN) ;
@@ -3008,11 +3016,11 @@ REMOVE:NomACR Acc IF (0 ACR OR ABBR)(*-1 BOS BARRIER WORD) ;
 SELECT:NomACR Nom IF (0 ACR OR ABBR)(*-1 BOS BARRIER WORD)(1 PUNCT) ;
 	#$ Ovttas.no - Sámi oahpponeavvut neahtas
 
-SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK *-1 BOS BARRIER WORD)(1 (":") OR EOS) ;
-SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 Nom - Sg1 LINK *-1 BOS OR LEFT BARRIER WORD)(1 (":") OR RIGHT OR EOS) ;
-SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 Gen LINK -1 Num LINK -1 BOS)(1 (":") OR EOS) ;
-SELECT:PrfPrcFragm PrfPrc (0 Der/NomAct LINK -1 Nom LINK -1 BOS)(1 (":") OR EOS) ;
-SELECT:PrfPrcFragm PrfPrc (0 Der/NomAct LINK -1 Nom LINK -1 CC LINK -1 N LINK -1 BOS)(1 (":") OR EOS) ;
+#SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK *-1 BOS BARRIER WORD)(1 (":") OR EOS) ;
+#SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 Nom - Sg1 LINK *-1 BOS OR LEFT BARRIER WORD)(1 (":") OR RIGHT OR EOS) ;
+#SELECT:PrfPrcFragm PrfPrc (0 Prs + Sg1 LINK -1 Gen LINK -1 Num LINK -1 BOS)(1 (":") OR EOS) ;
+#SELECT:PrfPrcFragm PrfPrc (0 Der/NomAct LINK -1 Nom LINK -1 BOS)(1 (":") OR EOS) ;
+#SELECT:PrfPrcFragm PrfPrc (0 Der/NomAct LINK -1 Nom LINK -1 CC LINK -1 N LINK -1 BOS)(1 (":") OR EOS) ;
 SELECT:N N + Nom (0 Der/NomAct LINK -1 CC LINK -1 N LINK -1 BOS)(1 PrfPrc LINK 1 (":") OR EOS) ;
 	#$ Gásttašeapmi njiedjan.
 	#$ Gásttašeapmi ja konfirmeren njiedjan.
@@ -6593,10 +6601,11 @@ MAP:CompNomHead (@COMP-CS<) TARGET NP-HEAD-NOM (*-1 ("go" CS) BARRIER NOT-NPMOD 
 
 
 #!! * __compMisc__ go geassebuođut, go dán áigge
-MAP:compMisc (@COMP-CS<) TARGET NP-HEAD-NOM - Attr - Comp OR TIME + Gen  (*-1 ("go") BARRIER NOT-NP OR Nom LINK NOT -1 VFIN OR BOS OR ("nu"))((1 S-BOUNDARY) OR (1 CLB OR CC LINK NEGATE *1 VFIN - Imprt BARRIER CC)); 
+MAP:compMisc (@COMP-CS<) TARGET NP-HEAD-NOM - Attr - Comp OR TIME + Gen  (*-1 ("go") BARRIER NOT-NP OR Nom LINK NOT -1 VFIN OR BOS OR ("nu"))((1 S-BOUNDARY) OR (1 CLB OR CC LINK NEGATE *1 VFIN - Imprt BARRIER CC))(NEGATE 0 VFIN); 
 	#$ Muhto buođđogeažit ja giđđabuođut ráhkaduvvojit muđui seammá vugiid mielde go geassebuođut, ja danne heive buođđun birra obbalohkái juo muitaluvvot.
 	#$ Šibihat ledje ovdal unnibut go dán áigge.
 	#$ Viššalat ohppet eanet go láikkit.
+	#% – Turisten nu guhká go sáhtán.
 
 MAP:compmade (@COMP-CS<) TARGET ("mađe") OR (A Nom) (*-1 ("go" CS) BARRIER NOT-NPMOD LINK -1 Comp OR ("seammá"))(1 go); 
 	#$ Finnmárkkus ássi olbmuid divat ii galgga leat alit go guovtti dan mađe go gielddas ássi olbmuid divat.
