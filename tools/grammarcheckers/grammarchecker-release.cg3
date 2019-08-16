@@ -3982,7 +3982,14 @@ TEMPLATE nextWordCrossSent = (1 (*))  OR (0  (<<<) LINK *1>  (>>>) BARRIER (>>>)
 
 ## ( áddejumi
 
+# Clean up potential punctuation error tagging before making real errors of them
+# ------------------------------------------------------------------------------
 
+# Remove the <NoSpaceAfterPunctMark> tag if followed by a quote sign:
+# SUBSTITUTE:RemopveNoSpaceAfterPunctMark (<NoSpaceAfterPunctMark>) (*) TARGET CLB IF (T:nextWordCrossSent LINK 0 PPUNCT);
+
+# Error tags on bad punctuation or missing/extra spaces
+# -----------------------------------------------------
 ADD:space-after-paren-beg      (&space-after-paren-beg)       TARGET (<spaceAfterParenBeg>) ;
 ADD:space-after-paren-beg-link (&space-after-paren-beg &LINK) TARGET (*) IF (-1 (<spaceAfterParenBeg>) ) ;
 ADDRELATION:space-after-paren-beg-rel (RIGHT) (&space-after-paren-beg) TO (1 (&LINK) LINK 0 (&space-after-paren-beg)) ;
@@ -4008,9 +4015,6 @@ ADD:double-space-before-link (&double-space-before &LINK) TARGET (*) IF (T:nextW
 ADDRELATION:double-space-before-rel ($2) (*) FROM (T:nextWordCrossSent LINK 0 (<doubleSpaceBefore>)) ;
 ADDRELATION:double-space-before-rel (LEFT) (&LINK) FROM (T:nextWordCrossSent LINK 0 (<doubleSpaceBefore>)) ;
 COPY:double-space-before ("<$2 $1>"v &SUGGESTWF) TARGET ("<(.*)>"r &double-space-before) IF (T:prevWordCrossSent LINK 0 ("<(.*)>"r)) (NOT 0 (&LINK)) ;
-
-# Remove the <NoSpaceAfterPunctMark> tag if followed by a quote sign:
-# SUBSTITUTE:RemopveNoSpaceAfterPunctMark (<NoSpaceAfterPunctMark>) (*) TARGET CLB ;
 
 # Test sentence: 'Sanner,gii ráđđehusas.gii lávvardaga?Bonju dán!Lassin.'
 ## Sanner,gii                       - works
@@ -4040,7 +4044,12 @@ COPY:no-space-after-punct-sugg ("<$1 $2>"v &SUGGESTWF) TARGET ("<(.*)>"r &no-spa
 #
 # Remove Err/Orth and other Err/ readings if there are alternative, non-Err readings.
 # Should block a number of false positives.
-REMOVE:SuperfluousErrTags SUB:* AllErrorTags IF (0/* AllErrorTags) (0/* NoErrorTags) ;
+# NB! SUB:* rewritten as SUB:1, SUB:2, etc to work around a serious memory leak in vislcg3.
+# Please leave as is until the leak has been fixed by Tino.
+REMOVE:SuperfluousErrTags SUB:0 AllErrorTags IF (0/* AllErrorTags) (0/* NoErrorTags) ;
+REMOVE:SuperfluousErrTags SUB:1 AllErrorTags IF (0/* AllErrorTags) (0/* NoErrorTags) ;
+REMOVE:SuperfluousErrTags SUB:2 AllErrorTags IF (0/* AllErrorTags) (0/* NoErrorTags) ;
+REMOVE:SuperfluousErrTags SUB:3 AllErrorTags IF (0/* AllErrorTags) (0/* NoErrorTags) ;
 
     # Fallback rules for the remaining errors
     # ---------------------------------------
