@@ -3949,8 +3949,8 @@ COPY:double-space-before ("<$2 $1>"v &SUGGESTWF) TARGET ("<(.*)>"r &double-space
 	
 	# 1. Add error tag on punctuation
 LIST no-space-after-punct-OK-before = ")" ; # «jna.)» is OK
-ADD:no-space-after-punct      (&no-space-after-punct-mark)       TARGET (<NoSpaceAfterPunctMark>)
-    IF (T:nextWordCrossSent) (NOT 1 no-space-after-punct-OK-before) ;
+ADD:no-space-after-punct      (&no-space-after-punct-mark)       TARGET (<NoSpaceAfterPunctMark>)    IF (T:nextWordCrossSent) (NOT 1 no-space-after-punct-OK-before)(NEGATE 0 (A Arab)); 
+    #$ ILS árvvoštalai buot geahččalemiid mannan giđa maid {4.}, 7. ja 10. luohkáid ja vuođđokurssa oahppit čađahedje.
 	# 2. Add error tag + &LINK on the following word (part 1 of extending the blue underline to the following word):
 ADD:no-space-after-punct-link (&no-space-after-punct-mark &LINK) TARGET (*) IF (T:prevWordCrossSent LINK 0 (&no-space-after-punct-mark));
 	# 3. Add RIGHT relation on the punctuation (part 2 of extending the blue underline to the following word,
@@ -3993,32 +3993,40 @@ REMOVE:SuperfluousErrTags SUB:3 AllErrorTags IF (0/* AllErrorTags) (0/* NoErrorT
 # Speller suggestions rule - make sure the suggestions survive the cg mangling:
 ADD:spelled (&typo &SUGGESTWF) (<spelled>) ;
 
-#### Err/Orth rules - make sure all Err/Orth analyses are generated as the normative counterpart of itself:
-# 1. Add aa &typo error tag if there is an Err/Orth tag __anywhere__ - including in subreadings:
+	#### Err/Orth rules - make sure all Err/Orth analyses are generated as the normative counterpart of itself:
+	# 1. Add aa &typo error tag if there is an Err/Orth tag __anywhere__ - including in subreadings:
+
 ADD:Err/Orth-any (&typo) TARGET (*) IF (0/* Err/Orth-any) ;
-# 2. Copy to a new reading minus Err/Orth, to generate suggestions - main reading:
+	## Dan sadjái bealalaččat leat diktan márkánságaid leavvat, ja dainna lágiin ráŋggaštan dárbbašmeahttumiid.
+	# 2. Copy to a new reading minus Err/Orth, to generate suggestions - main reading:
+	
 COPY:Err/Orth-any (&SUGGEST) EXCEPT Err/Orth-any_OR_TV_IV TARGET (&typo) IF (NOT 0/* (&SUGGESTWF) OR (&SUGGEST));
 
 COPY:Err/Orth-any SUB:0 (&SUGGEST) EXCEPT Err/Orth-any_OR_TV_IV TARGET (&typo) IF (NOT 0/* (&SUGGESTWF) OR (&SUGGEST));
 
 COPY:Err/Orth-any SUB:1 (&SUGGEST) EXCEPT Err/Orth-any_OR_TV_IV TARGET (&typo) IF (NOT 0/* (&SUGGESTWF) OR (&SUGGEST));
+COPY:Err/Orth-any SUB:2 (&SUGGEST) EXCEPT Err/Orth-any_OR_TV_IV TARGET (&typo) IF (NOT 0/* (&SUGGESTWF));
+COPY:Err/Orth-any SUB:3 (&SUGGEST) EXCEPT Err/Orth-any_OR_TV_IV TARGET (&typo) IF (NOT 0/* (&SUGGESTWF));
+COPY:Err/Orth-any SUB:4 (&SUGGEST) EXCEPT Err/Orth-any_OR_TV_IV TARGET (&typo) IF (NOT 0/* (&SUGGESTWF));
 	#THIS does not work at the moment, but hopefully Tino can help
 
 # 3. Substitute Err/Orth in subreadings to get something for generation.
 # Cf: http://giellatekno.uit.no/bugzilla/show_bug.cgi?id=2317
-SUBSTITUTE:Err/Orth-any SUB:0 Err/Orth-any (*) TARGET (&SUGGEST) ;
-SUBSTITUTE:Err/Orth-any SUB:1 Err/Orth-any (*) TARGET (&SUGGEST) ;
-SUBSTITUTE:Err/Orth-any SUB:2 Err/Orth-any (*) TARGET (&SUGGEST) ;
-SUBSTITUTE:Err/Orth-any SUB:3 Err/Orth-any (*) TARGET (&SUGGEST) ;
-# Some regression tests:
-# 'sátnejodiheaddji' → 'sátnejođiheaddji' # Simple Err/Orth
-# 'vuoddoskuvlla' → 'vuođđoskuvlla'       # Err/Orth in subreading, not main reading
-# 'olgoriikadepartementtas' → 'olgoriikkadepartemeanttas' # Err/Orth in subreading
-# 'stnejodiheaddji' → 'sátnejođiheaddji'  # simple <speller>
-# 'Finnmarku' → 'Finnmárku'               # Err/orth-a-á
-# 'johttigohte' → 'johtigohte'            # disambiguator sometimes removes this
-# 'buorrre' → 'buorre'                    # <speller>
-# 'husket' → 'hukset'                     # <speller>
+
+#SUBSTITUTE:Err/Orth-any SUB:0 Err/Orth-any (*) TARGET (&SUGGEST) ;
+#SUBSTITUTE:Err/Orth-any SUB:1 Err/Orth-any (*) TARGET (&SUGGEST) ;
+#SUBSTITUTE:Err/Orth-any SUB:2 Err/Orth-any (*) TARGET (&SUGGEST) ;
+#SUBSTITUTE:Err/Orth-any SUB:3 Err/Orth-any (*) TARGET (&SUGGEST) ;
+
+	# Some regression tests:
+	# 'sátnejodiheaddji' → 'sátnejođiheaddji' # Simple Err/Orth
+	# 'vuoddoskuvlla' → 'vuođđoskuvlla'       # Err/Orth in subreading, not main reading
+	# 'olgoriikadepartementtas' → 'olgoriikkadepartemeanttas' # Err/Orth in subreading
+	# 'stnejodiheaddji' → 'sátnejođiheaddji'  # simple <speller>
+	# 'Finnmarku' → 'Finnmárku'               # Err/orth-a-á
+	# 'johttigohte' → 'johtigohte'            # disambiguator sometimes removes this
+	# 'buorrre' → 'buorre'                    # <speller>
+	# 'husket' → 'hukset'                     # <speller>
 
 COPY:no-double-dot ("<$1>"v) EXCEPT  ("<(.*)[.]>"r) TARGET ("<(.*)[.]>"r <spelled>) IF (1 ("<[.].*>"r)) (NOT 0 ("<$1>"v));
 REMOVE:no-double-dot (<spelled> "<.*[.]>"r) IF (1 ("<[.].*>"r));
