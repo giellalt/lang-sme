@@ -16,7 +16,7 @@
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # This is the default weight for all editing operations in the error model:
-DEFAULT_WEIGHT=10
+DEFAULT_WEIGHT=20
 
 # Edit distanse for the Levenshtein error model:
 EDIT_DISTANCE=2
