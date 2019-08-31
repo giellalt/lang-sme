@@ -2126,14 +2126,14 @@ REMOVE:alphabet (".*alphabet"r) (NEGATE 0 (abbr)) ; #apertium
 #COPY:NNom (N Nom) EXCEPT Adv TARGET Sem/Adr  ;
 #	## www.samediggi.fi http://yle.fi/sapmi lene62@gmail.com anja.irina.ahola(at)gmail.com
 
-SELECT:ArabNom (Arab Nom) (-1 BOS)(NEGATE 1 Po)(NEGATE 1 Sem/Time LINK 1 ("áigi") + Adv)(NOT 0 Prop) ;
+SELECT:ArabNom (Arab Nom) (-1 BOS)(NEGATE 1 Po)(NEGATE 1 Sem/Time LINK 1 ("áigi") + Adv)(NOT 0 Prop OR Sem/ID) ;
 SELECT:Arab1 (Arab Nom)(0 ("1")) ;
 	#$ a) Álgogursa 1 sámegielas
 #SELECT:ArabNomPlc (Arab Nom) (-1 Sem/Plc)(NEGATE 1 Po)(NOT 0 Prop) ;
 
 SELECT:Sem/ID Sem/ID IF (-1 ("§")) ; 
 
-SELECT:Arab Arab IF (NOT 0 Ord OR Prop) ; # In Apertium we get analysis both with and without the tag.
+SELECT:Arab Arab IF (NOT 0 Ord OR Prop OR Arab + Err/Orth) ; # In Apertium we get analysis both with and without the tag.
 
 REMOVE:diNom Coll (-1 ("dii") OR ("diibmu")) ;
 
@@ -2314,16 +2314,22 @@ REMOVE:abbr (ABBR) (NOT 0 Ord) ;
 #!! !!Numerals
 #     -----------------------
 
-#For apertium:
-#!! * __IINeg__  Rom, not Neg (for apertium)
-REMOVE:IINeg Neg (0 Rom LINK NEGATE *1 ConNeg BARRIER Neg)(NEGATE 0 Neg LINK -1 ("dahje") OR ("muhto")) ;
+SET NOT-ERR-NUM = Num - (Num Err/Orth) ;
+
+REMOVE:numerrorth (Num Err/Orth) IF (0 NOT-ERR-NUM) ;
 
 #!! * __NumRom__ in beginning of sentence
 SELECT:NumRom (Num Rom) (0 ACR OR ABBR LINK -1 BOS)(NOT 0 Sem/Obj-el) (NEGATE *1 ConNeg BARRIER Neg ) ;
 	#$ I Áššebáhpirat
 	#% CD máksá 160 ruvnnu.
 
-REMOVE:Rom Rom (0 Neg LINK *1 ConNeg OR NEG-ADV-PRON OR ("danin") BARRIER NOT-ADV-PCLE) ;
+#REMOVE:Rom Rom (0 Neg LINK *1 ConNeg OR NEG-ADV-PRON OR ("danin") BARRIER NOT-ADV-PCLE) ;
+
+REMOVE:Rom Rom (0 Neg LINK NOT 1 PUNCT) ;
+
+
+REMOVE:IINeg Neg (0 Rom LINK NEGATE *1 ConNeg BARRIER Neg)(NEGATE 0 Neg LINK -1 ("dahje") OR ("muhto") OR ("vai")) ;
+
 
 	
 SELECT:CD Sem/Obj-el (0 Rom) ;	
