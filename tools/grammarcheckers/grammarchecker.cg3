@@ -13657,42 +13657,50 @@ ADD:space-after-paren-beg      (&space-after-paren-beg)       TARGET (<spaceAfte
 ADD:space-after-paren-beg-link (&space-after-paren-beg &LINK) TARGET (*) IF (-1 (<spaceAfterParenBeg>) ) ;
 ADDRELATION:space-after-paren-beg-rel (RIGHT) (&space-after-paren-beg) TO (1 (&LINK) LINK 0 (&space-after-paren-beg)) ;
 COPY:space-after-paren-beg-sugg ("<$1$2>"v &SUGGESTWF) TARGET ("<(.*)>"r &space-after-paren-beg) IF (1 ("<(.*)>"r)) (NOT 0 (&LINK)) ;
-
-## áddejumi )
+	## áddejumi )
+	
 ADD:space-before-paren-end      (&space-before-paren-end)       TARGET (<spaceBeforeParenEnd>);
 ADD:space-before-paren-end-link (&space-before-paren-end &LINK) TARGET (*) IF (1 (<spaceBeforeParenEnd>) );
 ADDRELATION:space-before-paren-end-rel (LEFT) (&space-before-paren-end) TO (-1 (&LINK) LINK 0 (&space-before-paren-end) );
 COPY:space-before-paren-end-sugg ("<$2$1>"v &SUGGESTWF) TARGET ("<(.*)>"r &space-before-paren-end) IF (-1 ("<(.*)>"r)) (NOT 0 (&LINK)) ;
-
-## Son gii njeaidá skáluid šaddá eret vuolgit . De galgá fas cegget skáluid ja álgit gaikut.
+	## Son gii njeaidá skáluid šaddá eret vuolgit . De galgá fas cegget skáluid ja álgit gaikut.
+		
 ADD:space-before-punct-mark      (&space-before-punct-mark)       TARGET (<SpaceBeforePunctMark>);
 ADD:space-before-punct-mark-link (&space-before-punct-mark &LINK) TARGET (*) IF (1 (<SpaceBeforePunctMark>) );
 ADDRELATION:space-before-punct-mark-rel (LEFT) (&space-before-punct-mark) TO (-1 (&LINK) LINK 0 (&space-before-punct-mark) );
 COPY:space-before-punct-mark-sugg ("<$2$1>"v &SUGGESTWF) TARGET ("<(.*)>"r &space-before-punct-mark) IF (-1 ("<(.*)>"r)) (NOT 0 (&LINK)) ;
+	## vuosttu  ceggejit
+	## álgit gaikut.  Stoagus joatká
+	## maid lea bargu.  – Mun barggan
 
-## vuosttu  ceggejit
-## álgit gaikut.  Stoagus joatká
-## maid lea bargu.  – Mun barggan
 ADD:double-space-before (&double-space-before)     (<doubleSpaceBefore>);
 ADD:double-space-before-link (&double-space-before &LINK) TARGET (*) IF (T:nextWordCrossSent LINK 0 (<doubleSpaceBefore>)) ;
 ADDRELATION:double-space-before-rel ($2) (*) FROM (T:nextWordCrossSent LINK 0 (<doubleSpaceBefore>)) ;
 ADDRELATION:double-space-before-rel (LEFT) (&LINK) FROM (T:nextWordCrossSent LINK 0 (<doubleSpaceBefore>)) ;
 COPY:double-space-before ("<$2 $1>"v &SUGGESTWF) TARGET ("<(.*)>"r &double-space-before) IF (T:prevWordCrossSent LINK 0 ("<(.*)>"r)) (NOT 0 (&LINK)) ;
-
-# Test sentence: 'Sanner,gii ráđđehusas.gii lávvardaga?Bonju dán!Lassin.'
-## Sanner,gii                       - works
-## ráđđehusas.Europride-festivála   - does not work
-## lávvardaga?Bonju                 - does not work
-## ráidovázzimis!Lassin             - does not work
+	# Test sentence: 'Sanner,gii ráđđehusas.gii lávvardaga?Bonju dán!Lassin.'
+	## Sanner,gii                       - works
+	## ráđđehusas.Europride-festivála   - does not work
+	## lávvardaga?Bonju                 - does not work
+	## ráidovázzimis!Lassin             - does not work
+	
 LIST no-space-after-punct-OK-before = ")" ; # «jna.)» is OK
-# 1. Add error tag on punctuation
-ADD:no-space-after-punct      (&no-space-after-punct-mark)       TARGET (<NoSpaceAfterPunctMark>) IF (T:nextWordCrossSent LINK NOT 0 no-space-after-punct-OK-before) ;
-# 2. Add error tag + &LINK on the following word (part 1 of extending the blue underline to the following word):
+	# 1. Add error tag on punctuation
+	
+ADD:no-space-after-punct      (&no-space-after-punct-mark)       TARGET (<NoSpaceAfterPunctMark>) IF (T:nextWordCrossSent LINK NOT 0 no-space-after-punct-OK-before)(NEGATE 0 (A Arab)) ;
+	#$ ILS árvvoštalai buot geahččalemiid mannan giđa maid {4.}, 7. ja 10. luohkáid ja vuođđokurssa oahppit čađahedje.	
+	
+	# 2. Add error tag + &LINK on the following word (part 1 of extending the blue underline to the following word):
+
 ADD:no-space-after-punct-link (&no-space-after-punct-mark &LINK) TARGET (*) IF (T:prevWordCrossSent LINK 0 (&no-space-after-punct-mark));
-# 3. Add RIGHT relation on the punctuation (part 2 of extending the blue underline to the following word,
-#    also ensures that the correction will replace the word, not be appended to it):
+
+	# 3. Add RIGHT relation on the punctuation (part 2 of extending the blue underline to the following word,
+	#    also ensures that the correction will replace the word, not be appended to it):
+	
 ADDRELATION:no-space-after-punct-rel (RIGHT) (&LINK) FROM (T:prevWordCrossSent LINK 0 (<NoSpaceAfterPunctMark>)) ;
-# 4. Add suggestions
+
+	# 4. Add suggestions
+	
 COPY:no-space-after-punct-sugg ("<$1 $2>"v &SUGGESTWF) TARGET ("<(.*)>"r &no-space-after-punct-mark) IF (T:nextWordCrossSent LINK 0 ("<(.*)>"r)) (NOT 0 (&LINK));
 
     # style error
