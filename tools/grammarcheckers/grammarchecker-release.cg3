@@ -629,6 +629,7 @@ LIST <copula> = <copula> ;
 LIST <firstWordOfParagraph> = <firstWordOfParagraph> ;
 LIST <NoSpaceAfterPunctMark> = <NoSpaceAfterPunctMark> ;
 LIST <NoSpaceAfterParenEnd> = <NoSpaceAfterParenEnd> ;
+LIST <NoSpaceBeforeParenBeg> = <NoSpaceBeforeParenBeg> ;
 LIST <spelled> = <spelled> ;
 
 LIST <0> = <0> ;
@@ -3979,6 +3980,24 @@ ADDRELATION:no-space-after-punct-rel (RIGHT) (&LINK) FROM (T:prevWordCrossSent L
 COPY:no-space-after-punct-sugg ("<$1 $2>"v &SUGGESTWF)
                                TARGET ("<(.*)>"r &no-space-after-punct-mark)
                                IF (T:nextWordCrossSent LINK 0 ("<(.*)>"r)) (NOT 0 (&LINK) OR (&SUGGESTWF));
+
+	# No space before parentheses - 1: add error tag on the target cohort:
+ADD:no-space-before-parenthesis (&no-space-before-parent-start) TARGET (<NoSpaceBeforeParenBeg>) ;
+	## Vuoigatvuođa Lávdegotti(SVL).
+	#$ Vuoigatvuođa Lávdegotti (SVL).
+
+	# No space before parentheses - 2: add error tag + link on the preceding cohort:
+ADD:no-space-before-parenthesis (&no-space-before-parent-start &LINK) TARGET (*) IF ( 1 (&no-space-before-parent-start))(NEGATE 0 <NoSpaceBeforeParenBeg> ) ; # the preceding cohort
+
+	# No space before parentheses - 3: add LEFT relation:
+ADDRELATION:no-before-after-parenthesis (LEFT) (&LINK) FROM ( 1 (<NoSpaceBeforeParenBeg>)) ;
+
+	# No space before parentheses - 4: Add suggestions
+COPY:no-space-before-parenthesis ("<$2 $1>"v &SUGGESTWF)
+                               TARGET ("<(.*)>"r &no-space-before-parent-start)
+                               IF (-1 ("<(.*)>"r))
+                                  (NOT 0 (&LINK) OR (&SUGGESTWF));
+
 
 	# No space after parentheses - 1: add error tag on the target cohort:
 ADD:no-space-after-parenthesis (&no-space-after-parent-end) TARGET (<NoSpaceAfterParenEnd>)(NEGATE 1 CLB OR PUNCT) ;
