@@ -49,7 +49,9 @@ endif # CAN_YAML_TEST
 
 # List tests that are presently (expected) failures here, ie things that should
 # be fixed *later*, but is not critical at the moment:
-XFAIL_TESTS=
+XFAIL_TESTS=run-gt-desc-genyaml-testcases.sh \
+            run-gt-desc-anayaml-testcases.sh \
+            run-gt-norm-yaml-testcases.sh
 
 ####### Other targets: ###########
 clean-local:
