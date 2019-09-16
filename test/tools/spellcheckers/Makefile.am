@@ -8,11 +8,12 @@ SUBDIRS = fstbased
 TESTS=
 
 # Yaml tests are run from shell scripts - specify them here:
-YAML_TEST_RUNNERS_IN=run-spellers-gt-norm-yaml-testcases.sh \
+YAML_TEST_RUNNERS_IN=\
                   run-spellers-gt-norm-anayaml-testcases.sh.in \
                   run-spellers-gt-norm-genyaml-testcases.sh.in
 
-YAML_TEST_RUNNERS=$(basename $(YAML_TEST_RUNNERS_IN))
+YAML_TEST_RUNNERS=$(basename $(YAML_TEST_RUNNERS_IN)) \
+                  run-spellers-gt-norm-yaml-testcases.sh
 
 # Specify other shell scripts here to make sure they are included in the distro
 # even though spellers are disabled:
