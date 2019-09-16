@@ -12,16 +12,19 @@ if CAN_YAML_TEST
 
 if WANT_APERTIUM
 TESTS+=run-mt-gt-desc-anayaml-testcases.sh \
-		run-mt-gt-desc.nob-anayaml-testcases.sh \
-		run-mt-apertium-desc.nob-anayaml-testcases.sh \
-		run-mt-gt-norm-genyaml-testcases.sh
+		run-mt-gt-desc.und-anayaml-testcases.sh \
+		run-mt-apertium-desc.und-anayaml-testcases.sh \
+		run-mt-apertium-norm-genyaml-testcases.sh
 
 endif # WANT_APERTIUM
 endif # CAN_YAML_TEST
 
 # List tests that are presently (expected) failures here, ie things that should
 # be fixed *later*, but is not critical at the moment:
-XFAIL_TESTS=run-mt-gt-desc-anayaml-testcases.sh
+XFAIL_TESTS=run-mt-gt-desc-anayaml-testcases.sh \
+            run-mt-gt-desc.und-anayaml-testcases.sh \
+            run-mt-apertium-desc.und-anayaml-testcases.sh \
+            run-mt-apertium-norm-genyaml-testcases.sh
 		
 
 ####### Other targets: ###########

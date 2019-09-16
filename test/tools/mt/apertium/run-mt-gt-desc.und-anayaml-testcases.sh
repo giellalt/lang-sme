@@ -6,14 +6,14 @@
 
 ###### Variables: #######
 # Specify the invariable part of the transducer name:
-transducer=mt-gt-norm
+transducer=mt-gt-desc.und
 
 # Specify whether the test runner should test only generation, analysis or both:
 # gen = generation test
 # ana = analysis test
 # full / both / "" (ie nothing) = test both directions
 # speller = to test one-tape automatons, like a speller acceptor
-halftest=gen # generation test
+halftest=ana # analysis test
 
 # Specify the name of the subdir where the yaml files are, use '.' if it is the
 # same dir as this script:

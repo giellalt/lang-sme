@@ -6,7 +6,7 @@
 
 ###### Variables: #######
 # Specify the invariable part of the transducer name:
-transducer=mt-apertium-desc.nob
+transducer=mt-apertium-desc.und
 
 # Specify whether the test runner should test only generation, analysis or both:
 # gen = generation test
