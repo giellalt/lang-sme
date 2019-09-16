@@ -23,9 +23,7 @@ endif # CAN_YAML_TEST
 # be fixed *later*, but is not critical at the moment:
 XFAIL_TESTS=run-mt-gt-desc-anayaml-testcases.sh \
             run-mt-gt-desc.und-anayaml-testcases.sh \
-            run-mt-apertium-desc.und-anayaml-testcases.sh \
-            run-mt-apertium-norm-genyaml-testcases.sh
-		
+            run-mt-apertium-desc.und-anayaml-testcases.sh
 
 ####### Other targets: ###########
 clean-local:
