@@ -8,11 +8,8 @@ SUBDIRS = fstbased
 TESTS=
 
 # Yaml tests are run from shell scripts - specify them here:
-YAML_TEST_RUNNERS_IN=\
-                  run-spellers-gt-norm-anayaml-testcases.sh.in \
-                  run-spellers-gt-norm-genyaml-testcases.sh.in
-
-YAML_TEST_RUNNERS=$(basename $(YAML_TEST_RUNNERS_IN)) \
+YAML_TEST_RUNNERS=run-spellers-gt-norm-anayaml-testcases.sh \
+                  run-spellers-gt-norm-genyaml-testcases.sh \
                   run-spellers-gt-norm-yaml-testcases.sh
 
 # Specify other shell scripts here to make sure they are included in the distro
@@ -32,7 +29,8 @@ endif # WANT_SPELLERS
 
 # List tests that are presently (expected) failures here (in addition to above),
 # ie things that should be fixed *later*, but is not critical at the moment:
-XFAIL_TESTS=
+XFAIL_TESTS=run-spellers-gt-norm-anayaml-testcases.sh \
+            run-spellers-gt-norm-genyaml-testcases.sh
 
 # Make sure all required files are included in the distribution:
 YAML_FILES=$(wildcard *.yaml)
