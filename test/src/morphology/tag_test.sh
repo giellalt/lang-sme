@@ -12,28 +12,29 @@ roottags=$(mktemp -t giella-tag_test.XXXXXXXXXXX)
 trap 'rm -f "${lexctags}" "${roottags}"' EXIT
 
 # Ensure we're in langs/sme:
-cd "$(dirname "$0")"/../../.. || exit 1
+# cd "$(dirname "$0")"/../../.. || exit 1
 
 if [[ $1 == "-v" ]]; then
     echo "$0: Are there tags not declared in root.lexc or misspelled?"
 fi
 
-cat src/morphology/clitics.lexc src/morphology/compounding.lexc src/morphology/affixes/*lexc src/morphology/stems/*lexc  ../../giella-shared/smi/src/morphology/stems/*lexc \
-    | cut -d '!' -f1                                                                                                    \
-    | grep ' ;'                                                                                                         \
-    | cut -d ':' -f1                                                                                                    \
-    | tr -s ' '                                                                                                         \
-    | sed 's/^ //'                                                                                                      \
-    | cut -d ' ' -f1                                                                                                    \
-    | sed 's/+/¢+/g'                                                                                                    \
-    | sed 's/@/¢@/g'                                                                                                    \
-    | tr '¢' '\n'                                                                                                       \
-    | tr '#"%' '\n'                                                                                                     \
-    | grep -E '(\+|@)'                                                                                                  \
-    | sort -u                                                                                                           \
-    | grep -E -v '^(\+|\+%|\+\/\-|\+Cmp\-|\+Cmp%\-|\@0|\@%)$' > "${lexctags}"
+sed -e '1,/LEXICON Root/ d' < ../../../src/morphology/lexicon.tmp.lexc \
+    | cut -d '!' -f1   \
+    | grep ' ;'        \
+    | cut -d ':' -f1   \
+    | tr -s ' '        \
+    | sed 's/^ //'     \
+    | cut -d ' ' -f1   \
+    | sed 's/+/¢+/g'   \
+    | sed 's/@/¢@/g'   \
+    | tr '¢' '\n'      \
+    | tr '#"%' '\n'    \
+    | grep -E '(\+|@)' \
+    | sort -u          \
+    | grep -E -v '^(\+|\+%|\+\/\-|\+Cmp\-|\+Cmp%\-|\@0|\@%)$' \
+    > "${lexctags}"
 
-cut -d '!' -f1 src/morphology/root.lexc \
+cut -d '!' -f1 $srcdir/../../../src/morphology/root.lexc \
     | cut -d ':' -f1                    \
     | sed 's/+/¢+/g'                    \
     | sed 's/@/¢@/g'                    \
