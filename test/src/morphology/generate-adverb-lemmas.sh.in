@@ -59,27 +59,24 @@ EXTEDITOR=@SEE@
 
 ##### Extract lemmas - extend the egrep exclude pattern in the #####
 ##### parenthesis as needed to exclude unwanted lexc lines:    #####
-### don't use extract-lemmas.sh ###
 
-# Hent ut lemmaer, bortsett fra Err/Lex (som blir filtrert bort fra normgenerator), og lemmaer som som krever Px eller kompareringstagg) . Lemmaene lagres som filtered_p-adverbs
-grep ";" $source_file | egrep -v "^(\!|\@|<|\(|$)" | \
-     egrep -v '(\+Err\/Lex|-comp| LE|-sup |SUP| Px|NOTLEMMA)' | \
-     sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " | \
-     cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > $padv_lemmas
+# Hent ut lemmaer, bortsett fra Err/Lex (som blir filtrert bort fra normgenerator),
+# og lemmaer som som krever Px eller kompareringstagg) . Lemmaene lagres som filtered_p-adverbs
+@GTCORE@/scripts/extract-lemmas.sh \
+    --exclude "(-comp| LE|-sup |SUP| Px|NOTLEMMA)" \
+    $source_file > $padv_lemmas
 
 # Hent ut lemmaer som krever Comp-tag. Lagres som filtered_c-adverbs (se bz 1926)
-grep ";" $source_file | cut -d '!' -f1 |  \
-         egrep -v "^(\!|\@|\+|<|\(|$)" | \
-         egrep -v '(\+Err\/Lex|NOTLEMMA)' | \
-     egrep '(-comp| LE)' |sed 's/% /€/g' | sed 's/%:/¢/g' | \
-     tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" > $cadv_lemmas
+@GTCORE@/scripts/extract-lemmas.sh \
+    --exclude "(-sup |SUP| Px|NOTLEMMA)" \
+    --include "(-comp| LE)" \
+    $source_file > $cadv_lemmas
 
 # Hent ut lemmaer som krever Superl-tag. Lagres som filtered_s-adverbs(se bz 1926)
-grep ";" $source_file | egrep -v "^(\!|\@|<|\(|$)" | \
-     egrep -v '(\+Err\/Lex| Px|NOTLEMMA)' | \
-     egrep '(-sup| SUP)' |sed 's/% /€/g' | sed 's/%:/¢/g' | \
-     tr ":+" " " | cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" > $sadv_lemmas
-
+@GTCORE@/scripts/extract-lemmas.sh \
+    --exclude "( Px|NOTLEMMA)" \
+    --include "(-sup |SUP)" \
+    $source_file > $sadv_lemmas
 
 ###### Start testing: #######
 transducer_found=0
