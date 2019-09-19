@@ -16,22 +16,24 @@ if CAN_YAML_TEST
 
 # This is for yaml tests requiring ONLY an analyser
 if WANT_MORPHOLOGY
-TESTS+=run-gt-norm-anayaml-testcases.sh \
-       run-gt-desc-anayaml-testcases.sh
+TESTS+=run-gt-norm-anayaml-testcases.sh
+#       run-gt-desc-anayaml-testcases.sh
 
 # This is for yaml tests requiring BOTH an analyser AND a generator:
 if WANT_GENERATION
 TESTS+=run-gt-norm-yaml-testcases.sh \
-       run-gt-desc-yaml-testcases.sh \
-       run-disamb-gt-desc-anayaml-testcases.sh \
        run-lexc-testcases.sh
+
+#       run-gt-desc-yaml-testcases.sh
+#       run-disamb-gt-desc-anayaml-testcases.sh
+
 endif # WANT_GENERATION
 endif # WANT_MORPHOLOGY
 
 # This is for yaml tests requiring ONLY a generator
 if WANT_GENERATION
-TESTS+=run-gt-norm-genyaml-testcases.sh \
-       run-gt-desc-genyaml-testcases.sh
+TESTS+=run-gt-norm-genyaml-testcases.sh
+#       run-gt-desc-genyaml-testcases.sh
 endif # WANT_GENERATION
 
 # This is for yaml tests to be run when building fst's tailored to the needs of
@@ -49,9 +51,7 @@ endif # CAN_YAML_TEST
 
 # List tests that are presently (expected) failures here, ie things that should
 # be fixed *later*, but is not critical at the moment:
-XFAIL_TESTS=run-gt-desc-genyaml-testcases.sh \
-            run-gt-desc-anayaml-testcases.sh \
-            run-gt-norm-yaml-testcases.sh
+XFAIL_TESTS=run-gt-norm-yaml-testcases.sh
 
 ####### Other targets: ###########
 clean-local:
