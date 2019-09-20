@@ -8,8 +8,7 @@
 
 # List any local additions here:
 GT_LOCAL_FSTSPELLER_FILTER_SRCS=\
-	remove-Use_Minus_PLX-tags.regex \
-	remove-spellerunwanted-strings.regex
+	remove-Use_Minus_PLX-tags.regex
 
 # Source files copied from:
 # 	src/filters/
