@@ -26,7 +26,11 @@
 #  All contexts: block insertion if there is an OLang or a CmpN tag to the left.
 
 # First context: nouns, bare POS tag:
- "+CmpN/SgN" <- [. 0 .] || [ "+N" ] _
+ "+CmpN/SgN" <- [. 0 .] || ! Anchor left context at beginning of the word:
+                           [ .#. | %- | %# ]
+                               ! ... then followed by anything that is not one of these tags
+                               ! essentially blocking addition of default tags after derivations
+                               ! that is: lemma symbols until you get to the ...
                                \[ "+CmpN/SgN"
                                 | "+CmpN/SgG"
                                 | "+CmpN/PlN"
@@ -35,16 +39,31 @@
                                 | "+CmpN/SgGenLeft"
                                 | "+CmpN/PlGenLeft"
                                 ]+
+                            ! ... POS tag:
+                            [ "+N" ] _
+                               ! unless followed by any of these tags:
+                               \[ "+CmpN/SgN"
+                                | "+CmpN/SgG"
+                                | "+CmpN/PlN"
+                                | "+CmpN/PlG"
+                                | "+CmpN/SgNomLeft"
+                                | "+CmpN/SgGenLeft"
+                                | "+CmpN/PlGenLeft"
+                                ]+
+                                ! stopping at the end of the word/lemma
                                 [  "+Cmp"
                                  | "+Der" | "+Der1" | "+Der2" | "+Der3" | "+Der4" | "+Der5"
                                  | .#. | %- | %>
                                  | %#
                                 ]
 
+! All in all: add default compounding tags only if there is nothing, and never after a derivation.
+! Derivations can have their own compounding tags, but they must always be explicitly stated.
+
 .o.
 
 # Third context: adjectives - always insert CmpN/Attr:
- "+CmpN/Attr" <- [. 0 .] || [ "+A" ] _
+ "+CmpN/Attr" <- [. 0 .] || [ "+A" | "+PrsPrc" ] _
 ;
 
 # In all other contexts, there is already a +CmpN/ tag, and thus we do NOT want
