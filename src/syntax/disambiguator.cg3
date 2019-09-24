@@ -2134,6 +2134,7 @@ SELECT:Arab1 (Arab Nom)(0 ("1")) ;
 #SELECT:ArabNomPlc (Arab Nom) (-1 Sem/Plc)(NEGATE 1 Po)(NOT 0 Prop) ;
 
 SELECT:Sem/ID Sem/ID IF (-1 ("§")) ; 
+REMOVE:Sem/ID Sem/ID IF (1 CURRENCY) ; 
 
 SELECT:Arab Arab IF (NOT 0 Ord OR Prop OR Arab + Err/Orth) ; # In Apertium we get analysis both with and without the tag.
 
@@ -7395,7 +7396,7 @@ SELECT:r1612 Indef IF (*-1 COPULAS BARRIER NOT-AUX-V)(0 UNNAN)(NEGATE 1 PrfPrc L
 
 
 #!! * __DemSgNom__ selects Dem Nom Sg if VFIN Sg3
-SELECT:DemSgNom (Dem Sg)  IF (*-1 VFIN + Sg3 BARRIER NOT-ADV-PCLE)(NOT 0 Pers LINK NEGATE *1 N BARRIER NOT-A-ADV OR PL-V);
+SELECT:DemSgNom (Dem Sg)  IF (*-1 VFIN + Sg3 BARRIER NOT-ADV-PCLE)(NOT 0 Pers LINK NEGATE *1 N BARRIER NOT-A-ADV OR PL-V)(NEGATE 0 Pl LINK 1 Pl3) ;
 
 
 #SELECT:DemPl (Dem Pl Acc) IF (0 Pers)(*1 PrfPrc BARRIER NOT-A-ADV LINK 1 (N Pl Acc) - TIME);
@@ -7989,7 +7990,7 @@ SELECT:Wr1802c (A Pl Nom) IF (-2 (Pl Nom))(NEGATE -2 Adv)(-1 JA/DAHJE)(1C NP-BOU
 	#$ Lehket álo ustitlaččat, vuollegaččat ja guhkesmielalaččat. # guhkesmielalaččat
 	#$ De bohte ollu tuollárat ja suttolaččat ja čohkkájedje beavddis.  # suttolaččat
 
-SELECT:Wr1803 (Pl Nom) IF (-2 (Pl Nom))(NEGATE -2 Adv OR Inf)(-1 JA/DAHJE)(1 JA/DAHJE OR CLB)(2 NP-BOUNDARY);
+SELECT:Wr1803 (Pl Nom) IF (-2 (Pl Nom))(NEGATE -2 Adv OR Inf)(-1 JA/DAHJE)((1 JA/DAHJE OR CLB LINK 1 NP-BOUNDARY) OR (1 CLB)) ;
 
 SELECT:PlNomCCPlNom (Pl Nom) IF (1 JA/DAHJE LINK *1C (Pl Nom) BARRIER NOT-NPMOD-ACC)(NEGATE 2 Interr);
 	#$ Dása gullet Sámi sierrabibliotehka, oahpahushálddašeami doaimmat ja sierra sámi mánáidgárdedoarjagat.
@@ -11217,7 +11218,7 @@ SELECT:XXr2002 Gen IF (-1 (Num Sg Acc))(0 TIME); #(1 ("maŋŋel"));
 SELECT:NumGenPo Gen IF (*-1 TRANS-V BARRIER S-BOUNDARY OR Pr LINK 0 FMAINV OR Inf)(0 NUM + Sg LINK NOT 0 NUMUNIT)(1 Gen LINK 1 Po) ;
 	#$ Mii leat vuovdán oktiibuot 163 000 ruvnnu ovddas.
 
-#!! * __NumMoney__ Selects Gen if you are a numeral and immediately to your right is CURRENCY ''vihtta ruvnnu''
+#!! * __NumMoney__ Removes Gen if you are a numeral and immediately to your right is CURRENCY ''vihtta ruvnnu''
 REMOVE:NumMoney Gen IF (0 Num)(1 CURRENCY);
 	#$ 1500 ruvnno
 
