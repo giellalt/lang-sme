@@ -1,6 +1,3 @@
-
-
-
 Denne fila dokumenterer oppsett og bruk av cg-basert mt basert på Eckhard Bick sine verkty.
 
 Språkfilene frå Eckhard ligg i bargofiillat/, mykje av det som står
@@ -26,13 +23,13 @@ Installering
 * Kopier filene sme2nor og genmorf_no frå den lukka mappa referert til ovanfor
   til ei mappe i stien, td. $HOME/bin eller  /usr/local/bin
 * Sjekk kor du har perl: {{which perl}}  /opt/local/bin/perl
-  g endre stien i første linja i sme2nor og genmorf_no til rett perl-adresse
+  og endre stien i første linja i sme2nor og genmorf_no til rett perl-adresse
 * sjekk at niceline_mt og trad2inline.pl har fått 
 ** {{chmod a+x  niceline_mt trad2inline.pl}} (TODO: generaliser dette)
-* Få fila levenshtein.pl frå Eckhoard (og endre sti til den i sme2nor) (TODO: sjekk)
+* Fila levenshtein.pl ligg i same katalog som denne README-fila. Sjekk at stien til
+  levenshtein.pl i sme2nor peiker hit.
 
-
-Installering av modulane IPC/Run og String/Approx i perl, slik:
+Installering av modulane IPC/Run og String/Approx i perl skjer slik:
 
 sudo cpan
 install IPC::Run
@@ -41,27 +38,32 @@ install String::Approx
 
 Her er pipeline for testing:
 
-cat prov.dep | vislcg3 -g smecg.nor.cg | perl niceline_mt | sme2nor --l |  vislcg3 -g smecg.norsyn.cg | perl niceline_mt | genmorf_no | perl trad2inline.pl
+Først lagar vi ei testfil som vi kallar prov.dep:
 
-Eckhards versjon for å lage prov.dep:
-(prov.dep er lavet med: cat cgtestsentence.txt | cg3 -g disambiguator.cg3 | cg3 -g functions.cg3 | cg3 -g dependency.cg3 > prov.dep)
+Eckhards versjon for å lage prov.dep var følgjande.
+cat cgtestsentence.txt | cg3 -g disambiguator.cg3 | cg3 -g functions.cg3 | cg3 -g dependency.cg3 > prov.dep
 
-Tronds versjon for å lage prov.dep:
+For å få denne til å fungere må vi tilpasse den til vårt oppsett, slik (stiane føreset at du står i katalogen bargofiillat):
+
 cat cgtestsentence.txt | hfst-tokenize ../../../tokenisers/tokeniser-disamb-gt-desc.pmhfst -g|vislcg3 -g ../../../../src/syntax/disambiguator.cg3 |vislcg3 -g ../../../../../../giella-shared/smi/src/syntax/functions.cg3  |vislcg3 -g ../../../../../../giella-shared/smi/src/syntax/dependency.cg3 > prov.dep
 
-TODO: Vi må endre perlscripta slik at den tar hfst og ikkje xerox som inøut frå analysator.
+(TODO: Vi må endre perlscripta slik at det tar hfst og ikkje xerox som input frå analysator.)
+
+
+Fila prov.dep bruker vi deretter som input til sjølve MT-prosessen:
+
+cat prov.dep | vislcg3 -g smecg.nor.cg | perl niceline_mt | sme2nor --l |  vislcg3 -g smecg.norsyn.cg | perl niceline_mt | genmorf_no | perl trad2inline.pl
+
 
 
 !!Output
 
+(Trond:Eg er usikker på kva denne kommandoen gjer:)
 perl -MCPAN -e shellx
 to install the module type. install module name. Example: install HTML::Template. installing the module making the shell much more user friendly.
 
 
-
-
-
-
+Her kommenterer Eckhard output av testsetninga:
 
 
 Output er nedenståend, og behøver ikke at være korrekt, det er udtryk for hvad jeg troede, det skulle hedde på norsk. Jeg har valgt indefinit for 'boken' for at prøve indsætningsreglen for artiklen.
@@ -93,11 +95,11 @@ Output er nedenståend, og behøver ikke at være korrekt, det er udtryk for hva
 
 Og så en gennemgang af modulerne:
 
-1. sme.nor.dict
+1. sme.nob.dict
 
 Jeg har forbedret det script, der skulle importere og tilpasse regler fra cglex.txt, og implementeret *1/*-1 og *0 kontekster og endda en BARRIER. Så det ser noget bedre ud i filen nu mht til dækningsgraden for de eksisterende regler. Jeg mener dog, at det, der kan omskrives til dependens, burde blive det.
 
-Fordi det er usikkert, om det går helt uden cglex.txt, har jeg nu åbnet for *både* in-situ regler i sme.nor.dict *og* efterfølgende semantisk cg-disambiguering. Hvis MT-kernen (sme2nor) konstaterer, at et opslag ikke har in-situ regler, outputter den alle læsninger som cg-kohorte, ellers én læsning, den valgte. Forskellen ses også på, at i begge tilfælde får man norsk lemma i kohorten, men med in-situ-regler kommer der også et <NO:norskoversættelse> tag.
+Fordi det er usikkert, om det går helt uden cglex.txt, har jeg nu åbnet for *både* in-situ regler i sme.nob.dict *og* efterfølgende semantisk cg-disambiguering. Hvis MT-kernen (sme2nor) konstaterer, at et opslag ikke har in-situ regler, outputter den alle læsninger som cg-kohorte, ellers én læsning, den valgte. Forskellen ses også på, at i begge tilfælde får man norsk lemma i kohorten, men med in-situ-regler kommer der også et <NO:norskoversættelse> tag.
 
 Jeg har manuel lavet regler for "lohkat", for at vise, hvordan det kan se ud. "si"-reglerne er egentlig overflødige, fordi den oversættelse står først og dermed er defaulten, hvis "lese" og "telle" ikke bliver valgt. I kan se at dependensen mere præcist finder subjekter og objekter, end *1 ville have gjort, og at det kan blive mere komprimeret, fordi nogle cg-regler kan slås sammen eller bliver overflødige pga. rækkfølge. Og det er netop mere "in situ" :), som jeg godt kan lide for at arbejde hurtigt.
 
@@ -105,15 +107,15 @@ Der er også noget manuelt ved "mun".
 
 2. MT-kernen
 
-Jeg har nu lavet en sme2nor version af vores MT-kerne, dvs. det program, der læser og implementerer sme.nor.dict. Hvis der er _[a->b] opskrifter og lignende i forbindelse med in-situ-regler, bliver de implementeret, ellers er der [<ø>-><ø>±<pardef>] for pardef'erne. <ø> er indføjet af cg'en før, som et hook for stedstyres substitution. Output af sme2nor er CG, hvor sme-analysen er bibeholdt efter ordformen, og kohorten eller er en kopi med norsk(e) lemma(ta).
+Jeg har nu lavet en sme2nor version af vores MT-kerne, dvs. det program, der læser og implementerer sme.nob.dict. Hvis der er _[a->b] opskrifter og lignende i forbindelse med in-situ-regler, bliver de implementeret, ellers er der [<ø>-><ø>±<pardef>] for pardef'erne. <ø> er indføjet af cg'en før, som et hook for stedstyres substitution. Output af sme2nor er CG, hvor sme-analysen er bibeholdt efter ordformen, og kohorten eller er en kopi med norsk(e) lemma(ta).
 
 3. smecg.nor.cg
 
-Det sted, hvor jeg mener norske kategorier skal indføjes, der ikke er der på samisk (fx definitness?). Desuden kreerer den foreløbigt set tags til brug i sme.nor.dict.
+Det sted, hvor jeg mener norske kategorier skal indføjes, der ikke er der på samisk (fx definitness?). Desuden kreerer den foreløbigt set tags til brug i sme.nob.dict.
 
 4. smecg.norsyn.cg
 
-Den grammatik, der indføjer tokens (i eksempler "for å" og artiklen "en"), og først og fremmest laver MOVE regler. Jeg mener også, at det må være muligt, at lave næsten alt, der er pardef, her. Hvorfor have __verb, hvis det alligevel skal gøres for alle verber? Så enten skal der være regler, der reagerer på pardefs, der stammer fra sme.nor.dict, eller også kan man lave direkte a->b ændringer i sme.nor.dict, og generelle ting i smecg.norsyn.cg, helt uden pardefs.
+Den grammatik, der indføjer tokens (i eksempler "for å" og artiklen "en"), og først og fremmest laver MOVE regler. Jeg mener også, at det må være muligt, at lave næsten alt, der er pardef, her. Hvorfor have __verb, hvis det alligevel skal gøres for alle verber? Så enten skal der være regler, der reagerer på pardefs, der stammer fra sme.nob.dict, eller også kan man lave direkte a->b ændringer i sme.nob.dict, og generelle ting i smecg.norsyn.cg, helt uden pardefs.
 
 Hvis jeg husker ret, har I også selv et cg-modul mere, hvorfra ting måske skal smeltes sammen med (4) i denne pipe.
 
@@ -127,16 +129,16 @@ genmorf_no går ud fra at fst'en ligger i /usr/share/giella/nob,  håber det er 
 
 7.   generate_dbs.smenor
 
-Laver perl-db'er til den endelige version, når den er i drift på nettet. Pt. bliver sme.nor.dict indlæst hver gang (--l), så ændringer ses med det samme. sme.nor.baselex og sme.nor.memory er tomme, men var tænk til as-is oversættelser. Ikke så relevant for et morfologirigt sprog.
+Laver perl-db'er til den endelige version, når den er i drift på nettet. Pt. bliver sme.nob.dict indlæst hver gang (--l), så ændringer ses med det samme. sme.nob.baselex og sme.nob.memory er tomme, men var tænk til as-is oversættelser. Ikke så relevant for et morfologirigt sprog.
 
 TO DO: Jeg har ikke set på komposita (og subreadings). Helst skal de komme ind som <POS:aaa~fuge+bbb> tags, uden subreadings, så kan jeg nemmest håndtere det i sme2nor.
 
-NOTABENE: Dette projekt er jo et forsøg på at vise, at samarbejde mellem Open Source og Ikke-Open Source sagtens kan lade sig gøre :) Men det betyder, at tingene kun kan blandes frit in-house på serveren, ikke i fx sourceforge eller svn-distribution. Det er relevant for 2 af modulerne: sme2nor og genmorf_no, som jeg har lavet copyright headers i af den grund. De andre scripts er så små, at det er ligemeget, cg'erne bliver det jo jer, der skal udfylde :), og sme.nor.dict er lavet med baggrund i jeres cglex og cgdix. Og mit arbejde er en julegave :) Håber, pipen kommer til at virke og gør det nemmere end den nuværende xml.
+NOTABENE: Dette projekt er jo et forsøg på at vise, at samarbejde mellem Open Source og Ikke-Open Source sagtens kan lade sig gøre :) Men det betyder, at tingene kun kan blandes frit in-house på serveren, ikke i fx sourceforge eller svn-distribution. Det er relevant for 2 af modulerne: sme2nor og genmorf_no, som jeg har lavet copyright headers i af den grund. De andre scripts er så små, at det er ligemeget, cg'erne bliver det jo jer, der skal udfylde :), og sme.nob.dict er lavet med baggrund i jeres cglex og cgdix. Og mit arbejde er en julegave :) Håber, pipen kommer til at virke og gør det nemmere end den nuværende xml.
 
 Mange hilsner,
 Eckhard
 
-
+KOMMENTARAR: fst-en ligg ikkje i /usr/share/giella/nob.
 
 
 On 12/7/18 10:04 PM, Lene Antonsen wrote:
@@ -148,7 +150,7 @@ Men der er et problem - formalismen er lavet til dependens-træer (D=daughter GD
 og de er ikke brugt i cglex. I stedet er der *-kontekster og BARRIER i cglex. Jeg kan muligvis tilføje * i formalismen, men hvis det kombinere
 med LINK og BARRIER bliver det svært. Løsningen må, for mig at se, snarere være at omskrive disse relativ få steder til dependens,
 fx D=(<H> @OBJ) for et humant objekt i et verbumsopslag, i stedet for *1 (<H> @OBJ BARRIER CLB OR V). Kan I prøve at se, om og
-i hvilken grad det er muligt, i sme.nor.dict filen?
+i hvilken grad det er muligt, i sme.nob.dict filen?
 
 Ja, det ser ut til å være en rimelig konklusjon. Poenget er jo å utnytte dependensen, og vi skal se på muligheter for omskriving. Trond ser på det.
 
@@ -156,7 +158,7 @@ Ja, det ser ut til å være en rimelig konklusjon. Poenget er jo å utnytte depe
 
 Vedlagt er en liste af de pardefs der forekom i cgdix i forbindelse med
 oversættelsesopslag (replace_patternsE). Min idé er at erstatte disse
-med en replace/insert-opskrift i sme.nor.dict: [from->to], og der kan
+med en replace/insert-opskrift i sme.nob.dict: [from->to], og der kan
 være flere end én: [sg_m_RL_f__n] [pl->sg][n->n±m]
 '±' bliver til ' ' (space) i output, tomrum er bare et beskyttet tegn i
 .dict-formatet. Af samme grund er der '=' alle de steder i ord og
