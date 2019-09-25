@@ -442,6 +442,13 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 				filters/rename-POS_before_Der-tags.hfst      \
 				filters/remove-semantic-tags-before-derivations.hfst \
 				filters/remove-word-boundary.hfst            \
+				filters/remove-illegal-derivation-strings-flagbased.hfst \
+    			filters/insert-default-compounding-tags.hfst \
+    			filters/insert-default_left_compounding-tags.hfst \
+    			filters/block-illegal_compound-strings.hfst \
+    			filters/split-CmpN-tags.hfst \
+    			filters/convert_to_flags-CmpNP-tags.hfst \
+    			filters/split-CmpNP-tags.hfst \
 				orthography/comprelax-with-flagtags.compose.hfst
 	$(AM_V_HXFST)$(PRINTF) "\
 	set encode-weights ON\n\
@@ -450,6 +457,13 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 		.o. @\"filters/remove-norm-comp-tags.hfst\"           \
 		.o. @\"filters/remove-derivation-position-tags.hfst\" \
 		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
+		.o. @\"filters/block-illegal_compound-strings.hfst\"       \
+    	.o. @\"filters/split-CmpN-tags.hfst\"                      \
+    	.o. @\"filters/insert-default_left_compounding-tags.hfst\" \
+    	.o. @\"filters/insert-default-compounding-tags.hfst\"      \
+    	.o. @\"filters/remove-illegal-derivation-strings-flagbased.hfst\" \
+    	.o. @\"filters/convert_to_flags-CmpNP-tags.hfst\"            \
+    	.o. @\"filters/split-CmpNP-tags.hfst\"                       \
 		.o. @\"filters/remove-semantic-tags-before-derivations.hfst\" \
 		.o. @\"$<\"                                           \
 		.o. @\"orthography/comprelax-with-flagtags.compose.hfst\" \
