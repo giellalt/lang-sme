@@ -623,7 +623,7 @@ LIST DOPPE = "badjin" "bajil" "dakko" "davveoarjin" "davvin" "dá" "dákko" "dá
 
 # Adverbs with a locativic form, but don´t get Loc as a tag. 
 
-LIST DOHKO = "bajás" "báldii" "deike" "deikke" "diehke" "diehko" "dohko" "duohko" "gaskii" "gurrii" "lulás" "olggos" "ruoktot" "sisa" "vuovdimassii" ;
+LIST DOHKO = "bajás" "báldii" "deike" "deikke" "diehke" "diehko" "dohko" "duohko" "gaskii" "gurrii" "lulás" "olggos" "ruoktot" "sisa" "vuovdimassii" "vulos" "vuolás" ;
 # Adverbs with a illativic form, but they don´t get Ill as a tag.
 
 LIST PO-ILL = "ala" "lusa" "vulos" "bajás" "vuollái" "geahčai" ;	
@@ -2356,6 +2356,9 @@ REMOVE:cmpDer_laš DYNCMP + Der/NomAct (0 Der/NomAct) ;
 
 #!! * __derN__ removes DER-N if lexicalised non-essives
 REMOVE:derN DER-N IF (0 LEX-N LINK NEGATE 0 Ess OR ("dahkat"));
+REMOVE:derN SUB:1 DER-N IF (0 LEX-N LINK NEGATE 0 Ess OR ("dahkat"));
+
+
 REMOVE:derN DER-N IF (0 Der/NomAg LINK 0 (".*eaddji"r)) ; # A	
 	#$ Dat lea oahpaheaddjin doppe.	
  # Since Der/NomAct was included in the DER-N set, this rule now removes
@@ -2422,6 +2425,10 @@ REMOVE:derPassActio Der/Pass + Der/NomAct IF (0 PrfPrc) ;
 SELECT:orrut ("orrut") (1 (Actio Essive)) ;
 	#$ Dat orro leamen nu ahte nissonolbmot váldet vuostá hástalusaid.
 
+SELECT:mannan PrfPrc  (0 ("mannan") LINK 1 Sem/Time) ;
+REMOVE:mannan N  (0 ("mannat") LINK 1 N) ; # too strong ?
+	#$ Dalle šattašii liikka buoret dálki go mannan sotnabeaivve.
+
 
 LIST NOT-REAL-V-LEMMAS = "álbmotregistreret" ;
 
@@ -2469,6 +2476,9 @@ SELECT:LEX-PASSPrfPrc PrfPrc IF (0 LEX-PASS LINK 1 N)(NEGATE *-1 Neg BARRIER REA
 #!! * __VGenPass__ remove when Pass or LEX-PASS
 REMOVE:Pass VGen IF (0 LEX-PASS) ;
 REMOVE:Pass VGen + Der/Pass  ;
+
+#!! * __Allegro__ 
+REMOVE:allegro Gen + Allegro (NOT 0 Sem/Time OR Sem/Plc)(NOT 1 Po)(NEGATE 0 Prop LINK 1 N) ;
 
 LIST AVVIR = "Ávvir" ; # eller andre typiske for Cmp
 
@@ -2822,6 +2832,7 @@ REMOVE:Foc-dis3 Foc/Neg-ge ;
 
 #!! * Removes __derV__  DER-V if lexicalised.
 REMOVE:derV DER-V IF (0 LEX-V)(NEGATE 0 (eaddji));
+
 
 #!! *Removes __derN__ if lexicalised.
 REMOVE:derN DER-N IF (0 LEX-N LINK NEGATE 0 Ess OR ("dahkat"));
@@ -3562,15 +3573,20 @@ SELECT:manneAdv1 ("manne" Adv)  IF (*-1 BOC OR PUNCT OR COMMA BARRIER NOT-ADV-PC
 	#% Sii manne isideaset lusa ja muitaledje buot. # BARRIER CC!
 
 
-SELECT:LIAmannemanne ("manne" Adv)  IF (1 ("manne" Adv) LINK *1 VFIN BARRIER NOT-ADV-PCLE) ; 
+SELECT:LIAmannemanne ("manne" Adv) IF (1 ("manne" Adv) LINK *1 VFIN BARRIER NOT-ADV-PCLE) ; 
 	#$ ahte manne manne dál eai sáhte muhto na go juo stáhtas leat ruđat ahte arbeidsledighetstrygdaid ja diekkáriid máksit jaja na dat manná dalle bures
 
 
-SELECT:LIAmanneAdv2 ("manne" Adv)  IF (*-1 VFIN BARRIER S-BOUNDARY OR CC OR CLB OR Du1 + Nom OR Pl + Nom LINK NOT 0 Neg)(*-1 VFIN BARRIER S-BOUNDARY OR CC OR CLB)(NEGATE 0 VFIN LINK *1 DOHKO OR PLACE + Ill BARRIER NOT-ADV-PCLE)(NEGATE 0 VFIN LINK *1 Gen BARRIER NOT-ADV-PCLE LINK 1 PO-ILL) ;
+SELECT:LIAmanneAdv2 ("manne" Adv) IF (*-1 VFIN BARRIER S-BOUNDARY OR CC OR CLB OR Du1 + Nom OR Pl + Nom LINK NOT 0 Neg)(*-1 VFIN BARRIER S-BOUNDARY OR CC OR CLB)(NEGATE 0 VFIN LINK *1 DOHKO OR PLACE + Ill BARRIER NOT-ADV-PCLE)(NEGATE 0 VFIN LINK *1 Gen BARRIER NOT-ADV-PCLE LINK 1 PO-ILL) ;
 	#$ Jos oktage jearaš dudnos manne doai dahkabeahtti dan,...
 	#% dat manne dat albmát manne vuos deikke bygget viesuid ja . (LIA)
 	#% muhto de lei dálvi lávededje dien dábálaččat die februar mánus go dat dážaid diggehearrát de manne manne duon duo Kárášjohkii . (LIA)
 	#% na dat gal dieđus ge njigui go dat oinnii dat manne buot dat olbmot. (LIA)
+
+SELECT:LIAmannemanne ("manne" Adv) IF (-1 ("muhto"))(1 VFIN ) ; 
+	#$ dat máđut leamašan das muhto manne bohte dalle áhkkorat
+
+
 
 SELECT:manneAdv3 ("manne" Adv)  IF (-1 BOC)(1 N OR Adv LINK 1 ("?")) ;
 	#$ Manne Sámi allaskuvlii?
@@ -3848,6 +3864,10 @@ REMOVE:LIAfertetDer Der/NomAct (0 ("fertet")) ;
 REMOVE:LIAnuorrat ("nuorrat") (0 ("nuorra")) ;
 REMOVE:LIAvarraPx Px (0 ("varra") LINK 0 ("varas")) ;
 REMOVE:LIAviessuPx Px (0 ("viessu") LINK 0 ("visot")) ;
+REMOVE:LIAoaktutV V (0 ("oaktut") LINK 0 ("okto")) ;
+REMOVE:LIAviessatV V (0 ("viessat") LINK 0 ("viessu")) ;
+
+
 
 SELECT:gáhkkuNom Pl (0 ("gáhkut")) ((-1 CC OR COMMA LINK -1 Nom) OR (1 CC OR COMMA LINK *1 Nom BARRIER NOT-A)) ;
 SELECT:gáhkkuAcc Acc (0 ("gáhkut")) ((-1 CC OR COMMA LINK -1 Acc) OR (1 CC OR COMMA LINK *1 Acc BARRIER NOT-A)) ;
@@ -4856,7 +4876,7 @@ SELECT:datPersCopulas Pers IF (-1 Nom)(NEGATE -1 Pers)(0 ("dat" Nom))(*1 REAL-CO
 	#$ Gean mearkka bohccot dat ledje?
 
 #!! * __datPcle1__ selects dat Pcle between N and finite, even if there is agreement between verb and dat .
-SELECT:datPcle1 ("dat" Pcle)  IF (-1 (N Nom) OR (Pers Nom) OR (Pers Loc) LINK NOT 0 A OR Interr OR PrfPrc LINK NEGATE *-1 Gen BARRIER WORD - Acc - Gen)((*1 VFIN BARRIER NOT-ADV-PCLE) OR (1 Adv LINK *1 VFIN BARRIER NOT-ADV-PCLE));
+SELECT:datPcle1 ("dat" Pcle)  IF (-1 (N Nom) OR (Pers Nom) OR (Pers Loc) LINK NOT 0 A OR Interr OR PrfPrc LINK NEGATE *-1 Gen BARRIER WORD - Acc - Gen)((*1 VFIN BARRIER NOT-ADV-PCLE) OR (1 Adv LINK *1 VFIN BARRIER NOT-ADV-PCLE))(NEGATE 1 ("bohtti")) ;
 	#$ Máret dat boahtá.
 	#$ Mun dat lean.
 	#$ Nissonat dat eanaš duddjojit sámi biktasiid.
@@ -6053,6 +6073,9 @@ SELECT:LIAboahtitV V IF (*-1 Sem/Veh + Com OR ("linnjá") + Com OR Pl + Nom BARR
 
 SELECT:LIAboahtitV V IF (0 ("boahtit") LINK *1 ("boahtit") BARRIER SV-BOUNDARY) ;
 	#$ dáppe bohte ovdamearkka dihte skábman dat bohte dáppe diekko Leavvajoga Deanu ala ja em .
+
+SELECT:LIAboahtitV V IF (0 ("boahtit") + Pl3 LINK 1 Neg + Pl3) ;
+	#$ ja dohko bohte sii dušše bivdit muhto gáddebargit maid ? (LIA)
 
 	
 #!! !!Disambiguating abbreviations
