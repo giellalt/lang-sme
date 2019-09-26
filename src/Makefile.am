@@ -437,6 +437,7 @@ analyser-disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.%      \
 # The HFST Grammar Checker analyser (keep the Err/SpaceCmp strings):
 analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 				filters/remove-dialect-tags.hfst             \
+				filters/remove-MinusSpell-strings.hfst       \
 				filters/remove-norm-comp-tags.hfst           \
 				filters/remove-derivation-position-tags.hfst \
 				filters/rename-POS_before_Der-tags.hfst      \
@@ -465,6 +466,7 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
     	.o. @\"filters/convert_to_flags-CmpNP-tags.hfst\"            \
     	.o. @\"filters/split-CmpNP-tags.hfst\"                       \
 		.o. @\"filters/remove-semantic-tags-before-derivations.hfst\" \
+		.o. @\"filters/remove-MinusSpell-strings.hfst\"              \
 		.o. @\"$<\"                                           \
 		.o. @\"orthography/comprelax-with-flagtags.compose.hfst\" \
 		.o. @\"filters/remove-word-boundary.hfst\"            \
