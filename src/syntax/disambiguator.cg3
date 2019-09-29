@@ -129,6 +129,7 @@ LIST Allegro = Allegro ; #!! Allegro
 LIST Arab = Arab ; #!! Arab
 LIST Rom = Rom ; #!! Romertall
 LIST Subqst = Subqst ;
+LIST CLBfinal = CLBfinal ;
 
 
 #!! !Tags for morphosyntactic properties
@@ -407,6 +408,9 @@ SET NOT-COMMA = WORD - COMMA ;  #!! NOT-COMMA
 #!! !Derivational affixes
 
 LIST DER-V = Der/adda Der/alla Der/d Der/g Der/h Der/halla Der/huhtti Der/huvva Der/l Der/st Der/stuvva Der/InchL Der/Caus ; #!! DER-V
+
+LIST DER-V2 = Der/adda Der/alla Der/halla Der/huhtti Der/huvva Der/stuvva Der/InchL  ; #!! DER-V
+
 
 LIST DER-N = Der/Dimin Der/eamoš  Der/Car Der/NomAct Der/muš Der/upmi Der/vuota Der/NomAg Der/NomAct ; #!! DER-N
 
@@ -2099,6 +2103,8 @@ SET NON-APP = ALLSYNTAG - (@APP); #!! NON-APP
 
 BEFORE-SECTIONS
 
+REMOVE CLBfinal ;
+
 #!! !!Guessing: Rule for adding Sem/Date as a tag to readings which looks like dates
 #SUBSTITUTE:Date1 (Num Arab Sg) (Num Sem/Date Sg) TARGET ("<[0-3][0-9][.][0-2][0-9][.][1-2][0-9][0-9][0-9]>"r) + Num ;
 #SUBSTITUTE:Date1 (Num Arab Sg) (Num Sem/Date Sg) TARGET ("<[0-9][.][0-9][.][1-2][0-9][0-9][0-9]>"r) + Num ;
@@ -2160,6 +2166,7 @@ ADD:muitalit <vdic> TARGET MUITALIT (0 REAL-V LINK 1 EOC) (-1 HUMAN-INDIVIDUAL +
 	#$ Dat čájeha ahte sámi guovllut leat geasuheaddjit ealáhusovdáneapmái, dadjá sámediggeráđđi Silje Karine Muotka.
 
 ADD:sme (<sme>) TARGET WORD ;
+ADD:sme (<sme>) TARGET PUNCT ;
 
 #!! ! Removing or selecting proper nouns that are lookalikes
 
@@ -2176,6 +2183,9 @@ REMOVE:finnmárku ("finnmárku") IF (0 ("Finnmárku")) ;
 REMOVE:Johan ("Jo") IF (0 ("Johan")) ;	
 
 REMOVE:Állet ("Állet") IF (-1 BOS) ;	
+
+REMOVE:JA ACR (0 ("ja") OR ("go") OR ("illu")) ;	
+
 
 #ADD:subqst (<subqst>) TARGET V ; # IF (0 @+FMAINV OR @+FAUXV LINK -1 @+FMAINV OR @-FMAINV) ;
 
@@ -2393,6 +2403,7 @@ REMOVE:derAdv DER-A-ADV (0 NOT-DER-A-ADV) ;
  
 #!! * __derV__ removes DER-V if lexicalised V,
 REMOVE:derV DER-V IF (0 LEX-V) ; 
+REMOVE:TESTderV SUB:1 DER-V ; # IF (0 LEX-V OR Der/NomAct) ; 
 REMOVE:A_derhuvva Der/huvva IF (0 (".*huvvat"r)) ; 
 	#$ Son oaivvilda iežas bealjehuvvagoahtán.
 
@@ -2664,7 +2675,7 @@ REMOVE:PropAttrIfPropx (Prop Attr) - Der/lasj IF (NEGATE *1 Prop BARRIER REAL-WO
 
 	
 #!! * __PropInsideProp__ Selects Prop if capital letter inside clause
-SELECT:PropInside Prop IF (NEGATE *-1 BOS OR (":") BARRIER WORD - Num)(0 N LINK NEGATE 0 (Der/t) OR (Der/lasj));
+SELECT:PropInside Prop IF (NEGATE *-1 BOS OR (":") BARRIER WORD - Num)(0 N LINK NEGATE 0 (Der/t) OR (Der/lasj))(NEGATE 0 Neg LINK *1 ConNeg BARRIER NOT-ADV-PCLE)(NEGATE 0 CC) ;
 	#$
 
 #!! * __AttrPropDerlaš__ Selects (Prop Der/lasj Attr) if first one to the right is a noun
@@ -2733,7 +2744,7 @@ SELECT:PropGen_b Gen IF (0C Prop LINK NEGATE 0 Sem/Fem OR Sem/Mal)(1 PROFESSION 
 	#% World Indigenous Higher Education Consortium, WINHEC, dohkkehii Sámi allaskuvlla eamiálbmotásahussan áigodahkii 2008–2018.
 
 #!! * Removes __PropAttr__ if no Prop on the right side
-REMOVE:XXPropAttr (Prop Attr) - Der/lasj IF (NEGATE *1 Prop BARRIER REAL-WORD-NOT-ABBR) ;
+REMOVE:HLPropAttr (Prop Attr) - Der/lasj IF (NEGATE *1 Prop BARRIER REAL-WORD-NOT-ABBR) ;
 
 #!! * Removes __PropEss__ if no Der/lasj
 REMOVE:PropEss (Prop Ess) - Der/lasj  ;
@@ -2829,11 +2840,6 @@ REMOVE:Foc-dis3 Foc/Neg-ge ;
 #!! !!Lexicalised derivations
 
 
-
-#!! * Removes __derV__  DER-V if lexicalised.
-REMOVE:derV DER-V IF (0 LEX-V)(NEGATE 0 (eaddji));
-
-
 #!! *Removes __derN__ if lexicalised.
 REMOVE:derN DER-N IF (0 LEX-N LINK NEGATE 0 Ess OR ("dahkat"));
 
@@ -2869,7 +2875,7 @@ REMOVE:derAlla Der/halla IF (0 Der/alla) ;
 	#$ Mii bovdehalaimet heajaide.
   
 #!! * Removes __derH__ if Der/InchL.  
-REMOVE:derH Der/h OR  Der/Caus IF (0 Der/InchL) ; 
+REMOVE:derH Der/h OR  Der/Caus IF (0 DER-V2) ; 
 	#$ Nillá-mága gasttihišgođii.
 
 #!! * Removes __derST__ if Der/ahtti #OBS se på denne	
@@ -2924,6 +2930,10 @@ SELECT:AnomInf Inf IF (0 TRANS-V LINK -1 Acc LINK -1 A + Nom - OLLU OR ("bággu"
 SELECT:ACompPl Pl + Nom IF (0 DEHALAS LINK -1 Nom)(NEGATE *0 VFIN) ;
 	#$ – Eanandoallu ja boazodoallu dehálaččat mátkeealáhussii.
 
+#!! *  __viimmatAdv__ 
+SELECT:viimmatAdv ("viimmat" Adv) IF  (NEGATE 1 Inf);
+
+
 REMOVE:bivnnuheapme Comp IF (0 ("bivnnut") + Pl + Nom) ;
 
 REMOVE:bárdnat V  IF (0 ("bárdni")) ;
@@ -2944,13 +2954,16 @@ SELECT:NotGen N + Nom IF (*-1 BOS BARRIER WORD)(0 Gen LINK NOT 0 PrfPrc OR Attr 
 	#% Vuosttáš báddenbeaivi.
 
 #Trying out generalisations:
-SELECT:XXNomAct N IF (0 Sg1 LINK NEGATE -1 Pers + Sg1 OR PUNCT)(0 Sem/Act + Nom LINK 1 CC LINK 1 N + Nom)(*1 ("❡")) ;
-SELECT:XXPrfPrc PrfPrc IF (0 Sg1 LINK NEGATE -1 Pers + Sg1 OR PUNCT)(*1 ("❡")) ;
-SELECT:XXPrfPrcSg1Acc PrfPrc IF (0 Sg1 LINK 1 Pers + Sg1 + Acc) ;
+SELECT:HLNomAct N IF (0 Sg1 LINK NEGATE -1 Pers + Sg1 OR PUNCT)(0 Sem/Act + Nom LINK 1 CC LINK 1 N + Nom)(*1 ("❡")) ;
+REMOVE:HLSg1 Sg1 IF (0 PrfPrc LINK NEGATE *-1 Pers + Sg1 OR PUNCT BARRIER SV-BOUNDARY OR REAL-V)(*1 ("❡")) ;
+#SELECT:HLPrfPrcSg1Acc PrfPrc IF (0 Sg1 LINK 1 Pers + Sg1 + Acc) ;
 	#$ Siidda organiseren ja váldi.
+#SELECT:HLXXPrfPrc PrfPrc IF (0 BOS) ;
+SELECT:HLPrfPrcCoor PrfPrc IF (1 JA/DAHJE LINK 1C PrfPrc LINK 1 ("❡")) ;
+	#$ CUVKON, MOLLEN JA BOALDÁN ❡ .
 
 
-SELECT:XXInfmearridit Inf IF (-1 ("mearridit") + PrfPrc) ;
+SELECT:HLInfmearridit Inf IF (-1 ("mearridit") + PrfPrc) ;
 
 SELECT:duššeAdv Adv IF (0 ("dušše"))(1 Num LINK *1 PrfPrc BARRIER REAL-V) ;
 SELECT:duššeAdv2 Adv IF (*-1 VFIN)(0 ("dušše"))(1 Num);
@@ -2963,16 +2976,16 @@ SELECT:duššeAdv2 Adv IF (*-1 VFIN)(0 ("dušše"))(1 Num);
 #SELECT:PrfPrc PrfPrc IF (-1 Gen LINK -1 Num LINK *-1 BOS BARRIER NOT-NPMODADV)(*1 ("❡") OR EOS OR (":") BARRIER REAL-V) ;
 #SELECT:PrfPrc PrfPrc IF (-1 Com LINK -1 Nom LINK *-1 BOS BARRIER Sg1)(*1 ("❡") BARRIER Sg1) ;
 #SELECT:PrfPrc PrfPrc IF (-1 ADVLCASE LINK *-1 BOS BARRIER WORD)(1 ADVLCASE LINK *1 ("❡")) ;
-SELECT:Nom Nom IF (-1 Gen LINK -1 Gen LINK -1 CC LINK -1 Nom LINK *-1 BOS BARRIER WORD)(1 ("❡")) ;
-SELECT:Pl Pl IF (0 A + Comp LINK 0 Sem/Hum)(1 ADVLCASE LINK *1 ("❡")) ;
-REMOVE:Sg1 Sg1 IF (0 N OR PrfPrc LINK 1 ("❡")) ;
-SELECT:CopAdvPrfPrc Adv IF (1 PrfPrc - ("leat") LINK *1 ("❡"))(NEGATE 0 Po) ;
-REMOVE:attrNum Attr IF (0 ("miljovdna") LINK 1 Ill LINK *1 ("❡"))(-1 Num) ;
-REMOVE:áddjá A IF (0 ("áddjá")  LINK *1 ("❡")) ;
-REMOVE:attrA (A Attr) IF (1 PrfPrc LINK *1 ("❡") BARRIER V) ;
+SELECT:HLNom Nom IF (-1 Gen LINK -1 Gen LINK -1 CC LINK -1 Nom LINK *-1 BOS BARRIER WORD)(1 ("❡")) ;
+SELECT:HLPl Pl IF (0 A + Comp LINK 0 Sem/Hum)(1 ADVLCASE LINK *1 ("❡")) ;
+REMOVE:HLSg1 Sg1 IF (0 N OR PrfPrc LINK 1 ("❡")) ;
+SELECT:HLCopAdvPrfPrc Adv IF (1 PrfPrc - ("leat") LINK *1 ("❡"))(NEGATE 0 Po) ;
+REMOVE:HLattrNum Attr IF (0 ("miljovdna") LINK 1 Ill LINK *1 ("❡"))(-1 Num) ;
+REMOVE:HLáddjá A IF (0 ("áddjá")  LINK *1 ("❡")) ;
+REMOVE:HLattrA (A Attr) IF (1 PrfPrc LINK *1 ("❡") BARRIER V) ;
         #$ Son muitalii maid ahte sin fanashoteallas leamašan dán jagi dušše vihtta guossi
-REMOVE:adv Adv IF (0 (A Pl) LINK *1 ("❡") BARRIER V) (-1 Pl + N LINK *-1 BOS BARRIER V) ;
-REMOVE:ImprtDu2 Du2 (0 Imprt LINK 0 PrsPrc LINK 1 N LINK *1 ("❡"))  ;
+REMOVE:HLadv Adv IF (0 (A Pl) LINK *1 ("❡") BARRIER V) (-1 Pl + N LINK *-1 BOS BARRIER V) ;
+REMOVE:HLImprtDu2 Du2 (0 Imprt LINK 0 PrsPrc LINK 1 N LINK *1 ("❡"))  ;
 
 	#$ Dieđihuvvon láhppon – gávdnon dearvan. 
 	#$ Olgeš čohkken olbmuid buot válgabiriin.
@@ -2982,8 +2995,8 @@ REMOVE:ImprtDu2 Du2 (0 Imprt LINK 0 PrsPrc LINK 1 N LINK *1 ("❡"))  ;
 	#$ Terminologiijadieđa ja sámi fágagielaid dutkan ❡ .
 	#$ Vel okta nuorra boazodoalli massán heakkas ❡ .
 
-SELECT:Sem/Act  Nom IF (*-1 BOS BARRIER WORD)(0 Sem/Act) (0 PrfPrc LINK 1 CC LINK 1 Sem/Act LINK 1 Ill LINK 1 ("❡")) ; #TEST
-SELECT:Sem/Act  Nom IF (-1 CC LINK -1C Nom LINK *-1 BOS BARRIER WORD)(0 PrfPrc LINK *1 ("❡")) ; #TEST
+SELECT:HLSem/Act Nom IF (*-1 BOS BARRIER WORD)(0 Sem/Act) (0 PrfPrc LINK 1 CC LINK 1 Sem/Act LINK 1 Ill LINK 1 ("❡")) ; #TEST
+SELECT:HLSem/Act Nom IF (-1 CC LINK -1C Nom LINK *-1 BOS BARRIER WORD)(0 PrfPrc LINK *1 ("❡")) ; #TEST
 	#$ Ovtta­stallan ja suohta­stallan nuoraide ❡ .
 
 
@@ -2997,23 +3010,26 @@ SELECT:Sem/Act  Nom IF (-1 CC LINK -1C Nom LINK *-1 BOS BARRIER WORD)(0 PrfPrc L
 #SELECT:PrfPrcHealiner PrfPrc IF (-1 CC LINK *-1 BOS BARRIER VFIN)(0 PrfPrc LINK *1 ("❡") BARRIER VFIN) ; #TEST
 	#$ Gidden sisabuktinvejolašvuođa ja maŋidan áigemeari.
 
-SELECT:Inf Inf IF (-1 Acc LINK -1 TRANS-V + PrfPrc LINK *-1 BOS BARRIER WORD)(*1 ("❡") BARRIER VFIN) ;
-SELECT:Inf Inf IF (-1 Ess LINK -1 Acc LINK -1 TRANS-V + PrfPrc LINK *-1 BOS BARRIER WORD)(*1 ("❡") BARRIER VFIN) ;
+SELECT:HLInf Inf IF (-1 Acc LINK -1 TRANS-V + PrfPrc LINK *-1 BOS BARRIER WORD)(*1 ("❡") BARRIER VFIN) ;
+SELECT:HLInf Inf IF (-1 Ess LINK -1 Acc LINK -1 TRANS-V + PrfPrc LINK *-1 BOS BARRIER WORD)(*1 ("❡") BARRIER VFIN) ;
 	#$ Váldán advokáhta čielggadit iežas vuoigatvuođaid ❡ .
 	#$ Váldán advokáhta veahkkin oažžut vástádusa gielddas  ❡ .
 
-SELECT:Inf Inf IF (1 CC LINK 1 Inf LINK *1 ("❡")) ;
-SELECT:Inf Inf IF (-1 CC LINK -1 Inf LINK *1 ("❡")) ;
-SELECT:Inf Inf IF (*-1 BOS BARRIER WORD)(1 ADVLCASE OR Adv LINK *1 ("❡")) ;
+SELECT:HLInf Inf IF (1 CC LINK 1 Inf LINK *1 ("❡")) ;
+SELECT:HLInf Inf IF (-1 CC LINK -1 Inf LINK *1 ("❡")) ;
+#SELECT:HLInf Inf IF (*-1 BOS BARRIER WORD)(1 ADVLCASE OR Adv LINK *1 ("❡"))(NEGATE 0 Pl1 LINK -1 PUNCT LINK -1 BOS) ;
 	#$ Oassálastit ja suohtastallat deháleappot go vuoitit čiekčamiid.
 	#$ – Háleštit earáin gii ádde lea buoremus dálkkas man goassige lean dovdan ❡ .
+
+SELECT:HLPl1 Pl1 IF (-1 PUNCT LINK -1 BOS)(0 Inf OR Sg2 LINK *1 ("❡")) ;
+
 
 #!! * __compgo__ 
 SELECT:compgo A + Comp IF (*-1 BOS BARRIER WORD)(1 go) ;
 	#$ Buoret go goassege ovdal.
 
-SELECT:Nom Nom IF (0 HUMAN LINK *1 Ill BARRIER NOT-NPMOD LINK 1 ("❡"))(NOT 0 A + Attr)(*-1 BOS BARRIER VFIN) ;
-SELECT:Nom Nom IF (0 HUMAN LINK 1 Gen OR Attr LINK 1 Ill LINK 1 ("❡"))(NOT 0 A + Attr)(*-1 BOS BARRIER VFIN) ;
+SELECT:HLNom Nom IF (0 HUMAN LINK *1 Ill BARRIER NOT-NPMOD LINK 1 ("❡"))(NOT 0 A + Attr)(*-1 BOS BARRIER VFIN) ;
+SELECT:HLNom Nom IF (0 HUMAN LINK 1 Gen OR Attr LINK 1 Ill LINK 1 ("❡"))(NOT 0 A + Attr)(*-1 BOS BARRIER VFIN) ;
 	#$ Forfang máilmmicupa rahpamii ❡ .
 
 	
@@ -3023,16 +3039,16 @@ SELECT:NomPunctRight ABBR + Nom IF (*-1 BOS BARRIER WORD)(1 (PUNCT RIGHT)) ;
 SELECT:NomFragm KLASS + Nom IF (*-1 BOS BARRIER WORD)(1 ACR OR Num OR PUNCT) ;
 	#$ Ášši DC 002/12
 
-REMOVE:NotVfinFragm VFIN (0 PrfPrc LINK *-1 BOS BARRIER WORD)(*1 EOS BARRIER REAL-V OR Adv) ;
+#REMOVE:NotVfinFragm VFIN (0 PrfPrc LINK *-1 BOS BARRIER WORD)(*1 EOS BARRIER REAL-V OR Adv) ;
 	#$ Čuvvon ášši.
 
 SELECT:§Attr Attr (0 ("§") LINK 1 Num) ;
 	#$ Njuolggadusat nággolága § 204:s § 209 rádjái ožžot seammá geavahusa.
 
-SELECT:Nom N IF (0 Imprt LINK *-1 BOS BARRIER WORD)(*1 PrfPrc BARRIER SV-BOUNDARY LINK *1 ("❡")) ;
+SELECT:HLNom N IF (0 Imprt LINK *-1 BOS BARRIER WORD)(*1 PrfPrc BARRIER SV-BOUNDARY LINK *1 ("❡")) ;
 	#$ Juoigi bargošiehtadus lebbejuvvon almmolašvuhtii.
 
-MAP:❡  (<ind>) TARGET N IF (*1 ("❡") BARRIER WORD - Po) ;
+#MAP:HL  (<ind>) TARGET N IF (*1 ("❡") BARRIER WORD - Po) ;
 
 
 SELECT:NomKlass Nom IF (0 ACR OR Num)((-1 ACR OR Num LINK -1 KLASS + Nom LINK -1 BOS) OR  (-1 KLASS) )(NEGATE -1 ("§") LINK 2 Po)(NEGATE 0 Loc)  ;
@@ -3162,7 +3178,7 @@ SELECT:Advleat2 Adv IF (*-1 ("leat") BARRIER SV-BOUNDARY OR Nom LINK -1 Loc + HA
 SELECT:AdvNum3 Adv IF (-1 N + Gen LINK *-1 MEASURE + Gen BARRIER NOT-A LINK -1 Num + Nom LINK NOT 0 Sem/Year) (0 Po LINK 0 ("mielde") LINK NEGATE -1 Sem/Time + Gen); 
 	#$ golbma kilo hášša mielde	
 
-SELECT:AdvleatFarmen Adv IF (0 Po LINK 0 ("mielde") LINK 1 ("Farmen") OR Sem/Prod-vis OR Sem/Event LINK 0 Loc LINK 1 ("❡")) ; 	
+SELECT:HLAdvleatFarmen Adv IF (0 Po LINK 0 ("mielde") LINK 1 ("Farmen") OR Sem/Prod-vis OR Sem/Event LINK 0 Loc LINK 1 ("❡")) ; 	
 
 	
 #!! * __cadaAdv__ if oažžut juoidá čađa
@@ -3212,8 +3228,6 @@ SELECT:mannelPr Pr IF (0 VFIN)(1 PLACE or Sem/Plc LINK 0 Gen) ;
 SELECT:aigiAdv Adv IF (NEGATE -2 (Num Gen))(-1 TIME-UNIT + Acc)(0 ("áigi"));	
 	#$ Ánde Máhtte Somby Sandvik beasai guokte vahku áigi diehtit ahte son beassá vuolgit.
 
-#!! *  __viimmatAdv__ 
-SELECT:viimmatAdv ("viimmat" Adv) IF  (NEGATE 1 Inf);
 
 SELECT:duppalitAdv ("duppalit" Adv);
 
@@ -3814,7 +3828,7 @@ REMOVE:Imprt1p Imprt + FIRSTPERS (0 (N Nom) LINK NOT 1 Inf OR Adv)(NEGATE 0 TRAN
 	#% Váldot beatnaga mielde!
 	#% Gárvodeahkku ja mannu geahččat dien nieidda, gii váccii stuora gápmagiiguin.
 
-REMOVE:vfin VFIN IF (0 N + Nom) ((1 (":") OR Rel OR EOS OR ("❡") LINK -2 BOS) OR (0 (N Gen) LINK 1 ("guovttos"))) ;
+REMOVE:HLvfin VFIN IF (0 N + Nom) ((1 (":") OR Rel OR EOS OR ("❡") LINK -2 BOS) OR (0 (N Gen) LINK 1 ("guovttos"))) ;
 	#$ Ohcci: Per M. Buljo , Guovdageaidnu
 	#$ Ohcci geas lea earenoamáš gelbbolašvuohta sáhttá árvvoštallojuvvot seniorráđđeaddin.
 	#$ Ohcci guovttos áigguiga ovdánahttit áibbas ođđa ja konkrehta buktagiid .
@@ -8713,7 +8727,7 @@ MAP:-FMAINVPrfPrcbisanit (@-FMAINV) TARGET PrfPrc + ("bisánit") (1 Sem/Route) ;
 LIST NOT-@>N = "bargat" "báhcit" "bálkestit" ("beahttit" Der/PassS) "beroštit" "boahtit" "buollát" "buohcat" "čadnot" "čuolastit" "eallit"  "fitnat" "galbet" "gearggus" "hálbut" "hárjehallat" "juhkan" "johtit" "leat" "lebbet" "logaldallat" "náđđut" "oaidnit" "oažžut" "orrot" "orrut"  "ihtit" "rahčat" "ráigat" "suhtadit" "unnut" "vuodjit" "váldot" "vuodjat" Der/InchL ;
 
 #!! * __NPrfPrc1__ with 1C N Nom
-MAP:>NPrfPrc1 (@>N) TARGET PrfPrc - NOT-@>N (NEGATE *-1 Neg BARRIER REAL-V)(NEGATE -1 COPULAS LINK *-1 Ill BARRIER NOT-A)(NEGATE 0 AUX)(NEGATE 0 TRANS-V LINK *1 Acc BARRIER NOT-NPMOD)(NEGATE 0 MOVEMENT-V LINK *1 Ill OR DOHKO OR ("lusa") BARRIER NOT-NPMOD)(NEGATE 0 PrfPrc LINK NOT 0 Der/Pass LINK 1 Attr)(*1 (N Nom) - Prop BARRIER NOT-A OR COMPAR OR PUNCT); # LINK NEGATE 0 TITLE LINK 1 Sem/Fem OR Sem/Mal OR Sem/Sur);
+MAP:>NPrfPrc1 (@>N) TARGET PrfPrc - NOT-@>N (NEGATE *-1 Neg BARRIER REAL-V)(NEGATE -1 COPULAS LINK *-1 Ill BARRIER NOT-A)(NEGATE 0 AUX)(NEGATE 0 TRANS-V LINK *1 Acc BARRIER NOT-NPMOD)(NEGATE 0 MOVEMENT-V LINK *1 Ill OR DOHKO OR ("lusa") BARRIER NOT-NPMOD)(NEGATE 0 PrfPrc LINK NOT 0 Der/Pass LINK 1 Attr)(*1 (N Nom) - Prop BARRIER NOT-A OR COMPAR OR PUNCT) ; # LINK NEGATE 0 TITLE LINK 1 Sem/Fem OR Sem/Mal OR Sem/Sur) ;
 	#$ Son lea oahppan olmmoš.
 	#$ .. maid almmolaš dohkkehuvvon dearvvašvuođabargit addet, ..
 	#$ Mearrasápmelaččat ledje áŋgiris ja oahppan bivdit.
@@ -8998,7 +9012,7 @@ MAP:N<Inf1 (@N<) TARGET Inf (-1 MIELLA + Nom OR MIELLA + Ess LINK NOT 0 PrfPrc L
 	#$ Sis lea nana árbevierru veahkehit ieš iežas persovnnalaš fierpmádagaid vehkiin.
 	#$ Lea geatnegasvuohta ovddidit buot mánáid beroštumiid servodagas.
 
-MAP:N<Infheadliner (@N<) TARGET Inf (-1 MIELLA) (*1 ("❡")) (NEGATE 0 TRANS-V LINK -1 NP-HEAD-NOM LINK NOT 0 GEN-CONCEPT LINK *-1 COPULAS BARRIER NOT-NPMOD LINK -1 Loc LINK 0 HUMAN OR Pers LINK *-1 BOS BARRIER NOT-NPMOD);	
+MAP:HLN<Infheadliner (@N<) TARGET Inf (-1 MIELLA) (*1 ("❡")) (NEGATE 0 TRANS-V LINK -1 NP-HEAD-NOM LINK NOT 0 GEN-CONCEPT LINK *-1 COPULAS BARRIER NOT-NPMOD LINK -1 Loc LINK 0 HUMAN OR Pers LINK *-1 BOS BARRIER NOT-NPMOD);	
 	#$ Stuora gudni oažžut dán bálkkašumi ❡ .
 
 
@@ -9538,6 +9552,7 @@ MAP:PrfPrcEllipsis @-FMAINV TARGET PrfPrc (NEGATE *-1 VFIN)(1 A OR N);
 #!! !And then we remove the verbs which didn't get any syntactic tag, in favour of verbs with syntactic tags.
 
 MAP:fragmverb (@-FMAINV) TARGET PrfPrc (0C PrfPrc)  ;
+MAP:fragmverb (@-FMAINV) TARGET PrfPrc (-1 BOS)(1 EOS)  ;
 	#$ Ođastuvvon: 07.03.2017 - 16:29
 
 
@@ -13418,7 +13433,8 @@ REMOVE:allSg2leat Sg2 IF (0 ("leat" Prs Pl3));
 
 
 #!! * __allPrsPl3__ selects and removes PrsPl3 if PrtSg2 initially
-SELECT:allPrsPl3 Prs + Pl3 + Ind  IF (0 Prt + Sg2 LINK *-1 BOS BARRIER NOT-ADV)(NEGATE *1 ("?"));
+SELECT:HLallPrsPl3 Prs + Pl1  IF (0 Pl3 LINK *-1 PUNCT BARRIER NOT-ADV-PCLE LINK -1 BOS)(*1 ("❡"));
+SELECT:HLallPrsPl3 Prs + Pl3 + Ind  IF (0 Prt + Sg2 LINK *-1 BOS BARRIER NOT-ADV)(NEGATE *1 ("?"));
 REMOVE:allPrsPl3 Prs + Pl3 IF (0 Prt + Sg2 LINK *-1 BOS BARRIER NOT-ADV);
 REMOVE:allPrsPl1 Prs + Pl1  IF (0 Prt + Sg2 LINK *-1 BOS BARRIER NOT-ADV);
 	#$ Oidnet go dan?
