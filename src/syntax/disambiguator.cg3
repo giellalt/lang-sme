@@ -2185,7 +2185,9 @@ REMOVE:Johan ("Jo") IF (0 ("Johan")) ;
 REMOVE:Állet ("Állet") IF (-1 BOS) ;	
 
 REMOVE:JA ACR (0 ("ja") OR ("go") OR ("illu")) ;	
-
+REMOVE:og CC (0 ("OG")) ;
+REMOVE:Gusto Prop (0 ("Gusto") LINK 0 Adv OR VFIN) ;
+REMOVE:Gusto Prop (0 ("Áigi") OR ("healbat") OR ("Davvin")) ;
 
 #ADD:subqst (<subqst>) TARGET V ; # IF (0 @+FMAINV OR @+FAUXV LINK -1 @+FMAINV OR @-FMAINV) ;
 
@@ -2194,7 +2196,7 @@ REMOVE:Prop Prop IF (0 ("Ai") LINK 0 Adv) ;
 
 
 #!! we don't want propernoun analysis of these words, initially in sentences
-LIST NOT-PROP = "Ai" "Ain" "Áigi" "Árran" "Beaska" "Bierdna" "Vuoksá" "Áddjá" "Áigi" "Álgu" "Barta" "Čeabet" "Dalan" "Dan" "Dávgi" "Dieđut" "Dronnet" "Duodji" "Duolba" "Fiervá" "Fiske" "Forum" "Gáldu" "Gahpir" "Galle" "Gámas" "Geassebáiki" "Giđđa" "Gieddi" "Gielas" "Gielda" "Girjjis" "Guksi" "Gulli" "Guoika" "Guovssahas" "Heasta" "In" "Internáhtta" "Jávregáddi" "Jávri" "Jo" "Johka" "Just" "Háhtta" "Li" "Márkan" "Miestta" "Muvra" "Muitte mu" "Náhkki" "Návet" "Náhkki" "Njunni" "Nuora" "Ob" "Ohcan" "Oja" "Olle" "Ose" "Ovdal" "Profehta" "Ra" "Riidi" "Sámeskuvla" "Sápmelaš" "Sápmi" "Sieidi" "Sisa" ("Siv" Loc) ("Siva" Loc) "Skávžá" "Stállu" "Varis" "Vággi" "Váldi" "Visti" "Vuotna" "Vuoigŋa" ;
+LIST NOT-PROP = "Ai" "Ain" "Áigi" "Árran" "Beaska" "Bierdna" "Vuoksá" "Áddjá" "Áigi" "Álgu" "Barta" "Čeabet" "Dalan" "Davvin" "Dávgi" "Dieđut" "Dronnet" "Duodji" "Duolba" "Fiervá" "Fiske" "Forum" "Gáldu" "Gahpir" "Galle" "Gámas" "Geassebáiki" "Giđđa" "Gieddi" "Gielas" "Gielda" "Girjjis" "Guksi" "Gusto" "Gulli" "Guoika" "Guovssahas" "Hel" "Heasta" "In" "Internáhtta" "Jávregáddi" "Jávri" "Jo" "Johka" "Just" "Háhtta" "Li" "Loss" "Márkan" "Miestta" "Muvra" "Muitte mu" "Náhkki" "Návet" "Náhkki" "Njunni" "Nuora" "Ob" "Ohcan" "Oja" "Olle" "Ose" "Ovdal" "Profehta" "Ra" "Riidi" "Sámeskuvla" "Sápmelaš" "Sápmi" "Sieidi" "Sisa" ("Siv" Loc) ("Siva" Loc) "Skávžá" "Stállu" "Varis" "Vággi" "Váldi" "Visti" "Vuotna" "Vuoigŋa" ;
 
 REMOVE:InitialSapmiNoun Prop IF (0 ("Sápmi") + Sg + Nom)(1 CC)(2 N + HUMAN OR N + Sem/Lang) ;
 	#$ Sápmi ja dárru galgaba báldalagaid oččodit givvuid Romssa gávpogii.
@@ -2209,6 +2211,7 @@ REMOVE:Sokki Prop IF (0 ("Sokki") LINK *-1 BOS BARRIER WORD)(NEGATE 0 Loc LINK 1
 SELECT:InitialSapmiProp Prop IF (0 ("Sápmi") + Sg + Nom LINK *-1 BOS OR (":") BARRIER WORD)(NOT 1 Prop + HUMAN);
 SELECT:InitialSapmiProp Prop IF (0 ("Sápmi") + Sg + Loc LINK *-1 BOS OR (":") BARRIER WORD) ;
 SELECT:InitialSapmiProp Prop IF (0 ("Sápmi") + Sg + Ill LINK *-1 BOS OR (":") BARRIER WORD) (1 Ess) ;
+SELECT:InitialSapmiProp Prop IF (0 ("Sápmi") + Sg + Ill LINK *-1 BOS OR (":") BARRIER WORD) (1 ("galgat")) ;
 #Comment: All initial Sápmi in Korp are Prop. In theory, they could be nouns as well, but we need authentic examples. 
 #Lene: I added + Sg, but still this one is too strong, and needs some constraints, so I commented it out. There are several examples counterexamples in the goldcorpus.
 #Trond: New try: demanding Nom or Loc, thereby getting correct goldcorpus. Especially Gen implies non-Prop.
@@ -2956,9 +2959,10 @@ SELECT:NotGen N + Nom IF (*-1 BOS BARRIER WORD)(0 Gen LINK NOT 0 PrfPrc OR Attr 
 #Trying out generalisations:
 SELECT:HLNomAct N IF (0 Sg1 LINK NEGATE -1 Pers + Sg1 OR PUNCT)(0 Sem/Act + Nom LINK 1 CC LINK 1 N + Nom)(*1 ("❡")) ;
 REMOVE:HLSg1 Sg1 IF (0 PrfPrc LINK NEGATE *-1 Pers + Sg1 OR PUNCT BARRIER SV-BOUNDARY OR REAL-V)(*1 ("❡")) ;
+REMOVE:HLSg1exep Sg1 IF (0 PrfPrc LINK -1 ("álo"))(*1 ("❡")) ;
 #SELECT:HLPrfPrcSg1Acc PrfPrc IF (0 Sg1 LINK 1 Pers + Sg1 + Acc) ;
 	#$ Siidda organiseren ja váldi.
-#SELECT:HLXXPrfPrc PrfPrc IF (0 BOS) ;
+SELECT:HLXXPrfPrc PrfPrc IF ((0 BOS) OR (-1 N + Nom LINK -1 BOS))(*1 ("❡") BARRIER REAL-V) ;
 SELECT:HLPrfPrcCoor PrfPrc IF (1 JA/DAHJE LINK 1C PrfPrc LINK 1 ("❡")) ;
 	#$ CUVKON, MOLLEN JA BOALDÁN ❡ .
 
@@ -2978,7 +2982,7 @@ SELECT:duššeAdv2 Adv IF (*-1 VFIN)(0 ("dušše"))(1 Num);
 #SELECT:PrfPrc PrfPrc IF (-1 ADVLCASE LINK *-1 BOS BARRIER WORD)(1 ADVLCASE LINK *1 ("❡")) ;
 SELECT:HLNom Nom IF (-1 Gen LINK -1 Gen LINK -1 CC LINK -1 Nom LINK *-1 BOS BARRIER WORD)(1 ("❡")) ;
 SELECT:HLPl Pl IF (0 A + Comp LINK 0 Sem/Hum)(1 ADVLCASE LINK *1 ("❡")) ;
-REMOVE:HLSg1 Sg1 IF (0 N OR PrfPrc LINK 1 ("❡")) ;
+#REMOVE:HLSg1 Sg1 IF (0 N OR PrfPrc LINK 1 ("❡")) ;
 SELECT:HLCopAdvPrfPrc Adv IF (1 PrfPrc - ("leat") LINK *1 ("❡"))(NEGATE 0 Po) ;
 REMOVE:HLattrNum Attr IF (0 ("miljovdna") LINK 1 Ill LINK *1 ("❡"))(-1 Num) ;
 REMOVE:HLáddjá A IF (0 ("áddjá")  LINK *1 ("❡")) ;
@@ -3015,8 +3019,8 @@ SELECT:HLInf Inf IF (-1 Ess LINK -1 Acc LINK -1 TRANS-V + PrfPrc LINK *-1 BOS BA
 	#$ Váldán advokáhta čielggadit iežas vuoigatvuođaid ❡ .
 	#$ Váldán advokáhta veahkkin oažžut vástádusa gielddas  ❡ .
 
-SELECT:HLInf Inf IF (1 CC LINK 1 Inf LINK *1 ("❡")) ;
-SELECT:HLInf Inf IF (-1 CC LINK -1 Inf LINK *1 ("❡")) ;
+#SELECT:HLInf Inf IF (1 CC LINK 1 Inf LINK *1 ("❡")) ;
+#SELECT:HLInf Inf IF (-1 CC LINK -1 Inf LINK *1 ("❡")) ;
 #SELECT:HLInf Inf IF (*-1 BOS BARRIER WORD)(1 ADVLCASE OR Adv LINK *1 ("❡"))(NEGATE 0 Pl1 LINK -1 PUNCT LINK -1 BOS) ;
 	#$ Oassálastit ja suohtastallat deháleappot go vuoitit čiekčamiid.
 	#$ – Háleštit earáin gii ádde lea buoremus dálkkas man goassige lean dovdan ❡ .
@@ -8172,6 +8176,9 @@ REMOVE:ImprtQst Imprt IF (*1 Qst BARRIER REAL-V OR COMMA OR (":") OR (""")) ;
 #!! * __ConNegImp__ selects ConNeg Imprt if Neg Imprt to the left. - 4265
 SELECT:ConNegImp (Imprt ConNeg) IF (*-1 (Neg Imprt) BARRIER ConNeg OR SV-BOUNDARY);
  	#$ Ale ge jorggit selggiid sutnje gii bivdá dus loanas.
+
+SELECT:NegImp Neg + Imprt IF (1 ConNeg + Imprt) ;
+
 
 #!! * __PrfPrcConNeg__  to ConNeg Aux after PrfPrc
 SELECT:PrfPrcConNeg ConNeg + AUX IF (*-1 PrfPrc BARRIER REAL-V OR SV-BOUNDARY LINK *-1 REAL-NEG BARRIER NOT-ADV-PCLE)(NEGATE *1 REAL-V BARRIER NOT-ADV-PCLE); 
