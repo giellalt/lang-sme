@@ -1,20 +1,54 @@
 Denne fila dokumenterer oppsett og bruk av cg-basert mt basert på Eckhard Bick sine verkty.
 
-Språkfilene frå Eckhard ligg i bargofiillat/, mykje av det som står
-nedanfor føreset at du står i den katalogen. Målet vårt no er å lage
-eit permanent oppsett i denne mappa, og deretter generalisere det til
-andre språk. Mappa bargofiillat/ er berre midlertidig.
 
-Det er også to lukka filer, dei ligg i det private repositoriet vårt, i
-mappa for planfiler, under projects/mt/tools. Sjå readmefila i den mappa for ei
-forklaring.
+Den opne katalogen (sme/tools/mt/cgbased) inneheld desse filene:
+----------------------------------------------------------------
+etc/smecg.nob.cg    # tilpasser kategorier til målspråket før transfer
+etc/smecg.nobsyn.cg # lagar syntaktisk transfer og legg til/fjernar ord
+lex/sme.nob.dict    # leksikon og transfer- og seleksjonsreglar
+
+Den lukka katalogen bin/ i private/ innheled desse filene:
+---------------------------------------------------------------------
+sme2nor     # ordboksoppslag og leksikalsk seleksjon
+genmorf_no  # generator
 
 
-Konfigurering (TODO)
-====================
+Pipeline
+--------
 
-Filene i projects/mt/tools skal få stiar som gjer at dei kan fungere med filene 
-$lang/tools/mt/cgbased.
+NB: Del to av pipeline (frå og med genmorf_no) fungerer framleis ikkje. Sjå nedanfor.
+
+Vi står i cgbased, og deler pipeline i to:
+
+echo "Nu dat lea." | hfst-tokenize ../../tokenisers/tokeniser-disamb-gt-desc.pmhfst -g|vislcg3 -g ../../../src/syntax/disambiguator.cg3 |vislcg3 -g ../../../../../giella-shared/smi/src/syntax/functions.cg3  |vislcg3 -g ../../../../../giella-shared/smi/src/syntax/dependency.cg3 > testsetning.dep
+
+cat testsetning.dep | vislcg3 -g etc/smecg.nob.cg | perl bin/niceline_mt | sme2nor --l |  vislcg3 -g etc/smecg.nobsyn.cg | perl bin/niceline_mt | genmorf_no | perl bin/trad2inline.pl
+
+
+
+cat prov.dep |\               # input
+vislcg3 -g smecg.nob.cg |\    # cg for å lage sme meir nob-aktig språk
+                              # (sett inn Det, Pr ...)
+perl niceline_mt |\           # formater til ei linje
+sme2nor --l | \               # transfer-kjerna. Den les sme.nob.dict
+vislcg3 -g smecg.nobsyn.cg |\ # syntaktiske tilpassingar (MOVE), ... 
+                              # Legg til ord ...
+perl niceline_mt |\           # formater til ei linje (ein gong til)
+genmorf_no |\                 # morfologisk generator for norsk
+perl trad2inline.pl |\        # postformattering
+
+
+genmorf_no fungerer ikkje.
+
+Den ber om ei fil nor.analyzer.wrapper som ikkje finst. Det er dermed
+neste steg framover.
+
+Diskusjon:
+Output av CG er 
+"bok" N Fem
+
+
+
 
 
 Installering
@@ -25,9 +59,7 @@ Installering
 * Sjekk kor du har perl: {{which perl}}  /opt/local/bin/perl
   og endre stien i første linja i sme2nor og genmorf_no til rett perl-adresse
 * sjekk at niceline_mt og trad2inline.pl har fått 
-** {{chmod a+x  niceline_mt trad2inline.pl}} (TODO: generaliser dette)
-* Fila levenshtein.pl ligg i same katalog som denne README-fila. Sjekk at stien til
-  levenshtein.pl i sme2nor peiker hit.
+** {{chmod a+x  bin/niceline_mt bin/trad2inline.pl}} 
 
 Installering av modulane IPC/Run og String/Approx i perl skjer slik:
 
@@ -36,31 +68,15 @@ install IPC::Run
 install String::Approx
 
 
-Her er pipeline for testing:
-
-Først lagar vi ei testfil som vi kallar prov.dep:
-
-Eckhards versjon for å lage prov.dep var følgjande.
-cat cgtestsentence.txt | cg3 -g disambiguator.cg3 | cg3 -g functions.cg3 | cg3 -g dependency.cg3 > prov.dep
-
-For å få denne til å fungere må vi tilpasse den til vårt oppsett, slik (stiane føreset at du står i katalogen bargofiillat):
-
-cat cgtestsentence.txt | hfst-tokenize ../../../tokenisers/tokeniser-disamb-gt-desc.pmhfst -g|vislcg3 -g ../../../../src/syntax/disambiguator.cg3 |vislcg3 -g ../../../../../../giella-shared/smi/src/syntax/functions.cg3  |vislcg3 -g ../../../../../../giella-shared/smi/src/syntax/dependency.cg3 > prov.dep
-
-(TODO: Vi må endre perlscripta slik at det tar hfst og ikkje xerox som input frå analysator.)
-
-
-Fila prov.dep bruker vi deretter som input til sjølve MT-prosessen:
-
-cat prov.dep | vislcg3 -g smecg.nor.cg | perl niceline_mt | sme2nor --l |  vislcg3 -g smecg.norsyn.cg | perl niceline_mt | genmorf_no | perl trad2inline.pl
-
-
-
-!!Output
-
 (Trond:Eg er usikker på kva denne kommandoen gjer:)
+
 perl -MCPAN -e shellx
 to install the module type. install module name. Example: install HTML::Template. installing the module making the shell much more user friendly.
+
+
+************
+Brevveksling
+************
 
 
 Her kommenterer Eckhard output av testsetninga:
@@ -91,7 +107,6 @@ Output er nedenståend, og behøver ikke at være korrekt, det er udtryk for hva
 
  han reiste for å telle sauer .
 
-**********************
 
 Og så en gennemgang af modulerne:
 
@@ -109,11 +124,11 @@ Der er også noget manuelt ved "mun".
 
 Jeg har nu lavet en sme2nor version af vores MT-kerne, dvs. det program, der læser og implementerer sme.nob.dict. Hvis der er _[a->b] opskrifter og lignende i forbindelse med in-situ-regler, bliver de implementeret, ellers er der [<ø>-><ø>±<pardef>] for pardef'erne. <ø> er indføjet af cg'en før, som et hook for stedstyres substitution. Output af sme2nor er CG, hvor sme-analysen er bibeholdt efter ordformen, og kohorten eller er en kopi med norsk(e) lemma(ta).
 
-3. smecg.nor.cg
+3. smecg.nob.cg
 
 Det sted, hvor jeg mener norske kategorier skal indføjes, der ikke er der på samisk (fx definitness?). Desuden kreerer den foreløbigt set tags til brug i sme.nob.dict.
 
-4. smecg.norsyn.cg
+4. smecg.nobsyn.cg
 
 Den grammatik, der indføjer tokens (i eksempler "for å" og artiklen "en"), og først og fremmest laver MOVE regler. Jeg mener også, at det må være muligt, at lave næsten alt, der er pardef, her. Hvorfor have __verb, hvis det alligevel skal gøres for alle verber? Så enten skal der være regler, der reagerer på pardefs, der stammer fra sme.nob.dict, eller også kan man lave direkte a->b ændringer i sme.nob.dict, og generelle ting i smecg.norsyn.cg, helt uden pardefs.
 
