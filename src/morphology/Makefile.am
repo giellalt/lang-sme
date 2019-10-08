@@ -32,7 +32,7 @@ GT_LEXC_SRCS_L1_L2=\
 			affixes/pronouns.lexc            \
 			affixes/propernouns.lexc         \
 			affixes/symbols.lexc             \
-			stems/abbreviations.lexc         \
+			stems/sme-abbreviations.lexc         \
 			stems/adjectives.lexc            \
 			stems/adpositions.lexc           \
 			stems/adverbs.lexc               \
