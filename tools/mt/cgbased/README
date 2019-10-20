@@ -1,8 +1,12 @@
 Denne fila dokumenterer oppsett og bruk av cg-basert mt basert på Eckhard Bick sine verkty.
 
 
+
+
+
 Den opne katalogen (sme/tools/mt/cgbased) inneheld desse filene:
 ----------------------------------------------------------------
+bin/smegram         # alias for mt: cat prov.dep | smegram --option
 etc/smecg.nob.cg    # tilpasser kategorier til målspråket før transfer
 etc/smecg.nobsyn.cg # lagar syntaktisk transfer og legg til/fjernar ord
 lex/sme.nob.dict    # leksikon og transfer- og seleksjonsreglar
@@ -16,6 +20,25 @@ genmorf_no  # generator
 Pipeline
 --------
 
+Programmet smegram inneheld heile pipeline. Det har desse opsjonane:
+
+--nob    (kæden indtil smecg.nob, med trace)
+--trad   (kæden indtil sme2nor)
+--nobsyn (kæden indtil smecg.nobsyn, med trace)
+--gen    (kæden indtil genmorf_no, med debugging output --, 
+          der viser fst-kaldene as is)
+
+Uden options køres hele kæden, dvs. nob tekst med følgende kæde:
+
+cat prov.dep | cg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | cg3 -g $etcDir/smecg.nob.cg | cg3 -g $etcDir/smecg.nobsyn.cg | $binDir/niceline_mt | $privDir/genmorf_no | $binDir/trad2inline.pl
+
+Konkret sti, ståande i tools/mt/cgbased:
+
+cat prov.dep | cg3 -g etc/smecg.nob.cg | bin/niceline_mt | $GTPRIV/plan/projects/mt/bin/sme2nor --l | cg3 -g etc/smecg.nob.cg | cg3 -g etc/smecg.nobsyn.cg | bin/niceline_mt | $GTPRIV/plan/projects/mt/bin/genmorf_no | bin/trad2inline.pl
+
+
+Kommentar frå NoDaLiDa-diskusjonen:
+------- -------- -------- ---------
 NB: Del to av pipeline (frå og med genmorf_no) fungerer framleis ikkje. Sjå nedanfor.
 
 Vi står i cgbased, og deler pipeline i to:
