@@ -1,0 +1,85 @@
+#!/usr/bin/env perl
+# -*- mode: cperl; indent-tabs-mode: nil; tab-width: 3; cperl-indent-level: 3; -*-
+BEGIN { $| = 1; }
+use utf8;
+use warnings;
+use strict;
+
+if ((($ENV{LANGUAGE} || "").($ENV{LANG} || "").($ENV{LC_ALL} || "")) !~ /UTF-?8/i) {
+   die "Locale is not UTF-8 - bailing out!\n";
+}
+if ($ENV{PERL_UNICODE} !~ /S/ || $ENV{PERL_UNICODE} !~ /D/ || $ENV{PERL_UNICODE} !~ /A/) {
+   die "Envvar PERL_UNICODE must contain S and D and A!\n";
+}
+
+#
+# Set environment variables for subprocesses
+#
+my ($binDir) = $0 =~ /^(.*)\/.*/;
+$ENV{PATH} = "$binDir:$binDir/../../bin:$ENV{PATH}";
+$ENV{SMEGRAM_BIN} = "$binDir";
+$ENV{SMEGRAM_ETC} = "$binDir/../etc";
+$ENV{SMEGRAM_LEX} = "$binDir/../lex";
+$ENV{SMEGRAM_USEDB} = 1;
+
+
+#
+# Set up parser chain.
+#
+my $etcDir = $ENV{SMEGRAM_ETC} || "/usr/local/visl/etc/";
+my $lexDir = $ENV{SMEGRAM_LEX} || "/usr/local/visl/lex/";
+my $privDir = "";
+
+my $GTHOME = "/Users/ttr000/main" ;
+if (-e $GTHOME) {
+   $privDir = "";
+}
+else {
+#   my $privDir = "/home/eckhard/parsers/sme2/priv";
+   $privDir = $binDir;
+   $privDir =~ s/bin/priv/;
+}
+
+chdir $binDir;
+
+#print "--$binDir\n";
+#print "--$etcDir\n";
+#print "--$privDir\n";
+
+my $cmd = "cg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | cg3 -g $etcDir/smecg.nob.cg | cg3 -g $etcDir/smecg.nobsyn.cg | $binDir/niceline_mt | $privDir/genmorf_no | $binDir/trad2inline.pl";
+
+my $option = "";
+
+if (defined($ARGV[0]) and $ARGV[0] =~ /^--(.*)$/) {
+   $option = $1;
+#   print "--option=$option\n";
+
+    if ($option =~ /^nob$/) {
+      $cmd = "cg3 -g $etcDir/smecg.nob.cg --trace"
+    }
+    elsif ($option =~ /^trad$/) {
+      $cmd = "cg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l"
+    }
+    elsif ($option =~ /^nobsyn$/) {
+      $cmd = "cg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | cg3 -g $etcDir/smecg.nobsyn.cg --trace"
+    }
+    elsif ($option =~ /^gen$/) {
+      $cmd = "cg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | cg3 -g $etcDir/smecg.nobsyn.cg | $binDir/niceline_mt | $privDir/genmorf_no"
+    }
+    else {
+       print STDERR "unknown option: $ARGV[0]\n";
+    }
+}
+
+
+
+print "--option =$option, cmd=$cmd\n";
+
+#
+# Run parser chain
+#
+open PARSER, "$cmd|" or die $!;
+while (<PARSER>) {
+    print;
+}
+close PARSER;
