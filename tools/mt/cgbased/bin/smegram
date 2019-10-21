@@ -4,6 +4,8 @@ BEGIN { $| = 1; }
 use utf8;
 use warnings;
 use strict;
+use File::Basename;
+use Cwd 'abs_path' ;
 
 if ((($ENV{LANGUAGE} || "").($ENV{LANG} || "").($ENV{LC_ALL} || "")) !~ /UTF-?8/i) {
    die "Locale is not UTF-8 - bailing out!\n";
@@ -12,10 +14,12 @@ if ($ENV{PERL_UNICODE} !~ /S/ || $ENV{PERL_UNICODE} !~ /D/ || $ENV{PERL_UNICODE}
    die "Envvar PERL_UNICODE must contain S and D and A!\n";
 }
 
+my $binDir = abs_path((fileparse(__FILE__))[1]) ;
+
 #
 # Set environment variables for subprocesses
 #
-my ($binDir) = $0 =~ /^(.*)\/.*/; # the smegram catalogue cgbased/bin
+# my ($binDir) = $0 =~ /^(.*)\/.*/; # the smegram catalogue cgbased/bin
 $ENV{PATH} = "$binDir:$binDir/../../bin:$ENV{PATH}";
 $ENV{SMEGRAM_BIN} = "$binDir";
 $ENV{SMEGRAM_ETC} = "$binDir/../etc";
@@ -40,9 +44,9 @@ if (-e "/home/eckhard/parsers/sme2/priv" ) {
 
 chdir $binDir;
 
-print "--binDir $binDir\n";
-print "--etcDir $etcDir\n";
-print "--prvDir $privDir\n";
+# print "--binDir $binDir\n";
+# print "--etcDir $etcDir\n";
+# print "--prvDir $privDir\n";
 
 my $cmd = "vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | vislcg3 -g $etcDir/smecg.nob.cg | vislcg3 -g $etcDir/smecg.nobsyn.cg | $binDir/niceline_mt | $privDir/genmorf_no | $binDir/trad2inline.pl";
 
