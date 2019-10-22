@@ -1,6 +1,48 @@
-Denne fila dokumenterer oppsett og bruk av cg-basert mt basert på Eckhard Bick sine verkty.
+==========================================================================================
+Denne fila dokumenterer oppsett og bruk av cg-basert mt basert på Eckhard Bick sine verkty
+==========================================================================================
+
+Filene ligg i langs/nob, i langs/sme og i priv/plan/projects/mt
+
+=====================
+Kompiler i sme og nob
+=====================
+
+./autogen.sh # berre første gong
+./configure --with-hfst --enable-tokenisers --enable-apertium --enable-cgmt --enable--enable-reversed-intersect
+make -j
 
 
+====
+Bruk
+====
+
+Gå til langs/sme/tools/mt/cgbased
+
+echo "Mun jorgalan cealkaga." | hfst-tokenize -g ../../tokenisers/tokeniser-disamb-gt-desc.pmhfst | vislcg3 -g ../../../src/syntax/disambiguator.cg3 | vislcg3 -g ../../../../../giella-shared/smi/src/syntax/functions.cg3 | vislcg3 -g ../../../../../giella-shared/smi/src/syntax/dependency.cg3 | grep -v '^:'|PERL_UNICODE=SDA ./bin/smegram 
+
+Som output får eg:
+
+jeg snur en setning .
+
+TODO:
+ 
+Del 1 (altså alt før siste kommando) skal inn i smegram.
+
+Vi har framleis feilmeldingar:
+--option =, cmd=vislcg3 -g /Users/trond/main/langs/sme/tools/mt/cgbased/bin/../etc/smecg.nob.cg | /Users/trond/main/langs/sme/tools/mt/cgbased/bin/niceline_mt | /Users/trond/priv/plan/projects/mt/bin/sme2nor --l | vislcg3 -g /Users/trond/main/langs/sme/tools/mt/cgbased/bin/../etc/smecg.nob.cg | vislcg3 -g /Users/trond/main/langs/sme/tools/mt/cgbased/bin/../etc/smecg.nobsyn.cg | /Users/trond/main/langs/sme/tools/mt/cgbased/bin/niceline_mt | /Users/trond/priv/plan/projects/mt/bin/genmorf_no | /Users/trond/main/langs/sme/tools/mt/cgbased/bin/trad2inline.pl
+Name "main::sentence_orig" used only once: possible typo at /Users/trond/main/langs/sme/tools/mt/cgbased/bin/trad2inline.pl line 53.
+
+Vi har ikkje mekanisme for stor bokstav i starten av setning.
+
+
+
+
+=============
+Dokumentasjon
+=============
+
+Dette skal vi rydde opp i etter kvart.
 
 
 
@@ -15,12 +57,14 @@ Den lukka katalogen bin/ i private/ innheled desse filene:
 ---------------------------------------------------------------------
 sme2nor     # ordboksoppslag og leksikalsk seleksjon
 genmorf_no  # generator
+nob.analyser.wrapper   # denne les analysefiler for norsk, veit ikkje korfor.
+nob.generator.wrapper  # denne les genereringsfiler for norsk
 
 
 Pipeline
 --------
 
-Programmet smegram inneheld heile pipeline. Det har desse opsjonane:
+Programmet smegram inneheld heile pipeline. Det har desse opsjonane for debugging:
 
 --nob    (kæden indtil smecg.nob, med trace)
 --trad   (kæden indtil sme2nor)
@@ -35,6 +79,10 @@ cat prov.dep | cg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2
 Konkret sti, ståande i tools/mt/cgbased:
 
 cat prov.dep | cg3 -g etc/smecg.nob.cg | bin/niceline_mt | $GTPRIV/plan/projects/mt/bin/sme2nor --l | cg3 -g etc/smecg.nob.cg | cg3 -g etc/smecg.nobsyn.cg | bin/niceline_mt | $GTPRIV/plan/projects/mt/bin/genmorf_no | bin/trad2inline.pl
+
+
+
+
 
 
 Kommentar frå NoDaLiDa-diskusjonen:
