@@ -7,11 +7,11 @@
 #
 # dir/filename.lexc => filename-dir.jspwiki
 
-JSP_PAGES=root-morphology.jspwiki        \
+JSP_PAGES=root-morphology.jspwiki          \
 		  adjectives-affixes.jspwiki       \
-		  nouns-affixes.jspwiki          \
+		  nouns-affixes.jspwiki            \
 		  possessive-suffixes-affixes.jspwiki \
-		  verbs-affixes.jspwiki \
+		  verbs-affixes.jspwiki            \
 		  abbreviations-stems.jspwiki      \
 		  acronyms-stems.jspwiki           \
 		  adjectives-stems.jspwiki         \
@@ -22,12 +22,14 @@ JSP_PAGES=root-morphology.jspwiki        \
 		  numerals-stems.jspwiki           \
 		  particles-stems.jspwiki          \
 		  pronouns-stems.jspwiki           \
-		  sme-propernouns-stems.jspwiki        \
+		  sme-propernouns-stems.jspwiki    \
 		  subjunctions-stems.jspwiki       \
 		  verbs-stems.jspwiki              \
-		  disambiguator-syntax.jspwiki \
-		  functions-syntax.jspwiki \
+		  sme-punctuation-stems.jspwiki    \
+		  disambiguator-syntax.jspwiki     \
+		  functions-syntax.jspwiki         \
 		  dependency-syntax.jspwiki  
+
 # clitics-morphology.jspwiki       \
 # compounding-morphology.jspwiki   \
 # adjectives-oahpa-stems.jspwiki   \
@@ -36,5 +38,6 @@ JSP_PAGES=root-morphology.jspwiki        \
 # punctuation-stems.jspwiki        \
 # smi-propernouns-stems.jspwiki    \
 # adjectives-oahpa-affixes.jspwiki \
-# propernouns-affixes.jspwiki      \
+# propernouns-affixes.jspwiki
+
 include $(top_srcdir)/am-shared/doc-dir-include.am

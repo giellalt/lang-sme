@@ -27,22 +27,23 @@ GT_LEXC_SRCS_L1_L2=\
 			compounding.lexc                 \
 			affixes/abbreviations.lexc       \
 			affixes/acronyms.lexc            \
-			affixes/numerals.lexc \
+			affixes/numerals.lexc            \
 			affixes/possessive-suffixes.lexc \
 			affixes/pronouns.lexc            \
 			affixes/propernouns.lexc         \
 			affixes/symbols.lexc             \
-			stems/sme-abbreviations.lexc         \
+			stems/sme-abbreviations.lexc     \
 			stems/adjectives.lexc            \
 			stems/adpositions.lexc           \
 			stems/adverbs.lexc               \
 			stems/conjunctions.lexc          \
 			stems/interjections.lexc         \
 			stems/nouns.lexc                 \
-			stems/numerals.lexc                 \
+			stems/numerals.lexc              \
 			stems/particles.lexc             \
 			stems/pronouns.lexc              \
-			stems/sme-acronyms.lexc         \
+			stems/sme-acronyms.lexc          \
+			stems/sme-punctuation.lexc       \
 			stems/subjunctions.lexc          \
 			stems/verbs.lexc
 
