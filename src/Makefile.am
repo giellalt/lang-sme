@@ -51,7 +51,8 @@ if WANT_MORPHOLOGY
 endif # WANT_MORPHOLOGY
 
 if WANT_GENERATION
-#GT_GENERATORS+=generator-nob-desc.xfst \
+GT_GENERATORS+=analyser-lia_disamb-gt-desc.xfst
+#			   generator-nob-desc.xfst \
 #			   generator-nob-norm.xfst 
 endif # WANT_GENERATION
 
@@ -68,7 +69,8 @@ endif # CAN_XFST
 if CAN_HFST
 
 if WANT_MORPHOLOGY
-GT_ANALYSERS+=analyser-gt-norm.hfst
+GT_ANALYSERS+=analyser-gt-norm.hfst \
+			  analyser-lia_disamb-gt-desc.hfstol
 #GT_ANALYSERS+=analyser-nob-desc.hfstol \
 #			  analyser-nob-norm.hfstol
 endif # WANT_MORPHOLOGY
@@ -89,7 +91,7 @@ endif # CAN_HFST
 
 #### FOMA transducers
 if CAN_FOMA
-GT_ANALYSERS+=
+GT_ANALYSERS+=analyser-lia_disamb-gt-desc.foma
 GT_GENERATORS+=
 endif # CAN_FOMA
 
@@ -450,6 +452,27 @@ analyser-disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.%      \
 			.o. @\"filters/remove-norm-comp-tags.$*\"           \
 			.o. @\"filters/remove-orig_lang-tags.$*\"           \
 			.o. @\"filters/remove-UseLIA-strings.$*\"           \
+			.o. @\"filters/rename-POS_before_Der-tags.$*\"      \
+			.o. @\"filters/remove-semantic-tags-before-derivations.$*\" \
+			.o. @\"$<\"                                         \
+			;\n\
+		 $(INVERT_HFST)\
+		 save stack $@\n\
+		 quit\n" | $(XFST_TOOL)
+
+# LIA disamb analysers here, all formats:
+analyser-lia_disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.%      \
+					filters/remove-orig_lang-tags.%           \
+					filters/remove-norm-comp-tags.%           \
+					filters/remove-dialect-tags.%             \
+					filters/remove-derivation-position-tags.% \
+					filters/rename-POS_before_Der-tags.%      \
+					filters/remove-semantic-tags-before-derivations.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+				@\"filters/remove-derivation-position-tags.$*\" \
+			.o. @\"filters/remove-dialect-tags.$*\"             \
+			.o. @\"filters/remove-norm-comp-tags.$*\"           \
+			.o. @\"filters/remove-orig_lang-tags.$*\"           \
 			.o. @\"filters/rename-POS_before_Der-tags.$*\"      \
 			.o. @\"filters/remove-semantic-tags-before-derivations.$*\" \
 			.o. @\"$<\"                                         \
