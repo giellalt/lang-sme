@@ -617,7 +617,7 @@ generator-gramcheck-gt-norm.hfst: generator-gramcheck-gt-norm.tmp.hfst \
 	read regex \
 			@\"filters/remove-norm-comp-tags.hfst\"           \
 		.o. @\"filters/remove-derivation-position-tags.hfst\" \
-		.o. @\"filters/remove-UseLIA-strings.$*\"             \
+		.o. @\"filters/remove-UseLIA-strings.hfst\"           \
 		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
 		.o. @\"$<\"                                           \
 		;\n\
