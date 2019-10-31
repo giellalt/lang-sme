@@ -372,9 +372,9 @@ analyser-gt-norm.xfst: analyser-gt-norm.tmp.xfst \
 			.o. @\"filters/remove-norm-comp-tags.xfst\"           \
 			.o. @\"filters/remove-derivation-position-tags.xfst\" \
 			.o. @\"filters/remove-illegal-derivation-strings.xfst\" \
-			.o. @\"filters/remove-UseLIA-strings.$*\"             \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.xfst\"   \
-			.o. @\"$<\"                                         \
+			.o. @\"filters/remove-UseLIA-strings.xfst\"           \
+			.o. @\"filters/remove-Err_SpaceCmp-strings.xfst\"     \
+			.o. @\"$<\"                                           \
 			;\n\
 		 save stack $@\n\
 		 quit\n" | $(XFST) $(VERBOSITY)
