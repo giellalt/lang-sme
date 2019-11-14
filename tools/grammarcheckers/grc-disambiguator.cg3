@@ -831,6 +831,7 @@ LIST Sem/Concrete-NotHuman-NotPlace = Sem/Ani Sem/Clth Sem/Clth-jewl Sem/Clth-pa
 
 LIST <vdic> = <vdic> ;
 LIST <copula> = <copula> ;
+LIST <spelled> = <spelled> ;
 
 LIST <0> = <0> ;
 LIST <AG-Ill-Ani><PR-Acc-Any> = <AG-Ill-Ani><PR-Acc-Any> ;
@@ -3323,10 +3324,13 @@ BEFORE-SECTIONS
 
 
 #!! Named-entity-guesser
-SUBSTITUTE (?) (N Prop Plc Sg Loc Guess) TARGET ("<[A-ZÆØÅÄÖČŠÁ].*s>"r ?) ;
+#SUBSTITUTE (?) (N Prop Plc Sg Loc Guess) TARGET ("<[A-ZÆØÅÄÖČŠÁ].*s>"r ?) ;
+SUBSTITUTE (?) (N Prop Plc Sg Loc Guess) TARGET ("<[\\p{Lu}].*s>"r ?) ;
 SUBSTITUTE (?) (N Prop Plc Sg Nom Guess) TARGET ("<[A-ZÆØÅÄÖČŠÁ].*>"r ?)(NOT -1 BOS) ;
 #REMOVE ("([^<]).*"r) IF (0 (VSTR:"<\Q$1\E.*>"r));
-REMOVE ("([\pL\pN]).*"r) IF (0 (VSTR:"<$1.*>"r));
+#REMOVE ("([\pL\pN]).*"r Sem/Plc) IF (0 (VSTR:"<$1.*>"r));
+REMOVE ("([\\p{L}\\p{N}]).*"r) IF (NEGATE 0 (VSTR:"<$1.*>"r) - (<spelled>));
+#REMOVE ("([^<]).*"r) IF (0 (VSTR:"<\\Q$1\\E.*>"r));
 	## Ruoŧa girkus lea oaiveovddasvástádus doallat hávdádusaid Ruoŧas, earret Stockholma gávpogis ja Tranåsa gielddas.
 
 #!! !!Guessing: Rule for adding Sem/Date as a tag to readings which looks like dates
