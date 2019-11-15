@@ -3271,14 +3271,15 @@ SET NON-APP = ALLSYNTAG - (@APP);
 	
 #! needs to be before PROTECT (<spelled>) ;
 
-#SUBSTITUTE (?) (N Prop Plc Sg Loc Guess) TARGET ("<[A-ZÆØÅÄÖČŠÁ].*s>"r ?) ;
-SUBSTITUTE (?) (N Prop Plc Sg Loc Guess) TARGET ("<[\\p{Lu}].*s>"r ?) ;
-SUBSTITUTE (?) (N Prop Plc Sg Nom Guess) TARGET ("<[A-ZÆØÅÄÖČŠÁ].*>"r ?)(NOT -1 BOS) ;
-#REMOVE ("([^<]).*"r) IF (0 (VSTR:"<\Q$1\E.*>"r));
-#REMOVE ("([\pL\pN]).*"r Sem/Plc) IF (0 (VSTR:"<$1.*>"r));
+#SUBSTITUTE (?) (N Prop Sem/Plc Sg Loc Guess) TARGET ("<[A-ZÆØÅÄÖČŠÁ].*s>"r ?) ;
+SUBSTITUTE (?) (N Prop Sem/Plc Sg Loc Guess) TARGET ("<[\\p{Lu}].*s>"r ?) ;
+SUBSTITUTE (?) (N Prop Sem/Plc Sg Nom Guess) TARGET ("<[A-ZÆØÅÄÖČŠÁ].*>"r ?)(NOT -1 BOS) ;
 REMOVE ("([\\p{L}\\p{N}]).*"r) IF (NEGATE 0 (VSTR:"<$1.*>"r) - (<spelled>));
-REMOVE ("([^<]).*"r) IF (NEGATE 0 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(0 Guess);
+
+	# remove speller suggestions if the first letter of the suggestion not the same as the name
+REMOVE ("([^<]).*"r) IF (NEGATE 0 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(0 Prop);
 	## Ruoŧa girkus lea oaiveovddasvástádus doallat hávdádusaid Ruoŧas, earret Stockholma gávpogis ja Tranåsa gielddas.
+	## Svenska Kyrkan
 
 
 
