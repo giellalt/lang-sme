@@ -533,6 +533,8 @@ SET NOMAG = NomAg OR Der/NomAg ;
 
 LIST VAbess = VAbess ;
 
+LIST Guess = Guess ;
+
 # Derivation
 # ----------
 
@@ -3263,6 +3265,24 @@ SET NON-APP = ALLSYNTAG - (@APP);
 
 # SET ASSIGNEDSYN = ALLSYNTAG - @X ;
 
+	# # # # # # # # # # # # # #
+	##!! Named-entity-guesser
+	# # # # # # # # # # # # # #
+	
+#! needs to be before PROTECT (<spelled>) ;
+
+#SUBSTITUTE (?) (N Prop Plc Sg Loc Guess) TARGET ("<[A-ZÆØÅÄÖČŠÁ].*s>"r ?) ;
+SUBSTITUTE (?) (N Prop Plc Sg Loc Guess) TARGET ("<[\\p{Lu}].*s>"r ?) ;
+SUBSTITUTE (?) (N Prop Plc Sg Nom Guess) TARGET ("<[A-ZÆØÅÄÖČŠÁ].*>"r ?)(NOT -1 BOS) ;
+#REMOVE ("([^<]).*"r) IF (0 (VSTR:"<\Q$1\E.*>"r));
+#REMOVE ("([\pL\pN]).*"r Sem/Plc) IF (0 (VSTR:"<$1.*>"r));
+REMOVE ("([\\p{L}\\p{N}]).*"r) IF (NEGATE 0 (VSTR:"<$1.*>"r) - (<spelled>));
+REMOVE ("([^<]).*"r) IF (NEGATE 0 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(0 Guess);
+	## Ruoŧa girkus lea oaiveovddasvástádus doallat hávdádusaid Ruoŧas, earret Stockholma gávpogis ja Tranåsa gielddas.
+
+
+
+
 
 # Do not touch speller output:
 
@@ -3323,15 +3343,6 @@ BEFORE-SECTIONS
 
 
 
-#!! Named-entity-guesser
-#SUBSTITUTE (?) (N Prop Plc Sg Loc Guess) TARGET ("<[A-ZÆØÅÄÖČŠÁ].*s>"r ?) ;
-SUBSTITUTE (?) (N Prop Plc Sg Loc Guess) TARGET ("<[\\p{Lu}].*s>"r ?) ;
-SUBSTITUTE (?) (N Prop Plc Sg Nom Guess) TARGET ("<[A-ZÆØÅÄÖČŠÁ].*>"r ?)(NOT -1 BOS) ;
-#REMOVE ("([^<]).*"r) IF (0 (VSTR:"<\Q$1\E.*>"r));
-#REMOVE ("([\pL\pN]).*"r Sem/Plc) IF (0 (VSTR:"<$1.*>"r));
-REMOVE ("([\\p{L}\\p{N}]).*"r) IF (NEGATE 0 (VSTR:"<$1.*>"r) - (<spelled>));
-#REMOVE ("([^<]).*"r) IF (0 (VSTR:"<\\Q$1\\E.*>"r));
-	## Ruoŧa girkus lea oaiveovddasvástádus doallat hávdádusaid Ruoŧas, earret Stockholma gávpogis ja Tranåsa gielddas.
 
 #!! !!Guessing: Rule for adding Sem/Date as a tag to readings which looks like dates
 #SUBSTITUTE:Date1 (Num Sg) (Num Sg Sem/Date) TARGET ("<[0-3][0-9][.][0-2][0-9][.][1-2][0-9][0-9][0-9]>"r Num);
@@ -3427,6 +3438,7 @@ SUBSTITUTE:Attr (Prop Sem/Mal Sg Nom) (Prop Sem/Mal Attr) ("Hearrá") (1 ("Ipmil
 REMOVE:divAttr (Prop Allegro Attr) OR (Prop Attr Gen) OR (Prop Attr Acc) OR (Prop Pl Attr);
 
 SECTION 
+
 
 REMOVE:CmpCit (Cmp/Cit)
     IF ( 0 Cmp/SplitR )
