@@ -738,7 +738,7 @@ LIST Sem/Feat = Sem/Feat Sem/Feat_Plant ; #many -vuohta and -dat nouns
 LIST Sem/Feat-measr = Sem/Feat-measr ;
 LIST Sem/Feat-phys = Sem/Ctain_Feat-phys Sem/Feat-phys Sem/Feat-phys_Tool-write Sem/Feat-phys_Veh Sem/Feat-phys_Wthr ;
 LIST Sem/Feat-psych = Sem/Feat-psych Sem/Feat-psych_Hum ; #not touchable, not countable ("beroštupmi" "gáđašvuohta" "mokta" "sáhkkiivuohta") - Mus lea X,  Son lea X-adj persovdna # muitu
-LIST Sem/Fem = Sem/Fem ;
+LIST Sem/Fem = Sem/Fem Sem/Fem_Mal;
 LIST Sem/Food = Sem/Body_Food Sem/Event_Food Sem/Food Sem/Food_Perc-phys Sem/Food_Plant ; #Syn: bassit/borrat/sohpat X-Acc. mon im læk borram dam guolest. mun boran iđitbiepmu. mus lea iđitbiebmu fárus. birgui borastuvvat
 LIST Sem/Food-med = Sem/Domain_Food-med Sem/Food-med ;
 LIST Sem/Fruit = Sem/Act_Fruit Sem/Clth-jewl_Fruit Sem/Fruit Sem/Fruit_Hum ;
@@ -752,7 +752,7 @@ LIST Sem/Hum-abstr = Sem/Hum-abstr ;
 LIST Sem/Hum-prof = Sem/Hum-prof ;
 LIST Sem/Ideol = Sem/Ideol ;
 LIST Sem/Lang = Sem/Hum_Lang Sem/Lang Sem/Lang_Tool; #Syn: hállat X:illatiiva. Son hállá X:Acc. Jorgalan dán X:lokatiiva Y:illatiiva.
-LIST Sem/Mal = Sem/Mal ;
+LIST Sem/Mal = Sem/Mal Sem/Fem_Mal ;
 LIST Sem/Mat = Sem/Body_Mat Sem/Edu_Mat Sem/Mat Sem/Mat_Plant Sem/Mat_Txt ; # Material #Sem: cannot pass through it without destroying it, ráhkadit juoidá X:s. Niibi lea X-Loc-Sg. #Dán báhkis šaddá čáppa gohppu.
 LIST Sem/Measr = Sem/Body_Measr Sem/Measr Sem/Measr_Obj_Time Sem/Measr_Time ; # Lea lassánan 100 X-Loc.
 LIST Sem/Money = Sem/Clth-jewl_Money Sem/Money Sem/Money_Obj Sem/Money_Org Sem/Money_Txt ; #Mun mávssán X. Mii ávžžuhit vuovdit alimus X-Ill (haddái). ruhtadit doaibmabušeahtain. vuovdit/bidjat ruđast - selge for penger
@@ -3276,14 +3276,21 @@ SUBSTITUTE (?) (N Prop Sem/Plc Sg Loc Guess) TARGET ("<[\\p{Lu}].*s>"r ?) ;
 SUBSTITUTE (?) (N Prop Sem/Plc Sg Ill Guess) TARGET ("<[\\p{Lu}].*ii>"r ?) ;
 SUBSTITUTE ("([\\p{L}\\p{N}].*)'ii"r) (VSTR:"$1"r) TARGET (N Prop Sem/Plc Sg Ill Guess) ;
 	## Davvi Nuorra ja Riddu Riđđu bovdejit sámi nuoraid 3. Arctic Youth Art Camp'ii Gáivuonas 17.-22. b. suoidnemánus 2001. Leairras lea sadji 30 oasseváldái, ja dat juohkásit nuoraide Sámis, Ruonáeatnamis, Kanadas, Alaskas ja Sibirjas.
+	
+SUBSTITUTE (?) (N Prop Sem/Fem_Mal Sg Nom Guess) TARGET ("<[A-ZÆØÅÄÖČŠÁ].*>"r ?)(1 Sem/Sur)(NOT -1 BOS) ;	
+	## Ramonesa lávlu {Joye} Ramone guoimmuhii guovtte lávlagis Blackfire One Nation Under skearrus 2002.
 
 SUBSTITUTE (?) (N Prop Sem/Plc Sg Nom Guess) TARGET ("<[A-ZÆØÅÄÖČŠÁ].*>"r ?)(NOT -1 BOS) ;
-REMOVE ("([\\p{L}\\p{N}]).*"r) IF (NEGATE 0 (VSTR:"<$1.*>"r) - (<spelled>))(0 Prop);
+
+REMOVE ("([\\p{L}\\p{N}]).*"r) IF (NEGATE 0 (VSTR:"<$1.*>"r) - (<spelled>))(NEGATE 0/-1 (VSTR:"<$1.*>"r) - (<spelled>))(0 Prop)(NEGATE 0/-1 Cmp);
 
 	# remove speller suggestions if the first letter of the suggestion not the same as the name
-REMOVE ("([^<]).*"r) IF (NEGATE 0 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(0 Prop);
+REMOVE ("([^<]).*"r) IF (NEGATE 0 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(NEGATE 0/-1 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(0 Prop)(NEGATE 0/-1 Cmp);
 	## Ruoŧa girkus lea oaiveovddasvástádus doallat hávdádusaid Ruoŧas, earret Stockholma gávpogis ja Tranåsa gielddas.
 	## Svenska Kyrkan
+	#$ Tšukčit ásset Davvi-Sibirjas.
+	
+REMOVE ("([^<])-.*"r) IF (NEGATE 0 (VSTR:"<\\Q$1\\E.*->"r) - (<spelled>))(NEGATE 0/-1 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(0 Prop)(NEGATE 0/-1 Cmp);
 
 
 
