@@ -3157,7 +3157,7 @@ LIST GASKAL = "gaskal" "gaskkal" "gaskii" "gaskka" "gaskkas" ;
  
  # p-positions that like coordination
  
-LIST TIME-PREP = "badjel" "čađa" "earret" "earet" gaskkal" "guovddáš" "maŋŋel" "maŋŋil" "maŋŋá" "mannjil" "miehtá" "ovdal" ;
+LIST TIME-PREP = "badjel" "čađa" "earret" "earet" "gaskkal" "guovddáš" "maŋŋel" "maŋŋil" "maŋŋá" "mannjil" "miehtá" "ovdal" ;
  
 
 SET NUM = Num - OKTA ;
@@ -3265,31 +3265,39 @@ SET NON-APP = ALLSYNTAG - (@APP);
 
 # SET ASSIGNEDSYN = ALLSYNTAG - @X ;
 
-	# # # # # # # # # # # # # #
+	###########################
 	##!! Named-entity-guesser
-	# # # # # # # # # # # # # #
-	
+	###########################
+
 #! needs to be before PROTECT (<spelled>) ;
 
-#SUBSTITUTE (?) (N Prop Sem/Plc Sg Loc Guess) TARGET ("<[A-ZÆØÅÄÖÔČŠÁ].*s>"r ?) ;
 SUBSTITUTE (?) (N Prop Sem/Plc Sg Loc Guess) TARGET ("<[\\p{Lu}].*s>"r ?) ;
 	## Mannan vahku finaimet sámeskuvllain, odne besset lohkat mo suomagielain manná Ruota bealde Durtnosleagis.
 	## Muhto dál lea šaddan sierra girjerájus Bajitdurtnosis man namma lea Nordkalottbiblioteket ja mas lea varra stuoramus čoakkáldat Davvikalohta birra; sihke ruotagillii, suomagillii, dárogillii, sámegilliija vel eará gielaide.
 
-SUBSTITUTE (?) (N Prop Sem/Plc Sg Ill Guess) TARGET ("<[\\p{Lu}].*ii>"r ?) ;
+SUBSTITUTE (?) (N Prop Sem/Plc Sg Ill Guess) TARGET ("<[\\p{Lu}].*ii>"r ?) OR ("<[\\p{Lu}].*-ai>"r ?) OR ("<[\\p{Lu}].*ái>"r ?);
+	## Mun riŋgejin Finnmark Kraftforsyning-ai ja jerren manne midjiide eai lean dieđihan maidige.
+	
 SUBSTITUTE ("([\\p{L}\\p{N}].*)'ii"r) (VSTR:"$1"r) TARGET (N Prop Sem/Plc Sg Ill Guess) ;
 	## Davvi Nuorra ja Riddu Riđđu bovdejit sámi nuoraid 3. Arctic Youth Art Camp'ii Gáivuonas 17.-22. b. suoidnemánus 2001. Leairras lea sadji 30 oasseváldái, ja dat juohkásit nuoraide Sámis, Ruonáeatnamis, Kanadas, Alaskas ja Sibirjas.
+SUBSTITUTE ("([\\p{L}\\p{N}].*)-ai"r) (VSTR:"$1"r) TARGET (N Prop Sem/Plc Sg Ill Guess) ;
 SUBSTITUTE ("([\\p{L}\\p{N}].*)ii"r) (VSTR:"$1"r) TARGET (N Prop Sem/Plc Sg Ill Guess) ;
 SUBSTITUTE ("([\\p{L}\\p{N}].*)ái"r) (VSTR:"$1á"r) TARGET (N Prop Sem/Plc Sg Ill Guess) ;
-	
-SUBSTITUTE (?) (N Prop Sem/Fem_Mal Sg Nom Guess) TARGET ("<[A-ZÆØÅÄÖÔČŠÁ].*>"r ?)(1 Sem/Sur)(NOT -1 BOS) ;	
+
+SUBSTITUTE (?) (N Prop Sem/Fem_Mal Sg Nom Guess) TARGET ("<[\\p{Lu}].*>"r ?)(1 Sem/Sur)(NOT -1 BOS) ;	
 	## Ramonesa lávlu {Joye} Ramone guoimmuhii guovtte lávlagis Blackfire One Nation Under skearrus 2002.
 
-SUBSTITUTE (?) (N Prop Sem/Plc Sg Nom Guess) TARGET ("<[A-ZÆØÅÄÖÔČŠÁ].*>"r ?)(NOT -1 BOS) ;
+SUBSTITUTE (?) (N Prop Sem/Plc Sg Nom Guess) TARGET ("<[\\p{Lu}].*>"r ?)(NOT -1 BOS) ;
+	## Eanaš Smiervuon-Leaibevuon guovlluin lea oktasašguohtun sávzzaide ja bohccuide, earret Bringnes, mii lea dušše šibihiid várás.
+	#$ {Folldal-verk} lea maiddai váldán ollu guohtunsajiid.
+	
+	# Remove speller suggestions if the first letter of the suggestion is not the same as the first letter of the original
+	# -----------------------------------------------------------------------------
+	#likely a name, since we only care about upper case letters
 
 REMOVE ("([\\p{L}\\p{N}]).*"r) IF (NEGATE 0 (VSTR:"<$1.*>"r) - (<spelled>))(NEGATE 0/-1 (VSTR:"<$1.*>"r) - (<spelled>))(0 Prop)(NEGATE 0/-1 Cmp);
 
-	# remove speller suggestions if the first letter of the suggestion not the same as the name
+
 REMOVE ("([^<]).*"r) IF (NEGATE 0 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(NEGATE 0/-1 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(0 Prop)(NEGATE 0/-1 Cmp);
 	## Ruoŧa girkus lea oaiveovddasvástádus doallat hávdádusaid Ruoŧas, earret Stockholma gávpogis ja Tranåsa gielddas.
 	## Svenska Kyrkan
@@ -3297,9 +3305,13 @@ REMOVE ("([^<]).*"r) IF (NEGATE 0 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(NEGATE 0
 
 REMOVE ("([^<]).*"r) IF (NEGATE 0 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(NEGATE 0/-1 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(0 Prop)(NEGATE 0/-1 Cmp);	
 
-	
+
 REMOVE (<spelled> "<([^<]).*>"r) IF (NEGATE 0 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>));
 	## Gávkavuonas ja Reifvágis eai šat gávdno sávzzat, ja Leaibevuona-Smiervuona guovlluin lea sávza- ja gussalohku garrasit maŋas mannan.
+	## Elfápmohuksejeaddjit háliidit álbmoga duogábeale bargat - dadjet boazosápmelaččat Fállanuori guovlluin.
+	## Sii han eai leat gilván geaidnoravddaid Porsas Porsajávrai.
+	## Lea vejolaš gávdnat Fállanuorileagis
+	## Geahča maiddái artihkkala seamma aviissas Rieppovuona ruvkkiid heaittiheami birra.
 	#Doesn't work yet
 
 
