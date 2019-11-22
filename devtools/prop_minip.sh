@@ -3,14 +3,14 @@
 # script to generate paradigms for generating word forms
 # command:
 # sh generate_contlex_para.sh PATTERN
-# example, when you are in smn:
-# sh devtools/prop_minip.sh VUONA | dsmnNorm | less
-# sh devtools/prop_minip.sh Hirškikkâ | dsmnNorm 
+# example, when you are in sme:
+# sh devtools/prop_minip.sh VUONA | dsmeNorm | less
+# sh devtools/prop_minip.sh Hirškikkâ | dsmeNorm 
 
 
 PATTERN=$1
 L_FILE="in.txt"
-cut -d '!' -f1 src/morphology/stems/smn-propernouns.lexc | grep $PATTERN | cut -d ':' -f1 | tr -d '%'>$L_FILE
+cut -d '!' -f1 src/morphology/stems/sme-propernouns.lexc | grep $PATTERN | cut -d ':' -f1 | tr -d '%'>$L_FILE
 
 P_FILE="test/data/testpropparadigm.txt"
 
