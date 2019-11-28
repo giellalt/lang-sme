@@ -3886,7 +3886,9 @@ LIST CONC-4C = (".*isk.*"r) (".*ist.*"r) (".*mškk.*"r) (".*nskk.*"r) (".*nstt.*
 
 LIST CONC-4D = (".*kc.*"r) (".*kč.*"r) (".*ks.*"r) (".*kš.*"r) (".*kt.*"r) ;
 
-SET CONC = CONC-1 OR CONC-2 OR CONC-3A OR CONC-3B OR CONC-3C OR CONC-4A OR CONC-4B OR CONC-4C OR CONC-4D ;	
+SET CONC-4 = CONC-4A OR CONC-4B OR CONC-4C OR CONC-4D ;
+
+SET CONC = CONC-1 OR CONC-2 OR CONC-3A OR CONC-3B OR CONC-3C OR CONC-4;	
 
 
 LIST IT-VERBS = (".*it"r V) (".*it"r Ex/V) ;
@@ -3898,6 +3900,9 @@ SET EVEN-VERBS = IT-EVEN-VERBS OR AT-VERBS OR UT-VERBS ;
 LIST ET-VERBS = (".*et"r V) (".*et"r V*) ;
 LIST ÁT-VERBS = (".*át"r V) (".*át"r V*) ;
 LIST OT-VERBS = (".*ot"r V) (".*ot"r V*) ;
+
+
+LIST DIPHTONG-ROOT = (".*uo.*"r) (".*oa.*"r) (".*ie.*"r) (".*ea.*"r) ;
 
 	# GENERAL REAL WORD ERROR RULES	(based on morpho-phonology)
 	###########################################################
@@ -3958,11 +3963,11 @@ COPY:real-Der/h-Inf (IV Inf &SUGGEST) EXCEPT (Ex/V TV Der/h ConNeg &real-Der/h-I
 COPY:real-Der/h-Inf (Inf &SUGGEST) EXCEPT (Ex/V Der/h ConNeg &real-Der/h-Inf) OR (Ex/V Der/h Imprt Sg2 &real-Der/h-Inf) OR (Ex/V Der/h Ind Prs ConNeg &real-Der/h-Inf) OR (Ind Prs Sg2 &real-Der/h-Inf) TARGET (&real-Der/h-Inf) ;
 
 
-	# láhččit¢(verb,conc|láhčit), fierbmut-fierpmut, cealkit-cealkkit, doabmit-doapmit;   imprt pl2 / actor nompl vs Inf, -i, -a, -u; alla konsonantgrupper utom 1 och  4D, grad III-II
+	# láhččit¢(verb,conc|láhčit), fierbmut-fierpmut, cealkit-cealkkit, doabmit-doapmit;   imprt pl2 / actor nompl vs Inf, -i; alla konsonantgrupper utom 1 och  4D, grad III-II
 	# ------------------------------------------------------------------------------
 
 
-ADD:real-ImprtPl2-Inf (&real-ImprtPl2-Inf) TARGET (Imprt Pl2) OR (Der/NomAg N Pl Nom) IF (0 EVEN-VERBS + CONC - CONC-4D - CONC-1)(*-1 <Inf> OR <TH-Inf> OR <PU-Inf> BARRIER NOT-ADV-PCLE - @ADVL - SUBJ); 
+ADD:real-ImprtPl2-Inf (&real-ImprtPl2-Inf) TARGET (Imprt Pl2) OR (Der/NomAg N Pl Nom) IF (0 IT-EVEN-VERBS + CONC - CONC-4D - CONC-1)(*-1 <Inf> OR <TH-Inf> OR <PU-Inf> BARRIER NOT-ADV-PCLE - @ADVL - SUBJ); 
 	## Mii sápmelaččat geat buriin oamedovdduin sáhttit gáibidit ahte dáčča galgá midjiide láhččit dili, ja aivve láitit jus ii oro duhtadeame buot min dárbbuid.
 	## Deikka sáhttet nuorat boahttit buhtes árkkaiguin ja muitalit dan maid ieža háliidit.
 	## Ekologalaš heiveheami dáfus ii leat prinsihpas deaŧalaš diehttit gii iešalddis lea eatnamiid geavaheaddji.
@@ -3974,6 +3979,20 @@ COPY:real-ImprtPl2-Inf (V TV Inf &SUGGEST) EXCEPT (Ex/V TV Der/NomAg N Pl Nom &r
 COPY:real-ImprtPl2-Inf (V IV Inf &SUGGEST) EXCEPT (Ex/V IV Der/NomAg N Pl Nom &real-ImprtPl2-Inf) TARGET (Ex/V IV &real-ImprtPl2-Inf) ;
 
 COPY:real-ImprtPl2-Inf (Inf &SUGGEST) EXCEPT (Imprt Pl2 &real-ImprtPl2-Inf) TARGET (Imprt Pl2 &real-ImprtPl2-Inf) ;
+
+
+	# biškui¢(verb,conc|biškkui) actor ill vs sg3prs  u-stam ikke diftong (uo, oa, ie, ea); konsonantgrupper 3A, 3B och 4, grad III-II
+	
+	
+SET CONC-3A-3B-4 = CONC-3A OR CONC-3B OR CONC-4 ;
+
+ADD:real-NomAgIll-PrtSg3 (&real-NomAgIll-PrtSg3) TARGET (Ex/V Der/NomAg N Sg Ill) IF (0 UT-VERBS + CONC-3A-3B-4 - DIPHTONG-ROOT)(NEGATE *0 VFIN BARRIER GRAMCHK-S-BOUNDARY OR CC)(NEGATE -1 ("<.*-Ill-.*>"r)); 
+	## Bálddis beare bijai njálmmi botnjut ja biškui.
+	## Máhtes ábbui báhti.
+
+COPY:real-NomAgIll-PrtSg3 (V IV Ind Prt Sg3 &SUGGEST) EXCEPT (Ex/V IV Der/NomAg N Sg Ill &real-NomAgIll-PrtSg3) TARGET (IV &real-NomAgIll-PrtSg3) ;
+
+COPY:real-NomAgIll-PrtSg3 (V TV Ind Prt Sg3 &SUGGEST) EXCEPT (Ex/V TV Der/NomAg N Sg Ill &real-NomAgIll-PrtSg3) TARGET (TV &real-NomAgIll-PrtSg3) ;
 
 
 	# IDIOSYNCRATIC REAL WORD ERROR RULES
