@@ -558,12 +558,15 @@ COPY:syn-Sg3-not-VGen (Ind Prt Sg3 &SUGGEST) EXCEPT (VGen &syn-Sg3-not-VGen) TAR
 D!
 =======================
 	
-	# -ccii vs. -zzi
-	# --------------
-LIST ZZ-VERBS = (".*zzit"r V) ;  it-stems with monoftong, all CONC but 1 and 4D, infinitive grade III
+	# real-DerNomAgSgAcc-PrtSg3
+	# --------------------------
+	# it-stems with monoftong, all CONC but 1 and 4D, infinitive grade III
+	# vázzi - váccii
 
-#ADD:syn-ccii-not-zzi (&syn-ccii-not-zzi) TARGET ZZ-VERBS IF (0 (Ex/V Ex/IV Der/NomAg N Sg Acc) OR (Ex/V Ex/IV Der/NomAg N Sg Gen) OR (Ex/V Ex/IV Der/NomAg N Sg Nom))(NEGATE *0 VFIN BARRIER GRAMCHK-S-BOUNDARY) ;
-COPY:syn-ccii-not-zzi (V IV Ind Prt Sg3 &SUGGEST) EXCEPT (Ex/V Ex/IV Der/NomAg N Sg Acc &syn-ccii-not-zzi) OR (Ex/V Ex/IV Der/NomAg N Sg Gen &syn-ccii-not-zzi) OR (Ex/V Ex/IV Der/NomAg N Sg Nom &syn-ccii-not-zzi) TARGET (&syn-ccii-not-zzi) ;
+SET CONC-2-3-4ABC = CONC-2 OR CONC-3A OR CONC-3B OR CONC-3C OR CONC-4A OR CONC-4B OR CONC-4C ;
+
+ADD:real-DerNomAgSgAcc-PrtSg3 (&real-DerNomAgSgAcc-PrtSg3) TARGET IT-VERBS + CONC-2-3-4ABC - DIPHTONG-ROOT IF (0 (Ex/V Ex/IV Der/NomAg N Sg Acc) OR (Ex/V Ex/IV Der/NomAg N Sg Gen) OR (Ex/V Ex/IV Der/NomAg N Sg Nom))(NEGATE *0 VFIN BARRIER GRAMCHK-S-BOUNDARY) ;
+COPY:real-DerNomAgSgAcc-PrtSg3 (V IV Ind Prt Sg3 &SUGGEST) EXCEPT (Ex/V Ex/IV Der/NomAg N Sg Acc &real-DerNomAgSgAcc-PrtSg3) OR (Ex/V Ex/IV Der/NomAg N Sg Gen &real-DerNomAgSgAcc-PrtSg3) OR (Ex/V Ex/IV Der/NomAg N Sg Nom &real-DerNomAgSgAcc-PrtSg3) TARGET (&real-DerNomAgSgAcc-PrtSg3) ;
 	## ???leago seammá go váccii? seamma dat lea 
 
 #ADD:syn-váccii (&syn-váccii) TARGET ("vázzi" A Sg Nom) OR ("vázzi" A Sg Gen) OR ("vázzi" A Sg Acc) OR ("vázzi" N NomAg Sg Nom) OR ("vázzi" N NomAg Sg Acc) OR ("vázzi" N NomAg Sg Gen) IF (NEGATE *0 VFIN BARRIER GRAMCHK-S-BOUNDARY) ;
@@ -582,15 +585,16 @@ D!
 	# -dnon vs. tnon  HUOM seamma go biddjon - bidjon badjelis
 
 	# -dnot vs. tnot  real-ImprtSg1-PrfPrc   ut-, at- and it-stems with Inf in Grade II, CONC 2, 3C and ddj-dj-j, grade III-II
+	# -------------------------------------------------------------------------------------
 
+SET CONC-2-3C-DDJ = CONC-2 OR CONC-3C OR DDJ ;	
 
-LIST TN-VERBS = (".*tn.*"r V) (".*tn.*"r V*) ;	
-
-#ADD:syn-dnot-not-tnot (&syn-dnot-not-tnot) TARGET TN-VERBS IF (0 (Imprt Pl1))(*0 VFIN BARRIER GRAMCHK-S-BOUNDARY) ;
-COPY:syn-dnot-not-dnot (Ex/V Ex/TV Der/Pass V IV Inf &SUGGEST) EXCEPT (V TV Imprt Pl1 &syn-dnot-not-tnot) TARGET (&syn-dnot-not-tnot) ;	
+ADD:real-ImprtPl1-PassInf (&real-ImprtPl1-PassInf) TARGET EVEN-VERBS + CONC-2-3C-DDJ IF (0 (Imprt Pl1))(*0 VFIN BARRIER GRAMCHK-S-BOUNDARY) ;
+COPY:real-ImprtPl1-PassInf (Ex/V Ex/TV Der/Pass V IV Inf &SUGGEST) EXCEPT (V TV Imprt Pl1 &real-ImprtPl1-PassInf) TARGET (&real-ImprtPl1-PassInf) ;	
 	## Fátmmastit šiehtadussii sáhttá atnot  sámi vuoigatvuođaeaiggadiid vuosttá, ja eará álgoálbmogiid sullasaš vuoigatvuođaiguin boahttevaš riekteproseassain.
-#ADD:syn-dnon-not-tnon (&syn-dnon-not-dnon) TARGET TN-VERBS IF (0 (Imprt Sg1))(*0 VFIN BARRIER GRAMCHK-S-BOUNDARY) ;
-COPY:syn-dnon-not-dnon (Ex/V Ex/TV Der/PassS V IV PrfPrc &SUGGEST) EXCEPT (V TV Imprt Sg1 &syn-dnon-not-dnon) TARGET (&syn-dnon-not-dnon) ;	
+
+ADD:real-ImprtSg1-PrfPrc (&real-ImprtSg1-PrfPrc) TARGET EVEN-VERBS + CONC-2-3C-DDJ  IF (0 (Imprt Sg1))(*0 VFIN BARRIER GRAMCHK-S-BOUNDARY) ;
+COPY:real-ImprtSg1-PrfPrc (Ex/V Ex/TV Der/PassS V IV PrfPrc &SUGGEST) EXCEPT (V TV Imprt Sg1 &real-ImprtSg1-PrfPrc) TARGET (&real-ImprtSg1-PrfPrc) ;	
 	## Ja muitalus lea čatnon Sápmái. ("čatnat" V <TH-Acc-Any><gitta> <TH-Acc-Any><ovdan> <PA-Acc-Any><RF-Ill-Any> <TH-Acc-Any> TV Imprt Sg1 )
 	# needs to be tested
 	# in errors.xml
@@ -603,8 +607,12 @@ D!
 	# Prs Sg1 vs. Der/NomAct for nouns with double consonants and consonant gradation
 LIST TKAT-V = (".*tkat"r V) ; u-stam, a-stam ; alla konsonantgrupper utom 1 och 4D gč: buoidun¢(verb,conc|buoiddun)
 
-#ADD:syn-Der_NomAct-not-Sg1 (&syn-Der_NomAct-not-Sg1) TARGET TKAT-V IF (0 (Ind Prs Sg1))(*1 CC LINK 1 (N Sg Nom)) ;
-COPY:syn-Der_NomAct-not-Sg1 (Ex/V Ex/TV Der/NomAct N Sg Nom &SUGGEST) EXCEPT (V TV Inf &syn-Der_NomAct-not-Sg1) OR (V TV Imprt Pl1 &syn-PrfPrc-not-Sg1) OR (V TV Imprt Pl2 &syn-Der_NomAct-not-Sg1) OR (V TV Ind Prs Pl1 &syn-Der_NomAct-not-Sg1) OR (V TV Der/NomAg N Pl Nom &syn-Der_NomAct-not-Sg1) TARGET (&syn-Der_NomAct-not-Sg1) ;
+SET UT-AT-VERBS = UT-VERBS OR AT-VERBS ;
+
+SET CONC-2-3-4ABC = CONC-2 OR CONC-3A OR CONC-3B OR CONC-3C OR CONC-4A OR CONC-4B OR CONC-4C;
+
+ADD:real-Der_NomAct-not-Sg1 (&real-Der_NomAct-not-Sg1) TARGET UT-AT-VERBS + CONC-2-3-4ABC IF (0 (Ind Prs Sg1))(*1 CC LINK 1 (N Sg Nom)) ;
+COPY:real-Der_NomAct-not-Sg1 (Ex/V Ex/TV Der/NomAct N Sg Nom &SUGGEST) EXCEPT (V TV Inf &real-Der_NomAct-not-Sg1) OR (V TV Imprt Pl1 &real-PrfPrc-not-Sg1) OR (V TV Imprt Pl2 &real-Der_NomAct-not-Sg1) OR (V TV Ind Prs Pl1 &real-Der_NomAct-not-Sg1) OR (V TV Der/NomAg N Pl Nom &real-Der_NomAct-not-Sg1) TARGET (&real-Der_NomAct-not-Sg1) ;
 	## Dutkkan  ja turisma leat šaddan dehálaš liigeealáhussan lassin Svalbárdda Universitehtaguovddážii ja Svalbárdda máilmmiviidosaš siepmanvárrehussii.
 	# definitely needs testing
 	# in errors.xml
