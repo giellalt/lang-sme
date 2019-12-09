@@ -33,7 +33,11 @@ $ENV{SMEGRAM_USEDB} = 1;
 my $etcDir = $ENV{SMEGRAM_ETC} || "/usr/local/visl/etc/";
 my $lexDir = $ENV{SMEGRAM_LEX} || "/usr/local/visl/lex/";
 my $GTPRIV = $ENV{GTPRIV} ;
+my $GTHOME = $ENV{GTHOME} ;
 my $privDir = "$GTPRIV/plan/projects/mt/bin";
+my $giellacoreDir = "$GTHOME/giella-core";
+my $giellasharedDir = "$GTHOME/giella-shared";
+my $smeDir = "$GTHOME/langs/sme";
 
 # For Eckhard
 if (-e "/home/eckhard/parsers/sme2/priv" ) {
@@ -48,7 +52,12 @@ chdir $binDir;
 # print "--etcDir $etcDir\n";
 # print "--prvDir $privDir\n";
 
-my $cmd = "vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | vislcg3 -g $etcDir/smecg.nob.cg | vislcg3 -g $etcDir/smecg.nobsyn.cg | $binDir/niceline_mt | $privDir/genmorf_no | $binDir/trad2inline.pl";
+my $cmd1 = "hfst-tokenize -g $smeDir/tools/tokenisers/tokeniser-disamb-gt-desc.pmhfst | vislcg3 -g $smeDir/src/syntax/disambiguator.cg3 | vislcg3 -g $giellasharedDir/smi/src/syntax/functions.cg3 | vislcg3 -g $giellasharedDir/smi/src/syntax/dependency.cg3 | grep -v '^:'" ;
+
+my $cmd = "$cmd1 | vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | vislcg3 -g $etcDir/smecg.nob.cg | vislcg3 -g $etcDir/smecg.nobsyn.cg | $binDir/niceline_mt | $privDir/genmorf_no | $binDir/trad2inline.pl";
+
+#my $cmd = "hfst-tokenize -g $smeDir/tools/tokenisers/tokeniser-disamb-gt-desc.pmhfst | vislcg3 -g $smeDir/src/syntax/disambiguator.cg3 | vislcg3 -g $giellasharedDir/smi/src/syntax/functions.cg3 | vislcg3 -g $giella-sharedDir/smi/src/syntax/dependency.cg3 | grep -v '^:' | vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | vislcg3 -g $etcDir/smecg.nob.cg | vislcg3 -g $etcDir/smecg.nobsyn.cg | $binDir/niceline_mt | $privDir/genmorf_no | $binDir/trad2inline.pl";
+
 
 my $option = "";
 
@@ -57,16 +66,16 @@ if (defined($ARGV[0]) and $ARGV[0] =~ /^--(.*)$/) {
 #   print "--option=$option\n";
 
     if ($option =~ /^nob$/) {
-      $cmd = "vislcg3 -g $etcDir/smecg.nob.cg --trace"
+      $cmd = "$cmd1 | vislcg3 -g $etcDir/smecg.nob.cg --trace"
     }
     elsif ($option =~ /^trad$/) {
-      $cmd = "vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l"
+      $cmd = "$cmd1 | vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l"
     }
     elsif ($option =~ /^nobsyn$/) {
-      $cmd = "vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | vislcg3 -g $etcDir/smecg.nobsyn.cg --trace"
+      $cmd = "$cmd1 | vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | vislcg3 -g $etcDir/smecg.nobsyn.cg --trace"
     }
     elsif ($option =~ /^gen$/) {
-      $cmd = "vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | vislcg3 -g $etcDir/smecg.nobsyn.cg | $binDir/niceline_mt | $privDir/genmorf_no"
+      $cmd = "$cmd1 | vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | vislcg3 -g $etcDir/smecg.nobsyn.cg | $binDir/niceline_mt | $privDir/genmorf_no"
     }
     else {
        print STDERR "unknown option: $ARGV[0]\n";
