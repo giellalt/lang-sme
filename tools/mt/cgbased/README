@@ -2,7 +2,7 @@
 Denne fila dokumenterer oppsett og bruk av cg-basert mt basert på Eckhard Bick sine verkty
 ==========================================================================================
 
-Filene ligg i langs/nob, i langs/sme og i priv/plan/projects/mt
+Filene ligg i $GTHOME/langs/nob, i $GTHOME/langs/sme og i $GTPRIV/plan/projects/mt
 
 =====================
 Kompiler i sme og nob
@@ -17,14 +17,21 @@ make -j
 ====
 Bruk
 ====
+Stå i langs/sme/tools/mt/cgbased
 
-Gå til langs/sme/tools/mt/cgbased
+
+Kommando for omsetjjing:
+------------------------
 
 echo Dat lea buorre|PERL_UNICODE=SDA ./bin/smegram 
 
-det være bra .
+Output:
 
-I tillegg har vi ulike delkommandoar (kortare delar av pipeline):
+det er bra 
+
+
+Ulike delkommandoar (kortare delar av pipeline, lista frå kort til lang):
+------------------------------------------------------------------------
 
 Trace på CG som tilpasser samisk analyse (source) til transfer:
 (tilføye kategoriar frå målspråket til kjeldespråket):
@@ -35,6 +42,9 @@ echo Dat lea buorre|PERL_UNICODE=SDA ./bin/smegram --trad
 
 Syntaktisk transfer:
 echo Dat lea buorre|PERL_UNICODE=SDA ./bin/smegram --nobsyn
+
+Output av niceline (formattering av transfer):
+echo Dat lea buorre|PERL_UNICODE=SDA ./bin/smegram --niceline
 
 Målspråksgenerering:
 echo Dat lea buorre|PERL_UNICODE=SDA ./bin/smegram --gen
@@ -87,54 +97,6 @@ Konkret sti, ståande i tools/mt/cgbased:
 cat prov.dep | cg3 -g etc/smecg.nob.cg | bin/niceline_mt | $GTPRIV/plan/projects/mt/bin/sme2nor --l | cg3 -g etc/smecg.nob.cg | cg3 -g etc/smecg.nobsyn.cg | bin/niceline_mt | $GTPRIV/plan/projects/mt/bin/genmorf_no | bin/trad2inline.pl
 
 
-
-
-
-
-Kommentar frå NoDaLiDa-diskusjonen:
-------- -------- -------- ---------
-NB: Del to av pipeline (frå og med genmorf_no) fungerer framleis ikkje. Sjå nedanfor.
-
-Vi står i cgbased, og deler pipeline i to:
-
-echo "Nu dat lea." \
-| hfst-tokenize -g ../../tokenisers/tokeniser-disamb-gt-desc.pmhfst \
-| vislcg3 -g ../../../src/syntax/disambiguator.cg3 \
-| vislcg3 -g ../../../../../giella-shared/smi/src/syntax/functions.cg3 \
-| vislcg3 -g ../../../../../giella-shared/smi/src/syntax/dependency.cg3 > testsetning.dep
-
-Deretter det som tilsvarer smegram:
-
-cat testsetning.dep \
-| vislcg3 -g etc/smecg.nob.cg \
-| perl bin/niceline_mt \
-| sme2nor --l \
-| vislcg3 -g etc/smecg.nobsyn.cg \
-| perl bin/niceline_mt \
-| genmorf_no \
-| perl bin/trad2inline.pl
-
-
-cat  testsetning.dep |\       # input, evt. prov.dep eller anna input, ferdig dep-analysert
-vislcg3 -g smecg.nob.cg |\    # cg for å lage sme meir nob-aktig språk
-                              # (sett inn Det, Pr ...)
-perl niceline_mt |\           # formater til ei linje
-sme2nor --l | \               # transfer-kjerna. Den les sme.nob.dict
-vislcg3 -g smecg.nobsyn.cg |\ # syntaktiske tilpassingar (MOVE), ... 
-                              # Legg til ord ...
-perl niceline_mt |\           # formater til ei linje (ein gong til)
-genmorf_no |\                 # morfologisk generator for norsk
-perl trad2inline.pl |\        # postformattering
-
-
-genmorf_no fungerer ikkje.
-
-Den ber om ei fil nor.analyzer.wrapper som ikkje finst. Det er dermed
-neste steg framover.
-
-Diskusjon:
-Output av CG er 
-"bok" N Fem
 
 
 
@@ -341,5 +303,24 @@ Finnes det en urmoder (oldemor)?
 
 Hilsen Lene og Trond
 
+
+
+
+
+
+Kommentar frå NoDaLiDa-diskusjonen:
+------- -------- -------- ---------
+
+
+cat  testsetning.dep |\       # input, evt. prov.dep eller anna input, ferdig dep-analysert
+vislcg3 -g smecg.nob.cg |\    # cg for å lage sme meir nob-aktig språk
+                              # (sett inn Det, Pr ...)
+perl niceline_mt |\           # formater til ei linje
+sme2nor --l | \               # transfer-kjerna. Den les sme.nob.dict
+vislcg3 -g smecg.nobsyn.cg |\ # syntaktiske tilpassingar (MOVE), ... 
+                              # Legg til ord ...
+perl niceline_mt |\           # formater til ei linje (ein gong til)
+genmorf_no |\                 # morfologisk generator for norsk
+perl trad2inline.pl |\        # postformattering
 
 
