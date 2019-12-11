@@ -522,7 +522,11 @@ SET V-SG = V-SG1 OR V-SG2 OR V-SG3 ;
 SET V-DU = V-DU1 OR V-DU2 OR V-DU3 ;
 SET V-PL = V-PL1 OR V-PL2 OR V-PL3 ;
 
+
 SET V-DU-PL = V-DU1 OR V-DU2 OR V-DU3 OR V-PL1 OR V-PL2 OR V-PL3 ;
+SET V-DU-PL-1 = V-DU1 OR V-PL1 ;
+SET V-DU-PL-2 = V-DU2 OR V-PL2 ;
+SET V-DU-PL-3 = V-DU3 OR V-PL3 ;
 
 SET V-NOT-SG1 = VFIN-NOT-IMP - V-SG1 ;
 SET V-NOT-SG2 = VFIN-NOT-IMP - V-SG2 ;
@@ -3325,13 +3329,6 @@ ADDCOHORT ("<til>" "til" <NOB:til> <insert> Pr) BEFORE N/Prop + Ill IF (NOT 0 (<
 ADDCOHORT ("<til>" "til" <NOB:til> <insert> Pr) BEFORE N + Ill ; 
 
 
-
-
-### pronouns
-
-ADDCOHORT ("<jeg>" "jeg" <NOB:jeg> <insert> Pron Pers Sg1 Nom @SUBJ>) BEFORE V + Sg1 (NOT *-1 Sg1) ;
-ADDCOHORT ("<du>" "du" <NOB:du> <insert> Pron Pers Sg2 Nom @SUBJ>) BEFORE V + Sg2 (NOT *-1 Sg2) ;
-
 ### determiners
 
 ADDCOHORT ("<en>" "en" <NOB:en> <insert> Det Dem Indef @>N) BEFORE A OR (N Sg) - (Def) (*1S (N Sg) + (<maydetind^n>) BARRIER (*) - det - A - Gen) (NOT -1 det OR A OR Gen) ; # simplified example for indef. article insertion 
@@ -3340,6 +3337,35 @@ ADDCOHORT ("<det>" "det" <NOB:det> <insert> Pron Pers Sg3 @X) BEFORE (<ext>) (NO
 ADDCOHORT ("<det>" "det" <NOB:det> <insert> Pron Pers Sg3 @X) BEFORE (<weather>) ;
 ADDCOHORT ("<det>" "det" <NOB:det> <insert> Pron Pers Sg3 @X) BEFORE (<esubj>) ;
 
+ADDCOHORT ("<det>" "det" <NOB:det> <insert> Pron Pers Sg3 @X) BEFORE (V Sg3) (c ("leat" @IMV));
+SETPARENT:formalsubjdep (<insert>) (NONE p (*)) TO (1 V);
+
+
+### pronouns
+
+ADDCOHORT ("<jeg>" "jeg" <NOB:jeg> <insert> Pron Pers Sg1 Nom @SUBJ>) BEFORE V + Sg1 (NONE c @SUBJ) ;
+ADDCOHORT ("<du>" "du" <NOB:du> <insert> Pron Pers Sg2 Nom @SUBJ>) BEFORE V + Sg2 (NONE c @SUBJ) ;
+ADDCOHORT ("<hun>" "hun" <NOB:hun> <insert> Pron Pers Sg3 Nom @SUBJ>) BEFORE V + Sg3 (NONE c @SUBJ) ;
+ADDCOHORT ("<vi>" "vi" <NOB:vi> <insert> Pron Pers Pl1 Nom @SUBJ>) BEFORE V + Pl1 (NONE c @SUBJ) ;
+ADDCOHORT ("<vi>" "vi" <NOB:vi> <insert> Pron Pers Pl1 Nom @SUBJ>) BEFORE V + Du1 (NONE c @SUBJ) ;
+ADDCOHORT ("<dere>" "dere" <NOB:dere> <insert> Pron Pers Pl2 Nom @SUBJ>) BEFORE V + Pl2 (NONE c @SUBJ) ;
+ADDCOHORT ("<dere>" "dere" <NOB:dere> <insert> Pron Pers Pl2 Nom @SUBJ>) BEFORE V + Du2 (NONE c @SUBJ) ;
+ADDCOHORT ("<de>" "de" <NOB:dere> <insert> Pron Pers Pl3 Nom @SUBJ>) BEFORE V + Pl3 (NONE c @SUBJ) ;
+ADDCOHORT ("<de>" "de" <NOB:dere> <insert> Pron Pers Pl3 Nom @SUBJ>) BEFORE V + Du3 (NONE c @SUBJ) ;
+
+
+
+
+ADDCOHORT ("<meg>" "jeg" <NOB:meg> <insert> Pron Pers Sg1 Acc @<OBJ) AFTER V + Sg1 + (".*=SUBJ"r) ;
+ADDCOHORT ("<deg>" "du" <NOB:deg> <insert> Pron Pers Sg2 Acc @<OBJ) AFTER V + Sg2 + (".*=SUBJ"r) ;
+ADDCOHORT ("<seg>" "seg" <NOB:seg> <insert> Pron Pers Sg3 Acc @<OBJ) AFTER V-3 + (".*=SUBJ"r) ;
+ADDCOHORT ("<oss>" "vi" <NOB:vi> <insert> Pron Pers Pl1 Acc @<OBJ) AFTER V-DU-PL-1 + (".*=SUBJ"r) ;
+ADDCOHORT ("<dere>" "dere" <NOB:dere> <insert> Pron Pers Pl2 Acc @<OBJ) AFTER V-DU-PL-2 + (".*=SUBJ"r) ;
+
+SUBSTITUTE ("(.*)=SUBJ"r) (VSTR:"$1") TARGET V ; 
+	## Basadan iđđes.
+
+SETPARENT:formalsubjdep (<insert>) (NONE p (*)) TO (-1 V);
 
 ### definiteness
 
