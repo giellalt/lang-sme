@@ -2041,7 +2041,7 @@ LIST EAMBBO = "eambbo" "eanet" "eambo" "eambu" ;
  # These combine with "go" Pcle, but COMPAR stands for 'comparison' rather than
  # 'comparative'.
 
-LIST CONTRA = "muhto" ;
+LIST CONTRA = "muhto" "muhte" ;
  # In lean muitalan, muhto dál muitalan.
 
 LIST PROSEANTA = "proseanta" "%" ;
@@ -2059,9 +2059,9 @@ SET CP = (Pron Interr) OR (Pron Rel) OR MO ;
 LIST BOUNDARYSYMBOLS =  "\;" ":" "-" "–" ;
 
 # This set if for disambiguating rules after mapping @CVP and @CNP to all CS and CC readings, therefore we cannot have @CVP in the set
-SET S-BOUNDARY-NOT-CVP = CP OR BOUNDARYSYMBOLS OR ("muhto") OR ("de" Adv) OR (Neg Sup) ;
+SET S-BOUNDARY-NOT-CVP = CP OR BOUNDARYSYMBOLS OR CONTRA OR ("de" Adv) OR (Neg Sup) ;
 	
-SET S-BOUNDARY = CP OR BOUNDARYSYMBOLS OR ("muhto") OR ("de" Adv) OR (Neg Sup) OR (@CVP) OR ("vel" Adv Qst) ;  
+SET S-BOUNDARY = CP OR BOUNDARYSYMBOLS OR CONTRA OR ("de" Adv) OR (Neg Sup) OR (@CVP) OR ("vel" Adv Qst) ;  
 	# does not include CS, because of "go" in questions, before it is disambugated.
 	# includes CP
 	# this one includes @CVP, the conjunction which actually connects two sentences (each with a finite verb) to each other, 
@@ -2350,7 +2350,7 @@ SELECT:NumRom (Num Rom) (0 ACR OR ABBR LINK -1 BOS)(NOT 0 Sem/Obj-el) (NEGATE *1
 REMOVE:Rom Rom (0 Neg LINK NOT 1 PUNCT) ;
 
 
-REMOVE:IINeg Neg (0 Rom LINK NEGATE *1 ConNeg BARRIER Neg)(NEGATE 0 Neg LINK -1 ("dahje") OR ("muhto") OR ("vai")) ;
+REMOVE:IINeg Neg (0 Rom LINK NEGATE *1 ConNeg BARRIER Neg)(NEGATE 0 Neg LINK -1 ("dahje") OR CONTRA OR ("vai")) ;
 
 SELECT:Nom Nom (0 Arab LINK -1 (":")) ; #probl. apertium
 SELECT:Nom Nom (0 Arab LINK 1 RIGHT) ;
@@ -2451,6 +2451,7 @@ SELECT:mannan PrfPrc  (0 ("mannan") LINK 1 Sem/Time) ;
 REMOVE:mannan N  (0 ("mannat") LINK 1 N) ; # too strong ?
 	#$ Dalle šattašii liikka buoret dálki go mannan sotnabeaivve.
 
+REMOVE VFIN (0 ("muhte") LINK -1 BOS OR COMMA) ; #muhte
 
 LIST NOT-REAL-V-LEMMAS = "álbmotregistreret" ;
 
@@ -3609,7 +3610,7 @@ SELECT:LIAmanneAdv2 ("manne" Adv) IF (*-1 VFIN BARRIER S-BOUNDARY OR CC OR CLB O
 	#% muhto de lei dálvi lávededje dien dábálaččat die februar mánus go dat dážaid diggehearrát de manne manne duon duo Kárášjohkii . (LIA)
 	#% na dat gal dieđus ge njigui go dat oinnii dat manne buot dat olbmot. (LIA)
 
-SELECT:LIAmannemanne ("manne" Adv) IF (-1 ("muhto"))(1 VFIN ) ; 
+SELECT:LIAmannemanne ("manne" Adv) IF (-1 CONTRA)(1 VFIN ) ; 
 	#$ dat máđut leamašan das muhto manne bohte dalle áhkkorat
 
 
@@ -3871,6 +3872,8 @@ SELECT:afterSami N (-1 NATIONAL-IDENTITY + Gen)(0 ("dutkan")) ;
 	#$ Sámi dutkan
 	
 REMOVE:LIAABBR ABBR (*1 ("¬")) ;
+REMOVE:LIAfiskat Imprt (0 ("fiskat")) ;
+IFF:Jos ABBR (0 ("jos") LINK 1 BOS OR Arab) ; 
 	
 # Rules made especially for LIA spoken corpus: the words often has little context. The rules should be safe.
 REMOVE:LIAbivvatDer ("bivvat") (0 ("bivastat")) ;
@@ -4681,7 +4684,7 @@ SELECT:vfingo VFIN - ConNeg IF (-1 BOS)(NEGATE 0 OLLU OR Adv)(0 Qst) ;
 REMOVE:buoritV V IF (0 ("buorre" Pl Nom) LINK 1 (N Pl)) ;
 	#$ Das leat buorit lanjat.
 
-REMOVE:muhtoNotConNeg ConNeg IF (NEGATE *-1 Neg BARRIER ("muhto"));
+REMOVE:muhtoNotConNeg ConNeg IF (NEGATE *-1 Neg BARRIER CONTRA);
 
 	
 #!! * Some brave rules for removing Imprt
@@ -6927,10 +6930,7 @@ REMOVE:CVPnoVfinAttr (@CVP) IF (0 CC LINK *-1 N BARRIER WORD - COMMA) (1 Adv OR 
 REMOVE:LocLoc (@CVP) IF (0 CC) (-1 (N Loc) OR ("birra" Po)) (*1 (N Loc) BARRIER NOT-A-ADV LINK 1 Inf)  ; 
 	#$ Dás son muitala iežas vásáhusaid birra Cizáš mánáidgárddis Oslos ja muđuid rahčamušain oažžut mánáguovtto guovttegielalažžan.
 
-REMOVE:CVPnoVfin1 (@CVP) IF (NEGATE *1 VFIN BARRIER S-BOUNDARY OR CS OR PUNCT-RIGHT)(NEGATE 1 S-BOUNDARY)(NEGATE -1 BOC) 
-(NEGATE 0 ("muhto") LINK *1 Rel BARRIER REAL-V OR SV-BOUNDARY LINK *1 VFIN LINK *1 VFIN)
-(NEGATE *1 ("leat" PrfPrc) BARRIER S-BOUNDARY-NOT-CVP OR PUNCT-RIGHT OR CCCOMMA LINK NEGATE *-1 PrfPrc BARRIER REAL-V)(NEGATE 1 MO - ("nugo") OR ("de") OR Rel LINK *1 VFIN)
-(NEGATE -1 BOS)(NEGATE 1 CC OR CS LINK *1 VFIN)(NEGATE *1 Inf BARRIER REAL-V OR S-BOUNDARY LINK *-2 Inf BARRIER REAL-V LINK *-1 MOD-ASP OR INF-V BARRIER REAL-V OR S-BOUNDARY)  ; 
+REMOVE:CVPnoVfin1 (@CVP) IF (NEGATE *1 VFIN BARRIER S-BOUNDARY OR CS OR PUNCT-RIGHT) (NEGATE 1 S-BOUNDARY)(NEGATE -1 BOC) (NEGATE 0 CONTRA LINK *1 Rel BARRIER REAL-V OR SV-BOUNDARY LINK *1 VFIN LINK *1 VFIN)(NEGATE *1 ("leat" PrfPrc) BARRIER S-BOUNDARY-NOT-CVP OR PUNCT-RIGHT OR CCCOMMA LINK NEGATE *-1 PrfPrc BARRIER REAL-V)(NEGATE 1 MO - ("nugo") OR ("de") OR Rel LINK *1 VFIN)(NEGATE -1 BOS)(NEGATE 1 CC OR CS LINK *1 VFIN)(NEGATE *1 Inf BARRIER REAL-V OR S-BOUNDARY LINK *-2 Inf BARRIER REAL-V LINK *-1 MOD-ASP OR INF-V BARRIER REAL-V OR S-BOUNDARY)  ; 
 	#$ Mun máhtán láibut sihke šuhkoládagáhku ja lákcagáhku.
 	#$ Mii bidjat dávviriid skáhpiide ja lođáide.
 	#$ Mii vuolgit Londonii golmmain mánáin ja ovttain beatnagiin.
@@ -6942,7 +6942,7 @@ REMOVE:CVPnoVfin1 (@CVP) IF (NEGATE *1 VFIN BARRIER S-BOUNDARY OR CS OR PUNCT-RI
 
 #!! * __CVPnoVfin_iige__ didn't succeed including iige in barrier in the last rule
 REMOVE:CVPnoVfin_iige (@CVP) IF (1 N LINK *1 Neg + Foc/Neg-ge BARRIER WORD )(NEGATE 1 S-BOUNDARY)(NEGATE -1 BOC) 
-(NEGATE 0 ("muhto") LINK *1 Rel BARRIER REAL-V OR SV-BOUNDARY LINK *1 VFIN LINK *1 VFIN)
+(NEGATE 0 CONTRA LINK *1 Rel BARRIER REAL-V OR SV-BOUNDARY LINK *1 VFIN LINK *1 VFIN)
 (NEGATE *1 ("leat" PrfPrc) BARRIER S-BOUNDARY-NOT-CVP OR PUNCT-RIGHT OR CCCOMMA LINK NEGATE *-1 PrfPrc BARRIER REAL-V)(NEGATE 1 MO - ("nugo") OR ("de") OR Rel LINK *1 VFIN)
 (NEGATE -1 BOS)(NEGATE 1 CC OR CS LINK *1 VFIN)(NEGATE *1 Inf BARRIER REAL-V OR S-BOUNDARY LINK *-2 Inf BARRIER REAL-V LINK *-1 MOD-ASP OR INF-V BARRIER REAL-V OR S-BOUNDARY)  ; 
 	#$ Vibeke Larsen muitala ožžon fálaldagaid Olgežis ja Árjjas, iige leat hilgon goappáge vuos.
