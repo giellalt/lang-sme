@@ -3356,14 +3356,21 @@ SETPARENT:formalsubjdep (<insert>) (NONE p (*)) TO (-1 V);
 
 ### suffixes
 
-SUBSTITUTE ("([^<]+)"r) (VSTR:"begynde=å=$1") TARGET (Der/InchL V) ;
+SUBSTITUTE ("([^<]+)"r) (VSTR:"begynne=å=$1") TARGET (Der/InchL V) ; # vuoššagohtet
 
 SUBSTITUTE  ("([^<]+)e"r) (VSTR:"$1ing") TARGET (Ex/V Der/NomAct N) ; # čohkamiid Pl koking
 SUBSTITUTE  ("([^<]+)e"r) (VSTR:"$1er") TARGET (Ex/V Der/NomAg N) ; # čohkamat Pl koker
 
+SUBSTITUTE (V) (*) TARGET (Ex/V N) ; # remove the interim V again, so it doesn't confuse genmorf
+
 ### splitting off particles
 
+ADDCOHORT ("<$1>"v "$1"v <insert> X @MV<) AFTER ("[^<=]+=(.+)"r V) ; # split off verb incorporates (particles or more)
+SUBSTITUTE ("([^<=]+)=.*"r) ("$1"v) TARGET (V) (1 (<insert> X) LINK NONE p (*)) ; # remove split-off part from verb lemma
+SETPARENT (<insert> X) (NONE p (*)) TO (-1 V) ; # dep-attach the split-offs
 
+SUBSTITUTE (X) (VSTR:$1) TARGET ("[^<]+/\([A-Z]+\)"r <insert> X) ; # add POS to split-offs if specified
+SUBSTITUTE ("([^<]+)/[A-Z]+"r) ("$1"v) TARGET (<insert>) ; # remove /POS information
 
 ### definiteness
 
