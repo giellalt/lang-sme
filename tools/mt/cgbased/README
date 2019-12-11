@@ -33,6 +33,9 @@ det er bra
 Ulike delkommandoar (kortare delar av pipeline, lista frå kort til lang):
 ------------------------------------------------------------------------
 
+Rein syntaktisk input til MT (utan prosessar i MT)
+echo Dat lea buorre|PERL_UNICODE=SDA ./bin/smegram --sme
+
 Trace på CG som tilpasser samisk analyse (source) til transfer:
 (tilføye kategoriar frå målspråket til kjeldespråket):
 echo Dat lea buorre|PERL_UNICODE=SDA ./bin/smegram --nob
@@ -163,27 +166,141 @@ Og så en gennemgang af modulerne:
 
 1. sme.nob.dict
 
-Jeg har forbedret det script, der skulle importere og tilpasse regler fra cglex.txt, og implementeret *1/*-1 og *0 kontekster og endda en BARRIER. Så det ser noget bedre ud i filen nu mht til dækningsgraden for de eksisterende regler. Jeg mener dog, at det, der kan omskrives til dependens, burde blive det.
+Denne fila inneholder tospråklig leksikon pluss ordspesifikke regler. syntaks
 
-Fordi det er usikkert, om det går helt uden cglex.txt, har jeg nu åbnet for *både* in-situ regler i sme.nob.dict *og* efterfølgende semantisk cg-disambiguering. Hvis MT-kernen (sme2nor) konstaterer, at et opslag ikke har in-situ regler, outputter den alle læsninger som cg-kohorte, ellers én læsning, den valgte. Forskellen ses også på, at i begge tilfælde får man norsk lemma i kohorten, men med in-situ-regler kommer der også et <NO:norskoversættelse> tag.
+lemma <kommenter> (kommentar) :defaultoversetting; (vilkår) :oversetting2; (vilkår) : oversetting3;
 
-Jeg har manuel lavet regler for "lohkat", for at vise, hvordan det kan se ud. "si"-reglerne er egentlig overflødige, fordi den oversættelse står først og dermed er defaulten, hvis "lese" og "telle" ikke bliver valgt. I kan se at dependensen mere præcist finder subjekter og objekter, end *1 ville have gjort, og at det kan blive mere komprimeret, fordi nogle cg-regler kan slås sammen eller bliver overflødige pga. rækkfølge. Og det er netop mere "in situ" :), som jeg godt kan lide for at arbejde hurtigt.
 
-Der er også noget manuelt ved "mun".
+Opertorer til bruk for vilkår, syntaks: OPERATOR=(TAG)
+* B = brother
+* D = daughter
+* GD = granddaughter,
+* GM = grandmother
+* H = head, (mother)
+* P-1 = en posisjon til venstre (BARRIER virker ikke. Stjerne fungerer, men tar tid)
+* P1 = en posisjon til høyre
+* P2 = to posisjoner til høyre, osv.
+* S = self
 
-2. MT-kernen
+Regler for å endre tagger har formatet oversetting_[a->b], der a er taggen for kildespråket og b er taggen for målspråket.
+
+Regler i smecg.nobsyn.cg som har enkeltord som mål (lexicon selection rules) skal inn i dict.
+
+
+Dictfila bruker også <ø> på samme måte som smecg.nob.cg. Formatet her er:
+
+{{{
+oversetting_[<ø>-><ø>±<pardef>]
+D=(Loc)_[Loc->Ela±<pardef>]
+}}}
+
+Alle <pardef> (og en del tilsvarende) kommer fra Apertium, og skal bort.
+
+Fordi det er usikkert, om det går helt uden cglex.txt, har jeg nu åbnet for *både* in-situ regler i sme.nob.dict *og* efterfølgende semantisk cg-disambiguering. Hvis MT-kernen (sme2nor) konstaterer, at et opslag ikke har in-situ regler, outputter den alle læsninger som cg-kohorte, ellers én læsning, den valgte. 
+
+Forskellen ses også på, at i begge tilfælde får man norsk lemma i kohorten, men med in-situ-regler (dvs. dict-regler) kommer der også et <NO:norskoversættelse> tag. (Denne taggen kan vi ssv. fjerne når vi har en prinsipiell forskjell mellom dict-regler og nobsyn-regler.
+
+(se. f.eks. "lokhat" og "mun" i .dict).
+
+
+Bruk av semantiske tagger i dict: I
+
+For å referere til Sem/Txt der taggen er +Sem/Money_Txt skriver vi (Sem/.*Txt.*) i leksikon
+Problem: Sem/Build Sem/Buildpart, Lene skriver BZ om å endre disse taggene
+
+NB! Tegna "_" og ":" er beskytta i .dict. Bruk regex "." i steden for "_".
+
+2. MT-kernen (= sme2nor)
+
+Fila sme2nor i priv leser og implementerer sme.nob.dict og seleksjonsregler.regler. 
+
 
 Jeg har nu lavet en sme2nor version af vores MT-kerne, dvs. det program, der læser og implementerer sme.nob.dict. Hvis der er _[a->b] opskrifter og lignende i forbindelse med in-situ-regler, bliver de implementeret, ellers er der [<ø>-><ø>±<pardef>] for pardef'erne. <ø> er indføjet af cg'en før, som et hook for stedstyres substitution. Output af sme2nor er CG, hvor sme-analysen er bibeholdt efter ordformen, og kohorten eller er en kopi med norsk(e) lemma(ta).
 
 3. smecg.nob.cg
 
-Det sted, hvor jeg mener norske kategorier skal indføjes, der ikke er der på samisk (fx definitness?). Desuden kreerer den foreløbigt set tags til brug i sme.nob.dict.
+Den fil, hvor jeg mener norske kategorier skal indføjes, der ikke er der på samisk (fx definitness?). Desuden kreerer den foreløbigt set tags til brug i sme.nob.dict.
+
+
+Den har bare disse to: BEFORE-SECTIONS og AFTER-SECTIONS. Grunnen til ikke å bruke SECTION er at det ville ha iterert reglene, og vi ville ha fått mange innsettinger.
+
+BEFORE-SECTIONS
+
+Denne seksjonen skal lage de norske kategoriene samisk ikke har. I dag har vi regelen:
+
+{{{
+SUBSTITUTE (N) (N Indef) TARGET (<ext>) ; # example of addition of Norwegian-relevant category
+}}}
+
+Denne legger til Indef ''til den samiske analysen'' av substantiv merka med <ext>. Dette er __før__ dict, og ingen endringer som .dict skal se kan bli gjort her.
+
+
+AFTER-SECTIONS
+
+
+AFTER-SECTIONS starter med regelen
+
+{{{
+SUBSTITUTE (".*"r) (VSTR:"$1" <ø>) TARGET ("([^<]*)"r) ; # create SUBSTITUTE anchor
+}}}
+
+som setter inn <ø> som anker for senere substitusjonsregler. Filosofien er å bruke SUBSTITUTE-regler som insettingsregler, og kontrollere posisjonen for innsetting ved hjelp av <ø>.
+
+
+AFTER-SECTIONS inneholder disse reglene:
+
+{{{
+SUBSTITUTE (<ø>) (<ø> <%BOS>) TARGET BOS ;
+SUBSTITUTE (<ø>) (<ø> <%COMMA>) TARGET COMMA ;
+...
+}}}
+
+CG har semantiske sett. Dictfila trenger __tagger__. Disse substitutereglene gjør setta om til tagger, og setter dem inn rett etter lemmaforma (dvs. etter <ø>). Tegnet <ø> markerer posisjonen mellom lemma og tagstreng. Grunnen til dette er at vi vil ha sekundære tagger (merka som <tag>) __før__ den vanlige taggrekka.
+
+Regelen ADDCOHORT SUB:1 brukes til å løfte opp forleddet i sammensetninger.
+
+Disse reglene:
+
+{{{
+SUBSTITUTE (Pr) (PR) TARGET (Pr) ;
+}}}
+
+er laga fordi .dict forventer ordklasse med bare store bokstaver (PRON-osv.). Deretter endrer generatoren dem tilbake til standard giella-format (Pron, osv.) for nob-generering.
+
+# ta inn sme med giella-tagg
+# endring til versaltagger i smecg.nob
+# bruk av versaltagger i dict
+# bruk av versaltagger i smecg.nobsyn (via sett som giella-tag)
+# endringer til giella-tagger i genmorf_no (usynlig for oss)
+
 
 4. smecg.nobsyn.cg
 
+Eckhard sine kommentarer:
 Den grammatik, der indføjer tokens (i eksempler "for å" og artiklen "en"), og først og fremmest laver MOVE regler. Jeg mener også, at det må være muligt, at lave næsten alt, der er pardef, her. Hvorfor have __verb, hvis det alligevel skal gøres for alle verber? Så enten skal der være regler, der reagerer på pardefs, der stammer fra sme.nob.dict, eller også kan man lave direkte a->b ændringer i sme.nob.dict, og generelle ting i smecg.norsyn.cg, helt uden pardefs.
 
 Hvis jeg husker ret, har I også selv et cg-modul mere, hvorfra ting måske skal smeltes sammen med (4) i denne pipe.
+
+Fila inneholder nå reglene fra lex-fila i Apertium. De ordspesifikke reglene skal over i .dict.
+
+Det er mulig å velge mellom ulike oversettelser av kildespråksord på to måter: i {{sme.nob.dict}} og i {{smecg.nobsyn.cg}}. Enkle regler og regler som bruker dependens kan vi ha i dict. Mer kompliserte CG-regler kan vi i steden ha i nobsyn. For å få til det må alle oversettelsene være i dict, __men uten vilkår__. Hvis det ikke er regler i nobsyn, vil den første oversettinga bli valgt. 
+
+Eksempel:
+
+{{{
+dict:
+miehtá_PR :langs;  :over; :i=hele;
+
+nobsyn:
+SELECT:fallback ("i=hele"i) (0 ("<miehtá>"i)) ;
+
+Resultat (overatt med smegram --nobsym):
+"<miehtá>" "miehtá" <right> <3> PR <W:0.0> @ADVL #3->1
+	"i=hele" <right> <3> PR @ADVL #5->1 SELECT:971:fallback SUBSTITUTE:3351
+;	"langs" <right> <3> PR <W:0.0> @ADVL #5->1 SELECT:971:fallback
+;	"over" <right> <3> PR <W:0.0> @ADVL #5->1 SELECT:971:fallback
+}}}
+
 
 5. genmorf_no
 

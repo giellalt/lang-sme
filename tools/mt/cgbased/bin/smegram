@@ -52,11 +52,12 @@ chdir $binDir;
 # print "--etcDir $etcDir\n";
 # print "--prvDir $privDir\n";
 
+# cmd1 is the pipline from text input to MT processing, i.e. the grammatical analysis
 my $cmd1 = "hfst-tokenize -g --weight-classes=1 $smeDir/tools/tokenisers/tokeniser-disamb-gt-desc.pmhfst |vislcg3 -g $smeDir/tools/tokenisers/mwe-dis.cg3 | vislcg3 -g $smeDir/src/syntax/disambiguator.cg3 | vislcg3 -g $giellasharedDir/smi/src/syntax/functions.cg3 | vislcg3 -g $giellasharedDir/smi/src/syntax/dependency.cg3 | grep -v '^:'" ;
 
+# cmd is the MT pipeline
 my $cmd = "$cmd1 | vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | vislcg3 -g $etcDir/smecg.nob.cg | vislcg3 -g $etcDir/smecg.nobsyn.cg | $binDir/niceline_mt | $privDir/genmorf_no | $binDir/trad2inline.pl";
 
-#my $cmd = "hfst-tokenize -g $smeDir/tools/tokenisers/tokeniser-disamb-gt-desc.pmhfst | vislcg3 -g $smeDir/src/syntax/disambiguator.cg3 | vislcg3 -g $giellasharedDir/smi/src/syntax/functions.cg3 | vislcg3 -g $giella-sharedDir/smi/src/syntax/dependency.cg3 | grep -v '^:' | vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | vislcg3 -g $etcDir/smecg.nob.cg | vislcg3 -g $etcDir/smecg.nobsyn.cg | $binDir/niceline_mt | $privDir/genmorf_no | $binDir/trad2inline.pl";
 
 
 my $option = "";
@@ -65,21 +66,27 @@ if (defined($ARGV[0]) and $ARGV[0] =~ /^--(.*)$/) {
    $option = $1;
 #   print "--option=$option\n";
 
+# --sme: Only grammatical analysis:
     if ($option =~ /^sme$/) {
       $cmd = "$cmd1"
     }
-    elsif ($option =~ /^nob$/) {
+# --nob: adjust CG analysis to TM (with smecg.nob)
+    elsif ($option =~ /^nob$/) { 
       $cmd = "$cmd1 | vislcg3 -g $etcDir/smecg.nob.cg --trace"
     }
+# --nob: lexical transfer (sme2nob calls sme.nob.dict)
     elsif ($option =~ /^(trad|trans)$/) {
       $cmd = "$cmd1 | vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l"
     }
+# --nobsyn: syntactic transfer (with smecg.nobsyn): insert tokens and movementrules
     elsif ($option =~ /^nobsyn$/) {
       $cmd = "$cmd1 | vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | vislcg3 -g $etcDir/smecg.nobsyn.cg --trace"
     }
+# --niceline: Write cohorts on one line, flattens cG format, to inspect input to fst (with niceline_mt)
     elsif ($option =~ /^niceline$/) {
       $cmd = "$cmd1 | vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | vislcg3 -g $etcDir/smecg.nobsyn.cg | $binDir/niceline_mt"
     }
+# --gen: calling the nob genarator (with genmorf_no)
     elsif ($option =~ /^gen$/) {
       $cmd = "$cmd1 | vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | vislcg3 -g $etcDir/smecg.nobsyn.cg | $binDir/niceline_mt | $privDir/genmorf_no"
     }
