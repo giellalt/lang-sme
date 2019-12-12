@@ -3297,20 +3297,20 @@ SUBSTITUTE (?) (N Prop Sem/Plc Sg Nom Guess) TARGET ("<[\\p{Lu}].*>"r ?)(NOT -1 
 	
 	# Remove speller suggestions if the first letter of the suggestion is not the same as the first letter of the original
 	# -----------------------------------------------------------------------------
-	#likely a name, since we only care about upper case letters
+	# likely a name, since we only care about upper case letters
 
-REMOVE ("([\\p{L}\\p{N}]).*"r) IF (NEGATE 0 (VSTR:"<$1.*>"r) - (<spelled>))(NEGATE 0/-1 (VSTR:"<$1.*>"r) - (<spelled>))(0 Prop)(NEGATE 0/-1 Cmp);
+#REMOVE ("([\\p{L}\\p{N}]).*"r) IF (NEGATE 0 (VSTR:"<$1.*>"r) - (<spelled>))(NEGATE 0/-1 (VSTR:"<$1.*>"r) - (<spelled>))(0 Prop)(NEGATE 0/-1 Cmp);
 
 
-REMOVE ("([^<]).*"r) IF (NEGATE 0 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(NEGATE 0/-1 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(0 Prop)(NEGATE 0/-1 Cmp);
+#REMOVE ("([^<]).*"r) IF (NEGATE 0 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(NEGATE 0/-1 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(0 Prop)(NEGATE 0/-1 Cmp);
 	## Ruoŧa girkus lea oaiveovddasvástádus doallat hávdádusaid Ruoŧas, earret Stockholma gávpogis ja Tranåsa gielddas.
 	## Svenska Kyrkan
 	#$ Tšukčit ásset Davvi-Sibirjas.
 
-REMOVE ("([^<]).*"r) IF (NEGATE 0 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(NEGATE 0/-1 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(0 Prop)(NEGATE 0/-1 Cmp);	
+#REMOVE ("([^<]).*"r) IF (NEGATE 0 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(NEGATE 0/-1 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>))(0 Prop)(NEGATE 0/-1 Cmp);	
 
 
-REMOVE (<spelled> "<([^<]).*>"r) IF (NEGATE 0 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>));
+REMOVE (/^"\([^<]\).*"S$/r) IF (0 (*) - (VSTR:"<\\Q$1\\E.*>"r) - (<spelled>)) ;
 	## Gávkavuonas ja Reifvágis eai šat gávdno sávzzat, ja Leaibevuona-Smiervuona guovlluin lea sávza- ja gussalohku garrasit maŋas mannan.
 	## Elfápmohuksejeaddjit háliidit álbmoga duogábeale bargat - dadjet boazosápmelaččat Fállanuori guovlluin.
 	## Sii han eai leat gilván geaidnoravddaid Porsas Porsajávrai.
@@ -3318,7 +3318,6 @@ REMOVE (<spelled> "<([^<]).*>"r) IF (NEGATE 0 (VSTR:"<\\Q$1\\E.*>"r) - (<spelled
 	## Geahča maiddái artihkkala seamma aviissas Rieppovuona ruvkkiid heaittiheami birra.
 	## Báiki lea liikka guhkkin Kristiansanddas go Flekkefjordas.
 	#Doesn't work yet
-
 
 
 
@@ -5342,10 +5341,11 @@ SELECT (PxSg2) IF (*-1 (Imprt Sg2) BARRIER NPNHA LINK -1 BOS)(*1 ADVLCASE BARRIE
 SELECT:r923 (PxSg2) IF (0 (N Pl Nom))(*1C (V Sg2) BARRIER NOT-ADV-PCLE OR CLB);
 	## Hearrá Ipmilat galggat gudnejahttit.
 
-SELECT:r924 (PxSg2) IF (0 (N Pl Nom))(*-1 V-TRANS-ACT-NOT-ACT + Sg2 BARRIER SV-BOUNDARY OR Acc LINK NOT 0 A OR Imprt OR Inf)(NEGATE *-1 V-TRANS-ACT-NOT-ACT + Sg2 BARRIER SV-BOUNDARY OR Acc LINK 0 Pl3)(NEGATE 0 ("váldi") LINK 1 ("vuostá") OR ("vuostái"));
+SELECT:r924 (PxSg2) IF (0 (N Pl Nom))(*-1 V-TRANS-ACT-NOT-ACT + Sg2 BARRIER SV-BOUNDARY OR Acc LINK NOT 0 A OR Imprt OR Inf)(NEGATE *-1 V-TRANS-ACT-NOT-ACT + Sg2 BARRIER SV-BOUNDARY OR Acc LINK 0 Pl3)(NEGATE 0 ("váldi") LINK 1 ("vuostá") OR ("vuostái"))(NEGATE 0 Der/h);
 	## Leat go oaidnán oappát?
 	#$GRAMval Earret eará 	ballet 	muhtun boanddat ásaheames lassidoaimma doalus.
 	#$ Jurddahala dárkilit guđe bovdejumi hálidat váldit vuostá ja guđemučča it .
+	#$GRAM Hálidivččet {gaccat} eambbo oahpu dál ja soaitá ahte dát boktá du áigumušaid boahtte áigái.
 
 REMOVE:r925 (Gen PxSg2) IF (*-1 REALCOPULAS BARRIER SV-BOUNDARY)(NEGATE *-1 (Pron Sg2 Loc)BARRIER S-BOUNDARY)(0 (N Pl Nom))(*1 ("mielde"));
 
@@ -15139,8 +15139,8 @@ SELECT:ConNegIfNeg ConNeg IF (*-1 (Neg Ind) BARRIER ConNeg OR PrfPrc OR SV-BOUND
 SELECT:ConNegCondIfNeg (Cond ConNeg) IF (*-1 (Neg Ind) BARRIER ConNeg OR SV-BOUNDARY);
 	## Ii go son ollu eanet gárvvohivčče din?
 
-REMOVE:NotConNegNotNeg ConNeg IF (NEGATE *-1 Neg OR ("állet") BARRIER NOT-COMMA OR go)(NEGATE -1 Rel LINK -1 Neg)(NEGATE -2 Rel LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-A-ADV LINK *-1 ConNeg BARRIER VFIN)(NOT 0 Prt);
-	#GRAM: BARRIER S-BOUNDARY changed to BARRIER NOT-COMMA and (NOT 0 Prt)
+REMOVE:NotConNegNotNeg ConNeg IF (NEGATE *-1 Neg OR ("állet") BARRIER NOT-COMMA OR go)(NEGATE -1 Rel LINK -1 Neg)(NEGATE -2 Rel LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-A-ADV LINK *-1 ConNeg BARRIER VFIN)(NOT 0 Prt)(NEGATE 0 Der/h);
+	#GRAM: BARRIER S-BOUNDARY changed to BARRIER NOT-COMMA and (NOT 0 Prt) and (NEGATE 0 Der/h)
 	#$ Eai buohkan geat vánddardit mehciin giđđat leat lobálaš doaimmat
 	
 REMOVE:NotConNegNotNegGRAMval ConNeg IF (0 ("dat" Ill Sg))(0* ConNeg BARRIER S-BOUNDARY);
@@ -15159,11 +15159,11 @@ SELECT:ConNegPrfPrc ConNeg IF (*-1 PrfPrc BARRIER NOT-ADV-PCLE LINK *-1 Neg BARR
 	# Need more advanced rule to select ConNeg when there is more
 	# material between Neg and ConNeg.
 
-REMOVE:NotConNegIfNotNeg ConNeg IF (NEGATE *-1 (Neg) OR ("állet") BARRIER NOT-COMMA)(NEGATE *-1 Nom LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-A-ADV LINK *-1 ConNeg BARRIER VFIN); 
+REMOVE:NotConNegIfNotNeg ConNeg IF (NEGATE *-1 (Neg) OR ("állet") BARRIER NOT-COMMA)(NEGATE *-1 Nom LINK -1 Neg)(NEGATE *-1 (@CVP) BARRIER NOT-A-ADV LINK *-1 ConNeg BARRIER VFIN)(NEGATE 0 Der/h); 
 	## Juohke muorra mii ii šaddat buriid šattuid, čullojuvvo ja 
 	## bálkestuvvo dollii.
 	## Gávpot mii lea vári alde, ii sáhte leat čihkosis.
-	#GRAM: BARRIER S-BOUNDARY OR V-IND-FIN changed to BARRIER NOT-COMMA, added OR ("állet")
+	#GRAM: BARRIER S-BOUNDARY OR V-IND-FIN changed to BARRIER NOT-COMMA, added OR ("állet"), (NEGATE 0 Der/h)
 	#$ Eai buohkan geat vánddardit mehciin giđđat leat lobálaš doaimmat
 	
 	# Imperative
@@ -15178,11 +15178,12 @@ REMOVE:NotImprtConNeg Imprt IF (*-1 ConNeg BARRIER COMMA OR SV-BOUNDARY)(NEGATE 
 	#GRAMCHK: (NOT 0 (Imprt ConNeg))
 
 REMOVE:NotImprtA Imprt IF (-1 A LINK NOT 0 Ess)(NEGATE 0 Err/Orth-any OR Err/Lex);
-REMOVE:NotImprtN Imprt IF (-1 N OR Po LINK NOT 0 Acc)(NEGATE 0 Err/Orth-any OR Err/Lex);
+REMOVE:NotImprtN Imprt IF (-1 N OR Po LINK NOT 0 Acc)(NEGATE 0 Err/Orth-any OR Err/Lex OR Der/h);
 	## Čuorvvas gullo Ramas. 
 	## Boarrásis leai dat vel eanaš ealáhussan ge.
 	#$ Hearrá sivdnit Liná!
 	#GRAM: - Acc
+	#GRAM OR Der/h
  # This will work fine when headings no longer interfere.
     #$ Son FERTII fas deaivvadit nieiddain máksos maid máksá..
 
@@ -15558,7 +15559,7 @@ REMOVE:r1883 Loc IF (*-1 ("leat") OR ("fitnat") OR ("orrut") or ("gávnnahallat"
 REMOVE:r2869 Imprt IF (-1 BOS)(0 Adv)(*1 ("?") BARRIER S-BOUNDARY2); 
 	## Gosa don dál?
 
-REMOVE:r2870 Imprt IF (*-1 S-BOUNDARY2 BARRIER PUNCT)(NEGATE -1 CLB OR ("de") OR ("nu"))(NEGATE -1 CC LINK -1 COMMA)(NEGATE -1 CC LINK *-1 Imprt BARRIER SV-BOUNDARY)(NEGATE 0 N LINK NEGATE 0* VFIN BARRIER S-BOUNDARY OR Rel OR CC OR COMMA)(NEGATE 0 Err/Orth-any OR Err/Lex);
+REMOVE:r2870 Imprt IF (*-1 S-BOUNDARY2 BARRIER PUNCT)(NEGATE -1 CLB OR ("de") OR ("nu"))(NEGATE -1 CC LINK -1 COMMA)(NEGATE -1 CC LINK *-1 Imprt BARRIER SV-BOUNDARY)(NEGATE 0 N LINK NEGATE 0* VFIN BARRIER S-BOUNDARY OR Rel OR CC OR COMMA)(NEGATE 0 Err/Orth-any OR Err/Lex OR Der/h);
 	## Jus divššohas roasmmohuvvá dahje oažžu duođalaš váttisvuođaid,...
 	#$ - Jeara nieidda-guovttos.
 	#$ » 11 Ja Hearrá celkkii : « Mana Judasa vissui Njulgesgeainnus ja 	jeara 	Sávlosa gii lea Tarsosis eret .
@@ -20096,8 +20097,9 @@ SELECT:r2868 Inf IF (-1C Loc LINK *-1 BOS BARRIER NPNH)(0 LOCV)(1 EOS);
 	# Some imperatives according to person and number.
 	# ------------------------------------------------
 
-REMOVE:r2882 (Imprt Sg2) IF (0 V-SG2)(NEGATE *1 COMMA OR CC BARRIER VFIN LINK 1C (Imprt Sg2));
+REMOVE:r2882 (Imprt Sg2) IF (0 V-SG2)(NEGATE *1 COMMA OR CC BARRIER VFIN LINK 1C (Imprt Sg2))(NEGATE 0 Der/h);
 	## Don gii gaikkodat tempela ja hukset dan fas ođđasit golmma beaivvis!
+	#GRAM Buoridan_dihte dan leat sii ásahan praktikántaortnega , mii galgá sihkkarastit ja movttidahttit sámi nuoraid gaccat media oahpu.
 
 SELECT:r2883 (Imprt Sg2) IF (NEGATE *-1 V-SG2 BARRIER VFIN)(*-1 PUNCT OR CLB BARRIER NOT-ADV-PCLE)(1 (PxSg2))(NEGATE 0 Err/Orth-any OR Err/Lex);
 	## Nahket miehkát fas dohppii.
@@ -20140,8 +20142,9 @@ SELECT:r2891 Imprt IF (-1 COMMA OR CC)(NEGATE 0 Pron)(*-2 Imprt BARRIER VFIN LIN
 	#$GRAM Beroškeahttá das sáhttá ođđa demokráhtalaš sámi almmolašvuohta mearkkašit dan ahte ferte standardiseret dihto osiid das movt čájehit , buktit oidnosii ja addet sámevuođa. 
 
 
-SELECT:r2892 Imprt IF (*-2C Imprt)(-1 COMMA);
+SELECT:r2892 Imprt IF (-2C Imprt)(-1 COMMA);
 	## Allet almmi bokte, dasgo dat lea Ipmila truvdnu, allet ge eatnama bokte...
+	#GRAM
 
 SELECT:r2893 (Imprt Sg2) IF (*1 CC OR COMMA BARRIER VFIN LINK *1C (Imprt Sg2) BARRIER SV-BOUNDARY2);
 	## Gohčo bargiid boahtit ja atte dáidda bálkká!
