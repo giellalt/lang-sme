@@ -25,7 +25,7 @@ LIST A = A ;
 LIST Adv = Adv ADV ;
 LIST V = V ;
 LIST Pron = Pron PRON ;
-LIST det = Det ;
+LIST Det = Det DET ;
 LIST Indef = Indef ;
 
 LIST CS = CS ;
@@ -926,10 +926,14 @@ SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @SPRED) (s @SUBJ LINK 0 (N /^\(Msc|Fem|
 SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @OPRED) (s @OBJ LINK 0 (N /^\(Sg|Pl\)$/r)) ; # number for predicatives
 SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @OPRED) (s @OBJ LINK 0 (N /^\(Msc|Fem|Neu\)$/r)) ; # gender for predicatives
 
-### propagating to det
+### propagating to Det
 
-SUBSTITUTE (Sg) (Pl) TARGET (Det) OR Pron (p (N /^\(Sg|Pl\)$/r)) ; 
-SUBSTITUTE (Sg) (Pl) TARGET (Det) OR Pron (p Num LINK pr (N /^\(Sg|Pl\)$/r)) ; 
+SUBSTITUTE (Sg) (Pl) TARGET Det OR Pron (p (N /^\(Sg|Pl\)$/r)) ; 
+SUBSTITUTE (Sg) (Pl) TARGET Det OR Pron (p Num LINK pr (N /^\(Sg|Pl\)$/r)) ; 
+
+### no gender for plural A og Det
+
+#SUBSTITUTE (/^<\(Msc|Fem|Neu\)>$/r) (*) TARGET A + Pl OR Det + Pl ;
 
 ### the following taken from cglex.txt
 
@@ -1844,7 +1848,7 @@ SELECT:fallback ("tau"i) (0 ("<báddi>"i)) ;
 SELECT ("innstilling"i) (0 ("<áššeguoddu>"i) LINK -1 ("<ráđđealmmái>"i)) ;
 SELECT:fallback ("holdning"i) (0 ("<áššeguoddu>"i)) ;
 
-SELECT ("vår"i) (0 ("<bievla>"i) LINK -1 det) ;
+SELECT ("vår"i) (0 ("<bievla>"i) LINK -1 Det) ;
 SELECT:fallback ("barmark"i) (0 ("<bievla>"i)) ;
 
 
@@ -3316,7 +3320,7 @@ SETPARENT (<insert> Pr) (NONE p (*)) TO (1 (*)) ;
 
 ### determiners
 
-ADDCOHORT ("<en>" "en" <NOB:en> <insert> Det Dem Indef @>N) BEFORE A OR (N Sg) - (Def) (*1S (N Sg) + (<maydetind^n>) BARRIER (*) - det - A - Gen) (NOT -1 det OR A OR Gen) ; # simplified example for indef. article insertion 
+ADDCOHORT ("<en>" "en" <NOB:en> <insert> Det Dem Indef @>N) BEFORE A OR (N Sg) - (Def) (*1S (N Sg) + (<maydetind^n>) BARRIER (*) - Det - A - Gen) (NOT -1 Det OR A OR Gen) ; # simplified example for indef. article insertion 
 
 ADDCOHORT ("<det>" "det" <NOB:det> <insert> Pron Pers Sg3 @SUBJ) BEFORE (<ext>) (NONE s (<hab>));
 ADDCOHORT ("<det>" "det" <NOB:det> <insert> Pron Pers Sg3 @SUBJ) BEFORE (<weather>) ;
