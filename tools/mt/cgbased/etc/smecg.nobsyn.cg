@@ -896,6 +896,28 @@ LIST IJ-TIME = ("<beaivi>"i) ("<eahket>"i) ("<iđit>"i)  ("<idja>"i)   ("<vahkko
 
 BEFORE-SECTIONS
 
+### implementing gender for nob noun translations
+
+SUBSTITUTE (N) (N M) TARGET (".*/N[MX]"r) ;
+SUBSTITUTE (N) (N F) TARGET (".*/NF"r) ;
+SUBSTITUTE (N) (N NEU) TARGET (".*/NN"r) ;
+
+SUBSTITUTE ("([^<]+)/[A-Z]+"r) (VSTR:"$1") TARGET N ;
+
+### tokenizing N-included ADJ
+
+ADDCOHORT ("<$1>"v "$1"v <insert> A @>N) BEFORE ("([^<]+)/A=.*"r N) ;
+SUBSTITUTE ("[^<]+/A=(.+)"r) (VSTR:"$1") TARGET N ;
+SETPARENT (<insert> A @>N) TO (*1 N) ;
+
+### propagating gender and number to adjectives
+
+SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (p (N /^\(Sg|Pl\)$/r)) ; # number first
+SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (p (N /^\(M|F|NEU\)$/r)) ; # then gender
+
+SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @SPRED OR @OPRED) (s @SUBJ OR @OBJ LINK 0 (N /^\(Sg|Pl\)$/r)) ; # number for predicatives
+SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @SPRED OR @OPRED) (s @SUBJ OR @OBJ LINK 0 (N /^\(M|F|NEU\)$/r)) ; # gender for predicatives
+
 ### the following taken from cglex.txt
 
 REMOVE Cmp (0 N) ;
