@@ -454,7 +454,7 @@ LIST CAP-INITIAL = "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M"
 
 # Word or not
 # -----------
-LIST WORD = N A Adv ADV V Prop PROP Pron PRON CS CC Po PO Pr PR PRP Interj INTERJ Pcle PCLE Num NUM ABBR ACR \? ;
+LIST WORD = N A Adv ADV V Pron PRON CS CC Po PO Pr PR Interj INTERJ Pcle PCLE Num NUM ABBR ACR \? ;
 # any word
 
 SET REALWORD = WORD - Num - Ord ;
@@ -914,26 +914,6 @@ SUBSTITUTE (<\(NOB:[^<]+\)/[A-Z]+>r) (VSTR:<$1>) TARGET N ;
 ADDCOHORT ("<$1>"v "$1"v <insert> A @>N) BEFORE ("([^<]+)/A=.*"r N) (NEGATE c ("$1"v A)) ;
 SUBSTITUTE ("[^<]+/A=(.+)"r) (VSTR:"$1") TARGET N ;
 SETPARENT (<insert> A @>N) TO (*1 N) ;
-
-### propagating gender and number to adjectives
-
-SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (p (N /^\(Sg|Pl\)$/r)) ; # number first
-SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (p (N /^\(Msc|Fem|Neu\)$/r)) ; # then gender
-
-SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @SPRED) (s @SUBJ LINK 0 (N /^\(Sg|Pl\)$/r)) ; # number for predicatives
-SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @SPRED) (s @SUBJ LINK 0 (N /^\(Msc|Fem|Neu\)$/r)) ; # gender for predicatives
-
-SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @OPRED) (s @OBJ LINK 0 (N /^\(Sg|Pl\)$/r)) ; # number for predicatives
-SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @OPRED) (s @OBJ LINK 0 (N /^\(Msc|Fem|Neu\)$/r)) ; # gender for predicatives
-
-### propagating to Det
-
-SUBSTITUTE (Sg) (Pl) TARGET Det OR Pron (p (N /^\(Sg|Pl\)$/r)) ; 
-SUBSTITUTE (Sg) (Pl) TARGET Det OR Pron (p Num LINK pr (N /^\(Sg|Pl\)$/r)) ; 
-
-### no gender for plural A og Det
-
-#SUBSTITUTE (/^<\(Msc|Fem|Neu\)>$/r) (*) TARGET A + Pl OR Det + Pl ;
 
 ### the following taken from cglex.txt
 
@@ -3305,7 +3285,7 @@ SETPARENT (<insert> Pr) TO (1 (<noprp>)) ;
 ## Locative
 
 ADDCOHORT ("<fra>" "fra" <NOB:fra> <insert> Pr) BEFORE N/Prop + Loc + (@ADVL-ela) IF (NOT 0 (<hab>) OR (<noprp>) OR A OR Adv); 
-#ADDCOHORT ("<på>" "på" <NOB:på> <insert> Pr) BEFORE N/Prop + Loc IF (0 LOC-PA) (NOT 0 (<hab>) OR (<noprp>))(NOT -1 Pr);  # på fungerer ikke, men av fungerer. utf8-problem?
+ADDCOHORT ("<på>" "på" <insert> Pr) BEFORE N/Prop + Loc IF (0 LOC-PA) (NOT 0 (<hab>) OR (<noprp>))(NOT -1 Pr);  # på fungerer ikke, men av fungerer. utf8-problem?
 ADDCOHORT ("<i>" "i" <NOB:i> <insert> Pr) BEFORE N/Prop + Loc IF (NOT 0 (<hab>) OR (<noprp>) OR A OR Adv)(NOT -1 Pr); 
 
 
@@ -3376,6 +3356,31 @@ SETPARENT (<insert> X) (NONE p (*)) TO (-1 V) ; # dep-attach the split-offs
 
 SUBSTITUTE (X) (VSTR:$1) TARGET ("[^<]+/\([A-Z]+\)"r <insert> X) ; # add POS to split-offs if specified
 SUBSTITUTE ("([^<]+)/[A-Z]+"r) ("$1"v) TARGET (<insert>) ; # remove /POS information
+
+#SUBSTITUTE (A) (A Pos Msc Sg Indef) TARGET (<insert> A) ;
+SUBSTITUTE (@MV<) (@SPRED) TARGET (<insert> A) (p ("bli") OR ("være")) ;
+
+### propagating gender and number to adjectives
+
+SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (p (N /^\(Sg|Pl\)$/r)) ; # number first
+SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (p (N /^\(Msc|Fem|Neu\)$/r)) ; # then gender
+
+SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @SPRED) (s @SUBJ LINK 0 (N /^\(Sg|Pl\)$/r)) ; # number for predicatives
+SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @SPRED) (s @SUBJ LINK 0 (N /^\(Msc|Fem|Neu\)$/r)) ; # gender for predicatives
+
+SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @OPRED) (s @OBJ LINK 0 (N /^\(Sg|Pl\)$/r)) ; # number for predicatives
+SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @OPRED) (s @OBJ LINK 0 (N /^\(Msc|Fem|Neu\)$/r)) ; # gender for predicatives
+
+### propagating to Det
+
+SUBSTITUTE (Sg) (Pl) TARGET Det OR Pron (p (N /^\(Sg|Pl\)$/r)) ; 
+SUBSTITUTE (Sg) (Pl) TARGET Det OR Pron (p Num LINK pr (N /^\(Sg|Pl\)$/r)) ; 
+
+### no gender for plural A og Det
+
+#SUBSTITUTE (/^<\(Msc|Fem|Neu\)>$/r) (*) TARGET A + Pl OR Det + Pl ;
+
+
 
 ### definiteness
 
