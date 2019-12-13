@@ -480,6 +480,7 @@ SET OBJ>-OTHERS = OBJ> OR (Gen) OR (Nom) OR (Ess) OR (Loc) OR (Adv) ;
 
 LIST @X = @X ;
 
+LIST Err/Confused		= Err/Confused ;
 LIST Err/Orth           = Err/Orth ;
 LIST Err/Orth-a-á       = Err/Orth-a-á ;
 LIST Err/Orth-nom-acc   = Err/Orth-nom-acc ;
@@ -4061,7 +4062,7 @@ COPY:real-NomAgIll-PrtSg3 (V TV Ind Prt Sg3 &SUGGEST) EXCEPT (Ex/V TV Der/NomAg 
 	# diehttu¢(noun,conc|diehtu), adnu-atnu  Imprt+Du1 EVEN-stem vs noun nomsg   u-stam; konsonantgrupper 2 och 3C och ddj-dj-j, grad III-II ---- problem: not the same lemma
 	#adnu --- atnu+N+Sg+Nom Confused
   
-ADD:real-ImprtDu1-NSgNom (&real-ImprtDu1-NSgNom) TARGET (N Sg Nom Err/Confused) + EVEN-VERBS + CONC IF (NEGATE *1 ("!"));
+ADD:real-ImprtDu1-NSgNom (&real-ImprtDu1-NSgNom) TARGET (N Sg Nom Err/Confused) IF (0 EVEN-VERBS + CONC) (NEGATE *1 ("!"));
 	## Guovdageainnu servodat oažžu unnán ávkki Sámedikkis , ja jus dat ii rievdat politihka guovddáš sámi guovlluid olggušteamis , de ii leat adnu dasa , lohká son dan birra go okte lea lohkan medias ahte Sámedikki oččošii heaittihit . -  adnu
 	## Mii váldit sámegiela duođas, lea Rettera čielga diehttu .  -   diehttu
 	## Njulges sáhccu čujuha man olu berre njuovvat go ealu varihiid gaskamearálaš njuovvandeaddu lea nuo ja nuo stuoris . .  -   sáhccu
@@ -4125,16 +4126,27 @@ ADD:real-PlNomPxSg2-PlNom (&real-PlNomPxSg2-PlNom) TARGET (N Sg Nom PxSg2) IF (0
 COPY:real-PlNomPxSg2-PlNom (Pl &SUGGEST) EXCEPT (Sg PxSg2 &real-PlNomPxSg2-PlNom) TARGET (IV &real-PlNomPxSg2-PlNom) ;
 
 
-	# adj vs  noun ill; konsonantgrupper 2 och 3C och ddj-dj-j, nomsg GRAD II
+	# adj vs  noun ill from u-, i- and á-nouns; alla konsonantgrupper konsonantgrupper 2 och 3C + ddj-dj, noun in grad II; konsonantgrupper 2 och 3C och ddj-dj-j, nomsg GRAD II
 	# -----------------------------------------------------------------------
 	
 	#duoddjái	duoddjái+A+Sg+Nom
 	#duodjái	duodji+N+Sg+Ill
 	#not the same lemma
 	#duoddjái duodji+N+Sg+Ill Err/Real Err/Confused
-	#duoddjái¢(noun,conc|duodjái)    
+	#duoddjái¢(noun,conc|duodjái) 
+	
+LIST Á-NOUNS = (".*[^aáeiou]á"r N) ;
+LIST U-NOUNS = (".*[^aáeiou]u"r N) ;
+LIST I-NOUNS = (".*[^aáeiou]i"r N) ; 
+LIST O-NOUNS = (".*[^aáeiou]o"r N) ;
 
-ADD:real-PlNomPxSg2-PlNom (&real-PlNomPxSg2-PlNom) TARGET (N Sg Ill Err/Confused) IF (0 (A Sg Nom))(0 CONC-2 OR CONC-3 OR CONC-3A-GRADE-II) (NEGATE *-1 COPULAS BARRIER VFIN OR Inf OR PrfPrc);	
+
+SET Á-I-U-NOUNS = Á-NOUNS OR I-NOUNS OR U-NOUNS ;
+
+
+#SUBSTITUTE (N) (N alsdkfjlaksdjfk) TARGET Á-NOUNS ;  
+
+ADD:real-PlNomPxSg2-PlNom (&real-PlNomPxSg2-PlNom) TARGET (N Sg Ill Err/Confused) + Á-I-U-NOUNS ; #IF (0 (A Sg Nom))(0 CONC-2 OR CONC-3 OR CONC-3A-GRADE-II) (NEGATE *-1 COPULAS BARRIER VFIN OR Inf OR PrfPrc);	
 	## Sisdoallu : Leago dus beroštupmi árbevirolaš ja ođđaáigásaš duoddjái , ja liikot duddjot ja hábmet ? -- duoddjái
 	## Digitála bargovuogit , dego ovdamearkka_dihte govven , filbmen ja sosiála media , leat veahkkeneavvun go ráhkadit duoddjái muitalusa . -- duoddjái
 	## Lihkkosávaldagat čeahccái du riegádanbeaivái mii lea juovlamánu 13. beaivvi .  ---   čeahccái
