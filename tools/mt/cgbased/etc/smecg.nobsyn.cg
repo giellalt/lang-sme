@@ -909,9 +909,16 @@ SUBSTITUTE (N) (N Neu) TARGET (".*/NN"r) ;
 SUBSTITUTE ("([^<]+)/[A-Z]+"r) (VSTR:"$1") TARGET N ;
 SUBSTITUTE (<\(NOB:[^<]+\)/[A-Z]+>r) (VSTR:<$1>) TARGET N ;
 
+### early suffixes
+
+SUBSTITUTE ("([^<]+)"r) (VSTR:"liten/A=$1") TARGET (Der/Dimin N) ; # biillaš
+SUBSTITUTE (<NOB:\(.*\)>r) (VSTR:<NOB:$1het>) TARGET (Der/vuota A) ; # ruonávuohta = grønnhet (hvis lex sel for A i dict)
+SUBSTITUTE ("([^<]*)"r) (VSTR:"$1het") TARGET (Der/vuota A) ; # ruonávuohta = grønnhet
+
+
 ### tokenizing N-included ADJ
 
-ADDCOHORT ("<$1>"v "$1"v <insert> A @>N) BEFORE ("([^<]+)/A=.*"r N) (NEGATE c ("$1"v A)) ;
+ADDCOHORT ("<$1>"v "$1"v <insert> A @>N) BEFORE ("([^<]+)/A=.*"r N) (NEGATE c ("$1"v A)) ; #hindrer samme adj to ganger, både i leksikon eller fra derivasjonsregel og som mod.adjektiv foran
 SUBSTITUTE ("[^<]+/A=(.+)"r) (VSTR:"$1") TARGET N ;
 SETPARENT (<insert> A @>N) TO (*1 N) ;
 
@@ -3341,7 +3348,12 @@ SETPARENT:formalsubjdep (<insert>) (NONE p (*)) TO (-1 V);
 
 ### suffixes
 
-SUBSTITUTE ("([^<]+)"r) (VSTR:"begynne=å=$1") TARGET (Der/InchL V) ; # vuoššagohtet
+SUBSTITUTE ("([^<]+)"r) (VSTR:"begynne=å=$1") TARGET (Der/InchL V) ; # vuoššagohtet Der/InchL => Inf
+SUBSTITUTE ("([^<]+)"r) (VSTR:"bli=$1/PCP") TARGET (Der/PassL V) ; # vuššojuvvot
+SUBSTITUTE ("([^<]+)"r) (VSTR:"bli=$1/PCP") TARGET (Der/PassS V) ; # vuššot
+SUBSTITUTE ("([^<]+)"r) (VSTR:"bli=$1/PCP") TARGET (Der/halla V) ; # vuovddáhalai
+
+
 
 SUBSTITUTE  ("([^<]+)e"r) (VSTR:"$1ing") TARGET (Ex/V Der/NomAct N) ; # čohkamiid Pl koking
 SUBSTITUTE  ("([^<]+)e"r) (VSTR:"$1er") TARGET (Ex/V Der/NomAg N) ; # čohkamat Pl koker
@@ -3360,6 +3372,7 @@ SUBSTITUTE ("<([^<]+)/[A-Z]+>"r) ("<$1>"v) TARGET (<insert>) ; # remove /POS inf
 
 #SUBSTITUTE (A) (A Pos Msc Sg Indef) TARGET (<insert> A) ;
 SUBSTITUTE (@MV<) (@SPRED) TARGET (<insert> A) (p ("bli") OR ("være")) ;
+SUBSTITUTE (PCP) (V PrfPrc) TARGET (<insert> PCP)  ;
 
 ### propagating gender and number to adjectives
 
@@ -3386,7 +3399,7 @@ SUBSTITUTE (Sg) (Pl) TARGET Det OR Pron (p Num LINK pr (N /^\(Sg|Pl\)$/r)) ;
 
 
 ### definiteness
-
+#SUBSTITUTE (Der/vuota) (Def) TARGET (A) IF (0 Der/vuota) ;
 
 
 ### subordinating conjunctions / infinitive markers
