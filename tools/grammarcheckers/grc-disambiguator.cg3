@@ -3288,6 +3288,10 @@ SUBSTITUTE ("([\\p{L}\\p{N}].*)-ai"r) (VSTR:"$1"r) TARGET (N Prop Sem/Plc Sg Ill
 SUBSTITUTE ("([\\p{L}\\p{N}].*)ii"r) (VSTR:"$1"r) TARGET (N Prop Sem/Plc Sg Ill Guess) ;
 SUBSTITUTE ("([\\p{L}\\p{N}].*)ái"r) (VSTR:"$1á"r) TARGET (N Prop Sem/Plc Sg Ill Guess) ;
 
+
+#SUBSTITUTE ("([\\p{L}\\p{N}]....*)"r) (VSTR:"$1"r) TARGET (N Prop Sem/Plc Sg Nom Guess) ;
+#bestimmte Länge
+
 SUBSTITUTE (?) (N Prop Sem/Fem_Mal Sg Nom Guess) TARGET ("<[\\p{Lu}].*>"r ?)(1 Sem/Sur)(NOT -1 BOS) ;	
 	## Ramonesa lávlu {Joye} Ramone guoimmuhii guovtte lávlagis Blackfire One Nation Under skearrus 2002.
 
@@ -3379,7 +3383,9 @@ BEFORE-SECTIONS
 ###############
 
 
+#Avoid the Err/Confused gets involved:
 
+SUBSTITUTE (Err/Confused) (Err/Confused*) ;
 
 #!! !!Guessing: Rule for adding Sem/Date as a tag to readings which looks like dates
 #SUBSTITUTE:Date1 (Num Sg) (Num Sg Sem/Date) TARGET ("<[0-3][0-9][.][0-2][0-9][.][1-2][0-9][0-9][0-9]>"r Num);
@@ -3957,7 +3963,7 @@ REMOVE:r596 ("fatnasit" Sg2) IF (0 ("fanas"));
 LIST FIRSTPERS = Du1 Sg1 Pl1 ;
 
 
-REMOVE:Imprt1p Imprt + FIRSTPERS (0 (N Nom) LINK NOT 1 Inf OR Adv)(NEGATE 0 TRANS-V LINK 1 Acc);
+REMOVE:Imprt1p Imprt + FIRSTPERS (0 (N Nom) LINK NOT 1 Inf OR Adv)(NEGATE 0 TRANS-V LINK 1 Acc)(NOT 0 Err/Confused);
 	#$ Giitu mu oasis!
 	#$ Gilvu golmma joavkku gaskka
 	#$ Bivdu ja guollebivdu
@@ -12045,7 +12051,7 @@ SELECT:r1244 Adv IF (*-1 VFIN BARRIER S-BOUNDARY)(-1C (A Nom) OR (N Nom))(0 A)(1
 	# Adverbs, not verbs
 	# ------------------
 
-REMOVE Imprt IF (NEGATE *-1 BOC OR VERBAL-ACTIVITY-V OR COMMA BARRIER NOT-CC)(NEGATE -1 Adv LINK -1 BOC OR COMMA)(NEGATE -1 Imprt)(NEGATE *-1 CC BARRIER NOT-ADV LINK -1 Imprt)(NEGATE 0 Neg OR ConNeg)(*0 VFIN BARRIER S-BOUNDARY OR CC)(NEGATE 0 Err/Orth-any OR Err/Lex); 
+REMOVE Imprt IF (NEGATE *-1 BOC OR VERBAL-ACTIVITY-V OR COMMA BARRIER NOT-CC)(NEGATE -1 Adv LINK -1 BOC OR COMMA)(NEGATE -1 Imprt)(NEGATE *-1 CC BARRIER NOT-ADV LINK -1 Imprt)(NEGATE 0 Neg OR ConNeg)(*0 VFIN BARRIER S-BOUNDARY OR CC)(NEGATE 0 Err/Orth-any OR Err/Lex OR Err/Confused); 
   #$ Váldde oktavuođa Finnmark Bedriftsrådgiving as , tlf. 78489550 ja 	jeara 	Arthura dahje 78486245 ja jeara Antte .
     #$ Son FERTII fas deaivvadit nieiddain máksos maid máksá..
     
@@ -15177,7 +15183,7 @@ REMOVE:NotImprtConNeg Imprt IF (*-1 ConNeg BARRIER COMMA OR SV-BOUNDARY)(NEGATE 
 	## Na muhto don it leat dasa nama čállán!
 	#GRAMCHK: (NOT 0 (Imprt ConNeg))
 
-REMOVE:NotImprtA Imprt IF (-1 A LINK NOT 0 Ess)(NEGATE 0 Err/Orth-any OR Err/Lex);
+REMOVE:NotImprtA Imprt IF (-1 A LINK NOT 0 Ess)(NEGATE 0 Err/Orth-any OR Err/Lex OR Err/Confused);
 REMOVE:NotImprtN Imprt IF (-1 N OR Po LINK NOT 0 Acc)(NEGATE 0 Err/Orth-any OR Err/Lex OR Der/h);
 	## Čuorvvas gullo Ramas. 
 	## Boarrásis leai dat vel eanaš ealáhussan ge.
@@ -15617,7 +15623,7 @@ SELECT:r2881 Imprt (*-1 BOS OR (":") BARRIER WORD)(0 Ind)(NEGATE 0 Qst)(*1 ("exc
 	# Nouns vs. verbs
 	# ======================
 
-REMOVE:r1975 VFIN IF (-1C Attr LINK NOT 0 ("eanet"))(NEGATE 0 Err/Orth-any OR Err/Lex);
+REMOVE:r1975 VFIN IF (-1C Attr LINK NOT 0 ("eanet"))(NEGATE 0 Err/Orth-any OR Err/Lex OR Err/Confused);
   	## Eambbo doaimmat ruovttuin váikkuhit maiddái veahkkebálvalusossodaga.
   	#$ Čoahkkimis juohkehaš buktá oainnuidis iešguđet čuoggái/gažaldahkii mii lea skovis, ja dasto ságastallet ja buktet loahppajurdaga.
   
@@ -18034,14 +18040,14 @@ SELECT:r2376 Nom IF (*-1 VERBAL-ACTIVITY-V BARRIER NPNH LINK -1 COMMA LINK *-1 V
 	# -----------------------
 
 
-SELECT:r2378 (Sg Nom) IF (*-1 COPULAS BARRIER SV-BOUNDARY2 OR PUNCT OR NP-HEAD-NOM LINK 0 Sg3)(0 NP-HEAD OR (A Nom))(NEGATE 0 PrfPrc OR NOMAG OR (Prop Loc) OR Ess)(NEGATE 0 NOUN-PO)(NEGATE 0 Loc LINK *-1 Nom BARRIER S-BOUNDARY2 OR PUNCT)(NEGATE 0 A LINK 0 Ill)(NEGATE 0 Adv LINK 1 Pr OR VGen)(1C NP-BOUNDARY)(NEGATE 0 Err/Orth-any OR Err/Lex);
+SELECT:r2378 (Sg Nom) IF (*-1 COPULAS BARRIER SV-BOUNDARY2 OR PUNCT OR NP-HEAD-NOM LINK 0 Sg3)(0 NP-HEAD OR (A Nom))(NEGATE 0 PrfPrc OR NOMAG OR (Prop Loc) OR Ess)(NEGATE 0 NOUN-PO)(NEGATE 0 Loc LINK *-1 Nom BARRIER S-BOUNDARY2 OR PUNCT)(NEGATE 0 A LINK 0 Ill)(NEGATE 0 Adv LINK 1 Pr OR VGen)(1C NP-BOUNDARY)(NEGATE 0 Err/Orth-any OR Err/Lex OR Err/Confused);
 	## Dasgo dus boahtá oaivámuš gii lea mu álbmoga Israela báimman.
 	## Dat gal lei beare unnán. 
     #$ Muhto bivddu vuođđu lea seamma.
 
 SELECT Nom (*-1 ("leat") BARRIER NPNH LINK *-1 Sem/Hum OR Pers)(0 Sem/Hum LINK 1 PLACE OR Sem/Plc);
 
-SELECT:r2379 (Sg Nom) IF (*-1 COPULAS BARRIER CC OR NPNHA OR (Sg Nom))(*-1 V-SG3 BARRIER V-NOT-AUX)(NEGATE 0 Loc OR Ess OR Adv)(NEGATE 0 NOUN-PO)(*1C NP-BOUNDARY BARRIER WORD)(NEGATE 0 Gen LINK 1 Po);
+SELECT:r2379 (Sg Nom) IF (*-1 COPULAS BARRIER CC OR NPNHA OR (Sg Nom))(*-1 V-SG3 BARRIER V-NOT-AUX)(NEGATE 0 Loc OR Ess OR Adv OR Err/Confused)(NEGATE 0 NOUN-PO)(*1C NP-BOUNDARY BARRIER WORD)(NEGATE 0 Gen LINK 1 Po);
 	## Go šattai eahket, de...
 	#$ ášši birra
 
@@ -24688,6 +24694,8 @@ MAP:>NTime (@>N) TARGET Gen IF (*-1 BOC BARRIER Pr)(NEGATE -1 Num)(0 TIME-N)(1 P
 # ======================================== #
             AFTER-SECTIONS #34              #
 # ======================================== #
+
+SUBSTITUTE (Err/Confused*) (Err/Confused) ;
              
 # This small ruleset could be put in a different file, or put
 # behind sme-dis.rle instead. At the moment, it could go into
