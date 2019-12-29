@@ -898,17 +898,17 @@ BEFORE-SECTIONS
 
 ### Number differences sme vs. nob (has to come early)
 
-SUBSTITUTE (Sg) (Pl) TARGET N (c Num LINK NOT 0 (<NOB:[eé]n>r)) ;
-SUBSTITUTE (Sg) (Pl) TARGET N (-1 Num LINK NOT 0 (<NOB:[eé]n>r)) ;
+SUBSTITUTE:pl (Sg) (Pl Indef) TARGET N (c Num LINK NOT 0 (<NOB:[eé]n>r)) ;
+SUBSTITUTE:pl (Sg) (Pl Indef) TARGET N (-1 Num LINK NOT 0 (<NOB:[eé]n>r)) ;
 
 ### implementing gender for nob noun translations
 
-SUBSTITUTE (N) (N Msc) TARGET (".*/N[MX]"r) ;
-SUBSTITUTE (N) (N Fem) TARGET (".*/NF"r) ;
-SUBSTITUTE (N) (N Neu) TARGET (".*/NN"r) ;
+SUBSTITUTE:Msc (N) (N Msc) TARGET (".*/N[MX]"r) ;
+SUBSTITUTE:Fem (N) (N Fem) TARGET (".*/NF"r) ;
+SUBSTITUTE:Neu (N) (N Neu) TARGET (".*/NN"r) ;
 
-SUBSTITUTE ("([^<]+)/[A-Z]+"r) (VSTR:"$1") TARGET N ;
-SUBSTITUTE (<\(NOB:[^<]+\)/[A-Z]+>r) (VSTR:<$1>) TARGET N ;
+SUBSTITUTE:trans ("([^<]+)/[A-Z]+"r) (VSTR:"$1") TARGET N ;
+SUBSTITUTE:trans (<\(NOB:[^<]+\)/[A-Z]+>r) (VSTR:<$1>) TARGET N ;
 
 ### early suffixes
 
@@ -3218,7 +3218,7 @@ SUBSTITUTE (Pl) (Sg) TARGET (N) (0 (<sg^n>)) ; # sg__n
 
 
 
-LIST LOC-PA = "tog" "tomt" ;
+LIST LOC-PA = "tog" "tomt" "politistasjon" "stasjon" ;
 LIST LOC-OM = "kveld" "morgen" "dag" ;
 
 ### infinitive marker
@@ -3253,6 +3253,11 @@ ADDCOHORT ("<til>" "til" <NOB:til> <insert> Pr) BEFORE NOMEN + Ill IF (NOT 0 (<n
 
 ADDCOHORT ("<med>" "med" <NOB:med> <insert> Pr) BEFORE N/Prop + Com IF (NOT 0 (<noprp>));
 
+## Essive
+
+ADDCOHORT ("<som>" "som" <NOB:som> <insert> Pr) BEFORE NOMEN + Ess IF (NOT 0 (<noprp>)); 
+
+
 SETPARENT (<insert> Pr) (NONE p (*)) TO (1 (*)) ;
 
 
@@ -3274,14 +3279,20 @@ SETPARENT:formalsubjdep (<insert>) (NONE p (*)) TO (1 V);
 
 ### indefinite determiners
 
+
 ## subject predicatives
 # insert Det Indef before SPRED Det er en bil. Han er en lærer. (?)
-ADDCOHORT ("<en>" "en" <NOB:en> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + @SPRED (NOT 0 (<unc>));
+ADDCOHORT ("<en>" "en" <NOB:en> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + (Msc) + (Def) + (<right>) + @SPRED (NONE c (PRON))(NOT 0 (<unc>) OR Ess);
+ADDCOHORT ("<et>" "et" <NOB:et> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + (Neu) + (Def) + (<right>) + @SPRED (NOT 0 (<unc>));
+ADDCOHORT ("<ei>" "ei" <NOB:ei> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + (Fem) + (Def) + (<right>) + @SPRED (NOT 0 (<unc>));
 
 ## e-subjects
 # insert Det Indef before e-subject I byen er det en bil
-ADDCOHORT ("<en>" "en" <NOB:en> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + Sg + (<ext>);
+ADDCOHORT ("<en>" "en" <NOB:en> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + Sg + (Msc) + (<ext>);
+ADDCOHORT ("<et>" "et" <NOB:et> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + Sg + (Neu) + (<ext>);
+ADDCOHORT ("<ei>" "ei" <NOB:ei> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + Sg + (Fem) + (<ext>);
 
+SETPARENT:article (<insert> Det Dem Indef) (NONE p (*)) TO (*1 N);
 
 ## objects
 # Definite: dør, hand, veg, blikk, tid, sak, gang, spørsmål, verden, bil, munn, bok, rygg
@@ -3399,10 +3410,13 @@ SUBSTITUTE (Sg) (Pl) TARGET Det OR Pron (p Num LINK pr (N /^\(Sg|Pl\)$/r)) ;
 
 #SUBSTITUTE (/^<\(Msc|Fem|Neu\)>$/r) (*) TARGET A + Pl OR Det + Pl ;
 
+### genitive 
+SUBSTITUTE:clt (Gen @>N) (Def Clt) TARGET (N Gen)  ; 
 
 
 ### definiteness
-#SUBSTITUTE (Der/vuota) (Def) TARGET (A) IF (0 Der/vuota) ;
+#SUBSTITUTE (Der/vuota) (Def) TARGET (A) IF (0 Der/vuota) ; # vi har en bedre regel for dette: +het
+
 
 ### accusative to pronouns
 SUBSTITUTE (Loc) (Acc) TARGET Pron (-1 Pr) ; 
@@ -3427,8 +3441,8 @@ SUBSTITUTE Acc (*) TARGET N + Acc ;
 
 #SUBSTITUTE (Sg) (Sg Indef) TARGET (<maydetind^n>) ;
 
-SUBSTITUTE (<W:.*>r) (*) TARGET (*) ;
-SUBSTITUTE (/Sem\/.*/r) (*) TARGET N ;
+SUBSTITUTE:clean (<W:.*>r) (*) TARGET (*) ;
+SUBSTITUTE:clean (/Sem\/.*/r) (*) TARGET N ;
 
 SELECT ("jeg") IF (1 V + Sg1); # todo: conditions
 
