@@ -3223,10 +3223,11 @@ LIST LOC-OM = "kveld" "morgen" "dag" ;
 
 ### infinitive marker
 
-ADDCOHORT ("<å>" "å" <NOB:å> <insert> IM) BEFORE V + Inf IF (p Ind) ;
+ADDCOHORT ("<å>" "å" <NOB:å> <insert> IM) BEFORE V + Inf IF (p Ind) (NONE p (@FAUX)) ;
 
 ### prepositions
 LIST N/Prop = N PROP ;
+LIST N/Prop/A = N PROP A ;
 LIST NOMEN = N PROP PRON ;
 
 ADDCOHORT (VSTR:"<$1>" VSTR:"$1" <insert> Pr) BEFORE (<NOB:\(.+\)=\\+.*>r) (0 (<noprp>)) ;
@@ -3240,6 +3241,7 @@ ADDCOHORT ("<som>" "som" <NOB:som> <insert> Pr) BEFORE ("verdifull") IF (p ("atn
 ADDCOHORT ("<om>" "om" <NOB:om> <insert> Pr) BEFORE Sem/Semcon + Loc OR LOC-OM + Loc (NOT 0 (<hab>) OR (<noprp>) OR Adv)(NOT -1 Pr) ; 
 ADDCOHORT ("<om>" "om" <NOB:om> <insert> Pr) BEFORE NOMEN + Loc (p ("beroštit" V)) (NOT 0 (<hab>) OR (<noprp>) OR Adv)(NOT -1 Pr) ; 
 ADDCOHORT ("<med>" "med" <NOB:med> <insert> Pr) BEFORE N/Prop + Loc IF (p ("geargat" V))(NOT 0 (<hab>) OR (<noprp>) OR A OR Adv)(NOT -1 Pr) ; 
+ADDCOHORT ("<av>" "av" <NOB:av> <insert> Pr) BEFORE N/Prop/A + Loc + (@ADVL-ela) IF (p ("gáibidit")); 
 ADDCOHORT ("<fra>" "fra" <NOB:fra> <insert> Pr) BEFORE N/Prop + Loc + (@ADVL-ela) IF (NOT 0 (<hab>) OR (<noprp>) OR A OR Adv)(NOT -1 Pr); 
 ADDCOHORT ("<på>" "på" <insert> Pr) BEFORE N/Prop + Loc IF (0 LOC-PA) (NOT 0 (<hab>) OR (<noprp>))(NOT -1 Pr)(NOT -1 Pr);  # på fungerer ikke, men av fungerer. utf8-problem?
 ADDCOHORT ("<i>" "i" <NOB:i> <insert> Pr) BEFORE N/Prop + Loc IF (NOT 0 (<hab>) OR (<noprp>) OR A OR Adv)(NOT -1 Pr); 
@@ -3251,7 +3253,7 @@ ADDCOHORT ("<til>" "til" <NOB:til> <insert> Pr) BEFORE NOMEN + Ill IF (NOT 0 (<n
 
 ## Com
 
-ADDCOHORT ("<med>" "med" <NOB:med> <insert> Pr) BEFORE N/Prop + Com IF (NOT 0 (<noprp>));
+ADDCOHORT ("<med>" "med" <NOB:med> <insert> Pr) BEFORE NOMEN + Com IF (NOT 0 (<noprp>));
 
 ## Essive
 
@@ -3282,9 +3284,9 @@ SETPARENT:formalsubjdep (<insert>) (NONE p (*)) TO (1 V);
 
 ## subject predicatives
 # insert Det Indef before SPRED Det er en bil. Han er en lærer. (?)
-ADDCOHORT ("<en>" "en" <NOB:en> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + (Msc) + (Def) + (<right>) + @SPRED (NONE c (PRON))(NOT 0 (<unc>) OR Ess);
-ADDCOHORT ("<et>" "et" <NOB:et> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + (Neu) + (Def) + (<right>) + @SPRED (NOT 0 (<unc>));
-ADDCOHORT ("<ei>" "ei" <NOB:ei> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + (Fem) + (Def) + (<right>) + @SPRED (NOT 0 (<unc>));
+ADDCOHORT ("<en>" "en" <NOB:en> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + (Msc) + (<right>) + @SPRED (NONE c (PRON) OR Gen)(NOT 0 (<unc>) OR Ess);
+ADDCOHORT ("<et>" "et" <NOB:et> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + (Neu) + (<right>) + @SPRED (NONE c (PRON) OR Gen)(NOT 0 (<unc>));
+ADDCOHORT ("<ei>" "ei" <NOB:ei> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + (Fem) + (<right>) + @SPRED (NONE c (PRON) OR Gen)(NOT 0 (<unc>));
 
 ## e-subjects
 # insert Det Indef before e-subject I byen er det en bil
@@ -3335,13 +3337,13 @@ SETPARENT:formalsubjdep (<insert> @<SUBJ) (NONE p (*)) TO (-1 (@FAUX) OR (@FMV))
 REMCOHORT:Qst ("<go>") IF (0 Qst) ;
 
 ADDCOHORT ("<jeg>" "jeg" <NOB:jeg> <insert> Pron Pers Sg1 Nom @SUBJ>) BEFORE V + Sg1 (NONE c SUBJ) ;
-ADDCOHORT ("<du>" "du" <NOB:du> <insert> Pron Pers Sg2 Nom @SUBJ>) BEFORE V + Sg2 (NONE c SUBJ) ;
+ADDCOHORT ("<du>" "du" <NOB:du> <insert> Pron Pers Sg2 Nom @SUBJ>) BEFORE V + Sg2 (NEGATE 0 Imprt) (NONE c SUBJ) ;
 #ADDCOHORT ("<hun>" "hun" <NOB:hun> <insert> Pron Pers Sg3 Nom @SUBJ>) BEFORE V + Sg3 (NONE c SUBJ) ;
 ADDCOHORT ("<det>" "det" <NOB:det> <insert> Pron Pers Sg3 @SUBJ>) BEFORE V + Sg3 (NONE c SUBJ) ;
 ADDCOHORT ("<vi>" "vi" <NOB:vi> <insert> Pron Pers Pl1 Nom @SUBJ>) BEFORE V + Pl1 (NONE c SUBJ) ;
 ADDCOHORT ("<vi>" "vi" <NOB:vi> <insert> Pron Pers Pl1 Nom @SUBJ>) BEFORE V + Du1 (NONE c SUBJ) ;
-ADDCOHORT ("<dere>" "dere" <NOB:dere> <insert> Pron Pers Pl2 Nom @SUBJ>) BEFORE V + Pl2 (NONE c SUBJ) ;
-ADDCOHORT ("<dere>" "dere" <NOB:dere> <insert> Pron Pers Pl2 Nom @SUBJ>) BEFORE V + Du2 (NONE c SUBJ) ;
+ADDCOHORT ("<dere>" "dere" <NOB:dere> <insert> Pron Pers Pl2 Nom @SUBJ>) BEFORE V + Pl2 (NEGATE 0 Imprt) (NONE c SUBJ) ;
+ADDCOHORT ("<dere>" "dere" <NOB:dere> <insert> Pron Pers Pl2 Nom @SUBJ>) BEFORE V + Du2 (NEGATE 0 Imprt) (NONE c SUBJ) ;
 ADDCOHORT ("<de>" "de" <NOB:dere> <insert> Pron Pers Pl3 Nom @SUBJ>) BEFORE V + Pl3 (NONE c SUBJ) ;
 ADDCOHORT ("<de>" "de" <NOB:dere> <insert> Pron Pers Pl3 Nom @SUBJ>) BEFORE V + Du3 (NONE c SUBJ) ;
 
@@ -3392,6 +3394,10 @@ SUBSTITUTE (PCP) (V PrfPrc) TARGET (<insert> PCP)  ;
 
 SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (p (N /^\(Sg|Pl\)$/r)) ; # number first
 SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (p (N /^\(Msc|Fem|Neu\)$/r)) ; # then gender
+SUBSTITUTE (PRON Indef) (Det Poss VSTR:$1) TARGET (PRON Indef @>N) (p (N /^\(Sg|Pl\)$/r)) ; # number first
+SUBSTITUTE (PRON Indef) (Det Poss VSTR:$1) TARGET (PRON Indef @>N) (p (N /^\(Msc|Fem|Neu\)$/r)) ; # then gender
+SUBSTITUTE (PRON Pers) (Det Poss VSTR:$1) TARGET (PRON Pers @>N) (p (N /^\(Sg|Pl\)$/r)) ; # number first
+SUBSTITUTE (PRON Pers) (Det Poss VSTR:$1) TARGET (PRON Pers @>N) (p (N /^\(Msc|Fem|Neu\)$/r)) ; # then gender
 
 SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @SPRED) (s @SUBJ LINK 0 (/^\(Sg|Pl\)[123]?$/r)) ; # number for predicatives
 SUBSTITUTE (A) (A Pl) TARGET (A) (0 @SPRED) (s @SUBJ LINK 0 (/^\(Du[123]\)$/r)) ; # number first
@@ -3419,8 +3425,20 @@ SUBSTITUTE:clt (Gen @>N) (Def Clt) TARGET (N Gen)  ;
 
 
 ### accusative to pronouns
+SUBSTITUTE (Nom) (Acc) TARGET Pron (1 ("selv" @Pron<)) ; 
 SUBSTITUTE (Loc) (Acc) TARGET Pron (-1 Pr) ; 
 SUBSTITUTE (Ill) (Acc) TARGET Pron (-1 Pr) ; 
+
+### reflexiive pronouns
+SUBSTITUTE (PRON Refl Gen PxPl2) (DET Poss Pl2) TARGET (PRON Refl Gen PxPl2) ; 
+
+
+
+### negation
+SUBSTITUTE:cond (Cond Prs ConNeg) (Ind Prt) TARGET (V Cond Prs ConNeg) ; # Jus in livčče mun ieš.
+SUBSTITUTE (Ind Prs ConNeg) (Ind Prs) TARGET (Ind Prs ConNeg) ; 
+SUBSTITUTE (Ind Prt ConNeg) (Ind Prt) TARGET (Ind Prt ConNeg) ; 
+
 
 ### subordinating conjunctions / infinitive markers
 
