@@ -3284,9 +3284,15 @@ SETPARENT:formalsubjdep (<insert>) (NONE p (*)) TO (1 V);
 
 ## subject predicatives
 # insert Det Indef before SPRED Det er en bil. Han er en lærer. (?)
-ADDCOHORT ("<en>" "en" <NOB:en> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + (Msc) + (<right>) + @SPRED (NONE c (PRON) OR Gen)(NOT 0 (<unc>) OR Ess);
-ADDCOHORT ("<et>" "et" <NOB:et> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + (Neu) + (<right>) + @SPRED (NONE c (PRON) OR Gen)(NOT 0 (<unc>));
-ADDCOHORT ("<ei>" "ei" <NOB:ei> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + (Fem) + (<right>) + @SPRED (NONE c (PRON) OR Gen)(NOT 0 (<unc>));
+ADDCOHORT ("<den>" "den" <NOB:den> <insert> Det Dem Def Msc @>N) BEFORE WITHCHILD (*) N + (Msc) + (<right>) + @SPRED (NONE c (PRON) OR Gen OR (Det))(NOT 0 (<unc>) OR Ess);
+ADDCOHORT ("<den>" "den" <NOB:den> <insert> Det Dem Def Fem @>N) BEFORE WITHCHILD (*) N + (Fem) + (<right>) + @SPRED (NONE c (PRON) OR Gen OR (Det))(NOT 0 (<unc>) OR Ess);
+ADDCOHORT ("<den>" "den" <NOB:den> <insert> Det Dem Def Neu @>N) BEFORE WITHCHILD (*) N + (Neu) + (<right>) + @SPRED (NONE c (PRON) OR Gen OR (Det))(NOT 0 (<unc>) OR Ess);
+SETPARENT:article (<insert> Det Dem) (NONE p (*)) TO (*1 N);
+ADDCOHORT ("<en>" "en" <NOB:en> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + (Msc) + (<right>) + @SPRED (NONE c (PRON) OR Gen OR (Det))(NOT 0 (<unc>) OR Ess);
+SETPARENT:article (<insert> Det Dem) (NONE p (*)) TO (*1 N);
+ADDCOHORT ("<et>" "et" <NOB:et> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + (Neu) + (<right>) + @SPRED (NONE c (PRON) OR Gen OR (Det))(NOT 0 (<unc>));
+SETPARENT:article (<insert> Det Dem) (NONE p (*)) TO (*1 N);
+ADDCOHORT ("<ei>" "ei" <NOB:ei> <insert> Det Dem Indef @>N) BEFORE WITHCHILD (*) N + (Fem) + (<right>) + @SPRED (NONE c (PRON) OR Gen OR (Det))(NOT 0 (<unc>));
 
 ## e-subjects
 # insert Det Indef before e-subject I byen er det en bil
@@ -3389,11 +3395,12 @@ SUBSTITUTE ("<([^<]+)/[A-Z]+>"r) ("<$1>"v) TARGET (<insert>) ; # remove /POS inf
 #SUBSTITUTE (A) (A Pos Msc Sg Indef) TARGET (<insert> A) ;
 SUBSTITUTE (@MV<) (@SPRED) TARGET (<insert> A) (p ("bli") OR ("være")) ;
 SUBSTITUTE (PCP) (V PrfPrc) TARGET (<insert> PCP)  ;
+SUBSTITUTE:superl (A Superl Attr) (A Superl Indef) TARGET (A Superl Attr) ; # 
 
 ### propagating gender and number to adjectives
 
-SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (p (N /^\(Sg|Pl\)$/r)) ; # number first
-SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (p (N /^\(Msc|Fem|Neu\)$/r)) ; # then gender
+SUBSTITUTE:num (A) (A VSTR:$1) TARGET (A) (p (N /^\(Sg|Pl\)$/r))(NEGATE 0 Superl) ; # number first
+SUBSTITUTE:gen (A) (A VSTR:$1) TARGET (A) (p (N /^\(Msc|Fem|Neu\)$/r))(NEGATE 0 Superl) ; # then gender
 SUBSTITUTE (PRON Indef) (Det Poss VSTR:$1) TARGET (PRON Indef @>N) (p (N /^\(Sg|Pl\)$/r)) ; # number first
 SUBSTITUTE (PRON Indef) (Det Poss VSTR:$1) TARGET (PRON Indef @>N) (p (N /^\(Msc|Fem|Neu\)$/r)) ; # then gender
 SUBSTITUTE (PRON Pers) (Det Poss VSTR:$1) TARGET (PRON Pers @>N) (p (N /^\(Sg|Pl\)$/r)) ; # number first
@@ -3406,6 +3413,8 @@ SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @SPRED) (s @SUBJ LINK 0 (/^\(Msc|Fem|Ne
 SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @OPRED) (s @OBJ LINK 0 (/^\(Sg|Pl\)[123]?$/r)) ; # number for predicatives
 SUBSTITUTE (A) (A Pl) TARGET (A) (0 @OPRED) (s @OBJ LINK 0 (/^\(Du[123]\)$/r)) ; # number first
 SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @OPRED) (s @OBJ LINK 0 (/^\(Msc|Fem|Neu\)$/r)) ; # gender for predicatives
+
+
 
 ### propagating to Det
 
