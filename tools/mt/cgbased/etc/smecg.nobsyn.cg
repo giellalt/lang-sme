@@ -3397,18 +3397,10 @@ SUBSTITUTE (@MV<) (@SPRED) TARGET (<insert> A) (p ("bli") OR ("være")) ;
 SUBSTITUTE (PCP) (V PrfPrc) TARGET (<insert> PCP)  ;
 SUBSTITUTE:superl (A Superl Attr) (A Superl Indef) TARGET (A Superl Attr) ; # 
 
-### propagating gender and number to adjectives and determiners (does not work for PRON)
+### propagating gender and number to adjectives
 
 SUBSTITUTE:num (A) (A VSTR:$1) TARGET (A) (p (N /^\(Sg|Pl\)$/r))(NEGATE 0 Superl) ; # number first
 SUBSTITUTE:gen (A) (A VSTR:$1) TARGET (A) (p (N /^\(Msc|Fem|Neu\)$/r))(NEGATE 0 Superl) ; # then gender
-
-SUBSTITUTE:IndefPossNum (PRON Indef) (Det Poss VSTR:$1) TARGET (PRON Indef @>N) (p (N /^\(Sg|Pl\)$/r)) ; # number first
-SUBSTITUTE:IndefPossCas (PRON Indef) (Det Poss VSTR:$1) TARGET (PRON Indef @>N) (p (N /^\(Msc|Fem|Neu\)$/r)) ; # then gender
-SUBSTITUTE:PersPossNum (PRON Pers) (Det Poss VSTR:$1) TARGET (PRON Pers @>N) (p (N /^\(Sg|Pl\)$/r)) ; # number first
-
-#SUBSTITUTE:PersPossCas (PRON Pers) (Det Poss VSTR:$1) TARGET (PRON Pers @>N) (p (N /^\(Msc|Fem|Neu\)$/r)) ; # then gender
-SUBSTITUTE:PersPossCas (Det Poss Msc) (Det Poss Neu) TARGET (Det Poss @>N) (p (N Neu)) ; # then gender
-SUBSTITUTE:PersPossCas (Det Poss Msc) (Det Poss Fem) TARGET (Det Poss @>N) (p (N Fem)) ; # then gender
 
 SUBSTITUTE:Anumpred (A) (A VSTR:$1) TARGET (A) (0 @SPRED) (s @SUBJ LINK 0 (/^\(Sg|Pl\)[123]?$/r)) ; # number for predicatives
 SUBSTITUTE:Anum (A) (A Pl) TARGET (A) (0 @SPRED) (s @SUBJ LINK 0 (/^\(Du[123]\)$/r)) ; # number first
@@ -3417,6 +3409,20 @@ SUBSTITUTE:Agend (A) (A VSTR:$1) TARGET (A) (0 @SPRED) (s @SUBJ LINK 0 (/^\(Msc|
 SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @OPRED) (s @OBJ LINK 0 (/^\(Sg|Pl\)[123]?$/r)) ; # number for predicatives
 SUBSTITUTE (A) (A Pl) TARGET (A) (0 @OPRED) (s @OBJ LINK 0 (/^\(Du[123]\)$/r)) ; # number first
 SUBSTITUTE (A) (A VSTR:$1) TARGET (A) (0 @OPRED) (s @OBJ LINK 0 (/^\(Msc|Fem|Neu\)$/r)) ; # gender for predicatives
+
+
+### propagating gender and number to determiners with a past as pronouns (does not work)
+
+SUBSTITUTE:IndefPossNum (PRON Indef) (Det Poss VSTR:$1) TARGET (PRON Indef @>N) (p (N /^\(Sg|Pl\)$/r)) ; # number first
+SUBSTITUTE:IndefPossCas (PRON Indef) (Det Poss VSTR:$1) TARGET (PRON Indef @>N) (p (N /^\(Msc|Fem|Neu\)$/r)) ; # then gender
+#SUBSTITUTE:PersPossNum (PRON Pers) (Det Poss VSTR:$1) TARGET (PRON Pers @>N) (p (N /^\(Sg|Pl\)$/r)) ; # number first
+SUBSTITUTE:PersPossNum (PRON Pers Gen) (Det Poss) TARGET (PRON Pers @>N) (p N) ; # case first
+
+#SUBSTITUTE:PersPossNum (Det Poss Gen) (Det Poss) TARGET (Det Poss @>N) (p N) ; # then case
+
+#SUBSTITUTE:PersPossCas (PRON Pers) (Det Poss VSTR:$1) TARGET (PRON Pers @>N) (p (N /^\(Msc|Fem|Neu\)$/r)) ; # then gender
+SUBSTITUTE:PersPossNeu (Det Poss Msc) (Det Poss Neu) TARGET (Det Poss @>N) (p (N Neu)) ; # then gender
+SUBSTITUTE:PersPossFem (Det Poss Msc) (Det Poss Fem) TARGET (Det Poss @>N) (p (N Fem)) ; # then gender
 
 
 
