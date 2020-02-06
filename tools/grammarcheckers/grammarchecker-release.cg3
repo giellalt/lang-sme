@@ -5995,12 +5995,14 @@ COPY:punct-aistton-both-sugg KEEPORDER (VSTR:"”$1”"S &SUGGESTWF) TARGET (&pu
         (2 &punct-aistton-both)
         (2 &LINK)
         (1 ("<(.*)>"r))
+        (NOT 0 &SUGGESTWF)      # don't COPY more than once
         ;
 
 # Generer forslag for hermeteikn på _venstre_ side:
 COPY:punct-aistton-left-sugg KEEPORDER (VSTR:"”$1"S &SUGGESTWF) TARGET (&punct-aistton-left) IF
         (NOT 0 (&LINK))
         (1 &punct-aistton-left LINK 0 &LINK LINK 0 ("<(.*)>"r))
+        (NOT 0 &SUGGESTWF)      # don't COPY more than once
         ;
         
 
@@ -6008,6 +6010,7 @@ COPY:punct-aistton-left-sugg KEEPORDER (VSTR:"”$1"S &SUGGESTWF) TARGET (&punct
 COPY:punct-aistton-right-sugg KEEPORDER (VSTR:"$1”"S &SUGGESTWF) TARGET (&punct-aistton-right) IF
         (NOT 0 (&LINK))
         (-1 &punct-aistton-right LINK 0 &LINK LINK 0 ("<(.*)>"r))
+        (NOT 0 &SUGGESTWF)      # don't COPY more than once
         ;
 
 # ADD (&keep-your-voice-down) ("^[A-ZÆØÅÁŠŽĐŊ]+$"r) (NOT (0 (<firstCohortOfParagraph>)));
@@ -6060,19 +6063,31 @@ SUBSTITUTE:RemopveNoSpaceAfterPunctMark (<NoSpaceAfterPunctMark>) (*) TARGET CLB
 ADD:space-after-paren-beg      (&space-after-paren-beg)       TARGET (<spaceAfterParenBeg>) ;
 ADD:space-after-paren-beg-link (&space-after-paren-beg &LINK) TARGET (*) IF (-1 (<spaceAfterParenBeg>) ) ;
 ADDRELATION:space-after-paren-beg-rel (RIGHT) (&space-after-paren-beg) TO (1 (&LINK) LINK 0 (&space-after-paren-beg)) ;
-COPY:space-after-paren-beg-sugg (VSTR:"$1$2"S &SUGGESTWF) TARGET ("<(.*)>"r &space-after-paren-beg) IF (1 ("<(.*)>"r)) (NOT 0 (&LINK))(NOT 0 (&SUGGESTWF)) ;
+COPY:space-after-paren-beg-sugg (VSTR:"$1$2"S &SUGGESTWF) TARGET ("<(.*)>"r &space-after-paren-beg) IF
+        (1 ("<(.*)>"r))
+        (NOT 0 (&LINK))
+        (NOT 0 &SUGGESTWF)      # don't COPY more than once
+        ;
 	## áddejumi )
 	
 ADD:space-before-paren-end      (&space-before-paren-end)       TARGET (<spaceBeforeParenEnd>);
 ADD:space-before-paren-end-link (&space-before-paren-end &LINK) TARGET (*) IF (1 (<spaceBeforeParenEnd>) );
 ADDRELATION:space-before-paren-end-rel (LEFT) (&space-before-paren-end) TO (-1 (&LINK) LINK 0 (&space-before-paren-end) );
-COPY:space-before-paren-end-sugg (VSTR:"$2$1"S &SUGGESTWF) TARGET ("<(.*)>"r &space-before-paren-end) IF (-1 ("<(.*)>"r)) (NOT 0 (&LINK))(NOT 0 (&SUGGESTWF)) ;
+COPY:space-before-paren-end-sugg (VSTR:"$2$1"S &SUGGESTWF) TARGET ("<(.*)>"r &space-before-paren-end) IF
+        (-1 ("<(.*)>"r))
+        (NOT 0 (&LINK))
+        (NOT 0 &SUGGESTWF)      # don't COPY more than once
+        ;
 	## Son gii njeaidá skáluid šaddá eret vuolgit . De galgá fas cegget skáluid ja álgit gaikut.
 	
 ADD:space-before-punct-mark      (&space-before-punct-mark)       TARGET (<SpaceBeforePunctMark>);
 ADD:space-before-punct-mark-link (&space-before-punct-mark &LINK) TARGET (*) IF (1 (<SpaceBeforePunctMark>) );
 ADDRELATION:space-before-punct-mark-rel (LEFT) (&space-before-punct-mark) TO (-1 (&LINK) LINK 0 (&space-before-punct-mark) );
-COPY:space-before-punct-mark-sugg (VSTR:"$2$1"S &SUGGESTWF) TARGET ("<(.*)>"r &space-before-punct-mark) IF (-1 ("<(.*)>"r)) (NOT 0 (&LINK))(NOT 0 (&SUGGESTWF)) ;
+COPY:space-before-punct-mark-sugg (VSTR:"$2$1"S &SUGGESTWF) TARGET ("<(.*)>"r &space-before-punct-mark) IF
+        (-1 ("<(.*)>"r))
+        (NOT 0 (&LINK))
+        (NOT 0 (&SUGGESTWF))    # don't COPY more than once
+        ;
 	## vuosttu  ceggejit
 	## álgit gaikut.  Stoagus joatká
 	## maid lea bargu.  – Mun barggan
@@ -6081,7 +6096,11 @@ ADD:double-space-before (&double-space-before)     (<doubleSpaceBefore>);
 ADD:double-space-before-link (&double-space-before &LINK) TARGET (*) IF (T:nextWordCrossSent LINK 0 (<doubleSpaceBefore>)) ;
 ADDRELATION:double-space-before-rel ($2) (*) FROM (T:nextWordCrossSent LINK 0 (<doubleSpaceBefore>)) ;
 ADDRELATION:double-space-before-rel (LEFT) (&LINK) FROM (T:nextWordCrossSent LINK 0 (<doubleSpaceBefore>)) ;
-COPY:double-space-before (VSTR:"$2 $1"S &SUGGESTWF) TARGET ("<(.*)>"r &double-space-before) IF (T:prevWordCrossSent LINK 0 ("<(.*)>"r)) (NOT 0 (&LINK))(NOT 0 (&SUGGESTWF)) ;
+COPY:double-space-before (VSTR:"$2 $1"S &SUGGESTWF) TARGET ("<(.*)>"r &double-space-before) IF
+        (T:prevWordCrossSent LINK 0 ("<(.*)>"r))
+        (NOT 0 (&LINK))
+        (NOT 0 (&SUGGESTWF))    # don't COPY more than once
+        ;
 	# Test sentence: 'Sanner,gii ráđđehusas.gii lávvardaga?Bonju dán!Lassin.'
 	## Sanner,gii                       - works
 	## ráđđehusas.Europride-festivála   - does not work
@@ -6105,9 +6124,11 @@ ADD:no-space-after-punct-link (&no-space-after-punct-mark &LINK) TARGET (*) IF (
 	#    also ensures that the correction will replace the word, not be appended to it):
 ADDRELATION:no-space-after-punct-rel (RIGHT) (&LINK) FROM (T:prevWordCrossSent LINK 0 (<NoSpaceAfterPunctMark>)) ;
 	# 4. Add suggestions
-COPY:no-space-after-punct-sugg (VSTR:"$1 $2"S &SUGGESTWF)
-                               TARGET ("<(.*)>"r &no-space-after-punct-mark)
-                               IF (T:nextWordCrossSent LINK 0 ("<(.*)>"r)) (NOT 0 (&LINK) OR (&SUGGESTWF));
+COPY:no-space-after-punct-sugg (VSTR:"$1 $2"S &SUGGESTWF) TARGET ("<(.*)>"r &no-space-after-punct-mark) IF
+        (T:nextWordCrossSent LINK 0 ("<(.*)>"r))
+        (NOT 0 (&LINK))
+        (NOT 0 (&SUGGESTWF))    # don't COPY more than once
+        ;
 
 	# No space before parentheses - 1: add error tag on the target cohort:
 ADD:no-space-before-parenthesis (&no-space-before-parent-start) TARGET (<NoSpaceBeforeParenBeg>) ;
@@ -6121,10 +6142,11 @@ ADD:no-space-before-parenthesis (&no-space-before-parent-start &LINK) TARGET (*)
 ADDRELATION:no-before-after-parenthesis (LEFT) (&LINK) FROM ( 1 (<NoSpaceBeforeParenBeg>)) ;
 
 	# No space before parentheses - 4: Add suggestions
-COPY:no-space-before-parenthesis (VSTR:"$2 $1"S &SUGGESTWF)
-                               TARGET ("<(.*)>"r &no-space-before-parent-start)
-                               IF (-1 ("<(.*)>"r))
-                                  (NOT 0 (&LINK) OR (&SUGGESTWF));
+COPY:no-space-before-parenthesis (VSTR:"$2 $1"S &SUGGESTWF) TARGET ("<(.*)>"r &no-space-before-parent-start) IF
+        (-1 ("<(.*)>"r))
+        (NOT 0 (&LINK))
+        (NOT 0 (&SUGGESTWF))    # don't COPY more than once
+        ;
 
 
 	# No space after parentheses - 1: add error tag on the target cohort:
@@ -6139,10 +6161,12 @@ ADD:no-space-after-parenthesis (&no-space-after-parent-end &LINK) TARGET (*) IF 
 ADDRELATION:no-space-after-parenthesis (RIGHT) (&LINK) FROM (-1 (<NoSpaceAfterParenEnd>)) ;
 
 	# No space after parentheses - 4: Add suggestions
-COPY:no-space-after-parenthesis (VSTR:"$1 $2"S &SUGGESTWF)
-                               TARGET ("<(.*)>"r &no-space-after-parent-end)
-                               IF (1 ("<(.*)>"r))
-                                  (NOT 0 (&LINK) OR (&SUGGESTWF));
+COPY:no-space-after-parenthesis (VSTR:"$1 $2"S &SUGGESTWF) TARGET ("<(.*)>"r &no-space-after-parent-end) IF
+        (1 ("<(.*)>"r))
+        (NOT 0 (&LINK))
+        (NOT 0 (&SUGGESTWF))    # don't COPY more than once
+        ;
+
 
 
 
@@ -6216,7 +6240,12 @@ COPY:Err/Orth-any SUB:4 (&SUGGEST) EXCEPT Err/Orth-any_OR_TV_IV TARGET (&typo) I
 	# 'buorrre' → 'buorre'                    # <speller>
 	# 'husket' → 'hukset'                     # <speller>
 
-COPY:no-double-dot (VSTR:"$1"S) EXCEPT  ("<(.*)[.]>"r) TARGET ("<(.*)[.]>"r <spelled>) IF (1 ("<[.].*>"r)) (NOT 0 ("<$1>"v));
+COPY:no-double-dot (VSTR:"$1"S &SUGGESTWF) EXCEPT  ("<(.*)[.]>"r) TARGET ("<(.*)[.]>"r <spelled>) IF
+        (1 ("<[.].*>"r))
+        (NOT 0 ("<$1>"v))
+        (NOT 0 (&LINK))
+        (NOT 0 (&SUGGESTWF))    # don't COPY more than once
+        ;
 REMOVE:no-double-dot (<spelled> "<.*[.]>"r) IF (1 ("<[.].*>"r));
 # Avoid suggestions getting two periods in a row (if there's a following period)
 	#$ 6-7 (maŋŋel ráŋggaštusč.)
