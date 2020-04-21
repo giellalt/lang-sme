@@ -14,7 +14,7 @@ GIELLA_GC_GRAMCHECKER_SRC=grammarchecker-release.cg3
 GIELLA_GC_WHSPACE_ANAL_SRC=analyser-gt-whitespace.regex \
 						   analyser-gt-errorwhitespace.regex
 
-# Will by default use the one in src/syntax/disambiguator.cg3. To use a
+# Will by default use the one in src/cg3/disambiguator.cg3. To use a
 # different file, specify anther filename here:
 GIELLA_GC_DISAMBIGUATOR_SRC=grc-disambiguator.cg3
 
