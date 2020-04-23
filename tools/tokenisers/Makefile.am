@@ -22,7 +22,7 @@ SUBDIRS = filters .
 ##################################################################
 
 # Set this variable to point to generated lexc source files, if any:
-GENRSRCS:=$(wildcard $(top_builddir)/src/morphology/generated_files/smi-$(GTLANG)-*.lexc)
+GENRSRCS:=$(wildcard $(top_builddir)/src/fst/generated_files/smi-$(GTLANG)-*.lexc)
 
 ########################################################
 #### Add language-specific transducer targets here: ####
