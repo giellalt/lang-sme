@@ -1,0 +1,63 @@
+! Divvun & Giellatekno - open source grammars for Sámi and other languages
+! Copyright © 2000-2010 The University of Tromsø & the Norwegian Sámi Parliament
+! http://giellatekno.uit.no & http://divvun.no
+!
+! This program is free software; you can redistribute and/or modify
+! this file under the terms of the GNU General Public License as published by
+! the Free Software Foundation, either version 3 of the License, or
+! (at your option) any later version. The GNU General Public License
+! is found at http://www.gnu.org/licenses/gpl.html. It is
+! also available in the file $GTHOME/LICENSE.txt.
+!
+! Other licensing options are available upon request, please contact
+! giellatekno@hum.uit.no or feedback@divvun.no
+
+!define uppercase [A|Á|B|C|Č|D|Đ|E|F|G|H|I|J|K|L|M|N|Ŋ|O|P|R|S|Š|T|Ŧ|U|V|Z|Ž];
+!define lowercase [a|á|b|c|č|d|đ|e|f|g|h|i|j|k|l|m|n|ŋ|o|p|r|s|š|t|ŧ|u|v|z|ž];
+!define alphabet [uppercase|lowercase];
+
+define vowel [a|á|e|i|o|u];
+define cons [b|c|č|d|đ|f|g|h|j|k|l|m|n|ŋ|p|r|s|š|t|ŧ|v|z|ž];
+define dipth [{ie}|{ea}|{uo}|{oa}];
+define letter [vowel|cons];
+define syll cons^{0,2} vowel^{1,2} cons^{0,2};
+!define word alphabet* syll syll;
+
+define cons2 [{bb}|{ff}|{ll}|{mm}|{rr}|{ss}|{vv}|{pp}|{tt}|{gg}|{kk}|{zz}|{cc}|đ đ|ŋ ŋ|š š|č č|ž ž];
+define cons3 [{hl}|{lj}|{nj}|{hr}|{hc}|h
+č|{hk}|{hp}|{ht}|{dj}|{bm}|{pm}|{dn}|{tn}|g ŋ|k ŋ|đ b|đ g|đ j|đ
+v|{lb}|{lc}|l č|{ld}|{lf}|{lg}|{lj}|{lk}|{lp}|{ls}|l š|{lt}|{lv}|l
+ž|{mb}|{mp}|{ms}|m š|{nc}|n č|{nd}|{ns}|{nt}|{nz}|n ž|ŋ g|ŋ
+k|{rb}|{rc}|r č|{rd}|{rf}|{rg}|{rj}|{rk}|{rp}|{rs}|r
+š|{rt}|{rv}|{rz}|r ž|{sk}|{sm}|{sp}|{st}|š k|š m|š t|š
+v|{tk}|{tm}|{vd}|{vg}|{vj}|{vk}|{vl}|{vp}|{vr}|{vt}|{vz}|v ž|{kc}|k
+č|{ks}|{kt}|k š];
+!define sg [];
+define center [š 0 š] : [š ' š] | š š : 0 | {nd} : {n'd} ;
+
+
+
+
+!read regex $[%+Guess] .o. AllInclusive ;
+!save stack ../bin/t-sme.fst
+
+!define PossWord letter* vowel center vowel ;
+
+
+! This is the guessing structure. Now it generates words very liberally.
+define PossWord (s) cons^{0,2} [vowel|dipth] (i) [cons|cons2|cons3|cons^3] vowel cons^{0,1};
+!define PossWord [syll^{0,5} | (s) cons (cons)] vowel center vowel ;
+define PossRoot PossWord "+Guess":0 ;
+!define PossRoot word{0,1} PossWord word^{0,1} "+Guess":0 ;
+
+load stack ../bin/g-sme.save
+!read lexc < ../dev/all-sme-lex.txt 
+
+substitute defined PossRoot for "^GUESSNOUNROOT"
+define AllInclusive
+
+
+read regex $[%+Guess] .o. AllInclusive ;
+!save stack ../bin/t-sme.fst
+!clear
+
