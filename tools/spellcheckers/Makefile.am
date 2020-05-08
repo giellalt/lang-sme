@@ -2,48 +2,13 @@
 ## Copyright: Sámediggi/Divvun/UiT
 ## Licence: GPL v3+
 
-# The current dir must be built first.
-SUBDIRS = filters . fstbased
+# Subdirs in build order:
+SUBDIRS = filters weights .
 
-#########################################
-# BEGIN: Local processing
-#
-# Target template:
-#
-# analyser-speller-gt-norm.%: analyser-speller-gt-norm.tmp.%
-#	build rules
-
-analyser-speller-gt-norm.%: analyser-speller-gt-norm.tmp.% \
-			$(top_builddir)/src/filters/remove-hyphenation-marks.%  \
-			$(top_builddir)/src/filters/remove-infl_deriv-borders.% \
-			$(top_builddir)/src/filters/remove-Use_PMatch-strings.%
-	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-			@\"$(top_builddir)/src/filters/remove-Use_PMatch-strings.$*\"    \
-		.o. @\"$(top_builddir)/src/filters/remove-Use_minus_PMatch-tags.$*\" \
-		.o. @\"$<\"                                                          \
-		.o. @\"$(top_builddir)/src/filters/remove-dynamic_compound-char.$*\" \
-		.o. @\"$(top_builddir)/src/filters/remove-hyphenation-marks.$*\"     \
-		.o. @\"$(top_builddir)/src/filters/remove-infl_deriv-borders.$*\"    \
-			;\n\
-		 $(INVERT_HFST)\
-		 save stack $@\n\
-		 quit\n" | $(XFST_TOOL)
-
-generator-speller-gt-norm.%: analyser-speller-gt-norm.tmp.% \
-				$(top_builddir)/src/filters/remove-dynamic_compound-char.% \
-				$(top_builddir)/src/filters/remove-Use_minus_PMatch-tags.% \
-				$(top_builddir)/src/filters/remove-Use_PMatch-strings.%
-	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-			@\"$(top_builddir)/src/filters/remove-Use_PMatch-strings.$*\"    \
-		.o. @\"$(top_builddir)/src/filters/remove-Use_minus_PMatch-tags.$*\" \
-		.o. @\"$<\"                                                          \
-		.o. @\"$(top_builddir)/src/filters/remove-dynamic_compound-char.$*\" \
-			;\n\
-		 $(INVERT_XFST)$(INVERT_FOMA)\
-		 save stack $@\n\
-		 quit\n" | $(XFST_TOOL)
-
-# END: Local processing
-#########################################
-
+include $(srcdir)/Makefile.mod-spellcheckers.am
+include $(srcdir)/Makefile.mod-fstbased.am
+include $(srcdir)/Makefile.mod-desktop.am
+include $(srcdir)/Makefile.mod-desktop-hfst.am
+include $(srcdir)/Makefile.mod-mobile.am
+include $(srcdir)/Makefile.mod-mobile-hfst.am
 include $(top_srcdir)/am-shared/tools-spellcheckers-dir-include.am
