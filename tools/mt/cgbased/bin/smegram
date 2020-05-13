@@ -1,0 +1,109 @@
+#!/usr/bin/env perl
+# -*- mode: cperl; indent-tabs-mode: nil; tab-width: 3; cperl-indent-level: 3; -*-
+BEGIN { $| = 1; }
+use utf8;
+use warnings;
+use strict;
+use File::Basename;
+use Cwd 'abs_path' ;
+
+if ((($ENV{LANGUAGE} || "").($ENV{LANG} || "").($ENV{LC_ALL} || "")) !~ /UTF-?8/i) {
+   die "Locale is not UTF-8 - bailing out!\n";
+}
+if ($ENV{PERL_UNICODE} !~ /S/ || $ENV{PERL_UNICODE} !~ /D/ || $ENV{PERL_UNICODE} !~ /A/) {
+#   die "Envvar PERL_UNICODE must contain S and D and A!\n";
+}
+
+my $binDir = abs_path((fileparse(__FILE__))[1]) ;
+
+#
+# Set environment variables for subprocesses
+#
+# my ($binDir) = $0 =~ /^(.*)\/.*/; # the smegram catalogue cgbased/bin
+$ENV{PATH} = "$binDir:$binDir/../../bin:$ENV{PATH}";
+$ENV{SMEGRAM_BIN} = "$binDir";
+$ENV{SMEGRAM_ETC} = "$binDir/../etc";
+$ENV{SMEGRAM_LEX} = "$binDir/../lex";
+$ENV{SMEGRAM_USEDB} = 1;
+
+
+#
+# Set up parser chain.
+#
+my $etcDir = $ENV{SMEGRAM_ETC} || "/usr/local/visl/etc/";
+my $lexDir = $ENV{SMEGRAM_LEX} || "/usr/local/visl/lex/";
+my $GTPRIV = $ENV{GTPRIV} ;
+my $GTHOME = $ENV{GTHOME} ;
+my $privDir = "$GTPRIV/plan/projects/mt/bin";
+my $giellacoreDir = "$GTHOME/giella-core";
+my $giellasharedDir = "$GTHOME/giella-shared";
+my $smeDir = "$GTHOME/langs/sme";
+
+# For Eckhard
+if (-e "/home/eckhard/parsers/sme2/priv" ) {
+   $privDir = $binDir;
+   $privDir =~ s/bin/priv/;
+}
+
+
+chdir $binDir;
+
+# print "--binDir $binDir\n";
+# print "--etcDir $etcDir\n";
+# print "--prvDir $privDir\n";
+
+# cmd1 is the pipline from text input to MT processing, i.e. the grammatical analysis
+my $cmd1 = "hfst-tokenize -g --weight-classes=1 $smeDir/tools/tokenisers/tokeniser-disamb-gt-desc.pmhfst |vislcg3 -g $smeDir/tools/tokenisers/mwe-dis.cg3 | vislcg3 -g $smeDir/src/syntax/disambiguator.cg3 | vislcg3 -g $giellasharedDir/smi/src/syntax/functions.cg3 | vislcg3 -g $giellasharedDir/smi/src/syntax/dependency.cg3 | grep -v '^:'" ;
+
+# cmd is the MT pipeline
+my $cmd = "$cmd1 | vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | vislcg3 -g $etcDir/smecg.nob.cg | vislcg3 -g $etcDir/smecg.nobsyn.cg | $binDir/niceline_mt | $privDir/genmorf_no | $binDir/trad2inline.pl";
+
+
+
+my $option = "";
+
+if (defined($ARGV[0]) and $ARGV[0] =~ /^--(.*)$/) {
+   $option = $1;
+#   print "--option=$option\n";
+
+# --sme: Only grammatical analysis:
+    if ($option =~ /^sme$/) {
+      $cmd = "$cmd1"
+    }
+# --nob: adjust CG analysis to TM (with smecg.nob)
+    elsif ($option =~ /^nob$/) { 
+      $cmd = "$cmd1 | vislcg3 -g $etcDir/smecg.nob.cg --trace"
+    }
+# --nob: lexical transfer (sme2nob calls sme.nob.dict)
+    elsif ($option =~ /^(trad|trans)$/) {
+      $cmd = "$cmd1 | vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l"
+    }
+# --nobsyn: syntactic transfer (with smecg.nobsyn): insert tokens and movementrules
+    elsif ($option =~ /^nobsyn$/) {
+      $cmd = "$cmd1 | vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | vislcg3 -g $etcDir/smecg.nobsyn.cg --trace"
+    }
+# --niceline: Write cohorts on one line, flattens cG format, to inspect input to fst (with niceline_mt)
+    elsif ($option =~ /^niceline$/) {
+      $cmd = "$cmd1 | vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | vislcg3 -g $etcDir/smecg.nobsyn.cg | $binDir/niceline_mt"
+    }
+# --gen: calling the nob genarator (with genmorf_no)
+    elsif ($option =~ /^gen$/) {
+      $cmd = "$cmd1 | vislcg3 -g $etcDir/smecg.nob.cg | $binDir/niceline_mt | $privDir/sme2nor --l | vislcg3 -g $etcDir/smecg.nobsyn.cg | $binDir/niceline_mt | $privDir/genmorf_no"
+    }
+    else {
+       print STDERR "unknown option: $ARGV[0]\n";
+    }
+}
+
+
+
+print "--option =$option, cmd=$cmd\n";
+
+#
+# Run parser chain
+#
+open PARSER, "$cmd|" or die $!;
+while (<PARSER>) {
+    print;
+}
+close PARSER;

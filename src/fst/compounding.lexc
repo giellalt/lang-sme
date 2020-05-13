@@ -1,0 +1,143 @@
+!! Divvun & Giellatekno - open source grammars for Sámi and other languages
+! Copyright © 2000-2010 The University of Tromsø & the Norwegian Sámi Parliament
+! http://giellatekno.uit.no & http://divvun.no
+!
+! This program is free software; you can redistribute and/or modify
+! this file under the terms of the GNU General Public License as published by
+! the Free Software Foundation, either version 3 of the License, or
+! (at your option) any later version. The GNU General Public License
+! is found at http://www.gnu.org/licenses/gpl.html. It is
+! also available in the file $GTHOME/LICENSE.txt.
+!
+! Other licensing options are available upon request, please contact
+! giellatekno@hum.uit.no or feedback@divvun.no
+
+! ==========================================================================
+!                     North Sámi morphological analyser
+! ==========================================================================
+
+
+! Prefixing and compounding
+! =========================
+
+LEXICON Prefixes
+! ii-+Err/Orth+Use/Circ:ii-             Noun       ; !there is another path from noun-stems
+! ii-+Err/Orth+Use/Circ:ii-             Adjective  ; ! ii-biologalaš
+        Lulle+Cmp#:Lul^le∑-         ProperNoun ; ! Lulli-Trøndelaga etc.
+        Lulli+Cmp#:Lul^li∑-         ProperNoun ;
+  Lullinuorta+Cmp#:Lul^li^nuor^ta∑- ProperNoun ;
+        Mátta+Cmp#:Mát^ta∑-         ProperNoun ;
+        Davvi+Cmp#:Dav^vi∑-         ProperNoun ;
+        Davve+Cmp#:Dav^ve∑-         ProperNoun ; ! 76 i korpus, 17 i leksikon
+        Gaska+Cmp#:Gas^ka∑-         ProperNoun ;
+       Vuolli+Cmp#:Vuol^li∑-        ProperNoun ;
+       Vuolle+Cmp#:Vuol^le∑-        ProperNoun ;
+        Badje+Cmp#:Bad^je∑-         ProperNoun ;
+        Oarje+Cmp#:Oar^je∑-         ProperNoun ;
+       Orjjel+Cmp#:Orj^jel∑-        ProperNoun ; ! Orjje 0 i korpus  orjjelsápmi
+       Orjješ+Cmp#:Orj^ješ∑-        ProperNoun ;
+       Nuorta+Cmp#:Nuor^ta∑-        ProperNoun ;
+         Ođđa+Cmp#:Ođ^đa∑-          ProperNoun ;
+         eahpe+Use/Circ:eah^pe∑#        Noun       ;
+  eahpe+Use/NG+Use/Circ:eah^pe∑#        Adjective  ;
+         eahpe+Use/Circ:eah^pe∑#        Verb       ;
+
+!"<Jus fylkkaboazodoallostivra gávnnaha ahte>"
+!"<Ođđa siidaoasi dohkkeheami biehttaleami>"
+
+LEXICON R
+ @P.CmpFrst.FALSE@@P.CmpPref.FALSE@@D.CmpLast.TRUE@@D.CmpNone.TRUE@@U.CmpNone.FALSE@@P.CmpOnly.TRUE@@C.Px@@C.Nom3Px@ RAlmostReal ; ! Flags to control compounding
+
+LEXICON RAlmostReal              ! lexicalising the 3-part compounds, with the tag ShCmp
+           RrealAfterCmpNFlags ; ! Business as usual: Normal compounds right on to Rreal
+ +Cmp#:∑# MiddleNouns         ; ! These nouns should not return to themselves, to avoid -jotjotjot-
+                                 ! They thus point directly to Rreal.
+
+LEXICON Rreal ! This is the former R lexicon, renamed to avoid the MiddleNouns loop
+ @P.CmpFrst.FALSE@@P.CmpPref.FALSE@@D.CmpLast.TRUE@@D.CmpNone.TRUE@@U.CmpNone.FALSE@@P.CmpOnly.TRUE@ RrealAfterCmpNFlags ; ! Flags to control compounding
+
+LEXICON RrealAfterCmpNFlags ! This is the former R lexicon, renamed to avoid the MiddleNouns loop
+                                          @U.NeedsVowRed.ON@@C.NeedsVowRed@+Cmp#:@U.NeedsVowRed.ON@@C.NeedsVowRed@∑#                Noun       ; ! This is the normal case.
+                           @P.NeedNoun.ON@@U.NeedsVowRed.ON@@C.NeedsVowRed@+Cmp#:@P.NeedNoun.ON@@U.NeedsVowRed.ON@@C.NeedsVowRed@∑# Verb       ; ! Flag diacr declares that the compound
+                           @P.NeedNoun.ON@@U.NeedsVowRed.ON@@C.NeedsVowRed@+Cmp#:@P.NeedNoun.ON@@U.NeedsVowRed.ON@@C.NeedsVowRed@∑# Adjective  ; ! needs a N tag later in the derivation
+
+                 @U.NeedsVowRed.ON@@C.NeedsVowRed@+Cmp/Hyph+Use/SpellNoSugg+Cmp#:@U.NeedsVowRed.ON@@C.NeedsVowRed@∑-                  Noun       ; ! These 3 cases add a hyphen, so
+  @P.NeedNoun.ON@@U.NeedsVowRed.ON@@C.NeedsVowRed@+Cmp/Hyph+Use/SpellNoSugg+Cmp#:@P.NeedNoun.ON@@U.NeedsVowRed.ON@@C.NeedsVowRed@∑-   Verb       ; ! Sem-julggaštus and maana-gåetie
+  @P.NeedNoun.ON@@U.NeedsVowRed.ON@@C.NeedsVowRed@+Cmp/Hyph+Use/SpellNoSugg+Cmp#:@P.NeedNoun.ON@@U.NeedsVowRed.ON@@C.NeedsVowRed@∑-   Adjective  ; ! are allowed.
+
+                    @U.NeedsVowRed.ON@@C.NeedsVowRed@+Cmp/SoftHyph+Err/Orth+Cmp#:@U.NeedsVowRed.ON@@C.NeedsVowRed@­                   Noun       ; ! These 3 cases add a SOFT hyphen, to
+     @P.NeedNoun.ON@@U.NeedsVowRed.ON@@C.NeedsVowRed@+Cmp/SoftHyph+Err/Orth+Cmp#:@P.NeedNoun.ON@@U.NeedsVowRed.ON@@C.NeedsVowRed@­    Verb       ; ! make it possible to analyse certain texts
+     @P.NeedNoun.ON@@U.NeedsVowRed.ON@@C.NeedsVowRed@+Cmp/SoftHyph+Err/Orth+Cmp#:@P.NeedNoun.ON@@U.NeedsVowRed.ON@@C.NeedsVowRed@­    Adjective  ; ! from printing houses and newspapers.
+
+! NB! ! ! The soft hyphens in the three last lines above are INVISIBLE! Even in SEE.
+! There really IS a character in front of the space and the continuation lexicon.
+! It is visible in tools like Emacs, UnicodeChecker and hexadecimal editors. DO NOT
+! EDIT THESE LINES WIHTOUT THE PROPER TOOLS TO CHECK THAT ALL IS CORRECT!!!
+
+                                @U.NeedsVowRed.OFF@@C.NeedsVowRed@+Cmp/Hyph+Cmp#:@U.NeedsVowRed.OFF@@C.NeedsVowRed@∑-∑#              Acronym    ; ! maana-tv, "lomme-cd-spelar"
+                                @U.NeedsVowRed.OFF@@C.NeedsVowRed@+Cmp/Hyph+Cmp#:@U.NeedsVowRed.OFF@@C.NeedsVowRed@∑-∑#              CmpNumeral ; ! maana-123
+                                @U.NeedsVowRed.OFF@@C.NeedsVowRed@+Cmp/Hyph+Cmp#:@U.NeedsVowRed.OFF@@C.NeedsVowRed@∑-∑#              ProperNoun ; ! Proper nouns as the 2nd part of compounds for non-hyph.
+                                                                                                                                          ! words. viessu-London goes through here.
+                                 @U.NeedsVowRed.ON@@C.NeedsVowRed@+Cmp/Hyph+Cmp#:@U.NeedsVowRed.ON@@C.NeedsVowRed@∑-∑#               HyphNouns  ; ! Go to words requiring hyphens, like -tv- and -cd-
+
+               0+Cmp/SplitR@U.NeedsVowRed.ON@@C.NeedsVowRed@+Use/SpellNoSugg+Cmp:∑-@U.NeedsVowRed.ON@@C.NeedsVowRed@                  ENDLEX     ; ! This to take care of Oahppo- ja dutkandept
+
+!                                                                    +Use/-Spell:                                                    R-LAGAN    ; !This should not be Cmp
+
+LEXICON RHyph ! Recursive lexicon from all classes REQUIRING a hyphen to follow.
+              ! NBNBNB! ! ! The hyphen should be added here! NOT in the other lexicons!
+ @P.CmpFrst.FALSE@@P.CmpPref.FALSE@@D.CmpLast.TRUE@@D.CmpNone.TRUE@@U.CmpNone.FALSE@@P.CmpOnly.TRUE@@C.CmpHyph@ RHyphTags ; ! Flags to control compounding
+
+LEXICON RHyphTags
+                        +Cmp/Hyph+Cmp#:∑-∑#                Noun       ; ! This is the normal case.
+                        +Cmp/Hyph+Cmp#:∑-∑#                HyphNouns  ; ! Go to nouns requiring hyphens, like -tv- and -cd-
+         @P.NeedNoun.ON@+Cmp/Hyph+Cmp#:@P.NeedNoun.ON@∑-∑# Verb       ; ! Flag diacr declares that the compound
+         @P.NeedNoun.ON@+Cmp/Hyph+Cmp#:@P.NeedNoun.ON@∑-∑# Adjective  ; ! needs a N tag later in the derivation
+                        +Cmp/Hyph+Cmp#:∑-∑#                Acronym    ; ! maana-tv, "lomme-cd-spelar"
+                        +Cmp/Hyph+Cmp#:∑-∑#                CmpNumeral ; ! NRK-2
+                        +Cmp/Hyph+Cmp#:∑-∑#                ProperNoun ; ! Proper nouns as the 2nd part of compounds for hyph-words.
+                                                                             ! London-Hull is covered here, whereas Hull-viessu
+                                                                             ! is covered by RHyph + Noun.
+       +Cmp/SplitR+Use/SpellNoSugg+Cmp:∑-                   ENDLEX     ; ! This to take care of Oahpo- ja dutkandept - want this in speller
+
+! Proper noun and other hyph word compounds WITHOUT hyphens are covered HERE
+! and are marked +Err/MissingHyph. Examples: LondonHull & viessuLondon.
+!                +Err/MissingHyph+Cmp#:∑#                 Noun       ; ! This is the normal case.
+!                +Err/MissingHyph+Cmp#:∑#                 HyphNouns  ; ! Go to nouns requiring hyphens, like -tv- and -cd-
+! @P.NeedNoun.ON@+Err/MissingHyph+Cmp#:@P.NeedNoun.ON@∑#  Verb       ; ! Flag diacr declares that the compound
+! @P.NeedNoun.ON@+Err/MissingHyph+Cmp#:@P.NeedNoun.ON@∑#  Adjective  ; ! needs a N tag later in the derivation
+!                +Err/MissingHyph+Cmp#:∑#                 Acronym    ; ! maanatv, "lommecdspelar"
+!                +Err/MissingHyph+Cmp#:∑#                 CmpNumeral ; ! NRK2
+!                +Err/MissingHyph+Cmp#:∑#                 ProperNoun ; ! Proper nouns as the 2nd part of compounds for hyph-words.
+
+
+LEXICON RNum
+      +Cmp/Hyph+Cmp#:∑-∑# Noun ; ! For Num Cmp Noun, vi vil ikke ha Num Cmp Num
+
+
+LEXICON Rnoun
+               :%> Rreal  ; ! Going to the compound lexicon
+ +Attr+Err/Orth:   ENDLEX ; ! Kárášjot, as independent (sub) word
+
+LEXICON RProp                         !!≈ !!!@CODE@
+ @P.CmpFrst.FALSE@@P.CmpPref.FALSE@@D.CmpLast.TRUE@@D.CmpNone.TRUE@@U.CmpNone.FALSE@@P.CmpOnly.TRUE@            RPropTags ; ! Flags to control compounding
+                                                                                +Cmp/Hyph+Cmp#namma+N:»»»∑-nammas DER-SAS   ;
+                                                                                +Cmp/Hyph+Cmp#nammasaš+A:»»»∑-nammas  AHKASAS ; !  for MT
+
+
+LEXICON RPropTags !! A special lexicon for handling proper noun compounding without hyphens
+                                       @C.CmpHyph@                                      RHyphTags ; !!≈ ; @CODE@ : This is the regular case, giving hyphens to compounds
+ @D.CmpHyph.TRUE@@U.CmpHyph.FALSE@+Use/-Spell+Cmp/NoHyph+Cmp#:@D.CmpHyph.TRUE@@U.CmpHyph.FALSE@∑# Noun      ; !!≈ ; @CODE@ : This is the special case, going directly to nouns (''not'' to NounRoot,
+                                                                                                    !!             as that would allow compounding with words explicitly coded to disallow
+                                                                                                    !!             such compounds)
+
+LEXICON flagON-R
+@U.NeedsVowRed.ON@ R ;
+
+LEXICON flagOFF-R
+@U.NeedsVowRed.OFF@ R ;
+
+!LEXICON R-LAGAN To be added as derivation
+! +Der1+Der2+Der/laakan+Use/Circ+Use/-Spell:» LAGAN ; ! ! biilalágan, noaidelágán noaiddilágán beatnagalágán beanalágán all these goes
+!                                                      ! Nielsen: beatnatlágán, beatnatlágáš, beanalágáš, giđalágáš, áhččelágáš,
+! +Der1+Der2+Der/laagasj+Use/Circ+Use/-Spell:» LAGAS ; ! ! etc.

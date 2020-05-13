@@ -1,0 +1,1161 @@
+! Divvun & Giellatekno - open source grammars for Sámi and other languages
+! Copyright © 2000-2010 The University of Tromsø & the Norwegian Sámi Parliament
+! http://giellatekno.uit.no & http://divvun.no
+!
+! This program is free software; you can redistribute and/or modify
+! this file under the terms of the GNU General Public License as published by
+! the Free Software Foundation, either version 3 of the License, or
+! (at your option) any later version. The GNU General Public License
+! is found at http://www.gnu.org/licenses/gpl.html. It is
+! also available in the file $GTHOME/LICENSE.txt.
+!
+! Other licensing options are available upon request, please contact
+! giellatekno@hum.uit.no or feedback@divvun.no
+
+! ===================================== !
+! Phonological converter for North Sámi !
+! ===================================== !
+
+! To eventual curious readers
+! This file tries out conversion from Sámi orthography to a phonetic
+! translation based upon IPA. There is a switch at the end to get 
+! different formats: SAMPA, Fenno-Ugric transcription or Finnish
+! orthography.
+
+! Usage: Compile sme as usual:
+! make GTLANG=sme
+! Pipe text through the analyser:
+! cat text | preprocess | lookup -flags mbTT bin/phon-sme.fst | ..
+
+!We may also add POS tagging:
+! cat corp/pedkorpus.txt | preprocess | lookup -flags mbTT -utf8 bin/pos-sme.fst | tr '\t' '+' | cut -d"+" -f1,3 | uniq | lookup -flags mbTT -utf8 bin/phon-sme.fst | cut -f2 | l
+
+! In order to make this better we should uniq the closed POS before giving them
+! to the phonological analyser (TODO: Check whether output is ok).
+
+! We might also add syllable boundaries. Here the simple version:
+!cat corp/pedkorpus.txt | preprocess | lookup -flags mbTT -utf8 bin/hyphrules-sme.fst | cut -f2 | lookup -flags mbTT -utf8 bin/phon-sme.fst | cut -f2 | tr '\n' ' '  | see
+
+! echo "dat lea 123" | preprocess | 
+! lookup -flags mbTT -utf8 bin/sme-num.fst | cut -f2 |
+! lookup -flags mbTT -utf8 bin/hyphrules-sme.fst | cut -f2 | 
+! lookup -flags mbTT -utf8 bin/phon-sme.fst | cut -f2 | tr '\n' ' ' | l
+
+
+!echo <<defining POS tags...>>
+!
+!define POSTAG %+N -> %+N,
+!              %+A -> %+A, 
+!              %+V -> %+V,
+!              %+Adv -> %+X, 
+!              %+Pron -> %+X,
+!              %+CS -> %+X,
+!              %+CC -> %+X,
+!              %+Adp -> %+X,
+!              %+Po -> %+X,
+!              %+Pr -> %+X,
+!              %+Interj -> %+X,
+!              %+Pcle -> %+X,
+!              %+Num -> %+X, 
+!              %+CLB -> %+CLB ;
+
+
+echo <<defining Vow and Cns...>>
+
+
+
+define Vow       [ a | e | i | o | u | y | æ | ø | å | 
+                   á | é | í | ó | ú | ý |
+                   à | è | ì | ò | ù | 
+                   â | ê | î | ô | û | 
+                   ä | ë | ï | ö | ü | 
+                   ă | ĕ | ĭ | ŭ | ŏ |
+                   ã | 
+                   ɑ | ə | 
+
+                   A | E | I | O | U | Y | Æ | Ø | Å | 
+                   Á | É | Í | Ó | Ú | Ý |
+                   À | È | Ì | Ò | Ù | 
+                   Â | Ê | Î | Ô | Û | 
+                   Ä | Ë | Ï | Ö | Ü | 
+                   Ã | 
+
+                   ː ] ;
+
+define Cns [ b | c | č | ç | d | đ | f | g | h | j | k | l | m | n | ŋ | 
+             B | C | Č | Ç | D | Đ | F | G | H | J | K | L | M | N | Ŋ | 
+             p | q | r | s | š | t | ŧ | þ | v | w | x | z | ž |   
+             P | Q | R | S | Š | T | Ŧ | Þ | V | W | X | Z | Ž |
+             ɟ | ʎ | ʃ | 
+             ː ] ;
+
+define Sgm [ Vow | Cns ] ;
+
+define Stop [ p | t | k | c | č ] ;
+
+define Alv [ t | T | d | D | ŧ | Ŧ | đ | Đ | s | S | l | L | r | R | n | N ] ;
+
+define Son [ m | n | ŋ | l | r | j | v | đ ] ;
+
+define Nas [ m | M | n | N | ŋ | Ŋ ] ;
+
+define WordBorder [ .#. | %# | %- ] ;
+
+define StressBorder [ WordBorder | %» ] ;
+
+! ^SL = Secondary Lengthening
+define Dummy %^SL ;
+
+! Define a syllable without Onset:
+define SyllWOOnset Vow+ Cns* (Dummy) Cns* (ə) %^ ;
+
+! Define a full syllable:
+define Syll Cns* SyllWOOnset ;
+
+! Primary stress always on first syllable:
+define PrimStress [..] -> ˈ || .#. Cns* _ Vow ;
+
+! Secondary stress:
+define SecStress  [..] -> ˌ ||
+                   ˈ SyllWOOnset Syll Cns*                         _ SyllWOOnset Cns* Vow    , ! gu^la^hal^lan
+                   ˈ SyllWOOnset Syll Cns* ˌ SyllWOOnset Syll Cns* _ SyllWOOnset Cns* Vow    ,
+ StressBorder Cns*                                                 _ SyllWOOnset Cns* Vow    ,
+ StressBorder Cns* ˌ SyllWOOnset Syll Cns*                         _ SyllWOOnset Cns* Vow    , ! giel^la#gu^la^hal^la^ma
+ StressBorder Cns* ˌ SyllWOOnset Syll Cns* ˌ SyllWOOnset Syll Cns* _ SyllWOOnset Cns* Vow    ;
+
+! giella#skuvla                  -> giel^la#skuv^la       -> kˈiella#skˌuvla
+! Dihtti^oalgi                   -> Diht^ti^oal^gi        -> tˈihtiˌŏɑləki
+! granihtalamosiid               -> gra^nih^ta»la^mos>iid -> grˈɑ.nih.tˌɑ»lˌɑ.mosijh
+! gulahallama                    -> gu^la^hal^la^ma       -> kˈulahˌallama
+! hálddahuslaš                   -> háld^da»hus»laš
+! borrama                        -> bor^ra^ma -> pˈo^SLrr^raa^ma
+! giella#gulahallama             -> giel^la#gu^la^hal^la^ma -> kˈiella#kˌulahˌallama
+! kˈiel^la#kˌu^la^hal^la^mĕä^seh -> kˈiella#kˌulahˌallamˌĕæ^seh
+! gulahallameaset                -> gu^la^hal^la^mea^set -> kˈulahˌallamˌĕæseh
+! ráidarasažiiddisguin           -> rái^da^ra^sa»žiid^dis^guin -> rˈájtarˌasa»dʃˌijtisguin
+! giella#gulahallameaset         -> giel^la#gu^la^hal^la^mea^set -> kˈiella#kˌulahˌallamˌĕæseh
+! giella#ráidarasažiiddisguin    -> giel^la#rái^da^ra^sa»žiid^dis^guin -> kˈiella#rˌájtarˌasa»dʃˌijtisguin
+! ^hˌɑl^lɑ^mĕæ^seh
+
+
+! SecondaryLenghtening
+
+echo << Downcasing rules>>
+
+define down [ A -> a, E -> e, I -> i, O -> o, U -> u, Y -> y, 
+              Á -> á, É -> é, Í -> í, Ó -> ó, Ú -> ú, Ý -> ý, 
+              À -> à, È -> è, Ì -> ì, Ò -> ò, Ù -> ù, 
+              Â -> â, Ê -> ê, Î -> î, Ô -> ô, Û -> û, 
+              Ä -> ä, Ë -> ë, Ï -> ï, Ö -> ö, Ü -> ü, 
+              Ã -> ã,
+              Æ -> æ, Ø -> ø, Å -> å, 
+
+              B -> b, C -> c, Č -> č, Ç -> ç, D -> d, Đ -> đ, 
+              F -> f, G -> g, H -> h, J -> j, K -> k, L -> l, 
+              M -> m, N -> n, Ŋ -> ŋ, P -> p, Q -> q, R -> r, 
+              S -> s, Š -> š, T -> t, Ŧ -> ŧ, Þ -> þ, V -> v, 
+              W -> w, X -> x, Z -> z, Ž -> ž
+              ] ;
+
+
+
+
+echo << Rules >>
+
+
+! Here comes the other rules
+
+define ijRule1  i -> j || [Vow - i] _ ;
+define ijRule2  i -> j ||  (Cns) i  _ ;
+
+
+define slRule  s -> š || WordBorder _ l ;
+
+define snjRule s -> š || WordBorder _ n j ;
+
+define yRule y -> ü ;
+
+define wRule w -> v ;
+
+define StrongGrade    m %^ b     -> m m %^ p     ,
+                      m %^ p     -> m m %^ p   ,
+                      m %^ s     -> m m %^ s     ,
+                      m %^ v     -> m m %^ v     ,
+                      m %^ š     -> m m %^ š     ,
+
+                      s %^ p     -> s s %^ p     ,
+                      s %^ t     -> s s %^ t     ,
+                      s %^ k     -> s s %^ k     ,
+                      s %^ m     -> s s %^ m     ,
+
+                      š %^ p     -> š š %^ p     ,
+                      š %^ t     -> š š %^ t     ,
+                      š %^ k     -> š š %^ k     ,
+                      š %^ m     -> š š %^ m     ,
+
+                      n %^ c     -> n n %^ N t s ,
+                      n %^ d     -> n n %^ t     ,
+                      ŋ %^ g     -> ŋ ŋ %^ k     ,
+                      n %^ g     -> ŋ   %^ ŋ     ,
+                      n %^ j     -> n n %^ j     ,
+                      n %^ n j   -> n j %^ n j   ,
+                      ŋ %^ k     -> ŋ ŋ %^ Ŋ k   ,
+                      n %^ k     -> ŋ ŋ %^   k   ,
+                      n %^ s     -> n n %^ s     ,
+                      n %^ t     -> n n %^ t     ,
+                      n %^ v     -> n n %^ v     ,   
+                      n %^ z     -> n n %^ t s   ,
+                      n %^ č     -> n n %^ N t š ,
+                      n %^ š     -> n n %^ š     ,
+                      n %^ ž     -> n n %^ t š   ,
+                      l %^ r     -> l l %^ r     ,
+                      l %^ b     -> l l %^ p     ,   
+                      l %^ f     -> l l %^ f     ,   
+                      l %^ g     -> l l %^ k     ,   
+                      l %^ k     -> l l %^ k     , 
+                      l %^ p     -> l l %^ p     ,   
+                      l %^ s     -> l l %^ s     ,   
+                      l %^ v     -> l l %^ v     ,   
+                      l %^ š     -> l l %^ š     ,
+                      l %^ l j   -> ʎ ʎ %^ ʎ     ,
+                      l %^ z     -> l l %^ d s   , 
+                      l %^ ž     -> l l %^ d š   , 
+                      l %^ t     -> l l %^ t     ,
+                      l %^ d     -> l l %^ t     ,
+                      l %^ c     -> l l %^ t s   ,
+                      l %^ č     -> l l %^ t š   ,
+                      l %^ s k   -> l l %^ s k   ,
+
+                    h l %^ l     -> L   %^  L    ,
+                    h r %^ r     -> R   %^  R    ,
+
+                      v %^ l     -> w w %^ l     ,
+                      v %^ d     -> w w %^ t     ,
+                      v %^ g     -> w w %^ k     ,
+                      v %^ p     -> w w %^ p     ,
+                      v %^ j     -> w w %^ j     ,
+                      v %^ k     -> w w %^ k     ,
+                      v %^ r     -> w w %^ r     ,
+                      v %^ h l   -> w w %^ L     ,
+                      v %^ t     -> w w %^ t     ,
+                      v %^ s k   -> w w %^ s k   ,   
+                      v %^ z     -> w w %^ t s   ,
+                      v %^ d n j -> w w %^ t n j ,
+                      v %^ d n   -> w w %^ t n   ,
+                      v %^ ž     -> w w %^ t š   ,
+                      v %^ s t   -> w w %^ s t   ,
+
+                      j %^ r     -> j j %^     r ,
+                      j %^ b     -> j j %^     p ,   
+                      j %^ f     -> j j %^     f ,   
+                      j %^ g     -> j j %^     k , 
+                      j %^ l     -> j j %^     l ,   
+                      j %^ k     -> j j %^     k , 
+                      j %^ p     -> j j %^     p ,   
+                      j %^ s     -> j j %^     s ,   
+                      j %^ v     -> j j %^     v ,   
+                      j %^ h l   -> j j %^     L , 
+                      j %^ z     -> j j %^   d s , 
+                      j %^ h m   -> j j %^     M , 
+                      j %^ t     -> j j %^     t ,
+                      j %^ d     -> j j %^     t ,
+                      j %^ c     -> j j %^ J t s ,
+                      j %^ h n   -> j j %^     N ,
+                      j %^ s t   -> j j %^   s t ,
+                      j %^ s k   -> j j %^   s k ,
+
+                      r %^ b     -> r r  %^    p ,
+                      r %^ d     -> r r  %^    t ,
+                      r %^ f     -> r r  %^    f ,
+                      r %^ g     -> r r  %^    k ,
+                      r %^ j     -> r r  %^    j ,
+                      r %^ k     -> r r %^     k ,
+                      r %^ p     -> r r  %^    p ,
+                      r %^ s     -> r r  %^    s ,
+                      r %^ t     -> r r %^     t ,
+                      r %^ v     -> r r %^     v ,
+                      r %^ š     -> r r %^     š ,
+                      r %^ z     -> r r %^   d s ,
+                      r %^ ž     -> r r %^   d š ,
+                      r %^ c     -> r r %^ h t s ,
+                      r %^ č     -> r r %^ h t š ,
+        
+                      đ %^ b     -> đ ə %^     p ,
+                      đ %^ g     -> đ ə %^     k ,
+                      đ %^ j     -> đ ə %^     j ,
+                      đ %^ v     -> đ ə %^     v
+                               || WordBorder (Syll Syll) Cns* Vow+ _ Vow ;
+
+define olju l %^ j -> l ə %^ j || WordBorder (s) o _ u , 
+                                  WordBorder  p  u _ a  ,
+								  WordBorder  b  u _ o  ;
+
+define FinalLightT t -> h ||       _ StressBorder ;
+define FinalLightD d -> h || Vow j _ StressBorder ;
+
+define sClusterWeak s p %^ p   ->   s %^ p     || Vow _ Vow ,, 
+                    s t %^ t   ->   s %^ t     || Vow _ Vow ,,
+                    s k %^ k   ->   s %^ k     || Vow _ Vow ,,
+                    s m %^ m   ->   s %^ m     || Vow _ Vow ,, 
+                    š p %^ p   ->   š %^ p     || Vow _ Vow ,, 
+                    š t %^ t   ->   š %^ t     || Vow _ Vow ,,
+                    š k %^ k   ->   š %^ k     || Vow _ Vow ,,
+                    š m %^ m   ->   š %^ m     || Vow _ Vow ; 
+
+define StopCluster    k %^ c   -> k k %^ h t s || Vow _ Vow ,, 
+                      k %^ č   -> k k %^ h t š || Vow _ Vow ,,
+                      k %^ š   -> k k %^ š     || Vow _ Vow ,,
+                      k %^ s   -> k k %^ s     || Vow _ Vow ,,
+                      k %^ s t -> k k %^ s t   || Vow _ Vow ,,
+                      k %^ t   -> k k %^ h t   || Vow _ Vow ;
+define tkRule         t %^ k   -> t t %^  k   || Vow _ Vow ;
+define tmRule         t %^ m   -> t t %^ m     || Vow _ Vow ;
+
+define 3rdSylld d -> đ || .#. Syll (Cns) Vow %^ _ Vow ;
+# bo.ra.dit -> bo.ra.đih
+
+!define rSchwa r -> r ə || Vow _ %^ [             b m | d n | d n j | g ŋ | s k | s t ] Vow ;
+define dSchwa đ -> đ ə || Vow _ %^ [ Cns - Alv | b m |       d n j | g ŋ ]             Vow ;
+!define lSchwa l -> l ə || Vow _ %^ [ Cns - Alv | b m | d n | d n j | g ŋ ]             Vow ;
+
+!áhč^či -> áhh^či
+define Preaspiration c -> h || h _ %^ c ,, 
+                     č -> h || h _ %^ č ,,
+                     p -> h || h _ %^ p ,,
+                     t -> h || h _ %^ t ,,
+                     k -> h || h _ %^ k ;
+! commented out jPreaspiration: no such rule in Finnish
+! define jPreaspiration [..] -> h || Vow Son %^ _ Stop    Vow  ,
+!                                   Vow Son    _ Stop %^ Stop ;
+
+
+! Note IPA/SAMPA value of c in next rule!!
+define LongPalatalAffricate  d %^ d j -> ɟ ɟ  %^ c  || Vow _ Vow ;
+define ShortPalatalAffricate d %^ j   ->   c  %^ c  || Vow _ Vow ;
+
+define SecondaryLengtheningPalAff d %^ j   -> %^SL c c  %^ c
+                    || [ .#. |
+                         Cns |
+                         [Vow - [e|o] ]
+                       ] [Vow - á] _  [
+                                        [i|u] [ 
+                                                [ Cns - j ]
+                                                | .#.
+                                              ]
+                                      | á
+                                      | a a
+                                      ] ;
+
+! commented out d -> t , g -> k , b -> p || Vow            _ %^ Nas ,,
+define PlosiveDevoicing    d -> t ,
+                           g -> k ,
+                           b -> p
+                                  || Vow Son (ə) %^ _    Nas ;
+define VoicelessSonorant h l -> L ,
+                         h r -> R
+                                  || Vow %^ _ ;  
+
+! Latusforlenging
+! How can we make this rule non-applicable after Strong grade QIII?
+! Now we have pag:.ka:h, but we want pag:.kah, for <baggat>
+! We need a rule for allegro shortening to block latus length in imperative
+! basa: /pasa/ imperative and /pasaa/ verb genitive
+! commented out LatusLengthening, Finnsih long vowels visible in orthography 
+! define LatusLengthening a -> a a || .#. Cns* [a|e|o|u|i] (Dummy) Cns* %^ Cns _ ;
+
+define PrimaryLenghtening h ->  h h ||
+            [.#.|Cns] [ Vow - á ] _ %^ Stop [ [ [i|u] [[Cns - j]|.#.]] | á | a a] ;
+! johtit -> johhtit
+
+!commented out primary lengthening, no such rule in finnish
+!define PrimaryLenghteningII l %^ l   ->  %^SL l l     %^ l , 
+!                            r %^ r   ->  %^SL r r     %^ r , 
+!                            s %^ s   ->  %^SL s s     %^ s , 
+!                            v %^ v   ->  %^SL v v     %^ v , 
+!                            n %^ n   ->  %^SL n n     %^ n , 
+!                            m %^ m   ->  %^SL m m     %^ m , 
+!                          n j %^ n j ->  %^SL n j n j %^ n j , 
+!                            đ %^ đ   ->  %^SL đ đ     %^ đ , 
+!                            š %^ š   ->  %^SL š š     %^ š
+!             ||
+!            [.#.|Cns] [ Vow - á ] _ [ [ [i|u] [[Cns - j]|.#.]] | á | a a] ;
+
+! Triple length?
+! Cns1 Cns2 Cns2 -> Cns1 Cns2 Cns2 Cns2 || _ i;
+! Cns1 Cns2 Cns2 -> Cns1 Cns2 Cns2 Cns2 || _ u;
+! Cns1 Cns2 Cns2 -> Cns1 Cns2 Cns2 Cns2 || _ á;
+
+! vi må liste konsonantpar
+!define TripleLength Cns2 Cns2 -> Cns2 Cns2 Cns2 || Cns1 _  [ i [.#.|Cns] | u | á | a a] ;
+! + lignende regler for <pp tt cc kk> osv.
+
+
+
+! Sekundær forlenging (her må vi liste konsonantpara)
+! Commented out, no such rule in Finnish
+! define SecondaryLengthening l b %^ b   -> %^SL l p p %^ p   ,
+!                            l f %^ f   -> %^SL l f f %^ f   ,
+!                            l d %^ d   -> %^SL l t t %^ t   ,
+!                            l g %^ g   -> %^SL l k k %^ k   ,
+!                            l j %^ j   -> %^SL l j j %^ j   ,
+!                          l h k %^ k   -> %^SL l L L %^ k   ,
+!                          l h p %^ p   -> %^SL l L L %^ p   ,
+!                            l m %^ m   -> %^SL l m m %^ m   ,
+!                            l n %^ n   -> %^SL l n n %^ n   ,
+!                            l ŋ %^ ŋ   -> %^SL l ŋ ŋ %^ ŋ   ,
+!                            l n %^ n j -> %^SL l ɲ ɲ %^ ɲ   ,
+!                            l s %^ s   -> %^SL l s s %^ s   ,
+!                            l v %^ v   -> %^SL l v v %^ v   ,
+!                            l š %^ š   -> %^SL l š š %^ š   ,
+!                          l h t %^ t   -> %^SL l L L %^ t   ,
+!                          l h c %^ c   -> %^SL l L L %^ t s ,
+!                          l h č %^ č   -> %^SL l L L %^ t š ,
+!                            l z %^ z   -> %^SL l t t %^ t s ,
+!                            l ž %^ ž   -> %^SL l t t %^ t š ,
+!
+!                            j b %^ b   -> %^SL j p p %^ p   ,
+!                            j f %^ f   -> %^SL j f f %^ f   ,
+!                            j g %^ g   -> %^SL j k k %^ k   ,
+!                            j l %^ l   -> %^SL j l l %^ l   ,
+!                          j h k %^ k   -> %^SL j J J %^ k   ,
+!                          j h p %^ p   -> %^SL j J J %^ p   ,
+!                            j m %^ m   -> %^SL j m m %^ m   ,
+!                            j n %^ n   -> %^SL j n n %^ n   ,
+!                            j ŋ %^ ŋ   -> %^SL j ŋ ŋ %^ ŋ   ,
+!                          j h n %^ n   -> %^SL j N N %^ N   ,
+!                            j s %^ s   -> %^SL j s s %^ s   ,
+!                            j v %^ v   -> %^SL j v v %^ v   ,
+!                          j h m %^ m   -> %^SL j M M %^ M   ,
+!                          j h t %^ t   -> %^SL j J J %^ t   ,
+!                          j h c %^ c   -> %^SL j J J %^ t s ,
+!                          j h l %^ l   -> %^SL j L L %^ L   ,
+!                            j z %^ z   -> %^SL j t t %^ t s ,
+!                            j d %^ d   -> %^SL j t t %^ t   ,
+!                            j r %^ r   -> %^SL j r r %^ r   ,
+!                          j s k %^ k   -> %^SL j s s %^ k   ,
+!                          j s t %^ t   -> %^SL j s s %^ t   ,
+!
+!                            r b %^ b   -> %^SL r p p %^ p   ,
+!                            r d %^ d   -> %^SL r t t %^ t   ,
+!                            r f %^ f   -> %^SL r f f %^ f   ,
+!                            r g %^ g   -> %^SL r k k %^ k   ,
+!                            r j %^ j   -> %^SL r j j %^ j   ,
+!                          r h p %^ p   -> %^SL r R R %^ p   ,
+!                            r s %^ s   -> %^SL r s s %^ s   ,
+!                          r h k %^ k   -> %^SL r R R %^ k   ,
+!                          r h t %^ t   -> %^SL r R R %^ t   ,
+!                          r h c %^ c   -> %^SL r R R %^ t s ,
+!                          r s t %^ t   -> %^SL r s s %^ t   ,
+!                          r s k %^ k   -> %^SL r s s %^ k   ,
+!                          r h č %^ č   -> %^SL r R R %^ t š ,
+!                            r v %^ v   -> %^SL r v v %^ v   ,
+!                            r š %^ š   -> %^SL r š š %^ š   ,
+!                            r z %^ z   -> %^SL r t t %^ t s ,
+!                            r ž %^ ž   -> %^SL r t t %^ t š ,
+!
+!                            m b %^ b   -> %^SL m p p %^ p   ,
+!                            n d %^ d   -> %^SL n t t %^ t   ,
+!                            n g %^ g   -> %^SL ŋ k k %^ k   ,
+!                            n j %^ j   -> %^SL n j j %^ j   ,
+!                          m h p %^ p   -> %^SL m M M %^ p   ,
+!                          m š k %^ k   -> %^SL m š š %^ k   ,
+!                            m s %^ s   -> %^SL m s s %^ s   ,
+!                            n s %^ s   -> %^SL n s s %^ s   ,
+!                          n h k %^ k   -> %^SL ŋ Ŋ Ŋ %^ k   ,
+!                          ŋ h k %^ k   -> %^SL ŋ Ŋ Ŋ %^ k   ,
+!                          n h t %^ t   -> %^SL n N N %^ t   ,
+!                          n h c %^ c   -> %^SL n N N %^ t s ,
+!                          n h č %^ č   -> %^SL n N N %^ t š ,
+!                          n s t %^ t   -> %^SL n s s %^ t   ,
+!                          n s k %^ k   -> %^SL n s s %^ k   ,
+!
+!                            m v %^ v   -> %^SL m v v %^ v   ,
+!                            m š %^ š   -> %^SL m š š %^ š   ,
+!                            n š %^ š   -> %^SL n š š %^ š   ,
+!                            n z %^ z   -> %^SL n t t %^ t s ,
+!                            n ž %^ ž   -> %^SL n t t %^ t š ,
+!
+!                            đ b %^ b   -> %^SL đ p p %^ p   ,
+!                            đ g %^ g   -> %^SL đ k k %^ k   ,
+!                            đ j %^ j   -> %^SL đ j j %^ j   ,
+!                            đ v %^ v   -> %^SL đ v v %^ v   ,
+!
+!                            v n %^ n   -> %^SL w n n %^ n   ,
+!                            v d %^ d   -> %^SL w t t %^ t   ,
+!                            v g %^ g   -> %^SL w k k %^ k   ,
+!                            v j %^ j   -> %^SL w j j %^ j   ,
+!                            v l %^ l   -> %^SL w l l %^ l   ,
+!                          v h l %^ l   -> %^SL w L L %^ L   ,
+!                            v r %^ r   -> %^SL w r r %^ r   ,
+!                            v z %^ z   -> %^SL w t t %^ t s ,
+!                            v ž %^ ž   -> %^SL w t t %^ t š ,
+!                            v š %^ š   -> %^SL w š š %^ š   ,
+!                            v s %^ s   -> %^SL w s s %^ s   ,
+!                            v n %^ n j -> %^SL w ɲ ɲ %^ ɲ   ,
+!                          v s k %^ k   -> %^SL w s s %^ k   ,
+!                          v s t %^ t   -> %^SL w s s %^ t   ,
+!                          v h t %^ t   -> %^SL w W W %^ t   ,
+!                          v h k %^ k   -> %^SL w W W %^ k   ,
+!                          v h p %^ p   -> %^SL w W W %^ p   ,
+!                          v h c %^ c   -> %^SL w W W %^ t s ,
+!                          v h č %^ č   -> %^SL w W W %^ t š ,
+!
+!                              p %^ p   -> %^SL p p   %^ p	,
+!                              t %^ t   -> %^SL t t   %^ t	,
+!                              k %^ k   -> %^SL k k   %^ k	,
+!                              c %^ c   -> %^SL t t   %^ t s ,
+!                              č %^ č   -> %^SL t t   %^ t š ,
+!
+!                              p %^ m   -> %^SL p p   %^ m   ,
+!                              t %^ n   -> %^SL t t   %^ n   ,
+!                              t %^ n j -> %^SL t t   %^ n j ,
+!                              k %^ ŋ   -> %^SL k k   %^ ŋ
+!
+!   || [.#.|Cns|[Vow - [e|o]]] [Vow - á] _  [ [i|u] [ [ Cns - j ] | .#. ] | á | a a ] ;
+   
+! Eventually double the SecondaryLenghtening rule with a SecondaryLenghteningForLongA with á in left context and ii (long i) in right: váccii (-secleng) : vácci (+secleng)
+! We have secondary lengthening according to young speakers
+! Secondary lengthening should not apply before secondary lengthened /aa/
+
+
+
+define SecondaryLengtheningNas  p %^ m   ->  %^SL p p %^ m   ,
+                                t %^ n   ->  %^SL t t %^ n   ,
+                                t %^ n j ->  %^SL t t %^ n j ,
+                                k %^ ŋ   ->  %^SL k k %^ ŋ
+                                || [.#.|Cns|[Vow - [e|o]]] [Vow - á] [r|j|đ] 
+                                 _ [ [i|u] [ [ Cns - j ] | .#. ] | á | a a ]  ;
+
+
+! Svakt stadium (her må vi liste konsonantpara)
+!Only the pairs with different phonological and orthographic representation
+define WeakGrade           l b %^ b   -> l p %^ p   ,
+                           l d %^ d   -> l t %^ t   ,
+                           l g %^ g   -> l k %^ k   ,
+                           l k %^ k   -> l k %^ k   ,
+                           l p %^ p   -> l p %^ p   ,
+                           l n %^ n j -> l ɲ %^ ɲ   ,
+                           l t %^ t   -> l t %^ t   ,
+                         l h c %^ c   -> l L %^ t s ,
+                         l h č %^ č   -> l L %^ t š ,
+                           l z %^ z   -> l t %^ t s ,
+                           l ž %^ ž   -> l t %^ t š ,
+
+                           j b %^ b   -> j p %^ p   ,
+                           j g %^ g   -> j k %^ k   ,
+                         j h n %^ n   -> j N %^ N   ,
+                           j k %^ k   -> j k %^ k   ,
+                           j p %^ p   -> j p %^ p   ,
+                         j h m %^ m   -> j M %^ M   ,
+                         j h l %^ l   -> j L %^ L   ,
+                           j t %^ t   -> j t %^ t   ,
+                         j h c %^ c   -> j J %^ t s ,
+                           j z %^ z   -> j t %^ t s ,
+                           j d %^ d   -> j t %^ t   ,
+                         j s k %^ k   -> j s k %^ k   ,
+                         j s t %^ t   -> j s t %^ t   ,
+
+                           r b %^ b   -> r p %^ p   ,
+                           r d %^ d   -> r t %^ t   ,
+                           r g %^ g   -> r k %^ k   ,
+                           r p %^ p   -> r p %^ p   ,
+
+                           r k %^ k   -> r k %^ k   ,
+                           r t %^ t   -> r t %^ t   ,
+                         r h c %^ c   -> r t %^ t s ,
+                         r h č %^ č   -> r t %^ t š ,
+                         r s t %^ t   -> r s t %^ t   ,
+                         r s k %^ k   -> r s k %^ k   ,
+
+                           r z %^ z   -> r t %^ t s ,
+                           r ž %^ ž   -> r t %^ t š ,
+
+                           m b %^ b   -> m p %^ p   ,
+                           n d %^ d   -> n t %^ t   ,
+                           n g %^ g   -> ŋ k %^ k   ,
+                           m p %^ p   -> m p %^ p   ,
+                         m š k %^ k   -> m š %^ k   ,
+
+                         n k %^ k   -> ŋ k %^ k   ,
+                         ŋ h k %^ k   -> ŋ Ŋ %^ k   ,
+                         n t %^ t   -> n t %^ t   ,
+                         n h c %^ c   -> n N %^ t s ,
+                         n h č %^ č   -> n N %^ t š ,
+                         n s t %^ t   -> n s t %^ t   ,
+                         n s k %^ k   -> n s k %^ k   ,
+
+                           n z %^ z   -> n t %^ t s ,
+                           n ž %^ ž   -> n t %^ t š ,
+
+                           đ b %^ b   -> đ p %^ p   ,
+                           đ g %^ g   -> đ k %^ k   ,
+
+                           v n %^ n   -> w n %^ n   ,
+                           v d %^ d   -> w t %^ t   ,
+                           v g %^ g   -> w k %^ k   ,
+                           v j %^ j   -> w j %^ j   ,
+                           v l %^ l   -> w l %^ l   ,
+                         v h l %^ l   -> w L %^ L   ,
+                           v r %^ r   -> w r %^ r   ,
+                           v z %^ z   -> w t %^ t s ,
+                           v ž %^ ž   -> w t %^ t š ,
+                           v š %^ š   -> w š %^ š   ,
+                           v s %^ s   -> w s %^ s   ,
+                           v n %^ n j -> w ɲ %^ ɲ   ,
+                         v s k %^ k   -> w s k %^ k   ,
+                         v s t %^ t   -> w s t %^ t   ,
+                         v t %^ t   -> w t %^ t   ,
+                         v k %^ k   -> w k %^ k   ,
+                         v p %^ p   -> w p %^ p   ,
+                         v c %^ c   -> w t %^ t s ,
+                         v č %^ č   -> w t %^ t š
+
+                   || WordBorder (Syll Syll) Cns* Vow+ _ Vow ;
+
+
+
+define HighVowelLenghtening i -> i i , u -> u u || .#. Syll (Cns) Cns* _ ( [Cns - j] ) .#. ;
+
+
+define StrongNasalClusters m %^ p   -> m m %^  p   ,
+                           m %^ š k -> m m %^ š k   ,
+                           n %^ t   -> n n %^  t   ,
+                           n %^ k   -> ŋ ŋ %^  k   ,
+                           n %^ c   -> n n %^ N t s ,
+                           n %^ s k -> n n %^ s k   ,
+                           n %^ s t -> n n %^ s t   ,
+                           n %^ č   -> n n %^ N t š 
+                           || Vow _ Vow ;
+
+! Allegro former... Hva gjør vi med dem?
+! Viss det er former som berre er allegro i visse delar av setninga, men ikkje
+! elles, må vi ta dei som del av syntaksen på noko vis.
+! Viss dei er allegro i samansetjingar må vi gå til leksikon
+
+
+
+define VzzRule z %^ z -> d d %^ t s , 
+               ž %^ ž -> d d %^ t š , 
+               b %^ b -> b b %^ p   , 
+               d %^ d -> d d %^ t   , 
+               g %^ g -> g g %^ k   || Vow _ Vow ;
+define zzRule  z %^ z ->   t %^ t s , 
+               ž %^ ž ->   t %^ t š ,
+               b %^ b ->   p %^ p   , 
+               d %^ d ->   t %^ t   , 
+               g %^ g ->   k %^ k   || Cns _ Vow ;
+             ! Bled by previous
+
+define bdgRule b -> p   , d -> t   , g -> k   || WordBorder _ Vow ;
+! commented out ptkRule, no aspiration in Finnish
+!define ptkRule p -> p h , t -> t h , k -> k h || WordBorder _ Vow ;
+
+
+define VzRule   z              -> d s        , 
+                ž              -> d š        || Vow [ %^ | %» ] _ Vow ;
+define CttjRule č %^ č         -> h %^ t š   , 
+                c %^ c         -> h %^ t s   ,
+                t š %^ t š     -> h %^ t š   , 
+                t s %^ t s     -> h %^ t s 
+                                             || Vow Cns (h)  _ ;
+define ttjRule  č %^ č         -> t %^ t š   , 
+                c %^ c         -> t %^ t s   || Vow _ ;
+define cRule    c              -> t s , 
+                č              -> t š ;
+
+!gávc^ci (line 367 ka:vht.tsi: -> ka:vh.tsi:
+! no får vi: kɑɑvhts.tsii
+!utan cRule: kɑːvhc.ciː 
+
+! commented out VowelLengthening, not necessary in Finnish
+!define VowelLengthening e -> e e ,
+!                        i -> i i ,
+!                        o -> o o ,
+!                        u -> u u 
+!                             || .#. (Cns*) _ (h) %^ Cns Vow [Cns | .#. ] ;
+
+define VowelShortening á -> a || _ h h ; ! this should be generalised.
+                                         !from aahhtšii to ahhtšii
+
+define DiphthongShorteningIIIGr  i -> ĭ ,
+                                 e -> ĕ ,
+                                 u -> ŭ ,
+                                 o -> ŏ 
+                                        || _ [e|a|o] 
+                                             [ [ h h
+                                               | m m
+                                               | n n
+                                               | ŋ ŋ
+                                               | đ đ
+                                               | ɟ ɟ
+                                               | l l
+                                               | ʎ ʎ
+                                               | s s
+                                               | š š
+                                               | j j
+                                               | v v
+                                               | Cns ə ] %^ ] ;
+
+define DiphthongShorteningSecLng  i e -> ĭ ĕ ,
+                                  e a -> ĕ ă ,
+                                  u o -> ŭ ŏ ,
+                                  o a -> ŏ ă 
+                                             || _ Cns* %^SL ;
+
+define DiphthongShorteningAllegro  i e -> ĭ e ,
+                                   e a -> ĕ a ,
+                                   u o -> ŭ o ,
+                                   o a -> ŏ a 
+                                              || _ Cns* %^ Cns* [e|o] ;
+echo << Dialectal rules >>
+
+!define dhRule đ -> r ; ! Moving from Karesuando to Kautokeino
+!define thRule ŧ -> s ;
+
+define eaRule a -> ä || [e|ĕ] _ ;
+
+define aaRule á -> a a ;
+
+define PronounLenghtening u -> u u || .#. [m|t|s] _ .#. ;
+
+
+echo << And now we go for some OUTPUTFORMAT or another >>
+
+! The rules above are somewhat oriented towards the orthography, and rearrange
+! based upon that. Now, we might want to have output in different formats for 
+! different reasons:
+! SAMPA   = for the Helsinki tts engine
+! IPA     = so that we may read it during development
+! FINNISH = to target the fallback Bitlips demo if we are not able to meet the
+!           October deadline with the generated Sámi voice.
+
+!The idea is to comment out two of the following three rules and keep the one intended.
+
+
+! ... here outputformat is SAMPA:              
+!define OUTPUTFORMAT ə -> %@ , ä -> %{ , æ -> %{ , ö -> 2 , ø -> 2 , a -> A , 
+!                  n j -> J , ŋ -> N , š -> S , đ -> D ,  ŧ -> T , ɟ -> J \ , 
+!                    L -> l %_ %0 , R -> r %_ %0 , M -> m %_ %0 , N -> n %_ %0 , 
+!                    Ŋ -> N %_ %0 , V -> v %_ %0 ,
+!                   %^ -> %. ;
+! note potential problems with J\.
+
+! ... here outputformat is IPA:              
+ define OUTPUTFORMAT a -> ɑ ,
+                     ç -> s ,
+                     đ -> ð ,
+                     é -> e e ,
+                     í -> i i ,
+                   n j -> ɲ ,
+                     ò -> o ,
+                     ó -> u u ,
+                     q -> k ,
+                     š -> ʃ ,
+                     ŧ -> θ ,
+                     þ -> θ ,
+                     ü -> y ,
+                     x -> k s ,
+                     å -> o o ,
+                     ä -> æ ,
+                     ö -> ø ,
+                     w -> β ,
+                     W -> ɸ ,
+                     L -> l̥ ,
+                     R -> r̥ ,
+                     M -> m̥ ,
+                     N -> n̥ ,
+                     Ŋ -> ŋ̊ ,
+                     V -> v̥ ,
+                     J -> ç , 
+                    %^ -> %. ;
+
+
+define OUTPUTFORMAT2   h -> ʰ || WordBorder [p|t|k] _ Vow ; ! for rules with context...
+
+
+
+! ... here outputformat is FUPA:
+! define OUTPUTFORMAT a -> ɑ , n j -> ń , đ -> ð ,
+!                                          
+!                     %^ -> %. ;
+
+define COLONLENGTH   ɑ ɑ -> ɑ ː        || \[a] _ .o.
+                     e e -> e ː        || \[e] _ .o.
+                     i i -> i ː        || \[i] _ .o.
+                     o o -> o ː        || \[o] _ .o.
+                     u u -> u ː        || \[u] _ .o.
+                     ä ä -> ä ː        || \[u] _ .o.
+                     b b -> b ː        || \[b] _ .o.
+                     β β -> β ː        || \[β] _ .o.
+                     ɸ ɸ -> ɸ ː        || \[ɸ] _ .o.
+                     ɟ ɟ -> ɟ ː        || \[ɟ] _ .o.
+                     c c -> c ː        || \[c] _ .o.
+                     d d -> d ː        || \[d] _ .o.
+                     ð ð -> ð ː        || \[ð] _ .o.
+                     f f -> f ː        || \[f] _ .o.
+                     g g -> g ː        || \[g] _ .o.
+                     h h -> h ː        || \[h] _ .o.
+                     j j -> j ː        || \[j] _ .o.
+                     k k -> k ː        || \[k] _ .o.
+                     l l -> l ː        || \[l] _ .o.
+                     ʎ ʎ -> ʎ ː        || \[ʎ] _ .o.
+                     m m -> m ː        || \[m] _ .o.
+                     n n -> n ː        || \[n] _ .o.
+                     ɲ ɲ -> ɲ ː        || \[ɲ] _ .o.
+                     p p -> p ː        || \[p] _ .o.
+                     r r -> r ː        || \[r] _ .o.
+                     s s -> s ː        || \[s] _ .o.
+                     t t -> t ː        || \[t] _ .o.
+                     ʃ ʃ -> ʃ ː        || \[ʃ] _ .o.
+                     v v -> v ː        || \[v] _ .o.
+                     l̥ l̥ -> l̥ ː        || \[l̥] _ .o.
+                     r̥ r̥ -> r̥ ː        || \[r̥] _ .o.
+                     m̥ m̥ -> m̥ ː        || \[m̥] _ .o.
+                     n̥ n̥ -> n̥ ː        || \[n̥] _ .o.
+                     ŋ̊ ŋ̊ -> ŋ̊ ː        || \[ŋ̊] _ .o.
+                     v̥ v̥ -> v̥ ː        || \[v̥] _ .o.
+                     t ʃ  t ʃ -> t ʃ ː || \[t ʃ ] _ ;
+
+! TT: The last line above is my temporary fix for čč =  t ʃ  t ʃ . TODO: fix
+
+! Then the same with a syllable mark in between (only consonants):
+define COLONLENGTHSYLL b %. b -> %. b ː , β %. β -> %. β ː , ɸ %. ɸ -> %. ɸ ː ,
+                       ɟ %. ɟ -> %. ɟ ː , c %. c -> %. c ː , d %. d -> %. d ː ,
+                       ð %. ð -> %. ð ː , f %. f -> %. f ː , g %. g -> %. g ː , 
+                       h %. h -> %. h ː , j %. j -> %. j ː , k %. k -> %. k ː ,
+                       l %. l -> %. l ː , ʎ %. ʎ -> %. ʎ ː , m %. m -> %. m ː ,
+                       n %. n -> %. n ː , ɲ %. ɲ -> %. ɲ ː , p %. p -> %. p ː ,
+                       r %. r -> %. r ː , s %. s -> %. s ː , t %. t -> %. t ː ,
+                       ʃ %. ʃ -> %. ʃ ː , v %. v -> %. v ː , l̥ %. l̥ -> %. l̥ ː ,
+                       r̥ %. r̥ -> %. r̥ ː , m̥ %. m̥ -> %. m̥ ː , n̥ %. n̥ -> %. n̥ ː , 
+                       ŋ̊ %. ŋ̊ -> %. ŋ̊ ː , v̥ %. v̥ -> %. v̥ ː 
+                       ;
+
+! ... here outputformat is Finnish orthography:              
+! define OUTPUTFORMAT ŋ -> n g , ŧ -> s , đ -> r , š -> s ,
+!                       %^ -> %.  ;
+! This rule is incomplete!
+
+! Cleaning up
+
+define DummyDeletion Dummy -> 0 ;
+
+define DerBorderSimplification [ ‰» %» %» %# -> %»,
+                                       %» %» -> %»,
+                                       %» %# -> %» ] ;
+
+define HyphenDeletion [ %- -> 0 ] ;
+
+echo <<Combining...>>
+
+read regex [ 
+!    POSTAG .o. 
+    down
+.o. DerBorderSimplification
+.o. DerBorderSimplification
+.o. DerBorderSimplification
+
+.o. ijRule1
+.o. ijRule2
+
+.o. slRule
+.o. snjRule
+.o. yRule
+.o. wRule
+
+.o. StrongNasalClusters
+.o. olju
+.o. StrongGrade
+.o. FinalLightT
+.o. FinalLightD
+.o. sClusterWeak
+.o. StopCluster  
+.o. tkRule  
+.o. tmRule  
+
+.o. 3rdSylld
+!.o. rSchwa
+.o. dSchwa
+!.o. lSchwa
+
+.o. Preaspiration
+!.o. jPreaspiration
+
+.o. VoicelessSonorant
+!.o. LatusLengthening
+.o. PrimaryLenghtening
+!.o. PrimaryLenghteningII
+!.o. SecondaryLengthening
+.o. SecondaryLengtheningNas
+.o. WeakGrade
+.o. PlosiveDevoicing
+!.o. HighVowelLenghtening
+
+.o. VzzRule
+.o. zzRule
+.o. VzRule
+!.o. ptkRule
+.o. bdgRule
+.o. CttjRule
+.o. ttjRule
+.o. cRule
+.o. LongPalatalAffricate
+.o. SecondaryLengtheningPalAff
+.o. ShortPalatalAffricate
+.o. HighVowelLenghtening
+!.o. VowelLengthening
+.o. VowelShortening
+.o. DiphthongShorteningIIIGr
+.o. DiphthongShorteningSecLng
+.o. DiphthongShorteningAllegro
+.o. eaRule
+.o. aaRule
+.o. PronounLenghtening
+.o. PrimStress
+.o. SecStress
+.o. SecStress
+.o. SecStress
+
+.o. OUTPUTFORMAT
+.o. OUTPUTFORMAT2
+.o. COLONLENGTH
+.o. COLONLENGTH
+.o. COLONLENGTH
+!.o. COLONLENGTHSYLL
+.o. DummyDeletion
+.o. HyphenDeletion
+
+] ;
+
+
+
+
+
+!  For reference: The SAMPA - IPA correspondence
+
+!  SAMPA   IPA  Description
+!  p       p    voiceless bilabial stop
+!  b       b    voiced bilabial stop
+!  t       t    voiceless alveolar or dental stop
+!  d       d    voiced alveolar or dental stop
+!  ts      ʦ    voiceless alveolar affricate
+!  dz      ʣ    voiced alveolar affricate
+!  tS      ʧ    voiceless postalveolar affricate
+!  dZ      ʤ    voiced postalveolar affricate
+!  c       c    voiceless palatal stop
+!  J\      ɟ    (overstroked j)    voiced palatal stop
+!  k       k    voiceless velar stop
+!  g       g    voiced velar stop
+!  q       q    voiceless uvular stop
+!  p\      ɸ    (Greek phi)    voiceless bilabial fricative
+!  B       β    (Greek beta)    voiced bilabial fricative
+!          ϐ    (Greek beta alt)    voiced bilabial approximant
+!  f       f    voiceless labiodental fricative
+!  v       v    voiced labiodental fricative
+!  T       θ    (Greek theta)    voiceless dental fricative
+!          ϑ    (Greek theta alt)    voiceless dental approximant
+!  D       ð    (Icelandic eth)    voiced dental fricative
+!          δ    (Greek delta)    voiced dental approximant
+!  s       s    voiceless alveolar fricative
+!  z       z    voiced alveolar fricative
+!  S       ʃ    voiceless postalveolar fricative
+!  Z       ʒ    voiced postalveolar fricative
+!  C       ç    (cedilla)    voiceless palatal fricative
+!  j\ (jj) ʝ    (j with crossed tail)    voiced palatal fricative
+!  x       x    voiceless velar fricative
+!  G       γ    (Greek gamma)    voiced velar fricative
+!          ɰ    voiced velar approximant
+!  X\      ħ    (overstroked h)    voiceless pharyngeal fricative
+!  ?\      ʕ    (Inverted ?)    voiced pharyngeal fricative
+!  h       h    voiceless glottal approximant
+!  h\      ɦ    (h with upper tail to the right)    voiced glottal approximant
+!  m       m    bilabial nasal
+!  F       ɱ    (m with downward right tail)    labiodental nasal
+!  n       n    alveolar or dental nasal
+!  J       ɲ    (n with downward left tail)    palatal nasal
+!  N       ŋ    (n with downward right tail)    velar nasal
+!  l       l    alveolar lateral
+!  L       ʎ    turned down y, alt. λ (Greek lambda)    palatal lateral
+!  5       ɫ    (l with middle tilde)    velarized dental lateral
+!  4 (r)   ɾ    (r without upper-left serif)    alveolar flap
+!  r (rr)  r    alveolar trill
+!  r\      ɹ    (r rotated 180°)    retroflexed alveolar approximant
+!  R       ʀ    (small capital R)    uvular trill
+!  P       ʋ    labiodental approximant
+!  w       w    velo-labial approximant
+!  H       ɥ    (turned down h)    palato-labial approximant
+!  j       j    palatal approximant
+!  
+!  Vowels
+!                front   near-front    central   near-back   back
+!  close          i • y               1 • }                 M • u
+!  near-close              I • Y                    U
+!  close-mid      e • 2              @\ • 8                 7 • o
+!  mid                                  @            
+!  open-mid       E • 9               3 • 3\                V • O
+!  near-open        {                    6           
+!  open           a • &                                     A • Q
+
+
+
+! More documentation
+
+!! retroflex plosive, voiceless		t`  ʈ	    0288, 648 (` = ASCII 096)
+!! retroflex plosive, voiced		d`	ɖ		0256, 598
+!! labiodental nasal				F 	ɱ		0271, 625
+!! retroflex nasal					n` 	ɳ		0273, 627
+!! palatal nasal					J 	ɲ		0272, 626
+!! velar nasal						N 	ŋ		014B, 331
+!! uvular nasal						N\	ɴ		0274, 628
+!! 
+!! bilabial trill					B\ 	ʙ		0299, 665
+!! uvular trill						R\ 	ʀ		0280, 640
+!! alveolar tap						4	ɾ		027E, 638
+!! retroflex flap					r` 	ɽ		027D, 637
+!! bilabial fricative, voiceless	p\ 	ɸ		0278, 632
+!! bilabial fricative, voiced		B 	β		03B2, 946
+!! dental fricative, voiceless		T 	θ		03B8, 952
+!! dental fricative, voiced			D 	ð		00F0, 240
+!! postalveolar fricative, voiceless	S	ʃ		0283, 643
+!! postalveolar fricative, voiced		Z 	ʒ		0292, 658
+!! retroflex fricative, voiceless		s` 	ʂ		0282, 642
+!! retroflex fricative, voiced			z` 	ʐ		0290, 656
+!! palatal fricative, voiceless			C 	ç		00E7, 231
+!! palatal fricative, voiced			j\ 	ʝ		029D, 669
+!! velar fricative, voiced	        	G 	ɣ		0263, 611
+!! uvular fricative, voiceless			X	χ		03C7, 967
+!! uvular fricative, voiced				R 	ʁ		0281, 641
+!! pharyngeal fricative, voiceless		X\ 	ħ		0127, 295
+!! pharyngeal fricative, voiced			?\ 	ʕ		0295, 661
+!! glottal fricative, voiced			h\	ɦ		0266, 614
+!! 
+!! alveolar lateral fricative, vl.		K 
+!! alveolar lateral fricative, vd.		K\
+!! 
+!! labiodental approximant				P (or v\) 
+!! alveolar approximant					r\ 
+!! retroflex approximant				r\` 
+!! velar approximant					M\
+!! 
+!! retroflex lateral approximant		l` 
+!! palatal lateral approximant			L 
+!! velar lateral approximant			L\
+!! Clicks
+!! 
+!! bilabial								O\	(O = capital letter) 
+!! dental								|\
+!! (post)alveolar						!\ 
+!! palatoalveolar						=\ 
+!! alveolar lateral						|\|\
+!! Ejectives, implosives
+!! 
+!! ejective								_>	e.g. ejective p		p_>
+!! implosive							_<	e.g. implosive b	b_<
+!! Vowels
+!! 
+!! close back unrounded					M
+!! close central unrounded 				1 
+!! close central rounded				} 
+!! lax i								I 
+!! lax y								Y 
+!! lax u								U
+!! 
+!! close-mid front rounded				2 
+!! close-mid central unrounded			@\ 
+!! close-mid central rounded			8 
+!! close-mid back unrounded				7
+!! 
+!! schwa								@
+!! 
+!! open-mid front unrounded				E 
+!! open-mid front rounded				9
+!! open-mid central unrounded			3 
+!! open-mid central rounded				3\ 
+!! open-mid back unrounded				V 
+!! open-mid back rounded				O
+!! 
+!! ash (ae digraph)						{ 
+!! open schwa (turned a)				6
+!! 
+!! open front rounded					& 
+!! open back unrounded	        		A 
+!! open back rounded					Q
+!! Other symbols
+!! 
+!! voiceless labial-velar fricative		W 
+!! voiced labial-palatal approx.		H 
+!! voiceless epiglottal fricative		H\ 
+!! voiced epiglottal fricative			<\ 
+!! epiglottal plosive					>\
+!! 
+!! alveolo-palatal fricative, vl. 		s\ 
+!! alveolo-palatal fricative, voiced	z\ 
+!! alveolar lateral flap				l\ 
+!! simultaneous S and x					x\ 
+!! tie bar								_
+!! Suprasegmentals
+!! 
+!! primary stress						" 
+!! secondary stress						% 
+!! long									: 
+!! half-long							:\ 
+!! extra-short							_X 
+!! linking mark							-\
+!! Tones and word accents
+!! 
+!! level extra high						_T 
+!! level high							_H
+!! level mid							_M 
+!! level low							_L 
+!! level extra low						_B
+!! downstep								! 
+!! upstep								^	(caret, circumflex)
+!! 
+!! contour, rising						 
+!! contour, falling						_F 
+!! contour, high rising					_H_T 
+!! contour, low rising					_B_L 
+!! 
+!! contour, rising-falling				_R_F 
+!! (NB Instead of being written as diacritics with _, all prosodic marks can alternatively be placed in a separate tier, set off by < >, as recommended for the next two symbols.)
+!! global rise				<R> 
+!! global fall				<F>
+!! Diacritics
+!! 
+!! voiceless				_0	(0 = figure), e.g. n_0
+!! voiced					_v 
+!! aspirated				_h 
+!! more rounded				_O	(O = letter) 
+!! less rounded				_c 
+!! advanced					_+
+!! retracted				_-
+!! centralized				_" 
+!! syllabic					=	(or _=) e.g. n= (or n_=) 
+!! non-syllabic				_^ 
+!! rhoticity				`
+!! 
+!! breathy voiced			_t 
+!! creaky voiced			_k
+!! linguolabial				_N 
+!! labialized				_w 
+!! palatalized				'	(or _j) e.g. t' (or t_j) 
+!! velarized				_G 
+!! pharyngealized			_?\
+!! 
+!! dental					_d 
+!! apical					_a 
+!! laminal					_m
+!! nasalized				~	(or _~) e.g. A~ (or A_~) 
+!! nasal release			_n
+!! lateral release			_l 
+!! no audible release		_}
+!! 
+!! velarized or pharyngealized		_e 
+!! velarized l, alternatively		5 
+!! raised							_r 
+!! lowered							_o 
+!! advanced tongue root				_A 
+!! retracted tongue root			_q
+
+
+

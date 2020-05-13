@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -u
+
+cd "$(dirname "$0")"
+
+declare -i fail=0
+for input in *.input; do
+    base=${input%%input}
+    analyser=${base%%-*}
+    hfst-tokenize --gtd -l1 ../tokeniser-"${analyser}"-gt-desc.pmhfst < "${input}" \
+                  | "$GTCORE"/scripts/sort-cg-cohort.pl > "${base}"output
+    if ! diff "${base}"expected "${base}"output; then
+        echo "stdout differs for ${base}"
+        (( fail++ ))
+    fi
+done
+
+exit ${fail}

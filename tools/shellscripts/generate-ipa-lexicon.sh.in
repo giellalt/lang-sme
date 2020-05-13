@@ -1,0 +1,84 @@
+#!/bin/bash
+# @configure_input@
+
+# This is a shell script that will produce a three-column text file:
+#
+# 1. lemma+analysis tags
+# 2. orthographic word form
+# 3. phonetic transcription of the word form
+#
+# The generated text file is used as input to certain TTS systems.
+#
+# This file must be processed by ./configure before being used.
+# The script only works with hfst transducers.
+
+###### Variables: #######
+
+# Languages:
+languages="sme fin nob"
+
+# How many entries for each language:
+entries=400000
+
+# $srcdir:
+if test -z "$srcdir"; then
+    srcdir=$(echo "$0" | sed s,[^/]*$,,)
+    test "$srcdir" = "$0" && srcdir=.
+    test -z "$srcdir" && srcdir=.
+fi
+
+# Fst files:
+hyphenator=${srcdir}/../../src/hyphenation/hyphenation.hfst
+
+# Check whether the actual fst's exist:
+if ! test -f "$hyphenator" ; then
+    echo "FAIL: Transducer not found! $hyphenator"
+    exit 1
+fi
+
+hfst_lookup="@HFST_LOOKUP@"
+hfst_fst2strings=@HFST_FST2STRINGS@
+
+for lang in $languages; do
+    echo "Generating $lang IPA entries."
+    # Fst files:
+    generator=${srcdir}/../../src/generator-tts-gt-norm_nonum_noabbr_nohyph_$lang.hfst
+    ipa_converter=${srcdir}/../../src/phonetics/text2ipa-$lang.hfst
+    
+    # Output file:
+    tts_lexicon=${srcdir}/tts-lexicon-$lang.txt
+    
+    # Check whether the actual fst's exist:
+    if ! test -f "$generator" ; then
+        echo "FAIL: Transducer not found! $generator"
+        exit 1
+    fi
+    if ! test -f "$ipa_converter" ; then
+        echo "FAIL: Transducer not found! $ipa_converter"
+        exit 1
+    fi
+    
+	$hfst_fst2strings $generator --random=$entries > $tts_lexicon.tmp.txt
+	# Extract word forms:
+	cut -d':' -f 2- < $tts_lexicon.tmp.txt > $tts_lexicon.wordforms.txt
+	# Extract lemmas:
+	cut -d':' -f 1 < $tts_lexicon.tmp.txt > $tts_lexicon.lemmas.txt
+	# Convert word forms to IPA:
+	$hfst_lookup -q $hyphenator \
+	    < $tts_lexicon.wordforms.txt \
+	    | cut -f2 \
+	    | grep -v '^$' \
+	    > $tts_lexicon.hyph.txt
+	$hfst_lookup -q $ipa_converter \
+	    < $tts_lexicon.hyph.txt \
+	    > $tts_lexicon.ipatmp.txt
+	# Remove empty lines (done separately to preserve easy identification of
+	# double IPA conversion/overgeneration, in the ipatmp file):
+	grep -v '^$' < $tts_lexicon.ipatmp.txt > $tts_lexicon.ipa.txt
+	tr -d "#^»>" < $tts_lexicon.wordforms.txt > $tts_lexicon.wordformsclean.txt
+	paste $tts_lexicon.lemmas.txt \
+	      $tts_lexicon.wordformsclean.txt \
+	      $tts_lexicon.ipa.txt \
+	    | cut -f1,2,4 \
+	    > $tts_lexicon
+done
