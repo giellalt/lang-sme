@@ -47,6 +47,6 @@ remove-derivation-strings.%.regex: \
 ##########################################
 # General build rules included from here:#
 
-include $(top_srcdir)/am-shared/tools-mt-apertium-filters-dir-include.am
+include $(top_srcdir)/../giella-core/am-shared/tools-mt-apertium-filters-dir-include.am
 
 # vim: set ft=automake:

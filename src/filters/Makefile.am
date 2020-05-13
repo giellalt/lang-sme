@@ -77,6 +77,6 @@ change-optionally-word_boundary_to_hyphen.whfst: \
 #########################################################
 
 # Included build file, where the actual build instructions are:
-include $(top_srcdir)/am-shared/src-filters-dir-include.am
+include $(top_srcdir)/../giella-core/am-shared/src-filters-dir-include.am
 
 # vim: set ft=automake:
