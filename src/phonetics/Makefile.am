@@ -29,6 +29,6 @@ GT_PHONETICS_SUPPLEMENTS=text2tts-$(GTLANG).xfscript \
 
 ##########################################
 # General build rules included from here:#
-include $(top_srcdir)/am-shared/src-phonetics-dir-include.am
+include $(top_srcdir)/../giella-core/am-shared/src-phonetics-dir-include.am
 
 # vim: set ft=automake:
