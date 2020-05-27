@@ -3875,9 +3875,1717 @@ COPY:hyphen (Ex/V IV Der/NomAct N Cmp/SgNom Cmp/SplitR Cmp &SUGGEST) EXCEPT (V I
     #$ Konferánssa ulbmil dán háve lea čohkket nissoniid geain leat iešguđetlágan duogážat ja ahki, oainnusin dahkan dihte nissoniid vásihusaid luonddu ja ressurssaid birra {davvi} báikkálaš servodagain.
     
     
-    # Dependency rules and semantic role rules
-    # ----------------------------------------
+    # BEGINNING Dependency rules and semantic role rules
+    # ####################################################
     # I want to put them here to identify valid verb-argument constructions (for example for avoiding nominal readings of verbs)
+    
+	# dependency
+	# ==========
+	
+	# SET objects
+	# -----------
+	
+LIST <mv> = <mv> ;
+LIST <aux> = <aux> ;
+LIST <ctjHead> = <ctjHead> ;
+
+LIST OBJ-COMP = ("ahte" CS) ("makkár" Pron) ("movt" CS) ; 
+LIST MCL-CONJ = ("de" CC) ("dellie" CC)("dillie" CC)("dle" CC) ("die" Adv) ("muhto" CC) ("mohte" CC) ("men" CC) ("valla" CC) ; # these typically introduce a main clause, not coordination of subclauses
+SET ADVL-COMP = MO-MANge - ("man" Foc/ge) ; 
+
+LIST @FV = @+FMAINV @+FAUXV ;
+LIST @AUX = @-FAUXV @+FAUXV ;
+LIST @MV = @-FMAINV @+FMAINV @FMVdic @IMVdic ;
+LIST @V = @+FMAINV @-FMAINV @+FAUXV @-FAUX @FS-VFIN< @FS-ADVL @FS-<ADVL @FS-ADVL> ; #@FS-OBJ @FS-OBJ> @FS-<OBJ @FS-SUBJ @FS-SUBJ> @FS-<SUBJ @FS-IMV @FS-N<IMV @FS-N< @FS-P< @FS-P<IMV @FS-IAUX @ICL-P< @ICL-P<IMV @FS-N<IAUX @ICL-OBJ @ICL-SUBJ @PRED @PRED2;
+#LIST ADVL = @<ADVL @ADVL> @ADVL @-FADVL> @-F<ADVL @APP-ADVL< @CL-<ADVL @CL-ADVL> ; # @i-<ADVL @i-ADVL> ; 		         # adverbial
+#LIST @ICL-OBJ = @ICL-OBJ ; 	         # non-finite subclause ...
+#LIST @ICL-SUBJ = @ICL-SUBJ ; 	         # non-finite subclause ...
+#
+#LIST SUBJ = @<SUBJ @SUBJ> @SUBJ @-FSUBJ> ;
+#LIST SUBJ> = @SUBJ> @tSUBJ> ;
+#LIST <SUBJ = @<SUBJ @<tSUBJ ;
+LIST IOBJ = @<IOBJ @IOBJ> ;
+LIST OBJ> = @OBJ> @IOBJ> ;
+LIST FOBJ> = @-FOBJ> @-FIOBJ> ;
+LIST F<OBJ = @-F<OBJ @-F<IOBJ ;
+#LIST APP = @APP>Pron @APP-ADVL< @APP-N< @APP-Num< @APP-Pron< ;
+SET @ARG = SUBJ OR OBJ OR SPRED OR OPRED ; #OR ADVL OR @ICL-OBJ OR @<PPRED OR IOBJ OR @POSS> OR @APP-N< OR @P< ;
+#	
+
+LIST @FS-VFIN< = @FS-VFIN< ;
+LIST @FS-ADVL 	= @FS-ADVL ;
+LIST @FS-<ADVL 	= @FS-<ADVL ;
+LIST @FS-ADVL> 	= @FS-ADVL> ; 
+LIST @FS-OBJ 	= @FS-OBJ ;
+LIST @FS-OBJ> 	= @FS-OBJ> ;
+LIST @FS-<OBJ 	= @FS-<OBJ ;
+LIST @FS-SUBJ 	= @FS-SUBJ ;
+LIST @FS-SUBJ> 	= @FS-SUBJ> ;
+LIST @FS-<SUBJ 	= @FS-<SUBJ ;
+LIST @FS-IMV 	= @FS-IMV ;
+LIST @FS-N<IMV 	= @FS-N<IMV ;
+LIST @FS-N< 	= @FS-N< ;
+LIST @FS-P< 	= @FS-P< ;
+LIST @FS-P<IMV 	= @FS-P<IMV ;
+LIST @FS-IAUX 	= @FS-IAUX ;
+LIST @ICL-P< 	= @ICL-P< ;
+LIST @ICL-P<IMV = @ICL-P<IMV ;
+LIST @FS-N<IAUX = @FS-N<IAUX ;
+LIST @ICL-OBJ 	= @ICL-OBJ ;
+LIST @ICL-SUBJ 	= @ICL-SUBJ ;
+
+LIST @FMVdic = @FMVdic ;
+LIST @IMVdic = @IMVdic ;
+
+LIST MUITALIT = "árvalit" "bivdit" "boagustit" "cealkit" "cuoigut" "čilget" "čurvet" "čuorvut" "dadjat" "geardduhit" "gielistit" "gilljut" "hállat" "hoallat" "huikit" "huikkádit" "imaštallat" "jearrat" "jievžat"  "juoigat" "jurdilit" "jurddašit" "kommenteret" "lávlut" "lasihit" "loahpahit" "lohkat" "lohpidit" "máidnut" "máinnašit" "muitalit" "muittuhit" "nágget" "njávggádit" "oaivvildit" "rávvet" "savkalit" "sárdnidit" "šuohkihit" "váidalit" "váruhit" "vástidit" ;
+    ## Njáv, váidalii Busi ja gávastalai.
+    ## Njáv, njávggádii Busi fas ja fanahalai. 
+
+LIST ILL-LOC-PRON-ADV = "buot" "visot" ;    
+
+# Only verbs in the predicate gets <mv> and <aux>
+# -----------------------------------------------
+SUBSTITUTE:SubV=mv (V) (<mv> V) TARGET @MV (NEGATE 0 (<mv>));
+SUBSTITUTE:SubV=aux (V) (<aux> V) TARGET @AUX (NEGATE 0 (<aux>));
+
+
+# citations - the verb is marked so it will be handled differently from other verbs if it is in the end of the sentence
+SUBSTITUTE:utt (@+FMAINV)(@FMVdic) TARGET (<vdic>) (-1 COMMA LINK 1 VFIN LINK *1 @<SUBJ BARRIER @V) ;
+	## Mii fertet maiddái geahčadit makkár lassi guoimmuhemiid galgat fállat vai bohtet vel eanet olbmot boahtte jagi, loahpaha duhtavaš beaivválaš jođiheaddji Eriksen.  
+	
+SUBSTITUTE:utt (@+FMAINV)(@FMVdic) TARGET (<vdic>) (*1 (":") BARRIER @V LINK 1 CITATION) ;
+	## Ja go stállu álggii nohkkat, de son fas čuorvvui moarsis: "Boađe nohkkat!"
+SUBSTITUTE:utt (@+FMAINV)(@FMVdic) TARGET (<vdic>) (0 VFIN LINK -1 @SUBJ> LINK *-1 COMMA BARRIER @V) ;
+SUBSTITUTE:utt (@+FMAINV)(@IMVdic) TARGET (<vdic>) (*1 (":") BARRIER @V LINK 1 CITATION) ;
+	## Ja lea dadjan: "Ale nohka mu nalde!"
+
+
+
+# the finite verb of object-subclauses gets @FS-SUBJ:
+SUBSTITUTE:SubV=FS-SUBJmv (@+FMAINV)(@FS-<SUBJ) TARGET V (-1 SPRED)(0 Qst);
+SUBSTITUTE:SubV=FS-SUBJmv (@+FMAINV)(@FS-<SUBJ) TARGET V (-1 ("ahte") LINK -1 SPRED)(0 Qst);
+	## Dás leat juohkelágáš muitalusat, muhto ii leat vissis leatgo jur njuolga, go eai leat čállojuvvon.
+	## Muhto vissis ii leat leatgo jur njuolga.
+SUBSTITUTE:SubV=FS-SUBJmv (@+FMAINV)(@FS-<SUBJ) TARGET V (*-1 BOS BARRIER S-BOUNDARY LINK 1 ("ahte"))(*-1 SPRED BARRIER S-BOUNDARY);
+	## Dehálaš lea ahte don maid boađát.
+	## Lea dehálaš ahte don maid boađát.
+SUBSTITUTE:SubV=FS-SUBJmv (@+FMAINV)(@FS-SUBJ>) TARGET V (*-1 BOS BARRIER S-BOUNDARY LINK 1 ("ahte"))(*1 COPULAS LINK *1 (@<SPRED) BARRIER S-BOUNDARY);
+	## Ahte don maid boađát lea dehálaš.
+
+# the finite verb of object-subclauses gets @FS-OBJ:
+SUBSTITUTE:SubV=FS-OBJmv (@+FMAINV)(@FS-OBJ) TARGET V (*-1 OBJ-COMP BARRIER @V OR @CVP OR CS OR Rel LINK NOT *-1 Com BARRIER @ARG LINK *-1 TV + VFIN)(NEGATE *-1 Interr BARRIER @V OR @CVP OR CS OR Rel LINK *-1 BOS BARRIER @V)(NEGATE *1 (?)); 
+	#$ Sápmelaččas leai dakkár luondu, ahte son háliidišgođii gottiid.
+SUBSTITUTE:SubV=FS-OBJmv (@+FMAINV)(@FS-OBJ) TARGET V (*-1 OBJ-COMP BARRIER @V OR @CVP OR CS OR Rel LINK NOT *-1 Com BARRIER @ARG)(NEGATE *-1 Interr BARRIER @V OR @CVP OR CS OR Rel LINK *-1 BOS BARRIER @V)(NEGATE *1 (?))(*1 VFIN LINK *1 TV + VFIN); 
+SUBSTITUTE:SubV=FS-OBJmv (@+FMAINV)(@FS-OBJ) TARGET V (*-1 CC OR COMMA BARRIER @V OR @CVP OR CS OR Rel OR @SUBJ> LINK NOT 0 MCL-CONJ LINK *-1 (@FS-OBJ) BARRIER @V)(NEGATE *1 (@<SUBJ)) ; # coordination
+SUBSTITUTE:SubVmain=FS-OBJaux (@+FAUX) (@FS-OBJ) TARGET V (*-1 OBJ-COMP BARRIER @V OR @CVP OR CS OR Rel LINK NOT *-1 Com BARRIER @ARG)(NEGATE *1 (?)) ;
+SUBSTITUTE:SubVmain=FS-OBJaux (@+FAUX) (@FS-OBJ) TARGET V (*-1 CC BARRIER @V OR @CVP OR CS OR Rel OR @SUBJ> LINK NOT 0 MCL-CONJ LINK *-1 (@FS-OBJ) BARRIER VFIN) ;  # coordination
+SUBSTITUTE:SubVmain=FS-OBJaux (@+FAUX) (@FS-OBJ) TARGET V (**-1 Indef OR A BARRIER VFIN OR @CVP OR CS OR Rel LINK -1 ("man" Adv) LINK NOT *-1 Com BARRIER @ARG) ; # object-subclause starts with "man stuoris/galle" 
+SUBSTITUTE (@+FAUX) (@FS-OBJ) TARGET V (0 (Neg Ind) LINK *-1 @FS-OBJ BARRIER VFIN) ; # coordination with Neg
+
+# the finite verb of advl-subclauses gets @FS-ADVL> or @FS-<ADVL:
+SUBSTITUTE:SubV=FS-<ADVLmv (@+FMAINV)(@FS-<ADVL) TARGET VFIN (-1 @SUBJ> OR Nom LINK *-1 VFIN BARRIER NPNHA) ;
+
+SUBSTITUTE:SubV=FS-<ADVLmv (@+FMAINV)(@FS-<ADVL) TARGET V (*-1 ADVL-COMP OR CS OR Rel BARRIER @V OR Rel OR @CVP OR @COMP-CS<)(*-1 @FV BARRIER (":"))(NEGATE *-1 ("go") BARRIER @V OR Rel OR @CVP OR @COMP-CS< LINK -1 ("nu"))(NEGATE *-1 ADVL-COMP + Sem/Plc LINK -1 Adv + Sem/Plc) ;
+    # the last condition makes sure there is a potential finite verb of the main clause to the left that can be modified
+    #$GRAMval Jus eai leat álgán divodemiin ovdal geassemánu , de sáhttet manahit visot daid tippenruđaid , lohká Johansen , gii ii loga 	liikot 	dili nu go dál lea.
+    ##GRAMval – Mánát ja olbmot gean govven eai 	liiko 	man láhkái media govve sin .
+    
+SUBSTITUTE:SubV=FS-<ADVLmv (@+FMAINV)(@FS-<ADVL) TARGET V (*-1 ADVL-COMP OR CS BARRIER @V OR Rel OR @CVP OR @COMP-CS<)(*-1 @FV BARRIER (":"))(NEGATE *-1 ("go") BARRIER @V OR Rel OR @CVP OR @COMP-CS< LINK -1 ("nu"))(NEGATE *-1 ADVL-COMP + Sem/Plc BARRIER NPNHAPcle LINK -1 Adv + Sem/Plc) ;
+    #GRAMval 
+    #$ Ii leat liikká makkárge ágga 	ballat 	ahte foandda doarjagat eai váikkut buori ovdáneami dohko gos dat geavahuvvojit . 
+    #last condition
+    
+SUBSTITUTE:SubV=FS-OBJ (@+FMAINV)(@FS-OBJ) TARGET V (*-1 ADVL-COMP OR CS BARRIER @V OR Rel OR @CVP OR @COMP-CS<)(*-1 @FMVdic OR @IMVdic)(NOT *1 @FV BARRIER S-BOUNDARY) ;
+    # The variant for the ones where the part following ":" is a subclause of the clause before ":" like in direct speech
+	## Muhto dan gottáhallan olbmo bárdni, go son gulai ahte su áhčči lea goddojuvvon, de son dajai vašiidisguin ahte: "Mon vuolggán ja bážán visot vaikko livččo man olu dážat". 
+SUBSTITUTE:SubV=FS-OBJ (@+FMAINV)(@FS-OBJ) TARGET V (*-1 CITATION BARRIER @V OR Rel OR @CVP OR @COMP-CS< LINK -1 (":") LINK *-1 @FMVdic OR @IMVdic);
+	## Ja go stállu álggii nohkkat, de son fas čuorvvui moarsis: "Boađe nohkkat!"
+	## Ja go bođii dat báiki, de son gohčui čanadit dal gittalaga čeabehiidda, ja son dajai: "Vurdet veháš, mon manan geahččame geainnuid."
+SUBSTITUTE:SubV=FS-OBJ (@+FAUX)(@FS-OBJ) TARGET V (*-1 CITATION BARRIER @V OR Rel OR @CVP OR @COMP-CS< LINK -1 (":") LINK *-1 @FMVdic OR @IMVdic);
+	## Ja lea dadjan: "Ale nohka mu nalde!"
+SUBSTITUTE:SubV=FS-ADVL>mv (@+FMAINV)(@FS-ADVL>) TARGET V (*-1 ADVL-COMP OR CS BARRIER @V OR Rel OR @CVP OR @COMP-CS<)(*1 @FV BARRIER S-BOUNDARY) ;
+    # the last condition makes sure there is a potential finite verb of the main clause to the left that can be modified
+	## Ja vaikko presideanta logai daid dárbbašlažžan ođđasit guorahallat, ii mieđihan son Sámedikki boastut bargan.
+SUBSTITUTE:SubV=FS-<ADVLmv (@+FMAINV)(@FS-<ADVL) TARGET V (*-1 CC OR COMMA BARRIER @V OR Rel OR @CVP OR MCL-CONJ LINK NOT 0 MCL-CONJ LINK *-1 (@FS-<ADVL) BARRIER @V OR MCL-CONJ)(NEGATE *1 (@<SUBJ)) ;  # coordination, if there is no subject in the new clause
+SUBSTITUTE:SubV=FS-ADVL>mv (@+FMAINV)(@FS-ADVL>) TARGET V (*-1 CC OR COMMA BARRIER @V OR Rel OR @CVP OR MCL-CONJ LINK NOT 0 MCL-CONJ LINK *-1 (@FS-ADVL>) BARRIER @V OR MCL-CONJ)(NEGATE *1 (@<SUBJ)) ;  # coordination, if there is no subject in the new clause
+# some relative clauses introduced by adverbs
+SUBSTITUTE:SubV=FS-Naux (@+FAUX) (@FS-N<) TARGET V (*-1 ("gos") OR ("gosa") BARRIER VFIN OR COMMA LINK *-1 N OR Po or DOPPE OR DOHKO BARRIER NOT-COMMA) ;
+	## Muitalus sápmelaččaid birra, gos sii leat vuohččan orron, ja got sin dilli lea leamaš, ja mainna sii leat eallán ja gos sii leat boahtán.
+SUBSTITUTE:SubV=FS-Naux (@+FAUX) (@FS-N<) TARGET V (*-1 ("got") BARRIER VFIN OR COMMA LINK -1 COMMA LINK -1 N) ;
+	## Ja dát lea dušše ovdamearkan, got lea Sámis geavvan.
+SUBSTITUTE:SubV=FS-Naux (@+FMAINV) (@FS-N<) TARGET V (*-1 ("gos") OR ("gosa") BARRIER VFIN OR COMMA LINK *-1 N OR Po or DOPPE OR DOHKO BARRIER NOT-COMMA) ;
+    
+SUBSTITUTE:SubVmain=FS-<ADVLaux (@+FAUX)(@FS-<ADVL) TARGET V (*-1 ADVL-COMP OR CS BARRIER @V OR Rel OR @CVP OR (";")) (*-2 @FV BARRIER (":"));
+	## Sus šattai álo oaivvebávččas go galggai bargat rehkenastimiin.
+SUBSTITUTE:SubVmain=FS-<ADVLaux (@+FAUX)(@FS-<ADVL) TARGET V (*-1 ADVL-COMP OR CS BARRIER @V OR Rel OR @CVP OR (";")) (*-2 @FMVdic)(NOT *1 @FV BARRIER S-BOUNDARY) ;
+SUBSTITUTE:SubVmain=FS-ADVL>aux (@+FAUX)(@FS-ADVL>) TARGET V (*-1 ADVL-COMP OR CS BARRIER @V OR Rel OR @CVP OR (";"))(*1 @FV) ;
+	## Go galggai bargat rehkenastimiin sus šattai álo oaivvebávččas. 
+SUBSTITUTE:SubVmain=FS-ADVLaux (@+FAUX) (@FS-<ADVL) TARGET V (*-1 CC BARRIER @V OR Rel OR @CVP OR @SUBJ> LINK NOT 0 MCL-CONJ LINK *-1 (@FS-<ADVL) BARRIER VFIN OR COMMA)(NEGATE *1 (@<SUBJ)) ;  # coordination
+SUBSTITUTE:SubVmain=FS-ADVLaux (@+FAUX) (@FS-ADVL>) TARGET V (*-1 CC BARRIER @V OR Rel OR @CVP OR @SUBJ> LINK NOT 0 MCL-CONJ LINK *-1 (@FS-ADVL>) BARRIER VFIN OR COMMA)(NEGATE *1 (@<SUBJ)) ;  # coordination
+SUBSTITUTE (@+FAUX) (@FS-<ADVL) TARGET V (0 (Neg Ind) LINK *-1 @FS-<ADVL BARRIER VFIN)(*1 @+FMAINV OR @+FAUXV OR @FMVdic) ;
+    # The last condition makes sure there is finite verb candidate for the main clause  
+    # coordination with Neg
+	## ... juktie faamojne øøhpehti, idtji guktie dah tjaalege-ååhpetjh.
+SUBSTITUTE (@+FAUX) (@FS-ADVL>) TARGET V (0 (Neg Ind) LINK *-1 @FS-ADVL> BARRIER VFIN)(*1 @+FMAINV OR @+FAUXV OR @FMVdic BARRIER S-BOUNDARY) ;
+    # The last condition makes sure there is finite verb candidate for the main clause
+	#$ Ja dasa lea dát sivva: go sápmelaš boahtá moskkus gámmirii, de son ii ipmir ii báljo maidege, go ii biegga beasa bossut njuni vuostá.
+
+SUBSTITUTE:ctjHead (@<OBJ) (<ctjHead> @<OBJ) TARGET @<OBJ (NEGATE *-1 @CNP OR COMMA BARRIER @ARG OR (<mv>) LINK -1 @<OBJ)(1 COMMA OR @CNP LINK *1 @<OBJ BARRIER @V OR @ARG OR S-BOUNDARY) ;
+SUBSTITUTE:ctjHead (@<OBJ) (<ctjHead> @<OBJ) TARGET @<OBJ (NEGATE *-1 @CNP OR COMMA BARRIER @ARG OR (<mv>) OR S-BOUNDARY LINK *-1 @<OBJ BARRIER @V OR @ARG)(0 Num LINK *1 (N Gen) BARRIER NOT-ADJ LINK 1 COMMA OR @CNP LINK *1 @<OBJ BARRIER @V OR @ARG) ;
+SUBSTITUTE:ctjHead (@OBJ>) (<ctjHead> @OBJ>) TARGET @OBJ> (NEGATE *-1 @CNP OR COMMA BARRIER @ARG OR (<mv>) OR S-BOUNDARY LINK -1 @OBJ>)(1 COMMA OR @CNP LINK *1 @OBJ> BARRIER @ARG OR @V) ;
+SUBSTITUTE:ctjHead (@-F<OBJ) (<ctjHead> @-F<OBJ) TARGET @-F<OBJ (NEGATE *-1 @CNP OR COMMA BARRIER @ARG OR @V LINK -1 @-F<OBJ)(1 COMMA OR @CNP LINK *1 @-F<OBJ BARRIER @ARG OR @V OR S-BOUNDARY) ;
+SUBSTITUTE:ctjHead (@<ADVL) (<ctjHead> @<ADVL) TARGET @<ADVL (NEGATE *-1 @CNP OR COMMA BARRIER @ARG OR S-BOUNDARY LINK -1 @<ADVL)(1 @CNP LINK *1 @<ADVL BARRIER @ARG OR @V OR S-BOUNDARY OR CC) ;
+SUBSTITUTE:ctjHead (@ADVL>) (<ctjHead> @ADVL>) TARGET @ADVL> (NEGATE *-1 @CNP OR COMMA BARRIER @ARG OR S-BOUNDARY LINK -1 @ADVL>)(1 @CNP LINK *1 @ADVL> BARRIER  @ARG OR @V OR S-BOUNDARY OR CC) ;
+SUBSTITUTE:ctjHead (@-F<ADVL) (<ctjHead> @-F<ADVL) TARGET @-F<ADVL (NEGATE *-1 @CNP OR COMMA BARRIER @ARG OR @V LINK -1 @-F<ADVL)(1 COMMA OR @CNP LINK *1 @-F<ADVL BARRIER @ARG OR @V OR S-BOUNDARY) ;
+	## Muhto lei nu váttis rehkenastit tálain ja bustávain.
+
+SETCHILD @FMVdic TO (-1 COMMA LINK *-1 @+FMAINV BARRIER VFIN OR GRAMCHK-S-BOUNDARY);
+	## Sámedikki ja Finnmárkku fylkadikki ovttasbargu lea sákka buorránan dan maŋemus jagi , 	lohkába 	Sámediggeráđi lahttu Jørn Are Gaski ja Finnmárku fylkasátnejođiheaddji Runar Sjåstad .
+## obj-subclause to the nearest mv to the left
+SETPARENT:ADVLsentenceToSentence @FS-ADVL TO (*-1 ADVL-COMP OR CS LINK NOT 0 MCL-CONJ LINK **-1 (<mv>) BARRIER @SUBJ> OR @V OR (":") LINK NOT 0 @FS-N< OR @FS-N<IMV) ;
+	## Guktie vienhth jis dohte baenie-saehpie sååjhtoe båetedh! # no mainclause
+
+# advl-subclause to mainclause' mainverb
+SETPARENT:ADVLsentenceToSentence @FS-ADVL (NONE p (*)) TO (*-1 @+FMAINV OR @-FMAINV BARRIER (":"));
+	## Gávpot ii dárbbaš čuovgga beaivvážis ii ge mánus, dasgo Ipmila hearvásvuohta čuvge dan, ja Láppis lea dan čuovga. 
+
+	# subclause to mainclause to the right
+SETPARENT:ADVLsentenceToSentence @FS-ADVL (NONE p (*)) TO (*1 @+FMAINV OR @-FMAINV);
+	## Goh Jeesuse ånnetji guhkiebasse båata, dellie Seebedevusen elkide, Jaahke gonnoeh Jååhannesem vuajnije. 
+
+SETPARENT:OBJsentenceToSentence @FS-OBJ> TO (*1 (<mv>) LINK NOT 0 IV);
+
+SETPARENT:ADVLsentenceToSentence @FS-ADVL> TO (*1 (<mv>) BARRIER COMMA OR GRAMCHK-S-BOUNDARY);
+	# we do not want to link non-arguments...
+	#$ Muhto nu guhká go ná {lea} dilli , de olbmot álget unnit ahte unnit 	beroštit 	dáidaga .
+    # the finite verb of a subclause should go to the main verb of the main clause to its right
+	## Go Liná lea boahtán ruoktot maŋŋel skuvlla, manai son njuolga Busi lusa.
+SETPARENT:SetCNPToInf ($$CASE @<ADVL) TO (*-1 @CNP OR COMMA BARRIER <mv> LINK *-1 ($$CASE @<ADVL) LINK *-1 (<mv>)) ;    
+	## Lávdegotti lahtut , geat gullet Ovddádusbellodahkii , Olgežii ja Kristtalaš álbmotbellodahkii , eai 	liiko 	importasuodjái , mii livččii hatti vuođđun.
+	#$ Oahpahus galgá veahkehit ohppiid 	liikot 	leat luonddus ja addit sidjiide vejolašvuođa ovdánahttit fantasiija , hábmengálgga ja beroštumi diđoštit {birrasa}.
+	
+	# EARLY ADPOSITION RULES
+	# ----------------------
+
+SETPARENT Gen (1C Po LINK 1 EOS) TO (1 Po);
+
+
+	# "map" ADJUNCTS
+	# --------------
+	
+LIST TIME-ADJUNCT-N = ("loahpaloahppa" Loc Sg) ;
+
+SUBSTITUTE N (§TIME-ADJUNCT N) TARGET N IF (0 TIME-ADJUNCT-N)(NEGATE 0 §TIME-ADJUNCT) ;
+	## Berit Anja Skoglund lohká váhnemiid duođaid šaddan heahtái go eai šat diehtán mot galget nákcet bissehit dán áigumuša , ja sii 	balle 	{loahpaloahpas} sámemánáid Oslo gávpogis gillát dán geažil .
+	
+SUBSTITUTE N (§TIME-ADJUNCT N) TARGET N IF (0 ("áigi" Sg Loc) LINK -1 ("dálá" A Attr))(NEGATE 0 §TIME-ADJUNCT) ;
+	## Dálá áiggis 	mii eai 	oainne su lunddolaš čalmmiiguin , muhto ovtta beaivvi son galgá fastain boahtit eatnamii ja buohkat galget su oaidnit . 
+		
+SUBSTITUTE N (§TIME-ADJUNCT N) TARGET N IF (0 ("hávvi" Gen) LINK -1 (Pron Dem Gen) OR TIME-A)(NEGATE 0 §TIME-ADJUNCT) ;
+	## – Buohkat eai dárbbaš 	liikot 	Dán háve go lei Amerihkás de son gearggehii skearru Los Angelesis .
+	
+SUBSTITUTE Adv (§TIME-ADJUNCT Adv) TARGET Adv IF (0 ("ovtta gaskka" Adv))(NEGATE 0 §TIME-ADJUNCT); #(0 ("gaska" N Sg Acc) OR ("gaska" N Sg Gen) LINK -1 ("okta" Num Sg Acc) OR ("okta" Num Sg Gen))(NEGATE 0 §TIME-ADJUNCT) ;	
+	## Eiseválddit 	balle 	{ovtta gaskka} badjel 1400 norgalačča jápmán .
+
+SUBSTITUTE N (§PLACE-ADJUNCT N) TARGET N IF (0 ("oktavuohta" Sg Loc))(-1 (Pron Dem Sg Gen))(NEGATE 0 §PLACE-ADJUNCT); 	
+	## Dán oktavuođas maid 	ballá 	Wilhelmsen ahte áidna guollevuostáiváldin rustet Smiervuonas šaddá giddet
+	
+SUBSTITUTE N (§TIME-ADJUNCT N) TARGET N IF (0 Sem/Time + Gen LINK -1 Num LINK *-1 <LO-Loc-Any> BARRIER NPNHA)(NEGATE 0 §TIME-ADJUNCT) ;
+	## Muhtumin sáhtán 	čohkkat 	Facebook:s dušše vihtta minuhta , muhto olles diimmu maid muhtun beivviid , muitala Inger Johanne .
+	## Dakkaraš vearredagu dihte sahtta šaddat 	čohkkat máŋga jagi , muitala Henriksen .
+	
+	
+SUBSTITUTE Adv (§TIME-ADJUNCT Adv) TARGET	("duođaid" Adv)(NEGATE 0 §TIME-ADJUNCT) ;
+
+SUBSTITUTE N (§TIME-ADJUNCT N) TARGET N IF (0 Sem/Time + Gen LINK -1 (Pron Dem Gen) OR TIME-A OR ("ollis" A))(NEGATE *-1 IV BARRIER NPNHA LINK *-1 <TH-Acc-Any><TH-Inf> BARRIER NOT-ADV-PCLE)(NEGATE 0 §TIME-ADJUNCT) ;
+	## Norgalaččat 	liikojit 	pestoi, maŋemus jagiid lea pesto johtu loktanan 29 proseanttain Norggas.
+	## Son ballá arvit olles beaivve.
+	#$ Guovdageainnu Meahcásteddjiid Searvvi jođiheaddji Johan Henrik Buljo 	ballá 	dál leat maŋimuš giđa go lobálaččat besset loddet : – Jus dál rivvejit mis vel giđđaloddama , mii de báhcá doalahit dáloniid árbevirolaš kultuvrra dáppe , jearrá Johan Henrik Buljo .
+	
+SUBSTITUTE N (§TIME-ADJUNCT N) TARGET N IF (0 ("loahppa" Sg Loc) LINK -1 ("loahppa" N Sg Gen) OR ("loahppa" N Sg Acc))(NEGATE 0 §TIME-ADJUNCT) ;
+	## loahpa loahpas
+	
+SUBSTITUTE N (§MANNER-ADJUNCT N) TARGET N IF (0 ("láhki" N Sg Com))(-1 ("dát" Pron Dem Sg Com))(NEGATE 0 §MANNER-ADJUNCT) ;
+	## – Go ruhtahivvodaga lasihit , de beassat mii dasto lasihit virggiid miehtá Sámi guovlluide , ja dainna {lágiin} nannet ahte sámi beroštumit ovddiduvvojit , ja dan maid diehtit ahte stuora oassi sámiin eai hálddaš sámegiela , ii čálalaččat iige njálmmálaččat , dasto in 	bala 	ahte mii eat oaččo iežamet oasi , oaivvilda Wulff .
+	
+SUBSTITUTE N (§MANNER-ADJUNCT N) TARGET N IF (0 ("leaktu" N Sg Com))(-1 ("ollis" A Attr))(NEGATE 0 §MANNER-ADJUNCT) ;
+
+SUBSTITUTE N (§MANNER-ADJUNCT N) TARGET N IF (0 ("lassi" N Ess))(-1 ("dat" Pron Dem Sg Ill))(NEGATE 0 §MANNER-ADJUNCT) ;
+
+SUBSTITUTE N (§MANNER-ADJUNCT N) TARGET N IF (0 ("heahti" N Sg) LINK 0 Loc OR (Gen PxSg3) OR (Acc PxSg3))(1 ("ge"))(*-1 ("ii") BARRIER GRAMCHK-S-BOUNDARY)(NEGATE 0 §MANNER-ADJUNCT) ;
+	##
+	
+SUBSTITUTE N (§MANNER-ADJUNCT N) TARGET N IF (0 ("dássi" N Sg Loc))(NEGATE *-1 Dem BARRIER NOT-A)(NEGATE 0 §ANYADJUNCT OR §ANYROLE); 	
+	## Bargobájit dieđusge galget geavatlaš {dásis} váikkuhit ja bidjat proseassaid johtui.
+
+LIST COMMUNICATION-TV = "čállit" "kommenteret" "raporteret" ;
+
+SUBSTITUTE N (§MANNER-ADJUNCT N) TARGET N IF (0 ("dássi" N Sg Loc))(*-1 MUITALIT OR COMMUNICATION-TV BARRIER NPNHA)(NEGATE 0 §ANYADJUNCT OR §ANYROLE) ;
+	## Strøm Bull deattuha ahte son kommenteret obbalaš dásis , go ii dovdda dán konkrehta ášši .
+	## Norggas lea geatnegasvuohta raporteret riikkaidgaskasaš dásis Dálkkádatkonvenšuvnna ja Kyotoprotokolla vuođul .
+
+	# VALENCY DEPENDENCIES
+	# --------------------
+
+	
+SETCHILD (V <mielde>) TO (2 EOS LINK -1 ("mielde"))  ;
+	## Mánát liikojedje bures čájálmasii ja juige mielde.
+	
+SETCHILD (V <TH-Ill-Any>) TO (*-1 Ill OR ILL-LOC-PRON-ADV BARRIER NOT-ADV) ;
+	## Nissubirgui 	liikojedje 	sihke sápmelaččat ja dáččat .	
+	## Dasa gal mánát 	liikoje 	ja ledje hirbmat áŋgirat .
+	
+SETCHILD (V <TH-Ill-Any>) TO (-1 @ADVL> LINK *-1 Ill OR ILL-LOC-PRON-ADV BARRIER NOT-ADV) ;
+
+SETCHILD (V <TH-Ill-Any>) TO (-1 ConNeg LINK -1 Neg LINK -1 Ill OR ILL-LOC-PRON-ADV) ;
+	## Dasa eai leat buot skuvlamánát 	liikon.
+SETCHILD (V <TH-Ill-Any>) TO (2 PUNCT-LEFT-RIGHT OR EOS OR COMMA LINK -1 Ill OR ILL-LOC-PRON-ADV) ;
+	## Dan dihte sii eai diehtán buorebu , ja sii 	liikojedje 	váhneneatnamii ( ) ja eallinvuohkái nu bures , ahte seammá vuostemielain sii dan guođáše go bahádahkki jápminduopmobáikái manašii ( Leem 1767 : 172 ).
+	## Guollebivdit eai 	liikon 	ruovdešákšii .
+	## Muhtumat maid eai 	liikon 	hávgii , juogo dainna go dat lea ropmi dahje mágu geažil , muhto eatnasat borre hávgga .
+	
+SETCHILD (V <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (1 Adv OR Pcle OR @>N OR PrfPrc LINK 1 Ill OR ILL-LOC-PRON-ADV) ;
+	
+SETCHILD (V <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (*1 @>N BARRIER NOT-ADV-PCLE LINK 1 Ill) ;
+	## EU vuosttildeddjiid jođiheaddji Sigbjørn Gjelsvik 	liikui 	hui bures daidda bohtosiidda , vaikko dat ii atte makkárge čielga vuoitukandidahta.
+	
+SETCHILD (V <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (1 Adv OR Pcle LINK 1 @>N OR PrfPrc LINK 1 Ill OR ILL-LOC-PRON-ADV) ;
+	## Dat kvenat mat ovddemus bohte 1700-logus , gal orro 	álkibut 	seahkaneame báikkálaččat heivehuvvon riggodatgeavaheapmái go sii ásaiduvve eanas sámi guovlluide .
+	#unsure about PrfPrc
+
+
+SETCHILD (V <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (*1 Ill - Attr OR ILL-LOC-PRON-ADV - @>N BARRIER NPNHA - @<ADVL) ;
+	#$ Don dahje liikkot dahje ii 	liiko 	dán filmma .
+
+SETCHILD (V <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (1 Adv OR ("mii" Sg Acc) LINK 1 @>N OR @>A OR Adv LINK 1 @>N LINK 1 CC LINK 1 @>N LINK 1 Ill) ;
+	## Girječálli Karin Anema gáibida girjeárvvoštalli Karin Swart-Dondersa jávkadit árvvoštallamis áššiid maid Anema ii 	liiko 	, go dát girjeárvvoštallan sáhttá váikkuhit unohasat su journalisttalaš ja girječálli luohttevašvuhtii .
+	
+SETCHILD (V <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (1 Adv OR ("mii" Sg Acc) LINK *1 @SUBJ> BARRIER NPNHA LINK 1 Ill OR ILL-LOC-PRON-ADV) ;
+	##
+	
+SETCHILD (V <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (1 EOS OR COMMA OR @CVP LINK *-1 Ill OR ILL-LOC-PRON-ADV BARRIER GRAMCHK-S-BOUNDARY LINK NOT 0 @>N) ;
+	## Muhtin mánáide lea álki 	liikot, daidda geat leat “ siivut ” , leat gierdavaččat vuordit , jegolaččat , ja hárve dadjet vuostá .
+	## Norggas leat luoitimat viehka bures muddejuvvon, muhto dasa eai leat 	liikon 	buot riikkat .
+	#$ Muhto lea go dainna lágiin ahte jus oažžut buori vejolašvuođa dasa , de mii givssidit dan gean eat 	liiko?
+SETCHILD (V <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (1 Ill - @>N - @>A - Attr OR DOHKO OR ILL-LOC-PRON-ADV - @>N) ;
+	## Nissubirgui 	liikojedje 	sihke sápmelaččat ja dáččat .
+	## Dán geažil lea hui váttis nuorra niidii dahje bárdnái fuomášit ahte sii gusto 	liikojit 	olbmuide geat leat seamma sohkabealis go ieža .
+	
+	## Ill in COMP-CS	
+SETCHILD (V <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (*1 ("eará") OR ("iežá") OR Comp BARRIER NOT-ADV-PCLE LINK 1 ("go") LINK *1 Ill - @>N - @>A - Attr OR ILL-LOC-PRON-ADV - @>N BARRIER NPNHA) ;
+	## Son ii 	luohttán 	eará go Heikii, áinnas dákkár hearkkes áššis . 
+
+		
+SETCHILD (V <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (-3 BOS OR PUNCT LINK 1 @>N LINK 1 Ill) ;
+	## Makkár bargovugiide 	liikot 	?
+SETCHILD (V <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (-4 BOS OR PUNCT LINK 1 SUBJ LINK 1 Neg LINK 1 Ill OR ILL-LOC-PRON-ADV) ;
+	## Muhtimat eai dasa 	liiko 	, muhto dat lea vuoiggalaš , ja buorida min barggu .
+SETCHILD (V <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (0 ConNeg LINK -1 Neg LINK *-1 Ill OR ILL-LOC-PRON-ADV BARRIER NPNHA) ;
+	## Muhto dása eai 	liikon 	ámmátolbmot ja eanandoallobargit .
+	## Dasa oainnat eai 	liiko 	dakkárat geat ieža eai máhte sámegiela .
+SETCHILD (V <TH-Ill-Any>) TO (*-1 @SUBJ> - Rel - Indef BARRIER NPNHAPcle LINK *-1 Ill OR ILL-LOC-PRON-ADV BARRIER GRAMCHK-S-BOUNDARY LINK NOT 0 @>N) ;
+	#$ – Sáhtašin sáddet geasseliđiid vaikko iežan ustibii Čehkii , go son sihkkarit 	liiko 	suopmelaš rásiin .
+	## “ Eallin ” lea dat CD masa ieš nai 	liikon 	buoremusat , lohká Mari Boine.
+	#$ Luonddus leat hástalusat buohkaide, sihke sidjiide geat váivvahit alla rásiid siste gállit, ja sidjiide geat 	liikojit 	giccodit muorain.
+	#$ Prográmma lea oaivvilduvvon ii dušše Gába Ohcejoga Nissoniidda , muhto maid Searalaš Sirpmá Nissoniidda ja Čeahpes Avvila Nissoniidda , muhto maid buot almmáiolbmuide , geat 	liikojit 	nissoniin.
+SETCHILD (V <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (*-1 @SUBJ> BARRIER (*) - Adv - @ADVL LINK -1 Rel + Ill) ;
+	## Diibmá gis ledje kinnalaččat geat šaddet dat turistat geaidda olbmot oaba máilmmis 	liikojit 	heajumusat .
+
+SETCHILD (V <TH-Ill-Any>) (0 ConNeg)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (-1 Neg LINK *-1 @SUBJ> BARRIER (*) - Adv - @ADVL LINK -1 Rel + Ill) ;
+
+SETCHILD (V <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (1 @>N OR @<SUBJ LINK 1 Ill OR DOHKO) ;
+	## Novgoroda beales eai 	liikon 	dáčča sisabáhkkemii , dan dihte go sii atne dán iežaset vearro- ja vuollásašguovlun .
+
+SETCHILD (V <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (*1 @>N - @>A BARRIER NPNHA - Acc LINK 1 Ill) ;
+		## Leat go dakkár gii 	liikot 	aivve seamma sohkabealát olbmuide, vai liikot go maiddái nuppi sohkabealát olbmuide.
+		## Atle 	liiko 	hui bures dánset ja teáhteriin bargat.
+		
+SETCHILD (V <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (*1 @>N - @>A BARRIER NPNHA - Acc LINK 1 CC LINK 1 @>N LINK 1 Ill) ;
+	## Ártet , mii han liikot vuovttaid ja skuovaid eaiggádii .
+		
+SETCHILD (V <TH-lusa-Any>)(NONE c N OR Pron) TO (*1 @>P BARRIER NPNHA LINK 1 ("lusa")) ;
+	## Lei nu buolaš ja soai áibbašeigga nu issorasat dan rukses cizáža lusa mii galggai oahpistit sudno Geassegieddái .
+	
+SETCHILD (V <TH-birra-Any>)(NONE c N OR Pron) TO (*1 @>P BARRIER NPNHA LINK 1 ("birra")) ;
+	## – Mii oaidnit movt mánát 	beroštit 	buollinváras , earret eará dan dihte go ohppet dan birra mánáidgárddiin ja skuvllain .
+	
+SETCHILD (V <TH-birra-Any>)(-2 @>P)(NONE c N OR Pron) TO (-1 @>P) ;
+	## 
+	
+SETCHILD (V <TH-ala-*Plc>)(NONE c N - Sem/Place OR Pron) TO (*1 @>P BARRIER NPNHA - ? LINK 1 ("ala") OR ("nala")) ;
+	## Gaup ja Minde 	luohttiba 	dal Dearvvasvuoda ja sosidaldepartementta nala.
+	
+	
+SETCHILD (V <TH-Nom-Any><PO-Ill-Any>)(*1 SUBJ OR @<SPRED OR Inf BARRIER GRAMCHK-S-BOUNDARY) TO (-1 Ill);
+	## Dasa gullá sihke ruovttudoalu ealáhusvuođđu ja meahcásteapmi kulturguoddin ja sámi identitehtaguoddin.
+	## Dasa gullá earet eará boastta sirret ja registreret , čuovvut áššemeannudeami siskkáldas bargodábiid ja njuolggadusčállosiid ektui , gieđahallat dieđuid , oaidnit dárbbuid ,   čohket  ja gaskkustit dieđuid departemeantta bargiide .
+	
+	# destination illative
+	# --------------------
+	
+SETCHILD (V <DE-Ill-Plc>)(NEGATE c Ill OR DOHKO OR DE-ILL-ADP) TO (*1 Ill + Sem/Place OR Ill + Sem/Furn OR DOHKO OR DE-ILL-ADP BARRIER NPNHA) ;
+	## 
+
+SETCHILD (V <DE-Ill-Plc>)(NEGATE c Ill OR DOHKO OR DE-ILL-ADP) TO (*-1 Ill + Sem/Place OR DOHKO OR DE-ILL-ADP BARRIER NOT-ADV - AUX) ;	
+	## In livčče beassan ollášuhttit iežan niegu ja gokčat iežan áibbašeami ruoktot beassat fárret .
+
+SETCHILD (V <DE-Ill-*Ani>)(NEGATE c Ill OR DOHKO OR DE-ILL-ADP) TO (*1 Ill - Sem/Hum - Sem/Ani OR DOHKO OR DE-ILL-ADP BARRIER NOT-ADV - ?) ;
+SETCHILD (V <DE-Ill-*Ani>)(NEGATE c Ill OR DOHKO OR DE-ILL-ADP) TO (*-1 Ill - Sem/Hum - Sem/Ani OR DOHKO OR DE-ILL-ADP BARRIER NOT-ADV - AUX) ;
+
+SETCHILD (V <TH-Acc-Any><DE-Ill-Any>)(NEGATE c Ill OR DOHKO OR DE-ILL-ADP) TO (1 Acc LINK *1 Ill OR DOHKO OR DE-ILL-ADP BARRIER NPNHA) ;
+	## Almmá buvttidettiin oaivila áššái , lea almmatge čielggas ahte Lágu // Guhkesvákki johtin ealuin dáid eatnamiidda čakčamánu álggus , dahká váddáseabbun gávnnahit čovdosa mas Geaggán eambbo geavaha oarjjabeale duovdagiid
+		
+	# late rule
+	# ---------
+SETCHILD (N <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (1 Ill OR DOHKO OR DE-ILL-ADP LINK NONE p V) ;
+	## "ruoktot" Adv
+	## Mun dieđán dát boahtá ávkin maŋŋil eallimis , nu ahte vaikke man garas de livččii 	áibbašeapmi 	ruoktot , de in gal gáđa in veahá ge ahte CAMBRIDGE - a chance of a lifetime .
+
+	
+SETCHILD (V <TH-Ill-Any>)(NONE c Ill OR ILL-LOC-PRON-ADV) TO (*1 Ill - Attr BARRIER GRAMCHK-S-BOUNDARY3 OR CC OR V - (?)) ;
+	## Siri lohká iežas 	liikon 	Deanus buoremusat gáhttagilvvuide.
+SETCHILD (V <TH-Ill-Any>) (NONE s §TH) TO (1 @SUBJ> LINK *1 @>N BARRIER NPNHA - (?) LINK 1 Ill ) ;
+	#NEEDS TO BE TESTED
+
+	
+SETCHILD (V <TH-Nom-Any><PO-Ill-Any>) (NEGATE 1 Ill LINK p V) TO (1 Ill) ;
+	## Lávdegotti lahtut , geat gullet Ovddádusbellodahkii , Olgežii ja Kristtalaš álbmotbellodahkii , eai 	liiko 	importasuodjái , mii livččii hatti vuođđun .
+
+SETCHILD (V <TH-Acc-Any>) OR (V <PA-Acc-Any>) OR (V <IN-Acc-Any>) OR (V <PR-Acc-Any>) OR (V <EX-Acc-Any>) OR (<CO-Acc-Ani>)(NONE c @FS-<ADVL OR Acc OR Po)(NONE c Acc OR §TH) TO (1 @<OBJ - V OR @-F<OBJ - V OR Acc - @>N - @>A);
+	## Dii fertebehtet gal atnit jierpmi ehpetge ábut badjelmeare 	luohttit 	dovdduide .
+	## Dása eai 	liikon 	dan guovllu guollebivdit , juste seammá ákkaiguin go Finnmárkku guollebivdit nai vuosttaldedje fálesbivddu ( Nielsen 1992 : 60 ).
+	## Mii sávvat ahte sáhttit váikkuhit dasa ahte mánát geat leat min luhtte maiddai maŋŋil 	liikojit atnit {goruda} sihke falaštallama ja stoahkama bokte.
+	## Sii 	liikojedje 	sihke čiehkástallat ja maid gárvodit ja baldit iežáid .
+	#$ Dál beassá dahkat maid 	liiko 	buot buot buoremusat . (NEGATE c @FS-<ADVL)
+
+
+SETCHILD (V <TH-Acc-Any>) OR (V <PA-Acc-Any>) OR (V <IN-Acc-Any>) OR (V <PR-Acc-Any>) OR (V <EX-Acc-Any>) OR (<CO-Acc-Ani>)(NONE c @FS-<ADVL OR Acc OR Po)(NONE c Acc) TO (1 Adv OR Pcle LINK 1 @<OBJ - V OR @-F<OBJ - V OR Acc - @>N - @>A);
+	## 	Dološ sápmelaččat várra balle ahte muhtun eiseválddit geat ledje oahppan veahá {sámegiela} galge gullat dáid lávlagiid ja addet daid sisdoalu .
+	
+SETCHILD (V <TH-Acc-Any>) OR (V <PA-Acc-Any>) OR (V <PR-Acc-Any>) OR (V <EX-Acc-Any>) OR (V <IN-Acc-Any>) OR (<CO-Acc-Ani>)(NEGATE 0 (Actio Loc) LINK -1 <TH-Loc-Any>)(NONE c Acc)(NEGATE 0 <TH-Inf> LINK 1 Inf)  TO (-1 OBJ + Acc OR OBJ + Gen OR Acc - §ANYADJUNCT - ALLSYNTAG) ;
+	## Dan dihte sii eai diehtán buorebu , ja sii 	liikojedje 	váhneneatnamii ( ) ja eallinvuohkái nu bures , ahte seammá vuostemielain sii dan guođáše go bahádahkki jápminduopmobáikái manašii ( Leem 1767 : 172 ) .
+	## Dás lea sáhka 	luohttit , leahket eahpeluohttevažžan , maid bargá ovttas ja maid sáhttá bargat akto .
+	## 3 ášši manne stuora stádat 	ballet 	kollektiivvalaš {álgoálbmotrivttiid} dohkkehit. 
+	
+	## Ill in COMP-CS	
+SETCHILD (V <TH-Acc-Any>) TO (*1 ("eará") OR ("iežá") BARRIER NPNHA LINK 1 ("go") LINK *1 Acc - @>N - @>A - Attr BARRIER NPNHA - ?) ;	
+	## 
+
+SETCHILD (V <IN-Acc-Lang>) (NEGATE 0 (Actio Loc) LINK -1 <TH-Loc-Any>) TO (-1 Acc + Sem/Lang) ;	
+	## Liikon 	leat Guovdageainnus , dovddan olbmuid doppe ja beasan sámegiela hállat , lohká Gulsrud , geas maid leat fuolkkit Guovdageainnus .
+	
+SETCHILD (V <TH-Acc-Body>) TO (-1 Sem/Body + @OBJ> OR Sem/Body + @-FOBJ>) ;
+	## Dasa orro olbmot 	liikome, ja álge sihke oivviid nivkkuhit ja speažžut gieđaid go rumbojietna čuodjagođii Diehtosiidda kantiinnas .
+	
+SETCHILD (V <TH-Acc-*Plc>) TO (*1 @<OBJ - Sem/Place BARRIER NPNH);
+SETCHILD (V <TH-Acc-*Plc>) TO (1 @>N LINK 1 Acc - Sem/Place OR Gen - Sem/Place);
+	## – Mii sáhttit mieđihit ahte gávdno álo soahti ja liikka áibbašit ráfi .
+	## Mun boađan áibbašit mu skihpáriid go de fas vuolggán ruoktot Kárášjohkii , muhto šaddá buorre oaidnit mu bearraša fas ja mu skihpáriid ruovttus , dadjá son .
+
+SETCHILD (V <PA-Acc-Ani>) OR (V <RE-Acc-Ani>) TO (*-1 Acc + Sem/Animate OR (<NomGenSg> Prop Sg Nom)  + Sem/Animate BARRIER NOT-ADV-PCLE) ;
+	## – Sii geat 	liikojit 	luonddus vánddardit gávdnet stuorra vejolašvuođa dan dahkat , lubmet , luosaid ja ealggaid bivdit .
+	## Eai nu galle nissonolbmo Åstot ii loga sin guovllus vuos nu olu nissonolbmuid bivdit guovžžaid , muhto son jáhkká áiggi mielde álgit eanet ja eanet nissonolbmuid searvat maiddái guovžabivdui : – Maŋemus jagiid leat eanet nissonolbmot bivdigoahtán sarváid , ja 	varra 	álget guovžžaid maid bivdit . 
+SETCHILD (V <PA-Acc-Ani>) OR (V <RE-Acc-Ani>) TO (*1 Sem/Animate + OBJ BARRIER NPNHA) ;
+	## 
+
+SETCHILD (V <TO-Acc-*Ani>) TO (-1 OBJ - Sem/Animate) ;
+	##
+	
+SETCHILD (V <PA-Acc-Food>) TO (-1 OBJ + Sem/Food) ;
+		
+SETCHILD (V	<LO-Acc-Plc>) TO (-1 Sem/Place + OBJ OR Sem/Place + Gen) ;
+	## Astoáiggis 	liiko 	son rievssahiid bivdit ja jogaid melodit kajáhkain .
+		
+SETCHILD (V <TH-Acc-Any><LO-Ill-*Ani>) TO (-1 @OBJ> OR @-FOBJ> LINK *0 Ill + Sem/Plc) ;
+
+SETCHILD (V <RE-Ill-Ani><TH-Acc-*Ani>) OR (V <TH-Acc-*Ani><BE-Ill-Ani>) TO (1 Ill + Sem/Ani OR Ill + Sem/Hum OR Ill + Sem/Org LINK 1 Acc - Sem/Hum) ;
+	## Oahpahus galgá veahkehit ohppiid 	liikot 	leat luonddus ja addit sidjiide vejolašvuođa ovdánahttit fantasiija , hábmengálgga ja beroštumi diđoštit birrasa .
+	
+SETCHILD (V <RE-Ill-Ani><TH-Acc-*Ani>) OR (V <TH-Acc-*Ani><BE-Ill-Ani>) TO (1 Acc - Sem/Hum LINK 1 Ill + Sem/Ani OR Ill + Sem/Hum OR Ill + Sem/Org OR Ill + Der/NomAg) ;
+	## Sámediggi 	liiko 	go Sámi ealáhusráđđi addá doarjaga nissoniidda mat álggahit ealáhusdoaimma.
+	
+SETCHILD (V <RE-Ill-Ani><TH-Acc-*Ani>) OR (V <TH-Acc-*Ani><BE-Ill-Ani>) TO (c Acc - Sem/Hum  LINK -1 Ill + Sem/Ani OR Ill + Sem/Hum OR Ill + Sem/Org) ;
+	## 
+SETCHILD (V <RE-Ill-Ani><TH-Acc-*Ani>) OR (V <TH-Acc-*Ani><BE-Ill-Ani>) TO (c Ill + Sem/Ani OR Ill + Sem/Hum OR Ill + Sem/Org LINK -1 Acc - Sem/Hum) ;
+	## 
+	
+SETCHILD (V <RE-Ill-Ani>) OR (V <BE-Ill-Ani>) TO (*1 Ill + Sem/Animate BARRIER NPNHA) ;
+SETCHILD (V <RE-Ill-Ani>) OR (V <BE-Ill-Ani>) TO (1 Adv OR @>N OR Pcle LINK *1 Ill + Sem/Animate BARRIER NPNHA) ;
+SETCHILD (V <RE-Ill-Ani>) OR (V <BE-Ill-Ani>) TO (-1 Ill + Sem/Animate) ;
+	## Sii geat doppe orrot gal dieđusge 	ballet 	bohccuiguin ja váidalit politiijaide , ja de fas šaddá boazosápmelaš garraseappot guođohit .
+	
+SETCHILD (A <BE-Ill-Ani>) TO (1 Ill + Sem/Animate) ;
+SETCHILD (A <BE-Ill-Ani>) TO (-1 COPULAS + Sg3 LINK -1 Ill + Sem/Animate) ;
+	## Davvisámegielagiidda lea álki lohkat ja addet girjji sisdoalu.
+	
+SETCHILD (V <PA-Acc-Ani>) (NEGATE c @FS-<ADVL) TO (1 Sem/Ani + @<OBJ OR Sem/Ani + @-F<OBJ);
+	## – Geasset lávet mearragáttis gáfestallat go mánát 	liikojit 	bivdit guliid .
+	
+SETCHILD (V <PA-Com-Any>) TO (*1 Com BARRIER NPNHA) ;
+	## 	Son 	liiko 	ovttastallat earáiguin ja deaivvada ja oahpásnuvvá álkit olbmuiguin .
+SETCHILD (V <PA-Com-Any>) TO (-1 <aux> LINK -1 Com) ;
+
+
+SETCHILD (V <TO-Acc-*Ani>)(NEGATE c @FS-<ADVL) TO (1 @<OBJ - Sem/Animate OR @-F<OBJ - Sem/Animate);
+	## Áiddiid heajut bealit leat ahte - dagahit ahte áideguora , gosa čoahkkanit bohccot , čilviluvvá , - eaiggádat unnán guođohit bohccuid ( 	luhttet 	beare olu áidái ) , - njoammudávddat čoahkkanit eatnamii áidegurrii gosa bohccot báhkkejit , - áiddit čuhcet eará elliide ja lottiide 
+
+SETCHILD (V <TH-Acc-Body>) (NEGATE c @FS-<ADVL) TO (1 Sem/Body + @<OBJ OR Sem/Body + @-F<OBJ);
+
+SETCHILD (V <LO-Acc-Plc>) (NEGATE c @FS-<ADVL) TO (1 Sem/Place + OBJ);
+
+SETCHILD (V <TH-Acc-Any>) OR (V <PA-Acc-Any>) OR (V <IN-Acc-Any>) OR (V <PR-Acc-Any>) OR (V <EX-Acc-Any>) OR (<CO-Acc-Ani>) TO (1 @>N OR Adv LINK *1 @<OBJ OR @-F<OBJ BARRIER NPNHA) ;
+	## Muhtimat eai dasa 	liiko, muhto dat lea vuoiggalaš , ja buorida min {barggu}.
+	## Danne lea dárbu ásahit čielga {prinsihpaid} ja rievttálaš dásiid vaikke vel buohkat eai 	liikošege 	dasa .
+	## Turboneger lea dál dakkár joavku mii deaivá bures sin geat 	liikojit 	rock ’ n rollii ja dasa gal liikojit oallugat .
+	
+SETCHILD (V <IN-Acc-Lang>) TO (1 @>N OR Adv LINK *1 @<OBJ + Sem/Lang BARRIER NPNHA) ;
+	## 
+	
+SETCHILD (V <LO-Acc-Plc>) TO (1 @>N OR Adv LINK *1 Sem/Place + OBJ BARRIER NPNHA) ;
+	
+SETCHILD (V <TH-Acc-Any>) OR (V <PA-Acc-Any>) OR (V <IN-Acc-Any>) OR (V <PR-Acc-Any>) OR (V <EX-Acc-Any>) OR (<CO-Acc-Ani>) TO (-1 <aux> OR (?) LINK -1 @OBJ> OR @-FOBJ>) ;
+	## Árbevirolaš ealáhusaid prošeaktaoamasteaddjit leat dat geat unnimusat 	liikojit 	dasa ahte sin prošeavttaid sáhtášii geavahit minstarin go foanda galgá čájehit buriid prošeavttaid .
+	## Liikon 	leat Guovdageainnus , dovddan olbmuid doppe ja beasan sámegiela hállat , lohká Gulsrud , geas maid leat fuolkkit Guovdageainnus .
+	
+SETCHILD (V <TH-Acc-Any>) OR (V <PA-Acc-Any>) OR (V <IN-Acc-Any>) OR (V <PR-Acc-Any>) OR (V <EX-Acc-Any>) OR (<CO-Acc-Ani>)(0 Inf) TO (-1 <aux> OR (?) OR ("boahtit") + VFIN LINK -1 (Pron Rel Acc)) ;
+	## Liikká go nuorat leat jurddašan olu boahtte jagi birra , de eai oru 	ballamin 	daid stuorra hástalusain maid bohtet deaivat mátkkis .
+	
+	# if the accusative does not have a syntactic tag
+	
+SETCHILD (V <TH-Acc-Any>) OR (V <PA-Acc-Any>) OR (V <IN-Acc-Any>) OR (V <PR-Acc-Any>) OR (V <EX-Acc-Any>) OR (<CO-Acc-Ani>)(NONE c Acc) TO (*1 @>N OR @>A BARRIER NOT-ADV-PCLE - @<ADVL LINK *1 Acc BARRIER NPNH) ;
+	## Kuokkanen mielas eai leat sámi alitoahppoásahusat nákcen dahje 	beroštan 	váldit duođaš iežaset dehálamos ulbmila ovddidit sámi servodaga gelbbolašvuođa ja ásahit dárbbašlaš ođđa virggiid .
+
+	
+SETCHILD (V <TH-Acc-Any><RO-Ess-Any>) TO (1 OBJ LINK 1 Ess) ;
+SETCHILD (V <TH-Acc-Any><RO-Ess-Any>) TO (1 Acc - @>N LINK 1 Ess) ;
+SETCHILD (V <TH-Acc-Any><RO-Ess-Any>) TO (c Ess LINK -1 OBJ OR Acc) ;
+
+SETCHILD (V <TH-Acc-Any><RO-Ess-Any>) TO (1 Ess LINK 1 OBJ) ;
+SETCHILD (V <TH-Acc-Any><RO-Ess-Any>) TO (2 OBJ LINK -1 Ess) ;
+	## Guovllustivra dahje boazodoallostivra nammada soabaheaddjin olbmo geasa navdá goappaš beliid 	luohttit.
+
+SETCHILD (V <TH-Acc-Any><RO-Ess-Any>) TO (*-1 @OPRED> LINK *1 <TH-Acc-Any><RO-Ess-Any> LINK *1 OBJ BARRIER GRAMCHK-S-BOUNDARY OR VFIN + <mv>) ;
+SETCHILD (V <TH-Acc-Any><RO-Ess-Any>) TO (*1 OBJ BARRIER GRAMCHK-S-BOUNDARY OR VFIN + <mv> LINK *-1 <TH-Acc-Any><RO-Ess-Any> LINK *-1 @OPRED>) ;
+	## Soabaheaddjin galgá guovllustivra nammadit olbmo geasa navdá goappaš beliid 	luohttit.
+	
+SETCHILD (V <TH-Inf><RO-Ess-Any>) TO (*1 Ess BARRIER NOT-ADV-PCLE LINK 1 Inf) ; 
+SETCHILD (V <TH-Inf><RO-Ess-Any>) TO (c Inf LINK *-1 Ess BARRIER NOT-ADV-PCLE) ;   
+    ## Dál leat seamma vuođuin álggaheame fas riikkajoavkku , ja mun in doaivvo nu {geahpasin}   čohket  ja engašeret sápmelaččaid dán ođđa riikkajoavkku čuovvut , go ovddit háve lei , lohká Sara .
+    ## Diekkár arena   sáhtášii        leat positiivalaš doaibma easttadan dihtii nákkuid ja dagahivččii eaŋkalabbon gávdnat vuogas čovdosiid .
+    
+SETCHILD (V <RO-Ess-Any>)(NONE c §ANYROLE) TO (*1 Ess BARRIER NOT-ADV-PCLE) ; 
+	## Dat gávpot mii nagoda   čohket  eanemus cummásteddjiid , vuoitá ja oažžu čevllohaddat Norggameašttirin , ja párain mat servet , lea ges vejolaš vuorbádemiin vuoitit 5000 ruvdnosaš skeaŋkakoartta , ráhkisvuođa lupmui .
+	
+SETCHILD (V <TH-Acc-Body>) TO (-1 <aux> LINK -1 OBJ) ;
+
+SETCHILD (V <LO-Acc-Plc>) TO (-1 <aux> LINK -1 Sem/Place + OBJ) ;
+
+SETCHILD (V <LO-Acc-Time>) TO (1 Attr LINK 1 Sem/Time) ;
+	## mon álggán boahtte vahku bargagoahtit d. 700.
+	
+SETCHILD <TH-Acc-Any><RO-Ess-Any> TO (c @<OBJ LINK *1 (N Ess) BARRIER VFIN OR GRAMCHK-S-BOUNDARY) ;
+	## Novgoroda beales eai 	liikon 	dáčča sisabáhkkemii , dan dihte go sii atne dán iežaset vearro- ja vuollásašguovlun .
+	
+SETCHILD (V <TH-Acc-Any>) OR (V <PA-Acc-Any>) OR (V <PA-Acc-Food>) OR (V <IN-Acc-Any>) OR (V <PR-Acc-Any>) OR (V <EX-Acc-Any>) OR (<CO-Acc-Ani>) TO (c Acc LINK 1 @CNP LINK *1 Acc BARRIER NPNHA) ;
+	## Go beassážiid leat čáppa dálkkit ja beaivvádat , de olbmot 	liikojit 	čuoigat meahcis dahe vuodjit mohtorgielkkáin .
+ 
+	
+SETCHILD (V <TH-Acc-Body>) TO (c Acc LINK 1 @CNP LINK *1 Acc + Sem/Body BARRIER NPNHA) ;
+
+	# more explicit in case disambiguation is not complete
+
+SETCHILD (V <TH-Loc-Any>)(NONE c Loc) TO (1 @>N OR Pcle OR Adv OR @<ADVL LINK 1 @>N LINK 1 Loc) ;
+
+SETCHILD (V <LO-Loc-Plc>)(NONE c Loc) TO (1 @>N OR Pcle OR Adv OR @<ADVL LINK 1 @>N LINK 1 Loc + Sem/Place) ;
+
+SETCHILD (V <PA-Loc-Food>)(NONE c Loc) TO (1 @>N OR Pcle OR Adv OR @<ADVL LINK 1 @>N LINK 1 Loc LINK 0 Sem/Food OR Sem/Substnc) ;
+
+SETCHILD (V <TH-Loc-Plc>)(NONE c Loc) TO (1 @>N OR Pcle OR Adv OR @<ADVL LINK 1 Loc + Sem/Place) ;
+
+SETCHILD (V <TH-Loc-Any>)(NONE c Loc) TO (1 @>N OR Pcle OR Adv OR @<ADVL LINK 1 Loc) ;
+
+SETCHILD (V <PA-Loc-Food>)(NONE c Loc) TO (1 @>N OR Pcle OR Adv OR @<ADVL LINK 1 Loc LINK 0 Sem/Food OR Sem/Substnc) ;
+
+	
+SETCHILD (V <TH-Loc-Any>)(NONE c Loc) TO (*1 Loc - §ANYADJUNCT BARRIER NPNHA - ? - (Pron Refl)) ;
+SETCHILD (V <TH-Loc-Plc>)(NONE c Loc) TO (*1 Loc + Sem/Place -  §ANYADJUNCT BARRIER NPNHA - ? - (Pron Refl)) ;
+	## Guolástusbearráigeahčči dovddahii ahte son 	balai 	hui olu dan ođđa bivddu váikkuhusain .
+	## – Nu láve dáhpáhuvvat bibmojuvvon bohccuiguin go daid fas luoitá ellui , dat eai šat birge ieža {luonddus} , lohká Gaup gii 	ballá 	bohcco dáinna lágiin šaddat eanet ja eanet gárdešibihin .
+SETCHILD (V <TH-Loc-Any>)(NONE c Loc) TO (1 @-FOBJ> LINK *1 (Actio Loc) BARRIER NPNHA - ?) ;
+	## Sámediggi 	ballá 	boazodoalu rekrutteremis guhkit áiggi perspektiivvas .
+	 
+SETCHILD (V <TH-Loc-Any>) TO (1 @<SUBJ LINK *1 Loc - §TIME-ADJUNCT BARRIER NPNHA - ?) ;
+SETCHILD (V <TH-Loc-Plc>) TO (1 @<SUBJ LINK *1 Loc + Sem/Place - §TIME-ADJUNCT BARRIER NPNHA - ?) ;
+	## Vuosttažettiin várra 	balai 	leansmánni vearrosisaboađuid massimis .
+
+SETCHILD (V <TH-Loc-Any>) TO (*1 @<OBJ BARRIER NPNHA LINK 0 @>N OR Gen LINK *1 Loc BARRIER NPNHA - ?) ;
+SETCHILD (V <TH-Loc-Plc>) TO (*1 @<OBJ BARRIER NPNHA LINK 0 @>N OR Gen LINK *1 Loc + Sem/Place BARRIER NPNHA - ?) ;
+	## Guolástusbearráigeahčči dovddahii ahte son 	balai 	hui olu dan ođđa bivddu váikkuhusain .
+	## Muhto ii ábut gal 	ballat 	ja heaitit duvdimis sámi áššiid ovddos , logai Ole Henrik Magga .
+	#$ – Dál go bealli párkabivddus ii šatta mihkege , de lasket ealggat dán guvlui ja mun gal bealistan 	balan 	ealgajámu boahtte dálvvi Anárjotleagis ja párkka lagaš guovlluin.
+
+	## Com in COMP-CS	
+SETCHILD (V <TH-Loc-Any>) TO (*1 ("eará") OR ("iežá") BARRIER NPNHA LINK 1 ("go") LINK *1 Loc BARRIER NPNHA - ?) ;	
+	## – Boazodoalliid jáhkán gávdnat čovdosiid , ja mun in sáhte 	beroštit 	eará go ealáhusberoštumiin , dadjá Eira .
+
+
+SETCHILD (V <TH-Loc-Any>)(NEGATE 1 MO-MANge LINK -2 Sem/Plc OR Sem/Time)(NEGATE 1 (Pron Nom) OR (N Nom) LINK *1 VFIN BARRIER NOT-ADV-PCLE)(NEGATE -1 §ANYADJUNCT) TO (-1 Loc) ;
+	#$ Dán oktavuođas 	ballá 	maiddái dagahan vahágiid miessešaddui go eallu lea alimus ragatáiggi muosehuvvan. Dán oktavuođas ballá maiddái ahte lea dagahan.
+	#maybe it needs to be modified
+SETCHILD (V <TH-Loc-Any>)(NONE c Loc)(NEGATE 1 MO-MANge LINK -2 Sem/Plc OR Sem/Time)(NEGATE 1 (Pron Nom) OR (N Nom) LINK *1 VFIN BARRIER NOT-ADV-PCLE)(NEGATE 1 Inf)(NEGATE -2 §ANYADJUNCT) TO (-1 Adv OR Pcle LINK -1 Loc) ;
+	#$ Murmánskkas gal 	balle 	láhppot.
+SETCHILD (V <TH-Loc-Any>) TO (-1 ConNeg LINK -1 Neg LINK -1 Loc) ;
+	## Mánná ovdána ja hárjána stoahkamiin , stoahká ja vásiha ahte diŋggat main 	ballá 	ja orrot leamen várálaččat , eai leat šat váralaččat .
+		
+SETCHILD (V <TH-Loc-Any>)(NONE c Loc)(NEGATE 1 Inf) TO (-1 Adv OR Pcle LINK *-1 Loc - §ANYADJUNCT BARRIER NOT-ADV) ;
+	##
+	
+SETCHILD (V <TH-Loc-Any>)(NONE c Loc) TO (*-1 <aux> BARRIER NOT-ADV-PCLE LINK -1 (N Nom) OR (Pron Nom) LINK -1 (Rel Loc)) ;
+
+SETCHILD (V <TH-Loc-Any>)(NONE c Loc) TO (*-1 <aux> BARRIER NOT-ADV-PCLE LINK *-1 (N Loc)) ;
+	## {Das} gal ii dattetge 	bala 	Gaskaijarock . 
+	
+	
+SETCHILD (V <TH-Loc-Any>)(NONE c Loc) TO (*-1 @<SUBJ OR @SUBJ> BARRIER NOT-ADV-PCLE LINK *-1 Loc - §PART BARRIER NPNH) ;
+	##	Dat mas son eanemus 	balai 	lei revrebuollin ja fápmodálki .
+
+SETCHILD (V <TH-Loc-Any>)(NONE c Loc) TO (2 PUNCT-LEFT-RIGHT OR EOS OR COMMA LINK -1 Loc) ;
+	##
+SETCHILD (V <TH-Loc-Any>)(NONE c Loc) TO (*1 @<SUBJ BARRIER NPNHAPcle LINK *1 Loc BARRIER NOT-ADV) ;
+	## Earret eará 	ballet 	muhtun boanddat ásaheames lassidoaimma doalus .
+	## Go dasa vel lasiha negatiivva dáhpáhusaid 1990 rájes , de sáhttá imaštallat 	berošta 	go guolástuspolitihkka obanassiige servodagas . 
+
+SETCHILD (V <TH-Loc-Any>)(0 Inf)(NEGATE 1C Inf) TO (*-1 <TH-Inf> BARRIER NOT-ADV-PCLE LINK *-1 Loc BARRIER NOT-ADV) ;
+	## Muhto ii loga dáin ábuhit 	ballat.
+	
+SETCHILD (V <TH-Loc-Any>)(NONE c Loc)(0 Pl3) TO (1 @<SUBJ OR (N Nom) LINK *1 CC BARRIER NPNH - (N Nom) LINK 1 @<SUBJ OR (N Nom) LINK *1 Loc BARRIER NPNHA - ?) ;
+	## Earenoamážit 	ballet 	kolonistádat Storbritannia ja Frankriika kollektiivvalaš rivttiin .
+		
+	# in relative clauses
+	# -------------------
+	
+SETCHILD (V <TH-Loc-Any>) TO (*-1 @<SUBJ OR @SUBJ> BARRIER NPNHA - <aux> - <TH-Inf> - ? LINK *-1 Loc + Rel BARRIER NPNHAPcle) ;
+
+SETCHILD (V <TH-Loc-Any>) TO (*-1 @<SUBJ OR @SUBJ> BARRIER NPNHA - <aux> - <TH-Inf> - ? LINK *-1 Loc + Rel BARRIER NPNHAPcle) ;
+	## Nils Johan Päiviö , Johkamohkis eret , lea ožžon dán jagáš Israel Ruong stipeandda , maid Sámi Instituhtta addá nuorra , sámi dutkái gii lea bargame dutkangažaldagaiguin suorggis mas professor Israel Ruong 	beroštii.
+
+
+SETCHILD (V <TH-Loc-Any>) TO (*-1 @<SUBJ OR @SUBJ> BARRIER NPNHA - <aux> - <TH-Inf> - ? LINK *-1 CC BARRIER NPNHA LINK -1 @<SUBJ OR @SUBJ> LINK *-1 Loc + Rel BARRIER NPNHA - ? ) ;
+	## Áne ii leat dássážii goassege fuobmán jurdilit mas ihccalasaid dáččat ja rivgut nu 	ballet 	sámi dáfus .
+
+SETCHILD (V <TH-Loc-Any>) TO (*-1 @<SUBJ OR @SUBJ> BARRIER NPNHA - <aux> - <TH-Inf> - ? LINK -1 Acc OR Gen LINK *-1 CC BARRIER NPNHA LINK -1 Acc OR Gen LINK *-1 Loc + Rel BARRIER NPNHA - ? ) ;	
+	## Danne lea dárbu doarjjaortnegii mii movttiidahttá girjerádjosiid ja daid eaiggádiid vuoruhit girjerádjofálaldagaid sámi álbmoga ektui , ja oastit sámi girjjálašvuođa ja eará gálduid main sihke sámi ja dáčča álbmot 	berošta.
+
+	
+	# other cases where the locative is before verb and subject
+	# ---------------------------------------------------------
+	
+SETCHILD (V <TH-Loc-Any>)(0 Pl3 OR Inf) TO (-1 (Pl Nom) LINK *-1 Loc BARRIER NPNHA - ?) ;
+	## Sámedikkis lea leamaš čoahkkin Finnmárkku fylkasuohkana seniorráđiin ja digaštallan áigeguovdilis čuolmmaid main Finnmárkku boarrásat 	beroštit.
+	
+		
+SETCHILD (V <TH-Loc-Any>) (0 PrfPrc) TO (-1 @<SUBJ LINK -1 VFIN + <aux> LINK -1 Loc) ;
+	## das lean mun ballan
+
+SETCHILD (V <TH-Loc-Any>) (0 PrfPrc)(NONE c §TH) TO (-1 @<SUBJ OR @SUBJ> LINK *-1 ConNeg OR PrfPrc BARRIER NOT-ADV-PCLE LINK -1 ("ii") LINK *-1 Loc BARRIER NOT-ADV-PCLE) ;
+	## Mearrasámi giliid eretfárremis eai leat eiseválddit 	beroštan 	vaikko Sámediggi ja sámi organisašuvnnat 0,00 % máŋgii leat geardduhan eretfárrema heajos beliid .
+			
+SETCHILD (V <TH-Loc-Any>) TO (*1 ("ii" Neg Ind) BARRIER NOT-ADV-PCLE LINK 1 Loc + ("mihkkege") OR Loc + ("oktage")) ;
+SETCHILD (V <TH-Loc-Any>) TO (1 Loc + ("mihkkege") OR Loc + ("oktage")) ;
+	##
+
+
+SETCHILD (V <TH-AktioLoc>)(NONE c §TH) TO (*1 (Actio Loc) BARRIER NPNH - ?) ;
+
+	# in coordination
+	# -------------------
+	
+SETCHILD (V <TH-AktioLoc>)(NONE c §TH) TO (1 @>N OR Gen OR ? LINK 1 CC LINK *1 @>N OR Gen OR ? LINK *1 (Actio Loc) BARRIER NPNH - ?) ;
+	## Muhto dan berre dahkat dakkár vuogi mielde ahte ii baldde geange váidit rihkkuma dannego 	ballá 	gillájeaddjiid dahje sin bearrášiid dovddusindahkamis .
+		
+	# coordination rule
+	# -----------------
+SETCHILD V TO (c Acc LINK -1 @CNP LINK -1 Acc);
+	## – Sii geat 	liikojit 	luonddus vánddardit gávdnet stuorra vejolašvuođa dan dahkat, lubmet, {luosaid} ja ealggaid bivdit .
+		
+SETCHILD <TH-ahte> (NONE c §TH) TO (1 ("ahte") LINK *1 @FS-OBJ OR @+FAUXV OR @+FMAINV OR @FS-<ADVL LINK NOT 0 (N &SUGGEST));
+	## Dát fas čájeha ahte geavahedje riggodagaid hui máŋgga ládje , seammás go máhku ja 	liikon 	rievddadii guovlluid mielde ja mearridii makkár buktagiid olbmot geavahedje .
+	## Várrepresideanta Ragnhild Nystad lea mediaid bokte dovddahan ahte Sámediggi ii 	liiko 	dákkár doaimmaide .
+
+SETCHILD <TH-ahte> (NONE c §TH) TO (1 ("ahte") LINK 1 VFIN);
+	## Mii sávvat ahte {sáhttit} váikkuhit dasa ahte mánát geat leat min luhtte maiddai maŋŋil 	liikojit 	atnit goruda sihke falaštallama ja stoahkama bokte .
+	
+SETCHILD <TH-ahte> (NONE c §TH) TO (*1 @<SUBJ LINK 1 ("ahte") LINK *1 VFIN);
+	## Liikká 	ballá 	ráđđehus ahte máŋgga suohkanis vel eai váldde doarvái bures vuhtii sámi álbmoga beroštumiid ja dárbbuid .
+
+SETCHILD (V <TH-ahte>)(NONE c VFIN OR §TH) TO (1 COMMA LINK 1 ("ahte") LINK *1 VFIN BARRIER NOT-ADV-PCLE);
+	##
+		
+SETCHILD (V <TH-ahte>)(NONE c VFIN OR §TH) TO (1 COMMA LINK 1 ("ahte") LINK *1 SUBJ BARRIER NPNHA LINK *1 VFIN BARRIER NOT-ADV-PCLE);
+	## Balan 	, ahte dakkár doaibma gavdnje dakkár olbmuid , geat eai leat leamaš ovdal sámi politihkas dehe searvedoaimmas mielde nu ahte sii eai dákkár bargui searvva vaikko sis livččii dasa hállu .
+
+SETCHILD <TH-ahte> (NONE c §TH) TO (1 @<ADVL OR @ADVL> OR Pcle LINK *1 ("ahte") BARRIER NOT-ADV-PCLE - @ADVL< LINK *1 VFIN);	
+	## Lávdegotti eanetlohku anii unnitlogu árvalan válgabiirenjuolggadusaid beare moalkájin , ja 	balai 	dasa lassin ahte evttohus ii vuhtii váldde dan dárbbašlašvuođa ahte orohaga iešguđet beroštumit áiggi mielde leat ovddastuvvon stivrras .
+
+SETCHILD <TH-ahte> (NONE c §TH) TO (1 ("ahte") LINK *1 N BARRIER NPNHA LINK 1 Rel LINK *1 VFIN LINK *1 VFIN);	
+	## Brita Kåven 	ballá 	ahte evttohus mii dál lea boahtán GOD:s sáhttit mearkkašit ahte fálaldagat ja bargosajit Sámi joatkkaskuvllas Kárášjogas jávket .
+	
+LIST ADV-ADJ-ACC = ("dušši" N Acc Pl) ("dušši" N Gen Pl) ("meareheapme" A Acc Pl) ("meareheapme" A Gen Pl) ("mearri" A Pl Acc) ("mearri" A Pl Gen);
+
+SETCHILD (V <TH-go>)(NEGATE *1 ("go" Qst) LINK *1 ("?")) (NONE c §TH) TO (*1 ("go") OR ("daningo") BARRIER NOT-ADV - Pcle - ADV-ADJ-ACC LINK *1 @+FAUXV OR @+FMAINV OR @FS-<ADVL);
+	## 	Dát lea dehálaš ášši ja mun sakka 	liikon 	go mus lea nu buorre gulahallan komisearain Damanaki:n ja Eurohpá parlameantta guolástuskomitéain , dadjá Berg-Hansen .
+	## Sii maid lohket iežaset 	ballat 	daningo noaiddit, boares ádját ja viisát jápmet dávddain mat ovdal eai oppa leange indiánaid guovlluin .
+	## – Giitu , dajai bártnáš , muhto dál fertejetne jávkkihit , go diet áhkku gii orru dás , 	suhttá 	mearehemiid go moai čuojahetne uksabiellu .
+	
+SETCHILD <TH-jus> (NONE c §TH) TO (1 ("jus") OR ("jos") LINK *1 @+FAUXV OR @+FMAINV OR @FS-<ADVL);
+
+SETCHILD (V <BE-Acc-Any>) TO (*1 Acc BARRIER NPNH) ;
+SETCHILD (V <BE-Acc-Any>) TO (-1 Acc) ;
+	
+SETCHILD (V <BE-Acc-Ani>) TO (*1 Sem/Hum + Acc OR Sem/Org + Acc OR Sem/Ani + Acc BARRIER NPNH) ;
+	## Oahpahus galgá veahkehit ohppiid 	liikot 	leat luonddus ja addit sidjiide vejolašvuođa ovdánahttit fantasiija , hábmengálgga ja beroštumi diđoštit birrasa .
+	## son árpmiha min máddariid
+	## Fille gusaid
+SETCHILD (V <BE-Acc-Ani>) TO (-1 Sem/Hum + Acc OR Sem/Org + Acc OR Sem/Ani + Acc) ;
+	
+SETCHILD (V <BE-ovddas-Ani>) TO (1 Sem/Animate + Gen OR Sem/Animate + Acc LINK 1 ("ovddas")) ;
+	## Finnmárkku SG jođiheaddji ii 	bala 	Olav Gunnar Ballo garra čuoččuhusaidisguin billistit bellodaga ovddas Finnmárkkus : – Dan in gal jáhke , muhto ferte muddet ja lagabuidda čilget su oainnuid muhtomin .
+	
+SETCHILD (V <BE-Acc-Any><TH-AktioLoc>) TO (1 Acc OR Gen LINK 1 (Actio Loc));
+SETCHILD (V <BE-Acc-Any><TH-AktioLoc>) TO (c (Actio Loc) LINK -1 Acc OR Gen);
+	## – Lea gal buorre jus mii oažžut sierralobiid , muhto mun 	balan 	lávdegotti eanetlogu liikká gieldit min vuodjimis , dadjá Saari , vaikke gullá ahte Dalseng lea lohkan addit čađavuodjinlobiid .
+
+	# LIST NOM-GEN-NOUN contains nouns that are marked as errors
+LIST GRAMCHK-NOM-GEN-I-NOUNS = (".*ássi"r) (".*ášši"r) "julii" "juvlii" "juvllii" "juvnii" "juvnnii" "junii" "moarsi" "oassálasti" "ásii" "ásii";
+#vahkkuin	vahkku_Time+N+Pl+Loc
+#vahkkuin	vahkku_Time+N+Sg+Com
+#vahkkun	vahkku_Time+N+Ess
+
+LIST GRAMCHK-NOM-GEN-CONSONANT-NOUNS = (".*ortnet"r) "ulbmil" ;
+
+SETCHILD (V <TH-Inf>) (NONE c Inf) TO (1 Inf) ;
+	
+SETCHILD (V <TH-Acc-Any><TH-Inf>) OR (V <PA-Acc-Ani><TH-Inf>) OR (V <AG-Acc-Ani><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Inf)(NEGATE *1 Acc - @>A OR Gen - @>P - @>A - @>N OR GRAMCHK-NOM-GEN-N + Nom - @>A BARRIER NPNHAPcle - Ord LINK p V)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*1 Acc - @>A OR Gen - @>P - @>A - @>N OR GRAMCHK-NOM-GEN-N + Nom - @>A BARRIER NPNHAPcle - Ord - ? LINK *1 Inf BARRIER NPNHA -  @<ADVL - ?);
+	## – Beaivváš Sámi Teáhter lea áidna sámi kulturinstitušuvdna ja danin geatnegahttá min 	beroštit 	ja atnit fuola luođis ja sámemusihka ovdáneamis .
+	## Son ii loga Guvodageainnu {meahcástansearvvi} dárbbašit ballat Goahtegearrehis .
+SETCHILD (V <TH-Acc-Any><TH-Inf>) OR (V <PA-Acc-Ani><TH-Inf>) OR (V <AG-Acc-Ani><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Inf)(NEGATE 1 @>N OR Pcle OR Adv LINK *1 Acc OR Gen - @>P OR GRAMCHK-NOM-GEN-N + Nom BARRIER Ord LINK p V)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (1 @>N OR Pcle OR Adv LINK *1 Acc OR Gen - @>P OR GRAMCHK-NOM-GEN-N + Nom BARRIER Ord LINK *1 Inf BARRIER NOT-ADV - ?);
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Inf)(NEGATE 1 @>N OR Pcle OR Adv LINK 1 @>N LINK 1 Ord LINK 1 Acc OR Gen - @>P OR GRAMCHK-NOM-GEN-N + Nom LINK p V)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (1 @>N OR Pcle OR Adv LINK 1 @>N LINK 1 Ord LINK 1 Acc OR Gen - @>P OR GRAMCHK-NOM-GEN-N + Nom LINK *1 Inf BARRIER NOT-ADV - ?);
+SETCHILD (V <TH-Acc-Any><TH-Inf>) OR (V <PA-Acc-Ani><TH-Inf>) OR (V <AG-Acc-Ani><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Inf)(NEGATE 1 @>N OR @>A OR Pcle OR Adv LINK 1 @>N LINK 1 Acc OR Gen - @>P OR GRAMCHK-NOM-GEN-N + Nom LINK p V)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (1 @>N OR @>A OR Pcle OR Adv LINK 1 @>N LINK 1 Acc OR Gen - @>P OR GRAMCHK-NOM-GEN-N + Nom LINK *1 Inf BARRIER NOT-ADV - ?);
+SETCHILD (V <TH-Acc-Any><TH-Inf>) OR (V <PA-Acc-Ani><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Inf)(NEGATE 1 @>N OR @>A OR Pcle OR Adv LINK 1 @>N LINK 1 @>N LINK 1 Acc OR Gen - @>P OR GRAMCHK-NOM-GEN-N + Nom LINK p V)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (1 @>N OR @>A OR Pcle OR Adv LINK 1 @>N LINK 1 @>N LINK 1 Acc OR Gen - @>P OR GRAMCHK-NOM-GEN-N + Nom LINK *1 Inf BARRIER NOT-ADV - ?);
+
+SETCHILD (V <TH-Acc-Any><TH-Inf>) OR (V <PA-Acc-Ani><TH-Inf>) OR (V <AG-Acc-Ani><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (c Inf LINK *-1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NOT-ADV - ?); #OR SHOULD IT BE A SUBJECT OF LIIKOT?
+	## Dasa jáhkkit jienasteddjiid 	liikot. 
+	## Liikon 	eanet kriminála girjjálašvuhtii , livččen hálidan eanet goddimiid , go lágádus suovai , lohká Skattvik ja muitala {iežas} hui olu liikot Agatha Christie girjjiide .
+	
+SETCHILD (V <TH-Acc-Any><TH-Inf>) OR (V <PA-Acc-Ani><TH-Inf>) OR (V <AG-Acc-Ani><TH-Inf>)  (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Inf)(NEGATE *1 OBJ - Inf BARRIER NPNHA LINK p V)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*1 OBJ - Inf BARRIER NPNHA LINK *1 Inf BARRIER (*) - Adv - @ADVL - Pr - @P<);
+SETCHILD (V <TH-Acc-Any><TH-Inf>) OR (V <PA-Acc-Ani><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (c Inf LINK *-1 Acc - @>A OR Gen - @>P - @>A - @>N OR GRAMCHK-NOM-GEN-N + Nom - @>A BARRIER (*) - Adv - @ADVL);
+SETCHILD (V <TH-Acc-Any><TH-Inf>) OR (V <PA-Acc-Ani><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (c Inf LINK -1 Adv OR @ADVL> OR @<ADVL LINK *-1 Acc - @>A OR Gen - @>P - @>A - @>N OR GRAMCHK-NOM-GEN-N + Nom - @>A);
+
+	## Sámediggi 	ballá 	dán dili čuohcat boazodoalu sosialála birrasii , kultuvrii , gillii , bestemii ja dietnasii .
+	## Stuorastádat 	ballet 	{riikkaideaset} earret eará bieđganit , jus álgoálbmogat ožžot rivttiid álgoálbmotjulggaštusa bokte .
+	
+	# subject after infinitive
+	# - - - - - - - - - - - - -
+
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NEGATE *1 Inf + IV BARRIER NOT-ADV - @<ADVL - @<SPRED LINK *1 (Gen @>N) LINK 1 N)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*1 Inf + IV BARRIER NOT-ADV - @<ADVL - @<SPRED LINK *1 Acc - Sem/Time OR Gen - Sem/Time - @>N - @>P - @>A OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA OR COMMA); # LINK NOT p V);	
+	#$ Buohkat 	balle 	internáhttii fas {boahtit} , vel Biret nai gii lei ollu jagiid juo doppe orron . 
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NEGATE *1 Inf + IV BARRIER NOT-ADV - @<ADVL - @<SPRED LINK *1 (Gen @>N) BARRIER NPNHA - @ADVL LINK 1 N)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*1 Inf + IV BARRIER NOT-ADV - @<ADVL - @<SPRED LINK *1 Acc - Sem/Time - @>N - @P< OR Gen - Sem/Time - @>N - @>P - @P< - @>A OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA - @ADVL OR COMMA);
+	## Fylkkadiggeáirras Vera Lysklætt 	ballá 	dál boađusin šaddat juohke njárgii bieggamillu .
+
+
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) (NEGATE c Acc - Sem/Time OR Gen - Sem/Time OR GRAMCHK-NOM-GEN-N + Nom  LINK *-1 Inf + IV BARRIER NPNHA - @ADVL LINK p V)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (c Acc - Sem/Time OR Gen - Sem/Time OR GRAMCHK-NOM-GEN-N + Nom  LINK *-1 Inf + IV BARRIER NPNHA - @ADVL);
+	## Várrugas FeFo áigu goittot várrugasat ložžet njuolggadusaid menddo sakka , go 	ballet 	šaddat menddo olu luossabivdiid .
+	# accusative subject after infinitive (intransititve verb)
+	
+	# accusative before matrix verb
+	# - - - - - - - - - - - - - - -
+	
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(*1 Inf + IV BARRIER NOT-ADV)(NONE c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*-1 @SUBJ> BARRIER NPNHA LINK *-1 Acc OR Gen - @>N OR GRAMCHK-NOM-GEN-N + Nom  BARRIER NPNHA - ?); 	
+	## Guokte lábbá ain váilot, ja maid Berit Anna 	ballá 	leat gáskkahallon ja ain leat meahcis .
+	#(NEGATE 0 Sg3 LINK *-1 (Sg @SUBJ>) BARRIER NPNHA LINK 0 Sem/Human)
+	
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(*1 Inf + IV BARRIER NOT-ADV)(NEGATE 0 Sg3 LINK *-1 (Sg @SUBJ>) BARRIER NPNHA LINK 0 Sem/Human)(NONE c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*-1 @SUBJ> BARRIER NPNHA LINK *-1 Acc OR Gen - @>N OR GRAMCHK-NOM-GEN-N + Nom  BARRIER NPNHA - ?);
+
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(*1 Inf + IV BARRIER NOT-ADV)(NONE c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*-1 @SUBJ> BARRIER NPNHA LINK -1 CC LINK -1 @SUBJ> LINK *-1 Acc OR Gen - @>N OR GRAMCHK-NOM-GEN-N + Nom  BARRIER NPNHA - ?); 
+	## Dan maid politiijá ja Suodjalus 	balaiga 	leat várálaš soahtebázahussan , čájehuvvui leat bávkkehuvvon miidna .
+	
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) (*1 Inf + IV BARRIER NOT-ADV-PCLE)(NEGATE 0 Sg3 LINK -1 (Sg @SUBJ>) OR (Sg3 @SUBJ>) LINK 0 Sem/Human)(NEGATE 0 Pl3 LINK -1 (Pl @SUBJ>) OR (Pl3 @SUBJ>) LINK 0 Sem/Human)(NONE c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (-1 Acc OR Gen - @>N OR GRAMCHK-NOM-GEN-N + Nom) ;	
+	## Dán jagi jáhkán lihkká bures mannat , muhto 	balan 	dássálaga čiekčat Romssa Skarp joavkku vuostá , einnosta Ole Niklas .
+
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) (*1 Inf + TV BARRIER NOT-ADV LINK c Acc)(NEGATE 0 Sg3 LINK *-1 (Sg3 @SUBJ>) OR (Sg @SUBJ>) BARRIER NPNHA - ?)(NEGATE 0 Pl3 LINK *-1 (Pl3 @SUBJ>) OR (Pl @SUBJ>) BARRIER NPNHA - ?)(NEGATE *-1 §TIME-ADJUNCT BARRIER NPNHA - ?)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*-1 @SUBJ> BARRIER NPNHAPcle - ? LINK *-1 Acc - @>N OR Gen - @>N OR GRAMCHK-NOM-GEN-N + Nom - @>N BARRIER NPNHA - ?) ;
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom LINK *1 @SUBJ> BARRIER NPNHA - ? LINK *1 (V <TH-Acc-Any><TH-Inf>) BARRIER NOT-ADV-PCLE LINK *1 Inf BARRIER NOT-ADV); 
+	## Dán son gal 	ballá 	goaridit ohppiid dili , earenoamážit sin geat eai oro ruovttuin , muhto leat fárren eará báikái skuvlla vázzit .
+
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) (*1 Inf + IV BARRIER NOT-ADV LINK NOT p V)(NEGATE 0 Sg3 LINK *-1 Acc - @>N - @>P OR Gen - @>N - @>P OR GRAMCHK-NOM-GEN-N + Nom - @>N - @>P BARRIER NOT-ADV-PCLE LINK 0 (Sg @SUBJ>) OR (Sg3 @SUBJ>) LINK 0 Sem/Human)(NEGATE 0 Pl3 LINK *-1 Acc - @>N - @>P OR Gen - @>N - @>P OR GRAMCHK-NOM-GEN-N + Nom - @>N - @>P BARRIER NOT-ADV-PCLE LINK 0 (Pl @SUBJ>) OR (Pl3 @SUBJ>) LINK 0 Sem/Human)(NEGATE *-1 Acc - @>N - @>P OR Gen - @>N - @>P OR GRAMCHK-NOM-GEN-N + Nom - @>N - @>P BARRIER NOT-ADV-PCLE LINK p V)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*-1 Acc - @>N - @>P OR Gen - @>N - @>P OR GRAMCHK-NOM-GEN-N + Nom - @>N - @>P BARRIER NOT-ADV-PCLE) ;
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom)(NEGATE *1 Inf BARRIER NOT-ADV-PCLE LINK p V)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*1 Inf BARRIER NOT-ADV-PCLE);
+	## Deaggečuotnjága maid ballet jávkat oalát miehtá máilmmi , stuorámus áitta lea lobihis bivdu iige dálkkádatrievdan .
+
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) (*1 Inf + TV BARRIER NOT-ADV LINK c Acc OR §PO + Ill)(NEGATE 0 Sg3 LINK *-1 (Sg3 @SUBJ>) OR (Sg @SUBJ>) BARRIER NPNHA - ?)(NEGATE 0 Pl3 LINK *-1 (Pl3 @SUBJ>) OR (Pl @SUBJ>) BARRIER NPNHA - ?)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*-1 @SUBJ> BARRIER NPNHAPcle - ? LINK *-1 Acc - @>N OR Gen - @>N OR GRAMCHK-NOM-GEN-N + Nom - @>N BARRIER NPNHA - ?) ;
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom LINK *1 @SUBJ> BARRIER NPNHA - ? LINK *1 (V <TH-Acc-Any><TH-Inf>) BARRIER NOT-ADV-PCLE LINK *1 Inf BARRIER NOT-ADV);	
+	## Dá leat bealle borgojuvvon luottat maid bussá eaiggát 	ballá 	gullat albasii .
+	
+	
+#SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) TO (*1 @<SUBJ BARRIER NPNHA - Gen LINK 1 CC LINK *1 @SUBJ> OR @<SUBJ BARRIER NPNHA LINK 1 Inf OR (Ind Prs Pl1) LINK *1 Acc OR Gen BARRIER NPNHA);
+	## Muhto das eaba loga Ánte Buljo ja Thor Thrane galgat sámi artisttaid 	ballat. - Don't know how to fix this
+	
+	# nominative subject after matrix verb
+	# ------------------------------------
+
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*1 @SUBJ> OR @<SUBJ BARRIER NPNHA LINK *1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA LINK *1 Inf BARRIER NPNHA); 
+	## Njuolggadusaid haga 	ballá 	Mathisen sámepolitihkkáriid eanet {álgit} márkanfievrredit fitnodagaid . 
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*1 @SUBJ> OR @<SUBJ BARRIER NPNHA LINK 1 @>N LINK *1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA LINK 1 Inf); 
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*1 @SUBJ> OR @<SUBJ BARRIER NPNHA LINK 0 Sem/Fem OR Sem/Mal OR Sem/Sur LINK *1 @<OBJ  BARRIER NPNHA - (Sem/Fem Nom) - (Sem/Fem Acc) - (Sem/Fem Gen) - (Sem/Mal Nom) - (Sem/Mal Acc) - (Sem/Mal Gen) - (Sem/Sur Nom) - (Sem/Sur Acc) - (Sem/Sur Gen) LINK 0 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom LINK 1 Inf);
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*1 @<SUBJ OR @SUBJ> BARRIER NPNHA LINK 0 Sem/Fem OR Sem/Mal OR Sem/Sur LINK *1 @>N BARRIER NPNHA - (Sem/Fem Nom) - (Sem/Fem Acc) - (Sem/Fem Gen) - (Sem/Mal Nom) - (Sem/Mal Acc) - (Sem/Mal Gen) - (Sem/Sur Nom) - (Sem/Sur Acc) - (Sem/Sur Gen) LINK 1 @<OBJ LINK 0 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom LINK 1 Inf);
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*1 @<SUBJ OR @SUBJ> BARRIER NPNHA LINK 0 Sem/Fem OR Sem/Mal OR Sem/Sur LINK *1 @>N BARRIER NPNHA - (Sem/Fem Nom) - (Sem/Fem Acc) - (Sem/Fem Gen) - (Sem/Mal Nom) - (Sem/Mal Acc) - (Sem/Mal Gen) - (Sem/Sur Nom) - (Sem/Sur Acc) - (Sem/Sur Gen) LINK 1 @>N LINK 1 @<OBJ LINK 0 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom LINK 1 Inf);
+
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (1 Sem/Human LINK 0 Nom OR Gen OR Acc LINK 1 Sem/Human LINK 0 Nom OR Gen OR Acc LINK *1 @<SUBJ OR @SUBJ> BARRIER NPNHA LINK 1 Acc OR Gen - @>N OR @>P OR GRAMCHK-NOM-GEN-N + Nom LINK 1 Inf);
+	## Dál 	ballá 	geaidnodoaimmahat bearráigeahčči Ole Edvard Nedredal šaldi gahččat vaikko goas .
+
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (c Inf LINK -1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom);
+	## Snøhvita huksemiid gieažil 	ballá 	son dál leat stuorra fámuid jođus norddasteamen boazoeláhusa eret Fálás .
+	## Dál 	ballet 	Rávdojoga olbmot goaskima álgit seivvodit sin viesuid lusa .
+	## Juovlamánu 3. beaivvi dahkkojuvvo bissovaš mearrádussan Skániid Joatkkaskuvlla ektui , ja dál 	ballet 	politihkarnjunnošat skuvlla boahtteáiggi šaddat seavdnjadin .
+	## Áibbas duođas eai jáhke politiijat olbmuid dárbbašit 	ballat 	deaivat.
+	
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*1 @SUBJ> OR @<SUBJ BARRIER NPNHA LINK *1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA LINK 1 Adv OR Pcle LINK 1 Inf); 
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom)(NEGATE -2 Acc OR Gen LINK p V)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (c Inf LINK -1 Adv LINK -1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom);
+	## Dál 	ballet 	Romssa sámit dán nuppádussii dáhpáhuvvat . 
+
+
+	# coordinated subject
+	# - - - - - - - - - -
+	
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Inf)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom LINK 1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom LINK 1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom LINK 1 @<SUBJ LINK *1 CC BARRIER (*) - (Gen Sem/Mal) - (Nom Sem/Mal) - (Acc Sem/Mal) - (Gen Sem/Fem) - (Nom Sem/Mal) - (Acc Sem/Fem) - (Nom Sem/Sur) - (Gen Sem/Sur) - (Acc Sem/Sur) LINK 1 Gen LINK 1 @<SUBJ LINK *1 (N @<OBJ) BARRIER (*) - (Gen Sem/Mal) - (Nom Sem/Mal) - (Acc Sem/Mal) - (Gen Sem/Fem) - (Nom Sem/Mal) - (Acc Sem/Fem) - (Nom Sem/Sur) - (Gen Sem/Sur) - (Acc Sem/Sur) LINK *1 Inf BARRIER NOT-ADV-PCLE);
+
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Inf)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (1 @>N OR Adv OR Pcle LINK 1 @>N OR Gen LINK 1 @>N OR Gen LINK *1 @<SUBJ BARRIER NPNH LINK *1 CC BARRIER (*) - (Gen Sem/Mal) - (Nom Sem/Mal) - (Acc Sem/Mal) - (Gen Sem/Fem) - (Nom Sem/Mal) - (Acc Sem/Fem) - (Nom Sem/Sur) - (Gen Sem/Sur) - (Acc Sem/Sur) LINK *1 @<SUBJ BARRIER NPNH LINK *1 (N @<OBJ) BARRIER (*) - (Gen Sem/Mal) - (Nom Sem/Mal) - (Acc Sem/Mal) - (Gen Sem/Fem) - (Nom Sem/Mal) - (Acc Sem/Fem) - (Nom Sem/Sur) - (Gen Sem/Sur) - (Acc Sem/Sur) LINK *1 Inf + IV BARRIER NOT-ADV-PCLE);
+	## Stáhta lea juolludan boazodoallošiehtadusas vihtta miljovnna ruvnno njuovvanbussiid oastimii Kárášjoga ja Guovdageainnu boazosuohkaniidda , muhto dál 	ballaba 	johttisápmelaččaid searvvi jođiheaddjit Piera Jovnna Anti ja Nils Mathis Sara njuovanplánaid duššat .
+	
+	# in case the subject does not get the subject tag
+	
+SETCHILD (V <TH-Acc-Any><TH-Inf>)(0 Sg3) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) TO (*1 (Nom Sg3) OR (Nom Sg) BARRIER NPNHA LINK *1 Inf + IV BARRIER NOT-ADV-PCLE  LINK *1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA);
+SETCHILD (V <TH-Acc-Any><TH-Inf>)(0 Pl3) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*1 (Nom Pl3) OR (Nom Pl) BARRIER NPNHA LINK *1 Inf + IV BARRIER NOT-ADV-PCLE  LINK *1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA);
+
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*1 @SUBJ> OR @<SUBJ BARRIER NPNHA LINK *1 Inf + IV BARRIER NOT-ADV-PCLE LINK *1 Acc OR Gen - @>P OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA);
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom LINK *-1 Inf BARRIER NPNHA);	
+	## LASSÁNA : Jus njuorjju lassána , de 	ballet 	dutkit šaddat unnán guoli .
+
+	
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) TO (1 Adv OR @>P OR Pcle OR @<ADVL LINK 1 @<ADVL LINK *1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA LINK *1 Inf BARRIER NOT-ADV);
+
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Inf)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (1 Adv OR @>P OR Pcle OR @<ADVL LINK 1 @<ADVL OR @>P LINK 1 @<ADVL OR Adv LINK *1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA LINK *1 Inf BARRIER NOT-ADV);
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (c Inf LINK *-1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NOT-ADV);
+	## Sinclair ii 	bala 	guhtta jagi maŋŋil dán čájehit rektora Zimbabwes geahččaleame Molly veagalváldit .
+
+	# GEN-NOM / Sem/Sur words
+	# -----------------------	
+	
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Inf)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (1 @>ADVL LINK 1 Adv OR @>P OR Pcle OR @<ADVL LINK *1 Sem/Sur + Acc OR Sem/Sur + Gen OR Sem/Sur + Nom LINK 1 Sem/Sur + Acc OR Sem/Sur + Gen OR Sem/Sur + Nom LINK *1 Inf BARRIER NOT-ADV);
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Inf)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (1 @>ADVL LINK 1 Adv OR @>P OR Pcle OR @<ADVL LINK *1 Sem/Sur + Acc OR Sem/Sur + Gen OR Sem/Sur + Nom LINK *1 Inf BARRIER NOT-ADV);
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (c Inf LINK *-1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NOT-ADV);
+	## Guovdageainnu Johttisámi Searvvi jođiheaddji Nils Mathis M. Sara 	balai 	ovtta gaskka Kristina Jonsson Eira oažžut eanet jienaid go Nils Henrik Sara .
+	
+	# coordinated accusatives
+	# -----------------------
+	
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Inf)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA LINK 1 CC LINK *1 Acc OR Gen OR ? OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA LINK 1 Adv OR @>P OR @<ADVL OR Pcle LINK 1 Adv OR @>P OR @<ADVL OR Pcle OR @ADVL> LINK 1 Inf);
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (c Inf LINK *-1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NOT-ADV);
+	## 
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Inf)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA LINK 1 CC LINK *1 Acc OR Gen OR ? OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA LINK *1 Inf BARRIER NOT-ADV);
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (c Inf LINK *-1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NOT-ADV);
+
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (*1 OPRED OR SPRED BARRIER NPNHA LINK 1 Inf + IV LINK *1 OBJ BARRIER NPNHA);
+
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (1 @>P OR Adv OR Pcle LINK 1 @<ADVL OR Adv OR Pcle LINK 1 Inf + IV LINK *1 Acc OR Gen - @>N - @>P BARRIER NPNHA);
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Inf OR PrfPrc)(NEGATE 0 <TH-Ill-Any> LINK c Ill OR ILL-LOC-PRON-ADV) TO (c OBJ LINK *-1 Inf BARRIER NPNHA);
+
+	# PrfPrc
+	# -------
+
+SETCHILD (V <TH-Acc-Any><TH-PrfPrc>) (NEGATE 1 @-FOBJ> LINK p PrfPrc OR Inf)(NONE c Inf OR PrfPrc) TO (1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom LINK 1 Adv OR Pcle LINK 1 PrfPrc);	
+SETCHILD (V <TH-Acc-Any><TH-PrfPrc>) (NEGATE 1 @-FOBJ> LINK p PrfPrc OR Inf)(NONE c Inf OR PrfPrc) TO (1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom LINK 1 PrfPrc);
+SETCHILD (V <TH-Acc-Any><TH-PrfPrc>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Inf OR PrfPrc) TO (1 @>N LINK 1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom LINK *1 PrfPrc BARRIER NOT-ADV);
+SETCHILD (V <TH-Acc-Any><TH-PrfPrc>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(NONE c Inf OR PrfPrc) TO (1 @>N LINK 1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom LINK 1 Adv OR Pcle LINK 1 PrfPrc);
+
+SETCHILD (V <TH-Acc-Any><TH-PrfPrc>) (NEGATE 1 @-FOBJ> LINK p PrfPrc OR Inf) TO (c PrfPrc LINK -1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom);
+SETCHILD (V <TH-Acc-Any><TH-PrfPrc>) (NEGATE 1 @-FOBJ> LINK p PrfPrc OR Inf) TO (c PrfPrc LINK -1 Adv OR Pcle LINK -1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom);
+	## Olbmot balle iežaset gozihuvvon , ja gáibidedje dieđuid , go eai 	luohttán 	eiseválddiide.
+	## Čáhci čájehuvvo leat nuoskkiduvvon ja eiseválddit 	ballet 	juhkančázi dási rievdan. 
+
+SETCHILD (V <TH-Acc-Any><TH-PrfPrc>) (NEGATE 1 @-FOBJ> LINK p PrfPrc OR Inf)(NONE c Inf OR PrfPrc) TO (-1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom LINK 1 V LINK *1 PrfPrc BARRIER NOT-ADV-PCLE);	
+SETCHILD (V <TH-Acc-Any><TH-PrfPrc>) (NEGATE 1 @-FOBJ> LINK p PrfPrc OR Inf)(NONE c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom) TO (c PrfPrc LINK *-1 <TH-Acc-Any><TH-PrfPrc> BARRIER NOT-ADV-PCLE LINK -1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom );	
+	## Sii leat maid čatnan mu priváhta olmmožin áššái , ja dan 	balan 	ge dahkan dan dihte go lean dovddus olmmoš . BOASTTUT DUOMMÁ: ... ja dan balan daid ge dahkan dan dihte ....
+	
+SETCHILD (V <TH-Acc-Any><TH-PrfPrc>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) TO (1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom LINK 1 Adv OR @>P OR Pcle OR @<ADVL OR @ADVL> LINK 1 Adv OR Pcle OR @<ADVL OR @ADVL> LINK *1 PrfPrc BARRIER NOT-ADV);
+SETCHILD (V <TH-Acc-Any><TH-PrfPrc>) TO (c PrfPrc LINK -1 @<ADVL OR Adv OR @>N LINK -1 Adv OR @>P OR Pcle OR @<ADVL OR @ADVL> LINK -1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom);
+	## – Mii ipmirdit álbmoga 	ballat 	ahte sáhttá leat várálaš orrut ja vánddardit rádár- ja radiorusttegiid lahka , muhto mii beroštit sihke iežamet bargiin ja álbmogis mii orru dakkár rusttegiid lahka , dadjá Langvik-Hansen ja muitala suodjalusa easka maid iskan suonjardeami ovtta rádárstašuvnna lahka lulde .
+
+
+SETCHILD (V <TH-Acc-Any><TH-AktioEss>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) TO (*1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA LINK *1 (Actio Ess) BARRIER NOT-ADV);	
+SETCHILD (V <TH-Acc-Any><TH-AktioEss>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) TO (1 @>A OR @>N LINK *1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA LINK *1 (Actio Ess) BARRIER NOT-ADV);	
+SETCHILD (V <TH-Acc-Any><TH-AktioEss>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) TO (1 @>A OR @>N LINK 1 @>A OR @>N LINK *1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA LINK *1 (Actio Ess) BARRIER NOT-ADV);
+	## Ballá 	Norgga stuorámus boazonjuovahaga geahččaleamin bilidit sin njuovahaga nama 
+SETCHILD (V <TH-Acc-Any><TH-AktioEss>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) TO (c (Actio Ess) LINK *-1 Acc OR Gen BARRIER NPNHA);
+
+
+SETCHILD (V <TH-Acc-Any><TH-AktioEss>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) TO (1 @>N LINK 1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom LINK 1 Adv OR @>P OR Pcle OR @<ADVL LINK *1 (Actio Ess) BARRIER NOT-ADV);
+SETCHILD (V <TH-Acc-Any><TH-AktioEss>) TO (c (Actio Ess) LINK -1 @<ADVL OR Adv OR @>N LINK -1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom);
+
+SETCHILD (V <TH-Acc-Any><TH-AktioEss>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) TO (*1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA LINK 1 Adv OR @>P OR Pcle LINK 1 Adv OR @<ADVL LINK *1 (Actio Ess) BARRIER NOT-ADV);
+SETCHILD (V <TH-Acc-Any><TH-AktioEss>) TO (c (Actio Ess) LINK -1 @<ADVL OR Adv OR @>N LINK -1 @>P OR @<ADVL OR Adv OR @>N LINK -1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom);
+	## Hilda Vuolab gal ii loga {iežaset} mange láhkai {ballamin} bajilčállagiin , ja su mielas lea dehálaš ahte media čuvge áššiid mat eai leat buorit ja dohkálaččat , muhto media galgá čuovvut dábálaš njuolggadusaid .
+	## Balto 	ballá 	ge guovlu {dálusámiid} dál {ribaheame} iežaset guollejávrri máid leat don dolin bivdán , erenoamážit dakkár jagiid go unnán luossa lei Anárjogas .
+	
+SETCHILD (V <TH-Acc-Any><TH-AktioEss>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) TO (*1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA LINK 1 Adv OR @>P OR Pcle LINK 1 Adv OR @<ADVL LINK *1 (Actio Ess) BARRIER NOT-ADV);
+SETCHILD (V <TH-Acc-Any><TH-AktioEss>) TO (c (Actio Ess) LINK -1 @<ADVL OR Adv OR @>N LINK -1 @>P OR @<ADVL OR Adv OR @>N LINK -1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom );
+	## NSR jođiheaddji 	ballá 	dološ dáruiduhttin- ja galbma áiggi fas máhccamin Sápmái.
+
+
+SETCHILD (V <TH-Acc-Any><TH-AktioEss>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc)(*1 (Actio Ess) + TV BARRIER NOT-ADV - @<ADVL LINK c Acc) TO (*1 (Actio Ess) + TV BARRIER NOT-ADV - @<ADVL LINK *-1 <TH-Acc-Any><TH-AktioEss> BARRIER NOT-ADV - @<ADVL LINK *-1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA); 	
+SETCHILD (V <TH-Acc-Any><TH-AktioEss>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) TO (c Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom LINK 1 <TH-Acc-Any><TH-AktioEss> LINK *1 (Actio Ess) BARRIER NOT-ADV - @<ADVL);	
+	## Mu leat bidjan dego rievvárin máid 	ballet 	alccen háhkame ruđaid , lohká Olaf Eliassen ja lasiha : – Mun in leat dien ámmáhis ožžon buollán evrrege .
+	
+	# VGEN head
+	# ---------	
+
+SETCHILD (V <TH-Acc-Any><TH-AktioEss>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) TO (*1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA LINK *1C VGen BARRIER NOT-ADV - @<ADVL);
+SETCHILD (V <TH-Acc-Any><TH-AktioEss>) (NEGATE 1 @-FOBJ> LINK p Inf OR PrfPrc) TO (c VGen LINK *-1 Acc OR Gen OR GRAMCHK-NOM-GEN-N + Nom BARRIER NOT-ADV - @<ADVL); 	
+	## Mii gal jáhkkit boazodoalu olu oahppan 1990-loguid garra jagiin , danne soaitá badjelmearálaš dál juo 	ballat 	garra guohtunnákkuid boađi boađi.
+		
+	# this needs to go first so that it goes to the correct
+SETPARENT (V <TH-Inf>) (NONE c Inf) (NEGATE 0 @N<) TO (*-1 (Acc @-FSUBJ>) + Sem/Human LINK p (V <BE-Acc-Ani><TH-Inf>)) ; 
+	## Oahpahus galgá veahkehit ohppiid 	liikot 	leat luonddus ja addit sidjiide vejolašvuođa ovdánahttit fantasiija , hábmengálgga ja beroštumi diđoštit birrasa .
+
+SETCHILD (V <TH-Inf>) (NONE c Inf) TO (1 Adv OR Pcle LINK 1 Inf) ;
+
+SETCHILD (V <TH-Inf>) (NONE c Inf) TO (*1 Inf OR (Ind Prs Pl1) BARRIER NPNHA - Acc - ("mii" Acc) OR MO-MANge - ("?")) ;
+	## Atle 	liiko 	hui bures dánset ja teáhteriin bargat .
+	## Duiskalaš Hans Sieck lea ráhkásnuvvan Finnmárkku lundui ja 	liiko 	maid oaggut .
+
+SETCHILD (V <TH-Inf>) (NONE c Inf) TO (1 Adv OR Pcle LINK 1 ("?") LINK 2 EOS LINK -1 (Ind Prs Pl1)) ;
+	## Mun liikon maid šukkulade borrat .
+	
+SETCHILD (V <TH-Acc-Any><TH-Inf>)(NONE c Inf)(NEGATE *1 @-FOBJ> BARRIER (*) - @>N - ? - Adv - Gen - Acc - Pcle LINK p V) TO (*1 @-FOBJ> BARRIER (*) - @>N - ? - Adv - Gen - Acc - Pcle LINK 1 Inf) ;
+SETCHILD (V <TH-Acc-Any><TH-Inf>) TO (c Inf LINK -1 @-FOBJ>) ;
+	## Dan dihte 	balai 	Guovdageainnu lensmánni vel eanet boazosápmelaččaid fárret , ja čálihit iežaset mearragátti suohkaniid olmmošloguide 
+
+SETCHILD <TH-Acc-Any><TH-Inf> (NONE c Acc OR Gen)(NONE c Inf)(NEGATE 0  <TH-Acc-Any><TH-Inf> + Sg3 LINK -1 Nom + Sg)(NEGATE 2 Inf LINK p V)(NEGATE -1 Gen OR Acc LINK p V)(NEGATE -1 Gen OR Acc LINK 0 §ANYADJUNCT) TO (-1 Gen OR Acc LINK 2 Inf) ;
+SETCHILD <TH-Acc-Any><TH-Inf> (NONE c Acc OR Gen) TO (c Inf LINK -1 Acc) ;
+	## Maiddái gáddelottiid 	balle 	nohkat máŋgga báikkis .
+	
+SETCHILD <TH-Acc-Any><TH-Inf> (NONE c Acc OR Gen)(NEGATE *1 Acc OR Gen BARRIER NPNHA - ? LINK p V) TO (*1 Acc OR Gen BARRIER NPNHA - ? LINK *1 Ess BARRIER NPNHA - @ADVL) ;
+SETCHILD <TH-Acc-Any><TH-Inf> TO (c Ess LINK *-1 Acc OR Gen BARRIER NPNHA - @ADVL) ;
+	## Son muitala dulvecaggi buktá gieldda ássiide oadjebasvuođa , go dulvin eai dárbbaš 	ballat 	čázi // balduid olles leavttuin boahtit sin ássandáluid njeaiga .
+	## Birasgáhttenorganisašuvnnat 	ballet 	ruskaduŋggi saji unnán oadjebassan radioaktiivva ruskkaid ektui .
+
+SETCHILD <TH-Acc-Any><TH-Inf> (NONE c Acc OR Gen)(NEGATE 2 Acc OR Gen LINK p V) TO (1 Acc OR Gen LINK 1 ("/") LINK 1 OBJ - V OR Acc OR Gen LINK *1 Inf BARRIER NPNHA - @ADVL) ;
+SETCHILD <TH-Acc-Any><TH-Inf> (NONE c Acc OR Gen)(NEGATE c Inf LINK *-1 Acc - @>A BARRIER NPNHA - @ADVL LINK p V) TO (c Inf LINK *-1 Acc - @>A BARRIER NPNHA - @ADVL) ;
+	## Son muitala dulvecaggi buktá gieldda ássiide oadjebasvuođa , go dulvin eai dárbbaš 	ballat 	čázi // balduid olles leavttuin boahtit sin ássandáluid njeaiga .
+	
+	
+	# cealkkavástta ellipse (Acc - Ess), Inf (leat) váilu
+	# - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+SETCHILD <TH-Acc-Any><TH-Inf> (NONE c Acc OR Gen) TO (*1 Acc OR Gen BARRIER NPNHA - ? LINK *1 Ess BARRIER NPNHA - @ADVL) ;
+SETCHILD <TH-Acc-Any><TH-Inf> TO (c Ess LINK *-1 Acc OR Gen BARRIER NPNHA - @ADVL) ;
+	## Eira 	ballá 	dasto váttisin oažžut lobi báhčit getkkiid maid , ii ge dušše albasiid .	
+
+
+SETCHILD (V <TH-Acc-Any><TH-Inf>) (NONE c Acc OR Gen) TO (*-1 (Rel OBJ) OR (Rel Acc) OR (Rel Gen) BARRIER NOT-ADV-PCLE LINK *1 <TH-Acc-Any><TH-Inf> BARRIER NOT-ADV-PCLE  LINK *1 Ess BARRIER NPNHA - @ADVL) ;
+SETCHILD <TH-Acc-Any><TH-Inf> TO (c Ess LINK *-1 <TH-Acc-Any><TH-Inf> BARRIER NOT-ADV-PCLE LINK *-1 Acc OR Gen BARRIER NPNHA - @ADVL) ;
+	## OSLO : Eambbo go bealli álbmogis oaivvilda ahte olbmuid {geaid} 	ballet 	{terroristan} galggašii sáhttit doallat rájusgiddagasas gitta golmma mánnui nu ahte eai biddjo duopmostuolu ovdii . 	
+
+	# cealkkavástta ellipse (Acc - Hab), Inf (leat) váilu
+	# - - - - - - - - - - - - - - - - - - - - - - - - - - -
+SETCHILD <TH-Acc-Any><TH-Inf> (NONE c Acc OR Gen OR Inf) TO (*1 Sem/Human BARRIER NPNHA - ? LINK 0 Loc LINK *1 Acc OR Gen - @>N - @>P OR GRAMCHK-NOM-GEN-N + Nom BARRIER NPNHA - ? - @<ADVL - @<ADVL) ;
+SETCHILD <TH-Acc-Any><TH-Inf> TO (c Acc OR Gen OR GRAMCHK-NOM-GEN-N + (Sg Nom) LINK *-1 (Sem/Hum Loc) BARRIER NPNHA - ? - @<ADVL - @<ADVL) ;
+	## Ballá 	buktit eanet huksemiid Boazodoalli Nils Ole Triumf gal ii jáhke sis boazodolliin nu ollu dadjamuša , jus mearriduvvo ahte linjá galgá huksejuvvot .
+	## Hætta lohká gal dát vuodjinplána livččii buorre , muhto 	ballá 	direktoráhtas eará plánaid .
+		
+LIST INF-LIKES = ("leat" IV Ind Prs ConNeg) ("leat" IV Ind Prs Pl1) ;
+		
+SETCHILD (V <TH-Inf>)(NONE c Inf) TO (1 Inf OR INF-LIKES);
+	## • Maid don 	liikot 	bargat friddjabottuin ?
+	## Inger Anne gii ieš ii juga , muitala son 	liiko 	leat mielde Kom og Dans feasttain , go doppe eai ástta olbmot juhkat alkohola dánsuma dihtii .
+
+SETCHILD (V <TH-Inf>)  TO (1 INF-LIKES);
+	
+SETCHILD (V <TH-Inf>)  (NOT 1 Inf) TO (2 Inf);
+	## Muhtin mánát 	liikojit 	muosis buđaldit , veahá eret earáin , ja muhtimiid mielas lea buot somámus gorpmodit ja doarkkudaddat , eandalii go máŋggas leat searválaga.
+	# maybe not strict enough
+	
+SETCHILD (V <TH-Inf>)  TO (*0 EOS LINK -1 ("?") LINK *-1 BOS LINK *1 Inf BARRIER Inf); 	
+	## Liiko go du // dudno mánná leat mánáidgárddis?
+	# maybe not strict enough
+
+SETCHILD (V <TH-Inf>)  TO (1 @>N OR Pcle LINK *1 @>P OR @>N OR (Adv @>ADVL) OR @<ADVL OR @-FADVL> OR Pron + Acc BARRIER NOT-ADV LINK *1 @<ADVL BARRIER NOT-ADV LINK *1 Inf BARRIER Inf);	
+	## Luonddus leat hástalusat buohkaide, sihke sidjiide geat váivvahit alla rásiid siste gállit, ja sidjiide geat 	liikojit 	giccodit muorain.
+	## Dán áigge eai leat šat nu oallugiin dat dološmállet liinnit , ja jáhkán maid olbmot 	liikojit 	juoidá ođđasa ráhkadit , lohká Berit Marie gii juste deaivá riessamin ođđa vuogi mielde .
+	# maybe not necessary rule
+	
+
+SETCHILD (V <TH-Inf>)  TO (1 @>N OR ? OR (Adv @>ADVL) OR @<ADVL OR @-FADVL> OR Pcle OR @>P LINK *1 @<ADVL OR @-FADVL> BARRIER NOT-ADV LINK *1 Inf BARRIER NOT-ADV);
+	## Son 	liikui 	AG3 bissuin báhčit ja danin osttii bivdobissu mas lea seammalágan luođđasturrodat go militearabissus ( 308 kaliber).
+	## Berit Marie Eira ii 	liiko 	albma čikŋagávttiin nu olu rievdadallat , muhto eará gávttiid , nu go dát dološmállet gákti mii sus dál lea alde , son gal liiko hervet ja goarrut juohke ivnnis .
+	## Berit Marie Eira ii 	liiko 	albma čikŋagávttiin nu olu rievdadallat , muhto eará gávttiid , nu go dát dološmállet gákti mii sus dál lea alde , son gal liiko hervet ja goarrut juohke ivnnis .
+	## Ieš maid lávii 	liikot 	váriid mielde goargŋut , dalle go máddin orui .
+	
+SETCHILD (V <TH-Inf>)  TO (1 @>N OR ? OR (Adv @>ADVL) OR Pcle OR @<ADVL OR @-FADVL> OR @>P LINK 1 @<ADVL OR @-FADVL> LINK 1 @<ADVL LINK *1 Inf BARRIER NOT-ADV);
+	## Liikon 	mearragáttis Bearralvágis biillain vuojašit geasseorohagas , go ii de dárbbaš šat skohteriin , ja kiiket misiid .
+
+
+SETCHILD (V <TH-Inf>)  TO (1 @>N OR ? OR (Adv @>ADVL) OR Pcle OR @<ADVL OR @-FADVL> OR @>P LINK 1 @<ADVL OR @-FADVL> LINK 1 @<ADVL LINK *1 Inf BARRIER NOT-ADV - @P< - @>N - @CNP - @SUBJ>);	
+		## — Ii sáhte 	luohttit 	Suoma beale Ohcejoga fuođđo- ja guolledoalu dutkanguovddáža interneahtta siidduid gávdnojit statistihkkat Deanu sálašmeriid birra .
+		#maybe not strict enough
+	
+SETCHILD (V <TH-Inf>)  TO (1 @>N OR @>A OR @<SUBJ OR @SUBJ> OR Pcle LINK 1 @<OBJ OR @OBJ> LINK *1 Inf BARRIER (*) - Adv - @ADVL - Pcle);
+	## In livčče ieš 	liikon 	dán girjji skuvllas geavahit . 
+	## Astoáiggis 	liiko 	son rievssahiid bivdit ja jogaid melodit kajáhkain . 
+	
+	
+SETCHILD (V <TH-Inf>)  TO (1 Pcle OR Adv LINK *1 @<SUBJ BARRIER NPNHA LINK *1 Inf BARRIER (*) - Adv - @ADVL - Pcle);
+	## Liiko go du mánná leat mánáidgárddis?
+	
+SETCHILD (V <TH-Inf>)  TO (1 @>N OR Pcle OR ? OR (Adv @>ADVL) OR @<ADVL OR @-FADVL> OR @>P LINK 1 @<ADVL OR @-FADVL> LINK 1 @OBJ> LINK *1 Inf BARRIER NOT-ADV);
+
+	# late rule
+	# ---------
+SETCHILD (N <TH-Inf>)(NEGATE 1 Inf LINK p V) TO (1 Inf) ;
+	##	Sámediggi atná dárbun deattuhit dán ja muittuhit ahte seammás go boazodoalu guohtongeavaheapmi guhká lea mearriduvvon lágas , de leat lágat ja hálddašeapmi uhccán 	beroštan 	ja gozihan eará sámi resursageavaheami .
+
+SETCHILD (N <TH-Inf>)(NEGATE 1 Inf LINK p V) TO (1 @>P LINK 1 Po LINK 1 Inf) ;
+	
+SETCHILD (N <TH-Inf>)(NEGATE 1 Inf LINK p V) TO (1 @>N LINK 1 @>P LINK 1 Po LINK 1 Inf) ;	
+    ## Jus dat leat duođat sáhttá dat mielddisbuktit eahpádusa ja balu nuorra sápmelaččaid gaskkas joatkit / álgit oahpu váldit Hápmira joatkkaskuvllas.	 
+	
+SETCHILD <LO-Loc-Plc> OR <LO-Loc-Any> TO (1 Sem/Place + Loc OR Loc + Sem/Furn OR Loc + Sem/Build OR Loc + Sem/Org OR Loc + Sem/Veh OR Adv + Sem/Plc OR DOPPE);
+	## Rathke válddahallá sápmelaččaid liggosit ja 	liikomiin, maŋŋel go lea fitnan {Njávdámis} 1802:s.
+	## 	Liiko 	go du // dudno mánná leat {mánáidgárddis}?
+	
+SETCHILD <LO-Loc-Plc> OR <LO-Loc-Any> (NEGATE c §ANYROLE) TO (*1 Sem/Place + Loc OR Loc + Sem/Furn OR Loc + Sem/Build OR Loc + Sem/Org OR Loc + Sem/Veh OR Adv + Sem/Plc BARRIER NPNHA - @<ADVL - @>P);
+	## Fitnen dá muhtin jagi dássá Gaska-Amerihkás oahpásmuvvamin 
+	
+SETCHILD <LO-Ill-Any> TO (1 Sem/Place + Ill OR Ill + Sem/Furn OR Ill + Sem/Build OR Ill + Sem/Org OR DE-ILL-ADV);
+	## 
+	
+SETCHILD <LO-Loc-Plc> OR <LO-Loc-Any> (NOT 0 <aux>) TO (-1 Sem/Place + Loc OR Loc + Sem/Furn OR Loc + Sem/Build OR Loc + Sem/Org OR Sem/Veh OR Rel + Loc - Sem/Hum OR DOPPE);
+	## Mun nu 	liikon 	dán sugadanstuolus čohkkát.
+	#$ Gávpotmátki , mas lei nu 	ballan 	, lei lihkostuvvan bures , earret orrunsaji válljema . 
+	
+SETCHILD <LO-Loc-Plc> OR <LO-Loc-Any> TO (-1 @SUBJ> LINK -1 Sem/Place + Loc OR Loc + Sem/Furn OR Loc + Sem/Build OR Loc + Sem/Org OR Sem/Veh OR Rel + Loc - Sem/Hum OR DOPPE);
+	## – Gal dat leat nu ollu áššit leamaš dán geasi maid mun gohčodan tulljan , inge 	liiko 	dilis mas mii leat .
+
+SETCHILD (V <SO-Loc-*Ani>) (NOT 1 §ANYROLE)(NONE c §SO)(NOT 0 <aux>) TO (1 Loc - Sem/Animate) ;	
+SETCHILD (V <SO-Loc-*Ani>) (NOT 2 §ANYROLE)(NONE c §SO)(NOT 0 <aux>) TO (1 @>N LINK 1 Loc - Sem/Animate);
+	## – Mun 	liikon 	háleštit olbmuiguin geat bohtet eará guovlluin ja oahppat sierralágan kultuvrraid ja riikkaid birra , lohká Johanna Unga .
+	#$ LUOSSABIVDI:Seavdnjesáigge dálvviid 	liiko 	Sverre čatnat dolgevuokkaid , vai geasset beassá iežas dolggiin {oaggut} luosa .
+	
+	
+SETCHILD <LO-Ill-Any> TO (-1 Sem/Place + Ill OR Ill + Sem/Furn OR Ill + Sem/Build OR Ill + Sem/Org OR DE-ILL-ADV);
+	## Áiddiid heajut bealit leat ahte - dagahit ahte áideguora , gosa čoahkkanit bohccot , čilviluvvá , - eaiggádat unnán guođohit bohccuid ( 	luhttet 	beare olu áidái ) , - njoammudávddat čoahkkanit eatnamii áidegurrii gosa bohccot báhkkejit , - áiddit čuhcet eará elliide ja lottiide . 
+	
+SETCHILD <TH-Acc-Any><LO-Ill-*Ani> TO (*0 Ill - Sem/Animate BARRIER NOT-ADV);
+	## Lea vejolašvuohta dalán go njuovvá bohcco , smávvet ruovjji dakkár bihtáide ahte jođánit máizet ja duššo šnjirahahttit báistos ja {dasa} vel lasiheastet juogalágan rutta máid 	liiko.
+	
+SETCHILD (V <TH-Acc-Any><OR-Loc-Any>) TO (*1 Loc BARRIER NPNHA LINK *1 Gen OR Acc BARRIER NPNHA);
+SETCHILD (V <TH-Acc-Any><OR-Loc-Any>) TO (c Acc OR Gen LINK *-1 Loc BARRIER NPNHA);
+
+SETCHILD (V <TH-Acc-Any><OR-Loc-Any>) TO (*1 Gen OR Acc BARRIER NPNHA LINK *1 Loc BARRIER NPNHA);
+SETCHILD (V <TH-Acc-Any><OR-Loc-Any>) TO (c Loc LINK *-1 Gen OR Acc BARRIER NPNHA);
+	
+	# ATTRIBUTE
+	
+SETCHILD (V <AT-Loc-Mat>) TO (1 Sem/Mat + (Sg Loc)) ;	
+SETCHILD (V <AT-Loc-Mat>) TO (1 Sem/Mat + (Sg Loc) LINK 1 CC OR COMMA LINK 1 Sem/Mat + (Sg Loc)) ;	
+	## Dat mearkkaša ahte son ráhkada niibbii, guvssiid ja náhpiid, dahje buot mii lea muoras ja čoarvvis. 
+	
+	
+	# MANNER
+			
+SETCHILD (V <MA-Adv-Manner>)(NOT 2 MANNER-ADV)(NOT 1 @>A) TO (1 MANNER-ADV) ;
+SETCHILD (V <MA-Adv-Manner>) TO (1 MANNER-ADV LINK 1 MANNER-ADV)(NOT 2 MANNER-ADV) ;
+SETCHILD (V <MA-Adv-Manner>) TO (1 MANNER-ADV LINK 1 MANNER-ADV LINK 1 MANNER-ADV) ;
+SETCHILD (V <MA-Adv-Manner>) TO (-1 MANNER-ADV) ;
+
+SETCHILD (V <MA-Adv-Manner>) TO (-1 <TH-Acc-Any><TH-Inf> LINK -1 ("nugo")) ;
+
+
+SETCHILD (V <RS-Acc-Reason>)(NONE c N OR Pron) TO (-1 ("dušši" N Pl Acc)) ;
+SETCHILD (V <RS-Acc-Reason>)(NONE c N OR Pron) TO (*1 ("dušši" N Pl Acc) BARRIER NPNH) ;
+
+SETCHILD (V <RS-Loc-Any>)(NONE c N OR Pron) TO (-1 Loc) ;
+SETCHILD (V <RS-Loc-Any>)(NONE c N OR Pron) TO (*1 Loc BARRIER NPNHA) ;
+
+SETCHILD (V <RS-Com-Impers>) TO (-1 (Pron Com)) ;
+SETCHILD (V <RS-Com-Impers>) TO (*1 (Pron Com) BARRIER NPNHA) ;
+
+SETCHILD (V <RS-Com-Any>) TO (-1 Com OR (Pl Loc)) ;
+SETCHILD (V <RS-Com-Any>) TO (*1 Com OR (Pl Loc) BARRIER NPNHA - @>N) ;
+
+SETCHILD (V <RS-dihte-Any>) TO (*1 Acc OR Gen BARRIER NPNHAPcle LINK *1 ("dihte") OR ("dihtii") BARRIER NPNHAPcle) ;
+	## « Maid duot – guhte lea guođđán duoddara , balan aitto dáččaid dihtii , áigu dáčča allasis gávdnat , dakkár leš ; mii árvvus eallimiid ceavzá dalle ?
+
+SETCHILD (V <RS-dihte-Any>) TO (*1 @>N BARRIER NPNHAPcle LINK *1 @>P BARRIER NPNHAPcle LINK *1 ("dihte") OR ("dihtii") BARRIER NPNHAPcle) ;
+	## Kárášjoga vuođđoskuvlla váhnemat 	ballet 	dál sin mánáid boahtteáiggi dihte. 
+	
+SETCHILD (V <RE-Loc-Ani>) TO (-1 Loc + Sem/Animate) ;
+	## Visot journalisttat olles dán riikkas leat Børre Knudsenis ja Strandebarm báhpain jearran manne sii eai hálit homofiila olbmuid girkolaš virggiide , ja manne eai 	liiko 	abortii .
+SETCHILD (V <RE-Loc-Ani>) TO (*1 Loc + Sem/Animate BARRIER NPNH) ;
+	## Mihkkel Issát jearahallá áhkus 	liiko 	go lákca gáhkkui .
+	
+SETCHILD (V <RE-Loc-Ani><TH-FS-Qst>) TO (*1 Loc + Sem/Human BARRIER NPNHA LINK 1 VFIN + Qst);
+
+SETCHILD (V <RE-Loc-Ani><TH-FS-Qst>) TO (*1 Loc + Sem/Human BARRIER NPNHA - (Pron Acc) LINK 2 ("go") LINK -1 VFIN - Qst);
+SETCHILD (V <RE-Loc-Ani><TH-FS-Qst>) TO (*1 Loc + Sem/Human BARRIER NPNHA - (Pron Acc) LINK *1 (Prop Sem/Sur) OR (Prop Sem/Mal) OR (Prop Sem/Fem) BARRIER  (*) - (Prop Sem/Sur) - (Prop Sem/Mal) - (Prop Sem/Fem) LINK *1  ("go") LINK -1 VFIN - Qst);	
+	## BUL spábbačiekčan ossodaga stivrajođiheaddji Gunn Heidi Henriksen lei   čohken  stivrra ikte go BUL-čiekči Matti Eira lei jearran iežas joavkku hárjeheaddjis Tomas Johannesson beassá go son mátkkoštit Sámi riikkajoavkkuin Itáliai .
+	
+SETCHILD (V <RE-Loc-Ani><TH-FS-Qst>)(c VFIN) TO (*1 Loc + Sem/Human BARRIER NPNHA - (Pron Acc));	
+	
+SETCHILD (V <RE-Ill-Ani><TH-Acc-*Ani>) (c Acc - Sem/Hum) TO (1 Ill + Sem/Ani OR Ill + Sem/Hum OR Ill + Sem/Org) ;
+	## Oahpahus galgá veahkehit ohppiid 	liikot 	leat luonddus ja addit sidjiide vejolašvuođa ovdánahttit fantasiija , hábmengálgga ja beroštumi diđoštit birrasa .
+	
+SETCHILD (V <TH-Acc-Any><RE-Ill-Any>) (*0 Acc BARRIER NPNHAPcle) TO (*1 Ill BARRIER NPNH) ;
+	## Go Gollerumbu lea       čohken  buot melodiijaevttohusaid , de lea sis jury mii galgá válljet makkár melodiijaid almmuhit jienasteapmái.
+
+
+SETCHILD (V <RE-Ill-Ani><TH-Acc-*Ani>) (c Ill LINK 0 Sem/Hum OR Sem/Ani OR Sem/Org) TO (1 Acc - Sem/Hum) ;
+	## Sámediggi 	liiko 	go Sámi ealáhusráđđi addá doarjaga nissoniidda mat álggahit ealáhusdoaimma .
+
+SETCHILD (V <TH-Acc-Any><RE-Ill-Any>) (c Ill) TO (1 Acc) ;
+	## Go Gollerumbu lea       čohken  buot melodiijaevttohusaid , de lea sis jury mii galgá válljet makkár melodiijaid almmuhit jienasteapmái.
+	
+SETCHILD (V <IN-Com-Veh>) TO (*1 Com + Sem/Veh BARRIER NPNHA) ;
+	## Go beassážiid leat čáppa dálkkit ja beaivvádat , de olbmot 	liikojit 	čuoigat meahcis dahe vuodjit mohtorgielkkáin .
+SETCHILD (V <IN-Com-Lang>) TO (*1 Com + Sem/Lang BARRIER NPNHA) ;
+	## Muhtun oažžu fámu dahkat oavdudaguid , nubbi profehtastallanattáldaga , ja nubbi fas máhtu earuhit iešguđetlágán vuoiŋŋaid , muhtun oažžu attáldaga sárdnut iešguđetlágán gielaiguin ja nubbi fas máhtu dulkot sárdnumiid gielaiguin .
+	
+SETCHILD (V <IN-Com-Veh>) TO (*-1 Com + Sem/Veh BARRIER NPNHA) ;
+	## ( bilde : Ullevol):ULLEVÅL : Go orru dušše 100 mehtera Ullevaal stadiona guoras , de beassá Henriksen dávjá fitnat čiekčamiid geahččame.(bilde : Bilen ) : GÁVPPOTEALLIN : Vaikko Henriksen sáhtášii trikka , busse ja t-bána váldit , de 	liiko 	gal son buoremusat biillain vuodjit .
+SETCHILD (V <IN-Com-Lang>) TO (*-1 Com + Sem/Lang BARRIER NPNHA) ;
+	
+SETCHILD (V <IN-Com-Any>) TO (*-1 Com BARRIER NPNHA) ;
+SETCHILD (V <IN-Com-Any>) TO (*1 Com - Attr BARRIER NPNHA) ;
+
+SETCHILD (V <TH-Com-Any>) (NONE c Com) TO (*1 Com OR ("dainna" Adv) BARRIER NPNHA - ?) ;
+	## – Mun lean mánnávuođa rájes 	beroštan 	oahppat juoigat ja go olles olmmožin šadden , de maid šattai miella oahpasmuvvat eará árktálaš {álbmotmusihkain} , nugo siberialaš Tuva álbmotmusihkain .
+	
+	## Com in COMP-CS	
+SETCHILD (V <TH-Com-Any>)(NONE c Com) TO (*1 ("eará") OR ("iežá") OR Comp BARRIER NOT-ADV-PCLE LINK 1 ("go") LINK *1 Com BARRIER NPNHA) ;
+	##  
+
+SETCHILD (V <TH-Com-Any>) (NONE c Com) TO (*-1 Com BARRIER NPNHA) ;
+
+SETCHILD (V <TH-Com-*Ani>) (NONE c Com) TO (*1 Com - Sem/Animate - Sem/Time OR ("dainna" Adv) BARRIER NPNHA) ;
+SETCHILD (V <TH-Com-*Ani>) (NONE c Com) TO (*-1 Com - Sem/Animate - Sem/Time OR ("dainna" Adv) BARRIER NPNHA) ;
+	## - Leat máŋga buori fálaldaga maid skuvllain     sáhtášii        álggahit , muhto mii álgit dainna mii lea deháleamos.
+	#$ Dát mátki heive measta buohkaide ja lea rehkenaston ádjánit sullii golbma diimmu {bottožiiguin} go vázzet olles bálgá mii lea 10,8 km, muhto lea vejolaš maid jorggihit čohkkás ruovttoluotta jus hálidat oanehit mátkki
+	
+SETCHILD (V <TH-Com-Impers>) (NONE s §TH) TO (*-1 (Pron Dem Sg Com) OR ("dainna" Adv) BARRIER NPNHA - ?) ;
+SETCHILD (V <TH-Com-Impers>) (NONE s §TH)(0 Inf) TO (-1 <aux> OR <TH-Inf> LINK *-1 Com OR ("dainna" Adv) BARRIER NPNHA - <aux>) ;
+	## Muhtin áigodaga sáhttet mánát “ loanahit ” nuppi giela sániid nuppi gillii ja seaguhit gielaid , muhto ii dainna dárbbat 	ballat.
+SETCHILD (V <TH-Com-Impers>) (NONE s §TH) TO (*1 (Pron Dem Sg Com) OR ("dainna" Adv) BARRIER NPNHA - ?) ;
+
+SETCHILD (V <TH-Acc-Impers>) (NONE s §TH)(*-1 (Pron Dem Sg Acc) OR ("mii" Pron Sg Acc) BARRIER NPNHA - ? LINK -1 Pron OR PrfPrc) TO (*-1 (Pron Dem Sg Acc) OR ("mii" Pron Sg Acc) BARRIER NPNHA - ?) ;
+SETCHILD (V <TH-Acc-Impers>) (NONE s §TH)(*-1 @SUBJ> BARRIER NOT-ADV - <aux> LINK *-1 ("mii" Pron Sg Acc) BARRIER NPNHA LINK -1 Pron OR PrfPrc) TO (*-1 @SUBJ> BARRIER NOT-ADV - <aux> LINK *-1 ("mii" Pron Sg Acc) BARRIER NPNHA) ;
+	## Dutkit leat dál duođaštan dan maid olusat leat 	ballan; Ii dušše gođa biebmodorski biebmodorskerusttega siskkobealde , muhto dan dorskemeađđemat besset leavvat viiddis stuorra guovlluide .
+	## Diet dat lei dat geavvan maid balai.
+SETCHILD (V <TH-Acc-Impers>) TO (*-1 @<SUBJ OR @SUBJ> BARRIER NPNHA - <aux> - <TH-Inf> - ? LINK *-1 CC BARRIER NPNHA LINK -1 @<SUBJ OR @SUBJ> LINK *-1 Loc + Rel BARRIER NPNHA - ? ) ;
+	## – Dat maid mii 	ballat 	eanemusat lea ahte Nussir ASA bidjá merrii bázahusdeponiija , ja guolit dan geažil jávket mearas , lohká son .
+	
+SETCHILD (V <TH-Acc-Impers>) (NONE s §TH)(NEGATE 1 @>N) TO (1 (Pron Dem Sg Acc) - @>N) ;
+SETCHILD (V <TH-Acc-Impers>) (NONE s §TH)(NEGATE 2 @>N) TO (1 @>N OR Adv OR Pcle LINK 1 (Pron Dem Sg Acc) - @>N) ;
+SETCHILD (V <TH-Acc-Impers>) (NONE s §TH)(NEGATE 2 @>N) TO (1 @>N OR Adv OR Pcle LINK 1 @>N OR Adv OR Pcle LINK 1 (Pron Dem Sg Acc) - @>N) ;	
+
+SETCHILD (V <TH-ovddas-Any>) (NONE s §TH) TO (*1 ("ovddas") BARRIER NPNHA) ;
+	##
+SETCHILD (V <TH-ovddas-Any>) (NONE s §TH) TO (*-1 ("ovddas") BARRIER NPNHA - (?) - <aux>) ;
+	## Go de duođaštuvvo ahte oalle stuorra oasi ovddas eai sáhte gielddanjunnožat vástidit , de dat dieđus ge lea moaittehahtti , muhto dat ballamis ii earrán nu sakka daid eará gielddaid ja suohkaniid dili dáfus .
+	
+#SETCHILD (V <TH-ovddas-Any>) (NONE s §TH) TO (*-1 *1 ("ovddas") BARRIER NPNHA) ;
+	##
+	
+SETCHILD (V <TH-haga-Any>) (NONE s §TH) TO (*1 Gen OR Acc BARRIER NPNHA LINK 1 ("haga")) ;
+SETCHILD (V <TH-haga-Any>) (NONE s §TH) TO (*-1  ("haga") BARRIER NOT-ADV-PCLE) ;
+	##  birget su haga
+		
+SETCHILD (V <CO-Com-Ani>) TO (*1 Com + Sem/Animate BARRIER NPNHA) ;
+	## 	Son 	liiko 	ovttastallat earáiguin ja deaivvada ja oahpásnuvvá álkit olbmuiguin .
+SETCHILD (V <CO-Com-Ani>) TO (*-1 Com + Sem/Animate BARRIER NPNHA) ;
+SETCHILD (V <CO-Com-Ani>) TO (*-1 Com + Sem/Hum BARRIER NPNHA) ;
+	## 	
+	
+SETCHILD (V <XT-Com-Measure>) TO (*1 (Sg Com) + Sem/Measr OR (Sg Com)  + Sem/Part OR (Pl Loc) + Sem/Measr OR (Pl Loc)  + Sem/Part BARRIER NOT-NUM) ;
+	## Norgalaččat 	liikojit 	pestoi , maŋemus jagiid lea pesto johtu loktanan 29 proseanttain Norggas .
+	
+SETCHILD (V <XT-Acc-Time>) TO (*1 (Sg Gen) + Sem/Measr LINK p (Num Acc)) ;
+	## Dát mátki heive measta buohkaide ja lea rehkenaston ádjánit sullii golbma {diimmu} bottožiiguin 
+	
+SETCHILD (V <PU-AktioEss>) TO (1 (Actio Ess)) ;
+	## fitnat ...
+SETCHILD (V <PU-Inf>) TO (1 Inf) ;
+
+SETCHILD (V <PU-Ill-*Ani>) TO (1 (N Ill) OR (Pron Ill) - Sem/Animate) ;
+	## Ulbmil lea movttiidahttit lohkamii ja oažžut eambbosiid liikot girjiide.
+
+SETCHILD (V <RF-Ill-Any>)(NONE c WORD) TO (1 Ill) ;
+	## Dan geažil máŋggas eai 	beroštan 	searvat márkaniidda.
+
+SETCHILD (V <RF-Ill-Any>)(NONE c WORD) TO (1 Adv LINK 1 Ill) ;	
+	## Dát mátki heive measta {buohkaide} ja lea rehkenaston ádjánit sullii golbma diimmu bottožiiguin go vázzet olles bálgá mii lea 10,8 km , muhto lea vejolaš maid jorggihit čohkkás ruovttoluotta jus hálidat oanehit mátkki. 
+		
+	# some noun rules??
+	
+SETPARENT Com TO (0* (N <CO-Com-Hum>) OR (N <CO-Com-Ani>)) ;
+	## - 	liiko 	ovttasbargat iešguđetlágán olbmuiguin CHECK
+	## Dát lea dehálaš ášši ja mun sakka 	liikon 	go mus lea nu buorre gulahallan komisearain Damanaki:n ja Eurohpá parlameantta guolástuskomitéain , dadjá Berg-Hansen .
+	
+SETPARENT Com + Sem/Veh TO (-1 (N <IN-Com-Veh>)) ;
+	## – Oljorevrrat maid ruoššat plánejit Oarje-Sibiras Murmánskii sáhttet lasihit váralaš oljofievrrideami dámppaiguin olggobeale Norgga rittu , 	ballá 	Norgga Luonddugáhttensearvi .
+	
+SETPARENT Loc TO (-1 (N <TH-Loc-Any>)) ;
+	##
+
+SETPARENT Com (NEGATE 0 @>N LINK *1 Com BARRIER NPNH) TO (*-1 (N <TH-Com-Any>) OR (A <TH-Com-Any>) BARRIER NPNHA) ;
+
+	# PV
+	# --
+	
+SETPARENT Loc TO (-1 (N <PV-Loc-Any>));
+	## Sáhtán namuhit ahte sáhtašii oasi álgoálbmotfilmmain čájehit , mat leat čájehuvvon maŋimuš 9 jagi.
+	
+
+	# "map" PARTITIVE
+	# ---------------
+#SUBSTITUTE N (§PART N) TARGET (N Loc) IF (-1 OASSI OR HEADOFPARTS LINK -1 Num) ;
+	#$ Norgalaččat 	liikojit 	pestoi , maŋemus jagiid lea pesto johtu loktanan 29 proseanttain Norggas.
+SUBSTITUTE N (§PART N) TARGET (N Loc) IF (-1 (A Ord) OR (Num Sg Loc Attr) LINK *-1 (Num Sg)  BARRIER NPNH - Num)(NEGATE 0 §PART) ;
+	## Jearahallamis čájehuvvo ahte okta juohke njealját olbmos ballá roasmmehuvvat rakeahtaid geažil . --- make a rule for juohke njealját olbmos...
+SUBSTITUTE Pron (§PART Pron) TARGET (Pron Sem/Hum Loc) IF (-1 (A Ord) OR (Num Sg Loc Attr) LINK *-1 (Num Sg)  BARRIER NPNH - Num)(NEGATE 0 §PART) ;
+	## okta máŋgga boazodolliin
+
+SUBSTITUTE N (§PART N) TARGET (N Loc) IF (-1 @>N LINK *-1 (N Coll Sg) BARRIER NPNH - Num)(NEGATE0 §PART);
+	## Norggas 	liikojit 	ovccis logi olbmos bohccobierggu ja fas gávccis logi olbmos dadjet bohccobiergu lea dearvvašlaš borramuš , čájeha varas oaiviliskkus maid Synovate lea dahkan .
+
+SUBSTITUTE N (§PART N) TARGET (N Loc) IF (0 Sem/Org LINK *-1 ("muhtin") BARRIER NPNH - (?))(NEGATE 0 §PART) ;
+	#Needs testing
+SUBSTITUTE Pron (§PART Pron) TARGET (Pron Sem/Hum Loc) IF (*-1 ("muhtin") OR (Num Sg Nom) BARRIER NPNH - (?))(NEGATE 0 §PART) ;
+
+SUBSTITUTE N (§PART N) TARGET (N Loc) IF (p <PV-Loc-Any>)(NEGATE 0 §PART) ;
+
+
+	# more global rules (apply after the local rules)
+	# -----------------------------------------------
+
+SETPARENT Acc (NEGATE p V)(-1 BOS LINK *0 ("?" CLB))(NEGATE 0 @-FSUBJ>) TO (0* <TH-Acc-Any> OR <IN-Acc-Any> LINK NEGATE c Acc) ;
+	## • Maid don 	liikot 	bargat friddjabottuin?
+	## – Čuojahin vuosttas geardde dán lávlaga Várjjat-festiválas mannan vahkkoloahpa ja ollosat 	liikojedje 	šuoŋa ja muitalusa , lohká Boine . <IN-Acc-Any> 
+	
+SETPARENT Acc (NEGATE p V)(-1 BOS LINK *0 ("?" CLB))(NEGATE 0 @-FSUBJ>) TO (0 Sem/Animate)(0* <CO-Acc-Ani> LINK NEGATE c Acc OR Inf) ;
+		
+SETPARENT Acc (NEGATE p V)(NEGATE 0 @-FSUBJ>)(NEGATE 0 @>N)(NEGATE -1 Acc LINK NOT 0 @>N OR @>A)(NEGATE -1 VFIN LINK *1 COMMA LINK 1 VERBAL-ACTIVITY-V + VFIN)(NEGATE 0 <vdic> LINK -1 COMMA LINK *-1 VFIN)(NEGATE 0 Rel LINK -1 COMMA)(NEGATE 0 §TIME-ADJUNCT)(NEGATE 0* <TH-Acc-Any> OR <IN-Acc-Any> OR <PR-Acc-Any> BARRIER <mv> OR @CVP LINK 0 <vdic> LINK -1 COMMA LINK *-1 VFIN LINK 0 <mv>)(NEGATE 0* <TH-Acc-Any> OR <IN-Acc-Any> OR <PR-Acc-Any> BARRIER <mv> OR @CVP OR §TH LINK c N OR V OR Po OR Adv) TO (0* <TH-Acc-Any> OR <IN-Acc-Any> OR <PR-Acc-Any> BARRIER <mv> OR @CVP OR COMMA OR Inf OR Rel OR ("de") OR §TH); # LINK NEGATE c Acc) ;
+	#$ Jus mii nannet máhttu  ja {diđolašvuođa} dáid birra dutkamušaid bokte, de lea álgoálbmogiidda álkit ákkastallat áigumušaid ja politihka, muitala Retter.
+	#$ – Lea hástalus ja šaddá somá oahppat daid birra {maid} mun 	beroštan.
+	#$ Dát čájeha ahte FSG ii luohte min {sápmelaččaid} iežamet sáhttit áššiideamet demokráhtalaš vuogi mielde bargat , lohká KSG Eilif Norvang , ja muitala ge juste diekkár stivremis 	ballan 	go cagge SG searvamis mannan sámedikki válgii .
+	#$ – 	Liikon 	hirbmadit 1920- logu , ja lean lohkan girjii ja filmma The Great Gatsby , danin šattai Gatsby , muitala Ann .
+	#$ – Karáte lea dakkár valáštallan masa 	liiko 	dahje ii liiko {dan} , dadjá Joks .
+	## – Čuojahin vuosttas geardde dán lávlaga Várjjat-festiválas mannan vahkkoloahpa ja ollosat 	liikojedje 	šuoŋa ja muitalusa , lohká Boine .
+	## • Maid don 	liikot 	bargat friddjabottuin ?
+	# maybe this rule should actually be in the beginning?
+	#$ Oahpahus galgá veahkehit ohppiid 	liikot 	leat luonddus ja addit sidjiide vejolašvuođa ovdánahttit fantasiija , hábmengálgga ja beroštumi diđoštit birrasa .
+	#$ Guolástusbearráigeahčči dovddahii ahte son 	balai 	hui olu dan ođđa bivddu váikkuhusain .
+	#$ Lea vejolašvuohta dalán go njuovvá bohcco , smávvet ruovjji dakkár bihtáide ahte jođánit máizet ja duššo šnjirahahttit báistos ja dasa vel lasiheastet juogalágan rutta {máid} 	liiko.
+	#$ Čuojahin vuosttas geardde dán lávlaga Várjjat-festiválas mannan vahkkoloahpa ja ollosat 	liikojedje 	{šuoŋa} ja muitalusa , lohká Boine .
+	
+SETPARENT Acc (NEGATE p V)(NEGATE 0 @-FSUBJ>)(NEGATE -1 Acc LINK NOT 0 @>N OR @>A)(NEGATE -1 VFIN LINK *1 COMMA LINK 1 VERBAL-ACTIVITY-V + VFIN) TO (0 Sem/Animate)(0* <CO-Acc-Ani> BARRIER <mv> OR @CVP)(NEGATE 0 <vdic> LINK -1 COMMA LINK *-1 VFIN);
+	## Áššu deaivvai Márjá Sofe Gártnetluohká mánaidgárddis , ja son muitala ahte son 	liiko 	spáppa čiekčat ja šukkulade borrat .
+	
+SETPARENT Com - Sem/Hum - Sem/Ani (NEGATE p V) TO (*0 <TH-Com-*Ani> - Der/Pass BARRIER <mv> OR CS) ;
+	#$ Sámediggi galgá konsulteret eanadoallodepartemeanttain ovdal soahpamušat boazodoallošiehtadusa oktavuođas {álggahuvvojit}.
+    ## Guorahallojuvvon leat árgabeaidáhpá-husat , {maiguin} sii 	liikojit 	buđaldit , mo sin iežaset mielas lea sin dilli , ja mo sii vásihit almmolaš bálvalusaddima .
+    #$ – Dat ii dárbbašuvvo nu olu suohkana bealis , mii čájeha ahte suohkan 	berošta 	iežas nuoraiguin ja hálida sin ruoktot boahtit bargat , loahpaha Barbro Lill Hætta .
+
+SETPARENT ("ovttas")  TO (*0 Com LINK 0* <ovttas><CO-Com-Ani>)  ;
+
+
+	# "map" AGENT role
+	# ----------------
+SET NUMBER = Sg1 OR Du1 OR Pl1 OR Sg2 OR Du2 OR Pl2 OR Sg3 OR Du3 OR Pl3;
+
+SUBSTITUTE N (§AG N) TARGET N IF (0 Nom + Pl) (*0 (V <AG-Nom-Any>) + Pl BARRIER GRAMCHK-S-BOUNDARY1 OR (SUBJ §AG))(0 SUBJ)(NEGATE 0 §AG); #(NEGATE 0* (SUBJ §EX)) ;
+SUBSTITUTE N (§AG N) TARGET N IF (0 Nom + Sg) (*0 (V <AG-Nom-Any>) + Sg BARRIER GRAMCHK-S-BOUNDARY1 OR (SUBJ §AG))(0 SUBJ)(NEGATE 0 §AG);
+SUBSTITUTE Pron (§AG Pron) TARGET Pron IF (0 Pers LINK 0 Nom + $$NUMBER) (*0 (V <AG-Nom-Any>) + $$NUMBER BARRIER GRAMCHK-S-BOUNDARY1 OR (SUBJ §AG))(0 SUBJ)(NEGATE 0 §AG);
+
+SUBSTITUTE Pron (§AG Pron) TARGET Pron IF (0 (Sg Nom)) (*0 (V <AG-Nom-Any>) + Sg3 BARRIER GRAMCHK-S-BOUNDARY1 OR (SUBJ §AG))(0 SUBJ)(NEGATE 0 §AG);
+SUBSTITUTE Pron (§AG Pron) TARGET Pron IF (0 (Pl Nom)) (*0 (V <AG-Nom-Any>) + Pl3 BARRIER GRAMCHK-S-BOUNDARY1 OR (SUBJ §AG))(0 SUBJ)(NEGATE 0 §AG); 
+
+	# "map" REASON role
+	# ----------------
+	# needs to be before the TH rules
+
+SUBSTITUTE N (§RS N) TARGET N IF (0 Acc) (p (V <RS-Acc-Reason>))(0 ("dušši" N Pl Acc))(NEGATE 0 §RS);
+
+SUBSTITUTE N (§RS N) TARGET N IF (0 Loc) (p (V <RS-Loc-Any>))(NEGATE 0 §RS);
+SUBSTITUTE N (§RS N) TARGET Pron IF (0 Loc) (p (V <RS-Loc-Any>))(NEGATE 0 §RS);
+
+SUBSTITUTE Pron (§RS Pron) TARGET Pron IF (0 Com LINK NOT 0 Pers) (p (V <RS-Com-Impers>))(NEGATE 0 §RS); 
+SUBSTITUTE N (§RS N) TARGET N IF (0 Com OR (Pl Loc)) (p (V <RS-Com-Any>))(NEGATE 0 §RS); 
+
+SUBSTITUTE Po (§RS Po) TARGET Po IF (0 ("dihte") OR ("dihtii")) (p (V <RS-dihte-Any>))(NEGATE 0 §RS);
+    
+	# "map" THEME role
+	# ----------------
+    
+SUBSTITUTE Po (§TH Po) TARGET Po IF (p (V <TH-maŋŋái-*Plc>))(0 ("maŋŋái") LINK *-1 Gen LINK NOT 0 Sem/Place) ; 
+
+
+SUBSTITUTE N (§TH N) TARGET N IF (p (V <TH-Ill-Any>))(0 Ill)(NEGATE 0 §TH) ; # a bit scary
+SUBSTITUTE Num (§TH Num) TARGET Num IF (p (V <TH-Ill-Any>))(0 Ill)(NEGATE 0 §TH) ;
+SUBSTITUTE Pron (§TH Pron) TARGET Pron IF (p (V <TH-Ill-Any>))(0 Ill OR ILL-LOC-PRON-ADV)(NEGATE 0 §TH) ;
+	## 
+SUBSTITUTE Adv (§TH Adv) TARGET Adv IF (p (V <TH-Ill-Any>))(0 DOHKO OR ILL-LOC-PRON-ADV)(NEGATE 0 §TH) ;
+
+SUBSTITUTE N (§TH N) TARGET N IF (p (V <TH-Acc-*Plc>))(0 Acc - Sem/Place)(NEGATE 0 §TH) ;
+
+SUBSTITUTE N (§TH N) TARGET N IF (p (V <TH-Acc-Edu>))(0 Acc + Sem/Edu)(NEGATE 0 §TH) ;
+ 
+SUBSTITUTE N (§TH N) TARGET N IF (p (V <TH-Acc-Any>) OR (V <TH-Acc-Body>))(0 Acc)(NEGATE 0 §TH) ;
+SUBSTITUTE Pron (§TH Pron) TARGET Pron IF (p (V <TH-Acc-Any>))(0 Acc)(NEGATE 0 §TH) ;
+SUBSTITUTE Num (§TH Num) TARGET Num IF (p (V <TH-Acc-Any>))(0 Acc)(NEGATE 0 §TH) ;
+	## Makkár gova dát addá luohttámuššii , go geahččá moadde dáhpáhusa áššis ; Olbmot balle iežaset gozihuvvon , ja gáibidedje dieđuid , go eai 	luohttán 	eiseválddiide .
+	
+SUBSTITUTE N (§TH N) TARGET N IF (p (V <TH-Acc-Any><RO-Ess-Any>))(0 Acc)(*0 Ess BARRIER GRAMCHK-S-BOUNDARY)(NEGATE 0 §TH) ;
+SUBSTITUTE Pron (§TH Pron) TARGET Pron IF (p (V <TH-Acc-Any><RO-Ess-Any>))(0 Acc)(*0 Ess BARRIER GRAMCHK-S-BOUNDARY)(NEGATE 0 §TH) ;
+SUBSTITUTE Num (§TH Num) TARGET Num IF (p (V <TH-Acc-Any><RO-Ess-Any>))(0 Acc)(*0 Ess BARRIER GRAMCHK-S-BOUNDARY)(NEGATE 0 §TH) ;
+
+SUBSTITUTE N (§TH N) TARGET N IF (*0 (V <TH-Acc-*Ani>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Acc LINK NOT 0 Sem/Animate)(NEGATE 0 §TH) ;
+
+SUBSTITUTE Pron (§TH Pron) TARGET Pron IF (c (V <TH-Acc-Impers>))(0 Acc LINK 0 Pron)(NEGATE 0 §TH) ;
+	
+SUBSTITUTE N (§TH N) TARGET N IF (p (V <TH-Com-Any>))(0 Com)(NEGATE 0 §TH) ;
+SUBSTITUTE Pron (§TH Pron) TARGET Pron IF (p (V <TH-Com-Any>))(0 Com)(NEGATE 0 §TH) ;
+SUBSTITUTE Adv (§TH Adv) TARGET ("dainna" Adv) IF (p (V <TH-Com-Any>))(NEGATE 0 §TH) ;
+
+SUBSTITUTE N (§TH N) TARGET N IF (p (V <TH-Com-*Ani>))(0 Com - Sem/Animate)(NEGATE 0 §TH) ;
+SUBSTITUTE Pron (§TH Pron) TARGET Pron IF (p (V <TH-Com-*Ani>))(0 Com - Sem/Animate)(NEGATE 0 §TH) ;
+SUBSTITUTE Adv (§TH Adv) TARGET ("dainna" Adv) IF (p (V <TH-Com-*Ani>))(NEGATE 0 §TH) ;
+
+SUBSTITUTE Pron (§TH Pron) TARGET Pron IF (p (V <TH-Com-Impers>))(0 Com)(NEGATE 0 §TH) ;
+SUBSTITUTE Adv (§TH Adv) TARGET Adv IF (p (V <TH-Com-Impers>))(0 ("dainna"))(NEGATE 0 §TH) ;
+
+SUBSTITUTE N (§TH N) TARGET N IF (p (V <TH-Loc-Any>))(0 Loc)(NEGATE 0 §PART)(NEGATE 0 §TH) ;
+SUBSTITUTE V (§TH V) TARGET V IF (p (V <TH-Loc-Any>))(0 (Actio Loc))(NEGATE 0 §TH) ;
+SUBSTITUTE Pron (§TH Pron) TARGET Pron IF (p (V <TH-Loc-Any>))(0 Loc)(NEGATE 0 §PART)(NEGATE 0 §TH) ;
+SUBSTITUTE Num (§TH Num) TARGET Num IF (p (V <TH-Loc-Any>))(0 Loc)(NEGATE 0 §PART)(NEGATE 0 §TH) ;
+
+SUBSTITUTE Po (§TH Po) TARGET Po IF (p (V <TH-ala-*Plc>))(0 ("ala"))(NEGATE 0 §TH) ;
+
+SUBSTITUTE Po (§TH Po) TARGET Po IF (p (V <TH-birra-Any>))(0 ("birra"))(NEGATE 0 §TH) ;
+
+SUBSTITUTE Po (§TH Po) TARGET Po IF (p (V <TH-lusa-Any>))(0 ("lusa"))(NEGATE 0 §TH) ;
+
+SUBSTITUTE Po (§TH Po) TARGET Po IF (p (V <TH-ovddas-Any>))(0 ("ovddas"))(NEGATE 0 §TH) ;
+
+SUBSTITUTE Po (§TH Po) TARGET Po IF (p (V <TH-haga-Any>))(0 ("haga"))(NEGATE 0 §TH) ;
+
+SUBSTITUTE Inf (§TH Inf) TARGET V IF (p (V <TH-Inf>))(NOT 0 @SUBJ)(NEGATE 0 §TH) ;
+	## Liiko 	go du // dudno mánná leat mánáidgárddis ?
+	## Duiskalaš Hans Sieck lea ráhkásnuvvan Finnmárkku lundui ja 	liiko 	maid oaggut .
+SUBSTITUTE Ind (§TH Ind) TARGET V IF (0 (Prs Pl3))(p (V <TH-Inf>))(0 Pl3-INF-V)(NOT 0 @SUBJ)(NEGATE 0 §TH) ;
+	## 
+	
+SUBSTITUTE V (§TH V) TARGET INF-LIKES IF (p (V <TH-Inf>))(NOT 0 @SUBJ)(NEGATE 0 §TH) ;
+SUBSTITUTE PrfPrc (§TH PrfPrc) TARGET V IF (p (V <TH-Acc-Any><TH-PrfPrc>))(NOT 0 @SUBJ)(NEGATE 0 §TH) ;
+	## Olbmot balle iežaset gozihuvvon , ja gáibidedje dieđuid , go eai 	luohttán 	eiseválddiide .
+	
+SUBSTITUTE Actio (§TH Actio) TARGET V IF (0 (Actio Ess))(p (V <TH-Acc-Any><TH-AktioEss>))(NOT 0 @SUBJ)(NEGATE 0 §TH) ;
+
+SUBSTITUTE V (§TH V) TARGET Inf IF (p (V <TH-Acc-Any><TH-Inf>) OR (V <AG-Acc-Ani><TH-Inf>))(NOT 0 @SUBJ)(NEGATE 0 §TH) ;
+	## Muhto son goitge 	balai 	daid šaddat heajos ovdamearkan ássiide .
+	
+SUBSTITUTE Pron (§TH Pron) TARGET Pron IF (p (V <TH-Acc-Any><TH-Inf>))(0 Acc OR Gen)(NEGATE 0 §ANYROLE) ;
+	## 
+SUBSTITUTE N (§TH N) TARGET N IF (p (V <TH-Acc-Any><TH-Inf>))(0 Acc OR Gen)(NEGATE 0 §ANYROLE) ;
+
+SUBSTITUTE A (§TH A) TARGET A IF (p (V <TH-Acc-Any><TH-Inf>))(0 Acc OR Gen LINK 0 OBJ)(NEGATE 0 §ANYROLE) ;
+
+
+SUBSTITUTE Pron (§AG Pron) TARGET Pron IF (p (V <AG-Acc-Ani><TH-Inf>))(0 Acc OR Gen)(NEGATE 0 §ANYROLE) ;
+	## Liná lei čohkkán jávohaga ja diktán {sin} hupmat.
+
+SUBSTITUTE N (§AG N) TARGET N IF (p (V <AG-Acc-Ani><TH-Inf>))(0 Acc OR Gen)(NEGATE 0 §ANYROLE) ;
+
+SUBSTITUTE A (§AG A) TARGET A IF (p (V <AG-Acc-Ani><TH-Inf>))(0 Acc OR Gen LINK 0 OBJ)(NEGATE 0 §ANYROLE) ;
+
+
+SUBSTITUTE V (§AG V) TARGET VFIN IF (*-1 ("ahte"))(0 @FS-OBJ OR @+FAUXV OR @FS-<ADVL LINK p (V <TH-ahte>))(NEGATE 0 §TH OR §AG) ;
+	## Dát fas čájeha ahte geavahedje riggodagaid hui máŋgga ládje , seammás go máhku ja 	liikon 	rievddadii guovlluid mielde ja mearridii makkár buktagiid olbmot geavahedje .
+	## Mii sávvat ahte {sáhttit} váikkuhit dasa ahte mánát geat leat min luhtte maiddai maŋŋil 	liikojit 	atnit goruda sihke falaštallama ja stoahkama bokte .
+	
+SUBSTITUTE V (§TH V) TARGET VFIN IF (*-1 ("go") OR ("daningo"))(0 @FS-OBJ OR @+FAUXV OR @FS-<ADVL LINK p (V <TH-go>))(NEGATE 0 §TH) ;
+	## Sámediggi 	liiko 	go kulturráđđi áŋgiruššá sohkabeliid dássedeattokeahtesvuođa vuostá .
+	## Sámediggi 	liiko 	go Sámi ealáhusráđđi addá doarjaga nissoniidda mat álggahit ealáhusdoaimma .
+
+SUBSTITUTE V (§TH V) TARGET VFIN IF (*-1 ("jus") OR ("jos"))(0 @FS-OBJ OR @+FAUXV OR @FS-<ADVL LINK p (V <TH-jus>))(NEGATE 0 §TH) ;
+	## - Muhto , mu váhnemat eai 	liiko 	jus vilgessáhpaniiguin fal bearehaga ovttastallat .
+
+	
+	# nominal parents
+
+SUBSTITUTE N (§TH N) TARGET N IF (p (N <TH-Ill-Any>))(0 Ill)(NEGATE 0 §TH) ; # not sure about this
+SUBSTITUTE Adv (§TH Adv) TARGET Adv IF (p (N <TH-Ill-Any>))(0 DOHKO)(NEGATE 0 §TH) ;
+
+SUBSTITUTE N (§TH N) TARGET N IF (p (N <TH-Loc-Any>))(0 Loc)(NEGATE 0 §TH) ;
+
+
+		
+	# "map" PATIENT role
+	# -----------------------
+SUBSTITUTE N (§PA N) TARGET N IF (p (V <PA-Acc-Any>) OR (V <PA-Acc-Food>) OR (V <PA-Acc-Ani>))(0 Acc)(NEGATE 0 §ANYROLE) ;
+	## Muhtimat eai dasa 	liiko, muhto dat lea vuoiggalaš , ja buorida min barggu .
+	
+SUBSTITUTE Pron (§PA Pron) TARGET Pron IF (p (V <PA-Acc-Any>) OR (V <PA-Acc-Ani>))(0 Acc)(NEGATE 0 §PA) ;
+	## Don 	liikot 	daid elliide , leat guhká daid kohkken ja dovddat daid .
+	
+SUBSTITUTE N (§PA N) TARGET N IF (p (V <PA-Com-Any>))(0 Com)(NEGATE 0 §ANYROLE) ;
+
+SUBSTITUTE Pron (§PA Pron) TARGET Pron IF (p (V <PA-Com-Any>))(0 Com)(NEGATE 0 §ANYROLE) ;
+
+
+
+	# "map" INSTRUMENT role
+	# -----------------------
+SUBSTITUTE N (§IN N) TARGET N IF (p (V <IN-Acc-Any>))(0 Acc)(NEGATE 0 §IN) ;
+
+SUBSTITUTE Pron (§IN Pron) TARGET Pron IF (p (V <IN-Acc-Any>))(0 Acc)(NEGATE 0 §IN) ;
+
+SUBSTITUTE N (§IN N) TARGET N IF (p (V <IN-Com-Veh>))(0 Com + Sem/Veh)(NEGATE 0 §IN);
+	## Go beassážiid leat čáppa dálkkit ja beaivvádat , de olbmot 	liikojit 	čuoigat meahcis dahe vuodjit {mohtorgielkkáin}.
+
+SUBSTITUTE N (§IN N) TARGET N IF (p (V <IN-Com-Lang>))(0 Com + Sem/Lang)(NEGATE 0 §IN);
+	
+SUBSTITUTE N (§IN N) TARGET N IF (p (V <IN-Com-Any>))(0 Com)(NEGATE 0 §IN);
+SUBSTITUTE Pron (§IN Pron) TARGET Pron IF (p (V <IN-Com-Any>))(0 Com)(NEGATE 0 §IN);
+
+SUBSTITUTE N (§IN N) TARGET N IF (p (V <IN-Acc-Lang>))(0 Acc + Sem/Lang)(NEGATE 0 §IN);	
+	## – 	Liikon 	leat Guovdageainnus , dovddan olbmuid doppe ja beasan sámegiela hállat , lohká Gulsrud , geas maid leat fuolkkit Guovdageainnus .
+
+SUBSTITUTE N (§IN N) TARGET N IF (p (V <IN-Ill-Lang>))(0 Ill + Sem/Lang)(NEGATE 0 §IN);
+	## 
+
+	# "map" PRODUCT role
+	# -----------------------
+SUBSTITUTE N (§PR N) TARGET N IF (p (V <PR-Acc-Any>))(0 Acc)(NEGATE 0 §PR) ;
+	## Danne lea dárbu ásahit čielga {prinsihpaid} ja rievttálaš dásiid vaikke vel buohkat eai 	liikošege 	dasa .
+	
+SUBSTITUTE Pron (§PR Pron) TARGET Pron IF (p (V <PR-Acc-Any>))(0 Acc)(NEGATE 0 §PR) ;
+	## Son vel vuittii lasi 11.000 ruvnnu ja Márjá-Liissá lea hui movtta go lea vuoitán ja ahte olbmot 	liikojit 	maid son lea designen.
+	
+	# "map" BENEFICIARY role
+	# ----------------------
+SUBSTITUTE N (§BE N) TARGET N IF (p (V <BE-Acc-Any>)) (0 Acc)(NEGATE 0 §BE) ;	
+SUBSTITUTE Pron (§BE Pron) TARGET Pron IF (p (V <BE-Acc-Any>)) (0 Acc)(NEGATE 0 §BE) ;	
+SUBSTITUTE N (§BE N) TARGET N IF (p (V <BE-Acc-Ani>)) (0 Sem/Hum + Acc OR Sem/Org + Acc)(NEGATE 0 §BE) ;
+	## Oahpahus galgá veahkehit ohppiid 	liikot 	leat luonddus ja addit sidjiide vejolašvuođa ovdánahttit fantasiija , hábmengálgga ja beroštumi diđoštit birrasa .
+SUBSTITUTE Pron (§BE Pron) TARGET Pron IF (p (V <BE-Acc-Ani>)) (0 Sem/Hum + Acc OR Sem/Org + Acc)(NEGATE 0 §BE) ;
+
+SUBSTITUTE Po (§BE Po) TARGET Po IF (p (V <BE-ovddas-Ani>)) (0 ("ovddas"))(NEGATE 0 §BE) ;
+	## 
+	
+SUBSTITUTE V (§TH V) TARGET Inf IF (p (V <BE-Acc-Ani><TH-Inf>)) (s Sem/Hum + Acc OR Sem/Org + Acc)(NEGATE 0 §TH) ;
+	## Oahpahus galgá veahkehit ohppiid 	liikot 	leat luonddus ja addit sidjiide vejolašvuođa ovdánahttit fantasiija , hábmengálgga ja beroštumi diđoštit birrasa .
+	
+SUBSTITUTE N (§BE N) TARGET N IF (p (V <BE-Acc-Any><TH-AktioLoc>)) (0 Acc OR Gen)(s (Actio Loc))(NEGATE 0 §BE) ;	
+SUBSTITUTE Pron (§BE Pron) TARGET Pron IF (p (V <BE-Acc-Any><TH-AktioLoc>)) (0 Acc OR Gen)(s (Actio Loc))(NEGATE 0 §BE) ;	
+SUBSTITUTE V (§TH V) TARGET V IF (p (V <BE-Acc-Any><TH-AktioLoc>)) (0 (Actio Loc))(s Acc OR Gen)(NEGATE 0 §TH) ;
+
+	# "map" ROLE role
+	# -----------------
+	
+SUBSTITUTE N (§RO N) TARGET N IF (p (V <TH-Acc-Any><RO-Ess-Any>) LINK c §TH)(0 Ess)(NEGATE 0 §RO) ;   
+SUBSTITUTE N (§RO N) TARGET N IF (p (V <TH-Acc-Any><RO-Ess-Any>) LINK c §TH)(0 Ess)(NEGATE 0 §RO) ; # a bit scary
+SUBSTITUTE Num (§RO Num) TARGET Num IF (p (V <TH-Acc-Any><RO-Ess-Any>) LINK c §TH)(0 Ess)(NEGATE 0 §RO) ;
+SUBSTITUTE Pron (§RO Pron) TARGET Pron IF (p (V <TH-Acc-Any><RO-Ess-Any>) LINK c §TH)(0 Ess)(NEGATE 0 §RO) ;
+
+
+SUBSTITUTE N (§RO N) TARGET N IF (p (V <RO-Ess-Any>))(0 Ess)(NEGATE 0 §RO) ;   
+SUBSTITUTE Pron (§RO Pron) TARGET Pron IF (p (V <RO-Ess-Any>))(0 Ess)(NEGATE 0 §RO) ;
+	## Dat gávpot mii nagoda   čohket  eanemus cummásteddjiid , vuoitá ja oažžu čevllohaddat Norggameašttirin , ja párain mat servet , lea ges vejolaš vuorbádemiin vuoitit 5000 ruvdnosaš skeaŋkakoartta , ráhkisvuođa lupmui .
+
+	# "map" TOPIC role
+	# -----------------
+	
+SUBSTITUTE N (§TO N) TARGET N IF (p (V <TO-Acc-*Ani>))(0 Acc - §ANYROLE)(NEGATE 0 §TO) ;  
+SUBSTITUTE Num (§TO Num) TARGET Num IF (p (V <TO-Acc-*Ani>))(0 Acc)(NEGATE 0 §TO) ;
+SUBSTITUTE Pron (§TO Pron) TARGET Pron IF (p (V <TO-Acc-*Ani>))(0 Ill)(NEGATE 0 §TO) ;
+
+	
+	# "map" POSSESSOR role
+	# -----------------------
+SUBSTITUTE N (§PO N) TARGET N IF (p (V <TH-Nom-Any><PO-Ill-Any>))(0 Ill)(NEGATE 0 §PO) ;
+	## Lávdegotti lahtut , geat gullet Ovddádusbellodahkii , Olgežii ja Kristtalaš álbmotbellodahkii , eai 	liiko 	importasuodjái , mii livččii hatti vuođđun .
+SUBSTITUTE Pron (§PO Pron) TARGET Pron IF (p (V <TH-Nom-Any><PO-Ill-Any>))(0 Ill)(NEGATE 0 §PO) ;
+	## Dasa gullá earet eará boastta sirret ja registreret , čuovvut áššemeannudeami siskkáldas bargodábiid ja njuolggadusčállosiid ektui , gieđahallat dieđuid , oaidnit dárbbuid ,   čohket  ja gaskkustit dieđuid departemeantta bargiide .
+	
+	# "map" EXPERIENCER role
+	# -----------------------
+SUBSTITUTE N (§EX N) TARGET N IF (0 Sem/Animate + Nom) (p (V <EX-Nom-Ani>))(0 SUBJ)(NEGATE 0 §ANYROLE); 
+
+#SUBSTITUTE Pron (§EX Pron) TARGET Pron IF (0 Pers LINK 0 Nom + $$NUMBER) (p (V <EX-Nom-Ani>)  + $$NUMBER BARRIER GRAMCHK-S-BOUNDARY1 OR (SUBJ §EX))(0 SUBJ)(NEGATE 0 §ANYROLE); #(NEGATE 0* (SUBJ §EX) BARRIER GRAMCHK-S-BOUNDARY1 OR @CVP OR GRAMCHK-VFIN) ;	
+
+SUBSTITUTE Pron (§EX Pron) TARGET Pron IF (0 (Sg Nom)) (p (V <EX-Nom-Ani>) + Sg3)(0 SUBJ)(NEGATE 0 §ANYROLE);
+
+SUBSTITUTE N (§EX N) TARGET N IF (0 Acc) (p (V <EX-Acc-Any>))(NEGATE 0 §ANYROLE) ; 
+SUBSTITUTE Pron (§EX Pron) TARGET Pron IF (0 Acc) (p (V <EX-Acc-Any>))(NEGATE 0 §ANYROLE) ;
+	## Sii 	liikojedje 	sihke čiehkástallat ja maid gárvodit ja baldit iežáid .
+
+	# "map" LOCATION role
+	# -------------------
+	
+SUBSTITUTE N (§LO N) TARGET N IF (p (V <LO-Loc-Plc>) OR (V <LO-Loc-Any>))(0 Loc + Sem/Place OR Loc + Sem/Furn OR Loc + Sem/Build OR Loc + Sem/Org OR Loc + Sem/Veh)(NEGATE 0 §LO OR §SO) ; 
+	## SETCHILD <LO-Loc-Plc> OR <LO-Loc-Any> TO (1 Sem/Place + Loc);
+	## Rathke válddahallá sápmelaččaid liggosit ja 	liikomiin, maŋŋel go lea fitnan {Njávdámis} 1802:s.
+	## 	Liiko 	go du // dudno mánná leat {mánáidgárddis}?
+	
+SUBSTITUTE N (§LO N) TARGET N IF (p (V <LO-Ill-Any>))(0 Ill + Sem/Place)(NEGATE 0 §LO OR §SO);
+	## Dan dihte sii eai diehtán buorebu , ja sii 	liikojedje 	váhneneatnamii ( ) ja eallinvuohkái nu bures , ahte seammá vuostemielain sii dan guođáše go bahádahkki jápminduopmobáikái manašii (Leem 1767 : 172).
+	
+SUBSTITUTE N (§LO N) TARGET N IF (p (V <LO-Acc-Time>))(0 Acc + Sem/Time)(NEGATE 0 §LO OR §SO) ; 
+	## 	mon álggán boahtte vahku bargagoahtit d. 700.
+	
+SUBSTITUTE Adv (§LO Adv) TARGET Adv IF (p (V <LO-Loc-Plc>) OR (V <LO-Loc-Any>))(0 Adv + Sem/Place)(NEGATE 0 §LO OR §SO) ; 
+	## Jos don it 	liiko 	, dus ii leat bággu leat doppe , don válljet ieš , dadjá Marita .
+	
+SUBSTITUTE Pron (§LO Pron) TARGET Pron IF (p (V <LO-Loc-Plc>) OR (V <LO-Loc-Any>))(0 Rel - Sem/Hum)(NEGATE 0 §LO OR §SO) ;
+
+SUBSTITUTE Adv (§LO Adv) TARGET Adv IF (p (V <LO-Loc-Plc>) OR (V <LO-Loc-Any>))(0 DOPPE)(NEGATE 0 §LO OR §SO) ; 
+
+ 
+	# "map" RECIPIENT role
+	# --------------------	
+SUBSTITUTE N (§RE N) TARGET N IF (p (V <RE-Loc-Ani>))(0 Loc)(NEGATE 0 §RE) ;
+	## Visot journalisttat olles dán riikkas leat Børre Knudsenis ja Strandebarm báhpain jearran manne sii eai hálit homofiila olbmuid girkolaš virggiide , ja manne eai 	liiko 	abortii .
+SUBSTITUTE Pron (§RE Pron) TARGET Pron IF (p (V <RE-Loc-Ani>))(0 Loc)(NEGATE 0 §RE) ;
+
+SUBSTITUTE N (§RE N) TARGET N IF (p (V <RE-Acc-Ani>))(0 Acc)(NEGATE 0 §RE) ;
+	## 
+SUBSTITUTE Pron (§RE Pron) TARGET Pron IF (p (V <RE-Acc-Ani>))(0 Acc)(NEGATE 0 §RE) ;
+
+SUBSTITUTE N (§RE N) TARGET N IF (p (V <RE-Ill-Ani><TH-Acc-*Ani>) OR (V <TH-Acc-Any><RE-Ill-Any>))(0 Ill)(s Acc)(NEGATE 0 §RE) ;
+	
+SUBSTITUTE Pron (§RE Pron) TARGET Pron IF (p (V <RE-Ill-Ani><TH-Acc-*Ani>) OR (V <TH-Acc-Any><RE-Ill-Any>))(0 Ill)(s Acc)(NEGATE 0 §RE) ;
+	## Sámediggi 	liiko 	go Sámi ealáhusráđđi addá doarjaga nissoniidda mat álggahit ealáhusdoaimma.
+
+SUBSTITUTE N (§RE N) TARGET N IF (p (V <RE-Ill-Ani>))(0 Ill)(NEGATE 0 §RE) ;
+SUBSTITUTE Pron (§RE Pron) TARGET Pron IF (p (V <RE-Ill-Ani>))(0 Ill)(NEGATE 0 §RE) ;	
+	 
+	# "map" CO-Agent role
+	# --------------------	
+
+
+SUBSTITUTE N (§CO N) TARGET N IF (p (V <CO-Acc-Ani>))(0 Acc + Sem/Animate)(NEGATE 0 §CO) ;
+	## Diehttelas boazu 	liiko 	varas , ruona šattuide juste seamma ládje go mii olbmot liikojit varas láibái.
+	
+SUBSTITUTE N (§CO N) TARGET N IF (p (V <CO-Com-Ani>))(0 Com + Sem/Animate)(NEGATE 0 §CO) ;	
+	## Son 	liiko 	ovttastallat earáiguin ja deaivvada ja oahpásnuvvá álkit olbmuiguin .
+	
+SUBSTITUTE Pron (§CO Pron) TARGET Pron IF (p (V <CO-Com-Ani>))(0 Com + Sem/Animate)(NEGATE 0 §CO) ;
+ 
+	# "map" MANNER role
+	# --------------------	
+	
+SUBSTITUTE Adv (§MA Adv) TARGET Adv IF (p (V <MA-Adv-Manner>))(0 MANNER-ADV)(NOT 0 §ANYROLE) ;
+	## 
+SUBSTITUTE CS (§MA CS) TARGET CS IF (p (V <MA-Adv-Manner>))(0 MANNER-ADV OR ("nugo"))(NOT 0 §ANYROLE) ;
+	#NOT SURE..
+	
+	# "map" EXTENT role
+	# --------------------	
+	
+SUBSTITUTE N (§XT N) TARGET N IF (*0 (V <XT-Com-Measure>) BARRIER GRAMCHK-S-BOUNDARY1 OR GRAMCHK-VFIN)(0 Com OR (Pl Loc))(NEGATE 0 §XT) ; ;
+	## Norgalaččat 	liikojit 	pestoi , maŋemus jagiid lea pesto johtu loktanan 29 proseanttain Norggas .
+
+
+	# "map" DESTINATION role
+	# ----------------------	
+
+SUBSTITUTE N (§DE N) TARGET N IF (p (V <DE-Ill-Plc>))(0 Ill LINK 0 Sem/Place)(NEGATE 0 §DE) ;
+SUBSTITUTE Adv (§DE Adv) TARGET Adv IF (p (V <DE-Ill-Plc>))(0 DOHKO)(NEGATE 0 §DE) ; 
+ 
+SUBSTITUTE N (§DE N) TARGET N IF (*0 (V <DE-Ill-Any>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Ill)(NEGATE 0 §DE) ; 
+SUBSTITUTE Pron (§DE Pron) TARGET Pron IF (*0 (V <DE-Ill-Any>) BARRIER GRAMCHK-S-BOUNDARY1)(0 Ill)(NEGATE 0 §DE) ; 
+
+SUBSTITUTE Po (§DE Po) TARGET DE-ILL-ADP IF (p (V <DE-Ill-Plc>))(NEGATE 0 §DE);
+SUBSTITUTE Po (§DE Po) TARGET ("sisa") IF (p (V <DE-sisa-Build>))(-1 Gen LINK 0 Sem/Build)(NEGATE 0 §DE) ; 
+
+	# "map" ORIGIN role
+	# -----------------
+
+SUBSTITUTE N (§OR N) TARGET N IF (p (V <TH-Acc-Any><OR-Loc-Any>)) (0 Loc)(s Acc OR Gen)(NEGATE 0 §OR) ;
+SUBSTITUTE Pron (§OR Pron) TARGET Pron IF (p (V <TH-Acc-Any><OR-Loc-Any>)) (0 Loc)(s Acc OR Gen)(NEGATE 0 §OR) ;
+
+
+	# "map" ATTRIBUTE role
+	# ---------------------
+
+SUBSTITUTE N (§AT N) TARGET N IF (p (V <AT-Loc-Mat>)) (0 Sem/Mat + (Sg Loc));
+	## Dat mearkkaša ahte son ráhkada niibbii, guvssiid ja náhpiid, dahje buot mii lea muoras ja čoarvvis. 
+
+	# "map" REFERENT role
+	# -----------------
+
+SUBSTITUTE N (§RF N) TARGET N IF (p (V <RF-Ill-Any>)) (0 Ill)(NEGATE 0 §RF) ;
+
+SUBSTITUTE Pron (§RF N) TARGET Pron IF (p (V <RF-Ill-Any>)) (0 Ill)(NEGATE 0 §RF) ;
+
+
+	# "map" SOURCE role
+	# -----------------
+	
+SUBSTITUTE N (§SO N) TARGET N IF (p (V <SO-Loc-*Ani>)) (0 Loc - Sem/Animate)(NEGATE 0 §SO OR §LO) ;
+SUBSTITUTE Pron (§SO Pron) TARGET Pron IF (p (V <SO-Loc-*Ani>)) (0 Loc - Sem/Animate)(NEGATE 0 §SO OR §LO) ;
+
+	# "map" PURPOSE role
+	# -----------------
+	
+SUBSTITUTE V (§PU V) TARGET Inf IF (p (V <PU-Inf>))(NEGATE 0 §PU) ;
+SUBSTITUTE V (§PU V) TARGET (Actio Ess) IF (p (V <PU-AktioEss>))(NEGATE 0 §PU) ;
+
+SUBSTITUTE N (§PU N) TARGET N IF (p (<PU-Ill-*Ani>))(0 Ill)(NEGATE 0 §PU);
+
+	
+	# LATE FS-ARGUMENT MAPPING
+	# ------------------------
+	
+SETCHILD (V <TH-FS>) (NONE c §TH) TO (*1 @FS-<ADVL BARRIER <mv>);
+	## Gaskaboddosaš presideanta Sámedikkis , Laila Susanne Vars , 	liiko 	maid gullá .
+SETCHILD (V <TH-FS-Qst>) (NONE c §TH) TO (*1 VFIN + Qst BARRIER <mv>);
+SETCHILD (V <TH-FS-Qst>) (NONE c §TH) (NEGATE *3 VFIN BARRIER GRAMCHK-S-BOUNDARY OR CC LINK NOT 0 Inf) TO (2 ("go") LINK -1 VFIN - Qst OR Inf - Qst);
+	## Dasto jearaimet 	beroštit 	go oahppat sámegiela buorebut , ja jos nu , de man suorggis ja mo háliidit oahppat .
+	#$ – Evy ii leat čilgen maidege , sutnje lea leamaš álkit báhtarit fatnasis , 	ballá 	{duššat} go fanas vuodju , dan sadjái go iežas várjalit , nu han dahká go ii vástit .
+	## Lea Mearkalávdegotti duohken mearridit addet go mearka vai eai , lohká son. 
+	
+SETCHILD (V <TH-FS-Qst>) (NONE c §TH) TO (4 ("go") LINK -1 VFIN - Qst OR Inf - Qst LINK -1 CC LINK -1 VFIN - Qst OR Inf - Qst);
+	## 
+	
+LIST FS-QPRON-ADV = ("gii" Pron Rel) "goas" "gokko" "gos" "gosa" "govt" ("got" Adv) "makkár" "man" "manne" "manin" ("mii" Pron Rel) ("mii" Pron Indef) "mo" "mot" "mov" "movt" ("nugo" @CVP) ;
+
+SETCHILD (V <TH-FS-Qpron>) TO (*1 FS-QPRON-ADV BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR Inf OR OBJ LINK *1 VFIN BARRIER VFIN);
+	#$ Mii hálidit alcceseamet dakkár politihkkariid geain leat viidát jurdagat go hálbbes viidni , ja mii hástalit sin 	beroštit 	buohkaid daid olbmuid {geat} guddet alkoholnođiid iežaset olggiid alde .
+	## Dolken 	iežan sániide , ja hálidin geahččat maid earát čállet , muitala Mari Boine .
+	
+SETCHILD (V <TH-FS-Qpron>) TO (1 ("maid") LINK *1 VFIN BARRIER VFIN);
+	## Seamma áigge eará sajis máilmmis Statoil čevllohallá ruoná politihkainis ja verddevuođainis eamiálbmogiiguin dego sámiin , geat eai oro diehtimin dahje 	berošteamen 	{maid} Statoil lea bargamin Kanadas ; mo dat lea mirkoheamen eamiálbmogiid eatnamiid ja jogaid dahje duššadeamen sin eallinvugiid , ealáhusaid ja dearvvašvuođa .
+	
+SETCHILD (V <RE-Loc-Ani><TH-FS-Qpron>) TO (c Loc + Sem/Animate LINK 1 ("maid") OR ("mii" Pron Pl Acc) LINK *1 VFIN BARRIER VFIN);
+	## Stuorra buvda Steen & Strøm lea jearran 1600 	olbmos maid 	sii ohcalit gávpeguovddážis .
+	
+
+#SETCHILD (V <TH-Ill-Any>) (NEGATE c §TH) TO (*1 @FS-<ADVL BARRIER <mv>);
+	## *Gaskaboddosaš presideanta Sámedikkis , Laila Susanne Vars , 	liiko 	maid gullá . - dasa maid gullá
+	#$ Jos don it 	liiko 	, dus ii leat bággu {leat} doppe , don válljet ieš , dadjá Marita .
+	
+	
+	
+SETCHILD (V <TH-ahte>) (NEGATE c §TH) TO (1 ("ahte") LINK *1 @FS-OBJ OR @+FAUXV OR @+FMAINV LINK NOT 0 (N &SUGGEST));
+	## - 	Balan 	gal go ealga- ja rievssatbivdu álgá , ahte olusat mannet meahccái ja bargu bisána , dadjá son .
+	
+SUBSTITUTE V (§TH V) TARGET VFIN IF (p (V <TH-FS>))(NEGATE 0 §TH) ; 
+SUBSTITUTE V (§TH V) TARGET VFIN + Qst IF (p (V <TH-FS-Qst>))(NEGATE 0 §TH) ;
+SUBSTITUTE V (§TH V) TARGET VFIN - Qst OR Inf - Qst IF (p (V <TH-FS-Qst>))(1 ("go"))(NEGATE 0 §TH) ;
+SUBSTITUTE V (§TH V) TARGET VFIN IF (p (V <TH-FS-Qpron>))(NEGATE 0 §TH) ;
+
+LIST MUITALIT = "árvalit" "bivdit" "boagustit" "cealkit" "cuoigut" "čilget" "čurvet" "čuorvut" "dadjat" "geardduhit" "gielistit" "gilljut" "hállat" "hoallat" "huikit" "huikkádit" "imaštallat" "jearrat" "jievžat"  "juoigat" "jurdilit" "jurddašit" "kommenteret" "lávlut" "lasihit" "loahpahit" "lohkat" "lohpidit" "máidnut" "máinnašit" "muitalit" "muittuhit" "nágget" "njávggádit" "oaivvildit" "rávvet" "savkalit" "sárdnidit" "šuohkihit" "váidalit" "váruhit" "vástidit" ;
+    ## Njáv, váidalii Busi ja gávastalai.
+    ## Njáv, njávggádii Busi fas ja fanahalai.    
+
+SUBSTITUTE V (§TH V) TARGET VFIN IF (p (V <RE-Loc-Ani><TH-FS-Qpron>))(0 VFIN)(NEGATE 0 §TH) ;
+	## Stuorra buvda Steen & Strøm lea jearran 1600 	olbmos maid 	sii ohcalit gávpeguovddážis .
+
+LIST BIRRA-V = "jorggihit" "geahččat" "bassat" "dohppet" "mannat" ;
+    # verbs that ask for birra as a postposition are HUPMAT
+SETPARENT ("birra") TO (*0 BIRRA-V OR HUPMAT BARRIER GRAMCHK-S-BOUNDARY OR BIRRA-V OR HUPMAT) ; # Adv meaning
+
+
+LIST RASTA-V = "čuohppat" "sahát" "spoahkehit" "spoahkihit" "čuolastit" "čuohpastit" "mannat" "ráhkat"  ;
+	## Leago son dat justa nu mo Hans Rasmus muitala, ahte viessu lea sahájuvvon rastá go isit ja eamit earráneigga?
+
+
+    
+SUBSTITUTE V (V <copula>) TARGET ("dáidit") OR ("gártat") OR ("leahkit") OR ("leat") OR ("soaitit") OR ("šaddat") OR ("veadjit") IF (NEGATE 0 (<copula>));
+SUBSTITUTE V (V <copula>) TARGET ("orrut") IF (NEGATE *0 Sem/Plc + Loc OR PLACE + Loc BARRIER GRAMCHK-S-BOUNDARY)(NEGATE 0 (<copula>)) ;
+
+LIST TIME-QUANT = "mánnu" "beaivi" "jahki" "jándor" "čuohtejahki" "dálvi" "diibmu" "jahkebealle" "jahkečuohti" "kaleanddarjahki" "minukta" "sekunda" "njealjádasjahki" "tiibma" "minuhtta" "vahkku"  "duhátjahki" "logijahki" "jahkebealle" "jahkebealli" "jahkeduhát" "jahkelohki" "jahkenjealjehas" "beallejahki" "lahkkejahki" ;
+
+   
+    
+    # adposition and case
+    # ----------------------
+
+LIST ONLY-PO = "bakte" "bakto" "dáfos" "dáfun" "dáfus" "dihtii" "duohkai" "ektui" "heret" "hárrai" "lusa" "mađo" "mađu" "maŋŋái" "maŋil" "muttos" "njeaiga" "njeaigga" "olggil" "ovdii" "ovddal" "ovddan" "ovdii" "rájes" "seahká" "váste" "viđá" "vuođul" ;
+    # ektui according to Konne mostly a plural noun ("eaktu")
+
+LIST ONLY-PR = "earet" "earret" "gaskkal" "hahttá" ;
+
+LIST PO-PR = "ovddabeal" "olggobeal" "olgešbeallái" "olgobealde" "olggobealde" "olggobeale" "olggobeali" "olggobeallai" "olggobeallái" "davábealde" "davábeale" "davábeali" "davábeallai" "davábeallái" "davágeaže" "oarjjabealde" "oarjjabeale" "oarjjabeali" "oarjjabeallai" "oarjjabeallái" "lulábealde" "lulábeale" "lulábeali" "lulábeallai" "lulábeallái" "lulágeaže" "máttábealde" "máttábeale" "máttábeali" "máttábeallai" "máttábeallái" "máttágeaže" "nuorttabealde" "nuorttabeale" "nuorttabeali" "nuorttabeallai" "nuorttabeallái" "nuorttageaže" "duogábeal" "duogábealde" "duogábeale" "duogábeali" "duogábeallai" "duogábeallái" "birra" "čađa" "gaskal" "gaskan" "gasku" "geahčai" "geahčil" "geažes" "geažis" "geažil" "guhkkot" "guhkkut" "gullut" "guovdalas" "guovddáš" "guovdelas" "guovdelaš" "guovdu" "gurutbeal" "gurutbeale" "gurutbeali" "gurutbealde" "gurutbeallai" "gurutbeallái" "hárrái" "hárráj" "labi" "labis" "lahka" "loahpageahčen" "maŋŋá" "maŋŋil" "maŋŋegeahčai" "maŋŋegeahčen" "maŋŋel" "maŋŋelaš" "mannjel" "meaddel" "meaddil" "meattil" "meattá" "miehtá" "nuorttabealde" "oaidnut" "oasil" "oarjjábeal" "oarjjageaže" "olis" "ollái" "ovdabeal" "ovdal" "ovdalaš" "rastá" "sivas" "skivhlái" "suktii" "várte" "vehkii" "veardde" "vuolil" "vuollel" "vuollil" "vulobeal" "vulobeale" "vulobealli" "vulobealde" "vulobeallai" "vulobeallái" "vuolábeal" "vuolábeale" "vuolábeali" "vuolábealde" "vuolábeallai" "vuolábeallái" "vuostá" "vuostái" "ijabealde" "ijabeallai" "ijabeallái" ;
+
+LIST PO-ADV = "olggobealde" "olggobeale" "olggobeali" "olggobeallái" "davábealde" "davábeale" "davábeallai" "davágeaže" "oarjjabealde" "oarjjabeale" "oarjjabeallai" "lulábealde" "lulábeale" "lulábeallai" "lulágeaže" "nuorttabealde" "nuorttabeale" "nuorttabeallai" "nuorttageaže" "duogábealde" "duogábeale" "duogábeallai" "birra" "čađa" "duoge" "duogi" "duohkái" "duohken" "duohkin" "fárrui" "fárus" "gaskal" "gaskan" "gaskii" "gaskka" "gaskkas" "gasku" "geahčen" "guora" "guoras" "gurrii" "haga" "lahka" "ládje" "loahpageahčen" "mađe" "mađi" "maŋŋil" "maŋŋá" "maŋŋegeahčen" "maŋŋel" "maŋŋelaš" "maŋŋelis" "maŋŋelaččas" "meattá" "miehtá" "mielde" "nala" "nalde" "nuorttabealde" "oarjjageaže" "ovdal" "ovdalaš" "ovdalis" "ovdalaččas" "ovddabeale" "ovddabealde" "ovddabeallai" "ovddas" "ráigge" "rádjai" "rádjái" "rájis" "rastá" "sajis" "sisa" "siskkil" "siste" "várás" "vuolde" "vuolil" "vuollai" "vuollái" "vuollel" "vuollil" "vulobeale" "vulobealde" "vulobeallai" "vuolábeale" "vuolábealde" "vuolábeallai" "vuostá" "vuostái" "ijabealde" "ijabeallái" ;
+
+LIST PO-N = "olgešbeallái" "olggobeale" "olggobeali" "olggobeallái" "davábeale" "davábeali" "davábeallái" "davágeaže" "oarjjabeale" "oarjjabeali" "oarjjabeallái" "lulábeale" "lulábeali" "lulábeallái" "lulágeaže" "nuorttabeale" "nuorttabeali" "nuorttageaže" "duogábealde" "duogábeale" "duogábeali" "duogábeallái" "čađa" "dihte" "duoge" "duogi" "duohkái" "duohkin" "fárrui" "fárus" "gaskan" "gaskii" "gaskka" "gaskkas" "geažis" "guhkkut" "guora" "guoras" "guovddáš" "gurrii" "gurutbeale" "gurutbeali" "gurutbeallái" "hárrái" "mađe" "mađi" "maŋis" "maŋŋái" "mano" "manu" "miel" "oarjjageaže" "olis" "ollái" "ovdasii" "ovddabeale" "ovddabeallái" "ovddabeali" "ovddas" "ráigge" "rádjái" "ráje" "ráji" "rájis" "sadjái" "sajis" "sivas" "várás" "vehkii" "veagas" "veardde" "vehkiin" "viđe" "vuđđosin" "vuole" "vuoli" "vuolin" "vuolis" "vuollái" "vulobeale" "vulobealli" "vulobeallái" "vuolábeale" "vuolábeali" "vuolábeallái" "vuostá" "vuostái" "ijabeallái" ;
+
+LIST PO-V = "bokte" "bokti" "dihte" "gaskal" "gaskan" "gaskka" "gaskkas" "gasku" "geahčai" "guhkkot" "guhkkut" "gullut" "guora" "guoras" "gurrii" "hárrái" "luhtte" "mano" "manu" "meaddil" "miehtá" "nala" "oaidnut" "olis" "ollái" "ovddas" "sajes" "sajis" "siskkil" "siste"  "várás" "vuolil" "vuollái" ;
+
+LIST PO-A = "olgešbeallái" "guovddáš" "gurutbeale" "gurutbeali" "gurutbeallái" "lahka" "maŋŋelaččas" "ovdalaččas" ;
+
+LIST PO-CS = "mađe" "mađi" ;
+
+SETPARENT Gen (NONE p V)(NEGATE 0 @>N LINK 1 Nom) TO (*1 Po  BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR Inf LINK 0 ONLY-PO);
+    # dan rájes
+SETPARENT Gen (NEGATE 0 @>N LINK 1 N)(NONE p V) TO (*1C Po BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR Inf);
+	# this rule depends on good disambiguation (specific Po rules for the disambiguator)
+	#$ Son 	ballá 	Billávuona skuvlla heaittiheapmi váikkuhit garrasit mearrasámi kultuvrii ja sáhttá maid áiggi mielde jávkadit dán erenoamáš kultuvrra .
+	
+SETPARENT Gen (NONE p Po OR Pr) TO (*-1 NUMERALS BARRIER N OR REALCLB OR PUNCT LINK 0 Nom OR Acc LINK NOT 0 Ord); 
+	#$ Jus lea nu, de háliida boazodoallohoavda ráŋggáštit boazoeaiggádiid, geain almmolaš lohkkon boazolohku lea 25% eambbo, go dat maid {boazodoallodieđáhusaid} bokte leat muitalan hálddahussii.
+
+SETPARENT Ill TO (-1 CC LINK -1 Ill LINK *-1 ILLV) ;
+
+#(NEGATE 0 Num)(NEGATE *1 A OR N BARRIER NOT-QMARK)(NEGATE *-1 COMMA BARRIER NOT-QMARK);    
+    ## 10 jagi rajes
+   
+SETPARENT Gen TO (*-1 Pr BARRIER Gen OR GRAMCHK-NPNH LINK 0 ONLY-PR);
+    # earret dan
+SETPARENT Gen (NEGATE -1 Pr LINK -1 @>P + Sem/Plc) TO (-*1C Pr BARRIER GRAMCHK-NPNHA);
+	## Dáiddáriid dilli lea maid sakka hedjonan dan rájes go biddjui Sámedikki vuollái, logai dáiddár Synnøve Persen ja čujuhii earret eará dasa go Sámediggi ii čuvvon dáiddárorganisašuvnnaid rávvagiid doalahit fágalávdegottiid  
+    ## Lei okta dánskalaš, ruoŧŧalaš ja norgalaš geat ledje veahtán, ahte ii oktage sis sáhte vázzit rastá ovtta šaldi mas leat nálut, nu ahte eai daja au, au. 
+SETPARENT Gen TO (*-1 Pr + ONLY-PR BARRIER Gen OR GRAMCHK-S-BOUNDARY LINK 1 Num - ("okta"));
+SETPARENT Gen TO (0 ("okta") LINK -1 Pr LINK 2 Gen); 
+
+	# important rule to match noun phrase modifiers with their nominal heads 
+	# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - -
+
+SETPARENT (Pron Sem/Hum Pers Gen) OR (Pron Dem Gen) TO (-1 Pr LINK 2 (N Nom));
+	## De dadjá rieban bohkái: –Bija čorvviid muvrra vuostá ja mana guovtti maŋŋejuolggi nala, de sáhtán mun ruohtastit badjel du čielgi ja čorvviid ja geassit du maid bajás iežan mielde.
+	## Lea máŋga jagiid leamaš garra digaštallan guovlludoarjaga birra, man earret eará Deatnu ja Guovdageaidnu eai leat fidnen máŋgga jahkái, go dan guovtti suohkanis leat ássit juste badjel {dan} olmmošlogumearri mii attášii miljunlasáhus bušehttii.
+
+LIST BIRRA-V = "jorggihit" "geahččat" "bassat" "dohppet" "mannat" ;
+    # verbs that ask for birra as a postposition are HUPMAT
+SETPARENT ("birra") TO (*0 BIRRA-V OR HUPMAT BARRIER GRAMCHK-S-BOUNDARY OR BIRRA-V OR HUPMAT) ; # Adv meaning
+
+SETCHILD ("birra") TO (1 GRAMCHK-S-BOUNDARY OR COMMA OR BOS LINK *-2 Gen BARRIER GRAMCHK-S-BOUNDARY) ;
+
+LIST ADV-PO = "bakte" ;
+LIST PP-ADV = "dakko" ;
+
+SETCHILD ADV-PO TO (-1 PP-ADV) ;
+	## “Riikkaidgaskasaš vahkku” jurdda lea hástalit eanas norgalaččaid searvat – ja dakko bakte duohtan dahkat daid vuordámušaid ja sávaldagaid mat leat duhátjahkeulbmilid vuođđun.
+	#Duommá gillet go lásihit seahtaide? huh?
+
+# adverbs
+# phrasal verbs:
+# mielde: MIELDE-V
+# vuollái: čállit
+# birra: jorggistit, mannat
+# čađa: mannat 
+
     
     # <TH-FS-Qpron> valencies
     # - - - - - - - - - - - -
@@ -3888,7 +5596,15 @@ COPY:hyphen (Ex/V IV Der/NomAct N Cmp/SgNom Cmp/SplitR Cmp &SUGGEST) EXCEPT (V I
     # - - - - - - - - - - - -
         
     ##  – Mii leat iskkagoahttán čiekčiid sámi almmáiolbmojovkui, ja diehttit ahte leat ollu ráidočiekčamat, danin avžžuhan olbmuid cavgilit čiekčiid birra dien áigodahki, loahpaha Ann Kristine Balto. (real-ImprtPl2-Inf)
-    
+
+
+
+	## END VALENCIES AND DEPENDENCIES (added 27.12.2020)
+	################################################
+	
+ 	# ====================== #
+	         SECTION         # 2 After dependency section starts
+	# ====================== #    
 	
 	
 	# Real word error rules (added 6.11.2019 + 21.11.2019)
