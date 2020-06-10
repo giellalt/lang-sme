@@ -7,10 +7,13 @@
 # sh devtools/prop_minip.sh VUONA | dsmeNorm | less
 # sh devtools/prop_minip.sh Hirškikkâ | dsmeNorm 
 
+HLOOKUP=$(echo $HLOOKUP)
+GTHOME=$(echo $GTHOME)
+
 
 PATTERN=$1
 L_FILE="in.txt"
-cut -d '!' -f1 src/fst/stems/sme-propernouns.lexc | grep $PATTERN | cut -d ':' -f1 | tr -d '%'>$L_FILE
+cut -d '!' -f1 src/fst/generated_files/smi-sme-propernouns.lexc | grep $PATTERN | tr '+' ':'| cut -d ':' -f1 | tr -d '%'>$L_FILE
 
 P_FILE="test/data/testpropparadigm.txt"
 
@@ -18,7 +21,7 @@ for lemma in $(cat $L_FILE);
 do
  for form in $(cat $P_FILE);
  do
-   echo "${lemma}${form}" | $LOOKUP $GTLANGS/lang-sme/src/generator-gt-norm.xfst
+   echo "${lemma}${form}" | $HLOOKUP $GTLANGS/lang-sme/src/generator-gt-norm.hfstol
  done
 done
 
