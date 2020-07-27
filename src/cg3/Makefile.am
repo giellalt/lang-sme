@@ -27,6 +27,13 @@ endif # WANT_SYNTAX
 %.cg3: $(GIELLA_SHARED)/smi/src/cg3/%.cg3
 	$(AM_V_CP)cp -f $< $@
 
+%-postspell.cg3: %.cg3
+	$(GNUSED) -e 's/^# Error tags$$/\0\n\nLIST <spelled> = <spelled> ;/' \
+		-e 's/^SUBSTITUTE \(.*\);/SUBSTITUTE \1 (0 <spelled>)  ;/' \
+		< $< > $@
+
+GT_CG_LOCAL_SRCS+=valency-postspell.cg3
+
 ##################################################################
 #### END: Add local processing instructions ABOVE this line ######
 ##################################################################
