@@ -69,7 +69,7 @@ GT_LEXC_L2_SRCS=\
 			$(L2)
 
 # Set this to the names of all generated lexc files, if any
-GENERATED_LEXC_SRCS=generated_files/smi-$(GTLANG)-propernouns.lexc \
+GENERATED_LEXC_SRCS=generated_files/smi-propernouns.lexc \
                    generated_files/smi-abbreviations.lexc \
                    generated_files/smi-acronyms.lexc \
                    generated_files/arabic_roman_digits.lexc \
@@ -114,40 +114,20 @@ generated_files/smi-propernouns.lexc: \
 	$(AM_V_at)$(MKDIR_P) generated_files
 	$(AM_V_GEN)cp -f $< $@
 
-generated_files/smi-$(GTLANG)-propernouns.lexc: \
-		generated_files/smi-propernouns.lexc \
-		$(srcdir)/stems/$(GTLANG)-propernouns.lexc
-	$(AM_V_GEN)rm -f $@ && \
-	cp -f $(srcdir)/stems/$(GTLANG)-propernouns.lexc $@ && \
-	echo "" >> $@ && \
-	echo "! <--- Dump from SMI -->" >> $@ && \
-	echo "" >> $@ && \
-	cat $< >> $@
-
-
 generated_files/smi-abbreviations.lexc: \
-			$(GIELLA_SHARED)/smi/src/fst/stems/smi-abbreviations.lexc
+		$(GIELLA_SHARED)/smi/src/fst/stems/smi-abbreviations.lexc
 	$(AM_V_at)$(MKDIR_P) generated_files
 	$(AM_V_GEN)cp -f $< $@
 
-generated_files/smi-$(GTLANG)-abbreviations.lexc: \
-		generated_files/smi-abbreviations.lexc \
-		$(srcdir)/stems/$(GTLANG)-abbreviations.lexc
-	$(AM_V_GEN)rm -f $@ && \
-	cp -f $(srcdir)/stems/$(GTLANG)-abbreviations.lexc $@ && \
-	echo "" >> $@ && \
-	echo "! <--- Dump from SMI -->" >> $@ && \
-	echo "" >> $@ && \
-	cat $< >> $@
-
-
+generated_files/smi-acronyms.lexc: \
+		$(GIELLA_SHARED)/smi/src/fst/stems/smi-acronyms.lexc
+	$(AM_V_at)$(MKDIR_P) generated_files
+	$(AM_V_GEN)cp -f $< $@
 
 generated_files/%.lexc: \
 			$(GIELLA_SHARED)/smi/src/fst/stems/%.lexc
 	$(AM_V_at)$(MKDIR_P) generated_files
 	$(AM_V_GEN)cp -f $< $@
-
-
 
 
 ### END: Local processing: ###
