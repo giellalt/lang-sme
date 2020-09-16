@@ -66,9 +66,9 @@ GT_LEXC_L2_SRCS=\
 			$(L2)
 
 # Set this to the names of all generated lexc files, if any
-GENERATED_LEXC_SRCS=generated_files/$(GTLANG)-propernouns.lexc   \
-					generated_files/$(GTLANG)-abbreviations.lexc \
-					generated_files/$(GTLANG)-acronyms.lexc      \
+GENERATED_LEXC_SRCS=generated_files/smi-$(GTLANG)-propernouns.lexc   \
+					generated_files/smi-$(GTLANG)-abbreviations.lexc \
+					generated_files/smi-$(GTLANG)-acronyms.lexc      \
 					generated_files/arabic_roman_digits.lexc \
 					generated_files/punctuation.lexc \
 					generated_files/smi-digits.lexc \
@@ -84,7 +84,9 @@ GT_LOCAL_SRCS=
 GT_LOCAL_XFSCRIPT_SRCS=
 
 # Define here any additional sources just included in the distro:
-GT_DISTRO_SRCS=stems/$(GTLANG)-propernouns.lexc 
+GT_DISTRO_SRCS= $(srcdir)/stems/$(GTLANG)-propernouns.lexc   \
+				$(srcdir)/stems/$(GTLANG)-abbreviations.lexc \
+				$(srcdir)/stems/$(GTLANG)-acronyms.lexc
 
 ### BEGIN: Local processing: ###
 
@@ -108,25 +110,27 @@ endif # CAN_FOMA
 
 generated_files/smi-$(GTLANG)-propernouns.lexc: \
 		$(GIELLA_SHARED)/smi/src/fst/stems/smi-propernouns.lexc \
-		stems/$(GTLANG)-propernouns.lexc
+		$(srcdir)/stems/$(GTLANG)-propernouns.lexc
 	$(AM_V_at)$(MKDIR_P) generated_files
-	$(AM_V_GEN)cp -f stems/$(GTLANG)-propernouns.lexc $@
+	$(AM_V_GEN)cp -f $(srcdir)/stems/$(GTLANG)-propernouns.lexc $@
 	$(AM_V_at)echo "! <--- Dump from SMI starting here: -->" >> $@ 
-	$(AM_V_GEN)$(top_srcdir)/src/scripts/smi-$(GTLANG)-conversion.pl $< >> $@
+	$(AM_V_GEN)cat $< >> $@
 
 generated_files/smi-$(GTLANG)-abbreviations.lexc: \
 		$(GIELLA_SHARED)/smi/src/fst/stems/smi-abbreviations.lexc \
-		stems/$(GTLANG)-abbreviations.lexc
+		$(srcdir)/stems/$(GTLANG)-abbreviations.lexc
 	$(AM_V_at)$(MKDIR_P) generated_files
+	$(AM_V_GEN)cp -f $(srcdir)/stems/$(GTLANG)-abbreviations.lexc $@
 	$(AM_V_at)echo "! <--- Dump from SMI starting here: -->" >> $@ 
-	$(AM_V_GEN)$(top_srcdir)/src/scripts/smi-$(GTLANG)-conversion.pl $< >> $@
+	$(AM_V_GEN)cat $< >> $@
 
 generated_files/smi-$(GTLANG)-acronyms.lexc: \
 		$(GIELLA_SHARED)/smi/src/fst/stems/smi-acronyms.lexc \
-		stems/$(GTLANG)-acronyms.lexc
+		$(srcdir)/stems/$(GTLANG)-acronyms.lexc
 	$(AM_V_at)$(MKDIR_P) generated_files
+	$(AM_V_GEN)cp -f $(srcdir)/stems/$(GTLANG)-acronyms.lexc $@
 	$(AM_V_at)echo "! <--- Dump from SMI starting here: -->" >> $@ 
-	$(AM_V_GEN)$(top_srcdir)/src/scripts/smi-$(GTLANG)-conversion.pl $< >> $@
+	$(AM_V_GEN)cat $< >> $@
 
 generated_files/%.lexc: \
 			$(GIELLA_SHARED)/smi/src/fst/stems/%.lexc
