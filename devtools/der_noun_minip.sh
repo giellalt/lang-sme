@@ -11,7 +11,7 @@
 
 
 LOOKUP=$(echo $LOOKUP)
-GTHOME=$(echo $GTHOME)
+GTLANGS=$(echo $GTLANGS)
 
 
 PATTERN=$1
