@@ -8,7 +8,7 @@
 # sh devtools/prop_minip.sh Hirškikkâ | dsmeNorm 
 
 HLOOKUP=$(echo $HLOOKUP)
-GTHOME=$(echo $GTHOME)
+GTLANGS=$(echo $GTLANGS)
 
 
 PATTERN=$1
