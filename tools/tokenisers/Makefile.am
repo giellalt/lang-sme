@@ -36,6 +36,6 @@ GENRSRCS:=$(wildcard $(top_builddir)/src/fst/generated_files/smi-$(GTLANG)-*.lex
 
 ####### Other targets: ###########
 clean-local:
-	-rm -f *.hfst *.xfst abbr.txt *.pmhfst
+	-rm -f *.hfst *.xfst *.pmhfst
 
 include $(top_srcdir)/../giella-core/am-shared/tools-tokenisers-dir-include.am
