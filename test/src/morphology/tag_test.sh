@@ -22,9 +22,9 @@ sed -e '1,/LEXICON Root/ d' < ../../../src/fst/lexicon.tmp.lexc \
     | cut -d '!' -f1   \
     | grep ' ;'        \
     | cut -d ':' -f1   \
-    | tr -s ' '        \
-    | sed 's/^ //'     \
-    | cut -d ' ' -f1   \
+   	| rev  \
+   	|cut -d ' ' -f1  \
+   	|rev \
     | sed 's/+/¢+/g'   \
     | sed 's/@/¢@/g'   \
     | tr '¢' '\n'      \
