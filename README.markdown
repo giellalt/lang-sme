@@ -22,7 +22,7 @@ Documentation
 
 Documentation can be found at:
 
--   <https://giellalt.uit.no/lang/smedoc/index.html>
+-   <https://giellalt.uit.no/lang/sme/j-sme.html>
 -   <https://giellalt.uit.no/index.html>
 
 Core dependencies
