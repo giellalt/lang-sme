@@ -1,4 +1,4 @@
-The Northern Sami morphology and tools
+ The Northern Sami morphology and tools
 ==========================================
 
 This repository contains finite state source files for the Northern Sami language,
