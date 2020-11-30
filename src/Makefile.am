@@ -506,12 +506,12 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 				filters/remove-word-boundary.hfst            \
 				filters/remove-UseLIA-strings.hfst           \
 				filters/remove-illegal-derivation-strings-flagbased.hfst \
-				filters/insert-default-compounding-tags.hfst      \
-				filters/insert-default_left_compounding-tags.hfst \
-				filters/block-illegal_compound-strings.hfst       \
-				filters/split-CmpN-tags.hfst                      \
-				filters/convert_to_flags-CmpNP-tags.hfst          \
-				filters/split-CmpNP-tags.hfst                     \
+    			filters/insert-default-compounding-tags.hfst      \
+    			filters/insert-default_left_compounding-tags.hfst \
+    			filters/block-illegal_compound-strings.hfst       \
+    			filters/split-CmpN-tags.hfst                      \
+    			filters/convert_to_flags-CmpNP-tags.hfst          \
+    			filters/split-CmpNP-tags.hfst                     \
 				orthography/block-double_spellrelax.compose.hfst  \
 				orthography/spellrelax-with-flagtags.compose.hfst \
 				orthography/comprelax-with-flagtags.compose.hfst
@@ -523,12 +523,12 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 		.o. @\"filters/remove-derivation-position-tags.hfst\" \
 		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
 		.o. @\"filters/block-illegal_compound-strings.hfst\"       \
-		.o. @\"filters/split-CmpN-tags.hfst\"                      \
-		.o. @\"filters/insert-default_left_compounding-tags.hfst\" \
-		.o. @\"filters/insert-default-compounding-tags.hfst\"      \
-		.o. @\"filters/remove-illegal-derivation-strings-flagbased.hfst\" \
-		.o. @\"filters/convert_to_flags-CmpNP-tags.hfst\"             \
-		.o. @\"filters/split-CmpNP-tags.hfst\"                        \
+    	.o. @\"filters/split-CmpN-tags.hfst\"                      \
+    	.o. @\"filters/insert-default_left_compounding-tags.hfst\" \
+    	.o. @\"filters/insert-default-compounding-tags.hfst\"      \
+    	.o. @\"filters/remove-illegal-derivation-strings-flagbased.hfst\" \
+    	.o. @\"filters/convert_to_flags-CmpNP-tags.hfst\"             \
+    	.o. @\"filters/split-CmpNP-tags.hfst\"                        \
 		.o. @\"filters/remove-semantic-tags-before-derivations.hfst\" \
 		.o. @\"filters/remove-UseLIA-strings.hfst\"                   \
 		.o. @\"filters/remove-MinusSpell-strings.hfst\"               \
@@ -636,13 +636,7 @@ generator-gramcheck-gt-norm.hfst: generator-gramcheck-gt-norm.tmp.hfst \
 				filters/remove-derivation-position-tags.hfst \
 				filters/remove-UseLIA-strings.hfst           \
 				filters/make-optional-grammatical-tags.hfst  \
-				filters/rename-POS_before_Der-tags.hfst      \
-				filters/insert-default-compounding-tags.hfst \
-				filters/insert-default_left_compounding-tags.hfst \
-				filters/block-illegal_compound-strings.hfst  \
-				filters/split-CmpN-tags.hfst                 \
-				filters/convert_to_flags-CmpNP-tags.hfst     \
-				filters/split-CmpNP-tags.hfst
+				filters/rename-POS_before_Der-tags.hfst
 	$(AM_V_HXFST)$(PRINTF) "\
 	set encode-weights ON\n\
 	read regex \
@@ -651,13 +645,6 @@ generator-gramcheck-gt-norm.hfst: generator-gramcheck-gt-norm.tmp.hfst \
 		.o. @\"filters/make-optional-grammatical-tags.hfst\"  \
 		.o. @\"filters/remove-UseLIA-strings.hfst\"           \
 		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
-		.o. @\"filters/block-illegal_compound-strings.hfst\"         \
-		.o. @\"filters/split-CmpN-tags.hfst\"                        \
-		.o. @\"filters/insert-default_left_compounding-tags.hfst\"   \
-		.o. @\"filters/insert-default-compounding-tags.hfst\"        \
-		.o. @\"filters/remove-illegal-derivation-strings-flagbased.hfst\" \
-		.o. @\"filters/convert_to_flags-CmpNP-tags.hfst\"            \
-		.o. @\"filters/split-CmpNP-tags.hfst\"                       \
 		.o. @\"$<\"                                           \
 		;\n\
 	twosided flag-diacritics\n\
