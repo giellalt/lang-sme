@@ -146,8 +146,8 @@ the sentence can be considered as true cases.
 * **+Gram/TIAbbr**:  Both transitive and intransitive abbreviation
 * **+Gram/IAbbr**:  Intransitive abbreviation (it takes no argument)
 * **+Gram/3syll**: trisyllabic verbs
- ; +Gram/Superl 
- ; +Gram/Comp 
+ ; +Gram/Superl
+ ; +Gram/Comp
 
 
 ### Question and Focus particles:
@@ -283,9 +283,9 @@ so that we can exclude the one or the other from different fst's, but only
 when the oposite stem variant is present.
 
 ### Multichars for marking start and end of IPA sequences
- * %{%<ipa#%} - ipa text to the left
- * %{#ipa%>%} - ipa text to the right
- * %<sent%> apertium
+ * `{ %<ipa# }` - ipa text to the left
+ * `{ #ipa%> }` - ipa text to the right
+ * `%<sent%>` apertium
 
 ### Compounding tags
 
@@ -420,7 +420,7 @@ The order is:
  *  +Sem/Org          = Organisation
  *  +Sem/Part         = Feature, oassi, bealli
 * Perc = (perception) er noe man kan kjenne i en begrensa periode og som er forårsaka av noe utenifra, f.eks. Mus lea ballu. Mus lea bavččas.
- *  +Sem/Perc-cogn    =  
+ *  +Sem/Perc-cogn    =
  *  +Sem/Perc-emo     = Emotional perception
  *  +Sem/Perc-phys    = Physical perception
  *  +Sem/Perc-psych   = Psychological perception
@@ -468,7 +468,7 @@ The order is:
 
 
 ### Multiple Semantic tags:
- * +Sem/Act_Fruit                      
+ * +Sem/Act_Fruit
  * +Sem/Act_Group Activity and Group
  * +Sem/Act_Plc   A persons job is an activity, and a place as well
  * +Sem/Act_Route Activity and Route, ie johtolat
@@ -516,16 +516,16 @@ The order is:
  * +Sem/Build_Org
  * +Sem/Build_Route
  * +Sem/Build-room_Cat_Ctain_Mat
- * +Sem/Buildpart_Cat                 
- * +Sem/Buildpart_Cat_Ctain           
- * +Sem/Buildpart_Cat_Ctain_Mat       
- * +Sem/Buildpart_Ctain               
- * +Sem/Buildpart_Ctain_Mat           
- * +Sem/Buildpart_Ctain_Obj           
- * +Sem/Cat_Group_Hum                  
- * +Sem/Cat_Group_Hum_Plc              
- * +Sem/Cat_Edu                        
- * +Sem/Cat_Obj                        
+ * +Sem/Buildpart_Cat
+ * +Sem/Buildpart_Cat_Ctain
+ * +Sem/Buildpart_Cat_Ctain_Mat
+ * +Sem/Buildpart_Ctain
+ * +Sem/Buildpart_Ctain_Mat
+ * +Sem/Buildpart_Ctain_Obj
+ * +Sem/Cat_Group_Hum
+ * +Sem/Cat_Group_Hum_Plc
+ * +Sem/Cat_Edu
+ * +Sem/Cat_Obj
  * +Sem/Clth-jewl_Curr
  * +Sem/Clth-jewl_Curr_Obj
  * +Sem/Clth-jewl_Curr_Obj_Org
@@ -546,13 +546,13 @@ The order is:
  * +Sem/Dance_Org
  * +Sem/Dance_Prod-audio
  * +Sem/Domain_Food-med
- * +Sem/Domain_Hum                     
+ * +Sem/Domain_Hum
  * +Sem/Domain_Prod-audio
- * +Sem/Drink_Plant                    
+ * +Sem/Drink_Plant
  * +Sem/Edu_Event
- * +Sem/Edu_Geom                       
+ * +Sem/Edu_Geom
  * +Sem/Edu_Group_Hum
- * +Sem/Edu_Hum                        
+ * +Sem/Edu_Hum
  * +Sem/Edu_Mat
  * +Sem/Edu_Org
  * +Sem/Event_Food
@@ -571,7 +571,7 @@ The order is:
  * +Sem/Food_Perc-phys
  * +Sem/Food_Plant
  * +Sem/Food_Sign
- * +Sem/Fruit_Hum                      
+ * +Sem/Fruit_Hum
  * +Sem/Game_Obj-play
  * +Sem/Geom_Hum_Plc
  * +Sem/Geom_Obj
@@ -582,7 +582,7 @@ The order is:
  * +Sem/Group_Hum_Prod-vis
  * +Sem/Group_Hum_Time
  * +Sem/Group_Org
- * +Sem/Group_Prod-vis                 
+ * +Sem/Group_Prod-vis
  * +Sem/Group_Sign
  * +Sem/Group_Txt
  * +Sem/Hum_Lang
@@ -601,7 +601,7 @@ The order is:
  * +Sem/Lang_Tool
  * +Sem/Mat_Plant
  * +Sem/Mat_Txt
- * +Sem/Measr_Obj_Time                 
+ * +Sem/Measr_Obj_Time
  * +Sem/Measr_Sign                      = Sign (e.g. numbers, punctuation)
  * +Sem/Measr_Time
  * +Sem/Money_Obj
@@ -644,7 +644,7 @@ The order is:
  * +Sem/Plc_Time_Wthr
  * +Sem/Time_Wthr
  * +Sem/State-sick_Substnc
- * +Sem/Obj-ling_Obj-surfc             
+ * +Sem/Obj-ling_Obj-surfc
  * +Sem/Org_Prod-audio
  * +Sem/Org_Prod-cogn
  * +Sem/Org_Prod-vis
@@ -828,10 +828,10 @@ with verbs if the verb is further derived into a noun again:
 
 
 
-|  @D.ErrOrth.ON@ 
-|  @C.ErrOrth@ 
-|  @P.ErrOrth.ON@ 
-|  @R.ErrOrth.ON@ 
+|  @D.ErrOrth.ON@
+|  @C.ErrOrth@
+|  @P.ErrOrth.ON@
+|  @R.ErrOrth.ON@
 
 For languages that allow compounding, the following flag diacritics are needed
 to control position-based compounding restrictions for nominals. Their use is
