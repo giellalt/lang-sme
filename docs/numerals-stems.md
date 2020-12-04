@@ -1,5 +1,5 @@
 
-# North Saami numerals 
+# North Saami numerals
 
 
 
@@ -24,7 +24,7 @@
 
 
 
- * **LEXICON OVERDUHAT** for the numerals over 1000. 
+ * **LEXICON OVERDUHAT** for the numerals over 1000.
 
 
 
@@ -137,7 +137,7 @@
 
  * **LEXICON LOHKAI-END**
 
- * **LEXICON ARABICCOMPOUNDS**  ! arabic as first part, 
+ * **LEXICON ARABICCOMPOUNDS**  ! arabic as first part,
 
 
  * **LEXICON NUMERALCOMPOUNDS**: numeral as first part: duhatjienat,
@@ -284,6 +284,3 @@ numerical expressions in each category.
  * **LEXICON GUOKTELOGIOVCCI**
 
  * **LEXICON VIHTTALOGIOVCCI**
-
-
-

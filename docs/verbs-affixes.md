@@ -174,7 +174,7 @@ These are treated separately because
 
 
 
- * __LEXICON DIEHTISHORT_TV       __ Short action noun compound-form: neasken- 
+ * __LEXICON DIEHTISHORT_TV       __ Short action noun compound-form: neasken-
 
  * __LEXICON DIEHTILONGSHORT_TV       __ Long and short action noun compound-form, savdnjen-/savdnjin-
 
@@ -358,7 +358,7 @@ These are treated separately because
 
  * __LEXICON ARVVASJ_IV   __ impersonals ending -šit, -skit, smit, -idit, -ldit, -git and 5-syllables
 
- * __LEXICON ARVIL_IV  __ Impersonal Trisyllabic Verbs ending -lit 
+ * __LEXICON ARVIL_IV  __ Impersonal Trisyllabic Verbs ending -lit
 
 
 
@@ -379,9 +379,9 @@ These are treated separately because
 
  * __LEXICON BEAGASJ_IV  __ Words ending -šit, -skit -ldit, essive derivates on -hit -. !Reciprocals on -dit. Momentatives on -dit, -ádit, -ihit, -e7hit. Frequentatives on -(u)hit. Continuatives on -nit. Inchoatives in -nit
 
- * __LEXICON JORGGIID_IV  __ Words ending -smit, -idit, -git - 
+ * __LEXICON JORGGIID_IV  __ Words ending -smit, -idit, -git -
 
- * __LEXICON HURAI_IV  __ Words ending -aidit 
+ * __LEXICON HURAI_IV  __ Words ending -aidit
 
 
  * __LEXICON BALAT_IV  __ !Cont/Freq on -dit, Continuatives on -(u)hit, Reciprocals, momentatives and frequentatives ending -alit
@@ -577,104 +577,104 @@ These are treated separately because
 
 
 
- * **LEXICON DeverbalNounsC**  
+ * **LEXICON DeverbalNounsC**
 
- * **LEXICON DeverbalNounsCTV**  
+ * **LEXICON DeverbalNounsCTV**
 
- * **LEXICON DeverbalNounsBOAHTI**  
+ * **LEXICON DeverbalNounsBOAHTI**
 
  * **LEXICON DeverbalNounsRAIMMAHALLA** no NomAg/actor
 
- * **LEXICON DeverbalNounsBOAHTALADDA**  
+ * **LEXICON DeverbalNounsBOAHTALADDA**
 
- * **LEXICON DeverbalNounsDIEHTALADDA**  
+ * **LEXICON DeverbalNounsDIEHTALADDA**
 
- * **LEXICON DeverbalNounsDIEHTI**  
-
-
- * **LEXICON DeverbalNounsDIEHTISHORT**  
-
- * **LEXICON DeverbalNounsDIEHTILONGSHORT**  
-
- * **LEXICON DeverbalNounsBAHCCI**  
-
- * **LEXICON DeverbalNounsDOHPPE-**  
-
- * **LEXICON DeverbalNounsGARRE-**  
-
- * **LEXICON DeverbalNounsCIRRO-**  
-
- * **LEXICON DeverbalNounsORRO-**  
-
- * **LEXICON DeverbalNounsCIRROTV-**  
+ * **LEXICON DeverbalNounsDIEHTI**
 
 
- * **LEXICON DeverbalNounsDOHPPEJ**  
+ * **LEXICON DeverbalNounsDIEHTISHORT**
 
- * **LEXICON DeverbalNounsDOHPPEJTV**  
+ * **LEXICON DeverbalNounsDIEHTILONGSHORT**
 
- * **LEXICON DeverbalNounsMUITALTV**  
+ * **LEXICON DeverbalNounsBAHCCI**
 
- * **LEXICON DeverbalNounsMUITTASJTV**  
+ * **LEXICON DeverbalNounsDOHPPE-**
 
- * **LEXICON DeverbalNounsMUITAL**  
+ * **LEXICON DeverbalNounsGARRE-**
 
- * **LEXICON DeverbalNounsNUOSKIT**  
+ * **LEXICON DeverbalNounsCIRRO-**
 
+ * **LEXICON DeverbalNounsORRO-**
 
- * **LEXICON DeverbalNounsMUITTASJ**  
-
-
- * **LEXICON DeverbalVerbsBOAHTI**  
-
- * **LEXICON DeverbalVerbsDIEVVA**  
-
- * **LEXICON DeverbalVerbsBINDU**  
+ * **LEXICON DeverbalNounsCIRROTV-**
 
 
- * **LEXICON DeverbalVerbsBORRA**  
+ * **LEXICON DeverbalNounsDOHPPEJ**
 
- * **LEXICON DeverbalVerbsFALLA**  
+ * **LEXICON DeverbalNounsDOHPPEJTV**
 
- * **LEXICON DeverbalVerbsBOLTU**  
+ * **LEXICON DeverbalNounsMUITALTV**
 
+ * **LEXICON DeverbalNounsMUITTASJTV**
 
- * **LEXICON DeverbalVerbsDIEHTI**  
+ * **LEXICON DeverbalNounsMUITAL**
 
- * **LEXICON DeverbalVerbsBEAHTTI**  
-
- * **LEXICON DeverbalVerbsARVI**  
-
-
- * **LEXICON DeverbalVerbsDOHPPE**  
-
- * **LEXICON DeverbalVerbsFAHTE**  
+ * **LEXICON DeverbalNounsNUOSKIT**
 
 
- * **LEXICON DeverbalVerbsGILLE**  
-
- * **LEXICON DeverbalVerbsCOHKKA**  
-
- * **LEXICON DeverbalVerbsBORGE**  
+ * **LEXICON DeverbalNounsMUITTASJ**
 
 
+ * **LEXICON DeverbalVerbsBOAHTI**
 
- * **LEXICON DeverbalVerbsMUITAL**  
+ * **LEXICON DeverbalVerbsDIEVVA**
 
- * **LEXICON DeverbalVerbsVUORDIL**  
+ * **LEXICON DeverbalVerbsBINDU**
 
 
- * **LEXICON DeverbalVerbsALIST**  
+ * **LEXICON DeverbalVerbsBORRA**
 
- * **LEXICON DeverbalVerbsSUOTNJAL**  
+ * **LEXICON DeverbalVerbsFALLA**
 
- * **LEXICON DeverbalVerbsBOTNJAS**  
+ * **LEXICON DeverbalVerbsBOLTU**
 
- * **LEXICON DeverbalVerbsLASSAN**  
 
- * **LEXICON DeverbalVerbsCOASKKIT**  
+ * **LEXICON DeverbalVerbsDIEHTI**
 
- * **LEXICON DeverbalVerbsARVIL**  
+ * **LEXICON DeverbalVerbsBEAHTTI**
+
+ * **LEXICON DeverbalVerbsARVI**
+
+
+ * **LEXICON DeverbalVerbsDOHPPE**
+
+ * **LEXICON DeverbalVerbsFAHTE**
+
+
+ * **LEXICON DeverbalVerbsGILLE**
+
+ * **LEXICON DeverbalVerbsCOHKKA**
+
+ * **LEXICON DeverbalVerbsBORGE**
+
+
+
+ * **LEXICON DeverbalVerbsMUITAL**
+
+ * **LEXICON DeverbalVerbsVUORDIL**
+
+
+ * **LEXICON DeverbalVerbsALIST**
+
+ * **LEXICON DeverbalVerbsSUOTNJAL**
+
+ * **LEXICON DeverbalVerbsBOTNJAS**
+
+ * **LEXICON DeverbalVerbsLASSAN**
+
+ * **LEXICON DeverbalVerbsCOASKKIT**
+
+ * **LEXICON DeverbalVerbsARVIL**
 
 
 
@@ -684,8 +684,5 @@ These are treated separately because
 
 
  * LEXICON VGEN  flag for VGen
-
-
-
 
 

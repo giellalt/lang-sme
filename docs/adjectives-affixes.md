@@ -69,7 +69,7 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 ## Consonant-final even-syllabic adjectives
 
- * **LEXICON TUVRRAHAS**  
+ * **LEXICON TUVRRAHAS**
 
  * **LEXICON ISSORAS**  issoras and certain as-adj. also derivations, final -s
 
@@ -170,18 +170,18 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
  * **LEXICON GEARGGUS**  ,-ergo-#gearggo9s
 
- * **LEXICON VUDDJII**  
+ * **LEXICON VUDDJII**
 
  * __LEXICON VUDDJII_DECLINED  __ misses most cases
 
 
- * **LEXICON JIEDNAI**  
+ * **LEXICON JIEDNAI**
 
  * __ LEXICON JIEDNAI_DECLINED  __ misses most cases
 
  * **LEXICON BOARIS**  As GAPPUS, but with different attr.
 
- * __LEXICON BOARIS_NOCOMP __ 
+ * __LEXICON BOARIS_NOCOMP __
 
 
  * __LEXICON IIVA_NOCOMP  __  IIVA_A without comparatives
@@ -219,9 +219,9 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
  * **LEXICON STUORIS**  As fiinnis, but with different comparation
 
- * **LEXICON NJALGGAT** Comp+Sg+Nom: njálgát, njálgásut/-sit/-sut/-sat, njálgáseabbo/-sabbo 
+ * **LEXICON NJALGGAT** Comp+Sg+Nom: njálgát, njálgásut/-sit/-sut/-sat, njálgáseabbo/-sabbo
 
- * **LEXICON CAPPIS**  western comp: čábbát, eastern comp: čábbásabbo/-sut/-sat 
+ * **LEXICON CAPPIS**  western comp: čábbát, eastern comp: čábbásabbo/-sut/-sat
 
 
  * **LEXICON VIISSIS**  Contr, CG and -is -> -á, attr -es/-is, western and eastern comp forms
@@ -239,7 +239,7 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
  * LEXICON DEVNVCASE    bisyllabic nominal declension
 
- * LEXICON GOAHTI-OBLadj    
+ * LEXICON GOAHTI-OBLadj  
 
  * **LEXICON GOAHTI-NEadj**
 
@@ -422,7 +422,7 @@ eventually.
 
  * **LEXICON AHKASAS** derived words on -saš, -haš, -laš
 
- * __LEXICON AHKASAS_PL __  derived words on -saš, -haš, -laš, only plural, 
+ * __LEXICON AHKASAS_PL __  derived words on -saš, -haš, -laš, only plural,
 
 
 
@@ -505,4 +505,3 @@ eventually.
  * **LEXICON AGAdj**  mostly words like guovttejagat, allajoccat etc
 
  * **LEXICON AGAdjINFL**
-

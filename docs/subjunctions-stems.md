@@ -1,5 +1,5 @@
 
-# The North Saami Subjunctions 
+# The North Saami Subjunctions
 
 
 

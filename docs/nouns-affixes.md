@@ -66,7 +66,7 @@ it does not have the Prop tag.
  * **LEXICON ESSEIJA** loan words ending -iija; Illative -iijai as well -iijii: kopiijai, kopiijii
 
 
- * **LEXICON IIVA** -iivva loan words. 
+ * **LEXICON IIVA** -iivva loan words.
 
  * **LEXICON PROFIILA**  -iila Loan words.
 
@@ -279,7 +279,7 @@ it does not have the Prop tag.
 
 
 
- * **LEXICON GEAHCCI** +CmpN/SgN +CmpN/SgG +CmpN/PlG 
+ * **LEXICON GEAHCCI** +CmpN/SgN +CmpN/SgG +CmpN/PlG
 
  * **LEXICON GEAHCCICT**  Actors, to avoid geahččán, jábmán, geahččát, jábmát
 
@@ -289,7 +289,7 @@ it does not have the Prop tag.
 2f. Actor lexicas
 
 
- * **LEXICON ACTOR** +CmpN/SgN +CmpN/SgG +CmpN/PlG 
+ * **LEXICON ACTOR** +CmpN/SgN +CmpN/SgG +CmpN/PlG
 
  * **LEXICON ACTORCT** nowadays tagged NomAg. Long compound-forms
 
@@ -301,14 +301,14 @@ it does not have the Prop tag.
  * **LEXICON EADDJI-NomAg** +CmpN/SgN +CmpN/SgG +CmpN/PlG  tagged NomAg. Sometimes long compound-forms
 
 
- * **LEXICON ACTORLONGSHORT** +CmpN/SgN +CmpN/SgG +CmpN/PlG 
+ * **LEXICON ACTORLONGSHORT** +CmpN/SgN +CmpN/SgG +CmpN/PlG
 
 
  * **LEXICON ACTORLONGSHORTCT-nomag** adds +NomAg
 
  * **LEXICON ACTORLONGSHORTCT** nowadays tagged NomAg. Sometimes long compound-forms
 
- * **LEXICON ACTORSHORT** +CmpN/SgN +CmpN/SgG +CmpN/PlG 
+ * **LEXICON ACTORSHORT** +CmpN/SgN +CmpN/SgG +CmpN/PlG
 
  * **LEXICON ACTORSHORTCT** nowadays tagged NomAg. Short compound-forms
 
@@ -407,7 +407,7 @@ Trisyllabic nouns
  * **LEXICON EANA** eana, eanan, eatnan
 
 
- * **LEXICON DOAVTTIR** only doavttir. Short compound-forms 
+ * **LEXICON DOAVTTIR** only doavttir. Short compound-forms
 
 
  * __LEXICON OVCCIS_N __  Collective numerals gallis, moattes, moattis, máŋggas
@@ -562,7 +562,7 @@ Trisyllabic nouns
 
  * **LEXICON NPx3Vflag**
 
- * **LEXICON NPx3Vvowchflag** 
+ * **LEXICON NPx3Vvowchflag**
 
 
  * **LEXICON NPx12A** For loan word ending -a
@@ -575,7 +575,7 @@ Trisyllabic nouns
  * **LEXICON NPxPlComC**
 
 
- * **LEXICON NPxVvowch** for vowel stems, with X2, X1 with stem vowel change,  
+ * **LEXICON NPxVvowch** for vowel stems, with X2, X1 with stem vowel change,
 
  * **LEXICON NPx12Vvowch** for vowel stems, with X2, X1 with stem vowel change, 1. and 2. p
 
@@ -644,7 +644,7 @@ Trisyllabic nouns
  * **LEXICON STAHTACASE** for no cons grad
 
 
- * **LEXICON EGEZHAHKII** 
+ * **LEXICON EGEZHAHKII**
 
 
 
@@ -764,7 +764,7 @@ Trisyllabic nouns
 
  * **LEXICON VUONATCT** derivated nouns, from propers: guovdageainnut, divttasvuonat etc.
 
- * **LEXICON ACTORder** +CmpN/SgN +CmpN/SgG +CmpN/PlG 
+ * **LEXICON ACTORder** +CmpN/SgN +CmpN/SgG +CmpN/PlG
 
  * **LEXICON ACTORderCT** Tagged NomAg nowadays, Long compound-forms, from intransitive verbs
 

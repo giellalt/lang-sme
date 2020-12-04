@@ -1,9 +1,9 @@
 
-# North Saami verbs 
+# North Saami verbs
 
 
 
-## Negative verbs 
+## Negative verbs
 
  * **LEXICON Negativeverb**
 
@@ -16,7 +16,7 @@
 
  * **LEXICON negsup**
 
-## Copula 
+## Copula
 
  * **LEXICON Copula** Dividing into finite and infinite
 
@@ -32,7 +32,7 @@
 
  * **LEXICON Infinitecop**
 
-## Stray forms 
+## Stray forms
 
  * **LEXICON STRAYFORMS** (referred to from the main Verb lexicon)
 
@@ -40,7 +40,7 @@
 
  * __LEXICON Eahpe_Verb  __
 
-## Main verbs 
+## Main verbs
 
 Here comes the main list of verbs.
 
@@ -52,8 +52,6 @@ Here comes the main list of verbs.
 
 
  * **LEXICON Humsubj-VerbRoot**
-
-
 
 
 

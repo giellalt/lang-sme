@@ -283,9 +283,9 @@ so that we can exclude the one or the other from different fst's, but only
 when the oposite stem variant is present.
 
 ### Multichars for marking start and end of IPA sequences
- * `{ <ipa# }` - ipa text to the left
- * `{ #ipa> }` - ipa text to the right
- * `<sent>` apertium
+ * `{ %<ipa# }` - ipa text to the left
+ * `{ #ipa%> }` - ipa text to the right
+ * `%<sent%>` apertium
 
 ### Compounding tags
 
@@ -1144,7 +1144,7 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
  * LEXICON DEVNVCASE    bisyllabic nominal declension
 
- * LEXICON GOAHTI-OBLadj
+ * LEXICON GOAHTI-OBLadj  
 
  * **LEXICON GOAHTI-NEadj**
 
@@ -1410,7 +1410,6 @@ eventually.
  * **LEXICON AGAdj**  mostly words like guovttejagat, allajoccat etc
 
  * **LEXICON AGAdjINFL**
-
 Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 
@@ -2252,7 +2251,6 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
  * **LEXICON PxPlCom12V** for first, second person comitative Px
 
  * **LEXICON PxPlCom3V** for third person comitative Px
-
 Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 
@@ -2942,9 +2940,6 @@ These are treated separately because
 
 
 
-
-
-
 # File containing North Saami abbreviations
 
 ## Lexica for adding tags and periods
@@ -3017,9 +3012,6 @@ the sentence can be considered as true cases.
 
 
  * **LEXICON smallacro** contains acros with small letters
-
-
-
 
 
 
@@ -3101,10 +3093,6 @@ Px lexica in sme-lex.txt and closed-sme-lex.txt.
 
 
  * **LEXICON Adposition** is the lexicon with the adpositions
-
-
-
-
 
 
 # North Saami adverbs
@@ -3222,7 +3210,6 @@ Lexica for adverb subtypes
 The main adverb lexicon
  * **LEXICON adv** simply gives the tag +Adv and directs to K
 
-
 # North Saami Conjunctions
 
 
@@ -3283,9 +3270,6 @@ The main adverb lexicon
  * **LEXICON NounPxKin** this is the noun lexicon for nouns which can have Px Nom 3. person, mostly kinshipterms
 
  * **LEXICON NounPx** this is the main noun lexicon
-
-
-
 
 
 
@@ -3593,9 +3577,6 @@ numerical expressions in each category.
 
  * **LEXICON VIHTTALOGIOVCCI**
 
-
-
-
 # This file contains the Particles
 
 
@@ -3613,7 +3594,6 @@ and all the ge versions should be removed.
 (i.e. only goit, not goitge). This errouneously
 permits gege, goge, etc., though, and we thus leave
 things as they are.
-
 
 # This file contains the Pronouns
 
@@ -3740,8 +3720,6 @@ The indeclineable indefinites
 
 
 
-
-
 # The North Saami proper noun lexicon
 
 
@@ -3839,8 +3817,6 @@ Here comes the main list of verbs.
 
 
 
-
-
 # Punctuation symbols
 
  * __LEXICON Punctuation_SME   __ contains the list
@@ -3859,7 +3835,7 @@ generation, by keeping the same tagging as the standard analysis.
 
 
 
-# DELIMITERS
+# DELIMITERS 
 
 Sentence delimiters are the following: <.> <!> <?> <...> <¶>
 
@@ -3879,7 +3855,7 @@ on the basis of the tags listed here, those set names are not visible in the out
 
 
 ### Beginning and end of sentence
-BOS
+BOS 
 EOS
 
 
@@ -3965,7 +3941,7 @@ Attr
 Ord
 Qst
 IV
-TV
+TV 
 Prt
 Prs
 Ind
@@ -4052,13 +4028,13 @@ Der/viđi
 Der/veara
 Der/AAdv
 Der/Adv
-Der/dáfot
+Der/dáfot 
 Der/keahtta
 Der/nuolus
 Der/náittot
 Der/seagat
 Der/suttat
-Der/ár
+Der/ár 
 <vdic>
 
 
@@ -4072,12 +4048,12 @@ Der/ár
 
 ###  Syntactic tags
 
-* @+FAUXV : finite auxiliary verb
+* @+FAUXV : finite auxiliary verb 
 ** ferte: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
 * @+FMAINV : finite main verb
-** oaidná: Son oaidná ollislaš gova. - She sees the whole picture
+** oaidná: Son oaidná ollislaš gova. - She sees the whole picture	
 * @-FAUXV : infinite auxiliary verb
-** sáhte: In sáhte gáhku borrat. - I cannot eat cake.
+** sáhte: In sáhte gáhku borrat. - I cannot eat cake.	
 * @-FMAINV : infinite main verb
 ** oaidnit: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
 * @-FSUBJ> : Subject of infinite verb outside the verbal.
@@ -4145,7 +4121,7 @@ Der/ár
 
 ## Sets containing sets of lists and tags
 
-This part of the file lists a large number of sets based partly upon the tags defined above, and
+This part of the file lists a large number of sets based partly upon the tags defined above, and 
 partly upon lexemes drawn from the lexicon.
 See the sourcefile itself to inspect the sets, what follows here is an overview of the set types.
 
@@ -4153,7 +4129,7 @@ See the sourcefile itself to inspect the sets, what follows here is an overview 
 
 ### Sets for Single-word sets
 
-OKTA and go, and the set INITIAL for initial letters
+OKTA and go, and the set INITIAL for initial letters 
 OKTA
 go
 INITIAL
@@ -4296,7 +4272,7 @@ NOT-PRFPRC
 
 
 ### Sets for adverbs that have lookalikes
-Here come some adverbs that have identical twins in other POS.
+Here come some adverbs that have identical twins in other POS. 
 If these are found in Adv contexts, we treat them as adverbs.
 
 
@@ -4320,7 +4296,7 @@ If these are found in Adv contexts, we treat them as adverbs.
 
 
 V is all readings with a V tag in them, REAL-V should
-be the ones without an N tag following the V.
+be the ones without an N tag following the V.  
 The REAL-V set thus awaits a fix to the preprocess V ... N bug.
 
 
@@ -4430,7 +4406,7 @@ STRICT-TRANS-V is the set for verbs which don't let a GenAcc be a modifier of an
 
 
 
-* **PLACE-V** Those get only not locative if the target is a member TOOL, ABSTR-TOOL or ANIMATE or CONCEPT. Selects more locatives than ONLY-PLACE-LOC-V
+* **PLACE-V** Those get only not locative if the target is a member TOOL, ABSTR-TOOL or ANIMATE or CONCEPT. Selects more locatives than ONLY-PLACE-LOC-V 
 
 
 
@@ -4953,7 +4929,7 @@ we don't want propernoun analysis of these words, initially in sentences
 
 
 
-* **InitialSapmiProp** the initial Sápmi rule.
+* **InitialSapmiProp** the initial Sápmi rule. 
 
 
 * Rules for removing some Props which are identical to common nouns
@@ -4968,7 +4944,7 @@ we don't want propernoun analysis of these words, initially in sentences
 
 
 
-*Select **PlcSur** (Sem/Plc) (Sem/Sur)
+*Select **PlcSur** (Sem/Plc) (Sem/Sur) 
 
 
 
@@ -4991,7 +4967,7 @@ we don't want propernoun analysis of these words, initially in sentences
 
 
 
-* **PropAttr**
+* **PropAttr** 
 
 Remove unwanted analyses
 
@@ -5002,7 +4978,7 @@ Remove unwanted analyses
 * **SouthLoc** removes Southern Locative vs. Essive
 
 
-* **Apertium-rule** we want Num as alternativ to Ord reading
+* **Apertium-rule** we want Num as alternativ to Ord reading  
 
 
 
@@ -5027,7 +5003,7 @@ Remove unwanted analyses
 
 ## Lexicalised derivations
 
-* **derVuohta** removes A Attr Der/vuota if A Der/vuota.
+* **derVuohta** removes A Attr Der/vuota if A Der/vuota.	
 
 
 * **eapmi** compounds with eapmi if they have Der/NomAct analysis
@@ -5072,13 +5048,13 @@ Remove unwanted analyses
 
 * **notRealV** removes verb readings from verbs like álbmotregistreret
 
-* **notN** removes N for adjectives which have got noun analysis because of Px for Divvun
+* **notN** removes N for adjectives which have got noun analysis because of Px for Divvun 
 
 * **leapmaDimin** removes it
 
 * **leage** removes leahki Allegro
 
-* **Divvun**
+* **Divvun** 
 
 
 
@@ -5095,7 +5071,7 @@ Remove unwanted analyses
 
 * **VGenPass** remove when Pass or LEX-PASS
 
-* **Allegro**
+* **Allegro** 
 
 
 
@@ -5113,9 +5089,9 @@ Remove unwanted analyses
 
 * **Lexdiehttelasaid** diehttelasaid Adv
 
-* **Lexmearajiekŋa**
+* **Lexmearajiekŋa** 
 
-* **Lexmaniija**
+* **Lexmaniija** 
 
 
 * **Lexgeassit** geassit Adv vs geassit V
@@ -5153,7 +5129,7 @@ Remove unwanted analyses
 
 
 
-* **confProp, Lea, Man, Hui, Mo, Prop** removes Props which confuces the analyser,
+* **confProp, Lea, Man, Hui, Mo, Prop** removes Props which confuces the analyser, 
 
 
 
@@ -5184,7 +5160,7 @@ Remove unwanted analyses
 
 * **AttrPropDerlaš** Selects (Prop Der/lasj Attr) if first one to the right is a noun
 
-* **PropAttr** Removes (Prop Attr), but not if to the right is Prop or Ord OR ABBR
+* **PropAttr** Removes (Prop Attr), but not if to the right is Prop or Ord OR ABBR 
 
 * **PropSur** Selects (Prop Sem/Sur) if finite verb to the left. Immediately to the right is Sem/Fem OR Sem/Mal
 
@@ -5193,7 +5169,7 @@ Remove unwanted analyses
 
 
 
-* **PropAttr1** Selects Attr if you are Sem/Fem OR Sem/Mal, Sem/Sur or INITIAL and to your right is Prop which is Sem/Fem OR Sem/Mal or Sem/Sur
+* **PropAttr1** Selects Attr if you are Sem/Fem OR Sem/Mal, Sem/Sur or INITIAL and to your right is Prop which is Sem/Fem OR Sem/Mal or Sem/Sur 
 
 
 
@@ -5209,7 +5185,7 @@ Remove unwanted analyses
 
 * Removes **HearránEss** we want Px for Voc (we should we add it to the Prop version)
 
-* Selects **PropNom**
+* Selects **PropNom** 
 
 
 ### MISC
@@ -5231,19 +5207,19 @@ Remove unwanted analyses
 
 * **ollit** removes ollit when ollu - move this one?
 
-* **FocbaDu3** removes Foc/ba when Du3 verbs like máhttiba and Adv like juoba and Prop like Jáhkoba (Acc)
+* **FocbaDu3** removes Foc/ba when Du3 verbs like máhttiba and Adv like juoba and Prop like Jáhkoba (Acc) 
 
-* **Focmis** removes Foc/mis when Loc
+* **Focmis** removes Foc/mis when Loc  
 
-* **Focson** removes Foc/son when Sur
-
-
-* **Focmat** removes Foc/mat when not Imprt
-
-* **Fochan** removes Foc/han when adp
+* **Focson** removes Foc/son when Sur  
 
 
-* **Focbe** removes Foc/be when juobe Adv
+* **Focmat** removes Foc/mat when not Imprt  
+
+* **Fochan** removes Foc/han when adp  
+
+
+* **Focbe** removes Foc/be when juobe Adv  
 
 
 * **Focge** removes Foc/ge when Adv like dieđusge
@@ -5254,7 +5230,7 @@ Remove unwanted analyses
 # ONE-COHORT DISAMBIGUATION - CYCLE 0
 
 The idea behind "cycle 0" is to have safe rules without context first.
-These rules typically chose lexicalisations over derivations,
+These rules typically chose lexicalisations over derivations, 
 Saami words instead of marginal names, etc.
 
 
@@ -5267,9 +5243,9 @@ Saami words instead of marginal names, etc.
 
 *Removes **derA** or PrsPrc or VGen if lexicalised. VGen is a chance.
 
-*Removes **derAdv**  when Adv is lexicalised.
+*Removes **derAdv**  when Adv is lexicalised.  
 
-*Removes **VAbess**  when Adv is lexicalised.
+*Removes **VAbess**  when Adv is lexicalised.  
 
 
 * Removes **derVhmm** Does this function?
@@ -5278,42 +5254,37 @@ Saami words instead of marginal names, etc.
 
 * **derAlla** removes Der/halla if Der/alla.
 
-* Removes **derH** if Der/InchL.
+* Removes **derH** if Der/InchL.  
 
-* Removes **derST** if Der/ahtti #OBS se på denne
+* Removes **derST** if Der/ahtti #OBS se på denne	
 
 
 
 
 ## Fragments and headliners
 
-* **foto**
+* **foto** 
 
 
 
 
 
-* **Sem/Act** selects lexicalised NomAct in fragments (instead of looking for VFIN).
+* **Sem/Act** selects lexicalised NomAct in fragments (instead of looking for VFIN). 
 
 * **AnomInf** initial adjectiv or ceartain nouns
 
 * **ACompPl** adjective plural nomitative, not comp sg nor adv
 
-*  **viimmatAdv**
+*  **viimmatAdv** 
 
 
 
 
-* **SA kurssat**
+* **SA kurssat**  
 
 
 
-* **NotGen**
-
-
-
-
-
+* **NotGen** 
 
 
 
@@ -5323,7 +5294,12 @@ Saami words instead of marginal names, etc.
 
 
 
-* **compgo**
+
+
+
+
+
+* **compgo** 
 
 
 
@@ -5370,16 +5346,16 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 * **aiddo**
 
-***bealisAdv**
+***bealisAdv** 
 
 ***bearreAdv** beare vs bearri
 
-***ilusAdv**
+***ilusAdv** 
 
 
 
 
-***rámisA**
+***rámisA** 
 
 
 * **mannelTimeAdv** golbma jagi maŋŋel
@@ -5397,22 +5373,22 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 * **cohkkutAdv** čohkkut
 
 
-* **dussaiAdv**
+* **dussaiAdv**  
 
 
-* **gaskanAdvVGen**
+* **gaskanAdvVGen**  
 
-* **gotAdv**
+* **gotAdv**  
 
-* **ovdalgoCS**
+* **ovdalgoCS**  
 
-* **ikteAdv**
+* **ikteAdv**  
 
-* **miehtaV**
+* **miehtaV**  
 
-* **mannelAdv**
+* **mannelAdv**  
 
-* **miehtaPr**
+* **miehtaPr**  
 
 
 * **aigiAdv**  guokte vahku áigi
@@ -5422,7 +5398,7 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 * **dalleAdv**
 
-*  **dusseAdv**
+*  **dusseAdv** 
 
 
 
@@ -5431,46 +5407,46 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 
 
-* **alggageAdv**
+* **alggageAdv**  
 
-* **bearraiAdv**
+* **bearraiAdv**  
 
-* **boaittobealeAdv**
-
-
-* **buresAdv**
-
-* **cadatAdv**
-
-* **cuozzutAdv**
-
-* **dadjatAdv**
-
-* **dadjatAdv2**
+* **boaittobealeAdv**  
 
 
-* **dainnaAdv**
+* **buresAdv**  
+
+* **cadatAdv**  
+
+* **cuozzutAdv**  
+
+* **dadjatAdv**  
+
+* **dadjatAdv2** 
+
+
+* **dainnaAdv**  
 
 * **danin** (Pron Ess OR Adv)
 * **daninAdv** selects danin Adv. It is a special rule, only negative restrictions.
 
 
-* Select Ess, and then kill?
+* Select Ess, and then kill?  
 
-* **dassaAdv**
+* **dassaAdv**  
 
-* **dakkoAdv**
-
-
-* **jusCS**
+* **dakkoAdv**  
 
 
-* **duoAdv**
-
-* **duoN**
+* **jusCS**  
 
 
-* **duodaidAdv**
+* **duoAdv**  
+
+* **duoN**  
+
+
+* **duodaidAdv**  
 
 
 * **plcadv** words like nuortan adv (DOPPE) not N Ess
@@ -5504,12 +5480,12 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 * **doložat** removes doalut N
 
 
-* **eanasAdv**
+* **eanasAdv**  
 
 * **eambbogo** selects Adv eambbo go
 
 
-* **eanetAdv**
+* **eanetAdv**  
 
 
 
@@ -5517,31 +5493,31 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 
 
-* **AdvComp**
+* **AdvComp**  
 
-* **easkkaAdv**
-
-
+* **easkkaAdv**  
 
 
 
 
-* **gaskatAdv**
 
-* **goassigeAdv**
 
-* **gosaAdv**
+* **gaskatAdv**  
+
+* **goassigeAdv**  
+
+* **gosaAdv**  
 
 * **gustoAdv**
 
 
 * **gustoAdvláhka**
 
-* **guhkasAdv**
+* **guhkasAdv**  
 
 
 
-* **VifVFIN** removes V
+* **VifVFIN** removes V 
 
 * **harveAdv**
 
@@ -5653,7 +5629,7 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 * **vuhtiiAdv**
 
-## Pronouns
+## Pronouns 
 
 * **recipr, reciprPl** select Recipr
 
@@ -5895,9 +5871,9 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 
 
-* **UsImprt** removes Imprt Sg3 for all nouns in -us
+* **UsImprt** removes Imprt Sg3 for all nouns in -us	
 
-* **SUBImprt** removes Imprt when it can be a part of an NP
+* **SUBImprt** removes Imprt when it can be a part of an NP	
 
 
 
@@ -5923,12 +5899,12 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 ## Not Qst
 
-* **AdvQst** removes dego/nugo Qst
+* **AdvQst** removes dego/nugo Qst 
 
 
 ## Interjections
 
-* **Interjlemma** voja voja nana nana select interj if repeated
+* **Interjlemma** voja voja nana nana select interj if repeated 
 
 
 * **Interj** or not
@@ -5939,7 +5915,7 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 * **NnoPx** Remove Px for special nouns
 
-* **gaskaneaset** selects Po for gaskaneaset
+* **gaskaneaset** selects Po for gaskaneaset	
 
 ## Some verb rules
 
@@ -6005,7 +5981,7 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 * **moai** This rule is not in use because of REMOVE:Prop
 
-* __miiPersLeft1, miiPersLeft2, _miiPersRight__ select mii Pers
+* __miiPersLeft1, miiPersLeft2, _miiPersRight__ select mii Pers 
 
 
 
@@ -6020,7 +5996,7 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 ### Pron Pers 3. p.
 
-* **sonSG3V, sonRel, goson** select son as Pers, Rel or Pcle
+* **sonSG3V, sonRel, goson** select son as Pers, Rel or Pcle 
 
 
 
@@ -6033,10 +6009,10 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 * **datPlIll** selects dát Pron Dem Pl Ill
 
-* **daiddaVerb** removes dáidda N Sg Nom
+* **daiddaVerb** removes dáidda N Sg Nom 
 
 
-* **dasaVGen, dasaLassin dasa,datSg3, datSg3PrfPrc** ( = forms of the verb "dassat"):
+* **dasaVGen, dasaLassin dasa,datSg3, datSg3PrfPrc** ( = forms of the verb "dassat"): 
 
 * **dasaILLV** choses dasa to the left of verbs like duhtat, suhttat, luohttit
 
@@ -6081,7 +6057,7 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 * **eanasPron** selects Pron in front of Pron Loc
 
-## Px constraints
+## Px constraints 
 
 
 First select Px, then remove all remaining Px
@@ -6115,7 +6091,7 @@ First select Px, then remove all remaining Px
 * **PxSg1Acc** is Acc to the right.
 
 
-* coordination **PxSg1coord**
+* coordination **PxSg1coord** 
 
 * **PxSg1coordLast** for the last word of a coordination
 
@@ -6128,16 +6104,16 @@ First select Px, then remove all remaining Px
 
 * **PxSg2AccImprt** if  TV Imprt to the left
 
-* **PxSg2AccPrfPrc** after PrfPrc
+* **PxSg2AccPrfPrc** after PrfPrc 
 
-* **NotPxSg2** if no Sg2
+* **NotPxSg2** if no Sg2 
 
 * **PxSg2GenPo** if in front of Po, after til verb
 
 * **PxSg2Loc** after habitivconstruction
 
 
-* **ánsuPx**
+* **ánsuPx** 
 
 
 * **atnitPx** removes Px for for atnit muittus, gudnis, árvvus, čalmmis
@@ -6165,28 +6141,28 @@ First select Px, then remove all remaining Px
 
 * **PxSg3Nom**
 
-* **PxGenNorPo**
+* **PxGenNorPo**  
 
-* **PxGenNum**
+* **PxGenNum**  
 
-* **PxGenPr**
+* **PxGenPr**  
 
 * **PXGenoaivai**  for oaivái Po, there could be more Po for this rule?
 
 * **eallitAcc** Selects Acc for eallit IV if you are *eallin* or *eallinahki*
 
 
-* **PXAccCoor**
+* **PXAccCoor**  
 
 *  **PxSg3CC** in coordination with the owner
 
 
 
-* **PxSgIllPx**
+* **PxSgIllPx**  
 
 
 
-* **gaskaAcc**
+* **gaskaAcc**  
 
 
 
@@ -6203,14 +6179,14 @@ We end section 2 by removing all remaining Px
 * **FinGoInf** for  vai áigu go njulget.. Lene:  we don't need this
 
 
-verb or adv
+verb or adv	
 
 
 * **NotVGenIfDer** removes VGen if 0 = Der/Pass or Der...(r947)
 
-* **NotVGenIfDer** selects Actio Ess
+* **NotVGenIfDer** selects Actio Ess 
 
-* **NotActio** selects Actio Ess
+* **NotActio** selects Actio Ess 
 
 
 ### All imperatives
@@ -6275,7 +6251,7 @@ Such contexts are: Imperative verb sentence-initially with exclamation mark
 
 * **NegSg3BeforeFoc** selects Neg before Foc/ge or ConNeg (r959)
 
-* **vfin** removes verb reading when the reading should be noun
+* **vfin** removes verb reading when the reading should be noun  
 
 
 
@@ -6299,9 +6275,9 @@ The next two rules are not found in the corpus, but logically
 they belong, to cover the whole paradigm. There is no verb-internal
 homonymy here, but there is homonymy with e.g. Illative for certain verbs.
 
-* **VDu2IFDoaiLeft** selects Du2 if "doai" to the left (r962)
+* **VDu2IFDoaiLeft** selects Du2 if "doai" to the left (r962)	 
 
-* **VDu2IFDoaiRight** selects Du2 if "doai" to the right (r963)
+* **VDu2IFDoaiRight** selects Du2 if "doai" to the right (r963)	 
 
 ### Du3 - early cycle, safe rules
 
@@ -6309,7 +6285,7 @@ The competitor to Du3 is -ba Foc.
 
 * **VDu3IfSoaiLeft** selects Du3 when "soai" left (r964)
 
-* **VDu3IFSoaiLeft** selects Du2 if "doai" to the right (r965)
+* **VDu3IFSoaiLeft** selects Du2 if "doai" to the right (r965)	 
 
 * **VDu3IfGuokteLeft** selects Du3 if "guokte" left (r966) - 15
 
@@ -6377,7 +6353,7 @@ The following two may be joined:
 * **VPl3Lookalikes** removes "verbs" like "manne" and "dušše" (r984) - 274
 
 
-* **VSg3Lookalikes** removes "verbs" like "skuvlii"
+* **VSg3Lookalikes** removes "verbs" like "skuvlii" 
 
 
 * **VPl3NotSg2BefPassive** removes Sg2 for Pl3 and Inf before passive (r985)
@@ -6387,7 +6363,7 @@ The following two may be joined:
 * nuorra (vs. nuorrat V)
 * **PlNomCoor** Selects (N Pl Nom)
 
-* **johtilit og bastilit** removed johtit + Der/l
+* **johtilit og bastilit** removed johtit + Der/l 
 
 
 
@@ -6423,7 +6399,7 @@ OBS: denne er ikke helt bra
 * **BeallileatPl3** when bealli or oassi + Pl Loc
 
 
-* **ENInf1**
+* **ENInf1** 
 
 * **ENInf2** selects Inf (NOTE, this was further down in sme-dis)
 
@@ -6433,7 +6409,7 @@ OBS: denne er ikke helt bra
 
 ***listInf** in lists
 
-# Section 4: CYCLE 1B: REMOVING THE READINGS THAT WERE LEFT FROM THE 1A RULES
+# Section 4: CYCLE 1B: REMOVING THE READINGS THAT WERE LEFT FROM THE 1A RULES 
 
 We don't need more Px sections, it's done alrady
 
@@ -6510,24 +6486,24 @@ maid has many readings and as Rel it is a member of S-BOUNDARY. Therefore we nee
 
 * **maidAdv8** selects maid Adv after a Pers
 
-* **maidAdv9** selects maid Adv even
+* **maidAdv9** selects maid Adv even 
 
-* **maidAdv10** selects maid Adv iežas
+* **maidAdv10** selects maid Adv iežas 
 
-* **maidAdv11** selects maid Adv iežas
+* **maidAdv11** selects maid Adv iežas 
 
 * **maidAdv12** selects maid Adv for Lea maid A Inf
 
-* **maidAdv13** selects maid Adv for
+* **maidAdv13** selects maid Adv for 
 
 
-* **AdvPlc** selects Adv for
+* **AdvPlc** selects Adv for 
 
 
 * **KillmaidAdv** removed the remaining maid Adv
 
 
-* **mielasAdv**
+* **mielasAdv** 
 
 
 **matPcle**
@@ -6541,7 +6517,7 @@ The following two rules are omitted. They only inflect on the disambiguation of 
 
 
 
-* **olluNom**
+* **olluNom** 
 
 
 
@@ -6639,7 +6615,7 @@ Commented out som adp-rules we don't need anymore:
 
 
 ### guovddaš
-* **guovddasPP** or not
+* **guovddasPP** or not 
 
 ### mađe
 * **madePo** after Num Gen
@@ -6647,14 +6623,14 @@ Commented out som adp-rules we don't need anymore:
 * **NumMade** Num before mađe
 
 ### miehta
-* "miehtá" is also VFIN, and miehtá needs special treatment
+* "miehtá" is also VFIN, and miehtá needs special treatment 
 ** **miehtaPo** after place or time Gen
 
 ** **miehtaPr** before place or time Gen
 
 * **oidnosisAdv**
 
-* "ovddas" has many readings and needs special treatment
+* "ovddas" has many readings and needs special treatment 
 ** **ovddasPo**  - commented out because we don't need it
 
 * special rules for rastá because it often is Adv, and it can be an object connected to the PP
@@ -6667,7 +6643,7 @@ Commented out som adp-rules we don't need anymore:
 
 ** **sisaAdv**   sisa
 
-** **unnimusatAdv**
+** **unnimusatAdv**   
 
 
 * **birraPo, birraPr** special rules for birra because it often is Adv, and it can be an object connected to the PP
@@ -6677,9 +6653,9 @@ Commented out som adp-rules we don't need anymore:
 
 
 
-* "vuostá" has many readings and needs special treatment
+* "vuostá" has many readings and needs special treatment 
 ** **vuostaAdv**  váldit vuostá/vuostái
-** **vuostaPr**  váldit vuostá/vuostái
+** **vuostaPr**  váldit vuostá/vuostái	
 
 
 * vuollel ja badjel as Adv in front of Num
@@ -6719,7 +6695,7 @@ Commented out som adp-rules we don't need anymore:
 * **PrGen2** selects Pr
 
 
-* **PrNoCompl** removes Pr if no complement to the right
+* **PrNoCompl** removes Pr if no complement to the right	
 
 
 
@@ -6733,7 +6709,7 @@ Commented out som adp-rules we don't need anymore:
 
 * **beallaiPo** selects
 
-* **PrTime**
+* **PrTime** 
 
 
 * **ovdalPr** selects
@@ -6775,7 +6751,7 @@ Commented out som adp-rules we don't need anymore:
 
 * **dasgoCS** selects CS, not Qst
 
-* Select and remove **vaikkoAdv** ,
+* Select and remove **vaikkoAdv** , 
 
 
 ## go as CS and Qst Pcle
@@ -6811,7 +6787,7 @@ First select all "go" Qst Pcle, then remove them so the rest will be "go" CS
 
 * **AdvQst** selects Pcle for go after WORD
 
-* **killPcle** removes all remaining Pcle for go
+* **killPcle** removes all remaining Pcle for go 
 
 
 
@@ -6851,14 +6827,14 @@ First map all COMP-CS<, then remove the other readings
 
 
 
-* **CompEanet** dohko eanet go
+* **CompEanet** dohko eanet go 
 
 
 * **Compvejolas** go vejolaš
 
 * **compNomHead** NP-HEAD-NOM (ADVL) go NP-HEAD-NOM (ADVL). VFIN-NOT-IMPRT pga manglende disamgiguering
 
-* **CompNomHead** Comp NP-HEAD-NOM leat go NP-HEAD-NOM
+* **CompNomHead** Comp NP-HEAD-NOM leat go NP-HEAD-NOM  
 
 
 * **compMisc** go geassebuođut, go dán áigge
@@ -6875,19 +6851,19 @@ First map all COMP-CS<, then remove the other readings
 * **compAccgo** Acc go Acc
 
 
-* **compNum** TRANS-V eambbo go Num
+* **compNum** TRANS-V eambbo go Num  
 
 
-* **compCoord** coordination
+* **compCoord** coordination	
 
-* **compCoordAttr** coordination again, now with Attr. Speacial rule because of that Attr also has other readings.
+* **compCoordAttr** coordination again, now with Attr. Speacial rule because of that Attr also has other readings.	
 
-* **compInf**
+* **compInf** 
 
-* **compInf**
+* **compInf** 
 
 
-* **compInfCoor**
+* **compInfCoor** 
 
 
 
@@ -6927,7 +6903,7 @@ Mostly we map both @CNP and @CVP, then we select @CNP, after that we remove them
 
 * **vaiCCCNP** vai as CC or CS
 
-* **vaiCC** remove vai as CC
+* **vaiCC** remove vai as CC 
 
 * **vaiCCNegQst1** vai CC @CVP before Neg or question
 
@@ -6936,11 +6912,11 @@ Mostly we map both @CNP and @CVP, then we select @CNP, after that we remove them
 
 * **vaiCCPrfPrcInfQst** vai CC @CNP in question about two alternatives
 
-* **killAllvainotCSCVP** Select all vai CS @CVP
+* **killAllvainotCSCVP** Select all vai CS @CVP	
 
 * **dadeCNP** removes dađe @CNP, so @CVP remains
 
-* **CVPNPron** No finite verb or verbalactivity in front N/Pron @CNP N/Pron
+* **CVPNPron** No finite verb or verbalactivity in front N/Pron @CNP N/Pron	
 
 
 * **CVPnoVfin** No potential finite verb following
@@ -6959,7 +6935,7 @@ Mostly we map both @CNP and @CVP, then we select @CNP, after that we remove them
 * **CVPAdvAdv** between to Adv
 
 
-* **CVPActioNom**
+* **CVPActioNom** 
 
 
 
@@ -6967,14 +6943,14 @@ Mostly we map both @CNP and @CVP, then we select @CNP, after that we remove them
 
 
 
-* **CVPnoVfinAdvl** No finite verb in front ADVLCASE @CNP ADVLCASE
+* **CVPnoVfinAdvl** No finite verb in front ADVLCASE @CNP ADVLCASE	
 
 
 
 
-* **CVPAdvNom** Nom @CNP Adv Nom
+* **CVPAdvNom** Nom @CNP Adv Nom	
 
-* **CVPCopNomInf** COPULAS Nom @CNP Nom Inf
+* **CVPCopNomInf** COPULAS Nom @CNP Nom Inf	
 
 
  ***CVPoppramsing** Lásse, Iŋgá ja mun
@@ -6984,14 +6960,14 @@ Mostly we map both @CNP and @CVP, then we select @CNP, after that we remove them
 
 * **CVPwrongCmpnd** wrongly formatted compounds
 
-* **CVPAAttr** A Attr @CNP A Attr
+* **CVPAAttr** A Attr @CNP A Attr	
 
-* **CVPA** A @CNP A
+* **CVPA** A @CNP A 	
 
 
-* **CVPAccAdv** Acc @CNP Adv Acc
+* **CVPAccAdv** Acc @CNP Adv Acc	
 
-* **CVNFauxcFmainv**
+* **CVNFauxcFmainv** 
 
 
 
@@ -7039,7 +7015,7 @@ Mostly we map both @CNP and @CVP, then we select @CNP, after that we remove them
 
 
 
-## Emphatic ieš
+## Emphatic ieš     
 
 * **ies1Pl, ies2Pl** select Pl for ieža
 
@@ -7052,37 +7028,37 @@ Mostly we map both @CNP and @CVP, then we select @CNP, after that we remove them
 
 
 
-* **NifNum**
+* **NifNum** 
 
 
 
-* **AdvOvtta**
+* **AdvOvtta** 
 
-* **AdvNumEss**
+* **AdvNumEss** 
 
 * **NumCurrency** Selects Num
 
-* **NumNomJahki** Selects (Num Nom)
+* **NumNomJahki** Selects (Num Nom) 
 
 * **NumDassa** Selects (Num Nom)
 
-* **NumAccCurrency** Selects (Num Acc)
+* **NumAccCurrency** Selects (Num Acc)	
 
-* **árvosátniNum** Selects (Num Nom)
-
-
-* **NumNom** Selects (Num Nom)
+* **árvosátniNum** Selects (Num Nom) 
 
 
-* **NumNomCoord** Selects (Num Nom)
+* **NumNom** Selects (Num Nom) 
 
-* **r1082** Selects (Num Nom)
+
+* **NumNomCoord** Selects (Num Nom) 
+
+* **r1082** Selects (Num Nom) 
 
 * **year** Selects (Num Gen)
 
-* **numunit** Selects (Num Gen) + NUMUNIT
+* **numunit** Selects (Num Gen) + NUMUNIT 
 
-* **NumGenPo** Selects Gen if you are Num and there is a Gen following the first Gen to the right *gávcci máná njuni ovddas*
+* **NumGenPo** Selects Gen if you are Num and there is a Gen following the first Gen to the right *gávcci máná njuni ovddas* 
 
 
 
@@ -7114,15 +7090,15 @@ Mostly we map both @CNP and @CVP, then we select @CNP, after that we remove them
 ## Indefinite pronouns
 The rules are not documented yet
 
-* **IndefAttr1** Selects (Indef Attr)
+* **IndefAttr1** Selects (Indef Attr) 	
 
 
-* **IndefAttr2** Selects (Indef Attr)
+* **IndefAttr2** Selects (Indef Attr) 
 
 * **IndefAttr3** Selects (Indef Attr)
 
 
-* **NoAttr** Removes Attr if you are Pron and first one to your right is (Pron Rel)
+* **NoAttr** Removes Attr if you are Pron and first one to your right is (Pron Rel)	
 
 * **NoIndefAttr** Removes (Indef Attr) if first one to the right is (Pron Pers Loc)
 
@@ -7143,7 +7119,7 @@ The rules are not documented yet
 
 * **AttrBuot** IFF-rule
 
-* **IndefNom** Selects (Pron Indef Nom) if you are BUOT and first one to the right is PL3-V
+* **IndefNom** Selects (Pron Indef Nom) if you are BUOT and first one to the right is PL3-V 	
 
 * **IndefNom2** Selects Indef Nom if you are BUOT and there is no transitive verb to your left or roght in the clause
 
@@ -7201,7 +7177,7 @@ The rules are not documented yet
 
 
 
-## Disambiguating adjectives
+## Disambiguating adjectives 
 
 ### Rules related to specific adjectives
 
@@ -7213,7 +7189,7 @@ The rules are not documented yet
 
 * dáláš
 
-* dološ
+* dološ 
 
 * garra N vs. garas A
 
@@ -7246,25 +7222,25 @@ The rules are not documented yet
 * **AttrnotNA** removes Attr when no N or A to the right
 
 
-* **ANomILLA** selects Nom when ILL-A
+* **ANomILLA** selects Nom when ILL-A	
 
 ### Rules for Attr between Dem and N
 
-* **AAttrDemSg1, AAttrDemPl1**
+* **AAttrDemSg1, AAttrDemPl1** 
 
-* **AAttrDemSg2, AAttrDemPl2**
+* **AAttrDemSg2, AAttrDemPl2** 
 
-* **AAttrDemSg3, AAttrDemPl3**
+* **AAttrDemSg3, AAttrDemPl3** 
 
-* **AAttrDemSgIll, AAttrDemPlIll**
+* **AAttrDemSgIll, AAttrDemPlIll** 
 
-* **AAttrDemSgLoc, AAttrDemPlLoc**
+* **AAttrDemSgLoc, AAttrDemPlLoc** 
 
-* **AAttrDemComPl**
+* **AAttrDemComPl** 
 
-* **AAttrDemdakkar**
+* **AAttrDemdakkar** 
 
-### Other attribute rules
+### Other attribute rules 
 
 * Not attribute in front of Ess: dovddus sánálaš nissonin
 
@@ -7284,22 +7260,22 @@ The rules are not documented yet
 * **AttrPlacelaš** This rule selects Sem/Plc Der/lasj A Attr in front of Prop or N
 
 
-* **AttrCord**
+* **AttrCord** 
 
 
 
-* **AdvManimus**
+* **AdvManimus** 
 
 
 
-* **Advovdalaš**
+* **Advovdalaš** 
 
 
-* **AttrIllCop**
+* **AttrIllCop** 
 
-* **AttrAdv**
+* **AttrAdv** 
 
-* **Cop**
+* **Cop** 
 
 
 * **ANom**  removes A Nom
@@ -7316,11 +7292,11 @@ The rules are not documented yet
 
 
 
-* **AdvN** removes Adv
+* **AdvN** removes Adv   
 
-* **AAttrPunct**
+* **AAttrPunct**    
 
-* **AAttrgoAAttr**
+* **AAttrgoAAttr**    
 
 * **AttrTIME**    bad rule
 
@@ -7334,9 +7310,9 @@ The rules are not documented yet
 
 * **PrfPrcCoordA** selects PrfPrc in coordination with an A
 
-* **ACoordPrfPrc** selects A itn coordination with PrfPrc
+* **ACoordPrfPrc** selects A itn coordination with PrfPrc 
 
-* **AAttrContra** selects A itn coordination with PrfPrc
+* **AAttrContra** selects A itn coordination with PrfPrc 
 
 
 
@@ -7378,7 +7354,7 @@ This block of rules is there to ensure case agreement for comparatives.
 * **ASgNomafterCop** selects A Sg Nom after copulas and Sg Nom, not so strong constraint for the target
 
 
-* **ASgNomEssCopNeg** selects A Sg Nom after copulas Sg3 or Neg Sg3s,
+* **ASgNomEssCopNeg** selects A Sg Nom after copulas Sg3 or Neg Sg3s, 
 
 
 * dsfa
@@ -7387,7 +7363,7 @@ This block of rules is there to ensure case agreement for comparatives.
 
 * **Wr1775xc** Selects (A Sg Nom) if you are (N Sg Loc), Der/NomAg or (Ex/N A). Copulas is to the left. EOS or CLB is to the right
 
-* **Wr1776xc** selects (A Sg Nom)
+* **Wr1776xc** selects (A Sg Nom) 
 
 
 
@@ -7446,10 +7422,10 @@ This block of rules is there to ensure case agreement for comparatives.
 
 # VERBS
 
-## Disambiguating verbs - part 1
+## Disambiguating verbs - part 1 
 
-First ConNeg forms, they are dependent upon Neg verbs. Then Imperative
-(with their special syntax), infinitive, and other infinite forms.
+First ConNeg forms, they are dependent upon Neg verbs. Then Imperative 
+(with their special syntax), infinitive, and other infinite forms. 
 Person comes later (in part 2)
 
 
@@ -7497,31 +7473,31 @@ See also *Imprt or Ind* some sections down.
 
 * **ImprtLeat** says BOS Leat A is Imprt - 575
 
-* **ImprtDál**
+* **ImprtDál** 
 
-* **SelImprtExcl** selects initial Imprt when excl mark
+* **SelImprtExcl** selects initial Imprt when excl mark 
 
 
-* **ImprtComma**
+* **ImprtComma** 
 
 * **ImprtNotVGen**
 
-* **NotImprtInd**
+* **NotImprtInd** 
 
-* **NotImprtConNeg**
+* **NotImprtConNeg** 
 
-* **NotImprtA**
+* **NotImprtA** 
 
-* **NotImprtN**
-
-
-* **NotImprtVFIN**
+* **NotImprtN** 
 
 
-* **NotImprtSlash**
+* **NotImprtVFIN** 
 
 
-* **NotImprtGo**
+* **NotImprtSlash** 
+
+
+* **NotImprtGo** 
 
 
 * bearrat TV or berret IV - berret is aux
@@ -7534,56 +7510,56 @@ See also *Imprt or Ind* some sections down.
 
 * **r2974** was moved up to select PL3-V after N Pl, might be relaxed to REMOVE Inf
 
-* **headofparts**
+* **headofparts** 
 
 
 * **r2976** was moved up to select PL3-V after N Pl, might be relaxed to REMOVE Inf
 
 * **r1809** Not Pl1 (but Inf) if VFIN to the left, This is the basic Inf rule.
 
-* **r1812**
+* **r1812** 
 
 
-* **InfCompCs**
+* **InfCompCs** 
 
-* **r1811**
+* **r1811** 
 
 
 * **EssInf**
 
-Rules that prevent later selection of Inf for a finite verb in the frame
+Rules that prevent later selection of Inf for a finite verb in the frame 			
 
 *INF-V...CC...*
 
-* **r1816**
+* **r1816** 
 
 
-* **r1818**
+* **r1818** 
 
 
-* **r1819**
-
-
-
-* **r1820**
-
-* **r1821**
+* **r1819** 
 
 
 
+* **r1820** 
+
+* **r1821** 
 
 
 
 
-* **r1823**
 
-* **r1824**
 
-* **r1825**
 
-* **r1827**
+* **r1823** 
 
-* **r1828**
+* **r1824** 
+
+* **r1825** 
+
+* **r1827** 
+
+* **r1828** 
 
 
 
@@ -7661,7 +7637,7 @@ the following chapter should be possible to unify.
 
 
 ## Present participle
-*orrut vs. orrot)
+*orrut vs. orrot) 
 ## Rules for "addit" (which is an adjective, but more often a verb)
 ## Actio Loc = N Loc
 
@@ -7690,11 +7666,11 @@ The rules are no documented yet
 
 * **VFINAttr**
 
-* **NPlbuorit**
+* **NPlbuorit**  
 
-* **ActioEssNum**
+* **ActioEssNum**	
 
-* **ActEssIfSensationv**
+* **ActEssIfSensationv**	
 
 * **NoActorIfSg3**
 
@@ -7704,7 +7680,7 @@ The rules are no documented yet
 
 
 
-## Demonstrative pronouns, agreement in DP - should it be moved to after verbmappings?
+## Demonstrative pronouns, agreement in DP - should it be moved to after verbmappings? 
 The rules are no documented yet
 
 * **DemAttr**
@@ -7731,19 +7707,19 @@ The rules are no documented yet
 # VERB MAPPINGS
 
 
-## Verbs as predicatives (@SPRED>) and (@<OPRED)
+## Verbs as predicatives (@SPRED>) and (@<OPRED) 
 
 ### The tags (@SPRED>) and (@<OPRED) target  PrfPrc
 The rules are no documented yet
 
 * **spredPrfPrc** Buressivdniduvvon lehkos (topicalised PrfPrc) -- was r494
 
-* **opredPrfPrc**
+* **opredPrfPrc**	
 
 * **opredPrfPrc**
 
 
-## Passive verbs often have
+## Passive verbs often have 
 
 
 
@@ -7766,7 +7742,7 @@ The rules are no documented yet
 * **NPrfPrc5** for LEX-PASS
 
 
-* **NPrfPrcPr** after Pr
+* **NPrfPrcPr** after Pr 
 
 * **NPrfPrcPo** before Po
 
@@ -7793,10 +7769,10 @@ The rules are no documented yet
 
 
 
-### (@A<)  target Inf
-* **AInf** Inf
+### (@A<)  target Inf 	
+* **AInf** Inf 	
 
-* **r368**
+* **r368**	
 
 
 
@@ -7848,7 +7824,7 @@ The rules are no documented yet
 
 
 
-### @-F<OBJ  target Inf
+### @-F<OBJ  target Inf 
 
 
 
@@ -7877,13 +7853,10 @@ The rules are no documented yet
 
 
 
-* **ADVLActioEss** Inf
+* **ADVLActioEss** Inf 		
 
 
-### (@<OBJ)  target Inf, Actio Ess, PrfPrc
-
-
-
+### (@<OBJ)  target Inf, Actio Ess, PrfPrc 
 
 
 
@@ -7900,10 +7873,13 @@ The rules are no documented yet
 
 
 
-* **OBJActioEss** Inf
 
 
-* **OBJPrfPrc** PrfPrc
+
+* **OBJActioEss** Inf 		
+
+
+* **OBJPrfPrc** PrfPrc 			
 
 
 
@@ -7917,22 +7893,22 @@ The rules are no documented yet
 
 ### (@+FMAINV) and (@+FAUXV) and (@-FAUXV)
 
-* **+FMAINVaux** AUX-OR-MAIN verbs
+* **+FMAINVaux** AUX-OR-MAIN verbs     
 
-* **+FAUXVcop** AUX  COPULAS
-
-
-
-* **+FMAINVcop** COPULAS verbs
-
-* **+FAUXVaux** AUX  verbs
+* **+FAUXVcop** AUX  COPULAS     
 
 
-* **+FAUXVboahtit** boahtit as AUX
 
-* **-FAUXVaux** AUX verbs
+* **+FMAINVcop** COPULAS verbs     
 
-* **+FMAINVcopInfconstr** leat before Inf
+* **+FAUXVaux** AUX  verbs     
+
+
+* **+FAUXVboahtit** boahtit as AUX      
+
+* **-FAUXVaux** AUX verbs     
+
+* **+FMAINVcopInfconstr** leat before Inf     
 
 
 
@@ -7945,26 +7921,26 @@ The rules are no documented yet
 * **+FAUXVCop**  copulas coming before the mainverb, relative clause inbetween
 
 
-* **+FMAINVcopMannan**  leat before mannan TIME
+* **+FMAINVcopMannan**  leat before mannan TIME     
 
-* **+FMAINVHabconstr**  in habitive constructions
+* **+FMAINVHabconstr**  in habitive constructions    
 
-* **+FMAINVCoopCoord** coordination
+* **+FMAINVCoopCoord** coordination  
 
-* **+FAUXVleat**
+* **+FAUXVleat**  
 
-* **+FMAINVAux1**
+* **+FMAINVAux1**  
 
-* **-FMAINVAux2**
+* **-FMAINVAux2**  
 
 * **+FAUXVCop**  copulas coming after the mainverb
 
 * **+FAUXVboahtit**  boahtit coming before the mainverb
 
-* **+FMAINVCop**  copulas
+* **+FMAINVCop**  copulas 	
 
 
-* **+FMAINV**  to the remaining finite verbs which are not AUX
+* **+FMAINV**  to the remaining finite verbs which are not AUX    
 
 
 
@@ -7991,16 +7967,16 @@ The rules are no documented yet
 
 ### (@-FMAINV) and (@-FAUXV)
 
-* **-FAUXVConNegCop**  to ConNeg COPULAS
+* **-FAUXVConNegCop**  to ConNeg COPULAS   
 
-* **-FAUXVConNegAux**  to ConNeg AUX-OR-MAIN
+* **-FAUXVConNegAux**  to ConNeg AUX-OR-MAIN   
 
-* **-FAUXVConNegAux**  to ConNeg AUX
-
-
+* **-FAUXVConNegAux**  to ConNeg AUX   
 
 
-* **-FMAINVConNeg**  to ConNeg
+
+
+* **-FMAINVConNeg**  to ConNeg   
 
 
 
@@ -8010,14 +7986,14 @@ The rules are no documented yet
 
 * **-FMAINVConNeg**  to ConNeg Aux after PrfPrc
 
-* **-FMAINVConNegCop**  to ConNeg COPULAS
+* **-FMAINVConNegCop**  to ConNeg COPULAS   
 
 
 
 
 * **-FAUXVPrfPrcAux**  to PrfPrc AUX  before Inf or Actio Ess
 
-* **-FMAINVPrfPrc**  to PrfPrc
+* **-FMAINVPrfPrc**  to PrfPrc 
 
 * **-FMAINVPrfPrcEss**  to PrfPrc before Ess
 
@@ -8025,13 +8001,13 @@ The rules are no documented yet
 
 * **-FMAINVPrfPrcafterAuxAux**  to PrfPrc after two Auxs
 
-* **-FMAINVPrfPrccoord**  to PrfPrc coordination
+* **-FMAINVPrfPrccoord**  to PrfPrc coordination	
 
-* **-FMAINVPrfPrccoord**  to PrfPrc coordination
+* **-FMAINVPrfPrccoord**  to PrfPrc coordination	
 
-* **-FMAINVPrfbeforeAux**  to PrfPrc before the Aux
+* **-FMAINVPrfbeforeAux**  to PrfPrc before the Aux	
 
-* **-FMAINVPrfafterMan**  to PrfPrc before the Aux
+* **-FMAINVPrfafterMan**  to PrfPrc before the Aux	
 
 
 
@@ -8118,7 +8094,7 @@ The rules are no documented yet
 
 
 
-* **DiminNomPxSg1**
+* **DiminNomPxSg1**	
 
 
 ## ACCUSATIVE-GENITIVE DISAMBIGUATION
@@ -8138,9 +8114,9 @@ The rules are no documented yet
 
 
 
-* **vuoiAcc** selects accusative if *vuoi* or *vuoi surgat* to the left
+* **vuoiAcc** selects accusative if *vuoi* or *vuoi surgat* to the left 
 
-* **lihkkuAcc** selects accusative
+* **lihkkuAcc** selects accusative 
 
 
 
@@ -8151,7 +8127,7 @@ The rules are no documented yet
 * **SEMnotPossessor** Removes Gen if you are not a possible possessor (a human) # HAB-ACTOR
 
 
-* **SEMnotHUM** removes Gen. This is when an NP is thought to be the OBJ, because it's not in the human sets and to the right is NON-FAMILY *njálgáid mánáide*.
+* **SEMnotHUM** removes Gen. This is when an NP is thought to be the OBJ, because it's not in the human sets and to the right is NON-FAMILY *njálgáid mánáide*. 
 
 * **SEMXr2066** Removes Gen if there is a human or org to the right, exeption for *čállingiela áhčči* and so on
 
@@ -8166,14 +8142,14 @@ The rules are no documented yet
 
 * **SEMXxr2071** Removes Gen: Nobody can possess a Proper name? Except from (Pron Pers) and Sem/Fem OR Sem/Mal
 
-* **SEMXxPropOrg** Removes Gen: Who can possess Prop Sem/Org?
+* **SEMXxPropOrg** Removes Gen: Who can possess Prop Sem/Org?    
 
-* **SEMlohkat**
+* **SEMlohkat**     
 
-* **SEMNation** Removes Gen: Who can possess Sápmi?
+* **SEMNation** Removes Gen: Who can possess Sápmi?    
 
-* **SEMdep** Select Gen if main-organization in front of department
-* **SEMorghum** select gen if organization or education in front of human or text
+* **SEMdep** Select Gen if main-organization in front of department   
+* **SEMorghum** select gen if organization or education in front of human or text  
 
 
 
@@ -8191,7 +8167,7 @@ The rules are no documented yet
 
 * **SEMXr2076** Selects Gen if you are HUMAN or Pron with an ABSTRACT to your right *iežaset vuoigatvuođa*
 
-* **VocNom**
+* **VocNom** 
 
 
 
@@ -8231,7 +8207,7 @@ The rules are no documented yet
 * __SEMplcGen_b__ Selects Gen if you are GEOGRAPHICAL-PLACE or (Prop Sem/Plc) after a PLACE-ADV
 
 
-* **SEMplcGen2** Removes Gen in front of a GENERAL-PLACE or POLITICAL-PLACE, if you are a noun *bidjen hildu sadjásis*
+* **SEMplcGen2** Removes Gen in front of a GENERAL-PLACE or POLITICAL-PLACE, if you are a noun *bidjen hildu sadjásis* 
 
 * **SEMplcGen3** Removes Gen in front of GENERAL-PLACE or POLITICAL-PLACE, if you are ABSTR-TEXT or TEXT *cealkámušaid guovlluid dearvvašvuođafitnodagaid jahkedieđáhusain*
 
@@ -8300,7 +8276,7 @@ The rules are no documented yet
 
 * **SEMsapmiModifier** Selects genitive (modifier): Sámi, suoma or ruoŧa  as modifier of noun *sámi oahpahus*
 
-* **SEMsamegiellaCoord** Selects genitive
+* **SEMsamegiellaCoord** Selects genitive 
 
 * **SEMAcc** Selects accusative #to be generalised
 
@@ -8322,7 +8298,7 @@ The rules are no documented yet
 * **SEMXr2116** Selects genitive (modifier) if you are LAHKA OR ORGANIZATION followed by mannu, day and numerals..
 
 
-* **SEMvaldi** Selects removes NomAg váldi, till we find examples of actual use of it
+* **SEMvaldi** Selects removes NomAg váldi, till we find examples of actual use of it 
 
 
 
@@ -8334,11 +8310,11 @@ The rules are no documented yet
 *  **SEMgiella1** (modifier) selects Gen if you are a LANGUAGE in front of LESSON or SATNI *sámegiela oahpahusa*
 
 
-* **SEMsamegiella** selects Gen for LANGUAGE if *1 is LESSON
+* **SEMsamegiella** selects Gen for LANGUAGE if *1 is LESSON 
 
 
 
-* **SEMlang** removes Gen if LANGUAGE is to the right, but not if you are ACTOR-ROLE and so on *oahpponeavvuid sámegillii*
+* **SEMlang** removes Gen if LANGUAGE is to the right, but not if you are ACTOR-ROLE and so on *oahpponeavvuid sámegillii* 
 
 * **SEMlang2** Gen if you are LANGUAGE with 1 N: You are only a modifier in a sentence with a TV-verb, if there is an Acc or Com between you, or if the Obj is topicalized *ráhkadii sámegiela Áppesa*
 
@@ -8392,7 +8368,7 @@ The rules are no documented yet
 * **NomIfPo** removes Nom if sentence initial, because it modifies Gen
 
 
-* **GenPoCoordPunct** Selects genitive for coordinated postpositions: with PUNKT to the left
+* **GenPoCoordPunct** Selects genitive for coordinated postpositions: with PUNKT to the left 
 
 * **GenPoCoord** Selects genitive for coordinated postpositions *ráŋggáštusa ja buhtadusa hárrái*
 
@@ -8403,12 +8379,12 @@ The rules are no documented yet
 
 * **GenORG** (modifies Loc) selects Gen if you are MAIN-ORGANIZATION and to your right is Loc *dearvvašvuođafitnodagaid jahkedieđáhusain*
 
-* **GenPropSem/Semcon**
+* **GenPropSem/Semcon** 
 
 * **SEMnom** (modifies Nom) removes Acc if sentence boundary or adv to the left. To the right is Nom followed by a transitive verb and Acc *stálu beana njoallu háviid*
 
 
-* **SEMDomain**
+* **SEMDomain** 
 
 * **deaivatGenlusa** selects genitive when used like deaivat Gen lusa/lahkosii even if the verb deaivat belongs to the strict TV set.
 
@@ -8417,7 +8393,7 @@ The rules are no documented yet
 
 * **GenPlc** Selects genitive if you are ROUTE, and there is a MOVEMENT-V to your left or right *boahtiba dán geainnu*
 
-* Selects accusative if you are ROUTE, and the verb čuovvut to the left.
+* Selects accusative if you are ROUTE, and the verb čuovvut to the left. 
 
 * **ruovttoluottaAdv**
 
@@ -8472,20 +8448,20 @@ The rules are no documented yet
 
 * **AigiModifier** (modifier) selects Gen if aigi to the right *konferánssa áiggi*
 
-* **GenHávvi** selects Gen for hávvi if Acc somewhere to the right
+* **GenHávvi** selects Gen for hávvi if Acc somewhere to the right 
 
 
 * **GenHávvi2** selects Gen for hávvi if a transitive verb cannot be found somewhere in the sentence
 
 * **GenGeardi** selects Gen if the beginning of the sentence to the left *Eará háviid*
 
-* **GenRbeaivi** (modifier) selects Gen if riegádanbeaivi to your right
+* **GenRbeaivi** (modifier) selects Gen if riegádanbeaivi to your right 
 
-* **GenGeardi2** selects Gen for geardi if Num Gen or Ord to the left
+* **GenGeardi2** selects Gen for geardi if Num Gen or Ord to the left 
 
 * **GenTimePl** selects Gen for TIME-N + Pl if an attribute to the left *lagamus beivviid*
 
-* **GenDURadj1** selects Gen if a duration adverbial to the left
+* **GenDURadj1** selects Gen if a duration adverbial to the left 
 
 * **GenDURadj2** removes Gen for TIME-N, if duration adjective to the left *olles dálvvi*
 
@@ -8498,13 +8474,13 @@ The rules are no documented yet
 
 * **GenDURNum** vázzen guokte maŋimuš jagi doppe
 
-* **GenDUR2** removes Gen for VAHKKU-DUR if the duration verb or place verb to the left is perfectum participle or infinitive with an auxiliary to the left
+* **GenDUR2** removes Gen for VAHKKU-DUR if the duration verb or place verb to the left is perfectum participle or infinitive with an auxiliary to the left 
 
 * **NoTimeAcc** removes Acc for time if POINT-IN-TIME-SPEC or Ord to the left *vuosttas beaivvi*
 
-* **NoTimeAccII** removes Acc for time if POINT-IN-TIME verb to the left
+* **NoTimeAccII** removes Acc for time if POINT-IN-TIME verb to the left 
 
-* **NoTimeAccIII** removes Acc for time if POINT-IN-TIME verb to the left is infinitive or perfectum participle with an auxilliary or negation to the left
+* **NoTimeAccIII** removes Acc for time if POINT-IN-TIME verb to the left is infinitive or perfectum participle with an auxilliary or negation to the left 
 
 * **AccBeaivi** removes Acc for relative pronouns if followed by general beaivi *guđe beaivvi*
 
@@ -8553,12 +8529,12 @@ The rules are no documented yet
 * **GenIES** (modifier) selects (Pron Refl Gen) if NON-FAMILY OR ("bellodat") OR SAMEDIGGI-GEN to the right *iežaset mánáide*
 
 
-* **AccIES** SELECTS accusative object (Pron Refl Acc)
+* **AccIES** SELECTS accusative object (Pron Refl Acc)  
 
-* **AccIES** (modifier) removes accusative object (Pron Refl Acc) if Ill or Loc to the right, but not if a transitive verb is found to the left
+* **AccIES** (modifier) removes accusative object (Pron Refl Acc) if Ill or Loc to the right, but not if a transitive verb is found to the left 
 
 
-* **GenIESinf** removes (Pron Refl Gen) if a transitive verb to the left and an Inf to the right
+* **GenIESinf** removes (Pron Refl Gen) if a transitive verb to the left and an Inf to the right 
 
 
 
@@ -8568,13 +8544,13 @@ The rules are no documented yet
 
 * **NomIfProp2** Removes Acc and Nom when you are Prop Sem/Plc because you are Gen. To the left is a sg3-verb. To the right is a noun.
 
-* **NomSentFin** Selects Nom if you are Acc or Gen and EOS is to yoru right. Copulas is found to the left
+* **NomSentFin** Selects Nom if you are Acc or Gen and EOS is to yoru right. Copulas is found to the left 
 
 * __jr_sr__ Selects (ABBR Nom) if you are *jr* or *sr* and first one to your left is (Sem/Sur Nom)
 
 
 
-### Accusative object
+### Accusative object 
 
 
 * **AccActioEss** Selects accusative: when a Strict transitive verb actio ess to the left, but not if there is an other Acc to the right followed by EOS
@@ -8584,7 +8560,7 @@ The rules are no documented yet
 
 ***topOBJPers** Removes Gen if you are Acc, and to you right is a Pron followed by a transitive verb. You have to be sentence initial
 
-***AccVAbess** Selects Gen if to the right is abessive
+***AccVAbess** Selects Gen if to the right is abessive 
 
 * **topOBJ1** Selects accusative: when a Strict transitive verb to the right (topicalized object) *beaskka geavahedje*
 
@@ -8592,7 +8568,7 @@ The rules are no documented yet
 
 
 
-* **topOBJ3** Selects Acc. It is not depending on a transitive verb like topOBJ1 and 2, but selects Acc when Aux to the left, but only if there is no chanse of it beeing a Nom
+* **topOBJ3** Selects Acc. It is not depending on a transitive verb like topOBJ1 and 2, but selects Acc when Aux to the left, but only if there is no chanse of it beeing a Nom 
 
 
 
@@ -8619,7 +8595,7 @@ The rules are no documented yet
 * **AccTV2** Selects accusative: when a transitive verb to the left. No Acc allowed to the left in the sentence (sentenceboundary as a barrier). No Acc allowed to the right (barriers are CC, comma and sentenceboundary). Note that Gen to the right followed by a noun is allowed. You shall not be: route, time, Pron Dem. You are not Acc if you are: Gen-cased Pron or Animate with Ill immediately to your right. No Acc, Com, N Nom or Gerundium allowed immediately to your right. No Gen followed by Po allowed immediately to your right. A SG3-verb is only allowed to your left (barriers excluding everything except NP-heads and adverbs, PrfPrc is also a barrier) if there is a Nom left to the SG3-verb. No vdic allowed immediately to your left. You are not Acc if: you are a Nom-cased Prop, followed by ahte or EOS and the verb found to the left (SV-boundary) is some kind of verbalactivityverb or a humanagentverb.
 
 
-* **AccTV3** Selects accusative: when transitive verb to the left, if it doesn't find a barrier: comma, Num, real-v, Ess, s-boundary. Acc not allowed to the left of the verb. Not Acc if animate or Gen in front of Ill. Numerals the only Acc allowed to the right. Not Num, time route or adv. Not Com or Ger immediately to the right. Neither Po. Not Acc if sg3-verb to the left without a Nom to its left. Not Pron Dem followed by N, neither Pron Rel followed by time. No vdic immediately to your left. No Nom-cased Prop with some sort of verbal activity to its left is allowed..
+* **AccTV3** Selects accusative: when transitive verb to the left, if it doesn't find a barrier: comma, Num, real-v, Ess, s-boundary. Acc not allowed to the left of the verb. Not Acc if animate or Gen in front of Ill. Numerals the only Acc allowed to the right. Not Num, time route or adv. Not Com or Ger immediately to the right. Neither Po. Not Acc if sg3-verb to the left without a Nom to its left. Not Pron Dem followed by N, neither Pron Rel followed by time. No vdic immediately to your left. No Nom-cased Prop with some sort of verbal activity to its left is allowed..  
 
 
 
@@ -8632,10 +8608,10 @@ The rules are no documented yet
 
 * **AccCOP** Selects Acc if copulas to the left and nominative to the left of COP *gápmagat leat áhči*
 
-### Gen modifiers inside NP
+### Gen modifiers inside NP 
 
 
-* **GenNP1** Selects Gen for Pron Pers (modifier): if NP-BOUNDARY OR Acc (but not if the finite verb is TV) to the left and N to right
+* **GenNP1** Selects Gen for Pron Pers (modifier): if NP-BOUNDARY OR Acc (but not if the finite verb is TV) to the left and N to right 
 
 * **GenNP2** Selects Gen for N (modifier): if CC "ja" immediately to your left and accusative to your right *ja sámi jurddašanvuogi*
 
@@ -8686,18 +8662,18 @@ The rules are no documented yet
 
 
 
-* **IVisTrans** Selects Acc if you are *spábba* and somewhere is *viehkat*
+* **IVisTrans** Selects Acc if you are *spábba* and somewhere is *viehkat* 
 
 * **IVisTrans2** Selects Acc if you are SHOE or HUNT-ANIMAL or BOAZU and somewhere is *vázzit*
 
-* **IVceavzit** Selects Acc for ceavzit IV if you are *eksámen* and ceavzit is found somewhere in the clause
+* **IVceavzit** Selects Acc for ceavzit IV if you are *eksámen* and ceavzit is found somewhere in the clause 
 
 
-* **IVnohkkat** Selects Acc if you are BEDCLOTHES
+* **IVnohkkat** Selects Acc if you are BEDCLOTHES  
 
-* **IVsahttit** Selects Acc
+* **IVsahttit** Selects Acc 
 
-* **IVsahttit2** Selects Acc
+* **IVsahttit2** Selects Acc 
 
 
 ### Accusative or genitive in front of ALU and in front of adjectives
@@ -8728,9 +8704,9 @@ The rules are no documented yet
 
 * **NewGenCo** (coordinated complement of numerals) Selects Gen if Num Acc + NewGen found to the left of "ja" *máŋga dáhpáhusa ja digaštallama*
 
-* **ALU4** Selects Acc if you are Num and to your right Num Acc followed by MEASURE OR ALU/A *guokte golbma mehtara alu*
+* **ALU4** Selects Acc if you are Num and to your right Num Acc followed by MEASURE OR ALU/A *guokte golbma mehtara alu* 
 
-* **ALU5** Selects Gen if Num to the right, followed by Num, followed by ALU/A
+* **ALU5** Selects Gen if Num to the right, followed by Num, followed by ALU/A 
 
 
 * **NumTimeMannel** Selects Acc for Num before TIME MANNEL
@@ -8749,7 +8725,7 @@ The rules are no documented yet
 
 
 
-### Numerals
+### Numerals 
 
 
 * **NumGenPo** Selects Gen for a numeral if a transitive verb to the left. To the right a Gen followed by a postposition *vuovdán 163 000 ruvnnu ovddas*
@@ -8772,20 +8748,20 @@ The rules are no documented yet
 
 
 
-* **GenIfNum** (complement of numerals) Selects Gen Sg if there is a Num Sg to your left *guđa geardde*
+* **GenIfNum** (complement of numerals) Selects Gen Sg if there is a Num Sg to your left *guđa geardde* 
 
 * **NumAccCo** (coordinated num) Selects Acc if you are Num Sg and to your right: CC with a Num to the right *guokte ja eanemusat golbma*
 
-* **NumAccIV** Selects Acc
+* **NumAccIV** Selects Acc 
 
 * **NumAge** Selects Acc for Sg numerals if a time unit to the right is followed by boaris *vihtta jagi boaris*
 
 
 * **NumAccPlRight** Selects Acc when transitive verb to the left. You are Num Pl and to your right is Acc *goarui viđaid gápmagiid*
 
-* **NumAccPlLeft** Selects Acc when tranistive verb to the right (same as the previous. Only differs in which direction the verb is found). *galliid sabehiid don ostet*
+* **NumAccPlLeft** Selects Acc when tranistive verb to the right (same as the previous. Only differs in which direction the verb is found). *galliid sabehiid don ostet*	
 
-* **NumAccPlLeft** Selects Acc if you are N Acc Pl and to your left is Num Acc Pl *galliid sabegiid*
+* **NumAccPlLeft** Selects Acc if you are N Acc Pl and to your left is Num Acc Pl *galliid sabegiid*		
 
 
 
@@ -8832,14 +8808,14 @@ The rules are no documented yet
 
 * **AccPronRel** Selects (Pron Rel Acc) when a secure Acc or Nom to the left *gáibidedje internáhttaskuvlla man*
 
-* **AccPronRel2** Selects (Pron Rel Acc) when somewhere in the sentence is a Nom (barrier is sv-boundary), but only if leat isn't the main verb. *geaid eamiálbmogat*
+* **AccPronRel2** Selects (Pron Rel Acc) when somewhere in the sentence is a Nom (barrier is sv-boundary), but only if leat isn't the main verb. *geaid eamiálbmogat* 
 
-* **AccPronRel3** Selects Acc if there is a (Pron Rel Nom) to the right. Obs: not hit nominatives, hence negations. *eanu mii šealgá*
+* **AccPronRel3** Selects Acc if there is a (Pron Rel Nom) to the right. Obs: not hit nominatives, hence negations. *eanu mii šealgá*	
 
 * **AccActioLoc** Selects Acc when transitive Actio Loc somewhere in the sentence *guldeleames muitalusaid*
 
 
-* **AccAhte** Selects Acc when *ahte* is found to the right
+* **AccAhte** Selects Acc when *ahte* is found to the right 
 
 * **AccAux** Selects Acc if beginning of sentence to the right and aux, not leat,  is to the left. No Acc allowed to the left *láđđi fertejetne oastit*
 
@@ -8858,7 +8834,7 @@ The rules are no documented yet
 
 * **Gerundium2** Selects Acc in front of Ger, but not if it is not HAB-ACTOR/Pron Pers. No transitive verb allowed to the left, exept it it has an object of its own.
 
-* **GerundiumTEST** Selects Acc
+* **GerundiumTEST** Selects Acc 
 * **GerundiumTEST** selects Gen for HAB-ACTOR and Pron Pers in front of Ger, but only if there is an Acc belonging to a transitive to the left
 
 
@@ -8870,7 +8846,7 @@ The rules are no documented yet
 
 * **NomIfProp** Removes Acc and Gen when you Prop because you are Nom. To the left is a sg3-verb. Should not hit Prop that are Sem/Plc.
 * **NomIfProp2** Removes Acc and Nom when you are Prop Sem/Plc because you are Gen. To the left is a sg3-verb. To the right is a noun.
-* **NomSentFin** Selects Nom if you are Acc or Gen and EOS is to yoru right. Copulas is found to the left
+* **NomSentFin** Selects Nom if you are Acc or Gen and EOS is to yoru right. Copulas is found to the left 
 * __jr_sr__ Selects (ABBR Nom) if you are *jr* or *sr* and first one to your left is (Sem/Sur Nom)
 
 ## Accusative before @COMP-CS<
@@ -8894,7 +8870,7 @@ The rules are no documented yet
 ***NomIFInitialThenSg3** Selects Nom if -1 BOS and 1 oblique / Sg3 lookalike. Works in fragments.
 
 
-* **NAAccEllipsis1** Selects Acc
+* **NAAccEllipsis1** Selects Acc	
 
 * **NAAccEllipsis2** Selects Acc
 
@@ -8932,7 +8908,7 @@ The rules are no documented yet
 
 * **NDr2302** Selects Nom if immediately to the left is "ruvdno" and to the left of it is Num *70 ruvnno mehtar*
 
-* **NDr2304** Selects Nom for (Num Sg Loc) if to the left is a spesific word and to the right is EOC
+* **NDr2304** Selects Nom for (Num Sg Loc) if to the left is a spesific word and to the right is EOC 	
 
 * **NDr2305** Selects Nom for (Coll Nom) if to the left is (Pers Pl Nom) *mii golmmas*
 
@@ -8948,7 +8924,7 @@ The rules are no documented yet
 ### Vocatives, subjects of sentence fragments
 * **NDr2309** Selects Nom
 
-* **NDr2310** Selects Nom
+* **NDr2310** Selects Nom	
 
 * **NDr2311** Selects Nom
 
@@ -8968,7 +8944,7 @@ The rules are no documented yet
 
 * **NDr2318** Selects Nom: A single word with a numeral in front of it is nominative
 
-* **NDr2319** Selects Nom: An NP head with a genitive modifier is nominative
+* **NDr2319** Selects Nom: An NP head with a genitive modifier is nominative 
 
 * **NDr2320** Selects Nom: A title is nominative if it has a Nom reading at all
 
@@ -9006,7 +8982,7 @@ The rules are no documented yet
 
 * **NDr2332** Selects (Num Nom)
 
-* **NDr2333** Selects (Num Nom)
+* **NDr2333** Selects (Num Nom)	
 
 * **NDr2334** Selects Nom
 
@@ -9016,11 +8992,11 @@ The rules are no documented yet
 
 * **NDr2336** selects (N Sg Nom) when 1 SG3-V
 
-* **NDr2337** Selects (N Sg Nom)
+* **NDr2337** Selects (N Sg Nom)	
 
-* **NDr2338** Selects (N Sg Nom)
+* **NDr2338** Selects (N Sg Nom)	
 
-* **NDr2339** Selects (N Sg Nom)
+* **NDr2339** Selects (N Sg Nom)	
 
 
 
@@ -9101,7 +9077,7 @@ The rules are no documented yet
 
 * **NDr2380** Selects (Pl Nom)
 
-* **NDr2381** Selects (Pl Nom)
+* **NDr2381** Selects (Pl Nom)	
 
 * **NDr2382** Selects (Pl Nom)
 
@@ -9128,7 +9104,7 @@ The rules are no documented yet
 
 * **NDr2390** Selects Nom
 
-* **NDr2391** Selects Nom
+* **NDr2391** Selects Nom 
 
 * **NDr2392** Selects Nom
 
@@ -9141,7 +9117,7 @@ The rules are no documented yet
 ### Nominative in coordination and apposition
 
 
-* **NDr2399** Selects Nom
+* **NDr2399** Selects Nom  
 
 
 * **NDr2400** Selects Nom
@@ -9152,7 +9128,7 @@ The rules are no documented yet
 
 * **NDr2403** Selects Nom
 
-* **NDr3529** Selects Nom
+* **NDr3529** Selects Nom	
 
 
 
@@ -9183,7 +9159,7 @@ The rules are no documented yet
 
 * **NDr2420** Selects Nom
 
-* **NDr2421** Selects
+* **NDr2421** Selects 
 
 ### Nominative in parallell constructions
 
@@ -9193,7 +9169,7 @@ The rules are no documented yet
 
 * **nomHnoun** Selects Nom
 
-* **SOV** Selects Nom in front of an Acc
+* **SOV** Selects Nom in front of an Acc	
 
 
 ### Not nominative
@@ -9201,11 +9177,11 @@ The rules are no documented yet
 
 * **NDr2425** Removes Nom
 
-* **NDr2426** Removes Nom, but not Actio
+* **NDr2426** Removes Nom, but not Actio 
 
 * **NDr2427** Removes Nom
 
-* **ND** Removes Nom
+* **ND** Removes Nom	
 
 
 
@@ -9223,7 +9199,7 @@ The rules are no documented yet
 
 * **Locgoabbat** selects Pl Loc after goabbat Foc/ge
 
-* **LocNames** selects Pl Loc
+* **LocNames** selects Pl Loc 
 
 
 * **NumCom** selects Num Com: guvttiin nieiddain if not plural-noun like: guvttiin heajain
@@ -9231,9 +9207,9 @@ The rules are no documented yet
 * **gástaCom** selects Com: Johánas gásta
 
 
-* **ComDemNum1** selects N Com if there is a Dem or Num or buorre + Com to the left: Exception for plural-nouns
+* **ComDemNum1** selects N Com if there is a Dem or Num or buorre + Com to the left: Exception for plural-nouns  
 
-* **Comburiin** selects N Com if there is a safe N Com to the right: buriin vugiin
+* **Comburiin** selects N Com if there is a safe N Com to the right: buriin vugiin  
 
 
 * **ComCOM-A** selects Sg Com after COM-A
@@ -9272,14 +9248,14 @@ The rules are no documented yet
 
 ### Disambiguation of Com depending on Adv or certain verb or N
 
-* **ComComAdv1** selects Com for ACTOR OR ACTOR-ROLE after og before COM-ADV
+* **ComComAdv1** selects Com for ACTOR OR ACTOR-ROLE after og before COM-ADV 
 
 * **Comboahtit** selects riika Com when boahtit: boahtit riikkainis, which is a special construction
 
-* **Comjohtit** selects bihttá and čájálmas and čájáhus Com
+* **Comjohtit** selects bihttá and čájálmas and čájáhus Com 
 
 
-* **Comnamma** selects namma  Com
+* **Comnamma** selects namma  Com 
 
 * **Combealli** selects riika Com when boahtit: boahtit riikkainis, which is a special construction
 
@@ -9307,7 +9283,7 @@ The rules are no documented yet
 
 * **LocHab1, LocHab2** select Pl when HAB-ACTOR
 
-* **LocGenerell** select Pl
+* **LocGenerell** select Pl 
 
 váldit vára + Loc
 
@@ -9315,28 +9291,28 @@ dahkat earrodearvvuođat geainna nu
 
 eallit mainna nu
 
-### Disambiguation based upon verb valency
+### Disambiguation based upon verb valency 
 
-### COM-V
+### COM-V 
 * **ComVR, ComVL** select Com when COM-V
 
 
 
-* **ComVOktiiL** select Com when OKTII-V
+* **ComVOktiiL** select Com when OKTII-V 
 
-* **ComVOktiiR** select Com when OKTII-V
+* **ComVOktiiR** select Com when OKTII-V 
 
 ### tools (concrete and abstract)
 
-* **ComTool1, ComTool2, ComToolCoord** select Com TOOL when ACTIVITY-V, MOVEMENT-V, PLACE-V-V
+* **ComTool1, ComTool2, ComToolCoord** select Com TOOL when ACTIVITY-V, MOVEMENT-V, PLACE-V-V 
 
 
 
-* **ComHuman** selects Com ABSTR-TOOL OR SATNI when HUMAN-AGENT-V - does it function?
+* **ComHuman** selects Com ABSTR-TOOL OR SATNI when HUMAN-AGENT-V - does it function? 
 
 ### BODY as an instrument
 
-* **ComBodyVerbalV** selects Com BODY when VERBAL-ACTIVITY-V
+* **ComBodyVerbalV** selects Com BODY when VERBAL-ACTIVITY-V 
 
 * **ComHumanVerbalV** selects Com HUMAN when VERBAL-ACTIVITY-V or báhcit
 
@@ -9344,9 +9320,9 @@ eallit mainna nu
 
 * **ComAbstract** selects Com if ABSTR-ENTITY-COM-V somwhere
 
-* **ComOnlyPlaceV** is Only-place-loc-verb
+* **ComOnlyPlaceV** is Only-place-loc-verb 
 
-* **ComMaterial** selects Com Sem/Mat when some verbs
+* **ComMaterial** selects Com Sem/Mat when some verbs 
 
 
 
@@ -9362,7 +9338,7 @@ eallit mainna nu
 
 
 ### Event-tool-actio
-Most actio can be both tool and event.
+Most actio can be both tool and event. 
 
 
 ### PLACE-V
@@ -9371,16 +9347,16 @@ Most actio can be both tool and event.
 
 * **ComPlaceV** select Com ANIMATE, CONCEPT, TOOL, ABSTR-TOOL, EVENT-TOOL-ACTIVITY if there is a PLACE-V
 
-* **HumPxComPlaceV**
+* **HumPxComPlaceV**  
 
-* **HumPxComPlaceV**
+* **HumPxComPlaceV**  
 
 
 * **LocInstitution** select Loc INSTITUTION if there is a ABSTR-PLACE-V
 
 * **LocPlaceIndustry** select Loc GEOGRAPHICAL-PLACE if there is a INDUSTRY to the right
 
-* **LocSourceVR** select (Pl Loc)
+* **LocSourceVR** select (Pl Loc)  
 
 
 * **LocHumanAgVL** XXX This one was commented out (cf. 0 .. LINK ... BARRIER). Note that this rule did not affect the test result
@@ -9413,7 +9389,7 @@ Most actio can be both tool and event.
 
 ### The super-set Dynamic-verb according to choose (Pl Loc) or (Sg Com)
 
-The idea is that the superset DYNAMIC-V are not connected to TOOL, ABSTR-TOOL or CONCEPT in (Pl Loc). This is the "minste felles multiplum". The sub-sets are different, f.i. many of them (but not all) are not connected to HUMAN in (Pl Loc), one is not connected to ABSTR-ENTITY and ACTOR in (Pl Loc). We work with negation so the rules don´t destroy analysis because of insufficent sets.
+The idea is that the superset DYNAMIC-V are not connected to TOOL, ABSTR-TOOL or CONCEPT in (Pl Loc). This is the "minste felles multiplum". The sub-sets are different, f.i. many of them (but not all) are not connected to HUMAN in (Pl Loc), one is not connected to ABSTR-ENTITY and ACTOR in (Pl Loc). We work with negation so the rules don´t destroy analysis because of insufficent sets. 
 
 First the general-rules for selecting (Sg Com), then the more special rules for selecting (Sg Com), and then we selct (Pl Loc) for the rest of them under # Another round of locative rules.
 
@@ -9421,7 +9397,7 @@ First the general-rules for selecting (Sg Com), then the more special rules for 
 * **ComDynV** Dynamic-verbs selects Com when TOOL, ABSTR-TOOL, WRITING-TOOL, CONCEPT, EVENT-TOOL-ACTIVITY
 
 
-* Dynamic-verb selects Com when HUMAN, but not for HUMAN-SOURCE-VEHICLE-V
+* Dynamic-verb selects Com when HUMAN, but not for HUMAN-SOURCE-VEHICLE-V 
 
 
 * **ComBody** Body-activity-verb Selects Com when BODY, for BODY-ACTIVITY-V or VERBAL-ACTIVITY-V
@@ -9434,7 +9410,7 @@ First the general-rules for selecting (Sg Com), then the more special rules for 
 
 
 
-### HUMAN-LOC-V
+### HUMAN-LOC-V 
 * **LOCsatni** Selects (Pl Loc)
 
 * **LOCwordparts** Selects (Pl Loc)
@@ -9458,11 +9434,11 @@ First the general-rules for selecting (Sg Com), then the more special rules for 
 * suokkardit and čielggadit
 
 
-* haddegoargŋun
+* haddegoargŋun 
 
 
 
-* vástidit
+* vástidit 
 
 * Coordination
 
@@ -9479,14 +9455,14 @@ First the general-rules for selecting (Sg Com), then the more special rules for 
 
 
 
-* **AccEllipse**
+* **AccEllipse** 
 
 
 * **genRel** removes genitive if Rel OR @CVPg to your right *ožžot olbmot skoviid maid*
 
 
 
-* **genAcc** selects Acc
+* **genAcc** selects Acc 
 
 * **TopObj** selects Acc for Finnish-style topicalisation
 
@@ -9501,12 +9477,12 @@ First the general-rules for selecting (Sg Com), then the more special rules for 
 
 
 
-* **KillAcc** Removes Acc if you are Gen
+* **KillAcc** Removes Acc if you are Gen 
 
 
 
 
-* **NumOktaGen** Selects Gen after okta gen
+* **NumOktaGen** Selects Gen after okta gen 
 
 
 
@@ -9536,7 +9512,7 @@ First the general-rules for selecting (Sg Com), then the more special rules for 
 
 
 
-## Late case rules (after other case rules have worked).
+## Late case rules (after other case rules have worked). 
 
 
 # VERBS PART 2, Section #22
@@ -9649,24 +9625,24 @@ Rules that look backwards for a subject across a subordinate clause (CP boundary
 
 Extension possibilities: Coordination
 
-Son oaidná du ja mu ovdal go boahtit...
+Son oaidná du ja mu ovdal go boahtit... 
 
 Coordinated Sg3 verbs
 
-Not V + Sg3
+Not V + Sg3 
 
-### Du1 - First person dual
+### Du1 - First person dual 
 
 
 * **MunJaDonDu** selects Du1 if Mon V ja don V de V-Du2
 
 * **DonJaMunDu** selects Du1 if Don V ja mun V de V-Du2
 
-The previous two rules look marginal.
+The previous two rules look marginal.	
 
 * **DuNotPrtIfToday** selects Du1 over Prt in the context of a present-marker.
 
-* **Du1IfDu1** selects Du1 with a left context Du1 ... ja ...
+* **Du1IfDu1** selects Du1 with a left context Du1 ... ja ... 
 
 
 * **NoDu1** removes Du1 if no MOAI or Du1 around.
@@ -9715,7 +9691,7 @@ The previous two rules look marginal.
 ## Infinitive
 
 ## Present Participle
-## Actio/Perfect Participle
+## Actio/Perfect Participle 
 
 
 
@@ -9738,7 +9714,7 @@ The previous two rules look marginal.
 ## Selecting some more finite verbs
 
 
-## Lexical disambiguation of verbs
+## Lexical disambiguation of verbs 
 
 
 
@@ -9905,7 +9881,7 @@ The previous two rules look marginal.
 
 
 
-* **derNEss** removes DER-N if lexicalised essives
+* **derNEss** removes DER-N if lexicalised essives 
 
 
 
@@ -10038,12 +10014,12 @@ LEFT RIGHT because of apertium
 
 ## Syntactic tags
 
-* @+FAUXV : finite auxiliary verb
+* @+FAUXV : finite auxiliary verb 
 ** ferte: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
 * @+FMAINV : finite main verb
-** oaidná: Son oaidná ollislaš gova. - She sees the whole picture
+** oaidná: Son oaidná ollislaš gova. - She sees the whole picture	
 * @-FAUXV : infinite auxiliary verb
-** sáhte: In sáhte gáhku borrat. - I cannot eat cake.
+** sáhte: In sáhte gáhku borrat. - I cannot eat cake.	
 * @-FMAINV : infinite main verb
 ** oaidnit: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
 * @-FSUBJ> : Subject of infinite verb outside the verbal.
@@ -10073,7 +10049,7 @@ LEFT RIGHT because of apertium
 * <ext> : Extencial, specifying an subject, e.g. @<SUBJ <ext>
 ** beana: Máhtes lea beana.
 * <logo> : logoforic pronouns, e.g. @>N <logo> (for MT)
-* <cs> :
+* <cs> : 
 * @>N : Modifier of a noun to the right.
 ** geavatlaš: Ráđđehussii lea geavatlaš politihkka deaŧalaš. - For the government, practical politics is important.
 * @N< : Complement of noun to the left.
@@ -10413,7 +10389,7 @@ These were the set types.
 * **hab10** prop ord-hab leat
 
 * **habDain** (<hab> @ADVL>) for (Pron Dem Pl Loc) if leat followed by Nom to the right
-* **habDain2**
+* **habDain2** 
 
 
 * **habRel** # before relative clause
@@ -10514,9 +10490,9 @@ These were the set types.
 
 * **dasmaŋŋel** (@>ADVL) for vaikko if; first one to the right is man
 
-* **adv>advl** (@>ADVL)
+* **adv>advl** (@>ADVL) 
 
-* **adv>advl** (@>ADVL)
+* **adv>advl** (@>ADVL) 
 
 
 
@@ -10596,7 +10572,7 @@ These were the set types.
 
 * **<extSubj** (<ext> @<SUBJ) for Nom; if copulas to the left, and some kind of adverb, N Loc, time related word or Po to the left of it. OR: if Ill or @Pron< to the left, followed by copulas and the before mentioned to the left of copulas.
 
-* **<extSubj** (<ext> @<SUBJ) for sma Nom; if some kind of adverb to the left, N Loc, time related word or Po to the left of it.
+* **<extSubj** (<ext> @<SUBJ) for sma Nom; if some kind of adverb to the left, N Loc, time related word or Po to the left of it. 
 
 
 * **<extSubjA** (<ext> @<SUBJ) for A - TEST WITHOUT THIS ONE
@@ -11152,10 +11128,10 @@ IM For fao
 ** oaidná: Son oaidná ollislaš gova. - She sees the whole picture
 * infinite main verb
 * @FAUX : finite auxiliary verb
-** ferte: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
+** ferte: Son ferte oaidnit ollislaš gova. - She must see the whole picture. 
 * @FMVdic : finite main verb introducing direct speech
 * @IMVdic : infinite main verb introducing direct speech
-* @FS-IMV : infinite main verb of subclause
+* @FS-IMV : infinite main verb of subclause 
 * @FS-IAUX : infinite auxiliary verb in subclause
 * @FS-N<IAUX : infinite auxiliary verb of a relative subclause
 * @FS-N<IMV : infinite main verb of a relative subclause

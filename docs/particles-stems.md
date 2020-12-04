@@ -1,5 +1,5 @@
 
-# This file contains the Particles 
+# This file contains the Particles
 
 
 
@@ -16,4 +16,3 @@ and all the ge versions should be removed.
 (i.e. only goit, not goitge). This errouneously
 permits gege, goge, etc., though, and we thus leave
 things as they are.
-
