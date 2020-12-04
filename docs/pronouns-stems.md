@@ -1,5 +1,5 @@
 
-# This file contains the Pronouns 
+# This file contains the Pronouns
 
 
 
@@ -121,7 +121,5 @@ oktat
 The indeclineable indefinites
 
  * **LEXICON indeclindef**
-
-
 
 

@@ -25,7 +25,3 @@ Px lexica in sme-lex.txt and closed-sme-lex.txt.
 
  * **LEXICON Adposition** is the lexicon with the adpositions
 
-
-
-
-

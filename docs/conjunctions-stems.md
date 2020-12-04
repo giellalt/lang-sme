@@ -1,5 +1,5 @@
 
-# North Saami Conjunctions 
+# North Saami Conjunctions
 
 
 

@@ -52,4 +52,3 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
  * **LEXICON PxPlCom12V** for first, second person comitative Px
 
  * **LEXICON PxPlCom3V** for third person comitative Px
-
