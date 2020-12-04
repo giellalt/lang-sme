@@ -2,42 +2,42 @@
 ## Copyright: Sámediggi/Divvun/UiT
 ## Licence: GPL v3+
 
-# List all jspwiki files that should be created from source files in the
-# JSP_PAGES variable. The filename pattern is as follows:
+# List all md files that should be created from source files in the
+# MD_PAGES variable. The filename pattern is as follows:
 #
-# dir/filename.lexc => filename-dir.jspwiki
+# dir/filename.lexc => filename-dir.md
 
-JSP_PAGES=root-morphology.jspwiki          \
-		  adjectives-affixes.jspwiki       \
-		  nouns-affixes.jspwiki            \
-		  possessive-suffixes-affixes.jspwiki \
-		  verbs-affixes.jspwiki            \
-		  abbreviations-stems.jspwiki      \
-		  acronyms-stems.jspwiki           \
-		  adjectives-stems.jspwiki         \
-		  adpositions-stems.jspwiki        \
-		  adverbs-stems.jspwiki            \
-		  conjunctions-stems.jspwiki       \
-		  nouns-stems.jspwiki              \
-		  numerals-stems.jspwiki           \
-		  particles-stems.jspwiki          \
-		  pronouns-stems.jspwiki           \
-		  sme-propernouns-stems.jspwiki    \
-		  subjunctions-stems.jspwiki       \
-		  verbs-stems.jspwiki              \
-		  sme-punctuation-stems.jspwiki    \
-		  disambiguator-syntax.jspwiki     \
-		  functions-syntax.jspwiki         \
-		  dependency-syntax.jspwiki  
+MD_PAGES=root-morphology.md          \
+		  adjectives-affixes.md       \
+		  nouns-affixes.md            \
+		  possessive-suffixes-affixes.md \
+		  verbs-affixes.md            \
+		  sme-abbreviations-stems.md  \
+		  sme-acronyms-stems.md       \
+		  adjectives-stems.md         \
+		  adpositions-stems.md        \
+		  adverbs-stems.md            \
+		  conjunctions-stems.md       \
+		  nouns-stems.md              \
+		  numerals-stems.md           \
+		  particles-stems.md          \
+		  pronouns-stems.md           \
+		  sme-propernouns-stems.md    \
+		  subjunctions-stems.md       \
+		  verbs-stems.md              \
+		  sme-punctuation-stems.md    \
+		  disambiguator-syntax.md     \
+		  functions-syntax.md         \
+		  dependency-syntax.md  
 
-# clitics-morphology.jspwiki       \
-# compounding-morphology.jspwiki   \
-# adjectives-oahpa-stems.jspwiki   \
-# interjections-stems.jspwiki      \
-# nouns-oahpa-stems.jspwiki        \
-# punctuation-stems.jspwiki        \
-# smi-propernouns-stems.jspwiki    \
-# adjectives-oahpa-affixes.jspwiki \
-# propernouns-affixes.jspwiki
+# clitics-morphology.md       \
+# compounding-morphology.md   \
+# adjectives-oahpa-stems.md   \
+# interjections-stems.md      \
+# nouns-oahpa-stems.md        \
+# punctuation-stems.md        \
+# smi-propernouns-stems.md    \
+# adjectives-oahpa-affixes.md \
+# propernouns-affixes.md
 
-include $(top_srcdir)/../giella-core/am-shared/doc-dir-include.am
+include $(top_srcdir)/../giella-core/am-shared/docs-dir-include.am
