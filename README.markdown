@@ -17,6 +17,14 @@ Install proofing tools and [keyboards](https://github.com/giellalt/keyboard-sme)
 for the North Sami language by using the [Divvun Installer](http://divvun.no)
 (some languages are only available via the nightly channel).
 
+Spell-checker accuracy:
+
+[![Speller
+Accuracy](https://img.shields.io/badge/Speller_Accuracy-83_%25-green.svg)](https://giellalt.github.io/lang-sme/speller-report.html)
+[![Spell-checking accuracy development
+graph](https://giellalt.github.io/lang-sme/speller-report.svg)](https://giellalt.github.io/lang-sme/speller-report.svg)
+
+
 Documentation
 -------------
 
