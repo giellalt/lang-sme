@@ -3739,6 +3739,390 @@ SELECT:r1303 Adv IF (*-1 BOC BARRIER NOT-PCLE)(0 ADV-NOT-VERB);
 
 REMOVE:r1303,5 V IF ( 0 ("ollu"));
 
+	# ------------------------------- # 
+	# Lexical disambiguation of verbs #
+	# ------------------------------- #
+
+	# arvit vs arvát vs arvat
+	# ------------------------
+IFF ("arvit") IF (0 ("arvát") OR ("arvat"))(NEGATE *0 Sem/Hum LINK 0 SUBJ);
+
+	# ballat vs. ballát
+	# -----------------
+SELECT:r3103 ("ballat") IF (0 ("ballát"))(NEGATE *1 ("eret") BARRIER NPNHA - Acc - Gen);
+	# One can always (?) understand it as "ballat" if it is homonomy. -- no one can't - valency is different
+	#$GRAMval Muosehuhttimat guohtuneatnamiin váikkuhit dávjá seammaládje go divrrit , boazu ain 	ballá 	eret ja gaskkalduvvá guohtumiin . 
+	
+REMOVE:Gramval ("ballat" TV) IF (0 ("ballát"))(*1 ("eret") BARRIER NPNHA - Acc - Gen);
+
+	
+	# báhcit vs báhccat
+	# -----------------
+REMOVE:r3104 ("báhccat") IF (0 ("báhcit" Imprt));			
+	
+	# bearrat vs. berret
+	# ------------------
+	# bearrat = 'inherit; demand' etc., berret 'ought'
+
+REMOVE:r3105 ("bearrat") IF (0 ("berret"))(*1 Inf BARRIER SV-BOUNDARY2);
+	## Válljedettiin journálaovddasvástideaddji berre árvvoštallat su fágagealbbu.
+
+	# beassat vs. besset
+	# ------------------
+	# beassat = 'get out of; get into' etc., besset 'strip off bark'
+
+REMOVE:r3106 ("besset") IF (0 ("beassat"))(*1 (V Actio Loc) OR Inf OR (Der/h Prs ConNeg) BARRIER SV-BOUNDARY2);
+	## Mun bessen vuolgimis.
+    ## – Ovdalgo besset báhččit ealgabivdingeahččaleamis , lea ealgabivdiin bággu báhčit 30 luođa.
+    #GRAM 
+    
+REMOVE:r3107 ("biestit") IF (0 ("bistit") LINK *0 Sem/Time OR ("guhká") OR ("badjel") BARRIER SV-BOUNDARY2);
+
+REMOVE:r3108 ("bivvát") IF (0 ("bivvat"));
+
+	# boahtit vs. bohtat 
+	# ------------------
+	# boahtit 'come', bohtat 'swell'
+
+	# These verbs have 5 homonym forms, Prs Du1/Pl3 bohte, Prt Sg1 bohten,
+	# Prs Pl3/Prt Sg2 bohtet, Imprt Sg1 bohton, Imprt Pl1 bohtot
+	# In almost all cases, the correct choice will be "boahtit", the 
+	# challenge is to avoid removing the cases where it might be "bohtat"
+
+LIST BOHTAT-NOUN = "bálká" "áiteuksa" "bunci" "dáigi" "fanas" "lássa" "láse" "luŋka" "stohpouksa" "uksa" "viessouksa" "vanca" ;
+
+
+REMOVE:r3109 ("bohtat" Sg1) IF (0 ("boahtit")); # Will hit 'bohten' and 'bohton'.
+REMOVE:r3110 ("bohtat" Sg2) IF (0 ("boahtit")); # Will hit 'bohtet'.
+	## Go mun bohten du vissui,...
+	## Journálat álmmolaš doaimmas bohtet arkiivalága vuollái.
+
+REMOVE:r3111 ("bohtat" Du1) IF (0 ("boahtit")); # Will hit 'bohte'.
+REMOVE:r3112 ("bohtat" Pl1) IF (0 ("boahtit")); # Will hit 'bohtot'.
+
+REMOVE:r3113 ("bohtat" Pl3) IF (0 ("boahtit"))(*1 ("son" Pl3 Nom) BARRIER SV-BOUNDARY2);
+REMOVE:r3114 ("bohtat" Pl3) IF (*-1 ("son" Pl3 Nom) BARRIER NOT-ADV-PCLE)(0 ("boahtit"));
+
+SELECT:r3115 ("boahtit") IF (0 ("bohtat"))(NEGATE *1 (Pron Pers) OR BOHTAT-NOUN BARRIER SV-BOUNDARY2 OR Neg OR NP-HEAD-NOM LINK 0 Nom)(NEGATE *-1 (Pron Pers) OR BOHTAT-NOUN BARRIER NOT-ADV-PCLE LINK 0 Nom)(NEGATE *-1 (Pron Rel) OR MO LINK *-1 BOHTAT-NOUN BARRIER SV-BOUNDARY2 LINK 0 Nom);
+	# Only if there is a BOHTAT-NOUN Nom or "dat" Nom, we leave the possibility of "bohtat". But also in those cases, it cuold be "boahtit".
+  
+	# caggat vs.caggát
+	# ----------------
+	# caggat = 'tighten; keep open; hold back', caggát = 'be wide open'
+
+REMOVE:r3118 ("caggát") IF (0 ("caggat"))(*1 NP-HEAD-ACC BARRIER NPNHA);
+	## Olmmoš caggá čuolu rávdnjái fávlli guvlui.
+
+	# čuohcat vs. čuohcit
+	# -------------------
+	# Prs Sg3 čuohcá.
+	# Prs Pl3 čuhcet.
+
+ 	# doadjit vs. dodjit
+ 	# ------------------
+SELECT:r3122 ("doadjit") IF (*0 TOOL OR BODY OR PLANT BARRIER SV-BOUNDARY2);
+
+	# duđđat vs. duhtat
+	# -----------------
+	# duđđat = 'mess', duhtat 'be satisfied'
+
+REMOVE:r3124 ("duđđat") IF (0 ("duhtat"))(*1 Ill BARRIER NPNHA);
+ 	## Mun duđan dien vástádussii.
+
+REMOVE:r3125 ("duđđat") IF (0 ("duhtat"))(1 go)(*2 Ill BARRIER NPNHA);
+	## Duđat go mu čállimii?
+
+	# diehtit vs. dihttot
+	# -------------------
+	# diehtit is TV and takes an animate subject.
+	# dihttot (vise seg, forekomme) is Passive and intransitive
+
+SELECT:r3126 ("dihttot") IF (*-0 ("sátni") OR ("vearba") OR ("substantiiva") LINK 0 Nom);
+	## Sátni dihtto buot oarjesámegielain. # Needed here is a set of speach act and POS words.
+
+	# dovdat vs. dovdát
+	# -----------------
+REMOVE:r3127 ("dovdát") IF (0 ("dovdat"));
+	# One can always (?) understand it as "dovdat" if it is homonomy. 		
+
+	# eallit vs. eallát
+	# -----------------
+	# These verbs have 2 homonym forms: Ind Prs Sg3 eallá, PrfPrc eallán
+	# eallát = 'to recover, become alive again', eallit = 'to live'
+
+REMOVE:r3128 ("eallát") IF (0 ("eallit"))(*1 ("eallin"));
+	## Son eallá suttolaš eallima.
+REMOVE:r3129 ("eallát") IF (0 ("eallit"))(*1 Loc OR ("siste") OR (VAbess));
+    	## Mun dovddan muhtun olbmo guhte eallá Kristusis. 
+    	## Son eallá naitalkeahttá.
+REMOVE:r3130 ("eallát") IF (0 ("eallit"));
+	# One can always (?) understand it as "eallit" if it is homonomy. 		
+
+    	
+    # geargat vs. gerget
+    # ------------------
+	# gerget takes Acc     
+
+REMOVE:r3133 ("gerget") IF (0 ("geargat"))(NEGATE *1 Acc BARRIER NPNH);
+REMOVE:r3134 ("gerget") IF (0 ("geargat"))(*1 Acc BARRIER NPNH LINK 1 Inf);
+REMOVE:r3135 ("gerget") IF (0 ("geargat"))(*1 Acc BARRIER NPNH LINK -1 Inf);
+
+REMOVE:r3136 ("geavvat") IF (0 ("geavahit"));
+
+	# gieldit vs. gildit 
+	# ------------------
+	# gieldit = 'deny sb sth', gildit = 'shine'
+	# Here, we have a transitivity difference.
+	# Homonym in the diphtong simplification cases: Prs Du1 gilde, Prs Pl3 gildet
+	# all Prt forms, gilden, gildet, ..., all Pot forms gilddežan, ..., 
+	# some of the Imprt forms. 
+
+REMOVE:r3137 ("gildit") IF (0 ("gieldit"))(*1 Acc BARRIER VFIN);
+    	## Jesus gilddii sudno garrasit:
+    	## Muhto mađe eanet son gilddii, dađe eanet sii almmuhedje dan.
+	# The second example is ambiguous.
+
+SELECT:r3138 ("gieldit") IF (*1 (V Actio Loc) BARRIER SV-BOUNDARY2);
+	## Mun gilden Máhte boahtimis.
+
+	# goaddat vs. goddit 
+	# ------------------ 
+	# goaddat = 'stick to, tarrautua', goddit = 'kill'
+	# Homonym in the diphtong simplification cases.
+
+REMOVE:r3139 ("goaddat") IF (0 ("goddit"))(*1 Acc BARRIER VFIN);
+    	## Ja sii goddet su.
+REMOVE:r3140 ("goaddat") IF (NEGATE *-1 Ill BARRIER SV-BOUNDARY2)(0 ("goddit") LINK NEGATE *1 Ill BARRIER NOT-ADV-PCLE);   	
+
+	# goarrut vs. gorrat
+SELECT:r3141 ("goarrut") IF (*-1 BOC2 LINK *1 Sem/Clth OR Sem/Obj-clo BARRIER SV-BOUNDARY2 LINK 0 Nom OR Acc)(0 ("gorrat"));
+
+	# goastat vs goastit
+	# ------------------
+SELECT ("goastat") (0 ("goastit") LINK *1 (Refl Ess) BARRIER NOT-ADV);			
+
+	# goddet vs. goddit
+	# -----------------
+	# goddet = 'catch wild reindeer', goddit = kill
+
+REMOVE:r3142 ("goddet") IF (0 ("goddit"))(*0 Acc BARRIER NP-BOUNDARY);
+	## Vuovdái godde dán guovžža.
+
+	# gođđat vs. gođđit 
+	# ----------------- 
+	# gođđat = 'spawn', gođđit = 'knit, weave'
+
+REMOVE:r3143 ("gođđat") IF (0 ("gođđit"))(*1 Acc BARRIER VFIN);
+	## Ovddemus dáida oastit árppuid ja gođđá firpmiid.
+
+	# gullat vs. gullát vs. gullet
+	# ----------------------------
+	# gullat = 'hear; belong', gullát 'begin to hear', gullet 'fish'
+   
+SELECT:r3145 ("gullat") IF (0 ("gullát") LINK *0 SOUND OR ("sátni") BARRIER NPNH);    
+    ## Mánná hárve gullá eatnigielas.
+
+SELECT:r3146 ("gullat") IF (0 ("gullát") OR ("gullet"))(*1 Ill BARRIER SV-BOUNDARY2 LINK NOT 0 SOUND);
+	## Dat gullá lunddolaččat dakkár áššiide go Sámedikkiid válganjuolggadusaide.
+
+SELECT:r3147 ("gullat") IF (*-1 Ill BARRIER NOT-ADV-PCLE LINK NOT 0 SOUND)(0 ("gullát") OR ("gullet"));
+	## Doaimma divššohasjournálaide gullá persovdnaregisttar.
+	## Eanetlohku, masa gulle Riektejoavkku 6 eará lahtu,...
+
+SELECT:r3148 ("gullat") IF (*1 ("ahte") BARRIER NOT-ADV-PCLE);
+	## Mun gullen, ahte vulget ikte.
+
+	# guođđit vs. guđđat
+	# ------------------
+	# guođđit = 'leave sth swh', guđđat = 'swarm' 
+
+REMOVE:r3149 ("guđđat") IF (0 ("guođđit"))(*1 Acc BARRIER VFIN);
+    	## De sii guđđet dan viesu ja gávpoga.
+
+	# hálidit, háliidit vs. hálihit
+	# - - - - - - - - - - - - - - -
+REMOVE:r3151 ("hálihit") IF (0 ("hálidit") OR ("háliidit"))(*1 (@-FMAINV) OR Inf BARRIER SV-BOUNDARY2);
+  	## Son ii hálit dan dahkat.
+REMOVE:r3152 ("hálihit") IF (0 ("hálidit") OR ("háliidit"));	
+
+	# joavdat vs. joavdit
+	# -------------------
+SELECT:r3153 ("joavdat") IF (0 ("joavdit"))(*0 ("moalla" Ill) BARRIER SV-BOUNDARY2);	
+	# juhkat vs. juohkit
+	# ------------------
+
+LIST JUOHKIN-ADV = ("hálddahuslaš" Adv) "geografalaččat" ;
+LIST JUOHKIN-SUBJ = "eise#váldi" ;
+LIST JUOHKIN-PASS-SUBJ = "gávdnoštupmi" "eana" "čázádat" "vuoigatvuohta" ;
+
+SELECT:r3154 ("juohkit") IF (0 ("juhkat"))(*0 Ill BARRIER Loc OR SV-BOUNDARY2 LINK NOT 0 Sem/Time);	
+SELECT:r3156 ("juohkit") IF (0 ("juhkat"))(*1 ("diehtu") BARRIER NOT-A-PCLE);		
+SELECT:r3157 ("juohkit") IF (0 ("juhkat"))(*1 Ess BARRIER NOT-A-PCLE);	
+SELECT:r3158 ("juohkit") IF (0 ("juhkat"))(*1 ("mielde") OR ("ektui") OR ("gaskkas") OR ("ovddas") OR ("gaskka") BARRIER NPNH);	
+SELECT:r3159 ("juohkit") IF (0 ("juhkat"))(*0 JUOHKIN-ADV BARRIER VERB);
+SELECT:r3161 ("juohkit") IF (0 ("juhkat") LINK 0 Der/Pass LINK 0 (PrfPrc @>N));
+SELECT:r3162 ("juohkit") IF (*-1 JUOHKIN-PASS-SUBJ BARRIER Nom OR SV-BOUNDARY2)(0 ("juhkat") LINK 0 Der/Pass);
+SELECT:r3163 ("juohkit") IF (*-1 JUOHKIN-SUBJ BARRIER Nom OR SV-BOUNDARY2 LINK 0 (Pl Nom))(0 ("juhkat"));
+	## Ruhta lea juhkkojuvvon máŋgga olbmui.
+	## Eatnamat leat hálddahuslaččat juhkkojuvvon.	
+	## Eatnamat leat juo juhkkojuvvon.
+	## Eiseválddit juhke eatnamiid.
+	
+SELECT:r3164 ("juhkat") IF (0 ("juohkit") LINK -1 CC LINK -1 ("borrat"));
+SELECT:r3165 ("juhkat") IF (0 ("juohkit") LINK 1 CC LINK 1 ("borrat"));
+	## Ovdal stuoradulvvi sii borre ja juhke.	
+	
+SELECT:r3166 ("juhkat") IF (0 ("juohkit") LINK *0 LIQUID BARRIER Acc OR SV-BOUNDARY2);
+	## Sii juhket gáfe.	
+
+SELECT:r3168 ("juhkat") IF (0 ("juohkit") LINK 1 ("buohkat"));
+ 	## Juhket buohkat dás!
+ 	## Ja sii juhke buohkat das.
+
+	# lohkat vs. loahkkit
+SELECT:r3169 ("lohkat") IF (0 ("loahkkit") LINK 0 Der/Pass);	
+
+	# mannet vs. mannat
+	# -----------------
+REMOVE:r3170 ("mannet") IF (0 ("mannat") LINK 0 Sg1 OR Sg2); 
+REMOVE:r3171 ("mannet") IF (0 ("mannat"))(*0 Ill BARRIER S-BOUNDARY2);
+REMOVE:r3173 ("mannet") IF (0 ("mannat"))(*0 ("dohko") OR ("maŋos") OR ("ruovttoluotta") OR ("ruoktot") OR ("bajás") OR ("vulos") OR ("bokte") BARRIER S-BOUNDARY2);
+REMOVE:r3177 ("mannet") IF (0 ("mannat"))(*0 Inf BARRIER NOT-ADV);
+
+	# máhccat vs. máhccut 
+	# ------------------- #
+	# máhccat = 'return, retreat', máhccut = 'make folds in'
+
+	# máhttit vs máhttát
+	# ------------------
+REMOVE:r3179 ("máhttát") IF (0 ("máhttit"));
+	# One can always (?) understand it as "máhttit" if it is homonomy. 		
+	
+	# muitit vs muitát
+	# ----------------
+REMOVE:r3180 ("muitát") IF (0 ("muitit"));
+	# One can always (?) understand it as "muitit" if it is homonomy. 		
+	
+	# oađđit vs oađđát
+	# --------------- #
+REMOVE:r3181 ("oađđát") IF (*0 (Ex/A Adv) BARRIER VERB)(0 ("oađđit"));		
+
+	# ohcat vs oahcut
+	# --------------- #
+REMOVE:oahcut ("oahcut") IF (0 ("ohcat") LINK *1 Acc);
+	## De ohcot moadde girjji!	
+	
+    # oastit vs. ostet
+    # ---------------- #    
+LIST OSTEN-NOUN = "náhkki" "sistenáhkki" "sisti" ;
+
+SELECT:r3182 ("oastit") IF (0 ("ostet"))(*-1 BOS LINK NEGATE *1 OSTEN-NOUN LINK 0 Acc);     
+
+	# orrut vs. orrot
+	# ---------------- #
+	# orrot = 'remain somewhere (not come back as expected), settle down'
+	
+LIST ILL-N-ADV = ("muddu" Sg Ill) ;
+
+SELECT:r3183 ("orrot") IF (0 ("orrut"))(-1 Ill + Sem/Place - ILL-N-ADV - (Dem Ill Attr) LINK NEGATE -1 (N Sg Nom))(NEGATE *1 (A Ess) OR (Actio Ess) BARRIER NOT-ADV-PCLE - Superl)(NEGATE *1 (A Sg Nom) BARRIER NOT-ADV-PCLE LINK 1 Inf)(NEGATE *1 PrfPrc BARRIER NOT-ADV-PCLE LINK 1 (A Sg Nom));
+	#GRAM
+    #$ Das berrejit bearráigeahččan eiseválddit vuoruhit eambbo návccaid bearráigeahččamii, go dasa orro duođaid dárbu dan raportta dieđuid mielde.
+	#$ Ágga dasa orro ahte muhtin ealáhussurggiide leat unnit ohccit go eará surggiin.
+	#$ Ealáhusaide orro leamašan váttis oažžut earáid ipmirdit ahte juste dat han lea mii dáhpahuvva sidjiide boranávdevahágiid oktavuođas, muhto dál go eanadoallo- ja biebmoministtar orro rievdadan oainnu, de leat ealáhusat sávvamis ollen guhkkelii sin ákkastallamin.
+SELECT:r3184 ("orrot") IF (0 ("orrut"))(*1 Ill - Attr  BARRIER NOT-ADV LINK NOT 0 Adv);
+	#$GRAM
+    #$ Nu go dát orro oppalohkái čájehuvvomin, de leat raporterengáibádusat álkit, ja ii oro leamen dárbu daid moktege divdodit.
+REMOVE:r3185 ("orrut" Der/PassS) OR ("orrot") IF (0 ("orrut"))(1 ("go"));
+REMOVE:r3186 ("orrut" Der/PassS) OR ("orrot") IF (0 ("orrut"))(*1 (Actio Ess) OR ("leat" PrfPrc) BARRIER NOT-ADV-PCLE);
+	#$GRAM
+
+REMOVE:r3186 ("orrut" Der/PassS) OR ("orrot") IF (0 ("orrut"))(1 Gen LINK 1 Po LINK *1 (Actio Ess) OR ("leat" PrfPrc) BARRIER NOT-ADV-PCLE);
+    ##GRAM Ođđa sorttaid gávdnan lea dego stuora liidni maid galgá báidnit , muhto dát bargu čađahuvvon guovdu Davvi-Norgga bieb-mogári , ja bargovuohki orro dán rádjái leamaš hui buorre . #orru leamaš?
+
+REMOVE:r3186b ("orrut" Der/PassS) OR ("orrot") IF (0 ("orrut"))(1 (A Ess));
+	#GRAM
+	## Ahte plána geavaha doahpagiid nugo álgoálbmotperspektiivva , sámi perspektiiva ja máŋggakultuvrralaš perspektiivva lea positiivalaš , muhto suohkaniidda orro váttisin skuvlla geavatlaš hábmemis ollásit čuovvolit dakkár perspektiivvaid .
+REMOVE:r3187 ("orrot") IF (0 ("orrut"))(NEGATE 1 ("go"))(NEGATE *1 (Actio Ess) BARRIER NOT-ADV)(NEGATE *-1 Ill BARRIER NOT-ADV);
+REMOVE:r3188 ("orrot") IF (0 ("orrut"))(NEGATE 1 ("go"))(NEGATE *1 (Actio Ess) BARRIER NOT-ADV)(NEGATE *1 Ill BARRIER NOT-ADV);
+  	## Mii áigut dohko orrot idjii.
+  	## Buot dilálašvuođat main Ipmil orro leamen jávkosis. 
+  	## Min Áigi jearrá orro go heivvolaš ahte son čállá bartnis birra.
+
+	# rihkkut vs. riehkkat
+	# ------------------- #
+	# rihkkut = 'break, transgress, infringe, offens against, forfeit', riehkkat = 'work hard, make great efforts to..'
+
+SELECT:r3189 ("rihkkut") IF (0 Der/Pass)(*-1 BOS LINK *1C LAHKA OR LAHKA-NOUN);
+  	## Láhka lea rihkkojuvvon.
+
+	
+SELECT:r3191 ("savvot") IF (*-1 ("hávvi" Nom) BARRIER S-BOUNDARY2)(0 ("savvit"));	
+	# ruoidnat vs ruoidnát
+	#---------------------
+SELECT:r3193 ("ruoidnat") IF (0 ("ruoidnát"));	
+
+	# sihtat vs. sihtit : D ja L have agreed to remove "sihtit". It´s not in KN.
+	# -----------------
+REMOVE:r3194 ("sihtit") IF (0 ("sihtat")); 
+
+	 
+	# sirdit vs. sirdát
+	# -----------------
+REMOVE:r3195 ("sirdát") IF (0 ("sirdit") LINK *0 Ill OR ("dohko") OR ("deike") OR ABSTR-ROUTE BARRIER SV-BOUNDARY2); 
+	## Son sirdá gitta Billavutnii. 
+	
+REMOVE:r3197 ("sirdát") IF (0 ("sirdit"));
+	# One can always (?) understand it as "sirdit" if it is homonomy. 		
+	
+	 
+	# vázzit vs. vázzát
+	# -----------------
+REMOVE:r3198 ("vázzát") IF (0 ("vázzit") LINK *0 Ill OR ("dohko") OR ("deike") OR ABSTR-ROUTE BARRIER SV-BOUNDARY2); 
+	## Son vázzá gávpogii. 
+
+REMOVE:r3200 ("vázzát") IF (0 ("vázzit"));
+	# One can always (?) understand it as "vázzit" if it is homonomy. 		
+		
+	 
+	# vuodjat vs. vuodjit
+	# ------------------
+LIST VUODJIN-NOUN = "čáhcecross" "dáhkádus" "FMX" "mohtorsearvi" "motocross" "vuodjinlohpi" ;
+
+LIST VUODJIN-WORD = "biilavuoddji" "čáhcedrag-vuoddji" "FMX-vuoddji" ;
+
+SELECT:r3201 ("vuodjit") IF (0 ("vuodjat"))(*0 Sem/Veh BARRIER SV-BOUNDARY2 LINK 0 Com OR Nom OR Acc);
+SELECT:r3203 ("vuodjit") IF (0 ("vuodjat"))(*1 CONCRETE-ROUTE OR ("bargu" Ill) OR ("ruoktot") OR ("siida" Ill) BARRIER VFIN);
+SELECT:r3204 ("vuodjit") IF (0 ("vuodjat"))(*-1 BOS LINK *1 VUODJIN-NOUN); 
+SELECT:r3205 ("vuodjit") IF (0 ("vuodjat"))(*1 (Prop Sem/Plc Ill) BARRIER VFIN);
+REMOVE:r3206 ("vuodjat") IF (0 ("vuojašit"));
+SELECT:r3207 VUODJIN-WORD IF (0 VUODJIN-WORD);
+SELECT:r3208 ("vuodjat") IF (0 ("vuodjit"))(*0 WATER BARRIER SV-BOUNDARY2 LINK 0 Loc);
+SELECT:r3210 ("vuodjat") IF (*-1 FISH BARRIER V-NOT-AUX LINK 0 Nom OR Ess);
+	## Hálidatgo gullat go vudjen stuora sáhpana iežan sykkeliin?
+	## Okta nubbi vuodjá tráktor máđiiráigge.
+	## Ivdni lea deaŧalaš, muhto buot deaŧaleamos lea movt dat vuodjá čázis.
+	## Sii vudjet bálgá mielde.
+	## Sii vudjet Romsii.
+	## Muhto min guovlluin eatnasat veajehin ja vudjet merrii maŋŋel go leat leamaš jagi jogas.
+
+	# vuohttit vs. vuohttát
+	# ---------------------
+	# vuohttá is sg3 of both these verbs
+REMOVE:r3211 ("vuohttát") IF (0 ("vuohttit"));
+	# One can always (?) understand it as "vuohttit" if it is homonomy. 		
+	
+	# vuordit vs. vuordát
+	# -------------------
+REMOVE:r3212 ("vuordát") IF (0 ("vuordit"))(*0 Sem/Time BARRIER S-BOUNDARY2 LINK 0 Acc OR Ill);	
+REMOVE:r3214 ("vuordát") IF (0 ("vuordit"))(1 Num)(2 Po);
+	## Son vuordá diimmu.
+	## Son vuordá gitta mánnodahkii.
+	## Doppe ledje geainnu vuordán 1924 rájes.
+	
+REMOVE:r3215 ("vuordát") IF (0 ("vuordit"));
+	# One can always (?) understand it as "vuordit" if it is homonomy. 	
+
+
 
 	# Spellrelax
 	# ----------
@@ -21175,388 +21559,6 @@ REMOVE:r3098 (Prt Sg1) IF (-1 PRESENT-MARKER)(0C (Prt Sg1) OR (Prs Sg1));
 	# Past tense in subordinate clause if past in matrix clause
 REMOVE:r3100 Prs IF (*-1 CS BARRIER Prs OR (N Sg Nom) LINK *-1C Prt BARRIER Prs)(NEGATE -1 PRESENT-MARKER)(NEGATE 0 ConNeg);
 	## Mánáidgárdi lei dehálaš báiki gos sáhttet kártet mánáid giellaovdáneami.
-
-	# ------------------------------- # 
-	# Lexical disambiguation of verbs #
-	# ------------------------------- #
-
-	# arvit vs arvát vs arvat
-	# ------------------------
-IFF ("arvit") IF (0 ("arvát") OR ("arvat"))(NEGATE *0 Sem/Hum LINK 0 SUBJ);
-
-	# ballat vs. ballát
-	# -----------------
-SELECT:r3103 ("ballat") IF (0 ("ballát"))(NEGATE *1 ("eret") BARRIER NPNHA - Acc - Gen);
-	# One can always (?) understand it as "ballat" if it is homonomy. -- no one can't - valency is different
-	#$GRAMval Muosehuhttimat guohtuneatnamiin váikkuhit dávjá seammaládje go divrrit , boazu ain 	ballá 	eret ja gaskkalduvvá guohtumiin . 
-	
-REMOVE:Gramval ("ballat" TV) IF (0 ("ballát"))(*1 ("eret") BARRIER NPNHA - Acc - Gen);
-
-	
-	# báhcit vs báhccat
-	# -----------------
-REMOVE:r3104 ("báhccat") IF (0 ("báhcit" Imprt));			
-	
-	# bearrat vs. berret
-	# ------------------
-	# bearrat = 'inherit; demand' etc., berret 'ought'
-
-REMOVE:r3105 ("bearrat") IF (0 ("berret"))(*1 Inf BARRIER SV-BOUNDARY2);
-	## Válljedettiin journálaovddasvástideaddji berre árvvoštallat su fágagealbbu.
-
-	# beassat vs. besset
-	# ------------------
-	# beassat = 'get out of; get into' etc., besset 'strip off bark'
-
-REMOVE:r3106 ("besset") IF (0 ("beassat"))(*1 (V Actio Loc) OR Inf BARRIER SV-BOUNDARY2);
-	## Mun bessen vuolgimis.
-    ## – Ovdalgo besset báhččit ealgabivdingeahččaleamis , lea ealgabivdiin bággu báhčit 30 luođa.
-    
-REMOVE:r3107 ("biestit") IF (0 ("bistit") LINK *0 Sem/Time OR ("guhká") OR ("badjel") BARRIER SV-BOUNDARY2);
-
-REMOVE:r3108 ("bivvát") IF (0 ("bivvat"));
-
-	# boahtit vs. bohtat 
-	# ------------------
-	# boahtit 'come', bohtat 'swell'
-
-	# These verbs have 5 homonym forms, Prs Du1/Pl3 bohte, Prt Sg1 bohten,
-	# Prs Pl3/Prt Sg2 bohtet, Imprt Sg1 bohton, Imprt Pl1 bohtot
-	# In almost all cases, the correct choice will be "boahtit", the 
-	# challenge is to avoid removing the cases where it might be "bohtat"
-
-LIST BOHTAT-NOUN = "bálká" "áiteuksa" "bunci" "dáigi" "fanas" "lássa" "láse" "luŋka" "stohpouksa" "uksa" "viessouksa" "vanca" ;
-
-
-REMOVE:r3109 ("bohtat" Sg1) IF (0 ("boahtit")); # Will hit 'bohten' and 'bohton'.
-REMOVE:r3110 ("bohtat" Sg2) IF (0 ("boahtit")); # Will hit 'bohtet'.
-	## Go mun bohten du vissui,...
-	## Journálat álmmolaš doaimmas bohtet arkiivalága vuollái.
-
-REMOVE:r3111 ("bohtat" Du1) IF (0 ("boahtit")); # Will hit 'bohte'.
-REMOVE:r3112 ("bohtat" Pl1) IF (0 ("boahtit")); # Will hit 'bohtot'.
-
-REMOVE:r3113 ("bohtat" Pl3) IF (0 ("boahtit"))(*1 ("son" Pl3 Nom) BARRIER SV-BOUNDARY2);
-REMOVE:r3114 ("bohtat" Pl3) IF (*-1 ("son" Pl3 Nom) BARRIER NOT-ADV-PCLE)(0 ("boahtit"));
-
-SELECT:r3115 ("boahtit") IF (0 ("bohtat"))(NEGATE *1 (Pron Pers) OR BOHTAT-NOUN BARRIER SV-BOUNDARY2 OR Neg OR NP-HEAD-NOM LINK 0 Nom)(NEGATE *-1 (Pron Pers) OR BOHTAT-NOUN BARRIER NOT-ADV-PCLE LINK 0 Nom)(NEGATE *-1 (Pron Rel) OR MO LINK *-1 BOHTAT-NOUN BARRIER SV-BOUNDARY2 LINK 0 Nom);
-	# Only if there is a BOHTAT-NOUN Nom or "dat" Nom, we leave the possibility of "bohtat". But also in those cases, it cuold be "boahtit".
-  
-	# caggat vs.caggát
-	# ----------------
-	# caggat = 'tighten; keep open; hold back', caggát = 'be wide open'
-
-REMOVE:r3118 ("caggát") IF (0 ("caggat"))(*1 NP-HEAD-ACC BARRIER NPNHA);
-	## Olmmoš caggá čuolu rávdnjái fávlli guvlui.
-
-	# čuohcat vs. čuohcit
-	# -------------------
-	# Prs Sg3 čuohcá.
-	# Prs Pl3 čuhcet.
-
- 	# doadjit vs. dodjit
- 	# ------------------
-SELECT:r3122 ("doadjit") IF (*0 TOOL OR BODY OR PLANT BARRIER SV-BOUNDARY2);
-
-	# duđđat vs. duhtat
-	# -----------------
-	# duđđat = 'mess', duhtat 'be satisfied'
-
-REMOVE:r3124 ("duđđat") IF (0 ("duhtat"))(*1 Ill BARRIER NPNHA);
- 	## Mun duđan dien vástádussii.
-
-REMOVE:r3125 ("duđđat") IF (0 ("duhtat"))(1 go)(*2 Ill BARRIER NPNHA);
-	## Duđat go mu čállimii?
-
-	# diehtit vs. dihttot
-	# -------------------
-	# diehtit is TV and takes an animate subject.
-	# dihttot (vise seg, forekomme) is Passive and intransitive
-
-SELECT:r3126 ("dihttot") IF (*-0 ("sátni") OR ("vearba") OR ("substantiiva") LINK 0 Nom);
-	## Sátni dihtto buot oarjesámegielain. # Needed here is a set of speach act and POS words.
-
-	# dovdat vs. dovdát
-	# -----------------
-REMOVE:r3127 ("dovdát") IF (0 ("dovdat"));
-	# One can always (?) understand it as "dovdat" if it is homonomy. 		
-
-	# eallit vs. eallát
-	# -----------------
-	# These verbs have 2 homonym forms: Ind Prs Sg3 eallá, PrfPrc eallán
-	# eallát = 'to recover, become alive again', eallit = 'to live'
-
-REMOVE:r3128 ("eallát") IF (0 ("eallit"))(*1 ("eallin"));
-	## Son eallá suttolaš eallima.
-REMOVE:r3129 ("eallát") IF (0 ("eallit"))(*1 Loc OR ("siste") OR (VAbess));
-    	## Mun dovddan muhtun olbmo guhte eallá Kristusis. 
-    	## Son eallá naitalkeahttá.
-REMOVE:r3130 ("eallát") IF (0 ("eallit"));
-	# One can always (?) understand it as "eallit" if it is homonomy. 		
-
-    	
-    # geargat vs. gerget
-    # ------------------
-	# gerget takes Acc     
-
-REMOVE:r3133 ("gerget") IF (0 ("geargat"))(NEGATE *1 Acc BARRIER NPNH);
-REMOVE:r3134 ("gerget") IF (0 ("geargat"))(*1 Acc BARRIER NPNH LINK 1 Inf);
-REMOVE:r3135 ("gerget") IF (0 ("geargat"))(*1 Acc BARRIER NPNH LINK -1 Inf);
-
-REMOVE:r3136 ("geavvat") IF (0 ("geavahit"));
-
-	# gieldit vs. gildit 
-	# ------------------
-	# gieldit = 'deny sb sth', gildit = 'shine'
-	# Here, we have a transitivity difference.
-	# Homonym in the diphtong simplification cases: Prs Du1 gilde, Prs Pl3 gildet
-	# all Prt forms, gilden, gildet, ..., all Pot forms gilddežan, ..., 
-	# some of the Imprt forms. 
-
-REMOVE:r3137 ("gildit") IF (0 ("gieldit"))(*1 Acc BARRIER VFIN);
-    	## Jesus gilddii sudno garrasit:
-    	## Muhto mađe eanet son gilddii, dađe eanet sii almmuhedje dan.
-	# The second example is ambiguous.
-
-SELECT:r3138 ("gieldit") IF (*1 (V Actio Loc) BARRIER SV-BOUNDARY2);
-	## Mun gilden Máhte boahtimis.
-
-	# goaddat vs. goddit 
-	# ------------------ 
-	# goaddat = 'stick to, tarrautua', goddit = 'kill'
-	# Homonym in the diphtong simplification cases.
-
-REMOVE:r3139 ("goaddat") IF (0 ("goddit"))(*1 Acc BARRIER VFIN);
-    	## Ja sii goddet su.
-REMOVE:r3140 ("goaddat") IF (NEGATE *-1 Ill BARRIER SV-BOUNDARY2)(0 ("goddit") LINK NEGATE *1 Ill BARRIER NOT-ADV-PCLE);   	
-
-	# goarrut vs. gorrat
-SELECT:r3141 ("goarrut") IF (*-1 BOC2 LINK *1 Sem/Clth OR Sem/Obj-clo BARRIER SV-BOUNDARY2 LINK 0 Nom OR Acc)(0 ("gorrat"));
-
-	# goastat vs goastit
-	# ------------------
-SELECT ("goastat") (0 ("goastit") LINK *1 (Refl Ess) BARRIER NOT-ADV);			
-
-	# goddet vs. goddit
-	# -----------------
-	# goddet = 'catch wild reindeer', goddit = kill
-
-REMOVE:r3142 ("goddet") IF (0 ("goddit"))(*0 Acc BARRIER NP-BOUNDARY);
-	## Vuovdái godde dán guovžža.
-
-	# gođđat vs. gođđit 
-	# ----------------- 
-	# gođđat = 'spawn', gođđit = 'knit, weave'
-
-REMOVE:r3143 ("gođđat") IF (0 ("gođđit"))(*1 Acc BARRIER VFIN);
-	## Ovddemus dáida oastit árppuid ja gođđá firpmiid.
-
-	# gullat vs. gullát vs. gullet
-	# ----------------------------
-	# gullat = 'hear; belong', gullát 'begin to hear', gullet 'fish'
-   
-SELECT:r3145 ("gullat") IF (0 ("gullát") LINK *0 SOUND OR ("sátni") BARRIER NPNH);    
-    ## Mánná hárve gullá eatnigielas.
-
-SELECT:r3146 ("gullat") IF (0 ("gullát") OR ("gullet"))(*1 Ill BARRIER SV-BOUNDARY2 LINK NOT 0 SOUND);
-	## Dat gullá lunddolaččat dakkár áššiide go Sámedikkiid válganjuolggadusaide.
-
-SELECT:r3147 ("gullat") IF (*-1 Ill BARRIER NOT-ADV-PCLE LINK NOT 0 SOUND)(0 ("gullát") OR ("gullet"));
-	## Doaimma divššohasjournálaide gullá persovdnaregisttar.
-	## Eanetlohku, masa gulle Riektejoavkku 6 eará lahtu,...
-
-SELECT:r3148 ("gullat") IF (*1 ("ahte") BARRIER NOT-ADV-PCLE);
-	## Mun gullen, ahte vulget ikte.
-
-	# guođđit vs. guđđat
-	# ------------------
-	# guođđit = 'leave sth swh', guđđat = 'swarm' 
-
-REMOVE:r3149 ("guđđat") IF (0 ("guođđit"))(*1 Acc BARRIER VFIN);
-    	## De sii guđđet dan viesu ja gávpoga.
-
-	# hálidit, háliidit vs. hálihit
-	# - - - - - - - - - - - - - - -
-REMOVE:r3151 ("hálihit") IF (0 ("hálidit") OR ("háliidit"))(*1 (@-FMAINV) OR Inf BARRIER SV-BOUNDARY2);
-  	## Son ii hálit dan dahkat.
-REMOVE:r3152 ("hálihit") IF (0 ("hálidit") OR ("háliidit"));	
-
-	# joavdat vs. joavdit
-	# -------------------
-SELECT:r3153 ("joavdat") IF (0 ("joavdit"))(*0 ("moalla" Ill) BARRIER SV-BOUNDARY2);	
-	# juhkat vs. juohkit
-	# ------------------
-
-LIST JUOHKIN-ADV = ("hálddahuslaš" Adv) "geografalaččat" ;
-LIST JUOHKIN-SUBJ = "eise#váldi" ;
-LIST JUOHKIN-PASS-SUBJ = "gávdnoštupmi" "eana" "čázádat" "vuoigatvuohta" ;
-
-SELECT:r3154 ("juohkit") IF (0 ("juhkat"))(*0 Ill BARRIER Loc OR SV-BOUNDARY2 LINK NOT 0 Sem/Time);	
-SELECT:r3156 ("juohkit") IF (0 ("juhkat"))(*1 ("diehtu") BARRIER NOT-A-PCLE);		
-SELECT:r3157 ("juohkit") IF (0 ("juhkat"))(*1 Ess BARRIER NOT-A-PCLE);	
-SELECT:r3158 ("juohkit") IF (0 ("juhkat"))(*1 ("mielde") OR ("ektui") OR ("gaskkas") OR ("ovddas") OR ("gaskka") BARRIER NPNH);	
-SELECT:r3159 ("juohkit") IF (0 ("juhkat"))(*0 JUOHKIN-ADV BARRIER VERB);
-SELECT:r3161 ("juohkit") IF (0 ("juhkat") LINK 0 Der/Pass LINK 0 (PrfPrc @>N));
-SELECT:r3162 ("juohkit") IF (*-1 JUOHKIN-PASS-SUBJ BARRIER Nom OR SV-BOUNDARY2)(0 ("juhkat") LINK 0 Der/Pass);
-SELECT:r3163 ("juohkit") IF (*-1 JUOHKIN-SUBJ BARRIER Nom OR SV-BOUNDARY2 LINK 0 (Pl Nom))(0 ("juhkat"));
-	## Ruhta lea juhkkojuvvon máŋgga olbmui.
-	## Eatnamat leat hálddahuslaččat juhkkojuvvon.	
-	## Eatnamat leat juo juhkkojuvvon.
-	## Eiseválddit juhke eatnamiid.
-	
-SELECT:r3164 ("juhkat") IF (0 ("juohkit") LINK -1 CC LINK -1 ("borrat"));
-SELECT:r3165 ("juhkat") IF (0 ("juohkit") LINK 1 CC LINK 1 ("borrat"));
-	## Ovdal stuoradulvvi sii borre ja juhke.	
-	
-SELECT:r3166 ("juhkat") IF (0 ("juohkit") LINK *0 LIQUID BARRIER Acc OR SV-BOUNDARY2);
-	## Sii juhket gáfe.	
-
-SELECT:r3168 ("juhkat") IF (0 ("juohkit") LINK 1 ("buohkat"));
- 	## Juhket buohkat dás!
- 	## Ja sii juhke buohkat das.
-
-	# lohkat vs. loahkkit
-SELECT:r3169 ("lohkat") IF (0 ("loahkkit") LINK 0 Der/Pass);	
-
-	# mannet vs. mannat
-	# -----------------
-REMOVE:r3170 ("mannet") IF (0 ("mannat") LINK 0 Sg1 OR Sg2); 
-REMOVE:r3171 ("mannet") IF (0 ("mannat"))(*0 Ill BARRIER S-BOUNDARY2);
-REMOVE:r3173 ("mannet") IF (0 ("mannat"))(*0 ("dohko") OR ("maŋos") OR ("ruovttoluotta") OR ("ruoktot") OR ("bajás") OR ("vulos") OR ("bokte") BARRIER S-BOUNDARY2);
-REMOVE:r3177 ("mannet") IF (0 ("mannat"))(*0 Inf BARRIER NOT-ADV);
-
-	# máhccat vs. máhccut 
-	# ------------------- #
-	# máhccat = 'return, retreat', máhccut = 'make folds in'
-
-	# máhttit vs máhttát
-	# ------------------
-REMOVE:r3179 ("máhttát") IF (0 ("máhttit"));
-	# One can always (?) understand it as "máhttit" if it is homonomy. 		
-	
-	# muitit vs muitát
-	# ----------------
-REMOVE:r3180 ("muitát") IF (0 ("muitit"));
-	# One can always (?) understand it as "muitit" if it is homonomy. 		
-	
-	# oađđit vs oađđát
-	# --------------- #
-REMOVE:r3181 ("oađđát") IF (*0 (Ex/A Adv) BARRIER VERB)(0 ("oađđit"));		
-
-	# ohcat vs oahcut
-	# --------------- #
-REMOVE:oahcut ("oahcut") IF (0 ("ohcat") LINK *1 Acc);
-	## De ohcot moadde girjji!	
-	
-    # oastit vs. ostet
-    # ---------------- #    
-LIST OSTEN-NOUN = "náhkki" "sistenáhkki" "sisti" ;
-
-SELECT:r3182 ("oastit") IF (0 ("ostet"))(*-1 BOS LINK NEGATE *1 OSTEN-NOUN LINK 0 Acc);     
-
-	# orrut vs. orrot
-	# ---------------- #
-	# orrot = 'remain somewhere (not come back as expected), settle down'
-	
-LIST ILL-N-ADV = ("muddu" Sg Ill) ;
-
-SELECT:r3183 ("orrot") IF (0 ("orrut"))(-1 Ill + Sem/Place - ILL-N-ADV - (Dem Ill Attr) LINK NEGATE -1 (N Sg Nom))(NEGATE *1 (A Ess) OR (Actio Ess) BARRIER NOT-ADV-PCLE - Superl)(NEGATE *1 (A Sg Nom) BARRIER NOT-ADV-PCLE LINK 1 Inf)(NEGATE *1 PrfPrc BARRIER NOT-ADV-PCLE LINK 1 (A Sg Nom));
-	#GRAM
-    #$ Das berrejit bearráigeahččan eiseválddit vuoruhit eambbo návccaid bearráigeahččamii, go dasa orro duođaid dárbu dan raportta dieđuid mielde.
-	#$ Ágga dasa orro ahte muhtin ealáhussurggiide leat unnit ohccit go eará surggiin.
-	#$ Ealáhusaide orro leamašan váttis oažžut earáid ipmirdit ahte juste dat han lea mii dáhpahuvva sidjiide boranávdevahágiid oktavuođas, muhto dál go eanadoallo- ja biebmoministtar orro rievdadan oainnu, de leat ealáhusat sávvamis ollen guhkkelii sin ákkastallamin.
-SELECT:r3184 ("orrot") IF (0 ("orrut"))(*1 Ill - Attr  BARRIER NOT-ADV LINK NOT 0 Adv);
-	#$GRAM
-    #$ Nu go dát orro oppalohkái čájehuvvomin, de leat raporterengáibádusat álkit, ja ii oro leamen dárbu daid moktege divdodit.
-REMOVE:r3185 ("orrut" Der/PassS) OR ("orrot") IF (0 ("orrut"))(1 ("go"));
-REMOVE:r3186 ("orrut" Der/PassS) OR ("orrot") IF (0 ("orrut"))(*1 (Actio Ess) OR ("leat" PrfPrc) BARRIER NOT-ADV-PCLE);
-	#$GRAM
-
-REMOVE:r3186 ("orrut" Der/PassS) OR ("orrot") IF (0 ("orrut"))(1 Gen LINK 1 Po LINK *1 (Actio Ess) OR ("leat" PrfPrc) BARRIER NOT-ADV-PCLE);
-    ##GRAM Ođđa sorttaid gávdnan lea dego stuora liidni maid galgá báidnit , muhto dát bargu čađahuvvon guovdu Davvi-Norgga bieb-mogári , ja bargovuohki orro dán rádjái leamaš hui buorre . #orru leamaš?
-
-REMOVE:r3186b ("orrut" Der/PassS) OR ("orrot") IF (0 ("orrut"))(1 (A Ess));
-	#GRAM
-	## Ahte plána geavaha doahpagiid nugo álgoálbmotperspektiivva , sámi perspektiiva ja máŋggakultuvrralaš perspektiivva lea positiivalaš , muhto suohkaniidda orro váttisin skuvlla geavatlaš hábmemis ollásit čuovvolit dakkár perspektiivvaid .
-REMOVE:r3187 ("orrot") IF (0 ("orrut"))(NEGATE 1 ("go"))(NEGATE *1 (Actio Ess) BARRIER NOT-ADV)(NEGATE *-1 Ill BARRIER NOT-ADV);
-REMOVE:r3188 ("orrot") IF (0 ("orrut"))(NEGATE 1 ("go"))(NEGATE *1 (Actio Ess) BARRIER NOT-ADV)(NEGATE *1 Ill BARRIER NOT-ADV);
-  	## Mii áigut dohko orrot idjii.
-  	## Buot dilálašvuođat main Ipmil orro leamen jávkosis. 
-  	## Min Áigi jearrá orro go heivvolaš ahte son čállá bartnis birra.
-
-	# rihkkut vs. riehkkat
-	# ------------------- #
-	# rihkkut = 'break, transgress, infringe, offens against, forfeit', riehkkat = 'work hard, make great efforts to..'
-
-SELECT:r3189 ("rihkkut") IF (0 Der/Pass)(*-1 BOS LINK *1C LAHKA OR LAHKA-NOUN);
-  	## Láhka lea rihkkojuvvon.
-
-	
-SELECT:r3191 ("savvot") IF (*-1 ("hávvi" Nom) BARRIER S-BOUNDARY2)(0 ("savvit"));	
-	# ruoidnat vs ruoidnát
-	#---------------------
-SELECT:r3193 ("ruoidnat") IF (0 ("ruoidnát"));	
-
-	# sihtat vs. sihtit : D ja L have agreed to remove "sihtit". It´s not in KN.
-	# -----------------
-REMOVE:r3194 ("sihtit") IF (0 ("sihtat")); 
-
-	 
-	# sirdit vs. sirdát
-	# -----------------
-REMOVE:r3195 ("sirdát") IF (0 ("sirdit") LINK *0 Ill OR ("dohko") OR ("deike") OR ABSTR-ROUTE BARRIER SV-BOUNDARY2); 
-	## Son sirdá gitta Billavutnii. 
-	
-REMOVE:r3197 ("sirdát") IF (0 ("sirdit"));
-	# One can always (?) understand it as "sirdit" if it is homonomy. 		
-	
-	 
-	# vázzit vs. vázzát
-	# -----------------
-REMOVE:r3198 ("vázzát") IF (0 ("vázzit") LINK *0 Ill OR ("dohko") OR ("deike") OR ABSTR-ROUTE BARRIER SV-BOUNDARY2); 
-	## Son vázzá gávpogii. 
-
-REMOVE:r3200 ("vázzát") IF (0 ("vázzit"));
-	# One can always (?) understand it as "vázzit" if it is homonomy. 		
-		
-	 
-	# vuodjat vs. vuodjit
-	# ------------------
-LIST VUODJIN-NOUN = "čáhcecross" "dáhkádus" "FMX" "mohtorsearvi" "motocross" "vuodjinlohpi" ;
-
-LIST VUODJIN-WORD = "biilavuoddji" "čáhcedrag-vuoddji" "FMX-vuoddji" ;
-
-SELECT:r3201 ("vuodjit") IF (0 ("vuodjat"))(*0 Sem/Veh BARRIER SV-BOUNDARY2 LINK 0 Com OR Nom OR Acc);
-SELECT:r3203 ("vuodjit") IF (0 ("vuodjat"))(*1 CONCRETE-ROUTE OR ("bargu" Ill) OR ("ruoktot") OR ("siida" Ill) BARRIER VFIN);
-SELECT:r3204 ("vuodjit") IF (0 ("vuodjat"))(*-1 BOS LINK *1 VUODJIN-NOUN); 
-SELECT:r3205 ("vuodjit") IF (0 ("vuodjat"))(*1 (Prop Sem/Plc Ill) BARRIER VFIN);
-REMOVE:r3206 ("vuodjat") IF (0 ("vuojašit"));
-SELECT:r3207 VUODJIN-WORD IF (0 VUODJIN-WORD);
-SELECT:r3208 ("vuodjat") IF (0 ("vuodjit"))(*0 WATER BARRIER SV-BOUNDARY2 LINK 0 Loc);
-SELECT:r3210 ("vuodjat") IF (*-1 FISH BARRIER V-NOT-AUX LINK 0 Nom OR Ess);
-	## Hálidatgo gullat go vudjen stuora sáhpana iežan sykkeliin?
-	## Okta nubbi vuodjá tráktor máđiiráigge.
-	## Ivdni lea deaŧalaš, muhto buot deaŧaleamos lea movt dat vuodjá čázis.
-	## Sii vudjet bálgá mielde.
-	## Sii vudjet Romsii.
-	## Muhto min guovlluin eatnasat veajehin ja vudjet merrii maŋŋel go leat leamaš jagi jogas.
-
-	# vuohttit vs. vuohttát
-	# ---------------------
-	# vuohttá is sg3 of both these verbs
-REMOVE:r3211 ("vuohttát") IF (0 ("vuohttit"));
-	# One can always (?) understand it as "vuohttit" if it is homonomy. 		
-	
-	# vuordit vs. vuordát
-	# -------------------
-REMOVE:r3212 ("vuordát") IF (0 ("vuordit"))(*0 Sem/Time BARRIER S-BOUNDARY2 LINK 0 Acc OR Ill);	
-REMOVE:r3214 ("vuordát") IF (0 ("vuordit"))(1 Num)(2 Po);
-	## Son vuordá diimmu.
-	## Son vuordá gitta mánnodahkii.
-	## Doppe ledje geainnu vuordán 1924 rájes.
-	
-REMOVE:r3215 ("vuordát") IF (0 ("vuordit"));
-	# One can always (?) understand it as "vuordit" if it is homonomy. 	
 
 	# ===================== #
 	#      Residual cases   #
