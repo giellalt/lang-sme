@@ -103,7 +103,7 @@ LIST LEFT = LEFT ;	    #!! LEFT
 LIST RIGHT = RIGHT ;    #!! RIGHT
 LIST WEB = WEB ;	    #!! WEB
 LIST QMARK = """ ;      # "  syntax colouring reset.
-LIST PPUNCT = LEFT RIGHT PUNCT ;   #!! LEFT RIGHT because of apertium
+LIST PPUNCT = LEFT RIGHT PUNCT guio ;   #!! LEFT RIGHT because of apertium
 SET PUNCT = PPUNCT - QMARK ;
 LIST DASH = "–" "—" "-" ;
 
@@ -2373,6 +2373,11 @@ SELECT:CD Sem/Obj-el (0 Rom) ;
 REMOVE:derVuohtaAttr Attr IF (0 Der/vuota) ; 
 REMOVE:vuohtan (".*#vuohtan"r) OR  (Err/Lex) IF (0 Der/vuota) ; 
 
+
+#!! * __Focmat__ removes Foc/mat when not Imprt  
+REMOVE:Focmat Foc/mat IF (0 N OR Der/NomAct) ;
+	#$ Veahá doarrumat, muhto muđuid oalle jaskes idja.
+
 LIST DYNCMP = (".*#.*"r) ;
 
 #!! * __eapmi__ compounds with eapmi if they have Der/NomAct analysis
@@ -2830,9 +2835,6 @@ REMOVE:Focson Foc/son OR Pcle IF (0 Sem/Mal LINK 0 Sem/Sur) ;
 	#$ Johnson
 
 
-#!! * __Focmat__ removes Foc/mat when not Imprt  
-REMOVE:Focmat Foc/mat IF (0 N) ;
-	#$ Veahá doarrumat, muhto muđuid oalle jaskes idja.
 
 #!! * __Fochan__ removes Foc/han when adp  
 REMOVE:Fochan Foc/han IF (0 Pr OR Po OR Adv) ;
@@ -2850,7 +2852,7 @@ REMOVE:Focge Foc/ge IF (0 ("dieđusge")) ;
 #!! * __Focge-dis__ disambiguation Foc/Neg-ge and Foc/Pos-ge
 REMOVE:Foc-dis1 Foc/Pos-ge IF (0 Foc/Neg-ge LINK *-1 Neg BARRIER S-BOUNDARY OR CS) ;
 REMOVE:Foc-dis2 Foc/Pos-ge IF (0 Foc/Neg-ge LINK *1 Neg BARRIER NOT-ADV) ;
-REMOVE:Foc-dis3 Foc/Neg-ge ;
+SELECT:Foc-dis3 Foc/Pos-ge ;
 
 
 #!! !!!ONE-COHORT DISAMBIGUATION - CYCLE 0
@@ -5901,13 +5903,14 @@ SELECT:vuostálagaAdv Adv IF (0 ("vuostálaga") OR ("vuostálagaid")) ; # LINK *
 
 
 #!! * __maidAdv1__ selects maid Adv when there is no vfin to the right.
-SELECT:maidAdv ("maid" Adv) IF ((NEGATE *1 VFIN BARRIER S-BOUNDARY - ("de") OR CS) OR (*1 COMMA BARRIER VFIN LINK 1 CC) OR (1 Nom LINK -2 Loc LINK *-1 COPULAS BARRIER NOT-PCLE LINK NEGATE *-1 Nom))(NEGATE *1 NP-HEAD BARRIER NOT-NPMOD LINK 1 Rel LINK *1 VFIN LINK *1 VFIN)(NEGATE 1C CC)(NEGATE -1 BOC LINK *1 EOS BARRIER VFIN) ;
+SELECT:maidAdvA ("maid" Adv) IF ((NEGATE *1 VFIN BARRIER S-BOUNDARY - ("de") OR CS) OR (*1 COMMA BARRIER VFIN LINK 1 CC OR Neg) OR (1 Nom LINK -2 Loc LINK *-1 COPULAS BARRIER NOT-PCLE LINK NEGATE *-1 Nom))(NEGATE *1 NP-HEAD BARRIER NOT-NPMOD LINK 1 Rel LINK *1 VFIN LINK *1 VFIN)(NEGATE 1C CC)(NEGATE -1 BOC LINK *1 EOS BARRIER VFIN) ;
  	#$ Dán oktavuođas čujuhuvvo maid oanáduslistui ja gáldolistui.
  	#$ Sápmelaččat oasálaste maid dasa, muhto lassin ledje sis vel eará resursat.
  	#$ Dá lea reive maid.
  	#$ Dattetge bohciida maid sierra gažaldat, ...
  	#$ Boahtágo son maid?
  	#$ Riggodagaide gullet maid fuođđut ja lottit.
+  	#$ Dat njammá visot gavjjaid ja várra njammá maid dan gopmi, ii láve čiehkadit eahkedis Bireha seaŋgga vuollái.
   	#% Maid mii dál vihtaniiguin?
 
 #!! * __maidAdv2__ selects maid Adv copulas and PrfPrc or Actio Ess. We need this rule because of that there can be an Inf to the right which also has Vfin reading.
@@ -6949,7 +6952,7 @@ REMOVE:CVPNPron (CC @CVP)  IF (
 
 
 #!! * __CVPnoVfin__ No potential finite verb following
-REMOVE:CVPnoVfinAttr (@CVP) IF (0 CC LINK *-1 N BARRIER WORD - COMMA) (1 Adv OR A LINK 1 N LINK NEGATE 1* VFIN BARRIER S-BOUNDARY OR CS OR PUNCT-RIGHT OR COMMA)(NEGATE *1 ("leat" PrfPrc) BARRIER S-BOUNDARY-NOT-CVP OR PUNCT-RIGHT OR CCCOMMA LINK NEGATE *-1 PrfPrc BARRIER REAL-V)(NEGATE 1 MO - ("nugo") OR ("de") OR Rel LINK *1 VFIN)(NEGATE -1 BOS)  ; 
+REMOVE:CVPnoVfinAttr (@CVP) IF (0 CC LINK *-1 N BARRIER WORD - COMMA) (1 Adv OR A LINK 1 N LINK NOT 0 VFIN LINK NEGATE 1* VFIN BARRIER S-BOUNDARY OR CS OR PUNCT-RIGHT OR COMMA)(NEGATE *1 ("leat" PrfPrc) BARRIER S-BOUNDARY-NOT-CVP OR PUNCT-RIGHT OR CCCOMMA LINK NEGATE *-1 PrfPrc BARRIER REAL-V)(NEGATE 1 MO - ("nugo") OR ("de") OR Rel LINK *1 VFIN)(NEGATE -1 BOS)  ; 
 	#$ Mu givssidedje danin go hállen sámegiela ja heajos dárogiela.
 	#$ Mu givssidedje danin go hállen sámegiela, ja heajos dárogiela.
 	#$ Rusttegat mat fievrridit dahje nuppástuhttet elektrihkalaš energiija oktan dasa gulli elektrihkalaš huksehusaiguin ja huksenteknihkalaš konstrukšuvnnaiguin, leat earret eará fápmojođđasat...
@@ -7444,6 +7447,10 @@ SELECT:IndefNom2 (Indef Nom) IF (NEGATE *-1 TRANS-V BARRIER REAL-V OR S-BOUNDARY
 	
 SELECT:r1597 Nom IF (-1 ("gullat" Pl3) LINK -1 Ill)(0 BUOT); # trenges ikke
 	## Dat mearkkaša ahte dása gullet buot mat eai leat spiehkastuvvon.		
+
+SELECT:gula Nom IF (0 Acc LINK 0 Sem/Hum OR PROP-ATTR LINK -1 ("gullat") + Imprt + Sg2) ;  
+	## - Gula Biret, jeđđe eadni.	
+
 
 #SELECT:r1598 Indef IF (*-1 TRANS-V BARRIER NOT-ADV-PCLE)(0 BUOT LINK 1 S-BOUNDARY OR REAL-CLB); # trenges ikke
 	## Mun borren buot.
@@ -11088,6 +11095,8 @@ SELECT:OLDr2466 Acc IF (*-1C TRANS-V - Imprt BARRIER SV-BOUNDARY OR NOT-NPMODADV
 
 
 
+
+
 #SELECT:duration (DURATION-V objeakta sáhttá leat akk hámis!)
 
 #!! * __AccInf__ Selects Acc if the verb to the left is TV + Inf (you are the obj of the Inf). Differs from the other rules by not beeing restricted by an Acc to the right ''hállat eatnigiela''
@@ -11209,7 +11218,6 @@ SELECT:CoAccJA2 Acc IF (*-2 STRICT-TRANS-V BARRIER SV-BOUNDARY)(*-1 ("ja") BARRI
 
 SELECT:CoAccEss Acc IF (-1 CC LINK -1 (N Ess) LINK -1 (N Acc) LINK -1 OPRED-V)(0 (N Gen) LINK 1 Ess);
 		#$ Ipmil gohčodii čuovgga beaivin ja seavdnjadasa idjan.
-
 	
 #SELECT:CoAccr2455 Acc IF (*-1 VFIN OR MOD-ASP OR COPULAS BARRIER NOT-NPMOD)(1 CC)(*2 NP-HEAD BARRIER NOT-NPMOD LINK 1 Inf);
 	#$ Son ii muitán ahte lea ferten niesteseahka dahje lávkka guoddit.	
@@ -12998,11 +13006,12 @@ SECTION
 
 # Accusatives
 
-SELECT:miiPlAcc (N Pl Acc) OR (A Pl Acc) IF (*-1 ("mii") OR ("gii") OR ("mihkke" Foc/Neg-ge) OR (*"mii" Foc/Neg-ge) OR (*"guhte" Pl) BARRIER WORD - A + Attr)(1 NP-BOUNDARY OR Adv); 
+SELECT:miiPlAcc (N Pl Acc) OR (A Pl Acc) IF (*-1 ("mii") OR ("gii") OR ("mihkke" Foc/Neg-ge) OR ("guhte" Pl) BARRIER WORD - A + Attr)(1 NP-BOUNDARY OR Adv OR EOS OR COMMA); 
 	#$ Maid ipmašiid doppe dagat?
 	#$ Buot álbmogiid hearvásvuođat ja riggodagat buktojuvvojit gávpogii , muhto ii mihkkege buhtismeahttumiid beasa sisa.
 	#$ Guđiid biktasiid mun galggan bassat?
 	#$ Dát ii leat mihkkege ođđa áššiid minsiidda sámi vánhemiidda.
+	#$ Ii leat miige heđiid.
 
 
 
