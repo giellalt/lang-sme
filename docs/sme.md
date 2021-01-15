@@ -3067,7 +3067,6 @@ Move adjs that may take Px from **Adjective** to this lexicon.
 
 
 
-
 North Saami adposition lexicon
 
 First come the 3 continuation lexica, the division is based on Nickel
@@ -3118,7 +3117,6 @@ words going to multiadv.
 
 
 Thereafter comes the ordinary adverb list.
-
 
 
 
@@ -5006,6 +5004,9 @@ Remove unwanted analyses
 * **derVuohta** removes A Attr Der/vuota if A Der/vuota.	
 
 
+* **Focmat** removes Foc/mat when not Imprt  
+
+
 * **eapmi** compounds with eapmi if they have Der/NomAct analysis
 
 
@@ -5214,7 +5215,6 @@ Remove unwanted analyses
 * **Focson** removes Foc/son when Sur  
 
 
-* **Focmat** removes Foc/mat when not Imprt  
 
 * **Fochan** removes Foc/han when adp  
 
@@ -5257,6 +5257,7 @@ Saami words instead of marginal names, etc.
 * Removes **derH** if Der/InchL.  
 
 * Removes **derST** if Der/ahtti #OBS se på denne	
+
 
 
 
@@ -5493,6 +5494,8 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 
 
+
+
 * **AdvComp**  
 
 * **easkkaAdv**  
@@ -5614,6 +5617,7 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 * **varraAdv** selects
 
 
+
 * **valjisAdv** selects
 
 
@@ -5694,6 +5698,8 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 
 ### Lexical selection - nouns
+
+
 
 
 
@@ -6746,6 +6752,8 @@ Commented out som adp-rules we don't need anymore:
 
 * **amasNegSup** selects Neg Sup, not CS or A
 
+* **amasNegSup** selects Neg Sup, not CS or A
+
 
 * **amatNegSup** selects Neg Sup, not CS
 
@@ -7137,6 +7145,8 @@ The rules are not documented yet
 
 
 
+
+
 * **miiIndef** it vaikko mii or mii beare
 
 
@@ -7392,6 +7402,7 @@ This block of rules is there to ensure case agreement for comparatives.
 
 
 ## And now some rules for adverbs that modify adjectives
+
 
 
 
@@ -8604,6 +8615,8 @@ The rules are no documented yet
 
 
 
+
+
 * **AccInf** Selects Acc if the verb to the left is TV + Inf (you are the obj of the Inf). Differs from the other rules by not beeing restricted by an Acc to the right *hállat eatnigiela*
 
 * **AccCOP** Selects Acc if copulas to the left and nominative to the left of COP *gápmagat leat áhči*
@@ -8654,7 +8667,6 @@ The rules are no documented yet
 
 
 
-
 ### Intransitive verbs can sometimes be transitive
 
 * **IVasTV** Selects Acc if you are GEOGRAPHICAL-PLACE, ABSTR-ROUTE or EDUCATION and somewhere in the sentence is a intransitive verb acting as a transitive verb *sii vázzet skuvlla*
@@ -8674,6 +8686,10 @@ The rules are no documented yet
 * **IVsahttit** Selects Acc 
 
 * **IVsahttit2** Selects Acc 
+
+
+* **IVvaikkuhit** Selects Acc for váikkuhit IV   
+
 
 
 ### Accusative or genitive in front of ALU and in front of adjectives
