@@ -49,4 +49,3 @@ Move adjs that may take Px from **Adjective** to this lexicon.
 
 
 
-
