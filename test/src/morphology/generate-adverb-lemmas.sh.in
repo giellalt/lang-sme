@@ -63,19 +63,17 @@ EXTEDITOR=@SEE@
 # Hent ut lemmaer, bortsett fra Err/Lex (som blir filtrert bort fra normgenerator),
 # og lemmaer som som krever Px eller kompareringstagg) . Lemmaene lagres som filtered_p-adverbs
 @GTCORE@/scripts/extract-lemmas.sh \
-    --exclude "(-comp| LE|-sup |SUP| Px|NOTLEMMA)" \
+    --exclude "( Px|NOTLEMMA)" \
     $source_file > $padv_lemmas
 
 # Hent ut lemmaer som krever Comp-tag. Lagres som filtered_c-adverbs (se bz 1926)
 @GTCORE@/scripts/extract-lemmas.sh \
-    --exclude "(-sup |SUP| Px|NOTLEMMA)" \
-    --include "(-comp| LE)" \
+    --exclude "( Px|NOTLEMMA)" \
     $source_file > $cadv_lemmas
 
 # Hent ut lemmaer som krever Superl-tag. Lagres som filtered_s-adverbs(se bz 1926)
 @GTCORE@/scripts/extract-lemmas.sh \
     --exclude "( Px|NOTLEMMA)" \
-    --include "(-sup |SUP)" \
     $source_file > $sadv_lemmas
 
 ###### Start testing: #######
@@ -114,12 +112,12 @@ sed 's/$/+Adv/' $padv_lemmas | $lookup_tool $generator_file.$suffix | \
     cut -f2 | grep -v "Adv+" | grep -v "^$" > $generated_lemmas.$f.txt  
 
 # Generer adverbformen av lemmaene i compadverbs med +Adv+Comp (se bz 1926)
-sed 's/$/+Adv+Comp/' $cadv_lemmas | $lookup_tool $generator_file.$suffix | \
-    cut -f2 | grep -v "Adv+" | grep -v "^$" >> $generated_lemmas.$f.txt  
+#sed 's/$/+Adv+Comp/' $cadv_lemmas | $lookup_tool $generator_file.$suffix | \
+#    cut -f2 | grep -v "Adv+" | grep -v "^$" >> $generated_lemmas.$f.txt  
 
 # Generer adverbformen av lemmaene i supadverbs med +Adv+Superl (se bz 1926)
-sed 's/$/+Adv+Superl/' $sadv_lemmas | $lookup_tool $generator_file.$suffix | \
-    cut -f2 | grep -v "Adv+" | grep -v "^$" >> $generated_lemmas.$f.txt  
+#sed 's/$/+Adv+Superl/' $sadv_lemmas | $lookup_tool $generator_file.$suffix | \
+#    cut -f2 | grep -v "Adv+" | grep -v "^$" >> $generated_lemmas.$f.txt  
 
 
 ###### Collect results: #######
