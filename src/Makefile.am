@@ -10,6 +10,7 @@ SUBDIRS = fst filters phonetics hyphenation orthography cg3 transcriptions tagse
 # Define target variables first, before assigning to them:
 GT_ANALYSERS=
 GT_GENERATORS=
+CUSTOM_FSTS=
 
 #### Local modifications in *fst processing: ####
 ####
@@ -63,6 +64,10 @@ GT_GENERATORS+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst \
 			   generator-tts-gt-norm_nonum_noabbr_nohyph_nob.xfst
 endif # WANT_PHONETIC
 
+if WANT_CUSTOM_FSTS
+CUSTOM_FSTS+=
+endif # WANT_CUSTOM_FSTS
+
 endif # CAN_XFST
 
 #### HFST transducers
@@ -87,12 +92,21 @@ GT_GENERATORS+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst \
 			   generator-tts-gt-norm_nonum_noabbr_nohyph_nob.hfst
 endif # WANT_PHONETIC
 
+if WANT_CUSTOM_FSTS
+CUSTOM_FSTS+=
+endif # WANT_CUSTOM_FSTS
+
 endif # CAN_HFST
 
 #### FOMA transducers
 if CAN_FOMA
 GT_ANALYSERS+=analyser-lia_disamb-gt-desc.foma
 GT_GENERATORS+=
+
+if WANT_CUSTOM_FSTS
+CUSTOM_FSTS+=
+endif # WANT_CUSTOM_FSTS
+
 endif # CAN_FOMA
 
 
