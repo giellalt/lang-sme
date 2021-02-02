@@ -409,6 +409,7 @@ LIST Err/Spellrelax 	= Err/Spellrelax ;
 LIST Err/MissingHyph 	= Err/MissingHyph ;
 LIST Err/MissingSpace 	= Err/MissingSpace ;
 LIST Err/Any			= Err/Orth Err/Orth-a-á Err/Orth-nom-gen Err/Orth-nom-acc Err/Confused Err/Confused-Ess Err/Confused-ASgNom Err/Confused-NomAgIll Err/Confused-DerPassPrsSg3 Err/Lex Err/DerSub Err/CmpSub Err/HyphSub Err/SpaceCmp Err/Spellrelax Err/MissingHyph Err/MissingSpace ;
+LIST Err/Any-NotSpace   = Err/Orth Err/Orth-a-á Err/Orth-nom-gen Err/Orth-nom-acc Err/Confused Err/Confused-Ess Err/Confused-ASgNom Err/Confused-NomAgIll Err/Confused-DerPassPrsSg3 Err/Lex Err/DerSub Err/CmpSub Err/HyphSub Err/Spellrelax Err/MissingHyph Err/MissingSpace ;
 
 # Dialect tags
 # -------------
@@ -3010,14 +3011,17 @@ SELECT:fallback SUB:* (Err/SpaceCmp)(NEGATE 0/* Err/Spellrelax OR Err/MissingSpa
 	#$ 1936:s válddii stáhta badjelasas dáid goluid, muhto gielda galggai máksit elrávnnji, lieggasa ja klássalanjaid {buhtisin doallama}.
     #$ Dál mánát hállet dábáleammosit guktuid gielaid, ja ahte dáin mánáin lea sámegiella {vuostašgiella skuvllas}, lohkká Todal, gii lea dutkan sámegiela ealáskuhttinproseassa 90 - logus. #TO BE FIXED
     
-
+SELECT (*) - Err/Any OR Err/SpaceCmp IF (0 Err/SpaceCmp);
+	#Tino's rule so the next ones will work 
+    
 # If we still have reanalyses, choose the longest tokenisation:
 	# Altså, først fjern alt som har fem nivå med subreadings, så med fire, så med tre etc.
-REMOVE:longest-match SUB:4 ("<.*>"r)(NEGATE 0t Err/Any - Err/SpaceCmp);
-REMOVE:longest-match SUB:3 ("<.*>"r)(NEGATE 0t Err/Any - Err/SpaceCmp);
-REMOVE:longest-match SUB:2 ("<.*>"r)(NEGATE 0t Err/Any - Err/SpaceCmp);
-REMOVE:longest-match SUB:1 ("<.*>"r)(NEGATE 0t Err/Any - Err/SpaceCmp);
-	## 2.8.6 Mariidna ealáhusat ¶
+REMOVE:longest-match SUB:4 ("<.*>"r) (NEGATE 0t Err/Any ^ Err/SpaceCmp);
+REMOVE:longest-match SUB:3 ("<.*>"r) (NEGATE 0t Err/Any ^ Err/SpaceCmp);
+REMOVE:longest-match SUB:2 ("<.*>"r) (NEGATE 0t Err/Any ^ Err/SpaceCmp);
+REMOVE:longest-match SUB:1 ("<.*>"r) (NEGATE 0t Err/Any ^ Err/SpaceCmp);
+	## 2.8.6 Mariidna ealáhusat ¶						
+	#Remove a reading that includes any errortag that is not Err/SpaceCmp except for the readings that include Err/SpaceCmp in addition to it
 	
 
 	
