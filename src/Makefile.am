@@ -520,12 +520,12 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 				filters/remove-word-boundary.hfst            \
 				filters/remove-UseLIA-strings.hfst           \
 				filters/remove-illegal-derivation-strings-flagbased.hfst \
-    			filters/insert-default-compounding-tags.hfst      \
-    			filters/insert-default_left_compounding-tags.hfst \
-    			filters/block-illegal_compound-strings.hfst       \
-    			filters/split-CmpN-tags.hfst                      \
-    			filters/convert_to_flags-CmpNP-tags.hfst          \
-    			filters/split-CmpNP-tags.hfst                     \
+				filters/insert-default-compounding-tags.hfst      \
+				filters/insert-default_left_compounding-tags.hfst \
+				filters/block-illegal_compound-strings.hfst       \
+				filters/split-CmpN-tags.hfst                      \
+				filters/convert_to_flags-CmpNP-tags.hfst          \
+				filters/split-CmpNP-tags.hfst                     \
 				orthography/block-double_spellrelax.compose.hfst  \
 				orthography/spellrelax-with-flagtags.compose.hfst \
 				orthography/comprelax-with-flagtags.compose.hfst
