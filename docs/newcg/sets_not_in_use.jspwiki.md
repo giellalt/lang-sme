@@ -1,4 +1,5 @@
-!!!sme-dis.rle-seahtat mat eai leat geavahusas:
+# sme-dis.rle-seahtat mat eai leat geavahusas:
+
 
 * ADJ-LOCATION
 * ADV-NOT-ADJ
