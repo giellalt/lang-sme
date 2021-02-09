@@ -1,3 +1,7 @@
-Here's a list of links to the page for each file of source code. All pages are concatenated and can be found as [sme.html].
+## Documentation
 
+- [old docs](j-sme.md)
 
+## Generated documentation from source files
+
+- [Everything](sme.md)
