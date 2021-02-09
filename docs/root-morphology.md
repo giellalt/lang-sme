@@ -72,8 +72,6 @@ Divvun & Giellatekno - open source grammars for North Sámi.
  * **+PxPl3**    Plural Third Person
 
 ### Adjectival tags
- * **+Comp**   Comparative
- * **+Superl**   Superlative
  * **+Attr**   Attributive
  * **+Card**   Cardinal Number Not in use
  * **+Ord**   Ordinal Number
@@ -116,6 +114,8 @@ Divvun & Giellatekno - open source grammars for North Sámi.
  * **+Actio** Action Verb Form
 
 ### Other tags
+ * **+Gram/Comp**   Comparative, adverbs
+ * **+Gram/Superl**   Superlative, adverbs
 
  * **+ABBR** Abbreviation, subtag for e.g. +N
  * +Symbol = independent symbols in the text stream, like £, €, ©
@@ -146,8 +146,8 @@ the sentence can be considered as true cases.
 * **+Gram/TIAbbr**:  Both transitive and intransitive abbreviation
 * **+Gram/IAbbr**:  Intransitive abbreviation (it takes no argument)
 * **+Gram/3syll**: trisyllabic verbs
- ; +Gram/Superl
- ; +Gram/Comp
+ ; +Gram/Superl 
+ ; +Gram/Comp 
 
 
 ### Question and Focus particles:
@@ -283,9 +283,9 @@ so that we can exclude the one or the other from different fst's, but only
 when the oposite stem variant is present.
 
 ### Multichars for marking start and end of IPA sequences
- * `{ %<ipa# }` - ipa text to the left
- * `{ #ipa%> }` - ipa text to the right
- * `%<sent%>` apertium
+ * %{<ipa#%} - ipa text to the left
+ * %{#ipa%>%} - ipa text to the right
+ * %<sent%> apertium
 
 ### Compounding tags
 
@@ -350,9 +350,9 @@ Tags for descriptive compound analysis - this is what a compound actually is:
 To ease writing and maintaining regexes etc for manipulating and enforcing
 compounding, it is important to keep the tags in a certain order.
 The order is:
-# **+CmpN/** tags
-# **+CmpNP/** tags
-# **+Cmp/** tags - this is always true since the descriptive tags are always
+1. **+CmpN/** tags
+1. **+CmpNP/** tags
+1. **+Cmp/** tags - this is always true since the descriptive tags are always
   part of the continuation lexicons, and will be located after the POS tag.
 
 
@@ -378,7 +378,6 @@ The order is:
  *  +Sem/Ctain        = Container
  *  +Sem/Ctain-abstr  = Abstract container like bank account
  *  +Sem/Ctain-clth   = Soft container, like a rucksack
- *  +Sem/Ctain-Obj    = Soft container, like a rucksack
  *  +Sem/Curr         = Currency like dollár, Not Money
  *  +Sem/Date         = Date
  *  +Sem/Dance        = Dance
@@ -420,7 +419,7 @@ The order is:
  *  +Sem/Org          = Organisation
  *  +Sem/Part         = Feature, oassi, bealli
 * Perc = (perception) er noe man kan kjenne i en begrensa periode og som er forårsaka av noe utenifra, f.eks. Mus lea ballu. Mus lea bavččas.
- *  +Sem/Perc-cogn    =
+ *  +Sem/Perc-cogn    =  
  *  +Sem/Perc-emo     = Emotional perception
  *  +Sem/Perc-phys    = Physical perception
  *  +Sem/Perc-psych   = Psychological perception
@@ -468,7 +467,7 @@ The order is:
 
 
 ### Multiple Semantic tags:
- * +Sem/Act_Fruit
+ * +Sem/Act_Fruit                      
  * +Sem/Act_Group Activity and Group
  * +Sem/Act_Plc   A persons job is an activity, and a place as well
  * +Sem/Act_Route Activity and Route, ie johtolat
@@ -516,16 +515,16 @@ The order is:
  * +Sem/Build_Org
  * +Sem/Build_Route
  * +Sem/Build-room_Cat_Ctain_Mat
- * +Sem/Buildpart_Cat
- * +Sem/Buildpart_Cat_Ctain
- * +Sem/Buildpart_Cat_Ctain_Mat
- * +Sem/Buildpart_Ctain
- * +Sem/Buildpart_Ctain_Mat
- * +Sem/Buildpart_Ctain_Obj
- * +Sem/Cat_Group_Hum
- * +Sem/Cat_Group_Hum_Plc
- * +Sem/Cat_Edu
- * +Sem/Cat_Obj
+ * +Sem/Buildpart_Cat                 
+ * +Sem/Buildpart_Cat_Ctain           
+ * +Sem/Buildpart_Cat_Ctain_Mat       
+ * +Sem/Buildpart_Ctain               
+ * +Sem/Buildpart_Ctain_Mat           
+ * +Sem/Buildpart_Ctain_Obj           
+ * +Sem/Cat_Group_Hum                  
+ * +Sem/Cat_Group_Hum_Plc              
+ * +Sem/Cat_Edu                        
+ * +Sem/Cat_Obj                        
  * +Sem/Clth-jewl_Curr
  * +Sem/Clth-jewl_Curr_Obj
  * +Sem/Clth-jewl_Curr_Obj_Org
@@ -546,13 +545,13 @@ The order is:
  * +Sem/Dance_Org
  * +Sem/Dance_Prod-audio
  * +Sem/Domain_Food-med
- * +Sem/Domain_Hum
+ * +Sem/Domain_Hum                     
  * +Sem/Domain_Prod-audio
- * +Sem/Drink_Plant
+ * +Sem/Drink_Plant                    
  * +Sem/Edu_Event
- * +Sem/Edu_Geom
+ * +Sem/Edu_Geom                       
  * +Sem/Edu_Group_Hum
- * +Sem/Edu_Hum
+ * +Sem/Edu_Hum                        
  * +Sem/Edu_Mat
  * +Sem/Edu_Org
  * +Sem/Event_Food
@@ -571,7 +570,7 @@ The order is:
  * +Sem/Food_Perc-phys
  * +Sem/Food_Plant
  * +Sem/Food_Sign
- * +Sem/Fruit_Hum
+ * +Sem/Fruit_Hum                      
  * +Sem/Game_Obj-play
  * +Sem/Geom_Hum_Plc
  * +Sem/Geom_Obj
@@ -582,7 +581,7 @@ The order is:
  * +Sem/Group_Hum_Prod-vis
  * +Sem/Group_Hum_Time
  * +Sem/Group_Org
- * +Sem/Group_Prod-vis
+ * +Sem/Group_Prod-vis                 
  * +Sem/Group_Sign
  * +Sem/Group_Txt
  * +Sem/Hum_Lang
@@ -601,7 +600,7 @@ The order is:
  * +Sem/Lang_Tool
  * +Sem/Mat_Plant
  * +Sem/Mat_Txt
- * +Sem/Measr_Obj_Time
+ * +Sem/Measr_Obj_Time                 
  * +Sem/Measr_Sign                      = Sign (e.g. numbers, punctuation)
  * +Sem/Measr_Time
  * +Sem/Money_Obj
@@ -644,7 +643,7 @@ The order is:
  * +Sem/Plc_Time_Wthr
  * +Sem/Time_Wthr
  * +Sem/State-sick_Substnc
- * +Sem/Obj-ling_Obj-surfc
+ * +Sem/Obj-ling_Obj-surfc             
  * +Sem/Org_Prod-audio
  * +Sem/Org_Prod-cogn
  * +Sem/Org_Prod-vis
@@ -698,12 +697,12 @@ to split the lexical transducer in smaller ones according to langu-
 age, and apply different IPA conversion to each of them.
 The principle of tagging is that we only tag to the extent needed,
 and following a priority:
-# any untagged word is pronounced with SME orthographic conventions
-# NNO and NOB have identical pronunciation, NNO is only used if
+1. any untagged word is pronounced with SME orthographic conventions
+1. NNO and NOB have identical pronunciation, NNO is only used if
   different in spelling from NOB
-# SWE has mostly the same pronunciation as NOB, and is only used
+1. SWE has mostly the same pronunciation as NOB, and is only used
   if different in spelling from NOB
-# Occasionally even SME (the default) may be tagged, to block other
+1. Occasionally even SME (the default) may be tagged, to block other
   languages from being specified, mainly during semi-automatic
   language tagging sessions
 All in all, we want to get as much correctly transcribed to IPA
@@ -828,10 +827,10 @@ with verbs if the verb is further derived into a noun again:
 
 
 
-|  @D.ErrOrth.ON@
-|  @C.ErrOrth@
-|  @P.ErrOrth.ON@
-|  @R.ErrOrth.ON@
+|  @D.ErrOrth.ON@ 
+|  @C.ErrOrth@ 
+|  @P.ErrOrth.ON@ 
+|  @R.ErrOrth.ON@ 
 
 For languages that allow compounding, the following flag diacritics are needed
 to control position-based compounding restrictions for nominals. Their use is

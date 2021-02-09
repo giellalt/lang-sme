@@ -23,6 +23,7 @@
 
 
 
+
  * **LEXICON Adjective** is the main adjective list
 
  * **LEXICON AdjectivePx** Px-forms are restricted to this lexicon
