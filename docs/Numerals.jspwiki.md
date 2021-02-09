@@ -1,138 +1,172 @@
-!!!Numerals
+# Numerals
 
-__Background__
+
+**Background**
+
 
 Some Numeral meeting is long overdue
 
-__Potential obstacle__
+
+**Potential obstacle**
+
 
 Different people have different things they want to discuss. Now, we just jot down what we want, and then go to lunch.
 
-__Question to think of:__
+
+**Question to think of:**
+
 
 What part of the list below as a plenary discussion for all, and what for only some.
 
 
-!!!Topics
-# The TODO-list (__all__)
-# Morphology (__Trond, Thomas, Sjur?, Börre?__)
-# Spelling: Recursivity and the non-recursive transducers (__Thomas, __)
-# Preprocessing (__Trond, Saara,__ no need to meeting on this, there is a bug report)
-# Morphosyntax (__Trond, Linda, others?__)
 
 
-!!The TODO-list:
+# Topics
+1. The TODO-list (**all**)
+1. Morphology (**Trond, Thomas, Sjur?, Börre?**)
+1. Spelling: Recursivity and the non-recursive transducers (**Thomas,**)
+1. Preprocessing (**Trond, Saara,** no need to meeting on this, there is a bug report)
+1. Morphosyntax (**Trond, Linda, others?**)
+
+
+
+
+## The TODO-list:
 * discontinous case inflection (but only for maximally three-part compound
-  numerals) ({{viđain/goalmmát/logiin}} and {{guvttiin/logiin/viđain}})
-  (__Thomas, Trond__)
-* produce correct base forms in the analyzer (__Thomas, Trond__)
+  numerals) (`viđain/goalmmát/logiin` and `guvttiin/logiin/viđain`)
+  (**Thomas, Trond**)
+* produce correct base forms in the analyzer (**Thomas, Trond**)
 * include numbers in the non-recursive transducers (i.e. split the recursive and 
-  the non-recursive part of the numerals) (__Trond, Thomas__)THIS MUST BE DONE IMMEDIEATELY (i.e. today...)
-* Make a test bed {{make num-paradigm}} (__Trond__). Done.
-* Set up test bed for numerals, test and revise (__who?__)
-* Go through the Num bugs (__Trond, Thomas, Steinar__)
+  the non-recursive part of the numerals) (**Trond, Thomas**)THIS MUST BE DONE IMMEDIEATELY (i.e. today...)
+* Make a test bed `make num-paradigm` (**Trond**). Done.
+* Set up test bed for numerals, test and revise (**who?**)
+* Go through the Num bugs (**Trond, Thomas, Steinar**)
 * Preprocessing of ordinals at the end of sentences - reported as bug #368.
-  (__Trond__)
+  (**Trond**)
+
 
 Fleshing out some priority items:
 
-__Top-priority:__ make num-paradgim (__Trond__) Done.
-{{{
+
+**Top-priority:** make num-paradgim (**Trond**) Done.
+```
 cvs up
 cd gt/sme/testing
 make num-paradigm WORD=guokte
-}}}
-__Thereafter:__ someone to test the output (let's see how it looks before we decide who)
-
-__Speller:__ numbers in non-recursive
+```
+**Thereafter:** someone to test the output (let's see how it looks before we decide who)
 
 
-!!Morphology
+**Speller:** numbers in non-recursive
+
+
+
+
+## Morphology
 * Complex numerals written as single words
 * Case forms of Complex numerals written as single words (subnorm?)
 * Checking what we generate (test bed)
 
 
+
+
 Split the lexicon into circular and non-circular parts:
 * all base numbers should be non-circular as well as circular (ones, tens, hundred, thousand, etc)
 * complex numbers can be formed by simple concatenation (ie compounding) by the base numbers
-* case inflection of complex numbers will have to be pregenerated for spellers - but what counts as "three parts"? will __305 000__ be such a three-part compound?
+* case inflection of complex numbers will have to be pregenerated for spellers - but what counts as "three parts"? will **305 000** be such a three-part compound?
 
 
-{{{
+
+
+```
 golbma#cuohti#vihtta#duhát = four parts
-}}}
+```
+
 
 ok - 300 000 ?
-{{{
+```
 golbma#cuohti#duhát = three parts
+
 
 "<golbmačuohtiduhát>"
         "golbmačuohtiduhát" Num Sg Nom <<< @SPRED
-}}}
+```
+
 
 thus case inflection on all parts? yes, and that is not implemented. I suggest we do that after the beta release.
 
+
 That is fine with me, we don't need perfect numeral coverage in the beta
 
+
 Have a look at the Finnish numeral example from the book, see [this link.
-|http://www.stanford.edu/~laurik/fsmbook/LSA-207/Scripts/finnum/Finnish%20Numerals.html]
+| http://www.stanford.edu/~laurik/fsmbook/LSA-207/Scripts/finnum/Finnish%20Numerals.html]
 
-!Complex numerals written as single words
 
-__Nothing here yet__
+### Complex numerals written as single words
 
-!!Spelling
+
+**Nothing here yet**
+
+
+## Spelling
+
 
 Cf. the num.plx.txt list (output from the present PLX number conversion).
 We need a clarification of the num.plx.txt list. What is in, what is out, and why.
 Börre?
 
-!!Preprocessing
+
+## Preprocessing
+
 
 Issue: We analyse numerals at the end of sentences as ordinals. Oslo analyses it as cardinals.
 Arguments for our view? I (TT) am leaning toward the Oslo solution as better.
 
+
 I could do some research with both options. That's fine. I remember there was a request to analyze end of sentences as ordinals, but it can be otherwise.
+
 
 Examples of sentence final numerical expressions:
 
-{{{
-## Dat lea s. 240.
-## Dieđáhusa nummar okta.
-## Mun lean ilus go beasan ovdanbuktit St.dieđ. nr. 33.
-## Mun boađán diibmu vihtta/viđas.
-## Máŋggabealatvuohta ja ovttadássásašvuohta - ráđđehusa dearvvašvuođa- ja
+
+```
+    1. Dat lea s. 240.
+    1. Dieđáhusa nummar okta.
+    1. Mun lean ilus go beasan ovdanbuktit St.dieđ. nr. 33.
+    1. Mun boađán diibmu vihtta/viđas.
+    1. Máŋggabealatvuohta ja ovttadássásašvuohta - ráđđehusa dearvvašvuođa- ja
    sosiálabálvalusaid doaibmaplána Norgga sápmelaččaid várás 2002-2005.
-### There is no problem with years, they are not regarded as ordinals in the
+        1. There is no problem with years, they are not regarded as ordinals in the
     preprocessor in any case. How do you know it is a year?  we have rules that
     say it is a year after "jagi" and we have a Range analysis for "-"
     expressions, but isn't it a usual numeral (potentially) otherwise?
-## He owned kr 10000.
-## She was only 16.
-## The population is 120.000.
-## He reads from book 4.
-### Well, I don't go so deep to details, I just assume that a number containing
+    1. He owned kr 10000.
+    1. She was only 16.
+    1. The population is 120.000.
+    1. He reads from book 4.
+        1. Well, I don't go so deep to details, I just assume that a number containing
     4 digits is a year. Of course there are errors, but not so many.
-### I'm not so sure since we have a lot of law texts to which get numbers and
+        1. I'm not so sure since we have a lot of law texts to which get numbers and
     other entitites which just as well could get 4 digits, it would be nice
     though to have some help for recognizing years
-### Trond and I have worked on date expressions such as 21.5.2000 which are now
+        1. Trond and I have worked on date expressions such as 21.5.2000 which are now
     clearly identified as dates, that helps a lot
-### Yes, they are fine. The thing is, at the moment I don't have any better
+        1. Yes, they are fine. The thing is, at the moment I don't have any better
     heuristics for recognizing years, if they are not part of some date
     expression like above. It may also be that the date expressions in analyzer
     are not compatible with preprocessor, since I haven't updated it lately.
-### But we are maybe talking of two issues here. The expressions with 4 digits
+        1. But we are maybe talking of two issues here. The expressions with 4 digits
     are not considered as ordinals (since they are assumed to be years) but the
     question is if there are other 4-digit expressions that are ordinals
     contrary to the assumption.
-### would it be possible to get a tag for the 4-digit expressions so that we
+        1. would it be possible to get a tag for the 4-digit expressions so that we
     could use it in the rule file?
-### counterexamples could be:
-## I took part in a race. I got 1345.
-### Probably not very often in our corpus :)
-### Exactly, I think this is an empirical question.
+        1. counterexamples could be:
+    1. I took part in a race. I got 1345.
+        1. Probably not very often in our corpus :)
+        1. Exactly, I think this is an empirical question.
+
 
 Empirical investigation:
 kwic-snt '[a-z] [0-9]\. [A-Z]
@@ -140,36 +174,48 @@ So far, ONE example with sentence-final ordinals (Nordlys).
 tafettinnspurt greide Trude å sikre Kjelsås sitt 10. NM-gull. 
 er til Kypros torsdag 2. februar, proffene søndag 5. Roger Nilsen   <== 1/100
   real example, ellipsis                              
-}}}
+```
+
 
 probably not..unless min aigi deceides to write about large-scale sports with placing
 
+
 Ok. What if you just punched some Finnish text through the preprocessor and looked for the final numerals, to get an impression? I am pretty sure Fi and Sa behave the same.
+
 
 So, we have a verdict, and a new system.
 
 
-!! Syntax
+
+
+##  Syntax
 * Date
 * Range
 * Numbers in date expressions
 * Numbers postmodifying nouns
 * Concrete analyses
 
-!Date
+
+### Date
+
 
 <empty>
 
-!Range
+
+### Range
+
 
 <empty>
 
-!Numbers after ":"
+
+### Numbers after ":"
 such as in "faksa: 2323232323"
+
 
 I tried to solve that problem before when there were still sentence borders, so that the numeral item after the communication-device would get @SPRED (which was at least my favorable analysis) but after the sentence borders disappeared the analysis does not work any more. My proposal would be to make a set of communication devices with numbers and make a new rule
 
-{{{
+
+```
 "<Statens>"
         "Statens" N Prop Attr @PROP>
 "<forvaltningstjeneste>"
@@ -182,6 +228,7 @@ I tried to solve that problem before when there were still sentence borders, so 
         "8169" Num Sg Acc @OBJ
         "8169" Num Sg Gen @QN>
 
+
 "<Poastaboksa>"
         "poasta#boksa" N Sg Nom @HNOUN
 "<8169>"
@@ -189,13 +236,16 @@ I tried to solve that problem before when there were still sentence borders, so 
 "<.>"
         "." CLB <<<
 
+
 Status?
-}}}
+```
+
         
-!functional numbers in texts (such as ennumerations etc.)
+### functional numbers in texts (such as ennumerations etc.)
+
 
 This is a formating problem. I would prefer to mark those numbers as text-functional numbers, otherwise we always have the problem that they could be either quantifiers (post or pre) or one of the "thousand" different functions of numerals...
-{{{
+```
 "<¶>"
         "¶" CLB <<<
 "<SISDOALLU>"
@@ -212,6 +262,8 @@ This is a formating problem. I would prefer to mark those numbers as text-functi
         "1" A Ord @X
 "<.>"
         "." CLB <<<
+
+
 
 
 "<12>"
@@ -236,13 +288,15 @@ This is a formating problem. I would prefer to mark those numbers as text-functi
         "riikka#viiddus" N* Der1 Der/Dimin N Sg Nom @HNOUN
 "<diehtojuohkindoaimmat>"
         "diehto#juohkin#doaibma" N Pl Nom @SPRED
-}}}
+```
 
-!Numbers in date expressions
+
+### Numbers in date expressions
 there is a lot of creativity among dates (written in several or just one words, leaving out month or day, writing b or beaivvi
 probably not a big problem, even though sometimes I am unsure about the case
 
-{{{
+
+```
 "<Gustojeaddji>"
         "gustojeaddji" A Attr @AN>
 "<luoddaplána>"
@@ -283,18 +337,22 @@ probably not a big problem, even though sometimes I am unsure about the case
         "luodda" N Sg Acc @OBJ
 "<.>"
         "." CLB <<<
-}}}
+```
 
-!Numbers postmodifying nouns
+
+### Numbers postmodifying nouns
+
 
 * so etwas wie láhka nr. 67, jahki 2000,...
 * The láhka nr. 45 already has the analysis we want (the @NNum< must be interpreted as
   "not the one to the left, but the one to the left of that again.
 
+
 I was thinking about more complex expressions, I can look after concrete examples
 Gut.
 
-{{{
+
+```
 "<láhka>"
         "láhka" N Sg Nom @SPRED
 "<nr.>"
@@ -302,14 +360,18 @@ Gut.
         "nr" ABBR N Gen @NNum>
 "<45>"
         "45" Num Sg Nom <<< @NNum<
-}}}
+```
+
         
         That is a wrong analysis...
 
-!Concrete analyses
 
-{{{
+### Concrete analyses
+
+
+```
 golbma maŋemus jagi leat lassánan buhtadusat boraspiriid geažil.
+
 
 "<golbma>" S:14943, 14945, 15284
         "golbma" Num Sg Nom S:3314 @SUBJ <==== ADVL
@@ -331,7 +393,10 @@ golbma maŋemus jagi leat lassánan buhtadusat boraspiriid geažil.
         "." CLB <<<
 
 
+
+
 [
+
 
 "<62>"
 	"62"                              <=== head
@@ -339,10 +404,13 @@ golbma maŋemus jagi leat lassánan buhtadusat boraspiriid geažil.
 	"milj" ABBR Num Gen @NumQ<        <===
 	"milj" ABBR Num Acc @NumQ<
 
+
 "<10>"
         "10" Num Sg Nom @SUBJ-QH
 "<kr.>"
         "kr" ABBR Gen <<< @NQ<
+
+
 
 
 <10>" S:10069, 10069, 14874, 15260
@@ -351,6 +419,8 @@ golbma maŋemus jagi leat lassánan buhtadusat boraspiriid geažil.
         "miljon" Num Sg Gen S:2647 @NumQ<
 "<ruvnnu>" S:3583, 15042
         "ruvdnu" N Sg Acc <<< S:3397 @OBJ
+
+
 
 
 ok:
@@ -368,11 +438,15 @@ ok:
         "summa" N Sg Nom S:3360 @SPRED
 "<.>"
         "." CLB <<<
+
         
+
         
 what modifies what? 
 
+
 2006 stáhtabušeahtas lea ráđđehus liigudan 10 milj. kr álggahanmearreruhtan ođđa dieđavistái. 
+
 
 "<2006>"
         "2006" Num Sg Acc @OBJ
@@ -384,13 +458,13 @@ what modifies what?
         "ráđđehus" N Sg Nom @SUBJ
 "<liigudan>"
         "liigudit" V TV PrfPrc @-FMAINV
-"<10>"								   |||
-        "10" Num Sg Gen @QN>		   |||
-"<milj.>"							   |||
-        "milj" ABBR Num Acc @NumQ<	   |||
-        "milj" ABBR Num Gen @NumQ<	   |||
-"<kr>"								   |||
-        "kr" ABBR Gen @GN>  <== @NQ<   |||
+"<10>"								   ||
+        "10" Num Sg Gen @QN>		   ||
+"<milj.>"							   ||
+        "milj" ABBR Num Acc @NumQ<	   ||
+        "milj" ABBR Num Gen @NumQ<	   ||
+"<kr>"								   ||
+        "kr" ABBR Gen @GN>  <== @NQ<   ||
 "<álggahanmearreruhtan>"
         "álggahan#mearre#ruhta" N Ess @OPRED
 "<ođđa>"
@@ -399,6 +473,7 @@ what modifies what?
         "dieđa#visti" N Sg Ill @ADVL
 "<.>"
         "." CLB <<<
+
 
 "<2006>" S:11106, 11106, 15045, 15313
         "2006" Num Sg Acc S:3400 @OBJ
@@ -426,6 +501,7 @@ what modifies what?
 "<.>"
         "." CLB <<<
 
+
 "<Sámediggi>"
         "Sámediggi" N Prop Org Sg Nom @SUBJ
 "<hálddaša>"
@@ -451,6 +527,8 @@ what modifies what?
         "ruhtadit" V TV PrfPrc @-FMAINV
 "<.>"
         "." CLB <<<
+
+
 
 
 "<2006>"
@@ -510,6 +588,8 @@ what modifies what?
         "dieđa#visti" N Sg Ill S:3480 @ADVL
 "<.>"
         "." CLB <<<
-}}}        
+```        
+
         
+
         
