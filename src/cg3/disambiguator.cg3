@@ -2208,8 +2208,9 @@ REMOVE:InitialSapmiNoun Prop IF (0 ("Sápmi") + Sg + Nom)(1 CC)(2 N + HUMAN OR N
 SELECT:InitialÁlletNoun Neg IF (0 ("Állet") + Sg + Nom)(1 ConNeg) ;
 
 
-REMOVE:Sokki Prop IF (0 ("Sokki") LINK *-1 BOS BARRIER WORD)(NEGATE 0 Loc LINK 1 HUMAN + Nom) ;
+REMOVE:Sokki Prop IF (0 ("soggi") + Loc LINK 1 N + Nom OR Pron + Nom) ;
 	#$ Sokkis sii seailluhit diŋggaid, muhto go lávus leat ollu olbmot, de sáhttet soggái maid nohkkat.
+	#% Sokki bággoheaittiheapmi maŋiduvvon.
 
 #!! * __InitialSapmiProp__ the initial Sápmi rule. 
 SELECT:InitialSapmiProp Prop IF (0 ("Sápmi") + Sg + Nom LINK *-1 BOS OR (":") BARRIER WORD)(NOT 1 Prop + HUMAN);
@@ -2521,6 +2522,15 @@ LIST AVVIR = "Ávvir" ; # eller andre typiske for Cmp
 SELECT:Ávvir SUB:1 Prop (0/* AVVIR +  Cmp) ;
 SELECT:Ávvir ("Ávvir#.*"r) ; #xfst
 	#$ Ávvirgáibmi
+
+#!! * __LexSelpluralnouns__
+
+LIST PL-NOUN = "boahkut" ;
+LIST SG-NOUN = "boahkku" ;
+
+
+REMOVE:SG-NOUN SG-NOUN  IF (*-1 PLURALIZER OR OASSI OR HEADOFPARTS BARRIER NOT-NPMOD OR Num)(0 PL-NOUN);
+	#$ Badjel 200 duháha olbmo leat ožžon vuosttaš oasi boahkuin.
 
 
 #!! * __LexSelbeassat__
@@ -2932,6 +2942,11 @@ SELECT:čállit N + Nom - Der/NomAg IF (0 Inf OR Imprt LINK 1 EOS)(-1 BOS) ;
 SELECT:imprt N + Nom (0 Der/NomAg OR NomAg)(1 PrfPrc + ("gávdnot")) ;
 	#$ Goargŋu gávdnon jápmán.
 
+REMOVE:passl Sg1 IF (0 Der/Pass + PrfPrc LINK 1 (":") OR EOS) ;
+
+SELECT:PropNom Nom IF (0 Prop LINK *-1 (":") BARRIER WORD - Attr) ;
+
+
 
 #!! * __Sem/Act__ selects lexicalised NomAct in fragments (instead of looking for VFIN). 
 SELECT:Sem/Act Sem/Act + Nom IF (*-1 BOS BARRIER WORD)(NOT 0 Prop)(NEGATE *1 WORD) ;
@@ -3110,13 +3125,6 @@ SELECT:Coor PrfPrc (0 Prs + Sg1)((-1 CC LINK -1C PrfPrc LINK NEGATE *-1 VFIN) OR
 SELECT:Aifeambbo A - Px IF (-1 EAMBBO)(NEGATE 0 Pl OR Inf);
 	#$ Muhto eambbo eahpidahtti lea čielggadusa s. 17 cealkámuš.
 	
-
-#SELECT:Aeambbo (Der/Comp Attr) IF (0 EAMBBO LINK 1 N)(NEGATE -1 ("ahte"));
-	#$ Diŋgojitgo eambbo biergu?
-
-#SELECT:r1306 Adv IF (0 EAMBBO);
-	#$ Gittabivdosiin ii leat lohpi bivdit deanu eambbo go beallái.
-
 #!! * __muhtunlagan__ removes lága Ess if Indef ja lágan A
 SELECT:muhtunlagan A IF (-1 Indef)(0 ("lága" Ess));
  	#$ muhtun lágan
@@ -3406,7 +3414,7 @@ SELECT:biras N IF (-2 CS OR BOS)(-1 Gen)(0 ("birrasiid")); # Vi bør generaliser
 REMOVE:AdvNotNA N OR A IF (0 ADV-NOT-NOMEN) ;
 
 #!! * __AComp__ remove A Comp when Adv
-REMOVE:AComp (A Der/Comp) IF ((-1 DYNAMIC-V) OR (-1 Ill LINK -1 DYNAMIC-V))(0 Adv LINK NOT 0 EAMBBO OR ("unnit") OR Indef OR ("buorre"))(NEGATE *1 go BARRIER SV-BOUNDARY);         
+REMOVE:AComp (A Der/Comp) IF ((-1 DYNAMIC-V) OR (-1 Ill LINK -1 DYNAMIC-V))(0 Adv LINK NOT 0 ("unnit") OR Indef OR ("buorre"))(NEGATE *1 go BARRIER SV-BOUNDARY);         
 	#$ Eadni ráhkadii johtilit ruovttusiiddu.  
 	#$ Son sártnui sidjiide garrasit ja jearai:
 	#% Mun čállen romit reivve go don.
@@ -3449,8 +3457,11 @@ SELECT:eanasAdv Adv IF (*-1 NP-HEAD-NOM BARRIER S-BOUNDARY)(0 ("eanas") OR ("ean
 	#$ Áššemeannudeapmi lea eanaš dárogillii.
 	#$ Nuppádassii leat čielga gáibádusat eaktodáhtolaš oskui, mii guoská giddodahkii, eanaš vuođđuduvvon registrerema oktavuođas.
 
-#!! * __eambbogo__ selects Adv eambbo go
-SELECT:eambbogo Adv IF (0 EAMBBO LINK -1 REAL-V)(1 ("go")) ;
+#!! * __eambbogo__ selects Adv
+SELECT:eambbogo Adv IF (0 EAMBBO LINK -1 REAL-V)(1 ("go") OR COMMA) ;
+	#$ Gittabivdosiin ii leat lohpi bivdit deanu eambbo go beallái.
+	#$ Eamiálbmogat soitet gillát eambbo, danne go oallugat ellet geafivuođas.
+
 
 SELECT:eambboN Attr IF (0 EAMBBO LINK 1 N LINK 1 Inf) ;
 	#$ Lullisámi juoigi Marja Mortensson lohká Spellemann-nammadeami addit vel eambbo movtta bargat sámi musihkain.
@@ -8035,7 +8046,7 @@ SELECT:WASgNomafterCop (A Sg Nom) IF (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 
 
 
 #!! * __ASgNomEssCopNeg__ selects A Sg Nom after copulas Sg3 or Neg Sg3s, 
-SELECT:WASgNomEssCopNeg (A Sg Nom) IF (*-1 COPULAS BARRIER SV-BOUNDARY LINK *-1 (Neg Sg1) OR (Neg Sg2) OR (Neg Sg3) BARRIER NOT-ADV-PCLE)(NEGATE 0 N OR Indef)(NEGATE 1 N OR A)(NEGATE 1 GRADE-ADV LINK 1 A);
+SELECT:WASgNomEssCopNeg A + Sg + Nom IF (*-1 COPULAS BARRIER SV-BOUNDARY LINK *-1 Neg BARRIER NOT-ADV-PCLE LINK 0 Sg1 OR Sg2 OR Sg3)(NEGATE 0 N OR Indef)(NEGATE 1 N OR A)(NEGATE 1 GRADE-ADV LINK 1 A);
 	#$ Boazosápmelaččain ii leat bassin vejolaš fievrridit gálvvu gerresiiguin.
 	#$ Jos dat ii leat vejolaš, de mii fertet mannat.
 	#%  Son lei oainnat plánen irggis lusa vuolgit ovdal ođđabeairuohta, muhto dálki ii orron gal dasa riekta miehtame.
@@ -9200,7 +9211,7 @@ MAP:<OBJInf3 (@<OBJ) TARGET Inf (*-1 HAB-ACTOR + Acc BARRIER NOT-A-ADV LINK *-1 
 MAP:1 (@<OBJ) TARGET Inf (*-1 TRANS-V BARRIER SV-BOUNDARY OR AUX OR Acc OR COMMA LINK NOT 0 AUX LINK 0 PrfPrc OR ConNeg LINK -1 Neg OR COPULAS) ; 
 
 #!!	* __<OBJInf4__
-MAP:<OBJInf4 (@-F<OBJ) TARGET Inf (-1 Acc LINK NOT 0 TIME OR Rel LINK *-1 TRANS-V BARRIER SV-BOUNDARY OR AUX LINK NOT 0 AUX OR Adv OR N LINK NOT 0C Ger OR Imprt)(NEGATE 0 Pl3 LINK *-1 TRANS-V - DADJAT LINK 0 (Pl Nom)) ; 
+MAP:<OBJInf4 (@<OBJ) TARGET Inf (-1 Acc LINK NOT 0 TIME OR Rel LINK *-1 TRANS-V BARRIER SV-BOUNDARY OR AUX LINK NOT 0 AUX OR Adv OR N LINK NOT 0C Ger OR Imprt)(NEGATE 0 Pl3 LINK *-1 TRANS-V - DADJAT LINK 0 (Pl Nom)) ; 
 	#$ Eadni oahpaha nieidasis beaskka goarrut.
 
 
@@ -12033,7 +12044,7 @@ SELECT:NDr2337 (N Sg Nom) IF (NEGATE 0 Acc)(1 ("oktan") LINK 1 Com)(3 SG3-V)(NEG
 	#$ Ohcan oktan cealkámušaiguin sáddejuvvo boazodoallohálddahusa bokte Eanadoallodepartementii.
 
 #!! * __NDr2338__ Selects (N Sg Nom)	
-SELECT:NDr2338 (N Sg Nom) IF (NEGATE *-1 (N Sg Nom) BARRIER S-BOUNDARY OR CC OR CLB)(NEGATE 0 Loc)(1 (Neg Sg3));
+SELECT:NDr2338 (N Sg Nom) IF (NEGATE *-1 (N Sg Nom) BARRIER S-BOUNDARY OR CC OR CLB)(NEGATE 0 Loc)(1 Neg + Sg3);
 	#$ Sámi dutkan ii leat dan dihte soaittáhagas válljejuvvon dutkansuorgi.
  
 #!! * __NDr2339__ Selects (N Sg Nom)	
