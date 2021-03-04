@@ -188,7 +188,7 @@ analyser-tts-gt-norm_nonum_noabbr_nohyph.%: \
 					filters/remove-hyphenated-strings.%         \
 					filters/remove-mwe-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-			   "@\"filters/remove-semantic-tags.$*\"              \
+			    @\"filters/remove-semantic-tags.$*\"              \
 			.o. @\"filters/remove-homonymy-tags.$*\"              \
 			.o. @\"filters/remove-variant-tags.$*\"               \
 			.o. @\"filters/remove-derivation-position-tags.$*\"   \
@@ -229,7 +229,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.%: \
 					filters/remove-UseLIA-strings.%             \
 					filters/remove-infl_boundary-marks.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-			   "@\"filters/remove-orig_lang-tags.$*\"     \
+			    @\"filters/remove-orig_lang-tags.$*\"     \
 			.o. @\"filters/remove-UseLIA-strings.$*\"     \
 			.o. @\"filters/remove-OLang_ENG-strings.$*\"  \
 			.o. @\"filters/remove-OLang_FIN-strings.$*\"  \
@@ -253,7 +253,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_fin.%: \
 					filters/remove-UseLIA-strings.%             \
 					filters/remove-nonfirst_infl_boundary-marks.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-			   "@\"filters/remove-orig_lang-tags.$*\"       \
+			    @\"filters/remove-orig_lang-tags.$*\"       \
 			.o. @\"filters/remove-UseLIA-strings.$*\"       \
 			.o. @\"filters/extract-OLang_FIN-strings.$*\"   \
 			.o. @\"$<\" \
@@ -274,7 +274,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_nob.%: \
 					filters/remove-orig_lang-tags.%            \
 					filters/remove-nonfirst_infl_boundary-marks.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-			   "@\"filters/remove-orig_lang-tags.$*\"     \
+			    @\"filters/remove-orig_lang-tags.$*\"     \
 			.o. @\"filters/remove-UseLIA-strings.$*\"             \
 			.o. \
 			  [ @\"filters/extract-OLang_NOB-strings.$*\"   \
