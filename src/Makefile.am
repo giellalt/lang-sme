@@ -188,7 +188,7 @@ analyser-tts-gt-norm_nonum_noabbr_nohyph.%: \
 					filters/remove-hyphenated-strings.%         \
 					filters/remove-mwe-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-			    @\"filters/remove-semantic-tags.$*\"              \
+				@\"filters/remove-semantic-tags.$*\"              \
 			.o. @\"filters/remove-homonymy-tags.$*\"              \
 			.o. @\"filters/remove-variant-tags.$*\"               \
 			.o. @\"filters/remove-derivation-position-tags.$*\"   \
@@ -229,7 +229,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_sme.%: \
 					filters/remove-UseLIA-strings.%             \
 					filters/remove-infl_boundary-marks.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-			    @\"filters/remove-orig_lang-tags.$*\"     \
+				@\"filters/remove-orig_lang-tags.$*\"     \
 			.o. @\"filters/remove-UseLIA-strings.$*\"     \
 			.o. @\"filters/remove-OLang_ENG-strings.$*\"  \
 			.o. @\"filters/remove-OLang_FIN-strings.$*\"  \
@@ -253,7 +253,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_fin.%: \
 					filters/remove-UseLIA-strings.%             \
 					filters/remove-nonfirst_infl_boundary-marks.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-			    @\"filters/remove-orig_lang-tags.$*\"       \
+				@\"filters/remove-orig_lang-tags.$*\"       \
 			.o. @\"filters/remove-UseLIA-strings.$*\"       \
 			.o. @\"filters/extract-OLang_FIN-strings.$*\"   \
 			.o. @\"$<\" \
@@ -274,7 +274,7 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_nob.%: \
 					filters/remove-orig_lang-tags.%            \
 					filters/remove-nonfirst_infl_boundary-marks.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-			    @\"filters/remove-orig_lang-tags.$*\"     \
+				@\"filters/remove-orig_lang-tags.$*\"     \
 			.o. @\"filters/remove-UseLIA-strings.$*\"             \
 			.o. \
 			  [ @\"filters/extract-OLang_NOB-strings.$*\"   \
@@ -295,7 +295,7 @@ analyser-gt-desc.%: analyser-gt-desc.tmp.% \
 					filters/remove-grammatical-tags.%         \
 					filters/remove-Err_SpaceCmp-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-			    @\"filters/remove-derivation-position-tags.$*\" \
+				@\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-grammatical-tags.$*\"         \
 			.o. @\"filters/remove-norm-comp-tags.$*\"           \
 			.o. @\"filters/remove-UseLIA-strings.$*\"           \
@@ -314,7 +314,7 @@ analyser-dict-gt-desc.%: analyser-dict-gt-desc.tmp.% \
 					filters/remove-UseLIA-strings.%           \
 					filters/remove-Err_SpaceCmp-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-			    @\"filters/remove-derivation-position-tags.$*\" \
+				@\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-grammatical-tags.$*\"         \
 			.o. @\"filters/remove-norm-comp-tags.$*\"           \
 			.o. @\"filters/remove-UseLIA-strings.$*\"           \
@@ -333,7 +333,7 @@ analyser-dict-gt-desc-mobile.%: analyser-dict-gt-desc-mobile.tmp.% \
 					filters/remove-UseLIA-strings.%           \
 					filters/remove-Err_SpaceCmp-strings.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-			    @\"filters/remove-derivation-position-tags.$*\" \
+				@\"filters/remove-derivation-position-tags.$*\" \
 			.o. @\"filters/remove-grammatical-tags.$*\"         \
 			.o. @\"filters/remove-norm-comp-tags.$*\"           \
 			.o. @\"filters/remove-UseLIA-strings.$*\"           \
@@ -449,7 +449,7 @@ analyser-pmatchdisamb-gt-desc.hfst: analyser-pmatchdisamb-gt-desc.tmp.hfst \
 				filters/remove-Err_SpaceCmp-strings.hfst       \
 				filters/remove-semantic-tags-before-derivations.hfst
 	$(AM_V_HXFST)$(PRINTF) "read regex \
-		    @\"filters/remove-derivation-position-tags.hfst\" \
+			@\"filters/remove-derivation-position-tags.hfst\" \
 		.o. @\"filters/remove-dialect-tags.hfst\"             \
 		.o. @\"filters/remove-norm-comp-tags.hfst\"           \
 		.o. @\"filters/remove-orig_lang-tags.hfst\"           \
@@ -615,7 +615,7 @@ morpher-gt-desc.%: morpher-gt-desc.tmp.% \
 					filters/remove-dynamic_compound-char.% \
 					filters/simplify-triple-der-borders.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-			    @\"filters/remove-dynamic_compound-char.$*\".i  \
+				@\"filters/remove-dynamic_compound-char.$*\".i  \
 			.o. @\"filters/simplify-triple-der-borders.$*\".i  \
 			.o. @\"$<\" \
 			;\n\
