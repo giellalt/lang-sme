@@ -4709,13 +4709,15 @@ IFF:Interj Interj  IF (*-1 BOS BARRIER WORD LINK *1 Interj LINK 1 COMMA OR EOS);
 #!! !!Px-rules for special nouns
 
 #!! * __NnoPx__ Remove Px for special nouns
-REMOVE:NnoPx Px IF (0 N-NOPX + Px OR Num + Px OR Der/NomAct + Px OR MANNU + Px OR WEATHER-SITUATION + Px)(0 Loc OR Nom + Px OR Ess + Px);
+REMOVE:NnoPx Px IF (0 N-NOPX) ; # + Px OR Num + Px OR Der/NomAct + Px OR MANNU + Px OR WEATHER-SITUATION + Px)(0 Loc OR Nom + Px OR Ess + Px);
 	#$ Čoahkkin lea eahkedis.
 	#$ Mun gal ceavzzán du goargŋumis.
+	#$ Badjel 800 ođđa njoammuma vahkus.
 	
 #!! * __gaskaneaset__ selects Po for gaskaneaset	
 SELECT:gaskaneaset Po IF (0 ("gaskan") + Px)(NEGATE 1 VGen); 	
 	#$ Sii árvališgohte gaskaneaset.
+
 
 #!! !!Some verb rules
 
@@ -10020,10 +10022,11 @@ SELECT:SEMplcGen_b Gen IF (0 (Prop Sem/Plc) OR GEOGRAPHICAL-PLACE LINK 0 Acc)(-1
 
 	
 #!! * __SEMplcGen2__ Removes Gen in front of a GENERAL-PLACE or POLITICAL-PLACE, if you are a noun ''bidjen hildu sadjásis'' 
-REMOVE:SEMplcGen2 Gen IF (0 N LINK NOT 0 ABSTR-PLACE OR ACTIVITY OR HUMAN OR TOPIC OR PROCESS OR INDUSTRY OR INSTITUTION OR ORGANIZATION OR TIME OR Prop OR SIERRA-GUOVLU OR SAPMI OR LANGUAGE OR ("bealli") LINK NEGATE *-1 Pr BARRIER NOT-NPMOD)(1 GENERAL-PLACE + Loc OR POLITICAL-PLACE + Loc LINK NOT 0 ("biras" Pl Loc) OR ("sápmi"));
+REMOVE:SEMplcGen2 Gen IF (0 N LINK NOT 0 ABSTR-PLACE OR ACTIVITY OR HUMAN OR TOPIC OR PROCESS OR INDUSTRY OR INSTITUTION OR ORGANIZATION OR TIME OR Prop OR SIERRA-GUOVLU OR SAPMI OR LANGUAGE OR ("bealli") LINK NEGATE *-1 Pr BARRIER NOT-NPMOD)(1 GENERAL-PLACE + Loc OR POLITICAL-PLACE + Loc LINK NOT 0 ("biras" Pl Loc) OR ("sápmi"))(NEGATE *-1 Num + Nom BARRIER NOT-A) ;
 	#$ Mun oidnen dan golbmasa gávpešiljus.
 	#$ Mun bidjen hildu sadjásis.
 	#% Sii leat ságastallan daid sápmelaččaiguin geat dárbbašit dálvejagi ja geassejagi guohtuneatnamiid nuppi bealde riikaráji.	
+	#% 12 ođđa njoammuma Romssas.
 
 #!! * __SEMplcGen3__ Removes Gen in front of GENERAL-PLACE or POLITICAL-PLACE, if you are ABSTR-TEXT or TEXT ''cealkámušaid guovlluid dearvvašvuođafitnodagaid jahkedieđáhusain''
 REMOVE:SEMplcGen3 Gen IF (0 ABSTR-TEXT OR TEXT LINK NEGATE *-1 Pr BARRIER NOT-NPMOD)(1 GENERAL-PLACE OR POLITICAL-PLACE LINK NOT 0 ("biras" Pl Loc) OR ("sápmi"));
@@ -10792,10 +10795,11 @@ REMOVE:TESTr2027 Gen IF (*-1 TRANS-V)(0 ("dat" Acc))(1 CC OR CS);
  	
 #!! ! Reflexive pronouns: acc or gen
 
-REMOVE:genFinally Gen (0 Acc LINK NOT 0 Nom LINK NOT -1 Pr OR Num)(NEGATE *-1 REAL-V)(NEGATE -1 Nom)(*1 EOC OR CS BARRIER WORD) ;
+REMOVE:genFinally Gen (0 Acc LINK NOT 0 Nom LINK NEGATE *-1 Pr OR Num BARRIER NOT-A)(NEGATE *-1 REAL-V)(NEGATE -1 Nom)(*1 EOC OR CS BARRIER WORD) ;
 	#$ Naba daid stuora dorskiid, gosa daid bidjet?
 	#$ Muhtun sámi biktasiid, nugo gápmagiid ja vuoddagiid, sii geavahedje guhkit, gitta 1960-logu rádjai.
 	#% Boazodoallu čuohtejagi perspektiivvas.
+	#% Badjel 800 ođđa njoammuma.
 
 # Genitive between "nugo" and N
 	
@@ -11340,6 +11344,8 @@ SELECT:NumAcc Acc IF (0 Num LINK 1 N + ("siidu") + Acc)((2 Adv + Sem/Plc) OR (2 
 
 #!! * __NumNom__ Selects Nom
 SELECT:NumNom Nom IF (0 Num LINK 1 N LINK NOT 0 TIME)(*-1 FMAINV - TRANS-V BARRIER SV-BOUNDARY)  ;
+SELECT:NumNomFragm Nom IF (0 Num)(NEGATE *0 VFIN)  ;
+	#$ 12 ođđa njoammuma Romssas.
 
 #!! * __NumNom__ Selects Nom
 SELECT:NumNom Nom IF (*-1 COPULAS OR (IV) BARRIER NOT-ADV-PCLE)(0 NUM)(1 ("ruvdno"));
@@ -12332,6 +12338,10 @@ SELECT:NDr2397 Nom IF (*-1 COPULAS OR (IV) BARRIER NOT-ADV-PCLE)(0 NUM)(1 ("ruvd
 #!! * __NDr2399__ Selects Nom  
 SELECT:NDr2399 Nom IF (*-1 CRD BARRIER NOT-NPMODADV LINK -1 Nom LINK NOT 0 Acc LINK NEGATE *-1 NOT-AUX-V BARRIER NOT-NPMODADV)(NEGATE 0 VFIN)(1C NP-BOUNDARY); 
 	#$  Divššohas dahje su ovddasteaddji gii oaivvilda ahte... Comment: Please add the whole sentence in stead of "..."!
+
+#!! * __ProperNom__ Selects Nom, adjusted for arabics in paranthesis between  
+SELECT:ProperNom Nom IF (*-1 JA/DAHJE BARRIER NOT-NPMODADV LINK *-1 Nom BARRIER WORD - Arab LINK NOT 0 Acc LINK NEGATE *-1 NOT-AUX-V BARRIER NOT-NPMODADV)(0 Prop)(*1C NP-BOUNDARY BARRIER WORD - Arab); 
+	#$ Sámi ofelaččaguovttos Elle Rávdná Näkkäläjärvi (20) ja Mirja Andersson Renander (19) leaba Norgga mátkkis ja dán vahkkus leaba Plassjes.
 	
 SELECT:coordFirst N + Nom IF (0 Gen)(1 CRD LINK *1C Nom + N BARRIER NOT-NPMOD)(NEGATE 0 Ess LINK 1 XGO); 	
 	#$ Dan galgaba Anne Henriette Hætta Reinås ja Marita Kristin Eilertsen Tøsse muitalit Sápmái.
