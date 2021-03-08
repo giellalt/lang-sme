@@ -107,6 +107,7 @@ Declineable indefinites with normal case paradigms
 
 
 
+
 Separate lexica for exceptional entries
 
  * **LEXICON declindef-idiosync**

@@ -3291,6 +3291,8 @@ The main adverb lexicon
 
 
 
+
+
 # North Saami numerals
 
 
@@ -3670,6 +3672,7 @@ Declineable indefinite pronouns with case + clitic
 Declineable indefinites with normal case paradigms
 
  * **LEXICON declindef**
+
 
 
 
