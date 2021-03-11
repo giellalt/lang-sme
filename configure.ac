@@ -207,6 +207,8 @@ AC_CONFIG_FILES([tools/shellscripts/generate-ipa-lexicon.sh], \
 AC_CONFIG_FILES([src/phonetics/test/test-ipa-conversion.sh], \
       [chmod a+x src/phonetics/test/test-ipa-conversion.sh])
 
+AC_CONFIG_FILES([tools/tts/Makefile])
+
 ############ END: Language-specific scripts. #############
 
 # This must be near the end of all configure.ac files:
