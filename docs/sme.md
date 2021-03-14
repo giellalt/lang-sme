@@ -2652,7 +2652,7 @@ These are treated separately because
 
  * __LEXICON NUOSKIT_IV  __ only nuoskidit, for speller, no action noun nuoskideapmi
 
-
+ * __LEXICON HALIHIT_TV __ Like MUITTASJ_TV, without COnNeg so we dont get hálit
 
 
 
@@ -3269,7 +3269,6 @@ The main adverb lexicon
  * **LEXICON NounPxKin** this is the noun lexicon for nouns which can have Px Nom 3. person, mostly kinshipterms
 
  * **LEXICON NounPx** this is the main noun lexicon
-
 
 
 
@@ -5188,6 +5187,8 @@ Remove unwanted analyses
 
 
 
+
+
 * Removes **PropAttr** if no Prop on the right side
 
 * Removes **PropEss** if no Der/lasj
@@ -5538,6 +5539,10 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 * **justeAdv**
 
 * **jámasAdv**
+
+
+
+* **lihkusAdv**
 
 
 
@@ -5931,6 +5936,7 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 * **NnoPx** Remove Px for special nouns
 
 * **gaskaneaset** selects Po for gaskaneaset	
+
 
 ## Some verb rules
 
@@ -9143,6 +9149,8 @@ The rules are no documented yet
 
 
 * **NDr2399** Selects Nom  
+
+* **ProperNom** Selects Nom, adjusted for arabics in paranthesis between  
 
 
 * **NDr2400** Selects Nom

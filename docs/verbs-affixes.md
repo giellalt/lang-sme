@@ -400,7 +400,7 @@ These are treated separately because
 
  * __LEXICON NUOSKIT_IV  __ only nuoskidit, for speller, no action noun nuoskideapmi
 
-
+ * __LEXICON HALIHIT_TV __ Like MUITTASJ_TV, without COnNeg so we dont get hálit
 
 
 

@@ -1357,6 +1357,8 @@ Remove unwanted analyses
 
 
 
+
+
 * Removes **PropAttr** if no Prop on the right side
 
 * Removes **PropEss** if no Der/lasj
@@ -1707,6 +1709,10 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 * **justeAdv**
 
 * **jámasAdv**
+
+
+
+* **lihkusAdv**
 
 
 
@@ -2100,6 +2106,7 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 * **NnoPx** Remove Px for special nouns
 
 * **gaskaneaset** selects Po for gaskaneaset	
+
 
 ## Some verb rules
 
@@ -5312,6 +5319,8 @@ The rules are no documented yet
 
 
 * **NDr2399** Selects Nom  
+
+* **ProperNom** Selects Nom, adjusted for arabics in paranthesis between  
 
 
 * **NDr2400** Selects Nom
