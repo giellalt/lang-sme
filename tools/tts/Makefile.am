@@ -21,6 +21,9 @@ LOCAL_ANL_ZIP_FILES=
 
 #### BEGIN: Local build targets: ####
 
+semsets.cg3: $(top_srcdir)/src/cg3/semsets.cg3
+	$(AM_V_CP)cp -f $< $@
+
 #### END: Local build targets:   ####
 
 #### Do NOT edit below here: ####
