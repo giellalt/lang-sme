@@ -207,7 +207,8 @@ AC_CONFIG_FILES([tools/shellscripts/generate-ipa-lexicon.sh], \
 AC_CONFIG_FILES([src/phonetics/test/test-ipa-conversion.sh], \
       [chmod a+x src/phonetics/test/test-ipa-conversion.sh])
 
-AC_CONFIG_FILES([tools/tts/Makefile])
+AC_CONFIG_FILES([tools/tts/Makefile \
+				 tools/tts/pipespec.xml])
 
 ############ END: Language-specific scripts. #############
 
