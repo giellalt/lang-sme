@@ -593,6 +593,7 @@ The order is:
  * +Sem/Hum_Sign
  * +Sem/Hum_Plant
  * +Sem/Hum_Plc
+ * +Sem/Hum_Sign
  * +Sem/Hum_Tool
  * +Sem/Hum_Tool-it                     = Human
  * +Sem/Hum_Veh
@@ -3269,7 +3270,6 @@ The main adverb lexicon
  * **LEXICON NounPxKin** this is the noun lexicon for nouns which can have Px Nom 3. person, mostly kinshipterms
 
  * **LEXICON NounPx** this is the main noun lexicon
-
 
 
 

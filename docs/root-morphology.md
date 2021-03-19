@@ -593,6 +593,7 @@ The order is:
  * +Sem/Hum_Sign
  * +Sem/Hum_Plant
  * +Sem/Hum_Plc
+ * +Sem/Hum_Sign
  * +Sem/Hum_Tool
  * +Sem/Hum_Tool-it                     = Human
  * +Sem/Hum_Veh
