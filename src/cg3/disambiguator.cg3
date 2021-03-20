@@ -401,6 +401,7 @@ LIST INITIAL = "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m"
 
 LIST WORD = N A Adv V Pron CS CC Po Pr Interj Pcle Num ABBR ACR  \? ; #!! WORD
  # any word
+LIST WORD-NOTMISSING = N A Adv V Pron CS CC Po Pr Interj Pcle Num ABBR ACR ;
 SET REAL-WORD = WORD - Num - Ord ; #!! REAL-WORD
 SET REAL-WORD-NOT-ABBR = WORD - Num - Ord - (ABBR N) ; # This is former REALWORD-NOTABBR #!! REAL-WORD-NOT-ABBR
 SET WORD-NOT-de = WORD - ("de") ; #!! WORD-NOT-de
@@ -2700,7 +2701,8 @@ SELECT:ProLiet ("gurut") IF (0 ("Guro"));
 
 
 SELECT:Pro (Prop Attr) IF (0 Sem/Org LINK 1 ("oasseváldi") OR ("finála") OR ("gilvu") OR ("loahppagilvu"));
-SELECT:NominfrontofMissing Attr (0 Sem/Fem OR Sem/Mal LINK 1 (\?)) ;
+#SELECT:NominfrontofMissing Attr (0 Sem/Fem OR Sem/Mal LINK 1 (\?)) ;
+SELECT:NominfrontofMissing Attr (0 Sem/Fem OR Sem/Mal LINK *1 Prop BARRIER WORD-NOTMISSING) ;
 
 
 #!! * __PropAttrIfPropx__ removes Attr if no Prop on the right side
@@ -3917,7 +3919,7 @@ SELECT:afterSami N (-1 NATIONAL-IDENTITY + Gen)(0 ("dutkan")) ;
 	
 REMOVE:LIAABBR ABBR (*1 ("¬")) ;
 REMOVE:LIAfiskat Imprt (0 ("fiskat")) ;
-IFF:Jos ABBR (0 ("jos") LINK 1 BOS OR Arab) ; 
+IFF:Jos ("jos") + ABBR (0 ("jos") LINK 1 BOS OR Arab) ; 
 	
 # Rules made especially for LIA spoken corpus: the words often has little context. The rules should be safe.
 REMOVE:LIAbivvatDer ("bivvat") (0 ("bivastat")) ;
@@ -7225,7 +7227,7 @@ SELECT:iesDu Du IF (*0 DU-V OR MOAI OR DOAI OR SOAI BARRIER SV-BOUNDARY OR PUNCT
 
 
 #!! * __NifNum__ 
-REMOVE:NifNum N IF (0 Num)(*1 (N Sg Gen) OR Superl + Gen BARRIER NOT-A - Indef - PrfPrc)(NEGATE 0 (N ACR))(NEGATE 0 Coll LINK 1 PrfPrc OR Num)(NEGATE 0 Nom LINK *1 VFIN BARRIER NOT-A);
+REMOVE:NifNum N IF (0 Num - Rom)(*1 (N Sg Gen) OR Superl + Gen BARRIER NOT-A - Indef - PrfPrc)(NEGATE 0 (N ACR))(NEGATE 0 Coll LINK 1 PrfPrc OR Num)(NEGATE 0 Nom LINK *1 VFIN BARRIER NOT-A);
 	#$ Mii finaimet doppe guđa geardde.
 
 SELECT:Num1 Num IF (0 Loc LINK 1 Num + Ill - Attr) ;
@@ -11480,7 +11482,7 @@ SELECT:NumAcc2 Acc IF (*-1 NOT-FAUXV + TRANS-V BARRIER SV-BOUNDARY)(0 NUM + Sg L
 
 
 #!! * __GenIfNum__ (complement of numerals) Selects Gen Sg if there is a Num Sg to your left ''guđa geardde'' 
-SELECT:GenIfNum (Gen Sg) OR CURRENCY + Gen  IF (*-1 NUM + Sg + Gen OR NUM + Sg + Nom BARRIER MEASUREADJS OR NOT-A OR (":") LINK NOT 0 NUMUNIT OR Sem/Year OR Sem/Time-clock)(0 (N Gen))(NEGATE 1 Po)(NEGATE -1 CC) ;
+SELECT:GenIfNum (Gen Sg) OR CURRENCY + Gen  IF (*-1 NUM + Sg + Gen OR NUM + Sg + Nom BARRIER MEASUREADJS OR NOT-A OR (":") OR PUNCT LINK NOT 0 NUMUNIT OR Sem/Year OR Sem/Time-clock)(0 (N Gen))(NEGATE 1 Po)(NEGATE -1 CC) ;
 	#$ Mii finaimet doppe guđa geardde.
 	#$ Viđa máná biktasat ledje jávkan.
 	#% Sii geat máhtte dušše moadde luođi, ohppe máŋga ođđa luođi internáhtas orodettiin.
@@ -11971,10 +11973,12 @@ REMOVE:ipmi Foc/ba IF (0 FAMILY + Foc/ba LINK 0 FAMILY - Foc/ba) ;
 
 	# only propernouns are nominative
 #!! * __onlyProp__ Selects Nom
-SELECT:onlyProp (Prop Nom) IF (*-1 BOS BARRIER WORD - Prop) (*1 EOS OR PUNCT BARRIER WORD - Prop - Arab - Sem/Year) ;
+SELECT:onlyProp (Prop Nom) IF (*-1 BOS BARRIER WORD - Prop - PROFESSION) (NEGATE *1 WORD - Prop - Arab - Sem/Year) ;
+#SELECT:onlyProp (Prop Nom) IF (*-1 BOS BARRIER WORD - Prop) (*1 EOS OR PUNCT BARRIER WORD - Prop - Arab - Sem/Year) ;
 SELECT:onlyProp (Prop Nom) IF (-1*  (":") OR LEFT BARRIER WORD - Prop) (*1 PUNCT BARRIER WORD - Prop - Arab - Sem/Year) ;
 	#$ Paul Fjellheim, Røros 2003 (Govva: Basia Głowacka).
 
+SELECT:ProfNom Nom (0 PROFESSION) (*1C Prop + Nom BARRIER WORD - Prop) ;
 
 	# A propernoun followed by colon and new word is nominative	
 #!! * __nomAuthor__
