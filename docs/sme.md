@@ -3121,7 +3121,6 @@ words going to multiadv.
 Thereafter comes the ordinary adverb list.
 
 
-
 Then comes the gradating advs
 
 * type 1
