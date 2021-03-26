@@ -209,8 +209,6 @@ AC_CONFIG_FILES([src/phonetics/test/test-ipa-conversion.sh], \
 
 AC_CONFIG_FILES([tools/tts/Makefile \
 				 tools/tts/pipespec.xml ])
-AC_CONFIG_FILES([tools/tts/testpipeline.sh], \
-      [chmod a+x tools/tts/testpipeline.sh])
 
 ############ END: Language-specific scripts. #############
 
