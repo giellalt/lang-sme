@@ -776,7 +776,7 @@ SET STRICT-TV-V = STVLIST + V - Der/Pass OR ("čielgat") + Der/d - Der/Pass  ; #
 
 SET STRICT-TRANS-V = STRICT-TV-V + REAL-V ;
 
-LIST LOC-V = "ávkkástallat" "ballat" "beassat" "beroštit" "biehttalit" "bihtit" "ceavzit" "dinet" "dolkat" "eastadallat" "eastadit" "fitnat" "fuolahit" "fuollat" "garvit" "gáibidit" "gažadit" "heaitit" "hehttet" "ilbmat" "jearrat" "jearralit" "luohpat" "máinnašit" "nohkkot" "oassádallat" "oassálastit" "spiehkastit" "váibat" "váruhit" "vástidit" "veaddit" ;
+LIST LOC-V = "ávkkástallat" "ballat" "beassat" "beroštit" "biehttalit" "bihtit" "ceavzit" "dinet" "dolkat" "earránit" "eastadallat" "eastadit" "fitnat" "fuolahit" "fuollat" "garvit" "gáibidit" "gažadit" "heaitit" "hehttet" "ilbmat" "jearrat" "jearralit" "luohpat" "máinnašit" "nohkkot" "oassádallat" "oassálastit" "spiehkastit" "váibat" "váruhit" "vástidit" "veaddit" ;
 
 		#Note that "fuolahit" obviously has two homonymous variants: 
 		#fuolahit1+Acc, fuolahit2+Loc
@@ -5667,6 +5667,11 @@ REMOVE:r985 Prt + Sg2 IF (NEGATE *-1 (Pron Pers Sg2))(0 Prs + Pl3 )(*1 Der/Pass 
 SELECT:EssV Ess IF (0 ESS-ADVL-N)(*-1 VFIN BARRIER S-BOUNDARY) ;
 	#$ Beaskkain bivvá buolašin.
 
+#!! * __Esscoor__ selects Ess instead of NomAct
+SELECT:Ess Ess IF (0 N)(*-1 JA/DAHJE BARRIER NOT-A LINK -1 Ess) ;
+	#$ Rolf Morten Anti Amundsen beakkihii beaškasiin nuhttejeaddjin ja čállin joavkkuin rOlfFa jagi 2006.
+
+
 #!! * nuorra (vs. nuorrat V)
 REMOVE:nuorraV V IF (0 ("nuorra") LINK *-1 NOT-COP-V BARRIER SV-BOUNDARY);
 	#$ Son bođii dohko nuorran.
@@ -6071,6 +6076,8 @@ SELECT:Vihkinassii REAL-V IF (-1 ("ihkinassii"));
 SELECT:vissásit Adv (0 ("vissásit") LINK NEGATE 1 N) ;
  	#$ Muhto ii goassege dieđe vissásit
 
+SELECT:bealli Acc (0 ("bealli") LINK 1 Loc)(*-1 TRANS-V) ;	
+	#$ Válden oktavuođa givssideddjiin vai son gulašii mu beali áššis.
 
 
 SELECT:AdvPrfPrc Indef IF (0 ("olus") LINK -1 COPULAS + Pl3)(1 PrfPrc);
@@ -7973,10 +7980,11 @@ IFF:sapmelas ("sápmelaš") + A IF (0 Attr LINK 1 N LINK NOT 0 VFIN) ;
 REMOVE Attr IF (0 ("buorre") OR Dem OR ("nubbi")) (1 Num LINK *1 (Sg Com) BARRIER NOT-NPMOD LINK 0 N) ;
 
 SELECT:SeCaseAgrBuorre $$CASE-AGREEMENT + A IF (0 ("buorre") OR OKTA OR Dem LINK NOT 0 Superl OR Comp) (*1 $$CASE-AGREEMENT BARRIER NOT-NPMOD LINK 0 N)(NEGATE -1 Nom LINK NOT 0 Gen) ;
-SELECT:SeComAgrBuorre Com IF (0 ("buorre") OR OKTA OR Dem OR ("nubbi")) (0 Sg LINK *1 (Sg Com) BARRIER NOT-NPMOD LINK 0 N)(NEGATE -1 Gen LINK -1 OKTA) ;
-SELECT:SeLocAgrBuorre (Pl Loc) IF (0 ("buorre") OR OKTA OR Dem) (*1 (Pl Loc) BARRIER NOT-NPMOD LINK 0 N) ;
+SELECT:SeComAgrBuorre Com IF (0 ("buorre") OR OKTA OR Dem OR ("nubbi")) (0 Sg LINK *1 (Sg Com) BARRIER NOT-NPMOD LINK 0 N)(NEGATE -1 Gen LINK -1 OKTA)(NEGATE -1 LOC-V) ;
+SELECT:SeLocAgrBuorre (Pl Loc) IF (0 ("buorre") OR OKTA OR Dem OR ("nubbi")) (*1 (Pl Loc) BARRIER NOT-NPMOD LINK 0 N) ;
 	## Son dadjá dan nuppiin sániin.
 	#$ Báhppa fertii dávjá konfirmeret sin dáiguin unnán dieđuiguin mat sis ledje.
+	#$ Givssideapmi sáhttá boahtán das, go earránin nuppiin mánáin ja nuorain.
 
 SELECT:SeCaseHalfagrBuorre (A Gen) IF (0 ("buorre") OR OKTA OR Dem) (*1 CASE-HALFAGREEMENT + N BARRIER NOT-NPMOD);
 
@@ -8770,6 +8778,9 @@ SELECT:DemAttr $$CASE + (Dem Sg) IF (0 DAT-PRON)(*1 $$CASE + (N Sg) BARRIER NOT-
 	#% Mun muitalin dan vielljasan. # Should not hit this one.
 
 SELECT:nubbiAttr $$CASE + ("nubbi") + Attr IF (*1 $$CASE + (N Sg) BARRIER NOT-NPMOD OR TIME-N OR Num LINK NOT 0 VFIN OR ("leat") OR (Actio Ess) OR Po)(NEGATE 0 Acc LINK *-1 STRICT-TRANS-V BARRIER Acc LINK NOT -1 Acc LINK *2 ("nubbi") LINK NEGATE *1 Acc BARRIER NOT-NPMOD)  ;
+
+SELECT:GenTime Gen (0 ("nubbi") OR Dem LINK 1 Sem/Time OR ("jagáš") LINK 1 N)  ;
+	#$ Rolf Morten Anti Amundsen, dahje Rolffa nugo eatnašat dovdet su, lea musihkar gii vuittii dán jagáš Sami Music Awards komponistabálkkašumi.
 
 
 #!! * __IndefAgree__ guhtege goappašat iešguhtege guhte
@@ -9823,8 +9834,8 @@ LIST SAPMI-PROP-HEAD = "allaskuvla" "bálvalusguovddáš" "cup" "dihtorlávdegod
 # HUMAN
 
 #!! * __SEMnotPossessor__ Removes Gen if you are not a possible possessor (a human) # HAB-ACTOR
-REMOVE:SEMnotPossessor Gen IF (0 (N Acc) or (Rel Gen)  LINK NOT 0 HUMAN-INDIVIDUAL OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB  OR HAB-ACTOR OR ABSTR-TEXT  OR ANIMAL OR TIME OR TITLE OR NATION OR ("dállu") OR ("báiki") OR ORGANIZATION OR Prop OR Sem/Hum) 
-(NEGATE -1 Num OR Pr)(*1 ("bearaš"))(NEGATE 0 ANIMAL LINK *1 FAMILY-ALSO-ABSTRACT BARRIER NOT-NPMOD)(NEGATE 0 ("viidni") OR ("čáhci") OR ("illu") LINK -1 ("eallin")) ;
+REMOVE:SEMnotPossessor Gen IF (0 (N Acc) or (Rel Gen)  LINK NOT 0 HUMAN-INDIVIDUAL OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB  OR HAB-ACTOR OR ABSTR-TEXT  OR ANIMAL OR TITLE OR NATION OR ("dállu") OR ("báiki") OR ORGANIZATION OR Prop OR Sem/Hum) 
+(NEGATE -1 Num OR Pr)(*1 ("bearaš"))(NEGATE 0 ANIMAL LINK *1 FAMILY-ALSO-ABSTRACT BARRIER NOT-NPMOD)(NEGATE 0 ("viidni") OR ("čáhci") OR ("illu") LINK -1 ("eallin"))(NEGATE 0 TIME LINK NOT -1 ("árvu") + Loc OR ("árvvus")) ;
 	#$ Biret addá skeaŋkka Lemehii. 
 	#$ Moai oste bileahta Harry Potter-filbmii.
 	#% Abrama áhká namma lei Sarai, ja Nahora eamit lei Milka, Hanana nieida.
@@ -10166,7 +10177,7 @@ SELECT:SEMtext Acc IF (*-1 WRITING-ACTIVITY-V BARRIER SV-BOUNDARY)(NEGATE -1 Num
 	#$ Sámi geavaheaddjit galggašedje sáhttit váidalit njálmmálaččat, man vuođul fylkkadoavttir de čállá váidaga, dárbbu mielde dulkka vehkiin.
 
 #!! * __SEMXxacc__Removes accusative: if WRITING-ACTIVITY-V to the left and a noun to the right ''čállit Norgga vásáhusaid''
-REMOVE:SEMXxacc Acc OR Nom IF (*-1 WRITING-ACTIVITY-V BARRIER SV-BOUNDARY)(NEGATE -1 Num)(NEGATE 0 TEXT OR ABSTR-TEXT OR LANGUAGE OR ("namma"))(*1 N LINK 0 Gen OR Acc)(NEGATE 0 A LINK 1 N);
+REMOVE:SEMXxacc Acc OR Nom IF (*-1 WRITING-ACTIVITY-V + REAL-V BARRIER SV-BOUNDARY)(NEGATE -1 Num)(NEGATE 0 TEXT OR ABSTR-TEXT OR LANGUAGE OR ("namma"))(*1 N LINK 0 Gen OR Acc)(NEGATE 0 A LINK 1 N);
 	#$ Dán oasis mii čállit Norgga ja Ruoŧa vásáhusaid ja juohkit daid osiide.
 	#% Dá lea son Deanu girjerádjosis nuoraide muitaleamen mo čállit buori giehtačállosa.
 	#% Sii bovdejedje 400 neavttára mielde čállit nama seksuálaillasteami vuostá.
@@ -11898,11 +11909,12 @@ SELECT:NDr2306 (N Nom) IF (*-1 OKTA + Nom OR ("nubbi" Nom) BARRIER NOT-NPMOD LIN
 	#$ Málli vuššojuvvui okta lihtter.
 
 
-	# Nominative if two names in a row
+	# Nominative if two or more names in a row
 
 #!! * __NDr2308__ Selects Nom for PROP asdf 11231
-SELECT:NDr2308 Nom IF (*-1 PROP BARRIER REAL-WORD-NOT-ABBR)(0 PROP)(NEGATE 0 Gen LINK 1 N)(*1 SG3-V BARRIER VFIN); 
+SELECT:NDr2308 Nom IF (*-1 PROP BARRIER REAL-WORD-NOT-ABBR)(0 PROP)(NEGATE 0 Gen LINK 1 N)(*1 SG3-V);  # Uten barriere, men vi satser på at evt akkusativ allerede er valgt.
 	#$ Birasgáhttenminister Siri Bjerke dajai čielgasit ahte...
+	#$ Rolf Morten Anti Amundsen, dahje Rolffa nugo eatnašat dovdet su, lea musihkar gii vuittii dán jagáš Sami Music Awards komponistabálkkašumi.
  
  
  
@@ -12375,9 +12387,10 @@ SELECT:NDr2403 Nom IF (-2C Nom)(-1 CRD)(1 Gen LINK *1 Po BARRIER NOT-NPMOD)(NEGA
 	#$  Dearvvašvuođaásahusas mearriduvvo divvun dahje sihkkun dearvvašvuođabargiidlága § 44 mielde.
 
 #!! * __NDr3529__ Selects Nom	
-SELECT:NDr3529 Nom IF (*-1 TITLE BARRIER NOT-NPMOD LINK 0 ADVLCASE)(0 Prop);
+SELECT:NDr3529 Nom IF (*-1 TITLE OR ("joavku") OR ("koarra") BARRIER NOT-NPMOD LINK 0 ADVLCASE)(0 Prop);
 	#$  Son logai dan maiddái professoriidda Asbjørn Kjønstad ja Kristian Andenæs.	
-	#$  Son logai dan maiddái professoriidda Kjønstad ja Andenæs.	
+	#$  Son logai dan maiddái professoriidda Kjønstad ja Andenæs.
+	#$ 	Rolf Morten Anti Amundsen beakkihii beaškasiin nuhttejeaddjin ja lávllačállin joavkkuin rOlfFa jagi 2006.
 
 
 #SELECT:NDr2404 Nom IF (*-1 CRD BARRIER NOT-NPMOD LINK *-1 Nom BARRIER WORD LINK NOT 0 PrfPrc)(1 CS OR EOS OR (PUNCT RIGHT))(NEGATE 0 Inf LINK -1 CC LINK -1 Inf);
@@ -12612,6 +12625,7 @@ SELECT:comheaitit (Sg Com)  IF (*-1 ("heaitit") BARRIER SV-BOUNDARY) ;
 #!! * __LocLocVL1, LocLocVR__ select Pl Loc if there is a LOC-V
 SELECT:LocLocVL1 (Pl Loc) IF (NOT 0 VEHICLE OR Sem/Act) (*-1 LOC-V - ("heaitit") BARRIER SV-BOUNDARY OR COM-HEAD OR Loc - Attr LINK NOT 0 Adv)(NEGATE *-1 CC BARRIER S-BOUNDARY LINK -1 LOC-V)(NEGATE 0 Num OR Pron LINK *1C (N Com) BARRIER NOT-NPMOD)(0 Com OR Px) ;
 	#$ Juohke dáhpáhusas ferte áibbas boastut leat beroškeahttá sámiid riekteáddejumiin.
+	#$ Givssideapmi sáhttá boahtán das, go earránin nuppiin mánáin ja nuorain.
 	#% Sihke mun ja mu oappát ja vieljat heittiimet etniin sámásteamis, in dieđe manne.
 
 SELECT:LocLocVR (Pl Loc) IF (NEGATE 0 DAT-PRON OR Actio)(NEGATE *1C Com BARRIER NOT-NPMOD)(NEGATE 0 (Coll Nom) LINK 1 (Sg Com))(NEGATE 0 (Sg Com) LINK -1 (Coll Nom) OR ("buorre" Com))(*1 LOC-V BARRIER SV-BOUNDARY OR COMMA);
