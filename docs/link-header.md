@@ -1,12 +1,5 @@
-
 ## Documentation
 [What is this?](WhatIsThis.html)
-
-
-## Generated documentation from source files
-
-- [Everything](sme.md)
-
 
 ## Using the analysers
 
@@ -102,3 +95,7 @@ The links shown here are from the initial years of development, kept for referen
 -   Translating from xerox-style to vislcg3-style used to be done with the
     script
     [`lookup2cg`](https://gtsvn.uit.no/langtech/trunk/gt/script/lookup2cg)
+
+## Generated documentation from source files
+
+- [Everything](sme.md)
