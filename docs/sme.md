@@ -3292,7 +3292,6 @@ The main adverb lexicon
 
 
 
-
 # North Saami numerals
 
 
@@ -5188,6 +5187,8 @@ Remove unwanted analyses
 
 
 
+
+
 * Removes **PropAttr** if no Prop on the right side
 
 * Removes **PropEss** if no Der/lasj
@@ -5538,6 +5539,10 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 * **justeAdv**
 
 * **jámasAdv**
+
+
+
+* **lihkusAdv**
 
 
 
@@ -5931,6 +5936,7 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 * **NnoPx** Remove Px for special nouns
 
 * **gaskaneaset** selects Po for gaskaneaset	
+
 
 ## Some verb rules
 
@@ -6374,6 +6380,9 @@ The following two may be joined:
 * **VPl3NotSg2BefPassive** removes Sg2 for Pl3 and Inf before passive (r985)
 
 * **EssNotV** selects Ess instead of VFIN
+
+* **Esscoor** selects Ess instead of NomAct
+
 
 * nuorra (vs. nuorrat V)
 * **PlNomCoor** Selects (N Pl Nom)
@@ -7704,6 +7713,7 @@ The rules are no documented yet
 The rules are no documented yet
 
 * **DemAttr**
+
 
 
 
@@ -9143,6 +9153,8 @@ The rules are no documented yet
 
 
 * **NDr2399** Selects Nom  
+
+* **ProperNom** Selects Nom, adjusted for arabics in paranthesis between  
 
 
 * **NDr2400** Selects Nom
