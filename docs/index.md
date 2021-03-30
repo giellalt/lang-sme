@@ -3,7 +3,7 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 # North Sámi morphological analyser
 ## Documentation
 
-- [old docs](j-sme.md)
+- [Documentation](link-header.md)
 
 ## Generated documentation from source files
 
