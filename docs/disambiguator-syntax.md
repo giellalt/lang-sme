@@ -2551,6 +2551,9 @@ The following two may be joined:
 
 * **EssNotV** selects Ess instead of VFIN
 
+* **Esscoor** selects Ess instead of NomAct
+
+
 * nuorra (vs. nuorrat V)
 * **PlNomCoor** Selects (N Pl Nom)
 
@@ -3880,6 +3883,7 @@ The rules are no documented yet
 The rules are no documented yet
 
 * **DemAttr**
+
 
 
 

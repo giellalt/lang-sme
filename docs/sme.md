@@ -593,7 +593,6 @@ The order is:
  * +Sem/Hum_Sign
  * +Sem/Hum_Plant
  * +Sem/Hum_Plc
- * +Sem/Hum_Sign
  * +Sem/Hum_Tool
  * +Sem/Hum_Tool-it                     = Human
  * +Sem/Hum_Veh
@@ -2653,7 +2652,7 @@ These are treated separately because
 
  * __LEXICON NUOSKIT_IV  __ only nuoskidit, for speller, no action noun nuoskideapmi
 
- * __LEXICON HALIHIT_TV __ Like MUITTASJ_TV, without COnNeg so we dont get hálit
+
 
 
 
@@ -3121,6 +3120,7 @@ words going to multiadv.
 Thereafter comes the ordinary adverb list.
 
 
+
 Then comes the gradating advs
 
 * type 1
@@ -3269,6 +3269,7 @@ The main adverb lexicon
  * **LEXICON NounPxKin** this is the noun lexicon for nouns which can have Px Nom 3. person, mostly kinshipterms
 
  * **LEXICON NounPx** this is the main noun lexicon
+
 
 
 
@@ -6380,6 +6381,9 @@ The following two may be joined:
 
 * **EssNotV** selects Ess instead of VFIN
 
+* **Esscoor** selects Ess instead of NomAct
+
+
 * nuorra (vs. nuorrat V)
 * **PlNomCoor** Selects (N Pl Nom)
 
@@ -7709,6 +7713,7 @@ The rules are no documented yet
 The rules are no documented yet
 
 * **DemAttr**
+
 
 
 
