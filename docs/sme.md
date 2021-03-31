@@ -593,6 +593,7 @@ The order is:
  * +Sem/Hum_Sign
  * +Sem/Hum_Plant
  * +Sem/Hum_Plc
+ * +Sem/Hum_Sign
  * +Sem/Hum_Tool
  * +Sem/Hum_Tool-it                     = Human
  * +Sem/Hum_Veh
@@ -2652,7 +2653,7 @@ These are treated separately because
 
  * __LEXICON NUOSKIT_IV  __ only nuoskidit, for speller, no action noun nuoskideapmi
 
-
+ * __LEXICON HALIHIT_TV __ Like MUITTASJ_TV, without COnNeg so we dont get hálit
 
 
 
@@ -3118,7 +3119,6 @@ words going to multiadv.
 
 
 Thereafter comes the ordinary adverb list.
-
 
 
 Then comes the gradating advs
