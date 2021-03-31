@@ -1,5 +1,7 @@
 ## Documentation
-[What is this?](WhatIsThis.html)
+
+This page documnets the grammatical analyser for North Saami, how to build them and how to use them.
+
 
 ## Using the analysers
 
@@ -43,6 +45,7 @@
 
 ## Morphophonology, morphology and syntax
 
+-   [The structure of the source file catalogue](/infra/infraremake/NewinfraCatalogues.html).
 -   [Documentation](docu-sme-twol.html) of the
     [Northern Saami phonology file](https://giellalt.com/giellalt/lang-sme/src/fst/phonology.twolc).
 -   [Documentation](docu-sme-lex.html) of [the lexicon
