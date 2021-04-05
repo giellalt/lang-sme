@@ -4113,7 +4113,7 @@ The semantic tags are tacen from the generated file *semsets.cg3*
 - @APP-Num<
 - @APP-ADVL<
 - @VOC : Vocative
-    - Miss Turner : Bures boahtin deike, Miss Turner! - Welcome her, Miss Turner!
+    - Miss Turner : Bures boahtin deike, Miss Turner! - Welcome here, Miss Turner!
 * @CVP : Conjunction or subjunction that conjoins finite verb phrases.
     - go : Leago guhkes áigi dassá go Máreha oidnet? - Is it a long time since you saw Máret?
 * @CNP : Local conjunction or subjunction.
@@ -10150,7 +10150,7 @@ LEFT RIGHT because of apertium
 * @APP-ADVL< : Apposition to adverbial to the left.
     - bearjadaga: Mun vuolggán ihttin, bearjadaga.
 * @VOC : Vocative
-    - Miss Turner : Bures boahtin deike, Miss Turner! - Welcome her, Miss Turner!
+    - Miss Turner : Bures boahtin deike, Miss Turner! - Welcome here, Miss Turner!
 * @CVP : Conjunction or subjunction that conjoins finite verb phrases.
     - go : Leago guhkes áigi dassá go Máreha oidnet? - Is it a long time since you saw Máret?
 * @CNP : Local conjunction or subjunction.
