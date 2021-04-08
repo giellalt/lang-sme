@@ -469,6 +469,7 @@ The order is:
 ### Multiple Semantic tags:
  * +Sem/Act_Fruit                      
  * +Sem/Act_Group Activity and Group
+ * +Sem/Act_Hum Activity and Human
  * +Sem/Act_Plc   A persons job is an activity, and a place as well
  * +Sem/Act_Route Activity and Route, ie johtolat
  * +Sem/Act_Tool-it
