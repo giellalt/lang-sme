@@ -3070,6 +3070,7 @@ Move adjs that may take Px from **Adjective** to this lexicon.
 
 
 
+
 North Saami adposition lexicon
 
 First come the 3 continuation lexica, the division is based on Nickel
@@ -3879,7 +3880,7 @@ Num
 Interj
 ABBR
 ACR
-CLB
+CLB clb lagt til for apertium, fungerer ikke uten
 LEFT
 RIGHT
 WEB
@@ -4044,78 +4045,72 @@ Der/ár
 
 ### Semantic tags
 
-The semantic tags are tacen from the generated file *semsets.cg3*
-
- INCLUDE semsets.cg3 ; #
-
-
- SET TIME-N-SET = N + Sem/Time ; #
- LIST NOT-TIME = "dulvi" "lohpi" "vuorru" ; #
- SET TIME-N = TIME-N-SET - NOT-TIME ; #
 
 
 
-### Syntactic tags
 
-- @+FAUXV : finite auxiliary verb 
+
+###  Syntactic tags
+
+* @+FAUXV : finite auxiliary verb 
     - ferte: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
-- @+FMAINV : finite main verb
+* @+FMAINV : finite main verb
     - oaidná: Son oaidná ollislaš gova. - She sees the whole picture	
-- @-FAUXV : infinite auxiliary verb
+* @-FAUXV : infinite auxiliary verb
     - sáhte: In sáhte gáhku borrat. - I cannot eat cake.	
-- @-FMAINV : infinite main verb
+* @-FMAINV : infinite main verb
     - oaidnit: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
-- @-FSUBJ> : Subject of infinite verb outside the verbal.
+* @-FSUBJ> : Subject of infinite verb outside the verbal.
     - mu: Diet dáhpáhuvai mu dieđikeahttá. - It happened without me knowing about it.
-- @-F<OBJ : Subject of infinite verb outside the verbal.
+* @-F<OBJ : Subject of infinite verb outside the verbal.
     - nuppi: Ulbmil lea oažžut nuppi boagustit. - The goal is to get the other one to laugh.
-- @-FOBJ> : Object of infinite verb outside the verbal.
+* @-FOBJ> : Object of infinite verb outside the verbal.
     - váldovuoittuid: Sii vurde váldovuoittuid fasket. - They waited to grab the main prizes.
-- @-FSPRED<OBJ
-- @-F<ADVL
-- @-FADVL>
-- @-F<SPRED
-- @-F<OPRED
-- @-FSPRED>
-- @-FOPRED>
-- @>ADVL
-- @ADVL<
-- @<ADVL
-- @ADVL>
-- @>N
-- @Interj
-- @N<
-- @>A
-- @P<
-- @>P
-- @HNOUN
-- @INTERJ
-- @>Num
-- @Pron<
-- @>Pron
-- @Num<
-- @OBJ
-- @<OBJ
-- @OBJ>
-- @OPRED
-- @<OPRED
-- @OPRED>
-- @PCLE
-- @COMP-CS<
-- @SPRED
-- @<SPRED
-- @SPRED>
-- @SUBJ
-- @<SUBJ
-- @SUBJ>
-- @PPRED
-- @APP
-- @APP-N<
-- @APP-Pron<
-- @APP>Pron
-- @APP-Num<
-- @APP-ADVL<
-- @VOC : Vocative
+* @-FSPRED<OBJ
+* @-F<ADVL
+* @-FADVL>
+* @-F<SPRED
+* @-F<OPRED
+* @-FSPRED>
+* @-FOPRED>
+* @>ADVL
+* @ADVL<
+* @<ADVL
+* @ADVL>
+* @>N
+* @Interj
+* @N<
+* @>A
+* @P<
+* @>P
+* @HNOUN
+* @INTERJ
+* @>Num
+* @Pron<
+* @>Pron
+* @Num<
+* @OBJ
+* @<OBJ
+* @OBJ>
+* @OPRED
+* @<OPRED
+* @OPRED>
+* @PCLE
+* @COMP-CS<
+* @SPRED
+* @<SPRED
+* @SPRED>
+* @SUBJ
+* @<SUBJ
+* @SUBJ>
+* @PPRED
+* @APP
+* @APP-N<
+* @APP-Pron<
+* @APP>Pron
+* @APP-Num<
+* @APP-ADVL<
+* @VOC : Vocative
     - Miss Turner : Bures boahtin deike, Miss Turner! - Welcome here, Miss Turner!
 * @CVP : Conjunction or subjunction that conjoins finite verb phrases.
     - go : Leago guhkes áigi dassá go Máreha oidnet? - Is it a long time since you saw Máret?
@@ -5067,6 +5062,7 @@ Remove unwanted analyses
 * **leage** removes leahki Allegro
 
 * **Divvun** 
+
 
 
 
@@ -6529,6 +6525,7 @@ maid has many readings and as Rel it is a member of S-BOUNDARY. Therefore we nee
 
 * **maidAdv13** selects maid Adv for 
 
+* **maidAdv14** selects maid Adv for 
 
 * **AdvPlc** selects Adv for 
 
@@ -7714,6 +7711,8 @@ The rules are no documented yet
 
 * **GenIfPo**
 
+
+
 * **semináraNOM**
 
 
@@ -7805,6 +7804,7 @@ The rules are no documented yet
 * **FAUXVorrut** finite orrut
 
 * **FAUXVorrut** infinite orrut
+
 
 
 
