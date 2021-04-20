@@ -10,8 +10,8 @@ authors named in the AUTHORS file are available to grant other licencing
 choices.
 
 [![GitHub issues](https://img.shields.io/github/issues-raw/giellalt/lang-sme)](https://github.com/giellalt/lang-sme/issues)
- [![Build Status](https://github.com/giellalt/lang-sme/workflows/Build%20Speller%20Archives%20and%20Bundles/badge.svg)](https://github.com/giellalt/lang-sme/actions)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Build Status](https://github.com/giellalt/lang-sme/workflows/Build%20Speller%20Archives%20and%20Bundles/badge.svg)](https://github.com/giellalt/lang-sme/actions)
+[![License](https://img.shields.io/github/license/giellalt/template-lang-sme)](https://raw.githubusercontent.com/giellalt/lang-sme/develop/LICENSE)
 
 Install proofing tools and [keyboards](https://github.com/giellalt/keyboard-sme)
 for the North Sami language by using the [Divvun Installer](http://divvun.no)
