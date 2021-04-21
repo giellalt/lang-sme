@@ -967,7 +967,7 @@ LIST HANDICRAFT-ACTIVITY-V = "buddet" "botnit" "goarrut" "hervet" "vadjat" "vik�
 
 SET ACTIVITY-V = BODY-ACTIVITY-V OR WRITING-ACTIVITY-V OR PLACING-ACTIVITY-V OR HUMAN-ACTIVITY-V OR HANDICRAFT-ACTIVITY-V ;
 
-LIST DADJAT = "čuoččuhit" "dadjat" "jáhkkit" "láhttestit" "lohkat" "muitalit" "navdit" "oaivvildit" ;
+LIST DADJAT = "almmuhit" "cealkit" "čájehit" "čilget" "čuoččuhit" "dadjat" "dovdat" "gáibidit" "geatnegahttit" "jáhkkit" "láhttestit" "lohkat" "mearridit" "meroštallat" "muitalit" "navdit" "oaivvildit" ;
 # This set is for  cealkkavástta: DADJAT + Acc + Inf or PrfPrc
 
 LIST HUPMAT = "dáikit" "dárostit" "digaštallat" "digaštit" "duoldat" "háladit" "háleštit" "hállat" "hoallat" "humadit" "hupmat"  "jurddašit" "logaldallat" "máidnut" "máinnašit" "muitaladdat" "njurgut" "oaivvildit" "savkalit" "ságastaddat" "ságastallat" "ságastit" "sámástit" "sámistit" "sárdnidit" "sárdnut" "sártnodit" "smiehttat" "solžat" "suomastit" ;
@@ -2498,6 +2498,9 @@ LIST ALL-PERS = Sg1 Sg2 Sg3 Du1 Du2 DU3 Pl1 Pl2 Pl3 ;
 REMOVE:Der/PassS (Der/PassS) + $$ALL-PERS (0 ("guovlat") OR ("diehtit") OR (".*ut"r) + Der/Pass + $$ALL-PERS)(NOT 0 ("beahttut"))(0 VFIN-NOT-PASS) ;	
 REMOVE:Der/PassS (Der/PassS) + PrfPrc (0 ("guovlat") OR ("diehtit") OR (".*ut"r) + Der/Pass + PrfPrc)(NOT 0 ("beahttut"))(0 VFIN-NOT-PASS) ;	
 REMOVE:Der/PassS (Der/PassS) + ConNeg (0 ("guovlat") OR ("diehtit") OR (".*ut"r) + Der/Pass + ConNeg)(NOT 0 ("beahttut"))(0 VFIN-NOT-PASS) ;	
+REMOVE:Der/PassS (Der/PassS) (0 ("oažžut")) ;	
+
+
 
 REMOVE:beahttut  ("beahttut") (-1 ("garrasit")) ;
 
@@ -5984,7 +5987,7 @@ SELECT:maidAdv ("maid" Adv)  IF (*-1 INF-V BARRIER REAL-V OR N)(*1 Inf BARRIER R
  	#$ Sápmelaččat galge maid vearu máksit Danmárku-Norgii. 
 
 #!! * **maidAdv5** selects maid Adv in front of Comp which at this stage can have vfin analysis.
-SELECT:maidAdv ("maid" Adv)  IF (-1 COPULAS)(*1 (A Der/Comp) BARRIER NOT-ADV);
+SELECT:maidAdv ("maid" Adv)  IF (-1 COPULAS)(*1 Nom BARRIER SV-BOUNDARY);
  	#$ Geainnut ledje maid guhkit rabas.
 
 #!! * **maidAdv6** selects maid Adv between copulas Pl3 and N Pl.
@@ -6128,12 +6131,13 @@ IFF:ruovttusAdv ("ruoktu" Sg Loc)((*1 Ill BARRIER NOT-NPMOD) OR (-1 Gen LINK NEG
 REMOVE:sajisAdv ("sajis") IF (0 ("sadji") LINK *-1 Num BARRIER NOT-A-ADV);
  	#$ Dat lovttohalai leabuheamet julggiid ja vikkai jorggáhallat ovtta sajis.
 
+LIST ADV-NOT-PL = "digitálalaš" "vejolaš" ;
 
 #!! * **valjitAdv**
-SELECT:valjitAdv ("valjit" Adv) ; #more to come
-
+SELECT:valjitAdv ADV-NOT-PL + Adv (-1 S-BOUNDARY OR go)(1 VFIN) ; #more to come
 #!! * **vejolaččatAdv**
 SELECT:vejolaččatAdv ("vejolaččat" Adv)(NOT 1 ("go")) ; #more to come
+	#$ hirbmat buorre go digitálalaččat besse searvat doaluide
 
 #!! * **aččatAttr**
 REMOVE:aččatAttr Attr + Comp (0 (".*aččat"r) + Adv LINK NEGATE *1 ("go")) ; #more to come
@@ -7791,6 +7795,10 @@ SELECT:ANomCop (A Nom) IF (0 DEHALAS + Attr LINK 1 Sem/Hum + Gen LINK 1 N + Ill)
 SELECT:ANomCop (A Nom) IF (0 DEHALAS + Attr LINK 1 ("ollis")) ;
 	#$ Mánáidgárdi - deaŧalaš mánáid giellaovdánahttimii.
 
+SELECT:accANom A + Nom + Pl (-1 Pron + PL-PRON + Acc LINK -1 DADJAT) ;	
+SELECT:accANom A + Nom + Pl (-1 Pron + DU-PRON + Acc LINK -1 DADJAT) ;	
+SELECT:accANom A + Nom + Sg (-1 Pron + SG-PRON + Acc LINK -1 DADJAT) ;	
+	#$ Buvttadeaddji Elle Mari Dunfjell Oskal lohká sin duđavaččat doaluiguin.
 
 	
 
@@ -7886,6 +7894,7 @@ REMOVE:AttrVejolaš ("vejolaš" Attr)  IF (*-1 COPULAS)(1 REAL-V) ;
 #!! * **Cop** 
 SELECT:CopANom (A Nom) (-1 COPULAS LINK -1 HUMAN + Nom OR Pers + Nom)(0 Attr)(NEGATE 1 Nom OR Loc OR Gen OR Cmp/SplitR) ;	
 	#$ Son lei suollemas dainna doaivvuin ahte galgá leat nu..
+
 
 REMOVE:attrcom Attr (0 COM-A + Nom LINK 1 Com)(NEGATE 0 ("ollis") OR ("oppa")) ;
 	#$ Sara advokáhta Trond Biti lea hui duhtavaš bohtosiin.
@@ -8026,6 +8035,7 @@ REMOVE:NomifComp Nom IF (0 Comp)(*1 HEAD-N BARRIER NOT-NPMOD OR PUNCT LINK 0 NOT
 	## Álggahit eará doaibmabijuid gáibida baicca lassi árjja...  #  álggahit
 	#% Go dii lehpet šiegat ealibiin.
 	#% Soai vácciiga seamma luohká go Liná, ja leigga čeahpit eanas fágain.
+	#% Buvttadeaddji Elle Mari Dunfjell Oskal lohká sin duđavaččat doaluiguin.
 	
 #!! ### alit vs. allat Comp Attr
 
@@ -8074,6 +8084,11 @@ SELECT:WASgNomNoSubj (A Sg Nom) IF ((-1 COMMA LINK NEGATE *2 VFIN) OR (*-1 ("lea
 	#$ Ii leat vuogas geavahit hálduiváldima dálá fásta opmodagaide.
 	#$ Gávpoga geaidnu lei ráhkaduvvon gollis, buhtis dego čađačuovgi láse.
 
+
+#!! * **ASgNomNoSubj** selects A Sg Nom also when no copulas 
+SELECT:WASgNomNoSubj (A Sg Nom) IF (*-1 BOS BARRIER NOT-ADV)(*1 CS BARRIER WORD - Inf); 
+	#$ Hui somá oaidnit ahte lea beroštupmi, dadjá Dunfjell Oskal.
+
 #!! * **ASgNomafterCop** selects A Sg Nom after copulas and Sg Nom, not so strong constraint for the target
 SELECT:WASgNomafterCop (A Sg Nom) IF (*-1 COPULAS BARRIER NOT-ADV-PCLE LINK *-1 (Sg Nom) BARRIER NOT-ADV-PCLE LINK *-1 BOC OR CP BARRIER NOT-ADV-PCLE)(1 NP-BOUNDARY OR PrfPrc LINK NOT 0 N);	
 	#$ Vuoigŋa gal lea geargat, muhto oažži lea headju. # geargat, headju
@@ -8121,8 +8136,12 @@ SELECT:Wr1778xc (A Pl Nom) IF (*-1 (N Pl Nom) OR ("visot") BARRIER NOT-ADV-PCLE 
 
 SELECT:Wr1779xc (A Pl Nom) IF (*-1 COPULAS BARRIER SV-BOUNDARY LINK *-1 (V Neg) BARRIER NOT-ADV-PCLE LINK 0 DU-PL-V)(NEGATE 0 N)(NEGATE 1 REAL-V OR A); 
 
-SELECT:Wr1780c (A Sg Nom) IF (*-1 BOS OR REAL-CLB BARRIER NOT-CC)(1 (Dem Sg Nom) OR MUN OR DON OR SON); 
+SELECT:Wr1780c (A Sg Nom) IF (*-1 BOS OR REAL-CLB BARRIER NOT-CC)(NOT 0 Adv)(1 (Dem Sg Nom) OR MUN OR DON OR SON); 
 	#$ Ja ávdugas son guhte oskkui.
+
+SELECT:Adv Adv IF (*-1 BOS OR REAL-CLB BARRIER NOT-CC)(0 A)((1 VFIN) OR (1 Nom LINK 1 VFIN)); 
+	#$ ja rahpasit muitala endometriosa dávdda birra.
+
  
 #SELECT:Wr1781c (A Pl Nom) IF (*-1 BOS OR REAL-CLB BARRIER NOT-CC)(*1 NP-HEAD-PL-NOM BARRIER NOT-NPMOD);
 	#$ Ávdugasat sii geat moraštit.
@@ -9866,7 +9885,7 @@ REMOVE:SEMnotPossessor Gen IF (0 (N Acc) or (Rel Gen)  LINK NOT 0 HUMAN-INDIVIDU
 
 
 #!! * **SEMnotHUM** removes Gen. This is when an NP is thought to be the OBJ, because it's not in the human sets and to the right is NON-FAMILY *njálgáid mánáide*. 
-REMOVE:SEMnotHUM Gen IF (0 (N Acc) LINK NOT 0 (Prop Sem/Plc) OR HUMAN-INDIVIDUAL OR HUMAN-GROUP OR Prop OR PROFESSION OR OFFICE OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ABSTR-TEXT OR PLACE OR NATION OR EDUCATION OR ORGANIZATION OR INSTITUTION OR INDUSTRY OR TIME OR Sem/Domain OR Loc)(NEGATE 0 (NomAg Gen))(NEGATE -1 Num OR Ord OR Pr)(NEGATE -1 @CNP LINK -1 Gen)(*1 NON-FAMILY BARRIER NOT-A)(NEGATE 1 COMMA)(NEGATE *1 TRANS-V + FMAINV BARRIER S-BOUNDARY);
+REMOVE:SEMnotHUM Gen IF (0 (N Acc) LINK NOT 0 (Prop Sem/Plc) OR HUMAN-INDIVIDUAL OR HUMAN-GROUP OR Prop OR PROFESSION OR OFFICE OR HUM-FUNCTION OR HUM-ATTR OR HUM-VERB OR ABSTR-TEXT OR PLACE OR NATION OR EDUCATION OR ORGANIZATION OR INSTITUTION OR INDUSTRY OR TIME OR Sem/Domain OR Loc)(NEGATE 0 (NomAg Gen))(NEGATE -1 Num OR Ord OR Pr)(NEGATE -1 @CNP LINK -1 Gen)(*1 NON-FAMILY OR Num BARRIER NOT-A)(NEGATE 1 COMMA)(NEGATE *1 TRANS-V + FMAINV BARRIER S-BOUNDARY);
 	#$ Mun roggen ozastan njálgáid mánáide.
 	#$ Mun lean boahtán bidjat soahpameahttunvuođa bártni ja áhčis gaskii.
 	#$ Lei hui vuogas boahtit Kárášjohkii nuppiid badjemánáid lusa, dáppe in dárbbašan doarrut ja cielauhuvvot ja doaruhuvvot go ledjen badjeolbmuid mánná.
@@ -11083,7 +11102,7 @@ SELECT:dahkatGen Gen IF (-1 ("dahkat") OR ("bargat"))(0 Acc + HUMAN OR Pron + Ac
 #!! * **r2206** selects Gen when a finite verb to the left and Nom or Acc to the right *lohkaba su girjji*
 SELECT:r2206 Gen IF (*-1 VFIN BARRIER N OR (Pers Pron) OR CLB)(0 N OR Pron LINK NOT 0 ("buorre") OR VFIN)
 (*1 (N Nom) OR (N Acc) BARRIER NOT-NPMOD OR (":") OR PrfPrc OR CC OR PUNCT OR ("ollis") OR Pron LINK NOT 0 Prop OR Loc OR PrfPrc OR TIME)(NEGATE 0 Num OR Dem OR VGen OR PrfPrc OR PrsPrc OR Indef OR Interr OR (Pron Rel) OR Adv OR TIME-N OR Loc OR (Actio Ess) OR Nom)(NEGATE *-1 TRANS-V + FMAINV BARRIER NOT-NPMOD OR @CVP LINK *1 (Pron Refl Acc) BARRIER NOT-NPMOD LINK 1 Ess)
-(NEGATE 1 CLB)
+(NEGATE 1 CLB OR Arab)
 (NEGATE *1 Po OR V-TRANS BARRIER SV-BOUNDARY)(NEGATE *-1 PrfPrc + FMAINV BARRIER SV-BOUNDARY LINK *1 ANIMATE + Acc BARRIER NOT-NPMOD LINK 1 Gen)(NEGATE *-1 Num + Acc BARRIER NOT-Attr) ;
 	#$ Soai lohkaba su girjji eaŋgalasgillii.
 	#$ De son ohcá stálu silbbaid.
@@ -11091,6 +11110,7 @@ SELECT:r2206 Gen IF (*-1 VFIN BARRIER N OR (Pers Pron) OR CLB)(0 N OR Pron LINK 
 	#$ Buvtte deike su pistovlla.
 	#$ Dat mielddisbuktá ahte mánát ja ollesolbmot fertejit guođđit mánáidgárddi njeallje seainni ja šilju ja vuolgit mátkái.
 	#% Alimusriekti gávnnai dettetge doarjaga Čáhppesvuovdeášši bohtosii riikkaidgaskasaš álgoálbmot- ja unnitlohkorievttis. 
+	#% Su dieđuid mielde gehčče árbevirolaš konsearttaid 350 olbmo oktanaga.
 
 
 SELECT:AccRefl Acc (0 Refl) ((-1 Nom LINK -1 OPRED-V) OR (-1 Nom LINK -1 OPRED-V))(1 Ess OR PrfPrc + Der/Pass) ;
@@ -13711,6 +13731,7 @@ IFF:LexSel ("bassit") IF (0 ("bassat") LINK *0 Sem/Food + Acc) ;
 REMOVE:LexSel ("báhccat") IF (0 ("báhcit" Imprt)) ;			
 	
 REMOVE:LexSel ("biestit") IF (0 ("bistit") LINK *1 TIME BARRIER SV-BOUNDARY) ;
+REMOVE:LexSel ("biestit") IF (0 ("bistit") LINK 0* Sem/Event OR ("prográmma") OR ("sátta") OR ("guhká") BARRIER SV-BOUNDARY) ;
 
 REMOVE:LexSel ("bivvát") IF (0 ("bivvat")) ;
 
