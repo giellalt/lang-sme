@@ -84,24 +84,19 @@ The links shown here are from the initial years of development, kept for referen
 -   [Our earlier treatment of foreign
     words](../../ling/docu-foreign.html) (obsolete)
 
-## For reference: Obsolete documentation 
+## For reference: Documentation of tools not in use 
 -   [Documentation of the preprocessing of running
     text](../../ling/preprocessor.html)
-    1.  The perl-based
-        [`preprocess`](https://gtsvn.uit.no/langtech/trunk/gt/script/preprocess)
-        script, our current preprocessor
-    2.  For reference: Documentation of the old xfst-based preprocessor
-        [`tok.txt`](https://gtsvn.uit.no/langtech/trunk/gt/sme/src/tok.txt)
-        is found [here](docu-sme-preprocessor.html)
+    1. [The perl-based preprocess script](https://gtsvn.uit.no/langtech/trunk/gt/script/preprocess)
+    2. [The xfst-based preprocessor tok.txt](https://gtsvn.uit.no/langtech/trunk/gt/sme/src/tok.txt), cf. [documentation](docu-sme-preprocessor.html)
 -   [Documentation](../../ling/docu-case-allcaps.html) of
-    [`inituppercase.regex`](https://gtsvn.uit.no/langtech/trunk/langs/sme/src/orthography/inituppercase.regex),
+    [the file inituppercase.regex](https://github.com/giellalt/langs-sme/src/orthography/inituppercase.regex),
     (initial capitalisation) and
-    [`allcaps.xfst`](https://gtsvn.uit.no/langtech/trunk/gt/common/src/allcaps.xfst),
+    [allcaps.xfst](https://gtsvn.uit.no/langtech/trunk/gt/common/src/allcaps.xfst),
     the file for words written in all-caps. Note: The latter is
     presently not in use.
 -   Translating from xerox-style to vislcg3-style used to be done with the
-    script
-    [`lookup2cg`](https://gtsvn.uit.no/langtech/trunk/gt/script/lookup2cg)
+    [lookup2cg script](https://gtsvn.uit.no/langtech/trunk/gt/script/lookup2cg)
 
 # In-source documentation
 
