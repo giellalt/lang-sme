@@ -1,0 +1,440 @@
+
+# C O M M O N  S Á M I  D E P E N D E N C Y   G R A M M A R
+
+This dep file is for sma, sme, smj, sje.
+
+# DELIMITERS
+
+Sentence delimiters are the following: <.> <!> <?> <...> <¶>
+
+
+# TAGS AND SETS
+
+
+N
+V
+A
+Adv
+CC
+CS
+Inf
+Sup
+Neg
+Num
+Po
+Pr
+
+Pcle
+Prop
+
+Pron
+IV
+TV
+COMMA
+DASH
+CITATION to keep colouring we add a "
+HYPHEN
+QMARK
+PUNCT
+LEFT
+RIGHT
+CLB
+Ind
+Pot
+Impr
+ImprtII
+Cond
+ConNeg
+Caus causative eus
+VGen
+Interj
+ABBR
+ACR
+Prs
+Prt
+Cmpnd
+RCmpnd
+PrfPrc
+PrsPrc
+Actor
+Actio
+Ger
+Indef
+Nom
+Acc
+Ill
+Com
+Gen
+Ess
+
+IM For fao
+
+## POS sub-categories
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Syntactic tags and sets
+
+### Syntactic tags in input to this file
+
+
+### Syntactic tags added in this file
+
+* @FMV : finite main verb
+** oaidná: Son oaidná ollislaš gova. - She sees the whole picture
+* infinite main verb
+* @FAUX : finite auxiliary verb
+** ferte: Son ferte oaidnit ollislaš gova. - She must see the whole picture. 
+* @FMVdic : finite main verb introducing direct speech
+* @IMVdic : infinite main verb introducing direct speech
+* @FS-IMV : infinite main verb of subclause 
+* @FS-IAUX : infinite auxiliary verb in subclause
+* @FS-N<IAUX : infinite auxiliary verb of a relative subclause
+* @FS-N<IMV : infinite main verb of a relative subclause
+* @FS-OBJ : finite verb in subclause functioning as object
+* @FS-OBJ> : finite verb in subclause functioning as object
+* @FS-<OBJ : finite verb in subclause functioning as object
+* @FS-SUBJ : finite verb in subclause functioning as subject
+* @FS-SUBJ> : finite verb in subclause functioning as subject
+* @FS-<SUBJ : finite verb in subclause functioning as subject
+* @FS-ADVL> : finite verb in subclause functioning as adverbial to the left of the main clause
+* @FS-<ADVL : finite verb in subclause functioning as adverbial to the right of the main clause
+* @FS-ACC>> : finite verb in subclause, object of speechact verb
+* @S< : a clause modifying a sentence to the right of it
+* @FS-ADVL : finite verb in subclause ...
+* @-FS-<ADVL : infinite subclause - eus
+* @-FS-ADVL> : infinite subclause - eus
+* @FS-N< : relative clause to N
+* @FS->N : relative clause to N to the left side of it - eus
+* @FS-VFIN< : finite verb in sentence, statement
+** eai: Idja ii leat šat, eai ge sii dárbbaš lámppá dahje beaivváža čuovgga, dasgo Hearrá Ipmil lea sin čuovga. - The night is not anymore, they do not need the lamp- or day- light either, because God the Lord is their light.
+* @FS-<APP : finite subclause functioning as an apposition
+* @ICL-ADVL : non-finite subclause ...
+* @ICL-AUX< : "right" argument of auxiliary (?)
+* @ICL-OBJ : infinitival clause object
+* @ICL-SUBJ : infinitival clause subject
+* @ICL-P< : infinitival clause complement of preprosition
+* @IAUX : non-finite auxiliary
+* <mv> : main verb. A temporarily tag omitted in the end of the file.
+* <aux> : auxilary verb. A temporarily tag omitted in the end of the file.
+
+
+### fao syntags
+
+* @>V
+
+### kal syntags
+
+* @INS :
+* @<INS :
+* @INS> :
+
+### eus syntags
+
+* @FS-SPRED : finite verb in subclause functioning as a subject predicate - eus, but not sure if in use
+
+### Syntactic set definitions
+
+
+
+
+
+
+
+
+
+
+
+
+# Dep grammar
+
+
+
+Correction rules
+
+
+
+* **muitalit**
+
+
+* **XX**
+
+* **XX**
+
+* **XX**
+
+
+
+* **faoSumId=Rel**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## The finite verb
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Mapping rules
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**lgRemove** removes the language tags <sma>, <sme>,  etc, before proceeding to the dep file.
+
+
+
+
+
+
