@@ -118,7 +118,7 @@ Divvun & Giellatekno - open source grammars for North Sámi.
  * **+Gram/Superl**   Superlative, adverbs
 
  * **+ABBR** Abbreviation, subtag for e.g. +N
- * +Symbol = independent symbols in the text stream, like £, €, ©
+ * **+Symbol** = independent symbols in the text stream, like £, €, ©
  * **+ACR**  Acronym, subtag for +N
  * **+CLB**  Clause border (full stop, comma..)
  * **+PUNCT**  punctuation
@@ -212,10 +212,10 @@ doavttergrádakursa
 ### Escaped chars
 
  * ** %        **
- * +Guess for the name guesser
+ * **+Guess** for the name guesser
  * ** +MWE     ** - Multi-word expressions treated as such in the preprocessor. To be added as first tag after the lemma
 
- * +PxCPlComRecipr used in pronoun-sme-morph.txt
+ * **+PxCPlComRecipr** used in pronoun-sme-morph.txt
 
 
 ### Error (non-standard language) tags
@@ -423,7 +423,7 @@ The order is:
  *  +Sem/Perc-emo     = Emotional perception
  *  +Sem/Perc-phys    = Physical perception
  *  +Sem/Perc-psych   = Psychological perception
- * +Sem/Phonenr = Telephone number
+ * **+Sem/Phonenr** = Telephone number
  *  +Sem/Plant        = Plant
  *  +Sem/Plantpart   = Plant part
  *  +Sem/Plc          = Place
@@ -468,12 +468,12 @@ The order is:
 
 ### Multiple Semantic tags:
  * +Sem/Act_Fruit                      
- * +Sem/Act_Group Activity and Group
- * +Sem/Act_Hum Activity and Human
- * +Sem/Act_Plc   A persons job is an activity, and a place as well
- * +Sem/Act_Route Activity and Route, ie johtolat
+ * **+Sem/Act_Group** Activity and Group
+ * **+Sem/Act_Hum** Activity and Human
+ * **+Sem/Act_Plc**   A persons job is an activity, and a place as well
+ * **+Sem/Act_Route** Activity and Route, ie johtolat
  * +Sem/Act_Tool-it
- * +Sem/Amount_Build   Amount and Building
+ * **+Sem/Amount_Build**   Amount and Building
  * +Sem/Amount_Semcon
  * +Sem/Ani_Body-abstr_Hum
  * +Sem/Ani_Build
@@ -653,39 +653,49 @@ The order is:
 
 
 
- * +Allegro from LEXICON GOADE-IU-
+ * **+Allegro** from LEXICON GOADE-IU-
 
 
 
 
 
+Explanation:
+Combinations 1, 2, 3, 12, 23, 13, 123 are ok, all other ones are blocked.
+The suffixes marked as +Der1+Der2 to the right cannot combine with Der2, they
+have already "saturated" their Der2-part.
+Phonotactically, Der1 are initial consonants C, Der2 are VCV, and
+Der2 are of a different kind, more like compounding.
+This whole Der123 business is to prevent back-derivation of
+boahtigoahtijuvvohallat and the like.
+Computationally, this is done as a filter composed on top of sme.save.
 
 
-```
+
+--------------------------------
 
 
 
-```
+
 
 
 All non-positional derivations should be preceded by this tag, to make it possible
 to target regular expressions at all derivations in a language-independent way:
 just specify +Der|+Der1 .. +Der5 and you are set.
 
- * +Der
+ * **+Der** = 
 
 ### Other/unclassified derivations, can appear in all positions:
 
- * +Der/veara  NA#
- * +Der/viđá  NA#
- * +Der/viđi  NA#
- * +Der/has  only one in the code
+ * **+Der/veara** = NA#
+ * **+Der/viđá** = NA#
+ * **+Der/viđi** = NA#
+ * **+Der/has** = only one in the code
 
 
 ### Miscellanious list
 
- * +Der/A Adjective derivated from Noun or Verb
- * +Der/Adv Adverb derivated from Adjective
+ * **+Der/A** = Adjective derivated from Noun or Verb
+ * **+Der/Adv** = Adverb derivated from Adjective
 
 ## Tags for originating language
 
@@ -713,92 +723,92 @@ are tagged than strictly needed, this should pose no problem as
 long as the IPA conversion is correct - at least some words will
 get the same pronunciation whether read as SME or NOB/NNO/SWE.
 
- * +OLang/SME - North Sámi
- * +OLang/SMJ - Lule Sámi
- * +OLang/SMA - South Sámi
- * +OLang/FIN - Finnish
- * +OLang/SWE - Swedish
- * +OLang/NOB - Norw. bokmål
- * +OLang/NNO - Norw. nynorsk
- * +OLang/ENG - English
- * +OLang/RUS - Russian
- * +OLang/UND - Undefined
+ * **+OLang/SME** = North Sámi
+ * **+OLang/SMJ** = Lule Sámi
+ * **+OLang/SMA** = South Sámi
+ * **+OLang/FIN** = Finnish
+ * **+OLang/SWE** = Swedish
+ * **+OLang/NOB** = Norw. bokmål
+ * **+OLang/NNO** = Norw. nynorsk
+ * **+OLang/ENG** = English
+ * **+OLang/RUS** = Russian
+ * **+OLang/UND** = Undefined
 
 
 ### Triggers for morphophonological rules
 
- * X1  Diphthong Simplification, Metaphony
- * X2  Diphthong Simplification, Metaphony, Word Final Neutralization of g8, h8, m8
- * X3  Diphthong Simplification, Metaphony
- * X4  WeG, Vowel Shortening, Stem vowel alternations, Word Final Deletion of n8 m8 g8 h8
- * X5  WeG, Diphthong Simplification, Stem vowel alternations
- * X6  WeG, Diphthong Simplification, Metaphony, Word Final Deletion of n8 m8 g8 h8
- * X7  Vowel Shortening, Stem vowel alternations, Word Final Neutralization of g8, h8, m8
- * X8  WeG, Vowel Shortening, Metaphony, Stem Vowel alternations, Word Final Deletion of n8 m8 g8 h8
- * X9  WeG, Dipthtong simplification, Word Final Deletion of n8 m8 g8 h8
- * Y1  Lengthening of Central Consonants, Stem Vowel alternations,
- * Y2  Lengthening of Central Consonants, Stem Vowel alternations,
- * Y3  Lengthening of Central Consonants, Stem Vowel alternations,
- * Y4  Lengthening of Central Consonants, Stem Vowel alternations,
- * Y5  Lengthening of Central Consonants, Word Final Consonant Deletion, Diphthong Simplification, Stem vowel alternations
- * Y6  Lengthening of Central Consonants, Word Final Consonant Deletion, Diphthong Simplification, Stem vowel alternations
- * Y7  Lengthening of Central Consonants, Diphthong Simplification, Stem vowel alternations
- * Y8  Not in use
- * Y9  Lengthening of Central Consonants, Diphthong Simplification
- * Q1  Stem vowel alternations,
- * Q2  Diphthong Simplification, Stem vowel alternations,
- * Q3  Diphthong Simplification, Stem vowel alternations,
- * Q4  WeG, Stem vowel alternations,
- * Q5  WeG, Diphthong Simplification, Stem vowel alternations,
- * Q6  WeG, Vowel shortening,
- * Q7  WeG, Diphthong Simplification, Metaphony,
- * Q8  WeG, Diphthong Simplification, Stem vowel alternations,
- * Q9  Not in use
- * W1  WeG, Vowel Shortening
- * W2  Vowel Shortening,
- * W3  Stem vowel deletion in compounding,
- * W4  WeG, Word Final Cluster Simplification, Optional vowel-shortening, Word Final Deletion of n8 m8 g8 h8
- * W5  WeG, Diphthong Simplification, Stem vowel alternations
- * W6  Stem vowel alternations, WeG,
- * W7  Stem vowel alternations, WeG
- * W8  Stem vowel alternations,
- * W9  Not in use
- * %^DISIMP  diphthong simpification
+ * **X1** = Diphthong Simplification, Metaphony
+ * **X2** = Diphthong Simplification, Metaphony, Word Final Neutralization of g8, h8, m8
+ * **X3** = Diphthong Simplification, Metaphony
+ * **X4** = WeG, Vowel Shortening, Stem vowel alternations, Word Final Deletion of n8 m8 g8 h8
+ * **X5** = WeG, Diphthong Simplification, Stem vowel alternations
+ * **X6** = WeG, Diphthong Simplification, Metaphony, Word Final Deletion of n8 m8 g8 h8
+ * **X7** = Vowel Shortening, Stem vowel alternations, Word Final Neutralization of g8, h8, m8
+ * **X8** = WeG, Vowel Shortening, Metaphony, Stem Vowel alternations, Word Final Deletion of n8 m8 g8 h8
+ * **X9** = WeG, Dipthtong simplification, Word Final Deletion of n8 m8 g8 h8
+ * **Y1** = Lengthening of Central Consonants, Stem Vowel alternations,
+ * **Y2** = Lengthening of Central Consonants, Stem Vowel alternations,
+ * **Y3** = Lengthening of Central Consonants, Stem Vowel alternations,
+ * **Y4** = Lengthening of Central Consonants, Stem Vowel alternations,
+ * **Y5** = Lengthening of Central Consonants, Word Final Consonant Deletion, Diphthong Simplification, Stem vowel alternations
+ * **Y6** = Lengthening of Central Consonants, Word Final Consonant Deletion, Diphthong Simplification, Stem vowel alternations
+ * **Y7** = Lengthening of Central Consonants, Diphthong Simplification, Stem vowel alternations
+ * **Y8** = Not in use
+ * **Y9** = Lengthening of Central Consonants, Diphthong Simplification
+ * **Q1** = Stem vowel alternations,
+ * **Q2** = Diphthong Simplification, Stem vowel alternations,
+ * **Q3** = Diphthong Simplification, Stem vowel alternations,
+ * **Q4** = WeG, Stem vowel alternations,
+ * **Q5** = WeG, Diphthong Simplification, Stem vowel alternations,
+ * **Q6** = WeG, Vowel shortening,
+ * **Q7** = WeG, Diphthong Simplification, Metaphony,
+ * **Q8** = WeG, Diphthong Simplification, Stem vowel alternations,
+ * **Q9** = Not in use
+ * **W1** = WeG, Vowel Shortening
+ * **W2** = Vowel Shortening,
+ * **W3** = Stem vowel deletion in compounding,
+ * **W4** = WeG, Word Final Cluster Simplification, Optional vowel-shortening, Word Final Deletion of n8 m8 g8 h8
+ * **W5** = WeG, Diphthong Simplification, Stem vowel alternations
+ * **W6** = Stem vowel alternations, WeG,
+ * **W7** = Stem vowel alternations, WeG
+ * **W8** = Stem vowel alternations,
+ * **W9** = Not in use
+ * **%^DISIMP** = diphthong simpification
 
 ### Morphophonemes and Sámi letters
 
- * b9  twol rule override, so that b doesn't turn into t infront of hash
- * e7  shortened i = "e with dot below" from the dictionary
- * e9  twol rule override, so that e doesn't turn into i infront of j
- * d9  twol rule override, so that d doesn't turn into t infront of hash
- * g8  Word Final Neutralization and Deletion
- * g9  twol rule override, so that g doesn't turn into t infront of hash
- * h7
- * h8  Word Final Neutralization and Deletion
- * h9  twol rule override, so that h doesn't turn into t infront of hash
- * i7  twol rule override, so that i doesn't turn into e in certain contextes
- * j9  twol rule override, so that j doesn't turn into i after i
- * k9  twol rule override, so that k doesn't turn into t infront of hash
- * m8  Word Final Neutralization and Deletion
- * m9  twol rule override, so that m doesn't turn into n infront of hash
- * n8  Word Final Neutralization and Deletion
- * n9  twol rule override,
- * o7  shortened u = "o with dot below" from the dictionary
- * o9  twol rule override,  so that o doesn't turn into u infront of j
- * p9  twol rule override, so that p doesn't turn into t infront of hash
- * s9  twol rule override, so that we can have two ss in front of hash
- * t9  twol rule override, so that we can have st in front of hash
- * u7
- * z9  twol rule override, to avoid Word Final Consonant Neutralization
- * ž9  twol rule override, to avoid Word Final Consonant Neutralization
- * š9  twol rule override, so that we can have two šš in front of hash
- * r9
- * æ7  in smi, for lulesámi
- * u6  twol rule override, so that u doesn't turn into o in certain contextes
- * æ9  in smi, for lulesámi
+ * **b9** = twol rule override, so that b doesn't turn into t infront of hash
+ * **e7** = shortened i = "e with dot below" from the dictionary
+ * **e9** = twol rule override, so that e doesn't turn into i infront of j
+ * **d9** = twol rule override, so that d doesn't turn into t infront of hash
+ * **g8** = Word Final Neutralization and Deletion
+ * **g9** = twol rule override, so that g doesn't turn into t infront of hash
+ * **h7** = 
+ * **h8** = Word Final Neutralization and Deletion
+ * **h9** = twol rule override, so that h doesn't turn into t infront of hash
+ * **i7** = twol rule override, so that i doesn't turn into e in certain contextes
+ * **j9** = twol rule override, so that j doesn't turn into i after i
+ * **k9** = twol rule override, so that k doesn't turn into t infront of hash
+ * **m8** = Word Final Neutralization and Deletion
+ * **m9** = twol rule override, so that m doesn't turn into n infront of hash
+ * **n8** = Word Final Neutralization and Deletion
+ * **n9** = twol rule override,
+ * **o7** = shortened u = "o with dot below" from the dictionary
+ * **o9** = twol rule override,  so that o doesn't turn into u infront of j
+ * **p9** = twol rule override, so that p doesn't turn into t infront of hash
+ * **s9** = twol rule override, so that we can have two ss in front of hash
+ * **t9** = twol rule override, so that we can have st in front of hash
+ * **u7** = 
+ * **z9** = twol rule override, to avoid Word Final Consonant Neutralization
+ * **ž9** = twol rule override, to avoid Word Final Consonant Neutralization
+ * **š9** = twol rule override, so that we can have two šš in front of hash
+ * **r9** = 
+ * **æ7** = in smi, for lulesámi
+ * **u6** = twol rule override, so that u doesn't turn into o in certain contextes
+ * **æ9** = in smi, for lulesámi
 
 
- ∑ - a symbol used in front of `#` to block backtracking and
+ **∑** = a symbol used in front of `#` to block backtracking and
           mwe reanalysis in hfst-tokenise (e.g. in dynanic compounds).
           Makes it possible to distinguish lexical and dynamic compounds
           in rules. It is converted to zero together with `#`.
@@ -815,6 +825,9 @@ get the same pronunciation whether read as SME or NOB/NNO/SWE.
 We have manually optimised the structure of our lexicon using following
 flag diacritics to restrict morhpological combinatorics - only allow compounds
 with verbs if the verb is further derived into a noun again:
+
+| Flag | Explanation
+| ---- | ----------- 
  |  @P.NeedNoun.ON@ | (Dis)allow compounds with verbs unless nominalised
  |  @D.NeedNoun.ON@ | (Dis)allow compounds with verbs unless nominalised
  |  @C.NeedNoun@ | (Dis)allow compounds with verbs unless nominalised
@@ -822,13 +835,13 @@ with verbs if the verb is further derived into a noun again:
  |  @R.Vgen.add@ | (Dis)allow VGen
  |  @P.12p.add@ | (Dis)allow 1. and 2. pers forms
  |  @R.12p.add@ | (Dis)allow 1. and 2. pers forms
-
  |  @P.Pmatch.Loc@ | Used on multi-token analyses; tell hfst-tokenise/pmatch where in the form/analysis the token should be split.
  |  @P.Pmatch.Backtrack@ | Used on single-token analyses; tell hfst-tokenise/pmatch to backtrack by reanalysing the substrings before and after this point in the form (to find combinations of shorter analyses that would otherwise be missed)
 
 
 
-
+| Flag | Explanation
+| ---- | ----------- 
  |  @D.ErrOrth.ON@ 
  |  @C.ErrOrth@ 
  |  @P.ErrOrth.ON@ 
@@ -838,6 +851,9 @@ For languages that allow compounding, the following flag diacritics are needed
 to control position-based compounding restrictions for nominals. Their use is
 handled automatically if combined with +CmpN/xxx tags. If not used, they will
 do no harm.
+
+| Flag | Explanation
+| ---- | ----------- 
  |  @P.CmpFrst.FALSE@ | Require that words tagged as such only appear first
  |  @D.CmpPref.TRUE@ | Block such words from entering ENDLEX
  |  @P.CmpPref.FALSE@ | Block these words from making further compounds
@@ -851,17 +867,21 @@ do no harm.
  |  @U.CmpHyph.FALSE@ | Flag to control hyphenated compounds like proper nouns
  |  @U.CmpHyph.TRUE@ | Flag to control hyphenated compounds like proper nouns
  |  @C.CmpHyph@ | Flag to control hyphenated compounds like proper nouns
+
 Use the following flag diacritics to control downcasing of derived proper
 nouns (e.g. Finnish Pariisi -> pariisilainen). See e.g. North Sámi for how to use
 these flags. There exists a ready-made regex that will do the actual down-casing
 given the proper use of these flags.
+
+| Flag | Explanation
+| ---- | ----------- 
  |  @U.Cap.Obl@ | Allowing downcasing of derived names: deatnulasj.
  |  @U.Cap.Opt@ | Allowing downcasing of derived names: deatnulasj.
 
 
- * @U.NeedsVowRed.OFF@ is used to force hyphenation/non-reduction: samediggi-
- * @U.NeedsVowRed.ON@ is used to force reduction w/o hyphen: samedigge#xxx
- * @C.NeedsVowRed@ Clearing this feature, so that it doesn't interfere with further compounding
+ * **@U.NeedsVowRed.OFF@** is used to force hyphenation/non-reduction: samediggi-
+ * **@U.NeedsVowRed.ON@** is used to force reduction w/o hyphen: samedigge#xxx
+ * **@C.NeedsVowRed@** Clearing this feature, so that it doesn't interfere with further compounding
 
  * @C.Px@
  * @C.Nom3Px@
@@ -869,14 +889,18 @@ given the proper use of these flags.
  * @R.Px.add@
  * @P.Px.block@
  * @D.Px.block@
+ * @P.Nom12Px.add@
+ * @R.Nom12Px.add@
+ * @P.Nom3Px.add@
+ * @R.Nom3Px.add@
 
- * @R.SpellRlx.ON@ Flag used to tag spell-relax-analysed strings (and only those).
- * @D.SpellRlx.ON@ Flag used to tag spell-relax-analysed strings (and only those).
- * @C.SpellRlx@ Flag used to tag spell-relax-analysed strings (and only those).
+ * **@R.SpellRlx.ON@** Flag used to tag spell-relax-analysed strings (and only those).
+ * **@D.SpellRlx.ON@** Flag used to tag spell-relax-analysed strings (and only those).
+ * **@C.SpellRlx@** Flag used to tag spell-relax-analysed strings (and only those).
 
- * @R.SpaceCmp.ON@ Flag to tag compounds written with a space
- * @D.SpaceCmp.ON@ Flag to tag compounds written with a space
- * @C.SpaceCmp@ Flag to tag compounds written with a space+
+ * **@R.SpaceCmp.ON@** Flag to tag compounds written with a space
+ * **@D.SpaceCmp.ON@** Flag to tag compounds written with a space
+ * **@C.SpaceCmp@** Flag to tag compounds written with a space+
 
 
 
@@ -885,6 +909,7 @@ given the proper use of these flags.
 
  * **LEXICON Root** is the basic lexicon starting everything
 
+**Abbreviation**
 
 
  * **LEXICON Acronym   **
@@ -893,17 +918,20 @@ given the proper use of these flags.
  * **LEXICON ProperNoun   **
 
 
-# Lexicon ENDLEX
+Lexicon ENDLEX
 And this is the ENDLEX of everything:
-```
- @D.CmpOnly.FALSE@@D.CmpPref.TRUE@@D.NeedNoun.ON@ ENDLEX2 ;
-```
+
+ @D.CmpOnly.FALSE@@D.CmpPref.TRUE@@D.NeedNoun.ON@ ENDLEX2 ; 
+
 The `@D.CmpOnly.FALSE@` flag diacritic is ued to disallow words tagged
 with +CmpNP/Only to end here.
 The `@D.NeedNoun.ON@` flag diacritic is used to block illegal compounds.
 
+**ENDLEX2**
 
+**ENDLEX3**
 
+**ENDLEX4**
 Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 # North Saami adjective declension file
@@ -10065,106 +10093,106 @@ LEFT RIGHT because of apertium
 
 
 
-## Syntactic tags
+!!Syntactic tags
 
 * @+FAUXV : finite auxiliary verb 
-    - ferte: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
+** ferte: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
 * @+FMAINV : finite main verb
-    - oaidná: Son oaidná ollislaš gova. - She sees the whole picture	
+** oaidná: Son oaidná ollislaš gova. - She sees the whole picture	
 * @-FAUXV : infinite auxiliary verb
-    - sáhte: In sáhte gáhku borrat. - I cannot eat cake.	
+** sáhte: In sáhte gáhku borrat. - I cannot eat cake.	
 * @-FMAINV : infinite main verb
-    - oaidnit: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
+** oaidnit: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
 * @-FSUBJ> : Subject of infinite verb outside the verbal.
-    - mu: Diet dáhpáhuvai mu dieđikeahttá. - It happened without me knowing about it.
+** mu: Diet dáhpáhuvai mu dieđikeahttá. - It happened without me knowing about it.
 * @-F<OBJ : Subject of infinite verb outside the verbal.
-    - nuppi: Ulbmil lea oažžut nuppi boagustit. - The goal is to get the other one to laugh.
+** nuppi: Ulbmil lea oažžut nuppi boagustit. - The goal is to get the other one to laugh.
 * @-FOBJ> : Object of infinite verb outside the verbal.
-    - váldovuoittuid: Sii vurde váldovuoittuid fasket. - They waited to grab the main prizes.
+** váldovuoittuid: Sii vurde váldovuoittuid fasket. - They waited to grab the main prizes.
 * @SPRED<OBJ : Object of an subsject predicative. (some adjectives are transitive)
-    - guliid: Mánát leat oažžulat guliid.
+** guliid: Mánát leat oažžulat guliid.
 * @-FADVL : Adverbial complement of infinite verb outside the verbal.
-    - várrogasat: Dihkkadeaddji rávve skohtervuddjiid várrogasat mátkkoštit. - The roadman warns snowscooter drivers to drive carefully.
+** várrogasat: Dihkkadeaddji rávve skohtervuddjiid várrogasat mátkkoštit. - The roadman warns snowscooter drivers to drive carefully.
 * @-F<PRED : Predicative complement of infinite verb outside the verbal.
-    - ággan: Jáhkken kulturmáhtu leat oktan ággan.
+** ággan: Jáhkken kulturmáhtu leat oktan ággan.
 * @>ADVL : Modifier of an adverbial to the right.
-    - vaikko: doppe leat vaikko man ollu studeanttat.
+** vaikko: doppe leat vaikko man ollu studeanttat.
 * @ADVL< : Komplement for adverbial.
-    - vahkus: Son málesta guktii vahkus.
+** vahkus: Son málesta guktii vahkus.
 * @<ADVL : Adverbial after the main verb.
-    - dás: Eanet dieđuid gávnnat dás.
+** dás: Eanet dieđuid gávnnat dás.
 * @ADVL> : Adverbial to the left of the main verb
-    - viimmat: Dál de viimmat asttan lohkat reivve.
+** viimmat: Dál de viimmat asttan lohkat reivve.
 * @ADVL>CS : Adverbial modifying subjunction.
-    - 'beare' pointing at 'danin go': Muhto dus ii leat riekti dearpat su beare danin go sáhtát.
+** 'beare' pointing at 'danin go': Muhto dus ii leat riekti dearpat su beare danin go sáhtát.
 * <hab> : Habitive, specifying an adverbial, e.g. @ADVL> <hab>
-    - Máhtes: Máhtes lea beana.
+** Máhtes: Máhtes lea beana.
 * <ext> : Extencial, specifying an subject, e.g. @<SUBJ <ext>
-    - beana: Máhtes lea beana.
+** beana: Máhtes lea beana.
 * <logo> : logoforic pronouns, e.g. @>N <logo> (for MT)
 * <cs> : 
 * @>N : Modifier of a noun to the right.
-    - geavatlaš: Ráđđehussii lea geavatlaš politihkka deaŧalaš. - For the government, practical politics is important.
+** geavatlaš: Ráđđehussii lea geavatlaš politihkka deaŧalaš. - For the government, practical politics is important.
 * @N< : Complement of noun to the left.
-    - vihtta: Mun boađán diibmu vihtta.
+** vihtta: Mun boađán diibmu vihtta.
 * @>A : Modifier of an adjective to the right.
-    - juohke: Seminára lágiduvvo juohke nuppi jagi.
+** juohke: Seminára lágiduvvo juohke nuppi jagi.
 * @P< : Complement of preposition.
-    - soađi: Dat dáhpáhuvai maŋŋel soađi.
+** soađi: Dat dáhpáhuvai maŋŋel soađi.
 * @>P : Complement of postposition.
-    - riegádeami: Seta riegádeami maŋŋel Áttán elii vel 800 jagi.
+** riegádeami: Seta riegádeami maŋŋel Áttán elii vel 800 jagi.
 * @HNOUN : Stray noun in sentence fragment.
-    - muittut: Fidnokurssa muittut.
+** muittut: Fidnokurssa muittut.
 * @INTERJ : Interjection.
-    - Hei: Hei, boađe!
+** Hei: Hei, boađe!
 * @>Num : Attribute of numeral to the right.
-    - dušše: Mun ledjen dušše guokte mánu doppe.
+** dušše: Mun ledjen dušše guokte mánu doppe.
 * @Pron< : Complement of pronoun to the left.
-    - Birehiin: Moai Birehiin leimme doppe.
+** Birehiin: Moai Birehiin leimme doppe.
 * @>Pron : Modifyer of pronoun to the right.
-    - vaikko: Olmmoš sáhttá bargat vaikko maid.
+** vaikko: Olmmoš sáhttá bargat vaikko maid.
 * @Num< : Complement of numeral to the left.
-    - girjjiin: Dat lea okta min buoremus girjjiin.
+** girjjiin: Dat lea okta min buoremus girjjiin.
 * @OBJ : Object, the verb is not in the sentence (ellipse)
 * @<OBJ : Object, the verb is to the left.
-    - gávtti: Son goarru gávtti.
+** gávtti: Son goarru gávtti.
 * @OBJ> : Object, the verb is to the right.
-    - filmma: Dán filmma leat Kárášjoga nuorat oaidnán.
+** filmma: Dán filmma leat Kárášjoga nuorat oaidnán.
 * @OPRED : Object predicative, the verb is not in the sentence (ellipse).
 * @<OPRED : Object predicative, the verb is to the left.
-    - buriid: Son ráhkada gáhkuid hui buriid.
+** buriid: Son ráhkada gáhkuid hui buriid.
 * @OPRED> : Object predicative, the verb is to the right.
-    - dohkkemeahttumin: Son oinnii dohkkemeahttumin bargat ášši nu.
+** dohkkemeahttumin: Son oinnii dohkkemeahttumin bargat ášši nu.
 * @PCLE : Particle.
-    - Amma: Amma mii eat leat máksán? - We have not paid, have we?
+** Amma: Amma mii eat leat máksán? - We have not paid, have we?
 * @COMP-CS< : Complement of subjunction.
-    - vejolaš: Dat šaddá nu buorre go vejolaš.
+** vejolaš: Dat šaddá nu buorre go vejolaš.
 * @SPRED : Subject predicative, the verb is not in the sentence (ellipse).
 * @<SPRED : Subject predicative, the verb is to the left.
-    - árgabivttas: Ovdal lei gákti árgabivttas.
+** árgabivttas: Ovdal lei gákti árgabivttas.
 * @SPRED> : Subject predicative, the verb is to the left.
-    - álbmogin: Sápmelaččaid historjá álbmogin lea duháhiid jagiid boaris.
+** álbmogin: Sápmelaččaid historjá álbmogin lea duháhiid jagiid boaris.
 * @SUBJ : Subject, the finite verb is not in the sentence (ellipse).
 * @<SUBJ : Subject, the finite verb is to the left.
-    - gákti: Ovdal lei gákti árgabivttas.
+** gákti: Ovdal lei gákti árgabivttas.
 * @SUBJ> : Subject, the finite verb is to the right.
-    - Son: Son lea mu oabbá. - Sheis my sister.
+** Son: Son lea mu oabbá. - Sheis my sister.
 * @PPRED : Predicative for predicative.
 * @APP : Apposition
 * @APP-N< : Apposition to noun to the left.
-    - oahpaheaddji: Oidnen Ánne, min oahpaheaddji.
+** oahpaheaddji: Oidnen Ánne, min oahpaheaddji.
 * @APP-Pron< : Apposition to pronoun to the left.
-    - boazodoalloáirasat: Ja moai boazodoalloáirasat áigguime vaikko guovttá joatkit barggu.
+** boazodoalloáirasat: Ja moai boazodoalloáirasat áigguime vaikko guovttá joatkit barggu.
 * @APP>Pron : Apposition to noun to the right.
 * @APP-Num< : Apposition to numeral to the left.
 * @APP-ADVL< : Apposition to adverbial to the left.
-    - bearjadaga: Mun vuolggán ihttin, bearjadaga.
+** bearjadaga: Mun vuolggán ihttin, bearjadaga.
 * @VOC : Vocative
-    - Miss Turner : Bures boahtin deike, Miss Turner! - Welcome here, Miss Turner!
+** Miss Turner : Bures boahtin deike, Miss Turner! - Welcome her, Miss Turner!
 * @CVP : Conjunction or subjunction that conjoins finite verb phrases.
-    - go : Leago guhkes áigi dassá go Máreha oidnet? - Is it a long time since you saw Máret?
+** go : Leago guhkes áigi dassá go Máreha oidnet? - Is it a long time since you saw Máret?
 * @CNP : Local conjunction or subjunction.
-    - vai : Leago nieida vai bárdni? - Is it a girl or a boy?
+** vai : Leago nieida vai bárdni? - Is it a girl or a boy?
 * @CMPND
 * @X : The function is unknown, e.g. because of that the word is unknown
 
@@ -10178,7 +10206,7 @@ LEFT RIGHT because of apertium
 
 
 
-## Tag sets
+!!Tag sets
 
 
 
@@ -10280,7 +10308,7 @@ LEFT RIGHT because of apertium
 * Sets for verbs
 
 
-    - V is all readings with a V tag in them, REAL-V should
+** V is all readings with a V tag in them, REAL-V should
 be the ones without an N tag following the V.
 The REAL-V set thus awaits a fix to the preprocess V ... N bug.
 
@@ -10306,7 +10334,7 @@ The REAL-V set thus awaits a fix to the preprocess V ... N bug.
 
 These sets model noun phrases (NPs). The idea is to first define whatever can
 occur in front of the head of the NP, and thereafter negate that with the
-expression **WORD - premodifiers**.
+expression __WORD - premodifiers__.
 
 
 
@@ -10319,7 +10347,7 @@ expression **WORD - premodifiers**.
 
 
 
-The set **NOT-NPMOD** is used to find barriers between NPs.
+The set __NOT-NPMOD__ is used to find barriers between NPs.
 Typical usage: ... (*1 N BARRIER NPT-NPMOD) ...
 meaning: Scan to the first noun, ignoring anything that can be
 part of the noun phrase of that noun (i.e., "scan to the next NP head")
@@ -10382,36 +10410,36 @@ These were the set types.
 
 
 
-## Numeral outside the sentence
+!!Numeral outside the sentence
 
 
 
 
-## HABITIVE MAPPING
+!!HABITIVE MAPPING
 
 
 
 
 
 
-* **hab1** hab aux leat
+* __hab1__ hab aux leat
 
 * __hab_numo1__ hab copula comma comma N+Nom
 
 * __hab_numo2__ copula nu mo/go hab
 
 
-* **leahab** copula nu mo/go hab
+* __leahab__ copula nu mo/go hab
 
-* **hab2** hab auxv adv leat
+* __hab2__ hab auxv adv leat
 
-* **hab3** (<hab> @ADVL>) for asdf hab-actor and hab-case; if leat to the right, and Nom to the right of leat. Lots of restrictions.
+* __hab3__ (<hab> @ADVL>) for asdf hab-actor and hab-case; if leat to the right, and Nom to the right of leat. Lots of restrictions.
 
-* **hab3** (<hab> @ADVL>) for asdf hab-actor and hab-case; if leat to the right, and Nom to the right of leat. Lots of restrictions.
+* __hab3__ (<hab> @ADVL>) for asdf hab-actor and hab-case; if leat to the right, and Nom to the right of leat. Lots of restrictions.
 
-* **hab3** (<hab> @ADVL>) for asdf hab-actor and hab-case; if leat to the right, and Nom to the right of leat. Lots of restrictions.
+* __hab3__ (<hab> @ADVL>) for asdf hab-actor and hab-case; if leat to the right, and Nom to the right of leat. Lots of restrictions.
 
-* **hab3** (<hab> @ADVL>) for hab-actor and hab-case; if leat to the right, and Nom to the right of leat. Lots of restrictions.
+* __hab3__ (<hab> @ADVL>) for hab-actor and hab-case; if leat to the right, and Nom to the right of leat. Lots of restrictions.
 
 
 
@@ -10420,38 +10448,38 @@ These were the set types.
 * __hab_main__ (<hab> @ADVL>) for hab-actor and hab-case; if leat to the right, and Nom to the right of leat. Lots of restrictions.
 
 
-* **habInf** hab lea inf
+* __habInf__ hab lea inf
 
-* **habNomLeft** Nom or Num + gen hab lea
+* __habNomLeft__ Nom or Num + gen hab lea
 
-* **habAdvl** Ii han ovttasge du sogas leat dat namma.
+* __habAdvl__ Ii han ovttasge du sogas leat dat namma.
 
-* **hab4** hab cc hab leat
+* __hab4__ hab cc hab leat
 
 
 
-* **hab6** lea go hab -- leago hab
+* __hab6__ lea go hab -- leago hab
 
-* **hab7** lea go hab
+* __hab7__ lea go hab
 
-* **hab8** This is not HAB Ellii šattai hoahppu.
-* **hab5**  This is not HAB Mánás gollot gieđat.
+* __hab8__ This is not HAB Ellii šattai hoahppu.
+* __hab5__  This is not HAB Mánás gollot gieđat.
 
-* **hab9** prop ord-hab leat
+* __hab9__ prop ord-hab leat
 
-* **hab10** prop ord-hab leat
+* __hab10__ prop ord-hab leat
 
-* **habDain** (<hab> @ADVL>) for (Pron Dem Pl Loc) if leat followed by Nom to the right
-* **habDain2** 
+* __habDain__ (<hab> @ADVL>) for (Pron Dem Pl Loc) if leat followed by Nom to the right
+* __habDain2__ 
 
 
-* **habRel** # before relative clause
+* __habRel__ # before relative clause
 
-* **habEllipse** Buot gánddain lea dreassa, nieiddain fas gákti.
+* __habEllipse__ Buot gánddain lea dreassa, nieiddain fas gákti.
 
-* **habGen** (<hab> @<ADVL) hab for Gen; if Gen is located in the end of the sentence and Nom is sentence initial
+* __habGen__ (<hab> @<ADVL) hab for Gen; if Gen is located in the end of the sentence and Nom is sentence initial
 
-* **habGenQst** (<hab> @<ADVL) hab for Gen; in a question sentence. Gen is located sentence initially and SUBJ is found to the right. To the right of SUBJ is copulas
+* __habGenQst__ (<hab> @<ADVL) hab for Gen; in a question sentence. Gen is located sentence initially and SUBJ is found to the right. To the right of SUBJ is copulas
 
 
 
@@ -10469,14 +10497,14 @@ These were the set types.
 
 
 
-* **n<titel1** (@N<) for ("jr") or ("sr"); if first one to the left is Prop
+* __n<titel1__ (@N<) for ("jr") or ("sr"); if first one to the left is Prop
 
 
 
-* **n<titel2** (@N<) for INITIAL; if first one to the left is a noun, or if to the left of you is a single letter which is part of a noun conjunction *bustávas e ja f gáibiduvvo*
+* __n<titel2__ (@N<) for INITIAL; if first one to the left is a noun, or if to the left of you is a single letter which is part of a noun conjunction ''bustávas e ja f gáibiduvvo''
 
 
-* **n<:com** (@N<) for (Sg Com); if first one to the left is Coll
+* __n<:com__ (@N<) for (Sg Com); if first one to the left is Coll
 
 
 
@@ -10487,19 +10515,19 @@ These were the set types.
 
 
 
-* **>nAttr** (@>N) for Attr; if there is a noun to your right
+* __>nAttr__ (@>N) for Attr; if there is a noun to your right
 
-* **n>Indef** (Pron Indef Attr); if eará is to the right
+* __n>Indef__ (Pron Indef Attr); if eará is to the right
 
-* **n>Indef** (Pron Indef Com); if eará is to the right
+* __n>Indef__ (Pron Indef Com); if eará is to the right
 
 
-* **>nNum** (@>N) for numerals if; there is a noun to your right. You are not allowed to be (Sg Nom), (Sg Acc) or (Sem/Date)
+* __>nNum__ (@>N) for numerals if; there is a noun to your right. You are not allowed to be (Sg Nom), (Sg Acc) or (Sem/Date)
 
 
 
 
-* **noun>n** (@>N) for Gen; if there is a noun to your right. Restrictions: Not if you are: a time related word. Not if you are OKTA with Pl Loc to your right. Not if CC is to your right followed by another Gen and then Po. Not if you are HUMAN and to your right is Actio Nom folloed by a noun.
+* __noun>n__ (@>N) for Gen; if there is a noun to your right. Restrictions: Not if you are: a time related word. Not if you are OKTA with Pl Loc to your right. Not if CC is to your right followed by another Gen and then Po. Not if you are HUMAN and to your right is Actio Nom folloed by a noun.
 
 
 
@@ -10510,49 +10538,49 @@ These were the set types.
 
 
 
-* **>nTime** (@>N) for Gen TIME-N; if timenoun to your right. Restrictions: Not if you are a OKTA Nom with Pl Loc to your right. Not if CC followed by Gen, followed by Po to your right. Not if COMMA to your right
+* __>nTime__ (@>N) for Gen TIME-N; if timenoun to your right. Restrictions: Not if you are a OKTA Nom with Pl Loc to your right. Not if CC followed by Gen, followed by Po to your right. Not if COMMA to your right
 
 
 
 
-* **>ntittel** (@>N) for (Sg Nom TIME-N) or (Nom Der/NomAg); if to your right is Sem/Mal, Sem/Fem, Sem/Sur
+* __>ntittel__ (@>N) for (Sg Nom TIME-N) or (Nom Der/NomAg); if to your right is Sem/Mal, Sem/Fem, Sem/Sur
 
-* **>nplc** (@>N) for (Sg Nom Prop Sem/Plc), if to your right is Sem/Plc
+* __>nplc__ (@>N) for (Sg Nom Prop Sem/Plc), if to your right is Sem/Plc
 
 
-* **>nALU** (@>N) for Sg Acc numerals; when a measure-noun to the right
+* __>nALU__ (@>N) for Sg Acc numerals; when a measure-noun to the right
 
 
 
-* **>NTime** (@>N) for Gen; if you are TIME-N with BOC to your left, and PREGEN to your right
+* __>NTime__ (@>N) for Gen; if you are TIME-N with BOC to your left, and PREGEN to your right
 
 
 
-* **n<:Refl** (@N<) for (Refl Nom); if to the left is (N Nom), or if first one to the left is a finite mainverb with a (N Nom) to the left
+* __n<:Refl__ (@N<) for (Refl Nom); if to the left is (N Nom), or if first one to the left is a finite mainverb with a (N Nom) to the left
 
 
-* **>pron1** (@>Pron) for GRADE-ADV, DUSSE, BUOT if; first one to the right is Pron
+* __>pron1__ (@>Pron) for GRADE-ADV, DUSSE, BUOT if; first one to the right is Pron
 
-* **>pron2** (@>Pron) for (Refl Nom) if; first one to the right is Refl
+* __>pron2__ (@>Pron) for (Refl Nom) if; first one to the right is Refl
 
-* **>pron3** (@>Pron) for (Pron Recipr) if; first one to the right is (Pron Recipr)
+* __>pron3__ (@>Pron) for (Pron Recipr) if; first one to the right is (Pron Recipr)
 
-* **vaikko** (@>Pron) for vaikko if; first one to the right is Indef
+* __vaikko__ (@>Pron) for vaikko if; first one to the right is Indef
 
-* **vaikkoman** (@>ADVL) for vaikko if; first one to the right is man
+* __vaikkoman__ (@>ADVL) for vaikko if; first one to the right is man
 
-* **dasmaŋŋel** (@>ADVL) for vaikko if; first one to the right is man
+* __dasmaŋŋel__ (@>ADVL) for vaikko if; first one to the right is man
 
-* **adv>advl** (@>ADVL) 
+* __adv>advl__ (@>ADVL) 
 
-* **adv>advl** (@>ADVL) 
+* __adv>advl__ (@>ADVL) 
 
 
 
 
 
 
-* **BOSvoc** (@VOC) for HUMAN Nom; if sentence initial. To the right is comma. No nom-cased HUMAN followed by comma or CC is allowed to the right. There should not be a relative clause to the right, because then you are likely to be SUBJ
+* __BOSvoc__ (@VOC) for HUMAN Nom; if sentence initial. To the right is comma. No nom-cased HUMAN followed by comma or CC is allowed to the right. There should not be a relative clause to the right, because then you are likely to be SUBJ
 
 
 
@@ -10572,7 +10600,7 @@ These were the set types.
 
 
 
-* **voc** (@VOC) for Nom HUMAN; if comma to the left and an second person verb or pronoun to the left. To the right is the end of the sentence
+* __voc__ (@VOC) for Nom HUMAN; if comma to the left and an second person verb or pronoun to the left. To the right is the end of the sentence
 
 
 
@@ -10605,55 +10633,55 @@ These were the set types.
 
 
 
-* **Particle<subj** (@PCLE)
+* __Particle<subj __ (@PCLE)
 
 
-* **spred<obj** (@SPRED<OBJ) for Acc; the object of an SPRPED. Not to be mistaken with OPRED. If SPRED is to the left, and copulas is to the left of it. Nom or Hab are found sentence initially.
+* __spred<obj__ (@SPRED<OBJ) for Acc; the object of an SPRPED. Not to be mistaken with OPRED. If SPRED is to the left, and copulas is to the left of it. Nom or Hab are found sentence initially.
 
 
 
 
 
 
-* **Hab<subj** (<ext> @<SUBJ) for Nom; if copulas, goallut or jápmit is FMAINV and habitive or human Loc is found to the left. OR: if Ill or @Pron< followed by HAB are found to the left.
+* __Hab<subj__ (<ext> @<SUBJ) for Nom; if copulas, goallut or jápmit is FMAINV and habitive or human Loc is found to the left. OR: if Ill or @Pron< followed by HAB are found to the left.
 
 
 
-* **Hab<subj** (<ext> @<SUBJ) with relative clause in between
+* __Hab<subj__ (<ext> @<SUBJ) with relative clause in between
 
 
-* **Hab>Advlcase<subj** (<ext> @<SUBJ) for Nom; it allows adverbials with Ill/Loc/Com/Ess to be found inbetween HAB and <ext>.
+* __Hab>Advlcase<subj__ (<ext> @<SUBJ) for Nom; it allows adverbials with Ill/Loc/Com/Ess to be found inbetween HAB and <ext>.
 
-* **Nom>Advlcase<subj** (<ext> @<SUBJ) for Nom; it allows adverbials with Ill/Loc/Com/Ess to be found inbetween Nom and <ext> @<SUBJ.
+* __Nom>Advlcase<subj__ (<ext> @<SUBJ) for Nom; it allows adverbials with Ill/Loc/Com/Ess to be found inbetween Nom and <ext> @<SUBJ.
 
-* **<extSubj** (<ext> @<SUBJ) for Nom; if copulas to the left, and some kind of adverb, N Loc, time related word or Po to the left of it. OR: if Ill or @Pron< to the left, followed by copulas and the before mentioned to the left of copulas.
+* __<extSubj__ (<ext> @<SUBJ) for Nom; if copulas to the left, and some kind of adverb, N Loc, time related word or Po to the left of it. OR: if Ill or @Pron< to the left, followed by copulas and the before mentioned to the left of copulas.
 
-* **<extSubj** (<ext> @<SUBJ) for sma Nom; if some kind of adverb to the left, N Loc, time related word or Po to the left of it. 
+* __<extSubj__ (<ext> @<SUBJ) for sma Nom; if some kind of adverb to the left, N Loc, time related word or Po to the left of it. 
 
 
-* **<extSubjA** (<ext> @<SUBJ) for A - TEST WITHOUT THIS ONE
+* __<extSubjA__ (<ext> @<SUBJ) for A - TEST WITHOUT THIS ONE
 
-* **<extSubj** (<ext> @<SUBJ) for Nom; if leat to the left and sentenceboundary
+* __<extSubj__ (<ext> @<SUBJ) for Nom; if leat to the left and sentenceboundary
 
 
 
-* **<extSubj** (<ext> @<SUBJ) for Nom, but not for Pers. To the left boahtit or heaŋgát as MAINV, and futher to the left is some kind of place related word, or time related word
+* __<extSubj__ (<ext> @<SUBJ) for Nom, but not for Pers. To the left boahtit or heaŋgát as MAINV, and futher to the left is some kind of place related word, or time related word
 
-* **loc<extSubj** (<ext> @<SUBJ) for Nom
+* __loc<extSubj__ (<ext> @<SUBJ) for Nom
 
-* **<spred** (@<SPRED) for Nom; if Nom to the left, copulas to the left of Nom, and a time related word to the left of it.
+* __<spred__ (@<SPRED) for Nom; if Nom to the left, copulas to the left of Nom, and a time related word to the left of it.
 
 
-* **<extQst1** (<ext> @<SUBJ) for Nom; in an existential sentence. To your left is hab, some kind of place or time-word or Po. This is a Qst-sentence so the qst-pcle is attached to leat or following leat
+* __<extQst1__ (<ext> @<SUBJ) for Nom; in an existential sentence. To your left is hab, some kind of place or time-word or Po. This is a Qst-sentence so the qst-pcle is attached to leat or following leat
 
-* **<extQst2** (<ext> @<SUBJ) for Nom; in an existential sentence. To your left is leat and it is sentence initial. No attributes or other words are allowed inbetween (because then you are SPRED), except the attribute muhtun, muhtin
+* __<extQst2__ (<ext> @<SUBJ) for Nom; in an existential sentence. To your left is leat and it is sentence initial. No attributes or other words are allowed inbetween (because then you are SPRED), except the attribute muhtun, muhtin
 
-* **extQst3>** (<ext> @SUBJ>) for Nom; if habitive first one to the left, followed by copulas.
+* __extQst3>__ (<ext> @SUBJ>) for Nom; if habitive first one to the left, followed by copulas.
 
-* **extQst3>** (<ext> @SUBJ>) for Nom; if habitive first one to the left, followed by copulas.
+* __extQst3>__ (<ext> @SUBJ>) for Nom; if habitive first one to the left, followed by copulas.
 
 
-* **<extsubjcoor** (<ext> @<SUBJ) for Nom. Coordination
+* __<extsubjcoor__ (<ext> @<SUBJ) for Nom. Coordination
 
 * Sem/Year
 
@@ -10664,56 +10692,56 @@ These were the set types.
 
 
 
-* **<spredQst** (@<SPRED) for Nom; in a typically question sentence; You are not allowed to be Pers or human. The special part is that Nom is not allowed to your right
+* __<spredQst__ (@<SPRED) for Nom; in a typically question sentence; You are not allowed to be Pers or human. The special part is that Nom is not allowed to your right
 
-* **<spredQst2** (@<SPRED) for (A Nom); in a typically question sentence; You are SPRED if (N Nom) is to your left and leat + qst is to the left
+* __<spredQst2__ (@<SPRED) for (A Nom); in a typically question sentence; You are SPRED if (N Nom) is to your left and leat + qst is to the left
 
-* **<spredQst3** (@<SPRED) for (A Nom); you are SPRED when you are (A Nom) and to your right is (N Nom). This is a Qst-sentence, so copulas is found to your left
+* __<spredQst3__ (@<SPRED) for (A Nom); you are SPRED when you are (A Nom) and to your right is (N Nom). This is a Qst-sentence, so copulas is found to your left
 
-* **<spredQst4** (@<SPRED) for Nom; but only in a qst-sentence where there is no chance of you beeing the subj
+* __<spredQst4__ (@<SPRED) for Nom; but only in a qst-sentence where there is no chance of you beeing the subj
 
-* **<NomBeforeSpred** (@<SPRED) for (A Nom) if; Nom to the left, and copulas is to the left of Nom. There is no Nom allowed to the right of copulas! To avoid messing with coordination: ja, dahje and comma are not allowed to your left. Comma is not allowed to your right; if so then you are likely to be coordinated
+* __<NomBeforeSpred__ (@<SPRED) for (A Nom) if; Nom to the left, and copulas is to the left of Nom. There is no Nom allowed to the right of copulas! To avoid messing with coordination: ja, dahje and comma are not allowed to your left. Comma is not allowed to your right; if so then you are likely to be coordinated
 
-* **<spred** (@<SPRED) for A Nom or N Nom if; the subject Nom is on the same side of copulas as you: on the right side of copulas
+* __<spred__ (@<SPRED) for A Nom or N Nom if; the subject Nom is on the same side of copulas as you: on the right side of copulas
 
-* **<spredVeara** (@<SPRED) for veara + Nom; if genitive immediately to the right, and intransitive mainverb to the right of genitive
+* __<spredVeara__ (@<SPRED) for veara + Nom; if genitive immediately to the right, and intransitive mainverb to the right of genitive
 
-* **leftCop<spred** (@<SPRED) for Nom; if copulas is the main verb to the left, and there is no Ess found to the left of cop (note that Loc is allowed between target and cop). OR: if you are Coll or Sem/Group with copulas to your left.
+* __leftCop<spred__ (@<SPRED) for Nom; if copulas is the main verb to the left, and there is no Ess found to the left of cop (note that Loc is allowed between target and cop). OR: if you are Coll or Sem/Group with copulas to your left.
 
-* **<spredLocEXPERIMENT** (@<SPRED) for material Loc; if you are to the right of copulas, and the Nom to the left of copulas is not a hab-actor
+* __<spredLocEXPERIMENT__ (@<SPRED) for material Loc; if you are to the right of copulas, and the Nom to the left of copulas is not a hab-actor
 
-* **NumTime** (@<SPRED) for A Nom
+* __NumTime__ (@<SPRED) for A Nom
 
-* **<spredSg** (@<SPRED) for Sg Nom
+* __<spredSg__ (@<SPRED) for Sg Nom
 
-* **<spredPg** (@<SPRED) for Pl Nom
+* __<spredPg__ (@<SPRED) for Pl Nom
 
-* **<spred** (@<SPRED) for Nom; if copulas to the left, and Nom or sentence boundary to the left of copulas. First one to the right is EOS.
+* __<spred__ (@<SPRED) for Nom; if copulas to the left, and Nom or sentence boundary to the left of copulas. First one to the right is EOS.
 
-* **COP<spredEss** (@<SPRED) for N Ess
+* __COP<spredEss__ (@<SPRED) for N Ess
 
-* **spredEss>** (@SPRED>) for N Ess; if copulas to the right of you, and if an NP with nom-case first one to your left.
+* __spredEss>__ (@SPRED>) for N Ess; if copulas to the right of you, and if an NP with nom-case first one to your left.
 
-* **GalleSpred>** (@SPRED>) for Num Nom; if sentence initial
+* __GalleSpred>__ (@SPRED>) for Num Nom; if sentence initial
 
-* **spredSgMII>** (@SPRED>)
+* __spredSgMII>__ (@SPRED>)
 
-* **spredšaddat>** (@SPRED>)
+* __spredšaddat>__ (@SPRED>)
 
 
-* **r492>** (@SPRED>) for Interr Gen; consisting only of negations. You are not allowed to be MII. You are not allowed to have an adjective or noun to yor right. You are not allowed to have a verb to your right; the exception beeing an aux.
+* __r492>__ (@SPRED>) for Interr Gen; consisting only of negations. You are not allowed to be MII. You are not allowed to have an adjective or noun to yor right. You are not allowed to have a verb to your right; the exception beeing an aux.
 
 
 
-* **AdjSpredSg>** (@SPRED>) for A Sg Nom; if copulas to the right, but not if A or @<SPRED are found to the right of copulas
+* __AdjSpredSg>__ (@SPRED>) for A Sg Nom; if copulas to the right, but not if A or @<SPRED are found to the right of copulas
 
 
 
 
 
-* **Spred>SubjInf** (@SPRED>) for Nom; if copulas to the right, and the subject of copulas is an Inf to the right
+* __Spred>SubjInf__ (@SPRED>) for Nom; if copulas to the right, and the subject of copulas is an Inf to the right
 
-* **spredCoord** (@<SPRED) coordination for Nom; only if there already is a SPRED to the left of CNP. Not if there is some kind of comparison involved.
+* __spredCoord__ (@<SPRED) coordination for Nom; only if there already is a SPRED to the left of CNP. Not if there is some kind of comparison involved.
 
 
 
@@ -10723,31 +10751,31 @@ These were the set types.
 
 
 
-* **subj>Sgnr1** (@SUBJ>) for Nom Sg, including Indef Nom if; VFIN + Sg3 or Pl3 to the right (VFIN not allowed to the left)
 
 
 
-* **subj>Du** (@SUBJ>) for dual nominatives, including Coll Nom. VFIN + Du3 to the right.
-* **subj>Pl** (@SUBJ>) for plural nominatives, including Coll and Sem/Group. VFIN + Pl3 to the right.
 
-* **subj>Pl** (@SUBJ>) for plural nominatives
 
+* __subj>Sgnr1__ (@SUBJ>) for Nom Sg, including Indef Nom if; VFIN + Sg3 or Pl3 to the right (VFIN not allowed to the left)
 
-* **subj>Sg** (@SUBJ>) for Nom Sg; if VFIN + Sg3 to the right.
 
-* **Sg<subj** (@<SUBJ) for Nom Sg; if VFIN Sg3 or Du2 to the left (no HAB allowed to the left).
 
-* **Du<subj** (@<SUBJ) for Nom Coll if; a dual third person verb is found to the left
 
-* **PlDu<subj** (@<SUBJ) for (N Nom Pl), (Sem/Group Nom), (Coll Nom), (Pron Nom Pl) if; a verb is Pl3 or Du3 to your left. The verb is not allowed to be copulas with a place, Loc or time noun to its left
+* __subj>Du__ (@SUBJ>) for dual nominatives, including Coll Nom. VFIN + Du3 to the right.
+* __subj>Pl__ (@SUBJ>) for plural nominatives, including Coll and Sem/Group. VFIN + Pl3 to the right.
 
-* **copPl3<subj** (@<SUBJ) for Nom Pl; you don't to be a noun, only Nom Pl. To the left is copulas and first one to the right is @<SPRED
+* __subj>Pl__ (@SUBJ>) for plural nominatives
 
 
+* __subj>Sg__ (@SUBJ>) for Nom Sg; if VFIN + Sg3 to the right.
 
+* __Sg<subj__ (@<SUBJ) for Nom Sg; if VFIN Sg3 or Du2 to the left (no HAB allowed to the left).
 
+* __Du<subj__ (@<SUBJ) for Nom Coll if; a dual third person verb is found to the left
 
+* __PlDu<subj__ (@<SUBJ) for (N Nom Pl), (Sem/Group Nom), (Coll Nom), (Pron Nom Pl) if; a verb is Pl3 or Du3 to your left. The verb is not allowed to be copulas with a place, Loc or time noun to its left
 
+* __copPl3<subj__ (@<SUBJ) for Nom Pl; you don't to be a noun, only Nom Pl. To the left is copulas and first one to the right is @<SPRED
 
 
 
@@ -10765,11 +10793,11 @@ These were the set types.
 
 
 
-* **-fsubj>** (@-FSUBJ>) for HUMAN Gen; in a NP-clause. To your right is Actio Nom followed by a noun
 
 
 
 
+* __-fsubj>__ (@-FSUBJ>) for HUMAN Gen; in a NP-clause. To your right is Actio Nom followed by a noun
 
 
 
@@ -10783,42 +10811,42 @@ These were the set types.
 
 
 
-* **f<advl** (@-F<ADVL) for infinite adverbials
 
 
 
 
+* __f<advl__ (@-F<ADVL) for infinite adverbials
 
-* **f<advl** (@-F<ADVL) for infinite adverbials
 
 
 
 
+* __f<advl__ (@-F<ADVL) for infinite adverbials
 
 
 
 
 
 
-* **s-boundary=advl>** (@ADVL>) for ADVL that resemble s-boundaries. Mainverb to the right.
 
 
 
+* __s-boundary=advl>__ (@ADVL>) for ADVL that resemble s-boundaries. Mainverb to the right.
 
 
-* **diibmuadvl>** (@ADVL>) for (diibmu Nom) if first one to the right is Num
 
 
-* **-fsubj** (@-FSUBJ>) for HUMAN Acc after DADJAT verbs
 
+* __diibmuadvl>__ (@ADVL>) for (diibmu Nom) if first one to the right is Num
 
 
-* **-fobj>** (@-FOBJ>) for Acc if front of abessive, gerundium, actio locative, perfectum participle or infinitive. First one to the right not allowed to be Acc though
+* __-fsubj__ (@-FSUBJ>) for HUMAN Acc after DADJAT verbs
 
-* **-fobj>** (@-FOBJ>) for Acc if human with ADVL-case to the left and transitive infinitive OBJ to the right. First one to the right not allowed to be Acc though
 
 
+* __-fobj>__ (@-FOBJ>) for Acc if front of abessive, gerundium, actio locative, perfectum participle or infinitive. First one to the right not allowed to be Acc though
 
+* __-fobj>__ (@-FOBJ>) for Acc if human with ADVL-case to the left and transitive infinitive OBJ to the right. First one to the right not allowed to be Acc though
 
 
 
@@ -10828,10 +10856,10 @@ These were the set types.
 
 
 
-* **advl>mainV** (@ADVL>) if; finite mainverb not found to the left, but the finite mainverb is found to the right.
 
 
 
+* __advl>mainV__ (@ADVL>) if; finite mainverb not found to the left, but the finite mainverb is found to the right.
 
 
 
@@ -10848,170 +10876,178 @@ These were the set types.
 
 
 
-* **V<advl** (@<ADVL) if; finite mainverb found to the left. Not if a comma is found immediately to the left and a finite mainverb is located somewhere to the right of this comma.
 
 
 
 
 
-* **advl>v** (@ADVL>) if; you are ADVL, time-noun or Sem/Route and there is a finite verb to the right in the clause, or if to your right is: de followed by a finite verb. OR: if you are a time-nound and to your right is: go or sentenceboundary followed by a finite verb
 
 
 
-* **<advlPoPr** (@<ADVL) for Po or Pr; if mainverb to the left.
-* **advlPoPr>** (@<ADVL) for Po or Pr; if mainverb to the right.
+* __V<advl__ (@<ADVL) if; finite mainverb found to the left. Not if a comma is found immediately to the left and a finite mainverb is located somewhere to the right of this comma.
 
-* **BOSPo>** (@ADVL>) for Po; if trapped between BOS to the right and S-BOUNDARY OR COMMA to the left, because the main verb will then automatically be on your right side.
 
-* **<advlComIll** (@<ADVL) only if; you are Com OR Ill. To your left is a mainverb, and to your right a sentenceboundary, because we don't want there to be another mainverb you potentially could belong to
 
-* **<advlEOS** (@<ADVL) for Po or Pr or Loc; if you are found at the very end of a sentence. A mainverb is needed to the left though.
 
 
-* **<advlGen** (@<ADVL) for (N Gen) if mainverb to the left and no noun to the right
+* __advl>v__ (@ADVL>) if; you are ADVL, time-noun or Sem/Route and there is a finite verb to the right in the clause, or if to your right is: de followed by a finite verb. OR: if you are a time-nound and to your right is: go or sentenceboundary followed by a finite verb
 
 
-* **<opredgohcodit** (@<OPRED) for Ess
 
+* __<advlPoPr__ (@<ADVL) for Po or Pr; if mainverb to the left.
+* __advlPoPr>__ (@<ADVL) for Po or Pr; if mainverb to the right.
 
-* **advlEss>** (@<ADVL) for weather and time Ess, if FMAINV to the left.
+* __BOSPo>__ (@ADVL>) for Po; if trapped between BOS to the right and S-BOUNDARY OR COMMA to the left, because the main verb will then automatically be on your right side.
 
+* __<advlComIll__ (@<ADVL) only if; you are Com OR Ill. To your left is a mainverb, and to your right a sentenceboundary, because we don't want there to be another mainverb you potentially could belong to
 
+* __<advlEOS__ (@<ADVL) for Po or Pr or Loc; if you are found at the very end of a sentence. A mainverb is needed to the left though.
 
 
-* **comma<advlEOS** (@<ADVL) for Adv if; mainverb is to the left. Comma to the left and mainverb to the right in the same clause is not allowed
+* __<advlGen__ (@<ADVL) for (N Gen) if mainverb to the left and no noun to the right
 
 
-* **advl>inbetween** (@ADVL>) for Adv; if inbetween two sentenceboundaries where no mainverb is present.
+* __<opredgohcodit__ (@<OPRED) for Ess
 
-* **comma<advlEOS** (@<ADVL) for Adv if; comma found to the left and the finite mainverb to the left of comma. To the right is the end of the sentence.
 
+* __advlEss>__ (@<ADVL) for weather and time Ess, if FMAINV to the left.
 
 
-* **BOSadvl>** (@ADVL>) if; you are N Loc or N Ill and found sentence initially and there is a main verb somewhere to the right. No barrier for the mainverb; based on the thought that first one to your right is probably a sentenceboundary.
 
-* **cleanupILL<advl** (@<ADVL) for N Ill if; there are no boundarysymbols to your left, if you arent already @N< OR @APP-N<, and no mainverb is to yor left.
 
+* __comma<advlEOS__ (@<ADVL) for Adv if; mainverb is to the left. Comma to the left and mainverb to the right in the same clause is not allowed
 
 
-* **cleanupPo** (@ADVL) for Po: This rule tags all Po:s as ADVL if they haven't gotten a tag somewhere along the way.
+* __advl>inbetween__ (@ADVL>) for Adv; if inbetween two sentenceboundaries where no mainverb is present.
 
-* **cleanupPr** (@ADVL) for Po: This rule tags all Pr:s as ADVL if they haven't gotten a tag somewhere along the way.
+* __comma<advlEOS__ (@<ADVL) for Adv if; comma found to the left and the finite mainverb to the left of comma. To the right is the end of the sentence.
 
 
 
+* __BOSadvl>__ (@ADVL>) if; you are N Loc or N Ill and found sentence initially and there is a main verb somewhere to the right. No barrier for the mainverb; based on the thought that first one to your right is probably a sentenceboundary.
 
-* **-fsubj>asAcc** (@-FSUBJ>) for HUMAN Acc; if there is a verb @-F<OBJ to your left
+* __cleanupILL<advl__ (@<ADVL) for N Ill if; there are no boundarysymbols to your left, if you arent already @N< OR @APP-N<, and no mainverb is to yor left.
 
-* **-f<obj** (@-F<OBJ) for Acc if there is a transitive verb + SYN-V to your left
 
-* **-fsubj>IV** (@-FSUBJ>) for Acc; if there is an IV-verb acting as a @-F<OBJ to your right
 
-* **-fsubj>IV** (@-FSUBJ>) for Acc; if there is an TV-verb acting as a @-F<OBJ to your right followed by an Acc
+* __cleanupPo__ (@ADVL) for Po: This rule tags all Po:s as ADVL if they haven't gotten a tag somewhere along the way.
 
-* **-fsubj>asGen** (@-FSUBJ>) for Gen;
+* __cleanupPr__ (@ADVL) for Po: This rule tags all Pr:s as ADVL if they haven't gotten a tag somewhere along the way.
 
-* **f<subj** (@-F<SUBJ) for Nom if; (V @-F<OBJ) to the left.
 
 
 
+* __-fsubj>asAcc__ (@-FSUBJ>) for HUMAN Acc; if there is a verb @-F<OBJ to your left
 
+* __-f<obj__ (@-F<OBJ) for Acc if there is a transitive verb + SYN-V to your left
 
+* __-fsubj>IV__ (@-FSUBJ>) for Acc; if there is an IV-verb acting as a @-F<OBJ to your right
 
+* __-fsubj>IV__ (@-FSUBJ>) for Acc; if there is an TV-verb acting as a @-F<OBJ to your right followed by an Acc
 
-* **<opredAAcc** (@<OPRED) for A Acc; if an other accusative to the left, and a transtive verb to the left of it. OR: if a transitive verb to the left, and an accusative to the left of it.
+* __-fsubj>asGen__ (@-FSUBJ>) for Gen;
 
-* **TV<obj** (@<OBJ) for Acc; if there is a transitive mainverb to the left in the clause. Not for Rel. Not if you are a numeral followed by a measure-noun
+* __f<subj__ (@-F<SUBJ) for Nom if; (V @-F<OBJ) to the left.
 
 
 
-### sma object
 
 
-* **<advlMeasr** (@<ADVL) for (Num Acc); if finite IV-mainverb to the left, measure-noun to the right
 
-* **<objMeasr** (@<OBJ) for Num Acc; if finite TV-mainverb to the left, measure-noun to the right
 
-* **<advlMeasr2** (@<ADVL) for MEASR-N + Acc; if (Num Pl) to the left and mainverb to the left of it
+* __<opredAAcc__ (@<OPRED) for A Acc; if an other accusative to the left, and a transtive verb to the left of it. OR: if a transitive verb to the left, and an accusative to the left of it.
 
-* **advlMeasr>** (@ADVL>) for Num Acc;
+* __TV<obj__ (@<OBJ) for Acc; if there is a transitive mainverb to the left in the clause. Not for Rel. Not if you are a numeral followed by a measure-noun
 
 
-* **Obj>** (@OBJ>) for Acc; if there is a finite mainverb to the right in the clause. A really simple rule with no other restrictions..
 
-* **s-boun<obj** (@<OBJ) for Acc; if sentenceboundary to your left and a transitive mainverb to the left futher to the left
+!sma object
 
-* **<objIV** (@<OBJ) for Acc; if there is an intransitive mainverb in the clause. Not for Rel or Num. Not if you are a numeral followed by a measure-noun
 
+* __<advlMeasr__ (@<ADVL) for (Num Acc); if finite IV-mainverb to the left, measure-noun to the right
 
+* __<objMeasr__ (@<OBJ) for Num Acc; if finite TV-mainverb to the left, measure-noun to the right
 
+* __<advlMeasr2__ (@<ADVL) for MEASR-N + Acc; if (Num Pl) to the left and mainverb to the left of it
 
+* __advlMeasr>__ (@ADVL>) for Num Acc;
 
 
+* __Obj>__ (@OBJ>) for Acc; if there is a finite mainverb to the right in the clause. A really simple rule with no other restrictions..
 
-* **<advlEss** (@<ADVL) for ESS-ADVL if; FMAINV to the left
+* __s-boun<obj__ (@<OBJ) for Acc; if sentenceboundary to your left and a transitive mainverb to the left futher to the left
 
-* **IV<spredEss** (@<SPRED) for N Ess if; FMAINV to the left is intransitive or bargat
+* __<objIV__ (@<OBJ) for Acc; if there is an intransitive mainverb in the clause. Not for Rel or Num. Not if you are a numeral followed by a measure-noun
 
-* **<opredEss** (@<OPRED) for (N Ess), (A Ess) if; transitive mainverb to the left in the clause. If accusative to the left or to the right, or if Inf or ahte to the right, or if there is a noun to the right followed by an Inf
 
-* **Acc<opredEss** (@<OPRED) for (N Ess), (A Ess) if; transitive mainverb to the left in the clause, and an accusative cased Rel left to the verb
 
-* **onlyV<opred** (@<OPRED) for (N Ess) if; there is a transitive mainverb to the left. Usually there needs to be an Acc to the left, but here it is not needed
 
-* **onlyV<opred2** (@<OPRED) for (N Ess) if;
 
 
 
+* __<advlEss__ (@<ADVL) for ESS-ADVL if; FMAINV to the left
 
+* __IV<spredEss__ (@<SPRED) for N Ess if; FMAINV to the left is intransitive or bargat
 
+* __<opredEss__ (@<OPRED) for (N Ess), (A Ess) if; transitive mainverb to the left in the clause. If accusative to the left or to the right, or if Inf or ahte to the right, or if there is a noun to the right followed by an Inf
 
+* __Acc<opredEss__ (@<OPRED) for (N Ess), (A Ess) if; transitive mainverb to the left in the clause, and an accusative cased Rel left to the verb
 
+* __onlyV<opred__ (@<OPRED) for (N Ess) if; there is a transitive mainverb to the left. Usually there needs to be an Acc to the left, but here it is not needed
 
+* __onlyV<opred2__ (@<OPRED) for (N Ess) if;
 
 
 
-## SUBJ MAPPING - leftovers
 
-* **subj>ifV** (@SUBJ>) for NP-HEAD-NOM, DUPRON or (Num Nom) if; a finite mainverb is found to the right. This is a cleanup rule for subjects
 
-* **hnoun>ifV** (@SUBJ>) for NP-HEAD-NOM, DUPRON if. The counterpart of subj>ifV. You are HNOUN if there is a finite verb to your right, but NOT if there is a finite verb after a relative clause
 
 
-## OBJ MAPPING - leftovers
 
-## <logo> MAPPING for MT - experimental
 
 
-## HNOUN MAPPING
 
+!!SUBJ MAPPING - leftovers
 
+* __subj>ifV__ (@SUBJ>) for NP-HEAD-NOM, DUPRON or (Num Nom) if; a finite mainverb is found to the right. This is a cleanup rule for subjects
 
+* __hnoun>ifV__ (@SUBJ>) for NP-HEAD-NOM, DUPRON if. The counterpart of subj>ifV. You are HNOUN if there is a finite verb to your right, but NOT if there is a finite verb after a relative clause
 
 
+!!OBJ MAPPING - leftovers
 
+!!<logo> MAPPING for MT - experimental
 
 
+!!HNOUN MAPPING
 
-* **@<ADVLcoor** (@<ADVL) for ADVLCASEAdv if @CNP to the left and ADVL to the left of it
 
 
 
 
-###  **missingX** adds @X to all missings
 
 
 
 
+* __@<ADVLcoor__ (@<ADVL) for ADVLCASEAdv if @CNP to the left and ADVL to the left of it
 
-###  **therestX** adds @X to all what is left, often errouneus disambiguated forms
 
 
 
+! __missingX__ adds @X to all missings
 
 
 
-## For Apertium:
+
+
+! __therestX__ adds @X to all what is left, often errouneus disambiguated forms
+
+
+
+
+
+
+!!For Apertium:
 The analysis give double analysis because of optional semtags. We go for the one with semtag.
 
 
@@ -11021,16 +11057,16 @@ The analysis give double analysis because of optional semtags. We go for the one
 
 
 
-# C O M M O N  S Á M I  D E P E N D E N C Y   G R A M M A R
+!!!C O M M O N  S Á M I  D E P E N D E N C Y   G R A M M A R
 
 This dep file is for sma, sme, smj, sje.
 
-# DELIMITERS
+!!!DELIMITERS
 
 Sentence delimiters are the following: <.> <!> <?> <...> <¶>
 
 
-# TAGS AND SETS
+!!!TAGS AND SETS
 
 
 N
@@ -11091,7 +11127,7 @@ Ess
 
 IM For fao
 
-## POS sub-categories
+!!POS sub-categories
 
 
 
@@ -11174,12 +11210,12 @@ IM For fao
 
 
 
-## Syntactic tags and sets
+!!Syntactic tags and sets
 
-### Syntactic tags in input to this file
+!Syntactic tags in input to this file
 
 
-### Syntactic tags added in this file
+!Syntactic tags added in this file
 
 * @FMV : finite main verb
 ** oaidná: Son oaidná ollislaš gova. - She sees the whole picture
@@ -11220,21 +11256,21 @@ IM For fao
 * <aux> : auxilary verb. A temporarily tag omitted in the end of the file.
 
 
-### fao syntags
+!fao syntags
 
 * @>V
 
-### kal syntags
+!kal syntags
 
 * @INS :
 * @<INS :
 * @INS> :
 
-### eus syntags
+!eus syntags
 
 * @FS-SPRED : finite verb in subclause functioning as a subject predicate - eus, but not sure if in use
 
-### Syntactic set definitions
+!Syntactic set definitions
 
 
 
@@ -11247,7 +11283,7 @@ IM For fao
 
 
 
-# Dep grammar
+!!!Dep grammar
 
 
 
@@ -11255,18 +11291,18 @@ Correction rules
 
 
 
-* **muitalit**
+* __muitalit__
 
 
-* **XX**
+* __XX__
 
-* **XX**
+* __XX__
 
-* **XX**
+* __XX__
 
 
 
-* **faoSumId=Rel**
+* __faoSumId=Rel__
 
 
 
@@ -11283,7 +11319,7 @@ Correction rules
 
 
 
-## The finite verb
+!!The finite verb
 
 
 
@@ -11315,7 +11351,7 @@ Correction rules
 
 
 
-# Mapping rules
+!!!Mapping rules
 
 
 
@@ -11453,7 +11489,7 @@ Correction rules
 
 
 
-**lgRemove** removes the language tags <sma>, <sme>,  etc, before proceeding to the dep file.
+__lgRemove__ removes the language tags <sma>, <sme>,  etc, before proceeding to the dep file.
 
 
 

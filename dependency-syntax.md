@@ -1,14 +1,14 @@
 
-# C O M M O N  S Á M I  D E P E N D E N C Y   G R A M M A R
+!!!C O M M O N  S Á M I  D E P E N D E N C Y   G R A M M A R
 
 This dep file is for sma, sme, smj, sje.
 
-# DELIMITERS
+!!!DELIMITERS
 
 Sentence delimiters are the following: <.> <!> <?> <...> <¶>
 
 
-# TAGS AND SETS
+!!!TAGS AND SETS
 
 
 N
@@ -69,7 +69,7 @@ Ess
 
 IM For fao
 
-## POS sub-categories
+!!POS sub-categories
 
 
 
@@ -152,12 +152,12 @@ IM For fao
 
 
 
-## Syntactic tags and sets
+!!Syntactic tags and sets
 
-### Syntactic tags in input to this file
+!Syntactic tags in input to this file
 
 
-### Syntactic tags added in this file
+!Syntactic tags added in this file
 
 * @FMV : finite main verb
 ** oaidná: Son oaidná ollislaš gova. - She sees the whole picture
@@ -198,21 +198,21 @@ IM For fao
 * <aux> : auxilary verb. A temporarily tag omitted in the end of the file.
 
 
-### fao syntags
+!fao syntags
 
 * @>V
 
-### kal syntags
+!kal syntags
 
 * @INS :
 * @<INS :
 * @INS> :
 
-### eus syntags
+!eus syntags
 
 * @FS-SPRED : finite verb in subclause functioning as a subject predicate - eus, but not sure if in use
 
-### Syntactic set definitions
+!Syntactic set definitions
 
 
 
@@ -225,7 +225,7 @@ IM For fao
 
 
 
-# Dep grammar
+!!!Dep grammar
 
 
 
@@ -233,18 +233,18 @@ Correction rules
 
 
 
-* **muitalit**
+* __muitalit__
 
 
-* **XX**
+* __XX__
 
-* **XX**
+* __XX__
 
-* **XX**
+* __XX__
 
 
 
-* **faoSumId=Rel**
+* __faoSumId=Rel__
 
 
 
@@ -261,7 +261,7 @@ Correction rules
 
 
 
-## The finite verb
+!!The finite verb
 
 
 
@@ -293,7 +293,7 @@ Correction rules
 
 
 
-# Mapping rules
+!!!Mapping rules
 
 
 
@@ -431,7 +431,7 @@ Correction rules
 
 
 
-**lgRemove** removes the language tags <sma>, <sme>,  etc, before proceeding to the dep file.
+__lgRemove__ removes the language tags <sma>, <sme>,  etc, before proceeding to the dep file.
 
 
 
