@@ -90,7 +90,7 @@
  * **LEXICON UNDERDUHAT**  the numerals under 1000
 
 
- * __LEXICON ONLY_CMP__
+ * **LEXICON ONLY_CMP**
 
 
  * **LEXICON OKTAF**
@@ -196,7 +196,7 @@ numerical expressions in each category.
 
 
 
- * __LEXICON ONLY_OKTA__
+ * **LEXICON ONLY_OKTA**
 
 
  * **LEXICON LOGIF**

@@ -13,34 +13,34 @@ Divvun & Giellatekno - open source grammars for North Sámi.
  * **+Ex/A	** - This tag is not added in lexc. The POS tag before derivation is converted into this tag when compiling FST for disambiguation.
  * **+Ex/V	** - This tag is not added in lexc. The POS tag before derivation is converted into this tag when compiling FST for disambiguation.
 
- * **+N** - Noun
- * **+A** - Adjective
- * **+Adv** - Adverb
- * **+V** - Verb
- * **+Pron** - Pronoun
- * **+CS** - Subjunction
- * **+CC** - Conjunction
- * **+Adp** - Adposition, ie Post- and Prepostion, NOT IN USE
- * **+Po** - Postpostion
- * **+Pr** - Preposition
- * **+Interj** - Interjection
- * **+Pcle** - Particle
- * **+Num** - Numeral
+ * ** +N       ** - Noun
+ * ** +A       ** - Adjective
+ * ** +Adv     ** - Adverb
+ * ** +V       ** - Verb
+ * ** +Pron    ** - Pronoun
+ * ** +CS      ** - Subjunction
+ * ** +CC      ** - Conjunction
+ * ** +Adp     ** - Adposition, ie Post- and Prepostion, NOT IN USE
+ * ** +Po      ** - Postpostion
+ * ** +Pr      ** - Preposition
+ * ** +Interj  ** - Interjection
+ * ** +Pcle    ** - Particle
+ * ** +Num     ** - Numeral
 
 ### Tags for sub-POS
- * **+Prop** - Propernoun
- * **+Pers** - Personal Pronoun
- * **+Dem** - Demonstrative Pronoun
- * **+Interr** - Interrogative Pronoun
- * **+Refl** - Reflexive Pronoun
- * **+Recipr** - Reciprocal Pronoun
- * **+Rel** - Relative Pronoun
- * **+Indef** - Indefinitive Pronoun
- * **+Coll** - Collective numerals, subtag for +N
- * **+Arab** - Arabic numeral, subtag for +Num
- * **+Rom** - Roman numeral, subtag for +Num
- * **+Pass** - hallat/haddat not in use
- * **+Known** - man (different from maid): mii+Pron+Rel+Sg+Acc+Known
+ * ** +Prop      ** - Propernoun
+ * ** +Pers      ** - Personal Pronoun
+ * ** +Dem       ** - Demonstrative Pronoun
+ * ** +Interr    ** - Interrogative Pronoun
+ * ** +Refl      ** - Reflexive Pronoun
+ * ** +Recipr    ** - Reciprocal Pronoun
+ * ** +Rel       ** - Relative Pronoun
+ * ** +Indef     ** - Indefinitive Pronoun
+ * ** +Coll      ** - Collective numerals, subtag for +N
+ * ** +Arab      ** - Arabic numeral, subtag for +Num
+ * ** +Rom       ** - Roman numeral, subtag for +Num
+ * ** +Pass      ** - hallat/haddat not in use
+ * ** +Known     ** - man (different from maid): mii+Pron+Rel+Sg+Acc+Known
 
 
 ## Tags for Inflection
@@ -118,7 +118,7 @@ Divvun & Giellatekno - open source grammars for North Sámi.
  * **+Gram/Superl**   Superlative, adverbs
 
  * **+ABBR** Abbreviation, subtag for e.g. +N
- * +Symbol = independent symbols in the text stream, like £, €, ©
+ * **+Symbol** = independent symbols in the text stream, like £, €, ©
  * **+ACR**  Acronym, subtag for +N
  * **+CLB**  Clause border (full stop, comma..)
  * **+PUNCT**  punctuation
@@ -133,19 +133,19 @@ Divvun & Giellatekno - open source grammars for North Sámi.
  * **+G7** Grade 3, no consonant gradation, +N+G7
  * **+NomAg** Actor Noun From Verb - Nomen Agentis, +N+NomAg
 
-* **+Gram/TAbbr**:  Transitive abbreviation (it needs an argument)
-* **+Gram/NoAbbr**:  Intransitive abbreviations that are homonymous
+ * **+Gram/TAbbr**:  Transitive abbreviation (it needs an argument)
+ * **+Gram/NoAbbr**:  Intransitive abbreviations that are homonymous
    with more frequent words. They should only be considered
    abbreviations in the middle of a sentence.
-* **+Gram/TNumAbbr**:  Transitive abbreviation if the following
+ * **+Gram/TNumAbbr**:  Transitive abbreviation if the following
             constituent is numeric
-* **+Gram/NumNoAbbr**:  Transitive abbreviations for which numerals
+ * **+Gram/NumNoAbbr**:  Transitive abbreviations for which numerals
 are complements and normal words. The abbreviation usage
 is less common and thus only the occurences in the middle of
 the sentence can be considered as true cases.
-* **+Gram/TIAbbr**:  Both transitive and intransitive abbreviation
-* **+Gram/IAbbr**:  Intransitive abbreviation (it takes no argument)
-* **+Gram/3syll**: trisyllabic verbs
+ * **+Gram/TIAbbr**:  Both transitive and intransitive abbreviation
+ * **+Gram/IAbbr**:  Intransitive abbreviation (it takes no argument)
+ * **+Gram/3syll**: trisyllabic verbs
  ; +Gram/Superl 
  ; +Gram/Comp 
 
@@ -211,11 +211,11 @@ doavttergrádakursa
 
 ### Escaped chars
 
- * **%**
- * +Guess for the name guesser
- * **+MWE** - Multi-word expressions treated as such in the preprocessor. To be added as first tag after the lemma
+ * ** %        **
+ * **+Guess** for the name guesser
+ * ** +MWE     ** - Multi-word expressions treated as such in the preprocessor. To be added as first tag after the lemma
 
- * +PxCPlComRecipr used in pronoun-sme-morph.txt
+ * **+PxCPlComRecipr** used in pronoun-sme-morph.txt
 
 
 ### Error (non-standard language) tags
@@ -262,10 +262,10 @@ doavttergrádakursa
 
 ### Dialect tags:
 
- * **+Dial/-KJ** forms not in use in KJ (Kárásjohka)
- * **+Dial/-GG** forms not in use in GG (Guovdageaidnu)
- * **+Dial/-GS** forms not in use in GS (Gárasavvon) NOT IN USE
- * **+South** foreløpig lagt til Sg Loc -n, som er en sub-form
+ * ** +Dial/-KJ  ** forms not in use in KJ (Kárásjohka)
+ * ** +Dial/-GG  ** forms not in use in GG (Guovdageaidnu)
+ * ** +Dial/-GS  ** forms not in use in GS (Gárasavvon) NOT IN USE
+ * ** +South     ** foreløpig lagt til Sg Loc -n, som er en sub-form
 
 ### Tags for indicating the orthography used
  +Orth/Strd - Standard orthography
@@ -283,9 +283,9 @@ so that we can exclude the one or the other from different fst's, but only
 when the oposite stem variant is present.
 
 ### Multichars for marking start and end of IPA sequences
- * %{<ipa#%} - ipa text to the left
- * %{#ipa%>%} - ipa text to the right
- * %<sent%> apertium
+ * `%{%<ipa#%}` - ipa text to the left
+ * `%{#ipa%>%}` - ipa text to the right
+ * `%<sent%>` - apertium
 
 ### Compounding tags
 
@@ -423,7 +423,7 @@ The order is:
  *  +Sem/Perc-emo     = Emotional perception
  *  +Sem/Perc-phys    = Physical perception
  *  +Sem/Perc-psych   = Psychological perception
- * +Sem/Phonenr = Telephone number
+ * **+Sem/Phonenr** = Telephone number
  *  +Sem/Plant        = Plant
  *  +Sem/Plantpart   = Plant part
  *  +Sem/Plc          = Place
@@ -468,12 +468,12 @@ The order is:
 
 ### Multiple Semantic tags:
  * +Sem/Act_Fruit                      
- * +Sem/Act_Group Activity and Group
- * +Sem/Act_Hum Activity and Human
- * +Sem/Act_Plc   A persons job is an activity, and a place as well
- * +Sem/Act_Route Activity and Route, ie johtolat
+ * **+Sem/Act_Group** Activity and Group
+ * **+Sem/Act_Hum** Activity and Human
+ * **+Sem/Act_Plc**   A persons job is an activity, and a place as well
+ * **+Sem/Act_Route** Activity and Route, ie johtolat
  * +Sem/Act_Tool-it
- * +Sem/Amount_Build   Amount and Building
+ * **+Sem/Amount_Build**   Amount and Building
  * +Sem/Amount_Semcon
  * +Sem/Ani_Body-abstr_Hum
  * +Sem/Ani_Build
@@ -653,39 +653,49 @@ The order is:
 
 
 
- * +Allegro from LEXICON GOADE-IU-
+ * **+Allegro** from LEXICON GOADE-IU-
 
 
 
 
 
+Explanation:
+Combinations 1, 2, 3, 12, 23, 13, 123 are ok, all other ones are blocked.
+The suffixes marked as +Der1+Der2 to the right cannot combine with Der2, they
+have already "saturated" their Der2-part.
+Phonotactically, Der1 are initial consonants C, Der2 are VCV, and
+Der2 are of a different kind, more like compounding.
+This whole Der123 business is to prevent back-derivation of
+boahtigoahtijuvvohallat and the like.
+Computationally, this is done as a filter composed on top of sme.save.
 
 
-```
+
+--------------------------------
 
 
 
-```
+
 
 
 All non-positional derivations should be preceded by this tag, to make it possible
 to target regular expressions at all derivations in a language-independent way:
 just specify +Der|+Der1 .. +Der5 and you are set.
 
- * +Der
+ * **+Der** = 
 
 ### Other/unclassified derivations, can appear in all positions:
 
- * +Der/veara  NA#
- * +Der/viđá  NA#
- * +Der/viđi  NA#
- * +Der/has  only one in the code
+ * **+Der/veara** = NA#
+ * **+Der/viđá** = NA#
+ * **+Der/viđi** = NA#
+ * **+Der/has** = only one in the code
 
 
 ### Miscellanious list
 
- * +Der/A Adjective derivated from Noun or Verb
- * +Der/Adv Adverb derivated from Adjective
+ * **+Der/A** = Adjective derivated from Noun or Verb
+ * **+Der/Adv** = Adverb derivated from Adjective
 
 ## Tags for originating language
 
@@ -713,92 +723,92 @@ are tagged than strictly needed, this should pose no problem as
 long as the IPA conversion is correct - at least some words will
 get the same pronunciation whether read as SME or NOB/NNO/SWE.
 
- * +OLang/SME - North Sámi
- * +OLang/SMJ - Lule Sámi
- * +OLang/SMA - South Sámi
- * +OLang/FIN - Finnish
- * +OLang/SWE - Swedish
- * +OLang/NOB - Norw. bokmål
- * +OLang/NNO - Norw. nynorsk
- * +OLang/ENG - English
- * +OLang/RUS - Russian
- * +OLang/UND - Undefined
+ * **+OLang/SME** = North Sámi
+ * **+OLang/SMJ** = Lule Sámi
+ * **+OLang/SMA** = South Sámi
+ * **+OLang/FIN** = Finnish
+ * **+OLang/SWE** = Swedish
+ * **+OLang/NOB** = Norw. bokmål
+ * **+OLang/NNO** = Norw. nynorsk
+ * **+OLang/ENG** = English
+ * **+OLang/RUS** = Russian
+ * **+OLang/UND** = Undefined
 
 
 ### Triggers for morphophonological rules
 
- * X1  Diphthong Simplification, Metaphony
- * X2  Diphthong Simplification, Metaphony, Word Final Neutralization of g8, h8, m8
- * X3  Diphthong Simplification, Metaphony
- * X4  WeG, Vowel Shortening, Stem vowel alternations, Word Final Deletion of n8 m8 g8 h8
- * X5  WeG, Diphthong Simplification, Stem vowel alternations
- * X6  WeG, Diphthong Simplification, Metaphony, Word Final Deletion of n8 m8 g8 h8
- * X7  Vowel Shortening, Stem vowel alternations, Word Final Neutralization of g8, h8, m8
- * X8  WeG, Vowel Shortening, Metaphony, Stem Vowel alternations, Word Final Deletion of n8 m8 g8 h8
- * X9  WeG, Dipthtong simplification, Word Final Deletion of n8 m8 g8 h8
- * Y1  Lengthening of Central Consonants, Stem Vowel alternations,
- * Y2  Lengthening of Central Consonants, Stem Vowel alternations,
- * Y3  Lengthening of Central Consonants, Stem Vowel alternations,
- * Y4  Lengthening of Central Consonants, Stem Vowel alternations,
- * Y5  Lengthening of Central Consonants, Word Final Consonant Deletion, Diphthong Simplification, Stem vowel alternations
- * Y6  Lengthening of Central Consonants, Word Final Consonant Deletion, Diphthong Simplification, Stem vowel alternations
- * Y7  Lengthening of Central Consonants, Diphthong Simplification, Stem vowel alternations
- * Y8  Not in use
- * Y9  Lengthening of Central Consonants, Diphthong Simplification
- * Q1  Stem vowel alternations,
- * Q2  Diphthong Simplification, Stem vowel alternations,
- * Q3  Diphthong Simplification, Stem vowel alternations,
- * Q4  WeG, Stem vowel alternations,
- * Q5  WeG, Diphthong Simplification, Stem vowel alternations,
- * Q6  WeG, Vowel shortening,
- * Q7  WeG, Diphthong Simplification, Metaphony,
- * Q8  WeG, Diphthong Simplification, Stem vowel alternations,
- * Q9  Not in use
- * W1  WeG, Vowel Shortening
- * W2  Vowel Shortening,
- * W3  Stem vowel deletion in compounding,
- * W4  WeG, Word Final Cluster Simplification, Optional vowel-shortening, Word Final Deletion of n8 m8 g8 h8
- * W5  WeG, Diphthong Simplification, Stem vowel alternations
- * W6  Stem vowel alternations, WeG,
- * W7  Stem vowel alternations, WeG
- * W8  Stem vowel alternations,
- * W9  Not in use
- * %^DISIMP  diphthong simpification
+ * **X1** = Diphthong Simplification, Metaphony
+ * **X2** = Diphthong Simplification, Metaphony, Word Final Neutralization of g8, h8, m8
+ * **X3** = Diphthong Simplification, Metaphony
+ * **X4** = WeG, Vowel Shortening, Stem vowel alternations, Word Final Deletion of n8 m8 g8 h8
+ * **X5** = WeG, Diphthong Simplification, Stem vowel alternations
+ * **X6** = WeG, Diphthong Simplification, Metaphony, Word Final Deletion of n8 m8 g8 h8
+ * **X7** = Vowel Shortening, Stem vowel alternations, Word Final Neutralization of g8, h8, m8
+ * **X8** = WeG, Vowel Shortening, Metaphony, Stem Vowel alternations, Word Final Deletion of n8 m8 g8 h8
+ * **X9** = WeG, Dipthtong simplification, Word Final Deletion of n8 m8 g8 h8
+ * **Y1** = Lengthening of Central Consonants, Stem Vowel alternations,
+ * **Y2** = Lengthening of Central Consonants, Stem Vowel alternations,
+ * **Y3** = Lengthening of Central Consonants, Stem Vowel alternations,
+ * **Y4** = Lengthening of Central Consonants, Stem Vowel alternations,
+ * **Y5** = Lengthening of Central Consonants, Word Final Consonant Deletion, Diphthong Simplification, Stem vowel alternations
+ * **Y6** = Lengthening of Central Consonants, Word Final Consonant Deletion, Diphthong Simplification, Stem vowel alternations
+ * **Y7** = Lengthening of Central Consonants, Diphthong Simplification, Stem vowel alternations
+ * **Y8** = Not in use
+ * **Y9** = Lengthening of Central Consonants, Diphthong Simplification
+ * **Q1** = Stem vowel alternations,
+ * **Q2** = Diphthong Simplification, Stem vowel alternations,
+ * **Q3** = Diphthong Simplification, Stem vowel alternations,
+ * **Q4** = WeG, Stem vowel alternations,
+ * **Q5** = WeG, Diphthong Simplification, Stem vowel alternations,
+ * **Q6** = WeG, Vowel shortening,
+ * **Q7** = WeG, Diphthong Simplification, Metaphony,
+ * **Q8** = WeG, Diphthong Simplification, Stem vowel alternations,
+ * **Q9** = Not in use
+ * **W1** = WeG, Vowel Shortening
+ * **W2** = Vowel Shortening,
+ * **W3** = Stem vowel deletion in compounding,
+ * **W4** = WeG, Word Final Cluster Simplification, Optional vowel-shortening, Word Final Deletion of n8 m8 g8 h8
+ * **W5** = WeG, Diphthong Simplification, Stem vowel alternations
+ * **W6** = Stem vowel alternations, WeG,
+ * **W7** = Stem vowel alternations, WeG
+ * **W8** = Stem vowel alternations,
+ * **W9** = Not in use
+ * **%^DISIMP** = diphthong simpification
 
 ### Morphophonemes and Sámi letters
 
- * b9  twol rule override, so that b doesn't turn into t infront of hash
- * e7  shortened i = "e with dot below" from the dictionary
- * e9  twol rule override, so that e doesn't turn into i infront of j
- * d9  twol rule override, so that d doesn't turn into t infront of hash
- * g8  Word Final Neutralization and Deletion
- * g9  twol rule override, so that g doesn't turn into t infront of hash
- * h7
- * h8  Word Final Neutralization and Deletion
- * h9  twol rule override, so that h doesn't turn into t infront of hash
- * i7  twol rule override, so that i doesn't turn into e in certain contextes
- * j9  twol rule override, so that j doesn't turn into i after i
- * k9  twol rule override, so that k doesn't turn into t infront of hash
- * m8  Word Final Neutralization and Deletion
- * m9  twol rule override, so that m doesn't turn into n infront of hash
- * n8  Word Final Neutralization and Deletion
- * n9  twol rule override,
- * o7  shortened u = "o with dot below" from the dictionary
- * o9  twol rule override,  so that o doesn't turn into u infront of j
- * p9  twol rule override, so that p doesn't turn into t infront of hash
- * s9  twol rule override, so that we can have two ss in front of hash
- * t9  twol rule override, so that we can have st in front of hash
- * u7
- * z9  twol rule override, to avoid Word Final Consonant Neutralization
- * ž9  twol rule override, to avoid Word Final Consonant Neutralization
- * š9  twol rule override, so that we can have two šš in front of hash
- * r9
- * æ7  in smi, for lulesámi
- * u6  twol rule override, so that u doesn't turn into o in certain contextes
- * æ9  in smi, for lulesámi
+ * **b9** = twol rule override, so that b doesn't turn into t infront of hash
+ * **e7** = shortened i = "e with dot below" from the dictionary
+ * **e9** = twol rule override, so that e doesn't turn into i infront of j
+ * **d9** = twol rule override, so that d doesn't turn into t infront of hash
+ * **g8** = Word Final Neutralization and Deletion
+ * **g9** = twol rule override, so that g doesn't turn into t infront of hash
+ * **h7** = 
+ * **h8** = Word Final Neutralization and Deletion
+ * **h9** = twol rule override, so that h doesn't turn into t infront of hash
+ * **i7** = twol rule override, so that i doesn't turn into e in certain contextes
+ * **j9** = twol rule override, so that j doesn't turn into i after i
+ * **k9** = twol rule override, so that k doesn't turn into t infront of hash
+ * **m8** = Word Final Neutralization and Deletion
+ * **m9** = twol rule override, so that m doesn't turn into n infront of hash
+ * **n8** = Word Final Neutralization and Deletion
+ * **n9** = twol rule override,
+ * **o7** = shortened u = "o with dot below" from the dictionary
+ * **o9** = twol rule override,  so that o doesn't turn into u infront of j
+ * **p9** = twol rule override, so that p doesn't turn into t infront of hash
+ * **s9** = twol rule override, so that we can have two ss in front of hash
+ * **t9** = twol rule override, so that we can have st in front of hash
+ * **u7** = 
+ * **z9** = twol rule override, to avoid Word Final Consonant Neutralization
+ * **ž9** = twol rule override, to avoid Word Final Consonant Neutralization
+ * **š9** = twol rule override, so that we can have two šš in front of hash
+ * **r9** = 
+ * **æ7** = in smi, for lulesámi
+ * **u6** = twol rule override, so that u doesn't turn into o in certain contextes
+ * **æ9** = in smi, for lulesámi
 
 
- ∑ - a symbol used in front of `#` to block backtracking and
+ **∑** = a symbol used in front of `#` to block backtracking and
           mwe reanalysis in hfst-tokenise (e.g. in dynanic compounds).
           Makes it possible to distinguish lexical and dynamic compounds
           in rules. It is converted to zero together with `#`.
@@ -815,53 +825,63 @@ get the same pronunciation whether read as SME or NOB/NNO/SWE.
 We have manually optimised the structure of our lexicon using following
 flag diacritics to restrict morhpological combinatorics - only allow compounds
 with verbs if the verb is further derived into a noun again:
-|  @P.NeedNoun.ON@ | (Dis)allow compounds with verbs unless nominalised
-|  @D.NeedNoun.ON@ | (Dis)allow compounds with verbs unless nominalised
-|  @C.NeedNoun@ | (Dis)allow compounds with verbs unless nominalised
-|  @P.Vgen.add@ | (Dis)allow VGen
-|  @R.Vgen.add@ | (Dis)allow VGen
-|  @P.12p.add@ | (Dis)allow 1. and 2. pers forms
-|  @R.12p.add@ | (Dis)allow 1. and 2. pers forms
 
-|  @P.Pmatch.Loc@ | Used on multi-token analyses; tell hfst-tokenise/pmatch where in the form/analysis the token should be split.
-|  @P.Pmatch.Backtrack@ | Used on single-token analyses; tell hfst-tokenise/pmatch to backtrack by reanalysing the substrings before and after this point in the form (to find combinations of shorter analyses that would otherwise be missed)
+| Flag | Explanation
+| ---- | ----------- 
+ |  @P.NeedNoun.ON@ | (Dis)allow compounds with verbs unless nominalised
+ |  @D.NeedNoun.ON@ | (Dis)allow compounds with verbs unless nominalised
+ |  @C.NeedNoun@ | (Dis)allow compounds with verbs unless nominalised
+ |  @P.Vgen.add@ | (Dis)allow VGen
+ |  @R.Vgen.add@ | (Dis)allow VGen
+ |  @P.12p.add@ | (Dis)allow 1. and 2. pers forms
+ |  @R.12p.add@ | (Dis)allow 1. and 2. pers forms
+ |  @P.Pmatch.Loc@ | Used on multi-token analyses; tell hfst-tokenise/pmatch where in the form/analysis the token should be split.
+ |  @P.Pmatch.Backtrack@ | Used on single-token analyses; tell hfst-tokenise/pmatch to backtrack by reanalysing the substrings before and after this point in the form (to find combinations of shorter analyses that would otherwise be missed)
 
 
 
-
-|  @D.ErrOrth.ON@ 
-|  @C.ErrOrth@ 
-|  @P.ErrOrth.ON@ 
-|  @R.ErrOrth.ON@ 
+| Flag | Explanation
+| ---- | ----------- 
+ |  @D.ErrOrth.ON@ 
+ |  @C.ErrOrth@ 
+ |  @P.ErrOrth.ON@ 
+ |  @R.ErrOrth.ON@ 
 
 For languages that allow compounding, the following flag diacritics are needed
 to control position-based compounding restrictions for nominals. Their use is
 handled automatically if combined with +CmpN/xxx tags. If not used, they will
 do no harm.
-|  @P.CmpFrst.FALSE@ | Require that words tagged as such only appear first
-|  @D.CmpPref.TRUE@ | Block such words from entering ENDLEX
-|  @P.CmpPref.FALSE@ | Block these words from making further compounds
-|  @D.CmpLast.TRUE@ | Block such words from entering R
-|  @D.CmpNone.TRUE@ | Combines with the next tag to prohibit compounding
-|  @U.CmpNone.FALSE@ | Combines with the prev tag to prohibit compounding
-|  @U.CmpNone.TRUE@ | Combines with the two previous ones to block compounding
-|  @P.CmpOnly.TRUE@ | Sets a flag to indicate that the word has passed R
-|  @D.CmpOnly.FALSE@ | Disallow words coming directly from root.
-|  @D.CmpHyph.TRUE@ | Flag to control hyphenated compounds like proper nouns
-|  @U.CmpHyph.FALSE@ | Flag to control hyphenated compounds like proper nouns
-|  @U.CmpHyph.TRUE@ | Flag to control hyphenated compounds like proper nouns
-|  @C.CmpHyph@ | Flag to control hyphenated compounds like proper nouns
+
+| Flag | Explanation
+| ---- | ----------- 
+ |  @P.CmpFrst.FALSE@ | Require that words tagged as such only appear first
+ |  @D.CmpPref.TRUE@ | Block such words from entering ENDLEX
+ |  @P.CmpPref.FALSE@ | Block these words from making further compounds
+ |  @D.CmpLast.TRUE@ | Block such words from entering R
+ |  @D.CmpNone.TRUE@ | Combines with the next tag to prohibit compounding
+ |  @U.CmpNone.FALSE@ | Combines with the prev tag to prohibit compounding
+ |  @U.CmpNone.TRUE@ | Combines with the two previous ones to block compounding
+ |  @P.CmpOnly.TRUE@ | Sets a flag to indicate that the word has passed R
+ |  @D.CmpOnly.FALSE@ | Disallow words coming directly from root.
+ |  @D.CmpHyph.TRUE@ | Flag to control hyphenated compounds like proper nouns
+ |  @U.CmpHyph.FALSE@ | Flag to control hyphenated compounds like proper nouns
+ |  @U.CmpHyph.TRUE@ | Flag to control hyphenated compounds like proper nouns
+ |  @C.CmpHyph@ | Flag to control hyphenated compounds like proper nouns
+
 Use the following flag diacritics to control downcasing of derived proper
 nouns (e.g. Finnish Pariisi -> pariisilainen). See e.g. North Sámi for how to use
 these flags. There exists a ready-made regex that will do the actual down-casing
 given the proper use of these flags.
-|  @U.Cap.Obl@ | Allowing downcasing of derived names: deatnulasj.
-|  @U.Cap.Opt@ | Allowing downcasing of derived names: deatnulasj.
+
+| Flag | Explanation
+| ---- | ----------- 
+ |  @U.Cap.Obl@ | Allowing downcasing of derived names: deatnulasj.
+ |  @U.Cap.Opt@ | Allowing downcasing of derived names: deatnulasj.
 
 
- * @U.NeedsVowRed.OFF@ is used to force hyphenation/non-reduction: samediggi-
- * @U.NeedsVowRed.ON@ is used to force reduction w/o hyphen: samedigge#xxx
- * @C.NeedsVowRed@ Clearing this feature, so that it doesn't interfere with further compounding
+ * **@U.NeedsVowRed.OFF@** is used to force hyphenation/non-reduction: samediggi-
+ * **@U.NeedsVowRed.ON@** is used to force reduction w/o hyphen: samedigge#xxx
+ * **@C.NeedsVowRed@** Clearing this feature, so that it doesn't interfere with further compounding
 
  * @C.Px@
  * @C.Nom3Px@
@@ -869,14 +889,18 @@ given the proper use of these flags.
  * @R.Px.add@
  * @P.Px.block@
  * @D.Px.block@
+ * @P.Nom12Px.add@
+ * @R.Nom12Px.add@
+ * @P.Nom3Px.add@
+ * @R.Nom3Px.add@
 
- * @R.SpellRlx.ON@ Flag used to tag spell-relax-analysed strings (and only those).
- * @D.SpellRlx.ON@ Flag used to tag spell-relax-analysed strings (and only those).
- * @C.SpellRlx@ Flag used to tag spell-relax-analysed strings (and only those).
+ * **@R.SpellRlx.ON@** Flag used to tag spell-relax-analysed strings (and only those).
+ * **@D.SpellRlx.ON@** Flag used to tag spell-relax-analysed strings (and only those).
+ * **@C.SpellRlx@** Flag used to tag spell-relax-analysed strings (and only those).
 
- * @R.SpaceCmp.ON@ Flag to tag compounds written with a space
- * @D.SpaceCmp.ON@ Flag to tag compounds written with a space
- * @C.SpaceCmp@ Flag to tag compounds written with a space+
+ * **@R.SpaceCmp.ON@** Flag to tag compounds written with a space
+ * **@D.SpaceCmp.ON@** Flag to tag compounds written with a space
+ * **@C.SpaceCmp@** Flag to tag compounds written with a space+
 
 
 
@@ -885,22 +909,26 @@ given the proper use of these flags.
 
  * **LEXICON Root** is the basic lexicon starting everything
 
+**Abbreviation**
 
 
- * **LEXICON Acronym**
+ * **LEXICON Acronym   **
 
 
- * **LEXICON ProperNoun**
+ * **LEXICON ProperNoun   **
 
 
-# Lexicon ENDLEX
+Lexicon ENDLEX
 And this is the ENDLEX of everything:
-```
- @D.CmpOnly.FALSE@@D.CmpPref.TRUE@@D.NeedNoun.ON@ ENDLEX2 ;
-```
+
+ @D.CmpOnly.FALSE@@D.CmpPref.TRUE@@D.NeedNoun.ON@ ENDLEX2 ; 
+
 The `@D.CmpOnly.FALSE@` flag diacritic is ued to disallow words tagged
 with +CmpNP/Only to end here.
 The `@D.NeedNoun.ON@` flag diacritic is used to block illegal compounds.
 
+**ENDLEX2**
 
+**ENDLEX3**
 
+**ENDLEX4**

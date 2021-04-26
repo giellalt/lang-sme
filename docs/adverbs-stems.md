@@ -1,7 +1,7 @@
 
 # North Saami adverbs
 
- * **LEXICON Adverb**
+ * **LEXICON Adverb   **
 
 First comes some multiword adverbs, declared as MWE in tok.txt
 Of these, the ones going to adv are not treated as MWE in
@@ -55,59 +55,59 @@ Then comes the gradating advs
 
 Lexica for adverb subtypes
 
- * **LEXICON LADJE**
+ * **LEXICON LADJE     **
 
- * **LEXICON DIHTE**
-
-
- * **LEXICON LAGAadv**
-
- * **LEXICON LAGAIDadv**
-
- * **LEXICON LEBBUIplc**
+ * **LEXICON DIHTE     **
 
 
- * **LEXICON LEAPPOSplc**
+ * **LEXICON LAGAadv   **
 
- * **LEXICON gadv**  adv that can form compounds
+ * **LEXICON LAGAIDadv   **
 
- * **LEXICON gadv-plc**  adv that can form compounds
-
- * **LEXICON adv-plc**
-
- * **LEXICON adv-time**
-
- * **LEXICON adv-time-plc**
+ * **LEXICON LEBBUIplc   **
 
 
+ * **LEXICON LEAPPOSplc   **
 
- * **LEXICON CSadv**
+ * **LEXICON gadv   **  adv that can form compounds
 
- * **LEXICON CSadvFoc/Neg-ge**
+ * **LEXICON gadv-plc   **  adv that can form compounds
 
- * **LEXICON adv-subqst**
+ * **LEXICON adv-plc   **
 
+ * **LEXICON adv-time   **
 
- * **LEXICON adv-comp**
-
- * **LEXICON adv-sup**
-
- * **LEXICON adv-plc-comp**
-
- * **LEXICON adv-plc-sup**
+ * **LEXICON adv-time-plc   **
 
 
- * **LEXICON adv-time-comp**
 
- * **LEXICON adv-time-sup**
+ * **LEXICON CSadv   **
+
+ * **LEXICON CSadvFoc/Neg-ge   **
+
+ * **LEXICON adv-subqst   **
 
 
- * **LEXICON COMPADV**
+ * **LEXICON adv-comp   **
 
- * **LEXICON plc-SUPADVmus**
+ * **LEXICON adv-sup   **
 
- * **LEXICON plc-SUPADVmusj**
+ * **LEXICON adv-plc-comp   **
+
+ * **LEXICON adv-plc-sup   **
+
+
+ * **LEXICON adv-time-comp   **
+
+ * **LEXICON adv-time-sup   **
+
+
+ * **LEXICON COMPADV   **
+
+ * **LEXICON plc-SUPADVmus   **
+
+ * **LEXICON plc-SUPADVmusj   **
 
 
 The main adverb lexicon
- * **LEXICON adv** simply gives the tag +Adv and directs to K
+ * **LEXICON adv   ** simply gives the tag +Adv and directs to K
