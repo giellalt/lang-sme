@@ -1236,6 +1236,8 @@ Remove unwanted analyses
 
 
 
+
+
 * **notPass** removes som Pass readings which are not likely at all
 
 
@@ -2736,7 +2738,6 @@ The following two rules are omitted. They only inflect on the disambiguation of 
 
 
 * **valjitAdv**
-
 * **vejolaččatAdv**
 
 * **aččatAttr**
@@ -3478,6 +3479,7 @@ The rules are not documented yet
 * **Cop** 
 
 
+
 * **ANom**  removes A Nom
 
 
@@ -3551,6 +3553,9 @@ This block of rules is there to ensure case agreement for comparatives.
 
 * **ASgNomNoSubj** selects A Sg Nom after copulas Sg3 or Neg Sg3
 
+
+* **ASgNomNoSubj** selects A Sg Nom also when no copulas 
+
 * **ASgNomafterCop** selects A Sg Nom after copulas and Sg Nom, not so strong constraint for the target
 
 
@@ -3564,6 +3569,8 @@ This block of rules is there to ensure case agreement for comparatives.
 * **Wr1775xc** Selects (A Sg Nom) if you are (N Sg Loc), Der/NomAg or (Ex/N A). Copulas is to the left. EOS or CLB is to the right
 
 * **Wr1776xc** selects (A Sg Nom) 
+
+
 
 
 

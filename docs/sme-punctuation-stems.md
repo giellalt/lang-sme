@@ -1,7 +1,7 @@
 
 # Punctuation symbols
 
- * __LEXICON Punctuation_SME   __ contains the list
+ * **LEXICON Punctuation_SME   ** contains the list
 of punctuation symbols that are problematic from a normative
 point of view, and only those. Everything else is coming from
 the standard Punctuation lexicon.

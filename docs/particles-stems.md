@@ -4,12 +4,12 @@
 
 
 
- * **LEXICON Particles** gives all particles
+ * **LEXICON Particles   ** gives all particles
 
 
- * **LEXICON pcle** gives the tag +Pcle
+ * **LEXICON pcle   ** gives the tag +Pcle
 
- * **LEXICON qpcle** gives two tags, +Pcle and +Qst
+ * **LEXICON qpcle   ** gives two tags, +Pcle and +Qst
 
 Perhaps this should be opened to  a direction to K
 and all the ge versions should be removed.
