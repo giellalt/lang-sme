@@ -934,6 +934,90 @@ The `@D.NeedNoun.ON@` flag diacritic is used to block illegal compounds.
 **ENDLEX4**
 Divvun & Giellatekno - open source grammars for Sámi and other languages
 
+#                    North Sámi compounding
+
+This file governs prefixing and compounding, with the following lexica and pointers. All lexica and lexicon entries are documented.
+
+
+**LEXICON Prefixes** = lexicon for adding *eahpe and pointing to **N, A, V**
+
+
+**LEXICON R** = lexicon which is pointed to from affixes files. Here the strings get flags to control compounding (*@P.CmpFrst.FALSE@* etc.) and are redirected to **RAlmostReal**.
+
+**LEXICON RAlmostReal** = lexicon pointed to from R (where flags are added) and pointing to **RrealAfterCmpNFlags** and (with **+Cmp** tag) to **MiddleNouns**.
+lexicalising the 3-part compounds, with the tag ShCmp. It has two entries:
+* Just pointing directly to *RrealAfterCmpNFlags*
+* Adding **+Cmp#:∑# and pointing to **MiddleNouns**.
+These nouns should not return to themselves, to avoid -jotjotjot-
+They thus point directly to Rreal.
+
+**LEXICON Rreal** = This is the former R lexicon, renamed to avoid the MiddleNouns loop. The string gets flags like for R, and directed to **RrealAfterCmpNFlags**.
+* @P.CmpFrst.FALSE@ and other flags to control compounding
+
+**LEXICON RrealAfterCmpNFlags** = This was also part of the former R lexicon, here renamed to avoid the MiddleNouns loop. Here it gets flags ensuring the result is N+N.
+* N+N is the normal case.
+* N+(V to N) ensured by Flag diacr restricting to V>N.
+* N+(A to N) A needs a N tag later in the derivation
+* Then 3 cases (points to N, V, A)  add a hyphen, so
+Sem-julggaštus and maana-gåetie
+are allowed.
+* Then 3 cases (to N, V, A) add a SOFT hyphen, to
+make it possible to analyse certain texts
+from printing houses and newspapers.
+* to Acronym,  maana-tv, "lomme-cd-spelar"
+* to CmpNumeral, maana-123
+* to ProperNoun, as the 2nd part of compounds for non-hyph.
+words. viessu-London goes through here.
+* To words requiring hyphens, like -tv- and -cd-
+* To ENDLEX, to take care of Oahppo- ja dutkandept
+
+
+**LEXICON RHyph** =  Recursive lexicon from all classes REQUIRING a hyphen to follow.
+* Add Flags to control compounding, go to RHyphTags
+
+**LEXICON RHyphTags** = adds +Cmp/Hyph and +Cmp, and then - on lower side.
+* To Noun, the normal case.
+* To HyphNouns, for nouns requiring hyphens, like -tv- and -cd-
+* To Verb via flag diacr declares that the compound
+* To A,  needs a N tag later in the derivation
+* To Acronym, like  maana-tv, "lomme-cd-spelar"
+* to CmpNumeral,  NRK-2 etc.
+* Proper nouns as the 2nd part of compounds for hyph-words.
+London-Hull is covered here, whereas Hull-viessu
+is covered by RHyph + Noun.
+* To ENDLEX to take care of Oahpo- ja dutkandept - want this in speller
+
+
+
+**LEXICON RNum** =  For Num Cmp Noun, vi vil ikke ha Num Cmp Num
+* Gives  +Cmp/Hyph+Cmp and points to Noun
+
+
+
+**LEXICON Rnoun** = the lexicon has two entries: 
+* either adds > and goes to the compound lexicon Rreal
+* or goes to ENDLEX as *Kárášjot*, independent (sub) word, with *+Err/Orth*
+
+**LEXICON RProp** = lexicon pointed to from propernouns, and containing 3 entries
+* Flags to control compounding and to **RPropTags**
+* nammasaš, points to DER-SAS
+* nammasaš, points to AHKASAS, for MT
+
+
+**LEXICON RPropTags** = A special lexicon for handling proper noun compounding without hyphens. Two entries:
+ * **@C.CmpHyph@ RHyphTags ;**:  This is the regular case, giving hyphens to compounds
+ * **@D.CmpHyph.TRUE@@U.CmpHyph.FALSE@+Use/-Spell+Cmp/NoHyph+Cmp#:@D.CmpHyph.TRUE@@U.CmpHyph.FALSE@∑# Noun ;**:  This is the special case, going directly to nouns (*not* to NounRoot,
+            as that would allow compounding with words explicitly coded to disallow
+            such compounds)
+
+**LEXICON flagON-R** = turns NeedsVowRed on:
+* adds @U.NeedsVowRed.ON@ and directs to **R**
+
+**LEXICON flagOFF-R** = turns NeedsVowRed off:
+* adds @U.NeedsVowRed.OFF@ and directs to **R**
+
+Divvun & Giellatekno - open source grammars for Sámi and other languages
+
 # North Saami adjective declension file
 
 
@@ -1439,6 +1523,217 @@ eventually.
  * **LEXICON AGAdj  **  mostly words like guovttejagat, allajoccat etc
 
  * **LEXICON AGAdjINFL **
+
+# North Sámi adjective lexicon
+
+
+
+
+
+ * **LEXICON LEXATTR  ** This lexicon is here to give the tags to the compounding
+
+ * **LEXICON At    ** gives +A+Attr and directs to K
+
+ * **LEXICON PrfPrc ** Gives +A+Attr and Sg/Pl Nom and directs to K
+
+ * **LEXICON FINJU- ** compounds only, directs to Rreal and NAMAT
+
+ * **LEXICON ALIT ** Both second-part compound and independent adj.
+čáhppesalit bábir, alit bábir
+
+
+ * **LEXICON Eahpe_Adjective ** is a long list of lexicalised eahpe-prefixed adjs
+
+ * **LEXICON NomActVEARA ** hardcoded postposition frases with veara, for speller
+
+
+
+
+ * **LEXICON Adjective ** is the main adjective list
+
+ * **LEXICON AdjectivePx ** Px-forms are restricted to this lexicon
+Move adjs that may take Px from **Adjective** to this lexicon.
+
+
+ * **LEXICON AdjectiveNoPx ** is the main adjective list, not taking Px
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+North Saami adposition lexicon
+
+First come the 3 continuation lexica, the division is based on Nickel
+and should probably be revised. Then comes the adpositions themselves.
+The uninflecting ones are pointed to the 3 tag lexica, the Px ones to the
+Px lexica in sme-lex.txt and closed-sme-lex.txt.
+
+
+ * **LEXICON Pp   ** gives both +Po and +Pr
+
+ * **LEXICON Pp-Err   ** gives both +Po and +Pr
+
+
+
+ * **LEXICON Postp   ** gives +Po
+
+ * **LEXICON Postp-Err   ** gives +Po
+
+
+ * **LEXICON Prep   ** gives +Pr
+
+ * **LEXICON Prep-Err   ** gives +Pr
+
+
+ * **LEXICON Adposition   ** is the lexicon with the adpositions
+
+
+# North Saami adverbs
+
+ * **LEXICON Adverb   **
+
+First comes some multiword adverbs, declared as MWE in tok.txt
+Of these, the ones going to adv are not treated as MWE in
+abbr.txt and preprocess, whereas the ones going to
+multiadv are treated as one unit in the syntax.
+There are only a handful of words in the multiadv lexicon,
+they are the ones that are mentioned in sme-dis.rle.
+Goal: have mwe adverbs with syntactic behaviour as single
+words going to multiadv.
+
+
+
+
+
+
+
+
+
+
+Thereafter comes the ordinary adverb list.
+
+
+Then comes the gradating advs
+
+* type 1
+
+
+
+
+
+* type 2a
+
+
+* type 2b
+
+* 2c
+
+* 2d
+
+* type 3a
+
+
+
+* type 3b
+
+* type 3c
+
+
+
+
+
+Lexica for adverb subtypes
+
+ * **LEXICON LADJE     **
+
+ * **LEXICON DIHTE     **
+
+
+ * **LEXICON LAGAadv   **
+
+ * **LEXICON LAGAIDadv   **
+
+ * **LEXICON LEBBUIplc   **
+
+
+ * **LEXICON LEAPPOSplc   **
+
+ * **LEXICON gadv   **  adv that can form compounds
+
+ * **LEXICON gadv-plc   **  adv that can form compounds
+
+ * **LEXICON adv-plc   **
+
+ * **LEXICON adv-time   **
+
+ * **LEXICON adv-time-plc   **
+
+
+
+ * **LEXICON CSadv   **
+
+ * **LEXICON CSadvFoc/Neg-ge   **
+
+ * **LEXICON adv-subqst   **
+
+
+ * **LEXICON adv-comp   **
+
+ * **LEXICON adv-sup   **
+
+ * **LEXICON adv-plc-comp   **
+
+ * **LEXICON adv-plc-sup   **
+
+
+ * **LEXICON adv-time-comp   **
+
+ * **LEXICON adv-time-sup   **
+
+
+ * **LEXICON COMPADV   **
+
+ * **LEXICON plc-SUPADVmus   **
+
+ * **LEXICON plc-SUPADVmusj   **
+
+
+The main adverb lexicon
+ * **LEXICON adv   ** simply gives the tag +Adv and directs to K
+
+# North Saami Conjunctions
+
+
+
+
+
+ * **LEXICON Conjunction   ** contains the list of conjunctions
+
+ * **LEXICON ConfuseConjunction ** contains conjunctions that are
+                               homonyms with words in the open POS's
+
+ * **LEXICON CleanConjunction ** contains conjunctions that are not
+                           homonymous with any of the open POS's
+
+
+
+ * **LEXICON Cc-Conf  ** assigns the tag +CC and allows further grammar checker processing for disambiguation against nouns in potential compounds written apart
 Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 
@@ -2226,6 +2521,376 @@ Trisyllabic nouns
 
 
  * **LEXICON DIMINV ** diminutives, these comes from bisyll nouns
+
+
+ * **LEXICON NounRoot  ** Main lexicon, dividing in Noun, FirstComponent, NyphNouns
+
+
+
+ * **LEXICON MiddleNouns  **
+
+ * **LEXICON HyphNouns  **
+
+
+
+ * **LEXICON FirstComponent  **
+
+
+ * **LEXICON Eahpe_Noun  **
+
+
+ * **LEXICON NAMAT ** gives »»» and directs to NAMATCont
+
+
+ * **LEXICON NAMATCont ** second-part compounds
+
+
+
+
+
+ * **LEXICON SASCont ** FROM NUMERALS, gives -kilosaš etc.
+
+
+ * **LEXICON Noun  ** dividing in NounNoPx, NounPx (with a P.Px.add flag)  and NounPxKin (with a P.Nom3Px.add flag)
+
+ * **LEXICON NounNoPx   ** here goes nouns not taking Px.
+
+
+
+
+
+
+
+ * **LEXICON NounPxKin  ** this is the noun lexicon for nouns which can have Px Nom 3. person, mostly kinshipterms
+
+ * **LEXICON NounPx  ** this is the main noun lexicon
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# North Saami numerals
+
+
+
+
+
+## The initial lexica
+
+ * **LEXICON Numeral**  initial lexica
+
+ The **LEXICON CmpNumeral**  lexicon is the entrance for compounds
+ with numbers. Introduced to restrict such compounding
+ to a subgroup of numerals only, mainly to exclude
+ roman numerals, that turned out to be too problematic.
+ With this change, roman numerals are only recognised
+ on their own.
+
+
+
+
+ * **LEXICON MILJON**  miljons and miljards
+
+
+
+
+ * **LEXICON OVERDUHAT** for the numerals over 1000.
+
+
+
+
+
+ * **LEXICON O-OKTAF** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
+
+
+ * **LEXICON O-2TO9F** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
+
+ * **LEXICON 1TO9DUHAT**
+
+
+
+
+ * **LEXICON O-JUSTLOGIF** This lexicon is for the number 10 000 only. it is separated from the rest to avoid forms like *logivihttaduhát, etc.
+
+
+
+ * **LEXICON O-LOGIF** this lexicon is accessed only via other O-lexica, and not directly from OVERDUHAT. Thus, *logivihttaduhát, etc. is avoided.
+
+
+
+ * **LEXICON O-2TO9LOG** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
+
+
+
+ * **LEXICON O-NUPPELOT**  Teens of thousands
+
+ * **LEXICON O-NL**
+
+ * **LEXICON O-NUPPELOHKAI**
+
+
+
+
+ * **LEXICON O-CUODI** Hundreds of thousands
+
+ * **LEXICON O-2TO9CUO**
+
+ * **LEXICON O-GCUO**
+
+
+ * **LEXICON DUHAT**
+
+
+
+ * **LEXICON JUSTDUHAT** for numerals going via 1000
+
+
+
+
+ * **LEXICON OLD** for the old counting thirteen hundred etc.
+
+ * **LEXICON NLX**
+
+
+ * **LEXICON NUPPELOHKAICUODI**
+
+
+
+
+ * **LEXICON UNDERDUHAT**  the numerals under 1000
+
+
+ * **LEXICON ONLY_CMP**
+
+
+ * **LEXICON OKTAF**
+
+
+ * **LEXICON 2TO9F**
+
+
+ * **LEXICON 11TO99F**
+
+
+
+ * **LEXICON BARELOGIF**
+
+ * **LEXICON LOHKI**
+
+
+ * **LEXICON 2TO9LOG**
+
+
+ * **LEXICON 21TO99**
+
+
+ * **LEXICON 111TO119**
+
+
+ * **LEXICON CUODI**
+
+
+
+ * **LEXICON 2TO9CUO**
+
+ * **LEXICON GCUODI**
+
+
+ * **LEXICON 1TO9CUODI**
+
+
+
+
+
+ * **LEXICON NUPPELOGIS**
+
+
+ * **LEXICON LOHKAI-END**
+
+ * **LEXICON ARABICCOMPOUNDS**  ! arabic as first part,
+
+
+ * **LEXICON NUMERALCOMPOUNDS**: numeral as first part: duhatjienat,
+ logigielat, etc.
+
+ * **LEXICON SAS** gives :»»» and goes to SASCont
+
+
+
+
+
+
+
+ * **LEXICON num-ordinal** Ordinal numbers
+
+ * **LEXICON num-ordinal-1** Ordinal numbers vuosttas, vuosttaš
+
+ * **LEXICON num-ordinal-2to9** Ordinal numbers, 2 to 20, even though the name implies differenty
+
+
+ * **LEXICON VUOSTTAS**
+
+
+ * **LEXICON num-collective** Collective numerals
+
+
+
+
+
+ * **LEXICON num-imprecise** Imprecise numbers
+
+
+
+# Arabic numerals
+
+Arabic numeral expressions can be classified in at least the following categories:
+* **general numeric expressions: 123 456,789 - note**:  space as thousand separator, groups of three digits
+* **accounting numeric expressions: 123.456,789 - note**:  full stop as thousands separator, groups of three digits
+* **numeric range expressions**:  12-14 - can be dates, times, lengths, masses and other sorts of measurements
+* **measurements**:  123 kg
+* **dates**:  2.4.1999, 4.5., 7.8.02, 04.10.2016
+* **times: 12**: 34
+* **money amounts**:  kr 1234,56
+* **temperature**:  –8°C, 256°K, 100°F
+
+And for sure more than these. Previously everything has been more or less
+lumped together, but to avoid noise and to get better input for grammar
+checking the ARABICS section should be rewritten such that each category
+gets its own lexicon. That way it is easier to restrict the syntax of
+numerical expressions in each category.
+
+
+
+
+
+
+
+
+ * **LEXICON ONLY_OKTA**
+
+
+ * **LEXICON LOGIF**
+
+
+ * **LEXICON NUPPELOHKAI**
+
+
+
+ * **LEXICON GOLBMALOGIOKTA**
+
+ * **LEXICON GAVCCILOGIOKTA**
+
+
+ * **LEXICON GUOKTELOGIOKTA**
+
+ * **LEXICON VIHTTALOGIOKTA**
+
+ * **LEXICON GOLBMALOGIGUOKTE**
+
+ * **LEXICON GAVCCILOGIGUOKTE**
+
+
+ * **LEXICON GUOKTELOGIGUOKTE**
+
+ * **LEXICON VIHTTALOGIGUOKTE**
+
+ * **LEXICON GOLBMALOGIGOLBMA**
+
+ * **LEXICON GAVCCILOGIGOLBMA**
+
+
+ * **LEXICON GUOKTELOGIGOLBMA**
+
+ * **LEXICON VIHTTALOGIGOLBMA**
+
+ * **LEXICON GOLBMALOGINJEALLJE**
+
+ * **LEXICON GAVCCILOGINJEALLJE**
+
+
+ * **LEXICON GUOKTELOGINJEALLJE**
+
+ * **LEXICON VIHTTALOGINJEALLJE**
+
+ * **LEXICON GOLBMALOGIVIHTTA**
+
+ * **LEXICON GAVCCILOGIVIHTTA**
+
+
+ * **LEXICON GUOKTELOGIVIHTTA**
+
+ * **LEXICON VIHTTALOGIVIHTTA**
+
+ * **LEXICON GOLBMALOGIGUHTTA**
+
+ * **LEXICON GAVCCILOGIGUHTTA**
+
+ * **LEXICON GUOKTELOGIGUHTTA**
+
+ * **LEXICON VIHTTALOGIGUHTTA**
+
+ * **LEXICON GOLBMALOGICIEZA**
+
+ * **LEXICON GAVCCILOGICIEZA**
+
+
+ * **LEXICON GUOKTELOGICIEZA**
+
+ * **LEXICON VIHTTALOGICIEZA**
+
+ * **LEXICON GOLBMALOGIGAVCCI**
+
+ * **LEXICON GAVCCILOGIGAVCCI**
+
+
+ * **LEXICON GUOKTELOGIGAVCCI**
+
+ * **LEXICON VIHTTALOGIGAVCCI**
+
+ * **LEXICON GOLBMALOGIOVCCI**
+
+ * **LEXICON GAVCCILOGIOVCCI**
+
+ * **LEXICON GUOKTELOGIOVCCI**
+
+ * **LEXICON VIHTTALOGIOVCCI**
+
+# This file contains the Particles
+
+
+
+
+ * **LEXICON Particles   ** gives all particles
+
+
+ * **LEXICON pcle   ** gives the tag +Pcle
+
+ * **LEXICON qpcle   ** gives two tags, +Pcle and +Qst
+
+Perhaps this should be opened to  a direction to K
+and all the ge versions should be removed.
+(i.e. only goit, not goitge). This errouneously
+permits gege, goge, etc., though, and we thus leave
+things as they are.
 Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 
@@ -2280,6 +2945,256 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
  * **LEXICON PxPlCom12V   ** for first, second person comitative Px
 
  * **LEXICON PxPlCom3V   ** for third person comitative Px
+
+# This file contains the Pronouns
+
+
+
+
+
+
+ * **LEXICON Pronoun   ** Points to all the pronoun subgrops
+
+
+
+
+ * **LEXICON Personal   ** , splitting in 1st, 2nd, 3rd
+
+## Interrogative pronouns
+
+Giving ideosyncratic Sg Nom of gii, mii lexically
+Sending the oblique forms of gii, mii to an oblique sublexicon
+Giving the stem of guhte, guhtemuš, goabbá
+
+ * **LEXICON Interrogative   **
+
+
+
+
+## Relative pronouns
+
+ * **LEXICON Relative   **
+
+
+## Demonstrative pronouns
+
+## Giving baseform + all demonstrative stems
+## Pointing to case paradigms
+
+ * **LEXICON Demonstrative   **
+
+
+
+
+
+## Reflexive pronouns
+
+Two nominative reflexives, and pointer to the rest
+The Pl one is used for Du as well, here given two entries.
+Should one of them be removed?
+
+ * **LEXICON Reflexive   **
+
+## Reciprocal pronouns
+
+The first 4 entries handle the first element of the recipr.
+The next 12 handle the 2nd part of the non-Px recipr.
+The members of the third section  point to Px lexica.
+
+ * **LEXICON Reciprocal   **
+
+## Indefinite pronouns
+
+Dividing the indefinites in three groups
+
+ * **LEXICON Indefinite   **
+
+Declineable indefinite pronouns with case + clitic
+
+ * **LEXICON declindef-cl   **
+
+
+
+
+
+
+Declineable indefinites with normal case paradigms
+
+ * **LEXICON declindef   **
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Separate lexica for exceptional entries
+
+ * **LEXICON declindef-idiosync   **
+separate lexica for these entries:
+oktat
+
+
+
+
+
+
+The indeclineable indefinites
+
+ * **LEXICON indeclindef   **
+
+
+
+# File containing North Saami abbreviations
+
+## Lexica for adding tags and periods
+
+Splitting in 4 + 1 groups, because of the preprocessor
+
+ * **LEXICON Abbreviation-sme **
+ 1. The ITRAB ;	   lexicon (intransitive abbrs)
+ 1. The TRNUMAB ;  lexicon (abbrs trans wrt. numberals)
+ 1. The TRAB ;	   lexicon (transitive abbrs)
+ 1. The NOAB ;	   lexicon (not really abbrs)
+ 1. The NUMNOAB ;  lexicon (not behaving as abbr before num)
+
+## The abbreviation lexicon itself
+
+
+
+ * **LEXICON ITRAB ** are intransitive abbreviations, A.S. etc.
+
+
+
+ * **LEXICON NOAB ** du, gen, jur
+
+This class contains homonyms, which are both intransitive
+abbreviations and normal words. The abbreviation usage
+is less common and thus only the occurences in the middle of
+the sentnece (when next word has small letters) can be
+considered as true cases.
+
+
+
+ * **LEXICON TRNUMAB ** contains abbreviations who are transitive in front of numerals
+
+For abbrs for which numerals are complements, but other
+words not necessarily are. This group treats arabic numerals as
+if it were transitive but letters as if it were intransitive.
+
+
+
+
+ * **LEXICON TRAB ** contains transitive abbreviations
+
+This lexicon is for abbrs that always have a constituent following it.
+
+
+
+ * **LEXICON NUMNOAB ** su, dii
+
+This class contains homonyms, which are both abbrs for
+which numerals are complements and normal words. The abbreviation usage
+is less common and thus only the occurences in the middle of
+the sentence can be considered as true cases.
+
+ * **LEXICON Acronym-sme   ** divides the acros in the 3 types just mentioned.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ * **LEXICON smallacro   ** contains acros with small letters
+
+
+
+
+
+# The North Saami proper noun lexicon
+
+
+
+
+ * **LEXICON Prefix-Proper   ** for first-part names
+
+ * **LEXICON ProperNoun-sme-nocomp   ** for no cmp without hyph
+
+
+
+
+
+
+# Punctuation symbols
+
+ * **LEXICON Punctuation_SME   ** contains the list
+of punctuation symbols that are problematic from a normative
+point of view, and only those. Everything else is coming from
+the standard Punctuation lexicon.
+
+They are all tagged *+RIGHT* even though the correct quotation
+mark is supposed to be used on both sides. This is done to simplify
+generation, by keeping the same tagging as the standard analysis.
+
+
+# The North Saami Subjunctions
+
+
+
+
+
+
+
+ * **LEXICON Subjunction   ** contains the list of subjunctions.
+
+ * **LEXICON ConfuseSubjunction ** contains subjunctions that are
+                               homonyms with words in the open POS's
+
+ * **LEXICON CleanSubjunction ** contains subjunctions that are not
+                           homonymous with any of the open POS's
+
+
+
+ * **LEXICON Cs-Conf  ** assigns the tag +CC and allows further grammar checker processing for disambiguation against nouns in potential compounds written apart
+
 Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 
@@ -2968,825 +3883,6 @@ These are treated separately because
 
 
 
-# File containing North Saami abbreviations
-
-## Lexica for adding tags and periods
-
-Splitting in 4 + 1 groups, because of the preprocessor
-
- * **LEXICON Abbreviation-sme **
- 1. The ITRAB ;	   lexicon (intransitive abbrs)
- 1. The TRNUMAB ;  lexicon (abbrs trans wrt. numberals)
- 1. The TRAB ;	   lexicon (transitive abbrs)
- 1. The NOAB ;	   lexicon (not really abbrs)
- 1. The NUMNOAB ;  lexicon (not behaving as abbr before num)
-
-## The abbreviation lexicon itself
-
-
-
- * **LEXICON ITRAB ** are intransitive abbreviations, A.S. etc.
-
-
-
- * **LEXICON NOAB ** du, gen, jur
-
-This class contains homonyms, which are both intransitive
-abbreviations and normal words. The abbreviation usage
-is less common and thus only the occurences in the middle of
-the sentnece (when next word has small letters) can be
-considered as true cases.
-
-
-
- * **LEXICON TRNUMAB ** contains abbreviations who are transitive in front of numerals
-
-For abbrs for which numerals are complements, but other
-words not necessarily are. This group treats arabic numerals as
-if it were transitive but letters as if it were intransitive.
-
-
-
-
- * **LEXICON TRAB ** contains transitive abbreviations
-
-This lexicon is for abbrs that always have a constituent following it.
-
-
-
- * **LEXICON NUMNOAB ** su, dii
-
-This class contains homonyms, which are both abbrs for
-which numerals are complements and normal words. The abbreviation usage
-is less common and thus only the occurences in the middle of
-the sentence can be considered as true cases.
-
- * **LEXICON Acronym-sme   ** divides the acros in the 3 types just mentioned.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- * **LEXICON smallacro   ** contains acros with small letters
-
-
-
-
-
-# North Sámi adjective lexicon
-
-
-
-
-
- * **LEXICON LEXATTR  ** This lexicon is here to give the tags to the compounding
-
- * **LEXICON At    ** gives +A+Attr and directs to K
-
- * **LEXICON PrfPrc ** Gives +A+Attr and Sg/Pl Nom and directs to K
-
- * **LEXICON FINJU- ** compounds only, directs to Rreal and NAMAT
-
- * **LEXICON ALIT ** Both second-part compound and independent adj.
-čáhppesalit bábir, alit bábir
-
-
- * **LEXICON Eahpe_Adjective ** is a long list of lexicalised eahpe-prefixed adjs
-
- * **LEXICON NomActVEARA ** hardcoded postposition frases with veara, for speller
-
-
-
-
- * **LEXICON Adjective ** is the main adjective list
-
- * **LEXICON AdjectivePx ** Px-forms are restricted to this lexicon
-Move adjs that may take Px from **Adjective** to this lexicon.
-
-
- * **LEXICON AdjectiveNoPx ** is the main adjective list, not taking Px
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-North Saami adposition lexicon
-
-First come the 3 continuation lexica, the division is based on Nickel
-and should probably be revised. Then comes the adpositions themselves.
-The uninflecting ones are pointed to the 3 tag lexica, the Px ones to the
-Px lexica in sme-lex.txt and closed-sme-lex.txt.
-
-
- * **LEXICON Pp   ** gives both +Po and +Pr
-
- * **LEXICON Pp-Err   ** gives both +Po and +Pr
-
-
-
- * **LEXICON Postp   ** gives +Po
-
- * **LEXICON Postp-Err   ** gives +Po
-
-
- * **LEXICON Prep   ** gives +Pr
-
- * **LEXICON Prep-Err   ** gives +Pr
-
-
- * **LEXICON Adposition   ** is the lexicon with the adpositions
-
-
-# North Saami adverbs
-
- * **LEXICON Adverb   **
-
-First comes some multiword adverbs, declared as MWE in tok.txt
-Of these, the ones going to adv are not treated as MWE in
-abbr.txt and preprocess, whereas the ones going to
-multiadv are treated as one unit in the syntax.
-There are only a handful of words in the multiadv lexicon,
-they are the ones that are mentioned in sme-dis.rle.
-Goal: have mwe adverbs with syntactic behaviour as single
-words going to multiadv.
-
-
-
-
-
-
-
-
-
-
-Thereafter comes the ordinary adverb list.
-
-
-Then comes the gradating advs
-
-* type 1
-
-
-
-
-
-* type 2a
-
-
-* type 2b
-
-* 2c
-
-* 2d
-
-* type 3a
-
-
-
-* type 3b
-
-* type 3c
-
-
-
-
-
-Lexica for adverb subtypes
-
- * **LEXICON LADJE     **
-
- * **LEXICON DIHTE     **
-
-
- * **LEXICON LAGAadv   **
-
- * **LEXICON LAGAIDadv   **
-
- * **LEXICON LEBBUIplc   **
-
-
- * **LEXICON LEAPPOSplc   **
-
- * **LEXICON gadv   **  adv that can form compounds
-
- * **LEXICON gadv-plc   **  adv that can form compounds
-
- * **LEXICON adv-plc   **
-
- * **LEXICON adv-time   **
-
- * **LEXICON adv-time-plc   **
-
-
-
- * **LEXICON CSadv   **
-
- * **LEXICON CSadvFoc/Neg-ge   **
-
- * **LEXICON adv-subqst   **
-
-
- * **LEXICON adv-comp   **
-
- * **LEXICON adv-sup   **
-
- * **LEXICON adv-plc-comp   **
-
- * **LEXICON adv-plc-sup   **
-
-
- * **LEXICON adv-time-comp   **
-
- * **LEXICON adv-time-sup   **
-
-
- * **LEXICON COMPADV   **
-
- * **LEXICON plc-SUPADVmus   **
-
- * **LEXICON plc-SUPADVmusj   **
-
-
-The main adverb lexicon
- * **LEXICON adv   ** simply gives the tag +Adv and directs to K
-
-# North Saami Conjunctions
-
-
-
-
-
- * **LEXICON Conjunction   ** contains the list of conjunctions
-
- * **LEXICON ConfuseConjunction ** contains conjunctions that are
-                               homonyms with words in the open POS's
-
- * **LEXICON CleanConjunction ** contains conjunctions that are not
-                           homonymous with any of the open POS's
-
-
-
- * **LEXICON Cc-Conf  ** assigns the tag +CC and allows further grammar checker processing for disambiguation against nouns in potential compounds written apart
-
-
- * **LEXICON NounRoot  ** Main lexicon, dividing in Noun, FirstComponent, NyphNouns
-
-
-
- * **LEXICON MiddleNouns  **
-
- * **LEXICON HyphNouns  **
-
-
-
- * **LEXICON FirstComponent  **
-
-
- * **LEXICON Eahpe_Noun  **
-
-
- * **LEXICON NAMAT ** gives »»» and directs to NAMATCont
-
-
- * **LEXICON NAMATCont ** second-part compounds
-
-
-
-
-
- * **LEXICON SASCont ** FROM NUMERALS, gives -kilosaš etc.
-
-
- * **LEXICON Noun  ** dividing in NounNoPx, NounPx (with a P.Px.add flag)  and NounPxKin (with a P.Nom3Px.add flag)
-
- * **LEXICON NounNoPx   ** here goes nouns not taking Px.
-
-
-
-
-
-
-
- * **LEXICON NounPxKin  ** this is the noun lexicon for nouns which can have Px Nom 3. person, mostly kinshipterms
-
- * **LEXICON NounPx  ** this is the main noun lexicon
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# North Saami numerals
-
-
-
-
-
-## The initial lexica
-
- * **LEXICON Numeral**  initial lexica
-
- The **LEXICON CmpNumeral**  lexicon is the entrance for compounds
- with numbers. Introduced to restrict such compounding
- to a subgroup of numerals only, mainly to exclude
- roman numerals, that turned out to be too problematic.
- With this change, roman numerals are only recognised
- on their own.
-
-
-
-
- * **LEXICON MILJON**  miljons and miljards
-
-
-
-
- * **LEXICON OVERDUHAT** for the numerals over 1000.
-
-
-
-
-
- * **LEXICON O-OKTAF** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
-
-
- * **LEXICON O-2TO9F** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
-
- * **LEXICON 1TO9DUHAT**
-
-
-
-
- * **LEXICON O-JUSTLOGIF** This lexicon is for the number 10 000 only. it is separated from the rest to avoid forms like *logivihttaduhát, etc.
-
-
-
- * **LEXICON O-LOGIF** this lexicon is accessed only via other O-lexica, and not directly from OVERDUHAT. Thus, *logivihttaduhát, etc. is avoided.
-
-
-
- * **LEXICON O-2TO9LOG** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
-
-
-
- * **LEXICON O-NUPPELOT**  Teens of thousands
-
- * **LEXICON O-NL**
-
- * **LEXICON O-NUPPELOHKAI**
-
-
-
-
- * **LEXICON O-CUODI** Hundreds of thousands
-
- * **LEXICON O-2TO9CUO**
-
- * **LEXICON O-GCUO**
-
-
- * **LEXICON DUHAT**
-
-
-
- * **LEXICON JUSTDUHAT** for numerals going via 1000
-
-
-
-
- * **LEXICON OLD** for the old counting thirteen hundred etc.
-
- * **LEXICON NLX**
-
-
- * **LEXICON NUPPELOHKAICUODI**
-
-
-
-
- * **LEXICON UNDERDUHAT**  the numerals under 1000
-
-
- * **LEXICON ONLY_CMP**
-
-
- * **LEXICON OKTAF**
-
-
- * **LEXICON 2TO9F**
-
-
- * **LEXICON 11TO99F**
-
-
-
- * **LEXICON BARELOGIF**
-
- * **LEXICON LOHKI**
-
-
- * **LEXICON 2TO9LOG**
-
-
- * **LEXICON 21TO99**
-
-
- * **LEXICON 111TO119**
-
-
- * **LEXICON CUODI**
-
-
-
- * **LEXICON 2TO9CUO**
-
- * **LEXICON GCUODI**
-
-
- * **LEXICON 1TO9CUODI**
-
-
-
-
-
- * **LEXICON NUPPELOGIS**
-
-
- * **LEXICON LOHKAI-END**
-
- * **LEXICON ARABICCOMPOUNDS**  ! arabic as first part,
-
-
- * **LEXICON NUMERALCOMPOUNDS**: numeral as first part: duhatjienat,
- logigielat, etc.
-
- * **LEXICON SAS** gives :»»» and goes to SASCont
-
-
-
-
-
-
-
- * **LEXICON num-ordinal** Ordinal numbers
-
- * **LEXICON num-ordinal-1** Ordinal numbers vuosttas, vuosttaš
-
- * **LEXICON num-ordinal-2to9** Ordinal numbers, 2 to 20, even though the name implies differenty
-
-
- * **LEXICON VUOSTTAS**
-
-
- * **LEXICON num-collective** Collective numerals
-
-
-
-
-
- * **LEXICON num-imprecise** Imprecise numbers
-
-
-
-# Arabic numerals
-
-Arabic numeral expressions can be classified in at least the following categories:
-* **general numeric expressions: 123 456,789 - note**:  space as thousand separator, groups of three digits
-* **accounting numeric expressions: 123.456,789 - note**:  full stop as thousands separator, groups of three digits
-* **numeric range expressions**:  12-14 - can be dates, times, lengths, masses and other sorts of measurements
-* **measurements**:  123 kg
-* **dates**:  2.4.1999, 4.5., 7.8.02, 04.10.2016
-* **times: 12**: 34
-* **money amounts**:  kr 1234,56
-* **temperature**:  –8°C, 256°K, 100°F
-
-And for sure more than these. Previously everything has been more or less
-lumped together, but to avoid noise and to get better input for grammar
-checking the ARABICS section should be rewritten such that each category
-gets its own lexicon. That way it is easier to restrict the syntax of
-numerical expressions in each category.
-
-
-
-
-
-
-
-
- * **LEXICON ONLY_OKTA**
-
-
- * **LEXICON LOGIF**
-
-
- * **LEXICON NUPPELOHKAI**
-
-
-
- * **LEXICON GOLBMALOGIOKTA**
-
- * **LEXICON GAVCCILOGIOKTA**
-
-
- * **LEXICON GUOKTELOGIOKTA**
-
- * **LEXICON VIHTTALOGIOKTA**
-
- * **LEXICON GOLBMALOGIGUOKTE**
-
- * **LEXICON GAVCCILOGIGUOKTE**
-
-
- * **LEXICON GUOKTELOGIGUOKTE**
-
- * **LEXICON VIHTTALOGIGUOKTE**
-
- * **LEXICON GOLBMALOGIGOLBMA**
-
- * **LEXICON GAVCCILOGIGOLBMA**
-
-
- * **LEXICON GUOKTELOGIGOLBMA**
-
- * **LEXICON VIHTTALOGIGOLBMA**
-
- * **LEXICON GOLBMALOGINJEALLJE**
-
- * **LEXICON GAVCCILOGINJEALLJE**
-
-
- * **LEXICON GUOKTELOGINJEALLJE**
-
- * **LEXICON VIHTTALOGINJEALLJE**
-
- * **LEXICON GOLBMALOGIVIHTTA**
-
- * **LEXICON GAVCCILOGIVIHTTA**
-
-
- * **LEXICON GUOKTELOGIVIHTTA**
-
- * **LEXICON VIHTTALOGIVIHTTA**
-
- * **LEXICON GOLBMALOGIGUHTTA**
-
- * **LEXICON GAVCCILOGIGUHTTA**
-
- * **LEXICON GUOKTELOGIGUHTTA**
-
- * **LEXICON VIHTTALOGIGUHTTA**
-
- * **LEXICON GOLBMALOGICIEZA**
-
- * **LEXICON GAVCCILOGICIEZA**
-
-
- * **LEXICON GUOKTELOGICIEZA**
-
- * **LEXICON VIHTTALOGICIEZA**
-
- * **LEXICON GOLBMALOGIGAVCCI**
-
- * **LEXICON GAVCCILOGIGAVCCI**
-
-
- * **LEXICON GUOKTELOGIGAVCCI**
-
- * **LEXICON VIHTTALOGIGAVCCI**
-
- * **LEXICON GOLBMALOGIOVCCI**
-
- * **LEXICON GAVCCILOGIOVCCI**
-
- * **LEXICON GUOKTELOGIOVCCI**
-
- * **LEXICON VIHTTALOGIOVCCI**
-
-# This file contains the Particles
-
-
-
-
- * **LEXICON Particles   ** gives all particles
-
-
- * **LEXICON pcle   ** gives the tag +Pcle
-
- * **LEXICON qpcle   ** gives two tags, +Pcle and +Qst
-
-Perhaps this should be opened to  a direction to K
-and all the ge versions should be removed.
-(i.e. only goit, not goitge). This errouneously
-permits gege, goge, etc., though, and we thus leave
-things as they are.
-
-# This file contains the Pronouns
-
-
-
-
-
-
- * **LEXICON Pronoun   ** Points to all the pronoun subgrops
-
-
-
-
- * **LEXICON Personal   ** , splitting in 1st, 2nd, 3rd
-
-## Interrogative pronouns
-
-Giving ideosyncratic Sg Nom of gii, mii lexically
-Sending the oblique forms of gii, mii to an oblique sublexicon
-Giving the stem of guhte, guhtemuš, goabbá
-
- * **LEXICON Interrogative   **
-
-
-
-
-## Relative pronouns
-
- * **LEXICON Relative   **
-
-
-## Demonstrative pronouns
-
-## Giving baseform + all demonstrative stems
-## Pointing to case paradigms
-
- * **LEXICON Demonstrative   **
-
-
-
-
-
-## Reflexive pronouns
-
-Two nominative reflexives, and pointer to the rest
-The Pl one is used for Du as well, here given two entries.
-Should one of them be removed?
-
- * **LEXICON Reflexive   **
-
-## Reciprocal pronouns
-
-The first 4 entries handle the first element of the recipr.
-The next 12 handle the 2nd part of the non-Px recipr.
-The members of the third section  point to Px lexica.
-
- * **LEXICON Reciprocal   **
-
-## Indefinite pronouns
-
-Dividing the indefinites in three groups
-
- * **LEXICON Indefinite   **
-
-Declineable indefinite pronouns with case + clitic
-
- * **LEXICON declindef-cl   **
-
-
-
-
-
-
-Declineable indefinites with normal case paradigms
-
- * **LEXICON declindef   **
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Separate lexica for exceptional entries
-
- * **LEXICON declindef-idiosync   **
-separate lexica for these entries:
-oktat
-
-
-
-
-
-
-The indeclineable indefinites
-
- * **LEXICON indeclindef   **
-
-
-
-# The North Saami proper noun lexicon
-
-
-
-
- * **LEXICON Prefix-Proper   ** for first-part names
-
- * **LEXICON ProperNoun-sme-nocomp   ** for no cmp without hyph
-
-
-
-
-
-
-# The North Saami Subjunctions
-
-
-
-
-
-
-
- * **LEXICON Subjunction   ** contains the list of subjunctions.
-
- * **LEXICON ConfuseSubjunction ** contains subjunctions that are
-                               homonyms with words in the open POS's
-
- * **LEXICON CleanSubjunction ** contains subjunctions that are not
-                           homonymous with any of the open POS's
-
-
-
- * **LEXICON Cs-Conf  ** assigns the tag +CC and allows further grammar checker processing for disambiguation against nouns in potential compounds written apart
-
-
 # North Saami verbs
 
 
@@ -3847,18 +3943,6 @@ Here comes the main list of verbs.
 
 
 
-
-
-# Punctuation symbols
-
- * **LEXICON Punctuation_SME   ** contains the list
-of punctuation symbols that are problematic from a normative
-point of view, and only those. Everything else is coming from
-the standard Punctuation lexicon.
-
-They are all tagged *+RIGHT* even though the correct quotation
-mark is supposed to be used on both sides. This is done to simplify
-generation, by keeping the same tagging as the standard analysis.
 
 
 
