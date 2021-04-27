@@ -8,28 +8,28 @@
 # dir/filename.lexc => filename-dir.md
 
 MD_PAGES=root-morphology.md          \
+		  compounding-morphology.md   \
 		  adjectives-affixes.md       \
-		  nouns-affixes.md            \
-		  possessive-suffixes-affixes.md \
-		  verbs-affixes.md            \
-		  sme-abbreviations-stems.md  \
-		  sme-acronyms-stems.md       \
 		  adjectives-stems.md         \
 		  adpositions-stems.md        \
 		  adverbs-stems.md            \
 		  conjunctions-stems.md       \
+		  nouns-affixes.md            \
 		  nouns-stems.md              \
 		  numerals-stems.md           \
 		  particles-stems.md          \
+		  possessive-suffixes-affixes.md \
 		  pronouns-stems.md           \
+		  sme-abbreviations-stems.md  \
+		  sme-acronyms-stems.md       \
 		  sme-propernouns-stems.md    \
-		  subjunctions-stems.md       \
-		  verbs-stems.md              \
 		  sme-punctuation-stems.md    \
+		  subjunctions-stems.md       \
+		  verbs-affixes.md            \
+		  verbs-stems.md              \
 		  disambiguator-syntax.md     \
 		  functions-syntax.md         \
-		  dependency-syntax.md        \
-		  compounding-morphology.md
+		  dependency-syntax.md
 
 # clitics-morphology.md       \
 # adjectives-oahpa-stems.md   \
