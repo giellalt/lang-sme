@@ -6133,6 +6133,7 @@ The previous two rules look marginal.
 
 
 
+Test: Go for minimal weight.
 
 ## Final removing rules
 

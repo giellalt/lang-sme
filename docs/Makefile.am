@@ -28,10 +28,10 @@ MD_PAGES=root-morphology.md          \
 		  sme-punctuation-stems.md    \
 		  disambiguator-syntax.md     \
 		  functions-syntax.md         \
-		  dependency-syntax.md  
+		  dependency-syntax.md        \
+		  compounding-morphology.md
 
 # clitics-morphology.md       \
-# compounding-morphology.md   \
 # adjectives-oahpa-stems.md   \
 # interjections-stems.md      \
 # nouns-oahpa-stems.md        \

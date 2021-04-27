@@ -20,3 +20,4 @@
 * [disambiguator-syntax.md](disambiguator-syntax.md)
 * [functions-syntax.md](functions-syntax.md)
 * [dependency-syntax.md](dependency-syntax.md)
+* [compounding-morphology.md](compounding-morphology.md)
