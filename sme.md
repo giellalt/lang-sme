@@ -9,38 +9,38 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 
 ### Tags for POS
 
- * **+Ex/N	** - This tag is not added in lexc. The POS tag before derivation is converted into this tag when compiling FST for disambiguation.
- * **+Ex/A	** - This tag is not added in lexc. The POS tag before derivation is converted into this tag when compiling FST for disambiguation.
- * **+Ex/V	** - This tag is not added in lexc. The POS tag before derivation is converted into this tag when compiling FST for disambiguation.
+ * **+Ex/N** - This tag is not added in lexc. The POS tag before derivation is converted into this tag when compiling FST for disambiguation.
+ * **+Ex/A** - This tag is not added in lexc. The POS tag before derivation is converted into this tag when compiling FST for disambiguation.
+ * **+Ex/V** - This tag is not added in lexc. The POS tag before derivation is converted into this tag when compiling FST for disambiguation.
 
- * ** +N       ** - Noun
- * ** +A       ** - Adjective
- * ** +Adv     ** - Adverb
- * ** +V       ** - Verb
- * ** +Pron    ** - Pronoun
- * ** +CS      ** - Subjunction
- * ** +CC      ** - Conjunction
- * ** +Adp     ** - Adposition, ie Post- and Prepostion, NOT IN USE
- * ** +Po      ** - Postpostion
- * ** +Pr      ** - Preposition
- * ** +Interj  ** - Interjection
- * ** +Pcle    ** - Particle
- * ** +Num     ** - Numeral
+ * **+N** - Noun
+ * **+A** - Adjective
+ * **+Adv** - Adverb
+ * **+V** - Verb
+ * **+Pron** - Pronoun
+ * **+CS** - Subjunction
+ * **+CC** - Conjunction
+ * **+Adp** - Adposition, ie Post- and Prepostion, NOT IN USE
+ * **+Po** - Postpostion
+ * **+Pr** - Preposition
+ * **+Interj** - Interjection
+ * **+Pcle** - Particle
+ * **+Num** - Numeral
 
 ### Tags for sub-POS
- * ** +Prop      ** - Propernoun
- * ** +Pers      ** - Personal Pronoun
- * ** +Dem       ** - Demonstrative Pronoun
- * ** +Interr    ** - Interrogative Pronoun
- * ** +Refl      ** - Reflexive Pronoun
- * ** +Recipr    ** - Reciprocal Pronoun
- * ** +Rel       ** - Relative Pronoun
- * ** +Indef     ** - Indefinitive Pronoun
- * ** +Coll      ** - Collective numerals, subtag for +N
- * ** +Arab      ** - Arabic numeral, subtag for +Num
- * ** +Rom       ** - Roman numeral, subtag for +Num
- * ** +Pass      ** - hallat/haddat not in use
- * ** +Known     ** - man (different from maid): mii+Pron+Rel+Sg+Acc+Known
+ * **+Prop** - Propernoun
+ * **+Pers** - Personal Pronoun
+ * **+Dem** - Demonstrative Pronoun
+ * **+Interr** - Interrogative Pronoun
+ * **+Refl** - Reflexive Pronoun
+ * **+Recipr** - Reciprocal Pronoun
+ * **+Rel** - Relative Pronoun
+ * **+Indef** - Indefinitive Pronoun
+ * **+Coll** - Collective numerals, subtag for +N
+ * **+Arab** - Arabic numeral, subtag for +Num
+ * **+Rom** - Roman numeral, subtag for +Num
+ * **+Pass** - hallat/haddat not in use
+ * **+Known** - man (different from maid): mii+Pron+Rel+Sg+Acc+Known
 
 
 ## Tags for Inflection
@@ -262,10 +262,10 @@ doavttergrádakursa
 
 ### Dialect tags:
 
- * ** +Dial/-KJ  ** forms not in use in KJ (Kárásjohka)
- * ** +Dial/-GG  ** forms not in use in GG (Guovdageaidnu)
- * ** +Dial/-GS  ** forms not in use in GS (Gárasavvon) NOT IN USE
- * ** +South     ** foreløpig lagt til Sg Loc -n, som er en sub-form
+ * **+Dial/-KJ** forms not in use in KJ (Kárásjohka)
+ * **+Dial/-GG** forms not in use in GG (Guovdageaidnu)
+ * **+Dial/-GS** forms not in use in GS (Gárasavvon) NOT IN USE
+ * **+South** foreløpig lagt til Sg Loc -n, som er en sub-form
 
 ### Tags for indicating the orthography used
  +Orth/Strd - Standard orthography
@@ -361,117 +361,117 @@ The order is:
 
 ### Semantic tags to help disambiguation & synt. analysis: (before POS)
 
- *  +Sem/Act          = Activity
- *  +Sem/Adr          = Webadr
- *  +Sem/Amount       = Amount
- *  +Sem/Ani          = Animate
- *  +Sem/Aniprod      = Animal Product
- *  +Sem/Body         = Bodypart
- *  +Sem/Body-abstr   = siellu, vuoig?a, jierbmi, (noe man kan bruke i fysisk aktivitet som en kroppsdel, f.eks. synet, stemmen, etc.)
- *  +Sem/Build        = Building
- *  +Sem/Build-room   = Room in a building, typically place to be
- *  +Sem/Buildpart   = Part of Bulding, like the wall
- *  +Sem/Cat          = Category
- *  +Sem/Clth         = Clothes
- *  +Sem/Clth-jewl    = Jewelery
- *  +Sem/Clthpart    = part of clothes, boallu, sávdnji...
- *  +Sem/Ctain        = Container
- *  +Sem/Ctain-abstr  = Abstract container like bank account
- *  +Sem/Ctain-clth   = Soft container, like a rucksack
- *  +Sem/Curr         = Currency like dollár, Not Money
- *  +Sem/Date         = Date
- *  +Sem/Dance        = Dance
- *  +Sem/Dir          = Direction like GPS-kursa
- *  +Sem/Domain       = Domain like politics, reindeerherding (a system of actions)
- *  +Sem/Drink        = Drink
- *  +Sem/Dummytag     = Dummytag
- *  +Sem/Edu          = Educational event
- *  +Sem/Event        = Event
- *  +Sem/Feat         = Feature, like Árvu. (noe som man kan ha mye eller lite av, det kan være en skala og som er på en måte karakteriserende. (høyde, vekt, farge, kreativitet etc.)
- *  +Sem/Feat-phys    = Physiological feature, ivdni, fárda
- *  +Sem/Feat-psych   = Psychological feauture
- *  +Sem/Feat-measr   = Psychological feauture
- *  +Sem/Fem          = Female name
- *  +Sem/Food         = Food
- *  +Sem/Food-med     = Medicine
- *  +Sem/Fruit        = Fruits, vegetables, seeds, nuts
- *  +Sem/Furn         = Furniture
- *  +Sem/Game         = Game
- *  +Sem/Geom         = Geometrical object
- *  +Sem/Group        = Animal or Human Group
- *  +Sem/Hum          = Human
- *  +Sem/Hum-abstr    = Human abstract
- *  +Sem/Hum-prof     = Human professional
- *  +Sem/Ideol        = Ideology
- *  +Sem/ID        = ID
- *  +Sem/Lang         = Language
- *  +Sem/Mal          = Male name
- *  +Sem/Mat          = Material for producing things
- *  +Sem/Measr        = Measure
- *  +Sem/Money        = Has to do with money, like wages, not Curr(ency)
- *  +Sem/Obj          = Object
- *  +Sem/Obj-clo      = Cloth
- *  +Sem/Obj-cogn     = Cloth
- *  +Sem/Obj-el       = (Electrical) machine or apparatus
- *  +Sem/Obj-ling     = Object with something written on it
- *  +Sem/Obj-rope     = flexible ropelike object
- *  +Sem/Obj-surfc    = Surface object
- *  +Sem/Org          = Organisation
- *  +Sem/Part         = Feature, oassi, bealli
+ * +Sem/Act = Activity
+ * +Sem/Adr = Webadr
+ * +Sem/Amount = Amount
+ * +Sem/Ani = Animate
+ * +Sem/Aniprod = Animal Product
+ * +Sem/Body = Bodypart
+ * +Sem/Body-abstr = siellu, vuoig?a, jierbmi, (noe man kan bruke i fysisk aktivitet som en kroppsdel, f.eks. synet, stemmen, etc.)
+ * +Sem/Build = Building
+ * +Sem/Build-room = Room in a building, typically place to be
+ * +Sem/Buildpart = Part of Bulding, like the wall
+ * +Sem/Cat = Category
+ * +Sem/Clth = Clothes
+ * +Sem/Clth-jewl = Jewelery
+ * +Sem/Clthpart = part of clothes, boallu, sávdnji...
+ * +Sem/Ctain = Container
+ * +Sem/Ctain-abstr = Abstract container like bank account
+ * +Sem/Ctain-clth = Soft container, like a rucksack
+ * +Sem/Curr = Currency like dollár, Not Money
+ * +Sem/Date = Date
+ * +Sem/Dance = Dance
+ * +Sem/Dir = Direction like GPS-kursa
+ * +Sem/Domain = Domain like politics, reindeerherding (a system of actions)
+ * +Sem/Drink = Drink
+ * +Sem/Dummytag = Dummytag
+ * +Sem/Edu = Educational event
+ * +Sem/Event = Event
+ * +Sem/Feat = Feature, like Árvu. (noe som man kan ha mye eller lite av, det kan være en skala og som er på en måte karakteriserende. (høyde, vekt, farge, kreativitet etc.)
+ * +Sem/Feat-phys = Physiological feature, ivdni, fárda
+ * +Sem/Feat-psych = Psychological feauture
+ * +Sem/Feat-measr = Psychological feauture
+ * +Sem/Fem = Female name
+ * +Sem/Food = Food
+ * +Sem/Food-med = Medicine
+ * +Sem/Fruit = Fruits, vegetables, seeds, nuts
+ * +Sem/Furn = Furniture
+ * +Sem/Game = Game
+ * +Sem/Geom = Geometrical object
+ * +Sem/Group = Animal or Human Group
+ * +Sem/Hum = Human
+ * +Sem/Hum-abstr = Human abstract
+ * +Sem/Hum-prof = Human professional
+ * +Sem/Ideol = Ideology
+ * +Sem/ID = ID
+ * +Sem/Lang = Language
+ * +Sem/Mal = Male name
+ * +Sem/Mat = Material for producing things
+ * +Sem/Measr = Measure
+ * +Sem/Money = Has to do with money, like wages, not Curr(ency)
+ * +Sem/Obj = Object
+ * +Sem/Obj-clo = Cloth
+ * +Sem/Obj-cogn = Cloth
+ * +Sem/Obj-el = (Electrical) machine or apparatus
+ * +Sem/Obj-ling = Object with something written on it
+ * +Sem/Obj-rope = flexible ropelike object
+ * +Sem/Obj-surfc = Surface object
+ * +Sem/Org = Organisation
+ * +Sem/Part = Feature, oassi, bealli
 * Perc = (perception) er noe man kan kjenne i en begrensa periode og som er forårsaka av noe utenifra, f.eks. Mus lea ballu. Mus lea bavččas.
- *  +Sem/Perc-cogn    =  
- *  +Sem/Perc-emo     = Emotional perception
- *  +Sem/Perc-phys    = Physical perception
- *  +Sem/Perc-psych   = Psychological perception
- * **+Sem/Phonenr** = Telephone number
- *  +Sem/Plant        = Plant
- *  +Sem/Plantpart   = Plant part
- *  +Sem/Plc          = Place
- *  +Sem/Plc-abstr    = Abstract place
- *  +Sem/Plc-elevate  = Place
- *  +Sem/Plc-line     = Place
- *  +Sem/Plc-water    = Place
- *  +Sem/Pos          = Position (as in social position job)
- *  +Sem/Process      = Process
- *  +Sem/Prod         = Product
- *  +Sem/Prod-audio   = Audio product
- *  +Sem/Prod-cogn    = Cognition product
- *  +Sem/Prod-ling    = Linguistic product
- *  +Sem/Prod-vis     = Visual product
- *  +Sem/Rel          = Relation
- *  +Sem/Route        = Route
- *  +Sem/Rule         = Rule or convention
- *  +Sem/Semcon       = Semantic concept
- *  +Sem/Sign         = Sign (e.g. numbers, punctuation)
- *  +Sem/Sport        = Sport
- *  +Sem/State        =
- *  +Sem/State-sick   = Illness
- *  +Sem/Substnc      = Substance, like Air and Water
- *  +Sem/Sur          = Surname
- *  +Sem/Symbol       = Symbol
- *  +Sem/Time         = Time
- *  +Sem/Time-clock   = Time clock
- *  +Sem/Tool         = Prototypical tool for repairing things
- *  +Sem/Tool-catch   = Tool used for catching (e.g. fish)
- *  +Sem/Tool-clean   = Tool used for cleaning
- *  +Sem/Tool-it      = Tool used in IT
- *  +Sem/Tool-measr   = Tool used for measuring
- *  +Sem/Tool-music   = Music instrument
- *  +Sem/Tool-write   = Writing tool
- *  +Sem/Txt          = Text (girji, lávlla...)
- *  +Sem/Veh          = Vehicle
- *  +Sem/Wpn          = Weapon
- *  +Sem/Wthr         = The Weather or the state of ground
- *  +Sem/Year         - year (i.e. 1000 - 2999), used only for numerals
+ * +Sem/Perc-cogn =  
+ * +Sem/Perc-emo = Emotional perception
+ * +Sem/Perc-phys = Physical perception
+ * +Sem/Perc-psych = Psychological perception
+ * +Sem/Phonenr = Telephone number
+ * +Sem/Plant = Plant
+ * +Sem/Plantpart = Plant part
+ * +Sem/Plc = Place
+ * +Sem/Plc-abstr = Abstract place
+ * +Sem/Plc-elevate = Place
+ * +Sem/Plc-line = Place
+ * +Sem/Plc-water = Place
+ * +Sem/Pos = Position (as in social position job)
+ * +Sem/Process = Process
+ * +Sem/Prod = Product
+ * +Sem/Prod-audio = Audio product
+ * +Sem/Prod-cogn = Cognition product
+ * +Sem/Prod-ling = Linguistic product
+ * +Sem/Prod-vis = Visual product
+ * +Sem/Rel = Relation
+ * +Sem/Route = Route
+ * +Sem/Rule = Rule or convention
+ * +Sem/Semcon = Semantic concept
+ * +Sem/Sign = Sign (e.g. numbers, punctuation)
+ * +Sem/Sport = Sport
+ * +Sem/State =
+ * +Sem/State-sick = Illness
+ * +Sem/Substnc = Substance, like Air and Water
+ * +Sem/Sur = Surname
+ * +Sem/Symbol = Symbol
+ * +Sem/Time = Time
+ * +Sem/Time-clock = Time clock
+ * +Sem/Tool = Prototypical tool for repairing things
+ * +Sem/Tool-catch = Tool used for catching (e.g. fish)
+ * +Sem/Tool-clean = Tool used for cleaning
+ * +Sem/Tool-it = Tool used in IT
+ * +Sem/Tool-measr = Tool used for measuring
+ * +Sem/Tool-music = Music instrument
+ * +Sem/Tool-write = Writing tool
+ * +Sem/Txt = Text (girji, lávlla...)
+ * +Sem/Veh = Vehicle
+ * +Sem/Wpn = Weapon
+ * +Sem/Wthr = The Weather or the state of ground
+ * +Sem/Year - year (i.e. 1000 - 2999), used only for numerals
 
 
 
 ### Multiple Semantic tags:
- * +Sem/Act_Fruit                      
- * **+Sem/Act_Group** Activity and Group
- * **+Sem/Act_Hum** Activity and Human
- * **+Sem/Act_Plc**   A persons job is an activity, and a place as well
- * **+Sem/Act_Route** Activity and Route, ie johtolat
+ * +Sem/Act_Fruit
+ * +Sem/Act_Group Activity and Group
+ * +Sem/Act_Hum Activity and Human
+ * +Sem/Act_Plc   A persons job is an activity, and a place as well
+ * +Sem/Act_Route Activity and Route, ie johtolat
  * +Sem/Act_Tool-it
  * **+Sem/Amount_Build**   Amount and Building
  * +Sem/Amount_Semcon
@@ -516,16 +516,16 @@ The order is:
  * +Sem/Build_Org
  * +Sem/Build_Route
  * +Sem/Build-room_Cat_Ctain_Mat
- * +Sem/Buildpart_Cat                 
- * +Sem/Buildpart_Cat_Ctain           
- * +Sem/Buildpart_Cat_Ctain_Mat       
- * +Sem/Buildpart_Ctain               
- * +Sem/Buildpart_Ctain_Mat           
- * +Sem/Buildpart_Ctain_Obj           
- * +Sem/Cat_Group_Hum                  
- * +Sem/Cat_Group_Hum_Plc              
- * +Sem/Cat_Edu                        
- * +Sem/Cat_Obj                        
+ * +Sem/Buildpart_Cat
+ * +Sem/Buildpart_Cat_Ctain
+ * +Sem/Buildpart_Cat_Ctain_Mat
+ * +Sem/Buildpart_Ctain
+ * +Sem/Buildpart_Ctain_Mat
+ * +Sem/Buildpart_Ctain_Obj
+ * +Sem/Cat_Group_Hum
+ * +Sem/Cat_Group_Hum_Plc
+ * +Sem/Cat_Edu
+ * +Sem/Cat_Obj
  * +Sem/Clth-jewl_Curr
  * +Sem/Clth-jewl_Curr_Obj
  * +Sem/Clth-jewl_Curr_Obj_Org
@@ -546,13 +546,13 @@ The order is:
  * +Sem/Dance_Org
  * +Sem/Dance_Prod-audio
  * +Sem/Domain_Food-med
- * +Sem/Domain_Hum                     
+ * +Sem/Domain_Hum
  * +Sem/Domain_Prod-audio
- * +Sem/Drink_Plant                    
+ * +Sem/Drink_Plant
  * +Sem/Edu_Event
- * +Sem/Edu_Geom                       
+ * +Sem/Edu_Geom
  * +Sem/Edu_Group_Hum
- * +Sem/Edu_Hum                        
+ * +Sem/Edu_Hum
  * +Sem/Edu_Mat
  * +Sem/Edu_Org
  * +Sem/Event_Food
@@ -571,7 +571,7 @@ The order is:
  * +Sem/Food_Perc-phys
  * +Sem/Food_Plant
  * +Sem/Food_Sign
- * +Sem/Fruit_Hum                      
+ * +Sem/Fruit_Hum
  * +Sem/Game_Obj-play
  * +Sem/Geom_Hum_Plc
  * +Sem/Geom_Obj
@@ -582,7 +582,7 @@ The order is:
  * +Sem/Group_Hum_Prod-vis
  * +Sem/Group_Hum_Time
  * +Sem/Group_Org
- * +Sem/Group_Prod-vis                 
+ * +Sem/Group_Prod-vis
  * +Sem/Group_Sign
  * +Sem/Group_Txt
  * +Sem/Hum_Lang
@@ -596,14 +596,14 @@ The order is:
  * +Sem/Hum_Plc
  * +Sem/Hum_Sign
  * +Sem/Hum_Tool
- * +Sem/Hum_Tool-it                     = Human
+ * +Sem/Hum_Tool-it = Human
  * +Sem/Hum_Veh
  * +Sem/Hum_Wthr
  * +Sem/Lang_Tool
  * +Sem/Mat_Plant
  * +Sem/Mat_Txt
- * +Sem/Measr_Obj_Time                 
- * +Sem/Measr_Sign                      = Sign (e.g. numbers, punctuation)
+ * +Sem/Measr_Obj_Time
+ * +Sem/Measr_Sign = Sign (e.g. numbers, punctuation)
  * +Sem/Measr_Time
  * +Sem/Money_Obj
  * +Sem/Money_Org
@@ -645,7 +645,7 @@ The order is:
  * +Sem/Plc_Time_Wthr
  * +Sem/Time_Wthr
  * +Sem/State-sick_Substnc
- * +Sem/Obj-ling_Obj-surfc             
+ * +Sem/Obj-ling_Obj-surfc
  * +Sem/Org_Prod-audio
  * +Sem/Org_Prod-cogn
  * +Sem/Org_Prod-vis
@@ -912,10 +912,10 @@ given the proper use of these flags.
 **Abbreviation**
 
 
- * **LEXICON Acronym   **
+ * **LEXICON Acronym**
 
 
- * **LEXICON ProperNoun   **
+ * **LEXICON ProperNoun**
 
 
 Lexicon ENDLEX
@@ -1026,201 +1026,201 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 
 
- * **LEXICON BUORRE  **  For this adj only
+ * **LEXICON BUORRE**  For this adj only
 
 
 
- * **LEXICON BUOROT  ** SUB, Southern dialect
+ * **LEXICON BUOROT** SUB, Southern dialect
 
 
 
- * **LEXICON ALKI  **  Bisyll V-Adj, -es-Attr, no WeG.
+ * **LEXICON ALKI**  Bisyll V-Adj, -es-Attr, no WeG.
 
- * **LEXICON SEARRA  ** Bisyll. V-Adj's with s-Attr in WeG.
+ * **LEXICON SEARRA** Bisyll. V-Adj's with s-Attr in WeG.
 
- * **LEXICON HOHPI  ** Bisyll. V-Adj's with s-Attr. in WeG & Adv.
+ * **LEXICON HOHPI** Bisyll. V-Adj's with s-Attr. in WeG & Adv.
 
- * **LEXICON LAIKI  ** Bisyll. V-Adj's with es-Attr. in WeG & Adv.
+ * **LEXICON LAIKI** Bisyll. V-Adj's with es-Attr. in WeG & Adv.
 
- * **LEXICON LODJI  ** bisyll V-Adj with -es and -is Attr in WeG
-
-
- * **LEXICON JUHKKIS  ** Bisyll. V-Adj. with s-Attr; no Adv.
+ * **LEXICON LODJI** bisyll V-Adj with -es and -is Attr in WeG
 
 
- * **LEXICON HAHTTI  ** Bisyll. V-Adj. no Adv. !sponsors wants comparatives for these!
+ * **LEXICON JUHKKIS** Bisyll. V-Adj. with s-Attr; no Adv.
 
 
-
- * **LEXICON EADDJI  ** Bisyll. V-Adj. no Adv.
-
-
- * **LEXICON NUORRA  ** Bisyll. V-Adj. w/CG, w/o Sep. Attr; no Adv.
-
- * **LEXICON RIEKTA  **  Bisyll adj w/o obl sg forms, WeG Attr
+ * **LEXICON HAHTTI** Bisyll. V-Adj. no Adv. !sponsors wants comparatives for these!
 
 
 
- * **LEXICON VIELG  **  adj with -es -attrib. (cns final adj)
-
- * **LEXICON VIELGAT **  just a sublexicon to VIELG
-
- * **LEXICON VIELG_NOCOMP  **  adj with -es -attrib. (cns final adj)
-
- * **LEXICON VIELGAT_NOCOMP **  just a sublexicon to VIELG_NOCOMP
+ * **LEXICON EADDJI** Bisyll. V-Adj. no Adv.
 
 
- * **LEXICON CAHKK **  -at final adj with attr -es and -dis
+ * **LEXICON NUORRA** Bisyll. V-Adj. w/CG, w/o Sep. Attr; no Adv.
 
- * **LEXICON JALGAT **  only jalgat, attr jalga and jalges
+ * **LEXICON RIEKTA**  Bisyll adj w/o obl sg forms, WeG Attr
 
- * **LEXICON UHCC **  uhcci, unni, seaggi, attr uhca, unna, seakka
 
- * **LEXICON JEAGOHEAPMI **  caritives
 
- * **LEXICON BIVNNUHEAPME  **  no bivnnuhis here, special, beacause popular and unpopular collide in attribute form :)
+ * **LEXICON VIELG**  adj with -es -attrib. (cns final adj)
 
- * **LEXICON JEAGOHEAPMI_NOCOMP **  caritives, no comparative
+ * **LEXICON VIELGAT**  just a sublexicon to VIELG
 
- * **LEXICON OATNI  **  only this adj, no attr
+ * **LEXICON VIELG_NOCOMP**  adj with -es -attrib. (cns final adj)
+
+ * **LEXICON VIELGAT_NOCOMP**  just a sublexicon to VIELG_NOCOMP
+
+
+ * **LEXICON CAHKK**  -at final adj with attr -es and -dis
+
+ * **LEXICON JALGAT**  only jalgat, attr jalga and jalges
+
+ * **LEXICON UHCC**  uhcci, unni, seaggi, attr uhca, unna, seakka
+
+ * **LEXICON JEAGOHEAPMI**  caritives
+
+ * **LEXICON BIVNNUHEAPME**  no bivnnuhis here, special, beacause popular and unpopular collide in attribute form :)
+
+ * **LEXICON JEAGOHEAPMI_NOCOMP**  caritives, no comparative
+
+ * **LEXICON OATNI**  only this adj, no attr
 
 
 ## Consonant-final even-syllabic adjectives
 
- * **LEXICON TUVRRAHAS  **
+ * **LEXICON TUVRRAHAS**
 
- * **LEXICON ISSORAS  **  issoras and certain as-adj. also derivations, final -s
+ * **LEXICON ISSORAS**  issoras and certain as-adj. also derivations, final -s
 
- * **LEXICON IHKALAS-DABALAS ** loan adjectives ending on -ihkalaš - kritihkalaš etc
+ * **LEXICON IHKALAS-DABALAS** loan adjectives ending on -ihkalaš - kritihkalaš etc
 
- * **LEXICON IIVVAL-DABALAS ** loan adjectives ending on -iivvalaš
-
-
- * **LEXICON ISTTALAS ** loan adjectives ending on -ihkalaš
+ * **LEXICON IIVVAL-DABALAS** loan adjectives ending on -iivvalaš
 
 
- * **LEXICON DABALAS  **   -laš adjectives with short Attr and SgNom Comp forms - dábálet, dábálut etc
-
- * **LEXICON NVDCompAttr_ISSORASSA-  **  sublexicon to DABALAS
+ * **LEXICON ISTTALAS** loan adjectives ending on -ihkalaš
 
 
+ * **LEXICON DABALAS**   -laš adjectives with short Attr and SgNom Comp forms - dábálet, dábálut etc
 
- * **LEXICON DEARVVASLAS  **  -laš adjectives without short Attr and SgNom Comp forms. The word dearvvaslaš/dearvvašlaš is not directed here, but to DABALAS
-
-
- * **LEXICON DEARVVASLAS2  **  only to lift out ISSORASSA-, see DEARVVASLAS
-
- * **LEXICON STUORIBUS  **  -buš comparatives
+ * **LEXICON NVDCompAttr_ISSORASSA-**  sublexicon to DABALAS
 
 
- * **LEXICON ASEHAS **  5 words with -is attr: asehis, asihis, oanehis, vuollegis, vuolligis
 
- * **LEXICON UNOHAS   **  for this word only
+ * **LEXICON DEARVVASLAS**  -laš adjectives without short Attr and SgNom Comp forms. The word dearvvaslaš/dearvvašlaš is not directed here, but to DABALAS
 
- * **LEXICON IPMAHA  ** Tris. Gradating C-adj:s, The Troms declension: imaš:ipmaha, gáđaš:gáhtaha
+
+ * **LEXICON DEARVVASLAS2**  only to lift out ISSORASSA-, see DEARVVASLAS
+
+ * **LEXICON STUORIBUS**  -buš comparatives
+
+
+ * **LEXICON ASEHAS**  5 words with -is attr: asehis, asihis, oanehis, vuollegis, vuolligis
+
+ * **LEXICON UNOHAS**  for this word only
+
+ * **LEXICON IPMAHA** Tris. Gradating C-adj:s, The Troms declension: imaš:ipmaha, gáđaš:gáhtaha
 
 
 
 ## Trisyllabic adjectives
 
- * **LEXICON MEAHTTUS  **  meahttun-adj. with comp. and superl. forms -seabbo, -seamos etc.
+ * **LEXICON MEAHTTUS**  meahttun-adj. with comp. and superl. forms -seabbo, -seamos etc.
 
- * **LEXICON BEAKKAN  ** Trisyll. Non-gradating C-Adj. without Separate Attr.
+ * **LEXICON BEAKKAN** Trisyll. Non-gradating C-Adj. without Separate Attr.
 
- * **LEXICON BEAKKAN_NOCOMP  ** Trisyll. Non-gradating C-Adj. without Separate Attr. No comparatives
+ * **LEXICON BEAKKAN_NOCOMP** Trisyll. Non-gradating C-Adj. without Separate Attr. No comparatives
 
- * **LEXICON GEARDAN  ** Trisyll. Non-gradating C-Adj. without Separate Attr.
+ * **LEXICON GEARDAN** Trisyll. Non-gradating C-Adj. without Separate Attr.
 
- * **LEXICON JOHTIL  ** Trisyll. Non-gradating C-Adj. with is-Attr.
-
-
- * **LEXICON RAHKAT  ** Trisyll. Non-gradating C-Adj. with is-Attr. TO AVOID RAHKADIT
+ * **LEXICON JOHTIL** Trisyll. Non-gradating C-Adj. with is-Attr.
 
 
- * **LEXICON HEITTOHA  ** Trisyll. Non-gradating C-Adj. with is-Attr.
-
- * **LEXICON GUOHCA  ** Trisyll. Gradating V-Adj., no sep. Attr.
-
- * **LEXICON GARAS  ** Trisyll. Gradating C-Adj. with Bisyll. a-Attr. and final s Pred
-
- * **LEXICON LINIS  ** Trisyll. Gradating C-Adj. with Bisyll. a-Attr. and final s Pred
-
- * **LEXICON SUVRRIS   ** Trisyll. Gradating C-Adj. with Bisyll. weak grade a-Attr. and final s Pred
-
- * **LEXICON NANUS   ** Trisyll. Gradating C-Adj. with Bisyll. weak grade u-Attr. and final s Pred
-
- * **LEXICON LOSSAT  ** Trisyll. Gradating C-Adj. with Bisyll. a-Attr. and final t  Pred. geahppat and lossat, words with bisyllable form comparatives in addition to trisyllable form: geahpit, losit
+ * **LEXICON RAHKAT** Trisyll. Non-gradating C-Adj. with is-Attr. TO AVOID RAHKADIT
 
 
- * **LEXICON CAVGAT  ** Trisyll. Gradating C-Adj. with Bisyll. a/es-Attr. and final t Pred, both -but and -eappot comparatives
+ * **LEXICON HEITTOHA** Trisyll. Non-gradating C-Adj. with is-Attr.
 
- * **LEXICON CIENAL  ** Trisyll. Gradating C-Adj. with Strong Grade is-Attr.
+ * **LEXICON GUOHCA** Trisyll. Gradating V-Adj., no sep. Attr.
 
- * **LEXICON NJUORAS  ** Trisyll. Gradating C-Adj., with Strong Grade a-Attr.
+ * **LEXICON GARAS** Trisyll. Gradating C-Adj. with Bisyll. a-Attr. and final s Pred
 
- * **LEXICON DILDDAS  **  ,-ld-(#=is) Trisyll Grad., facult is-Attr.
+ * **LEXICON LINIS** Trisyll. Gradating C-Adj. with Bisyll. a-Attr. and final s Pred
 
- * **LEXICON VUOGAS  **  Trisyll. adj. with gradation I-III and no sep. attr. only this word, vuogas, vuohkkasat
+ * **LEXICON SUVRRIS** Trisyll. Gradating C-Adj. with Bisyll. weak grade a-Attr. and final s Pred
 
- * **LEXICON HEAHKAS  **  ,-hkk-#=is heahkka Trisyll Grad., is-Attr & heahkka
+ * **LEXICON NANUS** Trisyll. Gradating C-Adj. with Bisyll. weak grade u-Attr. and final s Pred
 
- * **LEXICON EATTAS  **  ,-dd-#=is Trisyll. Grad. C-Adj. with WeG -is Attr.
-
- * **LEXICON BOAKKAS  **  ,-gg-#boagge9- Trisyll no attr
+ * **LEXICON LOSSAT** Trisyll. Gradating C-Adj. with Bisyll. a-Attr. and final t  Pred. geahppat and lossat, words with bisyllable form comparatives in addition to trisyllable form: geahpit, losit
 
 
- * **LEXICON FARGAT  **  :d#Ø Trisyll no attr
+ * **LEXICON CAVGAT** Trisyll. Gradating C-Adj. with Bisyll. a/es-Attr. and final t Pred, both -but and -eappot comparatives
+
+ * **LEXICON CIENAL** Trisyll. Gradating C-Adj. with Strong Grade is-Attr.
+
+ * **LEXICON NJUORAS** Trisyll. Gradating C-Adj., with Strong Grade a-Attr.
+
+ * **LEXICON DILDDAS**  ,-ld-(#=is) Trisyll Grad., facult is-Attr.
+
+ * **LEXICON VUOGAS**  Trisyll. adj. with gradation I-III and no sep. attr. only this word, vuogas, vuohkkasat
+
+ * **LEXICON HEAHKAS**  ,-hkk-#=is heahkka Trisyll Grad., is-Attr & heahkka
+
+ * **LEXICON EATTAS**  ,-dd-#=is Trisyll. Grad. C-Adj. with WeG -is Attr.
+
+ * **LEXICON BOAKKAS**  ,-gg-#boagge9- Trisyll no attr
 
 
- * **LEXICON GAPPUS  **  -bbo- Trisyll, attr same as pred
-
- * **LEXICON VATTIS  **  Trisyll CG, -es/-is Attr
-
- * **LEXICON BIEKKUS  **  ,-iggo-#=is Trisyll Grad, is-Attr,
-
- * **LEXICON LIEKKUS  **  ,-iggo-(#=is) Trisyll Grad,  attr same as pred
-
- * **LEXICON GUOROS **  guoros and luovos, Trisyll Grad,  attr same as pred
+ * **LEXICON FARGAT**  :d#Ø Trisyll no attr
 
 
- * **LEXICON NUOLUS  **  ,-u8llo-(#nuolo9s)
+ * **LEXICON GAPPUS**  -bbo- Trisyll, attr same as pred
+
+ * **LEXICON VATTIS**  Trisyll CG, -es/-is Attr
+
+ * **LEXICON BIEKKUS**  ,-iggo-#=is Trisyll Grad, is-Attr,
+
+ * **LEXICON LIEKKUS**  ,-iggo-(#=is) Trisyll Grad,  attr same as pred
+
+ * **LEXICON GUOROS**  guoros and luovos, Trisyll Grad,  attr same as pred
 
 
- * **LEXICON GEARGGUS  **  ,-ergo-#gearggo9s
+ * **LEXICON NUOLUS**  ,-u8llo-(#nuolo9s)
+
+
+ * **LEXICON GEARGGUS**  ,-ergo-#gearggo9s
 
  * **LEXICON VUDDJII**
 
- * **LEXICON VUDDJII_DECLINED  ** misses most cases
+ * **LEXICON VUDDJII_DECLINED** misses most cases
 
 
- * ** LEXICON JIEDNAI **
+ * **LEXICON JIEDNAI**
 
- * ** LEXICON JIEDNAI_DECLINED  ** misses most cases
+ * **LEXICON JIEDNAI_DECLINED** misses most cases
 
- * **LEXICON BOARIS  **  As GAPPUS, but with different attr.
+ * **LEXICON BOARIS**  As GAPPUS, but with different attr.
 
- * **LEXICON BOARIS_NOCOMP **
-
-
- * **LEXICON IIVA_NOCOMP  **  IIVA_A without comparatives
+ * **LEXICON BOARIS_NOCOMP**
 
 
- * **LEXICON IIVA_A  **  loans ending with -a, same attr as pred
+ * **LEXICON IIVA_NOCOMP**  IIVA_A without comparatives
 
 
- * **LEXICON FRIIJA  **  loans ending with -a, same attr as pred
+ * **LEXICON IIVA_A**  loans ending with -a, same attr as pred
+
+
+ * **LEXICON FRIIJA**  loans ending with -a, same attr as pred
 
 
 
- * **LEXICON BOREALA  ** FRIIJA without comparatives
+ * **LEXICON BOREALA** FRIIJA without comparatives
 
- * **LEXICON SPANSKA ** spánska, dánska, fránska, ránska. WeG attr
-
-
- * **LEXICON ALLAT ** allat, gassat, govdat, attr: alla, gassa, govda. Trisyllables with Bisyllable compforms: alit, gasit, govddit
+ * **LEXICON SPANSKA** spánska, dánska, fránska, ránska. WeG attr
 
 
- * **LEXICON ALLAGA ** sublexicon to ALLAT and word árrat
+ * **LEXICON ALLAT** allat, gassat, govdat, attr: alla, gassa, govda. Trisyllables with Bisyllable compforms: alit, gasit, govddit
+
+
+ * **LEXICON ALLAGA** sublexicon to ALLAT and word árrat
 
 
 
@@ -1228,56 +1228,56 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 ## Contracted adjectives
 
- * **LEXICON FIINNIS  **  ,-dná-(:Ø)#fiinna, western comp: fiidnát, eastern comp: fiidnásabbo/-sut/-sat
+ * **LEXICON FIINNIS**  ,-dná-(:Ø)#fiinna, western comp: fiidnát, eastern comp: fiidnásabbo/-sut/-sat
 
 
- * ** LEXICON DEAHTIS  **  as fiinnis, but with StrGr in Attr
+ * **LEXICON DEAHTIS**  as fiinnis, but with StrGr in Attr
 
- * **LEXICON SMAVIS  **  as deahtis, but with even more Attr forms and comparative smávit in addition
+ * **LEXICON SMAVIS**  as deahtis, but with even more Attr forms and comparative smávit in addition
 
- * **LEXICON STUORIS  **  As fiinnis, but with different comparation
+ * **LEXICON STUORIS**  As fiinnis, but with different comparation
 
- * **LEXICON NJALGGAT ** Comp+Sg+Nom: njálgát, njálgásut/-sit/-sut/-sat, njálgáseabbo/-sabbo
+ * **LEXICON NJALGGAT** Comp+Sg+Nom: njálgát, njálgásut/-sit/-sut/-sat, njálgáseabbo/-sabbo
 
- * **LEXICON CAPPIS **  western comp: čábbát, eastern comp: čábbásabbo/-sut/-sat
-
-
- * **LEXICON VIISSIS   **  Contr, CG and -is -> -á, attr -es/-is, western and eastern comp forms
-
- * **LEXICON RAHPIS   **  Contr, CG and -is -> -á, attr -es, with long and short comp forms
-
- * **LEXICON HARVVIS   **  Contr, CG and -is -> -á, attr -e, short comp forms
-
- * **LEXICON MALLASadj- **
-
- * **LEXICON MALLASadj-_MINIP **  for giving Use/NGminip-tags
+ * **LEXICON CAPPIS**  western comp: čábbát, eastern comp: čábbásabbo/-sut/-sat
 
 
- * **LEXICON MALLASI-/NUORABUadj- **
+ * **LEXICON VIISSIS**  Contr, CG and -is -> -á, attr -es/-is, western and eastern comp forms
 
- * LEXICON DEVNVCASE    bisyllabic nominal declension
+ * **LEXICON RAHPIS**  Contr, CG and -is -> -á, attr -es, with long and short comp forms
 
- * LEXICON GOAHTI-OBLadj  
+ * **LEXICON HARVVIS**  Contr, CG and -is -> -á, attr -e, short comp forms
 
- * **LEXICON GOAHTI-NEadj **
+ * **LEXICON MALLASadj-**
 
- * **LEXICON GODIIadj- **
-
- * **LEXICON GOADIadj- **
+ * **LEXICON MALLASadj-_MINIP**  for giving Use/NGminip-tags
 
 
- * **LEXICON NomVadj  **
+ * **LEXICON MALLASI-/NUORABUadj-**
+
+ * LEXICON DEVNVCASE  bisyllabic nominal declension
+
+ * LEXICON GOAHTI-OBLadj
+
+ * **LEXICON GOAHTI-NEadj**
+
+ * **LEXICON GODIIadj-**
+
+ * **LEXICON GOADIadj-**
 
 
- * **LEXICON EssVadj **
+ * **LEXICON NomVadj**
+
+
+ * **LEXICON EssVadj**
 
 
 
 ## Special cases
 
- * **LEXICON VEARATAG **
+ * **LEXICON VEARATAG**
 
- * **LEXICON VEARA **
+ * **LEXICON VEARA**
 
 
 
@@ -1288,11 +1288,11 @@ from the otherwise uniform declension.
 
 
 
- * **LEXICON VUDDJI- **
+ * **LEXICON VUDDJI-**
 
- * **LEXICON BOHCCOadj **
+ * **LEXICON BOHCCOadj**
 
- * **LEXICON BOHCCUadj **
+ * **LEXICON BOHCCUadj**
 
 
 
@@ -1301,70 +1301,70 @@ from the otherwise uniform declension.
 
 # Adjective declension
 
- * **LEXICON ATTR  **  This is the normal lexicon for ATTR forms
+ * **LEXICON ATTR**  This is the normal lexicon for ATTR forms
 
- * **LEXICON ATTRCONT  **  This lexicon is for forms with non-sub Attr, where we sub the rest.
-
-
- * **LEXICON LAIKI0     **  Directing adjectives ...
+ * **LEXICON ATTRCONT**  This lexicon is for forms with non-sub Attr, where we sub the rest.
 
 
+ * **LEXICON LAIKI0**  Directing adjectives ...
 
 
 
- * **LEXICON ISSORASSA- **
 
 
- * **LEXICON EABBO/EAMOS ** comparision for trisyllable adjectives
-
- * **LEXICON EABBO/EAMOS_MINIP **  for giving Use/NGminip-tags
+ * **LEXICON ISSORASSA-**
 
 
- * **LEXICON EABBO/EAMOS_CONT **
+ * **LEXICON EABBO/EAMOS** comparision for trisyllable adjectives
 
- * **LEXICON EABBO/EAMOS_CONT_MINIP ** for giving Use/NGminip-tags
-
-
- * **LEXICON EAMOS_MINIP **  for giving Use/NGminip-tags
+ * **LEXICON EABBO/EAMOS_MINIP**  for giving Use/NGminip-tags
 
 
+ * **LEXICON EABBO/EAMOS_CONT**
 
- * **LEXICON EABBO/EAMOS_CONT-contracted  ** for certain contracted adjectives, divided dialectwise
-
- * **LEXICON SHORTCOMP **
-
- * **LEXICON SHORTCOMP_MINIP **  for giving Use/NGminip-tags
-
- * **LEXICON SHORTCOMP_PRED_MINIP **  for giving Use/NGminip-tags
+ * **LEXICON EABBO/EAMOS_CONT_MINIP** for giving Use/NGminip-tags
 
 
- * **LEXICON EABBU ** eastern form -abbo as well
-
- * **LEXICON EABBUCASE1 **
-
- * **LEXICON EABBUCASE2 **
-
- * **LEXICON EABBU_MINIP **  for giving Use/NGminip-tags
-
- * **LEXICON EABBUCASE1_MINIP **  for giving Use/NGminip-tags
-
- * **LEXICON EABBUCASE2_MINIP **  for giving Use/NGminip-tags
-
-
- * **LEXICON BU/MUS **  Bisyllabic adjectives comparision
-
-
- * **LEXICON BUStem **
-
-
- * **LEXICON EAMOS ** eastern form -amos as well
+ * **LEXICON EAMOS_MINIP**  for giving Use/NGminip-tags
 
 
 
- * **LEXICON GAPPUS0 ** Almost id. to MALIS0. MALIS0 has no VUOHTA, GAPPUS0 has no Px Ess., and shouldn't have either.
+ * **LEXICON EABBO/EAMOS_CONT-contracted** for certain contracted adjectives, divided dialectwise
+
+ * **LEXICON SHORTCOMP**
+
+ * **LEXICON SHORTCOMP_MINIP**  for giving Use/NGminip-tags
+
+ * **LEXICON SHORTCOMP_PRED_MINIP**  for giving Use/NGminip-tags
 
 
- * **LEXICON GAPPUS- **
+ * **LEXICON EABBU** eastern form -abbo as well
+
+ * **LEXICON EABBUCASE1**
+
+ * **LEXICON EABBUCASE2**
+
+ * **LEXICON EABBU_MINIP**  for giving Use/NGminip-tags
+
+ * **LEXICON EABBUCASE1_MINIP**  for giving Use/NGminip-tags
+
+ * **LEXICON EABBUCASE2_MINIP**  for giving Use/NGminip-tags
+
+
+ * **LEXICON BU/MUS**  Bisyllabic adjectives comparision
+
+
+ * **LEXICON BUStem**
+
+
+ * **LEXICON EAMOS** eastern form -amos as well
+
+
+
+ * **LEXICON GAPPUS0** Almost id. to MALIS0. MALIS0 has no VUOHTA, GAPPUS0 has no Px Ess., and shouldn't have either.
+
+
+ * **LEXICON GAPPUS-**
 
 GOAL: Keep GAPPUS- and MALLAS- apart, because of
 the Px(1)V issue, but unify the rest.
@@ -1379,16 +1379,16 @@ GAPPUS- to MALLAS-. Look into this.
 and remove GAPPUS- for MALLAS-
 eventually.
 
- * **LEXICON MEAHTTUN   ** Deverbal adjectives.
+ * **LEXICON MEAHTTUN** Deverbal adjectives.
 
 
- * **LEXICON LEXATTR_GEAHTES ** trisyllabic stems: geahtes for trisyll, heapmi for bisyll
+ * **LEXICON LEXATTR_GEAHTES** trisyllabic stems: geahtes for trisyll, heapmi for bisyll
 
- * **LEXICON GEAHTES **  geahtes for trisyll, heapmi for bisyll
+ * **LEXICON GEAHTES**  geahtes for trisyll, heapmi for bisyll
 
- * **LEXICON OVDDIT  ** Inherently comparative adjectives, bisyll
+ * **LEXICON OVDDIT** Inherently comparative adjectives, bisyll
 
- * **LEXICON MADDELEABBO  ** Inherently comparative adjectives, trisyll
+ * **LEXICON MADDELEABBO** Inherently comparative adjectives, trisyll
 
 
 
@@ -1401,10 +1401,10 @@ eventually.
 ## Noun derivation
 
 
- * **LEXICON VUOHTA  ** +CmpN/SgG
+ * **LEXICON VUOHTA** +CmpN/SgG
 
 
- * **LEXICON VUOHTAMORPH **
+ * **LEXICON VUOHTAMORPH**
 
 
 
@@ -1416,34 +1416,31 @@ eventually.
 # Adjective derivation
 
 
- * **LEXICON LAS ** from verbs: čirrolas, bealkálas etc
+ * **LEXICON LAS** from verbs: čirrolas, bealkálas etc
 
 
- * **LEXICON BUOREMUSS ** superlatives, from bisyll adjectives
+ * **LEXICON BUOREMUSS** superlatives, from bisyll adjectives
 
- * **LEXICON BUOREMUS **
+ * **LEXICON BUOREMUS**
 
- * **LEXICON BUOREMUSSA- **
-
-
-
-
- * **LEXICON HEAPMI ** caritives
-
- * **LEXICON LAGAN ** lágan, lágán and subform lagan as well
-
- * **LEXICON LAGAS ** lágaš, lágáš and subform lagaš as well
-
-
- * **LEXICON LAGAN_LAGAS **
-
-
- * **LEXICON AHKASAS ** derived words on -saš, -haš, -laš
-
- * **LEXICON AHKASAS_PL **  derived words on -saš, -haš, -laš, only plural,
+ * **LEXICON BUOREMUSSA-**
 
 
 
+
+ * **LEXICON HEAPMI** caritives
+
+ * **LEXICON LAGAN** lágan, lágán and subform lagan as well
+
+ * **LEXICON LAGAS** lágaš, lágáš and subform lagaš as well
+
+
+ * **LEXICON LAGAN_LAGAS**
+
+
+ * **LEXICON AHKASAS** derived words on -saš, -haš, -laš
+
+ * **LEXICON AHKASAS_PL**  derived words on -saš, -haš, -laš, only plural,
 
 
 
@@ -1455,74 +1452,77 @@ eventually.
 
 
 
- * **LEXICON SISKKALDAS ** olgguldas, siskkáldas, siskkildas, nuppáldas, that's all
 
 
 
- * **LEXICON DenominalAdjsV1 ** caritives and their derivatives (huvva, huhtti), from bisyll nouns
-
- * **LEXICON DenominalAdjsV1Long ** caritives and their derivatives (huvva, huhtti), from bisyll nouns without vowel shortening
-
- * **LEXICON DenominalAdjsV1Short ** caritives and their derivatives (huvva, huhtti), from bisyll nouns with vowel shortening
+ * **LEXICON SISKKALDAS** olgguldas, siskkáldas, siskkildas, nuppáldas, that's all
 
 
 
+ * **LEXICON DenominalAdjsV1** caritives and their derivatives (huvva, huhtti), from bisyll nouns
 
- * **LEXICON DenominalAdjsV2 ** from bisyllables, muoralaš, gieđalaš etc
+ * **LEXICON DenominalAdjsV1Long** caritives and their derivatives (huvva, huhtti), from bisyll nouns without vowel shortening
 
- * **LEXICON DenominalAdjsV2_lasj ** from bisyllables, muoralaš, gieđalaš etc
-
-
- * **LEXICON DenominalAdjsC ** from trisyllables, -laš and caritives on -heapme
-
-
-
- * **LEXICON DenominalAdjsCLong ** from trisyllables, -laš and caritives on -heapme
-
-
-
- * **LEXICON DenominalAdjsCShort ** from trisyllables, -laš and caritives on -heapme
+ * **LEXICON DenominalAdjsV1Short** caritives and their derivatives (huvva, huhtti), from bisyll nouns with vowel shortening
 
 
 
 
- * **LEXICON DenominalAdjsV3  ** +CmpN/SgN +CmpN/SgG +CmpN/PlG !from Propernames
+ * **LEXICON DenominalAdjsV2** from bisyllables, muoralaš, gieđalaš etc
 
- * **LEXICON DenominalAdjsV3case  ** from bisyllabic propers
+ * **LEXICON DenominalAdjsV2_lasj** from bisyllables, muoralaš, gieđalaš etc
 
 
- * **LEXICON DenominalAdjsC2  ** +CmpN/SgN +CmpN/SgG +CmpN/PlG	!from Propernames
+ * **LEXICON DenominalAdjsC** from trisyllables, -laš and caritives on -heapme
 
- * **LEXICON DenominalAdjsC2case  ** from trisyllabic propers
 
- * **LEXICON DenominalAdjsV4  ** +CmpN/SgN +CmpN/SgG +CmpN/PlG  from Propernames
 
- * **LEXICON DenominalAdjsV4case  ** from bisyllabic propers (subbed)
+ * **LEXICON DenominalAdjsCLong** from trisyllables, -laš and caritives on -heapme
 
- * **LEXICON DenominalAdjsC3  ** +CmpN/SgN +CmpN/SgG +CmpN/PlG	 !from Propernames
 
- * **LEXICON DenominalAdjsC3case  ** from trisyllabic propers (subbed)
 
- * **LEXICON LASJOBL **
+ * **LEXICON DenominalAdjsCShort** from trisyllables, -laš and caritives on -heapme
 
- * **LEXICON HEAPMIOBL ** sublexicon not only for caritives on -heapmi/-heapme
+
+
+
+ * **LEXICON DenominalAdjsV3** +CmpN/SgN +CmpN/SgG +CmpN/PlG !from Propernames
+
+ * **LEXICON DenominalAdjsV3case** from bisyllabic propers
+
+
+ * **LEXICON DenominalAdjsC2** +CmpN/SgN +CmpN/SgG +CmpN/PlG	!from Propernames
+
+ * **LEXICON DenominalAdjsC2case** from trisyllabic propers
+
+ * **LEXICON DenominalAdjsV4** +CmpN/SgN +CmpN/SgG +CmpN/PlG  from Propernames
+
+ * **LEXICON DenominalAdjsV4case** from bisyllabic propers (subbed)
+
+ * **LEXICON DenominalAdjsC3** +CmpN/SgN +CmpN/SgG +CmpN/PlG	 !from Propernames
+
+ * **LEXICON DenominalAdjsC3case** from trisyllabic propers (subbed)
+
+ * **LEXICON LASJOBL**
+
+ * **LEXICON HEAPMIOBL** sublexicon not only for caritives on -heapmi/-heapme
 
 
 
 ## Adverbs from adjectives
 
- * **LEXICON ADVV  ** adverb from bilysll stems
+ * **LEXICON ADVV** adverb from bilysll stems
 
- * **LEXICON ADVC  ** adverb from trilysll stems
+ * **LEXICON ADVC** adverb from trilysll stems
 
 
 
 
 ## Adjectives from nouns
 
- * **LEXICON AGAdj  **  mostly words like guovttejagat, allajoccat etc
+ * **LEXICON AGAdj**  mostly words like guovttejagat, allajoccat etc
 
- * **LEXICON AGAdjINFL **
+ * **LEXICON AGAdjINFL**
 
 # North Sámi adjective lexicon
 
@@ -1747,37 +1747,37 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 
 
- * **LEXICON GOAHTI-A ** divided into a-i-u due to errortag-branch
+ * **LEXICON GOAHTI-A** divided into a-i-u due to errortag-branch
 
- * **LEXICON GOAHTI-I  ** divided into a-i-u due to errortag-branch
-
-
- * **LEXICON GOAHTI-U  ** divided into a-i-u due to errortag-branch
+ * **LEXICON GOAHTI-I** divided into a-i-u due to errortag-branch
 
 
-
- * **LEXICON GOAHTI ** Bisyll. V-Nouns. Short nom-compound-forms goahte-,long/short gen
-
-
- * **LEXICON GOAHTI-IU ** Bisyll. V-Nouns. Short nom-compound-forms goahte-,long/short gen
+ * **LEXICON GOAHTI-U** divided into a-i-u due to errortag-branch
 
 
- * **LEXICON GOAHTILONG ** Long nom-compound-forms, long gen
 
- * **LEXICON GOAHTILONGSHORT ** Sometimes long nom-compound-forms, long gen
-
- * **LEXICON ALBMI ** Bisyll. V-Nouns. Short nom-compound-forms, long gen.
+ * **LEXICON GOAHTI** Bisyll. V-Nouns. Short nom-compound-forms goahte-,long/short gen
 
 
- * **LEXICON ALBMILONG ** Bisyll. V-Nouns. Long nom-compound-forms, long gen.
+ * **LEXICON GOAHTI-IU** Bisyll. V-Nouns. Short nom-compound-forms goahte-,long/short gen
 
 
- * **LEXICON ALBMILONGSHORT ** Bisyll. V-Nouns. Long/SHORT nom-compound-forms, long gen.
+ * **LEXICON GOAHTILONG** Long nom-compound-forms, long gen
 
- * **LEXICON AIGI ** Bisyll. V-Nouns. Short nom-compound-forms, short gen.
+ * **LEXICON GOAHTILONGSHORT** Sometimes long nom-compound-forms, long gen
+
+ * **LEXICON ALBMI** Bisyll. V-Nouns. Short nom-compound-forms, long gen.
 
 
- * **LEXICON STAHTA ** Bisyll. Non-Gradating a-Nouns; i-Illative
+ * **LEXICON ALBMILONG** Bisyll. V-Nouns. Long nom-compound-forms, long gen.
+
+
+ * **LEXICON ALBMILONGSHORT** Bisyll. V-Nouns. Long/SHORT nom-compound-forms, long gen.
+
+ * **LEXICON AIGI** Bisyll. V-Nouns. Short nom-compound-forms, short gen.
+
+
+ * **LEXICON STAHTA** Bisyll. Non-Gradating a-Nouns; i-Illative
 
 it does not have the Prop tag.
 
@@ -1797,149 +1797,149 @@ it does not have the Prop tag.
 
 
 
- * **LEXICON IIJA ** loan words ending -iija; also with only -i as Err/Orth, like galleri
+ * **LEXICON IIJA** loan words ending -iija; also with only -i as Err/Orth, like galleri
 
- * **LEXICON ESSEIJA ** loan words ending -iija; Illative -iijai as well -iijii: kopiijai, kopiijii
+ * **LEXICON ESSEIJA** loan words ending -iija; Illative -iijai as well -iijii: kopiijai, kopiijii
 
 
- * **LEXICON IIVA ** -iivva loan words.
+ * **LEXICON IIVA** -iivva loan words.
 
- * **LEXICON PROFIILA **  -iila Loan words.
+ * **LEXICON PROFIILA**  -iila Loan words.
 
 
 
- * **LEXICON STRUKTUR ** Recent loanwords on -vra with short cmp-form: struktur-
+ * **LEXICON STRUKTUR** Recent loanwords on -vra with short cmp-form: struktur-
 
- * **LEXICON KULTUR ** -kultuvra, compound forms: kultur-, kulttor-
+ * **LEXICON KULTUR** -kultuvra, compound forms: kultur-, kulttor-
 
- * **LEXICON KANTUR_N ** word with many forms
+ * **LEXICON KANTUR_N** word with many forms
 
- * **LEXICON MAŠIIDNA ** mašiidna with short cmp-forms as well
+ * **LEXICON MAŠIIDNA** mašiidna with short cmp-forms as well
 
- * **LEXICON BENSIN ** bensiidna with short cmp-forms as well
+ * **LEXICON BENSIN** bensiidna with short cmp-forms as well
 
- * **LEXICON ADRENALIN ** Recent loanwords on -iidna with short cmp-form as well
+ * **LEXICON ADRENALIN** Recent loanwords on -iidna with short cmp-form as well
 
 
- * **LEXICON TELEFON ** Recent loanwords on -vdna with short cmp-form as well
+ * **LEXICON TELEFON** Recent loanwords on -vdna with short cmp-form as well
 
- * **LEXICON AKTION ** akšuvdna with cmp form ákšun- as well
+ * **LEXICON AKTION** akšuvdna with cmp form ákšun- as well
 
- * **LEXICON NATION ** naššuvdna with short cmp form náššon as well
+ * **LEXICON NATION** naššuvdna with short cmp form náššon as well
 
 
- * **LEXICON KANON ** kanovdna with short cmp form kánon/kánun as well
+ * **LEXICON KANON** kanovdna with short cmp form kánon/kánun as well
 
 
- * **LEXICON SOSIAL ** Recent loanwords on -ála with both short and long cmp-form
+ * **LEXICON SOSIAL** Recent loanwords on -ála with both short and long cmp-form
 
- * **LEXICON GARGIA **  Vowel-final loan words without Gradation and Ill ^change
+ * **LEXICON GARGIA**  Vowel-final loan words without Gradation and Ill ^change
 
- * **LEXICON OBOE **  oe-final loan words without Gradation and Ill ^change
+ * **LEXICON OBOE**  oe-final loan words without Gradation and Ill ^change
 
 
- * **LEXICON BUFFALO ** consonant fin loanwords, some vow fin like revya
+ * **LEXICON BUFFALO** consonant fin loanwords, some vow fin like revya
 
- * **LEXICON ESSAYA ** recent loanwords on vow+a
+ * **LEXICON ESSAYA** recent loanwords on vow+a
 
- * **LEXICON IDEA ** restricted Px for speller recent loanwords on vow+a, only idea this far
+ * **LEXICON IDEA** restricted Px for speller recent loanwords on vow+a, only idea this far
 
 
- * **LEXICON MASAI ** only masai
+ * **LEXICON MASAI** only masai
 
 
 
 
 
- * **LEXICON BASSI ** words on -bassi. Long nom-compound-forms, short gen, long heapmi-caritive
+ * **LEXICON BASSI** words on -bassi. Long nom-compound-forms, short gen, long heapmi-caritive
 
- * **LEXICON MUOHTU ** words on -muohtu. Short nom-compound-forms, short gen, long heapmi-caritive
+ * **LEXICON MUOHTU** words on -muohtu. Short nom-compound-forms, short gen, long heapmi-caritive
 
- * **LEXICON EADNI ** eadni, gudni, ádnu. Short nom-compound-forms, long gen, short caritive
+ * **LEXICON EADNI** eadni, gudni, ádnu. Short nom-compound-forms, long gen, short caritive
 
 
 
- * **LEXICON VALDI ** words on -váldi. Short nom-compound-forms, long gen, short caritive, away with Px "váldán"
+ * **LEXICON VALDI** words on -váldi. Short nom-compound-forms, long gen, short caritive, away with Px "váldán"
 
 
- * **LEXICON RAFI ** words on -ráfi. Long nom-compound-forms, long gen. short heapmi-caritive
+ * **LEXICON RAFI** words on -ráfi. Long nom-compound-forms, long gen. short heapmi-caritive
 
 
- * **LEXICON LOTLOHKU ** words on -lotlohku. Long/SHORT nom-compound-forms, long gen.
+ * **LEXICON LOTLOHKU** words on -lotlohku. Long/SHORT nom-compound-forms, long gen.
 
- * **LEXICON SAPMI ** Bisyll. V-Nouns. No nom-compounding, short gen.
+ * **LEXICON SAPMI** Bisyll. V-Nouns. No nom-compounding, short gen.
 
- * **LEXICON XGIELLA ** Bisyll. V-Nouns. No nom-compounding, short gen.
+ * **LEXICON XGIELLA** Bisyll. V-Nouns. No nom-compounding, short gen.
 
 
- * **LEXICON BEALLE ** words ending -bealle. Short nom-compound-forms, short gen.
+ * **LEXICON BEALLE** words ending -bealle. Short nom-compound-forms, short gen.
 
 
- * **LEXICON TAXI ** dákse and tákse
+ * **LEXICON TAXI** dákse and tákse
 
 
- * **LEXICON LUONDU ** this word (+vuohta) because of behavior in compounds, where it is normally in SgGen: luonddubiebmu
+ * **LEXICON LUONDU** this word (+vuohta) because of behavior in compounds, where it is normally in SgGen: luonddubiebmu
 
 
- * **LEXICON GOADA-LUONDU **
+ * **LEXICON GOADA-LUONDU**
 
- * **LEXICON NPx2V-LUONDU **
+ * **LEXICON NPx2V-LUONDU**
 
 
- * **LEXICON RUOKTU ** only this word because of its behavior in compounds, where it is normally in SgGen: ruovttu-/ruovtto-
+ * **LEXICON RUOKTU** only this word because of its behavior in compounds, where it is normally in SgGen: ruovttu-/ruovtto-
 
 
 
- * **LEXICON MADIDJA ** máđi and cmp
+ * **LEXICON MADIDJA** máđi and cmp
 
 
 
- * **LEXICON GENTLEMAN **  gentleman (stem mana-)
+ * **LEXICON GENTLEMAN**  gentleman (stem mana-)
 
- * **LEXICON DUOHKI ** *duohki* and compounds, for disamb. reasons
+ * **LEXICON DUOHKI** *duohki* and compounds, for disamb. reasons
 
 
 
 
- * **LEXICON BUDEITA ** Rather special word: buđeita
+ * **LEXICON BUDEITA** Rather special word: buđeita
 
- * **LEXICON MANNI ** words on -mánni. Long/SHORT nom-compound-forms, long gen.ILL:mánnii/mánnái
+ * **LEXICON MANNI** words on -mánni. Long/SHORT nom-compound-forms, long gen.ILL:mánnii/mánnái
 
 
- * **LEXICON MANNI-INFL **
+ * **LEXICON MANNI-INFL**
 
 
- * **LEXICON OLLUVUOHTA ** Exceptional vuohta-Noun
+ * **LEXICON OLLUVUOHTA** Exceptional vuohta-Noun
 
 
- * **LEXICON LEXMUSH ** derived verbs on -muš
+ * **LEXICON LEXMUSH** derived verbs on -muš
 
 
 
 
 
 
- * **LEXICON OLGU ** only olgu. Short nom-compound-form, short gen. Incomplete paradigm
+ * **LEXICON OLGU** only olgu. Short nom-compound-form, short gen. Incomplete paradigm
 
- * **LEXICON MIEHTI ** nuorta, nuorti, oarji, miehti. Short nom-compound-forms, long gen. Incomplete paradigm
+ * **LEXICON MIEHTI** nuorta, nuorti, oarji, miehti. Short nom-compound-forms, long gen. Incomplete paradigm
 
- * **LEXICON LULLI ** lulli and davvi. Long/SHORT nom-compound-forms, long gen. Incomplete paradigm
+ * **LEXICON LULLI** lulli and davvi. Long/SHORT nom-compound-forms, long gen. Incomplete paradigm
 
 
 
 
- * **LEXICON GADDI ** Bisyll. V-Nouns with Comparative Forms.  Short nom-compound-forms, long gen.
+ * **LEXICON GADDI** Bisyll. V-Nouns with Comparative Forms.  Short nom-compound-forms, long gen.
 
- * **LEXICON GADDILONG ** long compound forms, short -heapme
+ * **LEXICON GADDILONG** long compound forms, short -heapme
 
- * **LEXICON GADDILONGSHORT ** NB! No SgIll and SgLoc (not directed to GOADI-, GODII- or GOAHTAI) because *davvi* is the only word this far Bisyll. V-Nouns with Comp. Forms, long-short nomcmp, long gencmp
+ * **LEXICON GADDILONGSHORT** NB! No SgIll and SgLoc (not directed to GOADI-, GODII- or GOAHTAI) because *davvi* is the only word this far Bisyll. V-Nouns with Comp. Forms, long-short nomcmp, long gencmp
 
 
- * **LEXICON GADDISHORT ** Bisyll. V-Nouns with Comparative Forms.  Short nom-compound-forms, SHORT gen.
+ * **LEXICON GADDISHORT** Bisyll. V-Nouns with Comparative Forms.  Short nom-compound-forms, SHORT gen.
 
- * **LEXICON OARJI ** máddi, nuorti, nuorta, oarji. Comparative Forms.  Short nom-compound-forms, long gen. Incomplete paradigms
+ * **LEXICON OARJI** máddi, nuorti, nuorta, oarji. Comparative Forms.  Short nom-compound-forms, long gen. Incomplete paradigms
 
- * **LEXICON LULLILONG ** long compound forms
+ * **LEXICON LULLILONG** long compound forms
 
 
 
@@ -1947,106 +1947,106 @@ it does not have the Prop tag.
 
 
 
- * **LEXICON VARRA **  varra and uvdna. No -laš, to get rid of varalaš and uvnnalaš from speller
+ * **LEXICON VARRA**  varra and uvdna. No -laš, to get rid of varalaš and uvnnalaš from speller
 
- * **LEXICON LASSA **  want this without essive Px: *lassanan, *lassanat, *lassaneame
+ * **LEXICON LASSA**  want this without essive Px: *lassanan, *lassanat, *lassaneame
 
- * **LEXICON AKCU **  No -heapme, no wg+Foc/han (thereby avoiding ávččuhit, ávččuhan, ávččuhat in speller) Short nom-compound-form ákčo-,long/short gen
+ * **LEXICON AKCU**  No -heapme, no wg+Foc/han (thereby avoiding ávččuhit, ávččuhan, ávččuhat in speller) Short nom-compound-form ákčo-,long/short gen
 
- * **LEXICON JAHKI ** Bisyll. V-Nouns. Short nom-compound-forms, long gen. to avoid jahkán, jagát
+ * **LEXICON JAHKI** Bisyll. V-Nouns. Short nom-compound-forms, long gen. to avoid jahkán, jagát
 
- * **LEXICON OAHPPA ** Bisyll. V-Nouns. Short nom-compound-forms goahte-,long/short gen, to avoid oahppasat
+ * **LEXICON OAHPPA** Bisyll. V-Nouns. Short nom-compound-forms goahte-,long/short gen, to avoid oahppasat
 
 
- * **LEXICON NPxC-OAHPPA **
+ * **LEXICON NPxC-OAHPPA**
 
 
 
 
- * **LEXICON BLV ** Bisyll. V-Nouns. Long nom-compound-forms, long gen., to avoid bálvát, Bihttánis
+ * **LEXICON BLV** Bisyll. V-Nouns. Long nom-compound-forms, long gen., to avoid bálvát, Bihttánis
 
 
- * **LEXICON NPx2V-BLV **
+ * **LEXICON NPx2V-BLV**
 
- * **LEXICON NPxC-BLV **
+ * **LEXICON NPxC-BLV**
 
 
 
- * **LEXICON Px2V-BLV   ** for second person vowel stems
+ * **LEXICON Px2V-BLV** for second person vowel stems
 
- * **LEXICON SOABBI ** Bisyll. V-Nouns. Short nom-compound-forms goahte-,long/short gen, to avoid SOABBÁT, gáldot, searván, laktasan
+ * **LEXICON SOABBI** Bisyll. V-Nouns. Short nom-compound-forms goahte-,long/short gen, to avoid SOABBÁT, gáldot, searván, laktasan
 
 
 
 
- * **LEXICON NPx1V-SOABBI **
+ * **LEXICON NPx1V-SOABBI**
 
 
- * **LEXICON NPxC-SOABBI **
+ * **LEXICON NPxC-SOABBI**
 
 
- * **LEXICON IVDNI ** Bisyll. V-Nouns. Short nom-compound-forms, short gen. preventing ivnnát, rivgot
+ * **LEXICON IVDNI** Bisyll. V-Nouns. Short nom-compound-forms, short gen. preventing ivnnát, rivgot
 
 
 
- * **LEXICON NPx2V-IVDNI **
+ * **LEXICON NPx2V-IVDNI**
 
- * **LEXICON Px2V-IVDNI   ** for second person vowel stems
+ * **LEXICON Px2V-IVDNI** for second person vowel stems
 
 
- * **LEXICON DAHKU ** Like ALBMILONG Bisyll. V-Nouns. Long nom-compound-forms, long gen. Without +Sg+Nom/Gen/Acc+PxSg1 to avoid "dahkon"
+ * **LEXICON DAHKU** Like ALBMILONG Bisyll. V-Nouns. Long nom-compound-forms, long gen. Without +Sg+Nom/Gen/Acc+PxSg1 to avoid "dahkon"
 
 
- * **LEXICON SADJA ** Bisyll. V-Nouns. Long nom-compound-forms, long gen. TO AVOID SÁDJÁI
+ * **LEXICON SADJA** Bisyll. V-Nouns. Long nom-compound-forms, long gen. TO AVOID SÁDJÁI
 
 
- * **LEXICON DAHPPA ** dahpa, dáhpa and dáhppa. to avoid dáhpahuvvat, dahpahuvvat etc in speller
+ * **LEXICON DAHPPA** dahpa, dáhpa and dáhppa. to avoid dáhpahuvvat, dahpahuvvat etc in speller
 
- * **LEXICON LAHKI  ** the words on -láhki. Because in speller we want to aviod boasttoláhkái, borranláhki etc. (borran láhkai)
+ * **LEXICON LAHKI** the words on -láhki. Because in speller we want to aviod boasttoláhkái, borranláhki etc. (borran láhkai)
 
 
 
 
- * **LEXICON NPxC-LAHKI **
+ * **LEXICON NPxC-LAHKI**
 
 
 
- * **LEXICON BEARRI **  to avoid unfortunate diminutives like bearáš and salaš in speller (bearaš, sálaš) +  "beassán" = beassi+Sg+Nom/Gen/Acc+PxSg1
+ * **LEXICON BEARRI**  to avoid unfortunate diminutives like bearáš and salaš in speller (bearaš, sálaš) +  "beassán" = beassi+Sg+Nom/Gen/Acc+PxSg1
 
 
 
- * **LEXICON GEAHCCI ** +CmpN/SgN +CmpN/SgG +CmpN/PlG
+ * **LEXICON GEAHCCI** +CmpN/SgN +CmpN/SgG +CmpN/PlG
 
- * **LEXICON GEAHCCICT **  Actors, to avoid geahččán, jábmán, geahččát, jábmát
+ * **LEXICON GEAHCCICT**  Actors, to avoid geahččán, jábmán, geahččát, jábmát
 
- * **LEXICON ACTORVALDI ** lexicalized actors because we have restricted verb derivation for speller. Long compound-forms, without "váldán"
+ * **LEXICON ACTORVALDI** lexicalized actors because we have restricted verb derivation for speller. Long compound-forms, without "váldán"
 
 
 2f. Actor lexicas
 
 
- * **LEXICON ACTOR ** +CmpN/SgN +CmpN/SgG +CmpN/PlG
+ * **LEXICON ACTOR** +CmpN/SgN +CmpN/SgG +CmpN/PlG
 
- * **LEXICON ACTORCT ** nowadays tagged NomAg. Long compound-forms
-
-
- * **LEXICON ACTOR-PL ** Plurals
+ * **LEXICON ACTORCT** nowadays tagged NomAg. Long compound-forms
 
 
-
- * **LEXICON EADDJI-NomAg ** +CmpN/SgN +CmpN/SgG +CmpN/PlG  tagged NomAg. Sometimes long compound-forms
-
-
- * **LEXICON ACTORLONGSHORT ** +CmpN/SgN +CmpN/SgG +CmpN/PlG
+ * **LEXICON ACTOR-PL** Plurals
 
 
- * **LEXICON ACTORLONGSHORTCT-nomag ** adds +NomAg
 
- * **LEXICON ACTORLONGSHORTCT ** nowadays tagged NomAg. Sometimes long compound-forms
+ * **LEXICON EADDJI-NomAg** +CmpN/SgN +CmpN/SgG +CmpN/PlG  tagged NomAg. Sometimes long compound-forms
 
- * **LEXICON ACTORSHORT ** +CmpN/SgN +CmpN/SgG +CmpN/PlG
 
- * **LEXICON ACTORSHORTCT ** nowadays tagged NomAg. Short compound-forms
+ * **LEXICON ACTORLONGSHORT** +CmpN/SgN +CmpN/SgG +CmpN/PlG
+
+
+ * **LEXICON ACTORLONGSHORTCT-nomag** adds +NomAg
+
+ * **LEXICON ACTORLONGSHORTCT** nowadays tagged NomAg. Sometimes long compound-forms
+
+ * **LEXICON ACTORSHORT** +CmpN/SgN +CmpN/SgG +CmpN/PlG
+
+ * **LEXICON ACTORSHORTCT** nowadays tagged NomAg. Short compound-forms
 
 +Use/NG:%> GOAHTAI ; ! Ill sublexicon     no dipth simpl
 
@@ -2055,44 +2055,44 @@ it does not have the Prop tag.
 
 
 
- * **LEXICON BOAHTALADDAN   **  Intransitiv Action nouns from deverbal verbs
+ * **LEXICON BOAHTALADDAN**  Intransitiv Action nouns from deverbal verbs
 
 
 
 
- * **LEXICON IHTALUDDAMAT   **  ihtaluddamat, plural
-
-
-
-
-
- * **LEXICON UPMI ** action noun, from passive verb
+ * **LEXICON IHTALUDDAMAT**  ihtaluddamat, plural
 
 
 
 
 
+ * **LEXICON UPMI** action noun, from passive verb
 
 
 
- * **LEXICON EGEZHAGAT **  reciprocals like verddežagat, jumežagat etc
 
 
- * **LEXICON BUVSSAT  ** Pl. bisyll vow-fin. Short cmp-forms
 
 
- * **LEXICON BUVSSATLONG  ** Pl. bisyll vow-fin. Short cmp-forms
 
- * **LEXICON MUODUT ** muođut only, plural
-
- * **LEXICON DEAHKIT ** like AIGI but plural only
-
- * **LEXICON DIEDUT ** like ALBMI but plural only
+ * **LEXICON EGEZHAGAT**  reciprocals like verddežagat, jumežagat etc
 
 
- * **LEXICON BORALMASAT ** like JOHTOLAT but plural only
+ * **LEXICON BUVSSAT** Pl. bisyll vow-fin. Short cmp-forms
 
- * **LEXICON DURVAT ** like LASIS but pl. only
+
+ * **LEXICON BUVSSATLONG** Pl. bisyll vow-fin. Short cmp-forms
+
+ * **LEXICON MUODUT** muođut only, plural
+
+ * **LEXICON DEAHKIT** like AIGI but plural only
+
+ * **LEXICON DIEDUT** like ALBMI but plural only
+
+
+ * **LEXICON BORALMASAT** like JOHTOLAT but plural only
+
+ * **LEXICON DURVAT** like LASIS but pl. only
 
 
 
@@ -2103,32 +2103,32 @@ Trisyllabic nouns
 
 
 
- * **LEXICON MATTAR ** Short compound-forms Tris. Anim. Gradating C-Nouns
+ * **LEXICON MATTAR** Short compound-forms Tris. Anim. Gradating C-Nouns
 
- * **LEXICON MALIS ** Short compound-forms Tris. Inanim. Gradating C-Nouns
-
-
-
- * **LEXICON MALISLONG **  Long compound-forms Tris. Inanim. Gradating C-Nouns
-
- * **LEXICON MALISLONGSHORT **  Long and short compound-forms. Tris. Inanim. Gradating C-Nouns
+ * **LEXICON MALIS** Short compound-forms Tris. Inanim. Gradating C-Nouns
 
 
 
- * **LEXICON BEANA ** Short compound-forms. Trisyll. Anim. Gradating 0-Nouns
+ * **LEXICON MALISLONG**  Long compound-forms Tris. Inanim. Gradating C-Nouns
 
- * **LEXICON SEAMU ** Short compound-forms. Trisyll. Inanim. Gradating 0-Nouns
-
- * **LEXICON SEAMULONG ** Long compound-forms. Trisyll. Inanim. Gradating 0-Nouns
+ * **LEXICON MALISLONGSHORT**  Long and short compound-forms. Tris. Inanim. Gradating C-Nouns
 
 
- * **LEXICON GAHPIR ** Short compound-forms. Trisyll. Non-Gradating C-Nouns
+
+ * **LEXICON BEANA** Short compound-forms. Trisyll. Anim. Gradating 0-Nouns
+
+ * **LEXICON SEAMU** Short compound-forms. Trisyll. Inanim. Gradating 0-Nouns
+
+ * **LEXICON SEAMULONG** Long compound-forms. Trisyll. Inanim. Gradating 0-Nouns
 
 
- * **LEXICON GAHPIRLONGSHORT ** Long and short compound-forms. Trisyll. Non-Gradating C-Nouns
+ * **LEXICON GAHPIR** Short compound-forms. Trisyll. Non-Gradating C-Nouns
 
 
- * **LEXICON GAHPIRLONG ** Long compound-forms. Trisyll. Non-Gradating C-Nouns
+ * **LEXICON GAHPIRLONGSHORT** Long and short compound-forms. Trisyll. Non-Gradating C-Nouns
+
+
+ * **LEXICON GAHPIRLONG** Long compound-forms. Trisyll. Non-Gradating C-Nouns
 
 
 
@@ -2140,82 +2140,82 @@ Trisyllabic nouns
 
 
 
- * **LEXICON EANA ** eana, eanan, eatnan
+ * **LEXICON EANA** eana, eanan, eatnan
 
 
- * **LEXICON DOAVTTIR ** only doavttir. Short compound-forms
+ * **LEXICON DOAVTTIR** only doavttir. Short compound-forms
 
 
- * **LEXICON OVCCIS_N **  Collective numerals gallis, moattes, moattis, máŋggas
+ * **LEXICON OVCCIS_N**  Collective numerals gallis, moattes, moattis, máŋggas
 
 
- * **LEXICON DAIVVAS ** Tris. Gradating C-Nouns, The Troms declension: dáivvaš:dáivaha, bearaš:bearraha, njunuš:njunnoha
-
-
-
-
-
- * **LEXICON BOADA ** Short compound-forms. Trisyll. Inanim. Gradating 0-Nouns  TO AVOID BOAĐAN
-
-
- * **LEXICON DAHPPAGA **  the dáhpahuvvá fix nr2. to avoid dahpahuvvat in speller
-
-
- * **LEXICON ENGEL ** Restricted denominals for speller   -eŋgel
+ * **LEXICON DAIVVAS** Tris. Gradating C-Nouns, The Troms declension: dáivvaš:dáivaha, bearaš:bearraha, njunuš:njunnoha
 
 
 
 
 
- * **LEXICON MAGASH ** reciprocals like verddežat, jumežat etc
+ * **LEXICON BOADA** Short compound-forms. Trisyll. Inanim. Gradating 0-Nouns  TO AVOID BOAĐAN
 
 
+ * **LEXICON DAHPPAGA**  the dáhpahuvvá fix nr2. to avoid dahpahuvvat in speller
 
 
- * **LEXICON BADJOSAT   ** Pl. bajus:badjosat, short cmp-form
-
- * **LEXICON BADJOSATLONG   ** Pl. bajus:badjosat, long cmp-form
-
-
-
- * **LEXICON ALIMAT   ** Pl. alin:alimat, like GAHPIR but pl only
-
-
- * **LEXICON CEAKCAGAT ** Like seamu but plural only
-
-
- * **LEXICON VUOIGNAHAT   ** LikeDAIVVAS but only Pl. vuoiŋŋaš:vuoigŋahat
+ * **LEXICON ENGEL** Restricted denominals for speller   -eŋgel
 
 
 
 
 
-
- * **LEXICON EAMOSH   ** váikkuheamoš, deverbals
-
-
- * **LEXICON AMOSH   ** váikkuhamoš, deverbals
-
-
-
- * **LEXICON BOAHTINLONGSHORT   **  Intransitiv action nouns from bisyll verbs, long and short cmp-form
-
- * **LEXICON BOAHTIN   **  Intransitiv action nouns from bisyll verbs, long cmp-form
-
- * **LEXICON PRE_BOAHTIN   **  Intransitiv action nouns from bisyll verbs, long cmp-form
+ * **LEXICON MAGASH** reciprocals like verddežat, jumežat etc
 
 
 
 
- * **LEXICON BOAHTINSHORT   ** Intransitiv action nouns from bisyll verbs, short cmp-form
+ * **LEXICON BADJOSAT** Pl. bajus:badjosat, short cmp-form
 
-
- * **LEXICON IHTAMAT   ** Plural action nouns, from bisyllabic verbs
-
+ * **LEXICON BADJOSATLONG** Pl. bajus:badjosat, long cmp-form
 
 
 
- * **LEXICON LEXDIMINC ** diminutives, these comes from noun stems file, from trisyll nouns
+ * **LEXICON ALIMAT** Pl. alin:alimat, like GAHPIR but pl only
+
+
+ * **LEXICON CEAKCAGAT** Like seamu but plural only
+
+
+ * **LEXICON VUOIGNAHAT** LikeDAIVVAS but only Pl. vuoiŋŋaš:vuoigŋahat
+
+
+
+
+
+
+ * **LEXICON EAMOSH** váikkuheamoš, deverbals
+
+
+ * **LEXICON AMOSH** váikkuhamoš, deverbals
+
+
+
+ * **LEXICON BOAHTINLONGSHORT**  Intransitiv action nouns from bisyll verbs, long and short cmp-form
+
+ * **LEXICON BOAHTIN**  Intransitiv action nouns from bisyll verbs, long cmp-form
+
+ * **LEXICON PRE_BOAHTIN**  Intransitiv action nouns from bisyll verbs, long cmp-form
+
+
+
+
+ * **LEXICON BOAHTINSHORT** Intransitiv action nouns from bisyll verbs, short cmp-form
+
+
+ * **LEXICON IHTAMAT** Plural action nouns, from bisyllabic verbs
+
+
+
+
+ * **LEXICON LEXDIMINC** diminutives, these comes from noun stems file, from trisyll nouns
 
 
 
@@ -2224,17 +2224,17 @@ Trisyllabic nouns
 
   Contracted nouns
 
- * **LEXICON BOAZU ** Anim. Contracted 0-Nouns. Short compound-forms.
+ * **LEXICON BOAZU** Anim. Contracted 0-Nouns. Short compound-forms.
 
- * **LEXICON SUOLU ** Inanim. Contracted 0-Nouns. Short compound-forms.
+ * **LEXICON SUOLU** Inanim. Contracted 0-Nouns. Short compound-forms.
 
- * **LEXICON SUOLULONG ** Inanim. Contracted 0-Nouns. Long compound-forms.
+ * **LEXICON SUOLULONG** Inanim. Contracted 0-Nouns. Long compound-forms.
 
 
 
- * **LEXICON FALIS ** Contracted Anim. C-Nouns.  Short compound-forms.
+ * **LEXICON FALIS** Contracted Anim. C-Nouns.  Short compound-forms.
 
- * **LEXICON LASIS ** Contracted Inanim. C-Nouns.  Short compound-forms.
+ * **LEXICON LASIS** Contracted Inanim. C-Nouns.  Short compound-forms.
 
 
 
@@ -2246,23 +2246,23 @@ Trisyllabic nouns
 
 
 
- * **LEXICON GISTTA ** The Noun gistta, gist -
+ * **LEXICON GISTTA** The Noun gistta, gist -
 
- * **LEXICON CEAHKES ** only -ceahkes
+ * **LEXICON CEAHKES** only -ceahkes
 
- * **LEXICON ALLGUOVT ** guovttos guovttis
-
-
- * **LEXICON GUOVTTIS_N **  only -guovttis
+ * **LEXICON ALLGUOVT** guovttos guovttis
 
 
- * **LEXICON GUOVTTU ** only -guovttos
+ * **LEXICON GUOVTTIS_N**  only -guovttis
 
 
+ * **LEXICON GUOVTTU** only -guovttos
 
 
 
- * **LEXICON GIRKOSADDOT ** LIKE SATTU but pl, only
+
+
+ * **LEXICON GIRKOSADDOT** LIKE SATTU but pl, only
 
 
 
@@ -2280,178 +2280,178 @@ Trisyllabic nouns
 ### Noun declension
 
 
- * **LEXICON GOAHTI-NE  ** Bisyll. V-Nouns; Nominative Sg. and Essive
+ * **LEXICON GOAHTI-NE** Bisyll. V-Nouns; Nominative Sg. and Essive
 
- * **LEXICON NomV **
-
-
- * **LEXICON EssV **
+ * **LEXICON NomV**
 
 
- * **LEXICON GOAHTI-OBL **
+ * **LEXICON EssV**
 
 
- * **LEXICON GOAHTI-IU-OBL **
+ * **LEXICON GOAHTI-OBL**
+
+
+ * **LEXICON GOAHTI-IU-OBL**
 
 
 ## Px lexica
 
- * **LEXICON NPx3Vflag **
+ * **LEXICON NPx3Vflag**
 
- * **LEXICON NPx3Vvowchflag **
-
-
- * **LEXICON NPx12A ** For loan word ending -a
-
- * **LEXICON NPx3A ** For loan word ending -a
-
- * **LEXICON NPxA ** For loan word ending -a
+ * **LEXICON NPx3Vvowchflag**
 
 
- * **LEXICON NPxPlComC **
+ * **LEXICON NPx12A** For loan word ending -a
+
+ * **LEXICON NPx3A** For loan word ending -a
+
+ * **LEXICON NPxA** For loan word ending -a
 
 
- * **LEXICON NPxVvowch ** for vowel stems, with X2, X1 with stem vowel change,
-
- * **LEXICON NPx12Vvowch ** for vowel stems, with X2, X1 with stem vowel change, 1. and 2. p
-
- * **LEXICON NPx1Vvowch ** for vowel stems, with X2, X1 with stem vowel change, 1. p
+ * **LEXICON NPxPlComC**
 
 
- * **LEXICON NPx3Vvowch ** for vowel stems, with X2, X1 with stem vowel change,  3. pers
+ * **LEXICON NPxVvowch** for vowel stems, with X2, X1 with stem vowel change,
+
+ * **LEXICON NPx12Vvowch** for vowel stems, with X2, X1 with stem vowel change, 1. and 2. p
+
+ * **LEXICON NPx1Vvowch** for vowel stems, with X2, X1 with stem vowel change, 1. p
+
+
+ * **LEXICON NPx3Vvowch** for vowel stems, with X2, X1 with stem vowel change,  3. pers
 
 
 
- * **LEXICON NPxV **
+ * **LEXICON NPxV**
 
 
- * **LEXICON NPx1V **
+ * **LEXICON NPx1V**
 
- * **LEXICON NPx2V **
+ * **LEXICON NPx2V**
 
- * **LEXICON NPx3V **
-
-
- * **LEXICON NPxC **
-
- * **LEXICON NPx1C **
+ * **LEXICON NPx3V**
 
 
- * **LEXICON NPx12C **
+ * **LEXICON NPxC**
 
- * **LEXICON NPx3C **
+ * **LEXICON NPx1C**
 
- * **LEXICON NPxPlComV1 **
+
+ * **LEXICON NPx12C**
+
+ * **LEXICON NPx3C**
+
+ * **LEXICON NPxPlComV1**
 
 
 ## Some GOAHTE-type lexica...
 
- * **LEXICON GOAHTE- ** compound lexicon
+ * **LEXICON GOAHTE-** compound lexicon
 
- * **LEXICON GOAHTICMP ** compound lexicon, vowel shortening
+ * **LEXICON GOAHTICMP** compound lexicon, vowel shortening
 
- * **LEXICON GOAHTILONGCMP ** compound lexicon, no vowel shortening
+ * **LEXICON GOAHTILONGCMP** compound lexicon, no vowel shortening
 
- * **LEXICON GOAHTILONGSHORTCMP ** compound lexicon, with and without vowel shortening
-
-
-
- * **LEXICON GOADE- ** genitiv
-
- * **LEXICON GOADE-IU- ** genitiv
+ * **LEXICON GOAHTILONGSHORTCMP** compound lexicon, with and without vowel shortening
 
 
- * **LEXICON GOAHTA- ** Lexicon for giving Px 1. and 2. p., pluss illativ
 
- * **LEXICON GOAHTAI ** illative
+ * **LEXICON GOADE-** genitiv
 
- * **LEXICON GOADI- ** weak grade
-
- * **LEXICON GOADI-_notCmp **
+ * **LEXICON GOADE-IU-** genitiv
 
 
- * **LEXICON GODII- ** diphthong simplification
+ * **LEXICON GOAHTA-** Lexicon for giving Px 1. and 2. p., pluss illativ
+
+ * **LEXICON GOAHTAI** illative
+
+ * **LEXICON GOADI-** weak grade
+
+ * **LEXICON GOADI-_notCmp**
 
 
- * **LEXICON GOADA- **
+ * **LEXICON GODII-** diphthong simplification
+
+
+ * **LEXICON GOADA-**
 
 ## Other lexica
 
- * **LEXICON STAHTACASE ** for no cons grad
+ * **LEXICON STAHTACASE** for no cons grad
 
 
- * **LEXICON EGEZHAHKII **
+ * **LEXICON EGEZHAHKII**
 
 
 
- * **LEXICON MALIS0 ** as GAPPUS0. MALIS0 has no VUOHTA, GAPPUS0 has no Px Ess
+ * **LEXICON MALIS0** as GAPPUS0. MALIS0 has no VUOHTA, GAPPUS0 has no Px Ess
 
- * **LEXICON MALLAS- **
+ * **LEXICON MALLAS-**
 
- * **LEXICON MALLASI-/NUORABU- ** joint cont. lexicon
+ * **LEXICON MALLASI-/NUORABU-** joint cont. lexicon
 
- * **LEXICON MALLASI-/NUORABUj- ** joint cont. lexicon
+ * **LEXICON MALLASI-/NUORABUj-** joint cont. lexicon
 
 
 
- * **LEXICON MUSHcase   ** Deverbal nouns
+ * **LEXICON MUSHcase** Deverbal nouns
 
- * **LEXICON MUSSHA **
+ * **LEXICON MUSSHA**
 
 
- * **LEXICON EAMOSHcase   **  Deverbal nouns
+ * **LEXICON EAMOSHcase**  Deverbal nouns
 
 
- * **LEXICON AMOSHcase **
+ * **LEXICON AMOSHcase**
 
 
 
- * **LEXICON BOAHTINcase   **  Long compound-forms
+ * **LEXICON BOAHTINcase**  Long compound-forms
 
 
 
 
- * **LEXICON BOAHTINLONGSHORTTV   **  Transitiv Action nouns. Both long and short compound forms
+ * **LEXICON BOAHTINLONGSHORTTV**  Transitiv Action nouns. Both long and short compound forms
 
- * **LEXICON BOAHTINLONGSHORTTVcase    ** +CmpN/Sg +CmpN/SgNomLeft +CmpN/SgNomLeft +CmpN/SgGenLeft +CmpN/PlGenLeft
+ * **LEXICON BOAHTINLONGSHORTTVcase** +CmpN/Sg +CmpN/SgNomLeft +CmpN/SgNomLeft +CmpN/SgGenLeft +CmpN/PlGenLeft
 
 
 
 
- * **LEXICON BOAHTINTV   **  Transitiv Action nouns. Long compound forms
+ * **LEXICON BOAHTINTV**  Transitiv Action nouns. Long compound forms
 
- * **LEXICON BOAHTINTVcase    ** +CmpN/Sg   +CmpN/SgNomLeft +CmpN/SgNomLeft +CmpN/SgGenLeft +CmpN/PlGenLeft
+ * **LEXICON BOAHTINTVcase** +CmpN/Sg   +CmpN/SgNomLeft +CmpN/SgNomLeft +CmpN/SgGenLeft +CmpN/PlGenLeft
 
- * **LEXICON BOAHTINTVCT **
+ * **LEXICON BOAHTINTVCT**
 
- * **LEXICON BOAHTINSHORTTV   **  Transitiv Action nouns. Short compound forms
+ * **LEXICON BOAHTINSHORTTV**  Transitiv Action nouns. Short compound forms
 
- * **LEXICON BOAHTINSHORTTVcase    ** +CmpN/Sg   +CmpN/SgNomLeft +CmpN/SgNomLeft +CmpN/SgGenLeft +CmpN/PlGenLeft
+ * **LEXICON BOAHTINSHORTTVcase** +CmpN/Sg   +CmpN/SgNomLeft +CmpN/SgNomLeft +CmpN/SgGenLeft +CmpN/PlGenLeft
 
- * **LEXICON BOAHTINSHORTTVCT **
+ * **LEXICON BOAHTINSHORTTVCT**
 
- * **LEXICON BOAHTALADDANTV   **  Transitiv Action nouns from deverbal verbs
+ * **LEXICON BOAHTALADDANTV**  Transitiv Action nouns from deverbal verbs
 
- * **LEXICON BOAHTALADDANTVcase   ** +CmpN/Sg   +CmpN/SgNomLeft +CmpN/SgNomLeft +CmpN/SgGenLeft +CmpN/PlGenLeft
+ * **LEXICON BOAHTALADDANTVcase** +CmpN/Sg   +CmpN/SgNomLeft +CmpN/SgNomLeft +CmpN/SgGenLeft +CmpN/PlGenLeft
 
- * **LEXICON BOAHTALADDANTVCT **
+ * **LEXICON BOAHTALADDANTVCT**
 
 
 
 
- * **LEXICON FALLA- **
+ * **LEXICON FALLA-**
 
- * **LEXICON BOAZU-NE **
+ * **LEXICON BOAZU-NE**
 
 
- * **LEXICON BOHCCO **
+ * **LEXICON BOHCCO**
 
- * **LEXICON BOHCCU **
+ * **LEXICON BOHCCU**
 
 
- * **LEXICON KEAHTTA ** Derivation keahttá/keahtes
+ * **LEXICON KEAHTTA** Derivation keahttá/keahtes
 
- * **LEXICON KEAHTTA-PRED ** Der/keahtta - only predforms
+ * **LEXICON KEAHTTA-PRED** Der/keahtta - only predforms
 
 
 
@@ -2459,68 +2459,68 @@ Trisyllabic nouns
 
 
 
- * **LEXICON DIMINC ** diminutives, these comes from noun affix file,  from trisyll nouns
+ * **LEXICON DIMINC** diminutives, these comes from noun affix file,  from trisyll nouns
 
- * **LEXICON GUOVDDAZI- ** joint cont. lexicon
+ * **LEXICON GUOVDDAZI-** joint cont. lexicon
 
 
- * **LEXICON JOHTOLAT0 **
+ * **LEXICON JOHTOLAT0**
 
 
- * **LEXICON JOHTOLAHKA- **
+ * **LEXICON JOHTOLAHKA-**
 
 
 
- * **LEXICON DenominalNounsV ** diminutives from bisyllabic nouns
+ * **LEXICON DenominalNounsV** diminutives from bisyllabic nouns
 
- * **LEXICON DenominalNounsC ** diminutives from trisyllabic nouns
+ * **LEXICON DenominalNounsC** diminutives from trisyllabic nouns
 
 
 
- * **LEXICON MUITTASJEAPMI ** action noun, from trisyll intransitive verb
+ * **LEXICON MUITTASJEAPMI** action noun, from trisyll intransitive verb
 
 
 
 
 
- * **LEXICON EAPMITV   ** +CmpN/Sg +CmpN/SgNomLeft +CmpN/SgGenLeft +CmpN/PlGenLeft
+ * **LEXICON EAPMITV** +CmpN/Sg +CmpN/SgNomLeft +CmpN/SgGenLeft +CmpN/PlGenLeft
 
- * **LEXICON EAPMITVCT ** action noun, from bisyll transitive verb
+ * **LEXICON EAPMITVCT** action noun, from bisyll transitive verb
 
- * **LEXICON EAPMITVCTcase **
+ * **LEXICON EAPMITVCTcase**
 
- * **LEXICON MUITTASJEAPMITV   ** +CmpN/Sg   +CmpN/SgNomLeft +CmpN/SgGenLeft +CmpN/PlGenLeft
+ * **LEXICON MUITTASJEAPMITV** +CmpN/Sg   +CmpN/SgNomLeft +CmpN/SgGenLeft +CmpN/PlGenLeft
 
- * **LEXICON MUITTASJEAPMITVCT ** action noun, from trisyll intransitive verb
+ * **LEXICON MUITTASJEAPMITVCT** action noun, from trisyll intransitive verb
 
 
 
 
- * **LEXICON VUONAT  ** +CmpN/SgN +CmpN/SgG +CmpN/PlG
+ * **LEXICON VUONAT** +CmpN/SgN +CmpN/SgG +CmpN/PlG
 
- * **LEXICON VUONATCT ** derivated nouns, from propers: guovdageainnut, divttasvuonat etc.
+ * **LEXICON VUONATCT** derivated nouns, from propers: guovdageainnut, divttasvuonat etc.
 
- * **LEXICON ACTORder  ** +CmpN/SgN +CmpN/SgG +CmpN/PlG
+ * **LEXICON ACTORder** +CmpN/SgN +CmpN/SgG +CmpN/PlG
 
- * **LEXICON ACTORderCT  ** Tagged NomAg nowadays, Long compound-forms, from intransitive verbs
+ * **LEXICON ACTORderCT** Tagged NomAg nowadays, Long compound-forms, from intransitive verbs
 
- * **LEXICON ACTORderCTcase  ** Tagged NomAg nowadays, Long compound-forms, from intransitive verbs
+ * **LEXICON ACTORderCTcase** Tagged NomAg nowadays, Long compound-forms, from intransitive verbs
 
 +Use/NG: GOAHTAI ; ! Ill sublexicon
 
 
- * **LEXICON ACTORTVder  ** +CmpN/SgN +CmpN/SgG +CmpN/PlG +CmpN/SgNomLeft +CmpN/SgGenLeft +CmpN/PlGenLeft
+ * **LEXICON ACTORTVder** +CmpN/SgN +CmpN/SgG +CmpN/PlG +CmpN/SgNomLeft +CmpN/SgGenLeft +CmpN/PlGenLeft
 
- * **LEXICON ACTORTVderCT ** Tagged NomAg nowadays, Long compound-forms, from transitive verbs
-
-
-
-
- * **LEXICON ACTORSHORTTVder ** Tagged NomAg nowadays, Short compound-forms, from transitive verbs
+ * **LEXICON ACTORTVderCT** Tagged NomAg nowadays, Long compound-forms, from transitive verbs
 
 
 
- * **LEXICON DIMINV ** diminutives, these comes from bisyll nouns
+
+ * **LEXICON ACTORSHORTTVder** Tagged NomAg nowadays, Short compound-forms, from transitive verbs
+
+
+
+ * **LEXICON DIMINV** diminutives, these comes from bisyll nouns
 
 
  * **LEXICON NounRoot  ** Main lexicon, dividing in Noun, FirstComponent, NyphNouns
@@ -2897,54 +2897,54 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 # North Saami Possessive suffixes
 
- * **LEXICON PxVvowch   ** for vowel stems, with X2, X1 with stem vowel change
+ * **LEXICON PxVvowch** for vowel stems, with X2, X1 with stem vowel change
 
- * **LEXICON Px1Vvowch   ** for vowel stems with stem vowel change, 1. p
+ * **LEXICON Px1Vvowch** for vowel stems with stem vowel change, 1. p
 
- * **LEXICON Px2Vvowch   ** for vowel stems with stem vowel change, 1. and 2. p
+ * **LEXICON Px2Vvowch** for vowel stems with stem vowel change, 1. and 2. p
 
- * **LEXICON Px3Vvowch   ** for vowel stems with stem vowel change, 3. p
-
-
- * **LEXICON PxV   ** for vowel stems, without stem vowel change
-
- * **LEXICON Px1V   ** for first person vowel stems
+ * **LEXICON Px3Vvowch** for vowel stems with stem vowel change, 3. p
 
 
- * **LEXICON Px2V   ** for second person vowel stems
+ * **LEXICON PxV** for vowel stems, without stem vowel change
 
- * **LEXICON Px3V   ** for third person vowel stems
-
-
-
- * **LEXICON PxA   ** for a-stems
+ * **LEXICON Px1V** for first person vowel stems
 
 
- * **LEXICON Px1A   ** for a-stems
+ * **LEXICON Px2V** for second person vowel stems
+
+ * **LEXICON Px3V** for third person vowel stems
 
 
- * **LEXICON Px2A   ** for a-stems
 
- * **LEXICON Px3A   ** for a-stems
-
-
- * **LEXICON PxC   ** for consonant stems
-
- * **LEXICON Px1C   ** for consonant stems
+ * **LEXICON PxA** for a-stems
 
 
- * **LEXICON Px2C   ** for consonant stems
-
- * **LEXICON Px3C   ** for consonant stems
+ * **LEXICON Px1A** for a-stems
 
 
- * **LEXICON PxPlComC   ** for plural comitative forms of consonant stems
+ * **LEXICON Px2A** for a-stems
 
- * **LEXICON PxPlComV1   ** for first person vowel stems with vow change, directing onw
+ * **LEXICON Px3A** for a-stems
 
- * **LEXICON PxPlCom12V   ** for first, second person comitative Px
 
- * **LEXICON PxPlCom3V   ** for third person comitative Px
+ * **LEXICON PxC** for consonant stems
+
+ * **LEXICON Px1C** for consonant stems
+
+
+ * **LEXICON Px2C** for consonant stems
+
+ * **LEXICON Px3C** for consonant stems
+
+
+ * **LEXICON PxPlComC** for plural comitative forms of consonant stems
+
+ * **LEXICON PxPlComV1** for first person vowel stems with vow change, directing onw
+
+ * **LEXICON PxPlCom12V** for first, second person comitative Px
+
+ * **LEXICON PxPlCom3V** for third person comitative Px
 
 # This file contains the Pronouns
 
@@ -3214,26 +3214,26 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 These are treated separately because
  modals do not participate in derivation
 
- * **LEXICON GALGA_IV ** only dáidit, galgat
+ * **LEXICON GALGA_IV** only dáidit, galgat
 
 
 
- * **LEXICON FERTE_IV **  only fertet and bállet
+ * **LEXICON FERTE_IV**  only fertet and bállet
 
 
 
 ### Ordinary bisyllabic verbs
 
 
- * **LEXICON DIEHTI_TV       ** Bisyllabic i-verbs with Personal Passive
+ * **LEXICON DIEHTI_TV** Bisyllabic i-verbs with Personal Passive
 
 
- * **LEXICON BORRA_TV       ** Bisyllabic a- and u-verbs with Personal Passive
+ * **LEXICON BORRA_TV** Bisyllabic a- and u-verbs with Personal Passive
 
 
- * **LEXICON BOAHTI_IV  **  Bisyllabic i-verbs without Personal Passive but with Der/NomAg
+ * **LEXICON BOAHTI_IV**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg
 
- * **LEXICON DIEVVA_IV  **  Bisyllabic a- and u-verbs without Personal Passive but with Der/NomAg
+ * **LEXICON DIEVVA_IV**  Bisyllabic a- and u-verbs without Personal Passive but with Der/NomAg
 
 
 
@@ -3245,53 +3245,53 @@ These are treated separately because
 
 
 
- * **LEXICON DEAKCU_TV   ** as BORRA for u-verbs with dim -astit, and a-verbs with dim -istit that are hardcoded
+ * **LEXICON DEAKCU_TV** as BORRA for u-verbs with dim -astit, and a-verbs with dim -istit that are hardcoded
 
 
- * **LEXICON BOAZZU_IV  ** as DIEVVA_IV for u-verbs with dim -astit, and a-verbs with dim -istit that are hardcoded
+ * **LEXICON BOAZZU_IV** as DIEVVA_IV for u-verbs with dim -astit, and a-verbs with dim -istit that are hardcoded
 
 
- * **LEXICON BINDU_IV  ** as DIEVVA (but without short passive) for u-verbs with dim -astit, that are hardcoded
+ * **LEXICON BINDU_IV** as DIEVVA (but without short passive) for u-verbs with dim -astit, that are hardcoded
 
- * **LEXICON DAHTU_TV  **  As diehti, but -ut verbs, thus without short passive
+ * **LEXICON DAHTU_TV**  As diehti, but -ut verbs, thus without short passive
 
- * **LEXICON BOLTU_TV  **  As DAHTU_TV but with dim -astit that are harcoded
+ * **LEXICON BOLTU_TV**  As DAHTU_TV but with dim -astit that are harcoded
 
- * **LEXICON ALLU_IV  **  -ut verbs, thus without short passive
+ * **LEXICON ALLU_IV**  -ut verbs, thus without short passive
 
 
 
 
- * **LEXICON DIEHTALADDA_TV    ** Already derived words (except words ending -uššat and -httit) - no deverbal verbs
+ * **LEXICON DIEHTALADDA_TV** Already derived words (except words ending -uššat and -httit) - no deverbal verbs
 
- * **LEXICON LAIGOHADDA_TV   ** láigohaddat. No deverbal nouns for speller reasons. No +Imprt+Pl2: láigohaddit
+ * **LEXICON LAIGOHADDA_TV** láigohaddat. No deverbal nouns for speller reasons. No +Imprt+Pl2: láigohaddit
 
 
- * **LEXICON HAHTTIT_TV    ** Four-syll kausatives on -httit
+ * **LEXICON HAHTTIT_TV** Four-syll kausatives on -httit
 
- * **LEXICON BOAHTALADDA_IV  ** Already derived words (except words ending -uššat)
+ * **LEXICON BOAHTALADDA_IV** Already derived words (except words ending -uššat)
 
- * **LEXICON RAIMMAHALLA_IV      ** passives on -hallat and INCHOATIVES on -stuvvat
+ * **LEXICON RAIMMAHALLA_IV** passives on -hallat and INCHOATIVES on -stuvvat
 
- * **LEXICON UVVA_IV      ** passives -uvvat
+ * **LEXICON UVVA_IV** passives -uvvat
 
 
- * **LEXICON SMUVVA_IV      ** passives -snuvvat, -smuvvat
+ * **LEXICON SMUVVA_IV** passives -snuvvat, -smuvvat
 
 
 
- * **LEXICON DOAROSTUVVA_TV      ** INCHOATIVES on -stuvvat
+ * **LEXICON DOAROSTUVVA_TV** INCHOATIVES on -stuvvat
 
 
- * **LEXICON MAHTALADDA_TV  ** Bisyllabic Already derived words (except words ending -uššat) without Personal Passive but with Acc obj
+ * **LEXICON MAHTALADDA_TV** Bisyllabic Already derived words (except words ending -uššat) without Personal Passive but with Acc obj
 
 
 
 
 
- * **LEXICON ARVI_IV  ** Bisyllabic Impersonal Verbs
+ * **LEXICON ARVI_IV** Bisyllabic Impersonal Verbs
 
- * **LEXICON ARVALADDA_IV  ** Already derived words (except words ending -uššat)
+ * **LEXICON ARVALADDA_IV** Already derived words (except words ending -uššat)
 
 
 
@@ -3301,83 +3301,83 @@ These are treated separately because
 
 
 
- * **LEXICON MASSI_TV       ** No Der/NomAg (for speller reasons). Bisyllabic i-verbs with Personal Passive. Otherwise like DIEHTI_TV
+ * **LEXICON MASSI_TV** No Der/NomAg (for speller reasons). Bisyllabic i-verbs with Personal Passive. Otherwise like DIEHTI_TV
 
- * **LEXICON VALDI_TV      **  No Der/NomAg (for speller reasons). Bisyllabic i-verbs with Personal Passive. No VGen. Otherwise like DIEHTI_TV
+ * **LEXICON VALDI_TV**  No Der/NomAg (for speller reasons). Bisyllabic i-verbs with Personal Passive. No VGen. Otherwise like DIEHTI_TV
 
 
- * **LEXICON ASTA_TV   ** No Der/NomAg (for speller reasons). Bisyllabic a- and u-verbs with Personal Passive. Otherwise like BORRA_TV
+ * **LEXICON ASTA_TV** No Der/NomAg (for speller reasons). Bisyllabic a- and u-verbs with Personal Passive. Otherwise like BORRA_TV
 
 
- * **LEXICON BORGI_IV  **  Bisyllabic i-verbs without Personal Passive but without Der/NomAg. No Der/NomAg for speller reasons. Otherwise like BOAHTI_IV
+ * **LEXICON BORGI_IV**  Bisyllabic i-verbs without Personal Passive but without Der/NomAg. No Der/NomAg for speller reasons. Otherwise like BOAHTI_IV
 
- * **LEXICON BEALLJA_IV  ** No Der/NomAg for speller reasons. Bisyllabic a- and u-verbs without Personal Passive but without Der/NomAg. Otherwise like DIEVVA_IV
+ * **LEXICON BEALLJA_IV** No Der/NomAg for speller reasons. Bisyllabic a- and u-verbs without Personal Passive but without Der/NomAg. Otherwise like DIEVVA_IV
 
 
- * **LEXICON DAVGU_TV  **  As DAHTU_TV, No Der/NomAg for speller reasons.
+ * **LEXICON DAVGU_TV**  As DAHTU_TV, No Der/NomAg for speller reasons.
 
 
- * **LEXICON LEABBU_TV    ** No Der/NomAg (for speller reasons)- otherwise like DEAKCU_TV
+ * **LEXICON LEABBU_TV** No Der/NomAg (for speller reasons)- otherwise like DEAKCU_TV
 
 
 
- * **LEXICON ALBMU_TV   ** No Der/NomAg (for speller reasons). As BOLTU_TV otherwise
+ * **LEXICON ALBMU_TV** No Der/NomAg (for speller reasons). As BOLTU_TV otherwise
 
 
 
- * **LEXICON BARGU_IV  **  no Der/NomAg for speller reasons- Like ALLU_IV
+ * **LEXICON BARGU_IV**  no Der/NomAg for speller reasons- Like ALLU_IV
 
 
- * **LEXICON BORSU_IV  ** as BINDU. No Der/NomAg
+ * **LEXICON BORSU_IV** as BINDU. No Der/NomAg
 
 
 
 
- * **LEXICON MUHTTI_TV       ** No deverbal nouns an ACTIO(for speller reasons). Bisyllabic i-verbs with Personal Passive
+ * **LEXICON MUHTTI_TV** No deverbal nouns an ACTIO(for speller reasons). Bisyllabic i-verbs with Personal Passive
 
- * **LEXICON BEAHTTI_TV       ** Bisyllabic i-verbs with Personal Passive, no Der/alla, no Der/adda, Der/halla  (beahtáhallat, báinnáhallat) for speller
+ * **LEXICON BEAHTTI_TV** Bisyllabic i-verbs with Personal Passive, no Der/alla, no Der/adda, Der/halla  (beahtáhallat, báinnáhallat) for speller
 
- * **LEXICON FAHTE_TV  ** Contracted Verbs with Personal Passive,  no Der/alla, no Der/adda, Der/halla  (fáhtehallin) for speller
+ * **LEXICON FAHTE_TV** Contracted Verbs with Personal Passive,  no Der/alla, no Der/adda, Der/halla  (fáhtehallin) for speller
 
 
- * **LEXICON GILVI_TV       ** only gilvit, to get rid of gilvohallat (for speller reasons).
+ * **LEXICON GILVI_TV** only gilvit, to get rid of gilvohallat (for speller reasons).
 
- * **LEXICON FAHTI_TV       ** (for speller reasons). no fáhttet (fáhtit+V+TV+Imprt+Pl2) because it get mixed up with fáhtet. No deverbal nouns.
+ * **LEXICON FAHTI_TV** (for speller reasons). no fáhttet (fáhtit+V+TV+Imprt+Pl2) because it get mixed up with fáhtet. No deverbal nouns.
 
 
- * **LEXICON DAHKA_TV       ** Like BORRA_TV, but without	dahkat+V+TV+Imprt+Sg1, to get rid of dahkon (for speller reasons)
+ * **LEXICON DAHKA_TV** Like BORRA_TV, but without	dahkat+V+TV+Imprt+Sg1, to get rid of dahkon (for speller reasons)
 
 
- * **LEXICON FALLA_TV       ** fállat, njoarrat,  to get rid of fálastallat, njoarastallat (for speller reasons).
+ * **LEXICON FALLA_TV** fállat, njoarrat,  to get rid of fálastallat, njoarastallat (for speller reasons).
 
 
 
 
- * **LEXICON OAHPPA_TV       ** only oahppat. Like BORRA but without Deverbal verb -stuvva (for speller reasons)
+ * **LEXICON OAHPPA_TV** only oahppat. Like BORRA but without Deverbal verb -stuvva (for speller reasons)
 
 
 
 
 
- * **LEXICON AKTI_IV  **  Bisyllabic i-verbs without Personal Passive but with Der/NomAg - for speller reasons, to prevent:
+ * **LEXICON AKTI_IV**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg - for speller reasons, to prevent:
 
 
 
- * **LEXICON GUHKKA_IV  ** No Imprt+Pl2 on -it, no Imprt+ConNegII and No +Der/NomAg for speller reasons. No Deverbal Verbs either. Bisyllabic a- and u-verbs without Personal Passive
+ * **LEXICON GUHKKA_IV** No Imprt+Pl2 on -it, no Imprt+ConNegII and No +Der/NomAg for speller reasons. No Deverbal Verbs either. Bisyllabic a- and u-verbs without Personal Passive
 
- * **LEXICON BARDNA_IV  ** "bárdnat" ----> potensialis removed; bártnažan, bártnažat, bártnaš, bártnaža. No Der/NomAg for speller reasons. Bisyllabic a- and u-verbs without Personal Passive but without Der/NomAg. Otherwise like DIEVVA_IV
+ * **LEXICON BARDNA_IV** "bárdnat" ----> potensialis removed; bártnažan, bártnažat, bártnaš, bártnaža. No Der/NomAg for speller reasons. Bisyllabic a- and u-verbs without Personal Passive but without Der/NomAg. Otherwise like DIEVVA_IV
 
 
 
 
 
- * **LEXICON DIEHTISHORT_TV       ** Short action noun compound-form: neasken-
+ * **LEXICON DIEHTISHORT_TV** Short action noun compound-form: neasken-
 
- * **LEXICON DIEHTILONGSHORT_TV       ** Long and short action noun compound-form, savdnjen-/savdnjin-
+ * **LEXICON DIEHTILONGSHORT_TV** Long and short action noun compound-form, savdnjen-/savdnjin-
 
- * **LEXICON BAHCCI_TV       ** bahčit. Long and short actio compound-form. No NomAg (Actor) compound, for speller reasons
+ * **LEXICON BAHCCI_TV** bahčit. Long and short actio compound-form. No NomAg (Actor) compound, for speller reasons
 
- * **LEXICON BOAHTILONGSHORT_IV  ** Long and short action noun compound-form
+ * **LEXICON BOAHTILONGSHORT_IV** Long and short action noun compound-form
 
 
 
@@ -3386,7 +3386,7 @@ These are treated separately because
 
 
 
- * **LEXICON MAHTI_TV  **  Bisyllabic Verbs without Personal Passive but with Acc obj.
+ * **LEXICON MAHTI_TV**  Bisyllabic Verbs without Personal Passive but with Acc obj.
 
 
 
@@ -3441,9 +3441,9 @@ These are treated separately because
 
 
 
- * **LEXICON GOAHTICnj       **  for speller reasons to hinder -goahttit, whick is confused with infinitive -goahtit
+ * **LEXICON GOAHTICnj**  for speller reasons to hinder -goahttit, whick is confused with infinitive -goahtit
 
- * **LEXICON RAIMMAHALLACnj       **  restricted imperatives
+ * **LEXICON RAIMMAHALLACnj**  restricted imperatives
 
 
 
@@ -3454,10 +3454,10 @@ These are treated separately because
 ## Basic lexica for contracted verbs
 
 
- * **LEXICON GILLE_IV  **  Contracted Verbs without Personal Passive
+ * **LEXICON GILLE_IV**  Contracted Verbs without Personal Passive
 
 
- * **LEXICON DOHPPE_TV  ** Contracted Verbs with Personal Passive
+ * **LEXICON DOHPPE_TV** Contracted Verbs with Personal Passive
 
 
 
@@ -3475,26 +3475,26 @@ These are treated separately because
 
 
 
- * **LEXICON CIRRO_IV  **  Inchoatives and essives on -á, -o, -e without Personal Passive
+ * **LEXICON CIRRO_IV**  Inchoatives and essives on -á, -o, -e without Personal Passive
 
- * **LEXICON MUITA_TV  **  Inchoatives and essives on -á, -o, -e with Personal Passive
-
-
+ * **LEXICON MUITA_TV**  Inchoatives and essives on -á, -o, -e with Personal Passive
 
 
 
 
 
- * **LEXICON COHKKA_IV  **  Contracted Verbs without Personal Passive - no stit-deverbal
-
- * **LEXICON GARRE_TV  **  garret, loget. with Personal Passive. for speller to hinder garrenávnnas, garrenoaivi etc
-
- * **LEXICON ORRO_IV  **  orrot. for speller to hinder orronsadji etc
 
 
+ * **LEXICON COHKKA_IV**  Contracted Verbs without Personal Passive - no stit-deverbal
+
+ * **LEXICON GARRE_TV**  garret, loget. with Personal Passive. for speller to hinder garrenávnnas, garrenoaivi etc
+
+ * **LEXICON ORRO_IV**  orrot. for speller to hinder orronsadji etc
 
 
- * **LEXICON MAHTA_TV  ** Contracted Verbs without Personal Passive but with Acc obj.
+
+
+ * **LEXICON MAHTA_TV** Contracted Verbs without Personal Passive but with Acc obj.
 
 
 
@@ -3532,10 +3532,10 @@ These are treated separately because
 ## Basic lexica for trisyllabic verbs
 
 
- * **LEXICON MUITAL_TV  ** Trisyllabic Verbs with Personal Passive
+ * **LEXICON MUITAL_TV** Trisyllabic Verbs with Personal Passive
 
 
- * **LEXICON ALIST_IV  ** Trisyllabic Verbs without Personal Passive
+ * **LEXICON ALIST_IV** Trisyllabic Verbs without Personal Passive
 
 
 
@@ -3548,64 +3548,13 @@ These are treated separately because
 
 
 
- * **LEXICON COASKKIT_IV   **  Trisyllabic impersonals
+ * **LEXICON COASKKIT_IV**  Trisyllabic impersonals
 
 
 
- * **LEXICON ARVVASJ_IV   ** impersonals ending -šit, -skit, smit, -idit, -ldit, -git and 5-syllables
+ * **LEXICON ARVVASJ_IV** impersonals ending -šit, -skit, smit, -idit, -ldit, -git and 5-syllables
 
- * **LEXICON ARVIL_IV  ** Impersonal Trisyllabic Verbs ending -lit
-
-
-
-
-
-
-
-
-
-
- * **LEXICON MUITTASJ_TV  ** Words ending -šit, -skit, -ldit - Reciprocals on -dit, Momentatives on -dit, -ádit, -ihit, -e7hit, Frequentatives on -(u)hit, Continuatives on -nit, Inchoatives on -nit
-
- * **LEXICON HALIID_TV  ** Words ending -smit, -idit, -git
-
- * **LEXICON BONJAT_TV  ** Cont/Freq on -dit, Continuatives on -(u)hit, Reciprocals, momentatives and frequentatives ending -alit
-
- * **LEXICON VUORDIL_TV  ** Trisyllabic Verbs ending -lit, -rit with Personal Passive
-
- * **LEXICON BEAGASJ_IV  ** Words ending -šit, -skit -ldit, essive derivates on -hit -. !Reciprocals on -dit. Momentatives on -dit, -ádit, -ihit, -e7hit. Frequentatives on -(u)hit. Continuatives on -nit. Inchoatives in -nit
-
- * **LEXICON JORGGIID_IV  ** Words ending -smit, -idit, -git -
-
- * **LEXICON HURAI_IV  ** Words ending -aidit
-
-
- * **LEXICON BALAT_IV  ** !Cont/Freq on -dit, Continuatives on -(u)hit, Reciprocals, momentatives and frequentatives ending -alit
-
- * **LEXICON SUOTNJAL_IV  ** Trisyllabic Verbs ending -lit, -rit without Personal Passive
-
- * **LEXICON BOTNJAS_IV  ** Trisyllabic Verbs ending -sit without Personal Passive
-
- * **LEXICON LASSAN_IV  ** Trisyllabic Verbs ending -nit without Personal Passive IV
-
-
-
-
-
- * **LEXICON OAHPAHIT_TV  ** only oahpahit, disamb reasons?
-
- * **LEXICON NUOSKIT_IV  ** only nuoskidit, for speller, no action noun nuoskideapmi
-
- * **LEXICON HALIHIT_TV ** Like MUITTASJ_TV, without COnNeg so we dont get hálit
-
-
-
-
- * **LEXICON LAHKAN_TV  ** lahkanit, lahkonit, are nowadays used transitively
-
- * **LEXICON GEAGAT_TV  **  Trisyllabic Verbs without Personal Passive but with Acc obj.
-
- * **LEXICON BUOVVAL_TV  **  buovvalit, guoigalit. Trisyllabic Verbs ending -lit without Personal Passive but with Acc obj.
+ * **LEXICON ARVIL_IV** Impersonal Trisyllabic Verbs ending -lit
 
 
 
@@ -3616,14 +3565,65 @@ These are treated separately because
 
 
 
+ * **LEXICON MUITTASJ_TV** Words ending -šit, -skit, -ldit - Reciprocals on -dit, Momentatives on -dit, -ádit, -ihit, -e7hit, Frequentatives on -(u)hit, Continuatives on -nit, Inchoatives on -nit
+
+ * **LEXICON HALIID_TV** Words ending -smit, -idit, -git
+
+ * **LEXICON BONJAT_TV** Cont/Freq on -dit, Continuatives on -(u)hit, Reciprocals, momentatives and frequentatives ending -alit
+
+ * **LEXICON VUORDIL_TV** Trisyllabic Verbs ending -lit, -rit with Personal Passive
+
+ * **LEXICON BEAGASJ_IV** Words ending -šit, -skit -ldit, essive derivates on -hit -. !Reciprocals on -dit. Momentatives on -dit, -ádit, -ihit, -e7hit. Frequentatives on -(u)hit. Continuatives on -nit. Inchoatives in -nit
+
+ * **LEXICON JORGGIID_IV** Words ending -smit, -idit, -git -
+
+ * **LEXICON HURAI_IV** Words ending -aidit
+
+
+ * **LEXICON BALAT_IV** !Cont/Freq on -dit, Continuatives on -(u)hit, Reciprocals, momentatives and frequentatives ending -alit
+
+ * **LEXICON SUOTNJAL_IV** Trisyllabic Verbs ending -lit, -rit without Personal Passive
+
+ * **LEXICON BOTNJAS_IV** Trisyllabic Verbs ending -sit without Personal Passive
+
+ * **LEXICON LASSAN_IV** Trisyllabic Verbs ending -nit without Personal Passive IV
 
 
 
 
- * **LEXICON MUITALCnj  ** Substems for Consonantal Verb Stems
+
+ * **LEXICON OAHPAHIT_TV** only oahpahit, disamb reasons?
+
+ * **LEXICON NUOSKIT_IV** only nuoskidit, for speller, no action noun nuoskideapmi
+
+ * **LEXICON HALIHIT_TV** Like MUITTASJ_TV, without COnNeg so we dont get hálit
 
 
- * **LEXICON HURAICnj  ** Substems for  Words ending -aidit
+
+
+ * **LEXICON LAHKAN_TV** lahkanit, lahkonit, are nowadays used transitively
+
+ * **LEXICON GEAGAT_TV**  Trisyllabic Verbs without Personal Passive but with Acc obj.
+
+ * **LEXICON BUOVVAL_TV**  buovvalit, guoigalit. Trisyllabic Verbs ending -lit without Personal Passive but with Acc obj.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ * **LEXICON MUITALCnj** Substems for Consonantal Verb Stems
+
+
+ * **LEXICON HURAICnj** Substems for  Words ending -aidit
 
 
 
@@ -3655,36 +3655,36 @@ These are treated separately because
 
 ### Vocalic stems
 
- * **LEXICON PotPrsV  ** Present Tense in Vocalic Verb Stems
+ * **LEXICON PotPrsV** Present Tense in Vocalic Verb Stems
 
- * **LEXICON PrsV  ** Present Tense in Vocalic Verb Stems
+ * **LEXICON PrsV** Present Tense in Vocalic Verb Stems
 
- * **LEXICON PrsV1  ** Present Tense Endings for Vocalic Verb Stems
+ * **LEXICON PrsV1** Present Tense Endings for Vocalic Verb Stems
 
- * **LEXICON PrsV2  ** Present Tense Endings for Vocalic Verb Stems
+ * **LEXICON PrsV2** Present Tense Endings for Vocalic Verb Stems
 
- * **LEXICON PrsV3  ** Present Tense Endings for Vocalic Verb Stems
+ * **LEXICON PrsV3** Present Tense Endings for Vocalic Verb Stems
 
- * **LEXICON PrsV4  ** Present Tense Endings for Vocalic Verb Stems
+ * **LEXICON PrsV4** Present Tense Endings for Vocalic Verb Stems
 
- * **LEXICON PrsV5  ** Present Tense Endings for Vocalic Verb Stems
+ * **LEXICON PrsV5** Present Tense Endings for Vocalic Verb Stems
 
 
 
 
 ### Consonantal stems
 
- * **LEXICON PotC  ** Present Tense in Consonantal Verb Stems
+ * **LEXICON PotC** Present Tense in Consonantal Verb Stems
 
 
- * **LEXICON PrsC  ** Present Tense in Consonantal Verb Stems
+ * **LEXICON PrsC** Present Tense in Consonantal Verb Stems
 
- * **LEXICON PrsC1  ** Present Tense in Contr/Non-Contr Consonantal Verb Stems
+ * **LEXICON PrsC1** Present Tense in Contr/Non-Contr Consonantal Verb Stems
 
- * **LEXICON PotC2  ** Potential in Non-Contracted Consonantal Verb Stems
+ * **LEXICON PotC2** Potential in Non-Contracted Consonantal Verb Stems
 
 
- * **LEXICON PrsC2  ** Present Tense in Non-Contracted Consonantal Verb Stems
+ * **LEXICON PrsC2** Present Tense in Non-Contracted Consonantal Verb Stems
 
 
 
@@ -3696,40 +3696,40 @@ These are treated separately because
 ### Vocalic stems
 
 
- * **LEXICON PrtV  ** Preterite Endings for Vocalic Verb Stems
+ * **LEXICON PrtV** Preterite Endings for Vocalic Verb Stems
 
- * **LEXICON PrtV1  ** Preterite Endings for Vocalic Weak Grade Verb Stems
+ * **LEXICON PrtV1** Preterite Endings for Vocalic Weak Grade Verb Stems
 
- * **LEXICON PrtV2  ** Preterite Endings for Vocalic Strong Grade Verb Stems
+ * **LEXICON PrtV2** Preterite Endings for Vocalic Strong Grade Verb Stems
 
 ### Consonantal stems
 
 
- * **LEXICON PrtC  ** Preterite Endings for Consonantal Verb Stems
+ * **LEXICON PrtC** Preterite Endings for Consonantal Verb Stems
 
- * **LEXICON PrtC1  ** Preterite Endings for Consonantal Contr./Non-Contr. Verb Stems
+ * **LEXICON PrtC1** Preterite Endings for Consonantal Contr./Non-Contr. Verb Stems
 
- * **LEXICON PrtC2  ** Preterite Endings for Consonantal Non-Contr. Verb Stems
+ * **LEXICON PrtC2** Preterite Endings for Consonantal Non-Contr. Verb Stems
 
- * **LEXICON PrtC3  ** Preterite Endings for Consonantal Contr./Non-Contr. Verb Stems
+ * **LEXICON PrtC3** Preterite Endings for Consonantal Contr./Non-Contr. Verb Stems
 
 
 ## Imperative mood
 
- * **LEXICON ImprtVA          **  Imperative Forms for Vocalic Verb Stems
+ * **LEXICON ImprtVA**  Imperative Forms for Vocalic Verb Stems
 
- * **LEXICON ImprtVB          **  Imperative Forms for Vocalic Verb Stems
+ * **LEXICON ImprtVB**  Imperative Forms for Vocalic Verb Stems
 
- * **LEXICON ImprtV1          **  Imperative Forms for Vocalic Verb Stems
+ * **LEXICON ImprtV1**  Imperative Forms for Vocalic Verb Stems
 
- * **LEXICON ImprtV2  ** Imperative Forms for Vocalic Verb Stems and Substems
+ * **LEXICON ImprtV2** Imperative Forms for Vocalic Verb Stems and Substems
 
- * **LEXICON ImprtSg2  ** Imperative Forms For Consonantal and Contracted Verb Stems
+ * **LEXICON ImprtSg2** Imperative Forms For Consonantal and Contracted Verb Stems
 
 
- * **LEXICON ImprtC **  Imperative Substems for Consonantal Verb Stems - uneven syll.
+ * **LEXICON ImprtC**  Imperative Substems for Consonantal Verb Stems - uneven syll.
 
- * **LEXICON ImprtC2 **  Imperative Substems for Consonantal Verb Stems - contracts
+ * **LEXICON ImprtC2**  Imperative Substems for Consonantal Verb Stems - contracts
 
 
 # Infinite forms
@@ -3737,35 +3737,35 @@ These are treated separately because
 
 ## V- and C-final
 
- * **LEXICON NominalFormsV   **  Vowel-final stems
+ * **LEXICON NominalFormsV**  Vowel-final stems
 
 
 
 ## Continuation lex
 
- * **LEXICON NominalFormsVC **  for vowel final
+ * **LEXICON NominalFormsVC**  for vowel final
 
- * **LEXICON NominalFormsV1 **   infinitiv, actio
-
-
- * **LEXICON NominalFormsV2 **  gerund, verbgenitiv, verbabessive
-
- * **LEXICON NominalFormsV3	 **  ^NG^ gerund
-
- * **LEXICON NominalFormsV4 **  perfect participe, preterite negation form
-
- * **LEXICON NominalFormsV5 **  negation form
-
- * **LEXICON NominalFormsV6  ** presence participe
+ * **LEXICON NominalFormsV1**   infinitiv, actio
 
 
- * **LEXICON NominalFormsV8 **  gerund, verbabessive
+ * **LEXICON NominalFormsV2**  gerund, verbgenitiv, verbabessive
 
- * **LEXICON NominalFormsV9 **  supine
+ * **LEXICON NominalFormsV3**  ^NG^ gerund
 
- * **LEXICON NominalFormsC1 **  for cons final stems: infinitive, supine, actio, gerund, perfect participe, preterite negation form
+ * **LEXICON NominalFormsV4**  perfect participe, preterite negation form
 
- * **LEXICON NominalFormsC2  **  for cons final stems: presence participe
+ * **LEXICON NominalFormsV5**  negation form
+
+ * **LEXICON NominalFormsV6** presence participe
+
+
+ * **LEXICON NominalFormsV8**  gerund, verbabessive
+
+ * **LEXICON NominalFormsV9**  supine
+
+ * **LEXICON NominalFormsC1**  for cons final stems: infinitive, supine, actio, gerund, perfect participe, preterite negation form
+
+ * **LEXICON NominalFormsC2**  for cons final stems: presence participe
 
 
 
@@ -3773,113 +3773,113 @@ These are treated separately because
 
 
 
- * **LEXICON DeverbalNounsC **
+ * **LEXICON DeverbalNounsC**
 
- * **LEXICON DeverbalNounsCTV **
+ * **LEXICON DeverbalNounsCTV**
 
- * **LEXICON DeverbalNounsBOAHTI **
+ * **LEXICON DeverbalNounsBOAHTI**
 
- * **LEXICON DeverbalNounsRAIMMAHALLA  ** no NomAg/actor
+ * **LEXICON DeverbalNounsRAIMMAHALLA** no NomAg/actor
 
- * **LEXICON DeverbalNounsBOAHTALADDA **
+ * **LEXICON DeverbalNounsBOAHTALADDA**
 
- * **LEXICON DeverbalNounsDIEHTALADDA **
+ * **LEXICON DeverbalNounsDIEHTALADDA**
 
- * **LEXICON DeverbalNounsDIEHTI **
-
-
- * **LEXICON DeverbalNounsDIEHTISHORT **
-
- * **LEXICON DeverbalNounsDIEHTILONGSHORT **
-
- * **LEXICON DeverbalNounsBAHCCI **
-
- * **LEXICON DeverbalNounsDOHPPE- **
-
- * **LEXICON DeverbalNounsGARRE- **
-
- * **LEXICON DeverbalNounsCIRRO- **
-
- * **LEXICON DeverbalNounsORRO- **
-
- * **LEXICON DeverbalNounsCIRROTV- **
+ * **LEXICON DeverbalNounsDIEHTI**
 
 
- * **LEXICON DeverbalNounsDOHPPEJ **
+ * **LEXICON DeverbalNounsDIEHTISHORT**
 
- * **LEXICON DeverbalNounsDOHPPEJTV **
+ * **LEXICON DeverbalNounsDIEHTILONGSHORT**
 
- * **LEXICON DeverbalNounsMUITALTV **
+ * **LEXICON DeverbalNounsBAHCCI**
 
- * **LEXICON DeverbalNounsMUITTASJTV **
+ * **LEXICON DeverbalNounsDOHPPE-**
 
- * **LEXICON DeverbalNounsMUITAL **
+ * **LEXICON DeverbalNounsGARRE-**
 
- * **LEXICON DeverbalNounsNUOSKIT **
+ * **LEXICON DeverbalNounsCIRRO-**
 
+ * **LEXICON DeverbalNounsORRO-**
 
- * **LEXICON DeverbalNounsMUITTASJ **
-
-
- * **LEXICON DeverbalVerbsBOAHTI **
-
- * **LEXICON DeverbalVerbsDIEVVA **
-
- * **LEXICON DeverbalVerbsBINDU **
+ * **LEXICON DeverbalNounsCIRROTV-**
 
 
- * **LEXICON DeverbalVerbsBORRA **
+ * **LEXICON DeverbalNounsDOHPPEJ**
 
- * **LEXICON DeverbalVerbsFALLA **
+ * **LEXICON DeverbalNounsDOHPPEJTV**
 
- * **LEXICON DeverbalVerbsBOLTU **
+ * **LEXICON DeverbalNounsMUITALTV**
 
+ * **LEXICON DeverbalNounsMUITTASJTV**
 
- * **LEXICON DeverbalVerbsDIEHTI **
+ * **LEXICON DeverbalNounsMUITAL**
 
- * **LEXICON DeverbalVerbsBEAHTTI **
-
- * **LEXICON DeverbalVerbsARVI **
-
-
- * **LEXICON DeverbalVerbsDOHPPE **
-
- * **LEXICON DeverbalVerbsFAHTE **
+ * **LEXICON DeverbalNounsNUOSKIT**
 
 
- * **LEXICON DeverbalVerbsGILLE **
-
- * **LEXICON DeverbalVerbsCOHKKA **
-
- * **LEXICON DeverbalVerbsBORGE **
+ * **LEXICON DeverbalNounsMUITTASJ**
 
 
+ * **LEXICON DeverbalVerbsBOAHTI**
 
- * **LEXICON DeverbalVerbsMUITAL **
+ * **LEXICON DeverbalVerbsDIEVVA**
 
- * **LEXICON DeverbalVerbsVUORDIL **
-
-
- * **LEXICON DeverbalVerbsALIST **
-
- * **LEXICON DeverbalVerbsSUOTNJAL **
-
- * **LEXICON DeverbalVerbsBOTNJAS **
-
- * **LEXICON DeverbalVerbsLASSAN **
-
- * **LEXICON DeverbalVerbsCOASKKIT **
-
- * **LEXICON DeverbalVerbsARVIL **
+ * **LEXICON DeverbalVerbsBINDU**
 
 
+ * **LEXICON DeverbalVerbsBORRA**
+
+ * **LEXICON DeverbalVerbsFALLA**
+
+ * **LEXICON DeverbalVerbsBOLTU**
+
+
+ * **LEXICON DeverbalVerbsDIEHTI**
+
+ * **LEXICON DeverbalVerbsBEAHTTI**
+
+ * **LEXICON DeverbalVerbsARVI**
+
+
+ * **LEXICON DeverbalVerbsDOHPPE**
+
+ * **LEXICON DeverbalVerbsFAHTE**
+
+
+ * **LEXICON DeverbalVerbsGILLE**
+
+ * **LEXICON DeverbalVerbsCOHKKA**
+
+ * **LEXICON DeverbalVerbsBORGE**
+
+
+
+ * **LEXICON DeverbalVerbsMUITAL**
+
+ * **LEXICON DeverbalVerbsVUORDIL**
+
+
+ * **LEXICON DeverbalVerbsALIST**
+
+ * **LEXICON DeverbalVerbsSUOTNJAL**
+
+ * **LEXICON DeverbalVerbsBOTNJAS**
+
+ * **LEXICON DeverbalVerbsLASSAN**
+
+ * **LEXICON DeverbalVerbsCOASKKIT**
+
+ * **LEXICON DeverbalVerbsARVIL**
 
 
 
 
 
 
- * LEXICON VGEN  flag for VGen
+
+
+ * LEXICON VGEN flag for VGen
 
 
 
