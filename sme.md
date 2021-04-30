@@ -7129,6 +7129,7 @@ Here comes the main list of verbs.
 
 
 
+
 # North Saami Conjunctions
 
 
