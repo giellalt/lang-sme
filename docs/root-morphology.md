@@ -9,38 +9,38 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 
 ### Tags for POS
 
- * **+Ex/N	** - This tag is not added in lexc. The POS tag before derivation is converted into this tag when compiling FST for disambiguation.
- * **+Ex/A	** - This tag is not added in lexc. The POS tag before derivation is converted into this tag when compiling FST for disambiguation.
- * **+Ex/V	** - This tag is not added in lexc. The POS tag before derivation is converted into this tag when compiling FST for disambiguation.
+ * **+Ex/N** - This tag is not added in lexc. The POS tag before derivation is converted into this tag when compiling FST for disambiguation.
+ * **+Ex/A** - This tag is not added in lexc. The POS tag before derivation is converted into this tag when compiling FST for disambiguation.
+ * **+Ex/V** - This tag is not added in lexc. The POS tag before derivation is converted into this tag when compiling FST for disambiguation.
 
- * ** +N       ** - Noun
- * ** +A       ** - Adjective
- * ** +Adv     ** - Adverb
- * ** +V       ** - Verb
- * ** +Pron    ** - Pronoun
- * ** +CS      ** - Subjunction
- * ** +CC      ** - Conjunction
- * ** +Adp     ** - Adposition, ie Post- and Prepostion, NOT IN USE
- * ** +Po      ** - Postpostion
- * ** +Pr      ** - Preposition
- * ** +Interj  ** - Interjection
- * ** +Pcle    ** - Particle
- * ** +Num     ** - Numeral
+ * **+N** - Noun
+ * **+A** - Adjective
+ * **+Adv** - Adverb
+ * **+V** - Verb
+ * **+Pron** - Pronoun
+ * **+CS** - Subjunction
+ * **+CC** - Conjunction
+ * **+Adp** - Adposition, ie Post- and Prepostion, NOT IN USE
+ * **+Po** - Postpostion
+ * **+Pr** - Preposition
+ * **+Interj** - Interjection
+ * **+Pcle** - Particle
+ * **+Num** - Numeral
 
 ### Tags for sub-POS
- * ** +Prop      ** - Propernoun
- * ** +Pers      ** - Personal Pronoun
- * ** +Dem       ** - Demonstrative Pronoun
- * ** +Interr    ** - Interrogative Pronoun
- * ** +Refl      ** - Reflexive Pronoun
- * ** +Recipr    ** - Reciprocal Pronoun
- * ** +Rel       ** - Relative Pronoun
- * ** +Indef     ** - Indefinitive Pronoun
- * ** +Coll      ** - Collective numerals, subtag for +N
- * ** +Arab      ** - Arabic numeral, subtag for +Num
- * ** +Rom       ** - Roman numeral, subtag for +Num
- * ** +Pass      ** - hallat/haddat not in use
- * ** +Known     ** - man (different from maid): mii+Pron+Rel+Sg+Acc+Known
+ * **+Prop** - Propernoun
+ * **+Pers** - Personal Pronoun
+ * **+Dem** - Demonstrative Pronoun
+ * **+Interr** - Interrogative Pronoun
+ * **+Refl** - Reflexive Pronoun
+ * **+Recipr** - Reciprocal Pronoun
+ * **+Rel** - Relative Pronoun
+ * **+Indef** - Indefinitive Pronoun
+ * **+Coll** - Collective numerals, subtag for +N
+ * **+Arab** - Arabic numeral, subtag for +Num
+ * **+Rom** - Roman numeral, subtag for +Num
+ * **+Pass** - hallat/haddat not in use
+ * **+Known** - man (different from maid): mii+Pron+Rel+Sg+Acc+Known
 
 
 ## Tags for Inflection
@@ -262,10 +262,10 @@ doavttergrádakursa
 
 ### Dialect tags:
 
- * ** +Dial/-KJ  ** forms not in use in KJ (Kárásjohka)
- * ** +Dial/-GG  ** forms not in use in GG (Guovdageaidnu)
- * ** +Dial/-GS  ** forms not in use in GS (Gárasavvon) NOT IN USE
- * ** +South     ** foreløpig lagt til Sg Loc -n, som er en sub-form
+ * **+Dial/-KJ** forms not in use in KJ (Kárásjohka)
+ * **+Dial/-GG** forms not in use in GG (Guovdageaidnu)
+ * **+Dial/-GS** forms not in use in GS (Gárasavvon) NOT IN USE
+ * **+South** foreløpig lagt til Sg Loc -n, som er en sub-form
 
 ### Tags for indicating the orthography used
  +Orth/Strd - Standard orthography
@@ -361,117 +361,117 @@ The order is:
 
 ### Semantic tags to help disambiguation & synt. analysis: (before POS)
 
- *  +Sem/Act          = Activity
- *  +Sem/Adr          = Webadr
- *  +Sem/Amount       = Amount
- *  +Sem/Ani          = Animate
- *  +Sem/Aniprod      = Animal Product
- *  +Sem/Body         = Bodypart
- *  +Sem/Body-abstr   = siellu, vuoig?a, jierbmi, (noe man kan bruke i fysisk aktivitet som en kroppsdel, f.eks. synet, stemmen, etc.)
- *  +Sem/Build        = Building
- *  +Sem/Build-room   = Room in a building, typically place to be
- *  +Sem/Buildpart   = Part of Bulding, like the wall
- *  +Sem/Cat          = Category
- *  +Sem/Clth         = Clothes
- *  +Sem/Clth-jewl    = Jewelery
- *  +Sem/Clthpart    = part of clothes, boallu, sávdnji...
- *  +Sem/Ctain        = Container
- *  +Sem/Ctain-abstr  = Abstract container like bank account
- *  +Sem/Ctain-clth   = Soft container, like a rucksack
- *  +Sem/Curr         = Currency like dollár, Not Money
- *  +Sem/Date         = Date
- *  +Sem/Dance        = Dance
- *  +Sem/Dir          = Direction like GPS-kursa
- *  +Sem/Domain       = Domain like politics, reindeerherding (a system of actions)
- *  +Sem/Drink        = Drink
- *  +Sem/Dummytag     = Dummytag
- *  +Sem/Edu          = Educational event
- *  +Sem/Event        = Event
- *  +Sem/Feat         = Feature, like Árvu. (noe som man kan ha mye eller lite av, det kan være en skala og som er på en måte karakteriserende. (høyde, vekt, farge, kreativitet etc.)
- *  +Sem/Feat-phys    = Physiological feature, ivdni, fárda
- *  +Sem/Feat-psych   = Psychological feauture
- *  +Sem/Feat-measr   = Psychological feauture
- *  +Sem/Fem          = Female name
- *  +Sem/Food         = Food
- *  +Sem/Food-med     = Medicine
- *  +Sem/Fruit        = Fruits, vegetables, seeds, nuts
- *  +Sem/Furn         = Furniture
- *  +Sem/Game         = Game
- *  +Sem/Geom         = Geometrical object
- *  +Sem/Group        = Animal or Human Group
- *  +Sem/Hum          = Human
- *  +Sem/Hum-abstr    = Human abstract
- *  +Sem/Hum-prof     = Human professional
- *  +Sem/Ideol        = Ideology
- *  +Sem/ID        = ID
- *  +Sem/Lang         = Language
- *  +Sem/Mal          = Male name
- *  +Sem/Mat          = Material for producing things
- *  +Sem/Measr        = Measure
- *  +Sem/Money        = Has to do with money, like wages, not Curr(ency)
- *  +Sem/Obj          = Object
- *  +Sem/Obj-clo      = Cloth
- *  +Sem/Obj-cogn     = Cloth
- *  +Sem/Obj-el       = (Electrical) machine or apparatus
- *  +Sem/Obj-ling     = Object with something written on it
- *  +Sem/Obj-rope     = flexible ropelike object
- *  +Sem/Obj-surfc    = Surface object
- *  +Sem/Org          = Organisation
- *  +Sem/Part         = Feature, oassi, bealli
+ * +Sem/Act = Activity
+ * +Sem/Adr = Webadr
+ * +Sem/Amount = Amount
+ * +Sem/Ani = Animate
+ * +Sem/Aniprod = Animal Product
+ * +Sem/Body = Bodypart
+ * +Sem/Body-abstr = siellu, vuoig?a, jierbmi, (noe man kan bruke i fysisk aktivitet som en kroppsdel, f.eks. synet, stemmen, etc.)
+ * +Sem/Build = Building
+ * +Sem/Build-room = Room in a building, typically place to be
+ * +Sem/Buildpart = Part of Bulding, like the wall
+ * +Sem/Cat = Category
+ * +Sem/Clth = Clothes
+ * +Sem/Clth-jewl = Jewelery
+ * +Sem/Clthpart = part of clothes, boallu, sávdnji...
+ * +Sem/Ctain = Container
+ * +Sem/Ctain-abstr = Abstract container like bank account
+ * +Sem/Ctain-clth = Soft container, like a rucksack
+ * +Sem/Curr = Currency like dollár, Not Money
+ * +Sem/Date = Date
+ * +Sem/Dance = Dance
+ * +Sem/Dir = Direction like GPS-kursa
+ * +Sem/Domain = Domain like politics, reindeerherding (a system of actions)
+ * +Sem/Drink = Drink
+ * +Sem/Dummytag = Dummytag
+ * +Sem/Edu = Educational event
+ * +Sem/Event = Event
+ * +Sem/Feat = Feature, like Árvu. (noe som man kan ha mye eller lite av, det kan være en skala og som er på en måte karakteriserende. (høyde, vekt, farge, kreativitet etc.)
+ * +Sem/Feat-phys = Physiological feature, ivdni, fárda
+ * +Sem/Feat-psych = Psychological feauture
+ * +Sem/Feat-measr = Psychological feauture
+ * +Sem/Fem = Female name
+ * +Sem/Food = Food
+ * +Sem/Food-med = Medicine
+ * +Sem/Fruit = Fruits, vegetables, seeds, nuts
+ * +Sem/Furn = Furniture
+ * +Sem/Game = Game
+ * +Sem/Geom = Geometrical object
+ * +Sem/Group = Animal or Human Group
+ * +Sem/Hum = Human
+ * +Sem/Hum-abstr = Human abstract
+ * +Sem/Hum-prof = Human professional
+ * +Sem/Ideol = Ideology
+ * +Sem/ID = ID
+ * +Sem/Lang = Language
+ * +Sem/Mal = Male name
+ * +Sem/Mat = Material for producing things
+ * +Sem/Measr = Measure
+ * +Sem/Money = Has to do with money, like wages, not Curr(ency)
+ * +Sem/Obj = Object
+ * +Sem/Obj-clo = Cloth
+ * +Sem/Obj-cogn = Cloth
+ * +Sem/Obj-el = (Electrical) machine or apparatus
+ * +Sem/Obj-ling = Object with something written on it
+ * +Sem/Obj-rope = flexible ropelike object
+ * +Sem/Obj-surfc = Surface object
+ * +Sem/Org = Organisation
+ * +Sem/Part = Feature, oassi, bealli
 * Perc = (perception) er noe man kan kjenne i en begrensa periode og som er forårsaka av noe utenifra, f.eks. Mus lea ballu. Mus lea bavččas.
- *  +Sem/Perc-cogn    =  
- *  +Sem/Perc-emo     = Emotional perception
- *  +Sem/Perc-phys    = Physical perception
- *  +Sem/Perc-psych   = Psychological perception
- * **+Sem/Phonenr** = Telephone number
- *  +Sem/Plant        = Plant
- *  +Sem/Plantpart   = Plant part
- *  +Sem/Plc          = Place
- *  +Sem/Plc-abstr    = Abstract place
- *  +Sem/Plc-elevate  = Place
- *  +Sem/Plc-line     = Place
- *  +Sem/Plc-water    = Place
- *  +Sem/Pos          = Position (as in social position job)
- *  +Sem/Process      = Process
- *  +Sem/Prod         = Product
- *  +Sem/Prod-audio   = Audio product
- *  +Sem/Prod-cogn    = Cognition product
- *  +Sem/Prod-ling    = Linguistic product
- *  +Sem/Prod-vis     = Visual product
- *  +Sem/Rel          = Relation
- *  +Sem/Route        = Route
- *  +Sem/Rule         = Rule or convention
- *  +Sem/Semcon       = Semantic concept
- *  +Sem/Sign         = Sign (e.g. numbers, punctuation)
- *  +Sem/Sport        = Sport
- *  +Sem/State        =
- *  +Sem/State-sick   = Illness
- *  +Sem/Substnc      = Substance, like Air and Water
- *  +Sem/Sur          = Surname
- *  +Sem/Symbol       = Symbol
- *  +Sem/Time         = Time
- *  +Sem/Time-clock   = Time clock
- *  +Sem/Tool         = Prototypical tool for repairing things
- *  +Sem/Tool-catch   = Tool used for catching (e.g. fish)
- *  +Sem/Tool-clean   = Tool used for cleaning
- *  +Sem/Tool-it      = Tool used in IT
- *  +Sem/Tool-measr   = Tool used for measuring
- *  +Sem/Tool-music   = Music instrument
- *  +Sem/Tool-write   = Writing tool
- *  +Sem/Txt          = Text (girji, lávlla...)
- *  +Sem/Veh          = Vehicle
- *  +Sem/Wpn          = Weapon
- *  +Sem/Wthr         = The Weather or the state of ground
- *  +Sem/Year         - year (i.e. 1000 - 2999), used only for numerals
+ * +Sem/Perc-cogn =  
+ * +Sem/Perc-emo = Emotional perception
+ * +Sem/Perc-phys = Physical perception
+ * +Sem/Perc-psych = Psychological perception
+ * +Sem/Phonenr = Telephone number
+ * +Sem/Plant = Plant
+ * +Sem/Plantpart = Plant part
+ * +Sem/Plc = Place
+ * +Sem/Plc-abstr = Abstract place
+ * +Sem/Plc-elevate = Place
+ * +Sem/Plc-line = Place
+ * +Sem/Plc-water = Place
+ * +Sem/Pos = Position (as in social position job)
+ * +Sem/Process = Process
+ * +Sem/Prod = Product
+ * +Sem/Prod-audio = Audio product
+ * +Sem/Prod-cogn = Cognition product
+ * +Sem/Prod-ling = Linguistic product
+ * +Sem/Prod-vis = Visual product
+ * +Sem/Rel = Relation
+ * +Sem/Route = Route
+ * +Sem/Rule = Rule or convention
+ * +Sem/Semcon = Semantic concept
+ * +Sem/Sign = Sign (e.g. numbers, punctuation)
+ * +Sem/Sport = Sport
+ * +Sem/State =
+ * +Sem/State-sick = Illness
+ * +Sem/Substnc = Substance, like Air and Water
+ * +Sem/Sur = Surname
+ * +Sem/Symbol = Symbol
+ * +Sem/Time = Time
+ * +Sem/Time-clock = Time clock
+ * +Sem/Tool = Prototypical tool for repairing things
+ * +Sem/Tool-catch = Tool used for catching (e.g. fish)
+ * +Sem/Tool-clean = Tool used for cleaning
+ * +Sem/Tool-it = Tool used in IT
+ * +Sem/Tool-measr = Tool used for measuring
+ * +Sem/Tool-music = Music instrument
+ * +Sem/Tool-write = Writing tool
+ * +Sem/Txt = Text (girji, lávlla...)
+ * +Sem/Veh = Vehicle
+ * +Sem/Wpn = Weapon
+ * +Sem/Wthr = The Weather or the state of ground
+ * +Sem/Year - year (i.e. 1000 - 2999), used only for numerals
 
 
 
 ### Multiple Semantic tags:
- * +Sem/Act_Fruit                      
- * **+Sem/Act_Group** Activity and Group
- * **+Sem/Act_Hum** Activity and Human
- * **+Sem/Act_Plc**   A persons job is an activity, and a place as well
- * **+Sem/Act_Route** Activity and Route, ie johtolat
+ * +Sem/Act_Fruit
+ * +Sem/Act_Group Activity and Group
+ * +Sem/Act_Hum Activity and Human
+ * +Sem/Act_Plc   A persons job is an activity, and a place as well
+ * +Sem/Act_Route Activity and Route, ie johtolat
  * +Sem/Act_Tool-it
  * **+Sem/Amount_Build**   Amount and Building
  * +Sem/Amount_Semcon
@@ -516,16 +516,16 @@ The order is:
  * +Sem/Build_Org
  * +Sem/Build_Route
  * +Sem/Build-room_Cat_Ctain_Mat
- * +Sem/Buildpart_Cat                 
- * +Sem/Buildpart_Cat_Ctain           
- * +Sem/Buildpart_Cat_Ctain_Mat       
- * +Sem/Buildpart_Ctain               
- * +Sem/Buildpart_Ctain_Mat           
- * +Sem/Buildpart_Ctain_Obj           
- * +Sem/Cat_Group_Hum                  
- * +Sem/Cat_Group_Hum_Plc              
- * +Sem/Cat_Edu                        
- * +Sem/Cat_Obj                        
+ * +Sem/Buildpart_Cat
+ * +Sem/Buildpart_Cat_Ctain
+ * +Sem/Buildpart_Cat_Ctain_Mat
+ * +Sem/Buildpart_Ctain
+ * +Sem/Buildpart_Ctain_Mat
+ * +Sem/Buildpart_Ctain_Obj
+ * +Sem/Cat_Group_Hum
+ * +Sem/Cat_Group_Hum_Plc
+ * +Sem/Cat_Edu
+ * +Sem/Cat_Obj
  * +Sem/Clth-jewl_Curr
  * +Sem/Clth-jewl_Curr_Obj
  * +Sem/Clth-jewl_Curr_Obj_Org
@@ -546,13 +546,13 @@ The order is:
  * +Sem/Dance_Org
  * +Sem/Dance_Prod-audio
  * +Sem/Domain_Food-med
- * +Sem/Domain_Hum                     
+ * +Sem/Domain_Hum
  * +Sem/Domain_Prod-audio
- * +Sem/Drink_Plant                    
+ * +Sem/Drink_Plant
  * +Sem/Edu_Event
- * +Sem/Edu_Geom                       
+ * +Sem/Edu_Geom
  * +Sem/Edu_Group_Hum
- * +Sem/Edu_Hum                        
+ * +Sem/Edu_Hum
  * +Sem/Edu_Mat
  * +Sem/Edu_Org
  * +Sem/Event_Food
@@ -571,7 +571,7 @@ The order is:
  * +Sem/Food_Perc-phys
  * +Sem/Food_Plant
  * +Sem/Food_Sign
- * +Sem/Fruit_Hum                      
+ * +Sem/Fruit_Hum
  * +Sem/Game_Obj-play
  * +Sem/Geom_Hum_Plc
  * +Sem/Geom_Obj
@@ -582,7 +582,7 @@ The order is:
  * +Sem/Group_Hum_Prod-vis
  * +Sem/Group_Hum_Time
  * +Sem/Group_Org
- * +Sem/Group_Prod-vis                 
+ * +Sem/Group_Prod-vis
  * +Sem/Group_Sign
  * +Sem/Group_Txt
  * +Sem/Hum_Lang
@@ -596,14 +596,14 @@ The order is:
  * +Sem/Hum_Plc
  * +Sem/Hum_Sign
  * +Sem/Hum_Tool
- * +Sem/Hum_Tool-it                     = Human
+ * +Sem/Hum_Tool-it = Human
  * +Sem/Hum_Veh
  * +Sem/Hum_Wthr
  * +Sem/Lang_Tool
  * +Sem/Mat_Plant
  * +Sem/Mat_Txt
- * +Sem/Measr_Obj_Time                 
- * +Sem/Measr_Sign                      = Sign (e.g. numbers, punctuation)
+ * +Sem/Measr_Obj_Time
+ * +Sem/Measr_Sign = Sign (e.g. numbers, punctuation)
  * +Sem/Measr_Time
  * +Sem/Money_Obj
  * +Sem/Money_Org
@@ -645,7 +645,7 @@ The order is:
  * +Sem/Plc_Time_Wthr
  * +Sem/Time_Wthr
  * +Sem/State-sick_Substnc
- * +Sem/Obj-ling_Obj-surfc             
+ * +Sem/Obj-ling_Obj-surfc
  * +Sem/Org_Prod-audio
  * +Sem/Org_Prod-cogn
  * +Sem/Org_Prod-vis
@@ -912,10 +912,10 @@ given the proper use of these flags.
 **Abbreviation**
 
 
- * **LEXICON Acronym   **
+ * **LEXICON Acronym**
 
 
- * **LEXICON ProperNoun   **
+ * **LEXICON ProperNoun**
 
 
 Lexicon ENDLEX
