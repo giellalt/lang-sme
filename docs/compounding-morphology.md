@@ -2,7 +2,8 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 #                    North Sámi compounding
 
-This file governs prefixing and compounding, with the following lexica and pointers
+This file governs prefixing and compounding, with the following lexica and pointers. All lexica and lexicon entries are documented.
+
 
 **LEXICON Prefixes** = lexicon for adding *eahpe and pointing to **N, A, V**
 
