@@ -1,20 +1,4 @@
 
-North Sámi morphophonological rule set                  
-
-The file contains the rule set for the non-segmental
-North Sámi morphophonological rules
-
-Note that when copied over to newinfra, this file will be labeled sme-phon-L1.twolc.
-The file sme-phon-L1.twolc will **not** be the source file to edit, 
-rather, the source file will be this file, gt/sme/src/twol-sme.txt. This file (in the old infra)
-is the ordinary sme fst file to be edited.
-The L2 sme fst, on the other hand, will have lags/sme/src/phonology/sme-phon-L2.twolc
-as its sourcefile, the file to be edited.
-
-
-
-
-
 
 
 
@@ -65,9 +49,15 @@ as its sourcefile, the file to be edited.
 
 
 
+Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 
 
-* *ájºgi*
+
+
+
+
+
+* *áj'gi*
 * *ái0gi*
 * ★*mánnáX5jd* (is not standard language)
 * ★*má0ná0jd* (is not standard language)
@@ -77,7 +67,7 @@ as its sourcefile, the file to be edited.
 
 
 
-* *ájºgi*
+* *áj'gi*
 * *ái0gi*
 
 * *majdege*
@@ -89,11 +79,11 @@ as its sourcefile, the file to be edited.
 * *mánnáX5jd*
 * *má0ná0id*
 
-* *almmájX4#*
-* *almmái0#*
+* *almmájX4*
+* *almmái0*
 
-* *almmájX4X7-*
-* *almmái00-*
+* *almmájX4X7-#*
+* *almmái00-#*
 
 * *almmájX4in*
 * *almmáj0in*
@@ -102,17 +92,8 @@ as its sourcefile, the file to be edited.
 
 
 
-
-
-
-
-
-
-* *barggož-*
-* *barggoš-*
-
-* *smirez-*
-* *smires-*
+* *smirez#*
+* *smires#*
 
 * *Troandim#*
 * *Troandin#*
@@ -144,12 +125,21 @@ as its sourcefile, the file to be edited.
 * *alih#*
 * *alit#*
 
-* *olmmož>X4X7-*
-* *olmmoš>00-*
 
+* ★*vejolažž#* (is not standard language)
+* ★*vejolaž0#* (is not standard language)
 
-* *olmmož>X4#*
-* *olmmoš>0#*
+* *vejolažž#*
+* *vejolaš0#*
+
+* *olmmožX4X7-*
+* *olmmoš00-*
+
+* ★*olmmožX7-* (is not standard language)
+* ★*olmmoš0-* (is not standard language)
+
+* *olmmožX4*
+* *olmmoš0*
 
 
 
@@ -181,47 +171,54 @@ as its sourcefile, the file to be edited.
 
 
 
-* *vuordild-*
-* *vuordil0-*
+* *vuordild#*
+* *vuordil0#*
 
-* ★*vuordild-* (is not standard language)
-* ★*vuordild-* (is not standard language)
+* ★*vuordild#* (is not standard language)
+* ★*vuordild#* (is not standard language)
 
-* *attest-*
-* *attes0-*
+* *attest#*
+* *attes0#*
 
-* ★*attest-* (is not standard language)
-* ★*attest-* (is not standard language)
+* ★*attest#* (is not standard language)
+* ★*attest#* (is not standard language)
 
 * *berošt#*
 * *beroš0#*
 
 
-* *bearjadah%ºk-*
-* *bearjadat00-*
+* *bearjadah'k#*
+* *bearjadat00#*
 
-* ★*bearjadah%ºk-* (is not standard language)
-* ★*bearjadat0k-* (is not standard language)
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadat0k#* (is not standard language)
 
-* ★*bearjadah%ºk-* (is not standard language)
-* ★*bearjadah00-* (is not standard language)
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadat'0#* (is not standard language)
 
-* ★*bearjadah%ºk-* (is not standard language)
-* ★*bearjadah0k-* (is not standard language)
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadah00#* (is not standard language)
+
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadat'k#* (is not standard language)
+
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadah0k#* (is not standard language)
+
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadah'k#* (is not standard language)
+
 
 
 
 * *muitaluss#*
 * *muitalus0#*
 
-* ★*vejolažž>-* (is not standard language)
-* ★*vejolažž>-* (is not standard language)
+* ★*vejolažž#* (is not standard language)
+* ★*vejolažž#* (is not standard language)
 
-* *vejolažž>-*
-* *vejolaš0>-*
-
-* ★*vejolažž>#* (is not standard language)
-* ★*vejolaž0>#* (is not standard language)
+* *vejolažž#*
+* *vejolaš0#*
 
 
 
@@ -229,17 +226,11 @@ as its sourcefile, the file to be edited.
 
 
 
-* *johºkaX4*
+* *joh'kaX4*
 * *jo00ga0*
 
-* ★*johºkaX4* (is not standard language)
-* ★*joh0ga0* (is not standard language)
-
-* ★*johºkaX4* (is not standard language)
-* ★*jo00ka0* (is not standard language)
-
-* ★*johºkaX4* (is not standard language)
-* ★*joh0ka0* (is not standard language)
+* ★*joh'kaX4* `joh'kaX4` (is not standard language joh'kaX4 joh'kaX4 joh'kaX4 jo0'kaX4)
+* ★*joh0ga0* `jo0'ga0` (is not standard language jo00ka0 joh'ga0 joh0ka0 joh0ga0)
 
 
 * *sápmiX4*
@@ -252,7 +243,7 @@ as its sourcefile, the file to be edited.
 * *latnjaX4*
 * *la0nja0*
 
-* *vuodºjiQ4n*
+* *vuod'jiQ4n*
 * *vuo00já0n*
 
 * *káffeX4s*
@@ -277,88 +268,81 @@ as its sourcefile, the file to be edited.
 * *áddjáX4*
 * *á0djá0*
 
-* *lájºbiX4*
+* *láj'biX4*
 * *láibbi0*
 
-* *seaŋºga>X4*
-* *seaŋgga>0*
+* *seaŋ'gaX4*
+* *seaŋgga0*
 
-* *boŋºki>X4j#*
-* *boŋkki>0i#*
-
-* *boŋºki>X4jmet#*
-* *boŋkki>0imet#*
+* *boŋ'kiX4j#*
+* *boŋkki0i#*
 
 
-* *sáfºtaX4*
+* *sáf'taX4*
 * *sáftta0*
 
 
-* *oabºnaX4*
+* *oab'naX4*
 * *oabnna0*
 
-* *ámºtaX4*
+* *ám'taX4*
 * *ámtta0*
 
-* *InºgáX4*
+* *In'gáX4*
 * *Inggá0*
 
 
-* *gánºdaX4*
+* *gán'daX4*
 * *gándda0*
 
 
-* *konseapºtaX4*
+* *konseap'taX4*
 * *konseaptta0*
 
 
-* *ájºruX4*
+* *áj'ruX4*
 * *áirru0*
 
-* *bievºlaX4*
+* *biev'laX4*
 * *bievlla0*
 
 
-* *jarºlaX4*
+* *jar'laX4*
 * *jarlla0*
 
 
-* *olºjuX4*
+* *ol'juX4*
 * *oljju0*
 
 
-* *mátºkiX4*
+* *mát'kiX4*
 * *mátkki0*
 
 
 
-* *kreatºsaX4*
+* *kreatsaX4*
 * *kreatssa0*
 
 
-* *korpºsaX4*
-* *korpssa0*
-
-
-* *beasºkaX4*
+* *beas'kaX4*
 * *beaskka0*
 
 
-* *čoavºjiX4*
+* *čoav'jiX4*
 * *čoavjji0*
 
 
-* *beajºviX4*
+* *beaj'viX4*
 * *beaivvi0*
 
-* *dujhºmiX4*
+* *dujh'miX4*
 * *duihmmi0*
 
 
 * *čuolbmaX4*
 * *čuolmma0*
 
-* *DálºmaX4*
+* *DálmaX4*
 * *Dálmma0*
 
 
@@ -376,22 +360,20 @@ as its sourcefile, the file to be edited.
 * *skurtnji0*
 
 
-* *návsºtuX4*
+* *návs'tuX4*
 * *návsttu0*
 
-* *boršºtaX4*
-* *borštta0*
 
-* *limšºkiX4*
+* *limš'kiX4*
 * *limškki0*
 
 
-* *ukºsaX4*
+* *uk'saX4*
 * *uvssa0*
 
 
 
-* *teaksºtaX4*
+* *teaks'taX4*
 * *teavstta0*
 
 
@@ -418,14 +400,12 @@ as its sourcefile, the file to be edited.
 
 
 
-* *boahºtiY1*
+* *boah'tiY1*
 * *boahtti0*
 
-* *dahºkaY7j#*
-* *dahkku0i#*
+* *dah'kaY7j*
+* *dahkku0i*
 
-* *dahºka>Y7jmet#*
-* *dahkku>0imet#*
 
 
 * *dapmaY1*
@@ -434,14 +414,14 @@ as its sourcefile, the file to be edited.
 * *bitnjuY1*
 * *bidnju0*
 
-* *dadºjaY1*
+* *dad'jaY1*
 * *daddji0*
 
 
 
 
 
-* *johºkaX4*
+* *joh'kaX4*
 * *jo00ga0*
 
 
@@ -459,7 +439,7 @@ as its sourcefile, the file to be edited.
 
 
 
-* *gávºpiX7*
+* *gáv'piX7*
 * *gáv0pe0*
 
 * *bassiX7*
@@ -478,55 +458,55 @@ as its sourcefile, the file to be edited.
 
 
 
-* *buorriX7*
-* *buorre0*
+* *buorriX7#*
+* *buorre0#*
 
-* *buorriX8*
-* *buo0re0*
-
-
-* *várriX7girºku*
-* *várre0gir0ku*
+* *buorriX8#*
+* *buo0re0#*
 
 
-
-
-
-
-* *lijgiX7#ruhºtaX4jd*
-* *liige0#ru00đa0id*
+* *várriX7gir'ku#*
+* *várre0gir0ku#*
 
 
 
 
 
 
-* *čuorºvuQ6*
+* *lijgiX7#ruh'taX4jd#*
+* *liige00ru00đa0id#*
+
+
+
+
+
+
+* *čuor'vuQ6*
 * *čuorvvo0*
 
 
-* *boahºtiQ6*
+* *boah'tiQ6*
 * *boa00đe0*
 
 
 
 
-* *lájºkiW1s#*
+* *láj'kiW1s#*
 * *láikke0s#*
 
-* *álºkiW2s#*
+* *ál'kiW2s#*
 * *ál0ke0s#*
 
 
 
-* *váttisW1*
-* *váttes0*
+* *váttisW1#*
+* *váttes0#*
 
-* *headºjusW1-*
+* *head'jusW1-*
 * *hea00jos0-*
 
-* *headºjusW1*
-* *hea00jos0*
+* *head'jusW1#*
+* *hea00jos0#*
 
 * *váttisW1-*
 * *váttes0-*
@@ -542,7 +522,24 @@ as its sourcefile, the file to be edited.
 
 
 
-* *goahºtiX5jd*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* *goah'tiX5jd*
 * *go000đi0id*
 
 
@@ -558,8 +555,7 @@ as its sourcefile, the file to be edited.
 
 
 
-
-* *viehºki¤X5jn*
+* *vieh'ki¤X5jn*
 * *vi0hkki00in*
 
 
@@ -579,23 +575,17 @@ as its sourcefile, the file to be edited.
 
 
 
+* *reŋ'koX2jd*
+* *reŋ0ku0id*
 
+* *basteX2j*
+* *basti0i*
 
+* *asibealle7X2j*
+* *asibealli0ide*
 
-* *boahºti>^DISIMPjmet#*
-* *bo000đi>0imet#*
-
-* *reŋºko>X2jd#*
-* *reŋ0ku>0id#*
-
-* *baste>X2j#*
-* *basti>0i#*
-
-* *asi#bealli>^DISIMPjde#*
-* *asi#be00li>0ide#*
-
-* *Line>X2j#*
-* *Lini>0i#*
+* *LineX2j*
+* *Lini0i*
 
 
 
@@ -608,14 +598,11 @@ as its sourcefile, the file to be edited.
 
 
 
+* *stahtaX3j*
+* *stahti0i*
 
-* *stahta>X3j#*
-* *stahti>0i#*
-
-
-
-* *Sij9te>i#*
-* *Sijte>i#*
+* *Sij9teW9j*
+* *Sijte0i*
 
 
 
@@ -632,7 +619,7 @@ as its sourcefile, the file to be edited.
 * *oažžuQ8dit*
 * *o0ččo0dit*
 
-* *coahºkuX8stit*
+* *coah'kuX8stit*
 * *coa00go0stit*
 
 
@@ -640,7 +627,7 @@ as its sourcefile, the file to be edited.
 * *jearraQ1*
 * *jearrá0*
 
-* *boahºtiQ1*
+* *boah'tiQ1*
 * *boah0tá0*
 
 
@@ -650,27 +637,27 @@ as its sourcefile, the file to be edited.
 * *jearraQ2t*
 * *je0rre0t*
 
-* *boahºtiQ3n*
+* *boah'tiQ3n*
 * *bo0h0to0n*
 
-* *čuorºvuQ3n*
+* *čuor'vuQ3n*
 * *ču0r0vo0n*
 
 
 * *jearraQ2*
 * *je0rre0*
 
-* *boahºtiQ2t*
+* *boah'tiQ2t*
 * *bo0h0te0t*
 
-* *čuorºvuQ2*
+* *čuor'vuQ2*
 * *ču0r0vo0*
 
 
-* *boahºtiQ4n*
+* *boah'tiQ4n*
 * *boa00đá0n*
 
-* *boahºtiQ5lin*
+* *boah'tiQ5lin*
 * *boa00đá0lin*
 
 
@@ -684,54 +671,52 @@ as its sourcefile, the file to be edited.
 
 
 
-
-
 * *jearraY2*
 * *jearru0*
 
-* *boahºtiY2*
+* *boah'tiY2*
 * *boahttu0*
 
 
 * *jearraQ2t*
 * *je0rre0t*
 
-boahºtiY4t ! It seems it should be Q3. ... both?!
-* *boahºtiQ3t*
+boah'tiY4t ! It seems it should be Q3. ... both?!
+* *boah'tiQ3t*
 * *bo0h0to0t*
 
 
-čuorºvuY4t ! Q2, it seems.
-* *čuorºvuQ2t*
+čuor'vuY4t ! Q2, it seems.
+* *čuor'vuQ2t*
 * *ču0r0vo0t*
 
 
 
-* *jearraY7t#*
-* *je0rro0t#*
+* *jearraY7t*
+* *je0rro0t*
 
-* *boahºtiY7t#*
-* *bo0htto0t#*
+* *boah'tiY7t*
+* *bo0htto0t*
 
-* *čuorºvuY7t#*
-* *ču0r0vo0t#*
+* *čuor'vuY7t*
+* *ču0r0vo0t*
 
-* *jearraY7juvvot#*
-* *je0rro0juvvot#*
-
-
+* *jearraY7juvvot*
+* *je0rro0juvvot*
 
 
 
 
-* *jearraY7j#*
-* *je0rru0i#*
 
-* *dahºkaY7j#*
-* *dahkku0i#*
 
-* *loikaY7j#*
-* *loiku0i#*
+* *jearraY7j*
+* *je0rru0i*
+
+* *dah'kaY7j*
+* *dahkku0i*
+
+* *loikaY7j*
+* *loiku0i*
 
 
 
@@ -768,7 +753,6 @@ boahºtiY4t ! It seems it should be Q3. ... both?!
 
 
 
-
 Changed because:we get almmáj- and not almmái-
 Postvocalic j surfaces as i
 Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dummy: ) _ ;
@@ -778,7 +762,11 @@ Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dum
 
 
 
+* *#hálijd#*
+* *0háliit#*
 
+* ★*hálijd#* (is not standard language)
+* ★*háliid#* (is not standard language)
 
 
 
@@ -4134,22 +4122,6 @@ is covered by RHyph + Noun.
 * adds @U.NeedsVowRed.OFF@ and directs to **R**
 
 
-North Sámi morphophonological rule set                  
-
-The file contains the rule set for the non-segmental
-North Sámi morphophonological rules
-
-Note that when copied over to newinfra, this file will be labeled sme-phon-L1.twolc.
-The file sme-phon-L1.twolc will **not** be the source file to edit, 
-rather, the source file will be this file, gt/sme/src/twol-sme.txt. This file (in the old infra)
-is the ordinary sme fst file to be edited.
-The L2 sme fst, on the other hand, will have lags/sme/src/phonology/sme-phon-L2.twolc
-as its sourcefile, the file to be edited.
-
-
-
-
-
 
 
 
@@ -4199,10 +4171,15 @@ as its sourcefile, the file to be edited.
 
 
 
+Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 
 
 
-* *ájºgi*
+
+
+
+
+* *áj'gi*
 * *ái0gi*
 * ★*mánnáX5jd* (is not standard language)
 * ★*má0ná0jd* (is not standard language)
@@ -4212,7 +4189,7 @@ as its sourcefile, the file to be edited.
 
 
 
-* *ájºgi*
+* *áj'gi*
 * *ái0gi*
 
 * *majdege*
@@ -4224,11 +4201,11 @@ as its sourcefile, the file to be edited.
 * *mánnáX5jd*
 * *má0ná0id*
 
-* *almmájX4#*
-* *almmái0#*
+* *almmájX4*
+* *almmái0*
 
-* *almmájX4X7-*
-* *almmái00-*
+* *almmájX4X7-#*
+* *almmái00-#*
 
 * *almmájX4in*
 * *almmáj0in*
@@ -4237,17 +4214,8 @@ as its sourcefile, the file to be edited.
 
 
 
-
-
-
-
-
-
-* *barggož-*
-* *barggoš-*
-
-* *smirez-*
-* *smires-*
+* *smirez#*
+* *smires#*
 
 * *Troandim#*
 * *Troandin#*
@@ -4279,12 +4247,21 @@ as its sourcefile, the file to be edited.
 * *alih#*
 * *alit#*
 
-* *olmmož>X4X7-*
-* *olmmoš>00-*
 
+* ★*vejolažž#* (is not standard language)
+* ★*vejolaž0#* (is not standard language)
 
-* *olmmož>X4#*
-* *olmmoš>0#*
+* *vejolažž#*
+* *vejolaš0#*
+
+* *olmmožX4X7-*
+* *olmmoš00-*
+
+* ★*olmmožX7-* (is not standard language)
+* ★*olmmoš0-* (is not standard language)
+
+* *olmmožX4*
+* *olmmoš0*
 
 
 
@@ -4316,47 +4293,54 @@ as its sourcefile, the file to be edited.
 
 
 
-* *vuordild-*
-* *vuordil0-*
+* *vuordild#*
+* *vuordil0#*
 
-* ★*vuordild-* (is not standard language)
-* ★*vuordild-* (is not standard language)
+* ★*vuordild#* (is not standard language)
+* ★*vuordild#* (is not standard language)
 
-* *attest-*
-* *attes0-*
+* *attest#*
+* *attes0#*
 
-* ★*attest-* (is not standard language)
-* ★*attest-* (is not standard language)
+* ★*attest#* (is not standard language)
+* ★*attest#* (is not standard language)
 
 * *berošt#*
 * *beroš0#*
 
 
-* *bearjadah%ºk-*
-* *bearjadat00-*
+* *bearjadah'k#*
+* *bearjadat00#*
 
-* ★*bearjadah%ºk-* (is not standard language)
-* ★*bearjadat0k-* (is not standard language)
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadat0k#* (is not standard language)
 
-* ★*bearjadah%ºk-* (is not standard language)
-* ★*bearjadah00-* (is not standard language)
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadat'0#* (is not standard language)
 
-* ★*bearjadah%ºk-* (is not standard language)
-* ★*bearjadah0k-* (is not standard language)
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadah00#* (is not standard language)
+
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadat'k#* (is not standard language)
+
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadah0k#* (is not standard language)
+
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadah'k#* (is not standard language)
+
 
 
 
 * *muitaluss#*
 * *muitalus0#*
 
-* ★*vejolažž>-* (is not standard language)
-* ★*vejolažž>-* (is not standard language)
+* ★*vejolažž#* (is not standard language)
+* ★*vejolažž#* (is not standard language)
 
-* *vejolažž>-*
-* *vejolaš0>-*
-
-* ★*vejolažž>#* (is not standard language)
-* ★*vejolaž0>#* (is not standard language)
+* *vejolažž#*
+* *vejolaš0#*
 
 
 
@@ -4364,17 +4348,11 @@ as its sourcefile, the file to be edited.
 
 
 
-* *johºkaX4*
+* *joh'kaX4*
 * *jo00ga0*
 
-* ★*johºkaX4* (is not standard language)
-* ★*joh0ga0* (is not standard language)
-
-* ★*johºkaX4* (is not standard language)
-* ★*jo00ka0* (is not standard language)
-
-* ★*johºkaX4* (is not standard language)
-* ★*joh0ka0* (is not standard language)
+* ★*joh'kaX4* `joh'kaX4` (is not standard language joh'kaX4 joh'kaX4 joh'kaX4 jo0'kaX4)
+* ★*joh0ga0* `jo0'ga0` (is not standard language jo00ka0 joh'ga0 joh0ka0 joh0ga0)
 
 
 * *sápmiX4*
@@ -4387,7 +4365,7 @@ as its sourcefile, the file to be edited.
 * *latnjaX4*
 * *la0nja0*
 
-* *vuodºjiQ4n*
+* *vuod'jiQ4n*
 * *vuo00já0n*
 
 * *káffeX4s*
@@ -4412,88 +4390,81 @@ as its sourcefile, the file to be edited.
 * *áddjáX4*
 * *á0djá0*
 
-* *lájºbiX4*
+* *láj'biX4*
 * *láibbi0*
 
-* *seaŋºga>X4*
-* *seaŋgga>0*
+* *seaŋ'gaX4*
+* *seaŋgga0*
 
-* *boŋºki>X4j#*
-* *boŋkki>0i#*
-
-* *boŋºki>X4jmet#*
-* *boŋkki>0imet#*
+* *boŋ'kiX4j#*
+* *boŋkki0i#*
 
 
-* *sáfºtaX4*
+* *sáf'taX4*
 * *sáftta0*
 
 
-* *oabºnaX4*
+* *oab'naX4*
 * *oabnna0*
 
-* *ámºtaX4*
+* *ám'taX4*
 * *ámtta0*
 
-* *InºgáX4*
+* *In'gáX4*
 * *Inggá0*
 
 
-* *gánºdaX4*
+* *gán'daX4*
 * *gándda0*
 
 
-* *konseapºtaX4*
+* *konseap'taX4*
 * *konseaptta0*
 
 
-* *ájºruX4*
+* *áj'ruX4*
 * *áirru0*
 
-* *bievºlaX4*
+* *biev'laX4*
 * *bievlla0*
 
 
-* *jarºlaX4*
+* *jar'laX4*
 * *jarlla0*
 
 
-* *olºjuX4*
+* *ol'juX4*
 * *oljju0*
 
 
-* *mátºkiX4*
+* *mát'kiX4*
 * *mátkki0*
 
 
 
-* *kreatºsaX4*
+* *kreatsaX4*
 * *kreatssa0*
 
 
-* *korpºsaX4*
-* *korpssa0*
-
-
-* *beasºkaX4*
+* *beas'kaX4*
 * *beaskka0*
 
 
-* *čoavºjiX4*
+* *čoav'jiX4*
 * *čoavjji0*
 
 
-* *beajºviX4*
+* *beaj'viX4*
 * *beaivvi0*
 
-* *dujhºmiX4*
+* *dujh'miX4*
 * *duihmmi0*
 
 
 * *čuolbmaX4*
 * *čuolmma0*
 
-* *DálºmaX4*
+* *DálmaX4*
 * *Dálmma0*
 
 
@@ -4511,22 +4482,20 @@ as its sourcefile, the file to be edited.
 * *skurtnji0*
 
 
-* *návsºtuX4*
+* *návs'tuX4*
 * *návsttu0*
 
-* *boršºtaX4*
-* *borštta0*
 
-* *limšºkiX4*
+* *limš'kiX4*
 * *limškki0*
 
 
-* *ukºsaX4*
+* *uk'saX4*
 * *uvssa0*
 
 
 
-* *teaksºtaX4*
+* *teaks'taX4*
 * *teavstta0*
 
 
@@ -4553,14 +4522,12 @@ as its sourcefile, the file to be edited.
 
 
 
-* *boahºtiY1*
+* *boah'tiY1*
 * *boahtti0*
 
-* *dahºkaY7j#*
-* *dahkku0i#*
+* *dah'kaY7j*
+* *dahkku0i*
 
-* *dahºka>Y7jmet#*
-* *dahkku>0imet#*
 
 
 * *dapmaY1*
@@ -4569,14 +4536,14 @@ as its sourcefile, the file to be edited.
 * *bitnjuY1*
 * *bidnju0*
 
-* *dadºjaY1*
+* *dad'jaY1*
 * *daddji0*
 
 
 
 
 
-* *johºkaX4*
+* *joh'kaX4*
 * *jo00ga0*
 
 
@@ -4594,7 +4561,7 @@ as its sourcefile, the file to be edited.
 
 
 
-* *gávºpiX7*
+* *gáv'piX7*
 * *gáv0pe0*
 
 * *bassiX7*
@@ -4613,55 +4580,55 @@ as its sourcefile, the file to be edited.
 
 
 
-* *buorriX7*
-* *buorre0*
+* *buorriX7#*
+* *buorre0#*
 
-* *buorriX8*
-* *buo0re0*
-
-
-* *várriX7girºku*
-* *várre0gir0ku*
+* *buorriX8#*
+* *buo0re0#*
 
 
-
-
-
-
-* *lijgiX7#ruhºtaX4jd*
-* *liige0#ru00đa0id*
+* *várriX7gir'ku#*
+* *várre0gir0ku#*
 
 
 
 
 
 
-* *čuorºvuQ6*
+* *lijgiX7#ruh'taX4jd#*
+* *liige00ru00đa0id#*
+
+
+
+
+
+
+* *čuor'vuQ6*
 * *čuorvvo0*
 
 
-* *boahºtiQ6*
+* *boah'tiQ6*
 * *boa00đe0*
 
 
 
 
-* *lájºkiW1s#*
+* *láj'kiW1s#*
 * *láikke0s#*
 
-* *álºkiW2s#*
+* *ál'kiW2s#*
 * *ál0ke0s#*
 
 
 
-* *váttisW1*
-* *váttes0*
+* *váttisW1#*
+* *váttes0#*
 
-* *headºjusW1-*
+* *head'jusW1-*
 * *hea00jos0-*
 
-* *headºjusW1*
-* *hea00jos0*
+* *head'jusW1#*
+* *hea00jos0#*
 
 * *váttisW1-*
 * *váttes0-*
@@ -4677,7 +4644,24 @@ as its sourcefile, the file to be edited.
 
 
 
-* *goahºtiX5jd*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* *goah'tiX5jd*
 * *go000đi0id*
 
 
@@ -4693,8 +4677,7 @@ as its sourcefile, the file to be edited.
 
 
 
-
-* *viehºki¤X5jn*
+* *vieh'ki¤X5jn*
 * *vi0hkki00in*
 
 
@@ -4714,23 +4697,17 @@ as its sourcefile, the file to be edited.
 
 
 
+* *reŋ'koX2jd*
+* *reŋ0ku0id*
 
+* *basteX2j*
+* *basti0i*
 
+* *asibealle7X2j*
+* *asibealli0ide*
 
-* *boahºti>^DISIMPjmet#*
-* *bo000đi>0imet#*
-
-* *reŋºko>X2jd#*
-* *reŋ0ku>0id#*
-
-* *baste>X2j#*
-* *basti>0i#*
-
-* *asi#bealli>^DISIMPjde#*
-* *asi#be00li>0ide#*
-
-* *Line>X2j#*
-* *Lini>0i#*
+* *LineX2j*
+* *Lini0i*
 
 
 
@@ -4743,14 +4720,11 @@ as its sourcefile, the file to be edited.
 
 
 
+* *stahtaX3j*
+* *stahti0i*
 
-* *stahta>X3j#*
-* *stahti>0i#*
-
-
-
-* *Sij9te>i#*
-* *Sijte>i#*
+* *Sij9teW9j*
+* *Sijte0i*
 
 
 
@@ -4767,7 +4741,7 @@ as its sourcefile, the file to be edited.
 * *oažžuQ8dit*
 * *o0ččo0dit*
 
-* *coahºkuX8stit*
+* *coah'kuX8stit*
 * *coa00go0stit*
 
 
@@ -4775,7 +4749,7 @@ as its sourcefile, the file to be edited.
 * *jearraQ1*
 * *jearrá0*
 
-* *boahºtiQ1*
+* *boah'tiQ1*
 * *boah0tá0*
 
 
@@ -4785,27 +4759,27 @@ as its sourcefile, the file to be edited.
 * *jearraQ2t*
 * *je0rre0t*
 
-* *boahºtiQ3n*
+* *boah'tiQ3n*
 * *bo0h0to0n*
 
-* *čuorºvuQ3n*
+* *čuor'vuQ3n*
 * *ču0r0vo0n*
 
 
 * *jearraQ2*
 * *je0rre0*
 
-* *boahºtiQ2t*
+* *boah'tiQ2t*
 * *bo0h0te0t*
 
-* *čuorºvuQ2*
+* *čuor'vuQ2*
 * *ču0r0vo0*
 
 
-* *boahºtiQ4n*
+* *boah'tiQ4n*
 * *boa00đá0n*
 
-* *boahºtiQ5lin*
+* *boah'tiQ5lin*
 * *boa00đá0lin*
 
 
@@ -4819,54 +4793,52 @@ as its sourcefile, the file to be edited.
 
 
 
-
-
 * *jearraY2*
 * *jearru0*
 
-* *boahºtiY2*
+* *boah'tiY2*
 * *boahttu0*
 
 
 * *jearraQ2t*
 * *je0rre0t*
 
-boahºtiY4t ! It seems it should be Q3. ... both?!
-* *boahºtiQ3t*
+boah'tiY4t ! It seems it should be Q3. ... both?!
+* *boah'tiQ3t*
 * *bo0h0to0t*
 
 
-čuorºvuY4t ! Q2, it seems.
-* *čuorºvuQ2t*
+čuor'vuY4t ! Q2, it seems.
+* *čuor'vuQ2t*
 * *ču0r0vo0t*
 
 
 
-* *jearraY7t#*
-* *je0rro0t#*
+* *jearraY7t*
+* *je0rro0t*
 
-* *boahºtiY7t#*
-* *bo0htto0t#*
+* *boah'tiY7t*
+* *bo0htto0t*
 
-* *čuorºvuY7t#*
-* *ču0r0vo0t#*
+* *čuor'vuY7t*
+* *ču0r0vo0t*
 
-* *jearraY7juvvot#*
-* *je0rro0juvvot#*
-
-
+* *jearraY7juvvot*
+* *je0rro0juvvot*
 
 
 
 
-* *jearraY7j#*
-* *je0rru0i#*
 
-* *dahºkaY7j#*
-* *dahkku0i#*
 
-* *loikaY7j#*
-* *loiku0i#*
+* *jearraY7j*
+* *je0rru0i*
+
+* *dah'kaY7j*
+* *dahkku0i*
+
+* *loikaY7j*
+* *loiku0i*
 
 
 
@@ -4903,7 +4875,6 @@ boahºtiY4t ! It seems it should be Q3. ... both?!
 
 
 
-
 Changed because:we get almmáj- and not almmái-
 Postvocalic j surfaces as i
 Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dummy: ) _ ;
@@ -4913,7 +4884,11 @@ Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dum
 
 
 
+* *#hálijd#*
+* *0háliit#*
 
+* ★*hálijd#* (is not standard language)
+* ★*háliid#* (is not standard language)
 
 
 
