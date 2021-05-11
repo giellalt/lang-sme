@@ -6703,9 +6703,11 @@ when the oposite stem variant is present.
 
 ### Multichars for marking start and end of IPA sequences
 
- * `{% raw %}%{%<ipa#%}{% endraw %}` - ipa text to the left
- * `{% raw %}%{#ipa%>%}{% endraw %}` - ipa text to the right
+<!-- {% raw %} -->
+ * `%{%<ipa#%}` - ipa text to the left
+ * `%{#ipa%>%}` - ipa text to the right
  * `%<sent%>` - apertium
+<!-- {% endraw %} -->
 
 ### Compounding tags
 
