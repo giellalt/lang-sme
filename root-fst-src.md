@@ -283,8 +283,9 @@ so that we can exclude the one or the other from different fst's, but only
 when the oposite stem variant is present.
 
 ### Multichars for marking start and end of IPA sequences
- * `%{%<ipa#%}` - ipa text to the left
- * `%{#ipa%>%}` - ipa text to the right
+
+ * `{% raw %}%{%<ipa#%}{% endraw %}` - ipa text to the left
+ * `{% raw %}%{#ipa%>%}{% endraw %}` - ipa text to the right
  * `%<sent%>` - apertium
 
 ### Compounding tags
