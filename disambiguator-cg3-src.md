@@ -206,11 +206,13 @@ Der/seagat
 Der/suttat
 Der/ár 
 <vdic>
+Cmp/Hyph 
 
 
 
 ### Semantic tags
 
+ INCLUDE semsets.cg3 ; # includes the list of semantic tags from semsets.cg3
 
 
 
