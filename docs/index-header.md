@@ -5,7 +5,7 @@
 [![Issues](https://img.shields.io/github/issues/giellalt/lang-sme)](https://github.com/giellalt/lang-sme/issues)
 [![Build status](https://github.com/giellalt/lang-sme/workflows/Speller%20CI+CD/badge.svg)](https://github.com/giellalt/lang-sme/actions)
 
-This page documents the work on the **North Sami language model**, how to build it and how to use it.
+This page documents the work on the [North Sami language model](http://github.com/giellalt/lang-sme), how to build it and how to use it.
 
 # Using the analysers
 
