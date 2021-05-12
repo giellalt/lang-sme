@@ -32,181 +32,185 @@ EOS
 
 ### Parts of speech tags
 
-N
-A
-Adv
-V
-Pron
-CS
-CC
-Po
-Pr
-Pcle
-Num
-Interj
-ABBR
-ACR
-CLB clb lagt til for apertium, fungerer ikke uten
-LEFT
-RIGHT
-WEB
-LEFT RIGHT because of apertium
+* N
+* A
+* Adv
+* V
+* Pron
+* CS
+* CC
+* SET CC-CS = CC OR CS ;
+* Po
+* Pr
+* Pcle
+* Num
+* Interj
+* ABBR
+* ACR
+* CLB clb (clb lagt til for apertium, fungerer ikke uten)
+* LEFT
+* RIGHT
+* WEB
+* LEFT RIGHT because of apertium
 
 
 
 
-### Tags for POS sub-categories
+* ### Tags for POS sub-categories
 
-Pers
-Dem
-Interr
-Indef
-Recipr
-Refl
-Rel
-Coll
-NomAg
-G3
-Prop
-Allegro
-Arab
-Romertall
-
-
-### Tags for morphosyntactic properties
-
-Nom
-Acc
-Gen
-Ill
-Loc
-Com
-Ess
-Sg
-Du
-Pl
-Cmp/SplitR
-Cmp/Attr
-Cmp/Cit
-Cmpnd
-Cmp/SgNom Cmp/SgGen
-Cmp/SgGen
-Cmp/PlGen
-Cmp/Sh
-Cmp
-PxSg1
-PxSg2
-PxSg3
-PxDu1
-PxDu2
-PxDu3
-PxPl1
-PxPl2
-PxPl3
+* Pers
+* Dem
+* Interr
+* Indef
+* Recipr
+* Refl
+* Rel
+* Coll
+* NomAg
+* G3
+* Prop
+* Allegro
+* Arab
+* Romertall
+* Subqst
+* CLBfinal
 
 
-Gram/Comp for adverbs,  Der/Comp for adverbs  
-Gram/Superl for adverbs, and Der/Superl for adjectives
-Attr
-Ord
-Qst
-IV
-TV 
-Prt
-Prs
-Ind
-Pot
-Cond
-Imprt
-ImprtII
-Sg1
-Sg2
-Sg3
-Du1
-Du2
-Du3
-Pl1
-Pl2
-Pl3
-Inf
-ConNeg
-Neg
-PrfPrc
-VGen
-PrsPrc
-Ger
-Sup
-Actio
+* ### Tags for morphosyntactic properties
+
+* Nom
+* Acc
+* Gen
+* Ill
+* Loc
+* Com
+* Ess
+* Sg
+* Du
+* Pl
+* Cmp/SplitR
+* Cmp/Attr
+* Cmp/Cit
+* Cmpnd
+* Cmp/SgNom Cmp/SgGen
+* Cmp/SgGen
+* Cmp/PlGen
+* Cmp/Sh
+* Cmp
+* PxSg1
+* PxSg2
+* PxSg3
+* PxDu1
+* PxDu2
+* PxDu3
+* PxPl1
+* PxPl2
+* PxPl3
+* Der/Comp
+* Der/Superl
+* Gram/Comp for adverbs,  Der/Comp for adverbs  
+* Gram/Superl for adverbs, and Der/Superl for adjectives
+* Attr
+* Ord
+* Qst
+* IV
+* TV 
+* Prt
+* Prs
+* Ind
+* Pot
+* Cond
+* Imprt
+* ImprtII
+* Sg1
+* Sg2
+* Sg3
+* Du1
+* Du2
+* Du3
+* Pl1
+* Pl2
+* Pl3
+* Inf
+* ConNeg
+* Neg
+* PrfPrc
+* VGen
+* PrsPrc
+* Ger
+* Sup
+* Actio
+* VBAbess
+* Known
 
 
+* ### Tags for clitic particles
+* Foc/ge
+* Foc/ge
+* Foc/ge
+* Foc/gen
+* Foc/ges
+* Foc/gis
+* Foc/naj
+* Foc/ba
+* Foc/be
+* Foc/hal
+* Foc/han
+* Foc/bat
+* Foc/son
+* Foc/mis
+* Foc/mat
 
-### Tags for clitic particles
-Foc/ge
-Foc/ge
-Foc/ge
-Foc/gen
-Foc/ges
-Foc/gis
-Foc/naj
-Foc/ba
-Foc/be
-Foc/hal
-Foc/han
-Foc/bat
-Foc/son
-Foc/mis
-Foc/mat
+* ### Derivation tags
 
-### Derivation tags
-
-Der/PassL Der/PassS
-Der/NomAg
-NomAg
-Der/adda
-Der/alla
-Der/easti
-Der/d
-Der/eamoš
-Der/amoš
-Der/geahtes
-Der/h
-Der/Car
-Der/Car
-Der/huhtti
-Der/huvva
-Der/halla
-Der/l
-Der/lasj
-Der/las
-Der/meahttun
-Der/muš
-Der/NomAct
-Der/sasj
-Der/st
-Der/stuvva
-Der/upmi
-Der/supmi
-Der/vuota
-Der/InchL
-Der/laakan
-Der/laagasj
-Der/jagáš
-Der/A Der/A* pga av bug i lookup2cg
-Der/Dimin
-Der/viđá
-Der/viđi
-Der/veara
-Der/AAdv
-Der/Adv
-Der/dáfot 
-Der/keahtta
-Der/nuolus
-Der/náittot
-Der/seagat
-Der/suttat
-Der/ár 
-<vdic>
-Cmp/Hyph 
+* Der/PassL Der/PassS
+* Der/NomAg
+* NomAg
+* Der/adda
+* Der/alla
+* Der/easti
+* Der/d
+* Der/eamoš
+* Der/amoš
+* Der/geahtes
+* Der/h
+* Der/Car
+* Der/Car
+* Der/huhtti
+* Der/huvva
+* Der/halla
+* Der/l
+* Der/lasj
+* Der/las
+* Der/meahttun
+* Der/muš
+* Der/NomAct
+* Der/sasj
+* Der/st
+* Der/stuvva
+* Der/upmi
+* Der/supmi
+* Der/vuota
+* Der/InchL
+* Der/laakan
+* Der/laagasj
+* Der/jagáš
+* Der/A Der/A* pga av bug i lookup2cg
+* Der/Dimin
+* Der/viđá
+* Der/viđi
+* Der/veara
+* Der/AAdv
+* Der/Adv
+* Der/dáfot 
+* Der/keahtta
+* Der/nuolus
+* Der/náittot
+* Der/seagat
+* Der/suttat
+* Der/ár 
+* <vdic>
+* Cmp/Hyph 
 
 
 
