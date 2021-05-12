@@ -25717,6 +25717,7 @@ Superl, both for adverbs and adjectives
 
 
 
+
 Comp, both for adverbs and adjectives
 Superl, both for adverbs and adjectives
 
