@@ -2,7 +2,6 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 
 # North Sámi morphological analyser
 
-
 ## Multicharacter symbols
 
 
