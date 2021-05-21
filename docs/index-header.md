@@ -16,19 +16,18 @@ This page documents the work on the [North Sami language model](http://github.co
 
 # Projects involving North Saami
 
-
 -   [Oversyn over ulike FST-ar for nordsamisk](KompilereFST.html)
 -   [Dictionary projects](/dicts/dicts.html)
 -   [ICALL](/ped/index.html)
 -   [Machine translation](/mt/MachineTranslation.html)
 -   [Converting the transducers to Apertium format](ConvertingToApertium.html)
--   [Grammar
-    checker](http://gtweb.uit.no/cgi-bin/wiki/index.php/North_Saami_grammar_checker)
+-   Grammar checker:
+    - [Documentation](gramcheck/index.md)
+    - [Tool](http://gtweb.uit.no/cgi-bin/wiki/index.php/North_Saami_grammar_checker)
 -   [Text-to-speech](http://giellatekno.uit.no//tts-plan.html)
 -   [The L2 Transducer](TheL2Transducer.html)
 
 # Tags used for analysis
-
 
 -   The [morphological](docu-sme-grammartags.html), [morphological
     (readable version)](docu-mini-smi-grammartags.html) and
