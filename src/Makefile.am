@@ -301,7 +301,7 @@ analyser-gt-desc.%: analyser-gt-desc.tmp.% \
 					filters/remove-norm-comp-tags.%           \
 					filters/remove-UseLIA-strings.%           \
 					filters/remove-grammatical-tags.%         \
-					filters/remove-Err_SpaceCmp-strings.%.    \
+					filters/remove-Err_SpaceCmp-strings.%     \
 					filters/remove-usage-tags.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 				@\"filters/remove-usage-tags.$*\"               \
