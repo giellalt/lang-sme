@@ -1,6 +1,8 @@
 
 North Sámi morphophonological rule set                  
 
+This file documents the [phonology.twolc file](http://github.com/giellalt/lang-sme/blob/main/src/fst/phonology.twolc) 
+
 The file contains the rule set for the non-segmental
 North Sámi morphophonological rules
 
