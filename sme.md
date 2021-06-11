@@ -1163,7 +1163,6 @@ Remove unwanted analyses
 
 
 
-
 ## Numerals
 
 
@@ -2608,6 +2607,11 @@ OBS: denne er ikke helt bra
 
 * **ENInf2** selects Inf (NOTE, this was further down in sme-dis)
 
+* **ENInf** selects Inf  
+
+* **ENInf** selects Inf  
+
+
 * **ENInfcoor1** selects Inf coor
 
 * **ENInfcoor2** selects Inf coor
@@ -2702,6 +2706,9 @@ maid has many readings and as Rel it is a member of S-BOUNDARY. Therefore we nee
 * **maidAdv13** selects maid Adv for 
 
 * **maidAdv14** selects maid Adv for 
+
+* **maidAdvProp** selects maid Adv for 
+
 
 * **AdvPlc** selects Adv for 
 
@@ -3271,6 +3278,9 @@ Mostly we map both @CNP and @CVP, then we select @CNP, after that we remove them
 
 
 * **WWNumOrdIllAttr** selects Ill Attr and Loc Attr for numerals and ordinals
+
+
+
 
 
 
@@ -4799,6 +4809,9 @@ The rules are no documented yet
 
 
 
+
+
+
 * **gosnevrriid** selects Acc in the special cases where there is an Acc Pl in the beginning of the question which is not the object of the verb: Gos nevrriid...
 
 
@@ -5040,6 +5053,7 @@ The rules are no documented yet
 * **AccPronRel3** Selects Acc if there is a (Pron Rel Nom) to the right. Obs: not hit nominatives, hence negations. *eanu mii šealgá*	
 
 * **AccActioLoc** Selects Acc when transitive Actio Loc somewhere in the sentence *guldeleames muitalusaid*
+
 
 
 * **AccAhte** Selects Acc when *ahte* is found to the right 
