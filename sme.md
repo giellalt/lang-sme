@@ -17519,6 +17519,10 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
  * **LEXICON BOARIS_NOCOMP**
 
 
+ * **LEXICON IIDNA_NOCOMP**   
+
+
+
  * **LEXICON IIVA_NOCOMP**  IIVA_A without comparatives
 
 
