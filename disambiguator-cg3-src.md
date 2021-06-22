@@ -4587,8 +4587,6 @@ The rules are no documented yet
 ***lassinIll** Selects Ill if first one to the left is lassin *lassin Sarai*
 
 
-***GenAhkásaš** Selects Gen 
-
 
 ### Gen and preposition/postposition
 
