@@ -777,6 +777,7 @@ The words in the set **N-PO** can be both N and Po, the set takes that into acco
 
 
 
+
 * Sets for nouns with morpho-syntactic preferences
 
 * Number-related sets
@@ -1356,6 +1357,8 @@ Remove unwanted analyses
 
 
 * **PropAttr1** Selects Attr if you are Sem/Fem OR Sem/Mal, Sem/Sur or INITIAL and to your right is Prop which is Sem/Fem OR Sem/Mal or Sem/Sur 
+
+
 
 
 
@@ -4823,6 +4826,7 @@ The rules are no documented yet
 
 * **dahkatGen** selects Gen when dahkat or bargat takes only adverb
 
+
 * **r2206** selects Gen when a finite verb to the left and Nom or Acc to the right *lohkaba su girjji*
 
 
@@ -5228,6 +5232,9 @@ The rules are no documented yet
 * **NDr2333** Selects (Num Nom)	
 
 * **NDr2334** Selects Nom
+
+
+
 
 * **NomEss** Selects Nom when not copula
 
