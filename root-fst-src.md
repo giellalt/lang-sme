@@ -134,10 +134,10 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 
  * **+Gram/TAbbr**:  Transitive abbreviation (it needs an argument)
  * **+Gram/NoAbbr**:  Intransitive abbreviations that are homonymous
-   with more frequent words. They should only be considered
-   abbreviations in the middle of a sentence.
+with more frequent words. They should only be considered
+abbreviations in the middle of a sentence.
  * **+Gram/TNumAbbr**:  Transitive abbreviation if the following
-            constituent is numeric
+constituent is numeric
  * **+Gram/NumNoAbbr**:  Transitive abbreviations for which numerals
 are complements and normal words. The abbreviation usage
 is less common and thus only the occurences in the middle of
@@ -249,7 +249,7 @@ doavttergrádakursa
  * **+Use/Circ** circular paths (old ^C^)
  * **+Use/CircN** circular paths for the numerals (old ^N^)
  * **+Use/MT** Generate for MT only, for restricting analyses needed
-              for MT generation not to pop up elsewhere (NOT IN FUNCTION)
+for MT generation not to pop up elsewhere (NOT IN FUNCTION)
  * **+Use/LIA** only for LIA-analyser
  * **+Use/NG** not-generate, for ped generation isme-ped.fst and MT
  * **+Use/NGminip** Not for miniparadigm in NDS dicts
@@ -293,11 +293,11 @@ when the oposite stem variant is present.
 
 The tags are of the following form:
 * **+CmpNP/xxx** - Normative (N), Position (P), ie the tag describes what
-                   position the tagged word can be in in a compound
+position the tagged word can be in in a compound
 * **+CmpN/xxx**  - Normative (N) **form** ie the tag describes what
-                   form the tagged word should use when making compounds
+form the tagged word should use when making compounds
 * **+Cmp/xxx**   - Descriptive compounding tags, ie tags that *describes*
-                   what form a word actually is using in a compound
+what form a word actually is using in a compound
 
 This entry / word should be in the following position(s):
 
@@ -308,7 +308,7 @@ This entry / word should be in the following position(s):
  * **+CmpNP/Suff** - ... only **last** part in a compound, NEVER alone
  * **+CmpNP/None** - ... does not take part in compounds
  * **+CmpNP/Only** - ... only be part of a compound, i.e. can never
-                    be used alone, but can appear in any position
+be used alone, but can appear in any position
 
 If unmarked, any position goes.
 
@@ -331,22 +331,22 @@ The second part of the compound may require that the previous (left part) is:
 Tags for descriptive compound analysis - this is what a compound actually is:
 
  * **+Cmp** - Dynamic compound. This tag should always be part
-                of a dynamic compound. It is important for
-                Apertium, and useful in other cases as well.
+           of a dynamic compound. It is important for
+           Apertium, and useful in other cases as well.
  * **+Cmp/Attr** - Attributive
  * **+Cmp/SgNom** - Singular Nominative
  * **+Cmp/SgGen** - Singular Genitive
  * **+Cmp/PlGen** - Plural Genitiv
  * **+Cmp/SplitR** - This is a split compound with the other part to
-                the right: "Arbeids- og inkluderingsdepartementet"
-                => Arbeids- = +Cmp/SplitR
+           the right: "Arbeids- og inkluderingsdepartementet"
+           => Arbeids- = +Cmp/SplitR
  * **+Cmp/SplitL** - This is a split compound with the other part to the left
  * **+Cmp/Sh** - testing +Cmp/Sh
  * **+Cmp/Hyph** - on dynamic compounds that have a hyphen
  * **+Cmp/NoHyph** - On compounds that COULD have had a hyphen (and usually have), but doesn't
  * **+Cmp/SoftHyph** - Tags compounds containing SOFT HYPHENS (U+00AD)
  * **+Cmp/Cit** - Tags citation compounds, which can in principle
-                cover any word. Requires a hyphen.
+cover any word. Requires a hyphen.
 
 ### Compounding tag ordering
 To ease writing and maintaining regexes etc for manipulating and enforcing
@@ -355,7 +355,7 @@ The order is:
 1. **+CmpN/** tags
 1. **+CmpNP/** tags
 1. **+Cmp/** tags - this is always true since the descriptive tags are always
-  part of the continuation lexicons, and will be located after the POS tag.
+part of the continuation lexicons, and will be located after the POS tag.
 
 
 
@@ -713,12 +713,12 @@ The principle of tagging is that we only tag to the extent needed,
 and following a priority:
 1. any untagged word is pronounced with SME orthographic conventions
 1. NNO and NOB have identical pronunciation, NNO is only used if
-  different in spelling from NOB
+different in spelling from NOB
 1. SWE has mostly the same pronunciation as NOB, and is only used
-  if different in spelling from NOB
+if different in spelling from NOB
 1. Occasionally even SME (the default) may be tagged, to block other
-  languages from being specified, mainly during semi-automatic
-  language tagging sessions
+languages from being specified, mainly during semi-automatic
+language tagging sessions
 All in all, we want to get as much correctly transcribed to IPA
 with as little work as possible. On the other hand, if more words
 are tagged than strictly needed, this should pose no problem as
@@ -811,9 +811,9 @@ get the same pronunciation whether read as SME or NOB/NNO/SWE.
 
 
  **∑** = a symbol used in front of `#` to block backtracking and
-          mwe reanalysis in hfst-tokenise (e.g. in dynanic compounds).
-          Makes it possible to distinguish lexical and dynamic compounds
-          in rules. It is converted to zero together with `#`.
+mwe reanalysis in hfst-tokenise (e.g. in dynanic compounds).
+Makes it possible to distinguish lexical and dynamic compounds
+in rules. It is converted to zero together with `#`.
 
 ### Symbols that need to be escaped on the lower side (towards twolc):
 
@@ -934,3 +934,5 @@ The `@D.NeedNoun.ON@` flag diacritic is used to block illegal compounds.
 **ENDLEX3**
 
 **ENDLEX4**
+* * *
+<small>This (part of) documentation was generated from [../src/fst/root.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/root.lexc)</small>

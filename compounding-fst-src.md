@@ -73,8 +73,8 @@ is covered by RHyph + Noun.
 **LEXICON RPropTags** = A special lexicon for handling proper noun compounding without hyphens. Two entries:
  * **@C.CmpHyph@ RHyphTags ;**:  This is the regular case, giving hyphens to compounds
  * **@D.CmpHyph.TRUE@@U.CmpHyph.FALSE@+Use/-Spell+Cmp/NoHyph+Cmp#:@D.CmpHyph.TRUE@@U.CmpHyph.FALSE@∑# Noun ;**:  This is the special case, going directly to nouns (*not* to NounRoot,
-            as that would allow compounding with words explicitly coded to disallow
-            such compounds)
+as that would allow compounding with words explicitly coded to disallow
+such compounds)
 
 **LEXICON flagON-R** = turns NeedsVowRed on:
 * adds @U.NeedsVowRed.ON@ and directs to **R**
@@ -82,3 +82,5 @@ is covered by RHyph + Noun.
 **LEXICON flagOFF-R** = turns NeedsVowRed off:
 * adds @U.NeedsVowRed.OFF@ and directs to **R**
 
+* * *
+<small>This (part of) documentation was generated from [../src/fst/compounding.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/compounding.lexc)</small>

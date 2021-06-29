@@ -225,19 +225,19 @@ EOS
 ###  Syntactic tags
 
 * @+FAUXV : finite auxiliary verb 
-    - ferte: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
+- ferte: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
 * @+FMAINV : finite main verb
-    - oaidná: Son oaidná ollislaš gova. - She sees the whole picture	
+- oaidná: Son oaidná ollislaš gova. - She sees the whole picture	
 * @-FAUXV : infinite auxiliary verb
-    - sáhte: In sáhte gáhku borrat. - I cannot eat cake.	
+- sáhte: In sáhte gáhku borrat. - I cannot eat cake.	
 * @-FMAINV : infinite main verb
-    - oaidnit: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
+- oaidnit: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
 * @-FSUBJ> : Subject of infinite verb outside the verbal.
-    - mu: Diet dáhpáhuvai mu dieđikeahttá. - It happened without me knowing about it.
+- mu: Diet dáhpáhuvai mu dieđikeahttá. - It happened without me knowing about it.
 * @-F<OBJ : Subject of infinite verb outside the verbal.
-    - nuppi: Ulbmil lea oažžut nuppi boagustit. - The goal is to get the other one to laugh.
+- nuppi: Ulbmil lea oažžut nuppi boagustit. - The goal is to get the other one to laugh.
 * @-FOBJ> : Object of infinite verb outside the verbal.
-    - váldovuoittuid: Sii vurde váldovuoittuid fasket. - They waited to grab the main prizes.
+- váldovuoittuid: Sii vurde váldovuoittuid fasket. - They waited to grab the main prizes.
 * @-FSPRED<OBJ
 * @-F<ADVL
 * @-FADVL>
@@ -283,11 +283,11 @@ EOS
 * @APP-Num<
 * @APP-ADVL<
 * @VOC : Vocative
-    - Miss Turner : Bures boahtin deike, Miss Turner! - Welcome here, Miss Turner!
+- Miss Turner : Bures boahtin deike, Miss Turner! - Welcome here, Miss Turner!
 * @CVP : Conjunction or subjunction that conjoins finite verb phrases.
-    - go : Leago guhkes áigi dassá go Máreha oidnet? - Is it a long time since you saw Máret?
+- go : Leago guhkes áigi dassá go Máreha oidnet? - Is it a long time since you saw Máret?
 * @CNP : Local conjunction or subjunction.
-    - vai : Leago nieida vai bárdni? - Is it a girl or a boy?
+- vai : Leago nieida vai bárdni? - Is it a girl or a boy?
 * @X : unknown
 
 
@@ -1321,7 +1321,7 @@ Remove unwanted analyses
 
 
 
- * **Dert** Rule for removing Der/t Prop when there are other analysis
+* **Dert** Rule for removing Der/t Prop when there are other analysis
 
 
 
@@ -1394,7 +1394,7 @@ Remove unwanted analyses
 
 * sutnje is not verb
 
- * **ABBR** Removes ABBR in favour of Adv, Pcle or Pron, e.g. "dii" when there is no punctuation
+* **ABBR** Removes ABBR in favour of Adv, Pcle or Pron, e.g. "dii" when there is no punctuation
 
 * **ollit** removes ollit when ollu - move this one?
 
@@ -2839,26 +2839,26 @@ Commented out som adp-rules we don't need anymore:
 
 ### miehta
 * "miehtá" is also VFIN, and miehtá needs special treatment 
-    - **miehtaPo** after place or time Gen
+- **miehtaPo** after place or time Gen
 
-    - **miehtaPr** before place or time Gen
+- **miehtaPr** before place or time Gen
 
 * **oidnosisAdv**
 
 * "ovddas" has many readings and needs special treatment 
-    - **ovddasPo**  - commented out because we don't need it
+- **ovddasPo**  - commented out because we don't need it
 
 * special rules for rastá because it often is Adv, and it can be an object connected to the PP
-    - **rastaAdv**  čuohppat/časkit/sahet rastá
+- **rastaAdv**  čuohppat/časkit/sahet rastá
 
-    - **rastaPo, rastaPr**  fievrridit olbmo man nu rastá
+- **rastaPo, rastaPr**  fievrridit olbmo man nu rastá
 
-    - **rastaPr**  rastá ráji/rájá
+- **rastaPr**  rastá ráji/rájá
 
 
-    - **sisaAdv**   sisa
+- **sisaAdv**   sisa
 
-    - **unnimusatAdv**   
+- **unnimusatAdv**   
 
 
 * **birraPo, birraPr** special rules for birra because it often is Adv, and it can be an object connected to the PP
@@ -2869,8 +2869,8 @@ Commented out som adp-rules we don't need anymore:
 
 
 * "vuostá" has many readings and needs special treatment 
-    - **vuostaAdv**  váldit vuostá/vuostái
-    - **vuostaPr**  váldit vuostá/vuostái	
+- **vuostaAdv**  váldit vuostá/vuostái
+- **vuostaPr**  váldit vuostá/vuostái	
 
 
 * vuollel ja badjel as Adv in front of Num
@@ -3086,7 +3086,7 @@ First map all COMP-CS<, then remove the other readings
 
 * **killAllnotComp** Removes analysis which are not @COMP-CS<
 
-    - *This was the kill all not Comp rule!!*
+*
 
 * **goCSbeforeComp** Selects CS analysis in front of @COMP-CS<
 
@@ -3170,7 +3170,7 @@ Mostly we map both @CNP and @CVP, then we select @CNP, after that we remove them
 * **CVPCopNomInf** COPULAS Nom @CNP Nom Inf	
 
 
- ***CVPoppramsing** Lásse, Iŋgá ja mun
+***CVPoppramsing** Lásse, Iŋgá ja mun
 
 
 ***CVPCmp/SplitR** Cmp/SplitR @CNP
@@ -4396,7 +4396,7 @@ The rules are no documented yet
 * **SEMGenOrg** Selects Gen in front of Sem/Act
 
 
- * **SEMactor** Select Gen in front of ABSTRACT and RIEKTEDILLI *unnitlogu oaidninčiegas*
+* **SEMactor** Select Gen in front of ABSTRACT and RIEKTEDILLI *unnitlogu oaidninčiegas*
 
 * **SEMXr2076** Selects Gen if you are HUMAN or Pron with an ABSTRACT to your right *iežaset vuoigatvuođa*
 
@@ -4964,7 +4964,7 @@ The rules are no documented yet
 
 * **GenBoaris** Selects Gen in golbma *jagi* boaris
 
-    - Ritva comment: Find a rule for "viđa" aswell, this hits "mehter" as it should
+- Ritva comment: Find a rule for "viđa" aswell, this hits "mehter" as it should
 
 
 * **XXr2002** Selects genitive if there is a numeral immediately to your left, and you are TIME: *golbma jagi*
@@ -6188,3 +6188,5 @@ Test: Go for minimal weight.
 
 
 
+* * *
+<small>This (part of) documentation was generated from [../src/cg3/disambiguator.cg3](http://github.com/giellalt/lang-sme/blob/main/../src/cg3/disambiguator.cg3)</small>

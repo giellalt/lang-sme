@@ -16,3 +16,5 @@ and all the ge versions should be removed.
 (i.e. only goit, not goitge). This errouneously
 permits gege, goge, etc., though, and we thus leave
 things as they are.
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/particles.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/particles.lexc)</small>

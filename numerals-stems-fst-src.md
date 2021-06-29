@@ -10,11 +10,11 @@
  * **LEXICON Numeral**  initial lexica
 
  The **LEXICON CmpNumeral**  lexicon is the entrance for compounds
- with numbers. Introduced to restrict such compounding
- to a subgroup of numerals only, mainly to exclude
- roman numerals, that turned out to be too problematic.
- With this change, roman numerals are only recognised
- on their own.
+with numbers. Introduced to restrict such compounding
+to a subgroup of numerals only, mainly to exclude
+roman numerals, that turned out to be too problematic.
+With this change, roman numerals are only recognised
+on their own.
 
 
 
@@ -141,7 +141,7 @@
 
 
  * **LEXICON NUMERALCOMPOUNDS**: numeral as first part: duhatjienat,
- logigielat, etc.
+logigielat, etc.
 
  * **LEXICON SAS** gives :»»» and goes to SASCont
 
@@ -284,3 +284,5 @@ numerical expressions in each category.
  * **LEXICON GUOKTELOGIOVCCI**
 
  * **LEXICON VIHTTALOGIOVCCI**
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/numerals.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/numerals.lexc)</small>

@@ -111,3 +111,5 @@ Lexica for adverb subtypes
 
 The main adverb lexicon
  * **LEXICON adv   ** simply gives the tag +Adv and directs to K
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/adverbs.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/adverbs.lexc)</small>

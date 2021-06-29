@@ -786,3 +786,5 @@ Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dum
 
 
 
+* * *
+<small>This (part of) documentation was generated from [../src/fst/phonology.twolc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/phonology.twolc)</small>

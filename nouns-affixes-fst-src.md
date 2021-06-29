@@ -7,7 +7,7 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 
 
-   Bisyllabic nouns
+Bisyllabic nouns
 
 
 
@@ -53,8 +53,8 @@ it does not have the Prop tag.
 
 
 
-  Bisyllabic nouns
-  2f. Actor lexicas
+Bisyllabic nouns
+2f. Actor lexicas
 
 
 
@@ -397,7 +397,7 @@ Trisyllabic nouns
 
 
 
-  Trisyllabic nouns
+Trisyllabic nouns
 
 
 
@@ -486,7 +486,7 @@ Trisyllabic nouns
 
 
 
-  Contracted nouns
+Contracted nouns
 
  * **LEXICON BOAZU** Anim. Contracted 0-Nouns. Short compound-forms.
 
@@ -504,7 +504,7 @@ Trisyllabic nouns
 
 
 
-  Contracted nouns
+Contracted nouns
 
 
 
@@ -785,3 +785,5 @@ Trisyllabic nouns
 
 
  * **LEXICON DIMINV** diminutives, these comes from bisyll nouns
+* * *
+<small>This (part of) documentation was generated from [../src/fst/affixes/nouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/nouns.lexc)</small>

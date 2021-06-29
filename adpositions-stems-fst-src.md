@@ -25,3 +25,5 @@ Px lexica in sme-lex.txt and closed-sme-lex.txt.
 
  * **LEXICON Adposition   ** is the lexicon with the adpositions
 
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/adpositions.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/adpositions.lexc)</small>

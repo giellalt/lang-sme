@@ -15,7 +15,7 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 ### Modals
 
 These are treated separately because
- modals do not participate in derivation
+modals do not participate in derivation
 
  * **LEXICON GALGA_IV** only dáidit, galgat
 
@@ -685,3 +685,5 @@ These are treated separately because
  * LEXICON VGEN flag for VGen
 
 
+* * *
+<small>This (part of) documentation was generated from [../src/fst/affixes/verbs.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/verbs.lexc)</small>

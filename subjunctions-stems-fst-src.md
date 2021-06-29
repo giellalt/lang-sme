@@ -19,3 +19,5 @@
 
  * **LEXICON Cs-Conf  ** assigns the tag +CC and allows further grammar checker processing for disambiguation against nouns in potential compounds written apart
 
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/subjunctions.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/subjunctions.lexc)</small>

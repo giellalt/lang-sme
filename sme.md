@@ -217,19 +217,19 @@ Der/ár
 ###  Syntactic tags
 
 * @+FAUXV : finite auxiliary verb 
-    - ferte: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
+- ferte: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
 * @+FMAINV : finite main verb
-    - oaidná: Son oaidná ollislaš gova. - She sees the whole picture	
+- oaidná: Son oaidná ollislaš gova. - She sees the whole picture	
 * @-FAUXV : infinite auxiliary verb
-    - sáhte: In sáhte gáhku borrat. - I cannot eat cake.	
+- sáhte: In sáhte gáhku borrat. - I cannot eat cake.	
 * @-FMAINV : infinite main verb
-    - oaidnit: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
+- oaidnit: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
 * @-FSUBJ> : Subject of infinite verb outside the verbal.
-    - mu: Diet dáhpáhuvai mu dieđikeahttá. - It happened without me knowing about it.
+- mu: Diet dáhpáhuvai mu dieđikeahttá. - It happened without me knowing about it.
 * @-F<OBJ : Subject of infinite verb outside the verbal.
-    - nuppi: Ulbmil lea oažžut nuppi boagustit. - The goal is to get the other one to laugh.
+- nuppi: Ulbmil lea oažžut nuppi boagustit. - The goal is to get the other one to laugh.
 * @-FOBJ> : Object of infinite verb outside the verbal.
-    - váldovuoittuid: Sii vurde váldovuoittuid fasket. - They waited to grab the main prizes.
+- váldovuoittuid: Sii vurde váldovuoittuid fasket. - They waited to grab the main prizes.
 * @-FSPRED<OBJ
 * @-F<ADVL
 * @-FADVL>
@@ -275,11 +275,11 @@ Der/ár
 * @APP-Num<
 * @APP-ADVL<
 * @VOC : Vocative
-    - Miss Turner : Bures boahtin deike, Miss Turner! - Welcome here, Miss Turner!
+- Miss Turner : Bures boahtin deike, Miss Turner! - Welcome here, Miss Turner!
 * @CVP : Conjunction or subjunction that conjoins finite verb phrases.
-    - go : Leago guhkes áigi dassá go Máreha oidnet? - Is it a long time since you saw Máret?
+- go : Leago guhkes áigi dassá go Máreha oidnet? - Is it a long time since you saw Máret?
 * @CNP : Local conjunction or subjunction.
-    - vai : Leago nieida vai bárdni? - Is it a girl or a boy?
+- vai : Leago nieida vai bárdni? - Is it a girl or a boy?
 * @X : unknown
 
 
@@ -1298,7 +1298,7 @@ Remove unwanted analyses
 
 
 
- * **Dert** Rule for removing Der/t Prop when there are other analysis
+* **Dert** Rule for removing Der/t Prop when there are other analysis
 
 
 
@@ -1367,7 +1367,7 @@ Remove unwanted analyses
 
 * sutnje is not verb
 
- * **ABBR** Removes ABBR in favour of Adv, Pcle or Pron, e.g. "dii" when there is no punctuation
+* **ABBR** Removes ABBR in favour of Adv, Pcle or Pron, e.g. "dii" when there is no punctuation
 
 * **ollit** removes ollit when ollu - move this one?
 
@@ -2786,26 +2786,26 @@ Commented out som adp-rules we don't need anymore:
 
 ### miehta
 * "miehtá" is also VFIN, and miehtá needs special treatment 
-    - **miehtaPo** after place or time Gen
+- **miehtaPo** after place or time Gen
 
-    - **miehtaPr** before place or time Gen
+- **miehtaPr** before place or time Gen
 
 * **oidnosisAdv**
 
 * "ovddas" has many readings and needs special treatment 
-    - **ovddasPo**  - commented out because we don't need it
+- **ovddasPo**  - commented out because we don't need it
 
 * special rules for rastá because it often is Adv, and it can be an object connected to the PP
-    - **rastaAdv**  čuohppat/časkit/sahet rastá
+- **rastaAdv**  čuohppat/časkit/sahet rastá
 
-    - **rastaPo, rastaPr**  fievrridit olbmo man nu rastá
+- **rastaPo, rastaPr**  fievrridit olbmo man nu rastá
 
-    - **rastaPr**  rastá ráji/rájá
+- **rastaPr**  rastá ráji/rájá
 
 
-    - **sisaAdv**   sisa
+- **sisaAdv**   sisa
 
-    - **unnimusatAdv**   
+- **unnimusatAdv**   
 
 
 * **birraPo, birraPr** special rules for birra because it often is Adv, and it can be an object connected to the PP
@@ -2816,8 +2816,8 @@ Commented out som adp-rules we don't need anymore:
 
 
 * "vuostá" has many readings and needs special treatment 
-    - **vuostaAdv**  váldit vuostá/vuostái
-    - **vuostaPr**  váldit vuostá/vuostái	
+- **vuostaAdv**  váldit vuostá/vuostái
+- **vuostaPr**  váldit vuostá/vuostái	
 
 
 * vuollel ja badjel as Adv in front of Num
@@ -3031,7 +3031,7 @@ First map all COMP-CS<, then remove the other readings
 
 * **killAllnotComp** Removes analysis which are not @COMP-CS<
 
-    - *This was the kill all not Comp rule!!*
+*
 
 * **goCSbeforeComp** Selects CS analysis in front of @COMP-CS<
 
@@ -3115,7 +3115,7 @@ Mostly we map both @CNP and @CVP, then we select @CNP, after that we remove them
 * **CVPCopNomInf** COPULAS Nom @CNP Nom Inf	
 
 
- ***CVPoppramsing** Lásse, Iŋgá ja mun
+***CVPoppramsing** Lásse, Iŋgá ja mun
 
 
 ***CVPCmp/SplitR** Cmp/SplitR @CNP
@@ -4323,7 +4323,7 @@ The rules are no documented yet
 * **SEMGenOrg** Selects Gen in front of Sem/Act
 
 
- * **SEMactor** Select Gen in front of ABSTRACT and RIEKTEDILLI *unnitlogu oaidninčiegas*
+* **SEMactor** Select Gen in front of ABSTRACT and RIEKTEDILLI *unnitlogu oaidninčiegas*
 
 * **SEMXr2076** Selects Gen if you are HUMAN or Pron with an ABSTRACT to your right *iežaset vuoigatvuođa*
 
@@ -4878,7 +4878,7 @@ The rules are no documented yet
 
 * **GenBoaris** Selects Gen in golbma *jagi* boaris
 
-    - Ritva comment: Find a rule for "viđa" aswell, this hits "mehter" as it should
+- Ritva comment: Find a rule for "viđa" aswell, this hits "mehter" as it should
 
 
 * **XXr2002** Selects genitive if there is a numeral immediately to your left, and you are TIME: *golbma jagi*
@@ -6095,7 +6095,8 @@ The previous two rules look marginal.
 
 
 
-
+* * *
+<small>This (part of) documentation was generated from [../src/cg3/speech_disambiguator.cg3](http://github.com/giellalt/lang-sme/blob/main/../src/cg3/speech_disambiguator.cg3)</small>
 
 
 
@@ -6322,19 +6323,19 @@ EOS
 ###  Syntactic tags
 
 * @+FAUXV : finite auxiliary verb 
-    - ferte: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
+- ferte: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
 * @+FMAINV : finite main verb
-    - oaidná: Son oaidná ollislaš gova. - She sees the whole picture	
+- oaidná: Son oaidná ollislaš gova. - She sees the whole picture	
 * @-FAUXV : infinite auxiliary verb
-    - sáhte: In sáhte gáhku borrat. - I cannot eat cake.	
+- sáhte: In sáhte gáhku borrat. - I cannot eat cake.	
 * @-FMAINV : infinite main verb
-    - oaidnit: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
+- oaidnit: Son ferte oaidnit ollislaš gova. - She must see the whole picture.
 * @-FSUBJ> : Subject of infinite verb outside the verbal.
-    - mu: Diet dáhpáhuvai mu dieđikeahttá. - It happened without me knowing about it.
+- mu: Diet dáhpáhuvai mu dieđikeahttá. - It happened without me knowing about it.
 * @-F<OBJ : Subject of infinite verb outside the verbal.
-    - nuppi: Ulbmil lea oažžut nuppi boagustit. - The goal is to get the other one to laugh.
+- nuppi: Ulbmil lea oažžut nuppi boagustit. - The goal is to get the other one to laugh.
 * @-FOBJ> : Object of infinite verb outside the verbal.
-    - váldovuoittuid: Sii vurde váldovuoittuid fasket. - They waited to grab the main prizes.
+- váldovuoittuid: Sii vurde váldovuoittuid fasket. - They waited to grab the main prizes.
 * @-FSPRED<OBJ
 * @-F<ADVL
 * @-FADVL>
@@ -6380,11 +6381,11 @@ EOS
 * @APP-Num<
 * @APP-ADVL<
 * @VOC : Vocative
-    - Miss Turner : Bures boahtin deike, Miss Turner! - Welcome here, Miss Turner!
+- Miss Turner : Bures boahtin deike, Miss Turner! - Welcome here, Miss Turner!
 * @CVP : Conjunction or subjunction that conjoins finite verb phrases.
-    - go : Leago guhkes áigi dassá go Máreha oidnet? - Is it a long time since you saw Máret?
+- go : Leago guhkes áigi dassá go Máreha oidnet? - Is it a long time since you saw Máret?
 * @CNP : Local conjunction or subjunction.
-    - vai : Leago nieida vai bárdni? - Is it a girl or a boy?
+- vai : Leago nieida vai bárdni? - Is it a girl or a boy?
 * @X : unknown
 
 
@@ -7418,7 +7419,7 @@ Remove unwanted analyses
 
 
 
- * **Dert** Rule for removing Der/t Prop when there are other analysis
+* **Dert** Rule for removing Der/t Prop when there are other analysis
 
 
 
@@ -7491,7 +7492,7 @@ Remove unwanted analyses
 
 * sutnje is not verb
 
- * **ABBR** Removes ABBR in favour of Adv, Pcle or Pron, e.g. "dii" when there is no punctuation
+* **ABBR** Removes ABBR in favour of Adv, Pcle or Pron, e.g. "dii" when there is no punctuation
 
 * **ollit** removes ollit when ollu - move this one?
 
@@ -8936,26 +8937,26 @@ Commented out som adp-rules we don't need anymore:
 
 ### miehta
 * "miehtá" is also VFIN, and miehtá needs special treatment 
-    - **miehtaPo** after place or time Gen
+- **miehtaPo** after place or time Gen
 
-    - **miehtaPr** before place or time Gen
+- **miehtaPr** before place or time Gen
 
 * **oidnosisAdv**
 
 * "ovddas" has many readings and needs special treatment 
-    - **ovddasPo**  - commented out because we don't need it
+- **ovddasPo**  - commented out because we don't need it
 
 * special rules for rastá because it often is Adv, and it can be an object connected to the PP
-    - **rastaAdv**  čuohppat/časkit/sahet rastá
+- **rastaAdv**  čuohppat/časkit/sahet rastá
 
-    - **rastaPo, rastaPr**  fievrridit olbmo man nu rastá
+- **rastaPo, rastaPr**  fievrridit olbmo man nu rastá
 
-    - **rastaPr**  rastá ráji/rájá
+- **rastaPr**  rastá ráji/rájá
 
 
-    - **sisaAdv**   sisa
+- **sisaAdv**   sisa
 
-    - **unnimusatAdv**   
+- **unnimusatAdv**   
 
 
 * **birraPo, birraPr** special rules for birra because it often is Adv, and it can be an object connected to the PP
@@ -8966,8 +8967,8 @@ Commented out som adp-rules we don't need anymore:
 
 
 * "vuostá" has many readings and needs special treatment 
-    - **vuostaAdv**  váldit vuostá/vuostái
-    - **vuostaPr**  váldit vuostá/vuostái	
+- **vuostaAdv**  váldit vuostá/vuostái
+- **vuostaPr**  váldit vuostá/vuostái	
 
 
 * vuollel ja badjel as Adv in front of Num
@@ -9183,7 +9184,7 @@ First map all COMP-CS<, then remove the other readings
 
 * **killAllnotComp** Removes analysis which are not @COMP-CS<
 
-    - *This was the kill all not Comp rule!!*
+*
 
 * **goCSbeforeComp** Selects CS analysis in front of @COMP-CS<
 
@@ -9267,7 +9268,7 @@ Mostly we map both @CNP and @CVP, then we select @CNP, after that we remove them
 * **CVPCopNomInf** COPULAS Nom @CNP Nom Inf	
 
 
- ***CVPoppramsing** Lásse, Iŋgá ja mun
+***CVPoppramsing** Lásse, Iŋgá ja mun
 
 
 ***CVPCmp/SplitR** Cmp/SplitR @CNP
@@ -10493,7 +10494,7 @@ The rules are no documented yet
 * **SEMGenOrg** Selects Gen in front of Sem/Act
 
 
- * **SEMactor** Select Gen in front of ABSTRACT and RIEKTEDILLI *unnitlogu oaidninčiegas*
+* **SEMactor** Select Gen in front of ABSTRACT and RIEKTEDILLI *unnitlogu oaidninčiegas*
 
 * **SEMXr2076** Selects Gen if you are HUMAN or Pron with an ABSTRACT to your right *iežaset vuoigatvuođa*
 
@@ -11061,7 +11062,7 @@ The rules are no documented yet
 
 * **GenBoaris** Selects Gen in golbma *jagi* boaris
 
-    - Ritva comment: Find a rule for "viđa" aswell, this hits "mehter" as it should
+- Ritva comment: Find a rule for "viđa" aswell, this hits "mehter" as it should
 
 
 * **XXr2002** Selects genitive if there is a numeral immediately to your left, and you are TIME: *golbma jagi*
@@ -12285,6 +12286,8 @@ Test: Go for minimal weight.
 
 
 
+* * *
+<small>This (part of) documentation was generated from [../src/cg3/disambiguator.cg3](http://github.com/giellalt/lang-sme/blob/main/../src/cg3/disambiguator.cg3)</small>
 
 
 
@@ -13784,6 +13787,8 @@ Test: Go for minimal weight.
 
 
 
+* * *
+<small>This (part of) documentation was generated from [../src/cg3/semanticroles.cg3](http://github.com/giellalt/lang-sme/blob/main/../src/cg3/semanticroles.cg3)</small>
 
 
 
@@ -15292,9 +15297,8 @@ Test: Go for minimal weight.
 
 
 
-
-
-Divvun & Giellatekno - open source grammars for Sámi and other languages
+* * *
+<small>This (part of) documentation was generated from [../src/cg3/valency.cg3](http://github.com/giellalt/lang-sme/blob/main/../src/cg3/valency.cg3)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 
 
@@ -15348,7 +15352,8 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
  * **LEXICON PxPlCom12V** for first, second person comitative Px
 
  * **LEXICON PxPlCom3V** for third person comitative Px
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/affixes/possessive-suffixes.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/possessive-suffixes.lexc)</small>
 
 
 
@@ -15599,14 +15604,16 @@ some multiword prons, according to Nickel
 
 
 
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/affixes/pronouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/pronouns.lexc)</small>
 # Symbol affixes
 
 
 
 
 
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/affixes/symbols.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/symbols.lexc)</small>
 # Continuation lexicons for abbreviations
 
 ## Lexica for adding tags and periods
@@ -15677,7 +15684,8 @@ some multiword prons, according to Nickel
  * **LEXICON DOT** - Adds the dot to dotted abbreviations.
 
 
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/affixes/abbreviations.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/abbreviations.lexc)</small>
 
 # North Saami acronyms - affix part
 
@@ -15711,7 +15719,8 @@ put between the abbreviation and its suffix
 
  * **LEXICON acrooblique**
 
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/affixes/acronyms.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/acronyms.lexc)</small>
 # North Saami numerals
 
 
@@ -16023,7 +16032,8 @@ by .:, and with reduced case forms. The Err/Orth tag is added in the calling lex
 
 
  * **LEXICON ROMNUMTAGOBL**
-Divvun & Giellatekno - open source grammars for Sámi and other languages
+* * *
+<small>This (part of) documentation was generated from [../src/fst/affixes/numerals.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/numerals.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 
 
@@ -16040,7 +16050,7 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 ### Modals
 
 These are treated separately because
- modals do not participate in derivation
+modals do not participate in derivation
 
  * **LEXICON GALGA_IV** only dáidit, galgat
 
@@ -16710,7 +16720,8 @@ These are treated separately because
  * LEXICON VGEN flag for VGen
 
 
-Divvun & Giellatekno - open source grammars for Sámi and other languages
+* * *
+<small>This (part of) documentation was generated from [../src/fst/affixes/verbs.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/verbs.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 
 # North Saami noun declension
@@ -16719,7 +16730,7 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 
 
-   Bisyllabic nouns
+Bisyllabic nouns
 
 
 
@@ -16765,8 +16776,8 @@ it does not have the Prop tag.
 
 
 
-  Bisyllabic nouns
-  2f. Actor lexicas
+Bisyllabic nouns
+2f. Actor lexicas
 
 
 
@@ -17109,7 +17120,7 @@ Trisyllabic nouns
 
 
 
-  Trisyllabic nouns
+Trisyllabic nouns
 
 
 
@@ -17198,7 +17209,7 @@ Trisyllabic nouns
 
 
 
-  Contracted nouns
+Contracted nouns
 
  * **LEXICON BOAZU** Anim. Contracted 0-Nouns. Short compound-forms.
 
@@ -17216,7 +17227,7 @@ Trisyllabic nouns
 
 
 
-  Contracted nouns
+Contracted nouns
 
 
 
@@ -17497,7 +17508,8 @@ Trisyllabic nouns
 
 
  * **LEXICON DIMINV** diminutives, these comes from bisyll nouns
-Divvun & Giellatekno - open source grammars for Sámi and other languages
+* * *
+<small>This (part of) documentation was generated from [../src/fst/affixes/nouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/nouns.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 # North Saami adjective declension file
 
@@ -18008,7 +18020,8 @@ eventually.
  * **LEXICON AGAdj**  mostly words like guovttejagat, allajoccat etc
 
  * **LEXICON AGAdjINFL**
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/affixes/adjectives.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/adjectives.lexc)</small>
 
 
 
@@ -18563,7 +18576,8 @@ Different lexicon for personal surnames. Blind
 
 
 
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/affixes/propernouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/propernouns.lexc)</small>
 North Sámi morphophonological rule set                  
 
 This file documents the [phonology.twolc file](http://github.com/giellalt/lang-sme/blob/main/src/fst/phonology.twolc) 
@@ -19351,7 +19365,8 @@ Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dum
 
 
 
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/phonology.twolc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/phonology.twolc)</small>
 
 
 
@@ -20124,7 +20139,8 @@ Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dum
 
 
 
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/phonology-L2-from-branch.twolc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/phonology-L2-from-branch.twolc)</small>
 # This file contains the Pronouns
 
 
@@ -20250,7 +20266,8 @@ The indeclineable indefinites
  * **LEXICON indeclindef   **
 
 
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/pronouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/pronouns.lexc)</small>
 # Punctuation symbols
 
  * **LEXICON Punctuation_SME   ** contains the list
@@ -20262,7 +20279,8 @@ They are all tagged *+RIGHT* even though the correct quotation
 mark is supposed to be used on both sides. This is done to simplify
 generation, by keeping the same tagging as the standard analysis.
 
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/sme-punctuation.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/sme-punctuation.lexc)</small>
 # This file contains the Particles
 
 
@@ -20280,7 +20298,8 @@ and all the ge versions should be removed.
 (i.e. only goit, not goitge). This errouneously
 permits gege, goge, etc., though, and we thus leave
 things as they are.
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/particles.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/particles.lexc)</small>
 # The North Saami proper noun lexicon
 
 
@@ -20294,7 +20313,8 @@ things as they are.
 
 
 
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/sme-propernouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/sme-propernouns.lexc)</small>
 # North Saami Interjections
 
 
@@ -20310,7 +20330,8 @@ the tag `+Err/Lexc`.
 
  * **LEXICON Interjection ** is the lexicon containing the list
 
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/interjections.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/interjections.lexc)</small>
 # North Saami adverbs
 
  * **LEXICON Adverb   **
@@ -20423,7 +20444,8 @@ Lexica for adverb subtypes
 
 The main adverb lexicon
  * **LEXICON adv   ** simply gives the tag +Adv and directs to K
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/adverbs.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/adverbs.lexc)</small>
 # The North Saami Subjunctions
 
 
@@ -20444,7 +20466,8 @@ The main adverb lexicon
 
  * **LEXICON Cs-Conf  ** assigns the tag +CC and allows further grammar checker processing for disambiguation against nouns in potential compounds written apart
 
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/subjunctions.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/subjunctions.lexc)</small>
 # North Saami numerals
 
 
@@ -20456,11 +20479,11 @@ The main adverb lexicon
  * **LEXICON Numeral**  initial lexica
 
  The **LEXICON CmpNumeral**  lexicon is the entrance for compounds
- with numbers. Introduced to restrict such compounding
- to a subgroup of numerals only, mainly to exclude
- roman numerals, that turned out to be too problematic.
- With this change, roman numerals are only recognised
- on their own.
+with numbers. Introduced to restrict such compounding
+to a subgroup of numerals only, mainly to exclude
+roman numerals, that turned out to be too problematic.
+With this change, roman numerals are only recognised
+on their own.
 
 
 
@@ -20587,7 +20610,7 @@ The main adverb lexicon
 
 
  * **LEXICON NUMERALCOMPOUNDS**: numeral as first part: duhatjienat,
- logigielat, etc.
+logigielat, etc.
 
  * **LEXICON SAS** gives :»»» and goes to SASCont
 
@@ -20730,7 +20753,8 @@ numerical expressions in each category.
  * **LEXICON GUOKTELOGIOVCCI**
 
  * **LEXICON VIHTTALOGIOVCCI**
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/numerals.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/numerals.lexc)</small>
 # North Saami Conjunctions
 
 
@@ -20748,7 +20772,8 @@ numerical expressions in each category.
 
 
  * **LEXICON Cc-Conf  ** assigns the tag +CC and allows further grammar checker processing for disambiguation against nouns in potential compounds written apart
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/conjunctions.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/conjunctions.lexc)</small>
 # North Saami verbs
 
 
@@ -20811,7 +20836,8 @@ Here comes the main list of verbs.
 
 
 
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/verbs.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/verbs.lexc)</small>
 # North Sámi adjective lexicon
 
 
@@ -20864,7 +20890,8 @@ Move adjs that may take Px from **Adjective** to this lexicon.
 
 
 
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/adjectives.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/adjectives.lexc)</small>
 North Saami adposition lexicon
 
 First come the 3 continuation lexica, the division is based on Nickel
@@ -20891,7 +20918,8 @@ Px lexica in sme-lex.txt and closed-sme-lex.txt.
 
  * **LEXICON Adposition   ** is the lexicon with the adpositions
 
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/adpositions.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/adpositions.lexc)</small>
 # File containing North Saami abbreviations
 
 ## Lexica for adding tags and periods
@@ -20945,7 +20973,8 @@ which numerals are complements and normal words. The abbreviation usage
 is less common and thus only the occurences in the middle of
 the sentence can be considered as true cases.
 
-
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/sme-abbreviations.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/sme-abbreviations.lexc)</small>
 
 
 
@@ -21719,7 +21748,8 @@ Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dum
 
 
 
-Divvun & Giellatekno - open source grammars for Sámi and other languages
+* * *
+<small>This (part of) documentation was generated from [../src/fst/phonology-L2.twolc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/phonology-L2.twolc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 
 
@@ -21742,7 +21772,8 @@ The lexicon K_only is for paths not going to  the K-less ENDLEX
 
 
 
-Divvun & Giellatekno - open source grammars for North Sámi.
+* * *
+<small>This (part of) documentation was generated from [../src/fst/clitics.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/clitics.lexc)</small>Divvun & Giellatekno - open source grammars for North Sámi.
 
 # North Sámi morphological analyser
 
@@ -21878,10 +21909,10 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 
  * **+Gram/TAbbr**:  Transitive abbreviation (it needs an argument)
  * **+Gram/NoAbbr**:  Intransitive abbreviations that are homonymous
-   with more frequent words. They should only be considered
-   abbreviations in the middle of a sentence.
+with more frequent words. They should only be considered
+abbreviations in the middle of a sentence.
  * **+Gram/TNumAbbr**:  Transitive abbreviation if the following
-            constituent is numeric
+constituent is numeric
  * **+Gram/NumNoAbbr**:  Transitive abbreviations for which numerals
 are complements and normal words. The abbreviation usage
 is less common and thus only the occurences in the middle of
@@ -21993,7 +22024,7 @@ doavttergrádakursa
  * **+Use/Circ** circular paths (old ^C^)
  * **+Use/CircN** circular paths for the numerals (old ^N^)
  * **+Use/MT** Generate for MT only, for restricting analyses needed
-              for MT generation not to pop up elsewhere (NOT IN FUNCTION)
+for MT generation not to pop up elsewhere (NOT IN FUNCTION)
  * **+Use/LIA** only for LIA-analyser
  * **+Use/NG** not-generate, for ped generation isme-ped.fst and MT
  * **+Use/NGminip** Not for miniparadigm in NDS dicts
@@ -22037,11 +22068,11 @@ when the oposite stem variant is present.
 
 The tags are of the following form:
 * **+CmpNP/xxx** - Normative (N), Position (P), ie the tag describes what
-                   position the tagged word can be in in a compound
+position the tagged word can be in in a compound
 * **+CmpN/xxx**  - Normative (N) **form** ie the tag describes what
-                   form the tagged word should use when making compounds
+form the tagged word should use when making compounds
 * **+Cmp/xxx**   - Descriptive compounding tags, ie tags that *describes*
-                   what form a word actually is using in a compound
+what form a word actually is using in a compound
 
 This entry / word should be in the following position(s):
 
@@ -22052,7 +22083,7 @@ This entry / word should be in the following position(s):
  * **+CmpNP/Suff** - ... only **last** part in a compound, NEVER alone
  * **+CmpNP/None** - ... does not take part in compounds
  * **+CmpNP/Only** - ... only be part of a compound, i.e. can never
-                    be used alone, but can appear in any position
+be used alone, but can appear in any position
 
 If unmarked, any position goes.
 
@@ -22075,22 +22106,22 @@ The second part of the compound may require that the previous (left part) is:
 Tags for descriptive compound analysis - this is what a compound actually is:
 
  * **+Cmp** - Dynamic compound. This tag should always be part
-                of a dynamic compound. It is important for
-                Apertium, and useful in other cases as well.
+           of a dynamic compound. It is important for
+           Apertium, and useful in other cases as well.
  * **+Cmp/Attr** - Attributive
  * **+Cmp/SgNom** - Singular Nominative
  * **+Cmp/SgGen** - Singular Genitive
  * **+Cmp/PlGen** - Plural Genitiv
  * **+Cmp/SplitR** - This is a split compound with the other part to
-                the right: "Arbeids- og inkluderingsdepartementet"
-                => Arbeids- = +Cmp/SplitR
+           the right: "Arbeids- og inkluderingsdepartementet"
+           => Arbeids- = +Cmp/SplitR
  * **+Cmp/SplitL** - This is a split compound with the other part to the left
  * **+Cmp/Sh** - testing +Cmp/Sh
  * **+Cmp/Hyph** - on dynamic compounds that have a hyphen
  * **+Cmp/NoHyph** - On compounds that COULD have had a hyphen (and usually have), but doesn't
  * **+Cmp/SoftHyph** - Tags compounds containing SOFT HYPHENS (U+00AD)
  * **+Cmp/Cit** - Tags citation compounds, which can in principle
-                cover any word. Requires a hyphen.
+cover any word. Requires a hyphen.
 
 ### Compounding tag ordering
 To ease writing and maintaining regexes etc for manipulating and enforcing
@@ -22099,7 +22130,7 @@ The order is:
 1. **+CmpN/** tags
 1. **+CmpNP/** tags
 1. **+Cmp/** tags - this is always true since the descriptive tags are always
-  part of the continuation lexicons, and will be located after the POS tag.
+part of the continuation lexicons, and will be located after the POS tag.
 
 
 
@@ -22457,12 +22488,12 @@ The principle of tagging is that we only tag to the extent needed,
 and following a priority:
 1. any untagged word is pronounced with SME orthographic conventions
 1. NNO and NOB have identical pronunciation, NNO is only used if
-  different in spelling from NOB
+different in spelling from NOB
 1. SWE has mostly the same pronunciation as NOB, and is only used
-  if different in spelling from NOB
+if different in spelling from NOB
 1. Occasionally even SME (the default) may be tagged, to block other
-  languages from being specified, mainly during semi-automatic
-  language tagging sessions
+languages from being specified, mainly during semi-automatic
+language tagging sessions
 All in all, we want to get as much correctly transcribed to IPA
 with as little work as possible. On the other hand, if more words
 are tagged than strictly needed, this should pose no problem as
@@ -22555,9 +22586,9 @@ get the same pronunciation whether read as SME or NOB/NNO/SWE.
 
 
  **∑** = a symbol used in front of `#` to block backtracking and
-          mwe reanalysis in hfst-tokenise (e.g. in dynanic compounds).
-          Makes it possible to distinguish lexical and dynamic compounds
-          in rules. It is converted to zero together with `#`.
+mwe reanalysis in hfst-tokenise (e.g. in dynanic compounds).
+Makes it possible to distinguish lexical and dynamic compounds
+in rules. It is converted to zero together with `#`.
 
 ### Symbols that need to be escaped on the lower side (towards twolc):
 
@@ -22678,7 +22709,8 @@ The `@D.NeedNoun.ON@` flag diacritic is used to block illegal compounds.
 **ENDLEX3**
 
 **ENDLEX4**
-Divvun & Giellatekno - open source grammars for Sámi and other languages
+* * *
+<small>This (part of) documentation was generated from [../src/fst/root.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/root.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 #                    North Sámi compounding
 
@@ -22753,8 +22785,8 @@ is covered by RHyph + Noun.
 **LEXICON RPropTags** = A special lexicon for handling proper noun compounding without hyphens. Two entries:
  * **@C.CmpHyph@ RHyphTags ;**:  This is the regular case, giving hyphens to compounds
  * **@D.CmpHyph.TRUE@@U.CmpHyph.FALSE@+Use/-Spell+Cmp/NoHyph+Cmp#:@D.CmpHyph.TRUE@@U.CmpHyph.FALSE@∑# Noun ;**:  This is the special case, going directly to nouns (*not* to NounRoot,
-            as that would allow compounding with words explicitly coded to disallow
-            such compounds)
+as that would allow compounding with words explicitly coded to disallow
+such compounds)
 
 **LEXICON flagON-R** = turns NeedsVowRed on:
 * adds @U.NeedsVowRed.ON@ and directs to **R**
@@ -22762,6 +22794,8 @@ is covered by RHyph + Noun.
 **LEXICON flagOFF-R** = turns NeedsVowRed off:
 * adds @U.NeedsVowRed.OFF@ and directs to **R**
 
+* * *
+<small>This (part of) documentation was generated from [../src/fst/compounding.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/compounding.lexc)</small>
 
 
 
@@ -22865,8 +22899,8 @@ is covered by RHyph + Noun.
 
 
 
-
-
+* * *
+<small>This (part of) documentation was generated from [../src/transcriptions/transcriptor-numbers-digit2text.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/transcriptions/transcriptor-numbers-digit2text.lexc)</small>
 
 
 
@@ -26224,6 +26258,8 @@ is covered by RHyph + Noun.
 
 
 
+* * *
+<small>This (part of) documentation was generated from [../tools/grammarcheckers/grammarchecker.cg3](http://github.com/giellalt/lang-sme/blob/main/../tools/grammarcheckers/grammarchecker.cg3)</small>
 
 
 
@@ -26423,8 +26459,7 @@ is covered by RHyph + Noun.
 
 
 
-
-    - V is all readings with a V tag in them, REAL-V should
+- V is all readings with a V tag in them, REAL-V should
 be the ones without an N tag following the V.  
 The REAL-V set thus awaits a fix to the preprocess V ... N bug.
 
@@ -26474,7 +26509,8 @@ The REAL-V set thus awaits a fix to the preprocess V ... N bug.
 
 
 
-
+* * *
+<small>This (part of) documentation was generated from [../tools/grammarcheckers/spellchecker.cg3](http://github.com/giellalt/lang-sme/blob/main/../tools/grammarcheckers/spellchecker.cg3)</small>
 
 
 
@@ -26760,7 +26796,7 @@ The REAL-V set thus awaits a fix to the preprocess V ... N bug.
 
 
 
-    - V is all readings with a V tag in them, REAL-V should
+- V is all readings with a V tag in them, REAL-V should
 be the ones without an N tag following the V.  
 The REAL-V set thus awaits a fix to the preprocess V ... N bug.
 
@@ -33456,7 +33492,8 @@ Remove unwanted analyses
 
 
 
-
+* * *
+<small>This (part of) documentation was generated from [../tools/grammarcheckers/grc-disambiguator.cg3](http://github.com/giellalt/lang-sme/blob/main/../tools/grammarcheckers/grc-disambiguator.cg3)</small>
 
 
 
@@ -36069,3 +36106,5 @@ Superl, both for adverbs and adjectives
 
 
 
+* * *
+<small>This (part of) documentation was generated from [../tools/grammarcheckers/grammarchecker-release.cg3](http://github.com/giellalt/lang-sme/blob/main/../tools/grammarcheckers/grammarchecker-release.cg3)</small>
