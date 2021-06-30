@@ -4674,6 +4674,8 @@ The rules are no documented yet
 
 * **GenBeaivi4** selects Gen if you are beaivi with a NP-boundary to your right
 
+
+
 * **GenDate** selects Gen if you are Sem/Date
 
 
