@@ -145,8 +145,8 @@ the sentence can be considered as true cases.
  * **+Gram/TIAbbr**:  Both transitive and intransitive abbreviation
  * **+Gram/IAbbr**:  Intransitive abbreviation (it takes no argument)
  * **+Gram/3syll**: trisyllabic verbs
- ; +Gram/Superl 
- ; +Gram/Comp 
+ ; +Gram/Superl
+ ; +Gram/Comp
 
 
 ### Question and Focus particles:
@@ -421,7 +421,7 @@ part of the continuation lexicons, and will be located after the POS tag.
  * +Sem/Org = Organisation
  * +Sem/Part = Feature, oassi, bealli
 * Perc = (perception) er noe man kan kjenne i en begrensa periode og som er forårsaka av noe utenifra, f.eks. Mus lea ballu. Mus lea bavččas.
- * +Sem/Perc-cogn =  
+ * +Sem/Perc-cogn =
  * +Sem/Perc-emo = Emotional perception
  * +Sem/Perc-phys = Physical perception
  * +Sem/Perc-psych = Psychological perception
@@ -684,7 +684,7 @@ All non-positional derivations should be preceded by this tag, to make it possib
 to target regular expressions at all derivations in a language-independent way:
 just specify +Der|+Der1 .. +Der5 and you are set.
 
- * **+Der** = 
+ * **+Der** =
 
 ### Other/unclassified derivations, can appear in all positions:
 
@@ -785,7 +785,7 @@ get the same pronunciation whether read as SME or NOB/NNO/SWE.
  * **d9** = twol rule override, so that d doesn't turn into t infront of hash
  * **g8** = Word Final Neutralization and Deletion
  * **g9** = twol rule override, so that g doesn't turn into t infront of hash
- * **h7** = 
+ * **h7** =
  * **h8** = Word Final Neutralization and Deletion
  * **h9** = twol rule override, so that h doesn't turn into t infront of hash
  * **i7** = twol rule override, so that i doesn't turn into e in certain contextes
@@ -800,11 +800,11 @@ get the same pronunciation whether read as SME or NOB/NNO/SWE.
  * **p9** = twol rule override, so that p doesn't turn into t infront of hash
  * **s9** = twol rule override, so that we can have two ss in front of hash
  * **t9** = twol rule override, so that we can have st in front of hash
- * **u7** = 
+ * **u7** =
  * **z9** = twol rule override, to avoid Word Final Consonant Neutralization
  * **ž9** = twol rule override, to avoid Word Final Consonant Neutralization
  * **š9** = twol rule override, so that we can have two šš in front of hash
- * **r9** = 
+ * **r9** =
  * **æ7** = in smi, for lulesámi
  * **u6** = twol rule override, so that u doesn't turn into o in certain contextes
  * **æ9** = in smi, for lulesámi
@@ -821,6 +821,7 @@ in rules. It is converted to zero together with `#`.
 * «
 * > (escaped with square brackets, to avoid collision with > as morpheme boundary)
 * < (escaped with square brackets, to avoid collision with < as morpheme boundary)
+* #
 
 
 ## Flag diacritics
@@ -829,7 +830,7 @@ flag diacritics to restrict morhpological combinatorics - only allow compounds
 with verbs if the verb is further derived into a noun again:
 
 | Flag | Explanation
-| ---- | ----------- 
+| ---- | -----------
  |  @P.NeedNoun.ON@ | (Dis)allow compounds with verbs unless nominalised
  |  @D.NeedNoun.ON@ | (Dis)allow compounds with verbs unless nominalised
  |  @C.NeedNoun@ | (Dis)allow compounds with verbs unless nominalised
@@ -843,11 +844,11 @@ with verbs if the verb is further derived into a noun again:
 
 
 | Flag | Explanation
-| ---- | ----------- 
- |  @D.ErrOrth.ON@ 
- |  @C.ErrOrth@ 
- |  @P.ErrOrth.ON@ 
- |  @R.ErrOrth.ON@ 
+| ---- | -----------
+ |  @D.ErrOrth.ON@
+ |  @C.ErrOrth@
+ |  @P.ErrOrth.ON@
+ |  @R.ErrOrth.ON@
 
 For languages that allow compounding, the following flag diacritics are needed
 to control position-based compounding restrictions for nominals. Their use is
@@ -855,7 +856,7 @@ handled automatically if combined with +CmpN/xxx tags. If not used, they will
 do no harm.
 
 | Flag | Explanation
-| ---- | ----------- 
+| ---- | -----------
  |  @P.CmpFrst.FALSE@ | Require that words tagged as such only appear first
  |  @D.CmpPref.TRUE@ | Block such words from entering ENDLEX
  |  @P.CmpPref.FALSE@ | Block these words from making further compounds
@@ -876,7 +877,7 @@ these flags. There exists a ready-made regex that will do the actual down-casing
 given the proper use of these flags.
 
 | Flag | Explanation
-| ---- | ----------- 
+| ---- | -----------
  |  @U.Cap.Obl@ | Allowing downcasing of derived names: deatnulasj.
  |  @U.Cap.Opt@ | Allowing downcasing of derived names: deatnulasj.
 
@@ -923,7 +924,7 @@ given the proper use of these flags.
 Lexicon ENDLEX
 And this is the ENDLEX of everything:
 
- @D.CmpOnly.FALSE@@D.CmpPref.TRUE@@D.NeedNoun.ON@ ENDLEX2 ; 
+ @D.CmpOnly.FALSE@@D.CmpPref.TRUE@@D.NeedNoun.ON@ ENDLEX2 ;
 
 The `@D.CmpOnly.FALSE@` flag diacritic is ued to disallow words tagged
 with +CmpNP/Only to end here.
