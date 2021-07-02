@@ -29826,7 +29826,6 @@ Remove unwanted analyses
 
 
 
-
 * **n<titel1** (@N<) for ("jr") or ("sr"); if first one to the left is Prop
 
 * **n<titel2** (@N<) for INITIAL; if first one to the left is a noun, or if to the left of you is a single letter which is part of a noun conjunction *bustávas e ja f gáibiduvvo*
