@@ -28,7 +28,7 @@ endif # WANT_SYNTAX
 	$(AM_V_CP)cp -f $< $@
 
 %-postspell.cg3: %.cg3
-	$(AM_V_GEN)$(GNUSED) -e 's/^# Error tags$$/\0\n\nLIST <spelled> = <spelled> ;/' \
+	$(AM_V_GEN)$(GNUSED) -e 's/^# Error tags$$/&\n\nLIST <spelled> = <spelled> ;/' \
 		-e 's/^SUBSTITUTE \(.*\);/SUBSTITUTE \1 (0 <spelled>)  ;/' \
 		< $< > $@
 
