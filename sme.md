@@ -19951,8 +19951,6 @@ Then comes the gradating advs
 
 
 
-
-
 * type 2a
 
 
