@@ -10282,6 +10282,9 @@ maid has many readings and as Rel it is a member of S-BOUNDARY. Therefore we nee
 
 * **maidAdv1** selects maid Adv when there is no vfin to the right.
 
+* **maidAdv** selects maid Adv when there is a comma to the right.
+
+
 * **maidAdv2** selects maid Adv copulas and PrfPrc or Actio Ess. We need this rule because of that there can be an Inf to the right which also has Vfin reading.
 
 
