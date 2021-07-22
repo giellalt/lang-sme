@@ -5230,6 +5230,9 @@ The rules are no documented yet
 
 ### Preverbal subjects
 
+
+* **relNomVfin** Selects (N Nom)
+
 * **NDr2331** Selects (N Nom)
 
 * **NDr2332** Selects (Num Nom)
@@ -5310,7 +5313,10 @@ The rules are no documented yet
 
 * **NDr2373** Selects Nom
 
-* **NDr2375** Selects Nom
+* **app** Selects Nom
+
+* **dasalassinNom** Selects Nom
+
 
 * **NDr2376** Selects Nom
 
@@ -6149,6 +6155,7 @@ The previous two rules look marginal.
 
 
 * Remove lemma2 if lemma 1
+
 
 
 
