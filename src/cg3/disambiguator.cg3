@@ -2206,7 +2206,7 @@ REMOVE:Prop Prop IF (0 ("Alm") LINK 0 ("albmi")) ;
 
 
 #!! we don't want propernoun analysis of these words, initially in sentences
-LIST NOT-PROP = "Ai" "Ain" "Áigi" "Alm" "Árran" "Beaska" "Bierdna" "Vuoksá" "Áddjá" "Áigi" "Álgu" "Barta" "Čeabet" "Daa" "Dalan" "Davvin" "Dávgi" "Dieđut" "Dronnet" "Duodji" "Duolba" "Fiervá" "Fiske" "Forum" "Gáldu" "Gahpir" "Galle" "Gaskaija" "Gámas" "Geassebáiki" "Giđđa" "Gieddi" "Gielas" "Gielda" "Girjjis" "Guksi" "Gusto" "Gulli" "Guoika" "Guovssahas" "Hel" "Heasta" "In" "Internáhtta" "Jávregáddi" "Jávri" "Jo" "Johka" "Just" "Háhtta" "Li" "Loss" "Márkan" "Miestta" "Muvra" "Muitte mu" "Náhkki" "Návet" "Náhkki" "Njunni" "Nuora" "Ob" "Ohcan" "Oja" "Olle" "Ose" "Ovdal" "Profehta" "Ra" "Riidi" "Sámeskuvla" "Sápmelaš" "Sápmi" "Sieidi" "Sisa" ("Siv" Loc) ("Siva" Loc) "Skávžá" "Stállu" "Varis" "Vággi" "Váldi" "Visti" "Vuotna" "Vuoigŋa" ;
+LIST NOT-PROP = "Ai" "Ain" "Áigi" "Alm" "Árran" "Beaska" "Bierdna" "Vuoksá" "Áddjá" "Áigi" "Álgu" "Barta" "Čeabet" "Daa" "Dalan" "Davvin" "Dávgi" "Dieđut" "Dronnet" "Duodji" "Duolba" "Ello" "Ellos" "Fiervá" "Fiske" "Forum" "Gáldu" "Gahpir" "Galle" "Gaskaija" "Gámas" "Geassebáiki" "Giđđa" "Gieddi" "Gielas" "Gielda" "Girjjis" "Guksi" "Gusto" "Gulli" "Guoika" "Guovssahas" "Hel" "Heasta" "In" "Internáhtta" "Jávregáddi" "Jávri" "Jo" "Johka" "Just" "Háhtta" "Li" "Loss" "Márkan" "Miestta" "Muvra" "Muitte mu" "Náhkki" "Návet" "Náhkki" "Njunni" "Nuora" "Ob" "Ohcan" "Oja" "Olle" "Ose" "Ovdal" "Profehta" "Ra" "Riidi" "Sámeskuvla" "Sápmelaš" "Sápmi" "Sieidi" "Sisa" ("Siv" Loc) ("Siva" Loc) "Skávžá" "Stállu" "Varis" "Vággi" "Váldi" "Visti" "Vuotna" "Vuoigŋa" ;
 
 REMOVE:InitialSapmiNoun Prop IF (0 ("Sápmi") + Sg + Nom)(1 CC)(2 N + HUMAN OR N + Sem/Lang) ;
 	#$ Sápmi ja dárru galgaba báldalagaid oččodit givvuid Romssa gávpogii.
@@ -12120,7 +12120,8 @@ SELECT:onlyProp (Prop Nom) IF (*-1 BOS BARRIER WORD - Prop - PROFESSION) (NEGATE
 SELECT:onlyProp (Prop Nom) IF (-1*  (":") OR LEFT BARRIER WORD - Prop) (*1 PUNCT BARRIER WORD - Prop - Arab - Sem/Year) ;
 	#$ Paul Fjellheim, Røros 2003 (Govva: Basia Głowacka).
 
-SELECT:ProfNom Nom (0 PROFESSION) (*1C Prop + Nom BARRIER WORD - Prop) ;
+SELECT:ProfNom1 Nom (0 PROFESSION) (*1C Prop + Nom BARRIER WORD - Prop) ;
+SELECT:ProfNom2 Nom (0 PROP-SUR) (-1C PROFESSION + Nom) ;
 
 	# A propernoun followed by colon and new word is nominative	
 #!! * **nomAuthor**
@@ -12168,6 +12169,11 @@ SELECT:NumAccgo (Num Acc) IF (-1 go LINK -1 Comp LINK *-1 TRANS-V BARRIER NOT-AD
 #!! ### Preverbal subjects
 	# - - - - - - - - - -
 	# The noun is very seldon, if it as at all.
+
+
+#!! * **relNomVfin** Selects (N Nom)
+SELECT:relNomVfin N + Nom IF (*-1 Rel - Nom BARRIER NOT-NPMODADV LINK -1 LEFT)(0 Sg LINK *1 VFIN + Sg3 BARRIER SV-BOUNDARY LINK 1 RIGHT);
+	#$ Lea maid ágga čujuhit ahte vaikke vissis gáldus (masa advokáhta Enoksen čujuha) ii leat válddálaš namuhit dan.
 
 #!! * **NDr2331** Selects (N Nom)
 SELECT:NDr2331 (N Nom) IF (*-1 (Dem Nom) BARRIER NOT-A)(NEGATE 0 ("leapma" Der/Dimin) OR Px);
@@ -12355,11 +12361,16 @@ SELECT:NDr2373 Nom IF (*-1C PL3-V BARRIER NOT-ADV-PCLE OR MO LINK *-1 BOC BARRIE
 	#% De ohcot moadde girjji.
 	#% Arkiivaávdnasat galget sáddejuvvot go leat sullii 25-30 jagi boarrásat. #Comment: Why is this marked? 
 
-#!! * **NDr2375** Selects Nom
+#!! * **app** Selects Nom
 SELECT:app Nom IF (*-1 COMMA OR LEFT BARRIER NOT-NPMOD LINK NEGATE *-1 MAIN-V BARRIER S-BOUNDARY)(NEGATE *1 VFIN BARRIER S-BOUNDARY)(NEGATE 0 Adv OR ("leat" PrfPrc) OR Imprt OR Po OR VFIN)(NEGATE 0 Actio LINK 1 ("veara")) ;#(NEGATE 0 PrfPrc LINK *-1 MOVT LINK -1 ("nu") LINK -1 ("leat"));
 	#$ Dá dat leat, 350 ruvnno.
 	#$ Solveig Joks (váldodoaimm.)
 	#% Eará guovlluin gos leat vel unnit sámit go Finnmárkkus, leamaš dákkár ákkain vel stuorát deaddu almmolaš ságastallamis.  # It should not take the latter one.
+
+#!! * **dasalassinNom** Selects Nom
+SELECT:dasalassinNom Nom IF (-1 ("dasa lassin") LINK *-1 Nom BARRIER Acc) ;
+	#$ Doppe galgá sátnejođiheaddji Bernt Eirik Isaksen Lyngstad leat mielde, dasa lassin várresátnejođiheaddji Britt Pedersen ja fylkkaráđđejođiheaddji Bjørn Inge Mo
+
 
 #!! * **NDr2376** Selects Nom
 SELECT:NDr2376 Nom IF (*-1 VERBAL-ACTIVITY-V BARRIER NOT-NPMOD LINK -1 COMMA LINK *-1 VFIN)(NEGATE 1 Nom);
@@ -12499,8 +12510,9 @@ SELECT:NDr2397 Nom IF (*-1 COPULAS OR (IV) BARRIER NOT-ADV-PCLE)(0 NUM)(1 ("ruvd
 
 #!! * **NDr2399** Selects Nom  
 SELECT:NDr2399 Nom IF (*-1 CRD BARRIER NOT-NPMODADV LINK -1 Nom LINK NOT 0 Acc LINK NEGATE *-1 NOT-AUX-V BARRIER NOT-NPMODADV)(NEGATE 0 VFIN)(1C NP-BOUNDARY); 
-	#$  Divššohas dahje su ovddasteaddji gii oaivvilda ahte... Comment: Please add the whole sentence in stead of "..."!
-
+	#$ Divššohas dahje su ovddasteaddji gii oaivvilda ahte... Comment: Please add the whole sentence in stead of "..."!
+	#$ Riddu Riđu festiválajođiheaddji Sandra Márjá West ja Riddu Riđu stivrajođiheaddji Bente Ovedie Skogvang doalaiga lávvardaga preassakonferánssa.
+	
 #!! * **ProperNom** Selects Nom, adjusted for arabics in paranthesis between  
 SELECT:ProperNom Nom IF (*-1 JA/DAHJE BARRIER NOT-NPMODADV LINK *-1 Nom BARRIER WORD - Arab LINK NOT 0 Acc LINK NEGATE *-1 NOT-AUX-V BARRIER NOT-NPMODADV)(0 Prop)(*1C NP-BOUNDARY BARRIER WORD - Arab); 
 	#$ Sámi ofelaččaguovttos Elle Rávdná Näkkäläjärvi (20) ja Mirja Andersson Renander (19) leaba Norgga mátkkis ja dán vahkkus leaba Plassjes.
@@ -14419,6 +14431,8 @@ LIST A-PL-N = "bassi" "boaris" "buohcci" "duiskalaš" "duiska" "headju" "lagamu�
 SELECT:NPlwhenAPl (N Pl) + $$CASE (0 A + $$CASE LINK NOT 0 TYP-A) ;
 SELECT:APlwhenNPl (A Pl) + $$CASE (0 N + $$CASE LINK 0 TYP-A) ;
 SELECT:APlwhenNPl (A Pl) (1 N + Pl LINK 1 COPULAS) ;
+
+SELECT:NomwhenProp Nom (0 Prop LINK 0 Acc OR Gen) ;
 
 
 SELECT:NomCCNom Nom (-1 CC LINK -1C Nom) ;
