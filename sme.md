@@ -16238,7 +16238,7 @@ And this is the ENDLEX of everything:
 
  @D.CmpOnly.FALSE@@D.CmpPref.TRUE@@D.NeedNoun.ON@ ENDLEX2 ;
 
-The `@D.CmpOnly.FALSE@` flag diacritic is ued to disallow words tagged
+The `@D.CmpOnly.FALSE@` flag diacritic is used to disallow words tagged
 with +CmpNP/Only to end here.
 The `@D.NeedNoun.ON@` flag diacritic is used to block illegal compounds.
 
