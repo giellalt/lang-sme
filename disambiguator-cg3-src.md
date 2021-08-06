@@ -1265,6 +1265,8 @@ Remove unwanted analyses
 
 * **LexSelbeassat**
 
+
+
 * **LexSelgieldit**
 
 * **LexSelmuohttit**
@@ -1345,7 +1347,7 @@ Remove unwanted analyses
 
 * **PropInsideProp** Selects Prop if capital letter inside clause
 
-* **AttrPropDerlaš** Selects (Prop Der/lasj Attr) if first one to the right is a noun
+* **AttrPropDerlaš** Selects Prop + Der/lasj + Attr if first one to the right is a noun
 
 * **PropAttr** Removes (Prop Attr), but not if to the right is Prop or Ord OR ABBR 
 
@@ -2728,6 +2730,7 @@ maid has many readings and as Rel it is a member of S-BOUNDARY. Therefore we nee
 **matPcle**
 
 The following two rules are omitted. They only inflect on the disambiguation of mat pcle, a wackernagel, which is done in the rule over here, I think.
+
 
 
 
@@ -4439,8 +4442,8 @@ The rules are no documented yet
 
 
 
-* __SEMplcGen_a__ Selects Gen if you are GEOGRAPHICAL-PLACE or (Prop Sem/Plc) in front of PLACE-ADV *Finnmárkku máttabealde*
-* __SEMplcGen_b__ Selects Gen if you are GEOGRAPHICAL-PLACE or (Prop Sem/Plc) after a PLACE-ADV
+* __SEMplcGen_a__ Selects Gen if you are GEOGRAPHICAL-PLACE or Prop + Sem/Plc in front of PLACE-ADV *Finnmárkku máttabealde*
+* __SEMplcGen_b__ Selects Gen if you are GEOGRAPHICAL-PLACE or Prop + Sem/Plc after a PLACE-ADV
 
 
 * **SEMplcGen2** Removes Gen in front of a GENERAL-PLACE or POLITICAL-PLACE, if you are a noun *bidjen hildu sadjásis* 
