@@ -3,7 +3,7 @@ The North Sami morphology and tools
 
 [![GitHub issues](https://img.shields.io/github/issues-raw/giellalt/lang-sme)](https://github.com/giellalt/lang-sme/issues)
 [![Build Status](https://github.com/giellalt/lang-sme/workflows/Speller%20CI+CD/badge.svg)](https://github.com/giellalt/lang-sme/actions)
-[![License](https://img.shields.io/github/license/giellalt/lang-sme)](https://raw.githubusercontent.com/giellalt/lang-sme/main/LICENSE)
+[![License](https://img.shields.io/github/license/giellalt/lang-sme)](https://github.com/giellalt/lang-sme/blob/main/LICENSE)
 
 This repository contains finite state source files for the North Sami language,
 for building morphological analysers, proofing tools
