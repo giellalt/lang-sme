@@ -684,7 +684,7 @@ generator-gramcheck-gt-norm.hfst: generator-gramcheck-gt-norm.tmp.hfst \
 				filters/remove-derivation-position-tags.hfst \
 				filters/remove-UseLIA-strings.hfst           \
 				filters/make-optional-grammatical-tags.hfst  \
-				filters/rename-POS_before_Der-tags.hfst      \
+				filters/rename_optional-POS_before_Der-tags.hfst      \
 				filters/remove-usage-tags.hfst
 	$(AM_V_HXFST)$(PRINTF) "\
 	set encode-weights ON\n\
@@ -694,7 +694,7 @@ generator-gramcheck-gt-norm.hfst: generator-gramcheck-gt-norm.tmp.hfst \
 		.o. @\"filters/remove-derivation-position-tags.hfst\" \
 		.o. @\"filters/make-optional-grammatical-tags.hfst\"  \
 		.o. @\"filters/remove-UseLIA-strings.hfst\"           \
-		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
+		.o. @\"filters/rename_optional-POS_before_Der-tags.hfst\"      \
 		.o. @\"$<\"                                           \
 		;\n\
 	twosided flag-diacritics\n\
@@ -707,3 +707,4 @@ generator-gramcheck-gt-norm.hfst: generator-gramcheck-gt-norm.tmp.hfst \
 ##################################################################
 
 include $(top_srcdir)/../giella-core/am-shared/src-dir-include.am
+
