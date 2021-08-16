@@ -1,6 +1,7 @@
 The North Sami morphology and tools
 ==========================================
 
+
 [![GitHub issues](https://img.shields.io/github/issues-raw/giellalt/lang-sme)](https://github.com/giellalt/lang-sme/issues)
 [![Build Status](https://github.com/giellalt/lang-sme/workflows/Speller%20CI+CD/badge.svg)](https://github.com/giellalt/lang-sme/actions)
 [![License](https://img.shields.io/github/license/giellalt/lang-sme)](https://github.com/giellalt/lang-sme/blob/main/LICENSE)
