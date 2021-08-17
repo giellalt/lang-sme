@@ -3994,7 +3994,12 @@ The rules are no documented yet
 
 * **NPrfPrc7** Der/Pass, no TIME to the right
 
+* **NPrfPrcdouble** the verb can be to the right
+
+
 * **NPrfPrcCoor** coordination
+
+
 
 ### (@+FAUXV) and (@+FMAINV) target Neg, orrut
 * **+FAUXVNeg**
@@ -4046,6 +4051,12 @@ The rules are no documented yet
 
 
 
+* **+FAUXVboahtit** boahtit as AUX      
+
+* **+FAUXVboahtit**  boahtit coming before the mainverb
+
+* **-FAUXVboahtit** boahtit as AUX      
+
 
 
 
@@ -4081,7 +4092,6 @@ The rules are no documented yet
 
 
 * **N<Infcoor**
-
 
 
 
@@ -4143,8 +4153,6 @@ The rules are no documented yet
 * **+FAUXVaux** AUX  verbs     
 
 
-* **+FAUXVboahtit** boahtit as AUX      
-
 * **-FAUXVaux** AUX verbs     
 
 * **+FMAINVcopInfconstr** leat before Inf     
@@ -4174,7 +4182,6 @@ The rules are no documented yet
 
 * **+FAUXVCop**  copulas coming after the mainverb
 
-* **+FAUXVboahtit**  boahtit coming before the mainverb
 
 * **+FMAINVCop**  copulas 	
 
@@ -4778,6 +4785,9 @@ The rules are no documented yet
 
 
 * **GenIESinf** removes (Pron Refl Gen) if a transitive verb to the left and an Inf to the right 
+
+
+
 
 
 
