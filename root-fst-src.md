@@ -594,6 +594,7 @@ part of the continuation lexicons, and will be located after the POS tag.
  * +Sem/Hum_Obj
  * +Sem/Hum_Org
  * +Sem/Hum_Sign
+ * +Sem/Hum_Part
  * +Sem/Hum_Plant
  * +Sem/Hum_Plc
  * +Sem/Hum_Sign
