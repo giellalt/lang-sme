@@ -8927,8 +8927,10 @@ ADD:syn-number_congruence-subj-verb (&syn-number_congruence-subj-verb) TARGET (V
     
     # post SUBJ
 	
-ADD:syn-number_congruence-subj-verb (&syn-number_congruence-subj-verb) TARGET (V Ind Prs) - ConNeg OR (V Ind Prt) - ConNeg OR (V Cond) OR (V Neg Ind) IF (*1 (Pron Sem/Hum Pers Sg3 Nom) BARRIER NPNHA OR COMMA OR MO-MANge LINK NOT 0 @COMP-CS< OR (V &SUGGEST) OR <spelled> LINK NEGATE *1 (V Sg3) BARRIER NOT-ADV-PCLE)(*-1 BOS OR (":") OR (";")  OR ("/") OR COMMA OR CS OR (Adv Subqst) OR (Pron Rel Sg) OR ("de") OR @ADVL> BARRIER NOT-ADV-PCLE - @ADVL>)(NEGATE 0 Sg3 OR &real OR PrfPrc OR ConNeg OR (N Sg) - Px OR Adv) ;
+ADD:syn-number_congruence-subj-verb (&syn-number_congruence-subj-verb) TARGET (V Ind Prs) - ConNeg OR (V Ind Prt) - ConNeg OR (V Cond) OR (V Neg Ind) IF (*1 (Pron Sem/Hum Pers Sg3 Nom) BARRIER NPNHA OR COMMA OR MO-MANge LINK NOT 0 @COMP-CS< OR (V &SUGGEST) OR <spelled> LINK NEGATE *1 (V Sg3) BARRIER NOT-ADV-PCLE)(*-1 BOS OR (":") OR (";")  OR ("/") OR COMMA OR CS OR (Adv Subqst) OR (Pron Rel Sg) OR ("de") OR @ADVL> BARRIER NOT-ADV-PCLE - @ADVL>)(NEGATE 0 Sg3 OR &real OR PrfPrc OR ConNeg OR (N Sg) - Px OR Adv)
+(NEGATE 0 Pl3 LINK *1 (Pron Sem/Hum Pers Sg3 Nom) LINK *1 CC BARRIER NOT-ADV LINK *1 (N Pl Nom) OR (Pron Pers Pl3) BARRIER NPNHA) ;
 	## Go maŋŋá fas lean oaidnán dan seamma láttána, guržo dahje turista, go son lea bivddus lihkostuvvan, de leat son aiddo loktaneamen ávvudeamis.
+	#$ Finnmárkoláhka árvalus hárddii dadjat juo olles Sámi, de {jorgo} son ja su ustibat gávtti miessemánu 17. beaivve ráiddus Romssas čájehan dihte vuostemielaset.
 	
 
 COPY:syn-number_congruence-subj-verb (Sg3 &SUGGEST) EXCEPT Sg1 OR Sg2 OR Du1 OR Du2 OR Du3 OR Pl1 OR Pl2 OR Pl3 TARGET (V Neg Ind &syn-number_congruence-subj-verb) OR (V Ind Prs &syn-number_congruence-subj-verb) OR (V Ind Prt &syn-number_congruence-subj-verb) OR (V Cond &syn-number_congruence-subj-verb) OR (V Neg Ind &syn-number_congruence-subj-verb) IF (*-1 (Pron Sem/Hum Pers Sg3 Nom) BARRIER NOT-ADV-PCLE LINK NOT 0 @COMP-CS< LINK *-1 BOS OR (":") OR (";") OR ("/") OR ("‹") OR ("–") OR COMMA OR CC OR CS OR (Adv Subqst) OR (Pron Rel Sg) BARRIER NOT-ADV-PCLE)(NEGATE 0 Sg3 OR &real OR Adv)(NEGATE *-1 (V Du1) BARRIER NOT-ADV-PCLE - ("go") - (Sg3 Nom) - (N Sg Nom));
@@ -9455,6 +9457,12 @@ COPY:syn-PassPrsPl1-PrtPl1 (TV &SUGGEST) EXCEPT (Ex/V Ex/TV Der/PassS IV &syn-Pa
 # (this one, or the one below, with multiple, targeted cg rules).
 # SELECT:PunctErrOrth Err/Orth IF (0 (PUNCT))(NOT 0 (&typo))  ;
 
+#1. Mun lean dáppe." Son ii leat --- dáppe.“
+#2. Mun lean dáppe. " Son ii leat -- “
+#3. Mun lean dáppe. "Son ii leat -- “Son
+
+
+
 # 1. Add error tags:
 #ADD:punct-aistton       (&punct-aistton)       TARGET (""") ;  # Delayed til later
 MAP:punct-aistton-both  (&punct-aistton-both)  TARGET ("«" PUNCT LEFT)  OR ("“" PUNCT LEFT) OR ("\"")  OR ("'") IF (2 ("»") OR ("“") OR ("\"") OR ("'")) ;
@@ -9463,7 +9471,7 @@ ADD:punct-aistton-left  (&punct-aistton-left)  TARGET ("«" PUNCT LEFT)  OR ("�
 ADD:punct-aistton-right (&punct-aistton-right) TARGET ("»" PUNCT RIGHT) ;
 
 	# for undefined if left or right
-ADD:punct-aistton-left  (&punct-aistton-left)  TARGET ("'" PUNCT) OR ("\"" PUNCT) (*-1 BOS BARRIER ("'" PUNCT) OR ("\"" PUNCT));
+ADD:punct-aistton-left  (&punct-aistton-left)  TARGET ("'" PUNCT) OR ("\"" PUNCT) (*-1 BOS BARRIER ("'" PUNCT) OR ("\"" PUNCT))(NEGATE -1> ("." CLB) OR ("!") OR ("?") LINK *-1 ("«" PUNCT LEFT)  OR ("“" PUNCT LEFT) OR ("\"")  OR ("'")  LINK -1 BOS);
 ADD:punct-aistton-right (&punct-aistton-right) TARGET ("'" PUNCT) OR ("\"" PUNCT) (*-1 (&punct-aistton-left));
 	## Don čuoččut mu 'ovddas'.
 	## Ii lean eambbo go okta vuohki dán eastadit, jus eiseváldit eai háliidan vuotnabivddu oalát nohkat". 
@@ -9513,6 +9521,14 @@ COPY:punct-aistton-right-sugg KEEPORDER (VSTR:"$1”"S &SUGGESTWF) TARGET (&punc
         (NOT 0 &SUGGESTWF)      # don't COPY more than once
         ;
 
+# Generer forslag for hermeteikn på _høgre_ side:
+COPY:punct-aistton-right-sugg KEEPORDER (VSTR:"$1’"S &SUGGESTWF) TARGET (&punct-aistton-right) IF
+        (NOT 0 (&LINK))
+        (0 ("'" PUNCT))
+        (-1 &punct-aistton-right LINK 0 &LINK LINK 0 ("<(.*)>"r))
+        (NOT 0 &SUGGESTWF)      # don't COPY more than once
+        ;
+        
 # ADD (&keep-your-voice-down) ("^[A-ZÆØÅÁŠŽĐŊ]+$"r) (NOT (0 (<firstCohortOfParagraph>)));
 
 ADD (&punct-end) TARGET Nom (-1 (\n)); 
