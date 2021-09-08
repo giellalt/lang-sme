@@ -659,6 +659,9 @@ LIST <NoSpaceAfterPunctMark> = <NoSpaceAfterPunctMark> ;
 LIST <NoSpaceAfterParenEnd> = <NoSpaceAfterParenEnd> ;
 LIST <NoSpaceBeforeParenBeg> = <NoSpaceBeforeParenBeg> ;
 LIST <LastCohortOfParagraph> = <LastCohortOfParagraph> ;
+
+LIST <SpaceOnRightSide> = <SpaceOnRightSide> ;
+LIST <SpaceOnLeftSide> = <SpaceOnLeftSide> ;
 LIST <spelled> = <spelled> ;
 
 LIST <0> = <0> ;
@@ -9474,21 +9477,30 @@ ADD:punct-aistton-left  (&punct-aistton-left)  TARGET ("«" PUNCT LEFT)  OR ("�
 ADD:punct-aistton-right (&punct-aistton-right) TARGET ("»" PUNCT RIGHT) ;
 
 	# for undefined if left or right
-ADD:punct-aistton-left  (&punct-aistton-left)  TARGET ("'" PUNCT) OR ("\"" PUNCT) (*-1 BOS BARRIER ("'" PUNCT) OR ("\"" PUNCT))(NEGATE -1> ("." CLB) OR ("!") OR ("?") LINK *-1 ("«" PUNCT LEFT)  OR ("“" PUNCT LEFT) OR ("\"")  OR ("'")  LINK -1 BOS);
+ADD:punct-aistton-left  (&punct-aistton-left)  TARGET ("'" PUNCT) OR ("\"" PUNCT) (*-1 BOS BARRIER ("'" PUNCT) OR ("\"" PUNCT))(NEGATE -1> ("." CLB) OR ("!") OR ("?") LINK *-1 ("«" PUNCT LEFT)  OR ("“" PUNCT LEFT) OR ("\"")  OR ("'")  LINK -1 BOS)(NEGATE 0 <SpaceOnRightSide>);
+	#$ Jos boađát dakko, go boađát stálu goahtái, de mon galggan neavvut du.{"} Sápmelaš vulggii ruoktot.
+
 ADD:punct-aistton-right (&punct-aistton-right) TARGET ("'" PUNCT) OR ("\"" PUNCT) (*-1 (&punct-aistton-left));
 	## Don čuoččut mu 'ovddas'.
 	## Ii lean eambbo go okta vuohki dán eastadit, jus eiseváldit eai háliidan vuotnabivddu oalát nohkat". 
 	## Muhto earenoamážit lei hávdda birra sáhka: 1926:s dagai Davvesiidda suohkanstivra ráfáiduhttincealkámuša, vai lottit mat "dál leat hui unnán, eai galgga oalát nohkat" (FFF 1926: ášši 88, s. 337).
+	
+ADD:punct-aistton-right (&punct-aistton-right) TARGET ("'" PUNCT) OR ("\"" PUNCT)  (0 <SpaceOnRightSide>); #  (-1*< (<<<) BARRIER (<<<) LINK 0 ("." CLB) OR ("!") OR ("?"));
 
 # 2. Add &LINK tags to the preceding/following word (depending on LEFT or RIGHT quotation marks), to handle overlapping errors:
 MAP:punct-aistton-both-link  (&punct-aistton-both &LINK )  TARGET (*) IF (-2 (&punct-aistton-both) LINK NOT 0 (&LINK)) ;
 ADD:punct-aistton-left-link  (&punct-aistton-left &LINK )  TARGET (*) IF (-1 (&punct-aistton-left) LINK NOT 0 (&LINK)) ;
 ADD:punct-aistton-right-link (&punct-aistton-right &LINK ) TARGET (*) IF (1 (&punct-aistton-right) LINK NOT 0 (&LINK)) ;
+ADD:punct-aistton-right-link (&punct-aistton-right &LINK ) TARGET (PUNCT) IF (1*> (>>>) BARRIER (>>>) LINK 1 (&punct-aistton-right) LINK NOT 0 (&LINK)) ;
+	# when  jumping  to the next window
 
 # 3. Add relation RIGHT/LEFT from the sentral cohort to the LINKed cohort for extended underline:
 ADDRELATION:punct-aistton-both-rel  (RIGHT) (&punct-aistton-both)  TO (2  &LINK LINK 0 (&punct-aistton-both) );
 ADDRELATION:punct-aistton-left-rel  (RIGHT) (&punct-aistton-left)  TO (1  &LINK LINK 0 (&punct-aistton-left) );
+ADDRELATION:punct-aistton-left-rel  (RIGHT) (&punct-aistton-left)  TO (1*> (>>>) BARRIER (>>>) LINK 1 &LINK  LINK 0 (&punct-aistton-left) );
+	## Jos boađát dakko, go boađát stálu goahtái, de mon galggan neavvut du.{"} Sápmelaš vulggii ruoktot.
 ADDRELATION:punct-aistton-right-rel (LEFT)  (&punct-aistton-right) TO (-1 &LINK LINK 0 (&punct-aistton-right) );
+ADDRELATION:punct-aistton-right-rel (LEFT)  (&punct-aistton-right) TO (-1*< (<<<) BARRIER (<<<) LINK 0 &LINK LINK 0 (&punct-aistton-right) );
 
 # 4. Generate suggestions including the following/preceeding word (ie matching underline):
 # Generer forslag for hermeteikn på _begge_ sider viss me har feilen på eitt og same ord:
