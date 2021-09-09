@@ -9490,8 +9490,11 @@ ADD:punct-aistton-right (&punct-aistton-right) TARGET ("'" PUNCT) OR ("\"" PUNCT
 # 2. Add &LINK tags to the preceding/following word (depending on LEFT or RIGHT quotation marks), to handle overlapping errors:
 MAP:punct-aistton-both-link  (&punct-aistton-both &LINK )  TARGET (*) IF (-2 (&punct-aistton-both) LINK NOT 0 (&LINK)) ;
 ADD:punct-aistton-left-link  (&punct-aistton-left &LINK )  TARGET (*) IF (-1 (&punct-aistton-left) LINK NOT 0 (&LINK)) ;
+#ADD:punct-aistton-left-link  (&punct-aistton-left &LINK )  TARGET (*) IF (-*<1 (>>>) BARRIER (>>>) (&punct-aistton-left) LINK NOT 0 (&LINK)) ;
+	# when it follows the next window
+	
 ADD:punct-aistton-right-link (&punct-aistton-right &LINK ) TARGET (*) IF (1 (&punct-aistton-right) LINK NOT 0 (&LINK)) ;
-ADD:punct-aistton-right-link (&punct-aistton-right &LINK ) TARGET (PUNCT) IF (1*> (>>>) BARRIER (>>>) LINK 1 (&punct-aistton-right) LINK NOT 0 (&LINK)) ;
+ADD:punct-aistton-right-link (&punct-aistton-right &LINK) TARGET ("." CLB) IF (1*> (>>>) BARRIER (>>>) LINK 1 ("'" PUNCT <SpaceOnRightSide>) OR ("\"" PUNCT <SpaceOnRightSide>) LINK NOT 0 (&LINK)) ;
 	# when  jumping  to the next window
 
 # 3. Add relation RIGHT/LEFT from the sentral cohort to the LINKed cohort for extended underline:
@@ -9535,6 +9538,14 @@ COPY:punct-aistton-right-sugg KEEPORDER (VSTR:"$1”"S &SUGGESTWF) TARGET (&punc
         (-1 &punct-aistton-right LINK 0 &LINK LINK 0 ("<(.*)>"r))
         (NOT 0 &SUGGESTWF)      # don't COPY more than once
         ;
+	# this one is after a clause/window boundary 
+COPY:punct-aistton-right-sugg KEEPORDER (VSTR:"$1”"S &SUGGESTWF) TARGET (&punct-aistton-right) IF
+        (NOT 0 (&LINK))
+        (NOT 0 ("'" PUNCT))
+        (-1*< (<<<) BARRIER (<<<) LINK 0 &punct-aistton-right LINK 0 &LINK LINK 0 ("<(.*)>"r))
+        (NOT 0 &SUGGESTWF)      # don't COPY more than once
+        ;
+   ## Jos boađát dakko, go boađát stálu goahtái, de mon galggan neavvut du{."} Sápmelaš vulggii ruoktot.
 
 # Generer forslag for hermeteikn på _høgre_ side:
 COPY:punct-aistton-right-sugg KEEPORDER (VSTR:"$1’"S &SUGGESTWF) TARGET (&punct-aistton-right) IF
