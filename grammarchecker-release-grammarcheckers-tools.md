@@ -1886,8 +1886,9 @@ Superl, both for adverbs and adjectives
 
 
 
--vv- ii galgga mielde!
 
+
+-vv- ii galgga mielde!
 
 
 
