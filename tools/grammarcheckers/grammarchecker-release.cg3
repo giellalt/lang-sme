@@ -9495,25 +9495,27 @@ COPY:syn-PassPrsPl1-PrtPl1 (TV &SUGGEST) EXCEPT (Ex/V Ex/TV Der/PassS IV &syn-Pa
 	# 1. Add error tags:
 #ADD:punct-aistton       (&punct-aistton)       TARGET (""") ;  # Delayed til later
 MAP:punct-aistton-both  (&punct-aistton-both)  TARGET ("«" PUNCT LEFT)  OR ("“" PUNCT LEFT) OR ("\"") OR ("„") OR ("‟") OR ("'") OR ("‹") OR ("‘") OR ("‚") OR ("‛") OR ("❛") OR ("❝") OR ("❮") OR ("〝") OR ("〟")
-IF (2 ("»") OR ("“") OR ("”") OR ("\"") OR ("'") OR ("‹") OR ("›") OR ("’") OR ("❜") OR ("❞") OR ("❯") OR ("〞") OR ("＂")) ;
+IF (2 ("»") OR ("“") OR ("”") OR ("\"") OR ("'") OR ("›") OR ("’") OR ("❜") OR ("❞") OR ("❯") OR ("〞") OR ("＂")) ;
 	## Artihkkal Ii fal EU Finnmárkoaviisa "Mearrit", borgemánnu 1993
 
 # "	« » “ ” „ ‟ ' ‹ › ‘ ’ ‚ ‛ ❛ ❜ ❝ ❞ ❮ ❯ 〝 〞 〟 ＂ 
 		
-ADD:punct-aistton-left  (&punct-aistton-left)  TARGET ("«" PUNCT LEFT) OR ("“" PUNCT LEFT) IF (NOT 0 <SpaceOnRightSide>);
-ADD:punct-aistton-right (&punct-aistton-right) TARGET ("»" PUNCT RIGHT) ;
-ADD:punct-aistton-right (&punct-aistton-right) TARGET ("«" PUNCT LEFT <SpaceOnRightSide>) IF (*-2 ("»") BARRIER PUNCT OR CLB);
+ADD:punct-aistton-left  (&punct-aistton-left)  TARGET ("«" PUNCT LEFT) OR ("“" PUNCT LEFT) OR ("„"  PUNCT LEFT) OR ("‟") OR ("‹") OR ("‘") OR ("‚") OR ("‛") OR ("❛") OR ("❝") OR ("❮") OR ("〝") OR ("〟") IF (NOT 0 <SpaceOnRightSide>);
+ADD:punct-aistton-right (&punct-aistton-right) TARGET ("»" PUNCT RIGHT) OR ("”") OR ("\"") OR ("'") OR ("›") OR ("’") OR ("❜") OR ("❞") OR ("❯") OR ("〞");
+ADD:punct-aistton-right (&punct-aistton-right) TARGET ("«" PUNCT LEFT <SpaceOnRightSide>) OR ("‹" PUNCT LEFT <SpaceOnRightSide>)  OR ("❮" <SpaceOnRightSide>) OR ("‛" <SpaceOnRightSide>) OR ("❛" <SpaceOnRightSide>) OR ("❝" <SpaceOnRightSide>) IF (*-2 ("«") OR ("‹") OR ("❮") OR ("‛") OR ("❛") OR ("❝") BARRIER PUNCT OR CLB);
+	##  Obbalaččat lei nu ahte eatnasat geat áigo sátnesaji oaivvildedje ahte «Fjellfinnhua{«} filbma ii dagat ahte buorrána gaskavuohta olbmočearddaid gaskka davviguovllus.
+	## Sámi fibmafestivála jođiheaddji Anne Lajla Utsi duođašta ahte sii áigo geassádit «Villmarkssenter{«} báikkis orrumis, go eaiggát ja sámepolitihkar Issán (Isak Mathis O. Hætta) lea ovddidan cealkámušaid máid olluhat leat dulkon rasistalažžan.
 
 	# for undefined if left or right
 ADD:punct-aistton-left  (&punct-aistton-left)  TARGET ("'" PUNCT) OR ("\"" PUNCT) (*-1 BOS BARRIER ("'" PUNCT) OR ("\"" PUNCT))(NEGATE -1> ("." CLB) OR ("!") OR ("?") LINK *-1 ("«" PUNCT LEFT)  OR ("“" PUNCT LEFT) OR ("\"")  OR ("'")  LINK -1 BOS)(NEGATE 0 <SpaceOnRightSide>);
 	#$ Jos boađát dakko, go boađát stálu goahtái, de mon galggan neavvut du.{"} Sápmelaš vulggii ruoktot.
 
-ADD:punct-aistton-right (&punct-aistton-right) TARGET ("'" PUNCT) OR ("\"" PUNCT) (*-1 (&punct-aistton-left));
+ADD:punct-aistton-right (&punct-aistton-right) TARGET ("'" PUNCT) OR ("\"" PUNCT) OR ("＂") (*-1 (&punct-aistton-left));
 	## Don čuoččut mu 'ovddas'.
 	## Ii lean eambbo go okta vuohki dán eastadit, jus eiseváldit eai háliidan vuotnabivddu oalát nohkat". 
 	## Muhto earenoamážit lei hávdda birra sáhka: 1926:s dagai Davvesiidda suohkanstivra ráfáiduhttincealkámuša, vai lottit mat "dál leat hui unnán, eai galgga oalát nohkat" (FFF 1926: ášši 88, s. 337).
 	
-ADD:punct-aistton-right (&punct-aistton-right) TARGET ("'" PUNCT) OR ("\"" PUNCT)  (0 <SpaceOnRightSide>); #  (-1*< (<<<) BARRIER (<<<) LINK 0 ("." CLB) OR ("!") OR ("?"));
+ADD:punct-aistton-right (&punct-aistton-right) TARGET ("'" PUNCT) OR ("\"" PUNCT) OR ("＂") (0 <SpaceOnRightSide>); #  (-1*< (<<<) BARRIER (<<<) LINK 0 ("." CLB) OR ("!") OR ("?"));
 
 	# 2. Add &LINK tags to the preceding/following word (depending on LEFT or RIGHT quotation marks), to handle overlapping errors:
 MAP:punct-aistton-both-link  (&punct-aistton-both &LINK )  TARGET (*) IF (-2 (&punct-aistton-both) LINK NOT 0 (&LINK)) ;
@@ -9522,7 +9524,7 @@ ADD:punct-aistton-left-link  (&punct-aistton-left &LINK )  TARGET (*) IF (-1 (&p
 	# when it follows the next window
 	
 ADD:punct-aistton-right-link (&punct-aistton-right &LINK ) TARGET (*) IF (1 (&punct-aistton-right) LINK NOT 0 (&LINK)) ;
-ADD:punct-aistton-right-link (&punct-aistton-right &LINK) TARGET ("." CLB) OR ("!" CLB) OR ("?" CLB) IF (1*> (>>>) BARRIER (>>>) LINK 1 ("'" PUNCT <SpaceOnRightSide>) OR ("\"" PUNCT <SpaceOnRightSide>) LINK NOT 0 (&LINK)) ;
+ADD:punct-aistton-right-link (&punct-aistton-right &LINK) TARGET ("." CLB) OR ("!" CLB) OR ("?" CLB) IF (1*> (>>>) BARRIER (>>>) LINK 1 ("'" PUNCT <SpaceOnRightSide>) OR ("\"" PUNCT <SpaceOnRightSide>) OR ("＂" PUNCT <SpaceOnRightSide>) LINK NOT 0 (&LINK)) ;
 	# when  jumping  to the next window
 
 	# 3. Add relation RIGHT/LEFT from the sentral cohort to the LINKed cohort for extended underline:
