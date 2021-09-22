@@ -22503,6 +22503,7 @@ part of the continuation lexicons, and will be located after the POS tag.
  * +Sem/Clth-jewl_Org
  * +Sem/Obj_Symbol
  * +Sem/Org_Rule
+ * +Sem/Org_Buildpart 
  * +Sem/Org_Txt
  * +Sem/Org_Veh
  * +Sem/Part_Prod-cogn
