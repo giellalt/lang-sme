@@ -22123,6 +22123,7 @@ doavttergrádakursa
  * **+Err/Confused-ImprtDu1** grammarcheking rela word error confusion pairs
  * **+Err/Confused-Der/PassPrtSg3** grammarcheking rela word error confusion pairs
  * **+Err/Confused-ImprtSg2** grammarcheking rela word error confusion pairs
+ * **+Err/Confused-ImprtPl2** grammarcheking rela word error confusion pairs
 
 
 ### Usage tags
