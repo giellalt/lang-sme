@@ -24,6 +24,7 @@ GIELLA_FILTER_LOCAL_REGEX_SRCS=\
 					make-optional-allegro-tags.regex                  \
 					make-optional-coll-tags.regex                     \
 					make-optional-lang_hom-tags.regex                 \
+					make-optional-desccompound-tags.regex             \
 					reorder-tags.$(GTLANG).regex                      \
 					rename-POS_before_Der-tags.regex                  \
 					rename_optional-POS_before_Der-tags.regex         \
