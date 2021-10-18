@@ -4680,6 +4680,8 @@ The rules are no documented yet
 
 * **aigiAcc** Gen if 0 TIME 1 áigi
 
+* **accgenbeaivi** ávvudit riegádanbeaivvi
+
 
 * **GenBeaivi2** selects Gen if you are beaivi with the end of the sentence or comma to your right. Restrictions to the left *riegádanbeaivvi,*
 
@@ -4714,8 +4716,6 @@ The rules are no documented yet
 * **GenDURadj1** selects Gen if a duration adverbial to the left 
 
 * **GenDURadj2** removes Gen for TIME-N, if duration adjective to the left *olles dálvvi*
-
-* **accgenbeaivi** ávvudit riegádanbeaivvi
 
 
 * **GenDURNumPl** duháhiid jagiid
@@ -4827,6 +4827,8 @@ The rules are no documented yet
 
 
 * **AccTV1** Selects accusative: when a Strict transitive verb to the left (barrier exludes everything but: adv, N Ess , N Loc and Pcle). No Acc allowed to the left of the verb. No Acc allowed to the right of you, except pronouns and education (sentenceboundary and N Ess as barriers). Only numunit numerals are allowed to the left. You are not Acc if you are: time, ruote or Pron Indef. Neither if you are Pron Refl with Gen to your right followed by N Ess. Neither if you are Pron Refl with Gen to your right followed by Po. N Nom and Ger not allowed immediatly to your right. You are not Acc if you are a Nom cased Prop and the verb is some kind of verbalactivityverb and ahte or sentenceboundary is to the right. Vdic not allowed immediately to your left. If váldit is the verb, you are likely to be a Gen if Ill-body noun is found to the right. *oste mielkki gávppis*
+
+
 
 
 
