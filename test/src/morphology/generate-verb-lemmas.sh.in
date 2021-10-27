@@ -64,7 +64,7 @@ EXTEDITOR=@SEE@
 ##### --exclude "(pattern1|pattern2|...)"                          #####
 @GTCORE@/scripts/extract-lemmas.sh \
     --exclude "(STRAYFORMS|ENDLEX|\+Neg|\+Use\/MT)" \
-    $source_file > $lemmas
+    $source_file | LC_ALL=C sort -u > $lemmas
 
 ###### Start testing: #######
 transducer_found=0
@@ -100,7 +100,7 @@ for f in $fsttype; do
 # Generer infitivsformen av verblemmaene, fjern dem som ikke gir analyse (de har V+ i output),
 # lagres som fil som har blitt deklarert oppe.
 		sed 's/$/+V+Inf/' $lemmas | $lookup_tool $generator_file.$suffix \
-            | cut -f2 | grep -v "V+" | grep -v "^$" | sort -u > $generated_lemmas.$f.txt 
+            | cut -f2 | grep -v "V+" | grep -v "^$" | LC_ALL=C sort -u > $generated_lemmas.$f.txt 
 
 ###### Collect results: #######
 		# Sort and compare original input with resulting output - the diff is
@@ -139,4 +139,4 @@ if [ $transducer_found -eq 0 ]; then
 fi
 
 # When done, remove the generated data file:
-rm -f $lemmas $generated_lemmas.$f.txt
+#rm -f $lemmas $generated_lemmas.$f.txt
