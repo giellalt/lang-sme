@@ -110,7 +110,7 @@ for f in $fsttype; do
 # Formene som er i verblemmalista, men ikke i den genererte lista, kopieres til
 # missingverbLemmas.txt. Formene generes med  +V+Inf for lettere debugging.
 
-		comm -23 $lemmas $generated_lemmas.$f.txt \
+		LC_ALL=C comm -23 $lemmas $generated_lemmas.$f.txt \
 		     | grep -v '^$' | sed 's/$/+V+Inf/' \
 		     | $lookup_tool $generator_file.$suffix > $result_file.$f.txt
 
@@ -119,6 +119,13 @@ for f in $fsttype; do
 			# Only open the failed lemmas in see if @SEE@ is defined:
 			if [ "$EXTEDITOR" ]; then
 				$EXTEDITOR $result_file.$f.txt
+			fi
+            # If you don't have see, print a message instead:
+            else
+                echo "There were problem lemmas. Details in:"
+                echo "* $result_file.$f.txt    "
+                echo "* $gen_result_file.$f.txt"
+                echo "* $ana_result_file.$f.txt"
 			fi
 		    Fail=1
 		    echo "$f - FAIL"

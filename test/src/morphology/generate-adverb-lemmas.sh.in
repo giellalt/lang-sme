@@ -135,7 +135,7 @@ cat $padv_lemmas | LC_ALL=C sort -u > $all_adv
 #Adverblemmaer som ikke er i den genererte lista, kopieres til missing_adverb_lemmas.txt.
 # Formene generes med  +Adv for enklere debugging. 
 
-		comm -23 $all_adv $generated_lemmas.$f.txt \
+		LC_ALL=C comm -23 $all_adv $generated_lemmas.$f.txt \
 		     | grep -v '^$' | sed 's/$/+Adv/' \
 		     | $lookup_tool $generator_file.$suffix > $result_file.$f.txt
 
@@ -144,6 +144,13 @@ cat $padv_lemmas | LC_ALL=C sort -u > $all_adv
 			# Only open the failed lemmas in see if @SEE@ is defined:
 			if [ "$EXTEDITOR" ]; then
 				$EXTEDITOR $result_file.$f.txt
+			fi
+			# If you don't have see, print a message instead:
+            else
+                echo "There were problem lemmas. Details in:"
+                echo "* $result_file.$f.txt    "
+                echo "* $gen_result_file.$f.txt"
+                echo "* $ana_result_file.$f.txt"
 			fi
 		    Fail=1
 		    echo "$f - FAIL"
