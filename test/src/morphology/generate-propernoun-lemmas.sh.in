@@ -30,9 +30,10 @@ analyser_file=./../../../src/analyser-gt-norm
 # Temporary files:
 lemmas=./filtered-${POS}.txt
 # Result files, will get filename suffix programmatically further down:
-lemmas_attr=./filtered-attr-${POS}
 generated_lemmas=./generated-${POS}
-generated_attr_lemmas=./generated-attr-${POS}
+generated_lemmas_sgnom=./generated-${POS}-sgnom
+generated_lemmas_plnom=./generated-${POS}-plnom
+generated_lemmas_attr=./generated-${POS}-attr
 result_file=missing_${POS}_lemmas
 gen_result_file=generated_missing_${POS}_lemmas
 ana_result_file=analysed_missing_${POS}_lemmas
@@ -65,18 +66,12 @@ EXTEDITOR=@SEE@
 ##### --include "(pattern1|pattern2|...)"                          #####
 ##### --exclude "(pattern1|pattern2|...)"                          #####
 
-# Hent ut lemmaer fra den genererte fila smi-sme-propernouns.lexc, bortsett fra utkommmenterte (^\!), 
-# dem som krever +Attr tag og hardkoding for spesielle former (Attr|FirstTag|-atr|),
+# Hent ut lemmaer fra den genererte fila smi-sme-propernouns.lexc, bortsett fra utkommmenterte (^\!) og
 # Err/Lex (som blir filtrert bort fra normgenerator).
 # Lemmaene lagres som $lemmas.
 @GTCORE@/scripts/extract-lemmas.sh \
-    --exclude "(Attr|-atr|FirstTag|ProperNoun|\+Use\/MT)" \
+    --exclude "(ProperNoun|\+Use\/MT)" \
     $source_file > $lemmas
-
-# Hent ut lemmaer som krever +Attr for å genereres. Lagres som $lemmas_attr
-@GTCORE@/scripts/extract-lemmas.sh \
-    --include "(Attr|-atr|FirstTag)" \
-    $source_file > $lemmas_attr
 
 ###### Start testing: #######
 transducer_found=0
@@ -109,44 +104,31 @@ for f in $fsttype; do
 		# generate verbs, extract the resulting generated lemma,
 		# store it:
 
-# Generer grunnformen av props med +N+Prop+Sg+Nom, fjern dem som ikke lar seg
-# generere (de har N+ i output). Lagres som $generated_lemmas.$f.txt
-		sed 's/$/+N+Prop+Sg+Nom/'   $lemmas \
+# Generer grunnformen av props med +N+Prop+Sg+Nom
+		sed 's/$/+N+Prop+Sg+Nom/' $lemmas \
 			| $lookup_tool $generator_file.$suffix \
-			| fgrep -v "+?" | grep -v "^$" | cut -f2 \
-            > $generated_lemmas.$f.txt
+			| cut -f2 > $generated_lemmas_sgnom.$f.txt
 
-# Generer grunnformen med +N+Prop+Pl+Nom av props som ikke lar seg generere med
-# +N+Prop+Sg+Nom. Lagres i $generated_lemmas.$f.txt
-		sed 's/$/+N+Prop+Sg+Nom/'   $lemmas \
+# Ta dei som ikkje vart generert og generer dei med +N+Prop+Pl+Nom
+		grep "\+N" $generated_lemmas_sgnom.$f.txt | sed 's/+N+Prop+Sg+Nom/+N+Prop+Pl+Nom/' \
 			| $lookup_tool $generator_file.$suffix \
-			| fgrep "+?" | cut -d "+" -f1 \
-			| sed 's/$/+N+Prop+Pl+Nom/' \
-			| $lookup_tool $generator_file.$suffix \
-			| fgrep -v "+?" | grep -v "^$" | cut -f2 \
-			>> $generated_lemmas.$f.txt
+			| cut -f2 > $generated_lemmas_plnom.$f.txt
 
-# Generer attrprops med +N+Prop+Attr
-# Lagre dem som ikke lar seg generere (de har N+ i output) i $result_file.$f.txt
-		sed 's/$/+N+Prop+Attr/' $lemmas_attr \
+# Ta dei som framleis ikkje vart generert og generer dei med +N+Prop+Attr
+		grep "\+N" $generated_lemmas_plnom.$f.txt | sed 's/+N+Prop+Pl+Nom/+N+Prop+Attr/' \
             | $lookup_tool $generator_file.$suffix \
-		    | cut -f2 | fgrep "+N+" \
-		    > $result_file.$f.txt
+		    | cut -f2 > $generated_lemmas_attr.$f.txt
 
-# Generer attrprops med +N+Prop+Attr
-# Lagre formene i $generated_lemmas_attr.$f.tmp
-		sed 's/$/+N+Prop+Attr/' $lemmas_attr \
-            | $lookup_tool $generator_file.$suffix \
-		    | cut -f2 |  grep -v "N+" | grep -v "^$" \
-		     > $generated_lemmas_attr.$f.txt
 
 ###### Collect results: #######
+grep -v "\+N" $generated_lemmas_sgnom.$f.txt > $generated_lemmas.$f.txt
+grep -v "\+N" $generated_lemmas_plnom.$f.txt >> $generated_lemmas.$f.txt
+grep -v "\+N" $generated_lemmas_attr.$f.txt >> $generated_lemmas.$f.txt
+
+
 # Sorter, unifiser dataene som ikke har vært sortert og unifisert
 		LC_ALL=no_NO.UTF-8 sort -u -o $generated_lemmas.$f.txt $generated_lemmas.$f.txt
-	    LC_ALL=no_NO.UTF-8 sort -u -o $lemmas $lemmas
-	    LC_ALL=no_NO.UTF-8 sort -u -o $lemmas_attr $lemmas_attr
-	    LC_ALL=no_NO.UTF-8 sort -u -o $generated_lemmas_attr.$f.txt $generated_lemmas_attr.$f.txt
-		
+	    LC_ALL=no_NO.UTF-8 sort -u -o $lemmas $lemmas		
 
 # Sammenlikne: Former som er i lemmalista men ikke i lista med genererte former,
 # lagre i missingProperLemmas.txt. Formene generes med  +N+Prop+Sg+Nom for
@@ -156,20 +138,12 @@ for f in $fsttype; do
 		LC_ALL=no_NO.UTF-8 comm -23 $lemmas $generated_lemmas.$f.txt \
 		     | $lookup_tool $analyser_file.$suffix > $ana_result_file.$f.txt
 
-# Sammenlikne: Former som er i lemmalista med ikke i lista med genererte former,
-# lagre i missingProperLemmas.txt. Formene generes med  +N+Prop+Attr for enklere
-# debugging.
-		LC_ALL=no_NO.UTF-8 comm -23 $lemmas_attr $generated_lemmas_attr.$f.txt | sed 's/$/+N+Prop+Attr/' \
-		     | $lookup_tool $generator_file.$suffix >> $result_file.$f.txt
-		LC_ALL=no_NO.UTF-8 comm -23 $lemmas_attr $generated_lemmas_attr.$f.txt \
-		     | $lookup_tool $analyser_file.$suffix >> $ana_result_file.$f.txt
-
 # Open the diff file in SubEthaEdit (if there is a diff):
 		if [ -s $result_file.$f.txt ]; then
 			# Only open the failed lemmas in see if @SEE@ is defined:
 			if [ "$EXTEDITOR" ]; then
 				$EXTEDITOR $result_file.$f.txt
-				$EXTEDITOR $ana_result_file.$f.txt
+				#$EXTEDITOR $ana_result_file.$f.txt
             # If you don't have see, print a message instead:
             else
                 echo "There were problem lemmas. Details in:"
@@ -195,4 +169,4 @@ if [ $transducer_found -eq 0 ]; then
 fi
 
 # When done, remove the generated data file:
-rm -f $lemmas $lemmas $generated_lemmas.$f.tmp $generated_lemmas_attr.$f.tmp
+rm -f $lemmas $generated_lemmas.$f.txt $generated_lemmas_attr.$f.txt $generated_lemmas_plnom.$f.txt $generated_lemmas_sgnom.$f.txt
