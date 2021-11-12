@@ -26,10 +26,7 @@ source_file=${srcdir}/../../../src/fst/stems/${POS}.lexc
 generator_file=./../../../src/generator-gt-norm
 
 ### out ###
-padv_lemmas=filtered_p-${POS}
-cadv_lemmas=filtered_c-${POS}
-sadv_lemmas=filtered_s-${POS}
-all_adv=all_${POS}
+adv_lemmas=filtered-${POS}
 generated_lemmas=generated-${POS}
 result_file=missing_${POS}_lemmas
 
@@ -64,17 +61,7 @@ EXTEDITOR=@SEE@
 # og lemmaer som som krever Px eller kompareringstagg) . Lemmaene lagres som filtered_p-adverbs
 @GTCORE@/scripts/extract-lemmas.sh \
     --exclude "( Px|NOTLEMMA|\+Use\/MT)" \
-    $source_file > $padv_lemmas
-
-## Hent ut lemmaer som krever Comp-tag. Lagres som filtered_c-adverbs (se bz 1926)
-#@GTCORE@/scripts/extract-lemmas.sh \
-#    --exclude "( Px|NOTLEMMA)" \
-#    $source_file > $cadv_lemmas
-
-## Hent ut lemmaer som krever Superl-tag. Lagres som filtered_s-adverbs(se bz 1926)
-#@GTCORE@/scripts/extract-lemmas.sh \
-#    --exclude "( Px|NOTLEMMA)" \
-#    $source_file > $sadv_lemmas
+    $source_file > $adv_lemmas
 
 ###### Start testing: #######
 transducer_found=0
@@ -108,34 +95,23 @@ for f in $fsttype; do
 		# store it:
 
 # Generer adverbformen av lemmaene i adverbs
-sed 's/$/+Adv/' $padv_lemmas | $lookup_tool $generator_file.$suffix | \
+sed 's/$/+Adv/' $adv_lemmas | $lookup_tool $generator_file.$suffix | \
     cut -f2 | grep -v "^$" > $generated_lemmas.$f.txt  
-
-# Generer adverbformen av lemmaene i compadverbs med +Adv+Comp (se bz 1926)
-#sed 's/$/+Adv+Comp/' $cadv_lemmas | $lookup_tool $generator_file.$suffix | \
-#    cut -f2 | grep -v "Adv+" | grep -v "^$" >> $generated_lemmas.$f.txt  
-
-# Generer adverbformen av lemmaene i supadverbs med +Adv+Superl (se bz 1926)
-#sed 's/$/+Adv+Superl/' $sadv_lemmas | $lookup_tool $generator_file.$suffix | \
-#    cut -f2 | grep -v "Adv+" | grep -v "^$" >> $generated_lemmas.$f.txt  
-
 
 ###### Collect results: #######
 		# Sort and compare original input with resulting output - the diff is
 		# stored and opened in SEE:
 		
 # Sorter og unifiser
-LC_ALL=C sort -u -o $generated_lemmas.$f.txt $generated_lemmas.$f.txt
-
-# Alle adverblemmaer samles i ei fil
-cat $padv_lemmas | LC_ALL=C sort -u > $all_adv
+LC_ALL=no_NO.UTF-8 sort -u -o $generated_lemmas.$f.txt $generated_lemmas.$f.txt
+LC_ALL=no_NO.UTF-8 sort -u -o $adv_lemmas $adv_lemmas
 
 
 # Sammenlikne lista med adverblemmaer med den genererte lista med adverber.
 #Adverblemmaer som ikke er i den genererte lista, kopieres til missing_adverb_lemmas.txt.
-# Formene generes med  +Adv for enklere debugging. 
+# Formene generes med +Adv for enklere debugging. 
 
-		LC_ALL=C comm -23 $all_adv $generated_lemmas.$f.txt \
+		LC_ALL=no_NO.UTF-8 comm -23 $adv_lemmas $generated_lemmas.$f.txt \
 		     | grep -v '^$' | sed 's/$/+Adv/' \
 		     | $lookup_tool $generator_file.$suffix > $result_file.$f.txt
 
@@ -160,7 +136,7 @@ cat $padv_lemmas | LC_ALL=C sort -u > $all_adv
 done
 
 # When done, remove the generated data file:
-rm -f $padv_lemmas $all_adv $generated_lemmas.$f.txt
+rm -f $adv_lemmas $generated_lemmas.$f.txt
 
 # At least one of the Xerox or HFST tests failed:
 if [ "$Fail" = "1" ]; then
