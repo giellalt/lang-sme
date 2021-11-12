@@ -31,13 +31,11 @@ analyser_file=./../../../src/analyser-gt-norm
 ### out ###
 # Temporary files:
 lemmas=./filtered-${POS}.txt
-lemmas_pl=./filtered-pl-${POS}.txt
-lemmas_attr=./filtered-attr-${POS}.txt
-lemmas_super=./filtered-super-${POS}.txt
-lemmas_comp=./filtered-comp-${POS}.txt
-all_adjs=./all_adjs.txt
 # Result files, will get filename suffix programmatically further down:
 generated_lemmas=./generated-${POS}
+generated_sgnom=./generated-${POS}-sgnom
+generated_plnom=./generated-${POS}-plnom
+generated_attr=./generated-${POS}-attr
 result_file=missing_${POS}_lemmas
 gen_result_file=generated_missing_${POS}_lemmas
 ana_result_file=analysed_missing_${POS}_lemmas
@@ -69,38 +67,10 @@ EXTEDITOR=@SEE@
 ##### Extract lemmas - add additional egrep pattern as parameters: #####
 ##### --include "(pattern1|pattern2|...)"                          #####
 ##### --exclude "(pattern1|pattern2|...)"                          #####
-
-# 1. dem med hardkoding for spesielle former (K), LexErr/ (som blir filtrert
-# bort fra normgenerator), adjektiver som bare har attributtform
-# (ATTR|Attr| At ) , adjektiver som krever tagger for komparering
-# (BBO |MUS |BUOREMUSS|OVDDIT |STUORIBUS|BUStem) og lemmaer som bare opptrer
-# i sammensetninger (FINJU|Rreal | R) Lemmaene lagres som $lemmas
+# Exclude lemmas only present in compounds and some others #
 @GTCORE@/scripts/extract-lemmas.sh \
-    --exclude "(ATTR|FINJU|Attr| At | Rreal | R |\+Use\/MT|Lex|Sub)" \
+    --exclude "FINJU| Rreal | R |\+Use\/MT|Lex|Sub)" \
     $source_file > $lemmas
-
-# 2. for plurale lemmaer (_PL). Lemmaene lagres som $lemmas_pl
-@GTCORE@/scripts/extract-lemmas.sh \
-    --exclude "(\+Gen|Lex|Sub)" \
-    --include "(_PL )" \
-    $source_file > $lemmas_pl
-
-# 3. som bare har attributtform. Lagres i $lemmas_attr
-@GTCORE@/scripts/extract-lemmas.sh \
-    --exclude "(\+Gen|Lex|Sub)" \
-    --include "(ATTR|Attr)" \
-    $source_file > $lemmas_attr
-
-# 4. som krever superlativtagg. Lagres i $lemmas_super
-#@GTCORE@/scripts/extract-lemmas.sh \
-#    --include "BUOREMUSS" \
-#    $source_file > $lemmas_super
-
-# 5. som krever komparativtagg. Lagres i $lemmas_comp
-@GTCORE@/scripts/extract-lemmas.sh \
-    --exclude "(\+Gen|Lex|Sub)" \
-    --include "(EABBO/EAMOS)" \
-    $source_file > $lemmas_comp
 
 ###### Start testing: #######
 transducer_found=0
@@ -135,54 +105,39 @@ for f in $fsttype; do
 
 # Generer former:
 
-# 1. med +A+Sg+Nom (grunnformen for de fleste).
-# Lagres som $generated_lemmas.$f.txt
-		sed 's/$/+A+Sg+Nom/' $lemmas | $lookup_tool $generator_file.$suffix \
-            | cut -f2 | grep -v "A+" | grep -v "^$"  \
-            > $generated_lemmas.$f.txt
+# Fyrst med +A+Sg+Nom (grunnformen for dei fleste).
+		sed 's/$/+A+Sg+Nom/' $lemmas | $lookup_tool $generator_file.$suffix | \
+            cut -f2 > $generated_sgnom.$f.txt
 
-# 2. med +A+Pl+Nom for plurale lemmaer. Lagres i $generated_lemmas.$f.txt
-		sed 's/$/+A+Pl+Nom/' $lemmas_pl | $lookup_tool $generator_file.$suffix \
-            | cut -f2 | grep -v "A+" | grep -v "^$"  \
-            >> $generated_lemmas.$f.txt
+# Ta dei som ikkje vart generert og generer med +A+Pl+Nom
+        grep "\+A" $generated_sgnom.$f.txt | sed "s/+A+Sg+Nom/+A+Pl+Nom/" | \
+            $lookup_tool $generator_file.$suffix | \
+            cut -f2 > $generated_plnom.$f.txt 
 
-# 3. med +A+Attr lemmaer som bare har attributtform.
-# Lagres i $generated_lemmas.$f.txt
-		sed 's/$/+A+Attr/' $lemmas_attr | $lookup_tool $generator_file.$suffix \
-            | cut -f2 | grep -v "A+" | grep -v "^$"  \
-            >> $generated_lemmas.$f.txt
+# Ta dei som framleis ikkje vart generert og generer med +A+Attr
+        grep "\+A" $generated_plnom.$f.txt | sed "s/+A+Pl+Nom/+A+Attr/" | \
+            $lookup_tool $generator_file.$suffix | \
+            cut -f2 > $generated_attr.$f.txt
 
-# 4. for lemmaer lemmaer som krever superlativtagg, med +A+Superl+Sg+Nom.
-# Lagres i $generated_lemmas.$f.txt
-#		sed 's/$/+A+Der\/Superl+A+Sg+Nom/' $lemmas_super \
-#			| $lookup_tool $generator_file.$suffix \
-#			| cut -f2 | grep -v "A+" | grep -v "^$"  \
-#			>> $generated_lemmas.$f.txt
-
-# 5. for lemmaer lemmaer som krever komparativtagg, med +A+Comp+Sg+Nom.
-# Lagres i $generated_lemmas.$f.txt
-		sed 's/$/+A+Der\/Comp+A+Sg+Nom/' $lemmas_comp \
-			| $lookup_tool $generator_file.$suffix \
-			| cut -f2 | grep -v "A+" | grep -v "^$"  \
-			>> $generated_lemmas.$f.txt
 
 ###### Collect results: #######
 		# Sort and compare original input with resulting output - the diff is
 		# stored and opened in SEE:
 
-# Samle alle lemmaer i en fil, sorter, unifiser
-cat $lemmas $lemmas_pl $lemmas_attr $lemmas_comp | LC_ALL=C sort -u  \
-	> $all_adjs
+# Samle dei genererte formene i éi fil
+grep -v "\+A" $generated_sgnom.$f.txt > $generated_lemmas.$f.txt
+grep -v "\+A" $generated_plnom.$f.txt >> $generated_lemmas.$f.txt
+grep -v "\+A" $generated_attr.$f.txt >> $generated_lemmas.$f.txt
 
-# Alle genererte former sorteres og unifiseres.
-LC_ALL=C sort -u -o $generated_lemmas.$f.txt $generated_lemmas.$f.txt 
+# Sorter alle formene og fjern duplikatar
+LC_ALL=no_NO.UTF-8 sort -u -o $generated_lemmas.$f.txt $generated_lemmas.$f.txt 
+LC_ALL=no_NO.UTF-8 sort -u -o $lemmas $lemmas
 		
 # Sammenlikne lista med lemmaer med den genererte lista med lemmaformer.
 # Formene som er i lemmalista, men ikke i den genererte lista, kopieres til
 # missing_adjectives_lemmas.txt. Formene generes med +A+Sg+Nom for
 # lettere debugging.
-
-        LC_ALL=C comm -23 $all_adjs $generated_lemmas.$f.txt > $result_file.$f.txt
+        LC_ALL=no_NO.UTF-8 comm -23 $lemmas $generated_lemmas.$f.txt > $result_file.$f.txt
 		grep -v '^$' $result_file.$f.txt | sed 's/$/+A+Sg+Nom/' \
 		     | $lookup_tool $generator_file.$suffix > $gen_result_file.$f.txt
 		grep -v '^$' $result_file.$f.txt \
@@ -192,9 +147,7 @@ LC_ALL=C sort -u -o $generated_lemmas.$f.txt $generated_lemmas.$f.txt
 		if [ -s $result_file.$f.txt ]; then
 			# Only open the failed lemmas in see if @SEE@ is defined:
 			if [ "$EXTEDITOR" ]; then
-#				$EXTEDITOR $result_file.$f.txt
 				$EXTEDITOR $gen_result_file.$f.txt
-#				$EXTEDITOR $ana_result_file.$f.txt
             # If you don't have see, print a message instead:
             else
                 echo "There were problem lemmas. Details in:"
@@ -222,11 +175,10 @@ fi
 
 # When done, remove the generated data and result files:
 rm -f $lemmas \
-      $lemmas_pl \
-      $lemmas_attr  \
-      $lemmas_comp \
-      $all_adjs \
       $generated_lemmas.*.txt \
+      $generated_sgnom.*.txt \
+      $generated_plnom.*.txt \
+      $generated_attr.*.txt \
       $result_file.*.txt \
       $gen_result_file.*.txt \
       $ana_result_file.*.txt
