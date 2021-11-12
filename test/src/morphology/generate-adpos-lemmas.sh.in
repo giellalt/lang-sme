@@ -26,7 +26,7 @@ source_file=${srcdir}/../../../src/fst/stems/${POS}.lexc
 generator_file=./../../../src/generator-gt-norm
 
 ### out ###
-lemmas=filtered-${POS}.tmp
+lemmas=filtered-${POS}.txt
 generated_lemmas=./generated-${POS}
 result_file=missing_${POS}_lemmas
 
@@ -62,13 +62,9 @@ EXTEDITOR=@SEE@
 
 # Hent ut lemmaer, bortsett fra Err/Lex (som blir filtrert bort fra normgenerator).
 # Lemmaene lagres som $lemmas.
-# grep ";" $source_file | cut -d '!' -f1 |  \
-#          egrep -v "^(\!|\@|\+|<|\()$" | \
-#   egrep -v "(^\!|\+Err\/Lex|NOTLEMMA|\+Use\/MT)" |\
-#   sed 's/% /€/g' | sed 's/%:/¢/g' |  tr ":+" " " |\
-#   cut -d " " -f1 | tr -d "%" | tr "€" " " | tr "¢" ":" | sort -u > $lemmas
 @GTCORE@/scripts/extract-lemmas.sh \
-	--exclude "(^\!|\+Err\/Lex|NOTLEMMA|\+Use\/MT)" $source_file > $lemmas
+	--exclude "(^\!|\+Err\/Lex|NOTLEMMA|\+Use\/MT)" \
+	$source_file > $lemmas
 
 ###### Start testing: #######
 transducer_found=0
@@ -103,18 +99,14 @@ for f in $fsttype; do
 
 # Generer lemmaer med +Po
 		sed 's/$/+Po/' $lemmas | $lookup_tool $generator_file.$suffix \
-            | grep -v "\?" | cut -f2 | grep -v "^$" | LC_ALL=C sort -u > $generated_lemmas.$f.tmp 
+            | grep -v "\?" | cut -f2 | grep -v "^$" > $generated_lemmas.$f.txt 
 
-# debugging demo for Lene
-# if [ "$debug" == "yes"]; then
 # Generer med +Pr for lemmaer som ikke lar seg genereres +Po
 		sed 's/$/+Po/' $lemmas | $lookup_tool $generator_file.$suffix \
             | grep "\?" | cut -f1 \
             | sed 's/+Po/+Pr/' | $lookup_tool $generator_file.$suffix \
             | cut -f2 | \
-              grep -v "^$" | LC_ALL=C sort -u >> $generated_lemmas.$f.tmp 
-# debugging demo for Lene
-#fi
+              grep -v "^$" >> $generated_lemmas.$f.txt 
 
 ###### Collect results: #######
 		# Sort and compare original input with resulting output - the diff is
@@ -125,11 +117,11 @@ for f in $fsttype; do
 # missingverbLemmas.txt. Formene generes med  +Po / +Pr for lettere debugging.
 
 # Sorter og unifiser
-        LC_ALL=C sort -u -o $generated_lemmas.$f.tmp $generated_lemmas.$f.tmp
-		LC_ALL=C sort -u -o $lemmas $lemmas
+        LC_ALL=no_NO.UTF-8 sort -u -o $generated_lemmas.$f.txt $generated_lemmas.$f.txt
+		LC_ALL=no_NO.UTF-8 sort -u -o $lemmas $lemmas
 
 # Sammenlikne lista med adposlemmaer med den genererte lista
-		LC_ALL=C comm -23 $lemmas $generated_lemmas.$f.tmp > $result_file.$f.txt
+		LC_ALL=no_NO.UTF-8 comm -23 $lemmas $generated_lemmas.$f.txt > $result_file.$f.txt
 
 		# Open the diff file in SubEthaEdit (if there is a diff):
 		if [ -s $result_file.$f.txt ]; then
@@ -152,7 +144,7 @@ for f in $fsttype; do
 done
 
 # When done, remove the generated data file:
-rm -f $lemmas $generated_lemmas.$f.tmp
+rm -f $lemmas $generated_lemmas.$f.txt
 
 # At least one of the Xerox or HFST tests failed:
 if [ "$Fail" = "1" ]; then

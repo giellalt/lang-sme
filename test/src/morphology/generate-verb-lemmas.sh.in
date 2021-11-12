@@ -64,7 +64,7 @@ EXTEDITOR=@SEE@
 ##### --exclude "(pattern1|pattern2|...)"                          #####
 @GTCORE@/scripts/extract-lemmas.sh \
     --exclude "(STRAYFORMS|ENDLEX|\+Neg|\+Use\/MT)" \
-    $source_file | LC_ALL=C sort -u > $lemmas
+    $source_file > $lemmas
 
 ###### Start testing: #######
 transducer_found=0
@@ -100,17 +100,20 @@ for f in $fsttype; do
 # Generer infitivsformen av verblemmaene, fjern dem som ikke gir analyse (de har V+ i output),
 # lagres som fil som har blitt deklarert oppe.
 		sed 's/$/+V+Inf/' $lemmas | $lookup_tool $generator_file.$suffix \
-            | cut -f2 | grep -v "V+" | grep -v "^$" | LC_ALL=C sort -u > $generated_lemmas.$f.txt 
+            | cut -f2 | grep -v "V+" | grep -v "^$" > $generated_lemmas.$f.txt 
 
 ###### Collect results: #######
 		# Sort and compare original input with resulting output - the diff is
 		# stored and opened in SEE:
+
+        LC_ALL=no_NO.UTF-8 sort -u -o $lemmas $lemmas
+        LC_ALL=no_NO.UTF-8 sort -u -o $generated_lemmas.$f.txt $generated_lemmas.$f.txt 
 		
 # Sammenlikne lista med verblemmaer med den genererte lista med infinitivsformer.
 # Formene som er i verblemmalista, men ikke i den genererte lista, kopieres til
 # missingverbLemmas.txt. Formene generes med  +V+Inf for lettere debugging.
 
-		LC_ALL=C comm -23 $lemmas $generated_lemmas.$f.txt \
+		LC_ALL=no_NO.UTF-8 comm -23 $lemmas $generated_lemmas.$f.txt \
 		     | grep -v '^$' | sed 's/$/+V+Inf/' \
 		     | $lookup_tool $generator_file.$suffix > $result_file.$f.txt
 
