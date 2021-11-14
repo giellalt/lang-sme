@@ -11721,10 +11721,12 @@ OBS: denne er ikke helt bra
 
 * **ENInf2** selects Inf (NOTE, this was further down in sme-dis)
 
-* **ENInf** selects Inf  
 
 * **ENInf** selects Inf  
 
+* **ENInf** selects Inf  
+
+* **InfgoInf** selects Inf  
 
 * **ENInfcoor1** selects Inf coor
 
@@ -11766,6 +11768,8 @@ maid has many readings and as Rel it is a member of S-BOUNDARY. Therefore we nee
 * **comparAdv**
 
 * **badjelisAdv**
+
+* **bálddasAdv**
 
 
 * **guhkáAdv**
@@ -11874,6 +11878,7 @@ The following two rules are omitted. They only inflect on the disambiguation of 
 * **vejolaččatAdv**
 
 * **aččatAttr**
+
 
 
 
@@ -14849,7 +14854,6 @@ First the general-rules for selecting (Sg Com), then the more special rules for 
 * **genRel** removes genitive if Rel OR @CVPg to your right *ožžot olbmot skoviid maid*
 
 
-
 * **genAcc** selects Acc 
 
 * **TopObj** selects Acc for Finnish-style topicalisation
@@ -15280,6 +15284,7 @@ The previous two rules look marginal.
 
 
 * Remove lemma2 if lemma 1
+
 
 
 
