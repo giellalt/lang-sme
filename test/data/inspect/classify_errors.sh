@@ -218,6 +218,7 @@ cat errors_marked2.txt \
 | sed 's/\(#_[^#]*\)#\(_subst1_kb_next\)/\1\/\2/' \
 | sed 's/\(#_no_error\).*$/\1/' \
 | sed '/#_has_space/s/^\([^#]*\)#.*$/\1#_has_space/' \
+| sed 's/#_subst1_vowel#_capitalize/#_capitalize/' \
 \
 > error_types.txt
 
@@ -225,9 +226,17 @@ paste only_typos.txt only_corrects.txt \
 | paste - error_types.txt \
 > err_types.txt
 
-# create a 3-column table with some type for every word
-# (in case of multiple types, keep only the first one on the line)
+# rename some of the types
 cat err_types.txt \
+| sed 's/aab2abb/subst1_&/' \
+| sed 's/capitalize/subst1_&/' \
+| sed 's/subst_both/subst2_both/' \
+| sed 's/_trans1/trans_12-21/' \
+> err_types2.txt
+
+# create a 3-column table with some type for every word
+
+cat err_types2.txt \
 | sed '/#/!s/$/\t#_unknown_type/' \
 | sed 's/&atsign;/@/g' \
 > err_types_all_words.txt
