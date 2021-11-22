@@ -17,6 +17,8 @@
 
 SUBDIRS=. test
 
+SUBDIRS = . tests
+
 ####### Source file defs: ########
 
 #! @param GT_PHONETICS_MAIN required, the source of phonetic transcription
