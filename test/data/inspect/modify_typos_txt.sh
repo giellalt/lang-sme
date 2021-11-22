@@ -2,6 +2,8 @@
 # !!! ---- NB! ---- !!! overwrites ../typos.txt
 # !!! ---- NB! ---- !!! be sure this is what you want!
 
+# do not transfer typos/corrections with a space to the new version
+
 # input:  old version of typos.txt file
 #         err_types_all_words.txt
 # output: new version of typos.txt 
@@ -9,6 +11,10 @@
 
 # count the tags
 cat err_types_all_words.txt \
+| grep -v '#_has_space' \
+> err_types_all_words_no_space.txt
+
+cat err_types_all_words_no_space.txt \
 | grep '#' | sed 's/^[^#]*#/#/' | sed 's/#/\n#/g' | sed 's/ $//' \
 | sort | uniq -c \
 > err_types_counted.txt
@@ -21,7 +27,7 @@ cat err_types_counted.txt | head -1 | sed 's/^/# corpus size:/' >> ../typos.txt
 echo '# error types:' >> ../typos.txt
 cat err_types_counted.txt | grep '#' | sed 's/^/#/' >> ../typos.txt
 
-cat err_types_all_words.txt >> ../typos.txt
+cat err_types_all_words_no_space.txt >> ../typos.txt
 
 exit
 
