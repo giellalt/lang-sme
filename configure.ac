@@ -196,16 +196,14 @@ gt_CONFIG_FILES
 ##### BEGIN: Add language-specific list of files to ######
 ########## be processed by autoconf below here: ##########
 
-AC_CONFIG_FILES([src/phonetics/test/Makefile])
-
 AC_CONFIG_FILES([test/src/morphology/generate-adverb-lemmas.sh], \
       [chmod a+x test/src/morphology/generate-adverb-lemmas.sh])
 AC_CONFIG_FILES([test/src/morphology/generate-adpos-lemmas.sh], \
       [chmod a+x test/src/morphology/generate-adpos-lemmas.sh])
 AC_CONFIG_FILES([tools/shellscripts/generate-ipa-lexicon.sh], \
       [chmod a+x tools/shellscripts/generate-ipa-lexicon.sh])
-AC_CONFIG_FILES([src/phonetics/test/test-ipa-conversion.sh], \
-      [chmod a+x src/phonetics/test/test-ipa-conversion.sh])
+AC_CONFIG_FILES([src/phonetics/tests/test-ipa-conversion.sh], \
+      [chmod a+x src/phonetics/tests/test-ipa-conversion.sh])
 
 ############ END: Language-specific scripts. #############
 
