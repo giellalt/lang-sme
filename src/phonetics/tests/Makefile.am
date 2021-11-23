@@ -13,13 +13,16 @@ if WANT_PHONETIC
 TESTS+=
 
 if CAN_HFST
-TESTS+=test-triple-vowel-conversion.sh \
+TESTS+=test-ipa-conversion.sh \
+       test-triple-vowel-conversion.sh \
        test-stress-assignment.sh
 endif # CAN_HFST
 
 # List tests that are presently (expected) failures here, ie things that should
 # be fixed *later*, but is not critical at the moment:
-XFAIL_TESTS=
+XFAIL_TESTS=test-ipa-conversion.sh \
+            test-triple-vowel-conversion.sh \
+            test-stress-assignment.sh
 
 endif # WANT_PHONETIC
 
