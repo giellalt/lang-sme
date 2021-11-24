@@ -90,45 +90,63 @@ se-cg.zhfst: $(srcdir)/index.xml \
 	$(AM_V_at)$(MKDIR_P) 3
 	$(AM_V_at)cp -f $@ 3/
 
-#### END: Local build rules: *.hfst: *.tmp.hfst ####
-
-### BEGIN: Local build rules: *.regex ###
-
-#editdist.default.regex: editdist-est.regex 
-#	cp $< $@
-
 # edit distance=1
 # typos related to computer keyboard:
 # substitute, transpose, add, delete
- 
-editdist-sme.hfst: editdist-sme.regex
+editdist.festschrift.hfst: editdist.festschrift.regex
 	$(AM_V_RGX2FST)$(HFST_REGEXP2FST) -S $(HFST_FLAGS) -i $<\
 	   --format=openfst-tropical \
 		-o $@
 
 # any accented letter
-accents-sme.hfst: accents-sme.regex 
+accents.festschrift.hfst: accents.festschrift.regex 
 	$(AM_V_RGX2FST)$(HFST_REGEXP2FST) -S $(HFST_FLAGS) -i $<\
 	   --format=openfst-tropical \
 		-o $@
 
 # edits that are so specific we may allow them to occur any number of times
 # (they will occur only once or twice anyway)
-strings-sme.hfst: strings-sme.regex 
+strings.festschrift.hfst: strings.festschrift.regex 
 	$(AM_V_RGX2FST)$(HFST_REGEXP2FST) -S $(HFST_FLAGS) -i $<\
 	   --format=openfst-tropical \
 		-o $@
 
 # any number of ad hoc style accented letters may be substituted
 # in addition to other edits
- 
-editdist.default.hfst: editdist-sme.hfst strings-sme.hfst accents-sme.hfst
+editdist.all.festschrift.hfst: editdist.festschrift.hfst \
+						   strings.festschrift.hfst \
+						   accents.festschrift.hfst
 	$(AM_V_XFST)printf "\
 		read regex \
-		[ @\"accents-sme.hfst\" .o. @\"strings-sme.hfst\" .o. @\"editdist-sme.hfst\"]; \
+		[ @\"accents.festschrift.hfst\" .o. @\"strings.festschrift.hfst\" .o. @\"editdist.festschrift.hfst\"]; \
 		save stack $@\n\
 		quit\n" | $(XFST_TOOL)
 
+words.festschrift.hfst: words.default.hfst
+	$(AM_V_CP)cp -f $< $@
+
+final_strings.all.festschrift.hfst: final_strings.txt.default.hfst
+	$(AM_V_CP)cp -f $< $@
+
+####### *.zhfst file: #######
+# Finally build the zhfst file, and make a copy in a subdir named '3', so that
+# we can test it without installing it (the '3' dir is a voikko requirement):
+se-x-festschrift.zhfst: $(srcdir)/index.xml \
+					 errmodel.festschrift.hfst \
+					 $(GT_SPELLER_ACCEPTOR)
+	$(AM_V_at)rm -f $@
+	$(AM_V_at)$(MKDIR_P) build/$@
+	$(AM_V_at)rm -f build/$@/*
+	$(AM_V_at)cp $(srcdir)/index.xml build/$@/index.xml
+	$(AM_V_at)cp $(GT_SPELLER_ACCEPTOR) build/$@/$(GT_SPELLER_ACCEPTOR)
+	$(AM_V_at)cp errmodel.festschrift.hfst build/$@/$(GT_ERRMODELS)
+	$(AM_V_ZIP)cd build/$@/ && $(ZIP) $(ZIPFLAGS) ../../$@ *
+
+####### *-desktop.zhfst file: #######
+# To make life easier for CI (and possibly the build flie maintainters later),
+# create a *-desktop.zhfst file by hard-linking to *.zhfst:
+se-x-festschrift-desktop.zhfst: se-x-festschrift.zhfst
+	$(AM_V_GEN)cp -f $< $@
 
 #### END: Local build rules: *.regex ####
 
