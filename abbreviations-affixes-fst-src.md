@@ -67,7 +67,18 @@
 
 
  * **LEXICON DOT** - Adds the dot to dotted abbreviations.
-
+we also allow different variations of dotted abbreviations at
+the end of the sentence (especially for tokenisers)
+* "su." gets analysed as `"su" Adv ABBR`
+in tokeniser mode also:
+* "su." -> `"su" Adv ABBR` + `"." CLB` to account for sentence
+final su with no extra full stop.
+* also `"son" Pron Pers Sg3 Gen/Acc` + `"." CLB` due to
+homonymy.
+Same treatment is done with two and three full stops after abbreviation in
+the end of the sentence:
+* "su.." -> `"su" Adv Abbr` + `"." CLB Err/Orth`
+* "su..." -> `"su" Adv Abbr` + `"..." CLB`
 
 * * *
 <small>This (part of) documentation was generated from [../src/fst/affixes/abbreviations.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/abbreviations.lexc)</small>
