@@ -8,7 +8,6 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 
 ### Tags for POS
 
-
  * **+N** - Noun
  * **+A** - Adjective
  * **+Adv** - Adverb
