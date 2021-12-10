@@ -8,9 +8,6 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 
 ### Tags for POS
 
- * **+Ex/N** - This tag is not added in lexc. The POS tag before derivation is converted into this tag when compiling FST for disambiguation.
- * **+Ex/A** - This tag is not added in lexc. The POS tag before derivation is converted into this tag when compiling FST for disambiguation.
- * **+Ex/V** - This tag is not added in lexc. The POS tag before derivation is converted into this tag when compiling FST for disambiguation.
 
  * **+N** - Noun
  * **+A** - Adjective
