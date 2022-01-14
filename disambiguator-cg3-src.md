@@ -2662,6 +2662,8 @@ maid has many readings and as Rel it is a member of S-BOUNDARY. Therefore we nee
 
 * **bálddasAdv**
 
+* **erenomážitAdv**
+
 
 * **guhkáAdv**
 
