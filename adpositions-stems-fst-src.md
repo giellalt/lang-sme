@@ -7,23 +7,23 @@ The uninflecting ones are pointed to the 3 tag lexica, the Px ones to the
 Px lexica in sme-lex.txt and closed-sme-lex.txt.
 
 
- * **LEXICON Pp   ** gives both +Po and +Pr
+* **LEXICON Pp   ** gives both +Po and +Pr
 
- * **LEXICON Pp-Err   ** gives both +Po and +Pr
-
-
-
- * **LEXICON Postp   ** gives +Po
-
- * **LEXICON Postp-Err   ** gives +Po
+* **LEXICON Pp-Err   ** gives both +Po and +Pr
 
 
- * **LEXICON Prep   ** gives +Pr
 
- * **LEXICON Prep-Err   ** gives +Pr
+* **LEXICON Postp   ** gives +Po
+
+* **LEXICON Postp-Err   ** gives +Po
 
 
- * **LEXICON Adposition   ** is the lexicon with the adpositions
+* **LEXICON Prep   ** gives +Pr
+
+* **LEXICON Prep-Err   ** gives +Pr
+
+
+* **LEXICON Adposition   ** is the lexicon with the adpositions
 
 * * *
 <small>This (part of) documentation was generated from [../src/fst/stems/adpositions.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/adpositions.lexc)</small>

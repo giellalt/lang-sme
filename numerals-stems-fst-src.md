@@ -7,9 +7,9 @@
 
 ## The initial lexica
 
- * **LEXICON Numeral**  initial lexica
+* **LEXICON Numeral**  initial lexica
 
- The **LEXICON CmpNumeral**  lexicon is the entrance for compounds
+The **LEXICON CmpNumeral**  lexicon is the entrance for compounds
 with numbers. Introduced to restrict such compounding
 to a subgroup of numerals only, mainly to exclude
 roman numerals, that turned out to be too problematic.
@@ -19,131 +19,131 @@ on their own.
 
 
 
- * **LEXICON MILJON**  miljons and miljards
+* **LEXICON MILJON**  miljons and miljards
 
 
 
 
- * **LEXICON OVERDUHAT** for the numerals over 1000.
+* **LEXICON OVERDUHAT** for the numerals over 1000.
 
 
 
 
 
- * **LEXICON O-OKTAF** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
+* **LEXICON O-OKTAF** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
 
 
- * **LEXICON O-2TO9F** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
+* **LEXICON O-2TO9F** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
 
- * **LEXICON 1TO9DUHAT**
+* **LEXICON 1TO9DUHAT**
 
 
 
 
- * **LEXICON O-JUSTLOGIF** This lexicon is for the number 10 000 only. it is separated from the rest to avoid forms like *logivihttaduhát, etc.
+* **LEXICON O-JUSTLOGIF** This lexicon is for the number 10 000 only. it is separated from the rest to avoid forms like *logivihttaduhát, etc.
 
 
 
- * **LEXICON O-LOGIF** this lexicon is accessed only via other O-lexica, and not directly from OVERDUHAT. Thus, *logivihttaduhát, etc. is avoided.
+* **LEXICON O-LOGIF** this lexicon is accessed only via other O-lexica, and not directly from OVERDUHAT. Thus, *logivihttaduhát, etc. is avoided.
 
 
 
- * **LEXICON O-2TO9LOG** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
+* **LEXICON O-2TO9LOG** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
 
 
 
- * **LEXICON O-NUPPELOT**  Teens of thousands
+* **LEXICON O-NUPPELOT**  Teens of thousands
 
- * **LEXICON O-NL**
+* **LEXICON O-NL**
 
- * **LEXICON O-NUPPELOHKAI**
+* **LEXICON O-NUPPELOHKAI**
 
 
 
 
- * **LEXICON O-CUODI** Hundreds of thousands
+* **LEXICON O-CUODI** Hundreds of thousands
 
- * **LEXICON O-2TO9CUO**
+* **LEXICON O-2TO9CUO**
 
- * **LEXICON O-GCUO**
+* **LEXICON O-GCUO**
 
 
- * **LEXICON DUHAT**
+* **LEXICON DUHAT**
 
 
 
- * **LEXICON JUSTDUHAT** for numerals going via 1000
+* **LEXICON JUSTDUHAT** for numerals going via 1000
 
 
 
 
- * **LEXICON OLD** for the old counting thirteen hundred etc.
+* **LEXICON OLD** for the old counting thirteen hundred etc.
 
- * **LEXICON NLX**
+* **LEXICON NLX**
 
 
- * **LEXICON NUPPELOHKAICUODI**
+* **LEXICON NUPPELOHKAICUODI**
 
 
 
 
- * **LEXICON UNDERDUHAT**  the numerals under 1000
+* **LEXICON UNDERDUHAT**  the numerals under 1000
 
 
- * **LEXICON ONLY_CMP**
+* **LEXICON ONLY_CMP**
 
 
- * **LEXICON OKTAF**
+* **LEXICON OKTAF**
 
 
- * **LEXICON 2TO9F**
+* **LEXICON 2TO9F**
 
 
- * **LEXICON 11TO99F**
+* **LEXICON 11TO99F**
 
 
 
- * **LEXICON BARELOGIF**
+* **LEXICON BARELOGIF**
 
- * **LEXICON LOHKI**
+* **LEXICON LOHKI**
 
 
- * **LEXICON 2TO9LOG**
+* **LEXICON 2TO9LOG**
 
 
- * **LEXICON 21TO99**
+* **LEXICON 21TO99**
 
 
- * **LEXICON 111TO119**
+* **LEXICON 111TO119**
 
 
- * **LEXICON CUODI**
+* **LEXICON CUODI**
 
 
 
- * **LEXICON 2TO9CUO**
+* **LEXICON 2TO9CUO**
 
- * **LEXICON GCUODI**
+* **LEXICON GCUODI**
 
 
- * **LEXICON 1TO9CUODI**
+* **LEXICON 1TO9CUODI**
 
 
 
 
 
- * **LEXICON NUPPELOGIS**
+* **LEXICON NUPPELOGIS**
 
 
- * **LEXICON LOHKAI-END**
+* **LEXICON LOHKAI-END**
 
- * **LEXICON ARABICCOMPOUNDS**  ! arabic as first part,
+* **LEXICON ARABICCOMPOUNDS**  ! arabic as first part,
 
 
- * **LEXICON NUMERALCOMPOUNDS**: numeral as first part: duhatjienat,
+* **LEXICON NUMERALCOMPOUNDS**: numeral as first part: duhatjienat,
 logigielat, etc.
 
- * **LEXICON SAS** gives :»»» and goes to SASCont
+* **LEXICON SAS** gives :»»» and goes to SASCont
 
 
 
@@ -151,23 +151,23 @@ logigielat, etc.
 
 
 
- * **LEXICON num-ordinal** Ordinal numbers
+* **LEXICON num-ordinal** Ordinal numbers
 
- * **LEXICON num-ordinal-1** Ordinal numbers vuosttas, vuosttaš
+* **LEXICON num-ordinal-1** Ordinal numbers vuosttas, vuosttaš
 
- * **LEXICON num-ordinal-2to9** Ordinal numbers, 2 to 20, even though the name implies differenty
-
-
- * **LEXICON VUOSTTAS**
+* **LEXICON num-ordinal-2to9** Ordinal numbers, 2 to 20, even though the name implies differenty
 
 
- * **LEXICON num-collective** Collective numerals
+* **LEXICON VUOSTTAS**
 
 
+* **LEXICON num-collective** Collective numerals
 
 
 
- * **LEXICON num-imprecise** Imprecise numbers
+
+
+* **LEXICON num-imprecise** Imprecise numbers
 
 
 
@@ -196,93 +196,93 @@ numerical expressions in each category.
 
 
 
- * **LEXICON ONLY_OKTA**
+* **LEXICON ONLY_OKTA**
 
 
- * **LEXICON LOGIF**
+* **LEXICON LOGIF**
 
 
- * **LEXICON NUPPELOHKAI**
+* **LEXICON NUPPELOHKAI**
 
 
 
- * **LEXICON GOLBMALOGIOKTA**
+* **LEXICON GOLBMALOGIOKTA**
 
- * **LEXICON GAVCCILOGIOKTA**
-
-
- * **LEXICON GUOKTELOGIOKTA**
-
- * **LEXICON VIHTTALOGIOKTA**
-
- * **LEXICON GOLBMALOGIGUOKTE**
-
- * **LEXICON GAVCCILOGIGUOKTE**
+* **LEXICON GAVCCILOGIOKTA**
 
 
- * **LEXICON GUOKTELOGIGUOKTE**
+* **LEXICON GUOKTELOGIOKTA**
 
- * **LEXICON VIHTTALOGIGUOKTE**
+* **LEXICON VIHTTALOGIOKTA**
 
- * **LEXICON GOLBMALOGIGOLBMA**
+* **LEXICON GOLBMALOGIGUOKTE**
 
- * **LEXICON GAVCCILOGIGOLBMA**
-
-
- * **LEXICON GUOKTELOGIGOLBMA**
-
- * **LEXICON VIHTTALOGIGOLBMA**
-
- * **LEXICON GOLBMALOGINJEALLJE**
-
- * **LEXICON GAVCCILOGINJEALLJE**
+* **LEXICON GAVCCILOGIGUOKTE**
 
 
- * **LEXICON GUOKTELOGINJEALLJE**
+* **LEXICON GUOKTELOGIGUOKTE**
 
- * **LEXICON VIHTTALOGINJEALLJE**
+* **LEXICON VIHTTALOGIGUOKTE**
 
- * **LEXICON GOLBMALOGIVIHTTA**
+* **LEXICON GOLBMALOGIGOLBMA**
 
- * **LEXICON GAVCCILOGIVIHTTA**
-
-
- * **LEXICON GUOKTELOGIVIHTTA**
-
- * **LEXICON VIHTTALOGIVIHTTA**
-
- * **LEXICON GOLBMALOGIGUHTTA**
-
- * **LEXICON GAVCCILOGIGUHTTA**
-
- * **LEXICON GUOKTELOGIGUHTTA**
-
- * **LEXICON VIHTTALOGIGUHTTA**
-
- * **LEXICON GOLBMALOGICIEZA**
-
- * **LEXICON GAVCCILOGICIEZA**
+* **LEXICON GAVCCILOGIGOLBMA**
 
 
- * **LEXICON GUOKTELOGICIEZA**
+* **LEXICON GUOKTELOGIGOLBMA**
 
- * **LEXICON VIHTTALOGICIEZA**
+* **LEXICON VIHTTALOGIGOLBMA**
 
- * **LEXICON GOLBMALOGIGAVCCI**
+* **LEXICON GOLBMALOGINJEALLJE**
 
- * **LEXICON GAVCCILOGIGAVCCI**
+* **LEXICON GAVCCILOGINJEALLJE**
 
 
- * **LEXICON GUOKTELOGIGAVCCI**
+* **LEXICON GUOKTELOGINJEALLJE**
 
- * **LEXICON VIHTTALOGIGAVCCI**
+* **LEXICON VIHTTALOGINJEALLJE**
 
- * **LEXICON GOLBMALOGIOVCCI**
+* **LEXICON GOLBMALOGIVIHTTA**
 
- * **LEXICON GAVCCILOGIOVCCI**
+* **LEXICON GAVCCILOGIVIHTTA**
 
- * **LEXICON GUOKTELOGIOVCCI**
 
- * **LEXICON VIHTTALOGIOVCCI**
+* **LEXICON GUOKTELOGIVIHTTA**
+
+* **LEXICON VIHTTALOGIVIHTTA**
+
+* **LEXICON GOLBMALOGIGUHTTA**
+
+* **LEXICON GAVCCILOGIGUHTTA**
+
+* **LEXICON GUOKTELOGIGUHTTA**
+
+* **LEXICON VIHTTALOGIGUHTTA**
+
+* **LEXICON GOLBMALOGICIEZA**
+
+* **LEXICON GAVCCILOGICIEZA**
+
+
+* **LEXICON GUOKTELOGICIEZA**
+
+* **LEXICON VIHTTALOGICIEZA**
+
+* **LEXICON GOLBMALOGIGAVCCI**
+
+* **LEXICON GAVCCILOGIGAVCCI**
+
+
+* **LEXICON GUOKTELOGIGAVCCI**
+
+* **LEXICON VIHTTALOGIGAVCCI**
+
+* **LEXICON GOLBMALOGIOVCCI**
+
+* **LEXICON GAVCCILOGIOVCCI**
+
+* **LEXICON GUOKTELOGIOVCCI**
+
+* **LEXICON VIHTTALOGIOVCCI**
 * * *
 <small>This (part of) documentation was generated from [../src/fst/stems/numerals.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/numerals.lexc)</small>

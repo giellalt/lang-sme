@@ -5,40 +5,40 @@
 
 ## Negative verbs
 
- * **LEXICON Negativeverb  **
+* **LEXICON Negativeverb  **
 
 
- * **LEXICON negmood  **
+* **LEXICON negmood  **
 
- * **LEXICON negind  **
+* **LEXICON negind  **
 
- * **LEXICON negimp  **
+* **LEXICON negimp  **
 
- * **LEXICON negsup  **
+* **LEXICON negsup  **
 
 ## Copula
 
- * **LEXICON Copula   ** Dividing into finite and infinite
+* **LEXICON Copula   ** Dividing into finite and infinite
 
 
- * **LEXICON Finitecop   ** (Removed %>, they blocked diphtsim^pl)
+* **LEXICON Finitecop   ** (Removed %>, they blocked diphtsim^pl)
 
 
- * **LEXICON Prscop   **
+* **LEXICON Prscop   **
 
- * **LEXICON Prtcop   **
+* **LEXICON Prtcop   **
 
- * **LEXICON Impcop  **
+* **LEXICON Impcop  **
 
- * **LEXICON Infinitecop  **
+* **LEXICON Infinitecop  **
 
 ## Stray forms
 
- * **LEXICON STRAYFORMS  ** (referred to from the main Verb lexicon)
+* **LEXICON STRAYFORMS  ** (referred to from the main Verb lexicon)
 
 
 
- * **LEXICON Eahpe_Verb  **
+* **LEXICON Eahpe_Verb  **
 
 ## Main verbs
 
@@ -51,7 +51,7 @@ Here comes the main list of verbs.
 
 
 
- * **LEXICON Humsubj-VerbRoot   **
+* **LEXICON Humsubj-VerbRoot   **
 
 
 
