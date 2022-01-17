@@ -7,66 +7,66 @@
 
 ### Continuation lexicons for abbrs both with and witout final period
 
- * **LEXICON ab-dot-noun-adj-trab**
+* **LEXICON ab-dot-noun-adj-trab**@CODE@****
 
- * **LEXICON ab-noun**
+* **LEXICON ab-noun**@CODE@****
 
- * **LEXICON ab-adj**
+* **LEXICON ab-adj**@CODE@****
 
- * **LEXICON ab-adv**
+* **LEXICON ab-adv**@CODE@****
 
- * **LEXICON ab-num**
+* **LEXICON ab-num**@CODE@****
 
 ### Lexicons without final period
 
- * **LEXICON ab-nodot-noun**  The bulk
+* **LEXICON ab-nodot-nounbulk**  The bulk
 
- * **LEXICON ab-nodot-adj**
+* **LEXICON ab-nodot-adj**@CODE@****
 
- * **LEXICON ab-nodot-adv**
+* **LEXICON ab-nodot-adv**@CODE@****
 
- * **LEXICON ab-nodot-num**
+* **LEXICON ab-nodot-num**@CODE@****
 
 ### Lexicons with final period
 
- * **LEXICON ab-dot-noun**  This is the lexicon for abbrs that must have a period.
+* **LEXICON ab-dot-nounperiod.**  This is the lexicon for abbrs that must have a period.
 
- * **LEXICON ab-dot-adj**  This is the lexicon for abbrs that must have a period.
+* **LEXICON ab-dot-adjperiod.**  This is the lexicon for abbrs that must have a period.
 
- * **LEXICON ab-dot-adv**  This is the lexicon for abbrs that must have a period.
+* **LEXICON ab-dot-advperiod.**  This is the lexicon for abbrs that must have a period.
 
- * **LEXICON ab-dot-num**  This is the lexicon for abbrs that must have a period.
+* **LEXICON ab-dot-numperiod.**  This is the lexicon for abbrs that must have a period.
 
- * **LEXICON ab-dot-cc**
-
-
-
- * **LEXICON ab-verb**  A lexicon for "gč." and perhaps also other abbreviated verbs.
+* **LEXICON ab-dot-cc**@CODE@****
 
 
- * **LEXICON ab-dot-verb**
 
- * **LEXICON ab-nodot-verb**
-
-
- * **LEXICON ab-dot-IVprfprc**
+* **LEXICON ab-verbverbs.**  A lexicon for "gč." and perhaps also other abbreviated verbs.
 
 
- * **LEXICON nodot-attrnomaccgen-infl**
+* **LEXICON ab-dot-verb**@CODE@****
 
- * **LEXICON nodot-attr-infl**
-
- * **LEXICON nodot-nomaccgen-infl**
+* **LEXICON ab-nodot-verb**@CODE@****
 
 
- * **LEXICON dot-attrnomaccgen-infl**
-
- * **LEXICON dot-attr**
-
- * **LEXICON dot-nomaccgen-infl**
+* **LEXICON ab-dot-IVprfprc**@CODE@****
 
 
- * **LEXICON DOT** - Adds the dot to dotted abbreviations.
+* **LEXICON nodot-attrnomaccgen-infl**@CODE@****
+
+* **LEXICON nodot-attr-infl**@CODE@****
+
+* **LEXICON nodot-nomaccgen-infl**@CODE@****
+
+
+* **LEXICON dot-attrnomaccgen-infl**@CODE@****
+
+* **LEXICON dot-attr**@CODE@****
+
+* **LEXICON dot-nomaccgen-infl**@CODE@****
+
+
+* **LEXICON DOTabbreviations.** - Adds the dot to dotted abbreviations.
 we also allow different variations of dotted abbreviations at
 the end of the sentence (especially for tokenisers)
 * "su." gets analysed as `"su" Adv ABBR`

@@ -7,9 +7,9 @@
 
 ## The initial lexica
 
- * **LEXICON Numeral**  initial lexica
+* **LEXICON Numerallexica**  initial lexica
 
- The **LEXICON CmpNumeral**  lexicon is the entrance for compounds
+The **LEXICON CmpNumeralcompounds**  lexicon is the entrance for compounds
 with numbers. Introduced to restrict such compounding
 to a subgroup of numerals only, mainly to exclude
 roman numerals, that turned out to be too problematic.
@@ -19,131 +19,131 @@ on their own.
 
 
 
- * **LEXICON MILJON**  miljons and miljards
+* **LEXICON MILJONmiljards**  miljons and miljards
 
 
 
 
- * **LEXICON OVERDUHAT** for the numerals over 1000.
+* **LEXICON OVERDUHAT1000.** for the numerals over 1000.
 
 
 
 
 
- * **LEXICON O-OKTAF** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
+* **LEXICON O-OKTAFJUSTDUHAT.** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
 
 
- * **LEXICON O-2TO9F** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
+* **LEXICON O-2TO9FJUSTDUHAT.** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
 
- * **LEXICON 1TO9DUHAT**
+* **LEXICON 1TO9DUHAT**@CODE@****
 
 
 
 
- * **LEXICON O-JUSTLOGIF** This lexicon is for the number 10 000 only. it is separated from the rest to avoid forms like *logivihttaduhát, etc.
+* **LEXICON O-JUSTLOGIFetc.** This lexicon is for the number 10 000 only. it is separated from the rest to avoid forms like *logivihttaduhát, etc.
 
 
 
- * **LEXICON O-LOGIF** this lexicon is accessed only via other O-lexica, and not directly from OVERDUHAT. Thus, *logivihttaduhát, etc. is avoided.
+* **LEXICON O-LOGIFavoided.** this lexicon is accessed only via other O-lexica, and not directly from OVERDUHAT. Thus, *logivihttaduhát, etc. is avoided.
 
 
 
- * **LEXICON O-2TO9LOG** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
+* **LEXICON O-2TO9LOGJUSTDUHAT.** All the child lexica of OVERDUHAT have the prefix O-. They are directed via their respective numerals to the lexicon JUSTDUHAT.
 
 
 
- * **LEXICON O-NUPPELOT**  Teens of thousands
+* **LEXICON O-NUPPELOTthousands**  Teens of thousands
 
- * **LEXICON O-NL**
+* **LEXICON O-NL**@CODE@****
 
- * **LEXICON O-NUPPELOHKAI**
+* **LEXICON O-NUPPELOHKAI**@CODE@****
 
 
 
 
- * **LEXICON O-CUODI** Hundreds of thousands
+* **LEXICON O-CUODIthousands** Hundreds of thousands
 
- * **LEXICON O-2TO9CUO**
+* **LEXICON O-2TO9CUO**@CODE@****
 
- * **LEXICON O-GCUO**
+* **LEXICON O-GCUO**@CODE@****
 
 
- * **LEXICON DUHAT**
+* **LEXICON DUHAT**@CODE@****
 
 
 
- * **LEXICON JUSTDUHAT** for numerals going via 1000
+* **LEXICON JUSTDUHAT1000** for numerals going via 1000
 
 
 
 
- * **LEXICON OLD** for the old counting thirteen hundred etc.
+* **LEXICON OLDetc.** for the old counting thirteen hundred etc.
 
- * **LEXICON NLX**
+* **LEXICON NLX**@CODE@****
 
 
- * **LEXICON NUPPELOHKAICUODI**
+* **LEXICON NUPPELOHKAICUODI**@CODE@****
 
 
 
 
- * **LEXICON UNDERDUHAT**  the numerals under 1000
+* **LEXICON UNDERDUHAT1000**  the numerals under 1000
 
 
- * **LEXICON ONLY_CMP**
+* **LEXICON ONLY_CMP**@CODE@****
 
 
- * **LEXICON OKTAF**
+* **LEXICON OKTAF**@CODE@****
 
 
- * **LEXICON 2TO9F**
+* **LEXICON 2TO9F**@CODE@****
 
 
- * **LEXICON 11TO99F**
+* **LEXICON 11TO99F**@CODE@****
 
 
 
- * **LEXICON BARELOGIF**
+* **LEXICON BARELOGIF**@CODE@****
 
- * **LEXICON LOHKI**
+* **LEXICON LOHKI**@CODE@****
 
 
- * **LEXICON 2TO9LOG**
+* **LEXICON 2TO9LOG**@CODE@****
 
 
- * **LEXICON 21TO99**
+* **LEXICON 21TO99**@CODE@****
 
 
- * **LEXICON 111TO119**
+* **LEXICON 111TO119**@CODE@****
 
 
- * **LEXICON CUODI**
+* **LEXICON CUODI**@CODE@****
 
 
 
- * **LEXICON 2TO9CUO**
+* **LEXICON 2TO9CUO**@CODE@****
 
- * **LEXICON GCUODI**
+* **LEXICON GCUODI**@CODE@****
 
 
- * **LEXICON 1TO9CUODI**
+* **LEXICON 1TO9CUODI**@CODE@****
 
 
 
 
 
- * **LEXICON NUPPELOGIS**
+* **LEXICON NUPPELOGIS**@CODE@****
 
 
- * **LEXICON LOHKAI-END**
+* **LEXICON LOHKAI-END**@CODE@****
 
- * **LEXICON ARABICCOMPOUNDS**  ! arabic as first part,
+* **LEXICON ARABICCOMPOUNDSpart,**  ! arabic as first part,
 
 
- * **LEXICON NUMERALCOMPOUNDS**: numeral as first part: duhatjienat,
+* **LEXICON NUMERALCOMPOUNDSduhatjienat,**: numeral as first part: duhatjienat,
 logigielat, etc.
 
- * **LEXICON SAS** gives :»»» and goes to SASCont
+* **LEXICON SASSASCont** gives :»»» and goes to SASCont
 
 
 
@@ -151,23 +151,23 @@ logigielat, etc.
 
 
 
- * **LEXICON num-ordinal** Ordinal numbers
+* **LEXICON num-ordinalnumbers** Ordinal numbers
 
- * **LEXICON num-ordinal-1** Ordinal numbers vuosttas, vuosttaš
+* **LEXICON num-ordinal-1vuosttaš** Ordinal numbers vuosttas, vuosttaš
 
- * **LEXICON num-ordinal-2to9** Ordinal numbers, 2 to 20, even though the name implies differenty
-
-
- * **LEXICON VUOSTTAS**
+* **LEXICON num-ordinal-2to9differenty** Ordinal numbers, 2 to 20, even though the name implies differenty
 
 
- * **LEXICON num-collective** Collective numerals
+* **LEXICON VUOSTTAS**@CODE@****
 
 
+* **LEXICON num-collectivenumerals** Collective numerals
 
 
 
- * **LEXICON num-imprecise** Imprecise numbers
+
+
+* **LEXICON num-imprecisenumbers** Imprecise numbers
 
 
 
@@ -196,93 +196,93 @@ numerical expressions in each category.
 
 
 
- * **LEXICON ONLY_OKTA**
+* **LEXICON ONLY_OKTA**@CODE@****
 
 
- * **LEXICON LOGIF**
+* **LEXICON LOGIF**@CODE@****
 
 
- * **LEXICON NUPPELOHKAI**
+* **LEXICON NUPPELOHKAI**@CODE@****
 
 
 
- * **LEXICON GOLBMALOGIOKTA**
+* **LEXICON GOLBMALOGIOKTA**@CODE@****
 
- * **LEXICON GAVCCILOGIOKTA**
-
-
- * **LEXICON GUOKTELOGIOKTA**
-
- * **LEXICON VIHTTALOGIOKTA**
-
- * **LEXICON GOLBMALOGIGUOKTE**
-
- * **LEXICON GAVCCILOGIGUOKTE**
+* **LEXICON GAVCCILOGIOKTA**@CODE@****
 
 
- * **LEXICON GUOKTELOGIGUOKTE**
+* **LEXICON GUOKTELOGIOKTA**@CODE@****
 
- * **LEXICON VIHTTALOGIGUOKTE**
+* **LEXICON VIHTTALOGIOKTA**@CODE@****
 
- * **LEXICON GOLBMALOGIGOLBMA**
+* **LEXICON GOLBMALOGIGUOKTE**@CODE@****
 
- * **LEXICON GAVCCILOGIGOLBMA**
-
-
- * **LEXICON GUOKTELOGIGOLBMA**
-
- * **LEXICON VIHTTALOGIGOLBMA**
-
- * **LEXICON GOLBMALOGINJEALLJE**
-
- * **LEXICON GAVCCILOGINJEALLJE**
+* **LEXICON GAVCCILOGIGUOKTE**@CODE@****
 
 
- * **LEXICON GUOKTELOGINJEALLJE**
+* **LEXICON GUOKTELOGIGUOKTE**@CODE@****
 
- * **LEXICON VIHTTALOGINJEALLJE**
+* **LEXICON VIHTTALOGIGUOKTE**@CODE@****
 
- * **LEXICON GOLBMALOGIVIHTTA**
+* **LEXICON GOLBMALOGIGOLBMA**@CODE@****
 
- * **LEXICON GAVCCILOGIVIHTTA**
-
-
- * **LEXICON GUOKTELOGIVIHTTA**
-
- * **LEXICON VIHTTALOGIVIHTTA**
-
- * **LEXICON GOLBMALOGIGUHTTA**
-
- * **LEXICON GAVCCILOGIGUHTTA**
-
- * **LEXICON GUOKTELOGIGUHTTA**
-
- * **LEXICON VIHTTALOGIGUHTTA**
-
- * **LEXICON GOLBMALOGICIEZA**
-
- * **LEXICON GAVCCILOGICIEZA**
+* **LEXICON GAVCCILOGIGOLBMA**@CODE@****
 
 
- * **LEXICON GUOKTELOGICIEZA**
+* **LEXICON GUOKTELOGIGOLBMA**@CODE@****
 
- * **LEXICON VIHTTALOGICIEZA**
+* **LEXICON VIHTTALOGIGOLBMA**@CODE@****
 
- * **LEXICON GOLBMALOGIGAVCCI**
+* **LEXICON GOLBMALOGINJEALLJE**@CODE@****
 
- * **LEXICON GAVCCILOGIGAVCCI**
+* **LEXICON GAVCCILOGINJEALLJE**@CODE@****
 
 
- * **LEXICON GUOKTELOGIGAVCCI**
+* **LEXICON GUOKTELOGINJEALLJE**@CODE@****
 
- * **LEXICON VIHTTALOGIGAVCCI**
+* **LEXICON VIHTTALOGINJEALLJE**@CODE@****
 
- * **LEXICON GOLBMALOGIOVCCI**
+* **LEXICON GOLBMALOGIVIHTTA**@CODE@****
 
- * **LEXICON GAVCCILOGIOVCCI**
+* **LEXICON GAVCCILOGIVIHTTA**@CODE@****
 
- * **LEXICON GUOKTELOGIOVCCI**
 
- * **LEXICON VIHTTALOGIOVCCI**
+* **LEXICON GUOKTELOGIVIHTTA**@CODE@****
+
+* **LEXICON VIHTTALOGIVIHTTA**@CODE@****
+
+* **LEXICON GOLBMALOGIGUHTTA**@CODE@****
+
+* **LEXICON GAVCCILOGIGUHTTA**@CODE@****
+
+* **LEXICON GUOKTELOGIGUHTTA**@CODE@****
+
+* **LEXICON VIHTTALOGIGUHTTA**@CODE@****
+
+* **LEXICON GOLBMALOGICIEZA**@CODE@****
+
+* **LEXICON GAVCCILOGICIEZA**@CODE@****
+
+
+* **LEXICON GUOKTELOGICIEZA**@CODE@****
+
+* **LEXICON VIHTTALOGICIEZA**@CODE@****
+
+* **LEXICON GOLBMALOGIGAVCCI**@CODE@****
+
+* **LEXICON GAVCCILOGIGAVCCI**@CODE@****
+
+
+* **LEXICON GUOKTELOGIGAVCCI**@CODE@****
+
+* **LEXICON VIHTTALOGIGAVCCI**@CODE@****
+
+* **LEXICON GOLBMALOGIOVCCI**@CODE@****
+
+* **LEXICON GAVCCILOGIOVCCI**@CODE@****
+
+* **LEXICON GUOKTELOGIOVCCI**@CODE@****
+
+* **LEXICON VIHTTALOGIOVCCI**@CODE@****
 * * *
 <small>This (part of) documentation was generated from [../src/fst/stems/numerals.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/numerals.lexc)</small>

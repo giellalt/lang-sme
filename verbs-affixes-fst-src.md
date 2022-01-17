@@ -17,26 +17,26 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 These are treated separately because
 modals do not participate in derivation
 
- * **LEXICON GALGA_IV** only dáidit, galgat
+* **LEXICON GALGA_IVgalgat** only dáidit, galgat
 
 
 
- * **LEXICON FERTE_IV**  only fertet and bállet
+* **LEXICON FERTE_IVbállet**  only fertet and bállet
 
 
 
 ### Ordinary bisyllabic verbs
 
 
- * **LEXICON DIEHTI_TV** Bisyllabic i-verbs with Personal Passive
+* **LEXICON DIEHTI_TVPassive** Bisyllabic i-verbs with Personal Passive
 
 
- * **LEXICON BORRA_TV** Bisyllabic a- and u-verbs with Personal Passive
+* **LEXICON BORRA_TVPassive** Bisyllabic a- and u-verbs with Personal Passive
 
 
- * **LEXICON BOAHTI_IV**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg
+* **LEXICON BOAHTI_IVDer/NomAg**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg
 
- * **LEXICON DIEVVA_IV**  Bisyllabic a- and u-verbs without Personal Passive but with Der/NomAg
+* **LEXICON DIEVVA_IVDer/NomAg**  Bisyllabic a- and u-verbs without Personal Passive but with Der/NomAg
 
 
 
@@ -48,53 +48,53 @@ modals do not participate in derivation
 
 
 
- * **LEXICON DEAKCU_TV** as BORRA for u-verbs with dim -astit, and a-verbs with dim -istit that are hardcoded
+* **LEXICON DEAKCU_TVhardcoded** as BORRA for u-verbs with dim -astit, and a-verbs with dim -istit that are hardcoded
 
 
- * **LEXICON BOAZZU_IV** as DIEVVA_IV for u-verbs with dim -astit, and a-verbs with dim -istit that are hardcoded
+* **LEXICON BOAZZU_IVhardcoded** as DIEVVA_IV for u-verbs with dim -astit, and a-verbs with dim -istit that are hardcoded
 
 
- * **LEXICON BINDU_IV** as DIEVVA (but without short passive) for u-verbs with dim -astit, that are hardcoded
+* **LEXICON BINDU_IVhardcoded** as DIEVVA (but without short passive) for u-verbs with dim -astit, that are hardcoded
 
- * **LEXICON DAHTU_TV**  As diehti, but -ut verbs, thus without short passive
+* **LEXICON DAHTU_TVpassive**  As diehti, but -ut verbs, thus without short passive
 
- * **LEXICON BOLTU_TV**  As DAHTU_TV but with dim -astit that are harcoded
+* **LEXICON BOLTU_TVharcoded**  As DAHTU_TV but with dim -astit that are harcoded
 
- * **LEXICON ALLU_IV**  -ut verbs, thus without short passive
+* **LEXICON ALLU_IVpassive**  -ut verbs, thus without short passive
 
 
 
 
- * **LEXICON DIEHTALADDA_TV** Already derived words (except words ending -uššat and -httit) - no deverbal verbs
+* **LEXICON DIEHTALADDA_TVverbs** Already derived words (except words ending -uššat and -httit) - no deverbal verbs
 
- * **LEXICON LAIGOHADDA_TV** láigohaddat. No deverbal nouns for speller reasons. No +Imprt+Pl2: láigohaddit
+* **LEXICON LAIGOHADDA_TVláigohaddit** láigohaddat. No deverbal nouns for speller reasons. No +Imprt+Pl2: láigohaddit
 
 
- * **LEXICON HAHTTIT_TV** Four-syll kausatives on -httit
+* **LEXICON HAHTTIT_TV-httit** Four-syll kausatives on -httit
 
- * **LEXICON BOAHTALADDA_IV** Already derived words (except words ending -uššat)
+* **LEXICON BOAHTALADDA_IV-uššat)** Already derived words (except words ending -uššat)
 
- * **LEXICON RAIMMAHALLA_IV** passives on -hallat and INCHOATIVES on -stuvvat
+* **LEXICON RAIMMAHALLA_IV-stuvvat** passives on -hallat and INCHOATIVES on -stuvvat
 
- * **LEXICON UVVA_IV** passives -uvvat
+* **LEXICON UVVA_IV-uvvat** passives -uvvat
 
 
- * **LEXICON SMUVVA_IV** passives -snuvvat, -smuvvat
+* **LEXICON SMUVVA_IV-smuvvat** passives -snuvvat, -smuvvat
 
 
 
- * **LEXICON DOAROSTUVVA_TV** INCHOATIVES on -stuvvat
+* **LEXICON DOAROSTUVVA_TV-stuvvat** INCHOATIVES on -stuvvat
 
 
- * **LEXICON MAHTALADDA_TV** Bisyllabic Already derived words (except words ending -uššat) without Personal Passive but with Acc obj
+* **LEXICON MAHTALADDA_TVobj** Bisyllabic Already derived words (except words ending -uššat) without Personal Passive but with Acc obj
 
 
 
 
 
- * **LEXICON ARVI_IV** Bisyllabic Impersonal Verbs
+* **LEXICON ARVI_IVVerbs** Bisyllabic Impersonal Verbs
 
- * **LEXICON ARVALADDA_IV** Already derived words (except words ending -uššat)
+* **LEXICON ARVALADDA_IV-uššat)** Already derived words (except words ending -uššat)
 
 
 
@@ -104,83 +104,83 @@ modals do not participate in derivation
 
 
 
- * **LEXICON MASSI_TV** No Der/NomAg (for speller reasons). Bisyllabic i-verbs with Personal Passive. Otherwise like DIEHTI_TV
+* **LEXICON MASSI_TVDIEHTI_TV** No Der/NomAg (for speller reasons). Bisyllabic i-verbs with Personal Passive. Otherwise like DIEHTI_TV
 
- * **LEXICON VALDI_TV**  No Der/NomAg (for speller reasons). Bisyllabic i-verbs with Personal Passive. No VGen. Otherwise like DIEHTI_TV
+* **LEXICON VALDI_TVDIEHTI_TV**  No Der/NomAg (for speller reasons). Bisyllabic i-verbs with Personal Passive. No VGen. Otherwise like DIEHTI_TV
 
 
- * **LEXICON ASTA_TV** No Der/NomAg (for speller reasons). Bisyllabic a- and u-verbs with Personal Passive. Otherwise like BORRA_TV
+* **LEXICON ASTA_TVBORRA_TV** No Der/NomAg (for speller reasons). Bisyllabic a- and u-verbs with Personal Passive. Otherwise like BORRA_TV
 
 
- * **LEXICON BORGI_IV**  Bisyllabic i-verbs without Personal Passive but without Der/NomAg. No Der/NomAg for speller reasons. Otherwise like BOAHTI_IV
+* **LEXICON BORGI_IVBOAHTI_IV**  Bisyllabic i-verbs without Personal Passive but without Der/NomAg. No Der/NomAg for speller reasons. Otherwise like BOAHTI_IV
 
- * **LEXICON BEALLJA_IV** No Der/NomAg for speller reasons. Bisyllabic a- and u-verbs without Personal Passive but without Der/NomAg. Otherwise like DIEVVA_IV
+* **LEXICON BEALLJA_IVDIEVVA_IV** No Der/NomAg for speller reasons. Bisyllabic a- and u-verbs without Personal Passive but without Der/NomAg. Otherwise like DIEVVA_IV
 
 
- * **LEXICON DAVGU_TV**  As DAHTU_TV, No Der/NomAg for speller reasons.
+* **LEXICON DAVGU_TVreasons.**  As DAHTU_TV, No Der/NomAg for speller reasons.
 
 
- * **LEXICON LEABBU_TV** No Der/NomAg (for speller reasons)- otherwise like DEAKCU_TV
+* **LEXICON LEABBU_TVDEAKCU_TV** No Der/NomAg (for speller reasons)- otherwise like DEAKCU_TV
 
 
 
- * **LEXICON ALBMU_TV** No Der/NomAg (for speller reasons). As BOLTU_TV otherwise
+* **LEXICON ALBMU_TVotherwise** No Der/NomAg (for speller reasons). As BOLTU_TV otherwise
 
 
 
- * **LEXICON BARGU_IV**  no Der/NomAg for speller reasons- Like ALLU_IV
+* **LEXICON BARGU_IVALLU_IV**  no Der/NomAg for speller reasons- Like ALLU_IV
 
 
- * **LEXICON BORSU_IV** as BINDU. No Der/NomAg
+* **LEXICON BORSU_IVDer/NomAg** as BINDU. No Der/NomAg
 
 
 
 
- * **LEXICON MUHTTI_TV** No deverbal nouns an ACTIO(for speller reasons). Bisyllabic i-verbs with Personal Passive
+* **LEXICON MUHTTI_TVPassive** No deverbal nouns an ACTIO(for speller reasons). Bisyllabic i-verbs with Personal Passive
 
- * **LEXICON BEAHTTI_TV** Bisyllabic i-verbs with Personal Passive, no Der/alla, no Der/adda, Der/halla  (beahtáhallat, báinnáhallat) for speller
+* **LEXICON BEAHTTI_TVspeller** Bisyllabic i-verbs with Personal Passive, no Der/alla, no Der/adda, Der/halla  (beahtáhallat, báinnáhallat) for speller
 
- * **LEXICON FAHTE_TV** Contracted Verbs with Personal Passive,  no Der/alla, no Der/adda, Der/halla  (fáhtehallin) for speller
+* **LEXICON FAHTE_TVspeller** Contracted Verbs with Personal Passive,  no Der/alla, no Der/adda, Der/halla  (fáhtehallin) for speller
 
 
- * **LEXICON GILVI_TV** only gilvit, to get rid of gilvohallat (for speller reasons).
+* **LEXICON GILVI_TVreasons).** only gilvit, to get rid of gilvohallat (for speller reasons).
 
- * **LEXICON FAHTI_TV** (for speller reasons). no fáhttet (fáhtit+V+TV+Imprt+Pl2) because it get mixed up with fáhtet. No deverbal nouns.
+* **LEXICON FAHTI_TVnouns.** (for speller reasons). no fáhttet (fáhtit+V+TV+Imprt+Pl2) because it get mixed up with fáhtet. No deverbal nouns.
 
 
- * **LEXICON DAHKA_TV** Like BORRA_TV, but without	dahkat+V+TV+Imprt+Sg1, to get rid of dahkon (for speller reasons)
+* **LEXICON DAHKA_TVreasons)** Like BORRA_TV, but without	dahkat+V+TV+Imprt+Sg1, to get rid of dahkon (for speller reasons)
 
 
- * **LEXICON FALLA_TV** fállat, njoarrat,  to get rid of fálastallat, njoarastallat (for speller reasons).
+* **LEXICON FALLA_TVreasons).** fállat, njoarrat,  to get rid of fálastallat, njoarastallat (for speller reasons).
 
 
 
 
- * **LEXICON OAHPPA_TV** only oahppat. Like BORRA but without Deverbal verb -stuvva (for speller reasons)
+* **LEXICON OAHPPA_TVreasons)** only oahppat. Like BORRA but without Deverbal verb -stuvva (for speller reasons)
 
 
 
 
 
- * **LEXICON AKTI_IV**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg - for speller reasons, to prevent:
+* **LEXICON AKTI_IVprevent:**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg - for speller reasons, to prevent:
 
 
 
- * **LEXICON GUHKKA_IV** No Imprt+Pl2 on -it, no Imprt+ConNegII and No +Der/NomAg for speller reasons. No Deverbal Verbs either. Bisyllabic a- and u-verbs without Personal Passive
+* **LEXICON GUHKKA_IVPassive** No Imprt+Pl2 on -it, no Imprt+ConNegII and No +Der/NomAg for speller reasons. No Deverbal Verbs either. Bisyllabic a- and u-verbs without Personal Passive
 
- * **LEXICON BARDNA_IV** "bárdnat" ----> potensialis removed; bártnažan, bártnažat, bártnaš, bártnaža. No Der/NomAg for speller reasons. Bisyllabic a- and u-verbs without Personal Passive but without Der/NomAg. Otherwise like DIEVVA_IV
+* **LEXICON BARDNA_IVDIEVVA_IV** "bárdnat" ----> potensialis removed; bártnažan, bártnažat, bártnaš, bártnaža. No Der/NomAg for speller reasons. Bisyllabic a- and u-verbs without Personal Passive but without Der/NomAg. Otherwise like DIEVVA_IV
 
 
 
 
 
- * **LEXICON DIEHTISHORT_TV** Short action noun compound-form: neasken-
+* **LEXICON DIEHTISHORT_TVneasken-** Short action noun compound-form: neasken-
 
- * **LEXICON DIEHTILONGSHORT_TV** Long and short action noun compound-form, savdnjen-/savdnjin-
+* **LEXICON DIEHTILONGSHORT_TVsavdnjen-/savdnjin-** Long and short action noun compound-form, savdnjen-/savdnjin-
 
- * **LEXICON BAHCCI_TV** bahčit. Long and short actio compound-form. No NomAg (Actor) compound, for speller reasons
+* **LEXICON BAHCCI_TVreasons** bahčit. Long and short actio compound-form. No NomAg (Actor) compound, for speller reasons
 
- * **LEXICON BOAHTILONGSHORT_IV** Long and short action noun compound-form
+* **LEXICON BOAHTILONGSHORT_IVcompound-form** Long and short action noun compound-form
 
 
 
@@ -189,7 +189,7 @@ modals do not participate in derivation
 
 
 
- * **LEXICON MAHTI_TV**  Bisyllabic Verbs without Personal Passive but with Acc obj.
+* **LEXICON MAHTI_TVobj.**  Bisyllabic Verbs without Personal Passive but with Acc obj.
 
 
 
@@ -244,9 +244,9 @@ modals do not participate in derivation
 
 
 
- * **LEXICON GOAHTICnj**  for speller reasons to hinder -goahttit, whick is confused with infinitive -goahtit
+* **LEXICON GOAHTICnj-goahtit**  for speller reasons to hinder -goahttit, whick is confused with infinitive -goahtit
 
- * **LEXICON RAIMMAHALLACnj**  restricted imperatives
+* **LEXICON RAIMMAHALLACnjimperatives**  restricted imperatives
 
 
 
@@ -257,10 +257,10 @@ modals do not participate in derivation
 ## Basic lexica for contracted verbs
 
 
- * **LEXICON GILLE_IV**  Contracted Verbs without Personal Passive
+* **LEXICON GILLE_IVPassive**  Contracted Verbs without Personal Passive
 
 
- * **LEXICON DOHPPE_TV** Contracted Verbs with Personal Passive
+* **LEXICON DOHPPE_TVPassive** Contracted Verbs with Personal Passive
 
 
 
@@ -278,26 +278,26 @@ modals do not participate in derivation
 
 
 
- * **LEXICON CIRRO_IV**  Inchoatives and essives on -á, -o, -e without Personal Passive
+* **LEXICON CIRRO_IVPassive**  Inchoatives and essives on -á, -o, -e without Personal Passive
 
- * **LEXICON MUITA_TV**  Inchoatives and essives on -á, -o, -e with Personal Passive
-
-
+* **LEXICON MUITA_TVPassive**  Inchoatives and essives on -á, -o, -e with Personal Passive
 
 
 
 
 
- * **LEXICON COHKKA_IV**  Contracted Verbs without Personal Passive - no stit-deverbal
-
- * **LEXICON GARRE_TV**  garret, loget. with Personal Passive. for speller to hinder garrenávnnas, garrenoaivi etc
-
- * **LEXICON ORRO_IV**  orrot. for speller to hinder orronsadji etc
 
 
+* **LEXICON COHKKA_IVstit-deverbal**  Contracted Verbs without Personal Passive - no stit-deverbal
+
+* **LEXICON GARRE_TVetc**  garret, loget. with Personal Passive. for speller to hinder garrenávnnas, garrenoaivi etc
+
+* **LEXICON ORRO_IVetc**  orrot. for speller to hinder orronsadji etc
 
 
- * **LEXICON MAHTA_TV** Contracted Verbs without Personal Passive but with Acc obj.
+
+
+* **LEXICON MAHTA_TVobj.** Contracted Verbs without Personal Passive but with Acc obj.
 
 
 
@@ -335,10 +335,10 @@ modals do not participate in derivation
 ## Basic lexica for trisyllabic verbs
 
 
- * **LEXICON MUITAL_TV** Trisyllabic Verbs with Personal Passive
+* **LEXICON MUITAL_TVPassive** Trisyllabic Verbs with Personal Passive
 
 
- * **LEXICON ALIST_IV** Trisyllabic Verbs without Personal Passive
+* **LEXICON ALIST_IVPassive** Trisyllabic Verbs without Personal Passive
 
 
 
@@ -351,64 +351,13 @@ modals do not participate in derivation
 
 
 
- * **LEXICON COASKKIT_IV**  Trisyllabic impersonals
+* **LEXICON COASKKIT_IVimpersonals**  Trisyllabic impersonals
 
 
 
- * **LEXICON ARVVASJ_IV** impersonals ending -šit, -skit, smit, -idit, -ldit, -git and 5-syllables
+* **LEXICON ARVVASJ_IV5-syllables** impersonals ending -šit, -skit, smit, -idit, -ldit, -git and 5-syllables
 
- * **LEXICON ARVIL_IV** Impersonal Trisyllabic Verbs ending -lit
-
-
-
-
-
-
-
-
-
-
- * **LEXICON MUITTASJ_TV** Words ending -šit, -skit, -ldit - Reciprocals on -dit, Momentatives on -dit, -ádit, -ihit, -e7hit, Frequentatives on -(u)hit, Continuatives on -nit, Inchoatives on -nit
-
- * **LEXICON HALIID_TV** Words ending -smit, -idit, -git
-
- * **LEXICON BONJAT_TV** Cont/Freq on -dit, Continuatives on -(u)hit, Reciprocals, momentatives and frequentatives ending -alit
-
- * **LEXICON VUORDIL_TV** Trisyllabic Verbs ending -lit, -rit with Personal Passive
-
- * **LEXICON BEAGASJ_IV** Words ending -šit, -skit -ldit, essive derivates on -hit -. !Reciprocals on -dit. Momentatives on -dit, -ádit, -ihit, -e7hit. Frequentatives on -(u)hit. Continuatives on -nit. Inchoatives in -nit
-
- * **LEXICON JORGGIID_IV** Words ending -smit, -idit, -git -
-
- * **LEXICON HURAI_IV** Words ending -aidit
-
-
- * **LEXICON BALAT_IV** !Cont/Freq on -dit, Continuatives on -(u)hit, Reciprocals, momentatives and frequentatives ending -alit
-
- * **LEXICON SUOTNJAL_IV** Trisyllabic Verbs ending -lit, -rit without Personal Passive
-
- * **LEXICON BOTNJAS_IV** Trisyllabic Verbs ending -sit without Personal Passive
-
- * **LEXICON LASSAN_IV** Trisyllabic Verbs ending -nit without Personal Passive IV
-
-
-
-
-
- * **LEXICON OAHPAHIT_TV** only oahpahit, disamb reasons?
-
- * **LEXICON NUOSKIT_IV** only nuoskidit, for speller, no action noun nuoskideapmi
-
- * **LEXICON HALIHIT_TV** Like MUITTASJ_TV, without COnNeg so we dont get hálit
-
-
-
-
- * **LEXICON LAHKAN_TV** lahkanit, lahkonit, are nowadays used transitively
-
- * **LEXICON GEAGAT_TV**  Trisyllabic Verbs without Personal Passive but with Acc obj.
-
- * **LEXICON BUOVVAL_TV**  buovvalit, guoigalit. Trisyllabic Verbs ending -lit without Personal Passive but with Acc obj.
+* **LEXICON ARVIL_IV-lit** Impersonal Trisyllabic Verbs ending -lit
 
 
 
@@ -419,14 +368,65 @@ modals do not participate in derivation
 
 
 
+* **LEXICON MUITTASJ_TV-nit** Words ending -šit, -skit, -ldit - Reciprocals on -dit, Momentatives on -dit, -ádit, -ihit, -e7hit, Frequentatives on -(u)hit, Continuatives on -nit, Inchoatives on -nit
+
+* **LEXICON HALIID_TV-git** Words ending -smit, -idit, -git
+
+* **LEXICON BONJAT_TV-alit** Cont/Freq on -dit, Continuatives on -(u)hit, Reciprocals, momentatives and frequentatives ending -alit
+
+* **LEXICON VUORDIL_TVPassive** Trisyllabic Verbs ending -lit, -rit with Personal Passive
+
+* **LEXICON BEAGASJ_IV-nit** Words ending -šit, -skit -ldit, essive derivates on -hit -. !Reciprocals on -dit. Momentatives on -dit, -ádit, -ihit, -e7hit. Frequentatives on -(u)hit. Continuatives on -nit. Inchoatives in -nit
+
+* **LEXICON JORGGIID_IV-** Words ending -smit, -idit, -git -
+
+* **LEXICON HURAI_IV-aidit** Words ending -aidit
+
+
+* **LEXICON BALAT_IV-alit** !Cont/Freq on -dit, Continuatives on -(u)hit, Reciprocals, momentatives and frequentatives ending -alit
+
+* **LEXICON SUOTNJAL_IVPassive** Trisyllabic Verbs ending -lit, -rit without Personal Passive
+
+* **LEXICON BOTNJAS_IVPassive** Trisyllabic Verbs ending -sit without Personal Passive
+
+* **LEXICON LASSAN_IVIV** Trisyllabic Verbs ending -nit without Personal Passive IV
 
 
 
 
- * **LEXICON MUITALCnj** Substems for Consonantal Verb Stems
+
+* **LEXICON OAHPAHIT_TVreasons?** only oahpahit, disamb reasons?
+
+* **LEXICON NUOSKIT_IVnuoskideapmi** only nuoskidit, for speller, no action noun nuoskideapmi
+
+* **LEXICON HALIHIT_TVhálit** Like MUITTASJ_TV, without COnNeg so we dont get hálit
 
 
- * **LEXICON HURAICnj** Substems for  Words ending -aidit
+
+
+* **LEXICON LAHKAN_TVtransitively** lahkanit, lahkonit, are nowadays used transitively
+
+* **LEXICON GEAGAT_TVobj.**  Trisyllabic Verbs without Personal Passive but with Acc obj.
+
+* **LEXICON BUOVVAL_TVobj.**  buovvalit, guoigalit. Trisyllabic Verbs ending -lit without Personal Passive but with Acc obj.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* **LEXICON MUITALCnjStems** Substems for Consonantal Verb Stems
+
+
+* **LEXICON HURAICnj-aidit** Substems for  Words ending -aidit
 
 
 
@@ -458,36 +458,36 @@ modals do not participate in derivation
 
 ### Vocalic stems
 
- * **LEXICON PotPrsV** Present Tense in Vocalic Verb Stems
+* **LEXICON PotPrsVStems** Present Tense in Vocalic Verb Stems
 
- * **LEXICON PrsV** Present Tense in Vocalic Verb Stems
+* **LEXICON PrsVStems** Present Tense in Vocalic Verb Stems
 
- * **LEXICON PrsV1** Present Tense Endings for Vocalic Verb Stems
+* **LEXICON PrsV1Stems** Present Tense Endings for Vocalic Verb Stems
 
- * **LEXICON PrsV2** Present Tense Endings for Vocalic Verb Stems
+* **LEXICON PrsV2Stems** Present Tense Endings for Vocalic Verb Stems
 
- * **LEXICON PrsV3** Present Tense Endings for Vocalic Verb Stems
+* **LEXICON PrsV3Stems** Present Tense Endings for Vocalic Verb Stems
 
- * **LEXICON PrsV4** Present Tense Endings for Vocalic Verb Stems
+* **LEXICON PrsV4Stems** Present Tense Endings for Vocalic Verb Stems
 
- * **LEXICON PrsV5** Present Tense Endings for Vocalic Verb Stems
+* **LEXICON PrsV5Stems** Present Tense Endings for Vocalic Verb Stems
 
 
 
 
 ### Consonantal stems
 
- * **LEXICON PotC** Present Tense in Consonantal Verb Stems
+* **LEXICON PotCStems** Present Tense in Consonantal Verb Stems
 
 
- * **LEXICON PrsC** Present Tense in Consonantal Verb Stems
+* **LEXICON PrsCStems** Present Tense in Consonantal Verb Stems
 
- * **LEXICON PrsC1** Present Tense in Contr/Non-Contr Consonantal Verb Stems
+* **LEXICON PrsC1Stems** Present Tense in Contr/Non-Contr Consonantal Verb Stems
 
- * **LEXICON PotC2** Potential in Non-Contracted Consonantal Verb Stems
+* **LEXICON PotC2Stems** Potential in Non-Contracted Consonantal Verb Stems
 
 
- * **LEXICON PrsC2** Present Tense in Non-Contracted Consonantal Verb Stems
+* **LEXICON PrsC2Stems** Present Tense in Non-Contracted Consonantal Verb Stems
 
 
 
@@ -499,40 +499,40 @@ modals do not participate in derivation
 ### Vocalic stems
 
 
- * **LEXICON PrtV** Preterite Endings for Vocalic Verb Stems
+* **LEXICON PrtVStems** Preterite Endings for Vocalic Verb Stems
 
- * **LEXICON PrtV1** Preterite Endings for Vocalic Weak Grade Verb Stems
+* **LEXICON PrtV1Stems** Preterite Endings for Vocalic Weak Grade Verb Stems
 
- * **LEXICON PrtV2** Preterite Endings for Vocalic Strong Grade Verb Stems
+* **LEXICON PrtV2Stems** Preterite Endings for Vocalic Strong Grade Verb Stems
 
 ### Consonantal stems
 
 
- * **LEXICON PrtC** Preterite Endings for Consonantal Verb Stems
+* **LEXICON PrtCStems** Preterite Endings for Consonantal Verb Stems
 
- * **LEXICON PrtC1** Preterite Endings for Consonantal Contr./Non-Contr. Verb Stems
+* **LEXICON PrtC1Stems** Preterite Endings for Consonantal Contr./Non-Contr. Verb Stems
 
- * **LEXICON PrtC2** Preterite Endings for Consonantal Non-Contr. Verb Stems
+* **LEXICON PrtC2Stems** Preterite Endings for Consonantal Non-Contr. Verb Stems
 
- * **LEXICON PrtC3** Preterite Endings for Consonantal Contr./Non-Contr. Verb Stems
+* **LEXICON PrtC3Stems** Preterite Endings for Consonantal Contr./Non-Contr. Verb Stems
 
 
 ## Imperative mood
 
- * **LEXICON ImprtVA**  Imperative Forms for Vocalic Verb Stems
+* **LEXICON ImprtVAStems**  Imperative Forms for Vocalic Verb Stems
 
- * **LEXICON ImprtVB**  Imperative Forms for Vocalic Verb Stems
+* **LEXICON ImprtVBStems**  Imperative Forms for Vocalic Verb Stems
 
- * **LEXICON ImprtV1**  Imperative Forms for Vocalic Verb Stems
+* **LEXICON ImprtV1Stems**  Imperative Forms for Vocalic Verb Stems
 
- * **LEXICON ImprtV2** Imperative Forms for Vocalic Verb Stems and Substems
+* **LEXICON ImprtV2Substems** Imperative Forms for Vocalic Verb Stems and Substems
 
- * **LEXICON ImprtSg2** Imperative Forms For Consonantal and Contracted Verb Stems
+* **LEXICON ImprtSg2Stems** Imperative Forms For Consonantal and Contracted Verb Stems
 
 
- * **LEXICON ImprtC**  Imperative Substems for Consonantal Verb Stems - uneven syll.
+* **LEXICON ImprtCsyll.**  Imperative Substems for Consonantal Verb Stems - uneven syll.
 
- * **LEXICON ImprtC2**  Imperative Substems for Consonantal Verb Stems - contracts
+* **LEXICON ImprtC2contracts**  Imperative Substems for Consonantal Verb Stems - contracts
 
 
 # Infinite forms
@@ -540,35 +540,35 @@ modals do not participate in derivation
 
 ## V- and C-final
 
- * **LEXICON NominalFormsV**  Vowel-final stems
+* **LEXICON NominalFormsVstems**  Vowel-final stems
 
 
 
 ## Continuation lex
 
- * **LEXICON NominalFormsVC**  for vowel final
+* **LEXICON NominalFormsVCfinal**  for vowel final
 
- * **LEXICON NominalFormsV1**   infinitiv, actio
-
-
- * **LEXICON NominalFormsV2**  gerund, verbgenitiv, verbabessive
-
- * **LEXICON NominalFormsV3**  ^NG^ gerund
-
- * **LEXICON NominalFormsV4**  perfect participe, preterite negation form
-
- * **LEXICON NominalFormsV5**  negation form
-
- * **LEXICON NominalFormsV6** presence participe
+* **LEXICON NominalFormsV1actio**   infinitiv, actio
 
 
- * **LEXICON NominalFormsV8**  gerund, verbabessive
+* **LEXICON NominalFormsV2verbabessive**  gerund, verbgenitiv, verbabessive
 
- * **LEXICON NominalFormsV9**  supine
+* **LEXICON NominalFormsV3gerund**  ^NG^ gerund
 
- * **LEXICON NominalFormsC1**  for cons final stems: infinitive, supine, actio, gerund, perfect participe, preterite negation form
+* **LEXICON NominalFormsV4form**  perfect participe, preterite negation form
 
- * **LEXICON NominalFormsC2**  for cons final stems: presence participe
+* **LEXICON NominalFormsV5form**  negation form
+
+* **LEXICON NominalFormsV6participe** presence participe
+
+
+* **LEXICON NominalFormsV8verbabessive**  gerund, verbabessive
+
+* **LEXICON NominalFormsV9supine**  supine
+
+* **LEXICON NominalFormsC1form**  for cons final stems: infinitive, supine, actio, gerund, perfect participe, preterite negation form
+
+* **LEXICON NominalFormsC2participe**  for cons final stems: presence participe
 
 
 
@@ -576,113 +576,113 @@ modals do not participate in derivation
 
 
 
- * **LEXICON DeverbalNounsC**
+* **LEXICON DeverbalNounsC**@CODE@****
 
- * **LEXICON DeverbalNounsCTV**
+* **LEXICON DeverbalNounsCTV**@CODE@****
 
- * **LEXICON DeverbalNounsBOAHTI**
+* **LEXICON DeverbalNounsBOAHTI**@CODE@****
 
- * **LEXICON DeverbalNounsRAIMMAHALLA** no NomAg/actor
+* **LEXICON DeverbalNounsRAIMMAHALLANomAg/actor** no NomAg/actor
 
- * **LEXICON DeverbalNounsBOAHTALADDA**
+* **LEXICON DeverbalNounsBOAHTALADDA**@CODE@****
 
- * **LEXICON DeverbalNounsDIEHTALADDA**
+* **LEXICON DeverbalNounsDIEHTALADDA**@CODE@****
 
- * **LEXICON DeverbalNounsDIEHTI**
-
-
- * **LEXICON DeverbalNounsDIEHTISHORT**
-
- * **LEXICON DeverbalNounsDIEHTILONGSHORT**
-
- * **LEXICON DeverbalNounsBAHCCI**
-
- * **LEXICON DeverbalNounsDOHPPE-**
-
- * **LEXICON DeverbalNounsGARRE-**
-
- * **LEXICON DeverbalNounsCIRRO-**
-
- * **LEXICON DeverbalNounsORRO-**
-
- * **LEXICON DeverbalNounsCIRROTV-**
+* **LEXICON DeverbalNounsDIEHTI**@CODE@****
 
 
- * **LEXICON DeverbalNounsDOHPPEJ**
+* **LEXICON DeverbalNounsDIEHTISHORT**@CODE@****
 
- * **LEXICON DeverbalNounsDOHPPEJTV**
+* **LEXICON DeverbalNounsDIEHTILONGSHORT**@CODE@****
 
- * **LEXICON DeverbalNounsMUITALTV**
+* **LEXICON DeverbalNounsBAHCCI**@CODE@****
 
- * **LEXICON DeverbalNounsMUITTASJTV**
+* **LEXICON DeverbalNounsDOHPPE-**@CODE@****
 
- * **LEXICON DeverbalNounsMUITAL**
+* **LEXICON DeverbalNounsGARRE-**@CODE@****
 
- * **LEXICON DeverbalNounsNUOSKIT**
+* **LEXICON DeverbalNounsCIRRO-**@CODE@****
 
+* **LEXICON DeverbalNounsORRO-**@CODE@****
 
- * **LEXICON DeverbalNounsMUITTASJ**
-
-
- * **LEXICON DeverbalVerbsBOAHTI**
-
- * **LEXICON DeverbalVerbsDIEVVA**
-
- * **LEXICON DeverbalVerbsBINDU**
+* **LEXICON DeverbalNounsCIRROTV-**@CODE@****
 
 
- * **LEXICON DeverbalVerbsBORRA**
+* **LEXICON DeverbalNounsDOHPPEJ**@CODE@****
 
- * **LEXICON DeverbalVerbsFALLA**
+* **LEXICON DeverbalNounsDOHPPEJTV**@CODE@****
 
- * **LEXICON DeverbalVerbsBOLTU**
+* **LEXICON DeverbalNounsMUITALTV**@CODE@****
 
+* **LEXICON DeverbalNounsMUITTASJTV**@CODE@****
 
- * **LEXICON DeverbalVerbsDIEHTI**
+* **LEXICON DeverbalNounsMUITAL**@CODE@****
 
- * **LEXICON DeverbalVerbsBEAHTTI**
-
- * **LEXICON DeverbalVerbsARVI**
-
-
- * **LEXICON DeverbalVerbsDOHPPE**
-
- * **LEXICON DeverbalVerbsFAHTE**
+* **LEXICON DeverbalNounsNUOSKIT**@CODE@****
 
 
- * **LEXICON DeverbalVerbsGILLE**
-
- * **LEXICON DeverbalVerbsCOHKKA**
-
- * **LEXICON DeverbalVerbsBORGE**
+* **LEXICON DeverbalNounsMUITTASJ**@CODE@****
 
 
+* **LEXICON DeverbalVerbsBOAHTI**@CODE@****
 
- * **LEXICON DeverbalVerbsMUITAL**
+* **LEXICON DeverbalVerbsDIEVVA**@CODE@****
 
- * **LEXICON DeverbalVerbsVUORDIL**
-
-
- * **LEXICON DeverbalVerbsALIST**
-
- * **LEXICON DeverbalVerbsSUOTNJAL**
-
- * **LEXICON DeverbalVerbsBOTNJAS**
-
- * **LEXICON DeverbalVerbsLASSAN**
-
- * **LEXICON DeverbalVerbsCOASKKIT**
-
- * **LEXICON DeverbalVerbsARVIL**
+* **LEXICON DeverbalVerbsBINDU**@CODE@****
 
 
+* **LEXICON DeverbalVerbsBORRA**@CODE@****
+
+* **LEXICON DeverbalVerbsFALLA**@CODE@****
+
+* **LEXICON DeverbalVerbsBOLTU**@CODE@****
+
+
+* **LEXICON DeverbalVerbsDIEHTI**@CODE@****
+
+* **LEXICON DeverbalVerbsBEAHTTI**@CODE@****
+
+* **LEXICON DeverbalVerbsARVI**@CODE@****
+
+
+* **LEXICON DeverbalVerbsDOHPPE**@CODE@****
+
+* **LEXICON DeverbalVerbsFAHTE**@CODE@****
+
+
+* **LEXICON DeverbalVerbsGILLE**@CODE@****
+
+* **LEXICON DeverbalVerbsCOHKKA**@CODE@****
+
+* **LEXICON DeverbalVerbsBORGE**@CODE@****
+
+
+
+* **LEXICON DeverbalVerbsMUITAL**@CODE@****
+
+* **LEXICON DeverbalVerbsVUORDIL**@CODE@****
+
+
+* **LEXICON DeverbalVerbsALIST**@CODE@****
+
+* **LEXICON DeverbalVerbsSUOTNJAL**@CODE@****
+
+* **LEXICON DeverbalVerbsBOTNJAS**@CODE@****
+
+* **LEXICON DeverbalVerbsLASSAN**@CODE@****
+
+* **LEXICON DeverbalVerbsCOASKKIT**@CODE@****
+
+* **LEXICON DeverbalVerbsARVIL**@CODE@****
 
 
 
 
 
 
- * LEXICON VGEN flag for VGen
+
+
+* LEXICON VGENVGen flag for VGen
 
 
 * * *

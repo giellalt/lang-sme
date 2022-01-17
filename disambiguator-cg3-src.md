@@ -216,7 +216,7 @@ EOS
 
 ### Semantic tags
 
- INCLUDE semsets.cg3 ; # includes the list of semantic tags from semsets.cg3
+INCLUDE semsets.cg3 ; #semsets.cg3 includes the list of semantic tags from semsets.cg3
 
 
 
