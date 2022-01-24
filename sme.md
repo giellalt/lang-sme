@@ -1515,6 +1515,1507 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* * *
+<small>This (part of) documentation was generated from [../src/cg3/semanticroles.cg3](http://github.com/giellalt/lang-sme/blob/main/../src/cg3/semanticroles.cg3)</small>
+
+
+
+
+
+
 # DELIMITERS 
 
 Sentence delimiters are the following: <.> <!> <?> <...> <¶>
@@ -13841,6 +15342,9 @@ The previous two rules look marginal.
 
 
 
+`º` is for CnsGrad of the `lg:lgg` and `lºl:ll` type
+`¤:0` prevents ConsGrad in certain words
+`'` is the real apostroph
 
 
 
@@ -13879,6 +15383,7 @@ The previous two rules look marginal.
 
 
 
+Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 
 
 
@@ -13886,72 +15391,168 @@ The previous two rules look marginal.
 
 
 
+* *áj'gi*
+* *ái0gi*
+* ★*mánnáX5jd* (is not standard language)
+* ★*má0ná0jd* (is not standard language)
 
 
 
 
 
 
+* *áj'gi*
+* *ái0gi*
 
+* *majdege*
+* *maidege*
 
+* ★*almmajX4in* (is not standard language)
+* ★*almmai0in* (is not standard language)
 
+* *mánnáX5jd*
+* *má0ná0id*
 
+* *almmájX4*
+* *almmái0*
 
+* *almmájX4X7-#*
+* *almmái00-#*
 
+* *almmájX4in*
+* *almmáj0in*
 
 
 
 
 
+* *smirez#*
+* *smires#*
 
+* *Troandim#*
+* *Troandin#*
 
+* *Troandim-*
+* *Troandin-*
 
+* *muhtum#*
+* *muhtun#*
 
+* *skoalkkuh#*
+* *skoalkkut#*
 
+* *nagod#*
+* *nagot#*
 
+* *bávččag#*
+* *bávččat#*
 
+* *nuorab#*
+* *nuorat#*
 
+* *bávččag#*
+* *bávččat#*
 
+* *eamid#*
+* *eamit#*
 
+* *alih#*
+* *alit#*
 
 
+* ★*vejolažž#* (is not standard language)
+* ★*vejolaž0#* (is not standard language)
 
+* *vejolažž#*
+* *vejolaš0#*
 
+* *olmmožX4X7-*
+* *olmmoš00-*
 
+* ★*olmmožX7-* (is not standard language)
+* ★*olmmoš0-* (is not standard language)
 
+* *olmmožX4*
+* *olmmoš0*
 
 
 
 
 
+* *fijdnisY5t*
+* *fiidná00t*
 
+* ★*fijdnisY5t* (is not standard language)
+* ★*fiidnás0t* (is not standard language)
 
+* ★*fijdnisY5t* (is not standard language)
+* ★*fiidnis0t* (is not standard language)
 
+* *albmájY5*
+* *albmá00*
 
+* *olbmožY5*
+* *olbmo00*
 
+* *fijdnisY5t-*
+* *fiidná00t-*
 
+* *albmájY5-*
+* *albmá00-*
 
+* *olbmožY5-*
+* *olbmo00-*
 
 
 
+* *vuordild#*
+* *vuordil0#*
 
+* ★*vuordild#* (is not standard language)
+* ★*vuordild#* (is not standard language)
 
+* *attest#*
+* *attes0#*
 
+* ★*attest#* (is not standard language)
+* ★*attest#* (is not standard language)
 
+* *berošt#*
+* *beroš0#*
 
 
+* *bearjadah'k#*
+* *bearjadat00#*
 
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadat0k#* (is not standard language)
 
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadat'0#* (is not standard language)
 
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadah00#* (is not standard language)
 
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadat'k#* (is not standard language)
 
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadah0k#* (is not standard language)
 
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadah'k#* (is not standard language)
 
 
 
 
+* *muitaluss#*
+* *muitalus0#*
 
+* ★*vejolažž#* (is not standard language)
+* ★*vejolažž#* (is not standard language)
 
+* *vejolažž#*
+* *vejolaš0#*
 
 
 
@@ -13959,101 +15560,203 @@ The previous two rules look marginal.
 
 
 
+* *joh'kaX4*
+* *jo00ga0*
 
+* ★*joh'kaX4* `joh'kaX4` (is not standard language joh'kaX4 joh'kaX4 joh'kaX4 jo0'kaX4)
+* ★*joh0ga0* `jo0'ga0` (is not standard language jo00ka0 joh'ga0 joh0ka0 joh0ga0)
 
 
+* *sápmiX4*
+* *sá0mi0*
 
+* ★*sápmiX4* (is not standard language)
+* ★*sápmi0* (is not standard language)
 
 
+* *latnjaX4*
+* *la0nja0*
 
+* *vuod'jiQ4n*
+* *vuo00já0n*
 
+* *káffeX4s*
+* *ká0fe0s*
 
 
+* *RuottaX4s*
+* *Ruo0ta0s*
 
 
 
 
+* *áhkkuX4s*
+* *áh0ku0s*
 
+* *vielljaX4*
+* *vie0lja0*
 
+* *mannjiX4*
+* *ma0nji0*
 
+* *áddjáX4*
+* *á0djá0*
 
+* *láj'biX4*
+* *láibbi0*
 
+* *seaŋ'gaX4*
+* *seaŋgga0*
 
+* *boŋ'kiX4j#*
+* *boŋkki0i#*
 
 
+* *sáf'taX4*
+* *sáftta0*
 
 
+* *oab'naX4*
+* *oabnna0*
 
+* *ám'taX4*
+* *ámtta0*
 
+* *In'gáX4*
+* *Inggá0*
 
 
+* *gán'daX4*
+* *gándda0*
 
 
+* *konseap'taX4*
+* *konseaptta0*
 
 
+* *áj'ruX4*
+* *áirru0*
 
+* *biev'laX4*
+* *bievlla0*
 
 
+* *jar'laX4*
+* *jarlla0*
 
 
+* *ol'juX4*
+* *oljju0*
 
 
+* *mát'kiX4*
+* *mátkki0*
 
 
 
+* *kreatsaX4*
+* *kreatssa0*
 
 
+* *beas'kaX4*
+* *beaskka0*
 
 
+* *čoav'jiX4*
+* *čoavjji0*
 
 
+* *beaj'viX4*
+* *beaivvi0*
 
+* *dujh'miX4*
+* *duihmmi0*
 
 
+* *čuolbmaX4*
+* *čuolmma0*
 
+* *DálmaX4*
+* *Dálmma0*
 
 
 
 
+* *sávdnjiX4*
+* *sávnnji0*
 
 
+* *čorbmaX4*
+* *čorpma0*
 
 
+* *skurdnjiX4*
+* *skurtnji0*
 
 
+* *návs'tuX4*
+* *návsttu0*
 
 
+* *limš'kiX4*
+* *limškki0*
 
 
+* *uk'saX4*
+* *uvssa0*
 
 
 
+* *teaks'taX4*
+* *teavstta0*
 
 
 
+* *spábbaX4*
+* *spáppa0*
 
 
 
+* ★*Szczecin* (is not standard language)
+* ★*Szccecin* (is not standard language)
 
+* *Szczecin*
+* *Szczecin*
 
+* *eadniX4*
+* *eatni0*
 
 
+* *boadnjiX4*
+* *boatnji0*
 
 
 
 
 
+* *boah'tiY1*
+* *boahtti0*
 
+* *dah'kaY7j*
+* *dahkku0i*
 
 
 
+* *dapmaY1*
+* *dabmi0*
 
+* *bitnjuY1*
+* *bidnju0*
 
+* *dad'jaY1*
+* *daddji0*
 
 
 
 
 
+* *joh'kaX4*
+* *jo00ga0*
 
 
 
@@ -14070,7 +15773,11 @@ The previous two rules look marginal.
 
 
 
+* *gáv'piX7*
+* *gáv0pe0*
 
+* *bassiX7*
+* *basse0*
 
 
 
@@ -14085,34 +15792,58 @@ The previous two rules look marginal.
 
 
 
+* *buorriX7#*
+* *buorre0#*
 
+* *buorriX8#*
+* *buo0re0#*
 
 
+* *várriX7gir'ku#*
+* *várre0gir0ku#*
 
 
 
 
 
 
+* *lijgiX7#ruh'taX4jd#*
+* *liige00ru00đa0id#*
 
 
 
 
 
 
+* *čuor'vuQ6*
+* *čuorvvo0*
 
 
+* *boah'tiQ6*
+* *boa00đe0*
 
 
 
 
+* *láj'kiW1s#*
+* *láikke0s#*
 
+* *ál'kiW2s#*
+* *ál0ke0s#*
 
 
 
+* *váttisW1#*
+* *váttes0#*
 
+* *head'jusW1-*
+* *hea00jos0-*
 
+* *head'jusW1#*
+* *hea00jos0#*
 
+* *váttisW1-*
+* *váttes0-*
 
 
 
@@ -14142,6 +15873,8 @@ The previous two rules look marginal.
 
 
 
+* *goah'tiX5jd*
+* *go000đi0id*
 
 
 
@@ -14156,6 +15889,8 @@ The previous two rules look marginal.
 
 
 
+* *vieh'ki¤X5jn*
+* *vi0hkki00in*
 
 
 
@@ -14174,20 +15909,34 @@ The previous two rules look marginal.
 
 
 
+* *reŋ'koX2jd*
+* *reŋ0ku0id*
 
+* *basteX2j*
+* *basti0i*
 
+* *asibealle7X2j*
+* *asibealli0ide*
 
+* *LineX2j*
+* *Lini0i*
 
 
 
 
+* *áhččiX2n*
+* *áhččá0n*
 
 
 
 
 
 
+* *stahtaX3j*
+* *stahti0i*
 
+* *Sij9teW9j*
+* *Sijte0i*
 
 
 
@@ -14197,25 +15946,53 @@ The previous two rules look marginal.
 
 
 
+* *fijdnisY5t*
+* *fiidná00t*
 
 
+* *oažžuQ8dit*
+* *o0ččo0dit*
 
+* *coah'kuX8stit*
+* *coa00go0stit*
 
 
 
+* *jearraQ1*
+* *jearrá0*
 
+* *boah'tiQ1*
+* *boah0tá0*
 
 
+* *jearraQ3n*
+* *je0rro0n*
 
+* *jearraQ2t*
+* *je0rre0t*
 
+* *boah'tiQ3n*
+* *bo0h0to0n*
 
+* *čuor'vuQ3n*
+* *ču0r0vo0n*
 
 
+* *jearraQ2*
+* *je0rre0*
 
+* *boah'tiQ2t*
+* *bo0h0te0t*
 
+* *čuor'vuQ2*
+* *ču0r0vo0*
 
 
+* *boah'tiQ4n*
+* *boa00đá0n*
 
+* *boah'tiQ5lin*
+* *boa00đá0lin*
 
 
 
@@ -14223,29 +16000,57 @@ The previous two rules look marginal.
 
 
 
+* *jearraY1*
+* *jearri0*
 
 
 
+* *jearraY2*
+* *jearru0*
 
+* *boah'tiY2*
+* *boahttu0*
 
 
+* *jearraQ2t*
+* *je0rre0t*
 
+boah'tiY4t ! It seems it should be Q3. ... both?!
+* *boah'tiQ3t*
+* *bo0h0to0t*
 
 
+čuor'vuY4t ! Q2, it seems.
+* *čuor'vuQ2t*
+* *ču0r0vo0t*
 
 
 
+* *jearraY7t*
+* *je0rro0t*
 
+* *boah'tiY7t*
+* *bo0htto0t*
 
+* *čuor'vuY7t*
+* *ču0r0vo0t*
 
+* *jearraY7juvvot*
+* *je0rro0juvvot*
 
 
 
 
 
 
+* *jearraY7j*
+* *je0rru0i*
 
+* *dah'kaY7j*
+* *dahkku0i*
 
+* *loikaY7j*
+* *loiku0i*
 
 
 
@@ -14262,8 +16067,14 @@ The previous two rules look marginal.
 
 
 
+* *beatnag8X4*
+* *bea0na00*
 
+* *luopmin8X4*
+* *luo0mi00*
 
+* *giellum8X4*
+* *gie0lu00*
 
 
 
@@ -14276,1046 +16087,33 @@ The previous two rules look marginal.
 
 
 
+Changed because:we get almmáj- and not almmái-
+Postvocalic j surfaces as i
+Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dummy: ) _ ;
 
 
 
 
 
 
+* *#hálijd#*
+* *0háliit#*
 
+* ★*hálijd#* (is not standard language)
+* ★*háliid#* (is not standard language)
 
 
 
 
 
+* * *
+<small>This (part of) documentation was generated from [../src/fst/phonology-L2-from-branch.twolc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/phonology-L2-from-branch.twolc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+The lexicon K_only is for paths not going to  the K-less ENDLEX
 
 
 
@@ -15333,7 +16131,1571 @@ The previous two rules look marginal.
 
 
 * * *
-<small>This (part of) documentation was generated from [../src/cg3/semanticroles.cg3](http://github.com/giellalt/lang-sme/blob/main/../src/cg3/semanticroles.cg3)</small>Divvun & Giellatekno - open source grammars for North Sámi.
+<small>This (part of) documentation was generated from [../src/fst/clitics.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/clitics.lexc)</small>
+
+
+
+
+
+
+
+
+`º` is for CnsGrad of the `lg:lgg` and `lºl:ll` type
+`¤:0` prevents ConsGrad in certain words
+`'` is the real apostroph
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
+
+
+
+
+
+
+
+* *áj'gi*
+* *ái0gi*
+* ★*mánnáX5jd* (is not standard language)
+* ★*má0ná0jd* (is not standard language)
+
+
+
+
+
+
+* *áj'gi*
+* *ái0gi*
+
+* *majdege*
+* *maidege*
+
+* ★*almmajX4in* (is not standard language)
+* ★*almmai0in* (is not standard language)
+
+* *mánnáX5jd*
+* *má0ná0id*
+
+* *almmájX4*
+* *almmái0*
+
+* *almmájX4X7-#*
+* *almmái00-#*
+
+* *almmájX4in*
+* *almmáj0in*
+
+
+
+
+
+* *smirez#*
+* *smires#*
+
+* *Troandim#*
+* *Troandin#*
+
+* *Troandim-*
+* *Troandin-*
+
+* *muhtum#*
+* *muhtun#*
+
+* *skoalkkuh#*
+* *skoalkkut#*
+
+* *nagod#*
+* *nagot#*
+
+* *bávččag#*
+* *bávččat#*
+
+* *nuorab#*
+* *nuorat#*
+
+* *bávččag#*
+* *bávččat#*
+
+* *eamid#*
+* *eamit#*
+
+* *alih#*
+* *alit#*
+
+
+* ★*vejolažž#* (is not standard language)
+* ★*vejolaž0#* (is not standard language)
+
+* *vejolažž#*
+* *vejolaš0#*
+
+* *olmmožX4X7-*
+* *olmmoš00-*
+
+* ★*olmmožX7-* (is not standard language)
+* ★*olmmoš0-* (is not standard language)
+
+* *olmmožX4*
+* *olmmoš0*
+
+
+
+
+
+* *fijdnisY5t*
+* *fiidná00t*
+
+* ★*fijdnisY5t* (is not standard language)
+* ★*fiidnás0t* (is not standard language)
+
+* ★*fijdnisY5t* (is not standard language)
+* ★*fiidnis0t* (is not standard language)
+
+* *albmájY5*
+* *albmá00*
+
+* *olbmožY5*
+* *olbmo00*
+
+* *fijdnisY5t-*
+* *fiidná00t-*
+
+* *albmájY5-*
+* *albmá00-*
+
+* *olbmožY5-*
+* *olbmo00-*
+
+
+
+* *vuordild#*
+* *vuordil0#*
+
+* ★*vuordild#* (is not standard language)
+* ★*vuordild#* (is not standard language)
+
+* *attest#*
+* *attes0#*
+
+* ★*attest#* (is not standard language)
+* ★*attest#* (is not standard language)
+
+* *berošt#*
+* *beroš0#*
+
+
+* *bearjadah'k#*
+* *bearjadat00#*
+
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadat0k#* (is not standard language)
+
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadat'0#* (is not standard language)
+
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadah00#* (is not standard language)
+
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadat'k#* (is not standard language)
+
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadah0k#* (is not standard language)
+
+* ★*bearjadah'k#* (is not standard language)
+* ★*bearjadah'k#* (is not standard language)
+
+
+
+
+* *muitaluss#*
+* *muitalus0#*
+
+* ★*vejolažž#* (is not standard language)
+* ★*vejolažž#* (is not standard language)
+
+* *vejolažž#*
+* *vejolaš0#*
+
+
+
+
+
+
+
+* *joh'kaX4*
+* *jo00ga0*
+
+* ★*joh'kaX4* `joh'kaX4` (is not standard language joh'kaX4 joh'kaX4 joh'kaX4 jo0'kaX4)
+* ★*joh0ga0* `jo0'ga0` (is not standard language jo00ka0 joh'ga0 joh0ka0 joh0ga0)
+
+
+* *sápmiX4*
+* *sá0mi0*
+
+* ★*sápmiX4* (is not standard language)
+* ★*sápmi0* (is not standard language)
+
+
+* *latnjaX4*
+* *la0nja0*
+
+* *vuod'jiQ4n*
+* *vuo00já0n*
+
+* *káffeX4s*
+* *ká0fe0s*
+
+
+* *RuottaX4s*
+* *Ruo0ta0s*
+
+
+
+
+* *áhkkuX4s*
+* *áh0ku0s*
+
+* *vielljaX4*
+* *vie0lja0*
+
+* *mannjiX4*
+* *ma0nji0*
+
+* *áddjáX4*
+* *á0djá0*
+
+* *láj'biX4*
+* *láibbi0*
+
+* *seaŋ'gaX4*
+* *seaŋgga0*
+
+* *boŋ'kiX4j#*
+* *boŋkki0i#*
+
+
+* *sáf'taX4*
+* *sáftta0*
+
+
+* *oab'naX4*
+* *oabnna0*
+
+* *ám'taX4*
+* *ámtta0*
+
+* *In'gáX4*
+* *Inggá0*
+
+
+* *gán'daX4*
+* *gándda0*
+
+
+* *konseap'taX4*
+* *konseaptta0*
+
+
+* *áj'ruX4*
+* *áirru0*
+
+* *biev'laX4*
+* *bievlla0*
+
+
+* *jar'laX4*
+* *jarlla0*
+
+
+* *ol'juX4*
+* *oljju0*
+
+
+* *mát'kiX4*
+* *mátkki0*
+
+
+
+* *kreatsaX4*
+* *kreatssa0*
+
+
+* *beas'kaX4*
+* *beaskka0*
+
+
+* *čoav'jiX4*
+* *čoavjji0*
+
+
+* *beaj'viX4*
+* *beaivvi0*
+
+* *dujh'miX4*
+* *duihmmi0*
+
+
+* *čuolbmaX4*
+* *čuolmma0*
+
+* *DálmaX4*
+* *Dálmma0*
+
+
+
+
+* *sávdnjiX4*
+* *sávnnji0*
+
+
+* *čorbmaX4*
+* *čorpma0*
+
+
+* *skurdnjiX4*
+* *skurtnji0*
+
+
+* *návs'tuX4*
+* *návsttu0*
+
+
+* *limš'kiX4*
+* *limškki0*
+
+
+* *uk'saX4*
+* *uvssa0*
+
+
+
+* *teaks'taX4*
+* *teavstta0*
+
+
+
+* *spábbaX4*
+* *spáppa0*
+
+
+
+* ★*Szczecin* (is not standard language)
+* ★*Szccecin* (is not standard language)
+
+* *Szczecin*
+* *Szczecin*
+
+* *eadniX4*
+* *eatni0*
+
+
+* *boadnjiX4*
+* *boatnji0*
+
+
+
+
+
+* *boah'tiY1*
+* *boahtti0*
+
+* *dah'kaY7j*
+* *dahkku0i*
+
+
+
+* *dapmaY1*
+* *dabmi0*
+
+* *bitnjuY1*
+* *bidnju0*
+
+* *dad'jaY1*
+* *daddji0*
+
+
+
+
+
+* *joh'kaX4*
+* *jo00ga0*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* *gáv'piX7*
+* *gáv0pe0*
+
+* *bassiX7*
+* *basse0*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* *buorriX7#*
+* *buorre0#*
+
+* *buorriX8#*
+* *buo0re0#*
+
+
+* *várriX7gir'ku#*
+* *várre0gir0ku#*
+
+
+
+
+
+
+* *lijgiX7#ruh'taX4jd#*
+* *liige00ru00đa0id#*
+
+
+
+
+
+
+* *čuor'vuQ6*
+* *čuorvvo0*
+
+
+* *boah'tiQ6*
+* *boa00đe0*
+
+
+
+
+* *láj'kiW1s#*
+* *láikke0s#*
+
+* *ál'kiW2s#*
+* *ál0ke0s#*
+
+
+
+* *váttisW1#*
+* *váttes0#*
+
+* *head'jusW1-*
+* *hea00jos0-*
+
+* *head'jusW1#*
+* *hea00jos0#*
+
+* *váttisW1-*
+* *váttes0-*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* *goah'tiX5jd*
+* *go000đi0id*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* *vieh'ki¤X5jn*
+* *vi0hkki00in*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* *reŋ'koX2jd*
+* *reŋ0ku0id*
+
+* *basteX2j*
+* *basti0i*
+
+* *asibealle7X2j*
+* *asibealli0ide*
+
+* *LineX2j*
+* *Lini0i*
+
+
+
+
+* *áhččiX2n*
+* *áhččá0n*
+
+
+
+
+
+
+* *stahtaX3j*
+* *stahti0i*
+
+* *Sij9teW9j*
+* *Sijte0i*
+
+
+
+
+
+
+
+
+
+* *fijdnisY5t*
+* *fiidná00t*
+
+
+* *oažžuQ8dit*
+* *o0ččo0dit*
+
+* *coah'kuX8stit*
+* *coa00go0stit*
+
+
+
+* *jearraQ1*
+* *jearrá0*
+
+* *boah'tiQ1*
+* *boah0tá0*
+
+
+* *jearraQ3n*
+* *je0rro0n*
+
+* *jearraQ2t*
+* *je0rre0t*
+
+* *boah'tiQ3n*
+* *bo0h0to0n*
+
+* *čuor'vuQ3n*
+* *ču0r0vo0n*
+
+
+* *jearraQ2*
+* *je0rre0*
+
+* *boah'tiQ2t*
+* *bo0h0te0t*
+
+* *čuor'vuQ2*
+* *ču0r0vo0*
+
+
+* *boah'tiQ4n*
+* *boa00đá0n*
+
+* *boah'tiQ5lin*
+* *boa00đá0lin*
+
+
+
+
+
+
+
+* *jearraY1*
+* *jearri0*
+
+
+
+* *jearraY2*
+* *jearru0*
+
+* *boah'tiY2*
+* *boahttu0*
+
+
+* *jearraQ2t*
+* *je0rre0t*
+
+boah'tiY4t ! It seems it should be Q3. ... both?!
+* *boah'tiQ3t*
+* *bo0h0to0t*
+
+
+čuor'vuY4t ! Q2, it seems.
+* *čuor'vuQ2t*
+* *ču0r0vo0t*
+
+
+
+* *jearraY7t*
+* *je0rro0t*
+
+* *boah'tiY7t*
+* *bo0htto0t*
+
+* *čuor'vuY7t*
+* *ču0r0vo0t*
+
+* *jearraY7juvvot*
+* *je0rro0juvvot*
+
+
+
+
+
+
+* *jearraY7j*
+* *je0rru0i*
+
+* *dah'kaY7j*
+* *dahkku0i*
+
+* *loikaY7j*
+* *loiku0i*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* *beatnag8X4*
+* *bea0na00*
+
+* *luopmin8X4*
+* *luo0mi00*
+
+* *giellum8X4*
+* *gie0lu00*
+
+
+
+
+
+
+
+
+
+
+
+
+Changed because:we get almmáj- and not almmái-
+Postvocalic j surfaces as i
+Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dummy: ) _ ;
+
+
+
+
+
+
+* *#hálijd#*
+* *0háliit#*
+
+* ★*hálijd#* (is not standard language)
+* ★*háliid#* (is not standard language)
+
+
+
+
+
+* * *
+<small>This (part of) documentation was generated from [../src/fst/phonology-L2.twolc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/phonology-L2.twolc)</small>
+North Sámi morphophonological rule set                  
+
+This file documents the [phonology.twolc file](http://github.com/giellalt/lang-sme/blob/main/src/fst/phonology.twolc) 
+
+The file contains the rule set for the non-segmental
+North Sámi morphophonological rules
+
+Note that when copied over to newinfra, this file will be labeled sme-phon-L1.twolc.
+The file sme-phon-L1.twolc will **not** be the source file to edit, 
+rather, the source file will be this file, gt/sme/src/twol-sme.txt. This file (in the old infra)
+is the ordinary sme fst file to be edited.
+The L2 sme fst, on the other hand, will have lags/sme/src/phonology/sme-phon-L2.twolc
+as its sourcefile, the file to be edited.
+
+
+
+
+
+
+
+
+
+
+
+
+
+`º` is for CnsGrad of the `lg:lgg` and `lºl:ll` type
+`¤:0` prevents ConsGrad in certain words
+`'` is the real apostroph
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* *ájºgi*
+* *ái0gi*
+* ★*mánnáX5jd* (is not standard language)
+* ★*má0ná0jd* (is not standard language)
+
+
+
+
+
+
+* *ájºgi*
+* *ái0gi*
+
+* *majdege*
+* *maidege*
+
+* ★*almmajX4in* (is not standard language)
+* ★*almmai0in* (is not standard language)
+
+* *mánnáX5jd*
+* *má0ná0id*
+
+* *almmájX4#*
+* *almmái0#*
+
+* *almmájX4X7-*
+* *almmái00-*
+
+* *almmájX4in*
+* *almmáj0in*
+
+
+
+
+
+
+
+
+
+
+
+* *barggož-*
+* *barggoš-*
+
+* *smirez-*
+* *smires-*
+
+* *Troandim#*
+* *Troandin#*
+
+* *Troandim-*
+* *Troandin-*
+
+* *muhtum#*
+* *muhtun#*
+
+* *skoalkkuh#*
+* *skoalkkut#*
+
+* *nagod#*
+* *nagot#*
+
+* *bávččag#*
+* *bávččat#*
+
+* *nuorab#*
+* *nuorat#*
+
+* *bávččag#*
+* *bávččat#*
+
+* *eamid#*
+* *eamit#*
+
+* *alih#*
+* *alit#*
+
+* *olmmož>X4X7-*
+* *olmmoš>00-*
+
+
+* *olmmož>X4#*
+* *olmmoš>0#*
+
+
+
+
+
+* *fijdnisY5t*
+* *fiidná00t*
+
+* ★*fijdnisY5t* (is not standard language)
+* ★*fiidnás0t* (is not standard language)
+
+* ★*fijdnisY5t* (is not standard language)
+* ★*fiidnis0t* (is not standard language)
+
+* *albmájY5*
+* *albmá00*
+
+* *olbmožY5*
+* *olbmo00*
+
+* *fijdnisY5t-*
+* *fiidná00t-*
+
+* *albmájY5-*
+* *albmá00-*
+
+* *olbmožY5-*
+* *olbmo00-*
+
+
+
+* *vuordild-*
+* *vuordil0-*
+
+* ★*vuordild-* (is not standard language)
+* ★*vuordild-* (is not standard language)
+
+* *attest-*
+* *attes0-*
+
+* ★*attest-* (is not standard language)
+* ★*attest-* (is not standard language)
+
+* *berošt#*
+* *beroš0#*
+
+
+* *bearjadah%ºk-*
+* *bearjadat00-*
+
+* ★*bearjadah%ºk-* (is not standard language)
+* ★*bearjadat0k-* (is not standard language)
+
+* ★*bearjadah%ºk-* (is not standard language)
+* ★*bearjadah00-* (is not standard language)
+
+* ★*bearjadah%ºk-* (is not standard language)
+* ★*bearjadah0k-* (is not standard language)
+
+
+
+* *muitaluss#*
+* *muitalus0#*
+
+* ★*vejolažž>-* (is not standard language)
+* ★*vejolažž>-* (is not standard language)
+
+* *vejolažž>-*
+* *vejolaš0>-*
+
+* ★*vejolažž>#* (is not standard language)
+* ★*vejolaž0>#* (is not standard language)
+
+
+
+
+
+
+
+* *johºkaX4*
+* *jo00ga0*
+
+* ★*johºkaX4* (is not standard language)
+* ★*joh0ga0* (is not standard language)
+
+* ★*johºkaX4* (is not standard language)
+* ★*jo00ka0* (is not standard language)
+
+* ★*johºkaX4* (is not standard language)
+* ★*joh0ka0* (is not standard language)
+
+
+* *sápmiX4*
+* *sá0mi0*
+
+* ★*sápmiX4* (is not standard language)
+* ★*sápmi0* (is not standard language)
+
+
+* *latnjaX4*
+* *la0nja0*
+
+* *vuodºjiQ4n*
+* *vuo00já0n*
+
+* *káffeX4s*
+* *ká0fe0s*
+
+
+* *RuottaX4s*
+* *Ruo0ta0s*
+
+
+
+
+* *áhkkuX4s*
+* *áh0ku0s*
+
+* *vielljaX4*
+* *vie0lja0*
+
+* *mannjiX4*
+* *ma0nji0*
+
+* *áddjáX4*
+* *á0djá0*
+
+* *lájºbiX4*
+* *láibbi0*
+
+* *seaŋºga>X4*
+* *seaŋgga>0*
+
+* *boŋºki>X4j#*
+* *boŋkki>0i#*
+
+* *boŋºki>X4jmet#*
+* *boŋkki>0imet#*
+
+
+* *sáfºtaX4*
+* *sáftta0*
+
+
+* *oabºnaX4*
+* *oabnna0*
+
+* *ámºtaX4*
+* *ámtta0*
+
+* *InºgáX4*
+* *Inggá0*
+
+
+* *gánºdaX4*
+* *gándda0*
+
+
+* *konseapºtaX4*
+* *konseaptta0*
+
+
+* *ájºruX4*
+* *áirru0*
+
+* *bievºlaX4*
+* *bievlla0*
+
+
+* *jarºlaX4*
+* *jarlla0*
+
+
+* *olºjuX4*
+* *oljju0*
+
+
+* *mátºkiX4*
+* *mátkki0*
+
+
+
+* *kreatºsaX4*
+* *kreatssa0*
+
+
+* *korpºsaX4*
+* *korpssa0*
+
+
+* *beasºkaX4*
+* *beaskka0*
+
+
+* *čoavºjiX4*
+* *čoavjji0*
+
+
+* *beajºviX4*
+* *beaivvi0*
+
+* *dujhºmiX4*
+* *duihmmi0*
+
+
+* *čuolbmaX4*
+* *čuolmma0*
+
+* *DálºmaX4*
+* *Dálmma0*
+
+
+
+
+* *sávdnjiX4*
+* *sávnnji0*
+
+
+* *čorbmaX4*
+* *čorpma0*
+
+
+* *skurdnjiX4*
+* *skurtnji0*
+
+
+* *návsºtuX4*
+* *návsttu0*
+
+* *boršºtaX4*
+* *borštta0*
+
+* *limšºkiX4*
+* *limškki0*
+
+
+* *ukºsaX4*
+* *uvssa0*
+
+
+
+* *teaksºtaX4*
+* *teavstta0*
+
+
+
+* *spábbaX4*
+* *spáppa0*
+
+
+
+* ★*Szczecin* (is not standard language)
+* ★*Szccecin* (is not standard language)
+
+* *Szczecin*
+* *Szczecin*
+
+* *eadniX4*
+* *eatni0*
+
+
+* *boadnjiX4*
+* *boatnji0*
+
+
+
+
+
+* *boahºtiY1*
+* *boahtti0*
+
+* *dahºkaY7j#*
+* *dahkku0i#*
+
+* *dahºka>Y7jmet#*
+* *dahkku>0imet#*
+
+
+* *dapmaY1*
+* *dabmi0*
+
+* *bitnjuY1*
+* *bidnju0*
+
+* *dadºjaY1*
+* *daddji0*
+
+
+
+
+
+* *johºkaX4*
+* *jo00ga0*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* *gávºpiX7*
+* *gáv0pe0*
+
+* *bassiX7*
+* *basse0*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* *buorriX7*
+* *buorre0*
+
+* *buorriX8*
+* *buo0re0*
+
+
+* *várriX7girºku*
+* *várre0gir0ku*
+
+
+
+
+
+
+* *lijgiX7#ruhºtaX4jd*
+* *liige0#ru00đa0id*
+
+
+
+
+
+
+* *čuorºvuQ6*
+* *čuorvvo0*
+
+
+* *boahºtiQ6*
+* *boa00đe0*
+
+
+
+
+* *lájºkiW1s#*
+* *láikke0s#*
+
+* *álºkiW2s#*
+* *ál0ke0s#*
+
+
+
+* *váttisW1*
+* *váttes0*
+
+* *headºjusW1-*
+* *hea00jos0-*
+
+* *headºjusW1*
+* *hea00jos0*
+
+* *váttisW1-*
+* *váttes0-*
+
+
+
+
+
+
+
+
+
+
+
+
+* *goahºtiX5jd*
+* *go000đi0id*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* *viehºki¤X5jn*
+* *vi0hkki00in*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* *boahºti>^DISIMPjmet#*
+* *bo000đi>0imet#*
+
+* *reŋºko>X2jd#*
+* *reŋ0ku>0id#*
+
+* *baste>X2j#*
+* *basti>0i#*
+
+* *asi#bealli>^DISIMPjde#*
+* *asi#be00li>0ide#*
+
+* *Line>X2j#*
+* *Lini>0i#*
+
+
+
+
+* *áhččiX2n*
+* *áhččá0n*
+
+
+
+
+
+
+
+* *stahta>X3j#*
+* *stahti>0i#*
+
+
+
+* *Sij9te>i#*
+* *Sijte>i#*
+
+
+
+
+
+
+
+
+
+* *fijdnisY5t*
+* *fiidná00t*
+
+
+* *oažžuQ8dit*
+* *o0ččo0dit*
+
+* *coahºkuX8stit*
+* *coa00go0stit*
+
+
+
+* *jearraQ1*
+* *jearrá0*
+
+* *boahºtiQ1*
+* *boah0tá0*
+
+
+* *jearraQ3n*
+* *je0rro0n*
+
+* *jearraQ2t*
+* *je0rre0t*
+
+* *boahºtiQ3n*
+* *bo0h0to0n*
+
+* *čuorºvuQ3n*
+* *ču0r0vo0n*
+
+
+* *jearraQ2*
+* *je0rre0*
+
+* *boahºtiQ2t*
+* *bo0h0te0t*
+
+* *čuorºvuQ2*
+* *ču0r0vo0*
+
+
+* *boahºtiQ4n*
+* *boa00đá0n*
+
+* *boahºtiQ5lin*
+* *boa00đá0lin*
+
+
+
+
+
+
+
+* *jearraY1*
+* *jearri0*
+
+
+
+
+
+* *jearraY2*
+* *jearru0*
+
+* *boahºtiY2*
+* *boahttu0*
+
+
+* *jearraQ2t*
+* *je0rre0t*
+
+boahºtiY4t ! It seems it should be Q3. ... both?!
+* *boahºtiQ3t*
+* *bo0h0to0t*
+
+
+čuorºvuY4t ! Q2, it seems.
+* *čuorºvuQ2t*
+* *ču0r0vo0t*
+
+
+
+* *jearraY7t#*
+* *je0rro0t#*
+
+* *boahºtiY7t#*
+* *bo0htto0t#*
+
+* *čuorºvuY7t#*
+* *ču0r0vo0t#*
+
+* *jearraY7juvvot#*
+* *je0rro0juvvot#*
+
+
+
+
+
+
+* *jearraY7j#*
+* *je0rru0i#*
+
+* *dahºkaY7j#*
+* *dahkku0i#*
+
+* *loikaY7j#*
+* *loiku0i#*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* *beatnag8X4*
+* *bea0na00*
+
+* *luopmin8X4*
+* *luo0mi00*
+
+* *giellum8X4*
+* *gie0lu00*
+
+
+
+
+
+
+
+
+
+
+
+
+
+Changed because:we get almmáj- and not almmái-
+Postvocalic j surfaces as i
+Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dummy: ) _ ;
+
+
+
+
+
+
+
+
+
+
+
+
+* * *
+<small>This (part of) documentation was generated from [../src/fst/phonology.twolc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/phonology.twolc)</small>Divvun & Giellatekno - open source grammars for North Sámi.
 
 # North Sámi morphological analyser
 
@@ -16273,7 +18635,62 @@ The `@D.NeedNoun.ON@` flag diacritic is used to block illegal compounds.
 
 **ENDLEX4**
 * * *
-<small>This (part of) documentation was generated from [../src/fst/root.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/root.lexc)</small>
+<small>This (part of) documentation was generated from [../src/fst/root.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/root.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
+
+
+
+# North Saami Possessive suffixes
+
+* **LEXICON PxVvowch** for vowel stems, with X2, X1 with stem vowel change
+
+* **LEXICON Px1Vvowch** for vowel stems with stem vowel change, 1. p
+
+* **LEXICON Px2Vvowch** for vowel stems with stem vowel change, 1. and 2. p
+
+* **LEXICON Px3Vvowch** for vowel stems with stem vowel change, 3. p
+
+
+* **LEXICON PxV** for vowel stems, without stem vowel change
+
+* **LEXICON Px1V** for first person vowel stems
+
+
+* **LEXICON Px2V** for second person vowel stems
+
+* **LEXICON Px3V** for third person vowel stems
+
+
+
+* **LEXICON PxA** for a-stems
+
+
+* **LEXICON Px1A** for a-stems
+
+
+* **LEXICON Px2A** for a-stems
+
+* **LEXICON Px3A** for a-stems
+
+
+* **LEXICON PxC** for consonant stems
+
+* **LEXICON Px1C** for consonant stems
+
+
+* **LEXICON Px2C** for consonant stems
+
+* **LEXICON Px3C** for consonant stems
+
+
+* **LEXICON PxPlComC** for plural comitative forms of consonant stems
+
+* **LEXICON PxPlComV1** for first person vowel stems with vow change, directing onw
+
+* **LEXICON PxPlCom12V** for first, second person comitative Px
+
+* **LEXICON PxPlCom3V** for third person comitative Px
+* * *
+<small>This (part of) documentation was generated from [../src/fst/affixes/possessive-suffixes.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/possessive-suffixes.lexc)</small>
 # Symbol affixes
 
 
@@ -16282,89 +18699,2074 @@ The `@D.NeedNoun.ON@` flag diacritic is used to block illegal compounds.
 
 * * *
 <small>This (part of) documentation was generated from [../src/fst/affixes/symbols.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/symbols.lexc)</small>
-# Continuation lexicons for abbreviations
-
-## Lexica for adding tags and periods
-
-## The sublexica
-
-### Continuation lexicons for abbrs both with and witout final period
-
-* **LEXICON ab-dot-noun-adj-trab**
-
-* **LEXICON ab-noun**
-
-* **LEXICON ab-adj**
-
-* **LEXICON ab-adv**
-
-* **LEXICON ab-num**
-
-### Lexicons without final period
-
-* **LEXICON ab-nodot-noun**  The bulk
-
-* **LEXICON ab-nodot-adj**
-
-* **LEXICON ab-nodot-adv**
-
-* **LEXICON ab-nodot-num**
-
-### Lexicons with final period
-
-* **LEXICON ab-dot-noun**  This is the lexicon for abbrs that must have a period.
-
-* **LEXICON ab-dot-adj**  This is the lexicon for abbrs that must have a period.
-
-* **LEXICON ab-dot-adv**  This is the lexicon for abbrs that must have a period.
-
-* **LEXICON ab-dot-num**  This is the lexicon for abbrs that must have a period.
-
-* **LEXICON ab-dot-cc**
 
 
 
-* **LEXICON ab-verb**  A lexicon for "gč." and perhaps also other abbreviated verbs.
 
 
-* **LEXICON ab-dot-verb**
-
-* **LEXICON ab-nodot-verb**
 
 
-* **LEXICON ab-dot-IVprfprc**
 
 
-* **LEXICON nodot-attrnomaccgen-infl**
-
-* **LEXICON nodot-attr-infl**
-
-* **LEXICON nodot-nomaccgen-infl**
 
 
-* **LEXICON dot-attrnomaccgen-infl**
-
-* **LEXICON dot-attr**
-
-* **LEXICON dot-nomaccgen-infl**
 
 
-* **LEXICON DOT** - Adds the dot to dotted abbreviations.
-we also allow different variations of dotted abbreviations at
-the end of the sentence (especially for tokenisers)
-* "su." gets analysed as `"su" Adv ABBR`
-in tokeniser mode also:
-* "su." -> `"su" Adv ABBR` + `"." CLB` to account for sentence
-final su with no extra full stop.
-* also `"son" Pron Pers Sg3 Gen/Acc` + `"." CLB` due to
-homonymy.
-Same treatment is done with two and three full stops after abbreviation in
-the end of the sentence:
-* "su.." -> `"su" Adv Abbr` + `"." CLB Err/Orth`
-* "su..." -> `"su" Adv Abbr` + `"..." CLB`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Different lexicon for female persons and place names.
+
+
+Different lexicon for personal surnames. Blind
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/abbreviations.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/abbreviations.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
+<small>This (part of) documentation was generated from [../src/fst/affixes/propernouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/propernouns.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
+
+
+
+
+
+
+# Verb conjugation
+
+
+
+## Basic lexica for bisyllabic verbs
+
+
+### Modals
+
+These are treated separately because
+modals do not participate in derivation
+
+* **LEXICON GALGA_IV** only dáidit, galgat
+
+
+
+* **LEXICON FERTE_IV**  only fertet and bállet
+
+
+
+### Ordinary bisyllabic verbs
+
+
+* **LEXICON DIEHTI_TV** Bisyllabic i-verbs with Personal Passive
+
+
+* **LEXICON BORRA_TV** Bisyllabic a- and u-verbs with Personal Passive
+
+
+* **LEXICON BOAHTI_IV**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg
+
+* **LEXICON DIEVVA_IV**  Bisyllabic a- and u-verbs without Personal Passive but with Der/NomAg
+
+
+
+
+
+
+### Bisyllabic verbs
+
+
+
+
+* **LEXICON DEAKCU_TV** as BORRA for u-verbs with dim -astit, and a-verbs with dim -istit that are hardcoded
+
+
+* **LEXICON BOAZZU_IV** as DIEVVA_IV for u-verbs with dim -astit, and a-verbs with dim -istit that are hardcoded
+
+
+* **LEXICON BINDU_IV** as DIEVVA (but without short passive) for u-verbs with dim -astit, that are hardcoded
+
+* **LEXICON DAHTU_TV**  As diehti, but -ut verbs, thus without short passive
+
+* **LEXICON BOLTU_TV**  As DAHTU_TV but with dim -astit that are harcoded
+
+* **LEXICON ALLU_IV**  -ut verbs, thus without short passive
+
+
+
+
+* **LEXICON DIEHTALADDA_TV** Already derived words (except words ending -uššat and -httit) - no deverbal verbs
+
+* **LEXICON LAIGOHADDA_TV** láigohaddat. No deverbal nouns for speller reasons. No +Imprt+Pl2: láigohaddit
+
+
+* **LEXICON HAHTTIT_TV** Four-syll kausatives on -httit
+
+* **LEXICON BOAHTALADDA_IV** Already derived words (except words ending -uššat)
+
+* **LEXICON RAIMMAHALLA_IV** passives on -hallat and INCHOATIVES on -stuvvat
+
+* **LEXICON UVVA_IV** passives -uvvat
+
+
+* **LEXICON SMUVVA_IV** passives -snuvvat, -smuvvat
+
+
+
+* **LEXICON DOAROSTUVVA_TV** INCHOATIVES on -stuvvat
+
+
+* **LEXICON MAHTALADDA_TV** Bisyllabic Already derived words (except words ending -uššat) without Personal Passive but with Acc obj
+
+
+
+
+
+* **LEXICON ARVI_IV** Bisyllabic Impersonal Verbs
+
+* **LEXICON ARVALADDA_IV** Already derived words (except words ending -uššat)
+
+
+
+
+
+
+
+
+
+* **LEXICON MASSI_TV** No Der/NomAg (for speller reasons). Bisyllabic i-verbs with Personal Passive. Otherwise like DIEHTI_TV
+
+* **LEXICON VALDI_TV**  No Der/NomAg (for speller reasons). Bisyllabic i-verbs with Personal Passive. No VGen. Otherwise like DIEHTI_TV
+
+
+* **LEXICON ASTA_TV** No Der/NomAg (for speller reasons). Bisyllabic a- and u-verbs with Personal Passive. Otherwise like BORRA_TV
+
+
+* **LEXICON BORGI_IV**  Bisyllabic i-verbs without Personal Passive but without Der/NomAg. No Der/NomAg for speller reasons. Otherwise like BOAHTI_IV
+
+* **LEXICON BEALLJA_IV** No Der/NomAg for speller reasons. Bisyllabic a- and u-verbs without Personal Passive but without Der/NomAg. Otherwise like DIEVVA_IV
+
+
+* **LEXICON DAVGU_TV**  As DAHTU_TV, No Der/NomAg for speller reasons.
+
+
+* **LEXICON LEABBU_TV** No Der/NomAg (for speller reasons)- otherwise like DEAKCU_TV
+
+
+
+* **LEXICON ALBMU_TV** No Der/NomAg (for speller reasons). As BOLTU_TV otherwise
+
+
+
+* **LEXICON BARGU_IV**  no Der/NomAg for speller reasons- Like ALLU_IV
+
+
+* **LEXICON BORSU_IV** as BINDU. No Der/NomAg
+
+
+
+
+* **LEXICON MUHTTI_TV** No deverbal nouns an ACTIO(for speller reasons). Bisyllabic i-verbs with Personal Passive
+
+* **LEXICON BEAHTTI_TV** Bisyllabic i-verbs with Personal Passive, no Der/alla, no Der/adda, Der/halla  (beahtáhallat, báinnáhallat) for speller
+
+* **LEXICON FAHTE_TV** Contracted Verbs with Personal Passive,  no Der/alla, no Der/adda, Der/halla  (fáhtehallin) for speller
+
+
+* **LEXICON GILVI_TV** only gilvit, to get rid of gilvohallat (for speller reasons).
+
+* **LEXICON FAHTI_TV** (for speller reasons). no fáhttet (fáhtit+V+TV+Imprt+Pl2) because it get mixed up with fáhtet. No deverbal nouns.
+
+
+* **LEXICON DAHKA_TV** Like BORRA_TV, but without	dahkat+V+TV+Imprt+Sg1, to get rid of dahkon (for speller reasons)
+
+
+* **LEXICON FALLA_TV** fállat, njoarrat,  to get rid of fálastallat, njoarastallat (for speller reasons).
+
+
+
+
+* **LEXICON OAHPPA_TV** only oahppat. Like BORRA but without Deverbal verb -stuvva (for speller reasons)
+
+
+
+
+
+* **LEXICON AKTI_IV**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg - for speller reasons, to prevent:
+
+
+
+* **LEXICON GUHKKA_IV** No Imprt+Pl2 on -it, no Imprt+ConNegII and No +Der/NomAg for speller reasons. No Deverbal Verbs either. Bisyllabic a- and u-verbs without Personal Passive
+
+* **LEXICON BARDNA_IV** "bárdnat" ----> potensialis removed; bártnažan, bártnažat, bártnaš, bártnaža. No Der/NomAg for speller reasons. Bisyllabic a- and u-verbs without Personal Passive but without Der/NomAg. Otherwise like DIEVVA_IV
+
+
+
+
+
+* **LEXICON DIEHTISHORT_TV** Short action noun compound-form: neasken-
+
+* **LEXICON DIEHTILONGSHORT_TV** Long and short action noun compound-form, savdnjen-/savdnjin-
+
+* **LEXICON BAHCCI_TV** bahčit. Long and short actio compound-form. No NomAg (Actor) compound, for speller reasons
+
+* **LEXICON BOAHTILONGSHORT_IV** Long and short action noun compound-form
+
+
+
+
+
+
+
+
+* **LEXICON MAHTI_TV**  Bisyllabic Verbs without Personal Passive but with Acc obj.
+
+
+
+
+
+
+
+## Intermediate lexica for even-syllable verbs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* **LEXICON GOAHTICnj**  for speller reasons to hinder -goahttit, whick is confused with infinitive -goahtit
+
+* **LEXICON RAIMMAHALLACnj**  restricted imperatives
+
+
+
+
+
+
+
+## Basic lexica for contracted verbs
+
+
+* **LEXICON GILLE_IV**  Contracted Verbs without Personal Passive
+
+
+* **LEXICON DOHPPE_TV** Contracted Verbs with Personal Passive
+
+
+
+
+###  BAsic lexica for Contracted verbs
+
+
+
+
+
+
+
+
+
+
+
+
+* **LEXICON CIRRO_IV**  Inchoatives and essives on -á, -o, -e without Personal Passive
+
+* **LEXICON MUITA_TV**  Inchoatives and essives on -á, -o, -e with Personal Passive
+
+
+
+
+
+
+
+* **LEXICON COHKKA_IV**  Contracted Verbs without Personal Passive - no stit-deverbal
+
+* **LEXICON GARRE_TV**  garret, loget. with Personal Passive. for speller to hinder garrenávnnas, garrenoaivi etc
+
+* **LEXICON ORRO_IV**  orrot. for speller to hinder orronsadji etc
+
+
+
+
+* **LEXICON MAHTA_TV** Contracted Verbs without Personal Passive but with Acc obj.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Basic lexica for trisyllabic verbs
+
+
+* **LEXICON MUITAL_TV** Trisyllabic Verbs with Personal Passive
+
+
+* **LEXICON ALIST_IV** Trisyllabic Verbs without Personal Passive
+
+
+
+
+
+
+
+###  Basic lexica for trisyllabic verbs
+
+
+
+
+* **LEXICON COASKKIT_IV**  Trisyllabic impersonals
+
+
+
+* **LEXICON ARVVASJ_IV** impersonals ending -šit, -skit, smit, -idit, -ldit, -git and 5-syllables
+
+* **LEXICON ARVIL_IV** Impersonal Trisyllabic Verbs ending -lit
+
+
+
+
+
+
+
+
+
+
+* **LEXICON MUITTASJ_TV** Words ending -šit, -skit, -ldit - Reciprocals on -dit, Momentatives on -dit, -ádit, -ihit, -e7hit, Frequentatives on -(u)hit, Continuatives on -nit, Inchoatives on -nit
+
+* **LEXICON HALIID_TV** Words ending -smit, -idit, -git
+
+* **LEXICON BONJAT_TV** Cont/Freq on -dit, Continuatives on -(u)hit, Reciprocals, momentatives and frequentatives ending -alit
+
+* **LEXICON VUORDIL_TV** Trisyllabic Verbs ending -lit, -rit with Personal Passive
+
+* **LEXICON BEAGASJ_IV** Words ending -šit, -skit -ldit, essive derivates on -hit -. !Reciprocals on -dit. Momentatives on -dit, -ádit, -ihit, -e7hit. Frequentatives on -(u)hit. Continuatives on -nit. Inchoatives in -nit
+
+* **LEXICON JORGGIID_IV** Words ending -smit, -idit, -git -
+
+* **LEXICON HURAI_IV** Words ending -aidit
+
+
+* **LEXICON BALAT_IV** !Cont/Freq on -dit, Continuatives on -(u)hit, Reciprocals, momentatives and frequentatives ending -alit
+
+* **LEXICON SUOTNJAL_IV** Trisyllabic Verbs ending -lit, -rit without Personal Passive
+
+* **LEXICON BOTNJAS_IV** Trisyllabic Verbs ending -sit without Personal Passive
+
+* **LEXICON LASSAN_IV** Trisyllabic Verbs ending -nit without Personal Passive IV
+
+
+
+
+
+* **LEXICON OAHPAHIT_TV** only oahpahit, disamb reasons?
+
+* **LEXICON NUOSKIT_IV** only nuoskidit, for speller, no action noun nuoskideapmi
+
+* **LEXICON HALIHIT_TV** Like MUITTASJ_TV, without COnNeg so we dont get hálit
+
+
+
+
+* **LEXICON LAHKAN_TV** lahkanit, lahkonit, are nowadays used transitively
+
+* **LEXICON GEAGAT_TV**  Trisyllabic Verbs without Personal Passive but with Acc obj.
+
+* **LEXICON BUOVVAL_TV**  buovvalit, guoigalit. Trisyllabic Verbs ending -lit without Personal Passive but with Acc obj.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* **LEXICON MUITALCnj** Substems for Consonantal Verb Stems
+
+
+* **LEXICON HURAICnj** Substems for  Words ending -aidit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Finite declension
+
+
+## Present tense
+
+### Vocalic stems
+
+* **LEXICON PotPrsV** Present Tense in Vocalic Verb Stems
+
+* **LEXICON PrsV** Present Tense in Vocalic Verb Stems
+
+* **LEXICON PrsV1** Present Tense Endings for Vocalic Verb Stems
+
+* **LEXICON PrsV2** Present Tense Endings for Vocalic Verb Stems
+
+* **LEXICON PrsV3** Present Tense Endings for Vocalic Verb Stems
+
+* **LEXICON PrsV4** Present Tense Endings for Vocalic Verb Stems
+
+* **LEXICON PrsV5** Present Tense Endings for Vocalic Verb Stems
+
+
+
+
+### Consonantal stems
+
+* **LEXICON PotC** Present Tense in Consonantal Verb Stems
+
+
+* **LEXICON PrsC** Present Tense in Consonantal Verb Stems
+
+* **LEXICON PrsC1** Present Tense in Contr/Non-Contr Consonantal Verb Stems
+
+* **LEXICON PotC2** Potential in Non-Contracted Consonantal Verb Stems
+
+
+* **LEXICON PrsC2** Present Tense in Non-Contracted Consonantal Verb Stems
+
+
+
+
+
+
+## Past tense
+
+### Vocalic stems
+
+
+* **LEXICON PrtV** Preterite Endings for Vocalic Verb Stems
+
+* **LEXICON PrtV1** Preterite Endings for Vocalic Weak Grade Verb Stems
+
+* **LEXICON PrtV2** Preterite Endings for Vocalic Strong Grade Verb Stems
+
+### Consonantal stems
+
+
+* **LEXICON PrtC** Preterite Endings for Consonantal Verb Stems
+
+* **LEXICON PrtC1** Preterite Endings for Consonantal Contr./Non-Contr. Verb Stems
+
+* **LEXICON PrtC2** Preterite Endings for Consonantal Non-Contr. Verb Stems
+
+* **LEXICON PrtC3** Preterite Endings for Consonantal Contr./Non-Contr. Verb Stems
+
+
+## Imperative mood
+
+* **LEXICON ImprtVA**  Imperative Forms for Vocalic Verb Stems
+
+* **LEXICON ImprtVB**  Imperative Forms for Vocalic Verb Stems
+
+* **LEXICON ImprtV1**  Imperative Forms for Vocalic Verb Stems
+
+* **LEXICON ImprtV2** Imperative Forms for Vocalic Verb Stems and Substems
+
+* **LEXICON ImprtSg2** Imperative Forms For Consonantal and Contracted Verb Stems
+
+
+* **LEXICON ImprtC**  Imperative Substems for Consonantal Verb Stems - uneven syll.
+
+* **LEXICON ImprtC2**  Imperative Substems for Consonantal Verb Stems - contracts
+
+
+# Infinite forms
+
+
+## V- and C-final
+
+* **LEXICON NominalFormsV**  Vowel-final stems
+
+
+
+## Continuation lex
+
+* **LEXICON NominalFormsVC**  for vowel final
+
+* **LEXICON NominalFormsV1**   infinitiv, actio
+
+
+* **LEXICON NominalFormsV2**  gerund, verbgenitiv, verbabessive
+
+* **LEXICON NominalFormsV3**  ^NG^ gerund
+
+* **LEXICON NominalFormsV4**  perfect participe, preterite negation form
+
+* **LEXICON NominalFormsV5**  negation form
+
+* **LEXICON NominalFormsV6** presence participe
+
+
+* **LEXICON NominalFormsV8**  gerund, verbabessive
+
+* **LEXICON NominalFormsV9**  supine
+
+* **LEXICON NominalFormsC1**  for cons final stems: infinitive, supine, actio, gerund, perfect participe, preterite negation form
+
+* **LEXICON NominalFormsC2**  for cons final stems: presence participe
+
+
+
+# Derivation
+
+
+
+* **LEXICON DeverbalNounsC**
+
+* **LEXICON DeverbalNounsCTV**
+
+* **LEXICON DeverbalNounsBOAHTI**
+
+* **LEXICON DeverbalNounsRAIMMAHALLA** no NomAg/actor
+
+* **LEXICON DeverbalNounsBOAHTALADDA**
+
+* **LEXICON DeverbalNounsDIEHTALADDA**
+
+* **LEXICON DeverbalNounsDIEHTI**
+
+
+* **LEXICON DeverbalNounsDIEHTISHORT**
+
+* **LEXICON DeverbalNounsDIEHTILONGSHORT**
+
+* **LEXICON DeverbalNounsBAHCCI**
+
+* **LEXICON DeverbalNounsDOHPPE-**
+
+* **LEXICON DeverbalNounsGARRE-**
+
+* **LEXICON DeverbalNounsCIRRO-**
+
+* **LEXICON DeverbalNounsORRO-**
+
+* **LEXICON DeverbalNounsCIRROTV-**
+
+
+* **LEXICON DeverbalNounsDOHPPEJ**
+
+* **LEXICON DeverbalNounsDOHPPEJTV**
+
+* **LEXICON DeverbalNounsMUITALTV**
+
+* **LEXICON DeverbalNounsMUITTASJTV**
+
+* **LEXICON DeverbalNounsMUITAL**
+
+* **LEXICON DeverbalNounsNUOSKIT**
+
+
+* **LEXICON DeverbalNounsMUITTASJ**
+
+
+* **LEXICON DeverbalVerbsBOAHTI**
+
+* **LEXICON DeverbalVerbsDIEVVA**
+
+* **LEXICON DeverbalVerbsBINDU**
+
+
+* **LEXICON DeverbalVerbsBORRA**
+
+* **LEXICON DeverbalVerbsFALLA**
+
+* **LEXICON DeverbalVerbsBOLTU**
+
+
+* **LEXICON DeverbalVerbsDIEHTI**
+
+* **LEXICON DeverbalVerbsBEAHTTI**
+
+* **LEXICON DeverbalVerbsARVI**
+
+
+* **LEXICON DeverbalVerbsDOHPPE**
+
+* **LEXICON DeverbalVerbsFAHTE**
+
+
+* **LEXICON DeverbalVerbsGILLE**
+
+* **LEXICON DeverbalVerbsCOHKKA**
+
+* **LEXICON DeverbalVerbsBORGE**
+
+
+
+* **LEXICON DeverbalVerbsMUITAL**
+
+* **LEXICON DeverbalVerbsVUORDIL**
+
+
+* **LEXICON DeverbalVerbsALIST**
+
+* **LEXICON DeverbalVerbsSUOTNJAL**
+
+* **LEXICON DeverbalVerbsBOTNJAS**
+
+* **LEXICON DeverbalVerbsLASSAN**
+
+* **LEXICON DeverbalVerbsCOASKKIT**
+
+* **LEXICON DeverbalVerbsARVIL**
+
+
+
+
+
+
+
+
+* LEXICON VGEN flag for VGen
+
+
+* * *
+<small>This (part of) documentation was generated from [../src/fst/affixes/verbs.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/verbs.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
+
+# North Saami adjective declension file
+
+
+
+## Bisyllabic adjectives
+
+
+
+* **LEXICON BUORRE**  For this adj only
+
+
+
+* **LEXICON BUOROT** SUB, Southern dialect
+
+
+
+* **LEXICON ALKI**  Bisyll V-Adj, -es-Attr, no WeG.
+
+* **LEXICON SEARRA** Bisyll. V-Adj's with s-Attr in WeG.
+
+* **LEXICON HOHPI** Bisyll. V-Adj's with s-Attr. in WeG & Adv.
+
+* **LEXICON LAIKI** Bisyll. V-Adj's with es-Attr. in WeG & Adv.
+
+* **LEXICON LODJI** bisyll V-Adj with -es and -is Attr in WeG
+
+
+* **LEXICON JUHKKIS** Bisyll. V-Adj. with s-Attr; no Adv.
+
+
+* **LEXICON HAHTTI** Bisyll. V-Adj. no Adv. !sponsors wants comparatives for these!
+
+
+
+* **LEXICON EADDJI** Bisyll. V-Adj. no Adv.
+
+
+* **LEXICON NUORRA** Bisyll. V-Adj. w/CG, w/o Sep. Attr; no Adv.
+
+* **LEXICON RIEKTA**  Bisyll adj w/o obl sg forms, WeG Attr
+
+
+
+* **LEXICON VIELG**  adj with -es -attrib. (cns final adj)
+
+* **LEXICON VIELGAT**  just a sublexicon to VIELG
+
+* **LEXICON VIELG_NOCOMP**  adj with -es -attrib. (cns final adj)
+
+* **LEXICON VIELGAT_NOCOMP**  just a sublexicon to VIELG_NOCOMP
+
+
+* **LEXICON CAHKK**  -at final adj with attr -es and -dis
+
+* **LEXICON JALGAT**  only jalgat, attr jalga and jalges
+
+* **LEXICON UHCC**  uhcci, unni, seaggi, attr uhca, unna, seakka
+
+* **LEXICON JEAGOHEAPMI**  caritives
+
+* **LEXICON BIVNNUHEAPME**  no bivnnuhis here, special, beacause popular and unpopular collide in attribute form :)
+
+* **LEXICON JEAGOHEAPMI_NOCOMP**  caritives, no comparative
+
+* **LEXICON OATNI**  only this adj, no attr
+
+
+## Consonant-final even-syllabic adjectives
+
+* **LEXICON TUVRRAHAS**
+
+* **LEXICON ISSORAS**  issoras and certain as-adj. also derivations, final -s
+
+* **LEXICON IHKALAS-DABALAS** loan adjectives ending on -ihkalaš - kritihkalaš etc
+
+* **LEXICON IIVVAL-DABALAS** loan adjectives ending on -iivvalaš
+
+
+* **LEXICON ISTTALAS** loan adjectives ending on -ihkalaš
+
+
+* **LEXICON DABALAS**   -laš adjectives with short Attr and SgNom Comp forms - dábálet, dábálut etc
+
+* **LEXICON NVDCompAttr_ISSORASSA-**  sublexicon to DABALAS
+
+
+
+* **LEXICON DEARVVASLAS**  -laš adjectives without short Attr and SgNom Comp forms. The word dearvvaslaš/dearvvašlaš is not directed here, but to DABALAS
+
+
+* **LEXICON DEARVVASLAS2**  only to lift out ISSORASSA-, see DEARVVASLAS
+
+* **LEXICON STUORIBUS**  -buš comparatives
+
+
+* **LEXICON ASEHAS**  5 words with -is attr: asehis, asihis, oanehis, vuollegis, vuolligis
+
+* **LEXICON UNOHAS**  for this word only
+
+* **LEXICON IPMAHA** Tris. Gradating C-adj:s, The Troms declension: imaš:ipmaha, gáđaš:gáhtaha
+
+
+
+## Trisyllabic adjectives
+
+* **LEXICON MEAHTTUS**  meahttun-adj. with comp. and superl. forms -seabbo, -seamos etc.
+
+* **LEXICON BEAKKAN** Trisyll. Non-gradating C-Adj. without Separate Attr.
+
+* **LEXICON BEAKKAN_NOCOMP** Trisyll. Non-gradating C-Adj. without Separate Attr. No comparatives
+
+* **LEXICON GEARDAN** Trisyll. Non-gradating C-Adj. without Separate Attr.
+
+* **LEXICON JOHTIL** Trisyll. Non-gradating C-Adj. with is-Attr.
+
+
+* **LEXICON RAHKAT** Trisyll. Non-gradating C-Adj. with is-Attr. TO AVOID RAHKADIT
+
+
+* **LEXICON HEITTOHA** Trisyll. Non-gradating C-Adj. with is-Attr.
+
+* **LEXICON GUOHCA** Trisyll. Gradating V-Adj., no sep. Attr.
+
+* **LEXICON GARAS** Trisyll. Gradating C-Adj. with Bisyll. a-Attr. and final s Pred
+
+* **LEXICON LINIS** Trisyll. Gradating C-Adj. with Bisyll. a-Attr. and final s Pred
+
+* **LEXICON SUVRRIS** Trisyll. Gradating C-Adj. with Bisyll. weak grade a-Attr. and final s Pred
+
+* **LEXICON NANUS** Trisyll. Gradating C-Adj. with Bisyll. weak grade u-Attr. and final s Pred
+
+* **LEXICON LOSSAT** Trisyll. Gradating C-Adj. with Bisyll. a-Attr. and final t  Pred. geahppat and lossat, words with bisyllable form comparatives in addition to trisyllable form: geahpit, losit
+
+
+* **LEXICON CAVGAT** Trisyll. Gradating C-Adj. with Bisyll. a/es-Attr. and final t Pred, both -but and -eappot comparatives
+
+* **LEXICON CIENAL** Trisyll. Gradating C-Adj. with Strong Grade is-Attr.
+
+* **LEXICON NJUORAS** Trisyll. Gradating C-Adj., with Strong Grade a-Attr.
+
+* **LEXICON DILDDAS**  ,-ld-(#=is) Trisyll Grad., facult is-Attr.
+
+* **LEXICON VUOGAS**  Trisyll. adj. with gradation I-III and no sep. attr. only this word, vuogas, vuohkkasat
+
+* **LEXICON HEAHKAS**  ,-hkk-#=is heahkka Trisyll Grad., is-Attr & heahkka
+
+* **LEXICON EATTAS**  ,-dd-#=is Trisyll. Grad. C-Adj. with WeG -is Attr.
+
+* **LEXICON BOAKKAS**  ,-gg-#boagge9- Trisyll no attr
+
+
+* **LEXICON FARGAT**  :d#Ø Trisyll no attr
+
+
+* **LEXICON GAPPUS**  -bbo- Trisyll, attr same as pred
+
+* **LEXICON VATTIS**  Trisyll CG, -es/-is Attr
+
+* **LEXICON BIEKKUS**  ,-iggo-#=is Trisyll Grad, is-Attr,
+
+* **LEXICON LIEKKUS**  ,-iggo-(#=is) Trisyll Grad,  attr same as pred
+
+* **LEXICON GUOROS**  guoros and luovos, Trisyll Grad,  attr same as pred
+
+
+* **LEXICON NUOLUS**  ,-u8llo-(#nuolo9s)
+
+
+* **LEXICON GEARGGUS**  ,-ergo-#gearggo9s
+
+* **LEXICON VUDDJII**
+
+* **LEXICON VUDDJII_DECLINED** misses most cases
+
+
+* **LEXICON JIEDNAI**
+
+* **LEXICON JIEDNAI_DECLINED** misses most cases
+
+* **LEXICON BOARIS**  As GAPPUS, but with different attr.
+
+* **LEXICON BOARIS_NOCOMP**
+
+
+* **LEXICON IIDNA_NOCOMP**   
+
+
+
+* **LEXICON IIVA_NOCOMP**  IIVA_A without comparatives
+
+
+* **LEXICON IIVA_A**  loans ending with -a, same attr as pred
+
+
+* **LEXICON FRIIJA**  loans ending with -a, same attr as pred
+
+
+
+* **LEXICON BOREALA** FRIIJA without comparatives
+
+* **LEXICON SPANSKA** spánska, dánska, fránska, ránska. WeG attr
+
+
+* **LEXICON ALLAT** allat, gassat, govdat, attr: alla, gassa, govda. Trisyllables with Bisyllable compforms: alit, gasit, govddit
+
+
+* **LEXICON ALLAGA** sublexicon to ALLAT and word árrat
+
+
+
+
+
+## Contracted adjectives
+
+* **LEXICON FIINNIS**  ,-dná-(:Ø)#fiinna, western comp: fiidnát, eastern comp: fiidnásabbo/-sut/-sat
+
+
+* **LEXICON DEAHTIS**  as fiinnis, but with StrGr in Attr
+
+* **LEXICON SMAVIS**  as deahtis, but with even more Attr forms and comparative smávit in addition
+
+* **LEXICON STUORIS**  As fiinnis, but with different comparation
+
+* **LEXICON NJALGGAT** Comp+Sg+Nom: njálgát, njálgásut/-sit/-sut/-sat, njálgáseabbo/-sabbo
+
+* **LEXICON CAPPIS**  western comp: čábbát, eastern comp: čábbásabbo/-sut/-sat
+
+
+* **LEXICON VIISSIS**  Contr, CG and -is -> -á, attr -es/-is, western and eastern comp forms
+
+* **LEXICON RAHPIS**  Contr, CG and -is -> -á, attr -es, with long and short comp forms
+
+* **LEXICON HARVVIS**  Contr, CG and -is -> -á, attr -e, short comp forms
+
+* **LEXICON MALLASadj-**
+
+* **LEXICON MALLASadj-_MINIP**  for giving Use/NGminip-tags
+
+
+* **LEXICON MALLASI-/NUORABUadj-**
+
+* LEXICON DEVNVCASE  bisyllabic nominal declension
+
+* LEXICON GOAHTI-OBLadj
+
+* **LEXICON GOAHTI-NEadj**
+
+* **LEXICON GODIIadj-**
+
+* **LEXICON GOADIadj-**
+
+
+* **LEXICON NomVadj**
+
+
+* **LEXICON EssVadj**
+
+
+
+## Special cases
+
+* **LEXICON VEARATAG**
+
+* **LEXICON VEARA**
+
+
+
+## Final note on the adjective sublexica
+
+todo: Rewrite the adj lexica so that the attr variation is kept separate
+from the otherwise uniform declension.
+
+
+
+* **LEXICON VUDDJI-**
+
+* **LEXICON BOHCCOadj**
+
+* **LEXICON BOHCCUadj**
+
+
+
+
+
+
+# Adjective declension
+
+* **LEXICON ATTR**  This is the normal lexicon for ATTR forms
+
+* **LEXICON ATTRCONT**  This lexicon is for forms with non-sub Attr, where we sub the rest.
+
+
+* **LEXICON LAIKI0**  Directing adjectives ...
+
+
+
+
+
+* **LEXICON ISSORASSA-**
+
+
+* **LEXICON EABBO/EAMOS** comparision for trisyllable adjectives
+
+* **LEXICON EABBO/EAMOS_MINIP**  for giving Use/NGminip-tags
+
+
+* **LEXICON EABBO/EAMOS_CONT**
+
+* **LEXICON EABBO/EAMOS_CONT_MINIP** for giving Use/NGminip-tags
+
+
+* **LEXICON EAMOS_MINIP**  for giving Use/NGminip-tags
+
+
+
+* **LEXICON EABBO/EAMOS_CONT-contracted** for certain contracted adjectives, divided dialectwise
+
+* **LEXICON SHORTCOMP**
+
+* **LEXICON SHORTCOMP_MINIP**  for giving Use/NGminip-tags
+
+* **LEXICON SHORTCOMP_PRED_MINIP**  for giving Use/NGminip-tags
+
+
+* **LEXICON EABBU** eastern form -abbo as well
+
+* **LEXICON EABBUCASE1**
+
+* **LEXICON EABBUCASE2**
+
+* **LEXICON EABBU_MINIP**  for giving Use/NGminip-tags
+
+* **LEXICON EABBUCASE1_MINIP**  for giving Use/NGminip-tags
+
+* **LEXICON EABBUCASE2_MINIP**  for giving Use/NGminip-tags
+
+
+* **LEXICON BU/MUS**  Bisyllabic adjectives comparision
+
+
+* **LEXICON BUStem**
+
+
+* **LEXICON EAMOS** eastern form -amos as well
+
+
+
+* **LEXICON GAPPUS0** Almost id. to MALIS0. MALIS0 has no VUOHTA, GAPPUS0 has no Px Ess., and shouldn't have either.
+
+
+* **LEXICON GAPPUS-**
+
+GOAL: Keep GAPPUS- and MALLAS- apart, because of
+the Px(1)V issue, but unify the rest.
+GAPPUS- and MALLAS- differ
+in the A and N treatment of
+Pl Nom Px (only 1st p. for A
+and all persons for N).
+Now that MALLASI- is deleted,
+GAPPUS- and MALLAS- are
+identical. We check by pointing
+GAPPUS- to MALLAS-. Look into this.
+and remove GAPPUS- for MALLAS-
+eventually.
+
+* **LEXICON MEAHTTUN** Deverbal adjectives.
+
+
+* **LEXICON LEXATTR_GEAHTES** trisyllabic stems: geahtes for trisyll, heapmi for bisyll
+
+* **LEXICON GEAHTES**  geahtes for trisyll, heapmi for bisyll
+
+* **LEXICON OVDDIT** Inherently comparative adjectives, bisyll
+
+* **LEXICON MADDELEABBO** Inherently comparative adjectives, trisyll
+
+
+
+
+
+
+# Nominal derivation
+
+## Noun derivation
+
+
+* **LEXICON VUOHTA** +CmpN/SgG
+
+
+* **LEXICON VUOHTAMORPH**
+
+
+
+
+
+
+
+
+# Adjective derivation
+
+
+* **LEXICON LAS** from verbs: čirrolas, bealkálas etc
+
+
+* **LEXICON BUOREMUSS** superlatives, from bisyll adjectives
+
+* **LEXICON BUOREMUS**
+
+* **LEXICON BUOREMUSSA-**
+
+
+
+
+* **LEXICON HEAPMI** caritives
+
+* **LEXICON LAGAN** lágan, lágán and subform lagan as well
+
+* **LEXICON LAGAS** lágaš, lágáš and subform lagaš as well
+
+
+* **LEXICON LAGAN_LAGAS**
+
+
+* **LEXICON AHKASAS** derived words on -saš, -haš, -laš
+
+* **LEXICON AHKASAS_PL**  derived words on -saš, -haš, -laš, only plural,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* **LEXICON SISKKALDAS** olgguldas, siskkáldas, siskkildas, nuppáldas, that's all
+
+
+
+* **LEXICON DenominalAdjsV1** caritives and their derivatives (huvva, huhtti), from bisyll nouns
+
+* **LEXICON DenominalAdjsV1Long** caritives and their derivatives (huvva, huhtti), from bisyll nouns without vowel shortening
+
+* **LEXICON DenominalAdjsV1Short** caritives and their derivatives (huvva, huhtti), from bisyll nouns with vowel shortening
+
+
+
+
+* **LEXICON DenominalAdjsV2** from bisyllables, muoralaš, gieđalaš etc
+
+* **LEXICON DenominalAdjsV2_lasj** from bisyllables, muoralaš, gieđalaš etc
+
+
+* **LEXICON DenominalAdjsC** from trisyllables, -laš and caritives on -heapme
+
+
+
+* **LEXICON DenominalAdjsCLong** from trisyllables, -laš and caritives on -heapme
+
+
+
+* **LEXICON DenominalAdjsCShort** from trisyllables, -laš and caritives on -heapme
+
+
+
+
+* **LEXICON DenominalAdjsV3** +CmpN/SgN +CmpN/SgG +CmpN/PlG !from Propernames
+
+* **LEXICON DenominalAdjsV3case** from bisyllabic propers
+
+
+* **LEXICON DenominalAdjsC2** +CmpN/SgN +CmpN/SgG +CmpN/PlG	!from Propernames
+
+* **LEXICON DenominalAdjsC2case** from trisyllabic propers
+
+* **LEXICON DenominalAdjsV4** +CmpN/SgN +CmpN/SgG +CmpN/PlG  from Propernames
+
+* **LEXICON DenominalAdjsV4case** from bisyllabic propers (subbed)
+
+* **LEXICON DenominalAdjsC3** +CmpN/SgN +CmpN/SgG +CmpN/PlG	 !from Propernames
+
+* **LEXICON DenominalAdjsC3case** from trisyllabic propers (subbed)
+
+* **LEXICON LASJOBL**
+
+* **LEXICON HEAPMIOBL** sublexicon not only for caritives on -heapmi/-heapme
+
+
+
+## Adverbs from adjectives
+
+* **LEXICON ADVV** adverb from bilysll stems
+
+* **LEXICON ADVC** adverb from trilysll stems
+
+
+
+
+## Adjectives from nouns
+
+* **LEXICON AGAdj**  mostly words like guovttejagat, allajoccat etc
+
+* **LEXICON AGAdjINFL**
+* * *
+<small>This (part of) documentation was generated from [../src/fst/affixes/adjectives.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/adjectives.lexc)</small>
+# North Saami numerals
+
+
+
+
+
+
+
+* **LEXICON OKTA** Case forms of the basic digits
+
+* **LEXICON BEALOKTA** Case forms of the basic digits, only sg
+
+
+
+* **LEXICON BARE-LOHKAI**
+
+* **LEXICON OKTANUPPELOHKAI**
+
+* **LEXICON BEALOKTANUPPELOHKAI** only sg
+
+* **LEXICON OKTAGOALMMATLOHKAI**
+
+
+* **LEXICON OKTANJEALJATLOHKAI**
+
+
+* **LEXICON OKTAVIDATLOHKAI**
+
+* **LEXICON OKTAGUDATLOHKAI**
+
+* **LEXICON OKTACIHCCETLOHKAI**
+
+
+
+* **LEXICON OKTAGAVCCATLOHKAI**
+
+* **LEXICON OKTAOVCCATLOHKAI**
+
+
+* **LEXICON OKTALOGATLOHKAI**
+
+
+* **LEXICON OKTALOHKI**
+
+* **LEXICON GUOKTE**
+
+* **LEXICON GUOKTE-pure** Case forms of the basic digits
+
+* **LEXICON BEALGUOKTE**
+
+* **LEXICON BEALGUOKTE-pure** Case forms of the basic digits, only sg
+
+* **LEXICON GUOKTENUPPELOHKAI**
+
+
+* **LEXICON BEALGUOKTENUPPELOHKAI**, only sg
+
+* **LEXICON GUOKTEGOALMMATLOHKAI**
+
+* **LEXICON GUOKTENJEALJATLOHKAI**
+
+* **LEXICON GUOKTEVIDATLOHKAI**
+
+
+* **LEXICON GUOKTEGUDATLOHKAI**
+
+* **LEXICON GUOKTECIHCCETLOHKAI**
+
+
+* **LEXICON GUOKTEGAVCCATLOHKAI**
+
+
+* **LEXICON GUOKTEOVCCATLOHKAI**
+
+* **LEXICON GUOKTELOGATLOHKAI**
+
+* **LEXICON GUOKTELOGI**
+
+
+* **LEXICON NUBBENUPPELOHKAI**
+
+
+* **LEXICON NUBBEGOALMMATLOHKAI**
+
+
+* **LEXICON NUBBENJEALJATLOHKAI**
+
+
+* **LEXICON NUBBEVIDATLOHKAI**
+
+
+* **LEXICON NUBBEGUDATLOHKAI**
+
+* **LEXICON NUBBECIHCCETLOHKAI**
+
+
+* **LEXICON NUBBEGAVCCATLOHKAI**
+
+* **LEXICON NUBBEOVCCATLOHKAI**
+
+
+* **LEXICON NUBBELOGATLOHKAI**
+
+* **LEXICON NUBBELOGI**
+
+
+
+
+* **LEXICON GOLBMA**  Case forms of the basic digits
+
+* **LEXICON BEALGOLBMA**  Case forms of the basic digits, only sg
+
+
+* **LEXICON NOLLA**  Case forms of nolla/nulla, as GOLBMA, but only Sg, no Cmp
+
+
+* **LEXICON GOLBMANUPPELOHKAI**
+
+* **LEXICON GOLBMAGOALMMATLOHKAI**
+
+* **LEXICON GOLBMANJEALJATLOHKAI**
+
+* **LEXICON GOLBMAVIDATLOHKAI**
+
+* **LEXICON GOLBMAGUDATLOHKAI**
+
+
+* **LEXICON GOLBMACIHCCETLOHKAI**
+
+
+* **LEXICON GOLBMAGAVCCATLOHKAI**
+
+
+* **LEXICON GOLBMAOVCCATLOHKAI**
+
+* **LEXICON GOLBMALOGATLOHKAI**
+
+* **LEXICON GOLBMALOGI**
+
+
+* **LEXICON VIHTTA** Case forms of the basic digits
+
+* **LEXICON BEALVIHTTA** Case forms of the basic digits, only sg
+
+
+* **LEXICON VIHTTANUPPELOHKAI**
+
+
+* **LEXICON VIHTTAGOALMMATLOHKAI**
+
+
+* **LEXICON VIHTTANJEALJATLOHKAI**
+
+* **LEXICON VIHTTAVIDATLOHKAI**
+
+
+* **LEXICON VIHTTAGUDATLOHKAI**
+
+* **LEXICON VIHTTACIHCCETLOHKAI**
+
+* **LEXICON VIHTTAGAVCCATLOHKAI**
+
+* **LEXICON VIHTTAOVCCATLOHKAI**
+
+* **LEXICON VIHTTALOGATLOHKAI**
+
+* **LEXICON VIHTTALOGI**
+
+
+
+* **LEXICON CIEZA** Case forms of the basic digits
+
+
+* **LEXICON BEALCIEZA** Case forms of the basic digits, only sg
+
+* **LEXICON CIEZANUPPELOHKAI**
+
+* **LEXICON CIEZAGOALMMATLOHKAI**
+
+* **LEXICON CIEZANJEALJATLOHKAI**
+
+* **LEXICON CIEZAVIDATLOHKAI**
+
+* **LEXICON CIEZAGUDATLOHKAI**
+
+* **LEXICON CIEZACIHCCETLOHKAI**
+
+* **LEXICON CIEZAGAVCCATLOHKAI**
+
+* **LEXICON CIEZAOVCCATLOHKAI**
+
+* **LEXICON CIEZALOGATLOHKAI**
+
+* **LEXICON CIEZALOGI**
+
+
+* **LEXICON GAVCCI** Case forms of the basic digits
+
+* **LEXICON BEALGAVCCI** Case forms of the basic digits, only sg
+
+* **LEXICON GAVCCINUPPELOHKAI**
+
+* **LEXICON GAVCCIGOALMMATLOHKAI**
+
+* **LEXICON GAVCCINJEALJATLOHKAI**
+
+* **LEXICON GAVCCIVIDATLOHKAI**
+
+* **LEXICON GAVCCIGUDATLOHKAI**
+
+* **LEXICON GAVCCICIHCCETLOHKAI**
+
+* **LEXICON GAVCCIGAVCCATLOHKAI**
+
+* **LEXICON GAVCCIOVCCATLOHKAI**
+
+* **LEXICON GAVCCILOGATLOHKAI**
+
+* **LEXICON GAVCCILOGI**
+
+
+
+* **LEXICON LOGI**
+
+* **LEXICON BEALLOGI** only sg
+
+* **LEXICON CUODICASE**
+
+
+* **LEXICON OKTACUOHTI**
+
+
+* **LEXICON GUOKTECUODI**
+
+* **LEXICON NUBBECUOHTI**
+
+
+* **LEXICON GOLBMACUODI**
+
+* **LEXICON VIHTTACUODI**
+
+* **LEXICON CIEZACUODI**
+
+* **LEXICON GAVCCICUODI**
+
+
+
+* **LEXICON DUHAHAT**
+
+
+
+* **LEXICON DUHATCASE**
+
+
+* **LEXICON OKTADUHAT**
+
+
+* **LEXICON GUOKTEDUHAT**
+
+* **LEXICON NUBBEDUHAT**
+
+* **LEXICON GOLBMADUHAT**
+
+* **LEXICON VIHTTADUHAT**
+
+* **LEXICON CIEZADUHAT**
+
+* **LEXICON GAVCCIDUHAT**
+
+
+
+* **LEXICON CIEZAS_N**  Collective numerals
+
+
+* **LEXICON VIDAS_N**  Collective numerals
+
+
+* **LEXICON BEANNOT** one and a half
+
+
+
+
+
+
+
+
+
+* **LEXICON ARABICCASES**  adds +Arab
+
+* **LEXICON ARABICCASE**  adds +Arab
+
+* **LEXICON ARABICCASE0**  adds +Arab
+
+
+* **LEXICON DIGITCASES**  to distinguish between 0 and oblique
+
+* **LEXICON DIGITCASE0**
+
+
+* **LEXICON DIGITCASE**
+
+
+* **LEXICON ARABICCASEORD** ordinals
+
+* **LEXICON ARABICCASEORD-ERR** ordinal inflection when preceded
+by .:, and with reduced case forms. The Err/Orth tag is added in the calling lexicon.
+
+* **LEXICON ARABICCASECOLL** collectives
+
+
+* **LEXICON ROMNUMTAGOBL**
+* * *
+<small>This (part of) documentation was generated from [../src/fst/affixes/numerals.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/numerals.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 
 # North Saami noun declension
@@ -17152,518 +21554,90 @@ Contracted nouns
 
 * **LEXICON DIMINV** diminutives, these comes from bisyll nouns
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/nouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/nouns.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
+<small>This (part of) documentation was generated from [../src/fst/affixes/nouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/nouns.lexc)</small>
+# Continuation lexicons for abbreviations
 
-# North Saami adjective declension file
+## Lexica for adding tags and periods
 
+## The sublexica
 
+### Continuation lexicons for abbrs both with and witout final period
 
-## Bisyllabic adjectives
+* **LEXICON ab-dot-noun-adj-trab**
 
+* **LEXICON ab-noun**
 
+* **LEXICON ab-adj**
 
-* **LEXICON BUORRE**  For this adj only
+* **LEXICON ab-adv**
 
+* **LEXICON ab-num**
 
+### Lexicons without final period
 
-* **LEXICON BUOROT** SUB, Southern dialect
+* **LEXICON ab-nodot-noun**  The bulk
 
+* **LEXICON ab-nodot-adj**
 
+* **LEXICON ab-nodot-adv**
 
-* **LEXICON ALKI**  Bisyll V-Adj, -es-Attr, no WeG.
+* **LEXICON ab-nodot-num**
 
-* **LEXICON SEARRA** Bisyll. V-Adj's with s-Attr in WeG.
+### Lexicons with final period
 
-* **LEXICON HOHPI** Bisyll. V-Adj's with s-Attr. in WeG & Adv.
+* **LEXICON ab-dot-noun**  This is the lexicon for abbrs that must have a period.
 
-* **LEXICON LAIKI** Bisyll. V-Adj's with es-Attr. in WeG & Adv.
+* **LEXICON ab-dot-adj**  This is the lexicon for abbrs that must have a period.
 
-* **LEXICON LODJI** bisyll V-Adj with -es and -is Attr in WeG
+* **LEXICON ab-dot-adv**  This is the lexicon for abbrs that must have a period.
 
+* **LEXICON ab-dot-num**  This is the lexicon for abbrs that must have a period.
 
-* **LEXICON JUHKKIS** Bisyll. V-Adj. with s-Attr; no Adv.
+* **LEXICON ab-dot-cc**
 
 
-* **LEXICON HAHTTI** Bisyll. V-Adj. no Adv. !sponsors wants comparatives for these!
 
+* **LEXICON ab-verb**  A lexicon for "gč." and perhaps also other abbreviated verbs.
 
 
-* **LEXICON EADDJI** Bisyll. V-Adj. no Adv.
+* **LEXICON ab-dot-verb**
 
+* **LEXICON ab-nodot-verb**
 
-* **LEXICON NUORRA** Bisyll. V-Adj. w/CG, w/o Sep. Attr; no Adv.
 
-* **LEXICON RIEKTA**  Bisyll adj w/o obl sg forms, WeG Attr
+* **LEXICON ab-dot-IVprfprc**
 
 
+* **LEXICON nodot-attrnomaccgen-infl**
 
-* **LEXICON VIELG**  adj with -es -attrib. (cns final adj)
+* **LEXICON nodot-attr-infl**
 
-* **LEXICON VIELGAT**  just a sublexicon to VIELG
+* **LEXICON nodot-nomaccgen-infl**
 
-* **LEXICON VIELG_NOCOMP**  adj with -es -attrib. (cns final adj)
 
-* **LEXICON VIELGAT_NOCOMP**  just a sublexicon to VIELG_NOCOMP
+* **LEXICON dot-attrnomaccgen-infl**
 
+* **LEXICON dot-attr**
 
-* **LEXICON CAHKK**  -at final adj with attr -es and -dis
+* **LEXICON dot-nomaccgen-infl**
 
-* **LEXICON JALGAT**  only jalgat, attr jalga and jalges
 
-* **LEXICON UHCC**  uhcci, unni, seaggi, attr uhca, unna, seakka
+* **LEXICON DOT** - Adds the dot to dotted abbreviations.
+we also allow different variations of dotted abbreviations at
+the end of the sentence (especially for tokenisers)
+* "su." gets analysed as `"su" Adv ABBR`
+in tokeniser mode also:
+* "su." -> `"su" Adv ABBR` + `"." CLB` to account for sentence
+final su with no extra full stop.
+* also `"son" Pron Pers Sg3 Gen/Acc` + `"." CLB` due to
+homonymy.
+Same treatment is done with two and three full stops after abbreviation in
+the end of the sentence:
+* "su.." -> `"su" Adv Abbr` + `"." CLB Err/Orth`
+* "su..." -> `"su" Adv Abbr` + `"..." CLB`
 
-* **LEXICON JEAGOHEAPMI**  caritives
-
-* **LEXICON BIVNNUHEAPME**  no bivnnuhis here, special, beacause popular and unpopular collide in attribute form :)
-
-* **LEXICON JEAGOHEAPMI_NOCOMP**  caritives, no comparative
-
-* **LEXICON OATNI**  only this adj, no attr
-
-
-## Consonant-final even-syllabic adjectives
-
-* **LEXICON TUVRRAHAS**
-
-* **LEXICON ISSORAS**  issoras and certain as-adj. also derivations, final -s
-
-* **LEXICON IHKALAS-DABALAS** loan adjectives ending on -ihkalaš - kritihkalaš etc
-
-* **LEXICON IIVVAL-DABALAS** loan adjectives ending on -iivvalaš
-
-
-* **LEXICON ISTTALAS** loan adjectives ending on -ihkalaš
-
-
-* **LEXICON DABALAS**   -laš adjectives with short Attr and SgNom Comp forms - dábálet, dábálut etc
-
-* **LEXICON NVDCompAttr_ISSORASSA-**  sublexicon to DABALAS
-
-
-
-* **LEXICON DEARVVASLAS**  -laš adjectives without short Attr and SgNom Comp forms. The word dearvvaslaš/dearvvašlaš is not directed here, but to DABALAS
-
-
-* **LEXICON DEARVVASLAS2**  only to lift out ISSORASSA-, see DEARVVASLAS
-
-* **LEXICON STUORIBUS**  -buš comparatives
-
-
-* **LEXICON ASEHAS**  5 words with -is attr: asehis, asihis, oanehis, vuollegis, vuolligis
-
-* **LEXICON UNOHAS**  for this word only
-
-* **LEXICON IPMAHA** Tris. Gradating C-adj:s, The Troms declension: imaš:ipmaha, gáđaš:gáhtaha
-
-
-
-## Trisyllabic adjectives
-
-* **LEXICON MEAHTTUS**  meahttun-adj. with comp. and superl. forms -seabbo, -seamos etc.
-
-* **LEXICON BEAKKAN** Trisyll. Non-gradating C-Adj. without Separate Attr.
-
-* **LEXICON BEAKKAN_NOCOMP** Trisyll. Non-gradating C-Adj. without Separate Attr. No comparatives
-
-* **LEXICON GEARDAN** Trisyll. Non-gradating C-Adj. without Separate Attr.
-
-* **LEXICON JOHTIL** Trisyll. Non-gradating C-Adj. with is-Attr.
-
-
-* **LEXICON RAHKAT** Trisyll. Non-gradating C-Adj. with is-Attr. TO AVOID RAHKADIT
-
-
-* **LEXICON HEITTOHA** Trisyll. Non-gradating C-Adj. with is-Attr.
-
-* **LEXICON GUOHCA** Trisyll. Gradating V-Adj., no sep. Attr.
-
-* **LEXICON GARAS** Trisyll. Gradating C-Adj. with Bisyll. a-Attr. and final s Pred
-
-* **LEXICON LINIS** Trisyll. Gradating C-Adj. with Bisyll. a-Attr. and final s Pred
-
-* **LEXICON SUVRRIS** Trisyll. Gradating C-Adj. with Bisyll. weak grade a-Attr. and final s Pred
-
-* **LEXICON NANUS** Trisyll. Gradating C-Adj. with Bisyll. weak grade u-Attr. and final s Pred
-
-* **LEXICON LOSSAT** Trisyll. Gradating C-Adj. with Bisyll. a-Attr. and final t  Pred. geahppat and lossat, words with bisyllable form comparatives in addition to trisyllable form: geahpit, losit
-
-
-* **LEXICON CAVGAT** Trisyll. Gradating C-Adj. with Bisyll. a/es-Attr. and final t Pred, both -but and -eappot comparatives
-
-* **LEXICON CIENAL** Trisyll. Gradating C-Adj. with Strong Grade is-Attr.
-
-* **LEXICON NJUORAS** Trisyll. Gradating C-Adj., with Strong Grade a-Attr.
-
-* **LEXICON DILDDAS**  ,-ld-(#=is) Trisyll Grad., facult is-Attr.
-
-* **LEXICON VUOGAS**  Trisyll. adj. with gradation I-III and no sep. attr. only this word, vuogas, vuohkkasat
-
-* **LEXICON HEAHKAS**  ,-hkk-#=is heahkka Trisyll Grad., is-Attr & heahkka
-
-* **LEXICON EATTAS**  ,-dd-#=is Trisyll. Grad. C-Adj. with WeG -is Attr.
-
-* **LEXICON BOAKKAS**  ,-gg-#boagge9- Trisyll no attr
-
-
-* **LEXICON FARGAT**  :d#Ø Trisyll no attr
-
-
-* **LEXICON GAPPUS**  -bbo- Trisyll, attr same as pred
-
-* **LEXICON VATTIS**  Trisyll CG, -es/-is Attr
-
-* **LEXICON BIEKKUS**  ,-iggo-#=is Trisyll Grad, is-Attr,
-
-* **LEXICON LIEKKUS**  ,-iggo-(#=is) Trisyll Grad,  attr same as pred
-
-* **LEXICON GUOROS**  guoros and luovos, Trisyll Grad,  attr same as pred
-
-
-* **LEXICON NUOLUS**  ,-u8llo-(#nuolo9s)
-
-
-* **LEXICON GEARGGUS**  ,-ergo-#gearggo9s
-
-* **LEXICON VUDDJII**
-
-* **LEXICON VUDDJII_DECLINED** misses most cases
-
-
-* **LEXICON JIEDNAI**
-
-* **LEXICON JIEDNAI_DECLINED** misses most cases
-
-* **LEXICON BOARIS**  As GAPPUS, but with different attr.
-
-* **LEXICON BOARIS_NOCOMP**
-
-
-* **LEXICON IIDNA_NOCOMP**   
-
-
-
-* **LEXICON IIVA_NOCOMP**  IIVA_A without comparatives
-
-
-* **LEXICON IIVA_A**  loans ending with -a, same attr as pred
-
-
-* **LEXICON FRIIJA**  loans ending with -a, same attr as pred
-
-
-
-* **LEXICON BOREALA** FRIIJA without comparatives
-
-* **LEXICON SPANSKA** spánska, dánska, fránska, ránska. WeG attr
-
-
-* **LEXICON ALLAT** allat, gassat, govdat, attr: alla, gassa, govda. Trisyllables with Bisyllable compforms: alit, gasit, govddit
-
-
-* **LEXICON ALLAGA** sublexicon to ALLAT and word árrat
-
-
-
-
-
-## Contracted adjectives
-
-* **LEXICON FIINNIS**  ,-dná-(:Ø)#fiinna, western comp: fiidnát, eastern comp: fiidnásabbo/-sut/-sat
-
-
-* **LEXICON DEAHTIS**  as fiinnis, but with StrGr in Attr
-
-* **LEXICON SMAVIS**  as deahtis, but with even more Attr forms and comparative smávit in addition
-
-* **LEXICON STUORIS**  As fiinnis, but with different comparation
-
-* **LEXICON NJALGGAT** Comp+Sg+Nom: njálgát, njálgásut/-sit/-sut/-sat, njálgáseabbo/-sabbo
-
-* **LEXICON CAPPIS**  western comp: čábbát, eastern comp: čábbásabbo/-sut/-sat
-
-
-* **LEXICON VIISSIS**  Contr, CG and -is -> -á, attr -es/-is, western and eastern comp forms
-
-* **LEXICON RAHPIS**  Contr, CG and -is -> -á, attr -es, with long and short comp forms
-
-* **LEXICON HARVVIS**  Contr, CG and -is -> -á, attr -e, short comp forms
-
-* **LEXICON MALLASadj-**
-
-* **LEXICON MALLASadj-_MINIP**  for giving Use/NGminip-tags
-
-
-* **LEXICON MALLASI-/NUORABUadj-**
-
-* LEXICON DEVNVCASE  bisyllabic nominal declension
-
-* LEXICON GOAHTI-OBLadj
-
-* **LEXICON GOAHTI-NEadj**
-
-* **LEXICON GODIIadj-**
-
-* **LEXICON GOADIadj-**
-
-
-* **LEXICON NomVadj**
-
-
-* **LEXICON EssVadj**
-
-
-
-## Special cases
-
-* **LEXICON VEARATAG**
-
-* **LEXICON VEARA**
-
-
-
-## Final note on the adjective sublexica
-
-todo: Rewrite the adj lexica so that the attr variation is kept separate
-from the otherwise uniform declension.
-
-
-
-* **LEXICON VUDDJI-**
-
-* **LEXICON BOHCCOadj**
-
-* **LEXICON BOHCCUadj**
-
-
-
-
-
-
-# Adjective declension
-
-* **LEXICON ATTR**  This is the normal lexicon for ATTR forms
-
-* **LEXICON ATTRCONT**  This lexicon is for forms with non-sub Attr, where we sub the rest.
-
-
-* **LEXICON LAIKI0**  Directing adjectives ...
-
-
-
-
-
-* **LEXICON ISSORASSA-**
-
-
-* **LEXICON EABBO/EAMOS** comparision for trisyllable adjectives
-
-* **LEXICON EABBO/EAMOS_MINIP**  for giving Use/NGminip-tags
-
-
-* **LEXICON EABBO/EAMOS_CONT**
-
-* **LEXICON EABBO/EAMOS_CONT_MINIP** for giving Use/NGminip-tags
-
-
-* **LEXICON EAMOS_MINIP**  for giving Use/NGminip-tags
-
-
-
-* **LEXICON EABBO/EAMOS_CONT-contracted** for certain contracted adjectives, divided dialectwise
-
-* **LEXICON SHORTCOMP**
-
-* **LEXICON SHORTCOMP_MINIP**  for giving Use/NGminip-tags
-
-* **LEXICON SHORTCOMP_PRED_MINIP**  for giving Use/NGminip-tags
-
-
-* **LEXICON EABBU** eastern form -abbo as well
-
-* **LEXICON EABBUCASE1**
-
-* **LEXICON EABBUCASE2**
-
-* **LEXICON EABBU_MINIP**  for giving Use/NGminip-tags
-
-* **LEXICON EABBUCASE1_MINIP**  for giving Use/NGminip-tags
-
-* **LEXICON EABBUCASE2_MINIP**  for giving Use/NGminip-tags
-
-
-* **LEXICON BU/MUS**  Bisyllabic adjectives comparision
-
-
-* **LEXICON BUStem**
-
-
-* **LEXICON EAMOS** eastern form -amos as well
-
-
-
-* **LEXICON GAPPUS0** Almost id. to MALIS0. MALIS0 has no VUOHTA, GAPPUS0 has no Px Ess., and shouldn't have either.
-
-
-* **LEXICON GAPPUS-**
-
-GOAL: Keep GAPPUS- and MALLAS- apart, because of
-the Px(1)V issue, but unify the rest.
-GAPPUS- and MALLAS- differ
-in the A and N treatment of
-Pl Nom Px (only 1st p. for A
-and all persons for N).
-Now that MALLASI- is deleted,
-GAPPUS- and MALLAS- are
-identical. We check by pointing
-GAPPUS- to MALLAS-. Look into this.
-and remove GAPPUS- for MALLAS-
-eventually.
-
-* **LEXICON MEAHTTUN** Deverbal adjectives.
-
-
-* **LEXICON LEXATTR_GEAHTES** trisyllabic stems: geahtes for trisyll, heapmi for bisyll
-
-* **LEXICON GEAHTES**  geahtes for trisyll, heapmi for bisyll
-
-* **LEXICON OVDDIT** Inherently comparative adjectives, bisyll
-
-* **LEXICON MADDELEABBO** Inherently comparative adjectives, trisyll
-
-
-
-
-
-
-# Nominal derivation
-
-## Noun derivation
-
-
-* **LEXICON VUOHTA** +CmpN/SgG
-
-
-* **LEXICON VUOHTAMORPH**
-
-
-
-
-
-
-
-
-# Adjective derivation
-
-
-* **LEXICON LAS** from verbs: čirrolas, bealkálas etc
-
-
-* **LEXICON BUOREMUSS** superlatives, from bisyll adjectives
-
-* **LEXICON BUOREMUS**
-
-* **LEXICON BUOREMUSSA-**
-
-
-
-
-* **LEXICON HEAPMI** caritives
-
-* **LEXICON LAGAN** lágan, lágán and subform lagan as well
-
-* **LEXICON LAGAS** lágaš, lágáš and subform lagaš as well
-
-
-* **LEXICON LAGAN_LAGAS**
-
-
-* **LEXICON AHKASAS** derived words on -saš, -haš, -laš
-
-* **LEXICON AHKASAS_PL**  derived words on -saš, -haš, -laš, only plural,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* **LEXICON SISKKALDAS** olgguldas, siskkáldas, siskkildas, nuppáldas, that's all
-
-
-
-* **LEXICON DenominalAdjsV1** caritives and their derivatives (huvva, huhtti), from bisyll nouns
-
-* **LEXICON DenominalAdjsV1Long** caritives and their derivatives (huvva, huhtti), from bisyll nouns without vowel shortening
-
-* **LEXICON DenominalAdjsV1Short** caritives and their derivatives (huvva, huhtti), from bisyll nouns with vowel shortening
-
-
-
-
-* **LEXICON DenominalAdjsV2** from bisyllables, muoralaš, gieđalaš etc
-
-* **LEXICON DenominalAdjsV2_lasj** from bisyllables, muoralaš, gieđalaš etc
-
-
-* **LEXICON DenominalAdjsC** from trisyllables, -laš and caritives on -heapme
-
-
-
-* **LEXICON DenominalAdjsCLong** from trisyllables, -laš and caritives on -heapme
-
-
-
-* **LEXICON DenominalAdjsCShort** from trisyllables, -laš and caritives on -heapme
-
-
-
-
-* **LEXICON DenominalAdjsV3** +CmpN/SgN +CmpN/SgG +CmpN/PlG !from Propernames
-
-* **LEXICON DenominalAdjsV3case** from bisyllabic propers
-
-
-* **LEXICON DenominalAdjsC2** +CmpN/SgN +CmpN/SgG +CmpN/PlG	!from Propernames
-
-* **LEXICON DenominalAdjsC2case** from trisyllabic propers
-
-* **LEXICON DenominalAdjsV4** +CmpN/SgN +CmpN/SgG +CmpN/PlG  from Propernames
-
-* **LEXICON DenominalAdjsV4case** from bisyllabic propers (subbed)
-
-* **LEXICON DenominalAdjsC3** +CmpN/SgN +CmpN/SgG +CmpN/PlG	 !from Propernames
-
-* **LEXICON DenominalAdjsC3case** from trisyllabic propers (subbed)
-
-* **LEXICON LASJOBL**
-
-* **LEXICON HEAPMIOBL** sublexicon not only for caritives on -heapmi/-heapme
-
-
-
-## Adverbs from adjectives
-
-* **LEXICON ADVV** adverb from bilysll stems
-
-* **LEXICON ADVC** adverb from trilysll stems
-
-
-
-
-## Adjectives from nouns
-
-* **LEXICON AGAdj**  mostly words like guovttejagat, allajoccat etc
-
-* **LEXICON AGAdjINFL**
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/adjectives.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/adjectives.lexc)</small>
+<small>This (part of) documentation was generated from [../src/fst/affixes/abbreviations.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/abbreviations.lexc)</small>
 
 
 
@@ -17915,1619 +21889,7 @@ some multiword prons, according to Nickel
 
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/pronouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/pronouns.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
-
-
-
-
-
-
-# Verb conjugation
-
-
-
-## Basic lexica for bisyllabic verbs
-
-
-### Modals
-
-These are treated separately because
-modals do not participate in derivation
-
-* **LEXICON GALGA_IV** only dáidit, galgat
-
-
-
-* **LEXICON FERTE_IV**  only fertet and bállet
-
-
-
-### Ordinary bisyllabic verbs
-
-
-* **LEXICON DIEHTI_TV** Bisyllabic i-verbs with Personal Passive
-
-
-* **LEXICON BORRA_TV** Bisyllabic a- and u-verbs with Personal Passive
-
-
-* **LEXICON BOAHTI_IV**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg
-
-* **LEXICON DIEVVA_IV**  Bisyllabic a- and u-verbs without Personal Passive but with Der/NomAg
-
-
-
-
-
-
-### Bisyllabic verbs
-
-
-
-
-* **LEXICON DEAKCU_TV** as BORRA for u-verbs with dim -astit, and a-verbs with dim -istit that are hardcoded
-
-
-* **LEXICON BOAZZU_IV** as DIEVVA_IV for u-verbs with dim -astit, and a-verbs with dim -istit that are hardcoded
-
-
-* **LEXICON BINDU_IV** as DIEVVA (but without short passive) for u-verbs with dim -astit, that are hardcoded
-
-* **LEXICON DAHTU_TV**  As diehti, but -ut verbs, thus without short passive
-
-* **LEXICON BOLTU_TV**  As DAHTU_TV but with dim -astit that are harcoded
-
-* **LEXICON ALLU_IV**  -ut verbs, thus without short passive
-
-
-
-
-* **LEXICON DIEHTALADDA_TV** Already derived words (except words ending -uššat and -httit) - no deverbal verbs
-
-* **LEXICON LAIGOHADDA_TV** láigohaddat. No deverbal nouns for speller reasons. No +Imprt+Pl2: láigohaddit
-
-
-* **LEXICON HAHTTIT_TV** Four-syll kausatives on -httit
-
-* **LEXICON BOAHTALADDA_IV** Already derived words (except words ending -uššat)
-
-* **LEXICON RAIMMAHALLA_IV** passives on -hallat and INCHOATIVES on -stuvvat
-
-* **LEXICON UVVA_IV** passives -uvvat
-
-
-* **LEXICON SMUVVA_IV** passives -snuvvat, -smuvvat
-
-
-
-* **LEXICON DOAROSTUVVA_TV** INCHOATIVES on -stuvvat
-
-
-* **LEXICON MAHTALADDA_TV** Bisyllabic Already derived words (except words ending -uššat) without Personal Passive but with Acc obj
-
-
-
-
-
-* **LEXICON ARVI_IV** Bisyllabic Impersonal Verbs
-
-* **LEXICON ARVALADDA_IV** Already derived words (except words ending -uššat)
-
-
-
-
-
-
-
-
-
-* **LEXICON MASSI_TV** No Der/NomAg (for speller reasons). Bisyllabic i-verbs with Personal Passive. Otherwise like DIEHTI_TV
-
-* **LEXICON VALDI_TV**  No Der/NomAg (for speller reasons). Bisyllabic i-verbs with Personal Passive. No VGen. Otherwise like DIEHTI_TV
-
-
-* **LEXICON ASTA_TV** No Der/NomAg (for speller reasons). Bisyllabic a- and u-verbs with Personal Passive. Otherwise like BORRA_TV
-
-
-* **LEXICON BORGI_IV**  Bisyllabic i-verbs without Personal Passive but without Der/NomAg. No Der/NomAg for speller reasons. Otherwise like BOAHTI_IV
-
-* **LEXICON BEALLJA_IV** No Der/NomAg for speller reasons. Bisyllabic a- and u-verbs without Personal Passive but without Der/NomAg. Otherwise like DIEVVA_IV
-
-
-* **LEXICON DAVGU_TV**  As DAHTU_TV, No Der/NomAg for speller reasons.
-
-
-* **LEXICON LEABBU_TV** No Der/NomAg (for speller reasons)- otherwise like DEAKCU_TV
-
-
-
-* **LEXICON ALBMU_TV** No Der/NomAg (for speller reasons). As BOLTU_TV otherwise
-
-
-
-* **LEXICON BARGU_IV**  no Der/NomAg for speller reasons- Like ALLU_IV
-
-
-* **LEXICON BORSU_IV** as BINDU. No Der/NomAg
-
-
-
-
-* **LEXICON MUHTTI_TV** No deverbal nouns an ACTIO(for speller reasons). Bisyllabic i-verbs with Personal Passive
-
-* **LEXICON BEAHTTI_TV** Bisyllabic i-verbs with Personal Passive, no Der/alla, no Der/adda, Der/halla  (beahtáhallat, báinnáhallat) for speller
-
-* **LEXICON FAHTE_TV** Contracted Verbs with Personal Passive,  no Der/alla, no Der/adda, Der/halla  (fáhtehallin) for speller
-
-
-* **LEXICON GILVI_TV** only gilvit, to get rid of gilvohallat (for speller reasons).
-
-* **LEXICON FAHTI_TV** (for speller reasons). no fáhttet (fáhtit+V+TV+Imprt+Pl2) because it get mixed up with fáhtet. No deverbal nouns.
-
-
-* **LEXICON DAHKA_TV** Like BORRA_TV, but without	dahkat+V+TV+Imprt+Sg1, to get rid of dahkon (for speller reasons)
-
-
-* **LEXICON FALLA_TV** fállat, njoarrat,  to get rid of fálastallat, njoarastallat (for speller reasons).
-
-
-
-
-* **LEXICON OAHPPA_TV** only oahppat. Like BORRA but without Deverbal verb -stuvva (for speller reasons)
-
-
-
-
-
-* **LEXICON AKTI_IV**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg - for speller reasons, to prevent:
-
-
-
-* **LEXICON GUHKKA_IV** No Imprt+Pl2 on -it, no Imprt+ConNegII and No +Der/NomAg for speller reasons. No Deverbal Verbs either. Bisyllabic a- and u-verbs without Personal Passive
-
-* **LEXICON BARDNA_IV** "bárdnat" ----> potensialis removed; bártnažan, bártnažat, bártnaš, bártnaža. No Der/NomAg for speller reasons. Bisyllabic a- and u-verbs without Personal Passive but without Der/NomAg. Otherwise like DIEVVA_IV
-
-
-
-
-
-* **LEXICON DIEHTISHORT_TV** Short action noun compound-form: neasken-
-
-* **LEXICON DIEHTILONGSHORT_TV** Long and short action noun compound-form, savdnjen-/savdnjin-
-
-* **LEXICON BAHCCI_TV** bahčit. Long and short actio compound-form. No NomAg (Actor) compound, for speller reasons
-
-* **LEXICON BOAHTILONGSHORT_IV** Long and short action noun compound-form
-
-
-
-
-
-
-
-
-* **LEXICON MAHTI_TV**  Bisyllabic Verbs without Personal Passive but with Acc obj.
-
-
-
-
-
-
-
-## Intermediate lexica for even-syllable verbs
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* **LEXICON GOAHTICnj**  for speller reasons to hinder -goahttit, whick is confused with infinitive -goahtit
-
-* **LEXICON RAIMMAHALLACnj**  restricted imperatives
-
-
-
-
-
-
-
-## Basic lexica for contracted verbs
-
-
-* **LEXICON GILLE_IV**  Contracted Verbs without Personal Passive
-
-
-* **LEXICON DOHPPE_TV** Contracted Verbs with Personal Passive
-
-
-
-
-###  BAsic lexica for Contracted verbs
-
-
-
-
-
-
-
-
-
-
-
-
-* **LEXICON CIRRO_IV**  Inchoatives and essives on -á, -o, -e without Personal Passive
-
-* **LEXICON MUITA_TV**  Inchoatives and essives on -á, -o, -e with Personal Passive
-
-
-
-
-
-
-
-* **LEXICON COHKKA_IV**  Contracted Verbs without Personal Passive - no stit-deverbal
-
-* **LEXICON GARRE_TV**  garret, loget. with Personal Passive. for speller to hinder garrenávnnas, garrenoaivi etc
-
-* **LEXICON ORRO_IV**  orrot. for speller to hinder orronsadji etc
-
-
-
-
-* **LEXICON MAHTA_TV** Contracted Verbs without Personal Passive but with Acc obj.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Basic lexica for trisyllabic verbs
-
-
-* **LEXICON MUITAL_TV** Trisyllabic Verbs with Personal Passive
-
-
-* **LEXICON ALIST_IV** Trisyllabic Verbs without Personal Passive
-
-
-
-
-
-
-
-###  Basic lexica for trisyllabic verbs
-
-
-
-
-* **LEXICON COASKKIT_IV**  Trisyllabic impersonals
-
-
-
-* **LEXICON ARVVASJ_IV** impersonals ending -šit, -skit, smit, -idit, -ldit, -git and 5-syllables
-
-* **LEXICON ARVIL_IV** Impersonal Trisyllabic Verbs ending -lit
-
-
-
-
-
-
-
-
-
-
-* **LEXICON MUITTASJ_TV** Words ending -šit, -skit, -ldit - Reciprocals on -dit, Momentatives on -dit, -ádit, -ihit, -e7hit, Frequentatives on -(u)hit, Continuatives on -nit, Inchoatives on -nit
-
-* **LEXICON HALIID_TV** Words ending -smit, -idit, -git
-
-* **LEXICON BONJAT_TV** Cont/Freq on -dit, Continuatives on -(u)hit, Reciprocals, momentatives and frequentatives ending -alit
-
-* **LEXICON VUORDIL_TV** Trisyllabic Verbs ending -lit, -rit with Personal Passive
-
-* **LEXICON BEAGASJ_IV** Words ending -šit, -skit -ldit, essive derivates on -hit -. !Reciprocals on -dit. Momentatives on -dit, -ádit, -ihit, -e7hit. Frequentatives on -(u)hit. Continuatives on -nit. Inchoatives in -nit
-
-* **LEXICON JORGGIID_IV** Words ending -smit, -idit, -git -
-
-* **LEXICON HURAI_IV** Words ending -aidit
-
-
-* **LEXICON BALAT_IV** !Cont/Freq on -dit, Continuatives on -(u)hit, Reciprocals, momentatives and frequentatives ending -alit
-
-* **LEXICON SUOTNJAL_IV** Trisyllabic Verbs ending -lit, -rit without Personal Passive
-
-* **LEXICON BOTNJAS_IV** Trisyllabic Verbs ending -sit without Personal Passive
-
-* **LEXICON LASSAN_IV** Trisyllabic Verbs ending -nit without Personal Passive IV
-
-
-
-
-
-* **LEXICON OAHPAHIT_TV** only oahpahit, disamb reasons?
-
-* **LEXICON NUOSKIT_IV** only nuoskidit, for speller, no action noun nuoskideapmi
-
-* **LEXICON HALIHIT_TV** Like MUITTASJ_TV, without COnNeg so we dont get hálit
-
-
-
-
-* **LEXICON LAHKAN_TV** lahkanit, lahkonit, are nowadays used transitively
-
-* **LEXICON GEAGAT_TV**  Trisyllabic Verbs without Personal Passive but with Acc obj.
-
-* **LEXICON BUOVVAL_TV**  buovvalit, guoigalit. Trisyllabic Verbs ending -lit without Personal Passive but with Acc obj.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* **LEXICON MUITALCnj** Substems for Consonantal Verb Stems
-
-
-* **LEXICON HURAICnj** Substems for  Words ending -aidit
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Finite declension
-
-
-## Present tense
-
-### Vocalic stems
-
-* **LEXICON PotPrsV** Present Tense in Vocalic Verb Stems
-
-* **LEXICON PrsV** Present Tense in Vocalic Verb Stems
-
-* **LEXICON PrsV1** Present Tense Endings for Vocalic Verb Stems
-
-* **LEXICON PrsV2** Present Tense Endings for Vocalic Verb Stems
-
-* **LEXICON PrsV3** Present Tense Endings for Vocalic Verb Stems
-
-* **LEXICON PrsV4** Present Tense Endings for Vocalic Verb Stems
-
-* **LEXICON PrsV5** Present Tense Endings for Vocalic Verb Stems
-
-
-
-
-### Consonantal stems
-
-* **LEXICON PotC** Present Tense in Consonantal Verb Stems
-
-
-* **LEXICON PrsC** Present Tense in Consonantal Verb Stems
-
-* **LEXICON PrsC1** Present Tense in Contr/Non-Contr Consonantal Verb Stems
-
-* **LEXICON PotC2** Potential in Non-Contracted Consonantal Verb Stems
-
-
-* **LEXICON PrsC2** Present Tense in Non-Contracted Consonantal Verb Stems
-
-
-
-
-
-
-## Past tense
-
-### Vocalic stems
-
-
-* **LEXICON PrtV** Preterite Endings for Vocalic Verb Stems
-
-* **LEXICON PrtV1** Preterite Endings for Vocalic Weak Grade Verb Stems
-
-* **LEXICON PrtV2** Preterite Endings for Vocalic Strong Grade Verb Stems
-
-### Consonantal stems
-
-
-* **LEXICON PrtC** Preterite Endings for Consonantal Verb Stems
-
-* **LEXICON PrtC1** Preterite Endings for Consonantal Contr./Non-Contr. Verb Stems
-
-* **LEXICON PrtC2** Preterite Endings for Consonantal Non-Contr. Verb Stems
-
-* **LEXICON PrtC3** Preterite Endings for Consonantal Contr./Non-Contr. Verb Stems
-
-
-## Imperative mood
-
-* **LEXICON ImprtVA**  Imperative Forms for Vocalic Verb Stems
-
-* **LEXICON ImprtVB**  Imperative Forms for Vocalic Verb Stems
-
-* **LEXICON ImprtV1**  Imperative Forms for Vocalic Verb Stems
-
-* **LEXICON ImprtV2** Imperative Forms for Vocalic Verb Stems and Substems
-
-* **LEXICON ImprtSg2** Imperative Forms For Consonantal and Contracted Verb Stems
-
-
-* **LEXICON ImprtC**  Imperative Substems for Consonantal Verb Stems - uneven syll.
-
-* **LEXICON ImprtC2**  Imperative Substems for Consonantal Verb Stems - contracts
-
-
-# Infinite forms
-
-
-## V- and C-final
-
-* **LEXICON NominalFormsV**  Vowel-final stems
-
-
-
-## Continuation lex
-
-* **LEXICON NominalFormsVC**  for vowel final
-
-* **LEXICON NominalFormsV1**   infinitiv, actio
-
-
-* **LEXICON NominalFormsV2**  gerund, verbgenitiv, verbabessive
-
-* **LEXICON NominalFormsV3**  ^NG^ gerund
-
-* **LEXICON NominalFormsV4**  perfect participe, preterite negation form
-
-* **LEXICON NominalFormsV5**  negation form
-
-* **LEXICON NominalFormsV6** presence participe
-
-
-* **LEXICON NominalFormsV8**  gerund, verbabessive
-
-* **LEXICON NominalFormsV9**  supine
-
-* **LEXICON NominalFormsC1**  for cons final stems: infinitive, supine, actio, gerund, perfect participe, preterite negation form
-
-* **LEXICON NominalFormsC2**  for cons final stems: presence participe
-
-
-
-# Derivation
-
-
-
-* **LEXICON DeverbalNounsC**
-
-* **LEXICON DeverbalNounsCTV**
-
-* **LEXICON DeverbalNounsBOAHTI**
-
-* **LEXICON DeverbalNounsRAIMMAHALLA** no NomAg/actor
-
-* **LEXICON DeverbalNounsBOAHTALADDA**
-
-* **LEXICON DeverbalNounsDIEHTALADDA**
-
-* **LEXICON DeverbalNounsDIEHTI**
-
-
-* **LEXICON DeverbalNounsDIEHTISHORT**
-
-* **LEXICON DeverbalNounsDIEHTILONGSHORT**
-
-* **LEXICON DeverbalNounsBAHCCI**
-
-* **LEXICON DeverbalNounsDOHPPE-**
-
-* **LEXICON DeverbalNounsGARRE-**
-
-* **LEXICON DeverbalNounsCIRRO-**
-
-* **LEXICON DeverbalNounsORRO-**
-
-* **LEXICON DeverbalNounsCIRROTV-**
-
-
-* **LEXICON DeverbalNounsDOHPPEJ**
-
-* **LEXICON DeverbalNounsDOHPPEJTV**
-
-* **LEXICON DeverbalNounsMUITALTV**
-
-* **LEXICON DeverbalNounsMUITTASJTV**
-
-* **LEXICON DeverbalNounsMUITAL**
-
-* **LEXICON DeverbalNounsNUOSKIT**
-
-
-* **LEXICON DeverbalNounsMUITTASJ**
-
-
-* **LEXICON DeverbalVerbsBOAHTI**
-
-* **LEXICON DeverbalVerbsDIEVVA**
-
-* **LEXICON DeverbalVerbsBINDU**
-
-
-* **LEXICON DeverbalVerbsBORRA**
-
-* **LEXICON DeverbalVerbsFALLA**
-
-* **LEXICON DeverbalVerbsBOLTU**
-
-
-* **LEXICON DeverbalVerbsDIEHTI**
-
-* **LEXICON DeverbalVerbsBEAHTTI**
-
-* **LEXICON DeverbalVerbsARVI**
-
-
-* **LEXICON DeverbalVerbsDOHPPE**
-
-* **LEXICON DeverbalVerbsFAHTE**
-
-
-* **LEXICON DeverbalVerbsGILLE**
-
-* **LEXICON DeverbalVerbsCOHKKA**
-
-* **LEXICON DeverbalVerbsBORGE**
-
-
-
-* **LEXICON DeverbalVerbsMUITAL**
-
-* **LEXICON DeverbalVerbsVUORDIL**
-
-
-* **LEXICON DeverbalVerbsALIST**
-
-* **LEXICON DeverbalVerbsSUOTNJAL**
-
-* **LEXICON DeverbalVerbsBOTNJAS**
-
-* **LEXICON DeverbalVerbsLASSAN**
-
-* **LEXICON DeverbalVerbsCOASKKIT**
-
-* **LEXICON DeverbalVerbsARVIL**
-
-
-
-
-
-
-
-
-* LEXICON VGEN flag for VGen
-
-
-* * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/verbs.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/verbs.lexc)</small>
-# North Saami numerals
-
-
-
-
-
-
-
-* **LEXICON OKTA** Case forms of the basic digits
-
-* **LEXICON BEALOKTA** Case forms of the basic digits, only sg
-
-
-
-* **LEXICON BARE-LOHKAI**
-
-* **LEXICON OKTANUPPELOHKAI**
-
-* **LEXICON BEALOKTANUPPELOHKAI** only sg
-
-* **LEXICON OKTAGOALMMATLOHKAI**
-
-
-* **LEXICON OKTANJEALJATLOHKAI**
-
-
-* **LEXICON OKTAVIDATLOHKAI**
-
-* **LEXICON OKTAGUDATLOHKAI**
-
-* **LEXICON OKTACIHCCETLOHKAI**
-
-
-
-* **LEXICON OKTAGAVCCATLOHKAI**
-
-* **LEXICON OKTAOVCCATLOHKAI**
-
-
-* **LEXICON OKTALOGATLOHKAI**
-
-
-* **LEXICON OKTALOHKI**
-
-* **LEXICON GUOKTE**
-
-* **LEXICON GUOKTE-pure** Case forms of the basic digits
-
-* **LEXICON BEALGUOKTE**
-
-* **LEXICON BEALGUOKTE-pure** Case forms of the basic digits, only sg
-
-* **LEXICON GUOKTENUPPELOHKAI**
-
-
-* **LEXICON BEALGUOKTENUPPELOHKAI**, only sg
-
-* **LEXICON GUOKTEGOALMMATLOHKAI**
-
-* **LEXICON GUOKTENJEALJATLOHKAI**
-
-* **LEXICON GUOKTEVIDATLOHKAI**
-
-
-* **LEXICON GUOKTEGUDATLOHKAI**
-
-* **LEXICON GUOKTECIHCCETLOHKAI**
-
-
-* **LEXICON GUOKTEGAVCCATLOHKAI**
-
-
-* **LEXICON GUOKTEOVCCATLOHKAI**
-
-* **LEXICON GUOKTELOGATLOHKAI**
-
-* **LEXICON GUOKTELOGI**
-
-
-* **LEXICON NUBBENUPPELOHKAI**
-
-
-* **LEXICON NUBBEGOALMMATLOHKAI**
-
-
-* **LEXICON NUBBENJEALJATLOHKAI**
-
-
-* **LEXICON NUBBEVIDATLOHKAI**
-
-
-* **LEXICON NUBBEGUDATLOHKAI**
-
-* **LEXICON NUBBECIHCCETLOHKAI**
-
-
-* **LEXICON NUBBEGAVCCATLOHKAI**
-
-* **LEXICON NUBBEOVCCATLOHKAI**
-
-
-* **LEXICON NUBBELOGATLOHKAI**
-
-* **LEXICON NUBBELOGI**
-
-
-
-
-* **LEXICON GOLBMA**  Case forms of the basic digits
-
-* **LEXICON BEALGOLBMA**  Case forms of the basic digits, only sg
-
-
-* **LEXICON NOLLA**  Case forms of nolla/nulla, as GOLBMA, but only Sg, no Cmp
-
-
-* **LEXICON GOLBMANUPPELOHKAI**
-
-* **LEXICON GOLBMAGOALMMATLOHKAI**
-
-* **LEXICON GOLBMANJEALJATLOHKAI**
-
-* **LEXICON GOLBMAVIDATLOHKAI**
-
-* **LEXICON GOLBMAGUDATLOHKAI**
-
-
-* **LEXICON GOLBMACIHCCETLOHKAI**
-
-
-* **LEXICON GOLBMAGAVCCATLOHKAI**
-
-
-* **LEXICON GOLBMAOVCCATLOHKAI**
-
-* **LEXICON GOLBMALOGATLOHKAI**
-
-* **LEXICON GOLBMALOGI**
-
-
-* **LEXICON VIHTTA** Case forms of the basic digits
-
-* **LEXICON BEALVIHTTA** Case forms of the basic digits, only sg
-
-
-* **LEXICON VIHTTANUPPELOHKAI**
-
-
-* **LEXICON VIHTTAGOALMMATLOHKAI**
-
-
-* **LEXICON VIHTTANJEALJATLOHKAI**
-
-* **LEXICON VIHTTAVIDATLOHKAI**
-
-
-* **LEXICON VIHTTAGUDATLOHKAI**
-
-* **LEXICON VIHTTACIHCCETLOHKAI**
-
-* **LEXICON VIHTTAGAVCCATLOHKAI**
-
-* **LEXICON VIHTTAOVCCATLOHKAI**
-
-* **LEXICON VIHTTALOGATLOHKAI**
-
-* **LEXICON VIHTTALOGI**
-
-
-
-* **LEXICON CIEZA** Case forms of the basic digits
-
-
-* **LEXICON BEALCIEZA** Case forms of the basic digits, only sg
-
-* **LEXICON CIEZANUPPELOHKAI**
-
-* **LEXICON CIEZAGOALMMATLOHKAI**
-
-* **LEXICON CIEZANJEALJATLOHKAI**
-
-* **LEXICON CIEZAVIDATLOHKAI**
-
-* **LEXICON CIEZAGUDATLOHKAI**
-
-* **LEXICON CIEZACIHCCETLOHKAI**
-
-* **LEXICON CIEZAGAVCCATLOHKAI**
-
-* **LEXICON CIEZAOVCCATLOHKAI**
-
-* **LEXICON CIEZALOGATLOHKAI**
-
-* **LEXICON CIEZALOGI**
-
-
-* **LEXICON GAVCCI** Case forms of the basic digits
-
-* **LEXICON BEALGAVCCI** Case forms of the basic digits, only sg
-
-* **LEXICON GAVCCINUPPELOHKAI**
-
-* **LEXICON GAVCCIGOALMMATLOHKAI**
-
-* **LEXICON GAVCCINJEALJATLOHKAI**
-
-* **LEXICON GAVCCIVIDATLOHKAI**
-
-* **LEXICON GAVCCIGUDATLOHKAI**
-
-* **LEXICON GAVCCICIHCCETLOHKAI**
-
-* **LEXICON GAVCCIGAVCCATLOHKAI**
-
-* **LEXICON GAVCCIOVCCATLOHKAI**
-
-* **LEXICON GAVCCILOGATLOHKAI**
-
-* **LEXICON GAVCCILOGI**
-
-
-
-* **LEXICON LOGI**
-
-* **LEXICON BEALLOGI** only sg
-
-* **LEXICON CUODICASE**
-
-
-* **LEXICON OKTACUOHTI**
-
-
-* **LEXICON GUOKTECUODI**
-
-* **LEXICON NUBBECUOHTI**
-
-
-* **LEXICON GOLBMACUODI**
-
-* **LEXICON VIHTTACUODI**
-
-* **LEXICON CIEZACUODI**
-
-* **LEXICON GAVCCICUODI**
-
-
-
-* **LEXICON DUHAHAT**
-
-
-
-* **LEXICON DUHATCASE**
-
-
-* **LEXICON OKTADUHAT**
-
-
-* **LEXICON GUOKTEDUHAT**
-
-* **LEXICON NUBBEDUHAT**
-
-* **LEXICON GOLBMADUHAT**
-
-* **LEXICON VIHTTADUHAT**
-
-* **LEXICON CIEZADUHAT**
-
-* **LEXICON GAVCCIDUHAT**
-
-
-
-* **LEXICON CIEZAS_N**  Collective numerals
-
-
-* **LEXICON VIDAS_N**  Collective numerals
-
-
-* **LEXICON BEANNOT** one and a half
-
-
-
-
-
-
-
-
-
-* **LEXICON ARABICCASES**  adds +Arab
-
-* **LEXICON ARABICCASE**  adds +Arab
-
-* **LEXICON ARABICCASE0**  adds +Arab
-
-
-* **LEXICON DIGITCASES**  to distinguish between 0 and oblique
-
-* **LEXICON DIGITCASE0**
-
-
-* **LEXICON DIGITCASE**
-
-
-* **LEXICON ARABICCASEORD** ordinals
-
-* **LEXICON ARABICCASEORD-ERR** ordinal inflection when preceded
-by .:, and with reduced case forms. The Err/Orth tag is added in the calling lexicon.
-
-* **LEXICON ARABICCASECOLL** collectives
-
-
-* **LEXICON ROMNUMTAGOBL**
-* * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/numerals.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/numerals.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
-
-
-
-# North Saami Possessive suffixes
-
-* **LEXICON PxVvowch** for vowel stems, with X2, X1 with stem vowel change
-
-* **LEXICON Px1Vvowch** for vowel stems with stem vowel change, 1. p
-
-* **LEXICON Px2Vvowch** for vowel stems with stem vowel change, 1. and 2. p
-
-* **LEXICON Px3Vvowch** for vowel stems with stem vowel change, 3. p
-
-
-* **LEXICON PxV** for vowel stems, without stem vowel change
-
-* **LEXICON Px1V** for first person vowel stems
-
-
-* **LEXICON Px2V** for second person vowel stems
-
-* **LEXICON Px3V** for third person vowel stems
-
-
-
-* **LEXICON PxA** for a-stems
-
-
-* **LEXICON Px1A** for a-stems
-
-
-* **LEXICON Px2A** for a-stems
-
-* **LEXICON Px3A** for a-stems
-
-
-* **LEXICON PxC** for consonant stems
-
-* **LEXICON Px1C** for consonant stems
-
-
-* **LEXICON Px2C** for consonant stems
-
-* **LEXICON Px3C** for consonant stems
-
-
-* **LEXICON PxPlComC** for plural comitative forms of consonant stems
-
-* **LEXICON PxPlComV1** for first person vowel stems with vow change, directing onw
-
-* **LEXICON PxPlCom12V** for first, second person comitative Px
-
-* **LEXICON PxPlCom3V** for third person comitative Px
-* * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/possessive-suffixes.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/possessive-suffixes.lexc)</small>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Different lexicon for female persons and place names.
-
-
-Different lexicon for personal surnames. Blind
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/propernouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/propernouns.lexc)</small>
+<small>This (part of) documentation was generated from [../src/fst/affixes/pronouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/pronouns.lexc)</small>
 
 # North Saami acronyms - affix part
 
@@ -19563,819 +21925,6 @@ put between the abbreviation and its suffix
 
 * * *
 <small>This (part of) documentation was generated from [../src/fst/affixes/acronyms.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/acronyms.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
-
-
-
-
-
-The lexicon K_only is for paths not going to  the K-less ENDLEX
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* * *
-<small>This (part of) documentation was generated from [../src/fst/clitics.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/clitics.lexc)</small>
-North Sámi morphophonological rule set                  
-
-This file documents the [phonology.twolc file](http://github.com/giellalt/lang-sme/blob/main/src/fst/phonology.twolc) 
-
-The file contains the rule set for the non-segmental
-North Sámi morphophonological rules
-
-Note that when copied over to newinfra, this file will be labeled sme-phon-L1.twolc.
-The file sme-phon-L1.twolc will **not** be the source file to edit, 
-rather, the source file will be this file, gt/sme/src/twol-sme.txt. This file (in the old infra)
-is the ordinary sme fst file to be edited.
-The L2 sme fst, on the other hand, will have lags/sme/src/phonology/sme-phon-L2.twolc
-as its sourcefile, the file to be edited.
-
-
-
-
-
-
-
-
-
-
-
-
-
-`º` is for CnsGrad of the `lg:lgg` and `lºl:ll` type
-`¤:0` prevents ConsGrad in certain words
-`'` is the real apostroph
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *ájºgi*
-* *ái0gi*
-* ★*mánnáX5jd* (is not standard language)
-* ★*má0ná0jd* (is not standard language)
-
-
-
-
-
-
-* *ájºgi*
-* *ái0gi*
-
-* *majdege*
-* *maidege*
-
-* ★*almmajX4in* (is not standard language)
-* ★*almmai0in* (is not standard language)
-
-* *mánnáX5jd*
-* *má0ná0id*
-
-* *almmájX4#*
-* *almmái0#*
-
-* *almmájX4X7-*
-* *almmái00-*
-
-* *almmájX4in*
-* *almmáj0in*
-
-
-
-
-
-
-
-
-
-
-
-* *barggož-*
-* *barggoš-*
-
-* *smirez-*
-* *smires-*
-
-* *Troandim#*
-* *Troandin#*
-
-* *Troandim-*
-* *Troandin-*
-
-* *muhtum#*
-* *muhtun#*
-
-* *skoalkkuh#*
-* *skoalkkut#*
-
-* *nagod#*
-* *nagot#*
-
-* *bávččag#*
-* *bávččat#*
-
-* *nuorab#*
-* *nuorat#*
-
-* *bávččag#*
-* *bávččat#*
-
-* *eamid#*
-* *eamit#*
-
-* *alih#*
-* *alit#*
-
-* *olmmož>X4X7-*
-* *olmmoš>00-*
-
-
-* *olmmož>X4#*
-* *olmmoš>0#*
-
-
-
-
-
-* *fijdnisY5t*
-* *fiidná00t*
-
-* ★*fijdnisY5t* (is not standard language)
-* ★*fiidnás0t* (is not standard language)
-
-* ★*fijdnisY5t* (is not standard language)
-* ★*fiidnis0t* (is not standard language)
-
-* *albmájY5*
-* *albmá00*
-
-* *olbmožY5*
-* *olbmo00*
-
-* *fijdnisY5t-*
-* *fiidná00t-*
-
-* *albmájY5-*
-* *albmá00-*
-
-* *olbmožY5-*
-* *olbmo00-*
-
-
-
-* *vuordild-*
-* *vuordil0-*
-
-* ★*vuordild-* (is not standard language)
-* ★*vuordild-* (is not standard language)
-
-* *attest-*
-* *attes0-*
-
-* ★*attest-* (is not standard language)
-* ★*attest-* (is not standard language)
-
-* *berošt#*
-* *beroš0#*
-
-
-* *bearjadah%ºk-*
-* *bearjadat00-*
-
-* ★*bearjadah%ºk-* (is not standard language)
-* ★*bearjadat0k-* (is not standard language)
-
-* ★*bearjadah%ºk-* (is not standard language)
-* ★*bearjadah00-* (is not standard language)
-
-* ★*bearjadah%ºk-* (is not standard language)
-* ★*bearjadah0k-* (is not standard language)
-
-
-
-* *muitaluss#*
-* *muitalus0#*
-
-* ★*vejolažž>-* (is not standard language)
-* ★*vejolažž>-* (is not standard language)
-
-* *vejolažž>-*
-* *vejolaš0>-*
-
-* ★*vejolažž>#* (is not standard language)
-* ★*vejolaž0>#* (is not standard language)
-
-
-
-
-
-
-
-* *johºkaX4*
-* *jo00ga0*
-
-* ★*johºkaX4* (is not standard language)
-* ★*joh0ga0* (is not standard language)
-
-* ★*johºkaX4* (is not standard language)
-* ★*jo00ka0* (is not standard language)
-
-* ★*johºkaX4* (is not standard language)
-* ★*joh0ka0* (is not standard language)
-
-
-* *sápmiX4*
-* *sá0mi0*
-
-* ★*sápmiX4* (is not standard language)
-* ★*sápmi0* (is not standard language)
-
-
-* *latnjaX4*
-* *la0nja0*
-
-* *vuodºjiQ4n*
-* *vuo00já0n*
-
-* *káffeX4s*
-* *ká0fe0s*
-
-
-* *RuottaX4s*
-* *Ruo0ta0s*
-
-
-
-
-* *áhkkuX4s*
-* *áh0ku0s*
-
-* *vielljaX4*
-* *vie0lja0*
-
-* *mannjiX4*
-* *ma0nji0*
-
-* *áddjáX4*
-* *á0djá0*
-
-* *lájºbiX4*
-* *láibbi0*
-
-* *seaŋºga>X4*
-* *seaŋgga>0*
-
-* *boŋºki>X4j#*
-* *boŋkki>0i#*
-
-* *boŋºki>X4jmet#*
-* *boŋkki>0imet#*
-
-
-* *sáfºtaX4*
-* *sáftta0*
-
-
-* *oabºnaX4*
-* *oabnna0*
-
-* *ámºtaX4*
-* *ámtta0*
-
-* *InºgáX4*
-* *Inggá0*
-
-
-* *gánºdaX4*
-* *gándda0*
-
-
-* *konseapºtaX4*
-* *konseaptta0*
-
-
-* *ájºruX4*
-* *áirru0*
-
-* *bievºlaX4*
-* *bievlla0*
-
-
-* *jarºlaX4*
-* *jarlla0*
-
-
-* *olºjuX4*
-* *oljju0*
-
-
-* *mátºkiX4*
-* *mátkki0*
-
-
-
-* *kreatºsaX4*
-* *kreatssa0*
-
-
-* *korpºsaX4*
-* *korpssa0*
-
-
-* *beasºkaX4*
-* *beaskka0*
-
-
-* *čoavºjiX4*
-* *čoavjji0*
-
-
-* *beajºviX4*
-* *beaivvi0*
-
-* *dujhºmiX4*
-* *duihmmi0*
-
-
-* *čuolbmaX4*
-* *čuolmma0*
-
-* *DálºmaX4*
-* *Dálmma0*
-
-
-
-
-* *sávdnjiX4*
-* *sávnnji0*
-
-
-* *čorbmaX4*
-* *čorpma0*
-
-
-* *skurdnjiX4*
-* *skurtnji0*
-
-
-* *návsºtuX4*
-* *návsttu0*
-
-* *boršºtaX4*
-* *borštta0*
-
-* *limšºkiX4*
-* *limškki0*
-
-
-* *ukºsaX4*
-* *uvssa0*
-
-
-
-* *teaksºtaX4*
-* *teavstta0*
-
-
-
-* *spábbaX4*
-* *spáppa0*
-
-
-
-* ★*Szczecin* (is not standard language)
-* ★*Szccecin* (is not standard language)
-
-* *Szczecin*
-* *Szczecin*
-
-* *eadniX4*
-* *eatni0*
-
-
-* *boadnjiX4*
-* *boatnji0*
-
-
-
-
-
-* *boahºtiY1*
-* *boahtti0*
-
-* *dahºkaY7j#*
-* *dahkku0i#*
-
-* *dahºka>Y7jmet#*
-* *dahkku>0imet#*
-
-
-* *dapmaY1*
-* *dabmi0*
-
-* *bitnjuY1*
-* *bidnju0*
-
-* *dadºjaY1*
-* *daddji0*
-
-
-
-
-
-* *johºkaX4*
-* *jo00ga0*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *gávºpiX7*
-* *gáv0pe0*
-
-* *bassiX7*
-* *basse0*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *buorriX7*
-* *buorre0*
-
-* *buorriX8*
-* *buo0re0*
-
-
-* *várriX7girºku*
-* *várre0gir0ku*
-
-
-
-
-
-
-* *lijgiX7#ruhºtaX4jd*
-* *liige0#ru00đa0id*
-
-
-
-
-
-
-* *čuorºvuQ6*
-* *čuorvvo0*
-
-
-* *boahºtiQ6*
-* *boa00đe0*
-
-
-
-
-* *lájºkiW1s#*
-* *láikke0s#*
-
-* *álºkiW2s#*
-* *ál0ke0s#*
-
-
-
-* *váttisW1*
-* *váttes0*
-
-* *headºjusW1-*
-* *hea00jos0-*
-
-* *headºjusW1*
-* *hea00jos0*
-
-* *váttisW1-*
-* *váttes0-*
-
-
-
-
-
-
-
-
-
-
-
-
-* *goahºtiX5jd*
-* *go000đi0id*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *viehºki¤X5jn*
-* *vi0hkki00in*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *boahºti>^DISIMPjmet#*
-* *bo000đi>0imet#*
-
-* *reŋºko>X2jd#*
-* *reŋ0ku>0id#*
-
-* *baste>X2j#*
-* *basti>0i#*
-
-* *asi#bealli>^DISIMPjde#*
-* *asi#be00li>0ide#*
-
-* *Line>X2j#*
-* *Lini>0i#*
-
-
-
-
-* *áhččiX2n*
-* *áhččá0n*
-
-
-
-
-
-
-
-* *stahta>X3j#*
-* *stahti>0i#*
-
-
-
-* *Sij9te>i#*
-* *Sijte>i#*
-
-
-
-
-
-
-
-
-
-* *fijdnisY5t*
-* *fiidná00t*
-
-
-* *oažžuQ8dit*
-* *o0ččo0dit*
-
-* *coahºkuX8stit*
-* *coa00go0stit*
-
-
-
-* *jearraQ1*
-* *jearrá0*
-
-* *boahºtiQ1*
-* *boah0tá0*
-
-
-* *jearraQ3n*
-* *je0rro0n*
-
-* *jearraQ2t*
-* *je0rre0t*
-
-* *boahºtiQ3n*
-* *bo0h0to0n*
-
-* *čuorºvuQ3n*
-* *ču0r0vo0n*
-
-
-* *jearraQ2*
-* *je0rre0*
-
-* *boahºtiQ2t*
-* *bo0h0te0t*
-
-* *čuorºvuQ2*
-* *ču0r0vo0*
-
-
-* *boahºtiQ4n*
-* *boa00đá0n*
-
-* *boahºtiQ5lin*
-* *boa00đá0lin*
-
-
-
-
-
-
-
-* *jearraY1*
-* *jearri0*
-
-
-
-
-
-* *jearraY2*
-* *jearru0*
-
-* *boahºtiY2*
-* *boahttu0*
-
-
-* *jearraQ2t*
-* *je0rre0t*
-
-boahºtiY4t ! It seems it should be Q3. ... both?!
-* *boahºtiQ3t*
-* *bo0h0to0t*
-
-
-čuorºvuY4t ! Q2, it seems.
-* *čuorºvuQ2t*
-* *ču0r0vo0t*
-
-
-
-* *jearraY7t#*
-* *je0rro0t#*
-
-* *boahºtiY7t#*
-* *bo0htto0t#*
-
-* *čuorºvuY7t#*
-* *ču0r0vo0t#*
-
-* *jearraY7juvvot#*
-* *je0rro0juvvot#*
-
-
-
-
-
-
-* *jearraY7j#*
-* *je0rru0i#*
-
-* *dahºkaY7j#*
-* *dahkku0i#*
-
-* *loikaY7j#*
-* *loiku0i#*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *beatnag8X4*
-* *bea0na00*
-
-* *luopmin8X4*
-* *luo0mi00*
-
-* *giellum8X4*
-* *gie0lu00*
-
-
-
-
-
-
-
-
-
-
-
-
-
-Changed because:we get almmáj- and not almmái-
-Postvocalic j surfaces as i
-Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dummy: ) _ ;
-
-
-
-
-
-
-
-
-
-
-
-
-* * *
-<small>This (part of) documentation was generated from [../src/fst/phonology.twolc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/phonology.twolc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 #                    North Sámi compounding
 
@@ -20461,1555 +22010,6 @@ such compounds)
 
 * * *
 <small>This (part of) documentation was generated from [../src/fst/compounding.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/compounding.lexc)</small>
-
-
-
-
-
-
-
-
-`º` is for CnsGrad of the `lg:lgg` and `lºl:ll` type
-`¤:0` prevents ConsGrad in certain words
-`'` is the real apostroph
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
-
-
-
-
-
-
-
-* *áj'gi*
-* *ái0gi*
-* ★*mánnáX5jd* (is not standard language)
-* ★*má0ná0jd* (is not standard language)
-
-
-
-
-
-
-* *áj'gi*
-* *ái0gi*
-
-* *majdege*
-* *maidege*
-
-* ★*almmajX4in* (is not standard language)
-* ★*almmai0in* (is not standard language)
-
-* *mánnáX5jd*
-* *má0ná0id*
-
-* *almmájX4*
-* *almmái0*
-
-* *almmájX4X7-#*
-* *almmái00-#*
-
-* *almmájX4in*
-* *almmáj0in*
-
-
-
-
-
-* *smirez#*
-* *smires#*
-
-* *Troandim#*
-* *Troandin#*
-
-* *Troandim-*
-* *Troandin-*
-
-* *muhtum#*
-* *muhtun#*
-
-* *skoalkkuh#*
-* *skoalkkut#*
-
-* *nagod#*
-* *nagot#*
-
-* *bávččag#*
-* *bávččat#*
-
-* *nuorab#*
-* *nuorat#*
-
-* *bávččag#*
-* *bávččat#*
-
-* *eamid#*
-* *eamit#*
-
-* *alih#*
-* *alit#*
-
-
-* ★*vejolažž#* (is not standard language)
-* ★*vejolaž0#* (is not standard language)
-
-* *vejolažž#*
-* *vejolaš0#*
-
-* *olmmožX4X7-*
-* *olmmoš00-*
-
-* ★*olmmožX7-* (is not standard language)
-* ★*olmmoš0-* (is not standard language)
-
-* *olmmožX4*
-* *olmmoš0*
-
-
-
-
-
-* *fijdnisY5t*
-* *fiidná00t*
-
-* ★*fijdnisY5t* (is not standard language)
-* ★*fiidnás0t* (is not standard language)
-
-* ★*fijdnisY5t* (is not standard language)
-* ★*fiidnis0t* (is not standard language)
-
-* *albmájY5*
-* *albmá00*
-
-* *olbmožY5*
-* *olbmo00*
-
-* *fijdnisY5t-*
-* *fiidná00t-*
-
-* *albmájY5-*
-* *albmá00-*
-
-* *olbmožY5-*
-* *olbmo00-*
-
-
-
-* *vuordild#*
-* *vuordil0#*
-
-* ★*vuordild#* (is not standard language)
-* ★*vuordild#* (is not standard language)
-
-* *attest#*
-* *attes0#*
-
-* ★*attest#* (is not standard language)
-* ★*attest#* (is not standard language)
-
-* *berošt#*
-* *beroš0#*
-
-
-* *bearjadah'k#*
-* *bearjadat00#*
-
-* ★*bearjadah'k#* (is not standard language)
-* ★*bearjadat0k#* (is not standard language)
-
-* ★*bearjadah'k#* (is not standard language)
-* ★*bearjadat'0#* (is not standard language)
-
-* ★*bearjadah'k#* (is not standard language)
-* ★*bearjadah00#* (is not standard language)
-
-* ★*bearjadah'k#* (is not standard language)
-* ★*bearjadat'k#* (is not standard language)
-
-* ★*bearjadah'k#* (is not standard language)
-* ★*bearjadah0k#* (is not standard language)
-
-* ★*bearjadah'k#* (is not standard language)
-* ★*bearjadah'k#* (is not standard language)
-
-
-
-
-* *muitaluss#*
-* *muitalus0#*
-
-* ★*vejolažž#* (is not standard language)
-* ★*vejolažž#* (is not standard language)
-
-* *vejolažž#*
-* *vejolaš0#*
-
-
-
-
-
-
-
-* *joh'kaX4*
-* *jo00ga0*
-
-* ★*joh'kaX4* `joh'kaX4` (is not standard language joh'kaX4 joh'kaX4 joh'kaX4 jo0'kaX4)
-* ★*joh0ga0* `jo0'ga0` (is not standard language jo00ka0 joh'ga0 joh0ka0 joh0ga0)
-
-
-* *sápmiX4*
-* *sá0mi0*
-
-* ★*sápmiX4* (is not standard language)
-* ★*sápmi0* (is not standard language)
-
-
-* *latnjaX4*
-* *la0nja0*
-
-* *vuod'jiQ4n*
-* *vuo00já0n*
-
-* *káffeX4s*
-* *ká0fe0s*
-
-
-* *RuottaX4s*
-* *Ruo0ta0s*
-
-
-
-
-* *áhkkuX4s*
-* *áh0ku0s*
-
-* *vielljaX4*
-* *vie0lja0*
-
-* *mannjiX4*
-* *ma0nji0*
-
-* *áddjáX4*
-* *á0djá0*
-
-* *láj'biX4*
-* *láibbi0*
-
-* *seaŋ'gaX4*
-* *seaŋgga0*
-
-* *boŋ'kiX4j#*
-* *boŋkki0i#*
-
-
-* *sáf'taX4*
-* *sáftta0*
-
-
-* *oab'naX4*
-* *oabnna0*
-
-* *ám'taX4*
-* *ámtta0*
-
-* *In'gáX4*
-* *Inggá0*
-
-
-* *gán'daX4*
-* *gándda0*
-
-
-* *konseap'taX4*
-* *konseaptta0*
-
-
-* *áj'ruX4*
-* *áirru0*
-
-* *biev'laX4*
-* *bievlla0*
-
-
-* *jar'laX4*
-* *jarlla0*
-
-
-* *ol'juX4*
-* *oljju0*
-
-
-* *mát'kiX4*
-* *mátkki0*
-
-
-
-* *kreatsaX4*
-* *kreatssa0*
-
-
-* *beas'kaX4*
-* *beaskka0*
-
-
-* *čoav'jiX4*
-* *čoavjji0*
-
-
-* *beaj'viX4*
-* *beaivvi0*
-
-* *dujh'miX4*
-* *duihmmi0*
-
-
-* *čuolbmaX4*
-* *čuolmma0*
-
-* *DálmaX4*
-* *Dálmma0*
-
-
-
-
-* *sávdnjiX4*
-* *sávnnji0*
-
-
-* *čorbmaX4*
-* *čorpma0*
-
-
-* *skurdnjiX4*
-* *skurtnji0*
-
-
-* *návs'tuX4*
-* *návsttu0*
-
-
-* *limš'kiX4*
-* *limškki0*
-
-
-* *uk'saX4*
-* *uvssa0*
-
-
-
-* *teaks'taX4*
-* *teavstta0*
-
-
-
-* *spábbaX4*
-* *spáppa0*
-
-
-
-* ★*Szczecin* (is not standard language)
-* ★*Szccecin* (is not standard language)
-
-* *Szczecin*
-* *Szczecin*
-
-* *eadniX4*
-* *eatni0*
-
-
-* *boadnjiX4*
-* *boatnji0*
-
-
-
-
-
-* *boah'tiY1*
-* *boahtti0*
-
-* *dah'kaY7j*
-* *dahkku0i*
-
-
-
-* *dapmaY1*
-* *dabmi0*
-
-* *bitnjuY1*
-* *bidnju0*
-
-* *dad'jaY1*
-* *daddji0*
-
-
-
-
-
-* *joh'kaX4*
-* *jo00ga0*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *gáv'piX7*
-* *gáv0pe0*
-
-* *bassiX7*
-* *basse0*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *buorriX7#*
-* *buorre0#*
-
-* *buorriX8#*
-* *buo0re0#*
-
-
-* *várriX7gir'ku#*
-* *várre0gir0ku#*
-
-
-
-
-
-
-* *lijgiX7#ruh'taX4jd#*
-* *liige00ru00đa0id#*
-
-
-
-
-
-
-* *čuor'vuQ6*
-* *čuorvvo0*
-
-
-* *boah'tiQ6*
-* *boa00đe0*
-
-
-
-
-* *láj'kiW1s#*
-* *láikke0s#*
-
-* *ál'kiW2s#*
-* *ál0ke0s#*
-
-
-
-* *váttisW1#*
-* *váttes0#*
-
-* *head'jusW1-*
-* *hea00jos0-*
-
-* *head'jusW1#*
-* *hea00jos0#*
-
-* *váttisW1-*
-* *váttes0-*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *goah'tiX5jd*
-* *go000đi0id*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *vieh'ki¤X5jn*
-* *vi0hkki00in*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *reŋ'koX2jd*
-* *reŋ0ku0id*
-
-* *basteX2j*
-* *basti0i*
-
-* *asibealle7X2j*
-* *asibealli0ide*
-
-* *LineX2j*
-* *Lini0i*
-
-
-
-
-* *áhččiX2n*
-* *áhččá0n*
-
-
-
-
-
-
-* *stahtaX3j*
-* *stahti0i*
-
-* *Sij9teW9j*
-* *Sijte0i*
-
-
-
-
-
-
-
-
-
-* *fijdnisY5t*
-* *fiidná00t*
-
-
-* *oažžuQ8dit*
-* *o0ččo0dit*
-
-* *coah'kuX8stit*
-* *coa00go0stit*
-
-
-
-* *jearraQ1*
-* *jearrá0*
-
-* *boah'tiQ1*
-* *boah0tá0*
-
-
-* *jearraQ3n*
-* *je0rro0n*
-
-* *jearraQ2t*
-* *je0rre0t*
-
-* *boah'tiQ3n*
-* *bo0h0to0n*
-
-* *čuor'vuQ3n*
-* *ču0r0vo0n*
-
-
-* *jearraQ2*
-* *je0rre0*
-
-* *boah'tiQ2t*
-* *bo0h0te0t*
-
-* *čuor'vuQ2*
-* *ču0r0vo0*
-
-
-* *boah'tiQ4n*
-* *boa00đá0n*
-
-* *boah'tiQ5lin*
-* *boa00đá0lin*
-
-
-
-
-
-
-
-* *jearraY1*
-* *jearri0*
-
-
-
-* *jearraY2*
-* *jearru0*
-
-* *boah'tiY2*
-* *boahttu0*
-
-
-* *jearraQ2t*
-* *je0rre0t*
-
-boah'tiY4t ! It seems it should be Q3. ... both?!
-* *boah'tiQ3t*
-* *bo0h0to0t*
-
-
-čuor'vuY4t ! Q2, it seems.
-* *čuor'vuQ2t*
-* *ču0r0vo0t*
-
-
-
-* *jearraY7t*
-* *je0rro0t*
-
-* *boah'tiY7t*
-* *bo0htto0t*
-
-* *čuor'vuY7t*
-* *ču0r0vo0t*
-
-* *jearraY7juvvot*
-* *je0rro0juvvot*
-
-
-
-
-
-
-* *jearraY7j*
-* *je0rru0i*
-
-* *dah'kaY7j*
-* *dahkku0i*
-
-* *loikaY7j*
-* *loiku0i*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *beatnag8X4*
-* *bea0na00*
-
-* *luopmin8X4*
-* *luo0mi00*
-
-* *giellum8X4*
-* *gie0lu00*
-
-
-
-
-
-
-
-
-
-
-
-
-Changed because:we get almmáj- and not almmái-
-Postvocalic j surfaces as i
-Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dummy: ) _ ;
-
-
-
-
-
-
-* *#hálijd#*
-* *0háliit#*
-
-* ★*hálijd#* (is not standard language)
-* ★*háliid#* (is not standard language)
-
-
-
-
-
-* * *
-<small>This (part of) documentation was generated from [../src/fst/phonology-L2.twolc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/phonology-L2.twolc)</small>
-
-
-
-
-
-
-
-
-`º` is for CnsGrad of the `lg:lgg` and `lºl:ll` type
-`¤:0` prevents ConsGrad in certain words
-`'` is the real apostroph
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
-
-
-
-
-
-
-
-* *áj'gi*
-* *ái0gi*
-* ★*mánnáX5jd* (is not standard language)
-* ★*má0ná0jd* (is not standard language)
-
-
-
-
-
-
-* *áj'gi*
-* *ái0gi*
-
-* *majdege*
-* *maidege*
-
-* ★*almmajX4in* (is not standard language)
-* ★*almmai0in* (is not standard language)
-
-* *mánnáX5jd*
-* *má0ná0id*
-
-* *almmájX4*
-* *almmái0*
-
-* *almmájX4X7-#*
-* *almmái00-#*
-
-* *almmájX4in*
-* *almmáj0in*
-
-
-
-
-
-* *smirez#*
-* *smires#*
-
-* *Troandim#*
-* *Troandin#*
-
-* *Troandim-*
-* *Troandin-*
-
-* *muhtum#*
-* *muhtun#*
-
-* *skoalkkuh#*
-* *skoalkkut#*
-
-* *nagod#*
-* *nagot#*
-
-* *bávččag#*
-* *bávččat#*
-
-* *nuorab#*
-* *nuorat#*
-
-* *bávččag#*
-* *bávččat#*
-
-* *eamid#*
-* *eamit#*
-
-* *alih#*
-* *alit#*
-
-
-* ★*vejolažž#* (is not standard language)
-* ★*vejolaž0#* (is not standard language)
-
-* *vejolažž#*
-* *vejolaš0#*
-
-* *olmmožX4X7-*
-* *olmmoš00-*
-
-* ★*olmmožX7-* (is not standard language)
-* ★*olmmoš0-* (is not standard language)
-
-* *olmmožX4*
-* *olmmoš0*
-
-
-
-
-
-* *fijdnisY5t*
-* *fiidná00t*
-
-* ★*fijdnisY5t* (is not standard language)
-* ★*fiidnás0t* (is not standard language)
-
-* ★*fijdnisY5t* (is not standard language)
-* ★*fiidnis0t* (is not standard language)
-
-* *albmájY5*
-* *albmá00*
-
-* *olbmožY5*
-* *olbmo00*
-
-* *fijdnisY5t-*
-* *fiidná00t-*
-
-* *albmájY5-*
-* *albmá00-*
-
-* *olbmožY5-*
-* *olbmo00-*
-
-
-
-* *vuordild#*
-* *vuordil0#*
-
-* ★*vuordild#* (is not standard language)
-* ★*vuordild#* (is not standard language)
-
-* *attest#*
-* *attes0#*
-
-* ★*attest#* (is not standard language)
-* ★*attest#* (is not standard language)
-
-* *berošt#*
-* *beroš0#*
-
-
-* *bearjadah'k#*
-* *bearjadat00#*
-
-* ★*bearjadah'k#* (is not standard language)
-* ★*bearjadat0k#* (is not standard language)
-
-* ★*bearjadah'k#* (is not standard language)
-* ★*bearjadat'0#* (is not standard language)
-
-* ★*bearjadah'k#* (is not standard language)
-* ★*bearjadah00#* (is not standard language)
-
-* ★*bearjadah'k#* (is not standard language)
-* ★*bearjadat'k#* (is not standard language)
-
-* ★*bearjadah'k#* (is not standard language)
-* ★*bearjadah0k#* (is not standard language)
-
-* ★*bearjadah'k#* (is not standard language)
-* ★*bearjadah'k#* (is not standard language)
-
-
-
-
-* *muitaluss#*
-* *muitalus0#*
-
-* ★*vejolažž#* (is not standard language)
-* ★*vejolažž#* (is not standard language)
-
-* *vejolažž#*
-* *vejolaš0#*
-
-
-
-
-
-
-
-* *joh'kaX4*
-* *jo00ga0*
-
-* ★*joh'kaX4* `joh'kaX4` (is not standard language joh'kaX4 joh'kaX4 joh'kaX4 jo0'kaX4)
-* ★*joh0ga0* `jo0'ga0` (is not standard language jo00ka0 joh'ga0 joh0ka0 joh0ga0)
-
-
-* *sápmiX4*
-* *sá0mi0*
-
-* ★*sápmiX4* (is not standard language)
-* ★*sápmi0* (is not standard language)
-
-
-* *latnjaX4*
-* *la0nja0*
-
-* *vuod'jiQ4n*
-* *vuo00já0n*
-
-* *káffeX4s*
-* *ká0fe0s*
-
-
-* *RuottaX4s*
-* *Ruo0ta0s*
-
-
-
-
-* *áhkkuX4s*
-* *áh0ku0s*
-
-* *vielljaX4*
-* *vie0lja0*
-
-* *mannjiX4*
-* *ma0nji0*
-
-* *áddjáX4*
-* *á0djá0*
-
-* *láj'biX4*
-* *láibbi0*
-
-* *seaŋ'gaX4*
-* *seaŋgga0*
-
-* *boŋ'kiX4j#*
-* *boŋkki0i#*
-
-
-* *sáf'taX4*
-* *sáftta0*
-
-
-* *oab'naX4*
-* *oabnna0*
-
-* *ám'taX4*
-* *ámtta0*
-
-* *In'gáX4*
-* *Inggá0*
-
-
-* *gán'daX4*
-* *gándda0*
-
-
-* *konseap'taX4*
-* *konseaptta0*
-
-
-* *áj'ruX4*
-* *áirru0*
-
-* *biev'laX4*
-* *bievlla0*
-
-
-* *jar'laX4*
-* *jarlla0*
-
-
-* *ol'juX4*
-* *oljju0*
-
-
-* *mát'kiX4*
-* *mátkki0*
-
-
-
-* *kreatsaX4*
-* *kreatssa0*
-
-
-* *beas'kaX4*
-* *beaskka0*
-
-
-* *čoav'jiX4*
-* *čoavjji0*
-
-
-* *beaj'viX4*
-* *beaivvi0*
-
-* *dujh'miX4*
-* *duihmmi0*
-
-
-* *čuolbmaX4*
-* *čuolmma0*
-
-* *DálmaX4*
-* *Dálmma0*
-
-
-
-
-* *sávdnjiX4*
-* *sávnnji0*
-
-
-* *čorbmaX4*
-* *čorpma0*
-
-
-* *skurdnjiX4*
-* *skurtnji0*
-
-
-* *návs'tuX4*
-* *návsttu0*
-
-
-* *limš'kiX4*
-* *limškki0*
-
-
-* *uk'saX4*
-* *uvssa0*
-
-
-
-* *teaks'taX4*
-* *teavstta0*
-
-
-
-* *spábbaX4*
-* *spáppa0*
-
-
-
-* ★*Szczecin* (is not standard language)
-* ★*Szccecin* (is not standard language)
-
-* *Szczecin*
-* *Szczecin*
-
-* *eadniX4*
-* *eatni0*
-
-
-* *boadnjiX4*
-* *boatnji0*
-
-
-
-
-
-* *boah'tiY1*
-* *boahtti0*
-
-* *dah'kaY7j*
-* *dahkku0i*
-
-
-
-* *dapmaY1*
-* *dabmi0*
-
-* *bitnjuY1*
-* *bidnju0*
-
-* *dad'jaY1*
-* *daddji0*
-
-
-
-
-
-* *joh'kaX4*
-* *jo00ga0*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *gáv'piX7*
-* *gáv0pe0*
-
-* *bassiX7*
-* *basse0*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *buorriX7#*
-* *buorre0#*
-
-* *buorriX8#*
-* *buo0re0#*
-
-
-* *várriX7gir'ku#*
-* *várre0gir0ku#*
-
-
-
-
-
-
-* *lijgiX7#ruh'taX4jd#*
-* *liige00ru00đa0id#*
-
-
-
-
-
-
-* *čuor'vuQ6*
-* *čuorvvo0*
-
-
-* *boah'tiQ6*
-* *boa00đe0*
-
-
-
-
-* *láj'kiW1s#*
-* *láikke0s#*
-
-* *ál'kiW2s#*
-* *ál0ke0s#*
-
-
-
-* *váttisW1#*
-* *váttes0#*
-
-* *head'jusW1-*
-* *hea00jos0-*
-
-* *head'jusW1#*
-* *hea00jos0#*
-
-* *váttisW1-*
-* *váttes0-*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *goah'tiX5jd*
-* *go000đi0id*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *vieh'ki¤X5jn*
-* *vi0hkki00in*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *reŋ'koX2jd*
-* *reŋ0ku0id*
-
-* *basteX2j*
-* *basti0i*
-
-* *asibealle7X2j*
-* *asibealli0ide*
-
-* *LineX2j*
-* *Lini0i*
-
-
-
-
-* *áhččiX2n*
-* *áhččá0n*
-
-
-
-
-
-
-* *stahtaX3j*
-* *stahti0i*
-
-* *Sij9teW9j*
-* *Sijte0i*
-
-
-
-
-
-
-
-
-
-* *fijdnisY5t*
-* *fiidná00t*
-
-
-* *oažžuQ8dit*
-* *o0ččo0dit*
-
-* *coah'kuX8stit*
-* *coa00go0stit*
-
-
-
-* *jearraQ1*
-* *jearrá0*
-
-* *boah'tiQ1*
-* *boah0tá0*
-
-
-* *jearraQ3n*
-* *je0rro0n*
-
-* *jearraQ2t*
-* *je0rre0t*
-
-* *boah'tiQ3n*
-* *bo0h0to0n*
-
-* *čuor'vuQ3n*
-* *ču0r0vo0n*
-
-
-* *jearraQ2*
-* *je0rre0*
-
-* *boah'tiQ2t*
-* *bo0h0te0t*
-
-* *čuor'vuQ2*
-* *ču0r0vo0*
-
-
-* *boah'tiQ4n*
-* *boa00đá0n*
-
-* *boah'tiQ5lin*
-* *boa00đá0lin*
-
-
-
-
-
-
-
-* *jearraY1*
-* *jearri0*
-
-
-
-* *jearraY2*
-* *jearru0*
-
-* *boah'tiY2*
-* *boahttu0*
-
-
-* *jearraQ2t*
-* *je0rre0t*
-
-boah'tiY4t ! It seems it should be Q3. ... both?!
-* *boah'tiQ3t*
-* *bo0h0to0t*
-
-
-čuor'vuY4t ! Q2, it seems.
-* *čuor'vuQ2t*
-* *ču0r0vo0t*
-
-
-
-* *jearraY7t*
-* *je0rro0t*
-
-* *boah'tiY7t*
-* *bo0htto0t*
-
-* *čuor'vuY7t*
-* *ču0r0vo0t*
-
-* *jearraY7juvvot*
-* *je0rro0juvvot*
-
-
-
-
-
-
-* *jearraY7j*
-* *je0rru0i*
-
-* *dah'kaY7j*
-* *dahkku0i*
-
-* *loikaY7j*
-* *loiku0i*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* *beatnag8X4*
-* *bea0na00*
-
-* *luopmin8X4*
-* *luo0mi00*
-
-* *giellum8X4*
-* *gie0lu00*
-
-
-
-
-
-
-
-
-
-
-
-
-Changed because:we get almmáj- and not almmái-
-Postvocalic j surfaces as i
-Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dummy: ) _ ;
-
-
-
-
-
-
-* *#hálijd#*
-* *0háliit#*
-
-* ★*hálijd#* (is not standard language)
-* ★*háliid#* (is not standard language)
-
-
-
-
-
-* * *
-<small>This (part of) documentation was generated from [../src/fst/phonology-L2-from-branch.twolc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/phonology-L2-from-branch.twolc)</small>
 # North Saami Interjections
 
 
@@ -22027,22 +22027,25 @@ the tag `+Err/Lexc`.
 
 * * *
 <small>This (part of) documentation was generated from [../src/fst/stems/interjections.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/interjections.lexc)</small>
-# The North Saami proper noun lexicon
-
-
-
-
-* **LEXICON Prefix-Proper   ** for first-part names
-
-* **LEXICON ProperNoun-sme-nocomp   ** for no cmp without hyph
+# North Saami Conjunctions
 
 
 
 
 
+* **LEXICON Conjunction   ** contains the list of conjunctions
 
+* **LEXICON ConfuseConjunction ** contains conjunctions that are
+                              homonyms with words in the open POS's
+
+* **LEXICON CleanConjunction ** contains conjunctions that are not
+                          homonymous with any of the open POS's
+
+
+
+* **LEXICON Cc-Conf  ** assigns the tag +CC and allows further grammar checker processing for disambiguation against nouns in potential compounds written apart
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/sme-propernouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/sme-propernouns.lexc)</small>
+<small>This (part of) documentation was generated from [../src/fst/stems/conjunctions.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/conjunctions.lexc)</small>
 # File containing North Saami abbreviations
 
 ## Lexica for adding tags and periods
@@ -22098,237 +22101,6 @@ the sentence can be considered as true cases.
 
 * * *
 <small>This (part of) documentation was generated from [../src/fst/stems/sme-abbreviations.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/sme-abbreviations.lexc)</small>
-# This file contains the Particles
-
-
-
-
-* **LEXICON Particles   ** gives all particles
-
-
-* **LEXICON pcle   ** gives the tag +Pcle
-
-* **LEXICON qpcle   ** gives two tags, +Pcle and +Qst
-
-Perhaps this should be opened to  a direction to K
-and all the ge versions should be removed.
-(i.e. only goit, not goitge). This errouneously
-permits gege, goge, etc., though, and we thus leave
-things as they are.
-* * *
-<small>This (part of) documentation was generated from [../src/fst/stems/particles.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/particles.lexc)</small>
-# North Saami Conjunctions
-
-
-
-
-
-* **LEXICON Conjunction   ** contains the list of conjunctions
-
-* **LEXICON ConfuseConjunction ** contains conjunctions that are
-                              homonyms with words in the open POS's
-
-* **LEXICON CleanConjunction ** contains conjunctions that are not
-                          homonymous with any of the open POS's
-
-
-
-* **LEXICON Cc-Conf  ** assigns the tag +CC and allows further grammar checker processing for disambiguation against nouns in potential compounds written apart
-* * *
-<small>This (part of) documentation was generated from [../src/fst/stems/conjunctions.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/conjunctions.lexc)</small>
-# North Sámi adjective lexicon
-
-
-
-
-
-* **LEXICON LEXATTR  ** This lexicon is here to give the tags to the compounding
-
-* **LEXICON At    ** gives +A+Attr and directs to K
-
-* **LEXICON PrfPrc ** Gives +A+Attr and Sg/Pl Nom and directs to K
-
-* **LEXICON FINJU- ** compounds only, directs to Rreal and NAMAT
-
-* **LEXICON ALIT ** Both second-part compound and independent adj.
-čáhppesalit bábir, alit bábir
-
-
-* **LEXICON Eahpe_Adjective ** is a long list of lexicalised eahpe-prefixed adjs
-
-* **LEXICON NomActVEARA ** hardcoded postposition frases with veara, for speller
-
-
-
-
-* **LEXICON Adjective ** is the main adjective list
-
-* **LEXICON AdjectivePx ** Px-forms are restricted to this lexicon
-Move adjs that may take Px from **Adjective** to this lexicon.
-
-
-* **LEXICON AdjectiveNoPx ** is the main adjective list, not taking Px
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* * *
-<small>This (part of) documentation was generated from [../src/fst/stems/adjectives.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/adjectives.lexc)</small>
-# This file contains the Pronouns
-
-
-
-
-
-
-* **LEXICON Pronoun   ** Points to all the pronoun subgrops
-
-
-
-
-* **LEXICON Personal   ** , splitting in 1st, 2nd, 3rd
-
-## Interrogative pronouns
-
-Giving ideosyncratic Sg Nom of gii, mii lexically
-Sending the oblique forms of gii, mii to an oblique sublexicon
-Giving the stem of guhte, guhtemuš, goabbá
-
-* **LEXICON Interrogative   **
-
-
-
-
-## Relative pronouns
-
-* **LEXICON Relative   **
-
-
-## Demonstrative pronouns
-
-## Giving baseform + all demonstrative stems
-## Pointing to case paradigms
-
-* **LEXICON Demonstrative   **
-
-
-
-
-
-## Reflexive pronouns
-
-Two nominative reflexives, and pointer to the rest
-The Pl one is used for Du as well, here given two entries.
-Should one of them be removed?
-
-* **LEXICON Reflexive   **
-
-## Reciprocal pronouns
-
-The first 4 entries handle the first element of the recipr.
-The next 12 handle the 2nd part of the non-Px recipr.
-The members of the third section  point to Px lexica.
-
-* **LEXICON Reciprocal   **
-
-## Indefinite pronouns
-
-Dividing the indefinites in three groups
-
-* **LEXICON Indefinite   **
-
-Declineable indefinite pronouns with case + clitic
-
-* **LEXICON declindef-cl   **
-
-
-
-
-
-
-Declineable indefinites with normal case paradigms
-
-* **LEXICON declindef   **
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Separate lexica for exceptional entries
-
-* **LEXICON declindef-idiosync   **
-separate lexica for these entries:
-oktat
-
-
-
-
-
-
-The indeclineable indefinites
-
-* **LEXICON indeclindef   **
-
-
-* * *
-<small>This (part of) documentation was generated from [../src/fst/stems/pronouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/pronouns.lexc)</small>
-# Punctuation symbols
-
-* **LEXICON Punctuation_SME   ** contains the list
-of punctuation symbols that are problematic from a normative
-point of view, and only those. Everything else is coming from
-the standard Punctuation lexicon.
-
-They are all tagged *+RIGHT* even though the correct quotation
-mark is supposed to be used on both sides. This is done to simplify
-generation, by keeping the same tagging as the standard analysis.
-
-* * *
-<small>This (part of) documentation was generated from [../src/fst/stems/sme-punctuation.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/sme-punctuation.lexc)</small>
 # The North Saami Subjunctions
 
 
@@ -22415,6 +22187,59 @@ Here comes the main list of verbs.
 
 * * *
 <small>This (part of) documentation was generated from [../src/fst/stems/verbs.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/verbs.lexc)</small>
+# North Sámi adjective lexicon
+
+
+
+
+
+* **LEXICON LEXATTR  ** This lexicon is here to give the tags to the compounding
+
+* **LEXICON At    ** gives +A+Attr and directs to K
+
+* **LEXICON PrfPrc ** Gives +A+Attr and Sg/Pl Nom and directs to K
+
+* **LEXICON FINJU- ** compounds only, directs to Rreal and NAMAT
+
+* **LEXICON ALIT ** Both second-part compound and independent adj.
+čáhppesalit bábir, alit bábir
+
+
+* **LEXICON Eahpe_Adjective ** is a long list of lexicalised eahpe-prefixed adjs
+
+* **LEXICON NomActVEARA ** hardcoded postposition frases with veara, for speller
+
+
+
+
+* **LEXICON Adjective ** is the main adjective list
+
+* **LEXICON AdjectivePx ** Px-forms are restricted to this lexicon
+Move adjs that may take Px from **Adjective** to this lexicon.
+
+
+* **LEXICON AdjectiveNoPx ** is the main adjective list, not taking Px
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/adjectives.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/adjectives.lexc)</small>
 # North Saami numerals
 
 
@@ -22702,6 +22527,152 @@ numerical expressions in each category.
 * **LEXICON VIHTTALOGIOVCCI**
 * * *
 <small>This (part of) documentation was generated from [../src/fst/stems/numerals.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/numerals.lexc)</small>
+# This file contains the Pronouns
+
+
+
+
+
+
+* **LEXICON Pronoun   ** Points to all the pronoun subgrops
+
+
+
+
+* **LEXICON Personal   ** , splitting in 1st, 2nd, 3rd
+
+## Interrogative pronouns
+
+Giving ideosyncratic Sg Nom of gii, mii lexically
+Sending the oblique forms of gii, mii to an oblique sublexicon
+Giving the stem of guhte, guhtemuš, goabbá
+
+* **LEXICON Interrogative   **
+
+
+
+
+## Relative pronouns
+
+* **LEXICON Relative   **
+
+
+## Demonstrative pronouns
+
+## Giving baseform + all demonstrative stems
+## Pointing to case paradigms
+
+* **LEXICON Demonstrative   **
+
+
+
+
+
+## Reflexive pronouns
+
+Two nominative reflexives, and pointer to the rest
+The Pl one is used for Du as well, here given two entries.
+Should one of them be removed?
+
+* **LEXICON Reflexive   **
+
+## Reciprocal pronouns
+
+The first 4 entries handle the first element of the recipr.
+The next 12 handle the 2nd part of the non-Px recipr.
+The members of the third section  point to Px lexica.
+
+* **LEXICON Reciprocal   **
+
+## Indefinite pronouns
+
+Dividing the indefinites in three groups
+
+* **LEXICON Indefinite   **
+
+Declineable indefinite pronouns with case + clitic
+
+* **LEXICON declindef-cl   **
+
+
+
+
+
+
+Declineable indefinites with normal case paradigms
+
+* **LEXICON declindef   **
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Separate lexica for exceptional entries
+
+* **LEXICON declindef-idiosync   **
+separate lexica for these entries:
+oktat
+
+
+
+
+
+
+The indeclineable indefinites
+
+* **LEXICON indeclindef   **
+
+
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/pronouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/pronouns.lexc)</small>
+# This file contains the Particles
+
+
+
+
+* **LEXICON Particles   ** gives all particles
+
+
+* **LEXICON pcle   ** gives the tag +Pcle
+
+* **LEXICON qpcle   ** gives two tags, +Pcle and +Qst
+
+Perhaps this should be opened to  a direction to K
+and all the ge versions should be removed.
+(i.e. only goit, not goitge). This errouneously
+permits gege, goge, etc., though, and we thus leave
+things as they are.
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/particles.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/particles.lexc)</small>
 # North Saami adverbs
 
 * **LEXICON Adverb   **
@@ -22814,6 +22785,35 @@ The main adverb lexicon
 * **LEXICON adv   ** simply gives the tag +Adv and directs to K
 * * *
 <small>This (part of) documentation was generated from [../src/fst/stems/adverbs.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/adverbs.lexc)</small>
+# Punctuation symbols
+
+* **LEXICON Punctuation_SME   ** contains the list
+of punctuation symbols that are problematic from a normative
+point of view, and only those. Everything else is coming from
+the standard Punctuation lexicon.
+
+They are all tagged *+RIGHT* even though the correct quotation
+mark is supposed to be used on both sides. This is done to simplify
+generation, by keeping the same tagging as the standard analysis.
+
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/sme-punctuation.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/sme-punctuation.lexc)</small>
+# The North Saami proper noun lexicon
+
+
+
+
+* **LEXICON Prefix-Proper   ** for first-part names
+
+* **LEXICON ProperNoun-sme-nocomp   ** for no cmp without hyph
+
+
+
+
+
+
+* * *
+<small>This (part of) documentation was generated from [../src/fst/stems/sme-propernouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/sme-propernouns.lexc)</small>
 North Saami adposition lexicon
 
 First come the 3 continuation lexica, the division is based on Nickel
@@ -23198,2735 +23198,6 @@ The REAL-V set thus awaits a fix to the preprocess V ... N bug.
 
 * * *
 <small>This (part of) documentation was generated from [../tools/grammarcheckers/spellchecker.cg3](http://github.com/giellalt/lang-sme/blob/main/../tools/grammarcheckers/spellchecker.cg3)</small>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Comp, both for adverbs and adjectives
-Superl, both for adverbs and adjectives
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--vv- ii galgga mielde!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* * *
-<small>This (part of) documentation was generated from [../tools/grammarcheckers/grammarchecker-release.cg3](http://github.com/giellalt/lang-sme/blob/main/../tools/grammarcheckers/grammarchecker-release.cg3)</small>
 
 
 
@@ -32938,6 +30209,2735 @@ Remove unwanted analyses
 
 * * *
 <small>This (part of) documentation was generated from [../tools/grammarcheckers/grc-disambiguator.cg3](http://github.com/giellalt/lang-sme/blob/main/../tools/grammarcheckers/grc-disambiguator.cg3)</small>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Comp, both for adverbs and adjectives
+Superl, both for adverbs and adjectives
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-vv- ii galgga mielde!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* * *
+<small>This (part of) documentation was generated from [../tools/grammarcheckers/grammarchecker-release.cg3](http://github.com/giellalt/lang-sme/blob/main/../tools/grammarcheckers/grammarchecker-release.cg3)</small>
 
 
 
