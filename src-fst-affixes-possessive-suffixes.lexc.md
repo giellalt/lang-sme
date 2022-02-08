@@ -1,7 +1,5 @@
 Divvun & Giellatekno - open source grammars for Sámi and other languages
 
-
-
 # North Saami Possessive suffixes
 
 * **LEXICON PxVvowch** for vowel stems, with X2, X1 with stem vowel change
@@ -12,38 +10,29 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 * **LEXICON Px3Vvowch** for vowel stems with stem vowel change, 3. p
 
-
 * **LEXICON PxV** for vowel stems, without stem vowel change
 
 * **LEXICON Px1V** for first person vowel stems
-
 
 * **LEXICON Px2V** for second person vowel stems
 
 * **LEXICON Px3V** for third person vowel stems
 
-
-
 * **LEXICON PxA** for a-stems
 
-
 * **LEXICON Px1A** for a-stems
-
 
 * **LEXICON Px2A** for a-stems
 
 * **LEXICON Px3A** for a-stems
 
-
 * **LEXICON PxC** for consonant stems
 
 * **LEXICON Px1C** for consonant stems
 
-
 * **LEXICON Px2C** for consonant stems
 
 * **LEXICON Px3C** for consonant stems
-
 
 * **LEXICON PxPlComC** for plural comitative forms of consonant stems
 

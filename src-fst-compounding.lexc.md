@@ -4,9 +4,7 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 This file governs prefixing and compounding, with the following lexica and pointers. All lexica and lexicon entries are documented.
 
-
 **LEXICON Prefixes** = lexicon for adding *eahpe and pointing to **N, A, V**
-
 
 **LEXICON R** = lexicon which is pointed to from affixes files. Here the strings get flags to control compounding (*@P.CmpFrst.FALSE@* etc.) and are redirected to **RAlmostReal**.
 
@@ -37,7 +35,6 @@ words. viessu-London goes through here.
 * To words requiring hyphens, like -tv- and -cd-
 * To ENDLEX, to take care of Oahppo- ja dutkandept
 
-
 **LEXICON RHyph** =  Recursive lexicon from all classes REQUIRING a hyphen to follow.
 * Add Flags to control compounding, go to RHyphTags
 
@@ -53,12 +50,8 @@ London-Hull is covered here, whereas Hull-viessu
 is covered by RHyph + Noun.
 * To ENDLEX to take care of Oahpo- ja dutkandept - want this in speller
 
-
-
 **LEXICON RNum** =  For Num Cmp Noun, vi vil ikke ha Num Cmp Num
 * Gives  +Cmp/Hyph+Cmp and points to Noun
-
-
 
 **LEXICON Rnoun** = the lexicon has two entries: 
 * either adds > and goes to the compound lexicon Rreal
@@ -68,7 +61,6 @@ is covered by RHyph + Noun.
 * Flags to control compounding and to **RPropTags**
 * nammasaš, points to DER-SAS
 * nammasaš, points to AHKASAS, for MT
-
 
 **LEXICON RPropTags** = A special lexicon for handling proper noun compounding without hyphens. Two entries:
 * **@C.CmpHyph@ RHyphTags ;**:  This is the regular case, giving hyphens to compounds

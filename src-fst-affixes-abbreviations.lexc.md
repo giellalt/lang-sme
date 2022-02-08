@@ -39,18 +39,13 @@
 
 * **LEXICON ab-dot-cc**
 
-
-
 * **LEXICON ab-verb**  A lexicon for "gč." and perhaps also other abbreviated verbs.
-
 
 * **LEXICON ab-dot-verb**
 
 * **LEXICON ab-nodot-verb**
 
-
 * **LEXICON ab-dot-IVprfprc**
-
 
 * **LEXICON nodot-attrnomaccgen-infl**
 
@@ -58,13 +53,11 @@
 
 * **LEXICON nodot-nomaccgen-infl**
 
-
 * **LEXICON dot-attrnomaccgen-infl**
 
 * **LEXICON dot-attr**
 
 * **LEXICON dot-nomaccgen-infl**
-
 
 * **LEXICON DOT** - Adds the dot to dotted abbreviations.
 we also allow different variations of dotted abbreviations at

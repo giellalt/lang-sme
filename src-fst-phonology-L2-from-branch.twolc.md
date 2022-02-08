@@ -1,70 +1,15 @@
 
 
-
-
-
-
-
-
-
 `º` is for CnsGrad of the `lg:lgg` and `lºl:ll` type
 `¤:0` prevents ConsGrad in certain words
 `'` is the real apostroph
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
-
-
-
-
-
-
 
 * *áj'gi*
 * *ái0gi*
 * ★*mánnáX5jd* (is not standard language)
 * ★*má0ná0jd* (is not standard language)
-
-
-
-
-
 
 * *áj'gi*
 * *ái0gi*
@@ -86,10 +31,6 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 
 * *almmájX4in*
 * *almmáj0in*
-
-
-
-
 
 * *smirez#*
 * *smires#*
@@ -124,7 +65,6 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * *alih#*
 * *alit#*
 
-
 * ★*vejolažž#* (is not standard language)
 * ★*vejolaž0#* (is not standard language)
 
@@ -139,10 +79,6 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 
 * *olmmožX4*
 * *olmmoš0*
-
-
-
-
 
 * *fijdnisY5t*
 * *fiidná00t*
@@ -168,8 +104,6 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * *olbmožY5-*
 * *olbmo00-*
 
-
-
 * *vuordild#*
 * *vuordil0#*
 
@@ -184,7 +118,6 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 
 * *berošt#*
 * *beroš0#*
-
 
 * *bearjadah'k#*
 * *bearjadat00#*
@@ -207,9 +140,6 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * ★*bearjadah'k#* (is not standard language)
 * ★*bearjadah'k#* (is not standard language)
 
-
-
-
 * *muitaluss#*
 * *muitalus0#*
 
@@ -219,25 +149,17 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * *vejolažž#*
 * *vejolaš0#*
 
-
-
-
-
-
-
 * *joh'kaX4*
 * *jo00ga0*
 
 * ★*joh'kaX4* `joh'kaX4` (is not standard language joh'kaX4 joh'kaX4 joh'kaX4 jo0'kaX4)
 * ★*joh0ga0* `jo0'ga0` (is not standard language jo00ka0 joh'ga0 joh0ka0 joh0ga0)
 
-
 * *sápmiX4*
 * *sá0mi0*
 
 * ★*sápmiX4* (is not standard language)
 * ★*sápmi0* (is not standard language)
-
 
 * *latnjaX4*
 * *la0nja0*
@@ -248,12 +170,8 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * *káffeX4s*
 * *ká0fe0s*
 
-
 * *RuottaX4s*
 * *Ruo0ta0s*
-
-
-
 
 * *áhkkuX4s*
 * *áh0ku0s*
@@ -276,10 +194,8 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * *boŋ'kiX4j#*
 * *boŋkki0i#*
 
-
 * *sáf'taX4*
 * *sáftta0*
-
 
 * *oab'naX4*
 * *oabnna0*
@@ -290,14 +206,11 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * *In'gáX4*
 * *Inggá0*
 
-
 * *gán'daX4*
 * *gándda0*
 
-
 * *konseap'taX4*
 * *konseaptta0*
-
 
 * *áj'ruX4*
 * *áirru0*
@@ -305,31 +218,23 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * *biev'laX4*
 * *bievlla0*
 
-
 * *jar'laX4*
 * *jarlla0*
-
 
 * *ol'juX4*
 * *oljju0*
 
-
 * *mát'kiX4*
 * *mátkki0*
-
-
 
 * *kreatsaX4*
 * *kreatssa0*
 
-
 * *beas'kaX4*
 * *beaskka0*
 
-
 * *čoav'jiX4*
 * *čoavjji0*
-
 
 * *beaj'viX4*
 * *beaivvi0*
@@ -337,50 +242,35 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * *dujh'miX4*
 * *duihmmi0*
 
-
 * *čuolbmaX4*
 * *čuolmma0*
 
 * *DálmaX4*
 * *Dálmma0*
 
-
-
-
 * *sávdnjiX4*
 * *sávnnji0*
-
 
 * *čorbmaX4*
 * *čorpma0*
 
-
 * *skurdnjiX4*
 * *skurtnji0*
-
 
 * *návs'tuX4*
 * *návsttu0*
 
-
 * *limš'kiX4*
 * *limškki0*
-
 
 * *uk'saX4*
 * *uvssa0*
 
-
-
 * *teaks'taX4*
 * *teavstta0*
 
-
-
 * *spábbaX4*
 * *spáppa0*
-
-
 
 * ★*Szczecin* (is not standard language)
 * ★*Szccecin* (is not standard language)
@@ -391,21 +281,14 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * *eadniX4*
 * *eatni0*
 
-
 * *boadnjiX4*
 * *boatnji0*
-
-
-
-
 
 * *boah'tiY1*
 * *boahtti0*
 
 * *dah'kaY7j*
 * *dahkku0i*
-
-
 
 * *dapmaY1*
 * *dabmi0*
@@ -416,27 +299,8 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * *dad'jaY1*
 * *daddji0*
 
-
-
-
-
 * *joh'kaX4*
 * *jo00ga0*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 * *gáv'piX7*
 * *gáv0pe0*
@@ -444,59 +308,29 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * *bassiX7*
 * *basse0*
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 * *buorriX7#*
 * *buorre0#*
 
 * *buorriX8#*
 * *buo0re0#*
 
-
 * *várriX7gir'ku#*
 * *várre0gir0ku#*
-
-
-
-
-
 
 * *lijgiX7#ruh'taX4jd#*
 * *liige00ru00đa0id#*
 
-
-
-
-
-
 * *čuor'vuQ6*
 * *čuorvvo0*
 
-
 * *boah'tiQ6*
 * *boa00đe0*
-
-
-
 
 * *láj'kiW1s#*
 * *láikke0s#*
 
 * *ál'kiW2s#*
 * *ál0ke0s#*
-
-
 
 * *váttisW1#*
 * *váttes0#*
@@ -510,69 +344,11 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * *váttisW1-*
 * *váttes0-*
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 * *goah'tiX5jd*
 * *go000đi0id*
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 * *vieh'ki¤X5jn*
 * *vi0hkki00in*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 * *reŋ'koX2jd*
 * *reŋ0ku0id*
@@ -586,16 +362,8 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * *LineX2j*
 * *Lini0i*
 
-
-
-
 * *áhččiX2n*
 * *áhččá0n*
-
-
-
-
-
 
 * *stahtaX3j*
 * *stahti0i*
@@ -603,17 +371,8 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * *Sij9teW9j*
 * *Sijte0i*
 
-
-
-
-
-
-
-
-
 * *fijdnisY5t*
 * *fiidná00t*
-
 
 * *oažžuQ8dit*
 * *o0ččo0dit*
@@ -621,14 +380,11 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * *coah'kuX8stit*
 * *coa00go0stit*
 
-
-
 * *jearraQ1*
 * *jearrá0*
 
 * *boah'tiQ1*
 * *boah0tá0*
-
 
 * *jearraQ3n*
 * *je0rro0n*
@@ -642,7 +398,6 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * *čuor'vuQ3n*
 * *ču0r0vo0n*
 
-
 * *jearraQ2*
 * *je0rre0*
 
@@ -652,30 +407,20 @@ Remainder! Change all # to (Hyph) #  in order to account for ealáhus- ja ...
 * *čuor'vuQ2*
 * *ču0r0vo0*
 
-
 * *boah'tiQ4n*
 * *boa00đá0n*
 
 * *boah'tiQ5lin*
 * *boa00đá0lin*
 
-
-
-
-
-
-
 * *jearraY1*
 * *jearri0*
-
-
 
 * *jearraY2*
 * *jearru0*
 
 * *boah'tiY2*
 * *boahttu0*
-
 
 * *jearraQ2t*
 * *je0rre0t*
@@ -684,12 +429,9 @@ boah'tiY4t ! It seems it should be Q3. ... both?!
 * *boah'tiQ3t*
 * *bo0h0to0t*
 
-
 čuor'vuY4t ! Q2, it seems.
 * *čuor'vuQ2t*
 * *ču0r0vo0t*
-
-
 
 * *jearraY7t*
 * *je0rro0t*
@@ -703,11 +445,6 @@ boah'tiY4t ! It seems it should be Q3. ... both?!
 * *jearraY7juvvot*
 * *je0rro0juvvot*
 
-
-
-
-
-
 * *jearraY7j*
 * *je0rru0i*
 
@@ -716,21 +453,6 @@ boah'tiY4t ! It seems it should be Q3. ... both?!
 
 * *loikaY7j*
 * *loiku0i*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 * *beatnag8X4*
 * *bea0na00*
@@ -741,35 +463,15 @@ boah'tiY4t ! It seems it should be Q3. ... both?!
 * *giellum8X4*
 * *gie0lu00*
 
-
-
-
-
-
-
-
-
-
-
-
 Changed because:we get almmáj- and not almmái-
 Postvocalic j surfaces as i
 Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dummy: ) _ ;
-
-
-
-
-
 
 * *#hálijd#*
 * *0háliit#*
 
 * ★*hálijd#* (is not standard language)
 * ★*háliid#* (is not standard language)
-
-
-
-
 
 * * *
 <small>This (part of) documentation was generated from [../src/fst/phonology-L2-from-branch.twolc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/phonology-L2-from-branch.twolc)</small>

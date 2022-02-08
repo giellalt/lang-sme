@@ -4,26 +4,11 @@
 
 ## The lexica giving tags and suffixes to the acronyms
 
-
-
-
 * **LEXICON ACRONOUN** is the lexicon for **nouns** (not +Prop) like ATV
 
 * **LEXICON UNIT**  As acro, but without paradigm
 
 * **LEXICON ACRO_ACCRA**
-
-
-
-
-
-
-
-
-
-
-
-
 
 * **LEXICON acroconnector** Here comes a set of possible symbols to
 put between the abbreviation and its suffix

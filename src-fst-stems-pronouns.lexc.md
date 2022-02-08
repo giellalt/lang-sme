@@ -1,15 +1,7 @@
 
 # This file contains the Pronouns
 
-
-
-
-
-
 * **LEXICON Pronoun   ** Points to all the pronoun subgrops
-
-
-
 
 * **LEXICON Personal   ** , splitting in 1st, 2nd, 3rd
 
@@ -21,13 +13,9 @@ Giving the stem of guhte, guhtemuš, goabbá
 
 * **LEXICON Interrogative   **
 
-
-
-
 ## Relative pronouns
 
 * **LEXICON Relative   **
-
 
 ## Demonstrative pronouns
 
@@ -35,10 +23,6 @@ Giving the stem of guhte, guhtemuš, goabbá
 ## Pointing to case paradigms
 
 * **LEXICON Demonstrative   **
-
-
-
-
 
 ## Reflexive pronouns
 
@@ -66,47 +50,9 @@ Declineable indefinite pronouns with case + clitic
 
 * **LEXICON declindef-cl   **
 
-
-
-
-
-
 Declineable indefinites with normal case paradigms
 
 * **LEXICON declindef   **
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 Separate lexica for exceptional entries
 
@@ -114,15 +60,9 @@ Separate lexica for exceptional entries
 separate lexica for these entries:
 oktat
 
-
-
-
-
-
 The indeclineable indefinites
 
 * **LEXICON indeclindef   **
-
 
 * * *
 <small>This (part of) documentation was generated from [../src/fst/stems/pronouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/pronouns.lexc)</small>

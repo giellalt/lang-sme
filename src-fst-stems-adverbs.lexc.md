@@ -12,26 +12,13 @@ they are the ones that are mentioned in sme-dis.rle.
 Goal: have mwe adverbs with syntactic behaviour as single
 words going to multiadv.
 
-
-
-
-
-
-
-
-
-
 Thereafter comes the ordinary adverb list.
-
 
 Then comes the gradating advs
 
 * type 1
 
-
-
 * type 2a
-
 
 * type 2b
 
@@ -41,15 +28,9 @@ Then comes the gradating advs
 
 * type 3a
 
-
-
 * type 3b
 
 * type 3c
-
-
-
-
 
 Lexica for adverb subtypes
 
@@ -57,13 +38,11 @@ Lexica for adverb subtypes
 
 * **LEXICON DIHTE     **
 
-
 * **LEXICON LAGAadv   **
 
 * **LEXICON LAGAIDadv   **
 
 * **LEXICON LEBBUIplc   **
-
 
 * **LEXICON LEAPPOSplc   **
 
@@ -77,14 +56,11 @@ Lexica for adverb subtypes
 
 * **LEXICON adv-time-plc   **
 
-
-
 * **LEXICON CSadv   **
 
 * **LEXICON CSadvFoc/Neg-ge   **
 
 * **LEXICON adv-subqst   **
-
 
 * **LEXICON adv-comp   **
 
@@ -94,18 +70,15 @@ Lexica for adverb subtypes
 
 * **LEXICON adv-plc-sup   **
 
-
 * **LEXICON adv-time-comp   **
 
 * **LEXICON adv-time-sup   **
-
 
 * **LEXICON COMPADV   **
 
 * **LEXICON plc-SUPADVmus   **
 
 * **LEXICON plc-SUPADVmusj   **
-
 
 The main adverb lexicon
 * **LEXICON adv   ** simply gives the tag +Adv and directs to K

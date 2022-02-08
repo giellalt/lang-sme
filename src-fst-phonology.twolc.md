@@ -13,71 +13,14 @@ is the ordinary sme fst file to be edited.
 The L2 sme fst, on the other hand, will have lags/sme/src/phonology/sme-phon-L2.twolc
 as its sourcefile, the file to be edited.
 
-
-
-
-
-
-
-
-
-
-
-
-
 `º` is for CnsGrad of the `lg:lgg` and `lºl:ll` type
 `¤:0` prevents ConsGrad in certain words
 `'` is the real apostroph
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 * *ájºgi*
 * *ái0gi*
 * ★*mánnáX5jd* (is not standard language)
 * ★*má0ná0jd* (is not standard language)
-
-
-
-
-
 
 * *ájºgi*
 * *ái0gi*
@@ -99,16 +42,6 @@ as its sourcefile, the file to be edited.
 
 * *almmájX4in*
 * *almmáj0in*
-
-
-
-
-
-
-
-
-
-
 
 * *barggož-*
 * *barggoš-*
@@ -149,13 +82,8 @@ as its sourcefile, the file to be edited.
 * *olmmož>X4X7-*
 * *olmmoš>00-*
 
-
 * *olmmož>X4#*
 * *olmmoš>0#*
-
-
-
-
 
 * *fijdnisY5t*
 * *fiidná00t*
@@ -181,8 +109,6 @@ as its sourcefile, the file to be edited.
 * *olbmožY5-*
 * *olbmo00-*
 
-
-
 * *vuordild-*
 * *vuordil0-*
 
@@ -198,7 +124,6 @@ as its sourcefile, the file to be edited.
 * *berošt#*
 * *beroš0#*
 
-
 * *bearjadah%ºk-*
 * *bearjadat00-*
 
@@ -210,8 +135,6 @@ as its sourcefile, the file to be edited.
 
 * ★*bearjadah%ºk-* (is not standard language)
 * ★*bearjadah0k-* (is not standard language)
-
-
 
 * *muitaluss#*
 * *muitalus0#*
@@ -225,12 +148,6 @@ as its sourcefile, the file to be edited.
 * ★*vejolažž>#* (is not standard language)
 * ★*vejolaž0>#* (is not standard language)
 
-
-
-
-
-
-
 * *johºkaX4*
 * *jo00ga0*
 
@@ -243,13 +160,11 @@ as its sourcefile, the file to be edited.
 * ★*johºkaX4* (is not standard language)
 * ★*joh0ka0* (is not standard language)
 
-
 * *sápmiX4*
 * *sá0mi0*
 
 * ★*sápmiX4* (is not standard language)
 * ★*sápmi0* (is not standard language)
-
 
 * *latnjaX4*
 * *la0nja0*
@@ -260,12 +175,8 @@ as its sourcefile, the file to be edited.
 * *káffeX4s*
 * *ká0fe0s*
 
-
 * *RuottaX4s*
 * *Ruo0ta0s*
-
-
-
 
 * *áhkkuX4s*
 * *áh0ku0s*
@@ -291,10 +202,8 @@ as its sourcefile, the file to be edited.
 * *boŋºki>X4jmet#*
 * *boŋkki>0imet#*
 
-
 * *sáfºtaX4*
 * *sáftta0*
-
 
 * *oabºnaX4*
 * *oabnna0*
@@ -305,14 +214,11 @@ as its sourcefile, the file to be edited.
 * *InºgáX4*
 * *Inggá0*
 
-
 * *gánºdaX4*
 * *gándda0*
 
-
 * *konseapºtaX4*
 * *konseaptta0*
-
 
 * *ájºruX4*
 * *áirru0*
@@ -320,35 +226,26 @@ as its sourcefile, the file to be edited.
 * *bievºlaX4*
 * *bievlla0*
 
-
 * *jarºlaX4*
 * *jarlla0*
-
 
 * *olºjuX4*
 * *oljju0*
 
-
 * *mátºkiX4*
 * *mátkki0*
-
-
 
 * *kreatºsaX4*
 * *kreatssa0*
 
-
 * *korpºsaX4*
 * *korpssa0*
-
 
 * *beasºkaX4*
 * *beaskka0*
 
-
 * *čoavºjiX4*
 * *čoavjji0*
-
 
 * *beajºviX4*
 * *beaivvi0*
@@ -356,27 +253,20 @@ as its sourcefile, the file to be edited.
 * *dujhºmiX4*
 * *duihmmi0*
 
-
 * *čuolbmaX4*
 * *čuolmma0*
 
 * *DálºmaX4*
 * *Dálmma0*
 
-
-
-
 * *sávdnjiX4*
 * *sávnnji0*
-
 
 * *čorbmaX4*
 * *čorpma0*
 
-
 * *skurdnjiX4*
 * *skurtnji0*
-
 
 * *návsºtuX4*
 * *návsttu0*
@@ -387,21 +277,14 @@ as its sourcefile, the file to be edited.
 * *limšºkiX4*
 * *limškki0*
 
-
 * *ukºsaX4*
 * *uvssa0*
-
-
 
 * *teaksºtaX4*
 * *teavstta0*
 
-
-
 * *spábbaX4*
 * *spáppa0*
-
-
 
 * ★*Szczecin* (is not standard language)
 * ★*Szccecin* (is not standard language)
@@ -412,13 +295,8 @@ as its sourcefile, the file to be edited.
 * *eadniX4*
 * *eatni0*
 
-
 * *boadnjiX4*
 * *boatnji0*
-
-
-
-
 
 * *boahºtiY1*
 * *boahtti0*
@@ -429,7 +307,6 @@ as its sourcefile, the file to be edited.
 * *dahºka>Y7jmet#*
 * *dahkku>0imet#*
 
-
 * *dapmaY1*
 * *dabmi0*
 
@@ -439,27 +316,8 @@ as its sourcefile, the file to be edited.
 * *dadºjaY1*
 * *daddji0*
 
-
-
-
-
 * *johºkaX4*
 * *jo00ga0*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 * *gávºpiX7*
 * *gáv0pe0*
@@ -467,59 +325,29 @@ as its sourcefile, the file to be edited.
 * *bassiX7*
 * *basse0*
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 * *buorriX7*
 * *buorre0*
 
 * *buorriX8*
 * *buo0re0*
 
-
 * *várriX7girºku*
 * *várre0gir0ku*
-
-
-
-
-
 
 * *lijgiX7#ruhºtaX4jd*
 * *liige0#ru00đa0id*
 
-
-
-
-
-
 * *čuorºvuQ6*
 * *čuorvvo0*
 
-
 * *boahºtiQ6*
 * *boa00đe0*
-
-
-
 
 * *lájºkiW1s#*
 * *láikke0s#*
 
 * *álºkiW2s#*
 * *ál0ke0s#*
-
-
 
 * *váttisW1*
 * *váttes0*
@@ -533,56 +361,11 @@ as its sourcefile, the file to be edited.
 * *váttisW1-*
 * *váttes0-*
 
-
-
-
-
-
-
-
-
-
-
-
 * *goahºtiX5jd*
 * *go000đi0id*
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 * *viehºki¤X5jn*
 * *vi0hkki00in*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 * *boahºti>^DISIMPjmet#*
 * *bo000đi>0imet#*
@@ -599,37 +382,17 @@ as its sourcefile, the file to be edited.
 * *Line>X2j#*
 * *Lini>0i#*
 
-
-
-
 * *áhččiX2n*
 * *áhččá0n*
-
-
-
-
-
-
 
 * *stahta>X3j#*
 * *stahti>0i#*
 
-
-
 * *Sij9te>i#*
 * *Sijte>i#*
 
-
-
-
-
-
-
-
-
 * *fijdnisY5t*
 * *fiidná00t*
-
 
 * *oažžuQ8dit*
 * *o0ččo0dit*
@@ -637,14 +400,11 @@ as its sourcefile, the file to be edited.
 * *coahºkuX8stit*
 * *coa00go0stit*
 
-
-
 * *jearraQ1*
 * *jearrá0*
 
 * *boahºtiQ1*
 * *boah0tá0*
-
 
 * *jearraQ3n*
 * *je0rro0n*
@@ -658,7 +418,6 @@ as its sourcefile, the file to be edited.
 * *čuorºvuQ3n*
 * *ču0r0vo0n*
 
-
 * *jearraQ2*
 * *je0rre0*
 
@@ -668,32 +427,20 @@ as its sourcefile, the file to be edited.
 * *čuorºvuQ2*
 * *ču0r0vo0*
 
-
 * *boahºtiQ4n*
 * *boa00đá0n*
 
 * *boahºtiQ5lin*
 * *boa00đá0lin*
 
-
-
-
-
-
-
 * *jearraY1*
 * *jearri0*
-
-
-
-
 
 * *jearraY2*
 * *jearru0*
 
 * *boahºtiY2*
 * *boahttu0*
-
 
 * *jearraQ2t*
 * *je0rre0t*
@@ -702,12 +449,9 @@ boahºtiY4t ! It seems it should be Q3. ... both?!
 * *boahºtiQ3t*
 * *bo0h0to0t*
 
-
 čuorºvuY4t ! Q2, it seems.
 * *čuorºvuQ2t*
 * *ču0r0vo0t*
-
-
 
 * *jearraY7t#*
 * *je0rro0t#*
@@ -721,11 +465,6 @@ boahºtiY4t ! It seems it should be Q3. ... both?!
 * *jearraY7juvvot#*
 * *je0rro0juvvot#*
 
-
-
-
-
-
 * *jearraY7j#*
 * *je0rru0i#*
 
@@ -734,21 +473,6 @@ boahºtiY4t ! It seems it should be Q3. ... both?!
 
 * *loikaY7j#*
 * *loiku0i#*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 * *beatnag8X4*
 * *bea0na00*
@@ -759,32 +483,9 @@ boahºtiY4t ! It seems it should be Q3. ... both?!
 * *giellum8X4*
 * *gie0lu00*
 
-
-
-
-
-
-
-
-
-
-
-
-
 Changed because:we get almmáj- and not almmái-
 Postvocalic j surfaces as i
 Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dummy: ) _ ;
-
-
-
-
-
-
-
-
-
-
-
 
 * * *
 <small>This (part of) documentation was generated from [../src/fst/phonology.twolc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/phonology.twolc)</small>

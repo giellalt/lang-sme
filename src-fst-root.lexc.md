@@ -4,8 +4,6 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 
 ## Multicharacter symbols
 
-
-
 ### Tags for POS
 
 * **+N** - Noun
@@ -36,7 +34,6 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 * **+Rom** - Roman numeral, subtag for +Num
 * **+Pass** - hallat/haddat not in use
 * **+Known** - man (different from maid): mii+Pron+Rel+Sg+Acc+Known
-
 
 ## Tags for Inflection
 
@@ -144,7 +141,6 @@ the sentence can be considered as true cases.
 ; +Gram/Superl
 ; +Gram/Comp
 
-
 ### Question and Focus particles:
 * **+Qst**   Question Particle: +Pcle+Qst
 * **+Subqst**   Embedded Question Particle: +Adv+Subqst
@@ -172,8 +168,6 @@ the sentence can be considered as true cases.
 * **+Foc/mat**	Focus clitic
 * **+Foc/mis**	Focus clitic
 * **+Foc/s**	Focus clitic
-
-
 
 ### Tags distinguishing different versions of the same lemma (before POS)
 * +v1
@@ -212,7 +206,6 @@ doavttergrádakursa
 
 * **+PxCPlComRecipr** used in pronoun-sme-morph.txt
 
-
 ### Error (non-standard language) tags
 
 * **+Err/Orth** substandard, not in normative fst
@@ -237,7 +230,6 @@ doavttergrádakursa
 * **+Err/Confused-DerPassPrtSg3** grammarcheking rela word error confusion pairs
 * **+Err/Confused-ImprtSg2** grammarcheking rela word error confusion pairs
 * **+Err/Confused-ImprtPl2** grammarcheking rela word error confusion pairs
-
 
 ### Usage tags
 
@@ -325,7 +317,6 @@ The second part of the compound may require that the previous (left part) is:
 * **+CmpN/SgGenLeft** Singular Genitive
 * **+CmpN/PlGenLeft** Plural Genitive
 
-
 Tags for descriptive compound analysis - this is what a compound actually is:
 
 * **+Cmp** - Dynamic compound. This tag should always be part
@@ -354,10 +345,6 @@ The order is:
 1. **+CmpNP/** tags
 1. **+Cmp/** tags - this is always true since the descriptive tags are always
 part of the continuation lexicons, and will be located after the POS tag.
-
-
-
-
 
 ### Semantic tags to help disambiguation & synt. analysis: (before POS)
 
@@ -463,8 +450,6 @@ part of the continuation lexicons, and will be located after the POS tag.
 * +Sem/Wpn = Weapon
 * +Sem/Wthr = The Weather or the state of ground
 * +Sem/Year - year (i.e. 1000 - 2999), used only for numerals
-
-
 
 ### Multiple Semantic tags:
 * +Sem/Act_Fruit
@@ -652,14 +637,7 @@ part of the continuation lexicons, and will be located after the POS tag.
 * +Sem/Org_Prod-cogn
 * +Sem/Org_Prod-vis
 
-
-
-
 * **+Allegro** from LEXICON GOADE-IU-
-
-
-
-
 
 Explanation:
 Combinations 1, 2, 3, 12, 23, 13, 123 are ok, all other ones are blocked.
@@ -671,16 +649,7 @@ This whole Der123 business is to prevent back-derivation of
 boahtigoahtijuvvohallat and the like.
 Computationally, this is done as a filter composed on top of sme.save.
 
-
-
 --------------------------------
-
-
-
-
-
-
-
 
 All non-positional derivations should be preceded by this tag, to make it possible
 to target regular expressions at all derivations in a language-independent way:
@@ -694,7 +663,6 @@ just specify +Der|+Der1 .. +Der5 and you are set.
 * **+Der/viđá** = NA#
 * **+Der/viđi** = NA#
 * **+Der/has** = only one in the code
-
 
 ### Miscellanious list
 
@@ -737,7 +705,6 @@ get the same pronunciation whether read as SME or NOB/NNO/SWE.
 * **+OLang/ENG** = English
 * **+OLang/RUS** = Russian
 * **+OLang/UND** = Undefined
-
 
 ### Triggers for morphophonological rules
 
@@ -811,7 +778,6 @@ get the same pronunciation whether read as SME or NOB/NNO/SWE.
 * **u6** = twol rule override, so that u doesn't turn into o in certain contextes
 * **æ9** = in smi, for lulesámi
 
-
 **∑** = a symbol used in front of `#` to block backtracking and
 mwe reanalysis in hfst-tokenise (e.g. in dynanic compounds).
 Makes it possible to distinguish lexical and dynamic compounds
@@ -824,7 +790,6 @@ in rules. It is converted to zero together with `#`.
 * > (escaped with square brackets, to avoid collision with > as morpheme boundary)
 * < (escaped with square brackets, to avoid collision with < as morpheme boundary)
 * #
-
 
 ## Flag diacritics
 We have manually optimised the structure of our lexicon using following
@@ -842,8 +807,6 @@ with verbs if the verb is further derived into a noun again:
 |  @R.12p.add@ | (Dis)allow 1. and 2. pers forms
 |  @P.Pmatch.Loc@ | Used on multi-token analyses; tell hfst-tokenise/pmatch where in the form/analysis the token should be split.
 |  @P.Pmatch.Backtrack@ | Used on single-token analyses; tell hfst-tokenise/pmatch to backtrack by reanalysing the substrings before and after this point in the form (to find combinations of shorter analyses that would otherwise be missed)
-
-
 
 | Flag | Explanation
 | ---- | -----------
@@ -883,7 +846,6 @@ given the proper use of these flags.
 |  @U.Cap.Obl@ | Allowing downcasing of derived names: deatnulasj.
 |  @U.Cap.Opt@ | Allowing downcasing of derived names: deatnulasj.
 
-
 * **@U.NeedsVowRed.OFF@** is used to force hyphenation/non-reduction: samediggi-
 * **@U.NeedsVowRed.ON@** is used to force reduction w/o hyphen: samedigge#xxx
 * **@C.NeedsVowRed@** Clearing this feature, so that it doesn't interfere with further compounding
@@ -907,21 +869,15 @@ given the proper use of these flags.
 * **@D.SpaceCmp.ON@** Flag to tag compounds written with a space
 * **@C.SpaceCmp@** Flag to tag compounds written with a space+
 
-
-
 ## Basic lexica, pointing to the other lexicon files
-
 
 * **LEXICON Root** is the basic lexicon starting everything
 
 **Abbreviation**
 
-
 * **LEXICON Acronym**
 
-
 * **LEXICON ProperNoun**
-
 
 Lexicon ENDLEX
 And this is the ENDLEX of everything:

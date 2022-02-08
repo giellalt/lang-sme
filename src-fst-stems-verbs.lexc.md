@@ -1,12 +1,9 @@
 
 # North Saami verbs
 
-
-
 ## Negative verbs
 
 * **LEXICON Negativeverb  **
-
 
 * **LEXICON negmood  **
 
@@ -20,9 +17,7 @@
 
 * **LEXICON Copula   ** Dividing into finite and infinite
 
-
 * **LEXICON Finitecop   ** (Removed %>, they blocked diphtsim^pl)
-
 
 * **LEXICON Prscop   **
 
@@ -36,30 +31,13 @@
 
 * **LEXICON STRAYFORMS  ** (referred to from the main Verb lexicon)
 
-
-
 * **LEXICON Eahpe_Verb  **
 
 ## Main verbs
 
 Here comes the main list of verbs.
 
-
-
-
-
-
-
-
 * **LEXICON Humsubj-VerbRoot   **
-
-
-
-
-
-
-
-
 
 * * *
 <small>This (part of) documentation was generated from [../src/fst/stems/verbs.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/verbs.lexc)</small>

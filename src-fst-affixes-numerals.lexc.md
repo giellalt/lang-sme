@@ -1,17 +1,9 @@
 
 # North Saami numerals
 
-
-
-
-
-
-
 * **LEXICON OKTA** Case forms of the basic digits
 
 * **LEXICON BEALOKTA** Case forms of the basic digits, only sg
-
-
 
 * **LEXICON BARE-LOHKAI**
 
@@ -21,9 +13,7 @@
 
 * **LEXICON OKTAGOALMMATLOHKAI**
 
-
 * **LEXICON OKTANJEALJATLOHKAI**
-
 
 * **LEXICON OKTAVIDATLOHKAI**
 
@@ -31,15 +21,11 @@
 
 * **LEXICON OKTACIHCCETLOHKAI**
 
-
-
 * **LEXICON OKTAGAVCCATLOHKAI**
 
 * **LEXICON OKTAOVCCATLOHKAI**
 
-
 * **LEXICON OKTALOGATLOHKAI**
-
 
 * **LEXICON OKTALOHKI**
 
@@ -53,7 +39,6 @@
 
 * **LEXICON GUOKTENUPPELOHKAI**
 
-
 * **LEXICON BEALGUOKTENUPPELOHKAI**, only sg
 
 * **LEXICON GUOKTEGOALMMATLOHKAI**
@@ -62,14 +47,11 @@
 
 * **LEXICON GUOKTEVIDATLOHKAI**
 
-
 * **LEXICON GUOKTEGUDATLOHKAI**
 
 * **LEXICON GUOKTECIHCCETLOHKAI**
 
-
 * **LEXICON GUOKTEGAVCCATLOHKAI**
-
 
 * **LEXICON GUOKTEOVCCATLOHKAI**
 
@@ -77,43 +59,31 @@
 
 * **LEXICON GUOKTELOGI**
 
-
 * **LEXICON NUBBENUPPELOHKAI**
-
 
 * **LEXICON NUBBEGOALMMATLOHKAI**
 
-
 * **LEXICON NUBBENJEALJATLOHKAI**
 
-
 * **LEXICON NUBBEVIDATLOHKAI**
-
 
 * **LEXICON NUBBEGUDATLOHKAI**
 
 * **LEXICON NUBBECIHCCETLOHKAI**
 
-
 * **LEXICON NUBBEGAVCCATLOHKAI**
 
 * **LEXICON NUBBEOVCCATLOHKAI**
-
 
 * **LEXICON NUBBELOGATLOHKAI**
 
 * **LEXICON NUBBELOGI**
 
-
-
-
 * **LEXICON GOLBMA**  Case forms of the basic digits
 
 * **LEXICON BEALGOLBMA**  Case forms of the basic digits, only sg
 
-
 * **LEXICON NOLLA**  Case forms of nolla/nulla, as GOLBMA, but only Sg, no Cmp
-
 
 * **LEXICON GOLBMANUPPELOHKAI**
 
@@ -125,12 +95,9 @@
 
 * **LEXICON GOLBMAGUDATLOHKAI**
 
-
 * **LEXICON GOLBMACIHCCETLOHKAI**
 
-
 * **LEXICON GOLBMAGAVCCATLOHKAI**
-
 
 * **LEXICON GOLBMAOVCCATLOHKAI**
 
@@ -138,22 +105,17 @@
 
 * **LEXICON GOLBMALOGI**
 
-
 * **LEXICON VIHTTA** Case forms of the basic digits
 
 * **LEXICON BEALVIHTTA** Case forms of the basic digits, only sg
 
-
 * **LEXICON VIHTTANUPPELOHKAI**
 
-
 * **LEXICON VIHTTAGOALMMATLOHKAI**
-
 
 * **LEXICON VIHTTANJEALJATLOHKAI**
 
 * **LEXICON VIHTTAVIDATLOHKAI**
-
 
 * **LEXICON VIHTTAGUDATLOHKAI**
 
@@ -167,10 +129,7 @@
 
 * **LEXICON VIHTTALOGI**
 
-
-
 * **LEXICON CIEZA** Case forms of the basic digits
-
 
 * **LEXICON BEALCIEZA** Case forms of the basic digits, only sg
 
@@ -193,7 +152,6 @@
 * **LEXICON CIEZALOGATLOHKAI**
 
 * **LEXICON CIEZALOGI**
-
 
 * **LEXICON GAVCCI** Case forms of the basic digits
 
@@ -219,22 +177,17 @@
 
 * **LEXICON GAVCCILOGI**
 
-
-
 * **LEXICON LOGI**
 
 * **LEXICON BEALLOGI** only sg
 
 * **LEXICON CUODICASE**
 
-
 * **LEXICON OKTACUOHTI**
-
 
 * **LEXICON GUOKTECUODI**
 
 * **LEXICON NUBBECUOHTI**
-
 
 * **LEXICON GOLBMACUODI**
 
@@ -244,17 +197,11 @@
 
 * **LEXICON GAVCCICUODI**
 
-
-
 * **LEXICON DUHAHAT**
-
-
 
 * **LEXICON DUHATCASE**
 
-
 * **LEXICON OKTADUHAT**
-
 
 * **LEXICON GUOKTEDUHAT**
 
@@ -268,23 +215,11 @@
 
 * **LEXICON GAVCCIDUHAT**
 
-
-
 * **LEXICON CIEZAS_N**  Collective numerals
-
 
 * **LEXICON VIDAS_N**  Collective numerals
 
-
 * **LEXICON BEANNOT** one and a half
-
-
-
-
-
-
-
-
 
 * **LEXICON ARABICCASES**  adds +Arab
 
@@ -292,14 +227,11 @@
 
 * **LEXICON ARABICCASE0**  adds +Arab
 
-
 * **LEXICON DIGITCASES**  to distinguish between 0 and oblique
 
 * **LEXICON DIGITCASE0**
 
-
 * **LEXICON DIGITCASE**
-
 
 * **LEXICON ARABICCASEORD** ordinals
 
@@ -307,7 +239,6 @@
 by .:, and with reduced case forms. The Err/Orth tag is added in the calling lexicon.
 
 * **LEXICON ARABICCASECOLL** collectives
-
 
 * **LEXICON ROMNUMTAGOBL**
 * * *

@@ -1,11 +1,7 @@
 
 # This file contains the Particles
 
-
-
-
 * **LEXICON Particles   ** gives all particles
-
 
 * **LEXICON pcle   ** gives the tag +Pcle
 

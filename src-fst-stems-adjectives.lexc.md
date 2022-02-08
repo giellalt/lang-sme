@@ -1,10 +1,6 @@
 
 # North Sámi adjective lexicon
 
-
-
-
-
 * **LEXICON LEXATTR  ** This lexicon is here to give the tags to the compounding
 
 * **LEXICON At    ** gives +A+Attr and directs to K
@@ -16,39 +12,16 @@
 * **LEXICON ALIT ** Both second-part compound and independent adj.
 čáhppesalit bábir, alit bábir
 
-
 * **LEXICON Eahpe_Adjective ** is a long list of lexicalised eahpe-prefixed adjs
 
 * **LEXICON NomActVEARA ** hardcoded postposition frases with veara, for speller
-
-
-
 
 * **LEXICON Adjective ** is the main adjective list
 
 * **LEXICON AdjectivePx ** Px-forms are restricted to this lexicon
 Move adjs that may take Px from **Adjective** to this lexicon.
 
-
 * **LEXICON AdjectiveNoPx ** is the main adjective list, not taking Px
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 * * *
 <small>This (part of) documentation was generated from [../src/fst/stems/adjectives.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/adjectives.lexc)</small>
