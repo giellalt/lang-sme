@@ -196,5 +196,9 @@ numerical expressions in each category.
 * **LEXICON GUOKTELOGIOVCCI**
 
 * **LEXICON VIHTTALOGIOVCCI**
+
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/numerals.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/numerals.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/stems/numerals.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/numerals.lexc)</small>
+
+---

@@ -1,3 +1,7 @@
+# North Sami description 
+
+All documents in one file
+
 
 
 # DELIMITERS 
@@ -3478,10 +3482,16 @@ Test: Go for minimal weight.
 # Removing Err/Orth
 
 * * *
-<small>This (part of) documentation was generated from [../src/cg3/disambiguator.cg3](http://github.com/giellalt/lang-sme/blob/main/../src/cg3/disambiguator.cg3)</small>
+
+<small>This (part of) documentation was generated from [src/cg3/disambiguator.cg3](https://github.com/giellalt/lang-sme/blob/main/src/cg3/disambiguator.cg3)</small>
+
+---
 
 * * *
-<small>This (part of) documentation was generated from [../src/cg3/valency.cg3](http://github.com/giellalt/lang-sme/blob/main/../src/cg3/valency.cg3)</small>
+
+<small>This (part of) documentation was generated from [src/cg3/valency.cg3](https://github.com/giellalt/lang-sme/blob/main/src/cg3/valency.cg3)</small>
+
+---
 
 # DELIMITERS 
 
@@ -6910,10 +6920,16 @@ The previous two rules look marginal.
 # Removing Err/Orth
 
 * * *
-<small>This (part of) documentation was generated from [../src/cg3/speech_disambiguator.cg3](http://github.com/giellalt/lang-sme/blob/main/../src/cg3/speech_disambiguator.cg3)</small>
+
+<small>This (part of) documentation was generated from [src/cg3/speech_disambiguator.cg3](https://github.com/giellalt/lang-sme/blob/main/src/cg3/speech_disambiguator.cg3)</small>
+
+---
 
 * * *
-<small>This (part of) documentation was generated from [../src/cg3/semanticroles.cg3](http://github.com/giellalt/lang-sme/blob/main/../src/cg3/semanticroles.cg3)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
+
+<small>This (part of) documentation was generated from [src/cg3/semanticroles.cg3](https://github.com/giellalt/lang-sme/blob/main/src/cg3/semanticroles.cg3)</small>
+
+---Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 #                    North Sámi compounding
 
@@ -6990,7 +7006,10 @@ such compounds)
 * adds @U.NeedsVowRed.OFF@ and directs to **R**
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/compounding.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/compounding.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/compounding.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/compounding.lexc)</small>
+
+---
 
 `º` is for CnsGrad of the `lg:lgg` and `lºl:ll` type
 `¤:0` prevents ConsGrad in certain words
@@ -7466,7 +7485,10 @@ Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dum
 * ★*háliid#* (is not standard language)
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/phonology-L2-from-branch.twolc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/phonology-L2-from-branch.twolc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/phonology-L2-from-branch.twolc](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonology-L2-from-branch.twolc)</small>
+
+---
 
 `º` is for CnsGrad of the `lg:lgg` and `lºl:ll` type
 `¤:0` prevents ConsGrad in certain words
@@ -7942,7 +7964,10 @@ Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dum
 * ★*háliid#* (is not standard language)
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/phonology-L2.twolc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/phonology-L2.twolc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/phonology-L2.twolc](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonology-L2.twolc)</small>
+
+---
 North Sámi morphophonological rule set                  
 
 This file documents the [phonology.twolc file](http://github.com/giellalt/lang-sme/blob/main/src/fst/phonology.twolc) 
@@ -8432,7 +8457,10 @@ Postvocalic j surfaces as i
 Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dummy: ) _ ;
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/phonology.twolc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/phonology.twolc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/phonology.twolc](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonology.twolc)</small>
+
+---
 # The North Saami proper noun lexicon
 
 * **LEXICON Prefix-Proper   ** for first-part names
@@ -8440,7 +8468,10 @@ Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dum
 * **LEXICON ProperNoun-sme-nocomp   ** for no cmp without hyph
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/sme-propernouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/sme-propernouns.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/stems/sme-propernouns.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/sme-propernouns.lexc)</small>
+
+---
 North Saami adposition lexicon
 
 First come the 3 continuation lexica, the division is based on Nickel
@@ -8463,7 +8494,10 @@ Px lexica in sme-lex.txt and closed-sme-lex.txt.
 * **LEXICON Adposition   ** is the lexicon with the adpositions
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/adpositions.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/adpositions.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/stems/adpositions.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/adpositions.lexc)</small>
+
+---
 # This file contains the Particles
 
 * **LEXICON Particles   ** gives all particles
@@ -8477,8 +8511,12 @@ and all the ge versions should be removed.
 (i.e. only goit, not goitge). This errouneously
 permits gege, goge, etc., though, and we thus leave
 things as they are.
+
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/particles.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/particles.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/stems/particles.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/particles.lexc)</small>
+
+---
 # North Saami adverbs
 
 * **LEXICON Adverb   **
@@ -8562,8 +8600,12 @@ Lexica for adverb subtypes
 
 The main adverb lexicon
 * **LEXICON adv   ** simply gives the tag +Adv and directs to K
+
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/adverbs.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/adverbs.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/stems/adverbs.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/adverbs.lexc)</small>
+
+---
 # Punctuation symbols
 
 * **LEXICON Punctuation_SME   ** contains the list
@@ -8576,7 +8618,10 @@ mark is supposed to be used on both sides. This is done to simplify
 generation, by keeping the same tagging as the standard analysis.
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/sme-punctuation.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/sme-punctuation.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/stems/sme-punctuation.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/sme-punctuation.lexc)</small>
+
+---
 # North Saami Interjections
 
 * **LEXICON Ij   ** is the lexicon giving the tag `+Interj` +
@@ -8587,7 +8632,10 @@ the tag `+Err/Lexc`.
 * **LEXICON Interjection ** is the lexicon containing the list
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/interjections.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/interjections.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/stems/interjections.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/interjections.lexc)</small>
+
+---
 # This file contains the Pronouns
 
 * **LEXICON Pronoun   ** Points to all the pronoun subgrops
@@ -8654,7 +8702,10 @@ The indeclineable indefinites
 * **LEXICON indeclindef   **
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/pronouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/pronouns.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/stems/pronouns.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/pronouns.lexc)</small>
+
+---
 # The North Saami Subjunctions
 
 * **LEXICON Subjunction   ** contains the list of subjunctions.
@@ -8668,7 +8719,10 @@ The indeclineable indefinites
 * **LEXICON Cs-Conf  ** assigns the tag +CC and allows further grammar checker processing for disambiguation against nouns in potential compounds written apart
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/subjunctions.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/subjunctions.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/stems/subjunctions.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/subjunctions.lexc)</small>
+
+---
 # North Saami numerals
 
 ## The initial lexica
@@ -8866,8 +8920,12 @@ numerical expressions in each category.
 * **LEXICON GUOKTELOGIOVCCI**
 
 * **LEXICON VIHTTALOGIOVCCI**
+
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/numerals.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/numerals.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/stems/numerals.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/numerals.lexc)</small>
+
+---
 # North Sámi adjective lexicon
 
 * **LEXICON LEXATTR  ** This lexicon is here to give the tags to the compounding
@@ -8893,7 +8951,10 @@ Move adjs that may take Px from **Adjective** to this lexicon.
 * **LEXICON AdjectiveNoPx ** is the main adjective list, not taking Px
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/adjectives.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/adjectives.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/stems/adjectives.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/adjectives.lexc)</small>
+
+---
 # File containing North Saami abbreviations
 
 ## Lexica for adding tags and periods
@@ -8937,7 +8998,10 @@ is less common and thus only the occurences in the middle of
 the sentence can be considered as true cases.
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/sme-abbreviations.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/sme-abbreviations.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/stems/sme-abbreviations.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/sme-abbreviations.lexc)</small>
+
+---
 # North Saami verbs
 
 ## Negative verbs
@@ -8979,7 +9043,10 @@ Here comes the main list of verbs.
 * **LEXICON Humsubj-VerbRoot   **
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/verbs.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/verbs.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/stems/verbs.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/verbs.lexc)</small>
+
+---
 # North Saami Conjunctions
 
 * **LEXICON Conjunction   ** contains the list of conjunctions
@@ -8991,13 +9058,20 @@ Here comes the main list of verbs.
                           homonymous with any of the open POS's
 
 * **LEXICON Cc-Conf  ** assigns the tag +CC and allows further grammar checker processing for disambiguation against nouns in potential compounds written apart
+
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/conjunctions.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/conjunctions.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
+
+<small>This (part of) documentation was generated from [src/fst/stems/conjunctions.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/conjunctions.lexc)</small>
+
+---Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 The lexicon K_only is for paths not going to  the K-less ENDLEX
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/clitics.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/clitics.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
+
+<small>This (part of) documentation was generated from [src/fst/clitics.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/clitics.lexc)</small>
+
+---Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 # North Saami Possessive suffixes
 
@@ -9040,8 +9114,12 @@ The lexicon K_only is for paths not going to  the K-less ENDLEX
 * **LEXICON PxPlCom12V** for first, second person comitative Px
 
 * **LEXICON PxPlCom3V** for third person comitative Px
+
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/possessive-suffixes.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/possessive-suffixes.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
+
+<small>This (part of) documentation was generated from [src/fst/affixes/possessive-suffixes.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/possessive-suffixes.lexc)</small>
+
+---Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 # North Saami noun declension
 
@@ -9549,8 +9627,12 @@ Contracted nouns
 * **LEXICON ACTORSHORTTVder** Tagged NomAg nowadays, Short compound-forms, from transitive verbs
 
 * **LEXICON DIMINV** diminutives, these comes from bisyll nouns
+
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/nouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/nouns.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/affixes/nouns.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/nouns.lexc)</small>
+
+---
 
 # North Saami acronyms - affix part
 
@@ -9570,12 +9652,18 @@ put between the abbreviation and its suffix
 * **LEXICON acrooblique**
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/acronyms.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/acronyms.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/affixes/acronyms.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/acronyms.lexc)</small>
+
+---
 
 some multiword prons, according to Nickel
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/pronouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/pronouns.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/affixes/pronouns.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/pronouns.lexc)</small>
+
+---
 # North Saami numerals
 
 * **LEXICON OKTA** Case forms of the basic digits
@@ -9818,15 +9906,22 @@ by .:, and with reduced case forms. The Err/Orth tag is added in the calling lex
 * **LEXICON ARABICCASECOLL** collectives
 
 * **LEXICON ROMNUMTAGOBL**
+
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/numerals.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/numerals.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/affixes/numerals.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/numerals.lexc)</small>
+
+---
 
 Different lexicon for female persons and place names.
 
 Different lexicon for personal surnames. Blind
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/propernouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/propernouns.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
+
+<small>This (part of) documentation was generated from [src/fst/affixes/propernouns.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/propernouns.lexc)</small>
+
+---Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 # North Saami adjective declension file
 
@@ -10203,8 +10298,12 @@ eventually.
 * **LEXICON AGAdj**  mostly words like guovttejagat, allajoccat etc
 
 * **LEXICON AGAdjINFL**
+
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/adjectives.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/adjectives.lexc)</small>Divvun & Giellatekno - open source grammars for Sámi and other languages
+
+<small>This (part of) documentation was generated from [src/fst/affixes/adjectives.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/adjectives.lexc)</small>
+
+---Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 # Verb conjugation
 
@@ -10586,11 +10685,17 @@ modals do not participate in derivation
 * LEXICON VGEN flag for VGen
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/verbs.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/verbs.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/affixes/verbs.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/verbs.lexc)</small>
+
+---
 # Symbol affixes
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/symbols.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/symbols.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/affixes/symbols.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/symbols.lexc)</small>
+
+---
 # Continuation lexicons for abbreviations
 
 ## Lexica for adding tags and periods
@@ -10666,7 +10771,10 @@ the end of the sentence:
 * "su..." -> `"su" Adv Abbr` + `"..." CLB`
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/abbreviations.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/abbreviations.lexc)</small>Divvun & Giellatekno - open source grammars for North Sámi.
+
+<small>This (part of) documentation was generated from [src/fst/affixes/abbreviations.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/abbreviations.lexc)</small>
+
+---Divvun & Giellatekno - open source grammars for North Sámi.
 
 # North Sámi morphological analyser
 
@@ -11561,8 +11669,12 @@ The `@D.NeedNoun.ON@` flag diacritic is used to block illegal compounds.
 **ENDLEX3**
 
 **ENDLEX4**
+
 * * *
-<small>This (part of) documentation was generated from [../src/fst/root.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/root.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/root.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/root.lexc)</small>
+
+---
 
 retroflex plosive, voiceless		t`  ʈ	    0288, 648 (` = ASCII 096)
 retroflex plosive, voiced		d`	ɖ		0256, 598
@@ -11722,325 +11834,10 @@ advanced tongue root				_A
 retracted tongue root			_q
 
 * * *
-<small>This (part of) documentation was generated from [../src/phonetics/text2tts-fin.xfscript](http://github.com/giellalt/lang-sme/blob/main/../src/phonetics/text2tts-fin.xfscript)</small>
 
-retroflex plosive, voiceless		t`  ʈ	    0288, 648 (` = ASCII 096)
-retroflex plosive, voiced		d`	ɖ		0256, 598
-labiodental nasal				F 	ɱ		0271, 625
-retroflex nasal					n` 	ɳ		0273, 627
-palatal nasal					J 	ɲ		0272, 626
-velar nasal						N 	ŋ		014B, 331
-uvular nasal						N\	ɴ		0274, 628
+<small>This (part of) documentation was generated from [src/phonetics/text2tts-fin.xfscript](https://github.com/giellalt/lang-sme/blob/main/src/phonetics/text2tts-fin.xfscript)</small>
 
-bilabial trill					B\ 	ʙ		0299, 665
-uvular trill						R\ 	ʀ		0280, 640
-alveolar tap						4	ɾ		027E, 638
-retroflex flap					r` 	ɽ		027D, 637
-bilabial fricative, voiceless	p\ 	ɸ		0278, 632
-bilabial fricative, voiced		B 	β		03B2, 946
-dental fricative, voiceless		T 	θ		03B8, 952
-dental fricative, voiced			D 	ð		00F0, 240
-postalveolar fricative, voiceless	S	ʃ		0283, 643
-postalveolar fricative, voiced		Z 	ʒ		0292, 658
-retroflex fricative, voiceless		s` 	ʂ		0282, 642
-retroflex fricative, voiced			z` 	ʐ		0290, 656
-palatal fricative, voiceless			C 	ç		00E7, 231
-palatal fricative, voiced			j\ 	ʝ		029D, 669
-velar fricative, voiced	        	G 	ɣ		0263, 611
-uvular fricative, voiceless			X	χ		03C7, 967
-uvular fricative, voiced				R 	ʁ		0281, 641
-pharyngeal fricative, voiceless		X\ 	ħ		0127, 295
-pharyngeal fricative, voiced			?\ 	ʕ		0295, 661
-glottal fricative, voiced			h\	ɦ		0266, 614
-
-alveolar lateral fricative, vl.		K 
-alveolar lateral fricative, vd.		K\
-
-labiodental approximant				P (or v\) 
-alveolar approximant					r\ 
-retroflex approximant				r\` 
-velar approximant					M\
-
-retroflex lateral approximant		l` 
-palatal lateral approximant			L 
-velar lateral approximant			L\
-Clicks
-
-bilabial								O\	(O = capital letter) 
-dental								|\
-(post)alveolar						!\ 
-palatoalveolar						=\ 
-alveolar lateral						|\|\
-Ejectives, implosives
-
-ejective								_>	e.g. ejective p		p_>
-implosive							_<	e.g. implosive b	b_<
-Vowels
-
-close back unrounded					M
-close central unrounded 				1 
-close central rounded				} 
-lax i								I 
-lax y								Y 
-lax u								U
-
-close-mid front rounded				2 
-close-mid central unrounded			@\ 
-close-mid central rounded			8 
-close-mid back unrounded				7
-
-schwa								@
-
-open-mid front unrounded				E 
-open-mid front rounded				9
-open-mid central unrounded			3 
-open-mid central rounded				3\ 
-open-mid back unrounded				V 
-open-mid back rounded				O
-
-ash (ae digraph)						{ 
-open schwa (turned a)				6
-
-open front rounded					& 
-open back unrounded	        		A 
-open back rounded					Q
-Other symbols
-
-voiceless labial-velar fricative		W 
-voiced labial-palatal approx.		H 
-voiceless epiglottal fricative		H\ 
-voiced epiglottal fricative			<\ 
-epiglottal plosive					>\
-
-alveolo-palatal fricative, vl. 		s\ 
-alveolo-palatal fricative, voiced	z\ 
-alveolar lateral flap				l\ 
-simultaneous S and x					x\ 
-tie bar								_
-Suprasegmentals
-
-primary stress						" 
-secondary stress						% 
-long									: 
-half-long							:\ 
-extra-short							_X 
-linking mark							-\
-Tones and word accents
-
-level extra high						_T 
-level high							_H
-level mid							_M 
-level low							_L 
-level extra low						_B
-downstep								! 
-upstep								^	(caret, circumflex)
-
-contour, rising						 
-contour, falling						_F 
-contour, high rising					_H_T 
-contour, low rising					_B_L 
-
-contour, rising-falling				_R_F 
-(NB Instead of being written as diacritics with _, all prosodic marks can alternatively be placed in a separate tier, set off by < >, as recommended for the next two symbols.)
-global rise				<R> 
-global fall				<F>
-Diacritics
-
-voiceless				_0	(0 = figure), e.g. n_0
-voiced					_v 
-aspirated				_h 
-more rounded				_O	(O = letter) 
-less rounded				_c 
-advanced					_+
-retracted				_-
-centralized				_" 
-syllabic					=	(or _=) e.g. n= (or n_=) 
-non-syllabic				_^ 
-rhoticity				`
-
-breathy voiced			_t 
-creaky voiced			_k
-linguolabial				_N 
-labialized				_w 
-palatalized				'	(or _j) e.g. t' (or t_j) 
-velarized				_G 
-pharyngealized			_?\
-
-dental					_d 
-apical					_a 
-laminal					_m
-nasalized				~	(or _~) e.g. A~ (or A_~) 
-nasal release			_n
-lateral release			_l 
-no audible release		_}
-
-velarized or pharyngealized		_e 
-velarized l, alternatively		5 
-raised							_r 
-lowered							_o 
-advanced tongue root				_A 
-retracted tongue root			_q
-* * *
-<small>This (part of) documentation was generated from [../src/phonetics/txt2ipa.xfscript](http://github.com/giellalt/lang-sme/blob/main/../src/phonetics/txt2ipa.xfscript)</small>
-
-retroflex plosive, voiceless		t`  ʈ	    0288, 648 (` = ASCII 096)
-retroflex plosive, voiced		d`	ɖ		0256, 598
-labiodental nasal				F 	ɱ		0271, 625
-retroflex nasal					n` 	ɳ		0273, 627
-palatal nasal					J 	ɲ		0272, 626
-velar nasal						N 	ŋ		014B, 331
-uvular nasal						N\	ɴ		0274, 628
-
-bilabial trill					B\ 	ʙ		0299, 665
-uvular trill						R\ 	ʀ		0280, 640
-alveolar tap						4	ɾ		027E, 638
-retroflex flap					r` 	ɽ		027D, 637
-bilabial fricative, voiceless	p\ 	ɸ		0278, 632
-bilabial fricative, voiced		B 	β		03B2, 946
-dental fricative, voiceless		T 	θ		03B8, 952
-dental fricative, voiced			D 	ð		00F0, 240
-postalveolar fricative, voiceless	S	ʃ		0283, 643
-postalveolar fricative, voiced		Z 	ʒ		0292, 658
-retroflex fricative, voiceless		s` 	ʂ		0282, 642
-retroflex fricative, voiced			z` 	ʐ		0290, 656
-palatal fricative, voiceless			C 	ç		00E7, 231
-palatal fricative, voiced			j\ 	ʝ		029D, 669
-velar fricative, voiced	        	G 	ɣ		0263, 611
-uvular fricative, voiceless			X	χ		03C7, 967
-uvular fricative, voiced				R 	ʁ		0281, 641
-pharyngeal fricative, voiceless		X\ 	ħ		0127, 295
-pharyngeal fricative, voiced			?\ 	ʕ		0295, 661
-glottal fricative, voiced			h\	ɦ		0266, 614
-
-alveolar lateral fricative, vl.		K 
-alveolar lateral fricative, vd.		K\
-
-labiodental approximant				P (or v\) 
-alveolar approximant					r\ 
-retroflex approximant				r\` 
-velar approximant					M\
-
-retroflex lateral approximant		l` 
-palatal lateral approximant			L 
-velar lateral approximant			L\
-Clicks
-
-bilabial								O\	(O = capital letter) 
-dental								|\
-(post)alveolar						!\ 
-palatoalveolar						=\ 
-alveolar lateral						|\|\
-Ejectives, implosives
-
-ejective								_>	e.g. ejective p		p_>
-implosive							_<	e.g. implosive b	b_<
-Vowels
-
-close back unrounded					M
-close central unrounded 				1 
-close central rounded				} 
-lax i								I 
-lax y								Y 
-lax u								U
-
-close-mid front rounded				2 
-close-mid central unrounded			@\ 
-close-mid central rounded			8 
-close-mid back unrounded				7
-
-schwa								@
-
-open-mid front unrounded				E 
-open-mid front rounded				9
-open-mid central unrounded			3 
-open-mid central rounded				3\ 
-open-mid back unrounded				V 
-open-mid back rounded				O
-
-ash (ae digraph)						{ 
-open schwa (turned a)				6
-
-open front rounded					& 
-open back unrounded	        		A 
-open back rounded					Q
-Other symbols
-
-voiceless labial-velar fricative		W 
-voiced labial-palatal approx.		H 
-voiceless epiglottal fricative		H\ 
-voiced epiglottal fricative			<\ 
-epiglottal plosive					>\
-
-alveolo-palatal fricative, vl. 		s\ 
-alveolo-palatal fricative, voiced	z\ 
-alveolar lateral flap				l\ 
-simultaneous S and x					x\ 
-tie bar								_
-Suprasegmentals
-
-primary stress						" 
-secondary stress						% 
-long									: 
-half-long							:\ 
-extra-short							_X 
-linking mark							-\
-Tones and word accents
-
-level extra high						_T 
-level high							_H
-level mid							_M 
-level low							_L 
-level extra low						_B
-downstep								! 
-upstep								^	(caret, circumflex)
-
-contour, rising						 
-contour, falling						_F 
-contour, high rising					_H_T 
-contour, low rising					_B_L 
-
-contour, rising-falling				_R_F 
-(NB Instead of being written as diacritics with _, all prosodic marks can alternatively be placed in a separate tier, set off by < >, as recommended for the next two symbols.)
-global rise				<R> 
-global fall				<F>
-Diacritics
-
-voiceless				_0	(0 = figure), e.g. n_0
-voiced					_v 
-aspirated				_h 
-more rounded				_O	(O = letter) 
-less rounded				_c 
-advanced					_+
-retracted				_-
-centralized				_" 
-syllabic					=	(or _=) e.g. n= (or n_=) 
-non-syllabic				_^ 
-rhoticity				`
-
-breathy voiced			_t 
-creaky voiced			_k
-linguolabial				_N 
-labialized				_w 
-palatalized				'	(or _j) e.g. t' (or t_j) 
-velarized				_G 
-pharyngealized			_?\
-
-dental					_d 
-apical					_a 
-laminal					_m
-nasalized				~	(or _~) e.g. A~ (or A_~) 
-nasal release			_n
-lateral release			_l 
-no audible release		_}
-
-velarized or pharyngealized		_e 
-velarized l, alternatively		5 
-raised							_r 
-lowered							_o 
-advanced tongue root				_A 
-retracted tongue root			_q
-* * *
-<small>This (part of) documentation was generated from [../src/phonetics/text2tts-sme.xfscript](http://github.com/giellalt/lang-sme/blob/main/../src/phonetics/text2tts-sme.xfscript)</small>
+---
 
 retroflex plosive, voiceless		t`  ʈ	    0288, 648 (` = ASCII 096)
 retroflex plosive, voiced		d`	ɖ		0256, 598
@@ -12200,19 +11997,354 @@ advanced tongue root				_A
 retracted tongue root			_q
 
 * * *
-<small>This (part of) documentation was generated from [../src/phonetics/text2tts-nob.xfscript](http://github.com/giellalt/lang-sme/blob/main/../src/phonetics/text2tts-nob.xfscript)</small>
+
+<small>This (part of) documentation was generated from [src/phonetics/txt2ipa.xfscript](https://github.com/giellalt/lang-sme/blob/main/src/phonetics/txt2ipa.xfscript)</small>
+
+---
+
+retroflex plosive, voiceless		t`  ʈ	    0288, 648 (` = ASCII 096)
+retroflex plosive, voiced		d`	ɖ		0256, 598
+labiodental nasal				F 	ɱ		0271, 625
+retroflex nasal					n` 	ɳ		0273, 627
+palatal nasal					J 	ɲ		0272, 626
+velar nasal						N 	ŋ		014B, 331
+uvular nasal						N\	ɴ		0274, 628
+
+bilabial trill					B\ 	ʙ		0299, 665
+uvular trill						R\ 	ʀ		0280, 640
+alveolar tap						4	ɾ		027E, 638
+retroflex flap					r` 	ɽ		027D, 637
+bilabial fricative, voiceless	p\ 	ɸ		0278, 632
+bilabial fricative, voiced		B 	β		03B2, 946
+dental fricative, voiceless		T 	θ		03B8, 952
+dental fricative, voiced			D 	ð		00F0, 240
+postalveolar fricative, voiceless	S	ʃ		0283, 643
+postalveolar fricative, voiced		Z 	ʒ		0292, 658
+retroflex fricative, voiceless		s` 	ʂ		0282, 642
+retroflex fricative, voiced			z` 	ʐ		0290, 656
+palatal fricative, voiceless			C 	ç		00E7, 231
+palatal fricative, voiced			j\ 	ʝ		029D, 669
+velar fricative, voiced	        	G 	ɣ		0263, 611
+uvular fricative, voiceless			X	χ		03C7, 967
+uvular fricative, voiced				R 	ʁ		0281, 641
+pharyngeal fricative, voiceless		X\ 	ħ		0127, 295
+pharyngeal fricative, voiced			?\ 	ʕ		0295, 661
+glottal fricative, voiced			h\	ɦ		0266, 614
+
+alveolar lateral fricative, vl.		K 
+alveolar lateral fricative, vd.		K\
+
+labiodental approximant				P (or v\) 
+alveolar approximant					r\ 
+retroflex approximant				r\` 
+velar approximant					M\
+
+retroflex lateral approximant		l` 
+palatal lateral approximant			L 
+velar lateral approximant			L\
+Clicks
+
+bilabial								O\	(O = capital letter) 
+dental								|\
+(post)alveolar						!\ 
+palatoalveolar						=\ 
+alveolar lateral						|\|\
+Ejectives, implosives
+
+ejective								_>	e.g. ejective p		p_>
+implosive							_<	e.g. implosive b	b_<
+Vowels
+
+close back unrounded					M
+close central unrounded 				1 
+close central rounded				} 
+lax i								I 
+lax y								Y 
+lax u								U
+
+close-mid front rounded				2 
+close-mid central unrounded			@\ 
+close-mid central rounded			8 
+close-mid back unrounded				7
+
+schwa								@
+
+open-mid front unrounded				E 
+open-mid front rounded				9
+open-mid central unrounded			3 
+open-mid central rounded				3\ 
+open-mid back unrounded				V 
+open-mid back rounded				O
+
+ash (ae digraph)						{ 
+open schwa (turned a)				6
+
+open front rounded					& 
+open back unrounded	        		A 
+open back rounded					Q
+Other symbols
+
+voiceless labial-velar fricative		W 
+voiced labial-palatal approx.		H 
+voiceless epiglottal fricative		H\ 
+voiced epiglottal fricative			<\ 
+epiglottal plosive					>\
+
+alveolo-palatal fricative, vl. 		s\ 
+alveolo-palatal fricative, voiced	z\ 
+alveolar lateral flap				l\ 
+simultaneous S and x					x\ 
+tie bar								_
+Suprasegmentals
+
+primary stress						" 
+secondary stress						% 
+long									: 
+half-long							:\ 
+extra-short							_X 
+linking mark							-\
+Tones and word accents
+
+level extra high						_T 
+level high							_H
+level mid							_M 
+level low							_L 
+level extra low						_B
+downstep								! 
+upstep								^	(caret, circumflex)
+
+contour, rising						 
+contour, falling						_F 
+contour, high rising					_H_T 
+contour, low rising					_B_L 
+
+contour, rising-falling				_R_F 
+(NB Instead of being written as diacritics with _, all prosodic marks can alternatively be placed in a separate tier, set off by < >, as recommended for the next two symbols.)
+global rise				<R> 
+global fall				<F>
+Diacritics
+
+voiceless				_0	(0 = figure), e.g. n_0
+voiced					_v 
+aspirated				_h 
+more rounded				_O	(O = letter) 
+less rounded				_c 
+advanced					_+
+retracted				_-
+centralized				_" 
+syllabic					=	(or _=) e.g. n= (or n_=) 
+non-syllabic				_^ 
+rhoticity				`
+
+breathy voiced			_t 
+creaky voiced			_k
+linguolabial				_N 
+labialized				_w 
+palatalized				'	(or _j) e.g. t' (or t_j) 
+velarized				_G 
+pharyngealized			_?\
+
+dental					_d 
+apical					_a 
+laminal					_m
+nasalized				~	(or _~) e.g. A~ (or A_~) 
+nasal release			_n
+lateral release			_l 
+no audible release		_}
+
+velarized or pharyngealized		_e 
+velarized l, alternatively		5 
+raised							_r 
+lowered							_o 
+advanced tongue root				_A 
+retracted tongue root			_q
+
+* * *
+
+<small>This (part of) documentation was generated from [src/phonetics/text2tts-sme.xfscript](https://github.com/giellalt/lang-sme/blob/main/src/phonetics/text2tts-sme.xfscript)</small>
+
+---
+
+retroflex plosive, voiceless		t`  ʈ	    0288, 648 (` = ASCII 096)
+retroflex plosive, voiced		d`	ɖ		0256, 598
+labiodental nasal				F 	ɱ		0271, 625
+retroflex nasal					n` 	ɳ		0273, 627
+palatal nasal					J 	ɲ		0272, 626
+velar nasal						N 	ŋ		014B, 331
+uvular nasal						N\	ɴ		0274, 628
+
+bilabial trill					B\ 	ʙ		0299, 665
+uvular trill						R\ 	ʀ		0280, 640
+alveolar tap						4	ɾ		027E, 638
+retroflex flap					r` 	ɽ		027D, 637
+bilabial fricative, voiceless	p\ 	ɸ		0278, 632
+bilabial fricative, voiced		B 	β		03B2, 946
+dental fricative, voiceless		T 	θ		03B8, 952
+dental fricative, voiced			D 	ð		00F0, 240
+postalveolar fricative, voiceless	S	ʃ		0283, 643
+postalveolar fricative, voiced		Z 	ʒ		0292, 658
+retroflex fricative, voiceless		s` 	ʂ		0282, 642
+retroflex fricative, voiced			z` 	ʐ		0290, 656
+palatal fricative, voiceless			C 	ç		00E7, 231
+palatal fricative, voiced			j\ 	ʝ		029D, 669
+velar fricative, voiced	        	G 	ɣ		0263, 611
+uvular fricative, voiceless			X	χ		03C7, 967
+uvular fricative, voiced				R 	ʁ		0281, 641
+pharyngeal fricative, voiceless		X\ 	ħ		0127, 295
+pharyngeal fricative, voiced			?\ 	ʕ		0295, 661
+glottal fricative, voiced			h\	ɦ		0266, 614
+
+alveolar lateral fricative, vl.		K 
+alveolar lateral fricative, vd.		K\
+
+labiodental approximant				P (or v\) 
+alveolar approximant					r\ 
+retroflex approximant				r\` 
+velar approximant					M\
+
+retroflex lateral approximant		l` 
+palatal lateral approximant			L 
+velar lateral approximant			L\
+Clicks
+
+bilabial								O\	(O = capital letter) 
+dental								|\
+(post)alveolar						!\ 
+palatoalveolar						=\ 
+alveolar lateral						|\|\
+Ejectives, implosives
+
+ejective								_>	e.g. ejective p		p_>
+implosive							_<	e.g. implosive b	b_<
+Vowels
+
+close back unrounded					M
+close central unrounded 				1 
+close central rounded				} 
+lax i								I 
+lax y								Y 
+lax u								U
+
+close-mid front rounded				2 
+close-mid central unrounded			@\ 
+close-mid central rounded			8 
+close-mid back unrounded				7
+
+schwa								@
+
+open-mid front unrounded				E 
+open-mid front rounded				9
+open-mid central unrounded			3 
+open-mid central rounded				3\ 
+open-mid back unrounded				V 
+open-mid back rounded				O
+
+ash (ae digraph)						{ 
+open schwa (turned a)				6
+
+open front rounded					& 
+open back unrounded	        		A 
+open back rounded					Q
+Other symbols
+
+voiceless labial-velar fricative		W 
+voiced labial-palatal approx.		H 
+voiceless epiglottal fricative		H\ 
+voiced epiglottal fricative			<\ 
+epiglottal plosive					>\
+
+alveolo-palatal fricative, vl. 		s\ 
+alveolo-palatal fricative, voiced	z\ 
+alveolar lateral flap				l\ 
+simultaneous S and x					x\ 
+tie bar								_
+Suprasegmentals
+
+primary stress						" 
+secondary stress						% 
+long									: 
+half-long							:\ 
+extra-short							_X 
+linking mark							-\
+Tones and word accents
+
+level extra high						_T 
+level high							_H
+level mid							_M 
+level low							_L 
+level extra low						_B
+downstep								! 
+upstep								^	(caret, circumflex)
+
+contour, rising						 
+contour, falling						_F 
+contour, high rising					_H_T 
+contour, low rising					_B_L 
+
+contour, rising-falling				_R_F 
+(NB Instead of being written as diacritics with _, all prosodic marks can alternatively be placed in a separate tier, set off by < >, as recommended for the next two symbols.)
+global rise				<R> 
+global fall				<F>
+Diacritics
+
+voiceless				_0	(0 = figure), e.g. n_0
+voiced					_v 
+aspirated				_h 
+more rounded				_O	(O = letter) 
+less rounded				_c 
+advanced					_+
+retracted				_-
+centralized				_" 
+syllabic					=	(or _=) e.g. n= (or n_=) 
+non-syllabic				_^ 
+rhoticity				`
+
+breathy voiced			_t 
+creaky voiced			_k
+linguolabial				_N 
+labialized				_w 
+palatalized				'	(or _j) e.g. t' (or t_j) 
+velarized				_G 
+pharyngealized			_?\
+
+dental					_d 
+apical					_a 
+laminal					_m
+nasalized				~	(or _~) e.g. A~ (or A_~) 
+nasal release			_n
+lateral release			_l 
+no audible release		_}
+
+velarized or pharyngealized		_e 
+velarized l, alternatively		5 
+raised							_r 
+lowered							_o 
+advanced tongue root				_A 
+retracted tongue root			_q
+
+* * *
+
+<small>This (part of) documentation was generated from [src/phonetics/text2tts-nob.xfscript](https://github.com/giellalt/lang-sme/blob/main/src/phonetics/text2tts-nob.xfscript)</small>
+
+---
 
 - V is all readings with a V tag in them, REAL-V should
 be the ones without an N tag following the V.  
 The REAL-V set thus awaits a fix to the preprocess V ... N bug.
 
 * * *
-<small>This (part of) documentation was generated from [../tools/grammarcheckers/spellchecker.cg3](http://github.com/giellalt/lang-sme/blob/main/../tools/grammarcheckers/spellchecker.cg3)</small>
+
+<small>This (part of) documentation was generated from [tools/grammarcheckers/spellchecker.cg3](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/spellchecker.cg3)</small>
+
+---
 
 "ámmát" N Sg Acc @<OBJ  "álgoálbmot" N Sg Gen @>N
 
 * * *
-<small>This (part of) documentation was generated from [../tools/grammarcheckers/grammarchecker.cg3](http://github.com/giellalt/lang-sme/blob/main/../tools/grammarcheckers/grammarchecker.cg3)</small>
+
+<small>This (part of) documentation was generated from [tools/grammarcheckers/grammarchecker.cg3](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/grammarchecker.cg3)</small>
+
+---
 
 Comp, both for adverbs and adjectives
 Superl, both for adverbs and adjectives
@@ -12220,7 +12352,10 @@ Superl, both for adverbs and adjectives
 -vv- ii galgga mielde!
 
 * * *
-<small>This (part of) documentation was generated from [../tools/grammarcheckers/grammarchecker-release.cg3](http://github.com/giellalt/lang-sme/blob/main/../tools/grammarcheckers/grammarchecker-release.cg3)</small>
+
+<small>This (part of) documentation was generated from [tools/grammarcheckers/grammarchecker-release.cg3](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/grammarchecker-release.cg3)</small>
+
+---
 
 Comp, both for adverbs and adjectives
 Superl, both for adverbs and adjectives
@@ -12414,7 +12549,10 @@ Remove unwanted analyses
 * **>NTime** (@>N) for Gen; if you are TIME-N with BOC to your left, and PREGEN to your right
 
 * * *
-<small>This (part of) documentation was generated from [../tools/grammarcheckers/grc-disambiguator.cg3](http://github.com/giellalt/lang-sme/blob/main/../tools/grammarcheckers/grc-disambiguator.cg3)</small>Requires a recent version of HFST (3.10.0 / git revision>=3aecdbc)
+
+<small>This (part of) documentation was generated from [tools/grammarcheckers/grc-disambiguator.cg3](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/grc-disambiguator.cg3)</small>
+
+---Requires a recent version of HFST (3.10.0 / git revision>=3aecdbc)
 Then just:
 $ make
 $ echo "ja, ja" | hfst-tokenise --giella-cg tokeniser-disamb-gt-desc.pmhfst
@@ -12487,7 +12625,10 @@ Finally we mark as a token any sequence making up a:
 * URL in context
 
 * * *
-<small>This (part of) documentation was generated from [../tools/tokenisers/tokeniser-gramcheck-gt-desc.pmscript](http://github.com/giellalt/lang-sme/blob/main/../tools/tokenisers/tokeniser-gramcheck-gt-desc.pmscript)</small># Tokeniser for sme
+
+<small>This (part of) documentation was generated from [tools/tokenisers/tokeniser-gramcheck-gt-desc.pmscript](https://github.com/giellalt/lang-sme/blob/main/tools/tokenisers/tokeniser-gramcheck-gt-desc.pmscript)</small>
+
+---# Tokeniser for sme
 
 Usage:
 ```
@@ -12545,4 +12686,7 @@ Finally we mark as a token any sequence making up a:
 * URL in context
 
 * * *
-<small>This (part of) documentation was generated from [../tools/tokenisers/tokeniser-disamb-gt-desc.pmscript](http://github.com/giellalt/lang-sme/blob/main/../tools/tokenisers/tokeniser-disamb-gt-desc.pmscript)</small>
+
+<small>This (part of) documentation was generated from [tools/tokenisers/tokeniser-disamb-gt-desc.pmscript](https://github.com/giellalt/lang-sme/blob/main/tools/tokenisers/tokeniser-disamb-gt-desc.pmscript)</small>
+
+---

@@ -42,4 +42,7 @@ is less common and thus only the occurences in the middle of
 the sentence can be considered as true cases.
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/sme-abbreviations.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/sme-abbreviations.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/stems/sme-abbreviations.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/sme-abbreviations.lexc)</small>
+
+---

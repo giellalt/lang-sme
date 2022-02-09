@@ -375,5 +375,9 @@ eventually.
 * **LEXICON AGAdj**  mostly words like guovttejagat, allajoccat etc
 
 * **LEXICON AGAdjINFL**
+
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/adjectives.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/adjectives.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/affixes/adjectives.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/adjectives.lexc)</small>
+
+---

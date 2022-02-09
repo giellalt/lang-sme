@@ -75,4 +75,7 @@ such compounds)
 * adds @U.NeedsVowRed.OFF@ and directs to **R**
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/compounding.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/compounding.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/compounding.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/compounding.lexc)</small>
+
+---

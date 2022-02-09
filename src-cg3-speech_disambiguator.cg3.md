@@ -3427,4 +3427,7 @@ The previous two rules look marginal.
 # Removing Err/Orth
 
 * * *
-<small>This (part of) documentation was generated from [../src/cg3/speech_disambiguator.cg3](http://github.com/giellalt/lang-sme/blob/main/../src/cg3/speech_disambiguator.cg3)</small>
+
+<small>This (part of) documentation was generated from [src/cg3/speech_disambiguator.cg3](https://github.com/giellalt/lang-sme/blob/main/src/cg3/speech_disambiguator.cg3)</small>
+
+---

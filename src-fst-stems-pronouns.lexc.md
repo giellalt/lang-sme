@@ -65,4 +65,7 @@ The indeclineable indefinites
 * **LEXICON indeclindef   **
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/pronouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/pronouns.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/stems/pronouns.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/pronouns.lexc)</small>
+
+---

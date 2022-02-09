@@ -24,4 +24,7 @@ Move adjs that may take Px from **Adjective** to this lexicon.
 * **LEXICON AdjectiveNoPx ** is the main adjective list, not taking Px
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/stems/adjectives.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/stems/adjectives.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/stems/adjectives.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/adjectives.lexc)</small>
+
+---

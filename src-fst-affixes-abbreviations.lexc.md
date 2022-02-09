@@ -74,4 +74,7 @@ the end of the sentence:
 * "su..." -> `"su" Adv Abbr` + `"..." CLB`
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/abbreviations.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/abbreviations.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/affixes/abbreviations.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/abbreviations.lexc)</small>
+
+---

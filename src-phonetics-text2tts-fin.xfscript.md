@@ -158,4 +158,7 @@ advanced tongue root				_A
 retracted tongue root			_q
 
 * * *
-<small>This (part of) documentation was generated from [../src/phonetics/text2tts-fin.xfscript](http://github.com/giellalt/lang-sme/blob/main/../src/phonetics/text2tts-fin.xfscript)</small>
+
+<small>This (part of) documentation was generated from [src/phonetics/text2tts-fin.xfscript](https://github.com/giellalt/lang-sme/blob/main/src/phonetics/text2tts-fin.xfscript)</small>
+
+---

@@ -41,5 +41,9 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 * **LEXICON PxPlCom12V** for first, second person comitative Px
 
 * **LEXICON PxPlCom3V** for third person comitative Px
+
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/possessive-suffixes.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/possessive-suffixes.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/affixes/possessive-suffixes.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/possessive-suffixes.lexc)</small>
+
+---

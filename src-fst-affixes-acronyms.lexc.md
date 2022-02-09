@@ -18,4 +18,7 @@ put between the abbreviation and its suffix
 * **LEXICON acrooblique**
 
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/acronyms.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/acronyms.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/affixes/acronyms.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/acronyms.lexc)</small>
+
+---

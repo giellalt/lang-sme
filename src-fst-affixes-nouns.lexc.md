@@ -506,5 +506,9 @@ Contracted nouns
 * **LEXICON ACTORSHORTTVder** Tagged NomAg nowadays, Short compound-forms, from transitive verbs
 
 * **LEXICON DIMINV** diminutives, these comes from bisyll nouns
+
 * * *
-<small>This (part of) documentation was generated from [../src/fst/affixes/nouns.lexc](http://github.com/giellalt/lang-sme/blob/main/../src/fst/affixes/nouns.lexc)</small>
+
+<small>This (part of) documentation was generated from [src/fst/affixes/nouns.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/nouns.lexc)</small>
+
+---
