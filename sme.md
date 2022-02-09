@@ -3487,11 +3487,15 @@ Test: Go for minimal weight.
 
 ---
 
+
+
 * * *
 
 <small>This (part of) documentation was generated from [src/cg3/valency.cg3](https://github.com/giellalt/lang-sme/blob/main/src/cg3/valency.cg3)</small>
 
 ---
+
+
 
 # DELIMITERS 
 
@@ -6925,11 +6929,15 @@ The previous two rules look marginal.
 
 ---
 
+
+
 * * *
 
 <small>This (part of) documentation was generated from [src/cg3/semanticroles.cg3](https://github.com/giellalt/lang-sme/blob/main/src/cg3/semanticroles.cg3)</small>
 
----Divvun & Giellatekno - open source grammars for Sámi and other languages
+---
+
+Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 #                    North Sámi compounding
 
@@ -7010,6 +7018,8 @@ such compounds)
 <small>This (part of) documentation was generated from [src/fst/compounding.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/compounding.lexc)</small>
 
 ---
+
+
 
 `º` is for CnsGrad of the `lg:lgg` and `lºl:ll` type
 `¤:0` prevents ConsGrad in certain words
@@ -7490,6 +7500,8 @@ Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dum
 
 ---
 
+
+
 `º` is for CnsGrad of the `lg:lgg` and `lºl:ll` type
 `¤:0` prevents ConsGrad in certain words
 `'` is the real apostroph
@@ -7968,6 +7980,8 @@ Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dum
 <small>This (part of) documentation was generated from [src/fst/phonology-L2.twolc](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonology-L2.twolc)</small>
 
 ---
+
+
 North Sámi morphophonological rule set                  
 
 This file documents the [phonology.twolc file](http://github.com/giellalt/lang-sme/blob/main/src/fst/phonology.twolc) 
@@ -8461,6 +8475,8 @@ Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dum
 <small>This (part of) documentation was generated from [src/fst/phonology.twolc](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonology.twolc)</small>
 
 ---
+
+
 # The North Saami proper noun lexicon
 
 * **LEXICON Prefix-Proper   ** for first-part names
@@ -8472,6 +8488,8 @@ Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dum
 <small>This (part of) documentation was generated from [src/fst/stems/sme-propernouns.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/sme-propernouns.lexc)</small>
 
 ---
+
+
 North Saami adposition lexicon
 
 First come the 3 continuation lexica, the division is based on Nickel
@@ -8498,6 +8516,8 @@ Px lexica in sme-lex.txt and closed-sme-lex.txt.
 <small>This (part of) documentation was generated from [src/fst/stems/adpositions.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/adpositions.lexc)</small>
 
 ---
+
+
 # This file contains the Particles
 
 * **LEXICON Particles   ** gives all particles
@@ -8517,6 +8537,8 @@ things as they are.
 <small>This (part of) documentation was generated from [src/fst/stems/particles.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/particles.lexc)</small>
 
 ---
+
+
 # North Saami adverbs
 
 * **LEXICON Adverb   **
@@ -8606,6 +8628,8 @@ The main adverb lexicon
 <small>This (part of) documentation was generated from [src/fst/stems/adverbs.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/adverbs.lexc)</small>
 
 ---
+
+
 # Punctuation symbols
 
 * **LEXICON Punctuation_SME   ** contains the list
@@ -8622,6 +8646,8 @@ generation, by keeping the same tagging as the standard analysis.
 <small>This (part of) documentation was generated from [src/fst/stems/sme-punctuation.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/sme-punctuation.lexc)</small>
 
 ---
+
+
 # North Saami Interjections
 
 * **LEXICON Ij   ** is the lexicon giving the tag `+Interj` +
@@ -8636,6 +8662,8 @@ the tag `+Err/Lexc`.
 <small>This (part of) documentation was generated from [src/fst/stems/interjections.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/interjections.lexc)</small>
 
 ---
+
+
 # This file contains the Pronouns
 
 * **LEXICON Pronoun   ** Points to all the pronoun subgrops
@@ -8706,6 +8734,8 @@ The indeclineable indefinites
 <small>This (part of) documentation was generated from [src/fst/stems/pronouns.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/pronouns.lexc)</small>
 
 ---
+
+
 # The North Saami Subjunctions
 
 * **LEXICON Subjunction   ** contains the list of subjunctions.
@@ -8723,6 +8753,8 @@ The indeclineable indefinites
 <small>This (part of) documentation was generated from [src/fst/stems/subjunctions.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/subjunctions.lexc)</small>
 
 ---
+
+
 # North Saami numerals
 
 ## The initial lexica
@@ -8926,6 +8958,8 @@ numerical expressions in each category.
 <small>This (part of) documentation was generated from [src/fst/stems/numerals.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/numerals.lexc)</small>
 
 ---
+
+
 # North Sámi adjective lexicon
 
 * **LEXICON LEXATTR  ** This lexicon is here to give the tags to the compounding
@@ -8955,6 +8989,8 @@ Move adjs that may take Px from **Adjective** to this lexicon.
 <small>This (part of) documentation was generated from [src/fst/stems/adjectives.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/adjectives.lexc)</small>
 
 ---
+
+
 # File containing North Saami abbreviations
 
 ## Lexica for adding tags and periods
@@ -9002,6 +9038,8 @@ the sentence can be considered as true cases.
 <small>This (part of) documentation was generated from [src/fst/stems/sme-abbreviations.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/sme-abbreviations.lexc)</small>
 
 ---
+
+
 # North Saami verbs
 
 ## Negative verbs
@@ -9047,6 +9085,8 @@ Here comes the main list of verbs.
 <small>This (part of) documentation was generated from [src/fst/stems/verbs.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/verbs.lexc)</small>
 
 ---
+
+
 # North Saami Conjunctions
 
 * **LEXICON Conjunction   ** contains the list of conjunctions
@@ -9063,7 +9103,9 @@ Here comes the main list of verbs.
 
 <small>This (part of) documentation was generated from [src/fst/stems/conjunctions.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/conjunctions.lexc)</small>
 
----Divvun & Giellatekno - open source grammars for Sámi and other languages
+---
+
+Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 The lexicon K_only is for paths not going to  the K-less ENDLEX
 
@@ -9071,7 +9113,9 @@ The lexicon K_only is for paths not going to  the K-less ENDLEX
 
 <small>This (part of) documentation was generated from [src/fst/clitics.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/clitics.lexc)</small>
 
----Divvun & Giellatekno - open source grammars for Sámi and other languages
+---
+
+Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 # North Saami Possessive suffixes
 
@@ -9119,7 +9163,9 @@ The lexicon K_only is for paths not going to  the K-less ENDLEX
 
 <small>This (part of) documentation was generated from [src/fst/affixes/possessive-suffixes.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/possessive-suffixes.lexc)</small>
 
----Divvun & Giellatekno - open source grammars for Sámi and other languages
+---
+
+Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 # North Saami noun declension
 
@@ -9634,6 +9680,8 @@ Contracted nouns
 
 ---
 
+
+
 # North Saami acronyms - affix part
 
 ## The lexica giving tags and suffixes to the acronyms
@@ -9657,6 +9705,8 @@ put between the abbreviation and its suffix
 
 ---
 
+
+
 some multiword prons, according to Nickel
 
 * * *
@@ -9664,6 +9714,8 @@ some multiword prons, according to Nickel
 <small>This (part of) documentation was generated from [src/fst/affixes/pronouns.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/pronouns.lexc)</small>
 
 ---
+
+
 # North Saami numerals
 
 * **LEXICON OKTA** Case forms of the basic digits
@@ -9913,6 +9965,8 @@ by .:, and with reduced case forms. The Err/Orth tag is added in the calling lex
 
 ---
 
+
+
 Different lexicon for female persons and place names.
 
 Different lexicon for personal surnames. Blind
@@ -9921,7 +9975,9 @@ Different lexicon for personal surnames. Blind
 
 <small>This (part of) documentation was generated from [src/fst/affixes/propernouns.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/propernouns.lexc)</small>
 
----Divvun & Giellatekno - open source grammars for Sámi and other languages
+---
+
+Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 # North Saami adjective declension file
 
@@ -10303,7 +10359,9 @@ eventually.
 
 <small>This (part of) documentation was generated from [src/fst/affixes/adjectives.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/adjectives.lexc)</small>
 
----Divvun & Giellatekno - open source grammars for Sámi and other languages
+---
+
+Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 # Verb conjugation
 
@@ -10689,6 +10747,8 @@ modals do not participate in derivation
 <small>This (part of) documentation was generated from [src/fst/affixes/verbs.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/verbs.lexc)</small>
 
 ---
+
+
 # Symbol affixes
 
 * * *
@@ -10696,6 +10756,8 @@ modals do not participate in derivation
 <small>This (part of) documentation was generated from [src/fst/affixes/symbols.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/symbols.lexc)</small>
 
 ---
+
+
 # Continuation lexicons for abbreviations
 
 ## Lexica for adding tags and periods
@@ -10774,7 +10836,9 @@ the end of the sentence:
 
 <small>This (part of) documentation was generated from [src/fst/affixes/abbreviations.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/abbreviations.lexc)</small>
 
----Divvun & Giellatekno - open source grammars for North Sámi.
+---
+
+Divvun & Giellatekno - open source grammars for North Sámi.
 
 # North Sámi morphological analyser
 
@@ -11676,6 +11740,8 @@ The `@D.NeedNoun.ON@` flag diacritic is used to block illegal compounds.
 
 ---
 
+
+
 retroflex plosive, voiceless		t`  ʈ	    0288, 648 (` = ASCII 096)
 retroflex plosive, voiced		d`	ɖ		0256, 598
 labiodental nasal				F 	ɱ		0271, 625
@@ -11838,6 +11904,8 @@ retracted tongue root			_q
 <small>This (part of) documentation was generated from [src/phonetics/text2tts-fin.xfscript](https://github.com/giellalt/lang-sme/blob/main/src/phonetics/text2tts-fin.xfscript)</small>
 
 ---
+
+
 
 retroflex plosive, voiceless		t`  ʈ	    0288, 648 (` = ASCII 096)
 retroflex plosive, voiced		d`	ɖ		0256, 598
@@ -12002,6 +12070,8 @@ retracted tongue root			_q
 
 ---
 
+
+
 retroflex plosive, voiceless		t`  ʈ	    0288, 648 (` = ASCII 096)
 retroflex plosive, voiced		d`	ɖ		0256, 598
 labiodental nasal				F 	ɱ		0271, 625
@@ -12164,6 +12234,8 @@ retracted tongue root			_q
 <small>This (part of) documentation was generated from [src/phonetics/text2tts-sme.xfscript](https://github.com/giellalt/lang-sme/blob/main/src/phonetics/text2tts-sme.xfscript)</small>
 
 ---
+
+
 
 retroflex plosive, voiceless		t`  ʈ	    0288, 648 (` = ASCII 096)
 retroflex plosive, voiced		d`	ɖ		0256, 598
@@ -12328,6 +12400,8 @@ retracted tongue root			_q
 
 ---
 
+
+
 - V is all readings with a V tag in them, REAL-V should
 be the ones without an N tag following the V.  
 The REAL-V set thus awaits a fix to the preprocess V ... N bug.
@@ -12338,6 +12412,8 @@ The REAL-V set thus awaits a fix to the preprocess V ... N bug.
 
 ---
 
+
+
 "ámmát" N Sg Acc @<OBJ  "álgoálbmot" N Sg Gen @>N
 
 * * *
@@ -12345,6 +12421,8 @@ The REAL-V set thus awaits a fix to the preprocess V ... N bug.
 <small>This (part of) documentation was generated from [tools/grammarcheckers/grammarchecker.cg3](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/grammarchecker.cg3)</small>
 
 ---
+
+
 
 Comp, both for adverbs and adjectives
 Superl, both for adverbs and adjectives
@@ -12356,6 +12434,8 @@ Superl, both for adverbs and adjectives
 <small>This (part of) documentation was generated from [tools/grammarcheckers/grammarchecker-release.cg3](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/grammarchecker-release.cg3)</small>
 
 ---
+
+
 
 Comp, both for adverbs and adjectives
 Superl, both for adverbs and adjectives
@@ -12552,39 +12632,26 @@ Remove unwanted analyses
 
 <small>This (part of) documentation was generated from [tools/grammarcheckers/grc-disambiguator.cg3](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/grc-disambiguator.cg3)</small>
 
----Requires a recent version of HFST (3.10.0 / git revision>=3aecdbc)
+---
+
+# Grammar checker tokenisation for sme
+
+Requires a recent version of HFST (3.10.0 / git revision>=3aecdbc)
 Then just:
+```
 $ make
 $ echo "ja, ja" | hfst-tokenise --giella-cg tokeniser-disamb-gt-desc.pmhfst
-
-Issues:
-- [X] Ambiguous input
-- Seems to work fine
-- [X] Ambiguous multiword expessions with ambiguous tokenisation
-- Seems to work – represented within lexc now; hfst-tokenise also
-supports forms on the analyses now
-- [X] Ambiguous multiword expessions need reorganising after CG
-- The module cg-mwesplit takes wordforms from readings and turns them into
-new cohorts
-- [X] Unknown words
-- The set-difference method only works for words without
-flag diacritics (even though we should be working only on the form-side?)
-and leads to binary blow-up: With only lower unknowns, we get 45M;
-lower+upper gives 67M, while no unknowns gives 27M
-- Fixed instead by treating empty analyses as unknown-tokens in
-hfst-tokenise, and outputting unmatched strings with a prefix
-- [ ] Treat input that's within superblanks as unmatched
-- probably requires a change in hfst-tokenise itself
-- [X] Try >1 space for ambiguous MWE's? – represented within lexc now
-- [ ] Try set-difference-unknowns method with regular hfst commands?
+```
 
 More usage examples:
+```
 $ echo "Juos gorreválggain lea (dárbbašlaš) deavdit gáibádusa boasttu olmmoš, man mielde lahtuid." | hfst-tokenise --giella-cg tokeniser-disamb-gt-desc.pmhfst
 $ echo "(gáfe) 'ja' ja 3. ja? ц jaja ukjend \"ukjend\"" | hfst-tokenise --giella-cg tokeniser-disamb-gt-desc.pmhfst
 $ echo "márffibiillagáffe" | hfst-tokenise --giella-cg tokeniser-disamb-gt-desc.pmhfst
+```
 
 Pmatch documentation:
-https://kitwiki.csc.fi/twiki/bin/view/KitWiki/HfstPmatch
+<https://kitwiki.csc.fi/twiki/bin/view/KitWiki/HfstPmatch>
 
 Characters which have analyses in the lexicon, but can appear without spaces
 before/after, that is, with no context conditions, and adjacent to words:
@@ -12628,7 +12695,9 @@ Finally we mark as a token any sequence making up a:
 
 <small>This (part of) documentation was generated from [tools/tokenisers/tokeniser-gramcheck-gt-desc.pmscript](https://github.com/giellalt/lang-sme/blob/main/tools/tokenisers/tokeniser-gramcheck-gt-desc.pmscript)</small>
 
----# Tokeniser for sme
+---
+
+# Tokeniser for sme
 
 Usage:
 ```
@@ -12640,7 +12709,7 @@ $ echo "márffibiillagáffe" | hfst-tokenise --giella-cg tokeniser-disamb-gt-des
 ```
 
 Pmatch documentation:
-https://kitwiki.csc.fi/twiki/bin/view/KitWiki/HfstPmatch
+<https://kitwiki.csc.fi/twiki/bin/view/KitWiki/HfstPmatch>
 
 Characters which have analyses in the lexicon, but can appear without spaces
 before/after, that is, with no context conditions, and adjacent to words:
@@ -12690,3 +12759,4 @@ Finally we mark as a token any sequence making up a:
 <small>This (part of) documentation was generated from [tools/tokenisers/tokeniser-disamb-gt-desc.pmscript](https://github.com/giellalt/lang-sme/blob/main/tools/tokenisers/tokeniser-disamb-gt-desc.pmscript)</small>
 
 ---
+

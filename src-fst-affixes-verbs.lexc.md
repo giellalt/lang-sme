@@ -384,3 +384,4 @@ modals do not participate in derivation
 <small>This (part of) documentation was generated from [src/fst/affixes/verbs.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/verbs.lexc)</small>
 
 ---
+
