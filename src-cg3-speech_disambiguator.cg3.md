@@ -272,7 +272,6 @@ INITIAL
 
 WORD
 REAL-WORD
-REAL-WORD-NOT-ABBR
 WORD-NOT-de
 NOT-COMMA
 
@@ -1572,7 +1571,7 @@ First map all COMP-CS<, then remove the other readings
 
 * **killAllnotComp** Removes analysis which are not @COMP-CS<
 
-*
+- *This was the kill all not Comp rule!!*
 
 * **goCSbeforeComp** Selects CS analysis in front of @COMP-CS<
 
@@ -2823,11 +2822,6 @@ The rules are no documented yet
 * **GerundiumTEST** Selects Acc 
 * **GerundiumTEST** selects Gen for HAB-ACTOR and Pron Pers in front of Ger, but only if there is an Acc belonging to a transitive to the left
 
-* **NomIfProp** Removes Acc and Gen when you Prop because you are Nom. To the left is a sg3-verb. Should not hit Prop that are Sem/Plc.
-* **NomIfProp2** Removes Acc and Nom when you are Prop Sem/Plc because you are Gen. To the left is a sg3-verb. To the right is a noun.
-* **NomSentFin** Selects Nom if you are Acc or Gen and EOS is to yoru right. Copulas is found to the left 
-* __jr_sr__ Selects (ABBR Nom) if you are *jr* or *sr* and first one to your left is (Sem/Sur Nom)
-
 ## Accusative before @COMP-CS<
 ## Accusative before some A
 ## Accusative sentence-finally
@@ -3427,8 +3421,4 @@ The previous two rules look marginal.
 # Removing Err/Orth
 
 * * *
-
 <small>This (part of) documentation was generated from [src/cg3/speech_disambiguator.cg3](https://github.com/giellalt/lang-sme/blob/main/src/cg3/speech_disambiguator.cg3)</small>
-
----
-

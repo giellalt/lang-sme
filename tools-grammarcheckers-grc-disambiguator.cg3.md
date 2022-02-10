@@ -13,8 +13,6 @@ The REAL-V set thus awaits a fix to the preprocess V ... N bug.
 be the ones without an N tag following the V.  
 The REAL-V set thus awaits a fix to the preprocess V ... N bug.
 
-Named-entity-guesser
-
 ## Guessing: Rule for adding Sem/Date as a tag to readings which looks like dates
 
 ## Guessing: Rule for adding Adv Sem/Adr as a tag to readings which looks addresses
@@ -192,8 +190,4 @@ Remove unwanted analyses
 * **>NTime** (@>N) for Gen; if you are TIME-N with BOC to your left, and PREGEN to your right
 
 * * *
-
 <small>This (part of) documentation was generated from [tools/grammarcheckers/grc-disambiguator.cg3](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/grc-disambiguator.cg3)</small>
-
----
-

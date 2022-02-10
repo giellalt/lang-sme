@@ -1,9 +1,4 @@
 * `src/`
-    * `cg3/`
-        * [disambiguator.cg3](src-cg3-disambiguator.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/cg3/disambiguator.cg3))
-        * [valency.cg3](src-cg3-valency.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/cg3/valency.cg3))
-        * [speech_disambiguator.cg3](src-cg3-speech_disambiguator.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/cg3/speech_disambiguator.cg3))
-        * [semanticroles.cg3](src-cg3-semanticroles.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/cg3/semanticroles.cg3))
     * `fst/`
         * [compounding.lexc](src-fst-compounding.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/compounding.lexc))
         * [phonology-L2-from-branch.twolc](src-fst-phonology-L2-from-branch.twolc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonology-L2-from-branch.twolc))
@@ -42,11 +37,18 @@
         * [text2tts-sme.xfscript](src-phonetics-text2tts-sme.xfscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/phonetics/text2tts-sme.xfscript))
         * [text2tts-nob.xfscript](src-phonetics-text2tts-nob.xfscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/phonetics/text2tts-nob.xfscript))
 * `tools/`
+    * `tokenisers/`
+        * [tokeniser-gramcheck-gt-desc.pmscript](tools-tokenisers-tokeniser-gramcheck-gt-desc.pmscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/tokenisers/tokeniser-gramcheck-gt-desc.pmscript))
+        * [tokeniser-disamb-gt-desc.pmscript](tools-tokenisers-tokeniser-disamb-gt-desc.pmscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/tokenisers/tokeniser-disamb-gt-desc.pmscript))
+* `src/`
+    * `cg3/`
+        * [disambiguator.cg3](src-cg3-disambiguator.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/cg3/disambiguator.cg3))
+        * [valency.cg3](src-cg3-valency.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/cg3/valency.cg3))
+        * [speech_disambiguator.cg3](src-cg3-speech_disambiguator.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/cg3/speech_disambiguator.cg3))
+        * [semanticroles.cg3](src-cg3-semanticroles.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/cg3/semanticroles.cg3))
+* `tools/`
     * `grammarcheckers/`
         * [spellchecker.cg3](tools-grammarcheckers-spellchecker.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/spellchecker.cg3))
         * [grammarchecker.cg3](tools-grammarcheckers-grammarchecker.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/grammarchecker.cg3))
         * [grammarchecker-release.cg3](tools-grammarcheckers-grammarchecker-release.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/grammarchecker-release.cg3))
         * [grc-disambiguator.cg3](tools-grammarcheckers-grc-disambiguator.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/grc-disambiguator.cg3))
-    * `tokenisers/`
-        * [tokeniser-gramcheck-gt-desc.pmscript](tools-tokenisers-tokeniser-gramcheck-gt-desc.pmscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/tokenisers/tokeniser-gramcheck-gt-desc.pmscript))
-        * [tokeniser-disamb-gt-desc.pmscript](tools-tokenisers-tokeniser-disamb-gt-desc.pmscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/tokenisers/tokeniser-disamb-gt-desc.pmscript))
