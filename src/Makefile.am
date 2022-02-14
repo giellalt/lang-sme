@@ -663,9 +663,9 @@ generator-dict-gt-norm.%: generator-dict-gt-norm.tmp.%             \
 					filters/rename_optional-POS_before_Der-tags.%  \
 					filters/remove-UseLIA-strings.%                \
 					filters/remove-Err_SpaceCmp-strings.%          \
-					filters/remove-usage-tags.%
+					filters/remove-usage_except_NGminip-tags.%
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
-			 	@\"filters/remove-usage-tags.$*\"               \
+			 	@\"filters/remove-usage_except_NGminip-tags.$*\"               \
 			.o. @\"filters/rename_optional-POS_before_Der-tags.$*\" \
 			.o. @\"filters/make-optional-grammatical-tags.$*\"   \
 			.o. @\"filters/remove-norm-comp-tags.$*\"            \
