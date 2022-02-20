@@ -1,4 +1,7 @@
-This is a list with the most important tags.
+The grammatical tags
+====================
+
+The list was made for North Saami but is written in a generic way so as to understand the tag setup.
 
 Noun (+N)
 =========
