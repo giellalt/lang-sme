@@ -31,13 +31,11 @@ This page documents the work on the [North Sami language model](http://github.co
 
 -   The [morphological](docu-sme-grammartags.html), [morphological
     (readable version)](docu-mini-smi-grammartags.html) and
-    [syntactic](docu-sme-syntaxtags.html) tags.
+    [syntactic](https://giellalt.github.io/lang/common/docu-sme-syntaxtags.html) tags.
 -   [Lemma homonymies and variants - tags for indentifying and
-    sorting](../smi/lemma.html)
+    sorting](https://giellalt.github.io/lang/smi/lemma.html)
 -   [Lemma homonymies and variants: Main documentation in
-    English](../common/Variation_in_lexc.html)
--   [Documentation of how use the tags for search in
-    Korp](../common/cqp.nob.html)
+    English](https://giellalt.github.io/common/Variation_in_lexc.html)
 
 # Discussions on improving our linguistic analysis
 
@@ -57,7 +55,7 @@ This page documents the work on the [North Sami language model](http://github.co
 -   [Documentation of the disambiguation
     file](docu-sme-dis.html) (Partly obsolete)
 -   [See also the general disambiguation
-    page](../../ling/docu-disambiguation.html).
+    page](https://giellalt.github.io/ling/docu-disambiguation.html).
 
 
 # Speller optimisations
