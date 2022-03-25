@@ -28,6 +28,7 @@
             * [adverbs.lexc](src-fst-stems-adverbs.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/adverbs.lexc))
             * [conjunctions.lexc](src-fst-stems-conjunctions.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/conjunctions.lexc))
             * [interjections.lexc](src-fst-stems-interjections.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/interjections.lexc))
+            * [nouns.lexc](src-fst-stems-nouns.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/nouns.lexc))
             * [numerals.lexc](src-fst-stems-numerals.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/numerals.lexc))
             * [particles.lexc](src-fst-stems-particles.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/particles.lexc))
             * [pronouns.lexc](src-fst-stems-pronouns.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/pronouns.lexc))

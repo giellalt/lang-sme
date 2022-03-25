@@ -7466,8 +7466,6 @@ Bisyllabic nouns
 
 * **LEXICON ESSAYA** recent loanwords on vow+a
 
-* **LEXICON IDEA** restricted Px for speller recent loanwords on vow+a, only idea this far
-
 * **LEXICON MASAI** only masai
 
 * **LEXICON BASSI** words on -bassi. Long nom-compound-forms, short gen, long heapmi-caritive
@@ -11233,10 +11231,10 @@ The main adverb lexicon
 * **LEXICON Conjunction   ** contains the list of conjunctions
 
 * **LEXICON ConfuseConjunction ** contains conjunctions that are
-                              homonyms with words in the open POS's
+  homonyms with words in the open POS's
 
 * **LEXICON CleanConjunction ** contains conjunctions that are not
-                          homonymous with any of the open POS's
+homonymous with any of the open POS's
 
 * **LEXICON Cc-Conf  ** assigns the tag +CC and allows further grammar checker processing for disambiguation against nouns in potential compounds written apart
 
@@ -11259,6 +11257,39 @@ the tag `+Err/Lexc`.
 * * *
 
 <small>This (part of) documentation was generated from [src/fst/stems/interjections.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/interjections.lexc)</small>
+
+---
+
+
+#                     North Sámi noun lexicon                                !
+
+* **LEXICON NounRoot  ** Main lexicon, dividing in Noun, FirstComponent, NyphNouns
+
+* **LEXICON MiddleNouns  **
+
+* **LEXICON HyphNouns  **
+
+* **LEXICON FirstComponent  **
+
+* **LEXICON Eahpe_Noun  **
+
+* **LEXICON NAMAT ** gives »»» and directs to NAMATCont
+
+* **LEXICON NAMATCont ** second-part compounds
+
+* **LEXICON SASCont ** FROM NUMERALS, gives -kilosaš etc.
+
+* **LEXICON Noun  ** dividing in NounNoPx, NounPx (with a P.Px.add flag)  and NounPxKin (with a P.Nom3Px.add flag)
+
+* **LEXICON NounNoPx   ** here goes nouns not taking Px.
+
+* **LEXICON NounPxKin  ** this is the noun lexicon for nouns which can have Px Nom 3. person, mostly kinshipterms
+
+* **LEXICON NounPx  ** this is the main noun lexicon
+
+* * *
+
+<small>This (part of) documentation was generated from [src/fst/stems/nouns.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/nouns.lexc)</small>
 
 ---
 
@@ -11646,10 +11677,10 @@ generation, by keeping the same tagging as the standard analysis.
 * **LEXICON Subjunction   ** contains the list of subjunctions.
 
 * **LEXICON ConfuseSubjunction ** contains subjunctions that are
-                              homonyms with words in the open POS's
+  homonyms with words in the open POS's
 
 * **LEXICON CleanSubjunction ** contains subjunctions that are not
-                          homonymous with any of the open POS's
+homonymous with any of the open POS's
 
 * **LEXICON Cs-Conf  ** assigns the tag +CC and allows further grammar checker processing for disambiguation against nouns in potential compounds written apart
 

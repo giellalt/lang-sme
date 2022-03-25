@@ -4,10 +4,10 @@
 * **LEXICON Subjunction   ** contains the list of subjunctions.
 
 * **LEXICON ConfuseSubjunction ** contains subjunctions that are
-                              homonyms with words in the open POS's
+  homonyms with words in the open POS's
 
 * **LEXICON CleanSubjunction ** contains subjunctions that are not
-                          homonymous with any of the open POS's
+homonymous with any of the open POS's
 
 * **LEXICON Cs-Conf  ** assigns the tag +CC and allows further grammar checker processing for disambiguation against nouns in potential compounds written apart
 

@@ -71,8 +71,6 @@ Bisyllabic nouns
 
 * **LEXICON ESSAYA** recent loanwords on vow+a
 
-* **LEXICON IDEA** restricted Px for speller recent loanwords on vow+a, only idea this far
-
 * **LEXICON MASAI** only masai
 
 * **LEXICON BASSI** words on -bassi. Long nom-compound-forms, short gen, long heapmi-caritive
