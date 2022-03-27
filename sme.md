@@ -11273,10 +11273,6 @@ the tag `+Err/Lexc`.
 
 * **LEXICON Eahpe_Noun  **
 
-* **LEXICON NAMAT ** gives »»» and directs to NAMATCont
-
-* **LEXICON NAMATCont ** second-part compounds
-
 * **LEXICON SASCont ** FROM NUMERALS, gives -kilosaš etc.
 
 * **LEXICON Noun  ** dividing in NounNoPx, NounPx (with a P.Px.add flag)  and NounPxKin (with a P.Nom3Px.add flag)
