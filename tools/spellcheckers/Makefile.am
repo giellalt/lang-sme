@@ -5,6 +5,14 @@
 # Subdirs in build order:
 SUBDIRS = filters weights .
 
+# Temporary
+
+analyser.default.hfst: analyser-desktopspeller-gt-norm.hfst
+	hfst-fst2fst -f olw -i $< -o $@
+
+# end temporar
+# # end temporaryy
+
 include $(srcdir)/Makefile.mod-spellcheckers.am
 include $(srcdir)/Makefile.mod-fstbased.am
 include $(srcdir)/Makefile.mod-desktop.am
