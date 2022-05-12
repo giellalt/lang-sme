@@ -937,6 +937,8 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 * **buoritV** removes buorit as V
 
+* **Imprtmannat** selects Imprt before dearvan
+
 * Some brave rules for removing Imprt
 
 * **ImprtCopPrfPrc** removes imperative readings in front of coopulas and PrfPrc
