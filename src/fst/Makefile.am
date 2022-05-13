@@ -140,6 +140,10 @@ generated_files/%.lexc: \
 
 ### END: Local processing: ###
 
+pkgsrcfststemsdir=${datadir}/giella/sme/src/fst/stems/
+pkgsrcfststems_DATA=stems/$(GTLANG)-propernouns.lexc
+
+
 ####### Other targets: ###########
 # Clean: add local clean targets on separate lines, so that the first line can
 # easily get updates from the template dir through svn merge.
