@@ -8342,6 +8342,8 @@ modals do not participate in derivation
 
 * **LEXICON BARDNA_IV** "bárdnat" ----> potensialis removed; bártnažan, bártnažat, bártnaš, bártnaža. No Der/NomAg for speller reasons. Bisyllabic a- and u-verbs without Personal Passive but without Der/NomAg. Otherwise like DIEVVA_IV
 
+* **LEXICON DUSSA_IV**  Bisyllabic a- and u-verbs without Passive and Der/NomAg, get rid of duššo
+
 * **LEXICON DIEHTISHORT_TV** Short action noun compound-form: neasken-
 
 * **LEXICON DIEHTILONGSHORT_TV** Long and short action noun compound-form, savdnjen-/savdnjin-
