@@ -27,6 +27,11 @@ Accuracy](https://img.shields.io/badge/Speller_Accuracy-83_%25-green.svg)](https
 [![Spell-checking accuracy development
 graph](https://giellalt.github.io/lang-sme/speller-report.svg)](https://giellalt.github.io/lang-sme/speller-report.svg)
 
+Use and test spellers
+---------------------
+
+The spellers downloadable at the top of this page (the `*.bhfst` files) can be
+used with [divvunspell](https://github.com/divvun/divvunspell).
 
 Documentation
 -------------
