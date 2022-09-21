@@ -27,11 +27,14 @@ Accuracy](https://img.shields.io/badge/Speller_Accuracy-83_%25-green.svg)](https
 [![Spell-checking accuracy development
 graph](https://giellalt.github.io/lang-sme/speller-report.svg)](https://giellalt.github.io/lang-sme/speller-report.svg)
 
-Use and test spellers
----------------------
+Download and test speller files
+-------------------------------
 
-The spellers downloadable at the top of this page (the `*.bhfst` files) can be
-used with [divvunspell](https://github.com/divvun/divvunspell).
+The speller files downloadable at the top of this page (the `*.bhfst` files) can
+be used with [divvunspell](https://github.com/divvun/divvunspell), to test their
+performance. These files are the exact same ones as installed on users' computers
+and mobile phones. Desktop and mobile speller files differ from each other in the
+error model and should be tested separately — thus also two different downloads.
 
 Documentation
 -------------
