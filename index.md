@@ -51,9 +51,9 @@ This page documents the work on the [North Sami language model](http://github.co
 -   [See also the general disambiguation page](/ling/docu-disambiguation.html).
 
 
-# Speller optimisations
-
-There is a [separate page on speller optimisations for SME](SpellerConfiguration.html).
+# Documentation on North Saami tools
+- There is a [separate page on speller optimisations for SME](SpellerConfiguration.html).
+- [The North Saami grammar checker page](https://giellalt.github.io/proof/gramcheck/NortSaamiGrammarchecker.html)
 
 # Obsolete links
 
