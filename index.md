@@ -21,9 +21,7 @@ This page documents the work on the [North Sami language model](http://github.co
 -   [Machine translation](/mt/MachineTranslation.html)
 -   [Converting the transducers to Apertium format](ConvertingToApertium.html)
 -   Grammar checker:
-    - [Documentation](gramcheck/index.md)
-    - [Tool](http://gtweb.uit.no/cgi-bin/wiki/index.php/North_Saami_grammar_checker)
--   [Text-to-speech](http://giellatekno.uit.no//tts-plan.html)
+    - [Documentation](https://giellalt.github.io/proof/gramcheck/NortSaamiGrammarchecker.html) and [some more documentation](gramcheck/index.md)
 -   [The L2 Transducer](TheL2Transducer.html)
 
 # Tags used for analysis
