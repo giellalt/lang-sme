@@ -23,7 +23,8 @@ GIELLA_GC_VALENCY=valency.bin
 
 # If there are additional, language specific files used in the GC archive,
 # specify here:
-LOCAL_GC_ZIP_FILES=after-speller-disambiguator.bin
+LOCAL_GC_ZIP_FILES=after-speller-disambiguator.bin \
+					valency-postspell.bin
 
 #### BEGIN: Local build targets: ####
 
@@ -33,6 +34,10 @@ LOCAL_GC_ZIP_FILES=after-speller-disambiguator.bin
 # the sentence is disambiguated.
 after-speller-disambiguator.cg3: grc-disambiguator.cg3
 	$(AM_V_GEN)grep -v 'PROTECT' $< > $@
+
+# Add valency info to speller suggestions:
+valency-postspell.cg3: ../../src/cg3/valency-postspell.cg3
+	$(AM_V_CP)cp -f $< $@
 
 #### END: Local build targets:   ####
 
