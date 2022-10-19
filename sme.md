@@ -11192,6 +11192,10 @@ Lexica for adverb subtypes
 
 * **LEXICON gadv-plc   **  adv that can form compounds
 
+* **LEXICON IL-adv-plc   **
+
+* **LEXICON IL-adv-time   **
+
 * **LEXICON LAS-adv   **
 
 * **LEXICON LAS-adv-plc   **
