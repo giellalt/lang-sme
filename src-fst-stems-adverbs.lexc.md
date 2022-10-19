@@ -50,6 +50,12 @@ Lexica for adverb subtypes
 
 * **LEXICON gadv-plc   **  adv that can form compounds
 
+* **LEXICON LAS-adv   **
+
+* **LEXICON LAS-adv-plc   **
+
+* **LEXICON LAS-adv-time   **
+
 * **LEXICON adv-plc   **
 
 * **LEXICON adv-time   **
