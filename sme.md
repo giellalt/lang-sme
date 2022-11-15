@@ -11279,19 +11279,26 @@ the tag `+Err/Lexc`.
 
 #                     North Sámi noun lexicon                                !
 
-* **LEXICON NounRoot  ** Main lexicon, dividing in Noun, FirstComponent, NyphNouns
+* **LEXICON NounRoot  ** Main lexicon, dividing in HyphNouns, Noun (below)
 
-* **LEXICON MiddleNouns  **
+* **LEXICON MiddleNouns  ** is pointed to from R in compounds.lexc
 
-* **LEXICON HyphNouns  **
+* **LEXICON HyphNouns  ** is pointed to from NounRoot above
 
-* **LEXICON FirstComponent  **
+* **LEXICON FirstComponent  ** is pointed to from Noun below
 
 * **LEXICON Eahpe_Noun  **
 
+* **LEXICON NAMATLAGANLAGASCont  ** gives »»» and directs to NAMATCont
+
 * **LEXICON SASCont ** FROM NUMERALS, gives -kilosaš etc.
 
+* **LEXICON DER-SAS ** gets Der/sasj and points to AHKASAS
+
 * **LEXICON Noun  ** dividing in NounNoPx, NounPx (with a P.Px.add flag)  and NounPxKin (with a P.Nom3Px.add flag)
+ *                           NounNoPx ;  default nouns, no px 
+* @P.Px.add@                NounPx ;  nouns with px 
+* @P.Px.add@@P.Nom3Px.add@  NounPxKin ;  kinship nouns with px 
 
 * **LEXICON NounNoPx   ** here goes nouns not taking Px.
 
