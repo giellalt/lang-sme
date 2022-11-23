@@ -27,7 +27,7 @@ This page documents the work on the [North Sami language model](http://github.co
 # Tags used for analysis
 
 -   The [morphological](docu-sme-grammartags.html),
-    [morphological (readable version)](docu-mini-smi-grammartags.html) and
+    [morphological (readable version)](docu-mini-smi-grammartags.html), [derivational](https://giellalt.github.io/lang/common/DerivationOverview.html) and
     [syntactic](/lang/common/docu-sme-syntaxtags.html) tags.
 -   [Lemma homonymies and variants - tags for indentifying and sorting](/lang/smi/lemma.html)
 -   [Lemma homonymies and variants: Main documentation in English](/common/Variation_in_lexc.html)
