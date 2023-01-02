@@ -33,7 +33,7 @@ else
 endif
 
 %-postspell.cg3: %.cg3
-	$(AM_V_GEN)$(GNUSED) -e 's/^# Error tags$$/&\n\nLIST <spelled> = <spelled> ;/' \
+	$(AM_V_GEN)$(SED) -e 's/^# Error tags$$/&\n\nLIST <spelled> = <spelled> ;/' \
 		-e 's/^SUBSTITUTE \(.*\);/SUBSTITUTE \1 (0 <spelled>)  ;/' \
 		< $< > $@
 
