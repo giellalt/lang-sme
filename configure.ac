@@ -177,13 +177,6 @@ gt_PROG_VISLCG3
 # Tests and sets up XML to lexc conversion
 gt_PROG_SAXON
 
-AC_PATH_PROGS_FEATURE_CHECK([GNUSED], [gnused gsed sed],
-              [[m4out=`echo aaa | $ac_path_GNUSED 's/a/\n/g' | wc -l | tr -d ' '`
-                test "x$m4out" = x4\
-                && ac_cv_path_GNUSED=$ac_path_GNUSED ac_path_GNUSED_found=:]],
-              [AC_MSG_ERROR([could not find sed that supports new line])])
-AC_SUBST([GNUSED], [$ac_cv_path_GNUSED])
-
 # Adds --enable/disable-morphology, -speller, -hyphenation, etc.
 # This should be the last step so that all program variables are available
 # to the enable checks
