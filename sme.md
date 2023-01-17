@@ -10317,8 +10317,6 @@ the sentence can be considered as true cases.
 * **+Gram/TIAbbr**:  Both transitive and intransitive abbreviation
 * **+Gram/IAbbr**:  Intransitive abbreviation (it takes no argument)
 * **+Gram/3syll**: trisyllabic verbs
-; +Gram/Superl
-; +Gram/Comp
 
 ### Question and Focus particles:
 * **+Qst**   Question Particle: +Pcle+Qst
@@ -10501,15 +10499,15 @@ The second part of the compound may require that the previous (left part) is:
 Tags for descriptive compound analysis - this is what a compound actually is:
 
 * **+Cmp** - Dynamic compound. This tag should always be part
-           of a dynamic compound. It is important for
-           Apertium, and useful in other cases as well.
+of a dynamic compound. It is important for
+Apertium, and useful in other cases as well.
 * **+Cmp/Attr** - Attributive
 * **+Cmp/SgNom** - Singular Nominative
 * **+Cmp/SgGen** - Singular Genitive
 * **+Cmp/PlGen** - Plural Genitiv
 * **+Cmp/SplitR** - This is a split compound with the other part to
-           the right: "Arbeids- og inkluderingsdepartementet"
-           => Arbeids- = +Cmp/SplitR
+the right: "Arbeids- og inkluderingsdepartementet"
+=> Arbeids- = +Cmp/SplitR
 * **+Cmp/SplitL** - This is a split compound with the other part to the left
 * **+Cmp/Sh** - testing +Cmp/Sh
 * **+Cmp/Hyph** - on dynamic compounds that have a hyphen
@@ -10757,7 +10755,6 @@ part of the continuation lexicons, and will be located after the POS tag.
 * +Sem/Hum_Mat_Tool
 * +Sem/Hum_Obj
 * +Sem/Hum_Org
-* +Sem/Hum_Sign
 * +Sem/Hum_Part
 * +Sem/Hum_Plant
 * +Sem/Hum_Plc
