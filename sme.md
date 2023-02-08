@@ -8212,6 +8212,8 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 * **LEXICON GALLE** Case forms of galle
 
+* **LEXICON MANGA**  Case forms of máŋga
+
 some multiword prons, according to Nickel
 
 * * *
