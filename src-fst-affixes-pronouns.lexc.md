@@ -1,5 +1,7 @@
 
 
+* **LEXICON GALLE** Case forms of galle
+
 some multiword prons, according to Nickel
 
 * * *

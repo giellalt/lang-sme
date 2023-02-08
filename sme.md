@@ -8210,6 +8210,8 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 
 
+* **LEXICON GALLE** Case forms of galle
+
 some multiword prons, according to Nickel
 
 * * *
