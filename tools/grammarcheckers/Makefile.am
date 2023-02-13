@@ -19,7 +19,7 @@ GIELLA_GC_WHSPACE_ANAL_SRC=analyser-gt-whitespace.regex \
 GIELLA_GC_DISAMBIGUATOR_SRC=grc-disambiguator.cg3
 
 # If a valency file is used, specify its name here:
-GIELLA_GC_VALENCY=valency.bin
+GIELLA_GC_VALENCY_SRC=valency.cg3
 
 # If there are additional, language specific files used in the GC archive,
 # specify here:
