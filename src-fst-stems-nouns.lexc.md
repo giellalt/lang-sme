@@ -1,7 +1,7 @@
 
 #                     North Sámi noun lexicon                                !
 
-* **LEXICON NounRoot  ** Main lexicon, dividing in HyphNouns, Noun (below)
+* **LEXICON NounRoot  ** Main lexicon, dividing in HyphNouns and Noun
 
 * **LEXICON MiddleNouns  ** is pointed to from R in compounds.lexc
 
