@@ -10185,9 +10185,9 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 
 # North Sámi morphological analyser
 
-## Multicharacter symbols
+# Multicharacter symbols
 
-### Tags for POS
+## Tags for POS
 
 * **+N** - Noun
 * **+A** - Adjective
@@ -10203,7 +10203,7 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 * **+Pcle** - Particle
 * **+Num** - Numeral
 
-### Tags for sub-POS
+## Tags for sub-POS
 * **+Prop** - Propernoun
 * **+Pers** - Personal Pronoun
 * **+Dem** - Demonstrative Pronoun
@@ -10218,9 +10218,9 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 * **+Pass** - hallat/haddat not in use
 * **+Known** - man (different from maid): mii+Pron+Rel+Sg+Acc+Known
 
-## Tags for Inflection
+# Tags for Inflection
 
-### Tags for Case and Number Inflection
+## Tags for Case and Number Inflection
 * **+Sg** - Singular
 * **+Du** - Dual
 * **+Pl** - Plural
@@ -10234,7 +10234,7 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 * **+Com** - Comitative
 * **+Com/Sh** - Comitative Plural Hyphened Shortform (w/o -guin), ie Beatnagii-, Biillai-, Bohccui- etc.
 
-### Possessive tags
+## Possessive tags
 
 * **+PxSg1**    Singular First Person
 * **+PxSg2**    Singular Second Person
@@ -10246,22 +10246,22 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 * **+PxPl2**    Plural Second Person
 * **+PxPl3**    Plural Third Person
 
-### Adjectival tags
+## Adjectival tags
 * **+Attr**   Attributive
 * **+Card**   Cardinal Number Not in use
 * **+Ord**   Ordinal Number
 
-### Moods
+## Moods
 * **+Ind** Indicative
 * **+Pot** Potential
 * **+Cond** Conditional
 * **+Imprt** Imperative
 
-### Tenses
+## Tenses
 * **+Prs** Present Tense
 * **+Prt** Past Tense, Preterite
 
-### Verb person-number
+## Verb person-number
 
 * **+Sg1** Singular First Person
 * **+Sg2** Singular Second Person
@@ -10273,7 +10273,7 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 * **+Pl2** Plural Second Person
 * **+Pl3** Plural Third Person
 
-### Infinite verb forms
+## Infinite verb forms
 
 * **+Inf** Infinitive
 * **+Ger** Gerund
@@ -10288,7 +10288,7 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 * **+VAbess** VerbAbbesive
 * **+Actio** Action Verb Form
 
-### Other tags
+## Other tags
 * **+Gram/Comp**   Comparative, adverbs
 * **+Gram/Superl**   Superlative, adverbs
 
@@ -10322,7 +10322,7 @@ the sentence can be considered as true cases.
 * **+Gram/IAbbr**:  Intransitive abbreviation (it takes no argument)
 * **+Gram/3syll**: trisyllabic verbs
 
-### Question and Focus particles:
+## Question and Focus particles:
 * **+Qst**   Question Particle: +Pcle+Qst
 * **+Subqst**   Embedded Question Particle: +Adv+Subqst
 * **+Foc/naj**	Focus clitic
@@ -10350,7 +10350,7 @@ the sentence can be considered as true cases.
 * **+Foc/mis**	Focus clitic
 * **+Foc/s**	Focus clitic
 
-### Tags distinguishing different versions of the same lemma (before POS)
+## Tags distinguishing different versions of the same lemma (before POS)
 * +v1
 * +v2
 * +v3
@@ -10379,7 +10379,7 @@ the sentence can be considered as true cases.
 Note: These high +v... number are in use for one word only:
 doavttergrádakursa
 
-### Escaped chars
+## Escaped chars
 
 * ** %        **
 * **+Guess** for the name guesser
@@ -10387,7 +10387,7 @@ doavttergrádakursa
 
 * **+PxCPlComRecipr** used in pronoun-sme-morph.txt
 
-### Error (non-standard language) tags
+## Error (non-standard language) tags
 
 * **+Err/Orth** substandard, not in normative fst
 * **+Err/Orth-a-á** substandard, not in normative fst
@@ -10412,7 +10412,7 @@ doavttergrádakursa
 * **+Err/Confused-ImprtSg2** grammarcheking rela word error confusion pairs
 * **+Err/Confused-ImprtPl2** grammarcheking rela word error confusion pairs
 
-### Usage tags
+## Usage tags
 
 * **+Use/-Spell** Orthographically correct, typically perifer words, excluded in speller because they cause trouble for frequent words
 * **+Use/-PLX** Excluded in PLX-speller
@@ -10432,14 +10432,14 @@ for MT generation not to pop up elsewhere (NOT IN FUNCTION)
 * **+Use/-TTS** – **never** retained in the HFST Text-To-Speech disambiguation analyser
 * **+MWESplit** Split point for MWE
 
-### Dialect tags:
+## Dialect tags:
 
 * **+Dial/-KJ** forms not in use in KJ (Kárásjohka)
 * **+Dial/-GG** forms not in use in GG (Guovdageaidnu)
 * **+Dial/-GS** forms not in use in GS (Gárasavvon) NOT IN USE
 * **+South** foreløpig lagt til Sg Loc -n, som er en sub-form
 
-### Tags for indicating the orthography used
+## Tags for indicating the orthography used
 +Orth/Strd - Standard orthography
 +Orth/IPA - IPA transcription
 
@@ -10454,7 +10454,7 @@ regular orthography stem must be marked with the tag `+Orth/Strd`. This is
 so that we can exclude the one or the other from different fst's, but only
 when the oposite stem variant is present.
 
-### Multichars for marking start and end of IPA sequences
+## Multichars for marking start and end of IPA sequences
 
 <!-- {% raw %} -->
 * `%{%<ipa#%}` - ipa text to the left
@@ -10462,7 +10462,7 @@ when the oposite stem variant is present.
 * `%<sent%>` - apertium
 <!-- {% endraw %} -->
 
-### Compounding tags
+## Compounding tags
 
 The tags are of the following form:
 * **+CmpNP/xxx** - Normative (N), Position (P), ie the tag describes what
@@ -10520,7 +10520,7 @@ the right: "Arbeids- og inkluderingsdepartementet"
 * **+Cmp/Cit** - Tags citation compounds, which can in principle
 cover any word. Requires a hyphen.
 
-### Compounding tag ordering
+## Compounding tag ordering
 To ease writing and maintaining regexes etc for manipulating and enforcing
 compounding, it is important to keep the tags in a certain order.
 The order is:
@@ -10529,7 +10529,7 @@ The order is:
 1. **+Cmp/** tags - this is always true since the descriptive tags are always
 part of the continuation lexicons, and will be located after the POS tag.
 
-### Semantic tags to help disambiguation & synt. analysis: (before POS)
+## Semantic tags to help disambiguation & synt. analysis: (before POS)
 
 * +Sem/Act = Activity
 * +Sem/Adr = Webadr
@@ -10634,7 +10634,7 @@ part of the continuation lexicons, and will be located after the POS tag.
 * +Sem/Wthr = The Weather or the state of ground
 * +Sem/Year - year (i.e. 1000 - 2999), used only for numerals
 
-### Multiple Semantic tags:
+## Multiple Semantic tags:
 * +Sem/Act_Fruit
 * +Sem/Act_Group Activity and Group
 * +Sem/Act_Hum Activity and Human
@@ -10821,37 +10821,82 @@ part of the continuation lexicons, and will be located after the POS tag.
 
 * **+Allegro** from LEXICON GOADE-IU-
 
+# Tags for derivation
+
 Explanation:
-Combinations 1, 2, 3, 12, 23, 13, 123 are ok, all other ones are blocked.
-The suffixes marked as +Der1+Der2 to the right cannot combine with Der2, they
+- Combinations 1, 2, 3, 1+2, 2+3, 1+3, 1+2+3 are ok, all other ones are blocked.
+- The suffixes marked as +Der1+Der2 to the right cannot combine with Der2, they
 have already "saturated" their Der2-part.
-Phonotactically, Der1 are initial consonants C, Der2 are VCV, and
+- Phonotactically, Der1 are initial consonants C, Der2 are VCV, and
 Der2 are of a different kind, more like compounding.
-This whole Der123 business is to prevent back-derivation of
+- This whole Der123 business is to prevent back-derivation of
 boahtigoahtijuvvohallat and the like.
-Computationally, this is done as a filter composed on top of sme.save.
+- Computationally, the `+Der1` etc tags are replaced with flag diacritics blocking
+forbidden combinations.
 
---------------------------------
+## Positional derivational tags
 
-All non-positional derivations should be preceded by this tag, to make it possible
+| `+Der1` | `+Der2` | `+Der3` | `+Der4` | POS transition | Comments |
+|:------- |:------- |:------- |:------- |:--------------:|:-------- |
+| `+Der/Dimin` |  |  |  | NN | (was: Der/aš & Der/š)
+| `+Der/lasj` |  |  |  | NA | 
+| `+Der/meahttun` |  |  |  | VA | 
+| `+Der/d` |  |  |  | VV | 
+| `+Der/h` |  |  |  | VV | - -hit/Causative
+| `+Der/Caus` |  |  |  | VV | - -ahtti/Causative
+| `+Der/huhtti` |  |  |  | VV | 
+| `+Der/l` |  |  |  | VV | 
+| `+Der/st` |  |  |  | VV | 
+| `+Der/las` |  |  |  | VA | * +Der1+Der2 - can only combine with Der3
+| `+Der/Car` |  |  |  | NA | * +Der1+Der2 - can only combine with Der3
+| `+Der/laakan` |  |  |  | AA | * +Der1+Der2 - can only combine with Der3
+| `+Der/halla` |  |  |  | VV | * +Der1+Der2 - can only combine with Der3
+| `+Der/huvva` |  |  |  | VV | * +Der1+Der2 - can only combine with Der3
+| `+Der/stuvva` |  |  |  | VV | * +Der1+Der2 - can only combine with Der3
+| `+Der/PassS` |  |  |  | VV | - short passive
+|  | `+Der/t` |  |  | NA
+|  | `+Der/ár` |  |  | ACRO>N
+|  | `+Der/NomAg` |  |  | VN
+|  | `+Der/NomAct` |  |  | VN | Der/NomAct har to realisasjonar, med ulike restriksjonar, this is previous Der/eapmi
+|  | `+Der/sasj` |  |  | NA
+|  | `+Der/adda` |  |  | VV
+|  | `+Der/alla` |  |  | VV
+|  | `+Der/AAdv` |  |  | QA | check this!
+|  | `+Der/easti` |  |  | VV
+|  | `+Der/laagasj` |  |  | QA
+|  | `+Der/Comp` |  |  | AA
+|  | `+Der/Superl` |  |  | AA
+|  |  | `+Der/PassL` |  | VV | long passive
+|  |  | `+Der/vuota` |  | AN
+|  |  |  | `+Der/InchL` | VV
+|  |  |  | `+Der/amoš` | VN
+|  |  |  | `+Der/eamoš` | VN
+|  |  |  | `+Der/geahtes` | VA
+|  |  |  | `+Der/keahtta` | VA
+|  |  |  | `+Der/muš` | VN
+|  |  |  | `+Der/supmi` | VN
+|  |  |  | `+Der/upmi` | VN
+
+## Non-positional derivations
+All non-positional derivations should be preceded by the following tag, to make it possible
 to target regular expressions at all derivations in a language-independent way:
-just specify +Der|+Der1 .. +Der5 and you are set.
+just specify `+Der|+Der1 .. +Der4` and you are set.
 
-* **+Der** =
+| Tag | POS transition | Comment |
+|:--- |:--------------:|:------- |
+| `+Der` |   n/a   | generic derivation tag used in front of all non-positional derivations.
+| `+Der/veara` | NA#     |
+| `+Der/viđá` | NA#     |
+| `+Der/viđi` | NA#     |
+| `+Der/has` | ?       | only one in the code
 
-### Other/unclassified derivations, can appear in all positions:
-
-* **+Der/veara** = NA#
-* **+Der/viđá** = NA#
-* **+Der/viđi** = NA#
-* **+Der/has** = only one in the code
-
-### Miscellanious list
+## Miscellanious list
+See lexicons NAMAT and SAS for these:
 
 * **+Der/A** = Adjective derivated from Noun or Verb
 * **+Der/Adv** = Adverb derivated from Adjective
 
-## Tags for originating language
+# Tags for originating language
 
 The following tags are used to guide conversion to IPA: loan words
 and foreign names are usually pronounced (approximately) as in the
@@ -10888,7 +10933,7 @@ get the same pronunciation whether read as SME or NOB/NNO/SWE.
 * **+OLang/RUS** = Russian
 * **+OLang/UND** = Undefined
 
-### Triggers for morphophonological rules
+## Triggers for morphophonological rules
 
 * **X1** = Diphthong Simplification, Metaphony
 * **X2** = Diphthong Simplification, Metaphony, Word Final Neutralization of g8, h8, m8
@@ -10928,7 +10973,7 @@ get the same pronunciation whether read as SME or NOB/NNO/SWE.
 * **W9** = Not in use
 * **%^DISIMP** = diphthong simpification
 
-### Morphophonemes and Sámi letters
+## Morphophonemes and Sámi letters
 
 * **b9** = twol rule override, so that b doesn't turn into t infront of hash
 * **e7** = shortened i = "e with dot below" from the dictionary
@@ -10965,7 +11010,7 @@ mwe reanalysis in hfst-tokenise (e.g. in dynanic compounds).
 Makes it possible to distinguish lexical and dynamic compounds
 in rules. It is converted to zero together with `#`.
 
-### Symbols that need to be escaped on the lower side (towards twolc):
+## Symbols that need to be escaped on the lower side (towards twolc):
 
 * »
 * «
@@ -10973,7 +11018,7 @@ in rules. It is converted to zero together with `#`.
 * < (escaped with square brackets, to avoid collision with < as morpheme boundary)
 * #
 
-## Flag diacritics
+# Flag diacritics
 We have manually optimised the structure of our lexicon using following
 flag diacritics to restrict morhpological combinatorics - only allow compounds
 with verbs if the verb is further derived into a noun again:
@@ -11051,7 +11096,7 @@ given the proper use of these flags.
 * **@D.SpaceCmp.ON@** Flag to tag compounds written with a space
 * **@C.SpaceCmp@** Flag to tag compounds written with a space+
 
-## Basic lexica, pointing to the other lexicon files
+# Basic lexica, pointing to the other lexicon files
 
 * **LEXICON Root** is the basic lexicon starting everything
 
