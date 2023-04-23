@@ -289,6 +289,8 @@ Trisyllabic nouns
 
 * **LEXICON PRE_BOAHTIN**  Intransitiv action nouns from bisyll verbs, long cmp-form
 
+* **LEXICON BOAHTINsemact**  adds Sem/Act
+
 * **LEXICON BOAHTINSHORT** Intransitiv action nouns from bisyll verbs, short cmp-form
 
 * **LEXICON IHTAMAT** Plural action nouns, from bisyllabic verbs
