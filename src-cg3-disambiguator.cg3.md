@@ -541,6 +541,8 @@ Remove unwanted analyses
 
 * **LexSelgieldit**
 
+* **LexSelgirdit**
+
 * **LexSelmuohttit**
 
 * LexSelvuhttot
