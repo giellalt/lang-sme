@@ -128,6 +128,7 @@ EOS
 * Actio
 * VBAbess
 * Known
+* sentinit
 
 * ### Tags for clitic particles
 * Foc/ge
