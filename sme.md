@@ -2661,8 +2661,6 @@ The rules are no documented yet
 
 * **GenIESinf** removes (Pron Refl Gen) if a transitive verb to the left and an Inf to the right 
 
-* **NomIfProp** Removes Acc and Gen when you Prop because you are Nom. To the left is a sg3-verb. Should not hit Prop that are Sem/Plc.
-
 * **NomIfProp2** Removes Acc and Nom when you are Prop Sem/Plc because you are Gen. To the left is a sg3-verb. To the right is a noun.
 
 * **NomSentFin** Selects Nom if you are Acc or Gen and EOS is to yoru right. Copulas is found to the left 
