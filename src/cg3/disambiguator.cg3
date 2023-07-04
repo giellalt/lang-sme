@@ -5030,12 +5030,13 @@ SELECT:datPersCopulas Pers IF (-1 Nom)(NEGATE -1 Pers)(0 ("dat" Nom))(*1 REAL-CO
 	#$ Gean mearkka bohccot dat ledje?
 
 #!! * **datPcle1** selects dat Pcle between N and finite, even if there is agreement between verb and dat .
-SELECT:datPcle1 ("dat" Pcle)  IF (-1 (N Nom) OR (Pers Nom) OR (Pers Loc) LINK NOT 0 A OR Interr OR PrfPrc LINK NEGATE *-1 Gen BARRIER WORD - Acc - Gen)((*1 VFIN BARRIER NOT-ADV-PCLE) OR (1 Adv LINK *1 VFIN BARRIER NOT-ADV-PCLE))(NEGATE 1 ("bohtti")) ;
+SELECT:datPcle1 ("dat" Pcle)  IF (-1 (N Nom) OR (Pers Nom) OR (Pers Loc) LINK NOT 0 A OR Interr OR PrfPrc LINK NEGATE *-1 Gen OR Interr BARRIER WORD - Acc - Gen)((*1 VFIN BARRIER NOT-ADV-PCLE) OR (1 Adv LINK *1 VFIN BARRIER NOT-ADV-PCLE))(NEGATE 1 ("bohtti")) ;
 	#$ Máret dat boahtá.
 	#$ Mun dat lean.
 	#$ Nissonat dat eanaš duddjojit sámi biktasiid.
 	#% Ođđa plána dat lea.
 	#% Gean mearkka bohccot dat leat?
+	#% In ipmir makkár olmmoš dat lea
 
 #!! * **datPcle2** selects dat Pcle when there is no agreement between verb and dat .
 SELECT:datPcle2 Pcle IF (NEGATE *-1 V + Sg3  OR V + Du3  OR V + Pl3  BARRIER SV-BOUNDARY)(NEGATE -1 BOC)(0 ("dat" Nom))(NEGATE *1 Rel BARRIER WORD)(NEGATE *1 N BARRIER NOT-NP)(NEGATE *1 V + Sg3  OR V + Du3  OR V + Pl3  BARRIER SV-BOUNDARY);
@@ -6525,7 +6526,7 @@ SELECT:punct Po IF (-1 Inf)(0 ("dihte") LINK 1 VFIN) ;
 SELECT:mieldeadv Adv (0 ("mielde") LINK -1 ("beassat") OR ("boahtit")) ;
 
 
-SELECT:PoCompl Po IF (*-1 NP-HEAD-GEN OR (A Gen) OR (Num Gen) OR (Actio Gen) OR (Refl Gen) BARRIER WORD LINK NOT 0 Rel + Acc)(NEGATE 0 N OR A OR ("mielde"))(NEGATE 0 Pr LINK *1 Gen BARRIER NOT-NPMOD) ;
+SELECT:PoCompl Po IF (*-1 NP-HEAD-GEN OR (A Gen) OR (Num Gen) OR (Actio Gen) OR (Refl Gen) BARRIER WORD LINK NOT 0 Rel + Acc OR PrfPrc)(NEGATE 0 N OR A OR ("mielde"))(NEGATE 0 Pr LINK *1 Gen BARRIER NOT-NPMOD) ;
 REMOVE:PoCompl Po IF (NEGATE *-1 NP-HEAD-GEN OR (A Gen) OR (Num Gen) OR (Actio Gen) OR (Refl Gen) OR (Pers Gen) BARRIER WORD) ;
 
 
@@ -6579,7 +6580,7 @@ REMOVE:PrNoCompl Pr IF (NEGATE *1 NP-HEAD-GEN OR (A Gen) OR Num + Gen BARRIER NO
 
 
 #!! * **PoGen** selects Po
-SELECT:PoGen Po - Foc - N-PO IF (-1 NP-HEAD-GEN - Qst LINK NEGATE 0 Acc LINK *-1 STRICT-TRANS-V BARRIER NOT-ADV-PCLE)(NEGATE -1 VAHKKU-DUR + Acc LINK -1 REAL-V) 
+SELECT:PoGen Po - Foc - N-PO IF (-1 NP-HEAD-GEN - Qst LINK NEGATE 0 Acc LINK *-1 STRICT-TRANS-V BARRIER NOT-ADV-PCLE)(NEGATE -1 VAHKKU-DUR + Acc LINK -1 REAL-V) (NOT -1 PrfPrc)
 (NEGATE 0 Pr LINK *1 NP-HEAD-GEN - (Rel) OR (A Gen) OR Num + Gen BARRIER NOT-NPMOD LINK NEGATE *1 Po BARRIER SV-BOUNDARY) 
 (NEGATE 1 STRICT-TRANS-V LINK NEGATE *1 Acc BARRIER NOT-NPMODADV)(NEGATE -1 Dem LINK 2 ADVLCASE)
 (NEGATE 0 ("mielde") LINK -1 Nom LINK 0 Err/Orth + Gen OR Err/Orth-spes + Gen)
@@ -8602,8 +8603,8 @@ SELECT:r1812 Inf IF (*-1 NP-HEAD-SG-NOM BARRIER NOT-ADV-PCLE LINK *-1 CC BARRIER
  	#$ Dearvvašvuođaveahkkedárbu galgá árvvoštallojuvvot ja diehtu addojuvvot.
  # This rule has to come before the ones below.
  
-ADD:sentinit (sentinit) TARGET COPULAS (-1 BOS)(NOT 0 (sentinit) OR Imprt) ; #For Apertium
-ADD:sentinit (sentinit) TARGET Pers (-1 BOS)(NOT 0 (sentinit))(1 COPULAS) ; #For Apertium
+ADD:sentinit (sentinit) TARGET COPULAS (*-1 BOS BARRIER WORD)(NOT 0 (sentinit) OR Imprt) ; #For Apertium
+ADD:sentinit (sentinit) TARGET Pers (*-1 BOS BARRIER WORD)(NOT 0 (sentinit))(1 COPULAS) ; #For Apertium
 
 #!! * **InfCompCs** 
 SELECT:InfCompCs (Inf @COMP-CS<) IF  (NOT 1 Inf);
@@ -11589,8 +11590,10 @@ SELECT:NumAcc Acc IF (0 Num LINK 1 N + ("siidu") + Acc)((2 Adv + Sem/Plc) OR (2 
 
 #!! * **NumNom** Selects Nom
 SELECT:NumNom Nom IF (0 Num LINK *1 N BARRIER NOT-Attr LINK NOT 0 TIME)(*-1 FMAINV - TRANS-V BARRIER SV-BOUNDARY)  ;
-SELECT:NumNomFragm Nom IF (0 Num)(NEGATE *0 VFIN)  ;
+SELECT:NumNomFragm Nom IF (0 Num - Loc)(NEGATE *0 VFIN)  ;
+SELECT:NumNomFragm Num + Arab IF (0 Coll)(-1 Sem/Plc)  ;
 	#$ 12 ođđa njoammuma Romssas.
+	#$ Mellomvegen 110:s
 
 #!! * **NumNom** Selects Nom
 SELECT:NumNom Nom IF (*-1 COPULAS OR (IV) BARRIER NOT-ADV-PCLE)(0 NUM)(1 ("ruvdno"));
