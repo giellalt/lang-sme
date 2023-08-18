@@ -8,3 +8,7 @@
 
 - [19.05.2021](meetings/2021-05-19.md)
 - [04.12.2020](meetings/2020-12-04.md)
+
+# Beta preparations
+
+- [Beta preparations](sme-grc-beta2019.md)
