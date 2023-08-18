@@ -44,8 +44,8 @@
         * [txt2ipa.xfscript](src-phonetics-txt2ipa.xfscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/phonetics/txt2ipa.xfscript))
 * `tools/`
     * `grammarcheckers/`
-        * [grammarchecker-release.cg3](tools-grammarcheckers-grammarchecker-release.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/grammarchecker-release.cg3))
         * [grammarchecker-resource.cg3](tools-grammarcheckers-grammarchecker-resource.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/grammarchecker-resource.cg3))
+        * [grammarchecker.cg3](tools-grammarcheckers-grammarchecker.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/grammarchecker.cg3))
         * [grc-disambiguator.cg3](tools-grammarcheckers-grc-disambiguator.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/grc-disambiguator.cg3))
         * [spellchecker.cg3](tools-grammarcheckers-spellchecker.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/spellchecker.cg3))
     * `tokenisers/`
