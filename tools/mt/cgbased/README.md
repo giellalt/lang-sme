@@ -1,30 +1,32 @@
 Denne fila dokumenterer oppsett og bruk av cg-basert mt basert på Eckhard Bick sine verkty
 ==========================================================================================
 
-Filene ligg i $GTHOME/langs/nob, i $GTHOME/langs/sme og i $GTPRIV/plan/projects/mt
+Filene ligg i `$GTHOME/lang-nob`, i `$GTHOME/lang-sme` og i `$GTPRIV/plan/projects/mt`.
 
 Kompiler i sme og nob
 =====================
 
+```sh
 ./autogen.sh # berre første gong
-./configure --with-hfst --enable-tokenisers --enable-apertium --enable-cgmt --enable-reversed-intersect
+./configure --enable-tokenisers --enable-apertium --enable-cgmt
 make -j
-
+```
 
 Bruk
 ====
 
-Stå i langs/sme/tools/mt/cgbased
+Stå i `lang-sme/tools/mt/cgbased`
 
 Kommando for omsetjjing:
 ------------------------
 
+```sh
 echo Dat lea buorre| ./bin/smegram 
-
+```
 
 Output:
 
-det er bra 
+> det er bra 
 
 
 Ulike delkommandoar (kortare delar av pipeline, lista frå kort til lang):
