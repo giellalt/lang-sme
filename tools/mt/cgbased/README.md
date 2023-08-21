@@ -444,3 +444,37 @@ genmorf_no |\                 # morfologisk generator for norsk
 perl trad2inline.pl |\        # postformattering
 
 
+Sjur sine notat
+---------------
+
+(kan vera utdaterte, notata er frå 12.2.2019)
+
+perladressefiks for cg-mt
+
+I dag ligg filene i 
+
+/Users/trond/main/langs/sme/tools/mt/cgbased/bargofiillat
+
+Dette er førebels ("arbeidsfiler"), vi vil flytte dei opp i 
+
+/Users/trond/main/langs/sme/tools/mt/cgbased
+
+Det ligg ei README-fil i bargofiillat.
+
+
+--------
+
+
+Filene vi vil bruke er (alle "nob" tilsvarer eckhards "nor", filene i cgbase (den endelege plasseringa) har namn med *nob*, filene i bargofiillat (filene vi fekk frå eckhard) heiter *nor*):
+
+Filene i pipeline:
+smecg.nob.cg    = 
+niceline_mt     = 
+sme2nob         = 
+cglex.txt       = 
+smecg.nobsyn.cg = 
+genmorf_no      = 
+trad2inline.pl  = 
+
+Fil som blir brukt av filene i pipeline:
+sme.nob.dict    = leksikon + MT-reglar. (ligg i cgbased)
