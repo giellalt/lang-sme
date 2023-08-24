@@ -99,54 +99,31 @@ editdist.default.hfst: editdist.default-new.regex
 		-o $@
 
 # any accented letter
-accents.festschrift.hfst: accents.festschrift.regex 
+accents.default.hfst: accents.default.regex 
 	$(AM_V_RGX2FST)$(HFST_REGEXP2FST) -S $(HFST_FLAGS) -i $<\
 	   --format=openfst-tropical \
 		-o $@
 
 ## edits that are so specific we may allow them to occur any number of times
 ## (they will occur only once or twice anyway)
-#strings.festschrift.hfst: strings.festschrift.regex 
+#strings.default.hfst: strings.default.regex 
 #	$(AM_V_RGX2FST)$(HFST_REGEXP2FST) -S $(HFST_FLAGS) -i $<\
 #	   --format=openfst-tropical \
 #		-o $@
-#
+
 # any number of ad hoc style accented letters may be substituted
 # in addition to other edits
-editdist.all.festschrift.hfst: editdist.festschrift.hfst \
-						   strings.festschrift.hfst \
-						   accents.festschrift.hfst
+editdist.all.default.hfst: editdist.default.hfst \
+						    strings.regex.default.hfst \
+						    accents.default.hfst
 	$(AM_V_XFST)printf "\
 		read regex \
-		[ @\"accents.festschrift.hfst\" .o. @\"strings.festschrift.hfst\" .o. @\"editdist.festschrift.hfst\"]; \
+		[    @\"accents.default.hfst\" \
+		 .o. @\"strings.regex.default.hfst\" \
+		 .o. @\"editdist.default.hfst\" \
+		]; \
 		save stack $@\n\
 		quit\n" | $(XFST_TOOL) --format=openfst-tropical
-
-words.festschrift.hfst: words.default.hfst
-	$(AM_V_CP)cp -f $< $@
-
-final_strings.all.festschrift.hfst: final_strings.txt.default.hfst
-	$(AM_V_CP)cp -f $< $@
-
-####### *.zhfst file: #######
-# Finally build the zhfst file, and make a copy in a subdir named '3', so that
-# we can test it without installing it (the '3' dir is a voikko requirement):
-se-x-festschrift.zhfst: $(srcdir)/index.xml \
-					 errmodel.festschrift.hfst \
-					 $(GT_SPELLER_ACCEPTOR)
-	$(AM_V_at)rm -f $@
-	$(AM_V_at)$(MKDIR_P) build/$@
-	$(AM_V_at)rm -f build/$@/*
-	$(AM_V_at)cp $(srcdir)/index.xml build/$@/index.xml
-	$(AM_V_at)cp $(GT_SPELLER_ACCEPTOR) build/$@/$(GT_SPELLER_ACCEPTOR)
-	$(AM_V_at)cp errmodel.festschrift.hfst build/$@/$(GT_ERRMODELS)
-	$(AM_V_ZIP)cd build/$@/ && $(ZIP) $(ZIPFLAGS) ../../$@ *
-
-####### *-desktop.zhfst file: #######
-# To make life easier for CI (and possibly the build flie maintainters later),
-# create a *-desktop.zhfst file by hard-linking to *.zhfst:
-se-x-festschrift-desktop.zhfst: se-x-festschrift.zhfst
-	$(AM_V_GEN)cp -f $< $@
 
 #### END: Local build rules: *.regex ####
 
