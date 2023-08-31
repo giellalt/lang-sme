@@ -8281,11 +8281,15 @@ modals do not participate in derivation
 
 * **LEXICON BINDU_IV** as DIEVVA (but without short passive) for u-verbs with dim -astit, that are hardcoded
 
+* **LEXICON DAHTU_IV**  As diehti, but -ut verbs, thus without short passive
+
 * **LEXICON DAHTU_TV**  As diehti, but -ut verbs, thus without short passive
 
 * **LEXICON BOLTU_TV**  As DAHTU_TV but with dim -astit that are harcoded
 
 * **LEXICON ALLU_IV**  -ut verbs, thus without short passive
+
+* **LEXICON DIEHTALADDA_IV** Already derived words (except words ending -uššat and -httit) - no deverbal verbs
 
 * **LEXICON DIEHTALADDA_TV** Already derived words (except words ending -uššat and -httit) - no deverbal verbs
 
@@ -8323,9 +8327,13 @@ modals do not participate in derivation
 
 * **LEXICON LEABBU_TV** No Der/NomAg (for speller reasons)- otherwise like DEAKCU_TV
 
+* **LEXICON ALBMU_IV** No Der/NomAg (for speller reasons). As BOLTU_TV otherwise
+
 * **LEXICON ALBMU_TV** No Der/NomAg (for speller reasons). As BOLTU_TV otherwise
 
 * **LEXICON BARGU_IV**  no Der/NomAg for speller reasons- Like ALLU_IV
+
+* **LEXICON BARGU_TV**  no Der/NomAg for speller reasons- Like ALLU_IV
 
 * **LEXICON BORSU_IV** as BINDU. No Der/NomAg
 
