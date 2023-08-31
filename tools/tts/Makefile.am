@@ -14,6 +14,7 @@ GIELLA_ANL_MWEDIS_SRC=mwe-dis.cg3
 GIELLA_ANL_DISAMBIGUATOR_SRC=disambiguator.cg3
 GIELLA_ANL_FUNCTIONS_SRC=functions.cg3
 GIELLA_ANL_DEPENDENCY_SRC=dependency.cg3
+GIELLA_ANL_SEMSETS_SRC=semsets.cg3
 
 # Tokeniser:
 GIELLA_ANL_TOKENISER=tokeniser-disamb-gt-desc.pmhfst
