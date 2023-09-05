@@ -23,7 +23,6 @@
 GT_TRANSCRIPTIONS_SRCS=\
 		transcriptor-clock-digit2text.lexc \
 		transcriptor-date-digit2text.lexc \
-		transcriptor-datefull-digit2text.lexc \
 		transcriptor-year-digit2text.lexc \
 		transcriptor-ttsdate-digit2text.lexc \
 		transcriptor-numbers-digit2text.lexc
