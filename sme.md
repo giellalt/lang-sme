@@ -735,8 +735,6 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 * **aigiAdv**  guokte vahku áigi
 
-* **dalleAdv**
-
 *  **dusseAdv** 
 
 * **alggageAdv**  
