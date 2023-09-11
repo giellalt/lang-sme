@@ -2412,6 +2412,8 @@ The rules are no documented yet
 
 * **SEMGenOrg** Selects Gen in front of Sem/Act
 
+* **SEMGenOrg** Selects Gen in front of Ill after ILL-V
+
 * **SEMactor** Select Gen in front of ABSTRACT and RIEKTEDILLI *unnitlogu oaidninčiegas*
 
 * **SEMXr2076** Selects Gen if you are HUMAN or Pron with an ABSTRACT to your right *iežaset vuoigatvuođa*
