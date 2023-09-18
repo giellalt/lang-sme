@@ -860,6 +860,8 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 * **rabasANom** selects
 
+* **sáhkkiiA** selects
+
 * **sámásAdv** selects
 
 * **soaittáhagasAdv** selects
@@ -2615,7 +2617,7 @@ The rules are no documented yet
 
 * **GenGeardi2** selects Gen for geardi if Num Gen or Ord to the left 
 
-* **GenTimePl** selects Gen for TIME-N + Pl if an attribute to the left *lagamus beivviid*
+* **AccTimePl** selects Acc for TIME-N + Pl if an attribute to the left *lagamus beivviid*
 
 * **GenDURadj1** selects Gen if a duration adverbial to the left 
 
