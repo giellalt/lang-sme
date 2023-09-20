@@ -749,6 +749,7 @@ get the same pronunciation whether read as SME or NOB/NNO/SWE.
 * **+OLang/ENG** = English
 * **+OLang/RUS** = Russian
 * **+OLang/UND** = Undefined
+* **+OLang/PARA** = parallelle navn, navnet skal ikke overføres til andre samisk språk
 
 ## Triggers for morphophonological rules
 
