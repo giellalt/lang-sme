@@ -118,7 +118,7 @@ AM_CONDITIONAL([DEFAULT_CASE_HANDLING], [ true ])
 # NOT support dialectal variant fst's. Use upper case, separate with space.
 # Dialects are presently only used in Oahpa fst's, and only support dialectal
 # variation within the -norm- fst's.
-AC_SUBST([DIALECTS], ["GG KJ GS"])
+#AC_SUBST([DIALECTS], ["GG KJ GS"])
 AM_CONDITIONAL([HAVE_DIALECTS], [test "x$DIALECTS" != "x"])
 
 ########## LANGUAGE SPECIFIC BUILD SETTINGS ##########
