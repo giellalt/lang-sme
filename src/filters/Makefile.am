@@ -46,6 +46,10 @@ GIELLA_FILTER_LOCAL_REGEX_SRCS=\
 					convert_to_flags-CmpNP-tags.regex                 \
 					change-optionally-word_boundary_to_hyphen.regex
 
+if WANT_APERTIUM
+GIELLA_FILTER_LOCAL_REGEX_SRCS+=remove-all_dialects_but_GG-strings.regex
+endif
+
 # List any local filter xfscript files here:
 GIELLA_FILTER_LOCAL_XFSCRIPT_SRCS=
 
