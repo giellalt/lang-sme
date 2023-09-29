@@ -296,6 +296,9 @@ generator-tts-gt-norm_nonum_noabbr_nohyph_nob.%: \
 		 quit\n" | $(XFST_TOOL)
 
 # We need to add processing of language-specific tags in the analyser:
+analyser-gt-desc.hfst \
+analyser-gt-desc.xfst \
+analyser-gt-desc.foma: \
 analyser-gt-desc.%: analyser-gt-desc.tmp.% \
 					filters/remove-derivation-position-tags.% \
 					filters/remove-norm-comp-tags.%           \
@@ -317,6 +320,9 @@ analyser-gt-desc.%: analyser-gt-desc.tmp.% \
 		 quit\n" | $(XFST_TOOL)
 
 # We need to add processing of language-specific tags in the analyser:
+analyser-dict-gt-desc.hfst \
+analyser-dict-gt-desc.xfst \
+analyser-dict-gt-desc.foma: \
 analyser-dict-gt-desc.%: analyser-dict-gt-desc.tmp.% \
 					filters/remove-derivation-position-tags.% \
 					filters/remove-grammatical-tags.%         \
@@ -338,6 +344,9 @@ analyser-dict-gt-desc.%: analyser-dict-gt-desc.tmp.% \
 		 quit\n" | $(XFST_TOOL)
 
 # We need to add processing of language-specific tags in the analyser:
+analyser-dict-gt-desc-mobile.hfst \
+analyser-dict-gt-desc-mobile.foma \
+analyser-dict-gt-desc-mobile.xfst: \
 analyser-dict-gt-desc-mobile.%: analyser-dict-gt-desc-mobile.tmp.% \
 					filters/remove-derivation-position-tags.% \
 					filters/remove-grammatical-tags.%         \
@@ -422,6 +431,9 @@ analyser-gt-norm.xfst: analyser-gt-norm.tmp.xfst \
 		 quit\n" | $(XFST) $(VERBOSITY)
 
 # ... and also in the Oahpa analyser:
+analyser-oahpa-gt-norm.hfst \
+analyser-oahpa-gt-norm.foma \
+analyser-oahpa-gt-norm.xfst: \
 analyser-oahpa-gt-norm.%: analyser-oahpa-gt-norm.tmp.% \
 					filters/remove-norm-comp-tags.%           \
 					filters/remove-grammatical-tags.%         \
@@ -486,6 +498,9 @@ analyser-pmatchdisamb-gt-desc.hfst: analyser-pmatchdisamb-gt-desc.tmp.hfst \
 	quit\n" | $(HFST_XFST) -p $(MORE_VERBOSITY)
 
 # Regular disamb analysers here, all formats:
+analyser-disamb-gt-desc.hfst \
+analyser-disamb-gt-desc.xfst \
+analyser-disamb-gt-desc.foma: \
 analyser-disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.%      \
 					filters/remove-orig_lang-tags.%           \
 					filters/remove-norm-comp-tags.%           \
@@ -511,6 +526,9 @@ analyser-disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.%      \
 		 quit\n" | $(XFST_TOOL)
 
 # LIA disamb analysers here, all formats:
+analyser-lia_disamb-gt-desc.hfst \
+analyser-lia_disamb-gt-desc.xfst \
+analyser-lia_disamb-gt-desc.foma: \
 analyser-lia_disamb-gt-desc.%: analyser-disamb-gt-desc.tmp.%      \
 					filters/remove-orig_lang-tags.%           \
 					filters/remove-grammatical-tags.%         \
@@ -618,6 +636,9 @@ endef
 $(foreach fst,hfst xfst foma,$(eval $(call giella_generators,$(fst))))
 
 # We need to add processing of language-specific tags for the Oahpa generators:
+generator-oahpa-gt-norm.hfst \
+generator-oahpa-gt-norm.foma \
+generator-oahpa-gt-norm.xfst: \
 generator-oahpa-gt-norm.%: generator-oahpa-gt-norm.tmp.% \
 					filters/remove-norm-comp-tags.%               \
 					filters/remove-derivation-position-tags.%     \
