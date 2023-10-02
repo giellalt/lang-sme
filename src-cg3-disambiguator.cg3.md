@@ -1378,6 +1378,8 @@ maid has many readings and as Rel it is a member of S-BOUNDARY. Therefore we nee
 
 * **AdvPlc** selects Adv for 
 
+* **Adv** selects Adv after lohkat 
+
 * **KillmaidAdv** removed the remaining maid Adv
 
 * **mielasAdv** 
