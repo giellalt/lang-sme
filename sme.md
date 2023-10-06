@@ -582,6 +582,8 @@ Remove unwanted analyses
 
 * **PropAttrIfPropx** removes Attr if no Prop on the right side
 
+* **Sem/Sur* removes Mal and Fem if no more names to the right
+
 * **nationalOrg** removes Prop after nation
 
 * **PropInsideProp** Selects Prop if capital letter inside clause
