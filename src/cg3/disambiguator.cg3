@@ -1557,7 +1557,7 @@ LIST SAPMI = "davvisápmi" "julevsápmi" "lullisápmi" "máttasápmi" "mearrasá
 
 LIST PROP-ATTR = Sem/Mal Sem/Sur Sem/Fem (ant m)  (ant f) ;
 LIST PROP-SUR = Sem/Sur Sem/Mal Sem/Fem  (ant m)  (ant f) cog ;
-
+LIST FIRST-NAME = Sem/Mal Sem/Fem ;
 
 
 SET HUMAN-INDIVIDUAL = HUMAN-LIKE OR FAMILY OR NON-FAMILY OR Sem/Hum - SAPMI OR ("gii") OR ("guhte") OR PROP-SUR ;
@@ -1990,7 +1990,7 @@ LIST ILLNESS = "albmasuoigi" "allergiija" "anemiija" "báhti" "bátnevárka" "b�
 # LIST ANIMAL-ILLNESS = "luossadávda" "vuorri" ;
 
 
-LIST MIELLA = "ambišuvdna" "áigumuš" "árbevierru" "bággu" "beroštupmi" "dáhttu" "dárbu" "diehtu" "dilli"  "doarjja" "ealjárvuohta" "fápmu" "geatnegahtton" "geatnegasvuohta" "gudni" "hállu" "hárjáneapmi" "liigenákca" (".*lohpi"r) "miella" "mihttu" "nákca" "niehku" "ovddasvástádus" "plána" "resursa" "riekti" "searat" "sávaldat" "váldi" "vejolašvuohta" "vuođđu" "vuohki" "vuoigatvuohta" "vuorru" ;
+LIST MIELLA = "ambišuvdna" "áigumuš" "árbevierru" "bággu" "beroštupmi" "dáhttu" "dárbu" "diehtu" "dilli"  "doarjja" "ealjárvuohta" "fápmu" "geatnegahtton" "geatnegasvuohta" "gudni" "hállu" "hárjáneapmi" "jurdda" "liigenákca" (".*lohpi"r) "miella" "mihttu" "nákca" "niehku" "ovddasvástádus" "plána" "resursa" "riekti" "searat" "sávaldat" "váldi" "vejolašvuohta" "vuođđu" "vuohki" "vuoigatvuohta" "vuorru" ;
 # These give Inf @N< instead of @ADVL (like more concrete nouns: ruhta, bileahta, dálki ...) "áigi"
 
 
@@ -2732,6 +2732,10 @@ SELECT:NominfrontofMissing Attr (0 Sem/Fem OR Sem/Mal LINK *1 Prop BARRIER WORD-
 #!! * **PropAttrIfPropx** removes Attr if no Prop on the right side
 REMOVE:PropAttrIfPropx Prop + Attr - Der/lasj IF (NEGATE *1 Prop BARRIER REAL-WORD-NOT-ABBR OR COMMA)(NEGATE 1 CC LINK 1 Prop + Attr LINK *1 Prop BARRIER REAL-WORD-NOT-ABBR OR COMMA);
 	#$ Ášši 05/01 Ođđa áššiid dieđiheapmi.
+
+#!! * **Sem/Sur* removes Mal and Fem if no more names to the right
+REMOVE:MalFem FIRST-NAME IF (0 Sem/Sur LINK NOT 1 Prop)((-1 Prop + Attr) OR (-1 Sem/Sign + ABBR LINK -1 Prop + Attr)) ;
+	#$ Mii illudit gullat Máhtte Ánte J. Sara.
 
 #!! * **nationalOrg** removes Prop after nation
 #REMOVE:nationalOrg Prop + Sem/Org IF (-1 SUOPMA + Gen)(0 N - Prop) ;
@@ -11329,8 +11333,6 @@ SELECT:AccTV Acc IF
 SELECT:TopAccCoorTEST Acc IF (0 Gen OR Nom)(1 @CNP LINK 1C Acc)  ;
 	#$ - Sámediggi galgá aivve fal giela ja kultuvrra ovddidit.
 
-
-
 #!! * **gosnevrriid** selects Acc in the special cases where there is an Acc Pl in the beginning of the question which is not the object of the verb: Gos nevrriid...
 SELECT:gosnevrriid Acc (*-1 TRANS-V BARRIER Acc - Dem OR S-BOUNDARY LINK *-1 (Acc Pl) LINK -1 MO)(0 Gen LINK *1 ("?")) ;
 	#$ Gos nevrriid Fávdna lei fidnen dan fiinna dávgebissu?
@@ -11475,6 +11477,9 @@ REMOVE:AccCOP Acc IF (*-1 COPULAS + FMAINV BARRIER NOT-NPMOD OR CC LINK *-1 (N N
 	#$ Lihtti lea ravddaid dási.
 	#Commet: (1 EOC OR COMMA OR NEGFOC) dárkkis dán oasi korpusis.. 
 
+
+
+
 #!! ### Gen modifiers inside NP 
 
 
@@ -11580,6 +11585,9 @@ SELECT:CoAccEss Acc IF (-1 CC LINK -1 (N Ess) LINK -1 (N Acc) LINK -1 OPRED-V)(0
 	
 #SELECT:CoAccr2455 Acc IF (*-1 VFIN OR MOD-ASP OR COPULAS BARRIER NOT-NPMOD)(1 CC)(*2 NP-HEAD BARRIER NOT-NPMOD LINK 1 Inf);
 	#$ Son ii muitán ahte lea ferten niesteseahka dahje lávkka guoddit.	
+	
+SELECT:TopAccCoorTEST Acc IF (0 Gen OR Nom)(1 @CNP LINK *1 Acc BARRIER NOT-Attr)  ;
+	#$ Mii illudit Máhtte Ánte J. Sara ja Hilda Länsman ja Lávrre gullat Beassášmárkaniin Guovdageainnus.
 	
 #Missing rules for: 
 
@@ -14696,6 +14704,7 @@ SELECT:SSg2Qst V + Sg2 (0 V + Pl1  LINK -1 CS)(NEGATE *0 Pl1) ;
 SELECT:SSg2Pot V + Sg2 (0 V + Pot + Pl1) ;
 SELECT:Pl3Pot Pl1 IF (0 Pot + Pl3 LINK *0 Pl1 OR Sg1) ;
 SELECT:Pl3Pot Pl3 IF (0 Pot + Pl1 LINK *0 Pl3) ;
+SELECT:Pl3 Inf IF (*-1 JA/DAHJE + @CVP BARRIER NOT-ADV-PCLE) ;
 SELECT:Pl1 Pl1 IF (*-1C Pl1 LINK NOT 0 Loc) ;
 SELECT:Pl1 Pl1 IF (-1 CS LINK NEGATE *-1 Pl3 OR Pl) ;
 REMOVE:Pl1 Pl1 IF (0 Prs + Pl3 )((*-1 Loc OR (Pl Nom) OR (Sg Nom) OR Pl3 OR (Num Nom)) OR (*1 ("?"))) ;
