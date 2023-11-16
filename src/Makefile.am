@@ -719,23 +719,23 @@ generator-gramcheck-gt-norm.hfst: generator-gramcheck-gt-norm.tmp.hfst   \
 	$(AM_V_HXFST)$(PRINTF) "\
 	set encode-weights ON\n\
 	read regex \
-			@\"filters/remove-usage-tags.hfst\"               \
-		.o. @\"filters/make-optional-foc-tags.hfst\"          \
-		.o. @\"filters/make-optional-desccompound-tags.hfst\" \
-		.o. @\"filters/make-optional-grammatical-tags.hfst\"  \
-		.o. @\"filters/remove-norm-comp-tags.hfst\"           \
-		.o. @\"filters/remove-derivation-position-tags.hfst\" \
-		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
-		.o. @\"filters/block-illegal_compound-strings.hfst\"       \
-    	.o. @\"filters/split-CmpN-tags.hfst\"                      \
-    	.o. @\"filters/insert-default_left_compounding-tags.hfst\" \
-    	.o. @\"filters/insert-default-compounding-tags.hfst\"      \
-    	.o. @\"filters/remove-illegal-derivation-strings-flagbased.hfst\" \
-    	.o. @\"filters/convert_to_flags-CmpNP-tags.hfst\"             \
-    	.o. @\"filters/split-CmpNP-tags.hfst\"                        \
-		.o. @\"filters/remove-UseLIA-strings.hfst\"           \
-		.o. @\"filters/rename_optional-POS_before_Der-tags.hfst\"      \
-		.o. @\"$<\"                                           \
+			@\"filters/remove-usage-tags.hfst\"                           \
+		.o. @\"filters/make-optional-foc-tags.hfst\"                      \
+		.o. @\"filters/make-optional-desccompound-tags.hfst\"             \
+		.o. @\"filters/make-optional-grammatical-tags.hfst\"              \
+		.o. @\"filters/remove-norm-comp-tags.hfst\"                       \
+		.o. @\"filters/remove-derivation-position-tags.hfst\"             \
+		.o. @\"filters/rename-POS_before_Der-tags.hfst\"                  \
+		.o. @\"filters/block-illegal_compound-strings.hfst\"              \
+		.o. @\"filters/split-CmpN-tags.hfst\"                             \
+		.o. @\"filters/insert-default_left_compounding-tags.hfst\"        \
+		.o. @\"filters/insert-default-compounding-tags.hfst\"             \
+		.o. @\"filters/remove-illegal-derivation-strings-flagbased.hfst\" \
+		.o. @\"filters/convert_to_flags-CmpNP-tags.hfst\"                 \
+		.o. @\"filters/split-CmpNP-tags.hfst\"                            \
+		.o. @\"filters/remove-UseLIA-strings.hfst\"                       \
+		.o. @\"filters/rename_optional-POS_before_Der-tags.hfst\"         \
+		.o. @\"$<\"                                                       \
 		;\n\
 	twosided flag-diacritics\n\
 	save stack $@\n\
