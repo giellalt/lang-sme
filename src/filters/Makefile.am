@@ -58,7 +58,8 @@ GIELLA_FILTER_LOCAL_XFSCRIPT_SRCS=
 GIELLA_FILTER_LOCAL_LEXC_SRCS=
 
 # List any locally generated regex source files here:
-GIELLA_FILTER_LOCAL_GENERATED_REGEX_SRCS=
+GIELLA_FILTER_LOCAL_GENERATED_REGEX_SRCS=\
+				make-optional-foc-tags.regex
 
 # List any locally generated xfscript source files here:
 GIELLA_FILTER_LOCAL_GENERATED_XFSCRIPT_SRCS=
@@ -78,6 +79,18 @@ change-optionally-word_boundary_to_hyphen.whfst: \
 		change-optionally-word_boundary_to_hyphen.hfst
 	$(AM_V_REWEIGHT)$(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
 		-a10000 --symbol="@C.LexComp@" --arcs-only < $< > $@
+
+foc-tags.txt: $(LEX_TAG_FILE)
+	$(AM_V_GEN)$(GTCORE)/scripts/extract-tags.sh $< $@.tmp Foc/
+	$(AM_V_GEN)if test -f $@ ; then \
+		if ! diff -q $@ $@.tmp ; then \
+			mv -f $@.tmp $@ ; \
+		else \
+			rm -f $@.tmp ; \
+		fi ;\
+	else \
+		mv -f $@.tmp $@ ; \
+	fi
 
 ############### END: Local modifications ################
 #########################################################
