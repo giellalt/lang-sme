@@ -15,18 +15,23 @@ is a noun:
 try to find another one with the same ending
 
 
-=AWG-lágideapmi+N+CmpN/SgN+CmpNP/First:AWG-lágid EAPMI_default_sem ;=
+```
+AWG-lágideapmi+N+CmpN/SgN+CmpNP/First:AWG-lágid EAPMI_default_sem ;
+```
+
 
 
 but this one has a hyphen, those are special, so try to find one without
 
-=beassášávvudeapmi+N+CmpN/SgN+Sem/Event:beassáš#ávvud EAPMI_lex_sem ;=:
-=biebmoguollešaddadeapmi+N+CmpN/SgN:biebmo#guolle#šaddad EAPMI_default_sem ;=:
-=vuorbádeapmi+N+CmpN/SgN+CmpNP/First:vuorbád EAPMI_default_sem ;=:
+```
+beassášávvudeapmi+N+CmpN/SgN+Sem/Event:beassáš#ávvud EAPMI_lex_sem ;
+biebmoguollešaddadeapmi+N+CmpN/SgN:biebmo#guolle#šaddad EAPMI_default_sem ;
+vuorbádeapmi+N+CmpN/SgN+CmpNP/First:vuorbád EAPMI_default_sem ;
+```
 
 
 how to know which one:
-EAPMI_default_sem gets a default semantic tag
+=EAPMI_default_sem= gets a default semantic tag
 EAPMI_lex_sem gets a manual semantic tag for example Sem/Event in this case
 
 means self-harm
@@ -52,7 +57,7 @@ next word:
 ## Adding siskkáldasdálkkodeapmi
 
 
-1. find the longest possible match (that is also a compound), so not only deapmi, but dálkkodeapmi --+N+CmpN/SgN:ele#rávdnje#dálkkod EAPMI_default_sem ;
+1. find the longest possible match (that is also a compound), so not only deapmi, but dálkkodeapmi --`+N+CmpN/SgN:ele#rávdnje#dálkkod EAPMI_default_sem ;`
 2. replace ele#rávdnje by siskkáldas: siskkáldasdálkkodeapmi+N+CmpN/SgN:siskkáldas#dálkkod EAPMI_default_sem ;
 3. DONE
 
@@ -63,12 +68,14 @@ since it is a sme-specific propernoun which would get translated in the other S�
 
 2. look for the longest possible match meaning if we have a compound, let's try to find a compound - diehtoguovddáš NO
 guovddáš:
+```
 Davvi% álbmogiid% guovddáš+MWE+CmpNP/First:Davvi% álbmogiid% guovddáž LONDON-org ;
 Sámi% Dáiddaguovddáš+MWE+CmpNP/First:Sámi% Dáidda#guovddáž LONDON-org ;
-3. Add entry + tags from the match - Árbediehtoguovddáš+MWE+CmpNP/First:Sámi% Dáidda#guovddáž LONDON-org ;
-4. Change part after the colon and add hashtags if there are more parts of a compound - Árbediehtoguovddáš+MWE+CmpNP/First:Árbe#diehto#guovddáž LONDON-org ;
-5. and then remove +MWE since it's only one word
-6. remove +CmpNP/First
+```
+4. Add entry + tags from the match - `Árbediehtoguovddáš+MWE+CmpNP/First:Sámi% Dáidda#guovddáž LONDON-org` ;
+5. Change part after the colon and add hashtags if there are more parts of a compound - `Árbediehtoguovddáš+MWE+CmpNP/First:Árbe#diehto#guovddáž LONDON-org ;`
+6. and then remove +MWE since it's only one word
+7. remove +CmpNP/First
 
 
 
@@ -76,31 +83,33 @@ Sámi% Dáiddaguovddáš+MWE+CmpNP/First:Sámi% Dáidda#guovddáž LONDON-org ;
 
 It's an adjective:
 1. search for a compound with -agat
-guhkesagat+A+Sem/Dummytag:guhkes#ag AGAdj ;
-CAREFUL (don't confuse) with similar -agat words where the consonant before is part of the word, like - lagat+A+Sem/Dummytag+Gram/Comp:laga OVDDIT ;
+`guhkesagat+A+Sem/Dummytag:guhkes#ag AGAdj ;`
+CAREFUL (don't confuse) with similar -agat words where the consonant before is part of the word, like - `lagat+A+Sem/Dummytag+Gram/Comp:laga OVDDIT ;`
 2. add entry with tags of guhkesagat
 3. replace parts after the colon:
-buotagat+A+CmpN/SgN+CmpN/PlG+Sem/Hum:buot#ag AGAdj ;
+
 
 
 These are tags that say that the entry can be the first part of the compound, it can either be in nominative singular and genitive plural.
 
-+CmpN/SgN --- could be buotagatsearvi
-+CmpN/PlG --- could be buotagagiidsearvi (this is used in combination with Sem/Hum tag)
+`+CmpN/SgN` --- could be buotagatsearvi
+`+CmpN/PlG` --- could be buotagagiidsearvi (this is used in combination with Sem/Hum tag)
 
 
 be aware of morphophonological processes:
 before the hashtag:
 
-what does the number 9 mean
 
+## what does the number 9 mean?
+
+```
 bargiidbellodatpolitihkar+v1+N+CmpN/SgN+CmpN/SgG+CmpN/PlG+OLang/NOB+Sem/Hum:bargiid9#bellodat#politihkkar MATTAR ;
 
 bargiid#bellodat#politihkkar MATTAR ;
 slamlaguna+N+CmpN/SgN+CmpN/SgG+CmpN/PlG+Sem/Plc:slam9#laguna GOAHTI-A ;
 
 eaŋkilváikkuhangaskaoapmi+v5+N+OLang/NOB+Sem/Dummytag:eaŋkal#váikkuhan#gask9#oapmi GOAHTI-I ;
-
+```
 
 9 prevents that 
 - bargiid- changes to bargiit-
