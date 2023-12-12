@@ -706,7 +706,6 @@ generator-gramcheck-gt-norm.hfst: generator-gramcheck-gt-norm.tmp.hfst   \
 				filters/remove-UseLIA-strings.hfst                       \
 				filters/make-optional-grammatical-tags.hfst              \
 				filters/make-optional-desccompound-tags.hfst             \
-				filters/make-optional-foc-tags.hfst                      \
 				filters/block-illegal_compound-strings.hfst              \
 				filters/split-CmpN-tags.hfst                             \
 				filters/insert-default_left_compounding-tags.hfst        \
@@ -720,7 +719,6 @@ generator-gramcheck-gt-norm.hfst: generator-gramcheck-gt-norm.tmp.hfst   \
 	set encode-weights ON\n\
 	read regex \
 			@\"filters/remove-usage-tags.hfst\"                           \
-		.o. @\"filters/make-optional-foc-tags.hfst\"                      \
 		.o. @\"filters/make-optional-desccompound-tags.hfst\"             \
 		.o. @\"filters/make-optional-grammatical-tags.hfst\"              \
 		.o. @\"filters/remove-norm-comp-tags.hfst\"                       \
