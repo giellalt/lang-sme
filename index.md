@@ -48,6 +48,7 @@ This page documents the work on the [North Sami language model](http://github.co
 -   [The use of flag diacritics](docu-sme-flag-diacritics.html)
 -   [Documentation of the disambiguation file](docu-sme-dis.html) (Partly obsolete)
 -   [See also the general disambiguation page](/ling/docu-disambiguation.html).
+-   [Introduction for CG linguists to working with FST for SME](docs/sme-fst-guide.md)
 
 
 # Documentation on North Saami tools
