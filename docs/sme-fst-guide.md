@@ -62,7 +62,7 @@ next word:
 3. DONE
 
 
-Árbediehtoguovddáš
+## Adding Árbediehtoguovddáš
 it's a propernoun
 since it is a sme-specific propernoun which would get translated in the other Sámi languages it goes to lang-sme/src/fst/stems/sme-propernouns.lexc (instead of shared-smi)
 
@@ -99,6 +99,51 @@ These are tags that say that the entry can be the first part of the compound, it
 be aware of morphophonological processes:
 before the hashtag:
 
+## Adding unnibuš
+It's an adjective, but not yet in the normative lexicon
+
+```
+unnibuš unni+A+Der/Comp+A+Der/Dimin+A+Attr 0,000000
+unnibuš unni+A+Der/Comp+A+Der/Dimin+A+Sg+Nom 0,000000
+unnibuš unni+A+Err/Orth+Der/Comp+A+Der/Dimin+A+Attr 0,000000
+unnibuš unni+A+Err/Orth+Der/Comp+A+Der/Dimin+A+Sg+Nom 0,000000
+```
+
+
+search for the ending -buš:
+`stuorebuš+A+Sem/Hum:stuorebužž STUORIBUS ;`
+exchange parts of it
+`unnibuš+A+Sem/Hum:unnibužž STUORIBUS ;`
+
+## Adding “Middagsfjället”
+
+it is a propernoun for all Sámi languages
+open shared-smi/src/fst/stems/smi-propernouns.lexc
+search for fjället
+find:
+`Borkafjället+OLang/UND:Borka^fjället LONDON-LOAN-plc ;`
+adapt:
+`Middagsfjället+OLang/UND:Middags^fjället LONDON-plc ;`
+
+## Adding buotagat “Jensenius”
+is a surname
+open shared-smi/src/fst/stems/smi-propernouns.lexc
+search for the ending -ius
+`Iskanius+OLang/UND:Iskani^us BERN-sur ;`
+
+## Adding buotagat “Rama Cay”
+what on earth is that? - google knows
+an island in Nicaragua
+There is nothing similar in the lexicon
+The following continuation lexica mean the following:
+BERN-plc — Bernas, Bernii
+LONDON-plc — Londonis, Londonii
+ACCRA-plc — Accras, Accrai
+
+search for “ay” – Bay+CmpNP/None+OLang/UND:Bay BERN-plc ;
+add +MWE
+change +CmpNP/None to +CmpNP/First
+
 
 ## what does the number 9 mean?
 
@@ -115,3 +160,9 @@ eaŋkilváikkuhangaskaoapmi+v5+N+OLang/NOB+Sem/Dummytag:eaŋkal#váikkuhan#gask9
 - bargiid- changes to bargiit-
 - slam- changes to slan- (slanlaguna)
 - gask- changes to gas-
+
+## Meaning of different continuation lexica
+BERN-plc — Bernas, Bernii
+LONDON-plc — Londonis, Londonii
+ACCRA-plc — Accras, Accrai
+
