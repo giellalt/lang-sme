@@ -583,12 +583,12 @@ analyser-gramcheck-gt-desc.hfst: analyser-gramcheck-gt-desc.tmp.hfst \
 		.o. @\"filters/remove-derivation-position-tags.hfst\" \
 		.o. @\"filters/rename-POS_before_Der-tags.hfst\"      \
 		.o. @\"filters/block-illegal_compound-strings.hfst\"       \
-    	.o. @\"filters/split-CmpN-tags.hfst\"                      \
-    	.o. @\"filters/insert-default_left_compounding-tags.hfst\" \
-    	.o. @\"filters/insert-default-compounding-tags.hfst\"      \
-    	.o. @\"filters/remove-illegal-derivation-strings-flagbased.hfst\" \
-    	.o. @\"filters/convert_to_flags-CmpNP-tags.hfst\"             \
-    	.o. @\"filters/split-CmpNP-tags.hfst\"                        \
+		.o. @\"filters/split-CmpN-tags.hfst\"                      \
+		.o. @\"filters/insert-default_left_compounding-tags.hfst\" \
+		.o. @\"filters/insert-default-compounding-tags.hfst\"      \
+		.o. @\"filters/remove-illegal-derivation-strings-flagbased.hfst\" \
+		.o. @\"filters/convert_to_flags-CmpNP-tags.hfst\"             \
+		.o. @\"filters/split-CmpNP-tags.hfst\"                        \
 		.o. @\"filters/remove-semantic-tags-before-derivations.hfst\" \
 		.o. @\"filters/remove-UseLIA-strings.hfst\"                   \
 		.o. @\"filters/remove-MinusSpell-strings.hfst\"               \
