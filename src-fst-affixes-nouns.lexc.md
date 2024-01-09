@@ -179,9 +179,9 @@ Bisyllabic nouns
 
 * **LEXICON BEARRI**  to avoid unfortunate diminutives like bearáš and salaš in speller (bearaš, sálaš) +  "beassán" = beassi+Sg+Nom/Gen/Acc+PxSg1
 
-* **LEXICON GEAHCCI** +CmpN/SgN +CmpN/SgG +CmpN/PlG
+* **LEXICON ACTORGEAHCCI** +CmpN/SgN +CmpN/SgG +CmpN/PlG
 
-* **LEXICON GEAHCCICT**  Actors, to avoid geahččán, jábmán, geahččát, jábmát
+* **LEXICON ACTORGEAHCCICT**  Actors, to avoid geahččán, jábmán, geahččát, jábmát
 
 * **LEXICON ACTORVALDI** lexicalized actors because we have restricted verb derivation for speller. Long compound-forms, without "váldán"
 
