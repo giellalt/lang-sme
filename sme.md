@@ -7653,6 +7653,8 @@ Trisyllabic nouns
 
 * **LEXICON SEAMU** Short compound-forms. Trisyll. Inanim. Gradating 0-Nouns
 
+* **LEXICON SEAMU_CGforms** Short compound-forms. Trisyll. Inanim. Gradating 0-Nouns
+
 * **LEXICON SEAMULONG** Long compound-forms. Trisyll. Inanim. Gradating 0-Nouns
 
 * **LEXICON GAHPIR** Short compound-forms. Trisyll. Non-Gradating C-Nouns
