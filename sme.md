@@ -7441,7 +7441,7 @@ Bisyllabic nouns
 
 * **LEXICON IIJA** loan words ending -iija; also with only -i as Err/Orth, like galleri
 
-* **LEXICON ESSEIJA** loan words ending -iija; Illative -iijai as well -iijii: kopiijai, kopiijii
+* **LEXICON ESSEIJA** loan words ending -ija; Illative -ijai as well -ijii: kopiijai, kopiijii
 
 * **LEXICON IIVA** -iivva loan words.
 
@@ -7470,6 +7470,8 @@ Bisyllabic nouns
 * **LEXICON SOSIAL** Recent loanwords on -ála with both short and long cmp-form
 
 * **LEXICON GARGIA**  Vowel-final loan words without Gradation and Ill ^change
+
+* **LEXICON MEDIA**  Vowel-final loan words without Gradation and Ill ^change, with -i(i)ja Err/Orth
 
 * **LEXICON OBOE**  oe-final loan words without Gradation and Ill ^change
 
