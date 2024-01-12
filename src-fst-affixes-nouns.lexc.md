@@ -22,6 +22,8 @@ Bisyllabic nouns
 
 * **LEXICON ALBMILONG** Bisyll. V-Nouns. Long nom-compound-forms, long gen.
 
+* **LEXICON GOAHTI_CGforms** Bisyll. V-Nouns. Forms that usually get CG. This lexicon is mostly meant for adding Err/Orth forms wihout CG to lemmas, which should have CG, like reabbá:reabbáid
+
 * **LEXICON ALBMILONGSHORT** Bisyll. V-Nouns. Long/SHORT nom-compound-forms, long gen.
 
 * **LEXICON AIGI** Bisyll. V-Nouns. Short nom-compound-forms, short gen.
