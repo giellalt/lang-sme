@@ -239,6 +239,8 @@ Trisyllabic nouns
 
 * **LEXICON MALIS** Short compound-forms Tris. Inanim. Gradating C-Nouns
 
+* **LEXICON MALIS_CGforms**  Long compound-forms Tris. Inanim. Gradating C-Nouns
+
 * **LEXICON MALISLONG**  Long compound-forms Tris. Inanim. Gradating C-Nouns
 
 * **LEXICON MALISLONGSHORT**  Long and short compound-forms. Tris. Inanim. Gradating C-Nouns
