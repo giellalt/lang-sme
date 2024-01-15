@@ -49,6 +49,8 @@ modals do not participate in derivation
 
 * **LEXICON UVVA_IV** passives -uvvat
 
+* **LEXICON UVVA_IV_NO_ErrOrth_uvvot** passives -uvvat, with no possible -uvvot derived from -it
+
 * **LEXICON SMUVVA_IV** passives -snuvvat, -smuvvat
 
 * **LEXICON DOAROSTUVVA_TV** INCHOATIVES on -stuvvat
