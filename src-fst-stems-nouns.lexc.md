@@ -5,6 +5,8 @@
 
 * **LEXICON MiddleNouns  ** is pointed to from R in compounds.lexc
 
+* **LEXICON Lahka  ** is pointed to from NounRoot above
+
 * **LEXICON HyphNouns  ** is pointed to from NounRoot above
 
 * **LEXICON FirstComponent  ** is pointed to from Noun below

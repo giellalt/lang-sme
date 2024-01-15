@@ -29,6 +29,7 @@ are allowed.
 make it possible to analyse certain texts
 from printing houses and newspapers.
 * to Acronym,  maana-tv, "lomme-cd-spelar"
+* to Lahka, 
 * to CmpNumeral, maana-123
 * to ProperNoun, as the 2nd part of compounds for non-hyph.
 words. viessu-London goes through here.
@@ -44,6 +45,7 @@ words. viessu-London goes through here.
 * To Verb via flag diacr declares that the compound
 * To A,  needs a N tag later in the derivation
 * To Acronym, like  maana-tv, "lomme-cd-spelar"
+* to Lahka,
 * to CmpNumeral,  NRK-2 etc.
 * Proper nouns as the 2nd part of compounds for hyph-words.
 London-Hull is covered here, whereas Hull-viessu
