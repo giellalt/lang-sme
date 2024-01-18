@@ -33,6 +33,16 @@ so better:
 FairPlay+CmpNP/First+OLang/ENG:FairPlay BERN-obj ;
 Playboy+Err/Orth+CmpNP/First+OLang/ENG:Play-boy BERN-obj ; !SUB
 
+## Adding last and first names
+
+Mollekleiv - last name
+same ending as Hynnekleiv+OLang/NOB:Hynne^kleiv BERN-sur ;
+
+Mollekleiv+OLang/NOB:Molle^kleiv BERN-sur ;
+
+## Adding Nouns - perfomativitehtateoriija
+ráŋggáštanriekteteoriija+N+Sem/Dummytag:ráŋggáštan#riekte#te^ori IIJA ;
+
 ## Adding Iežasnájadeapmi
   
 is a noun:
@@ -189,6 +199,13 @@ eaŋkilváikkuhangaskaoapmi+v5+N+OLang/NOB+Sem/Dummytag:eaŋkal#váikkuhan#gask9
 Playboy+CmpNP/First+OLang/ENG:Play^boy BERN-obj ;
 
 It's a soft hyphen
+
+## What kind of languages are there in propernouns
++OLang/NOB - Norwegian
++OLang/FIN - Finnish
++OLang/SWE - Swedish
++OLang/ENG - English
++OLang/UND - everything else
 
 ## What does +CmpNP/First mean?
 
