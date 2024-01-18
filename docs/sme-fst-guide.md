@@ -39,9 +39,13 @@ Mollekleiv - last name
 same ending as Hynnekleiv+OLang/NOB:Hynne^kleiv BERN-sur ;
 
 Mollekleiv+OLang/NOB:Molle^kleiv BERN-sur ;
+Butler+OLang/ENG:Butler LONDON-sur ;
+Hoge+OLang/NOB:Hoge ACCRA-sur ;
 
 ## Adding Nouns - perfomativitehtateoriija
 ráŋggáštanriekteteoriija+N+Sem/Dummytag:ráŋggáštan#riekte#te^ori IIJA ;
+
+perfomativitehtateoriija+N+Sem/Prod-cogn:perfomativitehta#te^ori IIJA ;
 
 ## Adding Iežasnájadeapmi
   
@@ -198,7 +202,7 @@ eaŋkilváikkuhangaskaoapmi+v5+N+OLang/NOB+Sem/Dummytag:eaŋkal#váikkuhan#gask9
 ## What does ^ mean?
 Playboy+CmpNP/First+OLang/ENG:Play^boy BERN-obj ;
 
-It's a soft hyphen
+It's a soft hyphen for names as opposed to hard hyphens #
 
 ## What kind of languages are there in propernouns
 +OLang/NOB - Norwegian
