@@ -8,6 +8,19 @@ How to add new words to lexc files:
 - "buotagat"
 - "Rama Cay"
 
+## Adding Nay Pyi Taw
+Search google
+
+
+## Adding Play-boy sub to Playboy
+is a propernoun in smi (smi-propernouns.lexc)
+since there is no -boy I search for -y
+
+Roy+CmpNP/None+OLang/UND:Roy BERN-mal ;
+but Playboy should be -org or -obj
+so better:
+FairPlay+CmpNP/First+OLang/ENG:FairPlay BERN-obj ;
+Playboy+Err/Orth+CmpNP/First+OLang/ENG:Play-boy BERN-obj ; !SUB
 
 ## Adding Iežasnájadeapmi
   
@@ -160,6 +173,11 @@ eaŋkilváikkuhangaskaoapmi+v5+N+OLang/NOB+Sem/Dummytag:eaŋkal#váikkuhan#gask9
 - bargiid- changes to bargiit-
 - slam- changes to slan- (slanlaguna)
 - gask- changes to gas-
+
+## What does ^ mean?
+Playboy+CmpNP/First+OLang/ENG:Play^boy BERN-obj ;
+
+It's a soft hyphen
 
 ## Meaning of different continuation lexica
 BERN-plc — Bernas, Bernii
