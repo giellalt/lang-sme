@@ -15,9 +15,17 @@ modals do not participate in derivation
 
 ### Ordinary bisyllabic verbs
 
-* **LEXICON DIEHTI_TV** Bisyllabic i-verbs with Personal Passive
+* **LEXICON DIEHTI_TV** Bisyllabic i-verbs with Personal Passive, diphthong
 
-* **LEXICON BORRA_TV** Bisyllabic a- and u-verbs with Personal Passive
+* **LEXICON ADDI_TV** Bisyllabic i-verbs with Personal Passive, monophthong
+
+* **LEXICON BORRA_TV** Bisyllabic a-verbs with Personal Passive, monophthong
+
+* **LEXICON DEAIVA_TV** Bisyllabic a-verbs with Personal Passive, diphthong
+
+* **LEXICON GAIKU_TV** Bisyllabic u-verbs with Personal Passive, monophthong
+
+* **LEXICON DOALVU_TV** Bisyllabic u-verbs with Personal Passive, diphthong
 
 * **LEXICON BOAHTI_IV**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg
 
