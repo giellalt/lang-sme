@@ -10,6 +10,17 @@ How to add new words to lexc files:
 
 ## Adding Nay Pyi Taw
 Search google
+Hovedstaden i Myanmar (Burma)
+search for -aw in smi-propernouns.lexc
+
+Saginaw+OLang/UND:Saginaw BERN-plc ;
+Nay% Pyi% Taw+MWE+OLang/UND:Nay% Pyi% Taw BERN-plc ;
+
+
+## Adding Frivilighet Norge
+propernoun in smi-propernouns.lexc
+
+Frivillighet% Norge+MWE+CmpNP/First+OLang/NOB:Frivillighet% Norge ACCRA-org ;
 
 
 ## Adding Play-boy sub to Playboy
@@ -178,6 +189,11 @@ eaŋkilváikkuhangaskaoapmi+v5+N+OLang/NOB+Sem/Dummytag:eaŋkal#váikkuhan#gask9
 Playboy+CmpNP/First+OLang/ENG:Play^boy BERN-obj ;
 
 It's a soft hyphen
+
+## What does +CmpNP/First mean?
+
+We add it always after +MWE
+it means that it can only be the first part of a compound, e.g. "Frivillighet Norge-organisašuvdna"
 
 ## Meaning of different continuation lexica
 BERN-plc — Bernas, Bernii
