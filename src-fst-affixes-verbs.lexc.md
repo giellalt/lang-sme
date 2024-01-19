@@ -33,7 +33,7 @@ modals do not participate in derivation
 
 * **LEXICON DIEVVA_IV**  Bisyllabic a- and u-verbs without Personal Passive but with Der/NomAg
 
-* **LEXICON CEARGU_IV**  Bisyllabic a- and u-verbs without Personal Passive but with Der/NomAg
+* **LEXICON BIEHKU_IV**  Bisyllabic a- and u-verbs without Personal Passive but with Der/NomAg
 
 * **LEXICON SUHKA_IV**  Bisyllabic a- and u-verbs without Personal Passive but with Der/NomAg
 
