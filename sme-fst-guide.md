@@ -204,12 +204,12 @@ Playboy+CmpNP/First+OLang/ENG:Play^boy BERN-obj ;
 
 It's a soft hyphen for names as opposed to hard hyphens #
 
-## What kind of languages are there in propernouns
-+OLang/NOB - Norwegian
-+OLang/FIN - Finnish
-+OLang/SWE - Swedish
-+OLang/ENG - English
-+OLang/UND - everything else
+## What kind of languages are there in propernouns?
+- +OLang/NOB - Norwegian
+- +OLang/FIN - Finnish
+- +OLang/SWE - Swedish
+- +OLang/ENG - English
+- +OLang/UND - everything else
 
 ## What does +CmpNP/First mean?
 
