@@ -27,9 +27,15 @@ modals do not participate in derivation
 
 * **LEXICON DOALVU_TV** Bisyllabic u-verbs with Personal Passive, diphthong
 
-* **LEXICON BOAHTI_IV**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg
+* **LEXICON BOAHTI_IV**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg, diphthong
+
+* **LEXICON CIVKI_IV**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg, monophthong
 
 * **LEXICON DIEVVA_IV**  Bisyllabic a- and u-verbs without Personal Passive but with Der/NomAg
+
+* **LEXICON CEARGU_IV**  Bisyllabic a- and u-verbs without Personal Passive but with Der/NomAg
+
+* **LEXICON SUHKA_IV**  Bisyllabic a- and u-verbs without Personal Passive but with Der/NomAg
 
 ### Bisyllabic verbs
 
