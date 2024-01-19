@@ -13,34 +13,39 @@ Search google
 Hovedstaden i Myanmar (Burma)
 search for -aw in smi-propernouns.lexc
 
+```
 Saginaw+OLang/UND:Saginaw BERN-plc ;
 Nay% Pyi% Taw+MWE+OLang/UND:Nay% Pyi% Taw BERN-plc ;
-
+```
 
 ## Adding Frivilighet Norge
 propernoun in smi-propernouns.lexc
 
-Frivillighet% Norge+MWE+CmpNP/First+OLang/NOB:Frivillighet% Norge ACCRA-org ;
+`Frivillighet% Norge+MWE+CmpNP/First+OLang/NOB:Frivillighet% Norge ACCRA-org ;`
 
 
 ## Adding Play-boy sub to Playboy
 is a propernoun in smi (smi-propernouns.lexc)
 since there is no -boy I search for -y
 
-Roy+CmpNP/None+OLang/UND:Roy BERN-mal ;
+`Roy+CmpNP/None+OLang/UND:Roy BERN-mal ;`
 but Playboy should be -org or -obj
 so better:
+```
 FairPlay+CmpNP/First+OLang/ENG:FairPlay BERN-obj ;
 Playboy+Err/Orth+CmpNP/First+OLang/ENG:Play-boy BERN-obj ; !SUB
+```
 
 ## Adding last and first names
 
 Mollekleiv - last name
-same ending as Hynnekleiv+OLang/NOB:Hynne^kleiv BERN-sur ;
+same ending as `Hynnekleiv+OLang/NOB:Hynne^kleiv BERN-sur ;`
 
+```
 Mollekleiv+OLang/NOB:Molle^kleiv BERN-sur ;
 Butler+OLang/ENG:Butler LONDON-sur ;
 Hoge+OLang/NOB:Hoge ACCRA-sur ;
+```
 
 ## Adding Nouns - perfomativitehtateoriija
 ráŋggáštanriekteteoriija+N+Sem/Dummytag:ráŋggáštan#riekte#te^ori IIJA ;
@@ -200,9 +205,9 @@ eaŋkilváikkuhangaskaoapmi+v5+N+OLang/NOB+Sem/Dummytag:eaŋkal#váikkuhan#gask9
 - gask- changes to gas-
 
 ## What does ^ mean?
-Playboy+CmpNP/First+OLang/ENG:Play^boy BERN-obj ;
+`Playboy+CmpNP/First+OLang/ENG:Play^boy BERN-obj ;'
 
-It's a soft hyphen for names as opposed to hard hyphens #
+It's a soft hyphen for names as opposed to hard hyphens # in anything else
 
 ## What kind of languages are there in propernouns?
 - +OLang/NOB - Norwegian
@@ -217,7 +222,7 @@ We add it always after +MWE
 it means that it can only be the first part of a compound, e.g. "Frivillighet Norge-organisašuvdna"
 
 ## Meaning of different continuation lexica
-BERN-plc — Bernas, Bernii
-LONDON-plc — Londonis, Londonii
-ACCRA-plc — Accras, Accrai
+- BERN-plc — Bernas, Bernii
+- LONDON-plc — Londonis, Londonii
+- ACCRA-plc — Accras, Accrai
 
