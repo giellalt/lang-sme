@@ -35,7 +35,7 @@ endif # WANT_APERTIUM
 
 # Add the build code of local additions here:
 remove-derivation-strings.%.regex: \
-			$(top_builddir)/src/filters/derivation-tags.txt \
+			$(top_builddir)/src/fst/filters/derivation-tags.txt \
 			remove-derivation-strings-modifications.%.regex
 	$(AM_V_GEN)$(GTCORE)/scripts/taglist2remove_strings_regex.sh \
 		$@ derivation $^

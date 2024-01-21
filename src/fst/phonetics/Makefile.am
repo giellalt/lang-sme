@@ -23,11 +23,7 @@ SUBDIRS = . tests
 #! @param GT_PHONETICS_SUPPLEMENTS optional, other sources to distribute and
 #! 		  compile for other things
 GT_PHONETICS_MAIN=txt2ipa.xfscript
-GT_PHONETICS_SUPPLEMENTS=text2tts-fin.xfscript \
-						 text2tts-nob.xfscript
-
-# text2tts-$(GTLANG).xfscript - not in use, was made for Acapela, and in the end
-# not used by them at all.
+GT_PHONETICS_SUPPLEMENTS=
 
 ##########################################
 # General build rules included from here:#

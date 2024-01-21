@@ -213,8 +213,8 @@ AC_CONFIG_FILES([test/src/morphology/generate-adpos-lemmas.sh], \
       [chmod a+x test/src/morphology/generate-adpos-lemmas.sh])
 AC_CONFIG_FILES([tools/shellscripts/generate-ipa-lexicon.sh], \
       [chmod a+x tools/shellscripts/generate-ipa-lexicon.sh])
-AC_CONFIG_FILES([src/phonetics/tests/test-ipa-conversion.sh], \
-      [chmod a+x src/phonetics/tests/test-ipa-conversion.sh])
+AC_CONFIG_FILES([src/fst/phonetics/tests/tests/test-ipa-conversion.sh], \
+      [chmod a+x src/fst/phonetics/tests/tests/test-ipa-conversion.sh])
 
 ############ END: Language-specific scripts. #############
 
