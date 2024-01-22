@@ -8283,23 +8283,31 @@ modals do not participate in derivation
 
 * **LEXICON ADDI_TV** Bisyllabic i-verbs with Personal Passive, monophthong
 
+* **LEXICON BOAHTI_IV**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg, diphthong
+
+* **LEXICON CIVKI_IV**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg, monophthong
+
+* **LEXICON DIEHTI-VERB** Bisyllabic i-verbs with Personal Passive
+
+* **LEXICON BOAHTI-VERB** Bisyllabic i-verbs with Personal Passive
+
+* **LEXICON DIEVVA_IV**  Bisyllabic a-verbs without Personal Passive but with Der/NomAg, diphthong
+
+* **LEXICON SUHKA_IV**  Bisyllabic a-verbs without Personal Passive but with Der/NomAg, monophthong
+
+* **LEXICON DIEVVA-VERB**  Bisyllabic a- and u-verbs without Personal Passive but with Der/NomAg, diphthong
+
 * **LEXICON BORRA_TV** Bisyllabic a-verbs with Personal Passive, monophthong
 
 * **LEXICON DEAIVA_TV** Bisyllabic a-verbs with Personal Passive, diphthong
+
+* **LEXICON BORRA-VERB** Bisyllabic a- and u-verbs with Personal Passive
 
 * **LEXICON GAIKU_TV** Bisyllabic u-verbs with Personal Passive, monophthong
 
 * **LEXICON DOALVU_TV** Bisyllabic u-verbs with Personal Passive, diphthong
 
-* **LEXICON BOAHTI_IV**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg, diphthong
-
-* **LEXICON CIVKI_IV**  Bisyllabic i-verbs without Personal Passive but with Der/NomAg, monophthong
-
-* **LEXICON DIEVVA_IV**  Bisyllabic a-verbs without Personal Passive but with Der/NomAg, diphthong
-
 * **LEXICON BIEHKU_IV**  Bisyllabic u-verbs without Personal Passive but with Der/NomAg, diphthong
-
-* **LEXICON SUHKA_IV**  Bisyllabic a-verbs without Personal Passive but with Der/NomAg, monophthong
 
 ### Bisyllabic verbs
 
