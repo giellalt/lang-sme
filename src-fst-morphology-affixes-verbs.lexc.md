@@ -15,7 +15,7 @@ modals do not participate in derivation
 
 ### Ordinary bisyllabic verbs
 
-* **LEXICON DIEHTI_TV** Bisyllabic i-verbs with Personal Passive, diphthong
+* **LEXICON VUOVDI_TV** Bisyllabic i-verbs with Personal Passive, diphthong
 
 * **LEXICON ADDI_TV** Bisyllabic i-verbs with Personal Passive, monophthong
 
@@ -83,9 +83,9 @@ modals do not participate in derivation
 
 * **LEXICON ARVALADDA_IV** Already derived words (except words ending -uššat)
 
-* **LEXICON MASSI_TV** No Der/NomAg (for speller reasons). Bisyllabic i-verbs with Personal Passive. Otherwise like DIEHTI_TV
+* **LEXICON MASSI_TV** No Der/NomAg (for speller reasons). Bisyllabic i-verbs with Personal Passive. Otherwise like VUOVDI_TV
 
-* **LEXICON VALDI_TV**  No Der/NomAg (for speller reasons). Bisyllabic i-verbs with Personal Passive. No VGen. Otherwise like DIEHTI_TV
+* **LEXICON VALDI_TV**  No Der/NomAg (for speller reasons). Bisyllabic i-verbs with Personal Passive. No VGen. Otherwise like VUOVDI_TV
 
 * **LEXICON ASTA_TV** No Der/NomAg (for speller reasons). Bisyllabic a- and u-verbs with Personal Passive. Otherwise like BORRA_TV
 
