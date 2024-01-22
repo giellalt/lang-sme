@@ -98,43 +98,21 @@ as one long text [here](sme.md).
         * [speech_disambiguator.cg3](src-cg3-speech_disambiguator.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/cg3/speech_disambiguator.cg3))
         * [valency.cg3](src-cg3-valency.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/cg3/valency.cg3))
     * `fst/`
-        * `affixes/`
-            * [abbreviations.lexc](src-fst-affixes-abbreviations.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/abbreviations.lexc))
-            * [acronyms.lexc](src-fst-affixes-acronyms.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/acronyms.lexc))
-            * [adjectives.lexc](src-fst-affixes-adjectives.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/adjectives.lexc))
-            * [nouns.lexc](src-fst-affixes-nouns.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/nouns.lexc))
-            * [numerals.lexc](src-fst-affixes-numerals.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/numerals.lexc))
-            * [possessive-suffixes.lexc](src-fst-affixes-possessive-suffixes.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/possessive-suffixes.lexc))
-            * [pronouns.lexc](src-fst-affixes-pronouns.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/pronouns.lexc))
-            * [propernouns.lexc](src-fst-affixes-propernouns.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/propernouns.lexc))
-            * [symbols.lexc](src-fst-affixes-symbols.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/symbols.lexc))
-            * [verbs.lexc](src-fst-affixes-verbs.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/affixes/verbs.lexc))
-        * [clitics.lexc](src-fst-clitics.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/clitics.lexc))
-        * [compounding.lexc](src-fst-compounding.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/compounding.lexc))
+        * `morphology/`
+            * `affixes/`
+            * [clitics.lexc](src-fst-morphology-clitics.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/morphology/clitics.lexc))
+            * [compounding.lexc](src-fst-morphology-compounding.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/morphology/compounding.lexc))
+            * [phonology.twolc](src-fst-morphology-phonology.twolc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/morphology/phonology.twolc))
+            * [root.lexc](src-fst-morphology-root.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/morphology/root.lexc))
+            * `stems/`
+        * `phonetics/`
+            * [text2tts-fin.xfscript](src-fst-phonetics-text2tts-fin.xfscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonetics/text2tts-fin.xfscript))
+            * [text2tts-nob.xfscript](src-fst-phonetics-text2tts-nob.xfscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonetics/text2tts-nob.xfscript))
+            * [text2tts-sme.xfscript](src-fst-phonetics-text2tts-sme.xfscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonetics/text2tts-sme.xfscript))
+            * [txt2ipa.xfscript](src-fst-phonetics-txt2ipa.xfscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonetics/txt2ipa.xfscript))
         * [phonology-L2-from-branch.twolc](src-fst-phonology-L2-from-branch.twolc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonology-L2-from-branch.twolc))
+            * `/`
         * [phonology-L2.twolc](src-fst-phonology-L2.twolc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonology-L2.twolc))
-        * [phonology.twolc](src-fst-phonology.twolc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonology.twolc))
-        * [root.lexc](src-fst-root.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/root.lexc))
-        * `stems/`
-            * [adjectives.lexc](src-fst-stems-adjectives.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/adjectives.lexc))
-            * [adpositions.lexc](src-fst-stems-adpositions.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/adpositions.lexc))
-            * [adverbs.lexc](src-fst-stems-adverbs.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/adverbs.lexc))
-            * [conjunctions.lexc](src-fst-stems-conjunctions.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/conjunctions.lexc))
-            * [interjections.lexc](src-fst-stems-interjections.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/interjections.lexc))
-            * [nouns.lexc](src-fst-stems-nouns.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/nouns.lexc))
-            * [numerals.lexc](src-fst-stems-numerals.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/numerals.lexc))
-            * [particles.lexc](src-fst-stems-particles.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/particles.lexc))
-            * [pronouns.lexc](src-fst-stems-pronouns.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/pronouns.lexc))
-            * [sme-abbreviations.lexc](src-fst-stems-sme-abbreviations.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/sme-abbreviations.lexc))
-            * [sme-propernouns.lexc](src-fst-stems-sme-propernouns.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/sme-propernouns.lexc))
-            * [sme-punctuation.lexc](src-fst-stems-sme-punctuation.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/sme-punctuation.lexc))
-            * [subjunctions.lexc](src-fst-stems-subjunctions.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/subjunctions.lexc))
-            * [verbs.lexc](src-fst-stems-verbs.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/stems/verbs.lexc))
-    * `phonetics/`
-        * [text2tts-fin.xfscript](src-phonetics-text2tts-fin.xfscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/phonetics/text2tts-fin.xfscript))
-        * [text2tts-nob.xfscript](src-phonetics-text2tts-nob.xfscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/phonetics/text2tts-nob.xfscript))
-        * [text2tts-sme.xfscript](src-phonetics-text2tts-sme.xfscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/phonetics/text2tts-sme.xfscript))
-        * [txt2ipa.xfscript](src-phonetics-txt2ipa.xfscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/phonetics/txt2ipa.xfscript))
 * `tools/`
     * `grammarcheckers/`
         * [grammarchecker-resource.cg3](tools-grammarcheckers-grammarchecker-resource.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/grammarchecker-resource.cg3))
@@ -145,3 +123,5 @@ as one long text [here](sme.md).
         * [tokeniser-disamb-gt-desc.pmscript](tools-tokenisers-tokeniser-disamb-gt-desc.pmscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/tokenisers/tokeniser-disamb-gt-desc.pmscript))
         * [tokeniser-gramcheck-gt-desc.pmscript](tools-tokenisers-tokeniser-gramcheck-gt-desc.pmscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/tokenisers/tokeniser-gramcheck-gt-desc.pmscript))
         * [tokeniser-tts-cggt-desc.pmscript](tools-tokenisers-tokeniser-tts-cggt-desc.pmscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/tokenisers/tokeniser-tts-cggt-desc.pmscript))
+    * `tts/`
+        * [valency.cg3](tools-tts-valency.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/tts/valency.cg3))
