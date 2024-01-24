@@ -17,7 +17,7 @@
 
 #########################################################
 ############## BEGIN: Local modifications ###############
-
+# List any local filter regex files here:
 GIELLA_FILTER_LOCAL_REGEX_SRCS=\
 					downcase_UCletters.regex                          \
 					remove-norm-comp-tags.regex                       \
@@ -91,7 +91,6 @@ foc-tags.txt: $(LEX_TAG_FILE)
 	else \
 		mv -f $@.tmp $@ ; \
 	fi
-
 
 ############### END: Local modifications ################
 #########################################################
