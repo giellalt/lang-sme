@@ -10,7 +10,10 @@ GT_ORTHOGRAPHIC_REGEX_SRCS=\
 		inituppercase.regex \
 		spellrelax.regex    \
 		spellrelax-mobile-keyboard.regex \
-		spellrelax-tags.regex
+		spellrelax-tags.regex \
+		spellrelax-with-flagtags.regex \
+		comprelax-with-flagtags.regex \
+		block-double_spellrelax.regex
 
 GT_ORTHOGRAPHIC_XFSCRIPT_SRCS=\
 		allcaps.xfscript      \
