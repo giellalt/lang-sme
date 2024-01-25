@@ -69,6 +69,8 @@ Bisyllabic nouns
 
 * **LEXICON GARGIA**  Vowel-final loan words without Gradation and Ill ^change
 
+* **LEXICON BANDY**  Vowel-final loan words without Gradation and Ill ^change
+
 * **LEXICON MEDIA**  Vowel-final loan words without Gradation and Ill ^change, with -i(i)ja Err/Orth
 
 * **LEXICON OBOE**  oe-final loan words without Gradation and Ill ^change
