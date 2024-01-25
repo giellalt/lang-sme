@@ -75,7 +75,7 @@ Bisyllabic nouns
 
 * **LEXICON OBOE**  oe-final loan words without Gradation and Ill ^change
 
-* **LEXICON BUFFALO** consonant fin loanwords, some vow fin like revya
+* **LEXICON STANDUP** consonant fin loanwords, some vow fin like revya
 
 * **LEXICON ESSAYA** recent loanwords on vow+a
 
