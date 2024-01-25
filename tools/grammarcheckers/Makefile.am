@@ -10,7 +10,7 @@ SUBDIRS = filters . tests
 
 GIELLA_GC_MWEDIS_SRC=mwe-dis.cg3
 GIELLA_GC_SPELLER_CG_SRC=spellchecker.cg3
-GIELLA_GC_GRAMCHECKER_SRC=grammarchecker-release.cg3
+GIELLA_GC_GRAMCHECKER_SRC=grammarchecker.cg3
 GIELLA_GC_WHSPACE_ANAL_SRC=analyser-gt-whitespace.regex \
 						   analyser-gt-errorwhitespace.regex
 
