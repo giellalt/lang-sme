@@ -7432,6 +7432,8 @@ Bisyllabic nouns
 
 * **LEXICON ALBMILONGSHORT** Bisyll. V-Nouns. Long/SHORT nom-compound-forms, long gen.
 
+* **LEXICON AIGI-I** Bisyll. V-Nouns. Short nom-compound-forms, short gen.
+
 * **LEXICON AIGI** Bisyll. V-Nouns. Short nom-compound-forms, short gen.
 
 * **LEXICON STAHTA** Bisyll. Non-Gradating a-Nouns; i-Illative
