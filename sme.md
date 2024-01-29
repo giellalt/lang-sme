@@ -7649,7 +7649,9 @@ Trisyllabic nouns
 
 * **LEXICON MALIS** Short compound-forms Tris. Inanim. Gradating C-Nouns
 
-* **LEXICON MALIS_CGforms**  Long compound-forms Tris. Inanim. Gradating C-Nouns
+* **LEXICON MALIS_CGforms**   Tris. Inanim. Gradating C-Nouns
+
+* **LEXICON GAHPIR_CGforms**  Inanim. Non-gradating C-Nouns
 
 * **LEXICON MINISTTAR**  Loanword. Trisyllm CG. Err/Orth as bisyll without CG.
 
@@ -8191,7 +8193,7 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 * **LEXICON PxVvowch** for vowel stems, with X2, X1 with stem vowel change
 
-* **LEXICON Px12VvowchD** for vowel stems with stem vowel change and diph, 1. p
+* **LEXICON Px12VvowchDIPH** for vowel stems with stem vowel change and diph, 1. p
 
 * **LEXICON Px1Vvowch** for vowel stems with stem vowel change, 1. p
 
@@ -9878,6 +9880,7 @@ part of the continuation lexicons, and will be located after the POS tag.
 * +Sem/Hum_Part
 * +Sem/Hum_Plant
 * +Sem/Hum_Plc
+* +Sem/Hum_Prod-vis !ikona
 * +Sem/Hum_Sign
 * +Sem/Hum_Tool
 * +Sem/Hum_Tool-it = Human

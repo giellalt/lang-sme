@@ -4,7 +4,7 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 * **LEXICON PxVvowch** for vowel stems, with X2, X1 with stem vowel change
 
-* **LEXICON Px12VvowchD** for vowel stems with stem vowel change and diph, 1. p
+* **LEXICON Px12VvowchDIPH** for vowel stems with stem vowel change and diph, 1. p
 
 * **LEXICON Px1Vvowch** for vowel stems with stem vowel change, 1. p
 

@@ -243,7 +243,9 @@ Trisyllabic nouns
 
 * **LEXICON MALIS** Short compound-forms Tris. Inanim. Gradating C-Nouns
 
-* **LEXICON MALIS_CGforms**  Long compound-forms Tris. Inanim. Gradating C-Nouns
+* **LEXICON MALIS_CGforms**   Tris. Inanim. Gradating C-Nouns
+
+* **LEXICON GAHPIR_CGforms**  Inanim. Non-gradating C-Nouns
 
 * **LEXICON MINISTTAR**  Loanword. Trisyllm CG. Err/Orth as bisyll without CG.
 
