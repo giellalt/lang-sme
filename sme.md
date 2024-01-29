@@ -7481,7 +7481,7 @@ Bisyllabic nouns
 
 * **LEXICON OBOE**  oe-final loan words without Gradation and Ill ^change
 
-* **LEXICON STANDUP** consonant fin loanwords, some vow fin like revya
+* **LEXICON STANDUP** consonant fin loanwords, 
 
 * **LEXICON ESSAYA** recent loanwords on vow+a
 
@@ -7651,6 +7651,8 @@ Trisyllabic nouns
 
 * **LEXICON MALIS_CGforms**  Long compound-forms Tris. Inanim. Gradating C-Nouns
 
+* **LEXICON MINISTTAR**  Loanword. Trisyllm CG. Err/Orth as bisyll without CG.
+
 * **LEXICON MALISLONG**  Long compound-forms Tris. Inanim. Gradating C-Nouns
 
 * **LEXICON MALISLONGSHORT**  Long and short compound-forms. Tris. Inanim. Gradating C-Nouns
@@ -7662,6 +7664,8 @@ Trisyllabic nouns
 * **LEXICON SEAMU_CGforms** Short compound-forms. Trisyll. Inanim. Gradating 0-Nouns
 
 * **LEXICON SEAMULONG** Long compound-forms. Trisyll. Inanim. Gradating 0-Nouns
+
+* **LEXICON REVISOR** Loanword. Trisyll. Err/Orth as bisyll.
 
 * **LEXICON GAHPIR** Short compound-forms. Trisyll. Non-Gradating C-Nouns
 
@@ -8186,6 +8190,8 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 # North Saami Possessive suffixes
 
 * **LEXICON PxVvowch** for vowel stems, with X2, X1 with stem vowel change
+
+* **LEXICON Px12VvowchD** for vowel stems with stem vowel change and diph, 1. p
 
 * **LEXICON Px1Vvowch** for vowel stems with stem vowel change, 1. p
 
