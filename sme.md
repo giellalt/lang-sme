@@ -7513,6 +7513,8 @@ Bisyllabic nouns
 
 * **LEXICON NPx2V-LUONDU**
 
+* **LEXICON RUVTTO** only this word because of it's Err/Orths 
+
 * **LEXICON RUOKTU** only this word because of its behavior in compounds, where it is normally in SgGen: ruovttu-/ruovtto-
 
 * **LEXICON MADIDJA** máđi and cmp
