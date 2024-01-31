@@ -1,5 +1,5 @@
 # Divvun & Giellatekno - open source grammars for Sámi and other languages
-# Copyright © 2000-2023 The University of Tromsø & the Norwegian Sámi Parliament
+# Copyright © 2000-2024 The University of Tromsø & the Norwegian Sámi Parliament
 # http://giellatekno.uit.no & http://divvun.no
 #
 # This program is free software; you can redistribute and/or modify
@@ -13,7 +13,7 @@
 # giellatekno@uit.no or feedback@divvun.no
 
 # ==================================================================== #
-#    N O R T H E R N  S Á M I  G R A M M A R  C H E C K E R  (RELEASE)
+#    N O R T H  S Á M I  G R A M M A R  C H E C K E R  
 # ==================================================================== #
 # ==================================================================== #
 
@@ -5804,15 +5804,15 @@ SET CONC-2-3C-DDJ = CONC-2 OR CONC-3C OR CONC-3A-GRADE-II;
 	
 	#!! ## moadde kerdi > moddii
 
-ADD:xmsyn-moddii (&msyn-moddii) TARGET (Num Sg Nom) OR (Num Sg Gen) IF	(1 ("kerdi" N Sg Nom) OR ("kerdi" N Sg Gen));
-ADDRELATION (DELETE1) (Num &msyn-moddii) TO (1 ("kerdi" N Sg Nom) OR ("kerdi" N Sg Gen)) ;
+ADD:xmsyn-moddii (&msyn-moddii) TARGET (Num Sg Nom) OR (Num Sg Gen) IF	(1 ("geardi" N Sg Gen Allegro) OR ("geardde" Adv));
+ADDRELATION (DELETE1) (Num &msyn-moddii) TO (1 ("geardi" N Sg Gen Allegro) OR ("geardde" Adv)) ;
 
-COPY:xmsyn-moddii ("moddii" Adv &SUGGEST) EXCEPT ("muáddi" Num Sg Nom &msyn-moddii) TARGET ("muáddi" &msyn-moddii);
+COPY:xmsyn-moddii ("moddii" Adv &SUGGEST) EXCEPT ("moadde" Pron Indef Attr &msyn-moddii) TARGET ("moadde" &msyn-moddii);
 	## uáčču uáiniđ moolâviermi hiáilumin muáddi kerdi.
 
-COPY:xmsyn-moddii ("maŋgii" Adv &SUGGEST) EXCEPT ("maŋgâ" Num Sg Nom &msyn-moddii) TARGET ("maŋgâ" &msyn-moddii);
+COPY:xmsyn-moddii ("maŋgii" Adv &SUGGEST) EXCEPT ("máŋga" Pron Indef Nom &msyn-moddii) TARGET ("máŋga" &msyn-moddii);
 
-COPY:xmsyn-moddii ("ohtii" Adv &SUGGEST) EXCEPT ("oovtâ" Num Sg Nom &msyn-moddii) TARGET ("oovtâ" &msyn-moddii);
+COPY:xmsyn-moddii ("oktii" Adv &SUGGEST) EXCEPT ("okta" Num Sg Nom &msyn-moddii) TARGET ("okta" &msyn-moddii);
 
 	############################################################
 	# GENERAL REAL WORD ERROR RULES	(based on morpho-phonology)#
@@ -5820,7 +5820,7 @@ COPY:xmsyn-moddii ("ohtii" Adv &SUGGEST) EXCEPT ("oovtâ" Num Sg Nom &msyn-moddi
 
 	# Der/h  vs inf, -i, -a, -u; alla konsonantgrupper utom  1 och 4D, grad III-II, infinitive grade III
 	# -----------------------------------------------------------------
-	# sáhtit¢(verb,conc|sáhttit), oahpat¢(verb,conc|oahppat)
+	# {sáhtit}¢{verb,conc|sáhttit}, {oahpat}¢{verb,conc|oahppat}
 
 	# set for idiosyncratic confusion partners
 
@@ -9026,6 +9026,96 @@ ADD:xreal-oastit (&real-oastit) TARGET ("oasttihit" V TV Imprt Sg2) OR ("oastit"
     ## Bivdán earáid oasttit vuola du ovddas ?
 
   	# in errors.xml
+  	
+	# rađastaddat vs. ráđastaddat vs. ráđástaddat
+    # --------------------------------------------
+
+ADD:xreal-rađastaddat (&real-rađastaddat) TARGET ("ráđastaddat") OR ("ráđistit" Ex/V IV Der/adda) IF (*0 (Nom) BARRIER GRAMCHK-S-BOUNDARY LINK 0 Sem/Hum OR Sem/Mal OR Sem/Fem OR Sem/Sur OR Pers OR Dem)(*0 (N Acc) BARRIER GRAMCHK-S-BOUNDARY LINK 0 Sem/Obj-clo OR Sem/Clth OR Sem/Clthpart)  ;
+
+COPY:real-rađastaddat ("rađastit" V TV Der/adda &SUGGEST) EXCEPT ("ráđastaddat" V IV &real-rađastaddat) TARGET (V &real-rađastaddat) ;
+	## Bengtsson ráđastattai sávnnjiid. Bengtsson rađastattai sávnnjiid.
+	## Bengtsson ráđástattai sávnnjiid.
+	#$ Bengtsson ráđástattai gerresiid.
+	#$ Bengtsson ráđástattai daid.
+	# in errors.xml
+	
+
+ADD:xreal-ráđastaddat (&real-ráđastaddat) TARGET ("rahtat" Ex/V TV Der/st Der/adda) OR ("rađastit" Ex/V TV Der/adda) OR ("ráđistit" Ex/V IV Der/adda) IF (*0 Nom + Sem/Hum OR Nom + Sem/Mal OR Nom + Sem/Fem OR Nom + Sem/Sur OR Nom + Sem/Org OR Nom +  Pers OR Nom + Dem BARRIER GRAMCHK-S-BOUNDARY)  (NEGATE *0  Acc + Sem/Hum OR Acc + Sem/Mal OR Acc + Sem/Fem OR Acc + Sem/Sur OR Acc + PPRON-NOM-NOT-DAT OR Acc + Sem/Obj-clo OR Acc + Sem/Clth OR Acc + Sem/Clthpart BARRIER GRAMCHK-S-BOUNDARY ) ;
+
+COPY:real-ráđastaddat ("ráđastaddat" V IV &SUGGEST) EXCEPT ("rađastit" V TV Der/adda &real-ráđastaddat) TARGET (V &real-ráđastaddat) ;
+	## Bengtsson rađastattai visot omiid.
+	#$ Bengtsson rađastattai visot olbmuid.
+	# in error.xml
+
+
+	# rađastallat vs. ráđastallat vs. ráđástallat
+    # -------------------------------------------
+
+
+
+ADD:xreal-rađastallat (&real-rađastallat) TARGET ("ráđastallat") OR ("ráđistit" Ex/V IV Der/alla) OR ("ráđastit" Ex/V IV Der/alla V) OR ("ráhtat" Ex/V IV Der/st Ex/V Der/alla V) IF (*0 (Nom) + Sem/Hum OR (Nom) + Sem/Mal OR (Nom) + Sem/Fem OR (Nom) + Sem/Sur OR (Nom) +  Pers OR (Nom) + Dem BARRIER GRAMCHK-S-BOUNDARY)  (*0 (N Acc) BARRIER GRAMCHK-S-BOUNDARY LINK 0 BEDCLOTHES OR CLOTHES OR Sem/Clth OR Sem/Obj-clo OR ("sávdnji"))  ;
+
+COPY:real-rađastallat ("rađastit" V TV Der/alla &SUGGEST) EXCEPT ("ráđastallat" V IV &real-rađastallat) OR ("ráđistit" Ex/V IV Der/alla) OR ("ráđastit" Ex/V IV Der/alla V) OR ("ráhtat" Ex/V IV Der/st Ex/V Der/alla V) TARGET (V &real-rađastallat) ;
+	## Bengtsson ráđastalai sávnnjiid.
+	#$ Bengtsson rađastalai daid.
+	## Bengtsson ráđástalai sávnnjiid.
+	#$ Bengtsson rađastalai gerresiid.
+	# in error.xml
+	
+ADD:xreal-ráđastallat (&real-ráđastallat) TARGET ("rahtat" Ex/V TV Der/st Der/alla) OR ("rađastit" Ex/V TV Der/alla) OR ("ráđistit" Ex/V IV Der/alla) IF (*0 (Nom) + Sem/Hum OR (Nom) + Sem/Mal OR (Nom) + Sem/Fem OR (Nom) + Sem/Sur OR (Nom) + Sem/Org OR (Nom) +  Pers OR (Nom) + Dem BARRIER GRAMCHK-S-BOUNDARY )  (NEGATE *0 (Acc) BARRIER GRAMCHK-S-BOUNDARY LINK 0 Sem/Hum OR Sem/Mal OR Sem/Fem OR Sem/Sur OR PPRON-NOM-NOT-DAT OR BEDCLOTHES OR CLOTHES OR ("sávdnji")) ;
+
+COPY:real-ráđastallat ("ráđastallat" V IV &SUGGEST) EXCEPT ("rađastit" V TV Der/alla &real-ráđastallat) TARGET (V &real-ráđastallat) ;
+	## Bengtsson rađastalai visot omiid. 
+	#$ Bengtsson rađastalai visot olbmuid.
+	# rađastallat - sprette
+	# ráđastallat (+Acc) = ville rå over noe, påstå at man eier det
+	# ráđastit (+Acc) = kamuflere, tildekke, dekke)
+	# ráđistit IV Der/Com (+Com+Sem/Ani)
+	# rahtat+V+TV+Der/st+V+Der/alla+V+Inf
+	# rađastallat	rahtat+V+TV+Der/st+V+Der/alla+V+Ind+Prs+Pl1
+	# rađastallat	rađastit+V+TV+Der/alla+V+Inf
+	# rađastallat	rađastit+V+TV+Der/alla+V+Ind+Prs+Pl1
+	# in error.xml
+
+ADD:xreal-ráđástallat (&real-ráđástallat) TARGET ("rahtat" Ex/V TV Der/st Der/alla) OR ("rađastit" Ex/V TV Der/alla) OR ("ráđastallat") OR ("ráđastit" Ex/V IV Der/alla V) OR ("ráhtat" Ex/V IV Der/st Ex/V Der/alla V) IF (*0 Com + Sem/Hum OR Com + Sem/Mal OR Com + Sem/Fem OR Com + Sem/Sur OR Com + Sem/Org OR Com +  Pers OR Com + Dem BARRIER GRAMCHK-S-BOUNDARY ) ;
+
+COPY:real-ráđástallat ("ráđistit" V IV Der/alla &SUGGEST) EXCEPT ("rađastit" V TV Der/alla &real-ráđástallat) TARGET (V &real-ráđástallat) ;
+	## Olbmot ráđastallet singuin.
+	#$ Olbmot ráđástallet singuin.
+	# in error.xml
+
+	
+	# rikkastaddat vs. rikkástaddat
+    # -----------------------------
+
+ADD:xreal-rikkástaddat (&real-rikkástaddat) TARGET ("rikkastaddat") IF (*0 (Nom) BARRIER GRAMCHK-S-BOUNDARY  LINK 0 Sem/Hum OR Sem/Mal OR Sem/Fem OR Sem/Sur) ;
+
+COPY:real-rikkástaddat ("rikkástaddat" &SUGGEST) EXCEPT ("rikkastaddat" &real-rikkástaddat) TARGET (V &real-rikkástaddat) ;
+	## Bengtsson rikkastattai doppe.
+	# in error.xml
+	
+ADD:xreal-rikkastaddat (&real-rikkastaddat) TARGET ("rikkástaddat") IF (*0 (N Nom) BARRIER GRAMCHK-S-BOUNDARY LINK 0 Sem/Body) ;
+
+COPY:real-rikkastaddat ("rikkastaddat" &SUGGEST) EXCEPT ("rikkástaddat" &real-rikkastaddat) TARGET (V &real-rikkastaddat) ;
+	## Mu bahta nu rikkástaddá.
+	# in error.xml
+
+
+
+	# rikkastallat vs. rikkástallat
+    # -----------------------------
+
+ADD:xreal-rikkástallat (&real-rikkástallat) TARGET ("rikkastallat") IF (*0 (N Nom) BARRIER GRAMCHK-S-BOUNDARY LINK 0 Sem/Hum OR Sem/Mal OR Sem/Fem OR Sem/Sur) ;
+
+COPY:real-rikkástallat ("rikkástallat" &SUGGEST) EXCEPT ("rikkastallat" &real-rikkástallat) TARGET (V &real-rikkástallat) ;
+	## Bengtsson rikkastalai doppe.
+	# in error.xml
+	
+ADD:xreal-rikkastallat (&real-rikkastallat) TARGET ("rikkástallat") IF (*0 (N Nom) BARRIER GRAMCHK-S-BOUNDARY LINK 0 Sem/Body) ;
+COPY:real-rikkastallat ("rikkastallat" &SUGGEST) EXCEPT ("rikkástallat" &real-rikkastallat) TARGET (V &real-rikkastallat) ;
+	## Mu bahta nu rikkástallá.
+	# in error.xml  	
+
 
 		# sakka vs. sákka
     # -----------------------------
