@@ -7501,6 +7501,8 @@ Bisyllabic nouns
 
 * **LEXICON SAPMI** Bisyll. V-Nouns. No nom-compounding, short gen.
 
+* **LEXICON DARRU** Bisyll. V-Nouns. No nom-compounding, short gen.
+
 * **LEXICON XGIELLA** Bisyll. V-Nouns. No nom-compounding, short gen.
 
 * **LEXICON BEALLE** words ending -bealle. Short nom-compound-forms, short gen.
