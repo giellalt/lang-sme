@@ -45,6 +45,8 @@ Bisyllabic nouns
 
 * **LEXICON PROFIILA**  -iila Loan words.
 
+* **LEXICON MINIMUMforms** For Err/Orth: giving e.g. -o forms for lemma with norm -u
+
 * **LEXICON STRUKTUR** Recent loanwords on -vra with short cmp-form: struktur-
 
 * **LEXICON KULTUR** -kultuvra, compound forms: kultur-, kulttor-
@@ -253,7 +255,9 @@ Trisyllabic nouns
 
 * **LEXICON MINISTTAR**  Loanword. Trisyllm CG. Err/Orth as bisyll without CG.
 
-* **LEXICON MALISLONG**  Long compound-forms Tris. Inanim. Gradating C-Nouns
+* **LEXICON MALISLONG**  Long compound-forms Tris. Inanim. Gradating C-Nouns, vowel change
+
+* **LEXICON BOAGAN**  Long compound-forms Tris. Inanim. Gradating C-Nouns, no vowel change
 
 * **LEXICON MALISLONGSHORT**  Long and short compound-forms. Tris. Inanim. Gradating C-Nouns
 
@@ -358,6 +362,8 @@ Contracted nouns
 * **LEXICON EssV**
 
 * **LEXICON GOAHTI-OBL**
+
+* **LEXICON KONSERTA-ERR** for some forms without dipth
 
 * **LEXICON GOAHTI-IU-OBL**
 
