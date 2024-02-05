@@ -7451,7 +7451,7 @@ Bisyllabic nouns
 
 * **LEXICON PROFIILA**  -iila Loan words.
 
-* **LEXICON MINIMUMforms** For Err/Orth: giving e.g. -o forms for lemma with norm -u
+* **LEXICON STEMVOWELforms** For alternative stem vowel, e.g. -o 
 
 * **LEXICON STRUKTUR** Recent loanwords on -vra with short cmp-form: struktur-
 
@@ -7475,7 +7475,7 @@ Bisyllabic nouns
 
 * **LEXICON SOSIAL** Recent loanwords on -ála with both short and long cmp-form
 
-* **LEXICON GARGIA**  Vowel-final loan words without Gradation and Ill ^change
+* **LEXICON ARENA**  Vowel-final loan words without Gradation and Ill ^change
 
 * **LEXICON BANDY**  Vowel-final loan words without Gradation and Ill ^change
 
