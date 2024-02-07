@@ -10362,7 +10362,11 @@ Lexica for adverb subtypes
 
 * **LEXICON LEBBUIplc   **
 
+* **LEXICON LEBBUItime   **
+
 * **LEXICON LEAPPOSplc   **
+
+* **LEXICON LEAPPOStime   **
 
 * **LEXICON gadv   **  adv that can form compounds
 
