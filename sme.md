@@ -7285,6 +7285,8 @@ from the otherwise uniform declension.
 
 * **LEXICON EABBUCASE2**
 
+* **LEXICON EABBU_ERRforms**
+
 * **LEXICON EABBU_MINIP**  for giving Use/NGminip-tags
 
 * **LEXICON EABBUCASE1_MINIP**  for giving Use/NGminip-tags
@@ -7296,6 +7298,8 @@ from the otherwise uniform declension.
 * **LEXICON BUStem**
 
 * **LEXICON EAMOS** eastern form -amos as well
+
+* **LEXICON EAMOS_ERRforms** eastern form -amos as well
 
 * **LEXICON GAPPUS0** Almost id. to MALIS0. MALIS0 has no VUOHTA, GAPPUS0 has no Px Ess., and shouldn't have either.
 
