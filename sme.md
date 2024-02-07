@@ -7088,6 +7088,8 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 * **LEXICON NVDCompAttr_ISSORASSA-**  sublexicon to DABALAS
 
+* **LEXICON LAS_OBL** 
+
 * **LEXICON DEARVVASLAS**  -laš adjectives without short Attr and SgNom Comp forms. The word dearvvaslaš/dearvvašlaš is not directed here, but to DABALAS
 
 * **LEXICON DEARVVASLAS2**  only to lift out ISSORASSA-, see DEARVVASLAS
@@ -7206,6 +7208,8 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 * **LEXICON RAHPIS**  Contr, CG and -is -> -á, attr -es, with long and short comp forms
 
+* **LEXICON HARVVIS_CGforms**  Contr, CG and -is -> -á, attr -e, short comp forms
+
 * **LEXICON HARVVIS**  Contr, CG and -is -> -á, attr -e, short comp forms
 
 * **LEXICON MALLASadj-**
@@ -7217,6 +7221,8 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 * LEXICON DEVNVCASE  bisyllabic nominal declension
 
 * LEXICON GOAHTI-OBLadj
+
+* **LEXICON GOAHTI-ADJ_CGforms** Bisyll. V-Adjs. Forms that usually get CG. This lexicon is mostly meant for adding Err/Orth forms wihtout CG to lemmas, which should have CG, 
 
 * **LEXICON GOAHTI-NEadj**
 
