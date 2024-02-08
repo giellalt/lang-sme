@@ -7058,6 +7058,8 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 * **LEXICON VIELGAT_NOCOMP**  just a sublexicon to VIELG_NOCOMP
 
+* **LEXICON RIEKTAT**  -at final adj with attr -es and -dis
+
 * **LEXICON CAHKK**  -at final adj with attr -es and -dis
 
 * **LEXICON JALGAT**  only jalgat, attr jalga and jalges
