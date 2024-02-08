@@ -42,6 +42,8 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 * **LEXICON UHCC**  uhcci, unni, seaggi, attr uhca, unna, seakka
 
+* **LEXICON UNN**  uhcci, unni, seaggi, attr uhca, unna, seakka
+
 * **LEXICON JEAGOHEAPMI**  caritives
 
 * **LEXICON BIVNNUHEAPME**  no bivnnuhis here, special, beacause popular and unpopular collide in attribute form :)
