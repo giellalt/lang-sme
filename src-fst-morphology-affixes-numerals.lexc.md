@@ -155,6 +155,8 @@
 
 * **LEXICON GAVCCI** Case forms of the basic digits
 
+* **LEXICON NumSTEMVOWELforms** Case forms of the basic digits
+
 * **LEXICON BEALGAVCCI** Case forms of the basic digits, only sg
 
 * **LEXICON GAVCCINUPPELOHKAI**
