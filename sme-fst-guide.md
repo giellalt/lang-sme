@@ -123,7 +123,7 @@ We also use it if the word is an MWE (Sámi% Dáiddaguovddáš+MWE+CmpNP/First:S
 
 next word:
 
-## Adding siskkáldasdálkkodeapmi
+## Adding noun siskkáldasdálkkodeapmi
 
 
 1. find the longest possible match (that is also a compound), so not only deapmi, but dálkkodeapmi --`+N+CmpN/SgN:ele#rávdnje#dálkkod EAPMI_default_sem ;`
@@ -131,7 +131,7 @@ next word:
 3. DONE
 
 
-## Adding Árbediehtoguovddáš
+## Adding propernoun Árbediehtoguovddáš
 it's a propernoun
 since it is a sme-specific propernoun which would get translated in the other Sámi languages it goes to lang-sme/src/fst/stems/sme-propernouns.lexc (instead of shared-smi)
 
@@ -214,6 +214,15 @@ add +MWE
 change +CmpNP/None to +CmpNP/First
 
 
+## Adding propernoun Sziget
+google - Hungarian festival
+
+```
+Sziget+OLang/UND:Sziget9 LONDON-org ;
+``
+
+
+
 ## what does the number 9 mean?
 
 ```
@@ -239,6 +248,13 @@ eaŋkilváikkuhangaskaoapmi+v5+N+OLang/NOB+Sem/Dummytag:eaŋkal#váikkuhan#gask9
 `Playboy+CmpNP/First+OLang/ENG:Play^boy BERN-obj ;'
 
 It's a soft hyphen for names as opposed to hard hyphens # in anything else
+
+## What does º mean?
+
+```
+billu+N+Sem/Dummytag:bilºlu GOAHTI-U ;
+``
+it means that genitive cannot be "bilu" - so it's third grade/second grade 
 
 ## What kind of languages are there in propernouns?
 - +OLang/NOB - Norwegian
