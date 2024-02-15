@@ -41,6 +41,8 @@ Bisyllabic nouns
 
 * **LEXICON ESSEIJA** loan words ending -ija; Illative -ijai as well -ijii: kopiijai, kopiijii
 
+* **LEXICON KAIJA** 
+
 * **LEXICON IIVA** -iivva loan words.
 
 * **LEXICON PROFIILA**  -iila Loan words.
