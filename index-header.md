@@ -8,11 +8,46 @@
 
 This page documents the work on the [North Sami language model](http://github.com/giellalt/lang-sme), how to build it and how to use it.
 
-# Using the analysers
+# Quick intro: Using the North Saami analysers
 
 -   [How to use the morphological parsers](/tools/docu-sme-manual.html)
 -   [Generation of paradigms](http://giellatekno.uit.no/cgi/p-sme.sme.html) and
     [analysis of text](http://giellatekno.uit.no/cgi/d-sme.sme.html)
+
+
+# Documentation of the analysers
+Here we document the different components of the analysers and the tags used. We also link to some discussion notes.
+
+## Morphophonology, morphology and syntax
+
+-   [The structure of the source file catalogue](/infra/infraremake/NewinfraCatalogues.html).
+-   [Documentation](docu-sme-twol.html) of the
+    [Northern Saami phonology file](https://giellalt.com/giellalt/lang-sme/src/fst/phonology.twolc).
+-   [Documentation](docu-sme-lex.html) of
+    [the lexicon files](https://giellalt.com/giellalt/lang-sme/src/fst/)
+-   [The use of flag diacritics](docu-sme-flag-diacritics.html)
+-   [Documentation of the disambiguation file](docu-sme-dis.html) (Partly obsolete)
+-   [See also the general disambiguation page](/ling/docu-disambiguation.html).
+-   [Introduction for CG linguists to working with FST for SME](sme-fst-guide.md)
+
+## Tags used for analysis
+
+-   The [morphological](docu-sme-grammartags.html),
+    [morphological (readable version)](docu-mini-smi-grammartags.html), [derivational](https://giellalt.github.io/lang/common/DerivationOverview.html) and
+    [syntactic](/lang/common/docu-sme-syntaxtags.html) tags.
+-   [Lemma homonymies and variants - tags for indentifying and sorting](/lang/smi/lemma.html)
+-   [Lemma homonymies and variants: Main documentation in English](/common/Variation_in_lexc.html)
+
+## Discussions on improving our linguistic analysis
+
+-   [Discussions on issues common for Saami languages](/lang/smi/index.html)
+-   [Discussions on restricting generating of possessive suffixes](PXdiscussion.html)
+
+
+# Documentation on North Saami tools
+- [Speller optimisations for North Saami](SpellerConfiguration.html).
+- [North Saami grammar checker](gramcheck/index.md)
+- [The original North Saami grammar checker page](https://giellalt.github.io/proof/gramcheck/NortSaamiGrammarchecker.html)
 
 # Projects involving North Saami
 
@@ -25,65 +60,9 @@ This page documents the work on the [North Sami language model](http://github.co
     - [Documentation](https://giellalt.github.io/proof/gramcheck/NortSaamiGrammarchecker.html) and [some more documentation](gramcheck/index.md)
 -   [The L2 Transducer](TheL2Transducer.html)
 
-# Tags used for analysis
-
--   The [morphological](docu-sme-grammartags.html),
-    [morphological (readable version)](docu-mini-smi-grammartags.html), [derivational](https://giellalt.github.io/lang/common/DerivationOverview.html) and
-    [syntactic](/lang/common/docu-sme-syntaxtags.html) tags.
--   [Lemma homonymies and variants - tags for indentifying and sorting](/lang/smi/lemma.html)
--   [Lemma homonymies and variants: Main documentation in English](/common/Variation_in_lexc.html)
-
-# Discussions on improving our linguistic analysis
-
--   [Discussions on issues common for Saami languages](/lang/smi/index.html)
--   [Discussions on restricting generating of possessive suffixes](PXdiscussion.html)
-
-# Morphophonology, morphology and syntax
-
--   [The structure of the source file catalogue](/infra/infraremake/NewinfraCatalogues.html).
--   [Documentation](docu-sme-twol.html) of the
-    [Northern Saami phonology file](https://giellalt.com/giellalt/lang-sme/src/fst/phonology.twolc).
--   [Documentation](docu-sme-lex.html) of
-    [the lexicon files](https://giellalt.com/giellalt/lang-sme/src/fst/)
--   [The use of flag diacritics](docu-sme-flag-diacritics.html)
--   [Documentation of the disambiguation file](docu-sme-dis.html) (Partly obsolete)
--   [See also the general disambiguation page](/ling/docu-disambiguation.html).
--   [Introduction for CG linguists to working with FST for SME](sme-fst-guide.md)
-
-
-# Documentation on North Saami tools
-- There is a [separate page on speller optimisations for SME](SpellerConfiguration.html).
-- [The North Saami grammar checker page](https://giellalt.github.io/proof/gramcheck/NortSaamiGrammarchecker.html)
-- [more North Sámi grammar checker docs](gramcheck/index.md)
-
 # Obsolete links
 
-The links below are kept here for reference, their content are not representative of the current analysers.
-
-## Normativity issues
--   [A list of issues to the Saami language board](normativity-issues.html)
-
-
-## Old test reports
-The links shown here are from the initial years of development, kept for reference.
-
--   [A test plan for sme](docu-sme-testplan.html) (obsolete)
--   [A test diary for sme](sme-testdiary.html) (obsolete)
--   [Bug report sheet from the days before we got a bug report system)](docu-sme-bugs.html) (obsolete)
--   [Our earlier treatment of foreign words](../../ling/docu-foreign.html) (obsolete)
-
-## For reference: Documentation of tools not in use 
--   [Documentation of the preprocessing of running text](../../ling/preprocessor.html)
-    1. [The perl-based preprocess script](https://gtsvn.uit.no/langtech/trunk/gt/script/preprocess)
-    2. [The xfst-based preprocessor tok.txt](https://gtsvn.uit.no/langtech/trunk/gt/sme/src/tok.txt), cf. [documentation](docu-sme-preprocessor.html)
--   [Documentation](../../ling/docu-case-allcaps.html) of
-    [the file inituppercase.regex](https://github.com/giellalt/langs-sme/src/orthography/inituppercase.regex),
-    (initial capitalisation) and
-    [allcaps.xfst](https://gtsvn.uit.no/langtech/trunk/gt/common/src/allcaps.xfst),
-    the file for words written in all-caps. Note: The latter is
-    presently not in use.
--   Translating from xerox-style to vislcg3-style used to be done with the
-    [lookup2cg script](https://gtsvn.uit.no/langtech/trunk/gt/script/lookup2cg)
+- [For reference: Some old documentation](old-documentation.md)
 
 # In-source documentation
 
