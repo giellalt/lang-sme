@@ -14,6 +14,13 @@ Search for -hit verbs
 gieđahit:gieđah MUITAL_TV ;
 ```
 
+## Adding 
+diskehallat - diskvalifisere (passive meaning)
+
+```
+diskehallat+OLang/NOB:diskehalla RAIMMAHALLA_IV ; ! ^LOAN
+```
+
 
 ## Adding Nay Pyi Taw
 Search google
@@ -45,6 +52,15 @@ Playboy+Err/Orth+CmpNP/First+OLang/ENG:Play-boy BERN-obj ; !SUB
 
 ## Adding propernoun Slagen
 Google first
+
+like Slaatten+OLang/UND:Slaatten9 LONDON-sur ;
+but since it is a place it needs to be LONDON-plc
+
+## Adding propernoun Tønsberg Blad
+to shared-smi
+Sem/Org
+
+Tønsberg% Blad+MWE+CmpNP/First+OLang/NOB:Tønsberg% Blad9 BERN-org ;
 
 ## Adding last and first names
 
@@ -212,7 +228,12 @@ eaŋkilváikkuhangaskaoapmi+v5+N+OLang/NOB+Sem/Dummytag:eaŋkal#váikkuhan#gask9
 9 prevents that 
 - bargiid- changes to bargiit-
 - slam- changes to slan- (slanlaguna)
+- en- changes to something else
 - gask- changes to gas-
+
+- vowel + d/m/k/s/h
+- some continuation lexicons are an exception - Sotaniemi+OLang/FIN:Sota^niem NIEMI ;
+  
 
 ## What does ^ mean?
 `Playboy+CmpNP/First+OLang/ENG:Play^boy BERN-obj ;'
