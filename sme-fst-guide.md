@@ -8,6 +8,13 @@ How to add new words to lexc files:
 - "buotagat"
 - "Rama Cay"
 
+## Adding gieđahit verb å hantere
+Search for -hit verbs
+```
+gieđahit:gieđah MUITAL_TV ;
+```
+
+
 ## Adding Nay Pyi Taw
 Search google
 Hovedstaden i Myanmar (Burma)
@@ -35,6 +42,9 @@ so better:
 FairPlay+CmpNP/First+OLang/ENG:FairPlay BERN-obj ;
 Playboy+Err/Orth+CmpNP/First+OLang/ENG:Play-boy BERN-obj ; !SUB
 ```
+
+## Adding propernoun Slagen
+Google first
 
 ## Adding last and first names
 
@@ -225,4 +235,8 @@ it means that it can only be the first part of a compound, e.g. "Frivillighet No
 - BERN-plc — Bernas, Bernii
 - LONDON-plc — Londonis, Londonii
 - ACCRA-plc — Accras, Accrai
+
+hit-verbs
+- MUITAL_TV - trisyllabic verbs with personal passive
+- BONJAT_TV - Cont/Freq on -dit, Continuatives on -(u)hit, Reciprocals, momentatives and frequentatives ending -alit --- not causatives
 
