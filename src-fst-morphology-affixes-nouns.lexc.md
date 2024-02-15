@@ -141,6 +141,8 @@ Bisyllabic nouns
 
 * **LEXICON GADDI** Bisyll. V-Nouns with Comparative Forms.  Short nom-compound-forms, long gen.
 
+* **LEXICON RIDDU** Bisyll. V-Nouns with Comparative Forms.  Short nom-compound-forms, long gen.
+
 * **LEXICON GADDILONG** long compound forms, short -heapme
 
 * **LEXICON GADDILONGSHORT** NB! No SgIll and SgLoc (not directed to GOADI-, GODII- or GOAHTAI) because *davvi* is the only word this far Bisyll. V-Nouns with Comp. Forms, long-short nomcmp, long gencmp
