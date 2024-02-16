@@ -8,11 +8,16 @@
 
 This page documents the work on the [North Sami language model](http://github.com/giellalt/lang-sme), how to build it and how to use it.
 
-# Quick intro: Using the North Saami analysers
+# Quick intro
 
--   [How to use the morphological parsers](/tools/docu-sme-manual.html)
--   [Generation of paradigms](http://giellatekno.uit.no/cgi/p-sme.sme.html) and
+- Using the North Saami grammatical analysers
+	-   [How to use the morphological parsers](/tools/docu-sme-manual.html)
+	-   [Generation of paradigms](http://giellatekno.uit.no/cgi/p-sme.sme.html) and
     [analysis of text](http://giellatekno.uit.no/cgi/d-sme.sme.html)
+- Documentation on some applied tools
+	- [Speller optimisations for North Saami](SpellerConfiguration.html).
+	- [North Saami grammar checker](gramcheck/index.md) ([The original documentation](https://giellalt.github.io/proof/gramcheck/NortSaamiGrammarchecker.html))
+    
 
 
 # Documentation of the analysers
@@ -38,27 +43,21 @@ Here we document the different components of the analysers and the tags used. We
 -   [Lemma homonymies and variants - tags for indentifying and sorting](/lang/smi/lemma.html)
 -   [Lemma homonymies and variants: Main documentation in English](/common/Variation_in_lexc.html)
 
-## Discussions on improving our linguistic analysis
+## Different issues relevant to the analysers
 
 -   [Discussions on issues common for Saami languages](/lang/smi/index.html)
 -   [Discussions on restricting generating of possessive suffixes](PXdiscussion.html)
-
-
-# Documentation on North Saami tools
-- [Speller optimisations for North Saami](SpellerConfiguration.html).
-- [North Saami grammar checker](gramcheck/index.md)
-- [The original North Saami grammar checker page](https://giellalt.github.io/proof/gramcheck/NortSaamiGrammarchecker.html)
-
-# Projects involving North Saami
-
--   [Oversyn over ulike FST-ar for nordsamisk](KompilereFST.html)
--   [Dictionary projects](/dicts/dicts.html)
--   [ICALL](/ped/index.html)
--   [Machine translation](/mt/MachineTranslation.html)
 -   [Converting the transducers to Apertium format](ConvertingToApertium.html)
--   Grammar checker:
-    - [Documentation](https://giellalt.github.io/proof/gramcheck/NortSaamiGrammarchecker.html) and [some more documentation](gramcheck/index.md)
+-   [Oversyn over ulike FST-ar for nordsamisk](KompilereFST.html)
 -   [The L2 Transducer](TheL2Transducer.html)
+
+
+
+# Other projects using the North Saami analysers
+
+-   [Dictionary projects](/dicts/dicts.html)
+-   [Machine translation](/mt/MachineTranslation.html)
+-   [ICALL](https://giellalt.uit.no/ped/index.html)
 
 # Obsolete links
 
