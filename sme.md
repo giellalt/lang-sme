@@ -7521,6 +7521,8 @@ Bisyllabic nouns
 
 * **LEXICON DARRU** Bisyll. V-Nouns. No nom-compounding, short gen.
 
+* **LEXICON DUISKA** Bisyll. V-Nouns. No nom-compounding, short gen.
+
 * **LEXICON XGIELLA** Bisyll. V-Nouns. No nom-compounding, short gen.
 
 * **LEXICON BEALLE** words ending -bealle. Short nom-compound-forms, short gen.
@@ -7595,6 +7597,8 @@ Bisyllabic nouns
 
 * **LEXICON SOABBI** Bisyll. V-Nouns. Short nom-compound-forms goahte-,long/short gen, to avoid SOABBÁT, gáldot, searván, laktasan
 
+* **LEXICON VIIDNA** Bisyll. V-Nouns. Short nom-compound-forms goahte-,long/short gen, to avoid SOABBÁT, gáldot, searván, laktasan
+
 * **LEXICON NPx1V-SOABBI**
 
 * **LEXICON NPxC-SOABBI**
@@ -7616,6 +7620,8 @@ Bisyllabic nouns
 * **LEXICON NPxC-LAHKI**
 
 * **LEXICON BEARRI**  to avoid unfortunate diminutives like bearáš and salaš in speller (bearaš, sálaš) +  "beassán" = beassi+Sg+Nom/Gen/Acc+PxSg1
+
+* **LEXICON VUOSTA**  to avoid unfortunate diminutives like bearáš and salaš in speller (bearaš, sálaš) +  "beassán" = beassi+Sg+Nom/Gen/Acc+PxSg1
 
 * **LEXICON ACTORGEAHCCI** +CmpN/SgN +CmpN/SgG +CmpN/PlG
 
@@ -7840,8 +7846,6 @@ Contracted nouns
 * **LEXICON GOAHTILONGCMP** compound lexicon, no vowel shortening
 
 * **LEXICON GOAHTILONGSHORTCMP** compound lexicon, with and without vowel shortening
-
-* **LEXICON GOADE-** genitiv
 
 * **LEXICON GOADE-IU-** genitiv
 
