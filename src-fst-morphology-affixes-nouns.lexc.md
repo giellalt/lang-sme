@@ -93,8 +93,6 @@ Bisyllabic nouns
 
 * **LEXICON VALDI** words on -váldi. Short nom-compound-forms, long gen, short caritive, away with Px "váldán"
 
-* **LEXICON RAFI** words on -ráfi. Long nom-compound-forms, long gen. short heapmi-caritive
-
 * **LEXICON LOTLOHKU** words on -lotlohku. Long/SHORT nom-compound-forms, long gen.
 
 * **LEXICON SAPMI** Bisyll. V-Nouns. No nom-compounding, short gen.
@@ -145,7 +143,9 @@ Bisyllabic nouns
 
 * **LEXICON RIDDU** Bisyll. V-Nouns with Comparative Forms.  Short nom-compound-forms, long gen.
 
-* **LEXICON GADDILONG** long compound forms, short -heapme
+* **LEXICON RAFI** ráfit, ráfimus  
+
+* **LEXICON -RAFI** words on -ráfi. Long nom-compound-forms, long gen. short heapmi-caritive
 
 * **LEXICON GADDILONGSHORT** NB! No SgIll and SgLoc (not directed to GOADI-, GODII- or GOAHTAI) because *davvi* is the only word this far Bisyll. V-Nouns with Comp. Forms, long-short nomcmp, long gencmp
 
