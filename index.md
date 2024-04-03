@@ -113,7 +113,6 @@ as one long text [here](sme.md).
             * [text2tts-sme.xfscript](src-fst-phonetics-text2tts-sme.xfscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonetics/text2tts-sme.xfscript))
             * [txt2ipa.xfscript](src-fst-phonetics-txt2ipa.xfscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonetics/txt2ipa.xfscript))
         * [phonology-L2-from-branch.twolc](src-fst-phonology-L2-from-branch.twolc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonology-L2-from-branch.twolc))
-            * `/`
         * [phonology-L2.twolc](src-fst-phonology-L2.twolc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonology-L2.twolc))
 * `tools/`
     * `grammarcheckers/`
