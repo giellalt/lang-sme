@@ -79,6 +79,3 @@ such compounds)
 * * *
 
 <small>This (part of) documentation was generated from [src/fst/morphology/compounding.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/morphology/compounding.lexc)</small>
-
----
-

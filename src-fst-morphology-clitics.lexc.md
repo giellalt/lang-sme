@@ -28,6 +28,3 @@ The following lexicons are not referenced by the `K` lexicon, but directly in sp
 * * *
 
 <small>This (part of) documentation was generated from [src/fst/morphology/clitics.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/morphology/clitics.lexc)</small>
-
----
-

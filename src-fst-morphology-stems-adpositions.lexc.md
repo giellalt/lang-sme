@@ -23,6 +23,3 @@ Px lexica in sme-lex.txt and closed-sme-lex.txt.
 * * *
 
 <small>This (part of) documentation was generated from [src/fst/morphology/stems/adpositions.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/morphology/stems/adpositions.lexc)</small>
-
----
-

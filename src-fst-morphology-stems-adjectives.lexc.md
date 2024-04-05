@@ -26,6 +26,3 @@ Move adjs that may take Px from **Adjective** to this lexicon.
 * * *
 
 <small>This (part of) documentation was generated from [src/fst/morphology/stems/adjectives.lexc](https://github.com/giellalt/lang-sme/blob/main/src/fst/morphology/stems/adjectives.lexc)</small>
-
----
-
