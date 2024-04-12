@@ -69,7 +69,7 @@ WORD_REPLACEMENTS=yes
 
 ### BEGIN: Local build rules: *.hfst: *.tmp.hfst ###
 
-analyser.%.hfst: ../analyser-desktopspeller-gt-norm.hfst \
+analyser.%.hfst: analyser-desktopspeller-gt-norm.hfst \
 				 easteregg.%.hfst
 	$(AM_V_HFST2FST)cat $< \
 		| $(HFST_MINIMIZE_SPELLER) $(HFST_FLAGS)        \
@@ -95,34 +95,34 @@ se-cg.zhfst: $(srcdir)/index.xml \
 # edit distance=1
 # typos related to computer keyboard:
 # substitute, transpose, add, delete
-editdist.default.hfst: editdist.default-new.regex
+.generated/editdist.default.hfst: editdist.default-new.regex
 	$(AM_V_RGX2FST)$(HFST_REGEXP2FST) -S $(HFST_FLAGS) -i $<\
 	   --format=openfst-tropical \
 		-o $@
 
 # NEW file for accents causing trouble in spelling.
 # any accented letter
-accents.default.hfst: accents.default.regex 
+.generated/accents.default.hfst: accents.default.regex 
 	$(AM_V_RGX2FST)$(HFST_REGEXP2FST) -S $(HFST_FLAGS) -i $<\
 	   --format=openfst-tropical \
 		-o $@
 
 # any number of ad hoc style accented letters may be substituted
 # in addition to other edits
-editdist.all.default.hfst: editdist.default.hfst \
-						    strings.regex.default.hfst \
-						    accents.default.hfst
+.generated/editdist.all.default.hfst: .generated/editdist.default.hfst \
+						    .generated/strings.regex.default.hfst \
+						    .generated/accents.default.hfst
 	$(AM_V_XFST)printf "\
 		read regex \
-		[    @\"accents.default.hfst\" \
-		 .o. @\"strings.regex.default.hfst\" \
-		 .o. @\"editdist.default.hfst\" \
+		[    @\".generated/accents.default.hfst\" \
+		 .o. @\".generated/strings.regex.default.hfst\" \
+		 .o. @\".generated/editdist.default.hfst\" \
 		]; \
 		save stack $@\n\
 		quit\n" | $(XFST_TOOL) --format=openfst-tropical
 
 # errmodel.default.predict.hfst: predict.default.hfst
-predict.default.regex: editdist.default.mobile.txt
+.generated/predict.default.regex: editdist.default.mobile.txt
 	$(AM_V_GEN)$(GTCORE)/scripts/predict.py \
 		--verbose \
 		--epsilon='@0@' \
