@@ -3,7 +3,7 @@
 ## Licence: GPL v3+
 
 # Subdirs in build order:
-SUBDIRS = filters weights neural .
+SUBDIRS = filters weights neural . test
 
 # Temporary
 
