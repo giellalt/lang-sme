@@ -16,7 +16,7 @@ YAML_TEST_RUNNERS=run-spellers-gt-norm-anayaml-testcases.sh \
 # even though spellers are disabled:
 OTHER_TEST_RUNNERS_IN=test-zhfst-file.sh.in
 
-OTHER_TEST_RUNNERS=$(basename $(OTHER_TEST_RUNNERS_IN))
+OTHER_TEST_RUNNERS=test-zhfst-file.sh
 
 # Only test spellers if we build spellers:
 if WANT_SPELLERS
