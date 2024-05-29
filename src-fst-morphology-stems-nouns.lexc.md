@@ -5,7 +5,7 @@
 
 * **LEXICON MiddleNouns  ** is pointed to from R in compounds.lexc
 
-* **LEXICON Lahka  ** is pointed to from NounRoot above
+* **LEXICON Lahka  ** is pointed to from NounRoot above, cannot be last part of Cmp
 
 * **LEXICON HyphNouns  ** is pointed to from NounRoot above
 
