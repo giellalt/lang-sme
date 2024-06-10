@@ -7,6 +7,10 @@
 # List here (space separated) all test scripts that should be run:
 TESTS=
 
+YAML_TEST_RUNNERS=
+
+OTHER_TEST_RUNNERS=
+
 if CAN_YAML_TEST
 # Add your shell scripts for running python-based tests here:
 
@@ -23,7 +27,5 @@ endif # CAN_YAML_TEST
 # be fixed *later*, but is not critical at the moment:
 XFAIL_TESTS=
 
-####### Other targets: ###########
-clean-local:
-	-rm -f *.txt
 include $(top_srcdir)/../giella-core/am-shared/devtest-include.am
+include $(top_srcdir)/../giella-core/am-shared/tools-mt-apertium-test-include.am

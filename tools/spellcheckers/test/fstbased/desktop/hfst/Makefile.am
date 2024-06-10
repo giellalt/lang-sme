@@ -40,7 +40,5 @@ EXTRA_DIST=$(OTHER_TEST_RUNNERS_IN) \
            $(YAML_FILES) \
            $(YAML_DIRS)
 
-####### Other targets: ###########
-clean-local:
-	-rm -f *.txt
+include $(top_srcdir)/../giella-core/am-shared/tools-spellcheckers-fstbased-desktop-hfst-test-include.am
 include $(top_srcdir)/../giella-core/am-shared/devtest-include.am

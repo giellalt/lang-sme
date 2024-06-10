@@ -2,11 +2,16 @@
 ## Copyright: Sámediggi/Divvun/UiT
 ## Licence: GPL v3+
 
-######## Test targets: ###########
+######## Local test targets: ###########
 
-# List here (space separated) all test scripts that should be run
-# _unconditionally_:
+# Add local tests here that will be run always 
 TESTS=
+
+# Add local yaml testers here:
+YAML_TEST_RUNNERS=
+
+# Add other local tests here:
+OTHER_TEST_RUNNERS=
 
 if CAN_YAML_TEST
 # Add your shell scripts for running python-based tests below here, so that
@@ -51,7 +56,9 @@ endif # CAN_YAML_TEST
 # be fixed *later*, but is not critical at the moment:
 XFAIL_TESTS=
 
+
+
 ####### Other targets: ###########
-clean-local:
-	-rm -f *.txt
+
+include $(top_srcdir)/../giella-core/am-shared/src-fst-test-include.am
 include $(top_srcdir)/../giella-core/am-shared/devtest-include.am
