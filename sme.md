@@ -2405,6 +2405,16 @@ The rules are no documented yet
 
 * **SEMgenEss** Removes Acc if there is Gen + Ess, like *dálu eamidin*
 
+* **SEMXxr2108** Selects genitive if you are SAPMI with an Acc/Gen immediately to your left and a noun immediately to your right *girji sámi áššiid (birra)*
+
+* **SEMsapmiModifier** Selects genitive (modifier): Sámi, suoma or ruoŧa  as modifier of noun *sámi oahpahus*
+
+* **SEMsamegiellaCoord** Selects genitive 
+
+* **SEMAcc** Selects accusative #to be generalised
+
+* **SEMálbmot** Selects genitive #to be generalised
+
 * **SEMXxr2071** Removes Gen: Nobody can possess a Proper name? Except from (Pron Pers) and Sem/Fem OR Sem/Mal
 
 * **SEMXxPropOrg** Removes Gen: Who can possess Prop Sem/Org?    
@@ -2492,16 +2502,6 @@ The rules are no documented yet
 * **SEMXxOrgRep** Selects genitive: An organization´s representative *Sámiráđi ovdaolmmoš*
 
 * **SEMxr2107** Acc if *-1 fáktemuš
-
-* **SEMXxr2108** Selects genitive if you are SAPMI with an Acc/Gen immediately to your left and a noun immediately to your right *girji sámi áššiid (birra)*
-
-* **SEMsapmiModifier** Selects genitive (modifier): Sámi, suoma or ruoŧa  as modifier of noun *sámi oahpahus*
-
-* **SEMsamegiellaCoord** Selects genitive 
-
-* **SEMAcc** Selects accusative #to be generalised
-
-* **SEMálbmot** Selects genitive #to be generalised
 
 * **SEMsapmiModifier2** Select genitive (modifier): Sámi, suoma or ruoŧa on both sides of CNP as modifier of noun *Suoma ja Ruošša soahti*
 
