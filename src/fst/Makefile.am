@@ -3,7 +3,7 @@
 ## Licence: GPL v3+
 
 # always build . last here, and tagsets have to be built after morphology
-SUBDIRS = morphology filters phonetics syllabification orthography transcriptions tagsets .
+SUBDIRS = morphology filters phonetics syllabification orthography transcriptions tagsets . test
 
 ####### Automake targets: ########
 
@@ -722,3 +722,4 @@ $(foreach fst,hfst xfst foma,$(eval $(call giella_generators,$(fst))))
 
 
 include $(top_srcdir)/../giella-core/am-shared/src-fst-dir-include.am
+include $(top_srcdir)/../giella-core/am-shared/devtest-include.am

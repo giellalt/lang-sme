@@ -88,7 +88,7 @@ AC_MSG_RESULT([$GIELLA_CORE])
 ###############################################################
 ### This is the version of the Giella Core that we require. ###
 ### UPDATE AS NEEDED.
-_giella_core_min_version=0.23.0
+_giella_core_min_version=1.0.0
 
 # GIELLA_CORE/GTCORE env. variable, required by the infrastructure to find scripts:
 AC_ARG_VAR([GIELLA_CORE], [directory for the Giella infra core scripts and other required resources])
@@ -674,6 +674,23 @@ AS_IF([test "x$enable_grammarchecker" != "xno"],
         then: pipx install git+https://github.com/divvun/giellaltgramtools
       ])]),
     AC_MSG_RESULT(yes))
+_gtgramtool_min_version=0.7.0
+gtgramtool_too_old_message="gtgramtool needs to be updated.
+    If you installed it with pipx, run:
+        pipx upgrade GiellaLTGramTools"
+AC_MSG_CHECKING([the version of gtgramtool])
+AS_IF([test "x${GTGRAMTOOL}" != xno],
+        [_gtgramtool_version=$( "${GTGRAMTOOL}" --version | sed -e 's/^.*version //')],
+        [_gtgramtool_version=0])
+AC_MSG_RESULT([$_gtgramtool_version])
+AS_IF([test "x$enable_grammarchecker" != "xno"], 
+      AC_MSG_CHECKING([whether the gtgramtool version is at least $_gtgramtool_min_version])
+      AX_COMPARE_VERSION([$_gtgramtool_version], [ge], [$_gtgramtool_min_version],
+                         [gtgramtool_version_ok=yes], [gtgramtool_version_ok=no])
+    AS_IF([test "x${gtgramtool_version_ok}" != xno],
+          [AC_MSG_RESULT([$gtgramtool_version_ok])],
+          [AC_MSG_ERROR([$gtgramtool_too_old_message])]))
+
 
 # Enable all spellers - default is 'no'
 AC_ARG_ENABLE([spellers],
@@ -998,6 +1015,9 @@ To build, test and install:
     make
     make check
     make install
+The developers’ version of the test suite is available under:
+    make devtest
+this version does not halt on errors and should be useful when fixing bugs
 EOF
 AS_IF([test x$gt_prog_xslt = xno -a \
       "$(find ${srcdir}/src/fst/morphology/stems -name "*.xml" | head -n 1)" != "" ],

@@ -50,3 +50,4 @@ remove-derivation-strings.%.regex: \
 include $(top_srcdir)/../giella-core/am-shared/tools-mt-apertium-filters-dir-include.am
 
 # vim: set ft=automake:
+include $(top_srcdir)/../giella-core/am-shared/devtest-include.am

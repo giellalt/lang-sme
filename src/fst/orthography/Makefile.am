@@ -2,6 +2,9 @@
 ## Copyright: Sámediggi/Divvun/UiT
 ## Licence: GPL v3+
 
+# build before test
+SUBDIRS=. test
+
 ####### Source file defs: ########
 
 # Set these to names of available orthographic rules in regex and
@@ -29,3 +32,4 @@ GIELLA_ORTH_EXTRA_TARGETS=
 
 # General build rules included from here:
 include $(top_srcdir)/../giella-core/am-shared/src-orthography-dir-include.am
+include $(top_srcdir)/../giella-core/am-shared/devtest-include.am

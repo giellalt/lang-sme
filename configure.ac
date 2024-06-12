@@ -34,14 +34,6 @@ AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE(
   1.11.6 tar-pax -Wall -Werror
   foreign -Wno-portability
-  dnl Automake versions before 1.13 (when the serial-tests option was
-  dnl still the default) still defined the badly obsolete macro
-  dnl 'AM_PROG_CC_STDC'. By checking for the non-existence of this macro,
-  dnl we can now force serial testing for newer automakes (with prettier
-  dnl output) and at the same time work reasonably with older automakes.
-  dnl Code based on:
-  dnl https://lists.gnu.org/archive/html/automake/2013-01/msg00060.html
-  m4_ifndef([AM_PROG_CC_STDC], [serial-tests])
 )
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
@@ -70,7 +62,7 @@ AC_SUBST([GTLANGUAGE], $GLANGUAGE)
 ### The AC variables SPELLER_NAME_xxx and SPELLER_DESC_xxx are used in:
 ### - manifest.toml.in
 ### - tools/spellcheckers/index.*.xml.in
-AC_SUBST([SPELLERVERSION], [4.3.2])
+AC_SUBST([SPELLERVERSION], [4.4.3])
 AC_SUBST([SPELLER_NAME_ENG], ["$GLANGUAGE spellchecker"])
 AC_SUBST([SPELLER_NAME_NATIVE], ["Autonym spellchecker"])
 AC_SUBST([SPELLER_DESC_ENG], ["A spellchecker for $GLANGUAGE, made by members of the language community, and by the Divvun and Giellatekno groups at UiT The Arctic University of Norway"])
@@ -216,10 +208,10 @@ gt_CONFIG_FILES
 ##### BEGIN: Add language-specific list of files to ######
 ########## be processed by autoconf below here: ##########
 
-AC_CONFIG_FILES([test/src/morphology/generate-adverb-lemmas.sh], \
-      [chmod a+x test/src/morphology/generate-adverb-lemmas.sh])
-AC_CONFIG_FILES([test/src/morphology/generate-adpos-lemmas.sh], \
-      [chmod a+x test/src/morphology/generate-adpos-lemmas.sh])
+AC_CONFIG_FILES([src/fst/morphology/test/generate-adverb-lemmas.sh], \
+      [chmod a+x src/fst/morphology/test/generate-adverb-lemmas.sh])
+AC_CONFIG_FILES([src/fst/morphology/test/generate-adpos-lemmas.sh], \
+      [chmod a+x src/fst/morphology/test/generate-adpos-lemmas.sh])
 AC_CONFIG_FILES([tools/shellscripts/generate-ipa-lexicon.sh], \
       [chmod a+x tools/shellscripts/generate-ipa-lexicon.sh])
 AC_CONFIG_FILES([src/fst/phonetics/tests/tests/test-ipa-conversion.sh], \

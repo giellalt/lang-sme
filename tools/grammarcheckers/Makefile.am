@@ -57,3 +57,4 @@ valency-postspell.cg3: valency.cg3
 
 #### Do NOT edit below here: ####
 include $(top_srcdir)/../giella-core/am-shared/tools-grammarcheckers-dir-include.am
+include $(top_srcdir)/../giella-core/am-shared/devtest-include.am
