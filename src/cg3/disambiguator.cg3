@@ -10562,6 +10562,39 @@ REMOVE:SEMgenEss Acc IF (0 PLACE LINK 0 Gen)(1 HUMAN LINK 0 Ess);
 	#$ Vánit eahpiduvvo ahte stáhta geatnegasvuođat sámiid ektui 27. artihkkala mielde dagahivččii stáhta dihto guovlluid eaiggádin geatnegassan doaimmahit eaiggáduššanvuoigatvuođa nu ahte deavddášii 27. artihkkala geatnegasvuođa.	
 	#$ Máret beasai dálu eamidin.
 
+# SÁPMI 
+
+
+#!! * **SEMXxr2108** Selects genitive if you are SAPMI with an Acc/Gen immediately to your left and a noun immediately to your right *girji sámi áššiid (birra)*
+SELECT:SEMXxr2108 Gen IF (-1 Acc OR Gen)(0 SAPMI + Sg)(1 N); 
+	#$ Čálán girjji sámi áššiid birra. 
+	
+#!! * **SEMsapmiModifier** Selects genitive (modifier): Sámi, suoma or ruoŧa  as modifier of noun *sámi oahpahus*
+SELECT:SEMsapmiModifier Gen IF (0 SAPMI OR SUOPMA)(*1 N BARRIER NOT-A); # Comment: Replaces SEMXxr2112. The difference is that it doesn't have the same restrictions on verbs. # OR NATIONAL-IDENTITY-NOT-SAPMI
+SELECT:SEMsapmiModifier Gen IF (0 SAPMI OR SUOPMA LINK NEGATE *-1 COPULAS)(1 PrfPrc LINK 1 N); # Comment: Replaces SEMXxr2112. The difference is that it doesn't have the same restrictions on verbs. # OR NATIONAL-IDENTITY-NOT-SAPMI
+	#$ Ja muđui dán čoahkkimis badjesápmelaččat dorjo eanet sámi hábmejuvvon oahpahusa.
+	#$ Dat movt sámi oahpahus lea doaibman.
+#! * Select genitive (modifier): Sámi, suoma or ruoŧa  as modifier of noun, but with restrictions on which verb can appear to the left of you. 
+	#$ Dalle čujuhuvvui ahte lea dárbu nannet doaimmaid mat ovddidit sámi dutkama, fágaidgaskasaš ovttasbarggu ja sámi áššiid oahpahusa.
+	#$ Ráđđehus deattuha sámegiela ja sámi kulturáddejumi gelbbolašvuođa loktema.	 
+	#$ Ráđđehus deattuha sámegiela ja sámi kulturáddejumi gelbbolašvuođa loktema, ja sámi bargiid bálkáheami.	 	
+	#$ Soai áiguba ovddastit sámi álbmoga dáhtu go Tromsa ohcá Olympia gilvvuid lágidit 2014:s.	
+	#$ Mii áigut oahpahit sámi álbmogii buot.	
+	#% Seminarium heaittihuvvui, ja miššonearaid gevrejedje oahpahit sámiid dárogillii.  
+	#% Ja muđui dán čoahkkimis badjesápmelaččat dorjo eanet sámi hábmejuvvon oahpahusa.
+
+#!! * **SEMsamegiellaCoord** Selects genitive 
+SELECT:SEMsamegiellaCoord Gen IF (0 ("sámegiella") LINK 1 CC LINK 1 ("sápmi") + Gen LINK 1 ("girjjálašvuohta") + Gen LINK 1 Acc) ;
+
+#!! * **SEMAcc** Selects accusative #to be generalised
+SELECT:SEMsamegiellaCoord Acc IF (0 N + Gen LINK NOT 1 Acc)(-1 ("girjjálašvuohta") + Gen LINK -1 ("sápmi") + Gen LINK -1 CC LINK -1 ("sámegiella") + Gen LINK *-1 STRICT-TRANS-V BARRIER SV-BOUNDARY) ;
+	#$ Gielladieđagoahti čađaha sámegiela ja sámi girjjálašvuođa ovdáneami dutkamis ja oahpahusas.
+
+
+#!! * **SEMálbmot** Selects genitive #to be generalised
+SELECT:SEMálbmot Gen IF (0 Sem/Group LINK *1 Sem/Edu OR Sem/Hum BARRIER NOT-A) ;
+	#$ Stáhtus eamiálbmot alit oahppo- ja dutkanásahussan eaktuda, ahte allaskuvla hábme ja ovddida oahppofálaldagaid.
+
 
 #REMOVE:SEMTr Gen IF (0 (N Acc) LINK NOT 0 TIME-N OR Sem/Route LINK *1 TIME-N + Gen BARRIER NOT-NPMOD OR CC)(*-1 STRICT-TV-V BARRIER SV-BOUNDARY OR Num) ; #not a good rule
 	#$ Vuojadansearvi váldá din fitnodagain oktavuođa vahkku 20:s, gullat mo dii sáhttibehtet veahkehit.
@@ -10579,7 +10612,7 @@ REMOVE:SEMXxr2071 Gen IF (NEGATE -1 Pr)(NEGATE *-1 Num BARRIER NOT-A)(0 (N Acc) 
 	#% Loahpas jearai listtu Anders Somby jr. sudnos njuolga háliida go čearru gulahallat, juo dahje ii.
 
 #!! * **SEMXxPropOrg** Removes Gen: Who can possess Prop Sem/Org?    
-REMOVE:SEMXxrPropOrg Gen IF (NEGATE -1 Num)(0 (N Acc) LINK NOT 0 NATION OR Sem/Plc OR TIME OR ACR)(1 Prop + Sem/Org LINK NOT 1 Prop + Sem/Org);
+REMOVE:SEMXxrPropOrg Gen IF (NEGATE *-1 Num BARRIER NOT-NPMOD)(0 (N Acc) LINK NOT 0 NATION OR Sem/Plc OR TIME OR ACR)(1 Prop + Sem/Org LINK NOT 1 Prop + Sem/Org);
 	#$ Álggos coggalii Anti vuosttaš spáppa Sørøy Glimt mollii 22 minuvtta maŋŋel go čiekčamat ledje álgán Niitoguolban stadionas.
 
 #!! * **SEMlohkat**     
@@ -10910,39 +10943,6 @@ SELECT:SEMxr2107 Acc IF (*-1 ("fáktemuš") BARRIER NOT-NPMOD)(0 (N Gen))(NEGATE
 # egentlig laga for njuolggadus, men tester med et sett
 REMOVE:SEMlahka-n Gen IF (0 LAHKA-N + Acc LINK 1 Gen LINK NOT 0 TEXT OR ABSTR-TEXT OR SATNI OR KLASS OR Der/NomAct OR Sem/Act)(*-1 TRANS-V BARRIER SV-BOUNDARY) ;
 	#$ Finnmárkkuopmodat sáhttá addit dárkilet njuolggadusaid luondduvalljodagaid ávkkástallamii iežas eatnamiin, earret eará ferte olbmos lohpi dasa.
-
-# SÁPMI 
-
-
-#!! * **SEMXxr2108** Selects genitive if you are SAPMI with an Acc/Gen immediately to your left and a noun immediately to your right *girji sámi áššiid (birra)*
-SELECT:SEMXxr2108 Gen IF (-1 Acc OR Gen)(0 SAPMI + Sg)(1 N); 
-	#$ Čálán girjji sámi áššiid birra. 
-	
-#!! * **SEMsapmiModifier** Selects genitive (modifier): Sámi, suoma or ruoŧa  as modifier of noun *sámi oahpahus*
-SELECT:SEMsapmiModifier Gen IF (0 SAPMI OR SUOPMA)(*1 N BARRIER NOT-A); # Comment: Replaces SEMXxr2112. The difference is that it doesn't have the same restrictions on verbs. # OR NATIONAL-IDENTITY-NOT-SAPMI
-SELECT:SEMsapmiModifier Gen IF (0 SAPMI OR SUOPMA LINK NEGATE *-1 COPULAS)(1 PrfPrc LINK 1 N); # Comment: Replaces SEMXxr2112. The difference is that it doesn't have the same restrictions on verbs. # OR NATIONAL-IDENTITY-NOT-SAPMI
-	#$ Ja muđui dán čoahkkimis badjesápmelaččat dorjo eanet sámi hábmejuvvon oahpahusa.
-	#$ Dat movt sámi oahpahus lea doaibman.
-#! * Select genitive (modifier): Sámi, suoma or ruoŧa  as modifier of noun, but with restrictions on which verb can appear to the left of you. 
-	#$ Dalle čujuhuvvui ahte lea dárbu nannet doaimmaid mat ovddidit sámi dutkama, fágaidgaskasaš ovttasbarggu ja sámi áššiid oahpahusa.
-	#$ Ráđđehus deattuha sámegiela ja sámi kulturáddejumi gelbbolašvuođa loktema.	 
-	#$ Ráđđehus deattuha sámegiela ja sámi kulturáddejumi gelbbolašvuođa loktema, ja sámi bargiid bálkáheami.	 	
-	#$ Soai áiguba ovddastit sámi álbmoga dáhtu go Tromsa ohcá Olympia gilvvuid lágidit 2014:s.	
-	#$ Mii áigut oahpahit sámi álbmogii buot.	
-	#% Seminarium heaittihuvvui, ja miššonearaid gevrejedje oahpahit sámiid dárogillii.  
-	#% Ja muđui dán čoahkkimis badjesápmelaččat dorjo eanet sámi hábmejuvvon oahpahusa.
-
-#!! * **SEMsamegiellaCoord** Selects genitive 
-SELECT:SEMsamegiellaCoord Gen IF (0 ("sámegiella") LINK 1 CC LINK 1 ("sápmi") + Gen LINK 1 ("girjjálašvuohta") + Gen LINK 1 Acc) ;
-
-#!! * **SEMAcc** Selects accusative #to be generalised
-SELECT:SEMsamegiellaCoord Acc IF (0 N + Gen LINK NOT 1 Acc)(-1 ("girjjálašvuohta") + Gen LINK -1 ("sápmi") + Gen LINK -1 CC LINK -1 ("sámegiella") + Gen LINK *-1 STRICT-TRANS-V BARRIER SV-BOUNDARY) ;
-	#$ Gielladieđagoahti čađaha sámegiela ja sámi girjjálašvuođa ovdáneami dutkamis ja oahpahusas.
-
-
-#!! * **SEMálbmot** Selects genitive #to be generalised
-SELECT:SEMálbmot Gen IF (0 Sem/Group LINK *1 Sem/Edu OR Sem/Hum BARRIER NOT-A) ;
-	#$ Stáhtus eamiálbmot alit oahppo- ja dutkanásahussan eaktuda, ahte allaskuvla hábme ja ovddida oahppofálaldagaid.
 
 
 #SELECT:SEMXxr2112 Gen IF (NEGATE *-1 ("máhttit") OR ("oahppat") OR ("oahpahit") OR ("juohkit") OR ("čállit") OR ("gallestallat") OR ("galledit") OR VERBAL-ACTIVITY-V BARRIER SV-BOUNDARY LINK 0 FMAINV OR Inf)(0 SAPMI OR SUOPMA)(*1 N BARRIER NOT-A); 
