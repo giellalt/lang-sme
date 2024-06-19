@@ -31,9 +31,9 @@ Here we document the different components of the analysers and the tags used. We
 -   [Documentation](docu-sme-lex.html) of
     [the lexicon files](https://giellalt.com/giellalt/lang-sme/src/fst/)
 -   [The use of flag diacritics](docu-sme-flag-diacritics.html)
+-   [Introduction for developers working with FST for SME](sme-fst-guide.md)
 -   [Documentation of the disambiguation file](docu-sme-dis.html) (Partly obsolete)
 -   [See also the general disambiguation page](/ling/docu-disambiguation.html).
--   [Introduction for CG linguists to working with FST for SME](sme-fst-guide.md)
 
 ## Tags used for analysis
 
