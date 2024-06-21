@@ -70,7 +70,7 @@ EXTEDITOR=@SEE@
 # Err/Lex (som blir filtrert bort fra normgenerator).
 # Lemmaene lagres som $lemmas.
 @GTCORE@/scripts/extract-lemmas.sh \
-    --exclude "(ProperNoun|\+Use\/MT)" \
+    --exclude "(ProperNoun|\+Use/MT)" \
     $source_file > $lemmas
 
 ###### Start testing: #######
@@ -110,20 +110,20 @@ for f in $fsttype; do
 			| cut -f2 > $generated_lemmas_sgnom.$f.txt
 
 # Ta dei som ikkje vart generert og generer dei med +N+Prop+Pl+Nom
-		grep "\+N" $generated_lemmas_sgnom.$f.txt | sed 's/+N+Prop+Sg+Nom/+N+Prop+Pl+Nom/' \
+		grep "+N" $generated_lemmas_sgnom.$f.txt | sed 's/+N+Prop+Sg+Nom/+N+Prop+Pl+Nom/' \
 			| $lookup_tool $generator_file.$suffix \
 			| cut -f2 > $generated_lemmas_plnom.$f.txt
 
 # Ta dei som framleis ikkje vart generert og generer dei med +N+Prop+Attr
-		grep "\+N" $generated_lemmas_plnom.$f.txt | sed 's/+N+Prop+Pl+Nom/+N+Prop+Attr/' \
+		grep "+N" $generated_lemmas_plnom.$f.txt | sed 's/+N+Prop+Pl+Nom/+N+Prop+Attr/' \
             | $lookup_tool $generator_file.$suffix \
 		    | cut -f2 > $generated_lemmas_attr.$f.txt
 
 
 ###### Collect results: #######
-grep -v "\+N" $generated_lemmas_sgnom.$f.txt > $generated_lemmas.$f.txt
-grep -v "\+N" $generated_lemmas_plnom.$f.txt >> $generated_lemmas.$f.txt
-grep -v "\+N" $generated_lemmas_attr.$f.txt >> $generated_lemmas.$f.txt
+grep -v "+N" $generated_lemmas_sgnom.$f.txt > $generated_lemmas.$f.txt
+grep -v "+N" $generated_lemmas_plnom.$f.txt >> $generated_lemmas.$f.txt
+grep -v "+N" $generated_lemmas_attr.$f.txt >> $generated_lemmas.$f.txt
 
 
 # Sorter, unifiser dataene som ikke har vært sortert og unifisert
@@ -149,6 +149,7 @@ grep -v "\+N" $generated_lemmas_attr.$f.txt >> $generated_lemmas.$f.txt
                 echo "There were problem lemmas. Details in:"
                 echo "* $result_file.$f.txt    "
                 echo "* $ana_result_file.$f.txt"
+                head $result_file.$f.txt $ana_result_file.$f.txt
 			fi
 		    Fail=1
 		    echo "$f - FAIL"

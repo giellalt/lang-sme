@@ -63,7 +63,7 @@ EXTEDITOR=@SEE@
 # Hent ut lemmaer, bortsett fra Err/Lex (som blir filtrert bort fra normgenerator).
 # Lemmaene lagres som $lemmas.
 @GTCORE@/scripts/extract-lemmas.sh \
-	--exclude "(^\!|\+Err\/Lex|NOTLEMMA|\+Use\/MT)" \
+	--exclude "(^!|\+Err/Lex|NOTLEMMA|\+Use/MT)" \
 	$source_file > $lemmas
 
 ###### Start testing: #######
@@ -99,11 +99,11 @@ for f in $fsttype; do
 
 # Generer lemmaer med +Po
 		sed 's/$/+Po/' $lemmas | $lookup_tool $generator_file.$suffix \
-            | grep -v "\?" | cut -f2 | grep -v "^$" > $generated_lemmas.$f.txt 
+            | grep -v "?" | cut -f2 | grep -v "^$" > $generated_lemmas.$f.txt 
 
 # Generer med +Pr for lemmaer som ikke lar seg genereres +Po
 		sed 's/$/+Po/' $lemmas | $lookup_tool $generator_file.$suffix \
-            | grep "\?" | cut -f1 \
+            | grep "?" | cut -f1 \
             | sed 's/+Po/+Pr/' | $lookup_tool $generator_file.$suffix \
             | cut -f2 | \
               grep -v "^$" >> $generated_lemmas.$f.txt 
@@ -132,8 +132,7 @@ for f in $fsttype; do
             else
                 echo "There were problem lemmas. Details in:"
                 echo "* $result_file.$f.txt    "
-                echo "* $gen_result_file.$f.txt"
-                echo "* $ana_result_file.$f.txt"
+                head $result_file.$f.txt
 			fi
 		    Fail=1
 		    echo "$f - FAIL"

@@ -69,7 +69,7 @@ EXTEDITOR=@SEE@
 ##### --exclude "(pattern1|pattern2|...)"                          #####
 # Exclude lemmas only present in compounds and some others #
 @GTCORE@/scripts/extract-lemmas.sh \
-    --exclude "FINJU| Rreal | R |\+Use\/MT|Lex|Sub)" \
+    --exclude "(FINJU| Rreal | R |\+Use/MT|Lex|Sub)" \
     $source_file > $lemmas
 
 ###### Start testing: #######
@@ -110,12 +110,12 @@ for f in $fsttype; do
             cut -f2 > $generated_sgnom.$f.txt
 
 # Ta dei som ikkje vart generert og generer med +A+Pl+Nom
-        grep "\+A" $generated_sgnom.$f.txt | sed "s/+A+Sg+Nom/+A+Pl+Nom/" | \
+        grep "+A" $generated_sgnom.$f.txt | sed "s/+A+Sg+Nom/+A+Pl+Nom/" | \
             $lookup_tool $generator_file.$suffix | \
             cut -f2 > $generated_plnom.$f.txt 
 
 # Ta dei som framleis ikkje vart generert og generer med +A+Attr
-        grep "\+A" $generated_plnom.$f.txt | sed "s/+A+Pl+Nom/+A+Attr/" | \
+        grep "+A" $generated_plnom.$f.txt | sed "s/+A+Pl+Nom/+A+Attr/" | \
             $lookup_tool $generator_file.$suffix | \
             cut -f2 > $generated_attr.$f.txt
 
@@ -125,9 +125,9 @@ for f in $fsttype; do
 		# stored and opened in SEE:
 
 # Samle dei genererte formene i éi fil
-grep -v "\+A" $generated_sgnom.$f.txt > $generated_lemmas.$f.txt
-grep -v "\+A" $generated_plnom.$f.txt >> $generated_lemmas.$f.txt
-grep -v "\+A" $generated_attr.$f.txt >> $generated_lemmas.$f.txt
+grep -v "+A" $generated_sgnom.$f.txt > $generated_lemmas.$f.txt
+grep -v "+A" $generated_plnom.$f.txt >> $generated_lemmas.$f.txt
+grep -v "+A" $generated_attr.$f.txt >> $generated_lemmas.$f.txt
 
 # Sorter alle formene og fjern duplikatar
 LC_ALL=no_NO.UTF-8 sort -u -o $generated_lemmas.$f.txt $generated_lemmas.$f.txt 
@@ -154,6 +154,7 @@ LC_ALL=no_NO.UTF-8 sort -u -o $lemmas $lemmas
                 echo "* $result_file.$f.txt    "
                 echo "* $gen_result_file.$f.txt"
                 echo "* $ana_result_file.$f.txt"
+                head $result_file.$f.txt $gen_result_file.$f.txt $ana_result_file.$f.txt
 			fi
 		    Fail=1
 		    echo "$f - FAIL"
