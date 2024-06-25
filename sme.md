@@ -13113,13 +13113,3 @@ Needs hfst-tokenise to output things differently depending on the tag they get
 * * *
 
 <small>This (part of) documentation was generated from [tools/tokenisers/tokeniser-tts-cggt-desc.pmscript](https://github.com/giellalt/lang-sme/blob/main/tools/tokenisers/tokeniser-tts-cggt-desc.pmscript)</small>
-
----
-
-# tools-tts-valency.cg3.md 
-
-
-
-* * *
-
-<small>This (part of) documentation was generated from [tools/tts/valency.cg3](https://github.com/giellalt/lang-sme/blob/main/tools/tts/valency.cg3)</small>

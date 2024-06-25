@@ -124,5 +124,3 @@ as one long text [here](sme.md).
         * [tokeniser-disamb-gt-desc.pmscript](tools-tokenisers-tokeniser-disamb-gt-desc.pmscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/tokenisers/tokeniser-disamb-gt-desc.pmscript))
         * [tokeniser-gramcheck-gt-desc.pmscript](tools-tokenisers-tokeniser-gramcheck-gt-desc.pmscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/tokenisers/tokeniser-gramcheck-gt-desc.pmscript))
         * [tokeniser-tts-cggt-desc.pmscript](tools-tokenisers-tokeniser-tts-cggt-desc.pmscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/tokenisers/tokeniser-tts-cggt-desc.pmscript))
-    * `tts/`
-        * [valency.cg3](tools-tts-valency.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/tts/valency.cg3))
