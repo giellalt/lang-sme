@@ -1,4 +1,6 @@
 # sme fst guide
+These are notes from someone learning how to add new entries to the finite state lexicon files for North Sámi. This includes adding new lemmata and morphological information needed to get the analyzer and the generator to work correctly. This includes adding surface- and underlying information, information about compounding, morpho-phonology, inflection paradigm and grammaticality.
+
 How to add new words to lexc files:
 - "Middagsfjället" 
 - "Iežasnájadeapmi"
