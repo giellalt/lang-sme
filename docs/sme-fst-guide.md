@@ -10,7 +10,7 @@ How to add new words to lexc files:
 - "buotagat"
 - "Rama Cay"
 
-# Adding faktuvra
+## Adding faktuvra
 
 The following ones exist already:
 
@@ -25,7 +25,7 @@ take away vra since it's already in the continuation lexicon STRUKTUR
 DGT-vuođđostruktuvra+N+CmpNP/First+Sem/Dummytag:DGT-vuođđo#struktu STRUKTUR ;
 
 
-# What if something does not have consonant gradation?
+## What if something does not have consonant gradation?
 
 Juvdu:Juvºdu MARJA-U-plc ;
 becomes
