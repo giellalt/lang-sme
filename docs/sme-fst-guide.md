@@ -10,6 +10,34 @@ How to add new words to lexc files:
 - "buotagat"
 - "Rama Cay"
 
+# Adding faktuvra
+
+The following ones exist already:
+
+fáktor+N+Err/Orth+Sem/Semcon:faktora STAHTA ;
+fáktor+N+Sem/Semcon:fáktor GAHPIR ;
+fáktor+N+Err/Orth+Sem/Semcon:faktu STRUKTUR ;
+
+search uvra
+search ktuvra
+take away vra since it's already in the continuation lexicon STRUKTUR
+
+DGT-vuođđostruktuvra+N+CmpNP/First+Sem/Dummytag:DGT-vuođđo#struktu STRUKTUR ;
+
+
+# What if something does not have consonant gradation?
+
+Juvdu:Juvºdu MARJA-U-plc ;
+becomes
+Juvdu:Juvdu MARJA-U-plc ;
+
+A) other cont-lex
+B) take away Konrad Nielsen-mark º
+
+º --twol Gradation: Cluster Non-nasal Sonorant + Non-sonorant
+
+"jº" -- is the truth and "i" is how we write it
+
 ## Adding "gieđahit" verb (hantere)
 Search for -hit verbs
 ```
