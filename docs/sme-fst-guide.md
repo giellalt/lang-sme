@@ -10,21 +10,20 @@ How to add new words to lexc files:
 - "buotagat"
 - "Rama Cay"
 
-## Adding gieđahit verb å hantere
+## Adding "gieđahit" verb (hantere)
 Search for -hit verbs
 ```
 gieđahit:gieđah MUITAL_TV ;
 ```
 
-## Adding 
-diskehallat - diskvalifisere (passive meaning)
+## Adding "diskehallat" verb (diskvalifisere) (passive meaning)
 
 ```
 diskehallat+OLang/NOB:diskehalla RAIMMAHALLA_IV ; ! ^LOAN
 ```
 
 
-## Adding Nay Pyi Taw
+## Adding "Nay Pyi Taw" propernoun
 Search google
 Hovedstaden i Myanmar (Burma)
 search for -aw in smi-propernouns.lexc
@@ -34,13 +33,13 @@ Saginaw+OLang/UND:Saginaw BERN-plc ;
 Nay% Pyi% Taw+MWE+OLang/UND:Nay% Pyi% Taw BERN-plc ;
 ```
 
-## Adding Frivilighet Norge
+## Adding "Frivilighet Norge"
 propernoun in smi-propernouns.lexc
 
 `Frivillighet% Norge+MWE+CmpNP/First+OLang/NOB:Frivillighet% Norge ACCRA-org ;`
 
 
-## Adding Play-boy sub to Playboy
+## Adding "Play-boy" sub to Playboy
 is a propernoun in smi (smi-propernouns.lexc)
 since there is no -boy I search for -y
 
@@ -52,13 +51,13 @@ FairPlay+CmpNP/First+OLang/ENG:FairPlay BERN-obj ;
 Playboy+Err/Orth+CmpNP/First+OLang/ENG:Play-boy BERN-obj ; !SUB
 ```
 
-## Adding propernoun Slagen
+## Adding propernoun "Slagen"
 Google first
 
 like Slaatten+OLang/UND:Slaatten9 LONDON-sur ;
 but since it is a place it needs to be LONDON-plc
 
-## Adding propernoun Tønsberg Blad
+## Adding propernoun "Tønsberg Blad"
 to shared-smi
 Sem/Org
 
@@ -75,12 +74,12 @@ Butler+OLang/ENG:Butler LONDON-sur ;
 Hoge+OLang/NOB:Hoge ACCRA-sur ;
 ```
 
-## Adding Nouns - perfomativitehtateoriija
+## Adding Noun "perfomativitehtateoriija"
 ráŋggáštanriekteteoriija+N+Sem/Dummytag:ráŋggáštan#riekte#te^ori IIJA ;
 
 perfomativitehtateoriija+N+Sem/Prod-cogn:perfomativitehta#te^ori IIJA ;
 
-## Adding Iežasnájadeapmi
+## Adding noun "Iežasnájadeapmi"
   
 is a noun:
 try to find another one with the same ending
@@ -125,7 +124,7 @@ We also use it if the word is an MWE (Sámi% Dáiddaguovddáš+MWE+CmpNP/First:S
 
 next word:
 
-## Adding noun siskkáldasdálkkodeapmi
+## Adding noun "siskkáldasdálkkodeapmi"
 
 
 1. find the longest possible match (that is also a compound), so not only deapmi, but dálkkodeapmi --`+N+CmpN/SgN:ele#rávdnje#dálkkod EAPMI_default_sem ;`
@@ -133,7 +132,7 @@ next word:
 3. DONE
 
 
-## Adding propernoun Árbediehtoguovddáš
+## Adding propernoun "Árbediehtoguovddáš"
 it's a propernoun
 since it is a sme-specific propernoun which would get translated in the other Sámi languages it goes to lang-sme/src/fst/stems/sme-propernouns.lexc (instead of shared-smi)
 
@@ -150,7 +149,7 @@ Sámi% Dáiddaguovddáš+MWE+CmpNP/First:Sámi% Dáidda#guovddáž LONDON-org ;
 
 
 
-## Adding buotagat
+## Adding adjective "buotagat"
 
 It's an adjective:
 1. search for a compound with -agat
@@ -170,7 +169,7 @@ These are tags that say that the entry can be the first part of the compound, it
 be aware of morphophonological processes:
 before the hashtag:
 
-## Adding unnibuš
+## Adding adjective "unnibuš"
 It's an adjective, but not yet in the normative lexicon
 
 ```
@@ -216,7 +215,7 @@ add +MWE
 change +CmpNP/None to +CmpNP/First
 
 
-## Adding propernoun Sziget
+## Adding propernoun "Sziget"
 google - Hungarian festival
 
 ```
