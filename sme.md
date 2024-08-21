@@ -9900,6 +9900,7 @@ part of the continuation lexicons, and will be located after the POS tag.
 * +Sem/Buildpart_Ctain
 * +Sem/Buildpart_Ctain_Mat
 * +Sem/Buildpart_Ctain_Obj
+* +Sem/Buildpart_Org
 * +Sem/Cat_Group_Hum
 * +Sem/Cat_Group_Hum_Plc
 * +Sem/Cat_Edu
