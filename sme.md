@@ -9894,6 +9894,7 @@ part of the continuation lexicons, and will be located after the POS tag.
 * +Sem/Build_Org
 * +Sem/Build_Route
 * +Sem/Build-room_Cat_Ctain_Mat
+* +Sem/Build-room_Org
 * +Sem/Buildpart_Cat
 * +Sem/Buildpart_Cat_Ctain
 * +Sem/Buildpart_Cat_Ctain_Mat
