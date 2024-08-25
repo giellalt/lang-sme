@@ -223,6 +223,8 @@
 
 * **LEXICON BEANNOT** one and a half
 
+* **LEXICON NARE**
+
 * **LEXICON ARABICCASES**  adds +Arab
 
 * **LEXICON ARABICCASE**  adds +Arab
