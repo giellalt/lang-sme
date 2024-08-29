@@ -100,8 +100,10 @@ AM_CONDITIONAL([HAVE_AREAS], [test "x$AREAS" != "x"])
 # alternate orthographies, also the default must have a name.
 # It is assumed that conversion from the default orthography to the alternate
 # orthographies can be done programmatically with a regex or xfscript.
-AC_SUBST([DEFAULT_ORTH], ["standard"])
-AC_SUBST([ALT_ORTHS], ["bergslan itkonen nielsen friis leem"])
+AC_SUBST([DEFAULT_ORTH], [""])
+AC_SUBST([ALT_ORTHS], [""])
+#AC_SUBST([DEFAULT_ORTH], ["standard"])
+#AC_SUBST([ALT_ORTHS], ["bergslan itkonen nielsen friis leem"])
 AM_CONDITIONAL([HAVE_ALT_ORTHS], [test "x$ALT_ORTHS" != "x" \
                                     -a "x$DEFAULT_ORTH" != "x"])
 # Specify whether spellers for alternative orthographies should be built, the
