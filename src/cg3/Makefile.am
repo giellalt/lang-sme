@@ -16,6 +16,8 @@ GT_CG_LOCAL_SRCS=semanticroles.cg3 \
 				 korp.cg3 \
 				 semsets.cg3
 
+GIELLA_CG_INCLUDES=semsets.cg3
+
 #############################################################
 #### Add language-specific targets to be installed here: ####
 if WANT_SYNTAX
