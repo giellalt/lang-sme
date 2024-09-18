@@ -38,6 +38,12 @@ else
 	$(AM_V_GEN)echo "! Missing dependency for $@" > $@
 endif
 
+semsets.cg3: $(top_srcdir)/src/fst/morphology/root.lexc \
+		$(GIELLA_CORE)/scripts/generate-semsets.py
+	$(PYTHON) $(GIELLA_CORE)/scripts/generate-semsets.py \
+		-i $(top_srcdir)/src/fst/morphology/root.lexc \
+		-o $@
+
 ##################################################################
 #### END: Add local processing instructions ABOVE this line ######
 ##################################################################
