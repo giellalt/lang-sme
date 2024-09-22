@@ -16,6 +16,9 @@ cat src/fst/morphology/stems/*lexc |cut -d '!' -f1 |grep '\+Der/.*;' |egrep -v '
 echo 'Checking for double Sem-tags:'
 cat src/fst/morphology/stems/*lexc |cut -d '!' -f1 |grep '+Sem.*+Sem' 
 
+echo 'Checking for whitespace without % on left side:'
+cat src/fst/morphology/stems/*lexc |cut -d '!' -f1 | tr -s ' ' |sed 's/^ //' | grep -v '^<' |sed 's/% /%/g' |grep ' .*:' 
+
 
 echo 'checked'
 rm lexctags roottags
