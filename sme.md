@@ -9973,6 +9973,7 @@ part of the continuation lexicons, and will be located after the POS tag.
 * +Sem/Hum_Mat_Tool
 * +Sem/Hum_Obj
 * +Sem/Hum_Org
+* +Sem/Hum_Org_Pos
 * +Sem/Hum_Part
 * +Sem/Hum_Plant
 * +Sem/Hum_Plc
