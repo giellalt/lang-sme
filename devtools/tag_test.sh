@@ -7,8 +7,8 @@ cat src/fst/morphology/root.lexc |cut -d '!' -f1 |cut -d ':' -f1 |sed 's/+/¢+/g
 
 comm -23 lexctags roottags 
 
-echo 'Checking for double + in stem files:'
-cat src/fst/morphology/stems/*lexc |cut -d '!' -f1 |grep '++'
+echo 'Checking for double + :'
+cat src/fst/morphology/stems/*lexc src/fst/morphology/affixes/*lexc |cut -d '!' -f1 |grep '++'
 
 
 echo 'Checking for double semicolon in stem files:'
