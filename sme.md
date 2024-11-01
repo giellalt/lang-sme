@@ -725,6 +725,8 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 
 * **dussaiAdv**  
 
+* **eanášAdv**  
+
 * **gaskanAdvVGen**  
 
 * **gotAdv**  
