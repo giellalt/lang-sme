@@ -14,6 +14,8 @@ Bisyllabic nouns
 
 * **LEXICON GOAHTI-IU** Bisyll. V-Nouns. Short nom-compound-forms goahte-,long/short gen
 
+* **LEXICON MOARSI** Bisyll. V-Nouns. Short nom-compound-forms goahte-,long/short gen, optional diph simpl
+
 * **LEXICON GOAHTILONG** Long nom-compound-forms, long gen
 
 * **LEXICON GOAHTILONGSHORT** Sometimes long nom-compound-forms, long gen
