@@ -134,7 +134,7 @@ if WITH_OFST_TROPICAL
 	$(AM_V_REWEIGHT)$(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
 			-S '+Cmp' -a 10 --arcs-only -i $< \
 		> $@
-endif
+endif # WITH_OFST_TROPICAL
 
 #		| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
 #			-S '+Der'  -a 5 --arcs-only \
