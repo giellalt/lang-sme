@@ -573,7 +573,6 @@ endif # WITH_OFST_TROPICAL
 		.o. @\"filters/remove-MinusSpell-strings.hfst\"               \
 		.o. @\"orthography/block-double_spellrelax.compose.hfst\"     \
 		.o. @\"$<\"                                                   \
-		.o. @\"orthography/spellrelax-with-flagtags.compose.hfst\" \
 		.o. @\"orthography/comprelax-with-flagtags.compose.hfst\"  \
 		.o. @\"filters/remove-word-boundary.hfst\"                 \
 		;\n\
