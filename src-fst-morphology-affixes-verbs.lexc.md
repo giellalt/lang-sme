@@ -105,7 +105,7 @@ modals do not participate in derivation
 
 * **LEXICON MUHTTI_TV** No deverbal nouns an ACTIO(for speller reasons). Bisyllabic i-verbs with Personal Passive
 
-* **LEXICON BEAHTTI_TV** Bisyllabic i-verbs with Personal Passive, no Der/alla, no Der/adda, Der/halla  (beahtáhallat, báinnáhallat) for speller
+* **LEXICON BEAHTTI_TV** Bisyllabic i-verbs with Personal Passive, no Der/alla, no Der/adda, Der/halla  (beahtáhallat, báinnáhallat) for speller and no Cmp for noun derivations to avoid e.g. borrabeahttit
 
 * **LEXICON FAHTE_TV** Contracted Verbs with Personal Passive,  no Der/alla, no Der/adda, Der/halla  (fáhtehallin) for speller
 
@@ -328,6 +328,8 @@ modals do not participate in derivation
 * **LEXICON DeverbalNounsDIEHTALADDA**
 
 * **LEXICON DeverbalNounsDIEHTI**
+
+* **LEXICON DeverbalNounsBIEHTTI**
 
 * **LEXICON DeverbalNounsDIEHTISHORT**
 

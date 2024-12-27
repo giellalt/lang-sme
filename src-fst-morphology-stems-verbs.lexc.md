@@ -29,8 +29,6 @@
 
 ## Stray forms
 
-* **LEXICON STRAYFORMS  ** (referred to from the main Verb lexicon)
-
 * **LEXICON Eahpe_Verb  **
 
 ## Main verbs

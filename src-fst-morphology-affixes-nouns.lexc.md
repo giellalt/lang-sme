@@ -541,6 +541,8 @@ Contracted nouns
 
 * **LEXICON ACTORTVderCT** Tagged NomAg nowadays, Long compound-forms, from transitive verbs
 
+* **LEXICON ACTORBIEHTTIder** +CmpN/SgN +CmpN/SgG +CmpN/PlG +CmpN/SgNomLeft +CmpN/SgGenLeft +CmpN/PlGenLeft 
+
 * **LEXICON ACTORSHORTTVder** Tagged NomAg nowadays, Short compound-forms, from transitive verbs
 
 * **LEXICON DIMINV** diminutives, these comes from bisyll nouns

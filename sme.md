@@ -8001,6 +8001,8 @@ Contracted nouns
 
 * **LEXICON ACTORTVderCT** Tagged NomAg nowadays, Long compound-forms, from transitive verbs
 
+* **LEXICON ACTORBIEHTTIder** +CmpN/SgN +CmpN/SgG +CmpN/PlG +CmpN/SgNomLeft +CmpN/SgGenLeft +CmpN/PlGenLeft 
+
 * **LEXICON ACTORSHORTTVder** Tagged NomAg nowadays, Short compound-forms, from transitive verbs
 
 * **LEXICON DIMINV** diminutives, these comes from bisyll nouns
@@ -8471,7 +8473,7 @@ modals do not participate in derivation
 
 * **LEXICON MUHTTI_TV** No deverbal nouns an ACTIO(for speller reasons). Bisyllabic i-verbs with Personal Passive
 
-* **LEXICON BEAHTTI_TV** Bisyllabic i-verbs with Personal Passive, no Der/alla, no Der/adda, Der/halla  (beahtáhallat, báinnáhallat) for speller
+* **LEXICON BEAHTTI_TV** Bisyllabic i-verbs with Personal Passive, no Der/alla, no Der/adda, Der/halla  (beahtáhallat, báinnáhallat) for speller and no Cmp for noun derivations to avoid e.g. borrabeahttit
 
 * **LEXICON FAHTE_TV** Contracted Verbs with Personal Passive,  no Der/alla, no Der/adda, Der/halla  (fáhtehallin) for speller
 
@@ -8694,6 +8696,8 @@ modals do not participate in derivation
 * **LEXICON DeverbalNounsDIEHTALADDA**
 
 * **LEXICON DeverbalNounsDIEHTI**
+
+* **LEXICON DeverbalNounsBIEHTTI**
 
 * **LEXICON DeverbalNounsDIEHTISHORT**
 
@@ -11054,8 +11058,6 @@ homonymous with any of the open POS's
 * **LEXICON Infinitecop  **
 
 ## Stray forms
-
-* **LEXICON STRAYFORMS  ** (referred to from the main Verb lexicon)
 
 * **LEXICON Eahpe_Verb  **
 
