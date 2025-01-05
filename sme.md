@@ -7345,8 +7345,6 @@ from the otherwise uniform declension.
 
 * **LEXICON GAPPUS0** Almost id. to MALIS0. MALIS0 has no VUOHTA, GAPPUS0 has no Px Ess., and shouldn't have either.
 
-* **LEXICON GAPPUS-**
-
 GOAL: Keep GAPPUS- and MALLAS- apart, because of
 the Px(1)V issue, but unify the rest.
 GAPPUS- and MALLAS- differ
@@ -8396,8 +8394,6 @@ modals do not participate in derivation
 * **LEXICON BOAHTI-VERB** Bisyllabic i-verbs with Personal Passive
 
 * **LEXICON DIEVVA_IV**  Bisyllabic a-verbs without Personal Passive but with Der/NomAg, diphthong
-
-* **LEXICON SUHKA_IV**  Bisyllabic a-verbs without Personal Passive but with Der/NomAg, monophthong
 
 * **LEXICON DIEVVA-VERB**  Bisyllabic a- and u-verbs without Personal Passive but with Der/NomAg, diphthong
 

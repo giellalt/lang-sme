@@ -285,8 +285,6 @@ from the otherwise uniform declension.
 
 * **LEXICON GAPPUS0** Almost id. to MALIS0. MALIS0 has no VUOHTA, GAPPUS0 has no Px Ess., and shouldn't have either.
 
-* **LEXICON GAPPUS-**
-
 GOAL: Keep GAPPUS- and MALLAS- apart, because of
 the Px(1)V issue, but unify the rest.
 GAPPUS- and MALLAS- differ
