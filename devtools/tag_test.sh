@@ -5,7 +5,7 @@ cat src/fst/morphology/clitics.lexc src/fst/morphology/compounding.lexc  src/fst
 
 cat src/fst/morphology/root.lexc |cut -d '!' -f1 |cut -d ':' -f1 |sed 's/+/¢+/g'|sed 's/@/¢@/g' |tr '¢' '\n' | egrep '(\+|@)' |tr -d ' ' | tr -d '\t'|sort -u > roottags
 
-comm -23 lexctags roottags 
+comm -23 lexctags roottags  |grep -v '%/'
 
 echo 'Checking for double + :'
 cat src/fst/morphology/stems/*lexc src/fst/morphology/affixes/*lexc |cut -d '!' -f1 |grep '++'
@@ -23,6 +23,8 @@ cat src/fst/morphology/stems/*lexc |cut -d '!' -f1 |grep '+Sem.*+Sem'
 echo 'Checking for whitespace without % on left side:'
 cat src/fst/morphology/stems/*lexc |cut -d '!' -f1 | cut -d ';' -f1 | cut -d '"' -f1 | tr -s ' ' |sed 's/^ //' | grep -v '^<' |sed 's/% /%/g' |grep ' .*:' 
 
+echo 'Checking for double :'
+cat src/fst/morphology/stems/*lexc src/fst/morphology/affixes/*lexc |cut -d '!' -f1 |grep ':[^ %]*:' | grep -v '%:'
 
 echo 'checked'
 rm lexctags roottags
