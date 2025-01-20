@@ -8397,11 +8397,15 @@ modals do not participate in derivation
 
 * **LEXICON DIEVVA-VERB**  Bisyllabic a- and u-verbs without Personal Passive but with Der/NomAg, diphthong
 
+* **LEXICON BIEHKU-VERB**  Bisyllabic a- and u-verbs without Personal Passive but with Der/NomAg, diphthong
+
 * **LEXICON BORRA_TV** Bisyllabic a-verbs with Personal Passive, monophthong
 
 * **LEXICON DEAIVA_TV** Bisyllabic a-verbs with Personal Passive, diphthong
 
-* **LEXICON BORRA-VERB** Bisyllabic a- and u-verbs with Personal Passive
+* **LEXICON BORRA-VERB** Bisyllabic a-verbs with Personal Passive
+
+* **LEXICON DOALVU-VERB** Bisyllabic u-verbs with Personal Passive
 
 * **LEXICON GAIKU_TV** Bisyllabic u-verbs with Personal Passive, monophthong
 
