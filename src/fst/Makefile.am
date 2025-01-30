@@ -47,12 +47,13 @@ CUSTOM_FSTS=
 if CAN_XFST
 
 if WANT_MORPHOLOGY
-#GT_ANALYSERS+= analyser-nob-desc.xfst \
-#			   analyser-nob-norm.xfst 
+GT_ANALYSERS+=analyser-lia_disamb-gt-desc.xfst
+#			  analyser-nob-desc.xfst \
+#			  analyser-nob-norm.xfst 
 endif # WANT_MORPHOLOGY
 
 if WANT_GENERATION
-GT_GENERATORS+=analyser-lia_disamb-gt-desc.xfst
+#GT_GENERATORS+=
 #			   generator-nob-desc.xfst \
 #			   generator-nob-norm.xfst 
 endif # WANT_GENERATION
