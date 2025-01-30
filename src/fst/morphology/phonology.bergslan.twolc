@@ -1,0 +1,1781 @@
+! Divvun & Giellatekno - open source grammars for Sámi and other languages
+! Copyright © 2000-2024 The University of Tromsø & the Norwegian Sámi Parliament
+! http://giellatekno.uit.no & http://divvun.no
+!
+! This program is free software; you can redistribute and/or modify
+! this file under the terms of the GNU General Public License as published by
+! the Free Software Foundation, either version 3 of the License, or
+! (at your option) any later version. The GNU General Public License
+! is found at http://www.gnu.org/licenses/gpl.html. It is
+! also available in the file $GTHOME/LICENSE.txt.
+!
+! Other licensing options are available upon request, please contact
+! giellatekno@uit.no or feedback@divvun.no
+
+! ========================================================================== !
+!! North Sámi morphophonological rule set                  
+! ========================================================================== !
+
+!! This file documents the [phonology.twolc file](http://github.com/giellalt/lang-sme/blob/main/src/fst/phonology.twolc) 
+
+! twol-sme.txt
+!! The file contains the rule set for the non-segmental
+!! North Sámi morphophonological rules
+
+!! Note that when copied over to newinfra, this file will be labeled sme-phon-L1.twolc.
+!! The file sme-phon-L1.twolc will **not** be the source file to edit, 
+!! rather, the source file will be this file, gt/sme/src/twol-sme.txt. This file (in the old infra)
+!! is the ordinary sme fst file to be edited.
+!! The L2 sme fst, on the other hand, will have lags/sme/src/phonology/sme-phon-L2.twolc
+!! as its sourcefile, the file to be edited.
+
+Alphabet
+ a b c d e f g h i j k l m n o p q   ! small
+ r s t u v w x y z å ä ö ø æ %-
+ á é ó ú í à è ò ù ì ë ü ï â ê ô û î ã ý þ ñ ð ß ª ß ç
+
+ A B C D E F G H I J K L M N O P Q   ! capital
+ R S T U V W X Y Z Å Ä Ö Ø Æ
+ Á É Ó Ú Í À È Ò Ù Ì Ë Ü Ï Â Ê Ô Û Î Ã Ý þ Ñ Ð
+
+! Morphophonemes
+
+
+u6:u
+
+e7:e h7:h i7:i o7:o u7:u æ7:æ 
+
+g8:g h8:h m8:m n8:n 
+
+  ! the x8 ones are consonants that alternate in stem-final positions.
+
+b9:b d9:d e9:e g9:g h9:h j9:j k9:k m9:m n9:n o9:o p9:p r9:r s9:s t9:t z9:z æ9:æ š9:š ž9:ž 
+
+! The x9 consonants  never alternate.
+
+! Literal quotes and angles must be escaped (cf morpheme boundaries further down):
+ »7     ! »
+ «7     ! «
+ %[%>%] ! >
+ %[%<%] ! <
+ #7     ! #
+
+ č đ ŋ š ŧ ž          ! Sámi letters.
+ Č Đ Ŋ Š Ŧ Ž          !
+
+ %/
+ º:0  !! `º` is for CnsGrad of the `lg:lgg` and `lºl:ll` type
+ ¤:0  !! `¤:0` prevents ConsGrad in certain words
+ ':'  !! `'` is the real apostroph
+
+
+ X1:0 X2:0 X3:0 X4:0 X5:0 X6:0 X7:0 X8:0 X9:0   ! diacritics
+ Q1:0 Q2:0 Q3:0 Q4:0 Q5:0 Q6:0 Q7:0 Q8:0 Q9:0   ! They trigger morphophono-
+ Y1:0 Y2:0 Y3:0 Y4:0 Y5:0 Y6:0 Y7:0 Y8:0 Y9:0   ! logical rules
+ W1:0 W2:0 W3:0 W4:0 W5:0 W6:0 W7:0 W8:0 W9:0
+ 
+
+ %^DISIMP:0
+
+! Morpheme boundaries:
+ «  ! Derivational prefix
+ »  ! Derivational suffix
+ %< ! Inflectional prefx
+ %> ! Inflectional suffix
+ #  ! Word boundary for both lexicalised and dynamic compounds
+ %^ ! (exceptional) soft hyphenation point
+ ∑ ! Used in front of # for dynamic compounds.
+
+ ! Escaped chars
+ %  
+
+! End of alphabet definitions
+;
+
+Sets
+  Vow = a á e e7 e9 i i7 o o7 o9 u u6 u7 y æ æ7 ø å ä ö
+        A Á E       I    O     U    Y Æ    Ø Å Ä Ö
+!        O9
+        é ó ú í à è ò ù ì ë ü ï â ê ô û î ã ý
+        É Ó Ú Í À È Ò Ù Ì Ë Ü Ï Â Ê Ô Û Î Ã Ý ;
+  Cns = b b9 c č d đ d9 f g g8 g9 h h8 h9 j j9 k k9 l m m8 m9 n ŋ n8 n9
+        B C Č D Đ F G H J K L M N Ŋ
+!        B9 D9 G8 G9 H8 H9 J9 K9 M8 M9 N8 N9 P9 Z9 
+        p p9 r s š t ŧ v w z ž z9 º '
+        P R S Š T Ŧ V W Z Ž ;
+  StemCns = b b9 d d9 g g8 g9 h h8 h9 j j9 l m m8 m9 n n8 n9 r s š
+            B D G H J L M N R S Š 
+!            B9 D9 G8 G9 H8 H9 J9 M8 M9 N8 N9 
+            ;
+  WeG = X4 X5 X6 X8 X9 Q4 Q5 Q6 Q7 Q8 W1 W4 W5 W7 %^DISIMP ;
+  Len = Y1 Y2 Y3 Y4 Y5 Y6 Y7 Y9 ¤ ;
+  Dummy = X1 X2 X3 X4 X5 X6 X7 X8 X9 Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 %^DISIMP
+          Y1 Y2 Y3 Y4 Y5 Y6 Y7 Y8 W1 W2 W3 W4 W5 W6 W7 W8 W9 ¤ %> %^ » ;
+  FinalDummy = X2 X4 X7 X8 %> %^ » ;         ! This set is not in use !!
+  NonMPDummy = X1 X4 X7 X8 ¤ %> %^ » ;
+  NonMPDummy2 = X1 X4 ¤ %> %^ » ;
+  HighVow = i i7 u u7 I U ;
+  NonHighVow = a e e7 e9 o7 o9 o A E O ;
+  Stop = k p t c č K P T C Č ;
+  DelCns = g8 m8 n8 h8 
+!  G8 M8 N8 H8 
+	;
+  CntrCns = s j h ž S J H Ž ;
+  Hyph = %- ;
+
+
+Definitions
+
+! G3  = Vow Cns Cns Cns Vow ;
+! G2  = Vow Cns Cns Vow ;
+! G1  = Vow Cns Vow ;
+! G12 = G1 | G2 ;
+
+! The G1 gang
+
+! The G2 gang
+
+! The G3 gang
+! đºđ fºf lºl hlºl mºm nºn nºnj ŋºŋ rºr hrºr sºs šºš ŧºŧ vºv
+! bm dn dnj gŋ
+! hcc hčč hpp hkk htt ddj
+! llj
+! bb dd gg zz žž
+! rºbm rºdn rºdnj ºrgŋ
+!đºb, đºb, đºj, đºv, iºb, iºc, iºd, iºf, iºg, iºk, iºl, iºhl, iºhm, iºhn, iºp, iºr, iºs, iºt, iºv, iºz,
+!lºb, lºc, lºč, lºd, lºf, lºg, lºj, lºk, lºp, lºs, lºš, lºt, lºv, lºž, mºb, mºp, mºs, mºš, nºc, nºč, nºd,
+!nºs, nºt, nºz, nºž, ŋºg, ŋºk, rºb, rºc, rºč, rºd, rºf, rºg, rºj, rºk, rºp, rºs, rºš, rºt, rºv, rºz, rºž,
+!sºk, sºm, sºp, sºt, šºk, šºm, šºt, šºv, tºk, tºm, vºd, vºg, vºj, vºk, vºl, vºhl, vºp, vºr, vºt, vºz, vºž
+!đºbm dºgŋ iºbm iºdn iºgŋ lºbm lºdn lºgŋ vºdn vºdnj
+!iºsk iºst mºšk nºsk nºst rºsk rºst vºsk
+!kºc kºč kºs kºst kºš kºt
+
+! G3 = Cns: Cns: Cns (Cns) | b m | d n | g ŋ | b b | d d | g g | z z | ž ž |
+
+! Intuition:
+! Have the => rule work in case of (upper or lower or both?) G3.
+! Have the <=> rule work in al
+
+! Define G12: Here we have <=>
+! Define G3 (or not): Here (i.e. elsewhere) we have =>.
+
+!Defining G1, G2, G3.
+!Auxiliary definitions
+G1  = Cns | h [l|r] | n j ;
+
+!UCns = Cns: ;
+!RLCns = :Cns;
+!RealCns = UCns:LCns - º:0 ;
+RealCns    = Cns - º:0 ;
+all2Cns    = Cns Cns ;
+real2CnsG3 =  b: m | d: n | g: ŋ | b: b: | d: d: | g: g: | z: z: | ž: ž: ; ! This could be the problem
+2CnsG2     = all2Cns - real2CnsG3 ;
+3CnsG2     = Cns RealCns Cns ; !!!!!!!!!!!!!!                        ! đºb:đbb, đºg:đgg, ...
+fake8CnsG3 = Cns: º: Cns ;                                          ! đºb:đ0b
+3CnsG3     = h [ c c | č č | p p | k k | t t ] | [ d d | l l ] j  ;
+
+!G2  = 2CnsG2 | 3CnsG2 ;
+! 2CnsG2 is well-defined, 3CnsG2 is not. :-(
+
+!G3  = fake8CnsG3 | real2CnsG3 | 3CnsG3 ;
+!G3  = fake8CnsG3 ; !err
+!G3  = real2CnsG3 ; !err
+!G3  = 3CnsG3 ;     !err
+! => All 3 parts of the G3 definition are flawed
+
+!G12 = G1 | G2 ;                        ! This is what we waht
+G12 = G1 | 2CnsG2 ; ! testing G2 parts  ! This we do while waiting for 3CnsG2.
+! The second part of the G2 definitions is flawed.
+
+! Pseudocode (see "Going for 2" below)
+! Diphthongsimpl <=> _ G12 i j: ;
+! OptDiphtsimpli  => _ G3  i j: ;
+
+
+
+
+
+
+
+
+! ============ !
+! Rule section !
+! ============ !
+
+
+
+Rules
+
+! Introduction to the set of testwords (introduced with !!€ and !!$ that are added)
+! -------------------------------------------------------------------------------
+
+! (this documentation will be enlarged and moved to the documentation, and a trimmed version
+! will be left here)
+
+! For each rule, there is a set of word pairs to test. The words will be extracted into
+! two files (the !!€ words for positive tests, the !!$ ones for negative tests, i.e. pairs that
+! the parser shall reject.
+
+! Basic usage is: (this paragraph shall be removed, as we want the one in the next paragraph)
+! open twolc -utf8. Issue the following commands:
+! install-binary bin/twol-sme.bin
+! pair-test-file filename (where "filename" is the name of the file containing the test words)
+
+! Usage (this is what we are aiming at):
+! In the testing catalogue, issue one of the commands
+! make twol-positive
+! make twol-negative
+! make twol-test (do both)
+! This will extract the test pairs from this file, and print a report for each of the tests.
+! The reports will be printed to report files named twol-pos.out and twol-neg.out. The reports
+! are finally scanned by another script, which gives a warning if anything unexpected was found.
+
+! We may also use other testfiles than the ones generated from this file (twol-sme.txt file).
+! make twol-test TYPE=pos FILE=testfile   (when the file contains positive test pairs)
+! make twol-test TYPE=neg FILE=testfile   (when the file contains negative test pairs)
+! make twol-test FILE=testfile            (the default is TYPE=pos)
+! make twol-test HELP                     (prints out these lines)
+
+! The test cases are of two types:
+! - positive tests
+! - negative tests
+!
+! Positive tests are such that they require the pairs to match - if not, the rule (or
+! another conflicting rule) is broken. These test pairs should be designed to check that
+! the rule allways give the wanted mapping.
+!
+! Positive tests are marked with a € sign (and as a comment, to not infer with the
+! regular rule compilation):
+!
+!!€ ájºgi
+!!€ ái0gi
+!
+! Negative tests are pairs that should NOT match. The pairs should be designed such that
+! they are likely but illegal pairs, so as to identify possible holes in the rules. Such
+! holes will lead to overgeneration, and spurious acceptance of misspelled words, wrong
+! analyses, bad generation, etc. Also, errors in the rules can lead to an inefficient
+! analyser.
+!
+! Negative tests are also very important for regression testing: all bugs found and
+! corrected should be added as negative pairs illustrating the bug that was corrected.
+! This way, we can always check whether the bugs are still fixed or reintroduced by
+! other bug fixes.
+!
+! Negative tests are marked with a dollar sign:
+!
+!!$ mánnáX5jd
+!!$ má0ná0jd
+!
+! You may have more than one test word (pair) on each line, that is, you can have several
+! pairs after each other on two lines separated by one or more spaces. This will save
+! precious vertical space in the file, and make the rule file easer to read.
+!
+! The result/output is:
+! REJECT
+! ACCEPT
+! Error
+! and will be put into a separate test result file. A final script checks that the test
+! result is what it should be, and reports the findings (ok/error(s) found).
+
+
+
+! ============================ !
+! Here begins the rule section !
+! ============================ !
+
+! j rule
+! ------
+
+"Postvocalic j Surfacing"
+! j:i <=>  ( %>: ) ( »: ( »: »: )) [Vow:|:0] ( %>: ) ( :0 ) ( %>: ) ( »: ( »: »: )) ( Dummy: ) _ [ Cns | º: | ( %>: ) ( »: ( »: »: )) ( :0 - Y5: - Y6:)+ (Hyph) ( ∑ ) # ] ; !Thomas #699
+  j:i <=>  Vow: ( %>: ) ( :0 ) ( Dummy: )* _ [ Cns | º: | ( %>: ) ( »: ( »: »: )) ( :0 - Y5: - Y6:)+ ( ∑ ) [ Hyph | # ] ] ; ! Kept Vow:, but accepted Dummies at length
+
+!!€ ájºgi
+!!€ ái0gi
+
+!!€ majdege
+!!€ maidege
+
+!!$ almmajX4in
+!!$ almmai0in
+
+!!€ mánnáX5jd
+!!€ má0ná0id
+
+!!€ almmájX4#
+!!€ almmái0#
+
+!!€ almmájX4X7-
+!!€ almmái00-
+
+!!€ almmájX4in
+!!€ almmáj0in
+
+! Added ( :0 ) because of olmmoš !  new version for Troandin-bisma
+! All j:i alternation is conflated into one rule. LC is vowel and optional
+! (suffixinitial) dummy symbol, RC is consonant, dummy or word boundary,
+! The intention is to have the strict operator (<=>), but catch the
+! variation with a lot of (=all) contextual alternatives.
+! exchanging DummyNotY5 with :0 - Y5: , better luck this time.
+
+! Word final consonant alternations
+! ---------------------------------
+
+! Only alveolar consonants word-finally:
+
+"Word Final Consonant Neutralization 1"  !smirezit : smires, Troandin-bisma
+  Cx:Cy <=> Vow: (( CntrCns:) ( %>: ) ( »: ( »: »: )) Dummy:+) _ (º:0 k:0) ( %>: ) ( »: ( »: »: )) ( :0 - Y5: - Y6: )( :0 - Y5: - Y6: ) ( ∑ ) ( ∑ ) [ Hyph | ( »: ( »: »: )) ( ∑ ) # ]  ;
+			where Cx in (z m h p g b d)
+			      Cy in (s n t t t t t)
+			matched ;
+
+
+"Word Final Consonant Neutralization Ž"
+ ž:š <=> Vow: _ (ž:0) [%>:|»: »: »: |%>: [(»:) X7:|X4:|»: X8:|X4: X7:|»: »: »:]] ( ∑ ) [ Hyph | # ] ;
+ 
+"Word Final Consonant Neutralization Ž2"
+ ž:š <=> Vow: [%>: Y5:|%>: Q7:|»:|%>] _ ( ∑ ) [ Hyph | # ] ;
+ 
+"Word Final Consonant Neutralization Ž3"
+ ž:š <=>  %>: Y5: »: X6: _ (X7:) ( ∑ ) [ Hyph | # ] ;
+
+"Word Final Consonant Neutralization Ž4"
+ ž:š <=> Vow: (¤:) (%>:) (»:) X6: _ (X7:) ( ∑ ) [ Hyph | # ] ;
+
+"Word Final Consonant Neutralization Ž5"
+ ž:š <=> Vow: _ (ž:0) ( ∑ ) [ Hyph | # ] ;
+
+!%>X6ž
+!Testcases for the above rules:
+!!€ barggož-
+!!€ barggoš-
+
+!!€ smirez-
+!!€ smires-
+
+!!€ Troandim#
+!!€ Troandin#
+
+!!€ Troandim-
+!!€ Troandin-
+
+!!€ muhtum#
+!!€ muhtun#
+
+!!€ skoalkkuh#
+!!€ skoalkkut#
+
+!!€ nagod#
+!!€ nagot#
+
+!!€ bávččag#
+!!€ bávččat#
+
+!!€ nuorab#
+!!€ nuorat#
+
+!!€ bávččag#
+!!€ bávččat#
+
+!!€ eamid#
+!!€ eamit#
+
+!!€ alih#
+!!€ alit#
+
+!!€ olmmož>X4X7-
+!!€ olmmoš>00-
+
+! This test pair irrelevant, as line commented out.
+! $ olmmožX7-
+! $ olmmoš0-
+
+!!€ olmmož>X4#
+!!€ olmmoš>0#
+
+
+"Word Final Consonant Neutralization 2"
+Cx:Cy => # Cns:* (Vow:) Vow: Cns:+ Vow: j: _ ( %>: ) ( »: ( »: »: )) ( ∑ ) # ; !háliid/háliit
+            where Cx in (d)
+                  Cy in (t) ;
+
+
+"Deletion: Final h s j ž in Contracted Stems"
+Cx:0 <=> Vow _ ( %>: ) ( »: ( »: »: )) [ Y5: | Y6: j: ] ; !1.138
+!Cx:0 <=> Vow _ [ Y5: | Y6: j: ] ( ( ∑ ) [ Hyph | # ] ) ;
+!Cx:0 <=> Vow _ [ Y5: | Y6: j: ]   ( ∑ ) [ Hyph | # | Cns: ];
+			where Cx in (h s j ž) ;
+! Debugging, 142 for reference.
+! Changed because:-
+
+!!€ fijdnisY5t
+!!€ fiidná00t
+
+!!$ fijdnisY5t
+!!$ fiidnás0t
+
+!!$ fijdnisY5t
+!!$ fiidnis0t
+
+!!€ albmájY5
+!!€ albmá00
+
+!!€ olbmožY5
+!!€ olbmo00
+
+!!€ fijdnisY5t-
+!!€ fiidná00t-
+
+!!€ albmájY5-
+!!€ albmá00-
+
+!!€ olbmožY5-
+!!€ olbmo00-
+
+
+
+"Word Final Cluster Simplification 1"
+  Cy:0 <=> Vow Cx _ ( %>: ) ( »: ( »: »: )) ( ∑ ) [ Hyph | # ] ;
+	where Cx in (l r)
+	      Cy in (d g) ;
+!!€ vuordild-
+!!€ vuordil0-
+
+!!$ vuordild-
+!!$ vuordild-
+
+"Word Final Cluster Simplification 2"                 ! attestit : attes
+  Cx:0 <=> Vow ( %>: ) ( »: ( »: »: )) (W4:) s _ ( %>: ) ( »: ( »: »: )) ( ∑ ) [ Hyph | # ] ;
+			where Cx in (t k m) ;
+!!€ attest-
+!!€ attes0-
+
+!!$ attest-
+!!$ attest-
+
+"Word Final Cluster Simplification 3"                 ! beroštit : beroš
+  t:0 <=> Vow š _ ( %>: ) ( »: ( »: »: )) ( ∑ ) [ Hyph | # ] ;
+!!€ berošt#
+!!€ beroš0#
+
+"Word Final Cluster Simplification 4"                 ! bearjadahka : bearjadat
+  Cx:0 <=> Vow h: º:0 _ ( %>: ) ( »: ( »: »: )) ( ∑ ) [ Hyph | # ] ;
+			where Cx in (t k) ;
+! Changing bearjadahk to bearjadahºk, adding º:0
+
+!!€ bearjadah%ºk-
+!!€ bearjadat00-
+
+!!$ bearjadah%ºk-
+!!$ bearjadat0k-
+
+!!$ bearjadah%ºk-
+!!$ bearjadah00-
+
+!!$ bearjadah%ºk-
+!!$ bearjadah0k-
+
+!"Word Final Cluster Simplification 5"                 ! bearjadahka : bearjadat
+!  h:t <=> Vow _ º:0 [t:0 | k:0] ( ∑ ) [ Hyph | # ] ;
+! Splitting WFCF 4 into 2 to handle the inserted º:0 symbol.
+! But this seems already covered by "Word Final Consonant Neutralization 1"
+
+
+"Word Final Double Consonant Simplification"          ! muitaluss : muitalus
+  Cy:0 <=> [ Vow: - á:  ] Cx: ( %>: ) _ ( %>: ) ( »: ( »: »: )) ( ∑ ) [ Hyph | # ] ;
+			where Cx in (s š ž)
+				  Cy in (s š ž)
+			matched ;
+!!€ muitaluss#
+!!€ muitalus0#
+
+!!$ vejolažž>-
+!!$ vejolažž>-
+
+!!€ vejolažž>-
+!!€ vejolaš0>-
+
+!!$ vejolažž>#
+!!$ vejolaž0>#
+
+
+
+
+! Consonant gradation rules
+! -------------------------
+
+
+!Now that long double cons. have been analyzed having lexical triple consonants,
+!many of the grad. rules of the form º:Cx may be collapsed to a single rule
+!without left context: _ Cx Vow: WeG: ; where XXXX matched ; . This has not
+!been done yet (PS 29.11.1993).
+! But the long double cons have not been analyzed as triple consonants!
+
+"Gradation: h Loss"                                    ! johka : joga (h:0)
+  h:0 <=> _ º: Cy: ( %>: ) ( »: ( »: »: )) Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cy in (p t k c č) ;
+!!€ johºkaX4
+!!€ jo00ga0
+
+!!$ johºkaX4
+!!$ joh0ga0
+
+!!$ johºkaX4
+!!$ jo00ka0
+
+!!$ johºkaX4
+!!$ joh0ka0
+
+"Gradation: Prenasal Stops"                           ! sápmi : sámi (p:0)
+  Cx:0 <=> _ Cy Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (p t k)
+			      Cy in (m n ŋ)
+			matched ;
+
+!!€ sápmiX4
+!!€ sá0mi0
+
+!!$ sápmiX4
+!!$ sápmi0
+
+
+"Gradation: tnj"                                       ! latnja : lanja (t:0)
+  t:0 <=> _ n j Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+!!€ latnjaX4
+!!€ la0nja0
+
+"Gradation: dj"                                        ! vuodjit:vuoján
+  d:0 <=> Vow: _ º: j Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+!!€ vuodºjiQ4n
+!!€ vuo00já0n
+
+"Gradation: Double Consonant"                          ! káffe:káfes
+  Cx:0 <=> Vow: _ Cy ( %>: ) ( »: ( »: »: )) Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (đ f l m n ŋ r s š ŧ v)
+			      Cy in (đ f l m n ŋ r s š ŧ v)
+			matched ;
+!!€ káffeX4s
+!!€ ká0fe0s
+
+
+! Note: I added a t rule, due to substandard Ruotta:Ruotas
+"Gradation: Double t"
+  t:0 <=> u o _ t a: ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+!!€ RuottaX4s
+!!€ Ruo0ta0s
+
+
+!"Gradation: šž"  !Commented out because it causes wordforms like *muitalepmožis. Instead we now have !this in lexicon:
+!nju0nuš:njunnuš MALIS ;
+!nju0nuš:njunnuž MALIS ; !SUB
+! Cx:Cy <=> Vow: _ X2: Vow ( StemCns:) (:StemCns) ;	! njunnoša:njunnožis
+!  Cx:Cy => Vow: _ X2: Vow ( StemCns:) (:StemCns) ;	! njunnoša:njunnožis
+!		    where Cx in (š)
+!		          Cy in (ž)
+!			matched ;
+!!!€ njunnošX2a
+!!!€ njunnož0a
+
+
+"Gradation: Preaspirated Geminates"                    ! áhkku:áhkus
+  Cx:0 <=> h _ Cy Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (k p t c č l r)
+			      Cy in (k p t c č l r)
+			matched ;
+!!€ áhkkuX4s
+!!€ áh0ku0s
+
+"Gradation: Jodded Double Consonants"                       ! viellja:vieljas
+  Cx:0 <=> Vow: _ Cy j Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;    ! mannji:manjis
+			where Cx in (l d n)                 ! áddjá:ádjás
+			      Cy in (l d n)
+			matched ;
+!!€ vielljaX4
+!!€ vie0lja0
+
+!!€ mannjiX4
+!!€ ma0nji0
+
+!!€ áddjáX4
+!!€ á0djá0
+
+"Gradation: Cluster Non-nasal Sonorant + Non-sonorant"      ! lájºbi:láibbi
+  º:Cx <=> Vow: [ g | l | r | đ | v | j: ] _ Cz Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (f g d b k p t z ž c č s š)
+			      Cz in (f g d b k p t z ž c č s š)
+			matched ;
+! Added (¤:), evaluate! XXX. (Removed it since it caused CG in some PrsPrc.TO)
+!!€ lájºbiX4
+!!€ láibbi0
+
+"Gradation: Cluster ŋ + Non-sonorant"                      ! seaŋºga:seaŋgga
+  º:Cx <=> Vow: ŋ _ Cz Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;   ! boŋºkit:boŋkkii
+			where Cx in ( g k )
+			      Cz in ( g k )
+			matched ;
+!!€ seaŋºga>X4
+!!€ seaŋgga>0
+
+!!€ boŋºki>X4j#
+!!€ boŋkki>0i#
+
+!!€ boŋºki>X4jmet#
+!!€ boŋkki>0imet#
+
+"Gradation: Cluster ft:ftt"                      ! sáfºta:sáftta
+  º:t <=> Vow: f _ t Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+
+!!€ sáfºtaX4
+!!€ sáftta0
+
+"Gradation: Cluster bn:bnn"			! oabºna:oabnna
+  º:n <=> Vow: b _ n Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+
+!!€ oabºnaX4
+!!€ oabnna0
+
+"Gradation: Cluster m + Non-sonorant"                       ! lámºpa:lámppas
+  º:Cx <=> Vow: m _ Cz Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;    ! ránºska:ránskkas
+			where Cx in (f b p s š t)
+			      Cz in (f b p s š t)
+			matched ;
+! mt : mtt added bec. of ámta:ámttas, although not in grammar. Check norm!
+!!€ ámºtaX4
+!!€ ámtta0
+
+! This rule only applies to lexical entries written with non-standard n.
+! The rule itself is ok, and requried for proper gradation of the lexical
+! entries. Thus, the rule is not in itself !SUB, but the entries in the
+! lexicon are, and should be marked accordingly.
+"Gradation: Cluster n + Non-sonorant"                      ! Inºgá:Inggás
+  º:Cx <=> Vow: n _ Cz Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in ( g k )
+			      Cz in ( g k )
+			matched ;
+!!€ InºgáX4
+!!€ Inggá0
+! The proper way of writing is Iŋgá/Iŋggás. We add a substandard pattern with n here,
+! as we have seen it in use (56 Ingá, 18 Inggá!).
+
+
+"Gradation: Cluster n + Non-sonorant"                       ! gánºda:gánddat
+  º:Cx <=> Vow: n _ Cz Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (d t z ž c č s š)
+			      Cz in (d t z ž c č s š)
+			matched ;
+!!€ gánºdaX4
+!!€ gándda0
+
+
+"Gradation: Cluster p + t"                                  ! konseapºta:konseapttat
+  º:t <=> Vow: p _ t Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+! Added because of this word. The pattern is not in the grammar.
+!!€ konseapºtaX4
+!!€ konseaptta0
+
+
+"Gradation: Cluster j/v + Liquid"                           ! ájºru:áirrut
+  º:Cx <=> Vow: [ j: | v ] _ Cz Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (l r)
+			      Cz in (l r)
+			matched ;
+!!€ ájºruX4
+!!€ áirru0
+
+!!€ bievºlaX4
+!!€ bievlla0
+
+"Gradation: Cluster r + l"                           ! ájºru:áirrut
+  º:l <=> Vow: r _ l Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+
+!!€ jarºlaX4
+!!€ jarlla0
+
+
+"Gradation: Clusters lv, rj etc."                           ! olºju:oljjus
+  º:Cx <=> Vow: [ đ | l | r | n ] _ Cz Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (v j)
+			      Cz in (v j)
+			matched ;
+!!€ olºjuX4
+!!€ oljju0
+
+
+"Gradation: Clusters tk, tm"                                ! mátºki:mátkkis
+  º:Cx <=> Vow: [ t | ŧ ] _ Cy Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (k m)
+			      Cy in (k m)
+			matched ;
+! ŧ is missing in the grammar. example?
+!!€ mátºkiX4
+!!€ mátkki0
+
+
+"Gradation: Clusters ts"                               !
+  º:s <=> [Vow:|r:] t  _ s Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+
+!!€ kreatºsaX4
+!!€ kreatssa0
+
+"Gradation: Clusters ps"                               !
+  º:s <=> [Vow:|r:] p  _ s Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+
+!!€ korpºsaX4
+!!€ korpssa0
+
+
+"Gradation: Clusters sk, sm etc."                          ! beasºka:beaskka
+  º:Cx <=> Vow: [ s | š ] _ Cz: Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (b k p t l m v)
+			      Cz in (b k p t l m v)
+			matched ;
+!!€ beasºkaX4
+!!€ beaskka0
+
+
+"Gradation: Cluster vj"                                    ! čoavºji:čoavjji
+  º:j <=> Vow: v _ j Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+!!€ čoavºjiX4
+!!€ čoavjji0
+
+
+"Gradation: Cluster jv"                                    ! beajºvi:beaivvit
+  º:v <=> Vow: j: _ v Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+!!€ beajºviX4
+!!€ beaivvi0
+
+"Gradation: ihm, vhl etc."                                 ! dujhºmi:duihmmit
+  º:Cx <=> Vow: [ j: | v ] h _ Cy Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (l m n)
+			      Cy in (l m n)
+			matched ;
+!!€ dujhºmiX4
+!!€ duihmmi0
+
+
+"Gradation: Clusters lbm, jdn, vdn etc."                   ! čuolbma:čuolmma
+  Cx:Cy <=> [ l | j: | v | đ ] _ Cz Vow (Cns) ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (b d g )
+			      Cy in (m n ŋ)
+			      Cz in (m n ŋ)
+			matched ;
+!!€ čuolbmaX4
+!!€ čuolmma0
+
+"Gradation: Clusters lm, jn, vn etc."                   ! Dálma:Dálmma
+  º:Cx <=> [ l | j: | v ] _ Cy Vow (Cns) ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (m n)
+			      Cy in (m n)
+			matched ;
+!!€ DálºmaX4
+!!€ Dálmma0
+
+
+! "(Cns)" is added. I do not like it. But the rule as it was blocked the
+! "olmmožin" essive of "olmmoš", since the "ž" was neither an underlying
+! nor a surface stem consonant, I had to do something. The rule as it stands
+! is meaningless, "(Cns)" contains both (StemCns:) and (:StemCns).
+! Think through this.
+
+
+"Gradation: Clusters ldnj, vdnj etc."                      ! sávdnji:sávnnji
+  d:n <=> [ l | v ] _ n j Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+!!€ sávdnjiX4
+!!€ sávnnji0
+
+
+"Gradation: Clusters rbm, rdn rgŋ"                        ! čorbma:čorpma
+  Cx:Cy <=> r _ Cz Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (b d g)
+			      Cy in (p t k)
+			      Cz in (m n ŋ)
+			matched ;
+!!€ čorbmaX4
+!!€ čorpma0
+
+
+"Gradation: Clusters rdnj"                                 ! skurdnji:skurtnji
+  Cx:Cy <=> r _ Cz j Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (b d g)
+			      Cy in (p t k)
+			      Cz in (m n ŋ)
+			matched ;
+!!€ skurdnjiX4
+!!€ skurtnji0
+
+
+"Gradation: ist, vsk etc."                                 ! návsºtu:návsttu
+  º:Cx <=> Vow: [ j: | v | l | r | m | n ] s _
+                Cy Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (k t)
+			      Cy in (k t)
+			matched ;
+!!€ návsºtuX4
+!!€ návsttu0
+
+"Gradation: ršt, ršk, mšk, ršk"                      ! boršºta:borštta
+  º:Cx <=> Vow: [  r | m  ] š _
+                Cy Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (k t)
+			      Cy in (k t)
+			matched ;
+!!€ boršºtaX4
+!!€ borštta0
+
+!"Gradation: mšk, ršk"                                    ! limšºki:limškki
+!  º:k <=> Vow: [ m | r ] š _ k Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+!!€ limšºkiX4
+!!€ limškki0
+
+
+"Gradation: Clusters kc ks etc. 1"                         ! ukºsa:uvssa
+  k:v <=> Vow: _ º: Cx Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (t c č s š) ;
+!!€ ukºsaX4
+!!€ uvssa0
+
+
+"Gradation: Clusters kc ks etc. 2"                         ! ukºsa:uvssa
+  º:Cx <=> Vow: k: _ Cy Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (t c č s š)
+			      Cy in (t c č s š)
+			matched ;
+
+"Gradation: Cluster kst 1"                                 ! teaksºta:teavstta
+  k:v <=> Vow: _ s º: t Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+!!€ teaksºtaX4
+!!€ teavstta0
+
+
+"Gradation: Cluster kst 2"                                 ! teaksºta:teavstta
+  º:t <=> Vow k: s _ t Vow: ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+
+"Gradation: bb dd etc.1"                                   ! spábba:spáppat
+  Cx:Cy <=> Vow: _ Cz: ( %>: ) ( »: ( »: »: )) Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (b d g z ž)
+			      Cy in (p t k c č)
+			      Cz in (b d g z ž)
+			matched ;
+!!€ spábbaX4
+!!€ spáppa0
+
+
+"Gradation: bb dd etc.2"                                   ! spábba:spáppat
+  Cx:Cy <=> Vow: :Cy _ ( %>: ) ( »: ( »: »: )) Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) ;
+			where Cx in (b d g z ž)
+			      Cy in (p t k c č)
+			matched ;
+
+!!$ Szczecin
+!!$ Szccecin
+
+!!€ Szczecin
+!!€ Szczecin
+
+"Gradation: dn to tn, etc."                                ! eadni:eatni
+  Cx:Cy <=> Vow: _ Cz: Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+			where Cx in (b d g )
+			      Cy in (p t k )
+			      Cz in (m n ŋ)
+			matched ;
+!!€ eadniX4
+!!€ eatni0
+
+
+"Gradation: dnj to tnj"                                    ! boadnji:boatnji
+  d:t <=> Vow: _ n j Vow ( StemCns:) ( %>: ) ( »: ( »: »: )) (:StemCns) WeG: ;
+!!€ boadnjiX4
+!!€ boatnji0
+
+
+
+! Lengthening of consonants
+! -------------------------
+
+! This takes place in certain verb forms, e.g. imperative and certain
+! nominalisation forms.
+
+"Lengthening of Central Consonants hk etc."                ! boahºtiY1:boahtti
+  º:Cy <=> h: _ Cz Vow ( CntrCns:) ( %>: ) ( »: ( »: »: )) Len: ( »: ( »: »: )) ;
+			where Cy in (p t k c č)
+			      Cz in (p t k c č)
+			matched ;
+!!€ boahºtiY1
+!!€ boahtti0
+
+!!€ dahºkaY7j#
+!!€ dahkku0i#
+
+!!€ dahºka>Y7jmet#
+!!€ dahkku>0imet#
+
+
+"Lengthening of Central Consonants pm etc."                ! dapmaY1:dabmi
+  Cx:Cy <=> Vow: _ Cz Vow ( CntrCns:) ( %>: ) ( »: ( »: »: )) Len: ( »: ( »: »: )) ;
+			where Cx in (p t k )
+			      Cy in (b d g )
+			      Cz in (m n ŋ)
+			matched ;
+!!€ dapmaY1
+!!€ dabmi0
+
+"Lengthening of Central Consonants tnj"
+  t:d <=> Vow: _ n j Vow ( CntrCns:) ( %>: ) ( »: ( »: »: )) Len: ( »: ( »: »: )) ;
+!!€ bitnjuY1
+!!€ bidnju0
+
+"Lengthening of Central Consonants dj"                     ! dadºjaY1:daddji
+  º:d <=> Vow: d _ j Vow ( CntrCns:) ( %>: ) ( »: ( »: »: )) Len: ( »: ( »: »: )) ;
+!!€ dadºjaY1
+!!€ daddji0
+
+
+
+
+! Lenition
+! --------
+
+"Lenition: Intervocalic Stops and Affricates"              ! johºkaX4:jo00ga
+  Cx:Cy <=> h:0 º:0 _ ( %>: ) ( »: ( »: »: )) Vow ( %>: ) ( »: ( »: »: )) ;
+			where Cx in (k p c č t)
+			      Cy in (g b z ž đ)
+			matched ;
+!!€ johºkaX4
+!!€ jo00ga0
+
+
+! Here, the k is reduced to g as an automatic result of the h deletion in the
+! "Gradation: h loss" rule.
+
+
+!"Three-part compounding: Consonant geminates"						! giella:giel
+! Cx:0 <=> Vow: _ Cy: Vow WeG: ;
+! 			where Cx in (l r)
+! 				  Cy in (l r)
+!			matched ;
+
+!"Three-part compounding: Consonant geminates II"					! giella:giel
+! Vx:0 <=> Vow: Cx Cx _ ;
+! 			where Vx in (a e i o u)
+! 				  Cx in (l r) ;
+
+
+!"Three-part compounding: -iv- consonant center"					! oaivi:oai
+! v:0 <=> i: _ Vow WeG: ;
+
+!"Three-part compounding: -iv- consonant center II"					! oaivi:oai
+! i:0 <=> i: v:0 _ WeG: ;
+
+
+
+!Vowel shortening
+!----------------
+
+
+! Nouns
+
+"Vowel Shortening in Compounds of Contract Stems"
+  Vx:Vy <=> [ (Vow) Vow | á ] Cns:+ Cns: _ (¤:) (StemCns:*) ( %>: ) ( »: ( »: »: )) [X4: X7:|X8:] ;
+	    where Vx in (u i i7)
+	          Vy in (o e e)
+	    matched ;
+
+"Allegro Forms in Compounds"                   ! gávºpiX7:gáv0pe
+ Vx:Vy <=> Cns:+ _ ( %>: ) ( »: ( »: »: )) (¤:) (StemCns:*) ( %>: ) ( »: ( »: »: )) X7: ;
+           where Vx in (i u á i7)
+                 Vy in (e o a e)
+           matched ;
+
+!!€ gávºpiX7
+!!€ gáv0pe0
+
+!!€ bassiX7
+!!€ basse0
+
+
+
+
+
+! Overlapping => constraint wrt. ºi:eº, Optional Vow Shortening
+! After short 1st Syllable
+! The ¤: condition was added in order to account for VIVVA nouns.
+! First, it was added as optional, with parentheses, but that did not
+! work, for some strange reason. Then the parentheses were removed, and to our
+! surprise both forms with and without ¤ worked.
+! And parantheses in again. Sigh.
+
+
+!"Optional Vowel Shortening after Short 1st Syllable"
+! Vx:Vy => [ Hyph | #  | Cns ] [a|i|o|u] [ Cns Cns:+ | j: Cns:+ | h: º: Cns: ]
+! Vx:Vy => [ Hyph | #  | Cns ] [a|i|o|u] [ Cns Cns:+            | h: º: Cns: ]
+!	_ (StemCns:*) [ X7: | X8: ] ;
+!	   where Vx in (u i)
+!	         Vy in (o e)
+!	   matched ;
+! Added + to Cns:+ and made StmCns: optional in LC, for bivºdu:bivdo
+! Onset relevant?
+
+
+
+!"Shortening of á in Compounds after Long 1st Syllable 1"
+!  á:a <=> [ Vow Vow | á ] Cns:+ Cns _ StemCns:* [ X7: | X8: ] ;
+
+
+
+!"Shortening of á in Compounds after Long 1st Syllable 2"
+!  á:a <=> [ Hyph | #  | Cns ] Vz Cns+ Cns: Cns+ _ StemCns:* [ X7: | X8: ]
+!        where Vz in (a i o u) ;
+
+!"Vowel lowering for buorre"
+! Vx:Vy <=> [ Vow Vow | á ] Cns:+ Cns _ X8: ;
+!         where Vx in (u i)
+!	       Vy in (o e)
+!	         matched ;
+! This rule was actually made for one word only, buorre:buoret
+! It replaces the missing "| X8:" sequence that is commented out in the
+! "Vowel shortening ... 1" rule above. Why X8: does not work there is unclear.
+! It seems to work in certain other cases, though.
+!!€ buorriX7
+!!€ buorre0
+
+!!€ buorriX8
+!!€ buo0re0
+
+
+!"Vowel Shortening in Vowel-Final Compounds after Long 1st Syllable 1"
+!  Vx:Vy <=> [ Vow Vow | á ] Cns:+ Cns: _ X7: ;
+!	where Vx in (u i)
+!	      Vy in (o e)
+!	matched ;
+! This rule was difficult. Look at *)footnote 1 below for comments.
+! *) footnote 1
+! Older, removed versions:
+! Vx:Vy <=> [ Vow Vow | á ] Cns:+ Cns: _ StemCns:* X7: ;
+! This one gave vuovden# as only possible form of vuovdin in compounds.
+! Vx:Vy <=> [ Vow Vow | á ] Cns:+ Cns _ StemCns:* [ X7: | X8: ] ;
+! the problem with this one was that it was not restricted to compounds !!
+! The X7: | X8: line was commented out since no lexicon in sme-lex.txt
+! pointed from X8 to R. This move should be checked for compounds later.
+! The testcases are kept here to ensure that its workload is being taken care of.
+!!€ várriX7girºku
+!!€ várre0gir0ku
+
+
+!"Vowel Shortening in Compounds after Long 1st Syllable 2"
+!  Vx:Vy <=> [ Hyph | # | Cns ] Vz Cns+ Cns: Cns+ _ StemCns:* [ X7: | X8: ] ;
+!	where Vz in (a i o u) ;
+!	where Vx in (u i)
+!			             Vy in (o e)
+!					   matched ;
+! XXX Remainder! This rule is commented out since including it
+! spoils the i:á alternation of verbs (boahtit:boađán, for some reason.
+! This should be looked into.
+
+!"Vowel Shortening in Cns-Final Compounds"
+!  Vx:Vy <=> Cns:+ _ StemCns:+ X7: ;
+!	   where Vx in (u i)                  ! example?
+!		     Vy in (o e)
+!       matched ;
+! This is for the vuovdin# and vuovden#, if vuovden# exists.
+! If vuovden# etc. is not possible, this rule should be removed.
+
+
+!"Vowel Shortening in Compounds of Contract Stems"
+!  Vx:Vy <=> [ Vow Vow | á ] Cns:+ Cns: _ StemCns:* X4: X7: ;
+!	    where Vx in (u i)
+!	          Vy in (o e)
+!	    matched ;
+
+!"Compulsory Vowel Shortening after ij"                ! liigi : liigeruđaid
+! Vx:Vy <=> [ Hyph | # | Cns ] i j:i Cns:* _ [ X7: | X8: ] ;
+!	   where Vx in (u i)
+!	         Vy in (o e)
+!	   matched ;
+! The rule is too general at the moment, since we do not have illu : illosáhka,
+! Now, we have "Cns:*", the earlier version said "º: Cns", and that was wrong,
+! it did not give liidni > liidne-. Still, *illo- must be a different problem,
+! since it has short vowel before the consonants. I leave the rule as it is now
+! and reconsider the illu case.
+!!€ lijgiX7#ruhºtaX4jd
+!!€ liige0#ru00đa0id
+
+!FOLLOWING TwO RULES COMMENTED OUT BECAUSE THEY ARE TOO CATEGORICAL,
+! new rules under optional vowelshortening e:i, u:o
+!"Optional Vowel Shortening in Caritives"
+!  Vx:Vy => [ Hyph | # | Cns ] [a|i|o|u] Cns:+ _ ( DelCns:) X9: ;
+!	   where Vx in (u i)
+!		 Vy in (o e)
+!	   matched ;
+! Hmm. X9 is used only in the DenominalAdjsV lexicon., in front of
+! heapmi, huvva, huhtti, hudda.
+
+!"Vowel Shortening in Caritives"
+!  Vx:Vy <=> [ Vow Vow | á ] Cns:+ _ ( DelCns:) X9: ;
+!	    where Vx in (u i)
+!	          Vy in (o e)
+!	    matched ;
+
+
+
+! Verbs
+
+"Vowel Shortening in Bisyllabic Sg2 Imperatives and Connegatives"
+  Vx:Vy <=> Cns _ ( %>: ) ( »: ( »: »: )) Q6: ;
+	    where Vx in (u i)                  ! čuorºvu:čuorvvo
+	          Vy in (o e)                  ! boahºti:boađe
+	    matched ;
+!!€ čuorºvuQ6
+!!€ čuorvvo0
+
+
+!!€ boahºtiQ6
+!!€ boa00đe0
+
+
+! Adjectives
+
+"Vowel Shortening in Attributive Forms, V-final Adjectives" ! lájºkiW1s:láikkes
+  Vx:Vy <=> Cns:+ _  ( %>: ) ( »: ( »: »: )) [ W1: | W2: ] s [ ( »: »: »: ) ( ∑ ) # | ( ∑ ) Hyph ] ; ! álºkiW2s:álkes
+	    where Vx in (u i)
+	          Vy in (o e)
+	    matched ;
+
+!!€ lájºkiW1s#
+!!€ láikke0s#
+
+!!€ álºkiW2s#
+!!€ ál0ke0s#
+
+                        ! W1 for WeG Attr, W2 for non-CG Attr form.
+
+"Vowel Shortening in Attributive Forms, s-final Adjectives" ! váttisW1:váttes W2??
+   Vx:Vy <=> Cns:+ _  s ( %>: ) ( »: ( »: »: )) W1:( »: ) (( ∑ ) [ Hyph | # ]) ; ! trying to get heajos-biila as well as heajosbiila
+	    where Vx in (u i)
+		      Vy in (o e)
+		matched ;
+!  Vx:Vy <=> Cns:+ _  ( %>: ) ( »: ( »: »: )) s W1: ; ! ( ∑ ) [ Hyph | # ] ;  ! orig
+
+!!€ váttisW1
+!!€ váttes0
+
+!!€ headºjusW1-
+!!€ hea00jos0-
+
+!!€ headºjusW1
+!!€ hea00jos0
+
+!!€ váttisW1-
+!!€ váttes0-
+
+
+! The rule now works for all "s W1:" right contexts. This means that ess of
+! guorus becomes guorrosin, as required. Check for side-effects.
+
+
+"Optional vowel-shortening i:e"
+ i:e => Cns:+ _ (Cns:) ( %>: ) ( »: ( »: »: )) (X4:) W4: ;   !in diminutive verbs, caritives
+
+
+"Optional vowel-shortening u:o"
+ u:o => Cns:+ _ (Cns:) ( %>: ) ( »: ( »: »: )) (X4:) W4: ; !Diminutive geaffut:geafustit/geafostit, caritives
+
+
+! Diphtong simplification
+! -----------------------
+
+
+
+"Diphthong Simplification in i-Stems before Suffixes Beginning with j:"
+!  Vx:0 <=> Vow _ Cns:+ [ i | e7:i ] X5: ; ! Cannot see why e7:1 here. Thj
+  Vx:0 <=> Vow _ Cns:+  [ i | e:i ]  ( %>: ) ( »: ( »: »: )) [ X5: | %^DISIMP: ] j: ; ! For some reason the e7:i here triggers optional forms to all verbs; naskke7stit, nahke7hit, niestte7huvvat, badje7lduolbmat etc etc -> naskkistit, nahkihit, niesttihuvvat, badjilduolbmat.
+!  Vx:0 <=> Vow _ Cns:+   :i   ( %>: ) ( »: ( »: »: )) [ X5: | %^DISIMP: ] ;
+	where Vx in (e o a) ;          ! goahºtiX5jd:go0điid
+! Cf. alt 2 below...
+
+!!€ goahºtiX5jd
+!!€ go000đi0id
+
+!!!€ bealle7>X5jd
+!!!€ be00li>0id
+
+!"e7 as i in suffixes"
+!e7:i <=> _ (Dummy:) j: ;
+
+! Two possible strategies for fixing bug 56, the oahpaheaddjiid bug:
+! ------------------------------------------------------------------
+! 1. lexical strategy: XX instead of X5, and marking in the lexicon
+! PrsPtc then do not go to GOAHTI, but to OAHPAHEADDJI, and point to
+!  :XX GODII- ; ! weak gr dipth simpl
+!"Optional Diphthong Simplification in Strong-Grade i-Stems before Suffixes Beginning with j:"
+!  Vx:0 => Vow _ Cns:+ [ i | e7:e ] XX: ; !XX is just an example of how we might do it...
+!	where Vx in (e o a) ;          ! goahºtiX5jd:go0điid
+! pro: do not need to define G3.
+! pro: Opens for lexical variation: moarsi, etc, PrsPtc, Comp must be marked XX or redirected
+! con: have to build a set of new lexica, identical to GOAHTI, except for the ref to GODII.
+! con: gives a lexical solution to a basically morphophonological problem
+
+! 2. morphophonological strategy, the smj way.
+! Define a G3 context, and integrate it into a further rule
+!"Optional Diphthong Simplification in Strong-Grade i-Stems before Suffixes Beginning with j:"
+!  Vx:0 => Vow _ G3 [ i | e7:e ] X5: ; !G3 to be defined...
+!	where Vx in (e o a) ;          ! goahºtiX5jd:go0điid
+! pro: linguistically the right approach, says intuition
+! pro: no need for confusing new lexica
+! con: defining G3 is a mess, at best
+! We have optional dipht. simpl. only in G3-nouns and no cons grad.
+
+! Going for 2:
+
+!"G12 Compulsatory Diphthong Simplification in i-Stems before Suffixes Beginning with j:"
+!  Vx:0 <=> Vow _ G12 [ i | e7:e ] X5: ;
+!	where Vx in (e o a) ;          ! goahºtiX5jd:go0điid
+
+!"G3 Facultative Diphthong Simplification in i-Stems before Suffixes Beginning with j:"
+!  Vx:0 => Vow _ G3 [ i | e7:e ] X5: ;
+!	where Vx in (e o a) ;          ! goahºtiX5jd:go0điid
+
+!Using this one while waiting for the G3 rule to be fixed.
+!"Diphthong Simplification in i-Stems before Suffixes Beginning with j:"
+!  Vx:0 => Vow _ Cns [º:Cns|Cns] Cns:+ [ i | e7:e ] X5: ;
+!	where Vx in (e o a) ;          ! goahºtiX5jd:go0điid
+
+
+
+
+
+"Diphthong Simplification in Actor Nouns from i- and a-Stems - obl, norm" ! viehºki > vihkkiin
+  Vx:0 <=> Vow _ Cns:+ [ i: | a: ] ( %>: ) ¤: ( %>: ) ( »: ( »: »: )) %^DISIMP: ;
+			where Vx in (e o a) ;				                          ! Western and norm
+
+"Diphthong Simplification in Actor Nouns from i- and a-Stems - optional, " ! viehºki > vihkkiin
+  Vx:0  => Vow _ Cns:+ [ i: | a: ] ( %>: ) ¤: ( %>: ) ( »: ( »: »: )) X5: ;        !           viehkkiin
+			where Vx in (e o a) ;				                              ! Eastern, substandard
+
+!!€ viehºki¤X5jn
+!!€ vi0hkki00in
+
+"Diphthong Simplification in Certain Forms of u-Stems"
+  Vx:0 <=> Vow _ Cns:+ [ u: | o7: ] ( %>: ) ( »: ( »: »: ))
+                         [ X3: | (DelCns:) ( %>: ) ( »: ( »: »: )) X6: | Q8: | Y5: | Y6: ] ;
+			where Vx in (e o a) ;
+
+"Diphthong Simplification in Certain Forms of u-Stems only X2" ! pga konflikt med illative only-regel
+  Vx:0 <=> Vow _ Cns:+ [ u: | o7: ] ( ¤: ) ( %>: ) ( ¤: ) ( »: ( »: »: ))
+                         [ X2: ] ;
+			where Vx in (e o a) ;
+
+
+!"Diphthong Simplification in Actor Nouns from u-Verbs - optional, sub"
+!  Vx:0 => Vow _ Cns:+ u:  ( %>: ) ¤: ( %>: ) ( »: ( »: »: )) X5: ;   ! Eastern, substandard
+!			where Vx in (e o a) ;
+
+"Diphthong Simplification in Actor Nouns from u-Verbs - obl, sub"
+  Vx:0 <=> Vow _ Cns:+ u:  ( %>: ) ¤: ( %>: ) ( »: ( »: »: )) X3: ;  ! Illative onlyl
+			where Vx in (e o a) ;
+
+"Diphthong Simplification in Actor Nouns from u-Verbs - opt, "
+  Vx:0 => Vow _ Cns:+ u:  ( %>: ) ¤: ( %>: ) ( »: ( »: »: )) X W9: ;  ! Illative onlyl
+			where Vx in (e o a) ;
+
+
+"Diphthong Simplification in Diminutives etc. from Trisyllabics with 2nd Syll u/o"
+  Vx:0 <=> Vow _ Cns:+ [ u: | o7: ]  ( %>: ) ( »: ( »: »: )) ( NonMPDummy:) Cns:+  ( %>: ) ( »: ( »: »: )) X2: ;
+			where Vx in (e o a) ;
+
+"Diphthong Simplification: Conditional in -alla- etc. Derivatives from Trisyllabics"
+  Vx:0 <=> Vow _ Cns:+ [u:o | o7: ] ( %>: ) ( »: ( »: »: )) ( NonMPDummy:) Cns:+ ( %>: ) ( »: ( »: »: )) X1: ;
+			where Vx in (e o a) ;
+
+"Diphthong Simplification in IllSg and Certain Conjug. Forms of a-Stems"
+  Vx:0 <=> Vow _ Cns:+ a:  ( %>: ) ( »: ( »: »: )) [ X3: | Q2: | Q3: | Y7: ] ;
+			where Vx in (e o a) ;
+
+"Diphthong Simplification in Certain Conjugational Forms of i- and u-Stems"
+  Vx:0 <=> Vow _ Cns:+ HighVow:  ( %>: ) ( »: ( »: »: )) [ Q2: | Q3: | Q7: [š:|ž:]| Y7: ] ;
+			where Vx in (e o a) ;
+
+"Diphthong Simplification: Optional before Deverbal -alla-, -adda-, -us"
+  Vx:0 => Vow _ Cns:+ o7: ( %>: ) ( »: ( »: »: )) ( NonMPDummy:) Cns:+ ( %>: ) ( »: ( »: »: )) X1: ;
+			where Vx in (e o a) ;
+
+"Diphthong Simplification in u-Stems before Conditional Marker"
+  Vx:0 => Vow _ Cns:+ u: ( %>: ) ( »: ( »: »: )) Q5: ;
+			where Vx in (a e o) ;
+
+"Dipthtong simplification in the attribute forms of AD-adjectives"
+  Vx:0 <=> Vow _ Cns:+ Vow ( %>: ) ( »: ( »: »: )) [ Y9: | X9: ] ;
+		       where Vx in (a e o) ;
+
+"Diphthong Simplification: Optional before Deverbal st+alla-, st+adda-"
+  Vx:0 => Vow _ Cns:+ u:o ( %>: ) ( »: ( »: »: )) W5: ;
+			where Vx in (e o a) ;
+
+
+! Vowel Rising
+! ------------
+
+"Vowel Rising"
+  Vx:Vy <=> Vow: (Cns:*) (%^:) Cns:+ _ ( CntrCns:0 ) ( %>: ) ( »: ( »: »: )) ( Dummy:+) j:i ;
+			where Vx in (e o)
+			      Vy in (i u)
+			matched ;
+
+! There is a conflict between e7:i here and e7:á in the Metaphony
+! chapter. (e7 is "e with dot below" from the dictionary).
+! We need to either restrict the context in the M chapter, or
+! in the Vowel Rising part. For now, we try out without the e7:i.
+! Needed: Documentation on all the rules in the M chapter.
+!			where Vx in (e o e7)
+!			      Vy in (i u i )
+
+! The original version had Vx = e,o for Vowel Rising and
+! Vx = i,e7,u for General metaphony. Thus, the new feature is
+! e7 for Vowel rising.
+
+!!€ boahºti>^DISIMPjmet#
+!!€ bo000đi>0imet#
+
+!!€ reŋºko>X2jd#
+!!€ reŋ0ku>0id#
+
+!!€ baste>X2j#
+!!€ basti>0i#
+
+!!€ asi#bealli>^DISIMPjde#
+!!€ asi#be00li>0ide#
+! Note. This will fail for now.
+! -bealle +sg.ill = -beallái, +pl. ill = -beliide,
+
+!!€ Line>X2j#
+!!€ Lini>0i#
+
+! should be Linii, exactly, fine, and is as well.
+
+! Metaphony
+! ---------
+
+"General Metaphony"
+  Vx:Vy <=> Cns _ Cns:* ( %>: ) ( »: ( »: »: )) [ X2: | X6: ] ;
+			where Vx in (i e7 u)
+			      Vy in (á á o)
+			matched ;
+
+!!€ áhččiX2n
+!!€ áhččá0n
+
+!"e7 Rising" ! Awaiting discussion.
+!  e7:i <=> Vow: Cns:+ _ ( CntrCns:0 ) ( Dummy:+ - W9: - X2: - X6: ) j:i ;
+!outcommented due to bug1375
+
+
+
+"Metaphony in Derivatives -us, -alla, -adda 1"
+  u:o => Cns _ ( %>: ) ( »: ( »: »: )) ( NonMPDummy2:) Cns:+ ( %>: ) ( »: ( »: »: )) X1: ;
+! Here I have a new set, NonMPDummy2, without X7 and X8, to avoid clash with
+! the allegro shortening rule. Check for alternative solutions !!!
+
+"Metaphony in Derivatives -us, -alla, -adda 2"
+  Vx:á <=> Cns _ ( %>: ) ( »: ( »: »: )) ( NonMPDummy2:) [ Cns: - j: ] (Cns) ( %>: ) ( »: ( »: »: )) X1: ;
+			where Vx in (i e7) ;
+
+"Illative Singular Metaphony"
+  Vx:Vy <=> Cns ( %>: ) ( »: ( »: »: )) _ ( %>: ) ( »: ( »: »: )) X3: ;
+			where Vx in (i a e7)
+			      Vy in (á i á )
+			matched ;
+
+!!€ stahta>X3j#
+!!€ stahti>0i#
+
+!"Illative Singular Metaphony2" !because of STAHTA: stahtai, commented out beacause -ai illative is only for iija-words
+!  Vx:Vy <=> Cns _ ( %>: ) ( »: ( »: »: )) W9: ;
+!            where Vx in (i e7)
+!	              Vy in (á á )
+!			matched ;
+
+! Commented in again for the sake of Sijte.
+!Now Fixed in lexicon
+
+!!€ Sij9te>i#
+!!€ Sijte>i#
+
+"Metaphony in Px Contexts of Actor Nouns of i-, a-, and u-Verbs"
+Vx:Vy <=> Cns _  ( %>: ) ¤: ( %>: ) ( »: ( »: »: )) [ X2: | X6: ] ;
+			where Vx in (i a u)
+			      Vy in (á á o)
+			matched ;
+
+"Metaphony in Illative of Actor Nouns of i-, a-, and u-Verbs"
+Vx:Vy <=> Cns _  ( %>: ) ¤: ( %>: ) ( »: ( »: »: )) X3: ;
+		       where Vx in (i a )
+			     Vy in (á á )
+		       matched ;
+
+!"Metaphony in Actor Nouns of i-, a-, and u-Verbs"
+!  Vx:Vy <=> Cns _  ( %>: ) ¤: ( %>: ) ( »: ( »: »: )) [ X2: | X3: | X6: ] ;
+!			where Vx in (i a ) !u)
+!			      Vy in (á á ) !o)
+!			matched ;
+
+"Metaphony in MUSH-Derivatives"
+  i:á => Cns _ ( %>: ) ( »: ( »: »: )) m: u: š: š: ;
+
+"Potential Marker Metaphony"
+  Vx:Vy <=> Cns _ ( %>: ) ( »: ( »: »: )) Q7: [š:|ž:];
+			where Vx in (i u)
+			      Vy in (e o)
+			matched ;
+
+
+
+! Stem vowel alternations
+! -----------------------
+
+"Stem Vowel in Contracted Stems"                ! fijdnisY5t:fiidnát
+  Vx:Vy <=> Cns _ ( CntrCns:) ( %>: ) ( »: ( »: »: )) Y5: ;
+			where Vx in (i a u)
+			      Vy in (á á o)
+			matched ;
+!!€ fijdnisY5t
+!!€ fiidná00t
+
+
+"Stem Vowel before Frequentative d"             ! oažžut:oččodit
+  Vx:Vy <=> Cns _ ( %>: ) ( »: ( »: »: )) Q8: ;                         ! coahkut:coagostit
+			where Vx in (u)
+			      Vy in (o)
+			matched ;
+! Note that this rule also triggers other contexts than frequentative -d-
+!!€ oažžuQ8dit
+!!€ o0ččo0dit
+
+!!€ coahºkuX8stit
+!!€ coa00go0stit
+
+!"Stem Vowel before Frequentative l"
+!  i:a <=> Cns _ Q9: ;
+! This rule is not implemented, there is no Q9 in the sme-lex.txt file (yet).
+
+!"Stem Vowel before Reflexive s"
+!  Vx:Vy <=> Cns _ Y8: ;
+!			where Vx in (i u)
+!			      Vy in (á a)
+!			matched ;
+! This rule is not implemented, there is no Y8 in the sme-lex.txt file (yet).
+
+"Indicative Present Singular 3rd Final Vowel"      ! jearraQ1:jearrá
+  Vx:á <=> Cns _ ( %>: ) ( »: ( »: »: )) Q1: ;                             ! boahtiQ1:boahtá
+			where Vx in (a i) ;
+!!€ jearraQ1
+!!€ jearrá0
+
+!!€ boahºtiQ1
+!!€ boah0tá0
+
+
+"Imperative Present 1st/3rd Person and Connegative Final Vowel"
+  Vx:o <=> Cns _ ( %>: ) ( »: ( »: »: )) Q3: ;                             ! jearraQ3n:jerron
+			where Vx in (a i u) ;                  ! boahtiQ3n:bohton
+                                                   ! čuorvuQ3n:čurvon
+!!€ jearraQ3n
+!!€ je0rro0n
+
+!!€ jearraQ2t
+!!€ je0rre0t
+
+!!€ boahºtiQ3n
+!!€ bo0h0to0n
+
+!!€ čuorºvuQ3n
+!!€ ču0r0vo0n
+
+
+"Stem Vowel Shift a:e, i:e, u:o"                   ! jearra:jerre
+  Vx:Vy <=> Cns _ ( %>: ) ( »: ( »: »: )) Q2: ;                            ! boahtit:bohtet
+			where Vx in (a i u)                    ! čuorvu:čurvo
+			      Vy in (e e o)
+			matched ;
+! This is for Prs Du1, Pl3, and 2nd Person Imperative
+!!€ jearraQ2
+!!€ je0rre0
+
+!!€ boahºtiQ2t
+!!€ bo0h0te0t
+
+!!€ čuorºvuQ2
+!!€ ču0r0vo0
+
+
+"Stem Vowel shift i:á"
+  i:á <=> Cns _ ( %>: ) ( »: ( »: »: )) [ Q4: | Q5: ] ; !1st and 2nd Person Singular Present/before Conditional Marker
+         Cns:+ _ ( %>: ) ( »: ( »: »: )) W5: ; !Dim-freq verbs
+         Cns:+ _ ( %>: ) ( »: ( »: »: )) W6: ; !Sub-freq verbs
+!!€ boahºtiQ4n
+!!€ boa00đá0n
+
+!!€ boahºtiQ5lin
+!!€ boa00đá0lin
+
+"Stem Vowel shift u:o"
+ u:o <=> Cns:+ _ ( %>: ) ( »: ( »: »: )) [ W5: | W7: ] ; !Dim-freq verbs, geaffut:geafostallat + stuvvat.
+
+"Stem Vowel shift i:e"
+ i:e <=> Cns:+ _ ( %>: ) ( »: ( »: »: )) W7: ; !!Dim-freq verbs, geaffut:geafostallat + stuvvat.
+         Cns:+ _ ( %>: ) ( »: ( »: »: )) W8: ; ! Deverbal nouns -meahttun
+
+
+
+!"Stem Vowel before Conditional Marker"              ! boahtit:boađálin
+!   i:á <=> Cns _ Q5: ;         !Collapsed into one rule, see above
+!  Vx:Vy <=> Cns _ Q5: ;                            ! The u:o alternation
+!			where Vx in (u i)           ! removed because it gave
+!			      Vy in (o á)           ! *čuorvvolin, but Nickel
+!			matched ;                   ! gives čuorvvulin.
+
+
+"Stem Vowel in Dual 2nd Person Imperative"          ! jearra:jearri
+  a:i <=> Cns _ ( %>: ) ( »: ( »: »: )) Y1: ;
+!!€ jearraY1
+!!€ jearri0
+
+!ska vara: viehkat->viehkki
+!status: viehkat->viehkkimuorra/viehkkamuorra
+
+!ska vara: viehkka¤ -> viehkki
+!status: viehºka¤ -> viehkkimuorra/viehkkamuorra
+
+! viehºka¤>∑#
+
+"Stem Vowel in Present Participials from i-Verbs"
+  a:i <=> Cns _  ( %>: ) ¤: ( %>: ) ( »: ( »: »: )) [ X1: | X4: | X5: | X7: | X8: | ( ∑ ) # | ( ∑ ) Hyph | s | n | %^DISIMP: ] ;
+! a:i <=> Cns _  ( %>: ) ¤: ( %>: ) ( »: ( »: »: )) [ X1: | X4: | X5: | X7: | X8: | ( ∑ ) # | ( ∑ ) Hyph ] ;
+! The problem with the old one was that it didnºt trigger for Essive and for
+! the Px forms of the nominative.
+! The new one isnºt perfect, the s and n are rather quasi for Ess and Px.
+
+"Stem Vowel in Dual and Pl 1st Person Imperative"             ! jearra:jearru
+  Vx:u <=> Cns _ ( %>: ) ( »: ( »: »: )) Y2: ;                                 ! boahºti:boahttu
+			where Vx in (a i) ;
+!!€ jearraY2
+!!€ jearru0
+
+!!€ boahºtiY2
+!!€ boahttu0
+
+
+"Stem Vowel in Plural 2nd Person Imperative"
+!  Vx:Vy <=> Cns _ ( %>: ) ( »: ( »: »: )) Q2: ;                               ! boahºti:bohtet
+   Vx:Vy <=> Cns _ ( %>: ) ( »: ( »: »: )) Y3: ;                               ! čuorºvu:čurvot
+			where Vx in (a i u)
+			      Vy in (e e o)
+			matched ;
+! Q2 context replaced by other rule for both imperative and other categories
+!!€ jearraQ2t
+!!€ je0rre0t
+
+!! boahºtiY4t ! It seems it should be Q3. ... both?!
+!!€ boahºtiQ3t
+!!€ bo0h0to0t
+
+
+!! čuorºvuY4t ! Q2, it seems.
+!!€ čuorºvuQ2t
+!!€ ču0r0vo0t
+
+"Stem Vowel in Imperative Plural 1st Person and Passive Stem"
+  Vx:o <=> Cns _ ( %>: ) ( »: ( »: »: )) [ Y4: | Y7: ] ( %>: ) ( »: ( »: »: )) (Y5:) [Cns: - j:i| ( ∑ ) #] ;
+		   where Vx in (a i u) ;
+
+
+! Y7 Testing passive forms
+!!€ jearraY7t#
+!!€ je0rro0t#
+
+!!€ boahºtiY7t#
+!!€ bo0htto0t#
+
+!!€ čuorºvuY7t#
+!!€ ču0r0vo0t#
+
+!!€ jearraY7juvvot#
+!!€ je0rro0juvvot#
+
+! Conflict: a:{o,u} <=> Cns _ Y7: {j: / unspecified}
+
+!"Stem Vowel in Past Tense of Derived Passive Stem"
+!  Vx:u <=> Cns _  Y7: (Y6:) j: ;
+!			where Vx in (a i) ;
+
+! This battlefield will be cleaned up, eventually, but we leave it as-is
+! for a while, so that Thomas and others can have a look at the ruins.
+
+! New oldrule
+ "Stem Vowel in Past Tense of Derived Passive Stem"
+   Vx:u <=> Cns _ ( %>: ) ( »: ( »: »: )) Y7: (Y6:) j:i [ ( ∑ ) #|m|d|g] ;
+             where Vx in (a i)  ;
+! for jerrui.
+
+
+!!€ jearraY7j#
+!!€ je0rru0i#
+
+!!€ dahºkaY7j#
+!!€ dahkku0i#
+
+!!€ loikaY7j#
+!!€ loiku0i#
+
+
+! Old rule
+! "Stem Vowel in Past Tense of Derived Passive Stem"
+!   Vx:u <=> Cns _  Y7: Y6: j: ;
+!            where Vx in (a i)  ;
+
+! Put Y6 into paranthesis, otherwise o:u stem vowel shift doesnºt work in Passive+Ind+Prt+Sg3 of
+! Impersonals and intransitives. (TO)
+! But we donºt have passives of impersonals and intransitives, do we ?! So, what was
+! the reason for changing the rule? (TT) yes we have passives of impersonals and intransitives:-) (TO):
+!arvit+V+IV+Pass+Ind+Prt+Sg3
+!arvojuvvui
+!arvui
+
+
+! Stem vowel deletion in compounding
+! ---------------------------------------------
+
+"á-stem vowel deletion"
+ á:0 <=> Cns: _ W3: ( ∑ ) # ;
+
+"a-stem vowel deletion"
+ a:0 <=> Cns: _ W3: ( ∑ ) #  ;
+           e: _ b: b: o: ( %>: ) ( »: ( »: »: )) [X2:|X3:|X6:]; !Diphthong Simplification in -eabbo comparatives
+
+
+"i-stem vowel deletion"
+ i:0 <=> Cns: _ W3: ( ∑ ) #  ;
+
+"u-stem vowel deletion"
+ u:0 <=> Cns: _ W3: ( ∑ ) #  ;
+
+"e-stem vowel deletion"
+ e:0 <=> Cns: _ W3: ( ∑ ) #  ;
+
+"o-stem vowel deletion"
+ o:0 <=> Cns: _ W3: ( ∑ ) #  ;
+
+
+
+! Special word final consonants
+! -----------------------------
+
+"Word Final Deletion of n8 m8 g8 h8"                   ! beatnag8:beana
+  Cx:0 <=> Vow _ ( %>: ) ( »: ( »: »: )) [ X4: | X8: | X6: Cns: | X9: | W4: ] ;      ! luopmán8:luomi
+			where Cx in (DelCns) matched ; ! giellum8:gielu
+!!€ beatnag8X4
+!!€ bea0na00
+
+!!€ luopmin8X4
+!!€ luo0mi00
+
+!!€ giellum8X4
+!!€ gie0lu00
+
+
+
+"Word Final Neutralization of g8, h8, m8"
+  Cx:Cy <=> Vow _ ( %>: ) ( »: ( »: »: )) [ X2: | X7: ] ( ∑ ) [ Hyph | # ] ;
+			where Cx in (g8 h8 m8)
+			      Cy in (t  t  n )
+			matched ;
+
+! Please add a test or two:
+! €
+! €
+
+
+
+
+! Appendix: Deleted rules that still need attention
+! -------------------------------------------------
+
+
+
+
+
+!"Postvocalic j Surfacing"
+!  j:i <=> Vow: ( :0 ) ( %>: ) ( »: ( »: »: )) ( Dummy: ) _ [ Cns | º: | ( :0 - Y5: - Y6:)+  ( ∑ ) [ Hyph | # ] ] ; !more and more dummies...
+! j:i <=> Vow: ( :0 ) ( Dummy: ) _ [ Cns | º: | ( :0 - Y5: )+  ( ∑ ) [ Hyph | # ] ] ; !more dummies...
+! j:i <=> Vow: ( :0 ) ( Dummy: ) _ [ Cns | º: | ( :0 - Y5: )   ( ∑ ) [ Hyph | # ] ] ; !1.138
+! j:i <=> Vow: ( :0 ) ( Dummy: ) _ [(Dummy:* - Y5: -Y6:    ) [ ( ∑ ) [ Hyph | # ] | Cns: ( ( ∑ ) [ Hyph | # ]) ]]; ! bad bec. Ess almmájin *almmáiin almmájX4in
+! j:i <=                     _ [Cns | ( DummyNotY5: ) ( ∑ ) # ] ;                             ! <============ 1.1 version:
+!!!j:i <=> Vow: (:0) (Dummy:) _ [Cns | º: | (:0 - Y5:) ( ∑ ) [ Hyph # | #]] ;
+!! Changed because:we get almmáj- and not almmái-
+!! Postvocalic j surfaces as i
+!! Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dummy: ) _ ;
+
+
+! "Word Final Consonant Neutralization 1"  !smirezit : smires, Troandin-bisma
+!   Cx:Cy <=> Vow: (( CntrCns:) Dummy:+) _ ( %>: ) ( »: ( »: »: )) ( :0 - Y5: - Y6: )( :0 - Y5: - Y6: ) ( ∑ ) [ Hyph | # ]  ;
+! ! Cx:Cy <=> Vow: (( CntrCns:) Dummy:+) _    ( :0 - Y5: )( :0 - Y5: ) ( ∑ ) [ Hyph | # ]  ; !1.138
+! ! Cx:Cy <=> Vow: (( CntrCns:) Dummy:+) _    ( Dummy: )  ( :0 - Y5: ) ( ∑ ) [ Hyph | # ]  ;
+! ! Cx:Cy <=> Vow: (( CntrCns:) Dummy:+) _    ( Dummy:  - Y5: - Y6:  ) [ :0 - Y5: - Y6:] ( ∑ ) [ Hyph | # ]  ; ! 1.155
+! ! Cx:Cy <=> Vow: (( CntrCns:) Dummy:+) _  [ ( Dummy:* - Y5   )       ( ∑ ) [ Hyph | # ]] ;
+! ! Cx:Cy <=> Vow: (( CntrCns:) Dummy:+) _  [ ( Dummy:* - Y5:  )       ( ∑ ) [ Hyph | # ]] ;
+! ! Cx:Cy <=> Vow: (( CntrCns:) Dummy:+) _  [ ( Dummy:* - Y5: - Y6:  ) ( ∑ ) [ Hyph | # ]] ; ! not vejolaš
+! 			where Cx in (z ž m h p g b d)
+! 			      Cy in (s š n t t t t t)
+! 			matched ;
+
+
+
+!"Word Final Consonant Neutralization 2"
+! This is no longer a mystery. For once, we ask for the # symbol in the
+! left context. Why we do, is a mystery, but at least now the example works.
+! We should thus consider whether the leftmost # is needed in the rule.
+
+! € hálijd>#
+! € háliit>#
+
+! € hálijd>#
+! € háliid>#
+
+!"Stem Final Consonant Neutralization" !háliidit : háliit
+! Cx:Cy <=> Vow: Cns* (Vow*) Vow: ( CntrCns:)  _  # ;
+!			where Cx in (z ž m h p d g b)
+!			      Cy in (s š n t t t t t)
+!			matched ;
+!
+! Old version:
+! Cx:Cy <=> Vow: (( CntrCns:) Dummy:+) _ ( :0 - Y5: ) ( ∑ ) [ Hyph | # ]  ;
+! This one works for all except háliit.
+!
+! Tentative version:
+! Cx:Cy <=> Vow: ( CntrCns:) (Dummy:+) _ ( :0 - Y5: ) ( ∑ ) [ Hyph | # ]  ;
+! The nested left context was changed because of háliidit - háliit.
+! NOTE: there are 454 jd# that come out incorrectly with this version.
+
+! Overview over j translations.
+! j:j # | Cns _                     ! this is default
+! j:i     Vow _ Cns                 ! Most common exception
+! j:0     Vow _ [ Y5: | Y6: j: ]    ! Contracted stems
+! j:j     Vow _ Vow                 ! if followed by vow-initial suff
+
+
+! *) footnote 1
+! Older, removed versions:
+! Vx:Vy <=> [ Vow Vow | á ] Cns:+ Cns: _ StemCns:* : ;
+! This one gave vuovden# as only possible form of vuovdin in compounds.
+! Vx:Vy <=> [ Vow Vow | á ] Cns:+ Cns _ StemCns:* [ X7: | X8: ] ;
+! the problem with this one was that it was not restricted to compounds !!
+! The X7: | X8: line was commented out since no lexicon in sme-lex.txt
+! pointed from X8 to R. This move should be checked for compounds later.
+
+!"Vowel Shortening in Compounds after Long 1st Syllable 2"
+!  Vx:Vy <=> [ Hyph | #  | Cns ] Vz Cns+ Cns: Cns+ _ StemCns:* [ X7: | X8: ] ;
+!			where Vz in (a i o u) ;
+!			where Vx in (u i)
+!			      Vy in (o e)
+!			matched ;
+! XXX Remainder! This rule is commented out since including it
+! spoils the i:á alternation of verbs (boahtit:boađán, for some reason.
+! This should be looked into.
