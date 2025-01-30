@@ -47,7 +47,7 @@ CUSTOM_FSTS=
 if CAN_XFST
 
 if WANT_MORPHOLOGY
-GT_ANALYSERS+=analyser-lia_disamb-gt-desc.xfst
+GT_ANALYSERS+=
 #			  analyser-nob-desc.xfst \
 #			  analyser-nob-norm.xfst 
 endif # WANT_MORPHOLOGY
@@ -66,7 +66,7 @@ GT_GENERATORS+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst \
 endif # WANT_PHONETIC
 
 if WANT_CUSTOM_FSTS
-CUSTOM_FSTS+=
+CUSTOM_FSTS+=analyser-lia_disamb-gt-desc.xfst
 endif # WANT_CUSTOM_FSTS
 
 endif # CAN_XFST
@@ -75,8 +75,7 @@ endif # CAN_XFST
 if CAN_HFST
 
 if WANT_MORPHOLOGY
-GT_ANALYSERS+=analyser-gt-norm.hfst \
-			  analyser-lia_disamb-gt-desc.hfstol
+GT_ANALYSERS+=analyser-gt-norm.hfst
 #GT_ANALYSERS+=analyser-nob-desc.hfstol \
 #			  analyser-nob-norm.hfstol
 endif # WANT_MORPHOLOGY
@@ -94,7 +93,7 @@ GT_GENERATORS+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst \
 endif # WANT_PHONETIC
 
 if WANT_CUSTOM_FSTS
-CUSTOM_FSTS+=
+CUSTOM_FSTS+=analyser-lia_disamb-gt-desc.hfstol
 endif # WANT_CUSTOM_FSTS
 
 endif # CAN_HFST
