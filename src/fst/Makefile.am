@@ -60,9 +60,9 @@ endif # WANT_GENERATION
 
 if WANT_PHONETIC
 GT_ANALYSERS+=
-GT_GENERATORS+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst \
-			   generator-tts-gt-norm_nonum_noabbr_nohyph_fin.xfst \
-			   generator-tts-gt-norm_nonum_noabbr_nohyph_nob.xfst
+#GT_GENERATORS+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst \
+#			   generator-tts-gt-norm_nonum_noabbr_nohyph_fin.xfst \
+#			   generator-tts-gt-norm_nonum_noabbr_nohyph_nob.xfst
 endif # WANT_PHONETIC
 
 if WANT_CUSTOM_FSTS
@@ -87,9 +87,9 @@ endif # WANT_GENERATION
 
 if WANT_PHONETIC
 GT_ANALYSERS+=
-GT_GENERATORS+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst \
-			   generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst \
-			   generator-tts-gt-norm_nonum_noabbr_nohyph_nob.hfst
+#GT_GENERATORS+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.hfst \
+#			   generator-tts-gt-norm_nonum_noabbr_nohyph_fin.hfst \
+#			   generator-tts-gt-norm_nonum_noabbr_nohyph_nob.hfst
 endif # WANT_PHONETIC
 
 if WANT_CUSTOM_FSTS
