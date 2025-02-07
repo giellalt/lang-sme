@@ -10171,6 +10171,12 @@ regular orthography stem must be marked with the tag `+Orth/Strd`. This is
 so that we can exclude the one or the other from different fst's, but only
 when the oposite stem variant is present.
 
+## Tags for indicating alternative orthographies, cf `configure.ac`
++AltOrth/standard - Standard orthography
++AltOrth/bergslan - Bergsland-Ruong orthography
++AltOrth/-standard - NOT Standard orthography
++AltOrth/-bergslan - NOT Bergsland-Ruong orthography
+
 ## Multichars for marking start and end of IPA sequences
 
 <!-- {% raw %} -->
