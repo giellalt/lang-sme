@@ -11,8 +11,8 @@ TESTS=\
 	NegV-ConNeg-3Sg-FAIL.yaml \
 	NegV-ConNeg-Cond-FAIL.yaml \
 	NegV-ConNeg-VFin-FAIL.yaml \
-	double-space-FAIL.yaml \
-	formatting-FAIL.yaml \
+	double-space-PASS.yaml \
+	formatting-PASS.yaml \
 	msyn-ASgLoc-AAttr-FAIL.yaml \
 	msyn-Inf-ConNeg-after-Neg-FAIL.yaml \
 	msyn-Pl3-ConNeg-FAIL.yaml \
@@ -72,8 +72,6 @@ XFAIL_TESTS=\
 	NegV-ConNeg-3Sg-FAIL.yaml \
 	NegV-ConNeg-Cond-FAIL.yaml \
 	NegV-ConNeg-VFin-FAIL.yaml \
-	double-space-FAIL.yaml \
-	formatting-FAIL.yaml \
 	msyn-ASgLoc-AAttr-FAIL.yaml \
 	msyn-Inf-ConNeg-after-Neg-FAIL.yaml \
 	msyn-Pl3-ConNeg-FAIL.yaml \
