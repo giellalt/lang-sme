@@ -8,6 +8,9 @@ if WANT_GRAMCHECK
 
 # List here (space separated) all yaml files to be run as part of make check:
 TESTS=\
+	real-DerNomActSgGen-PrfPrc.pass-false-triggered-by-context.yaml \
+	real-DerNomAgPlNom-Inf.pass-false-triggered-by-context.yaml \
+	real-PrtPl3-PrsSg3.pass-false-triggered-by-context.yaml \
 	NegV-ConNeg-3Sg-FAIL.yaml \
 	NegV-ConNeg-Cond-FAIL.yaml \
 	NegV-ConNeg-Cond-PASS.yaml \
@@ -116,6 +119,9 @@ TESTS=\
 # List tests that are presently (expected) failures here, ie things that should
 # be fixed *later*, but is not critical at the moment:
 XFAIL_TESTS=\
+	real-DerNomActSgGen-PrfPrc.pass-false-triggered-by-context.yaml \
+	real-DerNomAgPlNom-Inf.pass-false-triggered-by-context.yaml \
+	real-PrtPl3-PrsSg3.pass-false-triggered-by-context.yaml \
 	NegV-ConNeg-3Sg-FAIL.yaml \
 	NegV-ConNeg-Cond-FAIL.yaml \
 	NegV-ConNeg-VFin-FAIL.yaml \
@@ -171,6 +177,8 @@ XFAIL_TESTS=\
 	syn-dain_Loc-okta_Loc-FAIL.yaml \
 	syn-inf-after-soaitit-FAIL.yaml \
 	syn-not_dego-FAIL.yaml
+# when the pass-false-triggered-by-context xfail, then 497 is fixed
+
 
 endif # WANT_GRAMCHECK
 
