@@ -7755,6 +7755,10 @@ Trisyllabic nouns
 
 * **LEXICON OVCCIS_N**  Collective numerals gallis, moattes, moattis, máŋggas
 
+* **LEXICON CIEZAS_N**  Collective numerals
+
+* **LEXICON VIDAS_N**  Collective numerals
+
 * **LEXICON DAIVVAS** Tris. Gradating C-Nouns, The Troms declension: dáivvaš:dáivaha, bearaš:bearraha, njunuš:njunnoha
 
 * **LEXICON BOADA** Short compound-forms. Trisyll. Inanim. Gradating 0-Nouns  TO AVOID BOAĐAN
@@ -8231,10 +8235,6 @@ Contracted nouns
 * **LEXICON CIEZADUHAT**
 
 * **LEXICON GAVCCIDUHAT**
-
-* **LEXICON CIEZAS_N**  Collective numerals
-
-* **LEXICON VIDAS_N**  Collective numerals
 
 * **LEXICON BEANNOT** one and a half
 

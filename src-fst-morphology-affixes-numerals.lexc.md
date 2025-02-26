@@ -217,10 +217,6 @@
 
 * **LEXICON GAVCCIDUHAT**
 
-* **LEXICON CIEZAS_N**  Collective numerals
-
-* **LEXICON VIDAS_N**  Collective numerals
-
 * **LEXICON BEANNOT** one and a half
 
 * **LEXICON NARE**
