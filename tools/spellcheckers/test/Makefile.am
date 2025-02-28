@@ -14,9 +14,9 @@ YAML_TEST_RUNNERS=run-spellers-gt-norm-anayaml-testcases.sh \
 
 # Specify other shell scripts here to make sure they are included in the distro
 # even though spellers are disabled:
-OTHER_TEST_RUNNERS_IN=test-zhfst-file.sh.in
+OTHER_TEST_RUNNERS_IN=
 
-OTHER_TEST_RUNNERS=test-zhfst-file.sh
+OTHER_TEST_RUNNERS=
 
 # Only test spellers if we build spellers:
 if WANT_SPELLERS
