@@ -3074,6 +3074,8 @@ The rules are no documented yet
 
 * **CollGen** Selects Nom
 
+* **CollArab** removes Coll from Arab if not selected in other rule
+
 ### Nominative as objects in existential clauses
 
 * **NDSgr2388** Selects Nom
