@@ -7761,6 +7761,8 @@ Trisyllabic nouns
 
 * **LEXICON VIDAS_N**  Collective numerals
 
+* **LEXICON HUONAS** Tris. Gradating C-Nouns, with -s instead of -š. The Troms declension: huonas:huotnaha
+
 * **LEXICON DAIVVAS** Tris. Gradating C-Nouns, The Troms declension: dáivvaš:dáivaha, bearaš:bearraha, njunuš:njunnoha
 
 * **LEXICON BOADA** Short compound-forms. Trisyll. Inanim. Gradating 0-Nouns  TO AVOID BOAĐAN
