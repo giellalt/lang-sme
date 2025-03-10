@@ -26,9 +26,13 @@ GIELLA_ANL_REMOVE_TRANSCRIPTORS=transcriptor-date-digit2text
 
 # If there are additional, language specific files used in the GC archive,
 # specify here:
-LOCAL_ANL_ZIP_FILES=
+LOCAL_ANL_ZIP_FILES=generated-remove-lexicalised-compounds.bin
 
 #### BEGIN: Local build targets: ####
+
+# Copy to file with another name, to work around VPATH / CG3 INCLUDE incomps:
+generated-remove-lexicalised-compounds.cg3: remove-lexicalised-compounds.cg3
+	$(AM_V_CP)cp -f $< $@
 
 #### END: Local build targets:   ####
 
