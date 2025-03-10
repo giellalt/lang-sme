@@ -8261,8 +8261,6 @@ Contracted nouns
 * **LEXICON ARABICCASEORD-ERR** ordinal inflection when preceded
 by .:, and with reduced case forms. The Err/Orth tag is added in the calling lexicon.
 
-* **LEXICON ARABICCASECOLL** collectives
-
 * **LEXICON ROMNUMTAGOBL**
 
 * * *
