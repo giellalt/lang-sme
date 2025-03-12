@@ -10103,6 +10103,7 @@ doavttergrádakursa
 * ** %        **
 * **+Guess** for the name guesser
 * ** +MWE     ** - Multi-word expressions treated as such in the preprocessor. To be added as first tag after the lemma
+* **+Span** - used for numerical expressions denoting spans or intervals, like 5-10, 2012-2015, etc
 
 * **+PxCPlComRecipr** used in pronoun-sme-morph.txt
 
@@ -10282,7 +10283,7 @@ part of the continuation lexicons, and will be located after the POS tag.
 * +Sem/Dummytag = Dummytag
 * +Sem/Edu = Educational event
 * +Sem/Event = Event
-* +Sem/Feat = Feature, like Árvu. (noe som man kan ha mye eller lite av, det kan være en skala og som er på en måte karakteriserende. (høyde, vekt, farge, kreativitet etc.)
+* +Sem/Feat = Feature, like Árvu. (noe som man kan ha mye eller lite av, det kan være en skala og som er på en måte karakteriserende (høyde, vekt, farge, kreativitet etc.)
 * +Sem/Feat-phys = Physiological feature, ivdni, fárda
 * +Sem/Feat-psych = Psychological feauture
 * +Sem/Feat-measr = Psychological feauture
@@ -10314,7 +10315,7 @@ part of the continuation lexicons, and will be located after the POS tag.
 * +Sem/Org = Organisation
 * +Sem/Part = Feature, oassi, bealli
 * Perc = (perception) er noe man kan kjenne i en begrensa periode og som er forårsaka av noe utenifra, f.eks. Mus lea ballu. Mus lea bavččas.
-* +Sem/Perc-cogn =
+* +Sem/Perc-cogn = Cognitive perception
 * +Sem/Perc-emo = Emotional perception
 * +Sem/Perc-phys = Physical perception
 * +Sem/Perc-psych = Psychological perception
@@ -10339,7 +10340,7 @@ part of the continuation lexicons, and will be located after the POS tag.
 * +Sem/Semcon = Semantic concept
 * +Sem/Sign = Sign (e.g. numbers, punctuation)
 * +Sem/Sport = Sport
-* +Sem/State =
+* +Sem/State = State
 * +Sem/State-sick = Illness
 * +Sem/Substnc = Substance, like Air and Water
 * +Sem/Sur = Surname
