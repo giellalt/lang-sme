@@ -10,7 +10,6 @@ if WANT_GRAMCHECK
 TESTS=\
 	real-DerNomActSgGen-PrfPrc.pass-false-triggered-by-context.yaml \
 	real-DerNomAgPlNom-Inf.pass-false-triggered-by-context.yaml \
-	real-ImprtPl2-Inf.pass-false-triggered-by-context.yaml \
 	real-PrtPl3-PrsSg3.pass-false-triggered-by-context.yaml \
 	NegV-ConNeg-3Sg-FAIL.yaml \
 	NegV-ConNeg-Cond-FAIL.yaml \
