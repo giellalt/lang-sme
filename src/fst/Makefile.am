@@ -43,34 +43,6 @@ CUSTOM_FSTS=
 ########################################################
 #### Add language-specific transducer targets here: ####
 
-#### Xerox transducers:
-if CAN_XFST
-
-if WANT_MORPHOLOGY
-GT_ANALYSERS+=
-#			  analyser-nob-desc.xfst \
-#			  analyser-nob-norm.xfst 
-endif # WANT_MORPHOLOGY
-
-if WANT_GENERATION
-#GT_GENERATORS+=
-#			   generator-nob-desc.xfst \
-#			   generator-nob-norm.xfst 
-endif # WANT_GENERATION
-
-if WANT_PHONETIC
-GT_ANALYSERS+=
-#GT_GENERATORS+=generator-tts-gt-norm_nonum_noabbr_nohyph_sme.xfst \
-#			   generator-tts-gt-norm_nonum_noabbr_nohyph_fin.xfst \
-#			   generator-tts-gt-norm_nonum_noabbr_nohyph_nob.xfst
-endif # WANT_PHONETIC
-
-if WANT_CUSTOM_FSTS
-CUSTOM_FSTS+=analyser-lia_disamb-gt-desc.xfst
-endif # WANT_CUSTOM_FSTS
-
-endif # CAN_XFST
-
 #### HFST transducers
 if CAN_HFST
 
@@ -114,10 +86,6 @@ if WANT_DICTIONARIES
 if CAN_HFST
 GT_ANALYSERS+=analyser-dict-gt-norm.hfstol
 endif # CAN_HFST
-
-if CAN_XFST
-GT_ANALYSERS+=analyser-dict-gt-norm.xfst
-endif # CAN_XFST
 
 if CAN_FOMA
 GT_ANALYSERS+=analyser-dict-gt-norm.foma
