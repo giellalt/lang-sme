@@ -13,7 +13,6 @@ SUBDIRS=. test
 #### Add language-specific sources here: ####
 GT_CG_LOCAL_SRCS=semanticroles.cg3 \
 				 valency.cg3 \
-				 korp.cg3 \
 				 semsets.cg3
 
 GIELLA_CG_INCLUDES=semsets.cg3
@@ -52,7 +51,7 @@ semsets.cg3: $(top_srcdir)/src/fst/morphology/root.lexc \
 
 ####### Other targets: ###########
 clean-local:
-	-rm -f *.bin functions.cg3 dependency.cg3 korp.cg3
+	-rm -f *.bin functions.cg3 dependency.cg3
 
 ####### Build rules via include: ########
 

@@ -6,7 +6,7 @@ cat $GTHOME/langs/sme/test/data/inputCGtest.txt \
 | $LOOKUP $GTHOME/langs/sme/src/analyser-disamb-gt-desc.xfst \
 | lookup2cg \
 | vislcg3 -g $GTHOME/langs/sme/src/syntax/disambiguation.cg3 \
-| vislcg3 -g $GTHOME/giella-shared/smi/src/syntax/korp.cg3 \
+| vislcg3 -g $GTHOME/giella-shared/smi/src/syntax/functions.cg3 \
 | perl -pe 's/ (Allegro|v\d|Err\/Sub)//g' \
 | tr -d "#" \
 | perl $GTHOME/gt/script/sort-cg-cohort.pl \

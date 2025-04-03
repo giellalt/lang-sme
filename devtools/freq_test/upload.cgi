@@ -26,7 +26,7 @@ my $fst_file = '/home/ciprian/main/langs/sme/src/analyser-disamb-gt-desc.xfst';
 my $lookup2cg = '/home/ciprian/main/gt/script/lookup2cg';
 my $vislcg =  '/usr/local/bin/vislcg3';
 my $dis_file = '/home/ciprian/main/langs/sme/src/syntax/disambiguation.cg3';
-my $korp_file = '/home/ciprian/main/giella-shared/smi/src/syntax/korp.cg3';
+my $korp_file = '/home/ciprian/main/giella-shared/smi/src/syntax/functions.cg3';
 my $grep = '/usr/bin/grep';
 my $enc = 'utf-8';
 

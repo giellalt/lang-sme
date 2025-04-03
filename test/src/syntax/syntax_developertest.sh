@@ -1,7 +1,7 @@
 # Skript for å teste analysen av testkorpus.txt og divgullkorpus.txt med sme.fst og sme-dis.rle opp mot gullversjon.
 
 # Analyserer testkorpus:
-cat $GTBIG/sme-goldcorpus.txt | preprocess --abbr=$GTHOME/langs/sme/tools/preprocess/abbr.txt | $LOOKUP $GTHOME/langs/sme/src/analyser-disamb-gt-desc.xfst | lookup2cg | vislcg3 -g $GTHOME/langs/sme/src/syntax/disambiguation.cg3 | vislcg3 -g $GTHOME/giella-shared/smi/src/syntax/korp.cg3 | perl -pe 's/ (Allegro|v\d|Err\/Sub)//g' | tr -d "#" | perl $GTHOME/gt/script/sort-cg-cohort.pl | uniq > $GTHOME/langs/sme/test/data/syntaxtestoutput
+cat $GTBIG/sme-goldcorpus.txt | preprocess --abbr=$GTHOME/langs/sme/tools/preprocess/abbr.txt | $LOOKUP $GTHOME/langs/sme/src/analyser-disamb-gt-desc.xfst | lookup2cg | vislcg3 -g $GTHOME/langs/sme/src/syntax/disambiguation.cg3 | vislcg3 -g $GTHOME/shared-smi/src/syntax/functions.cg3 | perl -pe 's/ (Allegro|v\d|Err\/Sub)//g' | tr -d "#" | perl $GTHOME/gt/script/sort-cg-cohort.pl | uniq > $GTHOME/langs/sme/test/data/syntaxtestoutput
 
 # Henter gullstandard, fjerner semantiske tagger, # osv :
 cat $GTBIG/correct/sme-goldcorpus.syn.corr.txt | perl -pe 's/ (Sem\/[^\s]+|Use\/[^\s]+|Allegro|v\d|Err\/Sub)//g' | perl -pe 's/ <[^>]+>//g' > $GTHOME/langs/sme/test/data/sme-goldcorpus.syn.corr.txt
