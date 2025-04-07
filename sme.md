@@ -8904,7 +8904,7 @@ such compounds)
 
 ---
 
-# src-fst-morphology-phonology.bergsland.twolc.md 
+# src-fst-morphology-phonology.bergslan.twolc.md 
 
 
 North Sámi morphophonological rule set                  
@@ -9397,7 +9397,7 @@ Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dum
 
 * * *
 
-<small>This (part of) documentation was generated from [src/fst/morphology/phonology.bergsland.twolc](https://github.com/giellalt/lang-sme/blob/main/src/fst/morphology/phonology.bergsland.twolc)</small>
+<small>This (part of) documentation was generated from [src/fst/morphology/phonology.bergslan.twolc](https://github.com/giellalt/lang-sme/blob/main/src/fst/morphology/phonology.bergslan.twolc)</small>
 
 ---
 
@@ -10176,9 +10176,9 @@ when the oposite stem variant is present.
 
 ## Tags for indicating alternative orthographies, cf `configure.ac`
 +AltOrth/standard - Standard orthography
-+AltOrth/bergsland - Bergsland-Ruong orthography
++AltOrth/bergslan - Bergsland-Ruong orthography
 +AltOrth/-standard - NOT Standard orthography
-+AltOrth/-bergsland - NOT Bergsland-Ruong orthography
++AltOrth/-bergslan - NOT Bergsland-Ruong orthography
 
 ## Multichars for marking start and end of IPA sequences
 

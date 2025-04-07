@@ -274,9 +274,9 @@ when the oposite stem variant is present.
 
 ## Tags for indicating alternative orthographies, cf `configure.ac`
 +AltOrth/standard - Standard orthography
-+AltOrth/bergsland - Bergsland-Ruong orthography
++AltOrth/bergslan - Bergsland-Ruong orthography
 +AltOrth/-standard - NOT Standard orthography
-+AltOrth/-bergsland - NOT Bergsland-Ruong orthography
++AltOrth/-bergslan - NOT Bergsland-Ruong orthography
 
 ## Multichars for marking start and end of IPA sequences
 

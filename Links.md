@@ -19,7 +19,7 @@
                 * [verbs.lexc](src-fst-morphology-affixes-verbs.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/morphology/affixes/verbs.lexc))
             * [clitics.lexc](src-fst-morphology-clitics.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/morphology/clitics.lexc))
             * [compounding.lexc](src-fst-morphology-compounding.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/morphology/compounding.lexc))
-            * [phonology.bergsland.twolc](src-fst-morphology-phonology.bergsland.twolc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/morphology/phonology.bergsland.twolc))
+            * [phonology.bergslan.twolc](src-fst-morphology-phonology.bergslan.twolc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/morphology/phonology.bergslan.twolc))
             * [phonology.twolc](src-fst-morphology-phonology.twolc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/morphology/phonology.twolc))
             * [root.lexc](src-fst-morphology-root.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/morphology/root.lexc))
             * `stems/`
