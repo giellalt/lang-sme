@@ -14,7 +14,7 @@ PATTERN=$1
 L_FILE="in.txt"
 cut -d '!' -f1 src/fst/morphology/stems/verbs.lexc | egrep $PATTERN | grep -v Err | cut -d ':' -f1>$L_FILE
 
-P_FILE="test/data/testderverbpar.txt"
+P_FILE="src/fst/morphology/test/testderverbpar.txt"
 
 for lemma in $(cat $L_FILE);
 do

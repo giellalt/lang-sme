@@ -15,7 +15,7 @@ PATTERN=$1
 L_FILE="in.txt"
 cut -d '!' -f1 src/fst/morphology/generated_files/smi-sme-propernouns.lexc | grep $PATTERN | grep -v Err | tr '+' ':'| cut -d ':' -f1 | tr -d '%'>$L_FILE
 
-P_FILE="test/data/testpropparadigm.txt"
+P_FILE="src/fst/morphology/test/testpropparadigm.txt"
 
 for lemma in $(cat $L_FILE);
 do

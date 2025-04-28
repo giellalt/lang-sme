@@ -18,7 +18,7 @@ PATTERN=$1
 L_FILE="in.txt"
 cut -d '!' -f1 src/fst/morphology/stems/nouns.lexc | egrep $PATTERN | grep -v Err | cut -d ':' -f1>$L_FILE
 
-P_FILE="test/data/der_nouns.txt"
+P_FILE="src/fst/morphology/test/der_nouns.txt"
 
 for lemma in $(cat $L_FILE);
 do
