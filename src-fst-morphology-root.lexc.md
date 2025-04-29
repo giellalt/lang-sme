@@ -333,11 +333,13 @@ Apertium, and useful in other cases as well.
 * **+Cmp/SgNom** - Singular Nominative
 * **+Cmp/SgGen** - Singular Genitive
 * **+Cmp/PlGen** - Plural Genitiv
-* **+Cmp/SplitR** - This is a split compound with the other part to
-the right: "Arbeids- og inkluderingsdepartementet"
-=> Arbeids- = +Cmp/SplitR
-* **+Cmp/SplitL** - This is a split compound with the other part to the left
-* **+Cmp/Sh** - testing +Cmp/Sh
+* **+Cmp/SplitR** - This is a split compound with the split part to
+the left (pointing right): "Arbeids- og inkluderingsdepartementet"
+=> `Arbeids-` = `+Cmp/SplitR`
+* **+Cmp/SplitL** - This is a split compound with the split part to the right
+(pointing left):"arbeidsbuss og -bil" => `-bil` = `+Cmp/SplitL`
+Not used in the present system, the phenomenon is quite marginal.
+* **+Cmp/Sh** - Tag for marking short form compound stems
 * **+Cmp/Hyph** - on dynamic compounds that have a hyphen
 * **+Cmp/NoHyph** - On compounds that COULD have had a hyphen (and usually have), but doesn't
 * **+Cmp/SoftHyph** - Tags compounds containing SOFT HYPHENS (U+00AD)
