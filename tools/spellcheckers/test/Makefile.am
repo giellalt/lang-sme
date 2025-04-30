@@ -2,8 +2,6 @@
 ## Copyright: Sámediggi/Divvun/UiT
 ## Licence: GPL v3+
 
-SUBDIRS = fstbased
-
 # Uncomment and list here (space separated) all test scripts that should be run:
 TESTS=
 
