@@ -10,10 +10,6 @@ SUBDIRS=phonology
 # unconditionally:
 TESTS=
 
-# Add your shell scripts for running tests requiring only a generator:
-GENERATION_TESTS_IN=generate-adpos-lemmas.sh.in \
-					generate-adverb-lemmas.sh.in
-
 GENERATION_TESTS=generate-adpos-lemmas.sh \
 				 generate-adverb-lemmas.sh
 
