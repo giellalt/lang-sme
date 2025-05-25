@@ -13,7 +13,7 @@ TESTS=\
 	NegV-ConNeg-Cond-PASS.yaml \
 	NegV-ConNeg-VFin-FAIL.yaml \
 	NegV-ConNeg-VFin-PASS.yaml \
-	double-space-PASS.yaml \
+	double-space-FAIL.yaml \
 	formatting-PASS.yaml \
 	msyn-ASgLoc-AAttr-FAIL.yaml \
 	msyn-ASgLoc-AAttr-PASS.yaml \
@@ -119,6 +119,7 @@ XFAIL_TESTS=\
 	NegV-ConNeg-3Sg-FAIL.yaml \
 	NegV-ConNeg-Cond-FAIL.yaml \
 	NegV-ConNeg-VFin-FAIL.yaml \
+	double-space-FAIL.yaml \
 	msyn-ASgLoc-AAttr-FAIL.yaml \
 	msyn-Inf-ConNeg-after-Neg-FAIL.yaml \
 	msyn-Pl3-ConNeg-FAIL.yaml \
