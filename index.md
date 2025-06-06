@@ -115,6 +115,8 @@ as one long text [here](sme.md).
             * [txt2ipa.xfscript](src-fst-phonetics-txt2ipa.xfscript.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonetics/txt2ipa.xfscript))
         * [phonology-L2-from-branch.twolc](src-fst-phonology-L2-from-branch.twolc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonology-L2-from-branch.twolc))
         * [phonology-L2.twolc](src-fst-phonology-L2.twolc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/phonology-L2.twolc))
+        * `transcriptions/`
+            * [transcriptor-symbols2text.lexc](src-fst-transcriptions-transcriptor-symbols2text.lexc.html) ([src](https://github.com/giellalt/lang-sme/blob/main/src/fst/transcriptions/transcriptor-symbols2text.lexc))
 * `tools/`
     * `grammarcheckers/`
         * [grammarchecker-resource.cg3](tools-grammarcheckers-grammarchecker-resource.cg3.html) ([src](https://github.com/giellalt/lang-sme/blob/main/tools/grammarcheckers/grammarchecker-resource.cg3))
