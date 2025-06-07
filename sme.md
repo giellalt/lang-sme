@@ -10663,6 +10663,7 @@ get the same pronunciation whether read as SME or NOB/NNO/SWE.
 * **+OLang/NOB** = Norw. bokmål
 * **+OLang/NNO** = Norw. nynorsk
 * **+OLang/ENG** = English
+* **+OLang/HUN** = Hungarian
 * **+OLang/RUS** = Russian
 * **+OLang/UND** = Undefined
 * **+OLang/PARA** = parallelle navn, navnet skal ikke overføres til andre samisk språk
