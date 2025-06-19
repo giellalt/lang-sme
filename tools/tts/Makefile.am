@@ -29,7 +29,8 @@ GIELLA_ANL_REMOVE_TRANSCRIPTORS=transcriptor-date-digit2text
 LOCAL_ANL_ZIP_FILES=generated-remove-lexicalised-compounds.bin \
 					acro2text.hfstol \
 					text2phontext.hfstol \
-					disamb-cleanups.bin
+					disamb-cleanups.bin \
+					normalisation-cleanups.bin
 
 #### BEGIN: Local build targets: ####
 
