@@ -10402,6 +10402,7 @@ part of the continuation lexicons, and will be located after the POS tag.
 * +Sem/Body_Mat
 * +Sem/Body_Measr
 * +Sem/Body_Obj_Tool-catch
+* +Sem/Body_Plant
 * +Sem/Body_Plc
 * +Sem/Body_Plc-elevate
 * +Sem/Body_Time
