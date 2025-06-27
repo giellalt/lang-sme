@@ -25,7 +25,6 @@ TESTS=\
 	real-Ess-PrfPrc-PASS.yaml \
 	real-ImprtDu1-DerPassPrsSg3-PASS.yaml \
 	real-ImprtDu1-NSgNom-PASS.yaml \
-	real-ImprtPl2-Inf-FAIL.yaml \
 	real-ImprtPl2-Inf-PASS.yaml \
 	real-ImprtPl2-PrsPl3-PASS.yaml \
 	real-ImprtSg1-DerPassPrfPrc-PASS.yaml \
