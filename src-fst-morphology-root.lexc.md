@@ -638,6 +638,7 @@ part of the continuation lexicons, and will be located after the POS tag.
 * +Sem/Plc_Tool-catch
 * +Sem/Plc_Txt
 * +Sem/Plc_Wthr
+* +Sem/Prod-audio_Rule
 * +Sem/Prod-audio_Txt
 * +Sem/Prod-cogn_Txt
 * +Sem/Semcon_Txt
