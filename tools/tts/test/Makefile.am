@@ -9,7 +9,7 @@
 TESTS=
 
 if WANT_TTS
-TESTS+=
+TESTS+=regresstest.sh
 endif # WANT_TTS
 
 # List tests that are presently (expected) failures here, ie things that should
