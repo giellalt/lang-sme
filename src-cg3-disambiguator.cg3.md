@@ -57,6 +57,7 @@ EOS
 * Romertall
 * Subqst
 * CLBfinal
+* Dyn
 
 * ### Tags for morphosyntactic properties
 
