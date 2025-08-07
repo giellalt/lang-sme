@@ -215,8 +215,6 @@ AC_CONFIG_FILES([tools/shellscripts/generate-ipa-lexicon.sh], \
       [chmod a+x tools/shellscripts/generate-ipa-lexicon.sh])
 AC_CONFIG_FILES([src/fst/phonetics/tests/tests/test-ipa-conversion.sh], \
       [chmod a+x src/fst/phonetics/tests/tests/test-ipa-conversion.sh])
-AC_CONFIG_FILES([tools/tts/test/regresstest.sh], \
-      [chmod a+x tools/tts/test/regresstest.sh])
 
 ############ END: Language-specific scripts. #############
 
