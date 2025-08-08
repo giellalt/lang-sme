@@ -59,6 +59,8 @@ Bisyllabic nouns
 
 * **LEXICON MAŠIIDNA** mašiidna with short cmp-forms as well
 
+* **LEXICON MÁŠEN** 
+
 * **LEXICON BENSIN** bensiidna with short cmp-forms as well
 
 * **LEXICON ADRENALIN** Recent loanwords on -iidna with short cmp-form as well
