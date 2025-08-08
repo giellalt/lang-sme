@@ -55,7 +55,9 @@ Bisyllabic nouns
 
 * **LEXICON KULTUR** -kultuvra, compound forms: kultur-, kulttor-
 
-* **LEXICON KANTUR_N** word with many forms
+* **LEXICON KANTUVRA** word with many forms
+
+* **LEXICON GANTOR_N** word with many forms
 
 * **LEXICON MAŠIIDNA** mašiidna with short cmp-forms as well
 
