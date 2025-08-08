@@ -65,7 +65,8 @@ GT_ANALYSERS+=
 endif # WANT_PHONETIC
 
 if WANT_CUSTOM_FSTS
-CUSTOM_FSTS+=analyser-lia_disamb-gt-desc.hfstol
+CUSTOM_FSTS+=analyser-lia_disamb-gt-desc.hfstol \
+			 generator-korp-gt-norm.hfstol
 endif # WANT_CUSTOM_FSTS
 
 endif # CAN_HFST
@@ -656,6 +657,75 @@ $(foreach fst,hfst xfst foma,$(eval $(call giella_generators,$(fst))))
 	twosided flag-diacritics\n\
 	save stack $@\n\
 	quit\n" | $(HFST_XFST) -p $(MORE_VERBOSITY)
+
+# Dict-fst local modifications and language-specific changes:
+.generated/generator-korp-gt-norm.%: .generated/analyser-raw-gt-desc.% \
+					filters/remove-norm-comp-tags.%                \
+					filters/remove-derivation-position-tags.%      \
+					filters/make-optional-grammatical-tags.%       \
+					filters/rename_optional-POS_before_Der-tags.%  \
+					filters/remove-UseLIA-strings.%                \
+					filters/remove-Err_SpaceCmp-strings.%          \
+					filters/make-optional-transitivity-tags.% \
+					filters/make-optional-homonymy-tags.%     \
+					filters/make-optional-hyph-tags.%         \
+					filters/make-optional-variant-tags.%      \
+					filters/make-optional-semantic-tags.%     \
+					filters/make-optional-adv_comp-tags.%     \
+					filters/make-optional-orig_lang-tags.%    \
+					filters/make-optional-grammatical-tags.%  \
+					filters/remove-area-tags.%                \
+					filters/remove-dialect-tags.%             \
+					filters/remove-hyphenation-marks.%        \
+					filters/remove-infl_deriv-borders.%       \
+					filters/remove-word-boundary.%            \
+					filters/remove-number-string-tags.%       \
+					filters/remove-orthography-tags.%         \
+					filters/remove-Orth_IPA-strings.%         \
+					filters/remove-error-strings.%            \
+					filters/remove-Use_GC-strings.%           \
+					filters/remove-Use_minusGC-tags.%         \
+					filters/remove-Use_minus_PMatch-tags.%    \
+					filters/remove-Use_PMatch-strings.%       \
+					filters/remove-mwe-tags.%                 \
+					orthography/downcase-derived_proper-strings.compose.% \
+					filters/remove-usage_except_NGminip-tags.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+			 	@\"filters/remove-usage_except_NGminip-tags.$*\"               \
+			.o. @\"filters/rename_optional-POS_before_Der-tags.$*\" \
+			.o. @\"filters/make-optional-grammatical-tags.$*\"   \
+			.o. @\"filters/remove-norm-comp-tags.$*\"            \
+			.o. @\"filters/remove-derivation-position-tags.$*\"  \
+			.o. @\"filters/remove-UseLIA-strings.$*\"            \
+			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"      \
+			.o. @\"filters/make-optional-transitivity-tags.$*\" \
+			.o. @\"filters/make-optional-homonymy-tags.$*\"     \
+			.o. @\"filters/make-optional-hyph-tags.$*\"         \
+			.o. @\"filters/make-optional-variant-tags.$*\"      \
+			.o. @\"filters/make-optional-semantic-tags.$*\"     \
+			.o. @\"filters/make-optional-adv_comp-tags.$*\"     \
+			.o. @\"filters/make-optional-orig_lang-tags.$*\"    \
+			.o. @\"filters/make-optional-grammatical-tags.$*\"  \
+			.o. @\"filters/remove-area-tags.$*\"                \
+			.o. @\"filters/remove-dialect-tags.$*\"             \
+			.o. @\"filters/remove-number-string-tags.$*\"       \
+			.o. @\"filters/remove-error-strings.$*\"            \
+			.o. @\"filters/remove-orthography-tags.$*\"         \
+			.o. @\"filters/remove-Orth_IPA-strings.$*\"         \
+			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"    \
+			.o. @\"filters/remove-Use_GC-strings.$*\"           \
+			.o. @\"filters/remove-Use_minusGC-tags.$*\"         \
+			.o. @\"filters/remove-Use_PMatch-strings.$*\"       \
+			.o. @\"filters/remove-mwe-tags.$*\"                 \
+			.o. @\"$<\"                                          \
+			.o. @\"orthography/downcase-derived_proper-strings.compose.$*\"\
+			.o. @\"filters/remove-hyphenation-marks.$*\"        \
+			.o. @\"filters/remove-infl_deriv-borders.$*\"       \
+			.o. @\"filters/remove-word-boundary.$*\"            \
+			;\n\
+		 $(INVERT_XFST)$(INVERT_FOMA)\
+		 save stack $@\n\
+		 quit\n" | $(XFST_TOOL)
 
 
 ##################################################################
