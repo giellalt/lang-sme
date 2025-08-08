@@ -364,31 +364,6 @@ endif # WITH_OFST_TROPICAL
 		 save stack $@\n\
 		 quit\n" | $(XFST_TOOL)
 
-# The operation 'twosided flag-diacritics" crashes Xerox badly, so we do with
-# a simpler, less restrictive normative fst when building with Xerox:
-.generated/analyser-gt-norm.xfst: .generated/analyser-gt-norm.tmp.xfst \
-					filters/remove-norm-comp-tags.xfst             \
-					filters/remove-grammatical-tags.xfst           \
-					filters/remove-derivation-position-tags.xfst   \
-					filters/remove-illegal-derivation-strings.xfst \
-					filters/remove-allegro-tags.xfst               \
-					filters/remove-UseLIA-strings.xfst             \
-					filters/remove-Err_SpaceCmp-strings.xfst       \
-					filters/remove-usage-tags.xfst
-	$(AM_V_XFST)$(PRINTF) "read regex \
-				@\"filters/remove-usage-tags.xfst\"               \
-			.o. @\"filters/remove-allegro-tags.xfst\"             \
-			.o. @\"filters/remove-grammatical-tags.xfst\"         \
-			.o. @\"filters/remove-norm-comp-tags.xfst\"           \
-			.o. @\"filters/remove-derivation-position-tags.xfst\" \
-			.o. @\"filters/remove-illegal-derivation-strings.xfst\" \
-			.o. @\"filters/remove-UseLIA-strings.xfst\"           \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.xfst\"     \
-			.o. @\"$<\"                                           \
-			;\n\
-		 save stack $@\n\
-		 quit\n" | $(XFST) $(VERBOSITY)
-
 # ... and also in the Oahpa analyser:
 .generated/analyser-oahpa-gt-norm.%: .generated/analyser-oahpa-gt-norm.tmp.% \
 					filters/remove-norm-comp-tags.%           \
