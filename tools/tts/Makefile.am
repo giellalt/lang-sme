@@ -30,7 +30,12 @@ LOCAL_ANL_ZIP_FILES=generated-remove-lexicalised-compounds.bin \
 					acro2text.hfstol \
 					text2phontext.hfstol \
 					disamb-cleanups.bin \
-					normalisation-cleanups.bin
+					normalisation-cleanups.bin \
+					transcriptor-clock-digit2text.filtered.lookup.hfstol \
+						 transcriptor-date-digit2text.filtered.lookup.hfstol \
+						 transcriptor-numbers-digit2text.filtered.lookup.hfstol \
+						 transcriptor-abbrevs2text.filtered.lookup.hfstol \
+						 transcriptor-symbols2text.filtered.lookup.hfstol
 
 #### BEGIN: Local build targets: ####
 
