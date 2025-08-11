@@ -115,7 +115,8 @@ Divvun & Giellatekno - open source grammars for North Sámi.
 * **+CLB**  Clause border (full stop, comma..)
 * **+PUNCT**  punctuation
 * **+LEFT**  left paranthesis
-* **+RIGHT +MIDDLE**  right paranthesis
+* **+RIGHT**  right paranthesis
+* **+MIDDLE**  in-word punctuation, typically hyphen, used to indicate a measurement span of some sort
 * **+Dyn**  Dynamically generated (acronyms) +ACR+Dyn
 * **+CLBfinal**  Sentence final abbreviated expression ending in full stop, so that the full stop is ambiguous
 
