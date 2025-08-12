@@ -60,7 +60,8 @@ GIELLA_FILTER_LOCAL_XFSCRIPT_SRCS=
 GIELLA_FILTER_LOCAL_LEXC_SRCS=
 
 # List any locally generated regex source files here:
-GIELLA_FILTER_LOCAL_GENERATED_REGEX_SRCS=
+GIELLA_FILTER_LOCAL_GENERATED_REGEX_SRCS=\
+					remove-korp_error-strings.regex
 
 # List any locally generated xfscript source files here:
 GIELLA_FILTER_LOCAL_GENERATED_XFSCRIPT_SRCS=
@@ -83,6 +84,18 @@ change-optionally-word_boundary_to_hyphen.whfst: \
 
 foc-tags.txt: $(LEX_TAG_FILE)
 	$(AM_V_GEN)$(GTCORE)/scripts/extract-tags.sh $< $@.tmp Foc/
+	$(AM_V_GEN)if test -f $@ ; then \
+		if ! diff -q $@ $@.tmp ; then \
+			mv -f $@.tmp $@ ; \
+		else \
+			rm -f $@.tmp ; \
+		fi ;\
+	else \
+		mv -f $@.tmp $@ ; \
+	fi
+
+.generated/korp_error-tags.txt: .generated/error-tags.txt
+	$(AM_V_GEN)egrep -v '(\+Err/CmpSub|\+Err/DerSub|\+Err/Lex)' $< > $@.tmp
 	$(AM_V_GEN)if test -f $@ ; then \
 		if ! diff -q $@ $@.tmp ; then \
 			mv -f $@.tmp $@ ; \
