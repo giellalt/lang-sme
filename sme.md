@@ -7365,6 +7365,8 @@ eventually.
 
 * **LEXICON LEXATTR_GEAHTES** trisyllabic stems: geahtes for trisyll, heapmi for bisyll
 
+* **LEXICON LEXATTR_GEAHTES_Hum** trisyllabic stems: geahtes for trisyll, heapmi for bisyll
+
 * **LEXICON GEAHTES**  geahtes for trisyll, heapmi for bisyll
 
 * **LEXICON OVDDIT** Inherently comparative adjectives, bisyll
