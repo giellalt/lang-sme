@@ -693,11 +693,11 @@ $(foreach fst,hfst xfst foma,$(eval $(call giella_generators,$(fst))))
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 			 	@\"filters/remove-usage_except_NGminip-tags.$*\"               \
 			.o. @\"filters/rename_optional-POS_before_Der-tags.$*\" \
-			.o. @\"filters/make-optional-grammatical-tags.$*\"   \
-			.o. @\"filters/remove-norm-comp-tags.$*\"            \
-			.o. @\"filters/remove-derivation-position-tags.$*\"  \
-			.o. @\"filters/remove-UseLIA-strings.$*\"            \
 			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"      \
+			.o. @\"filters/make-optional-grammatical-tags.$*\"  \
+			.o. @\"filters/remove-norm-comp-tags.$*\"           \
+			.o. @\"filters/remove-derivation-position-tags.$*\" \
+			.o. @\"filters/remove-UseLIA-strings.$*\"           \
 			.o. @\"filters/make-optional-transitivity-tags.$*\" \
 			.o. @\"filters/make-optional-homonymy-tags.$*\"     \
 			.o. @\"filters/make-optional-hyph-tags.$*\"         \
@@ -717,7 +717,7 @@ $(foreach fst,hfst xfst foma,$(eval $(call giella_generators,$(fst))))
 			.o. @\"filters/remove-Use_minusGC-tags.$*\"         \
 			.o. @\"filters/remove-Use_PMatch-strings.$*\"       \
 			.o. @\"filters/remove-mwe-tags.$*\"                 \
-			.o. @\"$<\"                                          \
+			.o. @\"$<\"                                         \
 			.o. @\"orthography/downcase-derived_proper-strings.compose.$*\"\
 			.o. @\"filters/remove-hyphenation-marks.$*\"        \
 			.o. @\"filters/remove-infl_deriv-borders.$*\"       \
