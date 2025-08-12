@@ -682,7 +682,6 @@ $(foreach fst,hfst xfst foma,$(eval $(call giella_generators,$(fst))))
 					filters/remove-number-string-tags.%       \
 					filters/remove-orthography-tags.%         \
 					filters/remove-Orth_IPA-strings.%         \
-					filters/remove-error-strings.%            \
 					filters/remove-Use_GC-strings.%           \
 					filters/remove-Use_minusGC-tags.%         \
 					filters/remove-Use_minus_PMatch-tags.%    \
@@ -709,7 +708,6 @@ $(foreach fst,hfst xfst foma,$(eval $(call giella_generators,$(fst))))
 			.o. @\"filters/remove-area-tags.$*\"                \
 			.o. @\"filters/remove-dialect-tags.$*\"             \
 			.o. @\"filters/remove-number-string-tags.$*\"       \
-			.o. @\"filters/remove-error-strings.$*\"            \
 			.o. @\"filters/remove-orthography-tags.$*\"         \
 			.o. @\"filters/remove-Orth_IPA-strings.$*\"         \
 			.o. @\"filters/remove-Use_minus_PMatch-tags.$*\"    \
