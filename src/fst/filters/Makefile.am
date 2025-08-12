@@ -49,7 +49,8 @@ GIELLA_FILTER_LOCAL_REGEX_SRCS=\
 					change-optionally-word_boundary_to_hyphen.regex
 
 if WANT_APERTIUM
-GIELLA_FILTER_LOCAL_REGEX_SRCS+=remove-all_dialects_but_GG-strings.regex
+GIELLA_FILTER_LOCAL_REGEX_SRCS+=\
+					remove-all_dialects_but_GG-strings.regex
 endif
 
 # List any local filter xfscript files here:
