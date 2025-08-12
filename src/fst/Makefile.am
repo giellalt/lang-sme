@@ -665,7 +665,7 @@ $(foreach fst,hfst xfst foma,$(eval $(call giella_generators,$(fst))))
 					filters/make-optional-grammatical-tags.%       \
 					filters/rename_optional-POS_before_Der-tags.%  \
 					filters/remove-UseLIA-strings.%                \
-					filters/remove-Err_SpaceCmp-strings.%          \
+					filters/remove-korp_error-strings.%       \
 					filters/make-optional-transitivity-tags.% \
 					filters/make-optional-homonymy-tags.%     \
 					filters/make-optional-hyph-tags.%         \
@@ -693,7 +693,7 @@ $(foreach fst,hfst xfst foma,$(eval $(call giella_generators,$(fst))))
 	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
 			 	@\"filters/remove-usage_except_NGminip-tags.$*\"               \
 			.o. @\"filters/rename_optional-POS_before_Der-tags.$*\" \
-			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"      \
+			.o. @\"filters/remove-korp_error-strings.$*\"       \
 			.o. @\"filters/make-optional-grammatical-tags.$*\"  \
 			.o. @\"filters/remove-norm-comp-tags.$*\"           \
 			.o. @\"filters/remove-derivation-position-tags.$*\" \
