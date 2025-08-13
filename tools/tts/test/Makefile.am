@@ -14,7 +14,7 @@ endif # WANT_TTS
 
 # List tests that are presently (expected) failures here, ie things that should
 # be fixed *later*, but is not critical at the moment:
-XFAIL_TESTS=regresstest.sh
+XFAIL_TESTS=
 
 ####### Other targets: ###########
 clean-local:
