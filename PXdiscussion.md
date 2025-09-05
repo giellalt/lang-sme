@@ -5,7 +5,9 @@
 
 
 ### Laura/Lenes skjønnlitterært korpus og NT - oversikt
+
 76 tilfeller med diminutiv Nom PxSg1 er holdt utenfor da de ikke lager problemer for å identifisere feilstavinger. De blir heller ikke generert i Norm.
+
 |   - | Nom Sg  | Pl | Acc Sg | Pl | Gen Sg | Pl | Ill Sg | Pl | Loc Sg | Pl | Com Sg | Pl | Ess 
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- 
 |  Sg1 | 52 | 20  | 51 	| 33  | 35 | 12  | 15 | 3   | 37 | 13  | 20 | 5  | - 
@@ -20,6 +22,7 @@
 
  
 ### Laura/Lenes skjønnlitterært korpus og NT - nominativ og essiv
+
 |   - | Nom Sg | Nom Pl | Ess 
 | --- | --- | --- | --- 
 |  Sg1  | (52) 36 Kin, 16 Human | 20 Human (Bare NT) ustit, oskuguoibmi, ráhkis  | -
@@ -37,7 +40,9 @@ I andre tekster: Sg3: bargu, vuođđu, dovddaldat, namma Pl3: ovddasvástádus, 
 
 
 ###  News 280214 - nominativ og essiv
+
 123 tilfeller med diminutiv Nom PxSg1 er holdt utenfor.
+
 |   - | Nom Sg | Nom Pl | Ess 
 | --- | --- | --- | --- 
 |  Sg1  | 74: Kin, Human. 4 suohpal, váibmu, čoavji   | horti, ráhkis     | -
@@ -56,6 +61,7 @@ I andre tekster: Sg3: bargu, vuođđu, dovddaldat, namma Pl3: ovddasvástádus, 
 
 
 ##  Diskusjon om NPx i Divvun/fst - fra mai 2012, før siste versjon av Divvun
+
 I første omgang kan vi se på Nom+Px i 3.p. Her er det PxSg3 som er plagsom
 fordi den skygger for feil stadieveksling i SgLoc:
 
@@ -97,7 +103,8 @@ De aller fleste av Nom Px 3.pers ellers er skrivefeil eller dårlig
 disambiguering.
 
 
-### FORSLAG:
+### FORSLAG
+
 Begrense nominativformene for 3. (og 2.) person til slektskapsbenevnelser, (og
 da har vi på langt nær løst problemet med SgLoc.) 
 
@@ -105,6 +112,7 @@ da har vi på langt nær løst problemet med SgLoc.)
 
 
 ##  Diskusjonsinnspill fra Lene på mail fra 29. sept 2011, om NPx i VD
+
 Vi har fjerna NPx fra Vuosttaš Digisánit, men for å dekke ordformene i ungdomsbøkene vi har lagt til grunn, kan det være behov for å legge til noen typer. Her er setningene det gjelder fra bøkene, og en liten analyse av materialet.
 
 
@@ -114,6 +122,7 @@ Mii válddiimet eret buot NPx:id VD:s, muhto orru leamen dárbu lasihit muhtum h
 
 
 ### Dás leat ovdamearkkat dáin girjjiin:
+
 Sárá beaivegirji, Čábbámus iđitguovssu, Mu ártegis eallin:
 
 
@@ -181,9 +190,3 @@ soajáidis, sojiidat,  vuovttaidis, baksamiiddis, sallasis, salastis, mielastis,
 dálus, ruovttuidasaset, lanjat, latnjasis, vovnnastis,
 1. abstrávttat:
 čiegusvuođaidan, dáidagiinnis, bárttiidan
-
-
-
-
-
-
