@@ -3696,9 +3696,13 @@ Der/náittot
 Der/seagat
 Der/suttat
 Der/ár 
-<vdic>
+`<vdic>`
+Cmp/Hyph
+`<subqst>`
+`<ind>`
 
 ### Semantic tags
+The semantic tags are included from a generated file.
 
 ###  Syntactic tags
 
