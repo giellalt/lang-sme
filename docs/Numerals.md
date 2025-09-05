@@ -49,11 +49,13 @@ Fleshing out some priority items:
 
 
 **Top-priority:** make num-paradgim (**Trond**) Done.
-```
+
+```sh
 cvs up
 cd gt/sme/testing
 make num-paradigm WORD=guokte
 ```
+
 **Thereafter:** someone to test the output (let's see how it looks before we decide who)
 
 
@@ -63,6 +65,7 @@ make num-paradigm WORD=guokte
 
 
 ## Morphology
+
 * Complex numerals written as single words
 * Case forms of Complex numerals written as single words (subnorm?)
 * Checking what we generate (test bed)
@@ -84,6 +87,7 @@ golbma#cuohti#vihtta#duhát = four parts
 
 
 ok - 300 000 ?
+
 ```
 golbma#cuohti#duhát = three parts
 
@@ -177,7 +181,7 @@ er til Kypros torsdag 2. februar, proffene søndag 5. Roger Nilsen   <== 1/100
 ```
 
 
-probably not..unless min aigi deceides to write about large-scale sports with placing
+probably not..unless min aigi desides to write about large-scale sports with placing
 
 
 Ok. What if you just punched some Finnish text through the preprocessor and looked for the final numerals, to get an impression? I am pretty sure Fi and Sa behave the same.
@@ -189,6 +193,7 @@ So, we have a verdict, and a new system.
 
 
 ##  Syntax
+
 * Date
 * Range
 * Numbers in date expressions
@@ -245,6 +250,7 @@ Status?
 
 
 This is a formating problem. I would prefer to mark those numbers as text-functional numbers, otherwise we always have the problem that they could be either quantifiers (post or pre) or one of the "thousand" different functions of numerals...
+
 ```
 "<¶>"
         "¶" CLB <<<
@@ -292,6 +298,7 @@ This is a formating problem. I would prefer to mark those numbers as text-functi
 
 
 ### Numbers in date expressions
+
 there is a lot of creativity among dates (written in several or just one words, leaving out month or day, writing b or beaivvi
 probably not a big problem, even though sometimes I am unsure about the case
 
@@ -363,7 +370,7 @@ Gut.
 ```
 
         
-        That is a wrong analysis...
+That is a wrong analysis...
 
 
 ### Concrete analyses
@@ -438,16 +445,16 @@ ok:
         "summa" N Sg Nom S:3360 @SPRED
 "<.>"
         "." CLB <<<
-
+```
         
 
         
 what modifies what? 
 
 
-2006 stáhtabušeahtas lea ráđđehus liigudan 10 milj. kr álggahanmearreruhtan ođđa dieđavistái. 
+> 2006 stáhtabušeahtas lea ráđđehus liigudan 10 milj. kr álggahanmearreruhtan ođđa dieđavistái. 
 
-
+```
 "<2006>"
         "2006" Num Sg Acc @OBJ
 "<stáhtabušeahtas>"
@@ -589,7 +596,3 @@ what modifies what?
 "<.>"
         "." CLB <<<
 ```        
-
-        
-
-        
