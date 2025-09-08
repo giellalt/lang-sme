@@ -181,6 +181,9 @@ gt_PROG_VISLCG3
 # Tests and sets up XML to lexc conversion
 gt_PROG_SAXON
 
+# Check for divvun-runtime
+AC_PATH_PROG([DIVVUN_RUNTIME], [divvun-runtime], [false], $PATH)
+
 # Adds --enable/disable-morphology, -speller, -hyphenation, etc.
 # This should be the last step so that all program variables are available
 # to the enable checks
@@ -197,6 +200,9 @@ gt_USE_SHARED([smi], [shared-smi], [giella-shared-smi])
 AM_CONDITIONAL([HAVE_SHARED_SMI], [test x$gt_SHARED_smi != xfalse])
 
 gt_NEED_SHARED([mul], [shared-mul], [giella-shared-mul], [0.0.3])
+
+# Enable .drb support if divvun-runtime is available
+AM_CONDITIONAL([HAVE_DIVVUN_RUNTIME], [test x$DIVVUN_RUNTIME != xfalse])
 
 # Locally used shares above this line
 
