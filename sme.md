@@ -3778,7 +3778,7 @@ This part of the file lists a large number of sets based partly upon the tags de
 partly upon lexemes drawn from the lexicon.
 See the sourcefile itself to inspect the sets, what follows here is an overview of the set types.
 
-#### Sets for Single-word sets
+#### Sets for single word
 
 OKTA and go, and the set INITIAL for initial letters 
 OKTA
