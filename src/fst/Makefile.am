@@ -582,6 +582,31 @@ $(foreach fst,hfst xfst foma,$(eval $(call giella_generators,$(fst))))
 		 save stack $@\n\
 		 quit\n" | $(XFST_TOOL)
 
+# We need to add processing of language-specific tags for the TTS generators:
+.generated/generator-tts-gt-norm.%: .generated/generator-tts-gt-norm.tmp.% \
+					filters/remove-norm-comp-tags.%               \
+					filters/remove-derivation-position-tags.%     \
+					filters/make-optional-allegro-tags.%          \
+					filters/make-optional-grammatical-tags.%      \
+					filters/rename_optional-POS_before_Der-tags.% \
+					filters/remove-UseLIA-strings.%               \
+					filters/remove-Err_SpaceCmp-strings.%         \
+					filters/remove-usage-tags.%
+	$(AM_V_XFST_TOOL)$(PRINTF) "read regex \
+				@\"filters/remove-usage-tags.$*\"                   \
+			.o. @\"filters/make-optional-allegro-tags.$*\"          \
+			.o. @\"filters/make-optional-grammatical-tags.$*\"      \
+			.o. @\"filters/rename_optional-POS_before_Der-tags.$*\" \
+			.o. @\"filters/remove-norm-comp-tags.$*\"               \
+			.o. @\"filters/remove-derivation-position-tags.$*\"     \
+			.o. @\"filters/remove-UseLIA-strings.$*\"               \
+			.o. @\"filters/remove-Err_SpaceCmp-strings.$*\"         \
+			.o. @\"$<\"                                             \
+			;\n\
+		 $(INVERT_XFST)$(INVERT_FOMA)\
+		 save stack $@\n\
+		 quit\n" | $(XFST_TOOL)
+
 # morpher is a morph segmenting variant: taloautoissani -> talo#auto>i>ssa>ni
 .generated/morpher-gt-desc.%: .generated/morpher-gt-desc.tmp.% \
 					filters/remove-dynamic_compound-char.% \
