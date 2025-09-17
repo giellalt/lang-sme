@@ -9,7 +9,7 @@
 TESTS=
 
 if WANT_TTS
-TESTS+=regresstest.sh
+TESTS+=run-yaml-testcases.sh
 endif # WANT_TTS
 
 # List tests that are presently (expected) failures here, ie things that should
