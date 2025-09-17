@@ -215,6 +215,9 @@ AC_CONFIG_FILES([tools/shellscripts/generate-ipa-lexicon.sh], \
       [chmod a+x tools/shellscripts/generate-ipa-lexicon.sh])
 AC_CONFIG_FILES([src/fst/phonetics/tests/tests/test-ipa-conversion.sh], \
       [chmod a+x src/fst/phonetics/tests/tests/test-ipa-conversion.sh])
+# XXX: while testing, tbmoved to templates
+AC_CONFIG_FILES([tools/tts/test/run-yaml-testcases.sh], \
+                [chmod a+x tools/tts/test/run-yaml-testcases.sh])
 
 ############ END: Language-specific scripts. #############
 
