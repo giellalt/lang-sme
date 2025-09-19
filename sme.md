@@ -8424,7 +8424,7 @@ modals do not participate in derivation
 
 * **LEXICON DOALVU_TV** Bisyllabic u-verbs with Personal Passive, diphthong
 
-* **LEXICON BIEHKU_IV**  Bisyllabic u-verbs without Personal Passive but with Der/NomAg, diphthong
+* **LEXICON BIEHKU_IV**  Bisyllabic u-verbs without Personal Passive but with Der/NomAg (biehkut - biehkku), diphthong
 
 #### Bisyllabic verbs
 
