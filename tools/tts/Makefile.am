@@ -49,6 +49,21 @@ text2phontext.hfstol: text2phontext.regex
 	$(AM_V_RGX2FST)$(HFST_REGEXP2FST) -S -i $< \
 		| $(HFST_FST2FST) -O -o $@
 
+# Helper fst:
+# Add spaces before and after symbol transcriptions, so that they appear as individual
+# words in the normalised output:
+transcriptor-symbols2text.filtered.lookup.tmp.hfst: \
+			transcriptor-symbols2text.filtered.lookup.hfst
+	$(AM_V_XFST_TOOL)$(PRINTF) "load stack $<\n\
+		define fst \n\
+		read regex [ 0:{ } fst 0:{ } ] ;\n\
+		save stack $@\n\
+		quit\n" | $(XFST_TOOL)
+
+transcriptor-symbols2text.filtered.lookup.hfstol: \
+			transcriptor-symbols2text.filtered.lookup.tmp.hfst
+	$(AM_V_FST2FST)$(HFST_FST2FST) --optimized-lookup-unweighted -i $< -o $@
+
 #### END: Local build targets:   ####
 
 #### Do NOT edit below here: ####
