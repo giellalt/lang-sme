@@ -4,6 +4,10 @@
 ## Default patterns: re:real-.*, id:unreal-girjji
 spelling-error = Čállinmeattáhus dán oktavuođas
     .desc = Sátni šaddá eará go oaivvilduvvo
+    
+## Default patterns: re:real-.*-.*
+spelling-error = Čállinmeattáhus dán oktavuođas
+    .desc = Sátni šaddá eará go oaivvilduvvo
 
 ## Default patterns: re:msyn-wrong-case.*, re:msyn-wrong_case.*
 wrong-form = Boasttuhápmi
@@ -11,20 +15,20 @@ wrong-form = Boasttuhápmi
 
 ## Default patterns: re:punct-aistton.*
 quotation-marks = Aisttonmearkkat
-    .desc = Boasttuaisttonmearkkat
+    .desc = Leat boasttuaisttonmearkkat.
     .example-1 = Doarjja addo vuosttažettiin «Sámi dutkama prográmmii» (2001–05)
 
 ## Default patterns: re:no-space-after-paren.*, re:no-space-before-paren.*
 parenthesis-missing-space = Gaska váilu
-    .desc = Ii leat gaska ovdal dehe maŋŋil ruođu {$1}
+    .desc = Ii leat gaska ovdal dehe maŋŋil ruođu {$1}.
     .example-1 = Vuoigatvuođa Lávdegottičilgehus
 
 real-Sg3-ConNeg = Biehttálanhápmi gieldovearbba maŋŋel
     .desc = Go verba dego {$1} boahtá
-      biehttalanvearbba maŋŋel, de go dáppe {$2}, de dat ferte leat biehttalanhámis
+      biehttalanvearbba maŋŋel, de go dáppe {$2}, de dat ferte leat biehttalanhámis.
 
-missing-conneg-after-neg = Sátni váilu
-    .desc = {$1} maŋis berrešii leat biehttalanhápmi
+missing-conneg-after-neg = Biehttalanhápmi váilu
+    .desc = {$1} maŋis berrešii leat biehttalanhápmi.
 
 msyn-wrong_case = Boasttuhápmi
     .desc = {$1} orru leamen boasttukásusis
@@ -34,17 +38,17 @@ msyn-compound = Goallosteapmi
     .example-1 = Guollenáhkki lea árbevirolaš materiála mii geavahuvvo sihke čikŋan ja atnu ávnnasin.
 
 msyn-unspace-compound = Goallosteapmi
-    .desc = {$1} ii oro leamen goallossátni
+    .desc = {$1} ii oro leamen goallossátni.
 
 real-vuovttat = Sáhcu
-    .desc = Goallossánit leat dábálaččat sázu haga
+    .desc = Goallossánit leat dábálaččat sázu haga.
     .example-1 = Son jáhkii bártniid liikot buorebut čuvges-vuovttat nieiddaide
 
 msyn-addhyphen = Sáhcu
     .desc = Dákkár goallossániin lea sáhcu
 
 orth-prop = Álgobustávva
-    .desc = Namain berrešii leat stuora álgobustávva
+    .desc = Namain berrešii leat stuora álgobustávva.
 
 real-hallan = Boasttuhápmi
     .desc = {$1} lea duppal passiiva, "-hallat" ja "-ot"-
@@ -839,10 +843,10 @@ punct-rihkku = Rihkkomeattáhus
     .ref-1 = 
 
 typo = Čállinmeattáhus
-    .desc = Ii leat sátnelisttus
+    .desc = Hápmi ii leat sátnelisttus.
 
 double-space-before = Sátnegaskameattáhus
-    .desc = Leat guokte gaskka ovdal {$1}
+    .desc = Leat guokte gaskka ovdal {$1} dan sájis go okta.
 
 space-after-paren-beg = Sátnegaskameattáhus
     .desc = Lea gaska vuosttaš paragráfa {$1} ovddas
