@@ -7403,7 +7403,7 @@ eventually.
 
 * **LEXICON LAGAN_LAGAS**
 
-* **LEXICON AHKASAS** derived words on -saš, -haš, -laš
+* **LEXICON AHKASAS** derived words on -saš, -haš, -laš, no comp
 
 * **LEXICON AHKASAS_PL**  derived words on -saš, -haš, -laš, only plural,
 
