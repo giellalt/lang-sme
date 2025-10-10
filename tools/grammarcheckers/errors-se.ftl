@@ -5,10 +5,6 @@
 spelling-error = Čállinmeattáhus dán oktavuođas
     .desc = Sátni šaddá eará go oaivvilduvvo
     
-## Default patterns: re:real-.*-.*
-spelling-error = Čállinmeattáhus dán oktavuođas
-    .desc = Sátni šaddá eará go oaivvilduvvo
-
 ## Default patterns: re:msyn-wrong-case.*, re:msyn-wrong_case.*
 wrong-form = Boasttuhápmi
     .desc = {$1} orru leamen boasttukásusis
