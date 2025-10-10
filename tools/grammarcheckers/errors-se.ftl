@@ -17,7 +17,7 @@ quotation-marks = Aisttonmearkkat
 ## Default patterns: re:no-space-after-paren.*, re:no-space-before-paren.*
 parenthesis-missing-space = Gaska váilu
     .desc = Ii leat gaska ovdal dehe maŋŋil ruođu {$1}.
-    .example-1 = Vuoigatvuođa Lávdegottičilgehus
+    .example-1 = Vuoigatvuođa Lávdegotti(SVL)čilgehus
 
 real-Sg3-ConNeg = Biehttálanhápmi gieldovearbba maŋŋel
     .desc = Go verba dego {$1} boahtá
