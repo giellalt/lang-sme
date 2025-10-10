@@ -195,6 +195,11 @@ gt_USE_SHARED([common], [shared-mul], [giella-shared-mul])
 AM_CONDITIONAL([HAVE_SHARED_COMMON], [test x$gt_SHARED_common != xfalse])
 gt_USE_SHARED([smi], [shared-smi], [giella-shared-smi])
 AM_CONDITIONAL([HAVE_SHARED_SMI], [test x$gt_SHARED_smi != xfalse])
+gt_USE_SHARED([sma], [lang-sma], [giella-sma])
+AM_CONDITIONAL([HAVE_SHARED_SMA], [test x$gt_SHARED_sma != xfalse])
+gt_USE_SHARED([smj], [lang-smj], [giella-smj])
+AM_CONDITIONAL([HAVE_SHARED_SMJ], [test x$gt_SHARED_smj != xfalse])
+
 
 gt_NEED_SHARED([mul], [shared-mul], [giella-shared-mul], [0.0.3])
 
