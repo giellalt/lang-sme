@@ -1,7 +1,7 @@
 # Error messages for language: se
 # Generated from XML by xml-conv
 
-## Default patterns: re:real-.*, id:unreal-girjji
+## Default patterns: re:real-.*, re:real-.*-.*, id:unreal-girjji
 spelling-error = Čállinmeattáhus dán oktavuođas
     .desc = Sátni šaddá eará go oaivvilduvvo
     

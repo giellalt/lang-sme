@@ -1,7 +1,7 @@
 # Error messages for language: en
 # Generated from XML by xml-conv
 
-## Default patterns: re:real-.*, id:unreal-girjji
+## Default patterns: re:real-.*, re:real-.*-.*, id:unreal-girjji
 spelling-error = Spelling error
     .desc = The word means something different here
 
