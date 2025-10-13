@@ -16,20 +16,8 @@ export default function smeGramRelease(entry: StringEntry): Command {
   });
   x = cg3.vislcg3("postspell-valency", x, { model_path: "valency-postspell.bin" });
   x = cg3.vislcg3("grc-disamb", x, { model_path: "grc-disambiguator.bin" });
-  x = cg3.vislcg3("speller-disamb", x, { model_path: "spellchecker.bin" });
+  x = cg3.vislcg3("spell-sugg-filtering", x, { model_path: "spellchecker.bin" });
   x = cg3.vislcg3("gramcheck", x, { model_path: "grammarchecker-release.bin" });
-  return divvun.suggest("suggestions", x, { model_path: "generator-gramcheck-gt-norm.hfstol" });
-}
-
-/**
- * Spell-only checker (faster).
- */
-export function spellOnly(entry: StringEntry): Command {
-  let x = hfst.tokenize("tokenize", entry, { model_path: "tokeniser-gramcheck-gt-desc.pmhfst" });
-  x = divvun.cgspell(x, {
-    err_model_path: "errmodel.default.hfst",
-    acc_model_path: "acceptor.default.hfst"
-  });
   return divvun.suggest("suggestions", x, { model_path: "generator-gramcheck-gt-norm.hfstol" });
 }
 
