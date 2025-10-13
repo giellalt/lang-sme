@@ -3,24 +3,53 @@ import * as divvun from "./.divvun-rt/divvun.ts";
 import * as hfst from "./.divvun-rt/hfst.ts";
 import { Command, StringEntry } from "./.divvun-rt/mod.ts";
 
-export default function smaGramRelease(entry: StringEntry): Command {
-  let x = hfst.tokenize(entry, {
-    model_path: "tokeniser-gramcheck-gt-desc.pmhfst",
-  });
-  x = divvun.blanktag(x, { model_path: "analyser-gt-whitespace.hfst" });
-  x = cg3.vislcg3(x, { model_path: "valency.bin" });
-  x = cg3.vislcg3(x, { model_path: "mwe-dis.bin" });
-  x = cg3.mwesplit(x);
-  x = divvun.blanktag(x, { model_path: "analyser-gt-errorwhitespace.hfst" });
-  x = divvun.cgspell(x, {
+export default function smeGramRelease(entry: StringEntry): Command {
+  let x = hfst.tokenize("tokenize", entry, { model_path: "tokeniser-gramcheck-gt-desc.pmhfst" });
+  x = divvun.blanktag("whitespace", x, { model_path: "analyser-gt-whitespace.hfst" });
+  x = cg3.vislcg3("valency", x, { model_path: "valency.bin" });
+  x = cg3.vislcg3("mwe-dis", x, { model_path: "mwe-dis.bin" });
+  x = cg3.mwesplit("mwesplit", x);
+  x = divvun.blanktag("errorwhitespace", x, { model_path: "analyser-gt-errorwhitespace.hfst" });
+  x = divvun.cgspell("speller", x, {
     acc_model_path: "acceptor.default.hfst",
     err_model_path: "errmodel.default.hfst",
   });
-  x = cg3.vislcg3(x, { model_path: "valency-postspell.bin" });
-  x = cg3.vislcg3(x, { model_path: "grc-disambiguator.bin" });
-  x = cg3.vislcg3(x, { model_path: "spellchecker.bin" });
-  x = cg3.vislcg3(x, { model_path: "grammarchecker-release.bin" });
-  x = divvun.suggest(x, { model_path: "generator-gramcheck-gt-norm.hfstol" });
+  x = cg3.vislcg3("postspell-valency", x, { model_path: "valency-postspell.bin" });
+  x = cg3.vislcg3("grc-disamb", x, { model_path: "grc-disambiguator.bin" });
+  x = cg3.vislcg3("speller-disamb", x, { model_path: "spellchecker.bin" });
+  x = cg3.vislcg3("gramcheck", x, { model_path: "grammarchecker-release.bin" });
+  return divvun.suggest("suggestions", x, { model_path: "generator-gramcheck-gt-norm.hfstol" });
+}
 
-  return x;
+/**
+ * Spell-only checker (faster).
+ */
+export function spellOnly(entry: StringEntry): Command {
+  let x = hfst.tokenize("tokenize", entry, { model_path: "tokeniser-gramcheck-gt-desc.pmhfst" });
+  x = divvun.cgspell(x, {
+    err_model_path: "errmodel.default.hfst",
+    acc_model_path: "acceptor.default.hfst"
+  });
+  return divvun.suggest("suggestions", x, { model_path: "generator-gramcheck-gt-norm.hfstol" });
+}
+
+/**
+ * Dev pipeline for testing with local models.
+ */
+export function localTest_dev(entry: StringEntry): Command {
+  let x = hfst.tokenize("tokenize", entry, { model_path: "@./tokeniser-gramcheck-gt-desc.pmhfst" });
+  x = divvun.blanktag("whitespace", x, { model_path: "@./analyser-gt-whitespace.hfst" });
+  x = cg3.vislcg3("valency", x, { model_path: "@../../src/cg3/valency.cg3" });
+  x = cg3.vislcg3("mwe-dis", x, { model_path: "@../tokenisers/mwe-dis.cg3" });
+  x = cg3.mwesplit("mwesplit", x);
+  x = divvun.blanktag("errorwhitespace", x, { model_path: "@./analyser-gt-errorwhitespace.hfst" });
+  x = divvun.cgspell("speller", x, {
+    acc_model_path: "@./acceptor.default.hfst",
+    err_model_path: "@./errmodel.default.hfst",
+  });
+  x = cg3.vislcg3("postspell-valency", x, { model_path: "@./valency-postspell.cg3" });
+  x = cg3.vislcg3("grc-disamb", x, { model_path: "@./grc-disambiguator.cg3" });
+  x = cg3.vislcg3("spell-sugg-filtering", x, { model_path: "@./spellchecker.cg3" });
+  x = cg3.vislcg3("gramcheck", x, { model_path: "@./grammarchecker.cg3" });
+  return divvun.suggest("suggestions", x, { model_path: "@./generator-gramcheck-gt-norm.hfstol" });
 }
