@@ -3,7 +3,7 @@
 
 ## Default patterns: re:real-.*, re:real-.*-.*, id:unreal-girjji
 spelling-error = Čállinmeattáhus dán oktavuođas
-    .desc = Sátni šaddá eará go oaivvilduvvo
+    .desc = Sátni šattai eará go dan maid don orut oaivvildeame.
     
 ## Default patterns: re:msyn-wrong-case.*, re:msyn-wrong_case.*
 wrong-form = Boasttuhápmi
@@ -297,19 +297,19 @@ syn-u-not-o = Boasttuhápmi
     .example-1 = Dál son áigo vuoiŋŋastit guokte mánu iežas lagámušaid luhtte.
 
 syn-váccii = Boasttuhápmi
-    .desc = Sátni šaddá eará go oaivvilduvvo
+    .desc = Sátni šattai eará go dan maid don orut oaivvildeame.
     .example-1 = Gaup vázzi neavttárskuvlla Stáda Teáhterallaskuvllas, ja eksámena válddii 1978:is.
 
 syn-reflexive-pron = Boasttusátni
-    .desc = Refleksiiva pronomen iige persovnnalaš pronomen
+    .desc = Refleksiiva pronomen iige persovnnalaš pronomen.
     .example-1 = Mun válddán mu girjji.
 
 syn-case-congruence-buorre = Boasttuhápmi
-    .desc = Kongrueansa "buorre" ja substantiivva gaskkas
+    .desc = Kongrueansa "buorre" ja substantiivva gaskkas.
     .example-1 = buorre bargoskibir buori jurdagiiguin
 
 syn-number-congruence-moanat = Boasttuhápmi
-    .desc = Kongrueansa "moanat" ja substantiivva gaskkas
+    .desc = Kongrueansa "moanat" ja substantiivva gaskkas.
     .example-1 = Moanat buori spábbačiekči leat boahtán Jergolis.
 
 syn-case-congruence-moanat = Boasttuhápmi
@@ -427,7 +427,7 @@ syn-illative-agent-with-hallat-passive = Boasttuhápmi
     .ref-1 = Nickel1994:228
 
 syn-not_inf = Boasttuhápmi
-    .desc = Ii galgga leat infinitiiva
+    .desc = Ii galgga leat infinitiiva.
     .example-1 = Eadni balai mánás leat golgodávdda.
     .ref-1 = Nickel1994:441ff
 
@@ -437,16 +437,16 @@ syn-not-actio = Boasttuhápmi
     .ref-1 = Nickel1994:441ff
 
 syn-not_actio = Boasttuhápmi
-    .desc = Galggašii leat infinitiiva
+    .desc = Galggašii leat infinitiiva.
     .example-1 = Lávejit nu máilmmi fiidnat orrome diet doahpagat.
 real-Derh-Inf = Konsonántameattáhus
-    .desc = Orru leamen čállinmeattáhus konsonántaguovddážis
+    .desc = Orru leamen čállinmeattáhus konsonántaguovddážis.
     .example-1 = Studeanta ferte ceavzzit goappašiid eksámeniid.
 real-Ess-PrfPrc = Konsonántameattáhus
-    .desc = Sátni šaddá eará go oaivvilduvvo. Don leat čállán substantiivva essiivvas ({$1}). Galgá go leat vearba perfeakta partisihppahámis?
+    .desc = Sátni šattai eará go dan maid don orut oaivvildeame. Don leat čállán substantiivva essiivvas ({$1}). Galgá go leat vearba perfeakta partisihppahámis?
     .example-1 = Sámegielat oahpaheddjiid háhkkan lea stuorra hástalussan dáin skuvllain.
 real-ImprtDu1-NSgNom = Konsonántameattáhus
-    .desc = Sátni šaddá eará go oaivvilduvvo. Don leat čállán vearba duála imperatiivvas ({$1}). Galgá go substantiiva?
+    .desc = Sátni šattai eará go dan maid don orut oaivvildeame. Don leat čállán vearba duála imperatiivvas ({$1}). Galgá go substantiiva?
     .example-1 = Mii váldit sámegiela duođas, lea Rettera čielga diehttu.
 real-eallit = Čállinmeattáhus dán oktavuođas
     .desc = "eallit" orru leamen njuolga sátni
