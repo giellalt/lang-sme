@@ -468,12 +468,13 @@ real-oastit = Čállinmeattáhus dán oktavuođas
     .example-3 = Beaivet lea dábálaš váccašit márkanis, guovlat mii fállojuvvo, ja soaitá vel oasttit dujiid, biepmuid dahje eará.
     .example-4 = Jos mis livčče basttat, de fitnodat livčče ferten oasttit mis bálvalusaid ja mii leimmet beassat dalle ieža mearredit goas min mielas lea buoremussan gáldet iežamet bohccuid, čilge namahis boazodoalli.
 syn-super-part2 = Boasttuhápmi
-    .desc = Dan sadjái go "eanemus", de berrešii adjektiiva sodjat
+    .desc = Dan sadjái go "eanemus", de berrešii adjektiiva sodjat.
     .example-1 = Earet eará Guovdageainnu eanemus eksohtalaš sajis, Juhls Silver Gallerys, dánsunoahpaheaddjis, Beyoncés ja orodettiin Ođđa Zealánddas.
     .example-2 = Danne lea eanemus lunddolaš earuhit iešguđet doaimmaid maid Sámediggi čađaha.
     .example-3 = Logut maid geavahit kápihttalis, leat goitge dat maid atnit eanemus rievttes lohkun mat leat oažžumis dássážii.
-    .example-4 = Figuvra 3.10 čájeha ahte Lulli-Trøndelagas // Hedemárkkus lea leamašan eanemus bissovaš ja alimus gaskamearálaš lohku bohccot juohke siidaoasis dán áigodagas ( 1990-2008 ).
+    .example-4 = Figuvra 3.10 čájeha ahte Lulli-Trøndelagas / Hedemárkkus lea leamašan eanemus bissovaš ja alimus gaskamearálaš lohku bohccot juohke siidaoasis dán áigodagas (1990-2008).
     .ref-1 = Nickel1994:350
+    .ref-2 = Svonni2015:69
 
 syn-comp-part2 = Boasttuhápmi
     .desc = Dan sadjái go "eanet"/"eambbo", de berrešii adjektiiva sodjat
