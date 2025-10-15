@@ -467,27 +467,27 @@ real-oastit = Čállinmeattáhus dán oktavuođas
     .example-2 = Lea oainnat nu ahte bohtet Suoma bealde deikke oasttit guliid.
     .example-3 = Beaivet lea dábálaš váccašit márkanis, guovlat mii fállojuvvo, ja soaitá vel oasttit dujiid, biepmuid dahje eará.
     .example-4 = Jos mis livčče basttat, de fitnodat livčče ferten oasttit mis bálvalusaid ja mii leimmet beassat dalle ieža mearredit goas min mielas lea buoremussan gáldet iežamet bohccuid, čilge namahis boazodoalli.
-syn-super-part2 = Kompareren váilu
+syn-super-part2 = Komparerenmeattáhus
     .desc = Don leat čállán "eanemus {$1}". Galgá go baicce adjektiivva kompareret? 
-    .example-1 = Earet eará Guovdageainnu eanemus eksohtalaš sajis, Juhls Silver Gallerys, dánsunoahpaheaddjis, Beyoncés ja orodettiin Ođđa Zealánddas.
+    .example-1 = Earet eará Guovdageainnu eanemus bivnnuhis sajis, Juhls Silver Gallerys, dánsunoahpaheaddjis, Beyoncés ja orodettiin Ođđa Zealánddas.
     .example-2 = Danne lea eanemus lunddolaš earuhit iešguđet doaimmaid maid Sámediggi čađaha.
     .example-3 = Logut maid geavahit kápihttalis, leat goitge dat maid atnit eanemus rievttes lohkun mat leat oažžumis dássážii.
     .example-4 = Figuvra 3.10 čájeha ahte Lulli-Trøndelagas / Hedemárkkus lea leamašan eanemus bissovaš ja alimus gaskamearálaš lohku bohccot juohke siidaoasis dán áigodagas (1990-2008).
     .ref-1 = Nickel1994:350
     .ref-2 = Svonni2015:69
 
-syn-comp-part2 = Boasttuhápmi
-    .desc = Dan sadjái go "eanet"/"eambbo", de berrešii adjektiiva sodjat
+syn-comp-part2 = Komparerenmeattáhus
+    .desc = Don leat čállán "eanemus {$1}". Galgá go baicce adjektiivva kompareret? 
     .example-1 = Ramones váikkuhusas Blackfire musihkii ii leat eahpádus, vaikko Blackfire vuohki leage eanet aggressiiva go ovdagovastis.
     .ref-1 = Nickel1994:350
 
 syn-inf-after-soaitit = Boasttuhápmi
-    .desc = "soaitit" maŋŋel láve infinihtta
+    .desc = Don leat čállán  "{$2}" finihttavearban. "soaitit" maŋŋel galgá leat infinihttahápmi.
     .example-1 = Boahtte háve soaittán válddán govven- dahje filbmenbarggu.
     .ref-1 = Nickel1994:350
 
-syn-add-go = Sátni váilu
-    .desc = Fertet lasihit -go
+syn-add-go = "-go" / "go" váilu
+    .desc = Eahpidankonstrukšuvnnas galgá jearranpartihkal "-go" / "go" laktojuvvot finihttaverbii "{$1}".
     .example-1 = Mun in dieđe manne nu lei, muhto goit dál juo dieđán fárgga oaččun loana dahje stipeanda.
     .example-2 = Go ná dáhpáhuvvá, álgá olmmoš jurddašit lea veara bidjat áiggi dákkár bargui, lohká Sara.
     .example-3 = Olmmái muitala ahte son lea ohcame Soria-Moria sloahta, ja jearrala vel áhkus ii son dieđe gos dat báiki lea.
@@ -496,7 +496,7 @@ syn-add-go = Sátni váilu
     .ref-1 = Nickel1994:350
 
 syn-not-dego = Cealkkameattáhus
-    .desc = ii galgga leat "dego"
+    .desc = Don leat geavahan essiivahámi "{$2}". Danin ii galgga sátni "dego" leat.
     .example-1 = SNF doaibmá dál juo dego resursaguovddážin.
     .ref-1 = 
 
