@@ -500,13 +500,8 @@ syn-not-dego = Cealkkameattáhus
     .example-1 = SNF doaibmá dál juo dego resursaguovddážin.
     .ref-1 = 
 
-syn-ge_not_ja-part1 = Boasttusátni
-    .desc = "ge" iige "ja"
-    .example-1 = Dat lea nominašuvdnačoahkkin gii vállje gean bidjá bajimussii, ja in mun.
-    .ref-1 = 
-
-syn-ge_not_ja-part2 = Boasttusátni
-    .desc = "ge" iige "ja"
+syn-ge_not_ja = Cealkkameattáhus
+    .desc = Don leat čállán "ja {$2}". Dás galgá leat "{$2}ge". 
     .example-1 = Dat lea nominašuvdnačoahkkin gii vállje gean bidjá bajimussii, ja in mun.
     .ref-1 = 
 
