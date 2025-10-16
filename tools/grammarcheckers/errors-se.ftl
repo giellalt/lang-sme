@@ -510,24 +510,26 @@ syn-redundant_ahte = Cealkkameattáhus
     .example-1 = Dat lei seamma vearrái go ahte ii máhte dola dahkat.
     .ref-1 = 
 
-syn-timeadverbial-accusative = Boasttuhápmi
-    .desc = Berrešii akkusatiiva
-    .example-1 = Dál lea son oktiibuot 6 jahki orron Sámis, ja dasa lea fargga jagi áigi go álggahii iežas silbarávdefitnodaga Kárášjohkii.
+syn-timeadverbial-accusative = Boasttukásus
+    .desc = Don leat čállán nominatiivva "{$1}". Das galgá leat akkusatiiva.
+    .example-1 = Dál lea son oktiibuot jahki orron Sámis, ja dasa lea fargga jagi áigi go álggahii iežas silbarávdefitnodaga Kárášjohkii.
     .ref-1 = 
 
 msyn-valency-ill-acc = Boasttuhápmi
-    .desc = Berrešii illatiiva
-    .example-1 = Hui ollu liikon bohccobierggu ja goikebierggu.
+    .desc = Don leat čállán akkusatiivva "{$1}", muhto vearba gáibida illatiivva.
+    .example-1 = Dá lea oahppu dutnje gii liikot hástalusaid!
+    .example-2 = Váttis jearaldat, liikon dieđusge buoremusat Gárasavvona ja Guovdageainnu gávtti
     .ref-1 = 
 
 msyn-valency-ill-nom = Boasttuhápmi
-    .desc = Vearba gáibida illatiivva
-    .example-1 = Liikon     dat mii lea simpal ja vulgeara, maiddái geasuha energiija mii lea punk-ja garramushkas ja dan vikkan jođihit iežas dáidagiid .
+    .desc = Don leat čállán nominatiivva "{$1}", muhto vearba gáibida illatiivva.
+    .example-1 = Liikon dat mii lea simpal ja vulgeara, maiddái geasuha energiija mii lea punk-ja garramushkas ja dan vikkan jođihit iežas dáidagiid.
     .ref-1 = 
 
-msyn-valency-add-acc-inf = Sátni váilu
-    .desc = Akkusatiiva váilu
-    .example-1 = Stáhtaministtar Jens Stoltenberg lea iežas mátkkis davvin cealkán ahte son ádde go finnmárkulaččat     ballet     šaddat oassin stuorra regiuvnnas Davvi-Norggas, muhto dát ii dárbbaš mearkkašit ahte dát lea seamma go lohpádus .
+msyn-valency-add-acc-inf = Akkusatiivapronomen váilu
+    .desc = Don leat geavahan vearbba mii gáibida akkusatiivva (iežas, dan jna.)ovttas infinihttahámiin.
+    .example-1 = Ballá lassi ráŋggáštusa ožžon. 
+    .example-2 = Danin jáhkán mun leat okta sivvan váttisvuođaide, logai Odd Erling Smuk:a advokáhtta.
     .ref-1 = 
 
 msyn-valency-acc-inf-not-nom-inf = Boasttuhápmi
@@ -538,7 +540,7 @@ msyn-valency-acc-inf-not-nom-inf = Boasttuhápmi
 msyn-valency-dasa-before-ahte = Sátni váilu
     .desc = ovdal sáni
     .example-1 = Ráđđehus     luohttá     ahte Sámediggi, demokráhtalaš álbmotválljejuvvon orgánan, váfista ahte diekkár vuđolaš demokráhtalaš prinsihpat ja juksanmearit áimmahuššojuvvojit válgaortnega vejolaš earáhuhttimis.
-    .ref-1 = 
+    .ref-1 =
 
 msyn-valency-go-inf = Cealkkameattáhus
     .desc = iige infinitiiva
