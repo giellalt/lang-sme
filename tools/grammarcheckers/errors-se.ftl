@@ -515,31 +515,31 @@ syn-timeadverbial-accusative = Boasttukásus
     .example-1 = Dál lea son oktiibuot jahki orron Sámis, ja dasa lea fargga jagi áigi go álggahii iežas silbarávdefitnodaga Kárášjohkii.
     .ref-1 = 
 
-msyn-valency-ill-acc = Boasttuhápmi
+msyn-valency-ill-acc = Boasttukásus
     .desc = Don leat čállán akkusatiivva "{$1}", muhto vearba gáibida illatiivva.
     .example-1 = Dá lea oahppu dutnje gii liikot hástalusaid!
     .example-2 = Váttis jearaldat, liikon dieđusge buoremusat Gárasavvona ja Guovdageainnu gávtti
     .ref-1 = 
 
-msyn-valency-ill-nom = Boasttuhápmi
+msyn-valency-ill-nom = Boasttukásus
     .desc = Don leat čállán nominatiivva "{$1}", muhto vearba gáibida illatiivva.
     .example-1 = Liikon dat mii lea simpal ja vulgeara, maiddái geasuha energiija mii lea punk-ja garramushkas ja dan vikkan jođihit iežas dáidagiid.
     .ref-1 = 
 
 msyn-valency-add-acc-inf = Akkusatiivapronomen váilu
-    .desc = Don leat geavahan vearbba mii gáibida akkusatiivva (iežas, dan jna.)ovttas infinihttahámiin.
+    .desc = Don leat geavahan vearbba mii gáibida akkusatiivva ("iežas", "dan" jna.) ovttas infinihttahámiin.
     .example-1 = Ballá lassi ráŋggáštusa ožžon. 
     .example-2 = Danin jáhkán mun leat okta sivvan váttisvuođaide, logai Odd Erling Smuk:a advokáhtta.
     .ref-1 = 
 
-msyn-valency-acc-inf-not-nom-inf = Boasttuhápmi
-    .desc = Akkusatiiva iige nominatiiva
+msyn-valency-acc-inf-not-nom-inf = Boasttukásus
+    .desc = Don leat čállán sáni "{$1}" nominatiivvas. Das galgá leat akkusatiiva.
     .example-1 = Oaččo eadni addet!
     .ref-1 = 
 
-msyn-valency-dasa-before-ahte = Sátni váilu
-    .desc = ovdal sáni
-    .example-1 = Ráđđehus     luohttá     ahte Sámediggi, demokráhtalaš álbmotválljejuvvon orgánan, váfista ahte diekkár vuđolaš demokráhtalaš prinsihpat ja juksanmearit áimmahuššojuvvojit válgaortnega vejolaš earáhuhttimis.
+msyn-valency-dasa-before-ahte = Illatiivapronomen váilu
+    .desc = Don leat geavahan vearbba mii gáibida illatiivva. Ovdal "{$1}" galgá leat illatiivapronomen "dasa".
+    .example-1 = Ráđđehus luohttá ahte Sámediggi, demokráhtalaš álbmotválljejuvvon orgánan, váfista ahte diekkár vuđolaš demokráhtalaš prinsihpat ja juksanmearit áimmahuššojuvvojit válgaortnega vejolaš earáhuhttimis.
     .ref-1 =
 
 msyn-valency-go-inf = Cealkkameattáhus
