@@ -453,16 +453,16 @@ real-eallá = Čállinmeattáhus dán oktavuođas
     .example-1 = Dat gii ealla beassá dan vásihit.
     .example-2 = Stuorámus ealli máilmmis mii ealla goikásis, dahje eatnan alde.
 real-oažžut = Čállinmeattáhus dán oktavuođas
-    .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") konsonántaguovddážis. Dás galgá leat gievrrasdássi "žž".
+    .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") konsonántaguovddážis. Das galgá leat gievrrasdássi "žž".
     .example-1 = Dat livčče gal oba vuogas, jus ná geavašii, go muhtin mánát fertejit mannat priváhta skuvlii, jus áigot oaččut dakkár oahpu, mii ii gávdno stáhta skuvllain.
 real-orrut = Čállinmeattáhus dán oktavuođas
-    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "o". Dás galgá leat "u".
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "o". Das galgá leat "u".
     .example-1 = Lávejit nu máilmmi fiidnát orrome diet doahpagat.
 real-oainnat = Čállinmeattáhus dán oktavuođas
     .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á". Jus oaivvildat advearbba, de galga leat "a".
     .example-1 = Dalle oainnát sáddii gielddastivra fas ášši ruovttoluotta dalá huksenráđđái, mii ii šat bargan áššiin maide.
 real-oastit = Čállinmeattáhus dán oktavuođas
-    .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") konsonántaguovddážis. Dás galgá leat gievrrasdássi "st".
+    .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") konsonántaguovddážis. Das galgá leat gievrrasdássi "st".
     .example-1 = Dat lei divrras oasttit áibbas ođđa pláhta, muhto lei dan veara.
     .example-2 = Lea oainnat nu ahte bohtet Suoma bealde deikke oasttit guliid.
     .example-3 = Beaivet lea dábálaš váccašit márkanis, guovlat mii fállojuvvo, ja soaitá vel oasttit dujiid, biepmuid dahje eará.
@@ -501,7 +501,7 @@ syn-not-dego = Cealkkameattáhus
     .ref-1 = 
 
 syn-ge_not_ja = Cealkkameattáhus
-    .desc = Don leat čállán "ja {$2}". Dás galgá leat "{$2}ge". 
+    .desc = Don leat čállán "ja {$2}". Das galgá leat "{$2}ge". 
     .example-1 = Dat lea nominašuvdnačoahkkin gii vállje gean bidjá bajimussii, ja in mun.
     .ref-1 = 
 
@@ -511,18 +511,18 @@ syn-redundant_ahte = Cealkkameattáhus
     .ref-1 = 
 
 syn-timeadverbial-accusative = Boasttukásus
-    .desc = Don leat čállán nominatiivva "{$1}". Das galgá leat akkusatiiva.
+    .desc = Don leat čállán nominatiivva "{$1}". Dat galgá leat akkusatiivvas.
     .example-1 = Dál lea son oktiibuot jahki orron Sámis, ja dasa lea fargga jagi áigi go álggahii iežas silbarávdefitnodaga Kárášjohkii.
     .ref-1 = 
 
 msyn-valency-ill-acc = Boasttukásus
-    .desc = Don leat čállán akkusatiivva "{$1}", muhto vearba gáibida illatiivva.
+    .desc = Don leat čállán akkusatiivva "{$1}", muhto vearba gáibida sáni illatiivvas.
     .example-1 = Dá lea oahppu dutnje gii liikot hástalusaid!
     .example-2 = Váttis jearaldat, liikon dieđusge buoremusat Gárasavvona ja Guovdageainnu gávtti
     .ref-1 = 
 
 msyn-valency-ill-nom = Boasttukásus
-    .desc = Don leat čállán nominatiivva "{$1}", muhto vearba gáibida illatiivva.
+    .desc = Don leat čállán nominatiivva "{$1}", muhto vearba gáibida sáni illatiivvas.
     .example-1 = Liikon dat mii lea simpal ja vulgeara, maiddái geasuha energiija mii lea punk-ja garramushkas ja dan vikkan jođihit iežas dáidagiid.
     .ref-1 = 
 
@@ -533,7 +533,7 @@ msyn-valency-add-acc-inf = Akkusatiivapronomen váilu
     .ref-1 = 
 
 msyn-valency-acc-inf-not-nom-inf = Boasttukásus
-    .desc = Don leat čállán sáni "{$1}" nominatiivvas. Das galgá leat akkusatiiva.
+    .desc = Don leat čállán sáni "{$1}" nominatiivvas. Dat galgá leat akkusatiivvas.
     .example-1 = Oaččo eadni addet!
     .ref-1 = 
 
@@ -543,17 +543,17 @@ msyn-valency-dasa-before-ahte = Illatiivapronomen váilu
     .ref-1 =
 
 msyn-valency-go-inf = Cealkkameattáhus
-    .desc = iige infinitiiva
+    .desc = Don leat čállán infinitiivva. Dan sajis galgá leat "go" -oalgecealkka ja finihttavearba.
     .example-1 = Soai leaigga sihke dolkan ja suhttan gullat olbmuid šláddariid sudno birra, ja bovdiiga.
     .ref-1 = 
 
 msyn-valency-loc-not-birra = Cealkkameattáhus
-    .desc = lokatiiva iige
-    .example-1 = Mun sáddejin ohcama ja čállen oanehaččat iežan birra, ja sáddejin velá čállosa globaliserema birra, man birra mun     beroštan.
+    .desc = Don leat čállán "birra", muhto vearba gáibida lokatiiva.
+    .example-1 = Mun sáddejin ohcama ja čállen oanehaččat iežan birra, ja sáddejin velá čállosa globaliserema birra, man birra mun beroštan.
     .ref-1 = 
 
-msyn-valency-aktioloc-aktioess = Boasttuhápmi
-    .desc = Vearba láve gáibidit áktio lokatiiva
+msyn-valency-aktioloc-aktioess = Boasttu vearbahápmi
+    .desc = Don leat čállán vearbba "{$1}" aktio essiivvas. Dat galgá leat aktio lokatiivvas.
     .example-1 = Sámedikki politihkkárat eai galgga maid darbbašit ballat čalmmustahttimin fitnodagaid.
     .ref-1 = 
 
@@ -562,18 +562,19 @@ msyn-valency-ahte-inf = Cealkkameattáhus
     .example-1 = 
     .ref-1 = 
 
-msyn-valency-loc-ill = Boasttuhápmi
-    .desc = Lokatiiva iige illatiivva
-    .example-1 = Okta eaŋgas lihkkudutki, Lord Layard, čállá ahte olbmot geat     beroštit     earáin, leat gaskamearrálaččat eambbo lihkolaččat og olbmot geat dušše beroštit alcces .
+msyn-valency-loc-ill = Boasttukásus
+    .desc = Don leat čállán illatiiivva "{$1}". Dat galgá leat lokatiivvas.
+    .example-1 = Okta eaŋgas lihkkudutki, Lord Layard, čállá ahte olbmot geat     beroštit earáin, leat gaskamearrálaččat eambbo lihkolaččat og olbmot geat dušše beroštit alcces.
     .ref-1 = 
 
-msyn-valency-loc-com = Boasttuhápmi
-    .desc = Lokatiiva iige komitatiiva
-    .example-1 = Fina baicca olbuid     luhtte     geaiguin ovttasbarggat ja bearráigeahča seammás ahte eai leat vajálduhttán iežaset bargguid ja geatnegasvuođaid.
+msyn-valency-loc-com = Boasttukásus
+    .desc = Don leat čállán komitatiivva "{$1}". Dat galgá leat lokatiivvas.
+    .example-1 = – Dat ii dárbbašuvvo nu olu suohkana bealis, mii čájeha ahte suohkan berošta iežas nuoraiguin ja hálida sin ruoktot boahtit bargat, loahpaha Barbro Lill Hætta.
+    .example-2 = ja seammas ballat ođđa dieđuiguin.
     .ref-1 = 
 
-msyn-valency-acc-not-nom = Boasttuhápmi
-    .desc = Akkusatiiva iige nominatiiva
+msyn-valency-acc-not-nom = Boasttukásus 
+    .desc = Don leat čállán nominatiivva "{$1}". Dat galgá leat akkusatiivvas. 
     .example-1 = Mun čálán reive.
     .ref-1 = 
 
