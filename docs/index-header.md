@@ -5,6 +5,7 @@
 [![License](https://img.shields.io/github/license/giellalt/lang-sme)](https://github.com/giellalt/lang-sme/blob/main/LICENSE)
 [![Issues](https://img.shields.io/github/issues/giellalt/lang-sme)](https://github.com/giellalt/lang-sme/issues)
 [![Build Status](https://builds.giellalt.org/api/badge/lang-sme?label=CI)](https://builds.giellalt.org/pipelines/lang-sme/builds/latest)
+[![Glottolog](https://img.shields.io/badge/Glottolog-green)](https://glottolog.org/resource/languoid/id/nort2671)
 
 This page documents the work on the [North Sami language model](http://github.com/giellalt/lang-sme), how to build it and how to use it.
 
