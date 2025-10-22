@@ -476,7 +476,7 @@ syn-super-part2 = Komparerenmeattáhus
     .ref-1 = Nickel1994:350
     .ref-2 = Svonni2015:69
 
-syn-comp-part2 = Komparerenmeattáhus
+syn-comp = Komparerenmeattáhus
     .desc = Don leat čállán "eanemus {$1}". Galgá go baicce adjektiivva kompareret? 
     .example-1 = Ramones váikkuhusas Blackfire musihkii ii leat eahpádus, vaikko Blackfire vuohki leage eanet aggressiiva go ovdagovastis.
     .ref-1 = Nickel1994:350
