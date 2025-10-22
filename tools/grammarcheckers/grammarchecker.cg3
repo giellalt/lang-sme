@@ -11095,9 +11095,16 @@ COPY:lex-guorrasit-not-guorralit ("guorrasit" IV SUGGEST) EXCEPT ("guorrat" Ex/V
 
 #DELETE uncommon	
 ADD:xlex-acc-not-badjel (&lex-acc-not-badjel) TARGET ("badjel") IF (-1 Gen LINK *0 ("sihkodit") OR ("sihkkut") OR ("njávkkadit") BARRIER GRAMCHK-S-BOUNDARY)(NEGATE *1 Num OR Sem/Measr OR Sem/Curr OR Sem/Money BARRIER GRAMCHK-NPNH)(NEGATE -1 Num OR Sem/Measr OR Sem/Curr OR Sem/Money) ;
-COPY:lex-acc-not-badjel (&DELETE) EXCEPT (&lex-acc-not-badjel) TARGET (&lex-acc-not-badjel) ;
+
+ADD:xlex-acc-not-badjel (&lex-acc-not-badjel) TARGET Gen IF (1 ("badjel" &lex-acc-not-badjel)) ;
+
+ADDRELATION (DELETE1) (&lex-acc-not-badjel) TO (1 ("badjel" &lex-acc-not-badjel)) ;
+
+COPY:lex-acc-not-badjel (Acc SUGGEST) EXCEPT (Gen &lex-acc-not-badjel) TARGET (Gen &lex-acc-not-badjel) ;
     ## Idjabiegga liekkus jiella sihkoda alážiid badjel.
     # in errors.xml
+    
+
     
 LIST RASTA-PLACE = "ávžži" "áhpi" "deatnu" "čoalbmi" "eatnu" "geaidnu" "gurra" "jeaggi" "jávri" "johka" "johtolat" "leahki" "luodda" "luobbal" "máđidja" "moallasáhcu" "nuorri" "roahči" "rádji" "rášša" "raŧŧi" "reserváhtta" "ruovddáš" "savu" "savvon" "skurču" "vággi" "šallju" ; #mearra?
 LIST BADJEL-PLACE = "buolža" "buovda" "buolda" "čavil" "čielgi" "čearru" "čorru" "duottar" "dievvá" "etnan" "eana" "geaidnu" "maras" "gobba" "njárga"  "rášša" "várri"  ;
@@ -12377,7 +12384,10 @@ ADD:xsyn-go-not-ahte (&syn-go-not-ahte) TARGET THAT-CS IF (*-1 (A Nom) BARRIER N
  
 #DELETE uncommon   
 ADD:xsyn-redundant_ahte (&syn-redundant_ahte) TARGET THAT-CS IF (-1 BECAUSE-WHEN LINK *-1 BE + Sg3  OR ("šaddat") + Sg3 BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN) (*1 GRAMCHK-VFIN BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN) (NEGATE -2 GRAMCHK-VFIN)(NEGATE -1 VFIN) ;
-COPY:syn-redundant_ahte (&DELETE) EXCEPT (&syn-redundant_ahte) TARGET (CC &syn-redundant_ahte) ;
+
+ADD:xsyn-redundant_ahte (&syn-redundant_ahte) TARGET ("go") IF (1 &syn-redundant_ahte) ;
+
+ADDRELATION (DELETE1) ("go" &syn-redundant_ahte) TO (1 ("ahte" &syn-redundant_ahte)) ;
     ## Dat lei seamma vearrái go ahte ii máhte dola dahkat. XXX errormessage shuold contain suggestions to use Inf as well in subclause?
     #$ Jáhkkibehtet go ahte nubbi dalle vástida: Ale ráfehuhte mu! 
     # errors.xml
@@ -13252,8 +13262,12 @@ ADDRELATION (LEFT) (&msyn-valency-dasa-before-ahte) TO (-1 (ADDED)) ;
 
 #DELETE uncommon
 ADD:xmsyn-valency-ill-ovddas (&msyn-valency-ill-ovddas) TARGET ("ovddas") IF (NEGATE *0 (V <TH-Ill-Any>) LINK c §TH)(0 Po LINK NOT 0 §ANYROLE  OR §ANYADJUNCT LINK -1 Gen)(*0 (V <TH-Ill-Any>) BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN-NOT-AUX OR Inf OR @-FMAINV OR @CVP OR (";") LINK NONE c §TH OR §IN OR (Acc §CO))(NEGATE p <TH-ovddas-Any>)(NEGATE *0 &msyn-valency-ill-acc OR &msyn-valency-dasa-before-ahte OR &msyn-valency-loc-acc OR &msyn-valency-loc-missing OR &msyn-valency-ahte-not-fs)(NEGATE 0* (V <TH-Ill-Any>) BARRIER GRAMCHK-S-BOUNDARY OR GRAMCHK-VFIN-NOT-AUX OR Inf OR @CVP LINK 1 (".*s"r) + ?)(NEGATE *0 (V <TH-Ill-Any>) + &real OR (V <TH-Ill-Any>) + Der/Pass OR (V <TH-Ill-Any>) + @>N ); 
-COPY:msyn-valency-ill-ovddas (Ill SUGGEST) EXCEPT (Gen) TARGET (@>P) IF (1 &msyn-valency-ill-ovddas) ;  
-COPY:msyn-valency-ill-ovddas (&DELETE) EXCEPT (&msyn-valency-ill-ovddas) TARGET (&msyn-valency-ill-ovddas) ;   
+
+ADD:xmsyn-valency-ill-ovddas (&msyn-valency-ill-ovddas) TARGET (Gen) IF (1 &msyn-valency-ill-ovddas)
+
+COPY:msyn-valency-ill-ovddas (Ill SUGGEST) EXCEPT (Gen) TARGET (@>P &msyn-valency-ill-ovddas) ;  
+
+ADDRELATION (DELETE1) (Gen &msyn-valency-ill-ovddas) TO (1 ("ovddas" &msyn-valency-ill-ovddas)) ;  
     ## Boares áhkku nu liikui veahki ovddas, ja attii bárdnái soappi.
     
     # VERBS WITH LOC-VALENCY
@@ -14015,10 +14029,15 @@ ADDRELATION:syn-not-dego (DELETE1 $2) (Ess &syn-not-dego) TO (*-1 ("dego" &syn-n
     ## Lei gáddenuohti sullasaš ráhkkanus - nuohtti lei dego dávgin čavgejuvvon gáttis. #Ess
 
 
-ADD:xsyn-comp-part1 (&syn-comp-part1) TARGET A OR Adv IF (0 ("eanet") - Superl OR ("eambbo") - Superl LINK 1 (A Nom) OR (A Ess) OR Adv OR Attr + ADJ_ATTR/NOM LINK NOT 0 ("vejolaš") OR ("nuorra") OR NO_COMP OR Der/lasj)(-1 GRADE-ADV)(NEGATE 2 CS LINK *1 (A Nom) BARRIER NOT-ADV) (NEGATE -1 ("unnit") OR ("uhcit")) (NEGATE *-1 Neg BARRIER GRAMCHK-S-BOUNDARY) ;
-ADD:xsyn-comp-part2 (&syn-comp-part2) TARGET A  IF (0 Sg + Nom - Comp OR Ess - Comp) (-1 ("eanet") - Superl OR ("eambbo") - Superl LINK 1 (A Nom) OR (A Ess) OR Adv OR Attr + ADJ_ATTR/NOM LINK NOT 0 ("vejolaš") OR ("nuorra") OR NO_COMP OR Der/lasj) (-2 GRADE-ADV)(NEGATE 1 CS LINK *1 (A Nom) BARRIER NOT-ADV) (NEGATE -2 ("unnit") OR ("uhcit")) (NEGATE *-1 Neg BARRIER GRAMCHK-S-BOUNDARY);
-COPY:syn-comp-part1 (&DELETE) EXCEPT (&syn-comp-part1) TARGET (&syn-comp-part1) ;
-COPY:syn-comp-part2 (Comp SUGGEST) EXCEPT (&syn-comp-part2) AFTER A TARGET (A &syn-comp-part2) ;
+ADD:xsyn-comp (&syn-comp) TARGET A OR Adv IF (0 ("eanet") - Superl OR ("eambbo") - Superl LINK 1 (A Nom) OR (A Ess) OR Adv OR Attr + ADJ_ATTR/NOM LINK NOT 0 ("vejolaš") OR ("nuorra") OR NO_COMP OR Der/lasj)(NEGATE 2 CS LINK *1 (A Nom) BARRIER NOT-ADV) (NEGATE -1 ("unnit") OR ("uhcit")) (NEGATE *-1 Neg BARRIER GRAMCHK-S-BOUNDARY) ;
+#(-1 GRADE-ADV)
+ADD:xsyn-comp (&syn-comp) TARGET A  IF (0 Sg + Nom - Comp OR Ess - Comp) (-1 ("eanet") - Superl OR ("eambbo") - Superl LINK 1 (A Nom) OR (A Ess) OR Adv OR Attr + ADJ_ATTR/NOM LINK NOT 0 ("vejolaš") OR ("nuorra") OR NO_COMP OR Der/lasj)(NEGATE 1 CS LINK *1 (A Nom) BARRIER NOT-ADV) (NEGATE -2 ("unnit") OR ("uhcit")) (NEGATE *-1 Neg BARRIER GRAMCHK-S-BOUNDARY);
+#(-2 GRADE-ADV)
+
+COPY:syn-comp (Der/Comp SUGGEST) EXCEPT (&syn-comp) BEFORE A TARGET (A &syn-comp) (NEGATE 0 ("eanet") OR ("eambbo")) ;
+
+ADDRELATION (DELETE1) (A &syn-comp) TO (-1 ("eanet" &syn-comp)) ;
+ADDRELATION (DELETE1) (A &syn-comp) TO (-1 ("eambbo" &syn-comp)) ;  
 	## Lea šaddan eambbo positiiva go lei, ja bohtosat leat buorit.
 	## Dat báicco      sáhtášii addit stuorát hásttalusaid iešguđetge neavtáriid, ja dalle soaitá maiddái teahter šaddat eanet miellagiddevažžan ja čierggosat gehččiide.
    #$ Allet bala, dii han lehpet eanet veara go ollu cizážat!
@@ -14043,12 +14062,12 @@ LIST BINARY-A = "beakkán" "dovddus" ; #To be or not to be
     
     #DELETE SECOND ROUND
 
-ADD:xsyn-super-part1 (&syn-super-part1) TARGET A OR Adv IF (0 ("eanet") + Superl OR ("eambbo") + Superl OR ("eanemus" Adv Superl) LINK 1 (A Nom) OR (A Ess) OR (A Attr) LINK NOT 0 NO_COMP)(NEGATE 2 CS LINK *1 (A Nom) BARRIER NOT-ADV)(NEGATE 1 A - BINARY-A LINK NOT *1 N BARRIER NPNH LINK *0 VFIN + COPULAS)(NEGATE *1 (N Pl Nom) + COUNT-N BARRIER NPNH LINK *0 COPULAS BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR Inf OR PrfPrc OR (Prs Pl1) LINK 0 Pl3 OR VFIN OR Inf - COPULAS OR PrfPrc - COPULAS)(-1 Dem OR (N Gen) OR (Pron Gen) OR ONE + (Num Sg Nom) LINK NEGATE 0 Refl LINK *-1 TV)(NEGATE -1 (Sg Nom) LINK -1 BE + Sg3 OR BECOME + Sg3)(NEGATE -1 (Sg Nom) LINK -1 (N Gen) OR Attr LINK -1 BE + Sg3 OR BECOME + Sg3) ;
+ADD:xsyn-super (&syn-super) TARGET A OR Adv IF (0 ("eanet") + Superl OR ("eambbo") + Superl OR ("eanemus" Adv Superl) LINK 1 (A Nom) OR (A Ess) OR (A Attr) LINK NOT 0 NO_COMP)(NEGATE 2 CS LINK *1 (A Nom) BARRIER NOT-ADV)(NEGATE 1 A - BINARY-A LINK NOT *1 N BARRIER NPNH LINK *0 VFIN + COPULAS)(NEGATE *1 (N Pl Nom) + COUNT-N BARRIER NPNH LINK *0 COPULAS BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR Inf OR PrfPrc OR (Prs Pl1) LINK 0 Pl3 OR VFIN OR Inf - COPULAS OR PrfPrc - COPULAS)(-1 Dem OR (N Gen) OR (Pron Gen) OR ONE + (Num Sg Nom) LINK NEGATE 0 Refl LINK *-1 TV)(NEGATE -1 (Sg Nom) LINK -1 BE + Sg3 OR BECOME + Sg3)(NEGATE -1 (Sg Nom) LINK -1 (N Gen) OR Attr LINK -1 BE + Sg3 OR BECOME + Sg3) ;
 # + ADJ_ATTR/NOM OR Attr LINK NOT 0 ("vejolaš") OR ("nuorra") OR NO_COMP OR Der/lasj
 	#$  Juste dál lea dat eanemus {kreatiiva} proseassa, go mii leat bidjame maŋemus jienaid, ja maŋŋel dan mii álgit mixet, muitala Guifen Min Áigái.
     #$ Snøhvit-huksen lea dat eanemus {kontroversiealla} petroleumhuksen-prošeakta mii lea leamaš Norggas.
     
-ADD:xsyn-super-part2 (&syn-super-part2) TARGET A IF (0 Sg + Nom - Superl OR Ess - Superl OR Attr - Superl)(-1 ("eanet") + Superl OR ("eambbo") + Superl OR ("eanemus") + Superl)(NEGATE 2 CS LINK *1 (A Nom) BARRIER NOT-ADV)(-2 Dem OR (N Gen) OR (Pron Gen) OR ONE + (Num Sg Nom) LINK NEGATE 0 Refl LINK *-1 TV)(NEGATE 0 NO_COMP)(NEGATE -2 (Sg Nom) LINK -1 BE + Sg3 OR BECOME + Sg3)(NEGATE -2 (Sg Nom) LINK -1 (N Gen) OR Attr LINK -1 BE + Sg3 OR BECOME + Sg3);
+ADD:xsyn-super (&syn-super) TARGET A IF (0 Sg + Nom - Superl OR Ess - Superl OR Attr - Superl)(-1 ("eanet") + Superl OR ("eambbo") + Superl OR ("eanemus") + Superl)(NEGATE 2 CS LINK *1 (A Nom) BARRIER NOT-ADV)(-2 Dem OR (N Gen) OR (Pron Gen) OR ONE + (Num Sg Nom) LINK NEGATE 0 Refl LINK *-1 TV)(NEGATE 0 NO_COMP)(NEGATE -2 (Sg Nom) LINK -1 BE + Sg3 OR BECOME + Sg3)(NEGATE -2 (Sg Nom) LINK -1 (N Gen) OR Attr LINK -1 BE + Sg3 OR BECOME + Sg3);
    #LINK NOT 0 ("vejolaš") OR ("nuorra") OR NO_COMP OR Der/lasj
    #$ Dalle šattai kubána sigára eanemus {beakkán} «lassibierggas» politihkkáriin, gávpealbmáin ja India badjeseađu nuorain.	
 	#$ Eai dus šatta dán vahku nu ollu sosiála doaimmat ja danne beasat áibbas ráfis čiekŋudahttit iežat eanemus somás áššiide.
