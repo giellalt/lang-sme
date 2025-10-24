@@ -455,7 +455,7 @@ real-orrut = Čállinmeattáhus dán oktavuođas
     .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "o". Das galgá leat "u".
     .example-1 = Lávejit nu máilmmi fiidnát orrome diet doahpagat.
 real-oainnat = Čállinmeattáhus dán oktavuođas
-    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á". Jus oaivvildat advearbba, de galga leat "a".
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á". Jus oaivvildat advearbba, de galgá leat "a".
     .example-1 = Dalle oainnát sáddii gielddastivra fas ášši ruovttoluotta dalá huksenráđđái, mii ii šat bargan áššiin maide.
 real-oastit = Čállinmeattáhus dán oktavuođas
     .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") konsonántaguovddážis. Das galgá leat gievrrasdássi "st".
@@ -560,7 +560,7 @@ msyn-valency-ahte-inf = Cealkkameattáhus
 
 msyn-valency-loc-ill = Boasttukásus
     .desc = Don leat čállán illatiiivva "{$1}". Dat galgá leat lokatiivvas.
-    .example-1 = Okta eaŋgas lihkkudutki, Lord Layard, čállá ahte olbmot geat     beroštit earáin, leat gaskamearrálaččat eambbo lihkolaččat og olbmot geat dušše beroštit alcces.
+    .example-1 = Okta eaŋgas lihkkudutki, Lord Layard, čállá ahte olbmot geat beroštit earáin, leat gaskamearrálaččat eambbo lihkolaččat og olbmot geat dušše beroštit alcces.
     .ref-1 = 
 
 msyn-valency-loc-com = Boasttukásus
@@ -574,43 +574,38 @@ msyn-valency-acc-not-nom = Boasttukásus
     .example-1 = Mun čálán reive.
     .ref-1 = 
 
-msyn-com-pl-not-sg = Boasttuhápmi
-    .desc = komitatiiva plurála
+msyn-com-pl-not-sg = Boasttukásus
+    .desc = Don leat čállán komitatiivva singulára "{$1}". Dat galgá leat komitatiivva plurálas "-guin".
     .example-1 = Leago dus miella oahppat eanet davviálbmogiid birra ja deaivvadit eará davviguovlluid nuorain?
     .ref-1 = 
 
-msyn-ess-not-com = Boasttuhápmi
-    .desc = Essiiva iige komitatiiva
+msyn-ess-not-com = Boasttukásus
+    .desc = Don leat čállán komitatiivva singulára "{$1}". Dat galgá leat essiivvas. 
     .example-1 = NSR/SáB Nuortaguovllu válgabiire sámediggeáirras Trond Are Anti čilge ahte dát hástalus lea ovddiduvvon ođđa áššiin ja jerron ovdalis ráđis Sámedikki dievasčoahkkimis.
     .ref-1 = 
 
-msyn-wrong-case-in-coordination = Boasttuhápmi
-    .desc = kásusmeattáhus
-    .example-1 = 
-    .ref-1 = 
-
-msyn-valency-not-ahte = Cealkkameattáhus
-    .desc = Ii galggaše leat
-    .example-1 = Eandalii leat nuorat dolkan ahte sápmelaš álo galga govviduvvot heajubun, guhte ferte veahkehuvvot vai galggaš birget.
+msyn-wrong-case-in-coordination = Boasttukásus
+    .desc = Don leat čállán "{$1}" boasttukásusis bálddalas substantiivvaid ektui.
+    .example-1 = Sis lea čielga sosiálpolitihkalaš sidoallu lávlagiinniset, go lávlot ee. eiseválddiid vuolušteapmi, álgoálbmogiid bággofárrema, siskkáldas veahkaválddi, álbmotgoddima, olmmošvuoigatvuođaid ja álbmogaset árbevieruid seailluheami birra. 
+    .example-2 = Son lávlu narkotihka- ja alkoholageavaheami, oktovuohta, šlundivuođa ja iešsoardima birra
+    .example-3 = 2003 rájes lea son leamašan miellahttu Vajas-joavkkus, ja lea joavkku juoigi ja vokalistta.
     .ref-1 = 
 
 msyn-attr-not-pred = Boasttuhápmi
-    .desc = Adjektiivvas galgá leat attributiivahápmi
-    .example-1 = 
-    .ref-1 = 
-
-real-boahtit = Čállinmeattáhus dán oktavuođas
-    .desc = Berrešii leat boahtit-sáni hápmi
-    .example-1 = Mun in jáhkke ahte politihkka rievda jus mun boađan jienástit.
+    .desc = Don leat čállán adjektiivva "{$1}" predikatiivahámis. Dat galgá leat attributiivahámis. 
+    .example-1 = Su musihkka lea poehtalaš ja das lea roavis ja ihána čáppa ja fiinna, alit ja dassá lassin oalle vealtameahttun báruhámat harmoniija.
+    .example-2 = Mii leat dávjá ságastallan dán golmma alit, rukses, ruoná ja ihána stuorra diŋgga birra.
     .ref-1 = 
 
 real-galgá = Čállinmeattáhus dán oktavuođas
-    .desc = Berrešii leat galgat-sáni hápmi
+    .desc = Orru leamen vokálameattáhusat sánis "{$1}". Jus oaivvildat galgat-vearbba 3 persovnna singuláras, de galgá leat "galgá". 
     .example-1 = Jua, de gálga leat.
+    .example-2 = Go boahttevuođas gálga iskat man ollu ávki gielladoarjagiin lea, de savášii Guovdageainnu suohkan ahte čađahivčče kvalitatiiva mihtidemiid maid, eai ge dušše kvantitatiiva.
+    .example-3 = Dalle sáhttá ihtit vuogádatlaš givssideapmi jus rávisolbmos ii leat gelbbolašvuohta ja gálga bidjat rájiid ja bagadallat ovttasdoaibmama.
     .ref-1 = 
 
 real-ihtit = Čállinmeattáhus dán oktavuođas
-    .desc = Berrešii leat "ihtit"-sáni hápmi
+    .desc = Don leat čállán advearbba "{$1}". Jus oaivvildat ihtit-vearbba leat infinititiivvas de galgá leat "ihtit".
     .example-1 = 1900-logus álge dat liberálakonservatiiva áššit ihttin eanet.
     .ref-1 = 
 
