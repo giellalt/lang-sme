@@ -220,15 +220,11 @@ syn-on-not-un = Boasttuhápmi
     .desc = Galggašii leat perfeakta partisihpa
     .example-1 = Dát smávva čuvllat, leat maid gorrojuvvon biktasiin mat ledje nie baskun.
 
-case-congruence-ill-part1 = Boasttuhápmi
-    .desc = Pronomen nai berrešii leat illatiivahámis
+msyn-demphrase-sgill = Boasttukásus
+    .desc = Demonstratiiva berrešii leat seamma kásushámis go substantiiva
     .example-1 = Dát mearriduvvui easkka jagi maŋŋil, dan láhkái ahte ráđđehus dorvvastii daid bellodagaide mat álggos ledje dan vuostá ahte 6-jahkásaččat galge álgit skuvlii.
 
-case-congruence-ill-part2 = Boasttuhápmi
-    .desc = Galggašii leat illatiivva kásuskongrueansa
-    .example-1 = Dát mearriduvvui easkka jagi maŋŋil, dan láhkái ahte ráđđehus dorvvastii daid bellodagaide mat álggos ledje dan vuostá ahte 6-jahkásaččat galge álgit skuvlii.
-
-case-congruence-loc = Boasttuhápmi
+msyn-demphrase-sgloc = Boasttukásus
     .desc = Demonstratiiva berrešii leat seamma kásushámis go substantiiva
     .example-1 = Álbmotrievttalaš mearrádusat, nugo mat ILO konvenšuvdna 169, leat dehálaš oasit daid čovdosiin maid de šaddá válljet.
 
