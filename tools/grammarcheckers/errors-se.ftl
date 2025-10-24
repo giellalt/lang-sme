@@ -370,7 +370,7 @@ msyn-nom-not-gen = Boasttuhápmi
     .example-2 = Olli lohká Ávjováris válgaguovllus hálidan sámegielat presideantta ja lohká buorre go várrepresideantta hálddaša sámegiela.
     .ref-1 = 
 
-msyn-gen-not-nom = Boasttuhápmi
+msyn-sgnom-sggen = Boasttuhápmi
     .desc = Berrešii leat genitiiva
     .example-1 = Mun dovddan ahte lean váillahan ritnon muoraid ja skábma čuovgga, lohká Mari.
     .example-2 = Dáhttu diehtit ođđa várrepresideanta nama.
@@ -595,6 +595,12 @@ msyn-attr-not-pred = Boasttuhápmi
     .desc = Don leat čállán adjektiivva "{$1}" predikatiivahámis. Dat galgá leat attributiivahámis. 
     .example-1 = Su musihkka lea poehtalaš ja das lea roavis ja ihána čáppa ja fiinna, alit ja dassá lassin oalle vealtameahttun báruhámat harmoniija.
     .example-2 = Mii leat dávjá ságastallan dán golmma alit, rukses, ruoná ja ihána stuorra diŋgga birra.
+    .ref-1 = 
+    
+msyn-sgloc-attr = Boasttuhápmi
+    .desc = Don leat čállán adjektiivva "{$1}" lokatiivvas. Dat galgá leat attributiivahámis. 
+    .example-1 = Snoranuohtti lea gehppes ja álkis veahkkeneavvu.
+    .example-2 = Riehpponjohka lea čájehuvvon dás ovdamearkan danin go doppe leat eanemus soahpameahttunvuođat leamaš, muhto maiddái danin go lea álkis ipmirdahtti duogáš dákkár soahpameahttunvuođaide.
     .ref-1 = 
 
 real-galgá = Čállinmeattáhus dán oktavuođas

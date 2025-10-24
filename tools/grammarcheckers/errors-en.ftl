@@ -358,7 +358,7 @@ msyn-nom-not-gen = Wrong form
     .desc = Should be nominative
     .ref-1 = 
 
-msyn-gen-not-nom = Wrong form
+msyn-sgnom-sggen = Wrong form
     .desc = Should be genitive
     .ref-1 = 
 
@@ -548,6 +548,10 @@ msyn-wrong-case-in-coordination = Wrong form
     .ref-1 = 
 
 msyn-attr-not-pred = Wrong form
+    .desc = The adjective should have the attributive form
+    .ref-1 = 
+    
+msyn-sgloc-attr = Wrong form
     .desc = The adjective should have the attributive form
     .ref-1 = 
 
