@@ -357,7 +357,7 @@ msyn-gen-after-prep = Boasttuhápmi
     .example-1 = Ale diškkut čázi gasku gonagas.
     .ref-1 = 
 
-msyn-com-not-ess = Boasttuhápmi
+msyn-ess-sgcom = Boasttuhápmi
     .desc = Berrešii leat komitatiiva
     .example-1 = Buvttadeapme lassána njeljiin proseantan dan jage, vaikko diibmá juo lei viehka buorre jahki.
     .example-2 = Dá lea ášši máid boađán fas loktet Sámediggái politihkalaš meannudeapmái dainna ulbmilin ahte Sámediggi bidjá deattu eiseválddiid vuostá vai šaddá buoret boranávddiid hálddašeapmi, dadjá Bæhr.
@@ -543,7 +543,7 @@ msyn-valency-go-inf = Cealkkameattáhus
     .example-1 = Soai leaigga sihke dolkan ja suhttan gullat olbmuid šláddariid sudno birra, ja bovdiiga.
     .ref-1 = 
 
-msyn-valency-loc-not-birra = Cealkkameattáhus
+msyn-valency-birra-loc = Cealkkameattáhus
     .desc = Don leat čállán "birra", muhto vearba gáibida lokatiiva.
     .example-1 = Mun sáddejin ohcama ja čállen oanehaččat iežan birra, ja sáddejin velá čállosa globaliserema birra, man birra mun beroštan.
     .ref-1 = 
@@ -569,17 +569,17 @@ msyn-valency-loc-com = Boasttukásus
     .example-2 = ja seammas ballat ođđa dieđuiguin.
     .ref-1 = 
 
-msyn-valency-acc-not-nom = Boasttukásus 
+msyn-valency-nom-acc = Boasttukásus 
     .desc = Don leat čállán nominatiivva "{$1}". Dat galgá leat akkusatiivvas. 
     .example-1 = Mun čálán reive.
     .ref-1 = 
 
-msyn-com-pl-not-sg = Boasttukásus
+msyn-sgcom-plcom = Boasttukásus
     .desc = Don leat čállán komitatiivva singulára "{$1}". Dat galgá leat komitatiivva plurálas "-guin".
     .example-1 = Leago dus miella oahppat eanet davviálbmogiid birra ja deaivvadit eará davviguovlluid nuorain?
     .ref-1 = 
 
-msyn-ess-not-com = Boasttukásus
+msyn-com-ess = Boasttukásus
     .desc = Don leat čállán komitatiivva singulára "{$1}". Dat galgá leat essiivvas. 
     .example-1 = NSR/SáB Nuortaguovllu válgabiire sámediggeáirras Trond Are Anti čilge ahte dát hástalus lea ovddiduvvon ođđa áššiin ja jerron ovdalis ráđis Sámedikki dievasčoahkkimis.
     .ref-1 = 

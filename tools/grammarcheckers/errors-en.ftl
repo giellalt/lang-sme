@@ -350,7 +350,7 @@ msyn-gen-after-prep = Wrong form
     .desc = Genitive after preposition
     .ref-1 = 
 
-msyn-com-not-ess = Wrong form
+msyn-ess-sgcom = Wrong form
     .desc = Should be comitative
     .ref-1 = 
 
@@ -511,7 +511,7 @@ msyn-valency-go-inf = Syntactic error
     .desc = instead of illative
     .ref-1 = 
 
-msyn-valency-loc-not-birra = Syntactic error
+msyn-valency-birra-loc = Syntactic error
     .desc = locative instead of
     .ref-1 = 
 
@@ -531,15 +531,15 @@ msyn-valency-loc-com = Wrong form
     .desc = Locative instead of comitative
     .ref-1 = 
 
-msyn-valency-acc-not-nom = Wrong form
+msyn-valency-nom-acc = Wrong form
     .desc = Accusative instead of nominative
     .ref-1 = 
 
-msyn-com-pl-not-sg = Wrong form
+msyn-sgcom-plcom = Wrong form
     .desc = comitative plural
     .ref-1 = 
 
-msyn-ess-not-com = Wrong form
+msyn-com-ess = Wrong form
     .desc = Essive instead of a comitative
     .ref-1 = 
 
@@ -547,16 +547,8 @@ msyn-wrong-case-in-coordination = Wrong form
     .desc = wrong case in coordination
     .ref-1 = 
 
-msyn-valency-not-ahte = Syntactic error
-    .desc = Should not be
-    .ref-1 = 
-
 msyn-attr-not-pred = Wrong form
     .desc = The adjective should have the attributive form
-    .ref-1 = 
-
-real-boahtit = Spelling error
-    .desc = Should be a form of boahtit
     .ref-1 = 
 
 real-galgá = Spelling error
