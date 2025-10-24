@@ -250,13 +250,10 @@ syn-kon-not-kkun = Wrong form
 syn-on-not-un = Wrong form
     .desc = Should be perfect participle
 
-case-congruence-ill-part1 = Wrong form
+msyn-demphrase-sgill = Wrong case
     .desc = The pronoun should also be in illative case
 
-case-congruence-ill-part2 = Wrong form
-    .desc = There should be illative case congruence
-
-case-congruence-loc = Wrong form
+msyn-demphrase-sgloc = Wrong case
     .desc = There should be locative case congruence
 
 syn-number_congruence = Wrong form
