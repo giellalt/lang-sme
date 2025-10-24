@@ -451,11 +451,11 @@ real-beassat = Spelling error
     .desc = "beassat" seems to be the right word
     .ref-1 =  
 
-syn-super-part2 = Wrong form
+syn-super = Wrong form
     .desc = Instead of "eanemus", the adjective should inflect
     .ref-1 = Nickel1994:350
 
-syn-comp-part2 = Wrong form
+syn-comp = Wrong form
     .desc = Instead of "eanet"/"eambbo", the adjective should inflect
     .ref-1 = Nickel1994:350
 
