@@ -627,6 +627,8 @@ Remove unwanted analyses
 
 * **Focson** removes Foc/son when Sur  
 
+* **goassigeAdv**  
+
 * **Fochan** removes Foc/han when adp  
 
 * **Focbe** removes Foc/be when juobe Adv  
@@ -812,8 +814,6 @@ It is useful to select early the adverbial reading for potensial nouns or verbs.
 * **easkkaAdv**  
 
 * **gaskatAdv**  
-
-* **goassigeAdv**  
 
 * **gosaAdv**  
 
