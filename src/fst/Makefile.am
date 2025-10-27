@@ -554,6 +554,32 @@ define giella_generators
 		 $$(INVERT_XFST)$$(INVERT_FOMA)\
 		 save stack $$@\n\
 		 quit\n" | $$(XFST_TOOL)
+
+.generated/generator-gt-norm.$(1): .generated/generator-gt-norm.tmp.$(1) \
+					 filters/remove-norm-comp-tags.$(1)               \
+					 filters/remove-derivation-position-tags.$(1)     \
+					 filters/make-optional-grammatical-tags.$(1)      \
+					 filters/make-optional-allegro-tags.$(1)          \
+					 filters/make-optional-coll-tags.$(1)             \
+					 filters/rename_optional-POS_before_Der-tags.$(1) \
+					 filters/remove-UseLIA-strings.$(1)               \
+					 filters/remove-Err_SpaceCmp-strings.$(1)         \
+					 filters/remove-usage-tags.$(1)
+	$$(AM_V_XFST_TOOL)$$(PRINTF) "read regex \
+				@\"filters/remove-usage-tags.$(1)\"                   \
+			.o. @\"filters/make-optional-allegro-tags.$(1)\"          \
+			.o. @\"filters/make-optional-coll-tags.$(1)\"             \
+			.o. @\"filters/make-optional-grammatical-tags.$(1)\"      \
+			.o. @\"filters/rename_optional-POS_before_Der-tags.$(1)\" \
+			.o. @\"filters/remove-norm-comp-tags.$(1)\"               \
+			.o. @\"filters/remove-derivation-position-tags.$(1)\"     \
+			.o. @\"filters/remove-UseLIA-strings.$(1)\"               \
+			.o. @\"filters/remove-Err_SpaceCmp-strings.$(1)\"         \
+			.o. @\"$$<\"                                              \
+			;\n\
+		 $$(INVERT_XFST)$$(INVERT_FOMA)\
+		 save stack $$@\n\
+		 quit\n" | $$(XFST_TOOL)
 endef
 $(foreach fst,hfst xfst foma,$(eval $(call giella_generators,$(fst))))
 
