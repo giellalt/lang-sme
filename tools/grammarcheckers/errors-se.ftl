@@ -616,71 +616,42 @@ real-ihtit = Čállinmeattáhus dán oktavuođas
     .ref-1 = 
 
 real-logát = Čállinmeattáhus dán oktavuođas
-    .desc = {$1} berrešii leat "logát"
-    .example-1 = De lágiduvvo Márkomeannu logat geardde .
+    .desc = Don leat čállán vearbba "{$1}". Jus oaivvildat numerála, de galgá leat "logát".
+    .example-1 = De lágiduvvo Márkomeannu logat geardde.
     .example-2 = Lávvordaga lei son nubbin buoremus Norgalaš, dušše Petter Tande šattai buorebut su logat sajiin.
     .ref-1 = 
 
 real-lohká = Čállinmeattáhus dán oktavuođas
-    .desc = Berrešii leat lohkat-sáni hápmi
+    .desc = Don leat čállán substantiivva "{$1}". Jus oaivvildat vearbba 3 persovnna singuláras, de galgá leat "lohká". 
     .example-1 = Boazoeaiggát Magne Huva lohka gávdnan ráppiid.
     .example-2 = Nu ahte ii oktage sáhte lohkat ahte muhtun báikkit filkkas eai leat sámi, lohka Sámediggepresideanta.
     .example-3 = Sii jotket nu dálá oamasteaddji vuođuin, lohka Martinsen.
     .ref-1 = 
 
 real-lohkat = Čállinmeattáhus dán oktavuođas
-    .desc = Berrešii leat lohkat-sáni hápmi
-    .example-1 = 
-    .ref-1 = 
-
-real-lohkan = Čállinmeattáhus dán oktavuođas
-    .desc = Berrešii leat lohkat-sáni hápmi
-    .example-1 = Dakkár girjjit maid earát leat lohkán báddái vai don ieš it galgga dárbbašit daid bustávaid lohkat.
-    .ref-1 = 
-
-real-maŋemuš = Čállinmeattáhus dán oktavuođas
-    .desc = a/á-meattáhus
-    .example-1 = Dakkár girjjit maid earát leat lohkán báddái vai don ieš it galgga dárbbašit daid bustávaid lohkat.
+    .desc = Don leat čállán "{$1}". Jus oaivvildat vearbba 3 persovnna plurálas, de galgá leat "lohkat". 
+    .example-1 = Eat mii viša dien lohkkat, mii háliidit lohkat eambbo Mari birra.
     .ref-1 = 
 
 real-sutnje = Čállinmeattáhus dán oktavuođas
-    .desc = Berrešii leat "sutnje"
+    .desc = Don leat čállán vearbba "{$1}". Jus oaivvildat persovnnalaš pronomena, de galgá leat "sutnje".
     .example-1 = Dás gal lea oalle stuorra mearkkašupmi, suidne lea čuohcan garrasit, go dát diggeášši leamas vuordimis, dál su noađđi lea gehppon olu, muitala Bakke.
     .ref-1 = 
 
 real-sáhkki = Čállinmeattáhus dán oktavuođas
-    .desc = "Berrešii leat "sáhkkii"
+    .desc = Don leat čállán illatiivva substantiivva "{$1}". Jus oaivvildat adjektiivva, de galgá leat "sáhkkii".
     .example-1 = Leatgo sáhkii?
     .ref-1 = 
 
-real-muhtin = Čállinmeattáhus dán oktavuođas
-    .desc = Berrešii leat "muhtin"
-    .example-1 = Juos muhttin áššit šaddet hui beakkánat, daidda vuođđuduvvo iežas digáštallanforum.
-    .ref-1 = 
-
-real-uhccon = Čállinmeattáhus dán oktavuođas
-    .desc = u/o-meattáhus
-    .example-1 = 2012 organisašundoarjja lea de fas uhccun, 188 000 ruvdnui.
-    .ref-1 = 
-
-real-gohččon = Čállinmeattáhus dán oktavuođas
-    .desc = u/o-meattáhus
-    .example-1 = Amalie Bæverrud muitala iežas illudit go beassá Jesusis hállat, dalle dovdá son iežas dahkamin dan maid Ipmil lea gohččun  su dahket.
-    .ref-1 = 
-
 real-sárgon = Čállinmeattáhus dán oktavuođas
-    .desc = u/o-meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "u". Jus oaivvildat vearbba perfeavtta partisihpas, de galgá leat "o".
     .example-1 = Anne-Grethe Leine Bientie lea čállán teavstta ja su nieida Ellen Sara lea ges govaid sárgun.
-    .ref-1 = 
-
-real-veahkki = Čállinmeattáhus dán oktavuođas
-    .desc = {$1} berrešii leat veahkki-sáni hápmi
-    .example-1 = Ovddasvástideaddji: Ánde Somby ja Ivvár Niillas oktan čeahpes vehkkiin.
     .ref-1 = 
 
 real-viđa = Čállinmeattáhus dán oktavuođas
     .desc = á/a-meattáhus
     .example-1 = Dás oidno, ahte biergohattit leat njiedjan maŋiš golmma jagis, dasa lassin lea maid njuovvandeattut unnon, vaikko miessedeattu lea buorránan maŋimuš viđá jagis, de ráves bohccot leat gehppon.
+    .example-1 = Dan viđá vahkkus go vázzá skuvlla, de ii galgga oba hupmat ge iežas eatnigiela - dárogiela.
     .ref-1 = 
 
 real-guhká = Čállinmeattáhus dán oktavuođas
