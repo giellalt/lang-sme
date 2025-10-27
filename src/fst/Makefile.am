@@ -581,7 +581,7 @@ define giella_generators
 		 save stack $$@\n\
 		 quit\n" | $$(XFST_TOOL)
 endef
-$(foreach fst,hfst xfst foma,$(eval $(call giella_generators,$(fst))))
+$(foreach fst,hfst foma,$(eval $(call giella_generators,$(fst))))
 
 # We need to add processing of language-specific tags for the Oahpa generators:
 .generated/generator-oahpa-gt-norm.%: .generated/generator-oahpa-gt-norm.tmp.% \
