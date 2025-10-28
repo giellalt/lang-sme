@@ -616,7 +616,7 @@ real-ihtit = Čállinmeattáhus dán oktavuođas
     .ref-1 = 
 
 real-logát = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán vearbba "{$1}". Jus oaivvildat numerála, de galgá leat "logát".
+    .desc = Don leat čállán vearbba "{$1}". Jus oaivvildat lohkosáni, de galgá leat "logát".
     .example-1 = De lágiduvvo Márkomeannu logat geardde.
     .example-2 = Lávvordaga lei son nubbin buoremus Norgalaš, dušše Petter Tande šattai buorebut su logat sajiin.
     .ref-1 = 
@@ -649,66 +649,36 @@ real-sárgon = Čállinmeattáhus dán oktavuođas
     .ref-1 = 
 
 real-viđa = Čállinmeattáhus dán oktavuođas
-    .desc = á/a-meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas. Jus oaivvildat lohkosáni, de galgá leat "a".
     .example-1 = Dás oidno, ahte biergohattit leat njiedjan maŋiš golmma jagis, dasa lassin lea maid njuovvandeattut unnon, vaikko miessedeattu lea buorránan maŋimuš viđá jagis, de ráves bohccot leat gehppon.
     .example-1 = Dan viđá vahkkus go vázzá skuvlla, de ii galgga oba hupmat ge iežas eatnigiela - dárogiela.
     .ref-1 = 
 
 real-guhká = Čállinmeattáhus dán oktavuođas
-    .desc = {$1} berrešii leat "guhká"
+    .desc = Don leat čállán vearbba"{$1}".  Jus oaivvildat advearbba de galgá leat "guhká".
     .example-1 = Bellodat lea guhka leamaš árvokonservatiiva ja liberálakonservatiiva.
     .example-2 = Guhka lean smiehtan rahkadit dakkár borramuš, muhto dušše odne ollašuvvai smavvá niehku.
     .example-3 = Ráhkisvuohta gal ii bistán beare guhkká, muhto ráhkisvuohta musihkkii buolligođii fas gulul.
     .ref-1 = 
 
-real-ruovttoluotta = Čállinmeattáhus dán oktavuođas
-    .desc = {$1} berrešii leat "ruovttoluotta"
-    .example-1 = Go luoikanáigi lea nohkan, galget girjjit/mediat buktot ruovttuluotta.
-    .example-2 = Jus ii buvtte ruovttuluotta áigemeari sisa, de sáddejuvvo buhtadusgáibádus girjjiin dehe eará mediain maid leš luoikkahan girjerádjosis.
-    .ref-1 = 
-
-real-sádji = Čállinmeattáhus dán oktavuođas
-    .desc = {$1} berrešii leat sadji-sáni hápmi
-    .example-1 = Luoikkaheaddjis lea maid vejolaš oastit seammalágán girjji sádjái.
-    .ref-1 = 
-
-real-dakko = Čállinmeattáhus dán oktavuođas
-    .desc = {$1} berrešii leat "dakko"
-    .example-1 = Dahko bokte bivdit ahte čađahuvvo guorahallan mo Unjárgga gielda hálddaša guovttegielat ruđaid maid gielda oažžu Sámedikkis..
-    .ref-1 = 
-
 real-eahkes = Čállinmeattáhus dán oktavuođas
-    .desc = {$1} berrešii leat "eahkes"
-    .example-1 = Loddenáigi lea maŋŋi eahket, ihkku ja iđđesija.
+    .desc = Don leat čállán substantiivva "{$1}". Das galgá leat advearba "eahkes".
+    .example-1 = Rahpandilálašvuođa maŋŋá eahket joatkašuvai konsearttain Sajosa auditorios .
     .ref-1 = 
 
 real-earret = Čállinmeattáhus dán oktavuođas
-    .desc = {$1} berrešii leat "earret"
+    .desc = Don leat čállán vearbba "{$1}". Das galgá leat preposišuvdna "earret".
     .example-1 = Eandalit čáhppes beana lea buot divraseamos borramuš, čállá Kitti erret eará dán nuppi mátkkereivves Thailánddas.
     .ref-1 = 
 
-real-vuolgit = Čállinmeattáhus dán oktavuođas
-    .desc = {$1} berrešii leat "vuolggán"
+real-real-Ess-PrsSg1 = Čállinmeattáhus dán oktavuođas
+    .desc =  Don leat čállán substantiivva essiivvas "{$1}". Jus oaivvildat vearbba 1 persovnna singuláras, de galgá leat "{$2}".
     .example-1 = Muhto ihttin lean fas sápmelaš, muhto juste dál melden olggos, vuolggan geahččat Greys Anatomy.
-    .ref-1 = 
-
-real-aaktit_aaktet = Čállinmeattáhus dán oktavuođas
-    .desc = {$1} berrešii leat "áktit/áktet"
-    .example-1 = akte vel
-    .ref-1 = 
-
-real-manná = Čállinmeattáhus dán oktavuođas
-    .desc = {$1} berrešii leat "mannan"
-    .example-1 = Sámedikki dievasčoakkámis gieđahalaimet mánná vahku sámi giellagažaldagaid viidáseappotge.
-    .ref-1 = 
-
-real-ráhkadit = Čállinmeattáhus dán oktavuođas
-    .desc = {$1} berrešii leat "ráhkadit"
-    .example-1 = Guhká lean smiehttan rahkadit dakkár borramuša, muhto dušše odne ollašuvvai smavvá niehku.
+    .example = Go šieđđaluvan, de dalle mun čohkkedan ja fas joatkkan mátki.
     .ref-1 = 
 
 real-láse = Čállinmeattáhus dán oktavuođas
-    .desc = {$1} berrešii leat "láse"
+    .desc = Don leat čállán {$1}. Das berrešii leat "láse".
     .example-1 = Jus háliidat rahkadit dan, de don dárbbašat 1 kg jaffuid, salti, 2 lasse čázi ja 1 pahkka biergudáiggi.
     .ref-1 = 
 
