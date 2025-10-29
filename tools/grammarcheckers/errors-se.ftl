@@ -497,7 +497,7 @@ syn-not-dego = Cealkkameattáhus
     .ref-1 = 
 
 syn-ge_not_ja = Cealkkameattáhus
-    .desc = Don leat čállán "ja {$2}". Das galgá leat "{$2}ge". 
+    .desc = Don leat čállán "ja {$2}". Das galgá leat "{€1}". 
     .example-1 = Dat lea nominašuvdnačoahkkin gii vállje gean bidjá bajimussii, ja in mun.
     .ref-1 = 
 
@@ -672,56 +672,56 @@ real-earret = Čállinmeattáhus dán oktavuođas
     .ref-1 = 
 
 real-real-Ess-PrsSg1 = Čállinmeattáhus dán oktavuođas
-    .desc =  Don leat čállán substantiivva essiivvas "{$1}". Jus oaivvildat vearbba 1 persovnna singuláras, de galgá leat "{$2}".
+    .desc =  Don leat čállán substantiivva essiivvas "{$1}". Jus oaivvildat vearbba 1 persovnna singuláras, de galgá leat "{€1}".
     .example-1 = Muhto ihttin lean fas sápmelaš, muhto juste dál melden olggos, vuolggan geahččat Greys Anatomy.
     .example = Go šieđđaluvan, de dalle mun čohkkedan ja fas joatkkan mátki.
     .ref-1 = 
 
 real-láse = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán {$1}. Das berrešii leat "láse".
+    .desc = Don leat čállán "{$1}". Das galgá leat "láse".
     .example-1 = Jus háliidat rahkadit dan, de don dárbbašat 1 kg jaffuid, salti, 2 lasse čázi ja 1 pahkka biergudáiggi.
     .ref-1 = 
     
 real-lassi = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán vearbba {$1}. Das berrešii leat adjektiiva "lassi".
+    .desc = Don leat čállán vearbba "{$1}". Das galgá leat adjektiiva "lassi".
     .example-1 = Dalle váldojuvvo lasse mammongráfagovat ja dalle dutkojuvvo dávjá maid Ultra-jienain.
     .example-1 = Doaivvabiebmu ja lasse juhkamuš.
     .ref-1 = 
 
 real-vuosttaš = Čállinmeattáhus dán oktavuođas
-    .desc = "Sánis lea á/a-meattáhus
+    .desc = Dás orru leamen čállinmeattáhus nuppi stávvala vokálas sánis "{$1}". Jus oaivvildat lohkosáni, de galgá leat "a" nuppi stávvalis. 
     .example-1 = Ealáhus- ja Luonddubellodat lea vuosttáš gearddi searván Sámedikkegižžui Ávjovári válgabiires.
     .example-2 = Otne lei mis vuosttáš logaldallan.
     .ref-1 = Sammallahti2005
 
 real-vuostá = Čállinmeattáhus dán oktavuođas
-    .desc = tt/t-meattáhus
+    .desc = Orru leamen čállinmeattáhus konsonántaguovddážis. Jus oaivvildat postposišuvnna, de galgá leat "st".
     .example-1 = o elrávdnjerehket boahtá juohke nuppi mánu lea vuosttaš mánu a-konto máksn (500,- ru.), ja maŋit mánu rehkega vuosttá.
     .example-2 = Buot dát leat joavkkut geaid vuosttá sápmi lea čiekčan.
 
 real-jámas = Čállinmeattáhus dán oktavuođas
-    .desc = Sánis lea á/a-meattáhus
+    .desc = Orru leamen čállinmeattáhus vuosttaš stávvala vokálas. Jus oaivvildat advearbba vai adjektiivva, de galgá vuosttaš stávvalis leat "á". 
     .example-1 = Lea go imáš ahte balan jamas go soames namuha skuvlla munnje? Lea go imáš ahte balan jámas go soames namuha skuvlla munnje?
     .example-2 = Kotusa sámegiela lávdegoddi lea leamaš jahkeviissaid hui jamas ja dát linnjá joatkahuvvá dás duohkonai, daningo Kotusis eai leat mangelágán resurssat sámi giellapolitihkalaš bargui.
     .ref-1 = 
 
-lex-ollugat-not-máŋggas = Boasttusátni
-    .desc = Orru leamen boasttusátni
+lex-máŋggas-ollugat = Sátni ii heive
+    .desc = Don leat čállán "{$1}". Dasa heive "{€1}" buorebut.
     .example-1 = Earát eai bovde nu máŋgasa dahje eai heajastala ge.
     .ref-1 = 
 
-lex-not-maŋga = Boasttusátni
-    .desc = Orru leamen boasttusátni
+lex-not-maŋga =  Sátni ii heive
+    .desc = Don leat čállán "{$1}". Dasa heive "{€1}" vai "{€2}" buorebut.
     .example-1 = Man máŋga olbmo doppe ledje?
     .ref-1 = 
 
-lex-maŋis-not-maŋŋelis = Boasttusátni
-    .desc = Orru leamen boasttusátni
+lex-maŋŋelis-maŋis = Sátni ii heive
+    .desc =  Don leat čállán "{$1}". Dasa heive "{€1}" buorebut.
     .example-1 = Beakkán Terje Håkonsen čierastii muohtafielluin hearggi maŋŋelis.
     .ref-1 = 
 
-lex-ollis-not-miehtá = Boasttusátni
-    .desc = Orru leamen boasttusátni
+lex-miehtá-olles = Sátni ii heive
+    .desc = Don leat čállán "{$1}". Dasa heive "{€1}" buorebut.
     .example-1 = Mii háliidit ahte Guovdageaidnu ja Sámi allaskuvla dál maid galgá leat sámi nuoraid ja earáid deaivvadanbáiki, ja čohkket ollu sámi studeanttaid miehtá Sámis.
     .ref-1 = 
 
