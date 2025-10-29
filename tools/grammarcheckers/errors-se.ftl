@@ -681,6 +681,12 @@ real-láse = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán {$1}. Das berrešii leat "láse".
     .example-1 = Jus háliidat rahkadit dan, de don dárbbašat 1 kg jaffuid, salti, 2 lasse čázi ja 1 pahkka biergudáiggi.
     .ref-1 = 
+    
+real-lassi = Čállinmeattáhus dán oktavuođas
+    .desc = Don leat čállán vearbba {$1}. Das berrešii leat adjektiiva "lassi".
+    .example-1 = Dalle váldojuvvo lasse mammongráfagovat ja dalle dutkojuvvo dávjá maid Ultra-jienain.
+    .example-1 = Doaivvabiebmu ja lasse juhkamuš.
+    .ref-1 = 
 
 real-vuosttaš = Čállinmeattáhus dán oktavuođas
     .desc = "Sánis lea á/a-meattáhus
