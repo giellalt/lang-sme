@@ -725,71 +725,59 @@ lex-miehtá-olles = Sátni ii heive
     .example-1 = Mii háliidit ahte Guovdageaidnu ja Sámi allaskuvla dál maid galgá leat sámi nuoraid ja earáid deaivvadanbáiki, ja čohkket ollu sámi studeanttaid miehtá Sámis.
     .ref-1 = 
 
-lex-guorrasit-not-guorralit = Boasttusátni
-    .desc = Orru leamen boasttusátni
+lex-guorralit-guorrasit = Sátni ii heive
+    .desc = Don leat čállán "{$1}". Dasa heive "{€1}" buorebut.
     .example-1 = Sámediggi guorralii ráđi evttohussii, ja jienasteami bokte čuovvolii ráđi evttohusa.
     .ref-1 = 
 
-lex-mearridit-not-meannudit = Boasttusátni
-    .desc = Orru leamen boasttusátni
+lex-meannudit-mearridit = Sátni ii heive
+    .desc = Don leat čállán "{$1}". Dasa heive "{€1}" buorebut.
     .example-1 = Sii leat meannudan ahte sii eai hálit bismmain hupmat vuoiŋŋalaš áššiid birra.
     .ref-1 = 
 
-lex-acc-not-badjel = Boasttusátni
-    .desc = Orru leamen boasttusátni
+msyn-valency-badjel-acc = Badjelmearálaš postposišuvdna
+    .desc = Don leat čállán postposišuvnna "{$1}". Dat lea badjelmearálaš sátni.
     .example-1 = Idjabiegga liekkus jiella sihkoda alážiid badjel.
     .ref-1 = 
 
-lex-rastá-not-badjel = Boasttusátni
-    .desc = Orru leamen boasttusátni
+lex-badjel-rastá = Sátni ii heive
+    .desc = Don leat čállán postposišuvnna "{$1}". Dasa heive "{€1}" buorebut.
     .example-1 = Sii leat vel dakkárat mat vudjet jávrriid badjel ja dainna lágiin ollejit ge váikko gosa.
     .ref-1 = 
 
-lex-bokte-not-badjel = Boasttusátni
-    .desc = Orru leamen boasttusátni
+lex-badjel-bokte = Sátni ii heive
+    .desc = Don leat čállán postposišuvnna "{$1}". Dasa heive "{€1}" buorebut.
     .example-1 = Ovdalgihtiigeassima sierra máksingoartta ferte álohii atnit go máksá boastagiro dahje báŋku badjel.
     .ref-1 = 
 
-lex-badjelii-not-badjel = Boasttusátni
-    .desc = Orru leamen boasttusátni
-    .example-1 = Idja lebbii čáhppes ránu vári badjel, ja Gugán nai dovdagođii ahte šattai veaháš issoras.
-    .ref-1 = 
-
-lex-mielde-not-rastá = Boasttusátni
-    .desc = Orru leamen boasttusátni
-    .example-1 = Lei okta dánskalaš, ruoŧŧalaš ja norgalaš geat ledje veahtán, ahte ii oktage sis sáhte vázzit rastá ovtta šaldi mas leat nálut, nu ahte eai daja au, au.
-    .ref-1 = 
-
-cmp-nomhyph-or-gen = Boasttuhápmi
-    .desc = Nominatiiva ja sáhcu, muđuin genitiiva
-    .example-1 = ADD example here.
-    .ref-1 = 
-
-lex-mii-not-gii = Boasttusátni
-    .desc = Orru leamen boasttusátni
+msyn-gii-mii = Boasttupronomen
+    .desc = Don leat čállán pronomena "{$1}". Das galgá leat "{€1}". 
     .example-1 = Ledje Guovdageainnu Lunttat ja Falástallan searvvi A-joavku geat ledje čiekčanšiljus juste de go álddagas beaškalii nu issorasat ahte olles Báktevárri bávkkehii.
     .ref-1 = 
 
 punct-rihkku = Rihkkomeattáhus
-    .desc = Rihkku dán sáni ovdal
-    .example-1 = Son livččii gal viššal, muhto sus ii leat goassege dilli bargat.
+    .desc = Bija rihku sáni "{$1}" ovdal.
+    .example-1 = Son livččii gal viššal muhto sus ii leat goassege dilli bargat.
     .ref-1 = 
 
 typo = Čállinmeattáhus
     .desc = Hápmi ii leat sátnelisttus.
 
 double-space-before = Sátnegaskameattáhus
-    .desc = Leat guokte gaskka ovdal {$1} dan sájis go okta.
+    .desc = Don leat čállán ilá olu sátnegaskkaid ovdal "{$1}".
+    .example-1 = Son  livččii gal viššal.
 
 space-after-paren-beg = Sátnegaskameattáhus
-    .desc = Lea gaska vuosttaš paragráfa {$1} ovddas
+    .desc = Ruođu "{$1}" ii galgga leat sátnegaska.
+    .example-1 = Son ( Áilu) livččii gal viššal.
 
 space-before-paren-end = Sátnegaskameattáhus
-    .desc = Lea gaska nuppi paragráfa {$1} ovddas
+    .desc =  Ruođu "{$1}" ovdal ii galgga leat sátnegaska.
+    .example-1 = Son (Áilu ) livččii gal viššal.
 
 space-before-punct-mark = Sátnegaskameattáhus
-    .desc = Lea gaska {$1} ovddas
+    .desc = Cealkaga loahpas, ovdal "{$1}" ii galgga leat sátnegaska.
 
 no-space-after-punct-mark = Sátnegaskameattáhus
-    .desc = Ii leat gaska {$1} maŋis
+    .desc = Cealkaga loahpas, maŋŋel "{$1}" galgá leat sátnegaska.
 
