@@ -1317,12 +1317,12 @@ LIST &lex-transitive = &lex-transitive ;
 LIST &lex-maŋŋelis-maŋis = &lex-maŋŋelis-maŋis ;
 LIST &lex-máŋggas-ollugat = &lex-máŋggas-ollugat ;
 LIST &lex-not-maŋga = &lex-not-maŋga ;
-LIST &lex-acc-not-badjel = &lex-acc-not-badjel ;
-LIST &lex-rastá-not-badjel = &lex-rastá-not-badjel ;
-LIST &lex-bokte-not-badjel = &lex-bokte-not-badjel ;
-LIST &lex-badjelii-not-badjel = &lex-badjelii-not-badjel ;
-LIST &lex-mielde-not-rastá = &lex-mielde-not-rastá ;
+LIST &msyn-valency-badjel-acc = &msyn-valency-badjel-acc ;
+LIST &lex-badjel-rastá = &lex-badjel-rastá ;
+LIST &lex-badjel-bokte = &lex-badjel-bokte ;
+LIST &lex-badjel-badjelii = &lex-badjel-badjelii ;
 LIST &lex-miehtá-olles = &lex-miehtá-olles ;
+LIST &msyn-miehtá-Acc = &msyn-miehtá-Acc ;
 LIST &lex-guorralit-guorrasit = &lex-guorralit-guorrasit ;
 LIST &lex-valjit-not-valji = &lex-valjit-not-valji ;
 
@@ -1566,7 +1566,7 @@ SET &real = (/&real-.*/ri) OR (/&real-.*-.*/ri) ;
 
 SET &real-ADV = &real-sakka ;
 
-SET &lex = &lex-acc-not-badjel OR &lex-badjelii-not-badjel OR &lex-bokte-not-badjel OR &lex-guorralit-guorrasit OR &lex-maŋŋelis-maŋis OR &lex-mielde-not-rastá OR &lex-miehtá-olles OR &lex-máŋggas-ollugat OR &lex-not-maŋga OR &lex-rastá-not-badjel OR &lex-valjit-not-valji ;
+SET &lex = &msyn-valency-badjel-acc OR &lex-badjel-bokte OR &lex-guorralit-guorrasit OR &lex-maŋŋelis-maŋis OR &lex-miehtá-olles OR &lex-máŋggas-ollugat OR &lex-not-maŋga OR &lex-badjel-rastá OR &lex-valjit-not-valji ;
 
 SET &compound =  &compound-vallji-or-valljugas ;
 
@@ -11024,14 +11024,17 @@ ADD:xlex-majuscule (&lex-majuscule) TARGET ("<sámediggi>") IF (0 Sg)(NOT *-1 Nu
 	# ----------------
 	
 #DELETE miehtá+Adv + uncommon?
-ADD:xlex-miehtá-olles (&lex-miehtá-olles) TARGET ("miehtá") IF (0 Pr OR Po) (*1 GEOGRAPHICAL-PLACE + Loc OR POLITICAL-PLACE + Loc OR GENERAL-PLACE + Loc OR Sem/Plc + Loc BARRIER NOT-NP-HEAD-COMMA-CC) ;
+ADD:xlex-miehtá-olles (&lex-miehtá-olles &msyn-miehtá-Acc) TARGET ("miehtá") IF (0 Pr OR Po) (*1 GEOGRAPHICAL-PLACE + Loc OR POLITICAL-PLACE + Loc OR GENERAL-PLACE + Loc OR Sem/Plc + Loc BARRIER NOT-NP-HEAD-COMMA-CC) ;
 
-ADD:xlex-miehtá-olles (&lex-miehtá-olles) TARGET (N Loc) IF (0 GEOGRAPHICAL-PLACE OR POLITICAL-PLACE OR GENERAL-PLACE OR Sem/Plc)(*-1 (Pr &lex-miehtá-olles) OR (Po &lex-miehtá-olles) BARRIER NOT-NP-HEAD-COMMA-CC) ;
+ADD:xlex-miehtá-olles (&lex-miehtá-olles &msyn-miehtá-Acc) TARGET (N Loc) IF (0 GEOGRAPHICAL-PLACE OR POLITICAL-PLACE OR GENERAL-PLACE OR Sem/Plc)(*-1 (Pr &lex-miehtá-olles) OR (Po &lex-miehtá-olles) BARRIER NOT-NP-HEAD-COMMA-CC) ;
 
 
 ADDRELATION:xlex-miehtá-olles (LEFT $2) (N &lex-miehtá-olles) TO (-1 (Pr &lex-miehtá-olles));
 
 COPY:lex-miehtá-olles ("ollis" A Attr SUGGEST) EXCEPT ("miehtá" Po &lex-miehtá-olles) OR ("miehtá" Pr &lex-miehtá-olles) TARGET (&lex-miehtá-olles) IF (0 Pr OR Po);
+
+ADDRELATION:xmsyn-miehtá-Acc (RIGHT $2) (Pr &msyn-miehtá-Acc) OR (Po &msyn-miehtá-Acc) TO (1 (N &msyn-miehtá-Acc));
+COPY:msyn-miehtá-Acc (Acc SUGGEST) EXCEPT (Loc &msyn-miehtá-Acc) TARGET (Loc &msyn-miehtá-Acc);
     ## Mii háliidit ahte Guovdageaidnu ja Sámi allaskuvla dál maid galgá leat sámi nuoraid ja earáid deaivvadanbáiki, ja čohkket ollu sámi studeanttaid miehtá Sámis.
     # in errors.xml
     
@@ -11050,13 +11053,14 @@ COPY:lex-guorralit-guorrasit ("guorrasit" IV SUGGEST) EXCEPT ("guorrat" Ex/V TV 
 	# - - - - - - - - - - - - - -
 
 #DELETE uncommon	
-ADD:xlex-acc-not-badjel (&lex-acc-not-badjel) TARGET ("badjel") IF (-1 Gen LINK *0 ("sihkodit") OR ("sihkkut") OR ("njávkkadit") BARRIER GRAMCHK-S-BOUNDARY)(NEGATE *1 Num OR Sem/Measr OR Sem/Curr OR Sem/Money BARRIER GRAMCHK-NPNH)(NEGATE -1 Num OR Sem/Measr OR Sem/Curr OR Sem/Money) ;
+ADD:xmsyn-valency-badjel-acc (&msyn-valency-badjel-acc) TARGET ("badjel") IF (-1 Gen LINK *0 ("sihkodit") OR ("sihkkut") OR ("njávkkadit") BARRIER GRAMCHK-S-BOUNDARY)(NEGATE *1 Num OR Sem/Measr OR Sem/Curr OR Sem/Money BARRIER GRAMCHK-NPNH)(NEGATE -1 Num OR Sem/Measr OR Sem/Curr OR Sem/Money) ;
+	# OLD: msyn-valency-badjel-acc
 
-ADD:xlex-acc-not-badjel (&lex-acc-not-badjel) TARGET Gen IF (1 ("badjel" &lex-acc-not-badjel)) ;
+ADD:xmsyn-valency-badjel-acc (&msyn-valency-badjel-acc) TARGET Gen IF (1 ("badjel" &msyn-valency-badjel-acc)) ;
 
-ADDRELATION (DELETE1) (&lex-acc-not-badjel) TO (1 ("badjel" &lex-acc-not-badjel)) ;
+ADDRELATION (DELETE1) (&msyn-valency-badjel-acc) TO (1 ("badjel" &msyn-valency-badjel-acc)) ;
 
-COPY:lex-acc-not-badjel (Acc SUGGEST) EXCEPT (Gen &lex-acc-not-badjel) TARGET (Gen &lex-acc-not-badjel) ;
+COPY:msyn-valency-badjel-acc (Acc SUGGEST) EXCEPT (Gen &msyn-valency-badjel-acc) TARGET (Gen &msyn-valency-badjel-acc) ;
     ## Idjabiegga liekkus jiella sihkoda alážiid badjel.
     # in errors.xml
     
@@ -11072,17 +11076,18 @@ LIST MIELDE-PLACE = "šaldi" "čáhci" "sildi" ;
 	## čuoigat 900 km badjel duoddariid ja ráššaid, jávrriid ja jogaid rastá, čađa stuora vumiid, ávžžiid ja vuvddiid.
 
 #DELETE this is very hard to tell in most cases, we can maybe look into it later
-ADD:xlex-rastá-not-badjel (&lex-rastá-not-badjel) TARGET ("badjel") IF (*0 MOVEMENT-V - ("girdit") BARRIER GRAMCHK-S-BOUNDARY)(-1 RASTA-PLACE) (NEGATE 1 Num OR Sem/Measr OR Sem/Curr); 
-COPY:lex-rastá-not-badjel ("rastá" SUGGEST) EXCEPT ("badjel" &lex-rastá-not-badjel) TARGET (&lex-rastá-not-badjel) ;
+ADD:xlex-badjel-rastá (&lex-badjel-rastá) TARGET ("badjel") IF (*0 MOVEMENT-V - ("girdit") BARRIER GRAMCHK-S-BOUNDARY)(-1 RASTA-PLACE) (NEGATE 1 Num OR Sem/Measr OR Sem/Curr); 
+COPY:lex-badjel-rastá ("rastá" SUGGEST) EXCEPT ("badjel" &lex-badjel-rastá) TARGET (&lex-badjel-rastá) ;
 	# Sem/Plc-line and Sem/Plc-water instead of RASTA-PLACE?
     ## Sii leat vel dakkárat mat vudjet jávrriid badjel ja dainna lágiin ollejit ge váikko gosa. Sii leat vel dakkárat mat vudjet jávrriid rastá ja dainna lágiin ollejit ge váikko gosa.
     ## -Sáhttá go oktage dis mieđuštit dán bártni ábi badjel viežžat nuorravuođavuoidasa? -Sáhttá go oktage dis mieđuštit dán bártni ábi rastá viežžat nuorravuođavuoidasa?
     ## Lei sáhka galgá go lohpi vuodjit skuteriin muhtin joga badjel. Lei sáhka galgá go lohpi vuodjit skuteriin muhtin joga rastá.
-    #Duommá can you test? WOKS FINE!
+    #OLD: lex-rastá-not-badjel
     # in errors.xml
 
-ADD:xlex-bokte-not-badjel (&lex-bokte-not-badjel) TARGET ("badjel") IF (*0 ("máksit") OR ("oažžut") OR ("sáddet") BARRIER GRAMCHK-S-BOUNDARY)(-1 ("báŋku") OR ("telefuvdna") OR ("interneahtta") OR ("e-poasta") OR ("poasta") OR Sem/Obj-el) (NEGATE 1 Num OR Sem/Measr OR Sem/Curr); 
-COPY:lex-bokte-not-badjel ("bokte" Po SUGGEST) EXCEPT ("badjel" Pr &lex-bokte-not-badjel) OR ("badjel" Po &lex-bokte-not-badjel) TARGET (&lex-bokte-not-badjel) ; 
+ADD:lex-badjel-bokte (&lex-badjel-bokte) TARGET ("badjel") IF (*0 ("máksit") OR ("oažžut") OR ("sáddet") BARRIER GRAMCHK-S-BOUNDARY)(-1 ("báŋku") OR ("telefuvdna") OR ("interneahtta") OR ("e-poasta") OR ("poasta") OR Sem/Obj-el) (NEGATE 1 Num OR Sem/Measr OR Sem/Curr);
+ 
+COPY:lex-badjel-bokte ("bokte" Po SUGGEST) EXCEPT ("badjel" Pr &lex-badjel-bokte) OR ("badjel" Po &lex-badjel-bokte) TARGET (&lex-badjel-bokte) ; 
 	## Háliidan rádio badjel sáddet dearvuođaid. 
 	##MEANS-OF-COMMUNICATION  = "báŋkku" "telefuvdna" "interneahta" "e-poasta" "poasta" ;
 	## Ovdalgihtiigeassima sierra máksingoartta ferte álohii atnit go máksá boastagiro dahje báŋku badjel. Ovdalgihtiigeassima sierra máksingoartta ferte álohii atnit go máksá boastagiro dahje báŋku badjel.
@@ -11090,22 +11095,11 @@ COPY:lex-bokte-not-badjel ("bokte" Po SUGGEST) EXCEPT ("badjel" Pr &lex-bokte-no
 	## Ággan dása logai son ahte lea hirbmat barggulassin jus dušše ovtta departemeanttas lea dát čoavddus, ja máŋgga departemeanttaide galget sáddejuvvot báhpirat interneahta badjel. Ággan dása logai son ahte lea hirbmat barggulassin jus dušše ovtta departemeanttas lea dát čoavddus, ja máŋgga departemeanttaide galget sáddejuvvot báhpirat interneahta bokte.
 	# in errors.xml
 	# Duommá - this probably needs to be more general
+	#OLD: lex-bokte-not-badjel
 	
 #DELETE uncommon
-ADD:xlex-badjelii-not-badjel (&lex-badjelii-not-badjel) TARGET ("badjel") IF (*0 ("lebbet") BARRIER GRAMCHK-S-BOUNDARY) (NEGATE 1 Num OR Sem/Measr OR Sem/Curr);
-COPY:lex-badjelii-not-badjel ("badjelii" SUGGEST) EXCEPT ("badjel" &lex-badjelii-not-badjel) TARGET (&lex-badjelii-not-badjel) ;       
-	## Idja lebbii čáhppes ránu vári badjel, ja Gugán nai dovdagođii ahte šattai veaháš issoras. Idja lebbii čáhppes ránu vári badjelii, ja Gugán nai dovdagođii ahte šattai veaháš issoras.
-	# in errors.xml
-	
-#DELETE people seem to want to wright this
-ADD:xlex-mielde-not-rastá (&lex-mielde-not-rastá) TARGET ("rastá") IF (c ("šaldi")) (*0 MOVEMENT-V BARRIER GRAMCHK-S-BOUNDARY) ;
-COPY:lex-mielde-not-rastá ("mielde" SUGGEST) EXCEPT ("rastá" &lex-mielde-not-rastá) TARGET (&lex-mielde-not-rastá) ;  
-	## Lei okta dánskalaš, ruoŧŧalaš ja norgalaš geat ledje veahtán, ahte ii oktage sis sáhte vázzit rastá ovtta šaldi mas leat nálut, nu ahte eai daja au, au. Lei okta dánskalaš, ruoŧŧalaš ja norgalaš geat ledje veahtán, ahte ii oktage sis sáhte vázzit ovtta šaldi mielde mas leat nálut, nu ahte eai daja au, au.
-	# in errors.xml
-
-#DELETE uncommon
-ADD:xlex-mearridit-not-meannudit (&lex-mearridit-not-meannudit) TARGET ("meannudit")  IF (1 THAT-CS) (NEGATE *-2 <TH-ahte> BARRIER BOS LINK *1 (@ADVL>CS) BARRIER V);	
-COPY:lex-mearridit-not-meannudit ("mearridit" SUGGEST) EXCEPT ("meannudit" &lex-mearridit-not-meannudit) TARGET (&lex-mearridit-not-meannudit) ;  
+ADD:xlex-meannudit-mearridit (&lex-meannudit-mearridit) TARGET ("meannudit")  IF (1 THAT-CS) (NEGATE *-2 <TH-ahte> BARRIER BOS LINK *1 (@ADVL>CS) BARRIER V);	
+COPY:lex-meannudit-mearridit ("mearridit" SUGGEST) EXCEPT ("meannudit" &lex-meannudit-mearridit) TARGET (&lex-meannudit-mearridit) ;  
 	## Sii leat meannudan ahte sii eai hálit bismmain hupmat vuoiŋŋalaš áššiid birra.
 	#$ Sátnejođiheaddji lohká ovdal go galget ovtta stuora ášši meannudit ahte sii hal goit ožžot čuovggaid jáddadit dan botta ságastallet ášši birra
 	# in errors.xml
@@ -11119,8 +11113,8 @@ COPY:lex-mearridit-not-meannudit ("mearridit" SUGGEST) EXCEPT ("meannudit" &lex-
 	# gii vs. mii 
     # ------------
 
-ADD:xlex-mii-not-gii (&lex-mii-not-gii) TARGET WHO (*-1 N - Coll - ("Sápmi") - ("sápmi") - ("suohkan") BARRIER (*) - COMMA LINK 0 Sem/Group OR GROUP-WORDS LINK NEGATE 0 Loc LINK *-1 Sem/Hum + Nom OR Acc BARRIER NPNH) ; #CHECK tag change
-COPY:lex-mii-not-gii ("mii" SUGGEST) EXCEPT ("gii"  &lex-mii-not-gii) TARGET (&lex-mii-not-gii) ;
+ADD:xmsyn-gii-mii (&msyn-gii-mii) TARGET WHO (*-1 N - Coll - ("Sápmi") - ("sápmi") - ("suohkan") BARRIER (*) - COMMA LINK 0 Sem/Group OR GROUP-WORDS LINK NEGATE 0 Loc LINK *-1 Sem/Hum + Nom OR Acc BARRIER NPNH) ; #CHECK tag change
+COPY:msyn-gii-mii ("mii" SUGGEST) EXCEPT ("gii"  &msyn-gii-mii) TARGET (&msyn-gii-mii) ;
 	## Lea Innovašuvdna Norga gii vállje oasseváldiid stivrakursii, njuolga maŋŋel áigemeari.
 	#$ Mis lea osku nuoraide, ja mis lea nanu osku dasa ahte dat golmmas {geat} dál leat Guovdageainnu/Máze NSR listtus bajemusas, fievrredit NSR politihka juste dainna jierpmálašvuođain ja árvvuin mainna juo galget ge, čállá Máze Sámiid Searvi.
 	#$ Mii áigut viidáseappot vuoruhit eanet sámi mánáidgárdesajiid ovttas mánáidgárdeeaiggádiiguin ja suohkaniiguin {geat} leat mánáidgárdeeiseválddit.
@@ -11246,14 +11240,14 @@ ADD:xlex-missing-conneg-after-neg (&missing-conneg-after-neg) TARGET	Neg - Foc/N
 	#$Dasto gárttai ge nu ahte moai ean beassan gostege čilget iežame oainnu.
 	#$Dál galge lerat nu seammaláganat go vejolaš albma lottiid. Eai dušše olggosoaidnit ráhkadettiin, muhto maiddai čázis ii galgan čohkamis oaidnit goal lea ealli loddi ja goal lea čohkanloddi, dahje hápma nu go muhtimat dadjet.
 	#$Jus lei loddedahkki duhtivaš, válddii gáddái ja bihkkadii hámaid. Jus ii, fearai ja čuohpadii son dassá go lei duhtivaš.
-	#$Dalle dihte buohkat čilás ahte dál lea áigi náđustit, iige lihkkasit.
-	#$Ii, son bidjá iežas moni eará lottiid beassái.
-	#$Eai buohkain geat vánddardit mehciin giđđat leat lobálaš doaimmat
-	#$Norggas ii leat lohpi váldit makkárge moniid, ii vuovdima - ii ge iežas atnui.
-	#$Muhto ii mihkke nu heittot ahte ii juogamasa leat buorre.
-	#$Ii riggáid searvi.XXX
-	#$Ii dálon Sámedikkis.XXX
-	#$Dat lea nominašuvdnačoahkkin gii vállje gean bidjá bajimussii, ja in mun.
+	#$ Dalle dihte buohkat čilás ahte dál lea áigi náđustit, iige lihkkasit.
+	#$ Ii, son bidjá iežas moni eará lottiid beassái.
+	#$ Eai buohkain geat vánddardit mehciin giđđat leat lobálaš doaimmat
+	#$ Norggas ii leat lohpi váldit makkárge moniid, ii vuovdima - ii ge iežas atnui.
+	#$ Muhto ii mihkke nu heittot ahte ii juogamasa leat buorre.
+	#$ Ii riggáid searvi.XXX
+	#$ Ii dálon Sámedikkis.XXX
+	#$ Dat lea nominašuvdnačoahkkin gii vállje gean bidjá bajimussii, ja in mun.
 	#$ Viesus ii gullon ii makkár ge jietna.
 	#$ Ii Ájlinii ge.
 	#$ Muhto in fal ná.
