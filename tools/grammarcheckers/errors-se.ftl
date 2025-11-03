@@ -1,40 +1,38 @@
 # Error messages for language: se
 # Generated from XML by xml-conv
 
-## Default patterns: re:real-.*, re:real-.*-.*, id:unreal-girjji
+## Default patterns: re:real-.*, re:real-.*-.*, 
 spelling-error = Čállinmeattáhus dán oktavuođas
     .desc = Sátni šattai eará go dan maid don orut oaivvildeame.
     
-## Default patterns: re:msyn-wrong-case.*, re:msyn-wrong_case.*
-wrong-form = Boasttuhápmi
-    .desc = {$1} orru leamen boasttukásusis
-
 ## Default patterns: re:punct-aistton.*
-quotation-marks = Aisttonmearkkat
-    .desc = Leat boasttuaisttonmearkkat.
+quotation-marks = Aisttonmearkameattáhus
+    .desc = Davvisámegielas čállit áisttonmearkkaid ná: ”sátni”.
     .example-1 = Doarjja addo vuosttažettiin «Sámi dutkama prográmmii» (2001–05)
 
 ## Default patterns: re:no-space-after-paren.*, re:no-space-before-paren.*
-parenthesis-missing-space = Gaska váilu
-    .desc = Ii leat gaska ovdal dehe maŋŋil ruođu {$1}.
+parenthesis-missing-space = Sátnegaskameattáhus
+    .desc = Don leat vajálduhttán sátnegaskka. Sihke ruođu "{$1}" ovdal ja maŋŋel galgá leat sátnegaska.
     .example-1 = Vuoigatvuođa Lávdegotti(SVL)čilgehus
 
-real-Sg3-ConNeg = Biehttálanhápmi gieldovearbba maŋŋel
-    .desc = Go verba dego {$1} boahtá
-      biehttalanvearbba maŋŋel, de go dáppe {$2}, de dat ferte leat biehttalanhámis.
+msyn-Sg3-ConNeg = Boasttuhápmi gieldinvearbba maŋŋel
+    .desc = Don leat čállán gieldinvearbba "{$2}". Dan maŋŋel galgá boahtit vearba konnegatiivva hámis. 
+    .example-1 = Náhkkedikšun ja -goarrun lea nu árbevirolaš bargu ahte earálágan oahpahus go dat man láhkai lea ohppojuvvon boares áiggi rájes, ii buoridivččii sámiid ruhtadili iige dat heivešii kultuvrralaš prográmmii nu mo skuvla dan lea jurddašan.
+    
+    .example-2 = Juos in máhtášii čállit ja lávlut, livččen eahpelihkostuvvan olmmoš.
+    .example-3 = In mun nu bures ja inge nu čábbát máhtášii čállit ja lávlut, jos livččen eahpelihkostuvvan olmmoš.
 
-missing-conneg-after-neg = Biehttalanhápmi váilu
-    .desc = {$1} maŋis berrešii leat biehttalanhápmi.
-
-msyn-wrong_case = Boasttuhápmi
-    .desc = {$1} orru leamen boasttukásusis
-
-msyn-compound = Goallosteapmi
-    .desc = {$1} orru leamen goallossátni
+msyn-compound = Goallossátnemeattáhus
+    .desc = Don leat čállán "{$1}" guoktin sátnin. Dat galgá leat goallosátni. 
     .example-1 = Guollenáhkki lea árbevirolaš materiála mii geavahuvvo sihke čikŋan ja atnu ávnnasin.
+    .example-2 = Dat lea illu sáhka midjiide, go juovlamánus bargguhisvuohta Finnmárkkus lea 3,1 proseantta..
+    .example-3 = Muhto dattege, vaikke vel dát dieđusge lea illu diehtu sidjiide geat beroštit sámegielat girjiin, de bođii gielddastivrra mearrádus gieskat veahá ártegis vuogi mielde.
 
-msyn-unspace-compound = Goallosteapmi
-    .desc = {$1} ii oro leamen goallossátni.
+msyn-unspace-compound = Goallossátnemeattáhus
+    .desc = Don leat čállán "{$1}" goallosátnin.  Dat galgá leat sátnelihttu.
+    .example-1 = Sámediggeáirras Randi A. Skum ( NSR ) jearrá dasto odne gažaldagaid sámediggeráđđái ahte máid lea Sámediggeráđđi dássážii bargan čoavdindihti divatgažaldaga boazodoalus ja makkár strategiija lea Sámediggeráđis ovddasguvlui oažžun dihti vuoiggalaš divatortnega boazodollui.
+    .example-2 = Udmurtat lea álgoálbmot Ruoššabealde. 
+
 
 real-vuovttat = Sáhcu
     .desc = Goallossánit leat dábálaččat sázu haga.
@@ -319,11 +317,6 @@ syn-finitev_missing-end = Sátni váilu
 lex-transitive = Boasttusátni
     .desc = Berrešii leat transitiiva vearba
     .example-1 = Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta.
-
-syn-conneg = Boasttuhápmi
-    .desc = Berrešii leat biehttalanhápmi
-    .example-1 = Juos in máhtášii čállit ja lávlut, livččen eahpelihkostuvvan olmmoš.
-    .example-2 = In mun nu bures ja inge nu čábbát máhtášii čállit ja lávlut, jos livččen eahpelihkostuvvan olmmoš.
 
 msyn-acc-to-velggolaš = Boasttuhápmi
     .desc = Akkusatiiva ovdal "velggolaš"
@@ -768,7 +761,7 @@ double-space-before = Sátnegaskameattáhus
     .example-1 = Son  livččii gal viššal.
 
 space-after-paren-beg = Sátnegaskameattáhus
-    .desc = Ruođu "{$1}" ii galgga leat sátnegaska.
+    .desc = Ruođu "{$1}" maŋŋel ii galgga leat sátnegaska.
     .example-1 = Son ( Áilu) livččii gal viššal.
 
 space-before-paren-end = Sátnegaskameattáhus
