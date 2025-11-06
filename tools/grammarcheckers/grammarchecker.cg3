@@ -144,6 +144,7 @@ LIST Span = Span ;
 LIST Known = Known ;
 LIST NomAg = NomAg ;
 LIST Der/NomAg = Der/NomAg ;
+LIST Gram/NomAg = Gram/NomAg ;
 SET NOMAG = NomAg OR Der/NomAg ;
 LIST G3 = G3 ;
 LIST Gram/3syll = Gram/3syll ;
@@ -1171,11 +1172,10 @@ LIST &syn-case_congruence = &syn-case_congruence ;
 LIST &syn-ccii-not-zzi = &syn-ccii-not-zzi ;
 LIST &msyn-demphrase-sgill = &msyn-demphrase-sgill ;
 LIST &msyn-demphrase-sgloc = &msyn-demphrase-sgloc ;
+LIST &msyn-numphrase-sgnom = &msyn-numphrase-sgnom ;
 LIST &syn-case-congruence-moanat = &syn-case-congruence-moanat ;
 LIST &syn-case-congruence-buorre = &syn-case-congruence-buorre ;
 LIST &syn-comp = &syn-comp ;
-LIST &syn-conneg = &syn-conneg ;
-LIST &syn-conneg-not-3rdsg = &syn-conneg-not-3rdsg ;
 LIST &syn-Der_NomAct-not-Sg1 = &syn-Der_NomAct-not-Sg1 ;
 LIST &syn-ddjo-not-djo = &syn-ddjo-not-djo ;
 LIST &syn-double-inchoative = &syn-double-inchoative ;
@@ -1351,7 +1351,7 @@ LIST &real-DerNomActSgGen-PrsSg1 = &real-DerNomActSgGen-PrsSg1 ;
 LIST &real-DerNomActSgGen-PrfPrc = &real-DerNomActSgGen-PrfPrc ;
 LIST &real-PrsSg1-DerNomActNom = &real-PrsSg1-DerNomActNom ;
 LIST &real-Ess-PrfPrc = &real-Ess-PrfPrc ;
-LIST &real-Sg3-ConNeg = &real-Sg3-ConNeg ;
+LIST &msyn-Sg3-ConNeg = &msyn-Sg3-ConNeg ;
 LIST &real-PrsConNeg-PrsPl3 = &real-PrsConNeg-PrsPl3 ;
 LIST &real-PrsConNeg-PrtPl3 = &real-PrsConNeg-PrtPl3 ;
 
@@ -11186,18 +11186,15 @@ COPY:syn-kon-not-kkun (PrfPrc SUGGEST) EXCEPT (Ind Prs Sg1 &syn-kon-not-kkun) TA
 	# Sg3 should be ConNeg
 	# --------------------
 	
-ADD:real-Sg3-ConNeg (&real-Sg3-ConNeg) TARGET (V Cond Prs Sg3) - Err/Any OR BE + Sg3 - Err/Any IF (-1 (V Neg));
+ADD:msyn-Sg3-ConNeg (&msyn-Sg3-ConNeg) TARGET (V Cond Prs Sg3) - Err/Any OR BE + Sg3 - Err/Any IF (*-1 Neg BARRIER NOT-NP-HEAD-COMMA-CC-Adv-Neg);
 	##  Náhkkedikšun ja - goarrun lea nu árbevirolaš bargu ahte earálágan oahpahus go dat man láhkai lea ohppojuvvon boares áiggi rájes, ii {buoridivččii} sámiid ruhtadili iige dat heivešii kultuvrralaš prográmmii nu mo skuvla dan lea jurddašan.
 
-COPY:real-Sg3-ConNeg (ConNeg SUGGEST) EXCEPT Sg3 TARGET (V &real-Sg3-ConNeg) ;
-ADDRELATION:real-Sg3-ConNeg ($2) Neg FROM (1 ConNeg LINK 0 (&real-Sg3-ConNeg)) ;
-	
-    # conneg form instead of 3rd singular
-    # -------------------------------------
+ADD:msyn-Sg3-ConNeg (&msyn-Sg3-ConNeg) TARGET (V Neg) IF (1 &msyn-Sg3-ConNeg);
 
-     
-ADD:xsyn-conneg (&syn-conneg) TARGET (Cond Prs Sg3) IF (*-1 Neg BARRIER NOT-NP-HEAD-COMMA-CC-Adv-Neg) ;
-COPY:syn-conneg (ConNeg SUGGEST) EXCEPT (Err/Orth Sg3 &syn-conneg) OR (Sg3 &syn-conneg) TARGET (V &syn-conneg) ;
+COPY:msyn-Sg3-ConNeg (ConNeg SUGGEST) EXCEPT Sg3 OR (Err/Orth Sg3) TARGET (V &msyn-Sg3-ConNeg) IF (NOT 0 Neg) ;
+
+ADDRELATION:msyn-Sg3-ConNeg (RIGHT $2) (Neg &msyn-Sg3-ConNeg) FROM (1 (ConNeg &msyn-Sg3-ConNeg)) ;
+
     ## Juos in máhtášii čállit ja lávlut, livččen eahpelihkostuvvan olmmoš. Juos in máhtáše čállit ja lávlut, livččen eahpelihkostuvvan olmmoš.
     ## In mun nu bures ja inge nu čábbát máhtášii čállit ja lávlut, jos livččen eahpelihkostuvvan olmmoš.
     ## Dán guovllus eai galggašii leat boranávddit, ja dáid máŋemuš jágiid leat bivdit báhččán álbasiid Dielddasullos.
@@ -11210,7 +11207,7 @@ COPY:syn-conneg (ConNeg SUGGEST) EXCEPT (Err/Orth Sg3 &syn-conneg) OR (Sg3 &syn-
 	# -----------------
 	
 
-ADD:xsyn-conneg-not-3rdsg (&syn-conneg-not-3rdsg) TARGET (V Prs Sg3) IF (0 Ind OR Cond)(-1 (V Neg Sg3) LINK NOT 0 Sup);	#CHECK change tag to &syn-3rdsg-conneg
+ADD:xmsyn-Sg3-ConNeg (&msyn-Sg3-ConNeg) TARGET (V Prs Sg3) IF (0 Ind OR Cond)(-1 (V Neg Sg3) LINK NOT 0 Sup);	#CHECK change tag to &msyn-Sg3-ConNeg
 	## Meahccebiila vuodjá hárve olggobealde luotta go biila ii lea ráhkaduvvon dan gierdat, muhto ATV:in sáhttá álkit vuodjit juohke saji.
 	## Amma Anne G ii suhttá munnje, jus in čále nu čábbát go áiggošii?
 	## Dat ii leat ráđđehusa vuollásaš orgána, ja ráđđehusas ii lea danne ovddasvástádus Sámedikki politihkalaš doaimmas dahje dain politihkalaš mearrádusain maid Sámediggi dahká.
@@ -11220,50 +11217,8 @@ ADD:xsyn-conneg-not-3rdsg (&syn-conneg-not-3rdsg) TARGET (V Prs Sg3) IF (0 Ind O
 	## antesedeanta pro:ii, muhto antesedeanta ii adnošii , go pro almmatge birge dan haga.
 	#$ ) ii ii ii (.
 	## Jus bárdni dupmehallet seksualalaš oktavuhttin ja veagalváldin, de sahtta son čohkka giddagassii olles 15 jági, muhttu politi-inspektøra Are Meedbye lohká ahte dat ii lea realistalaš, ja sus ii leat makkarge oaivvil man guhkka raŋggaštus sahtta šaddet. 
-COPY:syn-conneg-not-3rdsg (ConNeg SUGGEST) EXCEPT (Sg3 Err/Orth &syn-conneg-not-3rdsg) TARGET (&syn-conneg-not-3rdsg) ;	
+COPY:msyn-Sg3-ConNeg (ConNeg SUGGEST) EXCEPT (Sg3 Err/Orth &msyn-Sg3-ConNeg) TARGET (&msyn-Sg3-ConNeg) IF (NOT 0 Neg) ;	
 
-	# missing conneg after neg
-	# ------------------------
-
-#DELETE uncommon	
-ADD:xlex-missing-conneg-after-neg (&missing-conneg-after-neg) TARGET	Neg - Foc/Neg-ge (0C Neg)(NOT 1 EOS)(NEGATE 1 ("ge") OR Neg)(NEGATE *2 Foc/Neg-ge BARRIER NOT-COMMA)(NEGATE *2 Neg BARRIER NOT-COMMA LINK 1 ("ge"))(NEGATE *1 ConNeg OR PrfPrc BARRIER Neg OR NOT-COMMA)(NEGATE *1 COMMA BARRIER NOT-COMMA) (NEGATE 1 (Pron Sg Nom) LINK *1 (A Sg Nom) BARRIER S-BOUNDARY OR VFIN LINK *2 VFIN BARRIER S-BOUNDARY OR VFIN) (NEGATE -1 ("ja") LINK 1 (Neg) LINK NOT *1 ConNeg OR PrfPrc BARRIER GRAMCHK-S-BOUNDARY)(NEGATE *0 ?)(NEGATE 1 ("mihkkege") OR ("oktage") OR Foc/Neg-ge OR ("nu"))(NEGATE 1 (Pron Indef) LINK 1 ("ge"))(NEGATE *-1 BOS LINK *1 NOT-V BARRIER (*) - CC)(NEGATE -1 CC LINK -1 ("juo"))(NEGATE 1 CC LINK 1 ("juo"))(NEGATE 1 &real OR &syn-conneg-not-3rdsg)(NEGATE 0 Sup);
-
-	#$ HUOM! HERES INF AFTER CONNEG AND ITS PERFECTLY CORRECT: Maiddái luonddugáhtten searvvit ja organisašuvnnat leat gergosat doarrut indiánaid ovddas, jus fal eai jur soahtat de earaládje veahkehit.
-	#$ Muhto earát leat ožžon daid veardádusaiguin, {amaset} sii oainnedettiineaset oaidnit ja guladettiineaset addet.
-	#$ Biilastivrrana duohken čohkka {amas} bárdni ja maŋágeahčen oidnojit maid ámadajut.
-	#$ SVL ii adde ráđi árvalusa.
-	#$ Son vástidii dušše juo dahje ii go maidege jearaiga.
-	#$ Imperatiivahápmi ale čuovvu njeallje mánu maŋŋel. #still not fixed
-	#$ Ii makkárge riektiásahus leat gávnnahan su sivalažžan.XXX disamb
-	#$ Ii stuora váttisvuohta.XXX
-	#$ Sámi Culture in a New Era.XXX
-	#$ In the Shadow of the Midnight Sun.XXX
-	#$ Muhto eai sii dan máhttán diehtit geat eai lean dárkilit čuvvon dievdduid vugiid.
-	#$ Moai letne soabadan Vilgge áhčiin ahte doai oažžubeahtti ihttin vel deaivvadit, muhto ii šat dan rájes.
-	#$Guovdageainnus eai beassan loddet giđđat eai lottiid ge mat eai leat ráfáidahtton. XXX
-	#$Sámi Cupa dahje ii - goanstarássešilju bargu ii galgga gaskkálduvvat.XXX
-	#$Ja go deaivvai juste vuodjit meaddel bána go gulaheaddji dahje speaker lei juoidá dieđiheamen, de ii gullon ii mihkkege - dušše sáttohevro badjánii áibmui. XXX
-	#$Okta áltálaš gal beassá báhčit čáhcelottiid, muhto ii olles álbmot.XXX
-	#$Guovdageainnu moalas lea albma garra fákta, dan meaddel ii beassan duorastagas sotnabeaivái ii fal ii oktage.XXX
-	#$Dasto gárttai ge nu ahte moai ean beassan gostege čilget iežame oainnu.
-	#$Dál galge lerat nu seammaláganat go vejolaš albma lottiid. Eai dušše olggosoaidnit ráhkadettiin, muhto maiddai čázis ii galgan čohkamis oaidnit goal lea ealli loddi ja goal lea čohkanloddi, dahje hápma nu go muhtimat dadjet.
-	#$Jus lei loddedahkki duhtivaš, válddii gáddái ja bihkkadii hámaid. Jus ii, fearai ja čuohpadii son dassá go lei duhtivaš.
-	#$ Dalle dihte buohkat čilás ahte dál lea áigi náđustit, iige lihkkasit.
-	#$ Ii, son bidjá iežas moni eará lottiid beassái.
-	#$ Eai buohkain geat vánddardit mehciin giđđat leat lobálaš doaimmat
-	#$ Norggas ii leat lohpi váldit makkárge moniid, ii vuovdima - ii ge iežas atnui.
-	#$ Muhto ii mihkke nu heittot ahte ii juogamasa leat buorre.
-	#$ Ii riggáid searvi.XXX
-	#$ Ii dálon Sámedikkis.XXX
-	#$ Dat lea nominašuvdnačoahkkin gii vállje gean bidjá bajimussii, ja in mun.
-	#$ Viesus ii gullon ii makkár ge jietna.
-	#$ Ii Ájlinii ge.
-	#$ Muhto in fal ná.
-	# in errors.xml
-	# ADDCOHORT does not make any sense here because we do not know which lemma to add (only the form)
-	
-
-	
 	
 	# double inchoative álgit + -goahtit
 	# ----------------------------------
@@ -12078,14 +12033,14 @@ COPY:syn-number_congruence-subj-verb (Pl3 SUGGEST) EXCEPT (Sg3 &syn-number_congr
 
 	# conditional
 
-ADD:syn-number_congruence-subj-verb (&syn-number_congruence-subj-verb) TARGET (V Cond Prs Sg3) IF (NEGATE *0 Nom + Sg OR Nom + Sg3 BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR MO OR CS)(*-1 (Nom Pl) OR (Nom Pl3) BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR CC OR COMMA LINK NOT 0 Acc)(NEGATE 0 &syn-conneg OR &real-idiosync);
+ADD:syn-number_congruence-subj-verb (&syn-number_congruence-subj-verb) TARGET (V Cond Prs Sg3) IF (NEGATE *0 Nom + Sg OR Nom + Sg3 BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR MO OR CS)(*-1 (Nom Pl) OR (Nom Pl3) BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR CC OR COMMA LINK NOT 0 Acc)(NEGATE 0 &msyn-Sg3-ConNeg OR &real-idiosync);
 	#$ – Goittotge oasusgotti siste galggašii čielggadit dáluid vuoigatvuođaid, vai {sáhtašii} garvit oasálaččaid gaskasaš riidduid, mat maŋimustá duopmostuoluin šaddet divrrasin.
 	#$ Livččii vejolaš dustet váttisvuođaid go oahpaheaddjit váilot jus {sáhtášii} doarjut davviriikkalaš sámegielat oahpaheddjit mátkoštanvejolašvuođa skuvllaid gaskkas. DOES NOT WORK YET BECAUSE OF CASE ERROR IN OAHPAHEDDJIT
 	## Boađusin lea váttisvuođat liigedeattuin, ja čierggesváibmosuotnadávddat.
 
 
 
-ADD:syn-number_congruence-subj-verb (&syn-number_congruence-subj-verb) TARGET (V Cond Prs Sg3) IF (NEGATE *0 Nom + Sg OR Nom + Sg3 BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR MO OR CS)(*1 (Nom Pl) + N OR (Nom Pl) + Dem OR (Nom Pl3) BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR CC OR COMMA LINK NOT 0 Acc OR Inf)(NEGATE 0 &syn-conneg OR &real-idiosync);
+ADD:syn-number_congruence-subj-verb (&syn-number_congruence-subj-verb) TARGET (V Cond Prs Sg3) IF (NEGATE *0 Nom + Sg OR Nom + Sg3 BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR MO OR CS)(*1 (Nom Pl) + N OR (Nom Pl) + Dem OR (Nom Pl3) BARRIER GRAMCHK-S-BOUNDARY OR VFIN OR CC OR COMMA LINK NOT 0 Acc OR Inf)(NEGATE 0 &msyn-Sg3-ConNeg OR &real-idiosync);
 	#$ Lohká livččii mávssolaš sápmelaččaide geat rahčet dáinna dávddain jus sáhtašedje ovttas hárjehallat, movttiidahttit nubbi nuppi.
 	#$ Livččii vejolaš dustet váttisvuođaid go oahpaheaddjit váilot jus sáhtášii doarjut davviriikkalaš sámegielat {oahpaheddjit} mátkoštanvejolašvuođa skuvllaid gaskkas. #not fixed yet
 	#$ Petter Asbjørn Balto muitala dán buktit váttisvuođaid árgabeaivvis go šaddá njealji miilla vuodjit Kárášjohkii go galgá gálgat earániid maid {livččii} sáhttit interneahtas čoavdit.
@@ -13681,6 +13636,98 @@ COPY:syn-case-congruence-buorre (Pl Ill SUGGEST) EXCEPT (Sg Acc &syn-case-congru
 COPY:syn-case-congruence-buorre (Pl Loc SUGGEST) EXCEPT (Sg Acc &syn-case-congruence-buorre) OR (Sg Gen &syn-case-congruence-buorre) TARGET (Sg &syn-case-congruence-buorre)(*1 (Pl Loc) BARRIER GRAMCHK-NPNHA OR Sg);
 	## Ortnet lea leamaš gáibideaddji hálddahušlaččat ja 2006 ja 2007 vásáhusat eai leat nu {buori} beavttuin, go mii lei vurdojuvvon.
 COPY:syn-case-congruence-buorre (Pl Com SUGGEST) EXCEPT (Sg Acc  &syn-case-congruence-buorre) OR (Sg Gen &syn-case-congruence-buorre) OR (Sg Com &syn-case-congruence-buorre) TARGET (Sg &syn-case-congruence-buorre)(*1 (Pl Com) BARRIER GRAMCHK-NPNHA OR Sg);
+
+
+# Noun
+
+ADD:msyn-numphrase-nom (&msyn-numphrase-sgnom) TARGET (N Sg Nom) OR (N Pl Nom) IF (*-1 (Num Sg Nom) BARRIER NOT-Attr - PrfPrc) 
+(NEGATE *-1 ("akta") OR ("1"))
+(NEGATE *-1 (Num Sem/Year))
+(NEGATE *-1 (Num Rom))
+#(NEGATE *-1 Num LINK -1 POST-N-NUM)
+#(NEGATE *-1 Der/akti BARRIER NPNHA) 
+#(NEGATE *-1 (Arab Ord) BARRIER NOT-NPMOD-WITHOUT-NUM)
+#(NEGATE *-1 (Num Sem/ID) BARRIER NOT-NPMOD-WITHOUT-NUM)
+(NEGATE *-1 Num BARRIER NPNHA LINK 0 ("aktan" Adv))
+(NEGATE *-1 Num BARRIER NPNHA LINK 1 Dem)
+#(NEGATE *-1 (Num "<[§].*>"r) OR (Num "<.*%>"r) OR ("%") BARRIER NOT-NPMOD-WITHOUT-NUM) 
+#(NEGATE *-1 (Num "<.*[0123456789]-.*>"r) BARRIER NOT-NPMOD-WITHOUT-NUM)
+(NEGATE *-1 (Num Sg Nom) BARRIER NPNHA LINK -1 BE + Sg3 OR BE + Du3 OR BE + Pl3 LINK -1 (Dem Pl Ela) OR (Pers Pl3 Ela) OR (Pers Pl2 Ela) OR (Pers Pl1 Ela)) 
+(NEGATE -1 ("vahkkusasj") OR ("mánnusasj") OR ("bæjvvásasj") OR ("tijmmasasj") OR ("jahkásasj") LINK -1 (Num)) 
+#(NEGATE -1 NUMUNIT LINK -1 PLURAL-QUANTIFIERS OR Num)
+(NEGATE -1 NUMUNIT LINK -1 Num OR ("moadda"))
+(NEGATE -1 Sem/Time) 
+(NEGATE -1 COMMA)
+(NEGATE -1 CLB)
+(NEGATE -1 (PUNCT RIGHT) LINK -1 Num) 
+(NEGATE 0 ABBR)
+(NEGATE 0 ("låhko"))
+(NEGATE 0 ("<[A-Z].*>"r) OR ("<Å.*>"r) OR ("<Æ.*>"r) OR ("<Ø.*>"r) LINK -1 (Arab Nom))
+(NEGATE 0 (Der/NomAct Sg Nom) LINK 0 PrfPrc LINK *1 (N Pl Nom)  BARRIER NOT-Attr) 
+(NEGATE 0 <spelled>)
+(NEGATE 0 Symbol)
+(NEGATE 0 Gram/NomAg OR Der/NomAg)
+(NEGATE 0 (Sg Gen) OR (Pl Nom))
+(NEGATE 0 Px LINK NOT 0 (Sg Acc PxSg3) OR (Sg Nom PxSg3) OR (Sg Gen PxSg3)) 
+
+    ##Ja dunji le dárbbo – danen gå dat le muv garra miella vaj tuvsán {tjalmme} dahki mijáv tuvsán gärddáj gievrabu
+
+COPY:msyn-numphrase-nom (Sg Gen SUGGEST) EXCEPT (Sg Nom) TARGET (&msyn-numphrase-sgnom) ;
+
+# Num
+
+ADD:msyn-numphrase-nom (&msyn-numphrase-sgnom) TARGET ("akta" Sg Nom) OR ("1" Sg Nom) IF (*1 (N Sg Nom) + &msyn-numphrase-sgnom BARRIER NOT-Attr - PrfPrc) 
+(NEGATE 0 ("<.*%>"r)) 
+(NEGATE 0 (Num "<[0123456789]-.*>"r))
+(NEGATE 0 (Num "<biel.*>"r))
+(NEGATE 0 Sem/Date OR (N Coll Nom) OR ("tuvsán" Num Pl Nom) OR Sem/Year) 
+(NEGATE 0 (Arab Nom) LINK 1 ("<[A-Z].*>"r) OR ("<Å.*>"r) OR ("<Æ.*>"r) OR ("<Ø.*>"r))
+(NEGATE 0 (Num Rom)) 
+#(NEGATE 0 &msyn-nom-numeral-jagák)
+(NEGATE 1 Prop)
+(NEGATE 0 Arab LINK 1 ABBR )
+(NEGATE 1 Num LINK NOT 0 NUMUNIT)
+(NEGATE 1 Dem) 
+(NEGATE 1 COMMA) 
+(NEGATE 1 (PUNCT RIGHT))
+(NEGATE 1 ("ja"))
+(NEGATE 1 ("låhko"))
+(NEGATE *1 (N <spelled>) BARRIER NPNHA) ;
+
+
+# coordinated adjectives
+# to the right
+ADD:msyn-numphrase-nom (&msyn-numphrase-sgnom) TARGET ("akta" Sg Nom) OR ("1" Sg Nom) IF (*1 PRE-NP-HEAD BARRIER NOT-ADV LINK 1 CC LINK 1 PRE-NP-HEAD LINK *1 (N Sg Nom) + &msyn-numphrase-sgnom BARRIER NOT-Attr - PrfPrc LINK NOT 0 (N Coll Nom) OR ("tuvsán" Num Pl Nom)) # OR PL-PAIR-N) 
+(NEGATE -1 ("nr"))
+(NEGATE -1 (Dem Acc))
+(NEGATE 0 NUMUNIT LINK -1 Num OR ("moadda")) 
+(NEGATE 0 (N Coll Nom) OR ("tuvsán" Num Pl Nom) OR Sem/Year OR Sem/Date OR Sem/Time-clock) 
+(NEGATE 0 ONE + (Sg Gen) LINK 1 ("vuoras")) 
+(NEGATE 0 (Num "<biel.*>"r))
+#(NEGATE 0 &msyn-nom-numeral-jagák)
+(NEGATE 0 (Num "<[0123456789]-.*>"r))
+(NEGATE *1 (N <spelled>) BARRIER NPNHA) ;
+	## 
+
+
+ADDRELATION ($2 LEFT) (N &msyn-numphrase-sgnom) OR NUMUNIT + &msyn-numphrase-sgnom TO (*-1 (Num &msyn-numphrase-sgnom));
+
+
+COPY:msyn-numphrase-nom (SUGGEST) EXCEPT (&msyn-numphrase-sgnom) TARGET (Num &msyn-numphrase-sgnom) IF (0 (Sg Nom)) ;
+
+
+# Dem
+
+ADD:msyn-numphrase-sgnom (&msyn-numphrase-sgnom) TARGET (Pron Dem Pl) IF (*1 (Num Sg) OR ("moadda" Indef Sg) OR (Nom SUGGEST) OR (A Arab) BARRIER (*) - ("maŋemus") - ("maŋep" Der/Superl <AttrPred>) - ("maŋŋe" Der/Superl <AttrPred>) LINK *1 (N &msyn-numphrase-sgnom) OR NUMUNIT + &msyn-numphrase-sgnom BARRIER NPNHA - CC) 
+(NEGATE 1 (Pron Dem)) ;
+
+
+COPY:msyn-numphrase-nom (SUGGEST) EXCEPT (&msyn-numphrase-sgnom) TARGET (Dem &msyn-numphrase-sgnom) ;
+
+ADDRELATION ($3 LEFT) (N &msyn-numphrase-sgnom) OR NUMUNIT + &msyn-numphrase-sgnom TO (*-1 (Dem &msyn-numphrase-sgnom));
+
+SUBSTITUTE (&msyn-numphrase-sgnom) (co&msyn-numphrase-sgnom) TARGET (SUGGEST);
+
 
   # comitative not essive
   # ---------------------
