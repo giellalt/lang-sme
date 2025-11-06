@@ -392,8 +392,9 @@ syn-sgnumeral = Boasttuhápmi
 syn-sg-not-pl-after-num = Boasttuhápmi
     .desc = Berrešii leat ovttaidlohku
     .example-1 = Fitnodaga álggaheaddji ja sáivačáhcebiologa Rune Muladal muitala Ávvirii ahte Deanu čázádagas lea nu guhkes gaska gaskal luossaveajehiid, ahte ádjána 5-6 geardde guhkit čohket  nu máŋga veajehiid go dárbbašit .
-syn-gen_acc-not-nom-after-num = Boasttuhápmi
-    .desc = Berrešii leat genitiiva
+
+msyn-numphrase-sgnom = Numerálagihppomeattáhus 
+    .desc = Don leat čállán numerálagihpu nominatiivvas. Substantiiva "{$1}" galgá leat singulára gentiivvas. 
     .example-1 = Isabel ii leat orrun go moadde váhku Leavnnjas, muhto  liiko jo Leavnnja hui bures.
     .ref-1 = 
 
