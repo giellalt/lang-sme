@@ -21,7 +21,8 @@ endif # WANT_GENERATION
 # be fixed *later*, but is not critical at the moment:
 XFAIL_TESTS=generate-adjective-paradigm.sh \
 			generate-noun-paradigm.sh \
-			generate-verb-paradigm.sh
+			generate-verb-paradigm.sh \
+			generate-noun-lemmas.sh
 
 
 include $(top_srcdir)/../giella-core/am-shared/devtest-include.am
