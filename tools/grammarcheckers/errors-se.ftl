@@ -18,7 +18,6 @@ parenthesis-missing-space = Sátnegaskameattáhus
 msyn-Sg3-ConNeg = Boasttuhápmi gieldinvearbba maŋŋel
     .desc = Don leat čállán gieldinvearbba "{$2}". Dan maŋŋel galgá boahtit vearba konnegatiivva hámis. 
     .example-1 = Náhkkedikšun ja -goarrun lea nu árbevirolaš bargu ahte earálágan oahpahus go dat man láhkai lea ohppojuvvon boares áiggi rájes, ii buoridivččii sámiid ruhtadili iige dat heivešii kultuvrralaš prográmmii nu mo skuvla dan lea jurddašan.
-    
     .example-2 = Juos in máhtášii čállit ja lávlut, livččen eahpelihkostuvvan olmmoš.
     .example-3 = In mun nu bures ja inge nu čábbát máhtášii čállit ja lávlut, jos livččen eahpelihkostuvvan olmmoš.
 
