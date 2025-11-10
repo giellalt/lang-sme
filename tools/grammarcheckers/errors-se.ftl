@@ -546,7 +546,7 @@ msyn-valency-birra-loc = Cealkkameattáhus
     .example-1 = Mun sáddejin ohcama ja čállen oanehaččat iežan birra, ja sáddejin velá čállosa globaliserema birra, man birra mun beroštan.
     .ref-1 = 
 
-msyn-valency-aktioloc-aktioess = Boasttu vearbahápmi
+msyn-valency-aktioloc-aktioess = Boasttuvearbahápmi
     .desc = Don leat čállán vearbba "{$1}" aktio essiivvas. Dat galgá leat aktio lokatiivvas.
     .example-1 = Sámedikki politihkkárat eai galgga maid darbbašit ballat čalmmustahttimin fitnodagaid.
     .ref-1 = 
