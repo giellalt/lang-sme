@@ -33,19 +33,18 @@ msyn-unspace-compound = Goallossátnemeattáhus
     .example-2 = Udmurtat lea álgoálbmot Ruoššabealde. 
 
 
-real-vuovttat = Sáhcu
+real-vuovttat = Sáhcomeattáhus
     .desc = Goallossánit leat dábálaččat sázu haga.
     .example-1 = Son jáhkii bártniid liikot buorebut čuvges-vuovttat nieiddaide
 
-msyn-addhyphen = Sáhcu
+msyn-addhyphen = Sáhcomeattáhus
     .desc = Dákkár goallossániin lea sáhcu
-
-orth-prop = Álgobustávva
-    .desc = Namain berrešii leat stuora álgobustávva.
+    .example-1 = Ossodagat addet maiddái doarjaga dutkamii, geahččalan ja ovdánahttinbargui, ja servet riikkaidgaskasaš ovttasbargguide sin fágasurggiineaset.
 
 real-hallan = Boasttuhápmi
     .desc = {$1} lea duppal passiiva, "-hallat" ja "-ot"-
     .example-1 = Mii gávnnaimet elliid mat ledje jápmán, main ledje borahallon seaibbit, bealjit ja vel juolggit ge.
+
 real-rađastaddat = Čállinmeattáhus dán oktavuođas
     .desc = Čális "a" "á" sadjái
     .example-1 = Bengtsson ráđastattai sávnnjiid.
@@ -129,9 +128,7 @@ real-duolmmástuvvat = Čállinmeattáhus dán oktavuođas
 real-duolmmastuvvat = Čállinmeattáhus dán oktavuođas
     .desc = "duolmmastuvvat" orru leamen njuolga sátni
     .example-1 = Heasta gal dál duolmmástuvvá.
-real-čohkká = Čállinmeattáhus dán oktavuođas
-    .desc = "čohkká" orru leamen njuolga sátni
-    .example-1 =
+
 real-čohkkánan = Čállinmeattáhus dán oktavuođas
     .desc = "čohkkánan" orru leamen njuolga sátni
     .example-1 =
@@ -168,12 +165,14 @@ real-čohkkii = Čállinmeattáhus dán oktavuođas
 real-čoahkkái = Čállinmeattáhus dán oktavuođas
     .desc = {$1} orru leamen čállinmeattáhus
     .example-1 = Áviisa čállá stuorsáhpán lei gáskkistan aitto giehtagávvii gokko varravárri lea njuolganaga čohkkái.
+
 real-gaskii = Čállinmeattáhus dán oktavuođas
     .desc = {$1} orru leamen čállinmeattáhus
     .example-1 = Dat bovttii garra vuosteháguid muhtun bargiid gaskkii, go oaivvildedje ahte oskuáššiid.
 real-gáskit = Čállinmeattáhus dán oktavuođas
     .desc = {$1} orru leamen čállinmeattáhus
     .example-1 = Muhto go dakkár juoigit leat, guđet garrudit ja bániid     gasket     ja uhkidit goddit bohccuid ja velá isidanai, ja de dat leat ahkidat gullat.
+
 real-áddet = Čállinmeattáhus dán oktavuođas
     .desc = "áddet" orru leamen njuolga sátni
     .example-1 =
@@ -196,6 +195,7 @@ real-sáhttit = Čállinmeattáhus dán oktavuođas
     .desc = "sáhttit" orru leamen njuolga sátni
     .example-1 = Juste dál sáhtašin baicca dego civnna girdilit biekka mielde ja girddašit gosa dal de dolvvošii, guhkas.
     .example-2 = Mus lea varra dat nu gohčoduvvon skuvla fobiija!!
+
 gen-before-postp = Boasttuhápmi
     .desc = Genetiiva postposišuvnna ovddas
     .example-1 = Mii leat dávjá ságastallan dan diŋga birra.

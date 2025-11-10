@@ -17,7 +17,7 @@ quotation-marks = Quotation marks
 parenthesis-missing-space = Parenthesis missing space
     .desc = There is no space before or after the parenthesis {$1}
 
-real-Sg3-ConNeg = Wrong form after negation
+msyn-Sg3-ConNeg = Wrong form after negation
     .desc = {$1} follows a negative verb, {$2},
       and should be a negative verbform
 
@@ -38,9 +38,6 @@ real-vuovttat = Hyphenation
 
 msyn-addhyphen = Hyphenation
     .desc = There should be a hyphen
-
-orth-prop = Capitalisation
-    .desc = Names should begin with a capital letter
 
 real-hallan = Wrong form
     .desc = {$1} is a double passive
@@ -144,10 +141,6 @@ real-duolmmástuvvat = Spelling error
 
 real-duolmmastuvvat = Spelling error
     .desc = "duolmmastuvvat" seems to be the right word
-    .ref-1 =  
-
-real-čohkká = Spelling error
-    .desc = "čohkká" seems to be the right word
     .ref-1 =  
 
 real-čohkkánan = Spelling error
@@ -255,6 +248,12 @@ msyn-demphrase-sgill = Wrong case
 
 msyn-demphrase-sgloc = Wrong case
     .desc = There should be locative case congruence
+
+msyn-numphrase-sgnom = Numeral phrase error
+    .desc = The noun should be in genitive singular
+
+msyn-gen-numeral-jahkasaš = Numeral phrase error
+    .desc = The noun should be in genitive 
 
 syn-number_congruence = Wrong form
     .desc = The verb or the noun should have another number
