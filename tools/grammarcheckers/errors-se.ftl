@@ -88,6 +88,7 @@ real-gierastallat = Čállinmeattáhus dán oktavuođas
 real-gierástallat = Čállinmeattáhus dán oktavuođas
     .desc = "gierástallat" orru leamen njuolga sátni
     .example-1 = Bengtsson gierastalai suinna.
+
 real-buorranaddat = Čállinmeattáhus dán oktavuođas
     .desc = "buorranaddat" orru leamen njuolga sátni
     .example-1 = Bengtsson buorránaddá sutnje.
@@ -103,6 +104,7 @@ real-buorráneastit = Čállinmeattáhus dán oktavuođas
 real-buorranastit = Čállinmeattáhus dán oktavuođas
     .desc = "buorranastit" orru leamen njuolga sátni
     .example-1 = Bengtsson buorránastá sutnje.
+
 real-lánjastuvvat = Čállinmeattáhus dán oktavuođas
     .desc = "lánjastuvvat" orru leamen njuolga sátni
     .example-1 = Gieddi lanjastuvvá.
