@@ -397,6 +397,11 @@ msyn-numphrase-sgnom = Numerálagihppomeattáhus
     .desc = Don leat čállán numerálagihpu nominatiivvas. Substantiiva "{$1}" galgá leat singulára gentiivvas. 
     .example-1 = Isabel ii leat orrun go moadde váhku Leavnnjas, muhto  liiko jo Leavnnja hui bures.
     .ref-1 = 
+    
+msyn-gen-numeral-jahkasaš  = Numerálagihppomeattáhus 
+    .desc = Substantiiva "{$1}" galgá gentiivvas. 
+    .example-1 = Muhtumiin lea okta jahkásaš váldodoallu dahje meannu.
+    .ref-1 = 
 
 syn-acc-not-nom = Boasttuhápmi
     .desc = Berrešii leat akkusatiiva
