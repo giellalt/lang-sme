@@ -32,36 +32,36 @@ msyn-unspace-compound = Goallossátnemeattáhus
     .example-1 = Sámediggeáirras Randi A. Skum ( NSR ) jearrá dasto odne gažaldagaid sámediggeráđđái ahte máid lea Sámediggeráđđi dássážii bargan čoavdindihti divatgažaldaga boazodoalus ja makkár strategiija lea Sámediggeráđis ovddasguvlui oažžun dihti vuoiggalaš divatortnega boazodollui.
     .example-2 = Udmurtat lea álgoálbmot Ruoššabealde. 
 
-
-real-vuovttat = Sáhcomeattáhus
-    .desc = Goallossánit leat dábálaččat sázu haga.
-    .example-1 = Son jáhkii bártniid liikot buorebut čuvges-vuovttat nieiddaide
-
-msyn-addhyphen = Sáhcomeattáhus
-    .desc = Dákkár goallossániin lea sáhcu
+msyn-addhyphen = Goallossáhcomeattáhus
+    .desc = Don leat čállán guokte goallossáni, main lea oktasaš vuođđooassi. Danin vuosttaš oasis "{$1}" galgá leat goallossáhcu.
     .example-1 = Ossodagat addet maiddái doarjaga dutkamii, geahččalan ja ovdánahttinbargui, ja servet riikkaidgaskasaš ovttasbargguide sin fágasurggiineaset.
 
-real-hallan = Boasttuhápmi
-    .desc = {$1} lea duppal passiiva, "-hallat" ja "-ot"-
+real-hallan = Boasttuvearbasuorggádus
+    .desc = Don leat čállán vearbba "{$1}". "-hallat" passiivvas ii rievdda goassege loahppavokála.
     .example-1 = Mii gávnnaimet elliid mat ledje jápmán, main ledje borahallon seaibbit, bealjit ja vel juolggit ge.
+    .example-2 = Dat ferte oainnahallot ovdal go sáhttit báhčit dan, lohká son.
+    .example-3 = Lojes gumpe Lea máŋga vahkku áigi dan rájes go gumppe álggos beakkehii Kárášjoga guovllus, ja Gaup atnáge imašin go gumpe lea dan rájes sihke vuddjon biilii, ja maiddái oainnahallon viesuid lahka.
+    .example-4 =
+    Dušše 40 mehtera Kjell Østmo viesus eret, lea gumpe oainnahallon ja vuhtton maŋŋebárgga. Kjell Østmo giettis, Rávdojoganjárggas, Kárášjogas, lea gumpe sihke vuhtton ja oainnahallon maŋŋebárgga eahkeda.
 
-real-rađastaddat = Čállinmeattáhus dán oktavuođas
-    .desc = Čális "a" "á" sadjái
+real-rađastaddat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus vuosttaš stávvala vokálas "á".
     .example-1 = Bengtsson ráđastattai sávnnjiid.
-real-ráđastaddat = Čállinmeattáhus dán oktavuođas
-    .desc = Čális "á" "a" sadjái
+    
+real-ráđastaddat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus vuosttaš stávvala vokálas "a".
     .example-1 = Bengtsson rađastattai visot omiid.
 
-real-ráđastallat = Čállinmeattáhus dán oktavuođas
-    .desc = Čális "á" "a" sadjái
+real-ráđastallat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus vuosttaš stávvala vokálas "a".
     .example-1 = Bengtsson rađastalai visot omiid.
 
-real-rađastallat = Čállinmeattáhus dán oktavuođas
-    .desc = Čális a á sadjái
+real-rađastallat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus vuosttaš stávvala vokálas "á".
     .example-1 = Bengtsson ráđastalai sávnnjiid.
-
-real-ráđástallat = Čállinmeattáhus dán oktavuođas
-    .desc = Čális "a" "á" sadjái
+    
+real-ráđástallat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á".
     .example-1 = Olbmot ráđastallet singuin.
 
 real-rikkástaddat = Čállinmeattáhus dán oktavuođas
