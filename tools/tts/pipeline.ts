@@ -22,14 +22,14 @@ export default function smeTextTTS(entry: StringEntry): Command {
       analyzer: "analyser-gt-norm.hfstol",
       normalizers: {
         "Sem/Time-clock": "transcriptor-clock-digit2text.filtered.lookup.hfstol",
-        "Sem/Date": "transcriptor-ttsdate-digit2text.filtered.lookup.hfstol",
-        "Sem/Year": "transcriptor-ttsdate-digit2text.filtered.lookup.hfstol",
-        "Arab": "transcriptor-numbers-digit2text.filtered.lookup.hfstol",
-        "ABBR": "transcriptor-abbrevs2text.filtered.lookup.hfstol",
-        "ACR": "transcriptor-abbrevs2text.filtered.lookup.hfstol",
-        "MIDDLE": "transcriptor-symbols2text.filtered.lookup.hfstol",
-        "Symbol": "transcriptor-symbols2text.filtered.lookup.hfstol",
-        "Emoji": "transcriptor-emoji2text.filtered.lookup.hfstol"
+        "Sem/Date":       "transcriptor-ttsdate-digit2text.filtered.lookup.hfstol",
+        "Sem/Year":       "transcriptor-ttsdate-digit2text.filtered.lookup.hfstol",
+        "Arab":           "transcriptor-numbers-digit2text.filtered.lookup.hfstol",
+        "ABBR":           "transcriptor-abbrevs2text.filtered.lookup.hfstol",
+        "ACR":            "transcriptor-abbrevs2text.filtered.lookup.hfstol",
+        "MIDDLE":         "transcriptor-symbols2text.filtered.lookup.hfstol",
+        "Symbol":         "transcriptor-symbols2text.filtered.lookup.hfstol",
+        "Emoji":          "transcriptor-emoji2text.filtered.lookup.hfstol"
       }
     }
   );
