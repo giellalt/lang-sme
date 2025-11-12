@@ -35,8 +35,8 @@ export default function smeTextTTS(entry: StringEntry): Command {
     }
   );
   x = cg3.vislcg3("norm-cleanup", x, { model_path: "normalisation-cleanups.bin" });
-  x = speech.phon("text2phon", x, { model: "text2phontext.hfstol", tag_models: { "ACR": "acro2text.hfstol" } });
-  x = cg3.sentences("phon", x, { mode: "phonological" });
+  x = speech.phon("text2phon",    x, { model: "text2phontext.hfstol", tag_models: { "ACR": "acro2text.hfstol" } });
+  x = cg3.sentences("phon",       x, { mode: "phonological" });
   return x;
 }
 
@@ -74,7 +74,7 @@ export function localTTSTest_dev(entry: StringEntry): Command {
     }
   );
   x = cg3.vislcg3("norm-cleanup", x, { model_path: "@./normalisation-cleanups.cg3" });
-  x = speech.phon("text2phon", x, { model: "@./text2phontext.hfstol", tag_models: { "ACR": "@./acro2text.hfstol" } });
-  x = cg3.sentences("phon",    x, { mode: "phonological" });
+  x = speech.phon("text2phon",    x, { model: "@./text2phontext.hfstol", tag_models: { "ACR": "@./acro2text.hfstol" } });
+  x = cg3.sentences("phon",       x, { mode: "phonological" });
   return x;
 }
