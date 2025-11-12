@@ -64,43 +64,53 @@ real-ráđástallat = Akseanta-a meattáhus
     .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á".
     .example-1 = Olbmot ráđastallet singuin.
 
-real-rikkástaddat = Čállinmeattáhus dán oktavuođas
-    .desc = "rikkástaddat" orru leamen njuolga sátni
+real-rikkástaddat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "a".
     .example-1 = Bengtsson rikkastattai doppe.
-real-rikkastaddat = Čállinmeattáhus dán oktavuođas
-    .desc = "rikkastaddat" orru leamen njuolga sátni
+    
+real-rikkastaddat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á".
     .example-1 = Mu bahta nu rikkástaddá.
-real-rikkástallat = Čállinmeattáhus dán oktavuođas
-    .desc = "rikkástallat" orru leamen njuolga sátni
+    
+real-rikkástallat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "a".
     .example-1 = Bengtsson rikkastallai doppe.
-real-rikkastallat = Čállinmeattáhus dán oktavuođas
-    .desc = "rikkastallat" orru leamen njuolga sátni
+    
+real-rikkastallat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á".
     .example-1 = Mu bahta nu rikkástallá.
-real-gierastaddat = Čállinmeattáhus dán oktavuođas
-    .desc = "gierastaddat" orru leamen njuolga sátni
+    
+real-gierastaddat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á".
     .example-1 = Bengtsson gierástattai sin.
-real-gierástaddat = Čállinmeattáhus dán oktavuođas
-    .desc = "gierástaddat" orru leamen njuolga sátni
+    
+real-gierástaddat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "a".
     .example-1 = Bengtsson gierastattai suinna.
-real-gierastallat = Čállinmeattáhus dán oktavuođas
-    .desc = "gierastallat" orru leamen njuolga sátni
+    
+real-gierastallat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á".
     .example-1 = Bengtsson gierástalai sin.
-real-gierástallat = Čállinmeattáhus dán oktavuođas
-    .desc = "gierástallat" orru leamen njuolga sátni
-    .example-1 = Bengtsson gierastalai suinna.
+    
+real-gierástallat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "a".
+        .example-1 = Bengtsson gierastalai suinna.
 
-real-buorranaddat = Čállinmeattáhus dán oktavuođas
-    .desc = "buorranaddat" orru leamen njuolga sátni
+real-buorranaddat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á".
     .example-1 = Bengtsson buorránaddá sutnje.
-real-buorránaddat = Čállinmeattáhus dán oktavuođas
-    .desc = "buorránaddat" orru leamen njuolga sátni
+    
+real-buorránaddat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "a".
     .example-1 = Bengtsson buorranaddá áiggi mielde.
+    
 real-buorraneastit = Čállinmeattáhus dán oktavuođas
     .desc = "buorraneastit" orru leamen njuolga sátni
     .example-1 = Bengtsson buorráneastá sutnje.
 real-buorráneastit = Čállinmeattáhus dán oktavuođas
     .desc = "buorráneastit" orru leamen njuolga sátni
     .example-1 = Bengtsson buorraneastá áiggi mielde.
+    
 real-buorranastit = Čállinmeattáhus dán oktavuođas
     .desc = "buorranastit" orru leamen njuolga sátni
     .example-1 = Bengtsson buorránastá sutnje.
