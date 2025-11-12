@@ -6,15 +6,15 @@ import * as speech from './.divvun-rt/speech.ts';
 
 export default function smeTextTTS(entry: StringEntry): Command {
   let x = hfst.tokenize("tokenise", entry, { model_path: "tokeniser-tts-cggt-desc.pmhfst" });
-  x = divvun.blanktag("whitespace", x, { model_path: "analyser-gt-whitespace.hfst" });
+  x = divvun.blanktag("whitespace",     x, { model_path: "analyser-gt-whitespace.hfst" });
   x = cg3.vislcg3("remove-lexicalised", x, { model_path: "generated-remove-lexicalised-compounds.bin" });
-  x = cg3.vislcg3("valency", x, { model_path: "valency.bin" });
-  x = cg3.vislcg3("mwe-dis", x, { model_path: "mwe-dis.bin" });
-  x = cg3.mwesplit("mwe-split", x);
-  x = cg3.vislcg3("disamb", x, { model_path: "disambiguator.bin" });
-  x = cg3.vislcg3("functions", x, { model_path: "functions.bin" });
-  x = cg3.vislcg3("deps", x, { model_path: "dependency.bin" });
-  x = cg3.vislcg3("disamb-cleanup", x, { model_path: "disamb-cleanups.bin" });
+  x = cg3.vislcg3("valency",            x, { model_path: "valency.bin" });
+  x = cg3.vislcg3("mwe-dis",            x, { model_path: "mwe-dis.bin" });
+  x = cg3.mwesplit("mwe-split",         x);
+  x = cg3.vislcg3("disamb",             x, { model_path: "disambiguator.bin" });
+  x = cg3.vislcg3("functions",          x, { model_path: "functions.bin" });
+  x = cg3.vislcg3("deps",               x, { model_path: "dependency.bin" });
+  x = cg3.vislcg3("disamb-cleanup",     x, { model_path: "disamb-cleanups.bin" });
   x = speech.normalize(
     "normaliser", x,
     {
