@@ -104,52 +104,59 @@ real-buorránaddat = Akseanta-a meattáhus
     .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "a".
     .example-1 = Bengtsson buorranaddá áiggi mielde.
     
-real-buorraneastit = Čállinmeattáhus dán oktavuođas
-    .desc = "buorraneastit" orru leamen njuolga sátni
+real-buorraneastit = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á".
     .example-1 = Bengtsson buorráneastá sutnje.
-real-buorráneastit = Čállinmeattáhus dán oktavuođas
-    .desc = "buorráneastit" orru leamen njuolga sátni
+    
+real-buorráneastit = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "a".
     .example-1 = Bengtsson buorraneastá áiggi mielde.
     
-real-buorranastit = Čállinmeattáhus dán oktavuođas
-    .desc = "buorranastit" orru leamen njuolga sátni
+real-buorranastit = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á".
     .example-1 = Bengtsson buorránastá sutnje.
 
-real-lánjastuvvat = Čállinmeattáhus dán oktavuođas
-    .desc = "lánjastuvvat" orru leamen njuolga sátni
+real-lánjastuvvat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus vuosttaš stávvala vokálas "a".
     .example-1 = Gieddi lanjastuvvá.
-real-givssastuvvat = Čállinmeattáhus dán oktavuođas
-    .desc = "givssastuvvat" orru leamen njuolga sátni
+    
+real-givssastuvvat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á".
     .example-1 = Biergu givssástuvvá.
-real-givssástuvvat = Čállinmeattáhus dán oktavuođas
-    .desc = "givssástuvvat" orru leamen njuolga sátni
+    
+real-givssástuvvat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "a".
     .example-1 = Bengtsson álgá givssastuvvat.
-real-liikkástuvvat = Čállinmeattáhus dán oktavuođas
-    .desc = "liikkástuvvat" orru leamen njuolga sátni
-    .example-1 = Gárvvut liikkastuvvat.
-real-liikkastuvvat = Čállinmeattáhus dán oktavuođas
-    .desc = "liikkastuvvat" orru leamen njuolga sátni
+    
+real-liikkástuvvat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "a".
+    .example-1 = Gárvvut liikkastuvvet.
+    
+real-liikkastuvvat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á".
     .example-1 = Liikkástuvai visot Bengtsson.
-real-almmáiduvvat = Čállinmeattáhus dán oktavuođas
-    .desc = "almmáiduvvat" orru leamen njuolga sátni
-    .example-1 = Heasta viimmat almmáiduvai fas.
+    
+real-almmáiduvvat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "a".
+    .example-1 = Heasta viimmat almmaiduvai fas.
     .example-2 = Bengtsson lea nu almmaiduvvan maŋimus jagi.
-real-duolmmástuvvat = Čállinmeattáhus dán oktavuođas
-    .desc = "duolmmástuvvat" orru leamen njuolga sátni
+    
+real-duolmmástuvvat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "a".
     .example-1 = Gieddi ja visot rásit doppe ledje visožit duolmmastuvvan.
-real-duolmmastuvvat = Čállinmeattáhus dán oktavuođas
-    .desc = "duolmmastuvvat" orru leamen njuolga sátni
+    
+real-duolmmastuvvat = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "a".
     .example-1 = Heasta gal dál duolmmástuvvá.
-
-real-čohkkánan = Čállinmeattáhus dán oktavuođas
-    .desc = "čohkkánan" orru leamen njuolga sátni
-    .example-1 =
+    
 real-čohkkáme = Čállinmeattáhus dán oktavuođas
     .desc = "čohkkáme" orru leamen njuolga sátni
     .example-1 =
+    
 real-čohkkát = Čállinmeattáhus dán oktavuođas
     .desc = "čohkkát" orru leamen njuolga sátni
     .example-1 = Jus bárdni dubmehallá seksuálalaš oktavuhtii ja veagalváldin, de sáhttá son čohkka giddagasas olles 15 jagi, muhto politiijainspektevra Are Meedbye lohká ahte dat ii leat realisttalaš, ja sus ii leat makkárge oaivil man guhkes ráŋggáštus sáhttá šaddat.
+    
 real-čohkkán = Čállinmeattáhus dán oktavuođas
     .desc = "čohkkán" orru leamen njuolga sátni
     .example-1 = Sii eai leat čohkán earo diibmobeali, muhto son jo máhttá vástidit : In, orun goađis .
