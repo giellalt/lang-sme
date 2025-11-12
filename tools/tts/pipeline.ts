@@ -25,6 +25,7 @@ export default function smeTextTTS(entry: StringEntry): Command {
         "Sem/Date":       "transcriptor-ttsdate-digit2text.filtered.lookup.hfstol",
         "Sem/Year":       "transcriptor-ttsdate-digit2text.filtered.lookup.hfstol",
         "Arab":           "transcriptor-numbers-digit2text.filtered.lookup.hfstol",
+        "Roman":          "transcriptor-numbers-digit2text.filtered.lookup.hfstol",
         "ABBR":           "transcriptor-abbrevs2text.filtered.lookup.hfstol",
         "ACR":            "transcriptor-abbrevs2text.filtered.lookup.hfstol",
         "MIDDLE":         "transcriptor-symbols2text.filtered.lookup.hfstol",
