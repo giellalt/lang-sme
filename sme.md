@@ -13246,18 +13246,26 @@ Is this what we want?? without right context??? postvoc j:i <=> Vow: ( :0 ) (Dum
 
 
 
-We describe here how abbreviations in Lule Sami are read out, e.g.
+This file contains mappings from abbreviations and some acronyms to full
+forms for text-to-speech purposes. This is a supplement to the analyser;
+the analyser must tag the strings as +ABBR or similar for the transcriptions
+to work. The resulting full form must be lemmas known to the analyser,
+for further processing.
+
+We describe here how abbreviations in North Sami are read out,
 for text-to-speech systems.
 
-Miscellaneous symbols
+The file contains:
 
-Smileys
+- miscellaneous symbols
 
-* Clause boundary symbols
+- smileys
 
-* Single punctuation marks
+- Clause boundary symbols
 
-* Paired punctuation marks
+- Single punctuation marks
+
+- Paired punctuation marks
 
 * * *
 
