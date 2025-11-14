@@ -147,10 +147,6 @@ real-čohkkánan = Spelling error
     .desc = "čohkkánan" seems to be the right word
     .ref-1 =  
 
-real-čohkkáme = Spelling error
-    .desc = "čohkkáme" seems to be the right word
-    .ref-1 =  
-
 real-čohkkát = Spelling error
     .desc = "čohkkát" seems to be the right word
     .ref-1 =  
@@ -161,10 +157,6 @@ real-čohkkán = Spelling error
 
 real-čohkka = Spelling error
     .desc = "čohkka" seems to be the right word
-    .ref-1 =  
-
-real-čohkas = Spelling error
-    .desc = "čohkas" seems to be the right word
     .ref-1 =  
 
 real-čohke = Spelling error
@@ -195,7 +187,7 @@ real-gaskii = Spelling error
     .desc = {$1} seems to be a spelling error
     .ref-1 =  
 
-real-gáskit = Spelling error
+real-gaskit-gáskit = Spelling error
     .desc = {$1} seems to be a spelling error
     .ref-1 =  
 
@@ -221,10 +213,6 @@ real-addit = Spelling error
 
 real-fidnet = Spelling error
     .desc = "fidnet" seems to be the right word
-    .ref-1 =  
-
-real-sáhttit = Spelling error
-    .desc = "sáhttit" seems to be the right word
     .ref-1 =  
 
 gen-before-postp = Wrong form
