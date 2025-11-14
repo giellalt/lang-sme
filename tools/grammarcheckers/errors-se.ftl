@@ -160,18 +160,24 @@ real-čohkkát = Čállinmeattáhus dán oktavuođas
 real-čohkkán = Čállinmeattáhus dán oktavuođas
     .desc = "čohkkán" orru leamen njuolga sátni
     .example-1 = Sii eai leat čohkán earo diibmobeali, muhto son jo máhttá vástidit : In, orun goađis .
-real-čohkka = Čállinmeattáhus dán oktavuođas
-    .desc = "čohkka" orru leamen njuolga sátni
+    
+real-čohkka = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á".
     .example-1 = Vihtta čohkká Guovdageainnu suohkanis leat “ áibbas duoddaris ” čohkain gos olbmot sáhttet finadit dán geasi.
-real-čohkas = Čállinmeattáhus dán oktavuođas
-    .desc = "čohkas" orru leamen njuolga sátni
-    .example-1 = Dát mátki heive measta buohkaide ja lea rehkenaston ádjánit sullii golbma diimmu bottožiiguin go vázzet olles bálgá mii lea 10,8 km, muhto lea vejolaš maid jorggihit čohkkás ruovttoluotta jus hálidat oanehit mátkki
+    
+    
+real-čohkas = Akseanta-a meattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á".
+    .example-1 = Dát mátki heive measta buohkaide ja lea rehkenaston ádjánit sullii golbma diimmu bottožiiguin go vázzet olles bálgá mii lea 10,8 km, muhto lea vejolaš maid jorggihit čohkkás ruovttoluotta jus hálidat oanehit mátkki.
+    
 real-čohke = Čállinmeattáhus dán oktavuođas
     .desc = {$1} orru leamen čállinmeattáhus
     .example-1 = Badjealbmát vurde miessemearkuma, eanadoallit čohkke hášestoalppuid, ordnejedje bargobiergasiid.
+    
 real-čohkken = Čállinmeattáhus dán oktavuođas
     .desc = {$1} orru leamen čállinmeattáhus
     .example-1 = Duvka lei čohken arvečázi, ja dát golggai oaivejietnabeavddi ala.
+    
 real-čohkke = Čállinmeattáhus dán oktavuođas
     .desc = {$1} orru leamen čállinmeattáhus
     .example-1 = Konklušuvdna lea ávžžuhit ahte suohkan čohke opmodathálddašeami ovddasvástádusa suohkanlaš doibmii .
