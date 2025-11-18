@@ -221,8 +221,8 @@ gen-before-postp = Wrong form
 gen-after-prep = Wrong form
     .desc = Genitive after a preposition
 
-msyn-acc_gen-to-adv = Wrong form
-    .desc = Genitive or accusative before word that determine height,
+msyn-acc-to-adv = Wrong form
+    .desc = Accusative before word that determine height,
     .ref-1 = Nickel1994:485,488
 
 syn-kon-not-kkun = Wrong form
