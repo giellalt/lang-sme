@@ -1251,7 +1251,6 @@ LIST typo = typo ;
 LIST &msyn-acc-to-comp = &msyn-acc-to-comp ;
 LIST &msyn-acc-to-adv = &msyn-acc-to-adv ;
 LIST &msyn-acc-to-velggolaš = &msyn-acc-to-velggolaš ;
-LIST &msyn-acc/gen-to-adv = &msyn-acc/gen-to-adv ;
 LIST &msyn-addhyphen = &msyn-addhyphen ;
 LIST &msyn-attr-not-pred = &msyn-attr-not-pred ;
 LIST &msyn-ess-sgcom = &msyn-ess-sgcom ;
@@ -12632,7 +12631,7 @@ ADD:xmsyn-gen-after-prep (&msyn-gen-after-prep) TARGET NP-HEAD - ABBR IF (NOT 0 
     # accusative + adverbs
     # -------------------------
     
-LIST ACC-ADV = ("asu" Adv) ("allu" N Sg Gen) ("guhkku" N Sg Gen) ("govdu" N Sg Gen)  "allat" "guhkki" ("govdat" A) "allosaš" "guhkkosaš" "govdosaš";
+LIST ACC-ADV = ("asu" Adv) ("alu" Po) ("guhku" Po) ("govddu" Po)  "allat" "guhkki" ("govdat" A) "allosaš" "guhkkosaš" "govdosaš";
 
 LIST ACC-NUM-ATTR =  (".*vihttalogi"r Acc Attr) (".*guoktelogi"r Acc Attr) (".*golbmalogi"r Acc Attr) (".*njealljelogi"r Acc Attr) (".*guhttalogi"r Acc Attr) (".*čuohte"r Attr) (".*čuohti"r Attr);
 
@@ -12649,7 +12648,10 @@ LIST NOM-GEN-NUM = (".*čieža"r)  (".*gávcci"r) (".*ovcci"r) (".*logi"r) ("gal
 
 ADD:xmsyn-acc-to-adv (&msyn-acc-to-adv) TARGET Num IF (0 NOM-ACC-NUM)(NOT 0 Acc OR Nom OR ACC-NUM-ATTR LINK 1 Sem/Measr OR MEASURE OR Sem/Time LINK 1 ACC-ADV OR ("boaris")) ;  #2nd
 ADD:xmsyn-acc-to-adv (&msyn-acc-to-adv) TARGET Num IF (NOT 0 NOM-ACC-NUM)(NOT 0 Acc OR Gen OR ACC-NUM-ATTR OR GEN-NUM-ATTR LINK 1 Sem/Measr OR MEASURE OR Sem/Time LINK 1 ACC-ADV OR ("boaris")) ;  #2nd
-COPY:msyn-acc-to-adv (Acc SUGGEST) EXCEPT (Gen &msyn-acc-to-adv) TARGET (Gen Num &msyn-acc-to-adv) ;  #2nd
+
+ADD:xmsyn-acc-to-adv (&msyn-acc-to-adv) TARGET ACC-ADV OR ("boaris") IF (-1 Sem/Measr OR MEASURE OR Sem/Time LINK *-1 (Num &msyn-acc-to-adv));
+
+COPY:msyn-acc-to-adv (Acc SUGGEST) EXCEPT (Gen) TARGET (Gen Num &msyn-acc-to-adv) ;  #2nd
 	#$ Dán mánná lea buorre muddui olahan go lea birrasii golbma jagi boaris.
     #$ Min viessu lea vihtta mehtera alu.
     #$ Dalle lei 10 kilomettar guhkkosaš láhttu Álttá guvlui mas 170:s ledje mielde. XXX
@@ -12660,18 +12662,20 @@ COPY:msyn-acc-to-adv (Acc SUGGEST) EXCEPT (Gen &msyn-acc-to-adv) TARGET (Gen Num
     #R Nickel1994:485,488 genitive: at least
     # in errors.xml
 
-
+ADDRELATION:msyn-acc-to-adv (RIGHT $2) (Num &msyn-acc-to-adv) TO (*1 &msyn-acc-to-adv + ACC-ADV);
     
 ADD:xmsyn-acc-to-velggolaš (&msyn-acc-to-velggolaš) TARGET Num IF (NOT 0 ACC-NUM-ATTR OR Acc LINK 1 CURRENCY OR Sem/Money LINK 1 ("velggolaš")) ;  #2nd
-COPY:msyn-acc-to-velggolaš (Acc SUGGEST) EXCEPT (Gen &msyn-acc-to-velggolaš) AFTER Sg OR Pl TARGET (Num &msyn-acc-to-velggolaš) ;  #2nd
+COPY:msyn-acc-to-velggolaš (Acc SUGGEST) EXCEPT Gen AFTER Sg OR Pl TARGET (Num &msyn-acc-to-velggolaš) ;  #2nd
     ## Ándde lea munnje viđalot ruvnnu velggolaš.
     #$ Ándde lea munnje vihttalot ruvnnu velggolaš.
     ## Ándde lea munnje guovtti ruvnnu velggolaš.
     #R Nickel1994:485 "Akkusativformen står også som attributt til adjektivene boaris, 'gammel' og velggolaš 'skyldig'."
     # in errors.xml
- 
     
+ADD:xmsyn-acc-to-velggolaš (&msyn-acc-to-velggolaš) TARGET ("velggolaš") IF (-1 CURRENCY OR Sem/Money LINK -1 Num) ; 
 
+ADDRELATION:msyn-acc-to-velggolaš (RIGHT $2) (Num &msyn-acc-to-velggolaš) TO (*1 ( "velggolaš" &msyn-acc-to-velggolaš));
+ 
 ADD:xmsyn-acc-to-comp (&msyn-acc-to-comp) TARGET Num IF (NOT 0 Acc OR Nom OR ACC-NUM-ATTR LINK 1 Sem/Measr OR MEASURE OR Sem/Time OR CURRENCY LINK 1 ("maŋŋil") OR ("maŋŋel") OR ("ovdal") OR ("maŋŋelaš") OR ("ovdalaš") OR Comp OR ADV-COMP-FUNCTION ) (NEGATE 0 Gen LINK 1 Sem/Measr OR MEASURE OR Sem/Time OR CURRENCY LINK 1 Comp OR ADV-COMP-FUNCTION LINK 1 Loc)(NOT 0 (Num Arab)) ;  #2nd
     ## Máhtte lea viđa jagi nuorat go mun. PROBLEM
     ## Dat šattai guovtti mehtera guhkit go galggašii.
@@ -12681,7 +12685,8 @@ ADD:xmsyn-acc-to-comp (&msyn-acc-to-comp) TARGET Num IF (NOT 0 Acc OR ACC-NUM-AT
 	# difficult to searching for
     
 ADD:xmsyn-acc-to-comp (&msyn-acc-to-comp) TARGET Num IF (NOT 0 Acc OR ACC-NUM-ATTR LINK 1 Sem/Measr OR MEASURE LINK *1 Loc BARRIER GRAMCHK-NPNHA  LINK *1 ("eret") BARRIER GRAMCHK-S-BOUNDARY ) ;  #2nd
-COPY:msyn-acc-to-comp (Num Sg Acc SUGGEST) EXCEPT (Num Sg Gen &msyn-acc-to-comp) OR (Num Sg Loc Attr &msyn-acc-to-comp) OR (Num Sg Ill Attr &msyn-acc-to-comp) OR (Num Sg Nom &msyn-acc-to-comp) TARGET (Num &msyn-acc-to-comp) ;  #2nd
+
+COPY:msyn-acc-to-comp (Num Sg Acc SUGGEST) EXCEPT (Num Sg Gen) OR (Num Sg Loc Attr) OR (Num Sg Ill Attr) OR (Num Sg Nom) TARGET (Num &msyn-acc-to-comp) ;  #2nd
 	#$ Máhtte lea vihtta jagi nuorat go mun.
     #$ Máhtte lea viđa jagi nuorat mus.    
     ## Lásse lea riegádan viđa jagi ovdal go mon. DISAMBPROBLEM: "viđa" Po is chosen
@@ -12699,6 +12704,10 @@ COPY:msyn-acc-to-comp (Num Sg Acc SUGGEST) EXCEPT (Num Sg Gen &msyn-acc-to-comp)
     #$ Ádjá viessu lea guokte miilla márkana bajábeale.
     #R: Nickel1994:486 "I øst brukes også genitiv i forbindelse med komparasjon, dersom komparativen er predikativ i steningen, og det andre sammanligningsleddet står i lokativ: Máhtte lea viđa jagi nuorat mus."
     # in errors.xml
+
+ADD:xmsyn-acc-to-comp (&msyn-acc-to-comp) TARGET Comp OR ADV-COMP-FUNCTION IF (-1 Sem/Measr OR MEASURE OR Sem/Time OR CURRENCY LINK -1 Num);
+
+ADDRELATION:msyn-acc-to-comp (RIGHT $2) (Num &msyn-acc-to-comp) TO (*1 Comp OR ADV-COMP-FUNCTION LINK 0 &msyn-acc-to-comp);
 
 
     # adverbs and certain cases
