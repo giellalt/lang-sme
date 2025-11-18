@@ -214,18 +214,32 @@ real-fidnet = Konsonántameattáhus
     .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") konsonántaguovddážis. Oaivvildat go "{€1}"?
     .example-1 = Dán ferte fitnet sisa movt nu.
    
-   gen-before-postp = Boasttuhápmi
-    .desc = Genetiiva postposišuvnna ovddas
+msyn-gen-before-postp = Boasttukásus
+    .desc = Sátni ("{$1}") orru leamen boasttukásusis. Postposišuvnna maŋŋel galgá nomen leat genetiivvas.
     .example-1 = Mii leat dávjá ságastallan dan diŋga birra.
+    .example-2 = Luoikkaheaddjis lea maid vejolaš oastit skearru girji sadjái.
 
-gen-after-prep = Boasttuhápmi
-    .desc = Genitiiva preposišuvnna maŋis
+msyn-gen-after-prep = Boasttukásus
+    .desc = Sátni ("{$1}") orru leamen boasttukásusis. Preposišuvnna maŋŋel galgá nomen leat genetiivvas.
     .example-1 = Ale diškkut čázi gasku gonagas.
 
-msyn-acc_gen-to-adv = Boasttuhápmi
-    .desc = Genitiiva dahje akkusatiiva sániid ovdal mat mearridit allodaga, govdodaga, guhkkodaga jna
-    .example-1 = Min viessu lea viđainlot mehtera alu.
+msyn-acc-to-adv = Boasttukásus
+    .desc = Sátni ("{$1}") orru leamen boasttukásusis. Sánit dego "{$2}", mat muitalit mihtuid ja meriid birra, gáibidit numerála akkusatiivvas.
+    .example-1 = Visti lei viđa mehter alu.
     .ref-1 = Nickel1994:485,488
+    
+    msyn-acc-to-velggolaš = Boasttukásus
+    .desc = Sátni ("{$1}") orru leamen boasttukásusis. Sátni "velggolaš" gáibida numerála akkusatiivvas.    
+    .example-1 = Ándde lea munnje guovtti ruvnnu velggolaš.
+    .ref-1 = Nickel1994:485
+
+msyn-acc-to-comp = Boasttukásus
+    .desc = Akkusatiiva ovdal komparatiivva
+    .example-1 = Máhtte lea viđa jagi nuorat go mun.
+    .example-2 = Dat šattai guovtti mehtera guhkit go galggašii.
+    .example-3 = Son vuvddii daid bohccuid viđa ruvnno hálbbibui.
+    .example-4 = Dat šattai guovtti mehtera guhkit go galggašii.
+    .ref-1 = Nickel1994:486
 
 syn-kon-not-kkun = Boasttuhápmi
     .desc = Galggašii leat perfeakta partisihpa
@@ -334,19 +348,6 @@ syn-finitev_missing-end = Sátni váilu
 lex-transitive = Boasttusátni
     .desc = Berrešii leat transitiiva vearba
     .example-1 = Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta.
-
-msyn-acc-to-velggolaš = Boasttuhápmi
-    .desc = Akkusatiiva ovdal "velggolaš"
-    .example-1 = Ándde lea munnje guovtti ruvnnu velggolaš.
-    .ref-1 = Nickel1994:485
-
-msyn-acc-to-comp = Boasttuhápmi
-    .desc = Akkusatiiva ovdal komparatiivva
-    .example-1 = Máhtte lea viđa jagi nuorat go mun.
-    .example-2 = Dat šattai guovtti mehtera guhkit go galggašii.
-    .example-3 = Son vuvddii daid bohccuid viđa ruvnno hálbbibui.
-    .example-4 = Dat šattai guovtti mehtera guhkit go galggašii.
-    .ref-1 = Nickel1994:486
 
 msyn-loc-not-guin = Boasttuhápmi
     .desc = "-guin" lea komitatiivageažus - dás galggašii lokatiiva
