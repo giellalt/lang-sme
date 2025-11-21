@@ -9,6 +9,7 @@ if WANT_GRAMCHECK
 # List here (space separated) all yaml files to be run as part of make check:
 TESTS=\
 	NegV-ConNeg-Cond-PASS.yaml \
+	NegV-ConNeg-3Sg-PASS.yaml \
 	NegV-ConNeg-VFin-PASS.yaml \
 	formatting-PASS.yaml \
 	msyn-ASgLoc-AAttr-PASS.yaml \
