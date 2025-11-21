@@ -18,6 +18,7 @@ TESTS=\
 	msyn-attr-not-pred-PASS.yaml \
 	msyn-congruence_subj-verb-PASS.yaml \
 	msyn-hab-nom-loc-PASS.yaml \
+	msyn-numphrase-sgnom-PASS.yaml \
 	real-DerNomActSgGen-PrfPrc-PASS.yaml \
 	real-DerNomActSgGen-PrsSg1-PASS.yaml \
 	real-DerNomActSgGen-PrtSg1-PASS.yaml \
