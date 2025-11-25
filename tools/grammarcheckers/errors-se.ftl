@@ -224,35 +224,35 @@ msyn-gen-after-prep = Boasttukásus
     .example-1 = Ale diškkut čázi gasku gonagas.
 
 msyn-acc-to-adv = Boasttukásus
-    .desc = Sátni ("{$1}") orru leamen boasttukásusis. Sánit dego "{$2}", mat muitalit mihtuid ja meriid birra, gáibidit numerála akkusatiivvas.
+    .desc = Sátni ("{$1}") orru leamen boasttukásusis. Sánit dego "{$2}", mat muitalit mihtuid ja meriid birra, gáibidit lohkosáni akkusatiivvas.
     .example-1 = Visti lei viđa mehter alu.
     .ref-1 = Nickel1994:485,488
     
-    msyn-acc-to-velggolaš = Boasttukásus
+msyn-acc-to-velggolaš = Boasttukásus
     .desc = Sátni ("{$1}") orru leamen boasttukásusis. Sátni "velggolaš" gáibida numerála akkusatiivvas.    
     .example-1 = Ándde lea munnje guovtti ruvnnu velggolaš.
     .ref-1 = Nickel1994:485
 
 msyn-acc-to-comp = Boasttukásus
-    .desc = Akkusatiiva ovdal komparatiivva
+    .desc = Sátni ("{$1}") orru leamen boasttukásusis. Sánit dego "{$2}", mat muitalit mihtuid ja meriid birra, gáibidit lohkosáni akkusatiivvas.
     .example-1 = Máhtte lea viđa jagi nuorat go mun.
     .example-2 = Dat šattai guovtti mehtera guhkit go galggašii.
     .example-3 = Son vuvddii daid bohccuid viđa ruvnno hálbbibui.
     .example-4 = Dat šattai guovtti mehtera guhkit go galggašii.
     .ref-1 = Nickel1994:486
 
-syn-kon-not-kkun = Boasttuhápmi
-    .desc = Galggašii leat perfeakta partisihpa
+msyn-kkun-kon = Boasttuhápmi
+    .desc = Sátni ("{$1}") orru leamen boasttuhámis. Dat galgá leat perfeakta partisihpas.
     .example-1 = Muhtin biktasiid lohke baskkun skáhppii heaŋgát, eaige šat heiven.
-
-syn-on-not-un = Boasttuhápmi
-    .desc = Galggašii leat perfeakta partisihpa
-    .example-1 = Dát smávva čuvllat, leat maid gorrojuvvon biktasiin mat ledje nie baskun.
 
 msyn-demphrase-sgill = Boasttukásus
     .desc = Demonstratiiva berrešii leat seamma kásushámis go substantiiva
     .example-1 = Dát mearriduvvui easkka jagi maŋŋil, dan láhkái ahte ráđđehus dorvvastii daid bellodagaide mat álggos ledje dan vuostá ahte 6-jahkásaččat galge álgit skuvlii.
+    .example-2 = Jos fas olmmošvuoigatvuođat leat olbmuid vuoigatvuođaid sin olmmošvuođa dihte, de dasto vuoigatvuođat gullet maid daid olbmuide geat ásset ii-riektestáhtain.
+    .example-3 = rustis váikkuha daid meroštallamiidda maid mii ieža dahkat, ja go sámi kulturdutkan ge iešalddes lea oalle nuorra dieđasuorgi, de ii das ge leat vel nu ollu veahki viežžamis jurddašit molssaeaktulaččat dáid áššiid.
+    .example-4 = Go oahpásmuvvat Árbbolaččat persovnnaide, de dan bokte maiddá oahpásmuvvat daid jurdagiidda mat leamaš mielde ovddideamen báikkálaš sámi kultuvrra dasa mii dat dál lea.
 
+    
 msyn-demphrase-sgloc = Boasttukásus
     .desc = Demonstratiiva berrešii leat seamma kásushámis go substantiiva
     .example-1 = Álbmotrievttalaš mearrádusat, nugo mat ILO konvenšuvdna 169, leat dehálaš oasit daid čovdosiin maid de šaddá válljet.
