@@ -228,20 +228,17 @@ msyn-acc-to-adv = Wrong form
 msyn-kkun-kon = Wrong form
     .desc = Should be perfect participle
 
-msyn-demphrase-sgill = Wrong case
-    .desc = The pronoun should also be in illative case
+msyn-demphrase-plill = Wrong case
+    .desc = The demonstrative pronoun should also be in illative case
 
-msyn-demphrase-sgloc = Wrong case
-    .desc = There should be locative case congruence
+msyn-demphrase-plloc = Wrong case
+    .desc = TThe demonstrative pronoun should also be in locative case
 
 msyn-numphrase-sgnom = Numeral phrase error
     .desc = The noun should be in genitive singular
 
 msyn-gen-numeral-jahkasaš = Numeral phrase error
     .desc = The noun should be in genitive 
-
-syn-number_congruence = Wrong form
-    .desc = The verb or the noun should have another number
 
 syn-number_congruence_relative_pronoun = Wrong form
     .desc = {$1} should have another number
@@ -252,7 +249,7 @@ syn-number_congruence-subj-verb = Wrong form
 syn-number_congruence-subj-verb-pl1 = Wrong form
     .desc = Congruence between subject and verb
 
-syn-prs-pl3-not-imprt-pl2 = Wrong form
+real-ImprtPl2-PrsPl3 = Wrong form
     .desc = Congruence between subject and verb
 
 syn-double-negation-part1 = Wrong form
