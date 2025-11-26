@@ -245,41 +245,47 @@ msyn-kkun-kon = Boasttuhápmi
     .desc = Sátni ("{$1}") orru leamen boasttuhámis. Dat galgá leat perfeakta partisihpas.
     .example-1 = Muhtin biktasiid lohke baskkun skáhppii heaŋgát, eaige šat heiven.
 
-msyn-demphrase-sgill = Boasttukásus
-    .desc = Demonstratiiva berrešii leat seamma kásushámis go substantiiva
+msyn-demphrase-plill = Boasttukásus
+    .desc = Demonstratiivapronomen ("{$1}") galgá leat seamma kásushámis go substantiiva ("{$2}"). 
     .example-1 = Dát mearriduvvui easkka jagi maŋŋil, dan láhkái ahte ráđđehus dorvvastii daid bellodagaide mat álggos ledje dan vuostá ahte 6-jahkásaččat galge álgit skuvlii.
     .example-2 = Jos fas olmmošvuoigatvuođat leat olbmuid vuoigatvuođaid sin olmmošvuođa dihte, de dasto vuoigatvuođat gullet maid daid olbmuide geat ásset ii-riektestáhtain.
     .example-3 = rustis váikkuha daid meroštallamiidda maid mii ieža dahkat, ja go sámi kulturdutkan ge iešalddes lea oalle nuorra dieđasuorgi, de ii das ge leat vel nu ollu veahki viežžamis jurddašit molssaeaktulaččat dáid áššiid.
     .example-4 = Go oahpásmuvvat Árbbolaččat persovnnaide, de dan bokte maiddá oahpásmuvvat daid jurdagiidda mat leamaš mielde ovddideamen báikkálaš sámi kultuvrra dasa mii dat dál lea.
 
-    
-msyn-demphrase-sgloc = Boasttukásus
-    .desc = Demonstratiiva berrešii leat seamma kásushámis go substantiiva
+msyn-demphrase-plloc = Boasttukásus
+    .desc = Demonstratiivapronomen ("{$1}") galgá leat seamma kásushámis go substantiiva ("{$2}"). 
     .example-1 = Álbmotrievttalaš mearrádusat, nugo mat ILO konvenšuvdna 169, leat dehálaš oasit daid čovdosiin maid de šaddá válljet.
 
-syn-number_congruence = Boasttuhápmi
-    .desc = Vearbbas dahje substantiivvas berrešii leat eará lohku
+syn-number_congruence-subj-verb = Kongrueansameattáhus
+    .desc = Don leat čállán vearbba ("{$1}") boasttupersovnnas. Subjeavtta ja vearbba gaskkas galgá leat kongrueansa sihke persovnnas ja logus.
     .example-1 = Sis lea erenoamáš lávlunárbevierut.
-
-syn-number_congruence_relative_pronoun = Relatiivapronomen lea boasttuhámis
-    .desc = {$1} berrešii leat eará logus
-    .example-1 = Thoralf Henriksen mielas leat Sámedikkis buorit áigumušat dain prošeavttain masa leat evttohan geavahit 2,4 miljovnna ruvnno, muhto ballá dáid ruđaid bálkestit duššái jus ii leat dáhttu ásahit meahcásteddjiide maid ealáhusšiehtadusa.
-
-syn-number_congruence-subj-verb = Vearba lea boasttuhámis
-    .desc = Ferte lea kongrueansa subjeavtta ja vearbba gaskkas
-    .example-1 = Dál berrejit olgeš- ja ovddádusbellodat gávnnah maid sii háliidit, nubbi háliidivčče heaittihit ee. sámedikki ja nubbi fas ii.
     .example-2 = Mun leat boaris.
-    .example-3 = Ja don logai ahte lea golbma vahkku áigi?
+    .example-3 = Mun it leat sordojuvvon, muhto mun jáhkan ahte mu sámevuohta lea dan.
+    .example-4 = Gosa don lea vuolgán? 
+    .example-5 = Songe lea guhkes mátkki dahkan min bealás, muhto ii oktage ádde maid don čilge.
+    .example-6 = It galgga dál maide ge váldit nu lossadit, earenoamážit jus veahá ártegis sánit bohtet dakkáris geasa don lea čadnojuvvon dovdduid bokte.
+    .example-7 = Son ii ge leat čeavlá, i. It don livččii su doivon fyrstan, jus don it dieđe gii son lea, dadjá Trulsen.
+    .example-8 = Vuvdojuvvot gáhkut ja gáffe.
+    .example-9 = Dálá áiggis mii eai oainne su lunddolaš čalmmiiguin, muhto ovtta beaivvi son galgá fastain boahtit eatnamii ja buohkat galget su oaidnit.
+    .example-10 = Danin eai gula sátnevádjasat dušše doložii, muhto leat baicce ealli njálmmálaš riggodat, nugo moai čállá ge girjji ovdasánis.
+    .example-11 = Ávvir čálii ovdal dán vahkkus ahte Odd Erling ja su searvvi stivrajođiheaddji Mikhail Pogodaev mátkkošteaba Amerihká New York gávpogii, gos soai galgá oassálastit ON čoahkkimis.
 
-syn-number_congruence-subj-verb-pl1 = Boasttuhápmi
-    .desc = Kongrueansa subjeavtta ja vearbba gaskkas
+syn-number_congruence-subj-verb-pl1 = Kongrueansameattáhus
+    .desc = Subjeavtta ja vearbba gaskkas galgá leat kongrueansa sihke persovnnas ja logus.
     .example-1 = Dieđusge mii máhttet sámegiela, go leat ohcan stipeandda lohkat sámegiela vuosttašgiellan.
 
-syn-prs-pl3-not-imprt-pl2 = Boasttuhápmi
-    .desc = Kongrueansa subjeavtta ja vearbba gaskkas
+real-ImprtPl2-PrsPl3 = Čállinmeattáhus dán oktavuođas
+    .desc = Don leat čállán vearbba ("{$1}"). Oaivvildat go ("{€1}")? 
     .example-1 = Son čájehii govaid buotlágan borramušain maid sii luonddus viežžet.
+    .example-2 = Maiddái áibmu lea nuoskiduvvon, ja leage varra sivvan manne nu olu olbmot jábmet borasdávdii.
+    .example-3 = Čájálmasa vuosttaščájáhus lea golggotmánu 7. beaivve Guovdageainnus ja bihtáin johttet miehtá Sámi, sihke Norgga, Suoma ja Ruoŧa bealde.
+    .example-4 = Vaikko vel eai gávdnoge almmolaš logut mat muitalit man galle sápmelačča leat, eai obbalaččat, eaige vissis guovlluide, de lea goitge dovddus ipmárdus ahte eai lahkage buohkat sii geat formálalaččat deavdet eavttuid dieđihit jienastuslohkui, albma ilmmis geavat dán rievtti. 
 
-syn-double-negation-part1 = Boasttuhápmi
+syn-number_congruence_relative_pronoun = Kongrueansameattáhus
+    .desc = Relatiivapromomen ("{$1}") galgá leat seamma logus go dat nomen, masa dat čujuha.
+    .example-1 = Thoralf Henriksen mielas leat Sámedikkis buorit áigumušat dain prošeavttain masa leat evttohan geavahit 2,4 miljovnna ruvnno, muhto ballá dáid ruđaid bálkestit duššái jus ii leat dáhttu ásahit meahcásteddjiide maid ealáhusšiehtadusa.
+
+syn-double-negation = Boasttuhápmi
     .desc = Berrešii leat "amas"
     .example-1 = Čiegain lea botken buot máđiid amaset eat beasa vuojániiguin luomejekkiide.
 
