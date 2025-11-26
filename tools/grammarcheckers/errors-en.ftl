@@ -225,10 +225,7 @@ msyn-acc-to-adv = Wrong form
     .desc = Accusative before word that determine height,
     .ref-1 = Nickel1994:485,488
 
-syn-kon-not-kkun = Wrong form
-    .desc = Should be perfect participle
-
-syn-on-not-un = Wrong form
+msyn-kkun-kon = Wrong form
     .desc = Should be perfect participle
 
 msyn-demphrase-sgill = Wrong case
