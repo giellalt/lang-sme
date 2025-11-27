@@ -26,13 +26,10 @@ err-quotation-marks = Quotation marks
 err-parenthesis-missing-space = Parenthesis missing space
     .desc = There is no space before or after the parenthesis {$arg1}
 
-# err-real-sg3-conneg
-err-real-sg3-conneg = Wrong form after negation
+# err-msyn-sg3-conneg
+err-msyn-sg3-conneg = Wrong form after negation
     .desc = {$arg1} follows a negative verb, {$arg2},
       and should be a negative verbform
-
-err-missing-conneg-after-neg = Missing negation form
-    .desc = {$arg1} should be followed by a co-negative form
 
 err-msyn-wrong_case = Wrong form
     .desc = {$arg1} seems to be in the wrong case
@@ -43,14 +40,8 @@ err-msyn-compound = Compounding
 err-msyn-unspace-compound = Compounding
     .desc = {$arg1} shouldn't be a written as a compound
 
-err-real-vuovttat = Hyphenation
-    .desc = There probably should be no hyphen here
-
 err-msyn-addhyphen = Hyphenation
     .desc = There should be a hyphen
-
-err-orth-prop = Capitalisation
-    .desc = Names should begin with a capital letter.
 
 err-real-hallan = Wrong form
     .desc = {$arg1} is a double passive
@@ -149,17 +140,9 @@ err-real-duolmm_u00E1stuvvat = Spelling error
 err-real-duolmmastuvvat = Spelling error
     .desc = "duolmmastuvvat" seems to be the right word
 
-# err-real-čohkká
-err-real-_u010Dohkk_u00E1 = Spelling error
-    .desc = "čohkká" seems to be the right word
-
 # err-real-čohkkánan
 err-real-_u010Dohkk_u00E1nan = Spelling error
     .desc = "čohkkánan" seems to be the right word
-
-# err-real-čohkkáme
-err-real-_u010Dohkk_u00E1me = Spelling error
-    .desc = "čohkkáme" seems to be the right word
 
 # err-real-čohkkát
 err-real-_u010Dohkk_u00E1t = Spelling error
@@ -172,10 +155,6 @@ err-real-_u010Dohkk_u00E1n = Spelling error
 # err-real-čohkka
 err-real-_u010Dohkka = Spelling error
     .desc = "čohkka" seems to be the right word
-
-# err-real-čohkas
-err-real-_u010Dohkas = Spelling error
-    .desc = "čohkas" seems to be the right word
 
 # err-real-čohke
 err-real-_u010Dohke = Spelling error
@@ -204,8 +183,8 @@ err-real-_u010Doahkk_u00E1i = Spelling error
 err-real-gaskii = Spelling error
     .desc = {$arg1} seems to be a spelling error
 
-# err-real-gáskit
-err-real-g_u00E1skit = Spelling error
+# err-real-gaskit-gáskit
+err-real-gaskit-g_u00E1skit = Spelling error
     .desc = {$arg1} seems to be a spelling error
 
 # err-real-áddet
@@ -229,23 +208,16 @@ err-real-addit = Spelling error
 err-real-fidnet = Spelling error
     .desc = "fidnet" seems to be the right word
 
-# err-real-sáhttit
-err-real-s_u00E1httit = Spelling error
-    .desc = "sáhttit" seems to be the right word
-
 err-gen-before-postp = Wrong form
     .desc = Genitive before a postposition
 
 err-gen-after-prep = Wrong form
     .desc = Genitive after a preposition
 
-err-msyn-acc_gen-to-adv = Wrong form
-    .desc = Genitive or accusative before word that determine height,
+err-msyn-acc-to-adv = Wrong form
+    .desc = Accusative before word that determine height,
 
-err-syn-kon-not-kkun = Wrong form
-    .desc = Should be perfect participle
-
-err-syn-on-not-un = Wrong form
+err-msyn-kkun-kon = Wrong form
     .desc = Should be perfect participle
 
 err-msyn-demphrase-sgill = Wrong form
@@ -254,8 +226,8 @@ err-msyn-demphrase-sgill = Wrong form
 err-msyn-demphrase-sgloc = Wrong form
     .desc = There should be locative case congruence
 
-err-syn-number_congruence = Wrong form
-    .desc = The verb or the noun should have another number
+err-msyn-gen-numeral-jahkas_u00E1_u0161 = Wrong form
+    .desc = The noun should be in genitive
 
 err-syn-number_congruence_relative_pronoun = Wrong form
     .desc = {$arg1} should have another number
@@ -266,7 +238,7 @@ err-syn-number_congruence-subj-verb = Wrong form
 err-syn-number_congruence-subj-verb-pl1 = Wrong form
     .desc = Congruence between subject and verb
 
-err-syn-prs-pl3-not-imprt-pl2 = Wrong form
+err-real-imprtpl2-prspl3 = Wrong form
     .desc = Congruence between subject and verb
 
 err-syn-double-negation-part1 = Wrong form
@@ -363,6 +335,9 @@ err-syn-pred-not-attr = Wrong form
 # err-msyn-asgloc-aattr
 err-msyn-asgloc-aattr = Wrong form
     .desc = The adjective should be in attributive form
+
+err-msyn-sgloc-attr = Wrong form
+    .desc = The adjective should have the attributive form
 
 err-syn-noun-not-nomag = Wrong form
     .desc = Should be nominative

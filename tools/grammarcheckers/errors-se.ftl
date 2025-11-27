@@ -4,56 +4,38 @@
 # err-spelling error
 ## Default patterns: re:real-.*, id:unreal-girjji
 err-spelling-error = Čállinmeattáhus dán oktavuođas
-    .desc = Sátni šaddá eará go oaivvilduvvo.
+    .desc = Sátni šattai eará go dan maid don orut oaivvildeame.
 
 # err-spelling error
 ## Default patterns: re:real-.*-.*
 err-spelling-error = Čállinmeattáhus dán oktavuođas
-    .desc = Sátni šaddá eará go oaivvilduvvo.
-
-# err-wrong case
-## Default patterns: re:msyn-wrong-case.*, re:msyn-wrong_case.*
-err-wrong-case = Boasttukásus
-    .desc = {$arg1} orru leamen boasttukásusis.
+    .desc = Sátni šattai eará go dan maid don orut oaivvildeame.
 
 # err-quotation marks
 ## Default patterns: re:punct-aistton.*
-err-quotation-marks = Aisttonmearkkat
-    .desc = Leat boasttuaisttonmearkkat.
+err-quotation-marks = Aisttonmearkameattáhus
+    .desc = Davvisámegielas čállit áisttonmearkkaid ná: "sátni".
 
 # err-parenthesis missing space
 ## Default patterns: re:no-space-after-paren.*, re:no-space-before-paren.*
-err-parenthesis-missing-space = Gaska váilu
-    .desc = Ii leat gaska ovdal dehe maŋŋil ruođu {$arg1}.
+err-parenthesis-missing-space = Sátnegaskameattáhus
+    .desc = Don leat vajálduhttán sátnegaskka. Sihke ruođu "{$arg1}" ovdal ja maŋŋel galgá leat sátnegaska.
 
-# err-real-sg3-conneg
-err-real-sg3-conneg = Biehttálanhápmi gieldovearbba maŋŋel
-    .desc = Go verba dego {$arg1} boahtá
-      biehttalanvearbba maŋŋel, de go dáppe {$arg2}, de dat ferte leat biehttalanhámis.
+# err-msyn-sg3-conneg
+err-msyn-sg3-conneg = Boasttuhápmi gieldinvearbba maŋŋel
+    .desc = Don leat čállán gieldinvearbba "{$arg2}". Dan maŋŋel galgá boahtit vearba konnegatiivva hámis.
 
-err-missing-conneg-after-neg = Biehttalanhápmi váilu
-    .desc = {$arg1} maŋis berrešii leat biehttalanhápmi.
+err-msyn-compound = Goallossátnemeattáhus
+    .desc = Don leat čállán "{$arg1}" guoktin sátnin. Dat galgá leat goallosátni.
 
-err-msyn-wrong_case = Boasttuhápmi
-    .desc = {$arg1} orru leamen boasttukásusis
+err-msyn-unspace-compound = Goallossátnemeattáhus
+    .desc = Don leat čállán "{$arg1}" goallosátnin. Dat galgá leat sátnelihttu.
 
-err-msyn-compound = Goallosteapmi
-    .desc = {$arg1} orru leamen goallossátni ja galgá leat okta sátni.
+err-msyn-addhyphen = Goallossáhcomeattáhus
+    .desc = Don leat čállán guokte goallossáni, main lea oktasaš vuođđooassi. Danin vuosttaš oasis "{$arg1}" galgá leat goallossáhcu.
 
-err-msyn-unspace-compound = Goallosteapmi
-    .desc = {$arg1} ii oro leamen goallossátni.
-
-err-real-vuovttat = Sáhcu
-    .desc = Goallossánit leat dábálaččat sázu haga.
-
-err-msyn-addhyphen = Sáhcu
-    .desc = Dákkár goallossániin lea sáhcu.
-
-err-orth-prop = Álgobustávva
-    .desc = Namain berrešii leat stuora álgobustávva.
-
-err-real-hallan = Boasttuhápmi
-    .desc = {$arg1} lea duppal passiiva, "-hallat" ja "-ot".-
+err-real-hallan = Boasttuvearbasuorggádus
+    .desc = Don leat čállán vearbba "{$arg1}". "-hallat" passiivvas ii rievdda goassege loahppavokála.
 
 # err-real-rađastaddat
 err-real-ra_u0111astaddat = Čállinmeattáhus dán oktavuođas
@@ -149,18 +131,6 @@ err-real-duolmm_u00E1stuvvat = Čállinmeattáhus dán oktavuođas
 err-real-duolmmastuvvat = Čállinmeattáhus dán oktavuođas
     .desc = "duolmmastuvvat" orru leamen njuolga sátni
 
-# err-real-čohkká
-err-real-_u010Dohkk_u00E1 = Čállinmeattáhus dán oktavuođas
-    .desc = "čohkká" orru leamen njuolga sátni
-
-# err-real-čohkkánan
-err-real-_u010Dohkk_u00E1nan = Čállinmeattáhus dán oktavuođas
-    .desc = "čohkkánan" orru leamen njuolga sátni
-
-# err-real-čohkkáme
-err-real-_u010Dohkk_u00E1me = Čállinmeattáhus dán oktavuođas
-    .desc = "čohkkáme" orru leamen njuolga sátni
-
 # err-real-čohkkát
 err-real-_u010Dohkk_u00E1t = Čállinmeattáhus dán oktavuođas
     .desc = "čohkkát" orru leamen njuolga sátni
@@ -172,10 +142,6 @@ err-real-_u010Dohkk_u00E1n = Čállinmeattáhus dán oktavuođas
 # err-real-čohkka
 err-real-_u010Dohkka = Čállinmeattáhus dán oktavuođas
     .desc = "čohkka" orru leamen njuolga sátni
-
-# err-real-čohkas
-err-real-_u010Dohkas = Čállinmeattáhus dán oktavuođas
-    .desc = "čohkas" orru leamen njuolga sátni
 
 # err-real-čohke
 err-real-_u010Dohke = Čállinmeattáhus dán oktavuođas
@@ -204,8 +170,8 @@ err-real-_u010Doahkk_u00E1i = Čállinmeattáhus dán oktavuođas
 err-real-gaskii = Čállinmeattáhus dán oktavuođas
     .desc = {$arg1} orru leamen čállinmeattáhus
 
-# err-real-gáskit
-err-real-g_u00E1skit = Čállinmeattáhus dán oktavuođas
+# err-real-gaskit-gáskit
+err-real-gaskit-g_u00E1skit = Čállinmeattáhus dán oktavuođas
     .desc = {$arg1} orru leamen čállinmeattáhus
 
 # err-real-áddet
@@ -223,26 +189,19 @@ err-real-_u00E1dde = Čállinmeattáhus dán oktavuođas
 err-real-atte = Čállinmeattáhus dán oktavuođas
     .desc = "atte" orru leamen njuolga sátni
 
-err-real-addit = Čállinmeattáhus dán oktavuođas
-    .desc = "addit" orru leamen njuolga sátni
-
 err-real-fidnet = Čállinmeattáhus dán oktavuođas
     .desc = "fidnet" orru leamen njuolga sátni
 
-# err-real-sáhttit
-err-real-s_u00E1httit = Čállinmeattáhus dán oktavuođas
-    .desc = "sáhttit" orru leamen njuolga sátni
+err-msyn-gen-before-postp = Boasttukásus
+    .desc = Sátni ("{$arg1}") orru leamen boasttukásusis. Postposišuvnna maŋŋel galgá nomen leat genetiivvas.
 
-err-gen-before-postp = Boasttuhápmi
-    .desc = Genetiiva postposišuvnna ovddas
+err-msyn-gen-after-prep = Boasttukásus
+    .desc = Sátni ("{$arg1}") orru leamen boasttukásusis. Preposišuvnna maŋŋel galgá nomen leat genetiivvas.
 
-err-gen-after-prep = Boasttuhápmi
-    .desc = Genitiiva preposišuvnna maŋis
+err-msyn-acc-to-adv = Boasttukásus
+    .desc = Sátni ("{$arg1}") orru leamen boasttukásusis. Sánit dego "{$arg2}", mat muitalit mihtuid ja meriid birra, gáibidit lohkosáni akkusatiivvas.
 
-err-msyn-acc_gen-to-adv = Boasttuhápmi
-    .desc = Genitiiva dahje akkusatiiva sániid ovdal mat mearridit allodaga, govdodaga, guhkkodaga jna
-
-err-syn-kon-not-kkun = Boasttuhápmi
+err-msyn-kkun-kon = Boasttuhápmi
     .desc = Galggašii leat perfeakta partisihpa
 
 err-syn-on-not-un = Boasttuhápmi
@@ -341,12 +300,6 @@ err-msyn-loc-not-guin = Boasttuhápmi
 
 err-msyn-partitive-loc = Boasttuhápmi
     .desc = Lokatiiva partitiiva (oassi--ollislašvuohta) ráhkadusain
-
-err-msyn-gen-before-postp = Boasttuhápmi
-    .desc = Genitiiva postposišuvnna ovddas
-
-err-msyn-gen-after-prep = Boasttuhápmi
-    .desc = Genitiiva preposišuvnna ovddas
 
 err-msyn-ess-sgcom = Boasttuhápmi
     .desc = Berrešii leat komitatiiva
