@@ -1,0 +1,410 @@
+// Deduplicated error definitions for lang-sme
+// This shows how KDL with regex captures can reduce ~150 entries to ~40
+//
+// How it works:
+//   1. CG3 outputs a tag like "real-čohkká"
+//   2. Runtime matches against patterns in this file
+//   3. Match found: error "spelling-error" with capture word="čohkká"
+//   4. Runtime looks up "spelling-error" in FTL, passing {input: "...", word: "čohkká"}
+//
+// FTL can then use:
+//   spelling-error = Spelling error
+//       .desc = The word {$input} seems to be a real-word error (matched: {$word})
+
+// =============================================================================
+// SPELLING ERRORS - all real-* entries collapse to one
+// =============================================================================
+//
+// Example: CG3 tag "real-čohkká" matches, captures word="čohkká"
+// FTL: spelling-error = Spelling error
+//      .desc = {$input} is a real-word error
+
+error "spelling-error" {
+    match {
+        re "real-(?<word>.+)"
+        id "unreal-girjji"
+    }
+    word "${word}"
+}
+
+// =============================================================================
+// WRONG CASE ERRORS
+// =============================================================================
+//
+// Example: CG3 tag "msyn-wrong-case-acc" matches, captures detail="-acc"
+
+error "wrong-case" {
+    match {
+        re "msyn-wrong[-_]case(?<detail>.*)"
+    }
+    detail "${detail}"
+}
+
+// =============================================================================
+// PUNCTUATION ERRORS
+// =============================================================================
+
+error "quotation-marks" {
+    match {
+        re "punct-aistton(?<type>.*)"
+    }
+    type "${type}"
+}
+
+error "parenthesis-missing-space" {
+    match {
+        re "no-space-(after|before)-paren(?<detail>.*)"
+    }
+}
+
+error "punct-rihkku" {
+    match {
+        id "punct-rihkku"
+    }
+}
+
+// =============================================================================
+// SPACING ERRORS
+// =============================================================================
+
+error "spacing" {
+    match {
+        id "double-space-before"
+        id "space-after-paren-beg"
+        id "space-before-paren-end"
+        id "space-before-punct-mark"
+        id "no-space-after-punct-mark"
+    }
+}
+
+// =============================================================================
+// VALENCY ERRORS - 13 entries collapse to one
+// =============================================================================
+//
+// Example: CG3 tag "msyn-valency-ill-acc" matches, captures type="ill-acc"
+// FTL: msyn-valency = Valency error
+//      .desc = Expected different case: {$valency_type}
+
+error "msyn-valency" {
+    match {
+        re "msyn-valency-(?<type>.+)"
+    }
+    valency_type "${type}"
+}
+
+// =============================================================================
+// DEMONSTRATIVE PHRASE ERRORS
+// =============================================================================
+
+error "msyn-demphrase" {
+    match {
+        re "msyn-demphrase-(?<case>sgill|sgloc|plloc)"
+    }
+    case "${case}"
+}
+
+// =============================================================================
+// NUMBER CONGRUENCE ERRORS
+// =============================================================================
+
+error "syn-number-congruence" {
+    match {
+        re "syn-number[_-]congruence[-_]?(?<type>.*)"
+    }
+    congruence_type "${type}"
+}
+
+// =============================================================================
+// LEXICAL ERRORS
+// =============================================================================
+//
+// Example: CG3 tag "lex-transitive" matches, captures type="transitive"
+
+error "lex" {
+    match {
+        re "lex-(?<type>.+)"
+    }
+    lex_type "${type}"
+}
+
+// =============================================================================
+// SIMPLE ERRORS - explicit id matching
+// =============================================================================
+
+error "typo" {
+    match {
+        id "typo"
+    }
+}
+
+error "msyn-sg3-conneg" {
+    match {
+        id "msyn-Sg3-ConNeg"
+    }
+}
+
+error "msyn-compound" {
+    match {
+        id "msyn-compound"
+    }
+}
+
+error "msyn-unspace-compound" {
+    match {
+        id "msyn-unspace-compound"
+    }
+}
+
+error "msyn-addhyphen" {
+    match {
+        id "msyn-addhyphen"
+    }
+}
+
+error "msyn-gen-before-postp" {
+    match {
+        id "msyn-gen-before-postp"
+    }
+}
+
+error "msyn-gen-after-prep" {
+    match {
+        id "msyn-gen-after-prep"
+    }
+}
+
+error "msyn-acc-to-adv" {
+    match {
+        id "msyn-acc-to-adv"
+    }
+}
+
+error "msyn-kkun-kon" {
+    match {
+        id "msyn-kkun-kon"
+    }
+}
+
+error "msyn-acc-to-comp" {
+    match {
+        id "msyn-acc-to-comp"
+    }
+}
+
+error "msyn-loc-not-guin" {
+    match {
+        id "msyn-loc-not-guin"
+    }
+}
+
+error "msyn-partitive-loc" {
+    match {
+        id "msyn-partitive-loc"
+    }
+}
+
+error "msyn-ess-sgcom" {
+    match {
+        id "msyn-ess-sgcom"
+    }
+}
+
+error "msyn-nom-not-gen" {
+    match {
+        id "msyn-nom-not-gen"
+    }
+}
+
+error "msyn-sgnom-sggen" {
+    match {
+        id "msyn-sgnom-sggen"
+    }
+}
+
+error "msyn-sgcom-plcom" {
+    match {
+        id "msyn-sgcom-plcom"
+    }
+}
+
+error "msyn-com-ess" {
+    match {
+        id "msyn-com-ess"
+    }
+}
+
+error "msyn-wrong-case-in-coordination" {
+    match {
+        id "msyn-wrong-case-in-coordination"
+    }
+}
+
+error "msyn-attr-not-pred" {
+    match {
+        id "msyn-attr-not-pred"
+    }
+}
+
+error "msyn-sgloc-attr" {
+    match {
+        id "msyn-sgloc-attr"
+    }
+}
+
+error "msyn-numphrase-sgnom" {
+    match {
+        id "msyn-numphrase-sgnom"
+    }
+}
+
+error "msyn-asgloc-aattr" {
+    match {
+        id "msyn-ASgLoc-AAttr"
+    }
+}
+
+// =============================================================================
+// SYNTAX ERRORS
+// =============================================================================
+
+error "syn-double-negation-part1" {
+    match {
+        id "syn-double-negation-part1"
+    }
+}
+
+error "syn-reflexive-pron" {
+    match {
+        id "syn-reflexive-pron"
+    }
+}
+
+error "syn-case-congruence-buorre" {
+    match {
+        id "syn-case-congruence-buorre"
+    }
+}
+
+error "syn-finitev_missing-end" {
+    match {
+        id "syn-finitev_missing-end"
+    }
+}
+
+error "syn-pred-not-attr" {
+    match {
+        id "syn-pred-not-attr"
+    }
+}
+
+error "syn-noun-not-nomag" {
+    match {
+        id "syn-noun-not-nomag"
+    }
+}
+
+error "syn-sgnumeral" {
+    match {
+        id "syn-sgnumeral"
+    }
+}
+
+error "syn-sg-not-pl-after-num" {
+    match {
+        id "syn-sg-not-pl-after-num"
+    }
+}
+
+error "syn-acc-not-nom" {
+    match {
+        id "syn-acc-not-nom"
+    }
+}
+
+error "syn-not_inf" {
+    match {
+        id "syn-not_inf"
+    }
+}
+
+error "syn-not-actio" {
+    match {
+        id "syn-not-actio"
+    }
+}
+
+error "syn-super" {
+    match {
+        id "syn-super"
+    }
+}
+
+error "syn-comp" {
+    match {
+        id "syn-comp"
+    }
+}
+
+error "syn-inf-after-soaitit" {
+    match {
+        id "syn-inf-after-soaitit"
+    }
+}
+
+error "syn-add-go" {
+    match {
+        id "syn-add-go"
+    }
+}
+
+error "syn-not-dego" {
+    match {
+        id "syn-not-dego"
+    }
+}
+
+error "syn-ge_not_ja" {
+    match {
+        id "syn-ge_not_ja"
+    }
+}
+
+error "syn-redundant_ahte" {
+    match {
+        id "syn-redundant_ahte"
+    }
+}
+
+error "syn-timeadverbial-accusative" {
+    match {
+        id "syn-timeadverbial-accusative"
+    }
+}
+
+// =============================================================================
+// REAL WORD ERRORS (specific ones with case-sensitive IDs)
+// =============================================================================
+
+error "real-imprtpl2-prspl3" {
+    match {
+        id "real-ImprtPl2-PrsPl3"
+    }
+}
+
+error "real-derh-inf" {
+    match {
+        id "real-Derh-Inf"
+    }
+}
+
+error "real-ess-prfprc" {
+    match {
+        id "real-Ess-PrfPrc"
+    }
+}
+
+error "real-imprtdu1-nsgnom" {
+    match {
+        id "real-ImprtDu1-NSgNom"
+    }
+}
