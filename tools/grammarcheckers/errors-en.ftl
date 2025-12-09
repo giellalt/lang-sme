@@ -1,650 +1,727 @@
 # Error messages for language: en
 # Generated from XML by xml-conv
 
-# err-spelling error
-## Default patterns: re:real-.*, id:unreal-girjji
-err-spelling-error = Spelling error
-    .desc = The word means something different here.
-
-# err-spelling error
-## Default patterns: re:real-.*-.*
-err-spelling-error = Spelling error
-    .desc = The word means something different here.
-
-# err-wrong case
-## Default patterns: re:msyn-wrong-case.*, re:msyn-wrong_case.*
-err-wrong-case = Wrong case
-    .desc = {$arg1} seems to be in the wrong case
-
-# err-quotation marks
-## Default patterns: re:punct-aistton.*
-err-quotation-marks = Quotation marks
-    .desc = Wrong quotation mark
-
-# err-parenthesis missing space
-## Default patterns: re:no-space-after-paren.*, re:no-space-before-paren.*
-err-parenthesis-missing-space = Parenthesis missing space
-    .desc = There is no space before or after the parenthesis {$arg1}
-
-# err-msyn-sg3-conneg
-err-msyn-sg3-conneg = Wrong form after negation
-    .desc = {$arg1} follows a negative verb, {$arg2},
-      and should be a negative verbform
-
-err-msyn-wrong_case = Wrong form
-    .desc = {$arg1} seems to be in the wrong case
-
-err-msyn-compound = Compounding
-    .desc = {$arg1} should be a written as a compound
-
-err-msyn-unspace-compound = Compounding
-    .desc = {$arg1} shouldn't be a written as a compound
-
-err-msyn-addhyphen = Hyphenation
-    .desc = There should be a hyphen
-
-err-real-hallan = Wrong form
-    .desc = {$arg1} is a double passive
-
-# err-real-rađastaddat
-err-real-ra_u0111astaddat = Spelling error
-    .desc = Try a instead of á
-
-# err-real-ráđastaddat
-err-real-r_u00E1_u0111astaddat = Spelling error
-    .desc = Try á instead of a
-
-# err-real-ráđastallat
-err-real-r_u00E1_u0111astallat = Spelling error
-    .desc = Try á instead of a
-
-# err-real-rađastallat
-err-real-ra_u0111astallat = Spelling error
-    .desc = Try a instead of á
-
-# err-real-ráđástallat
-err-real-r_u00E1_u0111_u00E1stallat = Spelling error
-    .desc = Try a instead of á
-
-# err-real-rikkástaddat
-err-real-rikk_u00E1staddat = Spelling error
-    .desc = "rikkástaddat" seems to be the right word
-
-err-real-rikkastaddat = Spelling error
-    .desc = "rikkastaddat" seems to be the right word
-
-# err-real-rikkástallat
-err-real-rikk_u00E1stallat = Spelling error
-    .desc = "rikkástallat" seems to be the right word
-
-err-real-rikkastallat = Spelling error
-    .desc = "rikkastallat" seems to be the right word
-
-err-real-gierastaddat = Spelling error
-    .desc = "gierastaddat" seems to be the right word
-
-# err-real-gierástaddat
-err-real-gier_u00E1staddat = Spelling error
-    .desc = "gierástaddat" seems to be the right word
-
-err-real-gierastallat = Spelling error
-    .desc = "gierastallat" seems to be the right word
-
-# err-real-gierástallat
-err-real-gier_u00E1stallat = Spelling error
-    .desc = "gierástallat" seems to be the right word
-
-err-real-buorranaddat = Spelling error
-    .desc = "buorranaddat" seems to be the right word
-
-# err-real-buorránaddat
-err-real-buorr_u00E1naddat = Spelling error
-    .desc = "buorránaddat" seems to be the right word
-
-err-real-buorraneastit = Spelling error
-    .desc = "buorraneastit" seems to be the right word
-
-# err-real-buorráneastit
-err-real-buorr_u00E1neastit = Spelling error
-    .desc = "buorráneastit" seems to be the right word
-
-err-real-buorranastit = Spelling error
-    .desc = "buorranastit" seems to be the right word
-
-# err-real-lánjastuvvat
-err-real-l_u00E1njastuvvat = Spelling error
-    .desc = "lánjastuvvat" seems to be the right word
-
-err-real-givssastuvvat = Spelling error
-    .desc = "givssastuvvat" seems to be the right word
-
-# err-real-givssástuvvat
-err-real-givss_u00E1stuvvat = Spelling error
-    .desc = "givssástuvvat" seems to be the right word
-
-# err-real-liikkástuvvat
-err-real-liikk_u00E1stuvvat = Spelling error
-    .desc = "liikkástuvvat" seems to be the right word
-
-err-real-liikkastuvvat = Spelling error
-    .desc = "liikkastuvvat" seems to be the right word
-
-# err-real-almmáiduvvat
-err-real-almm_u00E1iduvvat = Spelling error
-    .desc = "almmáiduvvat" seems to be the right word
-
-# err-real-duolmmástuvvat
-err-real-duolmm_u00E1stuvvat = Spelling error
-    .desc = "duolmmástuvvat" seems to be the right word
-
-err-real-duolmmastuvvat = Spelling error
-    .desc = "duolmmastuvvat" seems to be the right word
-
-# err-real-čohkkánan
-err-real-_u010Dohkk_u00E1nan = Spelling error
-    .desc = "čohkkánan" seems to be the right word
-
-# err-real-čohkkát
-err-real-_u010Dohkk_u00E1t = Spelling error
-    .desc = "čohkkát" seems to be the right word
-
-# err-real-čohkkán
-err-real-_u010Dohkk_u00E1n = Spelling error
-    .desc = "čohkkán" seems to be the right word
-
-# err-real-čohkka
-err-real-_u010Dohkka = Spelling error
-    .desc = "čohkka" seems to be the right word
-
-# err-real-čohke
-err-real-_u010Dohke = Spelling error
-    .desc = {$arg1} seems to be a spelling error
-
-# err-real-čohkken
-err-real-_u010Dohkken = Spelling error
-    .desc = {$arg1} seems to be a spelling error
-
-# err-real-čohkke
-err-real-_u010Dohkke = Spelling error
-    .desc = {$arg1} seems to be a spelling error
-
-# err-real-čohkket
-err-real-_u010Dohkket = Spelling error
-    .desc = {$arg1} seems to be a spelling error
-
-# err-real-čohkkii
-err-real-_u010Dohkkii = Spelling error
-    .desc = {$arg1} seems to be a spelling error
-
-# err-real-čoahkkái
-err-real-_u010Doahkk_u00E1i = Spelling error
-    .desc = {$arg1} seems to be a spelling error
-
-err-real-gaskii = Spelling error
-    .desc = {$arg1} seems to be a spelling error
-
-# err-real-gaskit-gáskit
-err-real-gaskit-g_u00E1skit = Spelling error
-    .desc = {$arg1} seems to be a spelling error
-
-# err-real-áddet
-err-real-_u00E1ddet = Spelling error
-    .desc = "áddet" seems to be the right word
-
-# err-real-ádden
-err-real-_u00E1dden = Spelling error
-    .desc = "áddet" seems to be the right word
-
-# err-real-ádde
-err-real-_u00E1dde = Spelling error
-    .desc = "áddet" seems to be the right word
-
-err-real-atte = Spelling error
-    .desc = "atte" seems to be the right word
-
-err-real-addit = Spelling error
-    .desc = "addit" seems to be the right word
-
-err-real-fidnet = Spelling error
-    .desc = "fidnet" seems to be the right word
-
-err-gen-before-postp = Wrong form
-    .desc = Genitive before a postposition
-
-err-gen-after-prep = Wrong form
-    .desc = Genitive after a preposition
-
-err-msyn-acc-to-adv = Wrong form
-    .desc = Accusative before word that determine height,
-
-err-msyn-kkun-kon = Wrong form
-    .desc = Should be perfect participle
-
-err-msyn-demphrase-sgill = Wrong form
-    .desc = There should be illative case congruence
-
-err-msyn-demphrase-sgloc = Wrong form
-    .desc = There should be locative case congruence
-
-err-msyn-gen-numeral-jahkas_u00E1_u0161 = Wrong form
-    .desc = The noun should be in genitive
-
-err-syn-number_congruence_relative_pronoun = Wrong form
-    .desc = {$arg1} should have another number
-
-err-syn-number_congruence-subj-verb = Wrong form
-    .desc = Congruence between subject and verb
-
-err-syn-number_congruence-subj-verb-pl1 = Wrong form
-    .desc = Congruence between subject and verb
-
-err-real-imprtpl2-prspl3 = Wrong form
-    .desc = Congruence between subject and verb
-
-err-syn-double-negation-part1 = Wrong form
-    .desc = The form should be "amas"
-
-# err-syn-aččat
-err-syn-a_u010D_u010Dat = Wrong form
-    .desc = The adjective should be in plural
-
-# err-syn-der_nomact-not-sg1
-err-syn-der_nomact-not-sg1 = Wrong form
-    .desc = Should be noun and not a verb
-
-# err-syn-sg3-not-vgen
-err-syn-sg3-not-vgen = Wrong form
-    .desc = Should end in "-ii"
-
-# err-syn-pl3-not-inf
-err-syn-pl3-not-inf = Wrong form
-    .desc = "-ot" instead of "-ut"
-
-# err-syn-du3-not-foc
-err-syn-du3-not-foc = Wrong form
-    .desc = Should be strong form
-
-err-syn-ga = Wrong form
-    .desc = "-ga" instead of "-ba"
-
-err-syn-dnot-not-tnot = Wrong form
-    .desc = "-dn" instead of "-tn"
-
-err-syn-ddjo-not-djo = Wrong form
-    .desc = "-ddj" instead of "-dj"
-
-err-syn-u-not-o = Wrong form
-    .desc = "-u" instead of "-o"
-
-# err-syn-váccii
-err-syn-v_u00E1ccii = Wrong form
+## Default patterns: re:real-.*, re:real-.*-.*, id:unreal-girjji
+spelling-error = Spelling error
     .desc = The word means something different here
 
-err-syn-reflexive-pron = Wrong word
+## Default patterns: re:msyn-wrong-case.*, re:msyn-wrong_case.*
+wrong-form = Wrong form
+    .desc = {$1} seems to be in the wrong case
+
+## Default patterns: re:punct-aistton.*
+quotation-marks = Quotation marks
+    .desc = Wrong quotation mark
+
+## Default patterns: re:no-space-after-paren.*, re:no-space-before-paren.*
+parenthesis-missing-space = Parenthesis missing space
+    .desc = There is no space before or after the parenthesis {$1}
+
+msyn-Sg3-ConNeg = Wrong form after negation
+    .desc = {$1} follows a negative verb, {$2},
+      and should be a negative verbform
+
+missing-conneg-after-neg = Missing word
+    .desc = {$1} should be followed by a co-negative form
+
+msyn-wrong_case = Wrong form
+    .desc = {$1} seems to be in the wrong case
+
+msyn-compound = Compounding
+    .desc = {$1} should be a written as a compound
+
+msyn-unspace-compound = Compounding
+    .desc = {$1} shouldn't be a written as a compound
+
+real-vuovttat = Hyphenation
+    .desc = There probably should be no hyphen here
+
+msyn-addhyphen = Hyphenation
+    .desc = There should be a hyphen
+
+real-hallan = Wrong form
+    .desc = {$1} is a double passive
+    .ref-1 =  
+
+real-rađastaddat = Spelling error
+    .desc = Try a instead of á
+    .ref-1 =  
+
+real-ráđastaddat = Spelling error
+    .desc = Try á instead of a
+
+real-ráđastallat = Spelling error
+    .desc = Try á instead of a
+
+real-rađastallat = Spelling error
+    .desc = Try a instead of á
+
+real-ráđástallat = Spelling error
+    .desc = Try a instead of á
+
+real-rikkástaddat = Spelling error
+    .desc = "rikkástaddat" seems to be the right word
+    .ref-1 =  
+
+real-rikkastaddat = Spelling error
+    .desc = "rikkastaddat" seems to be the right word
+    .ref-1 =  
+
+real-rikkástallat = Spelling error
+    .desc = "rikkástallat" seems to be the right word
+    .ref-1 =  
+
+real-rikkastallat = Spelling error
+    .desc = "rikkastallat" seems to be the right word
+    .ref-1 =  
+
+real-gierastaddat = Spelling error
+    .desc = "gierastaddat" seems to be the right word
+    .ref-1 =  
+
+real-gierástaddat = Spelling error
+    .desc = "gierástaddat" seems to be the right word
+    .ref-1 =  
+
+real-gierastallat = Spelling error
+    .desc = "gierastallat" seems to be the right word
+    .ref-1 =  
+
+real-gierástallat = Spelling error
+    .desc = "gierástallat" seems to be the right word
+    .ref-1 =  
+
+real-buorranaddat = Spelling error
+    .desc = "buorranaddat" seems to be the right word
+    .ref-1 =  
+
+real-buorránaddat = Spelling error
+    .desc = "buorránaddat" seems to be the right word
+    .ref-1 =  
+
+real-buorraneastit = Spelling error
+    .desc = "buorraneastit" seems to be the right word
+    .ref-1 =  
+
+real-buorráneastit = Spelling error
+    .desc = "buorráneastit" seems to be the right word
+    .ref-1 =  
+
+real-buorranastit = Spelling error
+    .desc = "buorranastit" seems to be the right word
+    .ref-1 =  
+
+real-lánjastuvvat = Spelling error
+    .desc = "lánjastuvvat" seems to be the right word
+    .ref-1 =  
+
+real-givssastuvvat = Spelling error
+    .desc = "givssastuvvat" seems to be the right word
+    .ref-1 =  
+
+real-givssástuvvat = Spelling error
+    .desc = "givssástuvvat" seems to be the right word
+    .ref-1 =  
+
+real-liikkástuvvat = Spelling error
+    .desc = "liikkástuvvat" seems to be the right word
+    .ref-1 =  
+
+real-liikkastuvvat = Spelling error
+    .desc = "liikkastuvvat" seems to be the right word
+    .ref-1 =  
+
+real-almmáiduvvat = Spelling error
+    .desc = "almmáiduvvat" seems to be the right word
+    .ref-1 =  
+
+real-duolmmástuvvat = Spelling error
+    .desc = "duolmmástuvvat" seems to be the right word
+    .ref-1 =  
+
+real-duolmmastuvvat = Spelling error
+    .desc = "duolmmastuvvat" seems to be the right word
+    .ref-1 =  
+
+real-čohkkánan = Spelling error
+    .desc = "čohkkánan" seems to be the right word
+    .ref-1 =  
+
+real-čohkkát = Spelling error
+    .desc = "čohkkát" seems to be the right word
+    .ref-1 =  
+
+real-čohkkán = Spelling error
+    .desc = "čohkkán" seems to be the right word
+    .ref-1 =  
+
+real-čohkka = Spelling error
+    .desc = "čohkka" seems to be the right word
+    .ref-1 =  
+
+real-čohke = Spelling error
+    .desc = {$1} seems to be a spelling error
+    .ref-1 =  
+
+real-čohkken = Spelling error
+    .desc = {$1} seems to be a spelling error
+    .ref-1 =  
+
+real-čohkke = Spelling error
+    .desc = {$1} seems to be a spelling error
+    .ref-1 =  
+
+real-čohkket = Spelling error
+    .desc = {$1} seems to be a spelling error
+    .ref-1 =  
+
+real-čohkkii = Spelling error
+    .desc = {$1} seems to be a spelling error
+    .ref-1 =  
+
+real-čoahkkái = Spelling error
+    .desc = {$1} seems to be a spelling error
+    .ref-1 =  
+
+real-gaskii = Spelling error
+    .desc = {$1} seems to be a spelling error
+    .ref-1 =  
+
+real-gaskit-gáskit = Spelling error
+    .desc = {$1} seems to be a spelling error
+    .ref-1 =  
+
+real-áddet = Spelling error
+    .desc = "áddet" seems to be the right word
+    .ref-1 =  
+
+real-ádden = Spelling error
+    .desc = "áddet" seems to be the right word
+    .ref-1 =  
+
+real-ádde = Spelling error
+    .desc = "áddet" seems to be the right word
+    .ref-1 =  
+
+real-atte = Spelling error
+    .desc = "atte" seems to be the right word
+    .ref-1 =  
+
+real-addit = Spelling error
+    .desc = "addit" seems to be the right word
+    .ref-1 =  
+
+real-fidnet = Spelling error
+    .desc = "fidnet" seems to be the right word
+    .ref-1 =  
+
+gen-before-postp = Wrong form
+    .desc = Genitive before a postposition
+
+gen-after-prep = Wrong form
+    .desc = Genitive after a preposition
+
+msyn-acc-to-adv = Wrong form
+    .desc = Accusative before word that determine height,
+    .ref-1 = Nickel1994:485,488
+
+msyn-kkun-kon = Wrong form
+    .desc = Should be perfect participle
+
+msyn-demphrase-plill = Wrong case
+    .desc = The demonstrative pronoun should also be in illative case
+
+msyn-demphrase-plloc = Wrong case
+    .desc = TThe demonstrative pronoun should also be in locative case
+
+msyn-numphrase-sgnom = Numeral phrase error
+    .desc = The noun should be in genitive singular
+
+msyn-gen-numeral-jahkasaš = Numeral phrase error
+    .desc = The noun should be in genitive 
+
+syn-number_congruence_relative_pronoun = Wrong form
+    .desc = {$1} should have another number
+
+syn-number_congruence-subj-verb = Wrong form
+    .desc = Congruence between subject and verb
+
+syn-number_congruence-subj-verb-pl1 = Wrong form
+    .desc = Congruence between subject and verb
+
+real-ImprtPl2-PrsPl3 = Wrong form
+    .desc = Congruence between subject and verb
+
+syn-double-negation-part1 = Wrong form
+    .desc = The form should be "amas"
+
+syn-aččat = Wrong form
+    .desc = The adjective should be in plural
+    .ref-1 = Pope2004:120
+
+syn-Der_NomAct-not-Sg1 = Wrong form
+    .desc = Should be noun and not a verb
+
+syn-Sg3-not-VGen = Wrong form
+    .desc = Should end in "-ii"
+
+syn-Pl3-not-Inf = Wrong form
+    .desc = "-ot" instead of "-ut"
+
+syn-Du3-not-Foc = Wrong form
+    .desc = Should be strong form
+
+syn-ga = Wrong form
+    .desc = "-ga" instead of "-ba"
+
+syn-dnot-not-tnot = Wrong form
+    .desc = "-dn" instead of "-tn"
+    .ref-1 = Pope2004:278
+
+syn-ddjo-not-djo = Wrong form
+    .desc = "-ddj" instead of "-dj"
+
+syn-u-not-o = Wrong form
+    .desc = "-u" instead of "-o"
+
+syn-váccii = Wrong form
+    .desc = The word means something different here
+
+syn-reflexive-pron = Wrong word
     .desc = Reflexive pronoun instead of a personal pronoun
 
-err-syn-case-congruence-buorre = Wrong form
+syn-case-congruence-buorre = Wrong form
     .desc = Congruence between "buorre" and the noun
 
-err-syn-number-congruence-moanat = Wrong form
+syn-number-congruence-moanat = Wrong form
     .desc = Congruence between "moanat" and the noun
 
-err-syn-case-congruence-moanat = Wrong form
+syn-case-congruence-moanat = Wrong form
     .desc = Congruence between "moanat" and the noun
 
-err-syn-finitev_missing-end = Missing word
+syn-finitev_missing-end = Missing word
     .desc = Finitive verb is missing
 
-err-lex-transitive = Wrong word
+lex-transitive = Wrong word
     .desc = Should be a transitive verb
 
-err-syn-conneg = Wrong form
+syn-conneg = Wrong form
     .desc = It should be a negation form
 
-# err-msyn-acc-to-velggolaš
-err-msyn-acc-to-velggola_u0161 = Wrong form
+msyn-acc-to-velggolaš = Wrong form
     .desc = Accusative before "velggolaš"
+    .ref-1 = Nickel1994:485
 
-err-msyn-acc-to-comp = Wrong form
+msyn-acc-to-comp = Wrong form
     .desc = Accusative before comparative
+    .ref-1 = Nickel1994:486
 
-err-msyn-loc-not-guin = Wrong form
+msyn-loc-not-guin = Wrong form
     .desc = "-guin" is comitative - here it should be locative
 
-err-msyn-partitive-loc = Wrong form
+msyn-partitive-loc = Wrong form
     .desc = Locative in partitive constructions
+    .ref-1 = Nickel1994:498
 
-err-msyn-gen-before-postp = Wrong form
+msyn-gen-before-postp = Wrong form
     .desc = Genitive before postposition
+    .ref-1 = 
 
-err-msyn-gen-after-prep = Wrong form
+msyn-gen-after-prep = Wrong form
     .desc = Genitive after preposition
+    .ref-1 = 
 
-err-msyn-ess-sgcom = Wrong form
+msyn-ess-sgcom = Wrong form
     .desc = Should be comitative
+    .ref-1 = 
 
-err-msyn-nom-not-gen = Wrong form
+msyn-nom-not-gen = Wrong form
     .desc = Should be nominative
+    .ref-1 = 
 
-err-msyn-sgnom-sggen = Wrong form
+msyn-sgnom-sggen = Wrong form
     .desc = Should be genitive
+    .ref-1 = 
 
-err-syn-pred-not-attr = Wrong form
+syn-pred-not-attr = Wrong form
     .desc = Predicative not attribute
+    .ref-1 = 
 
-# err-msyn-asgloc-aattr
-err-msyn-asgloc-aattr = Wrong form
+msyn-ASgLoc-AAttr = Wrong form
     .desc = The adjective should be in attributive form
+    .ref-1 = 
 
-err-msyn-sgloc-attr = Wrong form
-    .desc = The adjective should have the attributive form
-
-err-syn-noun-not-nomag = Wrong form
+syn-noun-not-nomag = Wrong form
     .desc = Should be nominative
+    .ref-1 = 
 
-err-syn-sgnumeral = Wrong form
+syn-sgnumeral = Wrong form
     .desc = Should be singular
+    .ref-1 =  
 
-err-syn-sg-not-pl-after-num = Wrong form
+syn-sg-not-pl-after-num = Wrong form
     .desc = Should be singular
+    .ref-1 =  
 
-err-syn-gen_acc-not-nom-after-num = Wrong form
+syn-gen_acc-not-nom-after-num = Wrong form
     .desc = Should be genitive
+    .ref-1 = 
 
-err-syn-acc-not-nom = Wrong form
+syn-acc-not-nom = Wrong form
     .desc = Should be accusative
+    .ref-1 = 
 
-err-syn-no-agent-with-ot-passive = Syntactic error
+syn-no-agent-with-ot-passive = Syntactic error
     .desc = Locative should not be used together with passive
+    .ref-1 = Nickel1994:227
+    .ref-2 = Mikalsen1993:17
 
-err-syn-illative-agent-with-hallat-passive = Wrong form
+syn-illative-agent-with-hallat-passive = Wrong form
     .desc = Illative together with -hallat passive
+    .ref-1 = Nickel1994:228
 
-err-syn-not_inf = Wrong form
+syn-not_inf = Wrong form
     .desc = Should not be an infinitive
+    .ref-1 = Nickel1994:441ff
 
-err-syn-not-actio = Wrong form
+syn-not-actio = Wrong form
     .desc = Should not be an actio form
+    .ref-1 = Nickel1994:441ff
 
-err-syn-not_actio = Wrong form
+syn-not_actio = Wrong form
     .desc = Should be an infinitive
+    .ref-1 =  
 
-# err-real-derh-inf
-err-real-derh-inf = Consonant error
+real-Derh-Inf = Consonant error
     .desc = There seems to be a consonant error in the consonant centre
+    .ref-1 =  
 
-# err-real-ess-prfprc
-err-real-ess-prfprc = Consonant error
+real-Ess-PrfPrc = Consonant error
     .desc = The word is different from what is meant.
+    .ref-1 =  
 
-# err-real-imprtdu1-nsgnom
-err-real-imprtdu1-nsgnom = Consonant error
+real-ImprtDu1-NSgNom = Consonant error
     .desc = The word is different from what is meant.
+    .ref-1 =  
 
-err-real-eallit = Spelling error
+real-eallit = Spelling error
     .desc = "eallit" seems to be the right word
+    .ref-1 =  
 
-# err-real-oažžut
-err-real-oa_u017E_u017Eut = Spelling error
+real-oažžut = Spelling error
     .desc = "oažžut" seems to be the right word
+    .ref-1 =  
 
-err-real-orrut = Spelling error
+real-orrut = Spelling error
     .desc = "orrut" seems to be the right word
+    .ref-1 =  
 
-err-real-oainnat = Spelling error
+real-oainnat = Spelling error
     .desc = "oainnát" seems to be the right word
+    .ref-1 =  
 
-err-real-oastit = Spelling error
+real-oastit = Spelling error
     .desc = "oastit" seems to be the right word
+    .ref-1 =  
 
-# err-real-jáhkkit
-err-real-j_u00E1hkkit = Spelling error
+real-jáhkkit = Spelling error
     .desc = "jáhkkit" seems to be the right word
+    .ref-1 =  
 
-err-real-beassat = Spelling error
+real-beassat = Spelling error
     .desc = "beassat" seems to be the right word
+    .ref-1 =  
 
-err-syn-super = Wrong form
+syn-super = Wrong form
     .desc = Instead of "eanemus", the adjective should inflect
+    .ref-1 = Nickel1994:350
 
-err-syn-comp = Wrong form
+syn-comp = Wrong form
     .desc = Instead of "eanet"/"eambbo", the adjective should inflect
+    .ref-1 = Nickel1994:350
 
-err-syn-inf-after-soaitit = Wrong form
+syn-inf-after-soaitit = Wrong form
     .desc = After "soaitit" there is usually and infinite verb form
+    .ref-1 = Nickel1994:350
 
-err-syn-add-go = Missing word
+syn-add-go = Missing word
     .desc = You need to add -go
+    .ref-1 = Nickel1994:350
 
-err-syn-not-dego = Syntactic error
+syn-not-dego = Syntactic error
     .desc = there should not be "dego"
+    .ref-1 = 
 
-err-syn-ge_not_ja-part1 = Wrong word
+syn-ge_not_ja-part1 = Wrong word
     .desc = "ge" not "ja"
+    .ref-1 = 
 
-err-syn-ge_not_ja-part2 = Wrong word
+syn-ge_not_ja-part2 = Wrong word
     .desc = "ge" not "ja"
+    .ref-1 = 
 
-err-syn-redundant_ahte = Syntactic error
+syn-redundant_ahte = Syntactic error
     .desc = not "ahte"
+    .ref-1 = 
 
-err-syn-timeadverbial-accusative = Wrong form
+syn-timeadverbial-accusative = Wrong form
     .desc = Should probably be accusative
+    .ref-1 = 
 
-err-msyn-valency-ill-acc = Wrong form
+msyn-valency-ill-acc = Wrong form
     .desc = Should probably be illative
+    .ref-1 = 
 
-err-msyn-valency-ill-nom = Wrong form
+msyn-valency-ill-nom = Wrong form
     .desc = The verb asks for an illative
+    .ref-1 = 
 
-err-msyn-valency-add-acc-inf = Missing word
+msyn-valency-add-acc-inf = Missing word
     .desc = Accusative is missing
+    .ref-1 = 
 
-err-msyn-valency-acc-inf-not-nom-inf = Wrong form
+msyn-valency-acc-inf-not-nom-inf = Wrong form
     .desc = Accusative instead of nominative
+    .ref-1 = 
 
-err-msyn-valency-dasa-before-ahte = Missing word
+msyn-valency-dasa-before-ahte = Missing word
     .desc = before
+    .ref-1 = 
 
-err-msyn-valency-go-inf = Syntactic error
+msyn-valency-go-inf = Syntactic error
     .desc = instead of illative
+    .ref-1 = 
 
-err-msyn-valency-birra-loc = Syntactic error
+msyn-valency-birra-loc = Syntactic error
     .desc = locative instead of
+    .ref-1 = 
 
-err-msyn-valency-aktioloc-aktioess = Wrong form
+msyn-valency-aktioloc-aktioess = Wrong form
     .desc = The verb usually asks for actio locative
+    .ref-1 = 
 
-err-msyn-valency-ahte-inf = Syntactic error
+msyn-valency-ahte-inf = Syntactic error
     .desc = "ahte" not infinitive
+    .ref-1 = 
 
-err-msyn-valency-loc-ill = Wrong form
+msyn-valency-loc-ill = Wrong form
     .desc = Locative instead of illative
+    .ref-1 = 
 
-err-msyn-valency-loc-com = Wrong form
+msyn-valency-loc-com = Wrong form
     .desc = Locative instead of comitative
+    .ref-1 = 
 
-err-msyn-valency-nom-acc = Wrong form
+msyn-valency-nom-acc = Wrong form
     .desc = Accusative instead of nominative
+    .ref-1 = 
 
-err-msyn-sgcom-plcom = Wrong form
+msyn-sgcom-plcom = Wrong form
     .desc = comitative plural
+    .ref-1 = 
 
-err-msyn-com-ess = Wrong form
+msyn-com-ess = Wrong form
     .desc = Essive instead of a comitative
+    .ref-1 = 
 
-err-msyn-wrong-case-in-coordination = Wrong form
+msyn-wrong-case-in-coordination = Wrong form
     .desc = wrong case in coordination
+    .ref-1 = 
 
-err-msyn-attr-not-pred = Wrong form
+msyn-attr-not-pred = Wrong form
     .desc = The adjective should have the attributive form
+    .ref-1 = 
+    
+msyn-sgloc-attr = Wrong form
+    .desc = The adjective should have the attributive form
+    .ref-1 = 
 
-# err-real-galgá
-err-real-galg_u00E1 = Spelling error
+real-galgá = Spelling error
     .desc = Should be a form of galgat
+    .ref-1 = 
 
-err-real-ihtit = Spelling error
+real-ihtit = Spelling error
     .desc = Should be a form of "ihtit"
+    .ref-1 = 
 
-# err-real-logát
-err-real-log_u00E1t = Spelling error
+real-logát = Spelling error
     .desc = Should be "logát"
+    .ref-1 = 
 
-# err-real-lohká
-err-real-lohk_u00E1 = Spelling error
+real-lohká = Spelling error
     .desc = Should be a form of lohkat
+    .ref-1 = 
 
-err-real-lohkat = Spelling error
+real-lohkat = Spelling error
     .desc = Should be a form of lohkat
+    .ref-1 = 
 
-err-real-lohkan = Spelling error
+real-lohkan = Spelling error
     .desc = Should be a form of lohkat
+    .ref-1 = 
 
-# err-real-maŋemuš
-err-real-ma_u014Bemu_u0161 = Spelling error
+real-maŋemuš = Spelling error
     .desc = a/á-error
+    .ref-1 = 
 
-err-real-sutnje = Spelling error
+real-sutnje = Spelling error
     .desc = Should be "sutnje"
+    .ref-1 = 
 
-# err-real-sáhkki
-err-real-s_u00E1hkki = Spelling error
+real-sáhkki = Spelling error
     .desc = Should be "sáhkkii"
+    .ref-1 = 
 
-err-real-muhtin = Spelling error
+real-muhtin = Spelling error
     .desc = Should be "muhtin"
+    .ref-1 = 
 
-err-real-uhccon = Spelling error
+real-uhccon = Spelling error
     .desc = u/o-error
+    .ref-1 = 
 
-# err-real-gohččon
-err-real-goh_u010D_u010Don = Spelling error
+real-gohččon = Spelling error
     .desc = u/o-error
+    .ref-1 = 
 
-# err-real-sárgon
-err-real-s_u00E1rgon = Spelling error
+real-sárgon = Spelling error
     .desc = u/o-error
+    .ref-1 = 
 
-err-real-veahkki = Spelling error
+real-veahkki = Spelling error
     .desc = Should be a form of veahkki
+    .ref-1 = 
 
-# err-real-viđa
-err-real-vi_u0111a = Spelling error
+real-viđa = Spelling error
     .desc = á/a-error
+    .ref-1 = 
 
-# err-real-guhká
-err-real-guhk_u00E1 = Spelling error
+real-guhká = Spelling error
     .desc = Should be "guhká"
+    .ref-1 = 
 
-err-real-ruovttoluotta = Spelling error
+real-ruovttoluotta = Spelling error
     .desc = Should be "ruovttoluotta"
+    .ref-1 = 
 
-# err-real-sádji
-err-real-s_u00E1dji = Spelling error
+real-sádji = Spelling error
     .desc = Should be a form of sadji
+    .ref-1 = 
 
-err-real-dakko = Spelling error
+real-dakko = Spelling error
     .desc = Should be "dakko"
+    .ref-1 = 
 
-err-real-eahkes = Spelling error
+real-eahkes = Spelling error
     .desc = Should be "eahkes"
+    .ref-1 = 
 
-err-real-earret = Spelling error
+real-earret = Spelling error
     .desc = Should be "earret"
+    .ref-1 = 
 
-err-real-vuolgit = Spelling error
-    .desc = {$arg1} should be "vuolggán"
+real-vuolgit = Spelling error
+    .desc = {$1} should be "vuolggán"
+    .ref-1 = 
 
-err-real-aaktit_aaktet = Spelling error
+real-aaktit_aaktet = Spelling error
     .desc = Should be "áktit/áktet"
+    .ref-1 = 
 
-# err-real-manná
-err-real-mann_u00E1 = Spelling error
-    .desc = {$arg1} should be "mannan"
+real-manná = Spelling error
+    .desc = {$1} should be "mannan"
+    .ref-1 = 
 
-# err-real-ráhkadit
-err-real-r_u00E1hkadit = Spelling error
+real-ráhkadit = Spelling error
     .desc = Should be "ráhkadit"
+    .ref-1 = 
 
-# err-real-láse
-err-real-l_u00E1se = Spelling error
+real-láse = Spelling error
     .desc = Should be "láse"
+    .ref-1 = 
 
-# err-real-vuosttaš
-err-real-vuostta_u0161 = Spelling error
+real-vuosttaš = Spelling error
     .desc = the word has an á/a error
+    .ref-1 = Sammallahti2005
 
-# err-real-vuostá
-err-real-vuost_u00E1 = Spelling error
+real-vuostá = Spelling error
     .desc = tt/t-error
 
-# err-real-jámas
-err-real-j_u00E1mas = Spelling error
+real-jámas = Spelling error
     .desc = the word has an á/a  error
+    .ref-1 = 
 
-# err-lex-ollugat-not-máŋggas
-err-lex-ollugat-not-m_u00E1_u014Bggas = Wrong word
+lex-ollugat-not-máŋggas = Wrong word
     .desc = Seems to be wrong word
+    .ref-1 = 
 
-# err-lex-not-maŋga
-err-lex-not-ma_u014Bga = Wrong word
+lex-not-maŋga = Wrong word
     .desc = Seems to be wrong word
+    .ref-1 = 
 
-# err-lex-maŋis-not-maŋŋelis
-err-lex-ma_u014Bis-not-ma_u014B_u014Belis = Wrong word
+lex-maŋis-not-maŋŋelis = Wrong word
     .desc = Seems to be wrong word
+    .ref-1 = 
 
-# err-lex-ollis-not-miehtá
-err-lex-ollis-not-mieht_u00E1 = Wrong word
+lex-ollis-not-miehtá = Wrong word
     .desc = Seems to be wrong word
+    .ref-1 = 
 
-err-lex-guorrasit-not-guorralit = Wrong word
+lex-guorrasit-not-guorralit = Wrong word
     .desc = Seems to be wrong word
+    .ref-1 = 
 
-err-lex-mearridit-not-meannudit = Wrong word
+lex-mearridit-not-meannudit = Wrong word
     .desc = Seems to be wrong word
+    .ref-1 = 
 
-err-lex-acc-not-badjel = Wrong word
+lex-acc-not-badjel = Wrong word
     .desc = Seems to be wrong word
+    .ref-1 = 
 
-# err-lex-rastá-not-badjel
-err-lex-rast_u00E1-not-badjel = Wrong word
+lex-rastá-not-badjel = Wrong word
     .desc = Seems to be wrong word
+    .ref-1 = 
 
-err-lex-bokte-not-badjel = Wrong word
+lex-bokte-not-badjel = Wrong word
     .desc = Seems to be wrong word
+    .ref-1 = 
 
-err-lex-badjelii-not-badjel = Wrong word
+lex-badjelii-not-badjel = Wrong word
     .desc = Seems to be wrong word
+    .ref-1 = 
 
-# err-lex-mielde-not-rastá
-err-lex-mielde-not-rast_u00E1 = Wrong word
+lex-mielde-not-rastá = Wrong word
     .desc = Seems to be wrong word
+    .ref-1 = 
 
-err-cmp-nomhyph-or-gen = Wrong form
+cmp-nomhyph-or-gen = Wrong form
     .desc = Nominative with hyphen, otherwise genitive
+    .ref-1 = 
 
-err-lex-mii-not-gii = Wrong word
+lex-mii-not-gii = Wrong word
     .desc = Seems to be wrong word
+    .ref-1 = 
 
-err-punct-rihkku = Comma error
+punct-rihkku = Comma error
     .desc = Comma before this word
+    .ref-1 = 
 
-err-typo = Spelling error
-    .desc = Not in the dictionary.
+typo = Spelling error
+    .desc = Not in the dictionary
 
-err-double-space-before = Space error
-    .desc = There are two spaces in front of {$arg1}.
+double-space-before = Space error
+    .desc = There are two spaces in front of {$1}
 
-err-space-after-paren-beg = Space error
-    .desc = There is a space after the opening parenthesis {$arg1}
+space-after-paren-beg = Space error
+    .desc = There is a space after the opening parenthesis {$1}
 
-err-space-before-paren-end = Space error
-    .desc = There is a space before the closing parenthesis {$arg1}
+space-before-paren-end = Space error
+    .desc = There is a space before the closing parenthesis {$1}
 
-err-space-before-punct-mark = Space error
-    .desc = There is a space in front of the punctuation mark {$arg1}
+space-before-punct-mark = Space error
+    .desc = There is a space in front of the punctuation mark {$1}
 
-err-no-space-after-punct-mark = Space error
-    .desc = There is no space after the punctuation mark {$arg1}
+no-space-after-punct-mark = Space error
+    .desc = There is no space after the punctuation mark {$1}
 
