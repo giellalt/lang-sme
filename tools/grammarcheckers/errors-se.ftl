@@ -286,11 +286,11 @@ syn-number_congruence_relative_pronoun = Kongrueansameattáhus
     .example-1 = Thoralf Henriksen mielas leat Sámedikkis buorit áigumušat dain prošeavttain masa leat evttohan geavahit 2,4 miljovnna ruvnno, muhto ballá dáid ruđaid bálkestit duššái jus ii leat dáhttu ásahit meahcásteddjiide maid ealáhusšiehtadusa.
 
 syn-double-negation = Boasttuhápmi
-    .desc = Berrešii leat "amas"
+    .desc = Lea boasttuvuohki sojahit sihke ("{$1}") ja čuovvovaš gieldinvearbba.   
     .example-1 = Čiegain lea botken buot máđiid amaset eat beasa vuojániiguin luomejekkiide.
 
-syn-aččat = Boasttuhápmi
-    .desc = Adjektiiva berrešii leat maŋggaidlogus
+&msyn-ačča-aččat = Boasttuhápmi
+    .desc = Adjektiivvas ("{$1}") galgá leat máŋggaidlogugeažus "-t". 
     .example-1 = Finálačiekčamat šaddege nu miellagiddevačča go loahppačiekčamat galgetge leat.
     .ref-1 = Pope2004:120
 
