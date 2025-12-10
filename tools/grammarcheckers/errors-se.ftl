@@ -224,17 +224,17 @@ msyn-gen-after-prep = Boasttukásus
     .example-1 = Ale diškkut čázi gasku gonagas.
 
 msyn-acc-to-adv = Boasttukásus
-    .desc = Sátni ("{$1}") orru leamen boasttukásusis. Sánit dego "{$2}", mat muitalit mihtuid ja meriid birra, gáibidit lohkosáni akkusatiivvas.
+    .desc = Sátni ("{$1}") orru leamen boasttukásusis. Sánit dego "{$2}", mat muitalit mihtuid ja meriid birra, gáibidit lohkosáni akkusatiivvas ("{€1}").
     .example-1 = Visti lei viđa mehter alu.
     .ref-1 = Nickel1994:485,488
     
 msyn-acc-to-velggolaš = Boasttukásus
-    .desc = Sátni ("{$1}") orru leamen boasttukásusis. Sátni "velggolaš" gáibida numerála akkusatiivvas.    
+    .desc = Sátni ("{$1}") orru leamen boasttukásusis. Sátni "velggolaš" gáibida numerála akkusatiivvas ("{€1}").    
     .example-1 = Ándde lea munnje guovtti ruvnnu velggolaš.
     .ref-1 = Nickel1994:485
 
 msyn-acc-to-comp = Boasttukásus
-    .desc = Sátni ("{$1}") orru leamen boasttukásusis. Sánit dego "{$2}", mat muitalit mihtuid ja meriid birra, gáibidit lohkosáni akkusatiivvas.
+    .desc = Sátni ("{$1}") orru leamen boasttukásusis. Sánit dego "{$2}", mat muitalit mihtuid ja meriid birra, gáibidit lohkosáni akkusatiivvas ("{€1}").
     .example-1 = Máhtte lea viđa jagi nuorat go mun.
     .example-2 = Dat šattai guovtti mehtera guhkit go galggašii.
     .example-3 = Son vuvddii daid bohccuid viđa ruvnno hálbbibui.
@@ -419,7 +419,7 @@ syn-sg-not-pl-after-num = Boasttuhápmi
     .example-1 = Fitnodaga álggaheaddji ja sáivačáhcebiologa Rune Muladal muitala Ávvirii ahte Deanu čázádagas lea nu guhkes gaska gaskal luossaveajehiid, ahte ádjána 5-6 geardde guhkit čohket  nu máŋga veajehiid go dárbbašit .
 
 msyn-numphrase-sgnom = Numerálagihppomeattáhus 
-    .desc = Don leat čállán numerálagihpu nominatiivvas. Substantiiva "{$1}" galgá leat singulára gentiivvas. 
+    .desc = Don leat čállán numerálagihpu nominatiivvas. Substantiiva "{$1}" galgá leat singulára gentiivvas "{€1}". 
     .example-1 = Isabel ii leat orrun go moadde váhku Leavnnjas, muhto  liiko jo Leavnnja hui bures.
     .ref-1 = 
     
@@ -501,7 +501,7 @@ syn-comp = Komparerenmeattáhus
     .ref-1 = Nickel1994:350
 
 syn-inf-after-soaitit = Boasttuhápmi
-    .desc = Don leat čállán  "{$2}" finihttavearban. "soaitit" maŋŋel galgá leat infinihttahápmi.
+    .desc = Don leat čállán "{$1}" finihttavearban. {"$2"} maŋŋel galgá leat infinihttahápmi "{€1}".
     .example-1 = Boahtte háve soaittán válddán govven- dahje filbmenbarggu.
     .ref-1 = Nickel1994:350
 
