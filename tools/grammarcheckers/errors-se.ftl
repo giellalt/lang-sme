@@ -313,15 +313,16 @@ real-ImprtPl1-PassInf = Konsonántameattáhus
     .example-1 = Fátmmastit šiehtadussii sáhttá atnot sámi vuoigatvuođaeaiggadiid vuosttá, ja eará álgoálbmogiid sullasaš vuoigatvuođaiguin boahttevaš riekteproseassain.
     .ref-1 = Pope2004:278
 
-syn-u-not-o = Boasttuhápmi
+real-PrtPl3-PrsSg3 = Boasttuhápmi
     .desc = "-u" iige "-o"
     .example-1 = Dál son áigo vuoiŋŋastit guokte mánu iežas lagámušaid luhtte.
+    .example-2 = Lea dušše dat veahá mii váilo.
 
-syn-váccii = Boasttuhápmi
+real-vázzi-váccii = Boasttuhápmi
     .desc = Sátni šattai eará go dan maid don orut oaivvildeame.
     .example-1 = Gaup vázzi neavttárskuvlla Stáda Teáhterallaskuvllas, ja eksámena válddii 1978:is.
 
-syn-reflexive-pron = Boasttusátni
+msyn-pers-refl-pron = Boasttusátni
     .desc = Refleksiiva pronomen iige persovnnalaš pronomen.
     .example-1 = Mun válddán mu girjji.
 
