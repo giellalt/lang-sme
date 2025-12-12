@@ -30,8 +30,6 @@ GIELLA_TTS_REMOVE_TRANSCRIPTORS=transcriptor-date-digit2text
 # If there are additional, language specific files used in the GC archive,
 # specify here:
 LOCAL_TTS_ZIP_FILES=generated-remove-lexicalised-compounds.bin \
-					acro2text.hfstol \
-					text2phontext.hfstol \
 					disamb-cleanups.bin \
 					normalisation-cleanups.bin
 
@@ -40,16 +38,6 @@ LOCAL_TTS_ZIP_FILES=generated-remove-lexicalised-compounds.bin \
 # Copy to file with another name, to work around VPATH / CG3 INCLUDE incomps:
 generated-remove-lexicalised-compounds.cg3: remove-lexicalised-compounds.cg3
 	$(AM_V_CP)cp -f $< $@
-
-# Compile acro conversion to spelled out letters:
-acro2text.hfstol: acro2text.regex
-	$(AM_V_RGX2FST)$(HFST_REGEXP2FST) -S -i $< \
-		| $(HFST_FST2FST) -O -o $@
-
-# Convert normalised text to some sort of phonemic form:
-text2phontext.hfstol: text2phontext.regex
-	$(AM_V_RGX2FST)$(HFST_REGEXP2FST) -S -i $< \
-		| $(HFST_FST2FST) -O -o $@
 
 # Helper fst:
 # Add spaces before and after symbol transcriptions, so that they appear as individual
