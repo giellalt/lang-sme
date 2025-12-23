@@ -685,7 +685,7 @@ real-earret = Čállinmeattáhus dán oktavuođas
     .example-1 = Eandalit čáhppes beana lea buot divraseamos borramuš, čállá Kitti erret eará dán nuppi mátkkereivves Thailánddas.
     .ref-1 = 
 
-real-real-Ess-PrsSg1 = Čállinmeattáhus dán oktavuođas
+real-Ess-PrsSg1 = Čállinmeattáhus dán oktavuođas
     .desc =  Don leat čállán substantiivva essiivvas "{$1}". Jus oaivvildat vearbba 1. persovnna singuláras, de galgá leat "{€1}".
     .example-1 = Muhto ihttin lean fas sápmelaš, muhto juste dál melden olggos, vuolggan geahččat Greys Anatomy.
     .example = Go šieđđaluvan, de dalle mun čohkkedan ja fas joatkkan mátki.
