@@ -338,10 +338,6 @@ syn-case-congruence-moanat = Boasttuhápmi
     .desc = Kongrueansa "moanat" ja substantiivva gaskkas
     .example-1 = Departemeanta lea moanat geardde juo cuiggodan dan dili ahte dát guokte joatkaskuvlla eai nagot doarvái ohppiid skuvllaide háhkat, ja departemeanttas nana gáibádusat skuvllaide deavdit guoros oahpposajiid.
 
-syn-finitev_missing-end = Sátni váilu
-    .desc = Finihtta vearba váilu
-    .example-1 = Gii ruoktot?
-
 lex-transitive = Boasttusátni
     .desc = Berrešii leat transitiiva vearba
     .example-1 = Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta.
@@ -354,16 +350,6 @@ msyn-partitive-loc = Boasttuhápmi
     .desc = Lokatiiva partitiiva (oassi--ollislašvuohta) ráhkadusain
     .example-1 = Vaikko eanaš oassi olbmuid eai liiko sudno politihkkii, de dan eaba válde vuhtii Putin ja Medvedev.
     .ref-1 = Nickel1994:498
-
-msyn-gen-before-postp = Boasttuhápmi
-    .desc = Genitiiva postposišuvnna ovddas
-    .example-1 = Mii leat dávjá ságastallan dan diŋga birra.
-    .ref-1 = 
-
-msyn-gen-after-prep = Boasttuhápmi
-    .desc = Genitiiva preposišuvnna ovddas
-    .example-1 = Ale diškkut čázi gasku gonagas.
-    .ref-1 = 
 
 msyn-ess-sgcom = Boasttuhápmi
     .desc = Berrešii leat komitatiiva
@@ -446,9 +432,6 @@ syn-not-actio = Boasttuhápmi
     .example-1 = Lávejit nu máilmmi fiidnát orrome diet doahpagat.
     .ref-1 = Nickel1994:441ff
 
-syn-not_actio = Boasttuhápmi
-    .desc = Galggašii leat infinitiiva.
-    .example-1 = Lávejit nu máilmmi fiidnat orrome diet doahpagat.
 real-Derh-Inf = Konsonántameattáhus
     .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") konsonántaguovddážis. Don leat čállán kausatiiva hámi dan sajis go infinitiiva hámi.
     .example-1 = Studeanta ferte ceavzzit goappašiid eksámeniid.
@@ -477,7 +460,7 @@ real-oastit = Čállinmeattáhus dán oktavuođas
     .example-2 = Lea oainnat nu ahte bohtet Suoma bealde deikke oasttit guliid.
     .example-3 = Beaivet lea dábálaš váccašit márkanis, guovlat mii fállojuvvo, ja soaitá vel oasttit dujiid, biepmuid dahje eará.
     .example-4 = Jos mis livčče basttat, de fitnodat livčče ferten oasttit mis bálvalusaid ja mii leimmet beassat dalle ieža mearredit goas min mielas lea buoremussan gáldet iežamet bohccuid, čilge namahis boazodoalli.
-syn-super-part2 = Komparerenmeattáhus
+syn-super = Komparerenmeattáhus
     .desc = Don leat čállán "eanemus {$1}". Galgá go baicce adjektiivva kompareret? 
     .example-1 = Earet eará Guovdageainnu eanemus bivnnuhis sajis, Juhls Silver Gallerys, dánsunoahpaheaddjis, Beyoncés ja orodettiin Ođđa Zealánddas.
     .example-2 = Danne lea eanemus lunddolaš earuhit iešguđet doaimmaid maid Sámediggi čađaha.
@@ -794,4 +777,628 @@ space-before-punct-mark = Sátnegaskameattáhus
 
 no-space-after-punct-mark = Sátnegaskameattáhus
     .desc = Cealkaga loahpas, maŋŋel "{$1}" galgá leat sátnegaska.
+    .example = 
+
+syn-add-ahte = juoga
+    .desc = 
+    .exapmle-1 =
+
+compound-vallji-or-valljugas =
+    .desc =
+    .example-1 =
+
+&lex-gaskan-gaskkas =
+    .desc =
+    .example-1 =
+    
+lex-majuscule = 
+    .desc =
+    .example-1 = 
+
+lex-mal-not-plc =
+    .desc =
+    .example-1 =
+
+lex-minuscule =
+    .desc =
+    .example-1 =
+
+lex-valjit-not-valji =
+    .desc =
+    .example =
+    
+msyn-ASgLoc-AAttrORAdv =
+    .desc =
+    .example-1 =
+
+msyn-missing-argument =
+    .desc =
+    .example-1 =
+
+msyn-moddii =
+    .desc =
+    .example-1 =
+
+msyn-nom-not-acc
+    .desc =
+    .example-1 =
+
+msyn-plloc-ess
+    .desc =
+    .example-1 =
+
+msyn-prs_not_prt_subclause =
+    .desc =
+    .example-1 =
+
+msyn-valency-add-acc-prfprc =
+    .desc =
+    .example-1 =
+
+msyn-valency-add-acc-to-ess
+    .desc =
+    .example-1
+
+msyn-valency-add-leat =
+    .desc =
+    .example-1
+
+msyn-valency-ahte-not-fs =
+    .desc =
+    .example-1 =
+
+msyn-valency-ill-com =
+    .desc =
+    .example-1 =
+
+msyn-valency-ill-loc = 
+    .desc =
+    .example-1 =
+
+msyn-valency-ill-missing =
+    .desc =
+    .example-1 =
+
+msyn-valency-ill-ovddas =
+    .desc =
+    .example-1 =
+
+msyn-valency-inf-not-fs =
+    .desc =
+    .example-1 =
+
+msyn-valency-loc-acc =
+    .desc =
+    .example-1
+
+msyn-valency-loc-missing =
+    .desc =
+    .example-1 =
+
+msyn-valency-locative =
+    .desc =
+    .example-1 =
+
+msyn-valency-lusa-ill =
+    .desc =
+    .example-1 =
+
+msyn-valency-not-ahte =
+    .desc =
+    .example-1 =
+
+msyn-valency-not-inf =
+    .desc =
+    .example-1 =
+
+msyn-valency-not-maŋŋái =
+    .desc =
+    .example-1 =
+
+msyn-wrong_case =
+    .desc =
+    .example-1 =
+
+msyn-valency-ahte-not-fs =
+    .desc =
+    .example-1 =
+
+msyn-valency-aktioloc-inf =
+    .desc =
+    .example-1 =
+
+msyn-valency-com-ess =
+    .desc =
+    .example-1 =
+
+msyn-valency-das-before-fs =
+    .desc =
+    .example-1 =
+
+msyn-valency-dasa-before-fs =
+    .desc =
+    .example-1 =
+
+no-space-after-parent-end =
+    .desc =
+    .example-1 =
+
+no-space-before-parent-start =
+    .desc =
+    .example-1 =
+
+punct-aistton-right =
+    .desc =
+    .example-1 =
+
+punct-aistton-siste =
+    .desc =
+    .example-1 =
+
+punct-sáhcu =
+    .desc =
+    .example-1 =
+
+real-ActioNom-PrfPrc =
+    .desc =
+    .example-1 =
+
+real-adde =
+    .desc =
+    .example-1 =
+
+real-adden =
+    .desc =
+    .example-1 =
+
+real-addet =
+    .desc =
+    .example-1 =
+
+real-adnui-atnui =
+    .desc =
+    .example-1 =
+
+real-áibbas = 
+    .desc =
+    .example-1 =
+
+real-áiggi =
+    .desc =
+    .example-1
+
+real-ale =
+    .desc =
+    .example-1
+
+real-allet =
+    .desc =
+    .example-1
+
+real-állut =
+    .desc =
+    .example-1 =
+
+real-almmaiduvvat =
+    .desc =
+    .example-1 =
+
+real-álo =
+    .desc =
+    .example-1 =
+
+real-alu =
+    .desc =
+    .example-1 =
+
+real-ballán =
+    .desc =
+    .example-1 =
+
+real-bállen =
+    .desc =
+    .example-1 =
+
+real-beasadit =
+    .desc =
+    .example-1 =
+
+real-biddjui =
+    .desc =
+    .example-1 =
+
+real-bidjui =
+    .desc =
+    .example-1 =
+
+real-boahtá =
+    .desc =
+    .example-1 =
+
+real-bokte =
+    .desc =
+    .example-1 =
+
+real-čohkkába =
+    .desc =
+    .example-1 =
+
+real-dáhto =
+    .desc =
+    .example-1 =
+
+real-dáruiduhttin =
+    .desc =
+    .example-1 =
+
+real-dassá =
+    .desc =
+    .example-1 =
+
+real-dássái =
+    .desc =
+    .example-1 =
+
+real-dassážii =
+    .desc =
+    .example-1 =
+
+real-DerdImprtSg2-PrsPl3 =
+    .desc =
+    .example-1 =
+
+real-DerNomActSgGen-PrfPrc =
+    .desc =
+    .example-1 =
+
+real-DerNomActSgGen-PrsSg1 =
+    .desc =
+    .example-1 =
+
+real-DerNomActSgGen-PrsSg1 =
+    .desc =
+    .example-1 =
+
+real-DerNomActSgGen-PrtSg1 =
+    .desc =
+    .example-1 =
+
+real-DerNomActSgGen-PrtSg1 =
+    .desc =
+    .example-1 =
+
+real-DerNomAgPlNom-Inf =
+    .desc =
+    .example-1 =
+
+real-DerNomAgSgAcc-PrtSg3 =
+    .desc =
+    .example-1 =
+
+real-diehtit = 
+    .desc =
+    .example-1 =
+
+real-dihtii =
+    .desc =
+    .example-1 =
+
+real-dohko = 
+    .desc =
+    .example-1 =
+
+real-duodjái = 
+    .desc =
+    .example-1 =
+
+real-eanet =
+    .desc =
+    .example-1 =
+
+real-geahčalit-geahččalit =
+    .desc =
+    .example-1 =
+
+real-geahččalii 0
+    .desc =
+    .example-1 =
+
+real-geahččalin =
+    .desc =
+    .example-1 =
+
+real-geahpis =
+    .desc =
+    .example-1 =
+
+real-geažes =
+    .desc =
+    .example-1 =
+
+real-GenSg-NomSg =
+    .desc =
+    .example-1 =
+
+real-girji =
+    .desc =
+    .example-1 =
+
+real-girjji =
+    .desc =
+    .example-1 =
+
+real-girjjiide =
+    .desc =
+    .example-1 =
+
+real-guhka-guhká =
+    .desc =
+    .example-1 =
+
+real-guhkká-guhká =
+    .desc =
+    .example-1 =
+
+real-hallan =
+    .desc =
+    .example-1 =
+
+real-heaŋgát =
+    .desc =
+    .example-1 =
+
+real-ImprtDu1-DerPassPrsSg3 =
+    .desc =
+    .example-1 =
+
+real-ImprtPl2-DerhPrsConNeg =
+    .desc =
+    .example-1 =
+
+real-ImprtPl2-Inf =
+    .desc =
+    .example-1
+
+real-ImprtSg1-DerPassPrfPrc =
+    .desc =
+    .example-1 =
+
+real-ImprtSg1-PrfPrc =
+    .desc = 
+    .example-1 =
+
+real-ImprtSg2-Inf =
+    .desc =
+    .example-1 =
+
+real-jearrá =
+    .desc = 
+    .example-1 =
+
+real-jearran =
+    .desc =
+    .exampe-1 =
+
+real-joatkán =
+    .desc =
+    .example-1 =
+
+real-johttui-johtui
+    .desc =
+    .example-1 =
+
+real-johtui
+    .desc =
+    .example-1 =
+
+real-lahkalagaid
+    .desc =
+    .example-1
+
+real-luohti =
+    .desc =
+    .example-1 0
+
+real-mahká =
+    .desc =
+    .example-1 =
+
+real-maŋŋit =
+    .desc =
+    .example-1 =
+
+real-measta =
+    .desc =
+    .example-1 =
+
+real-muhtumin =
+    .desc =
+    .example-1 =
+
+real-muoŧás =
+    .desc =
+    .example-1 =
+
+real-njaŋgát =
+    .desc =
+    .example-1 =
+
+real-NomAgIll-PrtSg3 =
+    .desc =
+    .example-1 =
+
+real-NSgIll-ASgNom
+    .desc =
+    .example-1 =
+
+real-NSgIll-PrtSg3 =
+    .desc =
+    .example-1 =
+
+real-nuorain =
+    .desc =
+    .example-1 =
+
+real-nuorran = 
+    .desc =
+    .example-1 =
+
+real-nuppádassii
+    .desc =
+    .example-1 =
+
+real-oaččut =
+    .desc =
+    .example-1 =
+
+real-oktage =
+    .desc =
+    .example-1 =
+
+real-orrut =
+    .desc =
+    .example-1 =
+
+real-PlNomPxSg2-PlNom =
+    .desc =
+    .example-1 =
+
+real-prs-pl3-not-imprt-pl2 =
+    .desc =
+    .example-1 =
+
+real-PrsConNeg-PrsPl3 =
+    .desc =
+    .example-1 =
+
+real-PrsConNeg-PrtPl3 =
+    .desc =
+    .example-1 =
+
+real-PrsSg1-PrfPrc =
+    .desc =
+    .example-1 =
+
+real-raddi =
+    .desc =
+    .example-1 =
+
+real-ráđđi =
+    .desc =
+    .example-1 =
+
+real-Ráđđi =
+    .desc =
+    .example-1 =
+
+real-ragada =
+    .desc =
+    .example-1 =
+
+real-rahčá =
+    .desc =
+    .example-1 =
+
+real-sáhtaš =
+    .desc =
+    .example-1 =
+
+real-sáhtáš =
+    .desc = 
+    .example-1 =
+
+real-sáhtát =
+    .desc =
+    .example-1 =
+
+real-sakka =
+    .desc =
+    .example-1 =
+
+real-vahkku =
+    .desc =
+    .example-1 =
+
+real-váldii =
+    .desc =
+    .example-1 =
+
+real-valljugas = 
+    .desc =
+    .example-1 =
+
+real-varra =
+    .desc =
+    .example-1 =
+
+real-várra =
+    .desc =
+    .example-1 =
+
+real-veallát =
+    .desc =
+    .example-1 =
+
+real-vuodjit =
+    .desc =
+    .example-1 =
+
+real-vuvdii =
+    .desc =
+    .example-1 =
+
+syn-case_congruence =
+    .desc =
+    .example-1 =
+
+syn-congruence-com-num
+    .desc
+    .example-1 =
+
+syn-congruence-loc-num=
+    .desc =
+    .example-1 =
+
+syn-double-inchoative =
+    .desc =
+    .example-1 =
+
+syn-go-not-ahte =
+    desc =
+    .example-1 =
+
+syn-not-aidna =
+    desc =
+    .example-1 =
+
+syn-object_missing =
+    .desc
+    .example-1 =
+
+syn-PassPrsPl1-PrtPl1 =
+    desc =
+    .example-1 =
+
+syn-PassPrtSg3-PrtSg3 =
+    desc =
+    .example-1 =
+
+syn-short-gen =
+    .desc =
+    .example-1 =
+
+syn-super-erenoamáš-buot =
+    .desc =
+    .example-1 =
+
+syn-super-erenoamáš =
+    .desc = 
+    .example-1 =
+
+syn-super-erenoamážit =
+    .desc =
+    .example-1 =
+
+
+
 
