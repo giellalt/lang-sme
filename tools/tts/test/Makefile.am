@@ -16,9 +16,6 @@ endif # WANT_TTS
 # be fixed *later*, but is not critical at the moment:
 XFAIL_TESTS=
 
-####### Other targets: ###########
-clean-local:
-	-rm -f *.txt
 
 include $(top_srcdir)/../giella-core/am-shared/tools-tts-test-dir-include.am
 include $(top_srcdir)/../giella-core/am-shared/devtest-include.am
