@@ -37,7 +37,7 @@ msyn-addhyphen = Goallossáhcomeattáhus
     .example-1 = Ossodagat addet maiddái doarjaga dutkamii, geahččalan ja ovdánahttinbargui, ja servet riikkaidgaskasaš ovttasbargguide sin fágasurggiineaset.
 
 real-hallan = Boasttuvearbasuorggádus
-    .desc = Don leat čállán vearbba "{$1}". "-hallat" passiivvas ii rievdda goassege loahppavokála.
+    .desc = Don leat čállán vearbba "{$1}". "-hallat" passiivvas ii rievdda goassege maŋemus a-vokála.
     .example-1 = Mii gávnnaimet elliid mat ledje jápmán, main ledje borahallon seaibbit, bealjit ja vel juolggit ge.
     .example-2 = Dat ferte oainnahallot ovdal go sáhttit báhčit dan, lohká son.
     .example-3 = Lojes gumpe Lea máŋga vahkku áigi dan rájes go gumppe álggos beakkehii Kárášjoga guovllus, ja Gaup atnáge imašin go gumpe lea dan rájes sihke vuddjon biilii, ja maiddái oainnahallon viesuid lahka.
@@ -178,7 +178,7 @@ real-čohkket = Konsonántameattáhus
     .example-1 = Midjiide sápmelaččaide gártá nu ahte min vuogit čohket, dulkot ja juohkit dieđuid, das maiddái riektedieđuid, eai lohkko riektelanjas.
     
 real-čohkkii = Čállinmeattáhus dán oktavuođas
-    .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") loahppavokálas. Oaivvildat go "{€1}"?
+    .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") loahpas. Oaivvildat go "{€1}"?
     .example-1 = Eahkedis čohkki Lloyde olbmáideaset bankehttii.
     
 real-čoahkkái = Čállinmeattáhus dán oktavuođas
@@ -313,17 +313,17 @@ real-ImprtPl1-PassInf = Konsonántameattáhus
     .example-1 = Fátmmastit šiehtadussii sáhttá atnot sámi vuoigatvuođaeaiggadiid vuosttá, ja eará álgoálbmogiid sullasaš vuoigatvuođaiguin boahttevaš riekteproseassain.
     .ref-1 = Pope2004:278
 
-real-PrtPl3-PrsSg3 = Boasttuhápmi !!
-    .desc = "-u" iige "-o"
+real-PrtPl3-PrsSg3 = Boasttuhápmi
+    .desc = Orru leamen čállimeattáhus sáni ("{$1}") soggevokálas. Jus oaivvildat 3. persovnna sg. vearbba, de galgá leat ("{€1}"). 
     .example-1 = Dál son áigo vuoiŋŋastit guokte mánu iežas lagámušaid luhtte.
     .example-2 = Lea dušše dat veahá mii váilo.
 
-real-vázzi-váccii = Boasttuhápmi !!
-    .desc = Sátni šattai eará go dan maid don orut oaivvildeame.
+real-vázzi-váccii = Čállinmeattáhus dán oktavuođas
+    .desc = Vearba ("{$1}") orru leamen boastut. Jus oaivvildat 3. persovnna sg. vearbba de galgá leat ("{€1}"). 
     .example-1 = Gaup vázzi neavttárskuvlla Stáda Teáhterallaskuvllas, ja eksámena válddii 1978:is.
 
-msyn-pers-refl-pron = Boasttusátni !!
-    .desc = Refleksiiva pronomen iige persovnnalaš pronomen.
+msyn-pers-refl-pron = Sátneválljen !!
+    .desc = Dás heivešii refleksiiva pronomen ("{€1}") persovnnalaš pronomena ("{$1}") sadjái.
     .example-1 = Mun válddán mu girjji.
 
 syn-case-congruence-buorre = Boasttuhápmi !!
