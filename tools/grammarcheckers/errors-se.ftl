@@ -805,71 +805,68 @@ lex-valji-valjit =
     
 msyn-ASgLoc-AAttrORAdv =
     .desc =
-    .example-1 =
-
-msyn-missing-argument =
-    .desc =
-    .example-1 =
+    .example-1 = Go fáŋggat eai beasa geavahit iežaset giela, de lassána isolerenvárra ja várra oažžut dárbbašmeahttumis lossa ráŋggáštumi lea stuorat go earáide.
+    .example-2 = Ohcejoga gielddaráđđehus lea sihkastan eret guokte oahpaheaddjiidvirggi ja doaimmaha sámegielat beaiveruovttuid dohkkemeahttumis gáržžes latnjadilis.
 
 msyn-moddii =
     .desc =
-    .example-1 =
+    .example-1 = Bileahtaid konsertii vuvde badjel 500, mii lea guokte geardde eanet go maŋimus jagiid.
 
-msyn-nom-not-acc
+msyn-pron-acc-nom
     .desc =
-    .example-1 =
+    .example-1 = Dan sivas su lea čuohpaduvvon guovtte háve sihke Oslos ahte Helssegis.
 
 msyn-plloc-ess
     .desc =
-    .example-1 =
+    .example-1 = Barggan giellaveahkin ruoššastudeanttaide. 
 
 msyn-prs_not_prt_subclause =
     .desc =
-    .example-1 =
+    .example-1 = Mon jáhkken ahte don lohket iežat jallan.
 
 msyn-valency-add-acc-prfprc =
     .desc =
-    .example-1 =
+    .example-1 = Ledje garra sánit sátnejođiheaddjis, muhto moai letne čielggadan ášši ja ipmirdan dieđusge ahte son balai dán soardit suohkana álbmoga, dadjá Ellen Zahl Jonassen ja lohká gullan sátnejođiheaddjis ahte ii boađe danin go lea mátkkošteame.
 
-msyn-valency-add-acc-to-ess
+msyn-valency-add-acc-to-ess =
     .desc =
-    .example-1
+    .example-1 = Eira ballá dasto váttisin oažžut lobi báhčit getkkiid maid, ii ge dušše albasiid.
 
 msyn-valency-add-leat =
     .desc =
-    .example-1
+    .example-1 = Doppe gos gáibiduvvo ovttasbargu ja searvevuohta, doppe liikot don nai.
 
 msyn-valency-ahte-not-fs =
     .desc =
-    .example-1 =
+    .example-1 = Muhto kantorolbmái jorggihii čállinmášiidnii go ipmirdii mii leimme márškku bártnit.
 
 msyn-valency-ill-com =
     .desc =
-    .example-1 =
+    .example-1 = Elina muitalii ahte son lea álo liikon ivnniiguin ja daid son lea málen dávváliin.
 
 msyn-valency-ill-loc = 
     .desc =
-    .example-1 =
+    .example-1 = Mo áddet dan ahte nubbi geas don liikot vállje baicce jápmima ovdalgo eallima, du ja su lagamuččaid? 
 
 msyn-valency-ill-missing =
     .desc =
-    .example-1 =
+    .example-1 = Gaskaboddosaš presideanta Sámedikkis, Laila Susanne Vars, liiko maid gullá.
 
 msyn-valency-ill-ovddas =
     .desc =
-    .example-1 =
+    .example-1 = Boares áhkku nu liikui veahki ovddas, ja attii bárdnái soappi.
 
 msyn-valency-inf-not-fs =
     .desc =
-    .example-1 =
+    .example-1 = Son liiko gáhtet iežas.
 
 msyn-valency-loc-acc =
     .desc =
-    .example-1
+    .example-1 = Ráđđeolmmái jearai jos poasta ii lean beroštan ođđa dieđuid mat ledjet boahtán áššis, ja namuhii rasfare, ja ahte poastakantuvrii lea sullii 40 kilomehtera, nu ahte šaddá gal menddo guhki fitnat poasta áššiid dahkamin.
 
 msyn-valency-loc-missing =
     .desc =
-    .example-1 =
+    .example-1 = Oahpaheddjiid searvi ballá rektorvirggiid oktiičaskin hehtte dán mihttomeari.
 
 msyn-valency-locative =
     .desc =
