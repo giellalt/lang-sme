@@ -779,33 +779,29 @@ no-space-after-punct-mark = Sátnegaskameattáhus
     .desc = Cealkaga loahpas, maŋŋel "{$1}" galgá leat sátnegaska.
     .example = 
 
-syn-add-ahte = juoga
+syn-add-ahte = ahte váilu
     .desc = 
-    .exapmle-1 =
+    .exapmle-1 = Sii ledje heajut nu ballan dušše doarggiste unna gorudaččat.
 
-compound-vallji-or-valljugas =
+compound-vallji-or-valljugas = Goallesátnemeattáhus
     .desc =
-    .example-1 =
+    .example-1 = Dasa lea sivvan ahte Josef Stalin siđai atnit ávkin davviguovlluid vallji luondduriggodagaid ja ásahii danin gulag-leairraid dohko.
 
-&lex-gaskan-gaskkas =
-    .desc =
-    .example-1 =
+lex-gaskan-gaskkas =
+    .desc = gaskkas iige gaskan
+    .example-1 = Lea 96 jiena earru blohkaid gaskan, Vuovdega sáhttá oažžut mearrideaddji rolla.
     
 lex-majuscule = 
-    .desc =
-    .example-1 = 
+    .desc = sámedikki lea boasttut
+    .example-1 = Dáid gávdná sámedikki ruovttusiidduin ságat-gaskabláđi olis.
 
-lex-mal-not-plc =
+lex-plc-mal =
     .desc =
-    .example-1 =
+    .example-1 = Áillus lei sihke loavdda ja lávvo-muorat mielde.
 
-lex-minuscule =
+lex-valji-valjit =
     .desc =
-    .example-1 =
-
-lex-valjit-not-valji =
-    .desc =
-    .example =
+    .example-1 = Vaikko diein leat vallji bohccot.
     
 msyn-ASgLoc-AAttrORAdv =
     .desc =
