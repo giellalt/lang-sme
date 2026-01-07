@@ -313,81 +313,81 @@ real-ImprtPl1-PassInf = Konsonántameattáhus
     .example-1 = Fátmmastit šiehtadussii sáhttá atnot sámi vuoigatvuođaeaiggadiid vuosttá, ja eará álgoálbmogiid sullasaš vuoigatvuođaiguin boahttevaš riekteproseassain.
     .ref-1 = Pope2004:278
 
-real-PrtPl3-PrsSg3 = Boasttuhápmi
+real-PrtPl3-PrsSg3 = Boasttuhápmi !!
     .desc = "-u" iige "-o"
     .example-1 = Dál son áigo vuoiŋŋastit guokte mánu iežas lagámušaid luhtte.
     .example-2 = Lea dušše dat veahá mii váilo.
 
-real-vázzi-váccii = Boasttuhápmi
+real-vázzi-váccii = Boasttuhápmi !!
     .desc = Sátni šattai eará go dan maid don orut oaivvildeame.
     .example-1 = Gaup vázzi neavttárskuvlla Stáda Teáhterallaskuvllas, ja eksámena válddii 1978:is.
 
-msyn-pers-refl-pron = Boasttusátni
+msyn-pers-refl-pron = Boasttusátni !!
     .desc = Refleksiiva pronomen iige persovnnalaš pronomen.
     .example-1 = Mun válddán mu girjji.
 
-syn-case-congruence-buorre = Boasttuhápmi
+syn-case-congruence-buorre = Boasttuhápmi !!
     .desc = Kongrueansa "buorre" ja substantiivva gaskkas.
     .example-1 = buorre bargoskibir buori jurdagiiguin
 
-syn-number-congruence-moanat = Boasttuhápmi
+syn-number-congruence-moanat = Boasttuhápmi !!
     .desc = Kongrueansa "moanat" ja substantiivva gaskkas.
     .example-1 = Moanat buori spábbačiekči leat boahtán Jergolis.
 
-syn-case-congruence-moanat = Boasttuhápmi
+syn-case-congruence-moanat = Boasttuhápmi !!
     .desc = Kongrueansa "moanat" ja substantiivva gaskkas
     .example-1 = Departemeanta lea moanat geardde juo cuiggodan dan dili ahte dát guokte joatkaskuvlla eai nagot doarvái ohppiid skuvllaide háhkat, ja departemeanttas nana gáibádusat skuvllaide deavdit guoros oahpposajiid.
 
-lex-transitive = Boasttusátni
+lex-transitive = Boasttusátni !!
     .desc = Berrešii leat transitiiva vearba
     .example-1 = Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta.
 
-msyn-loc-not-guin = Boasttuhápmi
+msyn-loc-not-guin = Boasttuhápmi !!
     .desc = "-guin" lea komitatiivageažus - dás galggašii lokatiiva
     .example-1 = Muhtimat olggobeale olbmuiguin dadjet ahte ii leat dárbu loddet.
 
-msyn-partitive-loc = Boasttuhápmi
+msyn-partitive-loc = Boasttuhápmi !!
     .desc = Lokatiiva partitiiva (oassi--ollislašvuohta) ráhkadusain
     .example-1 = Vaikko eanaš oassi olbmuid eai liiko sudno politihkkii, de dan eaba válde vuhtii Putin ja Medvedev.
     .ref-1 = Nickel1994:498
 
-msyn-ess-sgcom = Boasttuhápmi
+msyn-ess-sgcom = Boasttuhápmi !!
     .desc = Berrešii leat komitatiiva
     .example-1 = Buvttadeapme lassána njeljiin proseantan dan jage, vaikko diibmá juo lei viehka buorre jahki.
     .example-2 = Dá lea ášši máid boađán fas loktet Sámediggái politihkalaš meannudeapmái dainna ulbmilin ahte Sámediggi bidjá deattu eiseválddiid vuostá vai šaddá buoret boranávddiid hálddašeapmi, dadjá Bæhr.
     .example-3 = Sii dihtet ahte dat sáhttá dahkkot, jus dan seammás áddet Älvsbyn eret.
     .ref-1 = 
 
-msyn-nom-not-gen = Boasttuhápmi
+msyn-nom-not-gen = Boasttuhápmi!!
     .desc = Berrešii leat nominatiiva
     .example-1 = Eatni Inger Anne Siri Triumf ii loga árvalusa ávkin su niidii gii vázzá priváhta joatkkaskuvlla.
     .example-2 = Olli lohká Ávjováris válgaguovllus hálidan sámegielat presideantta ja lohká buorre go várrepresideantta hálddaša sámegiela.
     .ref-1 = 
 
-msyn-sgnom-sggen = Boasttuhápmi
+msyn-sgnom-sggen = Boasttuhápmi !!
     .desc = Berrešii leat genitiiva
     .example-1 = Mun dovddan ahte lean váillahan ritnon muoraid ja skábma čuovgga, lohká Mari.
     .example-2 = Dáhttu diehtit ođđa várrepresideanta nama.
     .ref-1 = 
 
-syn-pred-not-attr = Boasttuhápmi
+syn-pred-not-attr = Boasttuhápmi !!
     .desc = Predikatiiva iige attribuhtta
     .example-1 = Su musihkka lea poehtalaš ja das lea roavis ja ihána čáppa ja fiinna.
     .example-2 = Spábba ii leat  geahppa nu go láve.
     .ref-1 = 
 
-msyn-ASgLoc-AAttr = Boasttuhápmi
+msyn-ASgLoc-AAttr = Boasttuhápmi !!
     .desc = Adjektiiva galgá leat attributiivahámis
     .example-1 = Dán oainnu nanne maiddái Mikkel Nils Sara go lohká ahte eiseváldit gehččet teknihkalaččat ja atnet boazodoalu álkis gaskavuohtan olbmo, bohcco ja guohtuma gaskka, eai ge ipmir organiserema beali.
     .example-2 = Sámi servodaga iešdovdu lea ain rašši, servodat hálida čáppa, linis govaid jeđđehussan rašis dovdduide.
     .ref-1 = 
 
-syn-noun-not-nomag = Boasttuhápmi
+syn-noun-not-nomag = Boasttuhápmi !!
     .desc = Berrešii leat nominatiiva
     .example-1 = Iežas lohká illudit go beassá ná ollu olbmuide muitalit Jesusis, ja oaivvilda iežas Ipmila dáhttu  mielde bargat go sárdnida Ipmilsánis.
     .ref-1 = 
 
-syn-sgnumeral = Boasttuhápmi
+syn-sgnumeral = Boasttuhápmi !!
     .desc = Berrešii leat ovttaidlohku
     .example-1 = Veagat guvttiiguin mánáiguin.
     .example-2 = Veagat golmmaiguin dahje eanet mánáiguin.
@@ -405,29 +405,29 @@ msyn-gen-numeral-jahkasaš  = Numerálagihppomeattáhus
     .example-1 = Muhtumiin lea okta jahkásaš váldodoallu dahje meannu.
     .ref-1 = 
 
-syn-acc-not-nom = Boasttuhápmi
+syn-acc-not-nom = Boasttuhápmi !!
     .desc = Berrešii leat akkusatiiva
     .example-1 = Sámediggi berre dás doallat vuollegis profiila.
     .ref-1 = 
 
-syn-no-agent-with-ot-passive = Cealkkameattáhus
+syn-no-agent-with-ot-passive = Cealkkameattáhus !!
     .desc = Passiivvaiguin ovttas ii heive geavahit lokatiiva
     .example-1 = Eanan gos barta čuožžu, eaiggáduvvo viđa olbmos, namalassii dan golbma vieljažiin, daid oappás ja sin neabis.
     .ref-1 = Nickel1994:227
     .ref-2 = Mikalsen1993:17
 
-syn-illative-agent-with-hallat-passive = Boasttuhápmi
+syn-illative-agent-with-hallat-passive = Boasttuhápmi !!
     .desc = Illatiiva -hallat-passiivvain ovttas
     .example-1 = Prospero lea herttot Milanos Itálias, muhto rivvehallá vieljastis válddi.
     .example-2 = Sámi álbmot, earenoamážit boazodoallu lea hirbmadit cuiggohallan dáža mediain go mahkká billistit luonddu.
     .ref-1 = Nickel1994:228
 
-syn-not_inf = Boasttuhápmi
+syn-not_inf = Boasttuhápmi !!
     .desc = Ii galgga leat infinitiiva.
     .example-1 = Eadni balai mánás leat golgodávdda.
     .ref-1 = Nickel1994:441ff
 
-syn-not-actio = Boasttuhápmi
+syn-not-actio = Boasttuhápmi !!
     .desc = Ii galgga leat áktiohápmi
     .example-1 = Lávejit nu máilmmi fiidnát orrome diet doahpagat.
     .ref-1 = Nickel1994:441ff
@@ -498,7 +498,7 @@ syn-ge_not_ja = Cealkkameattáhus
     .example-1 = Dat lea nominašuvdnačoahkkin gii vállje gean bidjá bajimussii, ja in mun.
     .ref-1 = 
 
-syn-redundant_ahte = Cealkkameattáhus
+syn-redundant_ahte = Cealkkameattáhus !!
     .desc = ii "ahte"
     .example-1 = Dat lei seamma vearrái go ahte ii máhte dola dahkat.
     .ref-1 = 
@@ -550,7 +550,7 @@ msyn-valency-aktioloc-aktioess = Boasttuvearbahápmi
     .example-1 = Sámedikki politihkkárat eai galgga maid darbbašit ballat čalmmustahttimin fitnodagaid.
     .ref-1 = 
 
-msyn-valency-ahte-inf = Cealkkameattáhus
+msyn-valency-ahte-inf = Cealkkameattáhus !!
     .desc = -oalgeacealkka iige infinitiiva
     .example-1 = 
     .ref-1 = 
@@ -669,7 +669,7 @@ real-earret = Čállinmeattáhus dán oktavuođas
     .ref-1 = 
 
 real-Ess-PrsSg1 = Čállinmeattáhus dán oktavuođas
-    .desc =  Don leat čállán substantiivva essiivvas "{$1}". Jus oaivvildat vearbba 1. persovnna singuláras, de galgá leat "{€1}".
+    .desc = Don leat čállán substantiivva essiivvas "{$1}". Jus oaivvildat vearbba 1. persovnna singuláras, de galgá leat "{€1}".
     .example-1 = Muhto ihttin lean fas sápmelaš, muhto juste dál melden olggos, vuolggan geahččat Greys Anatomy.
     .example = Go šieđđaluvan, de dalle mun čohkkedan ja fas joatkkan mátki.
     .ref-1 = 
@@ -713,7 +713,7 @@ lex-not-maŋga =  Sátni ii heive
     .ref-1 = 
 
 lex-maŋŋelis-maŋis = Sátni ii heive
-    .desc =  Don leat čállán "{$1}". Dasa heive "{€1}" buorebut.
+    .desc = Don leat čállán "{$1}". Dasa heive "{€1}" buorebut.
     .example-1 = Beakkán Terje Håkonsen čierastii muohtafielluin hearggi maŋŋelis.
     .ref-1 = 
 
@@ -757,7 +757,7 @@ punct-rihkku = Rihkkomeattáhus
     .example-1 = Son livččii gal viššal muhto sus ii leat goassege dilli bargat.
     .ref-1 = 
 
-typo = Čállinmeattáhus
+typo = Čállinmeattáhus !!
     .desc = Hápmi ii leat sátnelisttus.
 
 double-space-before = Sátnegaskameattáhus
