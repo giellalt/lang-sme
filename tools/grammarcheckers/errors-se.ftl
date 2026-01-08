@@ -868,13 +868,13 @@ msyn-valency-loc-missing =
     .desc =
     .example-1 = Oahpaheddjiid searvi ballá rektorvirggiid oktiičaskin hehtte dán mihttomeari.
 
-msyn-valency-locative =
+msyn-valency-loc-acc =
     .desc =
-    .example-1 =
+    .example-1 = Mun boagustan dus.
 
 msyn-valency-lusa-ill =
     .desc =
-    .example-1 =
+    .example-1 = Áibbašan káfe lusa.
 
 msyn-valency-not-ahte =
     .desc =
@@ -882,23 +882,19 @@ msyn-valency-not-ahte =
 
 msyn-valency-not-inf =
     .desc =
-    .example-1 =
+    .example-1 = In livčče beassan ollášuhttit iežan niegu ja gokčat iežan áibbašeami ruoktot beassat fárret.
 
 msyn-valency-not-maŋŋái =
     .desc =
-    .example-1 =
-
-msyn-wrong_case =
-    .desc =
-    .example-1 =
+    .example-1 = Mii eat áibbaš Romssa maŋŋái.
 
 msyn-valency-ahte-not-fs =
     .desc =
-    .example-1 =
+    .example-1 = Muhto kantorolbmái jorggihii čállinmášiidnii go ipmirdii mii leimme márškku bártnit.
 
-msyn-valency-aktioloc-inf =
+msyn-valency-inf-aktioloc =
     .desc =
-    .example-1 =
+    .example-1 = Jearahallamis čájehuvvo ahte okta juohke njealját olbmos ballá roasmmehuvvat rakeahtaid geažil.
 
 msyn-valency-com-ess =
     .desc =
