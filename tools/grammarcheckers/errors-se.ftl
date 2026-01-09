@@ -322,7 +322,7 @@ real-vázzi-váccii = Čállinmeattáhus dán oktavuođas
     .desc = Vearba ("{$1}") orru leamen boastut. Jus oaivvildat 3. persovnna sg. vearbba de galgá leat ("{€1}"). 
     .example-1 = Gaup vázzi neavttárskuvlla Stáda Teáhterallaskuvllas, ja eksámena válddii 1978:is.
 
-msyn-pers-refl-pron = Sátneválljen !!
+msyn-pers-refl-pron = Boasttuhápmi
     .desc = Dás heivešii refleksiiva pronomen ("{€1}") persovnnalaš pronomena ("{$1}") sadjái.
     .example-1 = Mun válddán mu girjji.
 
