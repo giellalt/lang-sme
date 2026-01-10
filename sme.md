@@ -11056,12 +11056,6 @@ Lexica for adverb subtypes
 
 * **LEXICON adv-time-sup   **
 
-* **LEXICON COMPADV   **
-
-* **LEXICON plc-SUPADVmus   **
-
-* **LEXICON plc-SUPADVmusj   **
-
 The main adverb lexicon
 * **LEXICON adv   ** simply gives the tag +Adv and directs to K
 
