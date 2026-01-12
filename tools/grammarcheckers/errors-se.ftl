@@ -326,6 +326,10 @@ msyn-pers-refl-pron = Boasttuhápmi
     .desc = Dás heivešii refleksiiva pronomen ("{€1}") persovnnalaš pronomena ("{$1}") sadjái.
     .example-1 = Mun válddán mu girjji.
 
+syn-pers-refl-congruence = !!
+    .desc =
+    .example-1 = Lea sin iežas sivva ahte dorohallet, go bahkkejit sarvá lusa go lea rahkame, dadjá son.
+
 syn-case-congruence-buorre = Boasttuhápmi !!
     .desc = Kongrueansa "buorre" ja substantiivva gaskkas.
     .example-1 = buorre bargoskibir buori jurdagiiguin
