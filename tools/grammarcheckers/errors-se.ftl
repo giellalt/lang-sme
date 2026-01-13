@@ -323,27 +323,29 @@ real-vázzi-váccii = Čállinmeattáhus dán oktavuođas
     .example-1 = Gaup vázzi neavttárskuvlla Stáda Teáhterallaskuvllas, ja eksámena válddii 1978:is.
 
 syn-pers-refl-congruence = Kongrueansameattáhus
-    .desc = Subjeavtta ja refleksiiva pronomena ("{$1}") gaskkas galgá leat kongrueansa. 
+    .desc = Subjeavtta ja refleksiiva pronomena ("{$1}") gaskkas galgá leat kongrueansa sihke persovnnas ja logus. 
     .example-1 = Lea sin iežas sivva ahte dorohallet, go bahkkejit sarvá lusa go lea rahkame, dadjá son.
-    .example-2 = Lea šaddan mu eallinvuohki, ja mun stivrren iežas beivviid, čilge son.
 
 syn-case-congruence-buorre = Kongrueansameattáhus
-    .desc = Substantiivva ja sáni "buorre" gaskkas galgá leat kongrueansa.
+    .desc = Adjektiivvas "buorre" ja substantiivvas galgá leat seamma kásus ja lohku. 
     .example-1 = buorre bargoskibir buori jurdagiiguin
 
+syn-case-number-congruence-moanat = Kongrueansameattáhus
+    .desc = Sáni "moanat" ja substantiivva gaskkas galgá leat kongrueansa 
+
 syn-number-congruence-moanat = Kongrueansameattáhus
-    .desc = Substantiiva ja sáni "moanat" gaskkas galgá leat kongrueansa. / Go "moanat" geavahuvvo, de galgá álo substantiiva leat máŋggaidlogus.
+    .desc = Go "moanat" geavahuvvo, de galgá álo substantiiva leat máŋggaidlogus.
     .example-1 = Moanat buori spábbačiekči leat boahtán Jergolis.
 
 syn-case-congruence-moanat = Kongrueansameattáhus
-    .desc = Substantiiva ja sáni "moanat" gaskkas galgá leat kongrueansa.
+    .desc = Substantiivva ja sáni "moanat" gaskkas galgá leat kongrueansa kásusa dáfus.
     .example-1 = Departemeanta lea moanat geardde juo cuiggodan dan dili ahte dát guokte joatkaskuvlla eai nagot doarvái ohppiid skuvllaide háhkat, ja departemeanttas nana gáibádusat skuvllaide deavdit guoros oahpposajiid.
 
 lex-transitive = Boasttusátni !!
     .desc = Berrešii leat transitiiva vearba
     .example-1 = Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta.
 
-msyn-loc-not-guin = Boasttuhápmi !!
+msyn-loc-not-guin = Boasttukásus
     .desc = "-guin" lea komitatiivageažus - dás galggašii lokatiiva
     .example-1 = Muhtimat olggobeale olbmuiguin dadjet ahte ii leat dárbu loddet.
 
