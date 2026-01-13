@@ -322,24 +322,21 @@ real-vázzi-váccii = Čállinmeattáhus dán oktavuođas
     .desc = Vearba ("{$1}") orru leamen boastut. Jus oaivvildat 3. persovnna sg. vearbba de galgá leat ("{€1}"). 
     .example-1 = Gaup vázzi neavttárskuvlla Stáda Teáhterallaskuvllas, ja eksámena válddii 1978:is.
 
-msyn-pers-refl-pron = Boasttuhápmi
-    .desc = Dás heivešii refleksiiva pronomen ("{€1}") persovnnalaš pronomena ("{$1}") sadjái.
-    .example-1 = Mun válddán mu girjji.
-
-syn-pers-refl-congruence = !!
-    .desc =
+syn-pers-refl-congruence = Kongrueansameattáhus
+    .desc = Subjeavtta ja refleksiiva pronomena ("{$1}") gaskkas galgá leat kongrueansa. 
     .example-1 = Lea sin iežas sivva ahte dorohallet, go bahkkejit sarvá lusa go lea rahkame, dadjá son.
+    .example-2 = Lea šaddan mu eallinvuohki, ja mun stivrren iežas beivviid, čilge son.
 
-syn-case-congruence-buorre = Boasttuhápmi !!
-    .desc = Kongrueansa "buorre" ja substantiivva gaskkas.
+syn-case-congruence-buorre = Kongrueansameattáhus
+    .desc = Substantiivva ja sáni "buorre" gaskkas galgá leat kongrueansa.
     .example-1 = buorre bargoskibir buori jurdagiiguin
 
-syn-number-congruence-moanat = Boasttuhápmi !!
-    .desc = Kongrueansa "moanat" ja substantiivva gaskkas.
+syn-number-congruence-moanat = Kongrueansameattáhus
+    .desc = Substantiiva ja sáni "moanat" gaskkas galgá leat kongrueansa. / Go "moanat" geavahuvvo, de galgá álo substantiiva leat máŋggaidlogus.
     .example-1 = Moanat buori spábbačiekči leat boahtán Jergolis.
 
-syn-case-congruence-moanat = Boasttuhápmi !!
-    .desc = Kongrueansa "moanat" ja substantiivva gaskkas
+syn-case-congruence-moanat = Kongrueansameattáhus
+    .desc = Substantiiva ja sáni "moanat" gaskkas galgá leat kongrueansa.
     .example-1 = Departemeanta lea moanat geardde juo cuiggodan dan dili ahte dát guokte joatkaskuvlla eai nagot doarvái ohppiid skuvllaide háhkat, ja departemeanttas nana gáibádusat skuvllaide deavdit guoros oahpposajiid.
 
 lex-transitive = Boasttusátni !!
