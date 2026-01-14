@@ -330,39 +330,32 @@ syn-case-congruence-buorre = Kongrueansameattáhus
     .desc = Adjektiivvas "buorre" ja substantiivvas galgá leat seamma kásus ja lohku. 
     .example-1 = buorre bargoskibir buori jurdagiiguin
 
-syn-case-number-congruence-moanat = Kongrueansameattáhus
-    .desc = Sáni "moanat" ja substantiivva gaskkas galgá leat kongrueansa 
-
-syn-number-congruence-moanat = Kongrueansameattáhus
-    .desc = Go "moanat" geavahuvvo, de galgá álo substantiiva leat máŋggaidlogus.
-    .example-1 = Moanat buori spábbačiekči leat boahtán Jergolis.
-
-syn-case-congruence-moanat = Kongrueansameattáhus
-    .desc = Substantiivva ja sáni "moanat" gaskkas galgá leat kongrueansa kásusa dáfus.
-    .example-1 = Departemeanta lea moanat geardde juo cuiggodan dan dili ahte dát guokte joatkaskuvlla eai nagot doarvái ohppiid skuvllaide háhkat, ja departemeanttas nana gáibádusat skuvllaide deavdit guoros oahpposajiid.
+msyn-case-number-congruence-moanat = Kongrueansameattáhus
+    .desc = Sihke sátni "moanat" ja čuovvovaš substantiiva ("{$1}") galget sodjat kásusiid mielde. "Moanat" gáibida maiddái máŋggaidlogu substantiivva. 
+    .example-1 = Moanat buori spábbačiekči leat boahtán Jergolis. 
 
 lex-transitive = Boasttusátni !!
     .desc = Berrešii leat transitiiva vearba
     .example-1 = Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta.
 
-msyn-loc-not-guin = Boasttukásus
+msyn-loc-not-guin = Boasttukásus !!
     .desc = "-guin" lea komitatiivageažus. Dás galggá  leat lokatiiva "-in".
     .example-1 = Muhtimat olggobeale olbmuiguin dadjet ahte ii leat dárbu loddet.
 
-msyn-partitive-loc = Boasttuhápmi !!
-    .desc = Lokatiiva partitiiva (oassi--ollislašvuohta) ráhkadusain
+msyn-partitive-loc = Boasttukásus !!
+    .desc = Don leat čállán sáni "oassi". Dat gábida substantiivva lokatiivvas.
     .example-1 = Vaikko eanaš oassi olbmuid eai liiko sudno politihkkii, de dan eaba válde vuhtii Putin ja Medvedev.
     .ref-1 = Nickel1994:498
 
-msyn-ess-sgcom = Boasttuhápmi !!
-    .desc = Berrešii leat komitatiiva
+msyn-ess-sgcom = Boasttukásus !!
+    .desc = Don leat čállán sáni ("{$1}") essiivvas. Dat galgá leat komitatiivvas.
     .example-1 = Buvttadeapme lassána njeljiin proseantan dan jage, vaikko diibmá juo lei viehka buorre jahki.
     .example-2 = Dá lea ášši máid boađán fas loktet Sámediggái politihkalaš meannudeapmái dainna ulbmilin ahte Sámediggi bidjá deattu eiseválddiid vuostá vai šaddá buoret boranávddiid hálddašeapmi, dadjá Bæhr.
     .example-3 = Sii dihtet ahte dat sáhttá dahkkot, jus dan seammás áddet Älvsbyn eret.
     .ref-1 = 
 
-msyn-nom-not-gen = Boasttuhápmi!!
-    .desc = Berrešii leat nominatiiva
+msyn-nom-not-gen = Boasttukásus!!
+    .desc = Don leat čállán sáni ("{$1}") genetiivvas. Dat galgá leat nominatiivvas. 
     .example-1 = Eatni Inger Anne Siri Triumf ii loga árvalusa ávkin su niidii gii vázzá priváhta joatkkaskuvlla.
     .example-2 = Olli lohká Ávjováris válgaguovllus hálidan sámegielat presideantta ja lohká buorre go várrepresideantta hálddaša sámegiela.
     .ref-1 = 
@@ -399,7 +392,7 @@ syn-sg-not-pl-after-num = Boasttuhápmi
     .example-1 = Fitnodaga álggaheaddji ja sáivačáhcebiologa Rune Muladal muitala Ávvirii ahte Deanu čázádagas lea nu guhkes gaska gaskal luossaveajehiid, ahte ádjána 5-6 geardde guhkit čohket  nu máŋga veajehiid go dárbbašit .
 
 msyn-numphrase-sgnom = Numerálagihppomeattáhus 
-    .desc = Don leat čállán numerálagihpu nominatiivvas. Substantiiva "{$1}" galgá leat singulára gentiivvas "{€1}" go lea "{$2}" maŋŋel. 
+    .desc = Don leat čállán numerálagihpu nominatiivvas. Substantiiva "{$1}" galgá leat ovttaidlogu gentiivvas "{€1}" go lea "{$2}" maŋŋel. 
     .example-1 = Vihtta studeantta leat dán vahkku álgán dán ohppui, ja guokte studeanttat vel bohtet čavčča mielde."
     .ref-1 = 
     
@@ -442,7 +435,7 @@ real-Ess-PrfPrc = Konsonántameattáhus
     .desc = Orru leamen čállinmeattáhus sáni ("{$1}") konsonántaguovddážis. Don leat čállán substantiivva essiivvas. Galgá go leat vearba perfeakta partisihppahámis?
     .example-1 = Sámegielat oahpaheddjiid háhkkan lea stuorra hástalussan dáin skuvllain.
 real-ImprtDu1-NSgNom = Konsonántameattáhus
-    .desc = Orru leamen čállinmeattáhus sáni ("{$1}") konsonántaguovddážis. Don leat čállán vearbba duála imperatiivvas. Galgá go leat substantiiva?
+    .desc = Orru leamen čállinmeattáhus sáni ("{$1}") konsonántaguovddážis. Don leat čállán guvttiidlogu vearbba imperatiivvas. Galgá go leat substantiiva?
     .example-1 = Mii váldit sámegiela duođas, lea Rettera čielga diehttu.
 real-eallá = Čállinmeattáhus dán oktavuođas
     .desc = Orru leamen čállinmeattáhus sáni ("{$1}") loahpas. Jus oaivvildat vearbba 3. perosvnna ovttaidlogus, de galgá leat akseanta-a.
@@ -575,12 +568,12 @@ msyn-valency-nom-acc = Boasttukásus
     .ref-1 = 
 
 msyn-sgcom-plcom = Boasttukásus
-    .desc = Don leat čállán komitatiivva singulára "{$1}". Dat galgá leat komitatiivva plurálas "-guin".
+    .desc = Don leat čállán komitatiivva ovttaidlogu "{$1}". Dat galgá leat komitatiivva máŋggaidlogu gehčosiin "-guin".
     .example-1 = Leago dus miella oahppat eanet davviálbmogiid birra ja deaivvadit eará davviguovlluid nuorain?
     .ref-1 = 
 
 msyn-com-ess = Boasttukásus
-    .desc = Don leat čállán komitatiivva singulára "{$1}". Dat galgá leat essiivvas. 
+    .desc = Don leat čállán komitatiivva ovttaidlogu "{$1}". Dat galgá leat essiivvas. 
     .example-1 = NSR/SáB Nuortaguovllu válgabiire sámediggeáirras Trond Are Anti čilge ahte dát hástalus lea ovddiduvvon ođđa áššiin ja jerron ovdalis ráđis Sámedikki dievasčoahkkimis.
     .ref-1 = 
 
@@ -604,7 +597,7 @@ msyn-sgloc-attr = Boasttuhápmi
     .ref-1 = 
 
 real-galgá = Čállinmeattáhus dán oktavuođas
-    .desc = Orru leamen vokálameattáhusat sánis "{$1}". Jus oaivvildat galgat-vearbba 3. persovnna singuláras, de galgá leat "galgá". 
+    .desc = Orru leamen vokálameattáhusat sánis "{$1}". Jus oaivvildat galgat-vearbba 3. persovnna ovttaidlogus, de galgá leat "galgá". 
     .example-1 = Jua, de gálga leat.
     .example-2 = Go boahttevuođas gálga iskat man ollu ávki gielladoarjagiin lea, de savášii Guovdageainnu suohkan ahte čađahivčče kvalitatiiva mihtidemiid maid, eai ge dušše kvantitatiiva.
     .example-3 = Dalle sáhttá ihtit vuogádatlaš givssideapmi jus rávisolbmos ii leat gelbbolašvuohta ja gálga bidjat rájiid ja bagadallat ovttasdoaibmama.
@@ -622,14 +615,14 @@ real-logát = Čállinmeattáhus dán oktavuođas
     .ref-1 = 
 
 real-lohká = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán substantiivva "{$1}". Jus oaivvildat vearbba 3. persovnna singuláras, de galgá leat "lohká". 
+    .desc = Don leat čállán substantiivva "{$1}". Jus oaivvildat vearbba 3. persovnna ovttaidlogus, de galgá leat "lohká". 
     .example-1 = Boazoeaiggát Magne Huva lohka gávdnan ráppiid.
     .example-2 = Nu ahte ii oktage sáhte lohkat ahte muhtun báikkit filkkas eai leat sámi, lohka Sámediggepresideanta.
     .example-3 = Sii jotket nu dálá oamasteaddji vuođuin, lohka Martinsen.
     .ref-1 = 
 
 real-lohkat = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán "{$1}". Jus oaivvildat vearbba 3. persovnna plurálas, de galgá leat "lohkat". 
+    .desc = Don leat čállán "{$1}". Jus oaivvildat vearbba 3. persovnna máŋggaidlogus, de galgá leat "lohkat". 
     .example-1 = Eat mii viša dien lohkkat, mii háliidit lohkat eambbo Mari birra.
     .ref-1 = 
 
@@ -672,7 +665,7 @@ real-earret = Čállinmeattáhus dán oktavuođas
     .ref-1 = 
 
 real-Ess-PrsSg1 = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán substantiivva essiivvas "{$1}". Jus oaivvildat vearbba 1. persovnna singuláras, de galgá leat "{€1}".
+    .desc = Don leat čállán substantiivva essiivvas "{$1}". Jus oaivvildat vearbba 1. persovnna ovttaidlogus, de galgá leat "{€1}".
     .example-1 = Muhto ihttin lean fas sápmelaš, muhto juste dál melden olggos, vuolggan geahččat Greys Anatomy.
     .example = Go šieđđaluvan, de dalle mun čohkkedan ja fas joatkkan mátki.
     .ref-1 = 
