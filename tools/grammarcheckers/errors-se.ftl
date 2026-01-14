@@ -346,7 +346,7 @@ lex-transitive = Boasttusátni !!
     .example-1 = Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta.
 
 msyn-loc-not-guin = Boasttukásus
-    .desc = "-guin" lea komitatiivageažus - dás galggašii lokatiiva
+    .desc = "-guin" lea komitatiivageažus. Dás galggá  leat lokatiiva "-in".
     .example-1 = Muhtimat olggobeale olbmuiguin dadjet ahte ii leat dárbu loddet.
 
 msyn-partitive-loc = Boasttuhápmi !!
