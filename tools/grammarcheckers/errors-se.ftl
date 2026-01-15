@@ -322,7 +322,7 @@ real-vázzi-váccii = Čállinmeattáhus dán oktavuođas
     .desc = Vearba ("{$1}") orru leamen boastut. Jus oaivvildat 3. persovnna sg. vearbba de galgá leat ("{€1}"). 
     .example-1 = Gaup vázzi neavttárskuvlla Stáda Teáhterallaskuvllas, ja eksámena válddii 1978:is.
 
-syn-pers-refl-congruence = Kongrueansameattáhus
+syn-pers-refl-congruence = Kongrueansameattáhus !!
     .desc = Subjeavtta ja refleksiiva pronomena ("{$1}") gaskkas galgá leat kongrueansa sihke persovnnas ja logus. 
     .example-1 = Lea sin iežas sivva ahte dorohallet, go bahkkejit sarvá lusa go lea rahkame, dadjá son.
 
@@ -330,19 +330,21 @@ syn-case-congruence-buorre = Kongrueansameattáhus
     .desc = Adjektiivvas "buorre" ja substantiivvas galgá leat seamma kásus ja lohku. 
     .example-1 = buorre bargoskibir buori jurdagiiguin
 
-msyn-case-number-congruence-moanat = Kongrueansameattáhus
+msyn-case-number-congruence-moanat-all = Kongrueansameattáhus
     .desc = Sihke sátni "moanat" ja čuovvovaš substantiiva ("{$1}") galget sodjat kásusiid mielde. "Moanat" gáibida maiddái máŋggaidlogu substantiivva. 
-    .example-1 = Moanat buori spábbačiekči leat boahtán Jergolis. 
+    .example-1 = Moanat buori spábbačiekči leat boahtán Jergolis.
 
-lex-transitive = Boasttusátni !!
-    .desc = Berrešii leat transitiiva vearba
+lex-transitive = Sátni ii heive
+    .desc = Don leat čállán vearbba ("{$1}"). Dat ii oro heiveme dán oktavuhtii. Oaivvildat go ("{€1}")?
     .example-1 = Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta.
 
-msyn-loc-not-guin = Boasttukásus !!
-    .desc = "-guin" lea komitatiivageažus. Dás galggá  leat lokatiiva "-in".
+msyn-plcom-plloc = Boasttukásus
+    .desc = "-guin" lea komitatiivageažus. Dás galgá leat lokatiiva "-in".
     .example-1 = Muhtimat olggobeale olbmuiguin dadjet ahte ii leat dárbu loddet.
+    .example-2 = Dat sáhttet leat oassin árvvoštallamiiguin.
+    .example-3 = Muhtin biirres leat gávcci obbalaččat 12 válljejuvvon áirasiiguin leamaš nissonolbmot, ja eará biirres leat buohkat geat leat válljejuvvon leamaš dievddut.
 
-msyn-partitive-loc = Boasttukásus !!
+msyn-partitive-loc = Boasttukásus
     .desc = Don leat čállán sáni "oassi". Dat gábida substantiivva lokatiivvas.
     .example-1 = Vaikko eanaš oassi olbmuid eai liiko sudno politihkkii, de dan eaba válde vuhtii Putin ja Medvedev.
     .ref-1 = Nickel1994:498
