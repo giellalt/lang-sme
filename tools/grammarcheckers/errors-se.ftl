@@ -345,25 +345,25 @@ msyn-plcom-plloc = Boasttukásus
     .example-3 = Muhtin biirres leat gávcci obbalaččat 12 válljejuvvon áirasiiguin leamaš nissonolbmot, ja eará biirres leat buohkat geat leat válljejuvvon leamaš dievddut.
 
 msyn-partitive-loc = Boasttukásus
-    .desc = Don leat čállán sáni "oassi". Dat gábida substantiivva lokatiivvas.
+    .desc = Don leat čállán sáni ("{$2}"). Dat gábida substantiivva lokatiivvas.
     .example-1 = Vaikko eanaš oassi olbmuid eai liiko sudno politihkkii, de dan eaba válde vuhtii Putin ja Medvedev.
     .ref-1 = Nickel1994:498
 
-msyn-ess-sgcom = Boasttukásus !!
+msyn-ess-sgcom = Boasttukásus
     .desc = Don leat čállán sáni ("{$1}") essiivvas. Dat galgá leat komitatiivvas.
     .example-1 = Buvttadeapme lassána njeljiin proseantan dan jage, vaikko diibmá juo lei viehka buorre jahki.
     .example-2 = Dá lea ášši máid boađán fas loktet Sámediggái politihkalaš meannudeapmái dainna ulbmilin ahte Sámediggi bidjá deattu eiseválddiid vuostá vai šaddá buoret boranávddiid hálddašeapmi, dadjá Bæhr.
     .example-3 = Sii dihtet ahte dat sáhttá dahkkot, jus dan seammás áddet Älvsbyn eret.
     .ref-1 = 
 
-msyn-nom-not-gen = Boasttukásus!!
+msyn-gen-nom = Boasttukásus
     .desc = Don leat čállán sáni ("{$1}") genetiivvas. Dat galgá leat nominatiivvas. 
     .example-1 = Eatni Inger Anne Siri Triumf ii loga árvalusa ávkin su niidii gii vázzá priváhta joatkkaskuvlla.
     .example-2 = Olli lohká Ávjováris válgaguovllus hálidan sámegielat presideantta ja lohká buorre go várrepresideantta hálddaša sámegiela.
     .ref-1 = 
 
-msyn-sgnom-sggen = Boasttuhápmi !!
-    .desc = Berrešii leat genitiiva
+msyn-sgnom-sggen = Boasttukásus
+    .desc = Don leat čállán sáni ("{$1}") nominatiivvas. Dat galgá leat genetiivvas.
     .example-1 = Mun dovddan ahte lean váillahan ritnon muoraid ja skábma čuovgga, lohká Mari.
     .example-2 = Dáhttu diehtit ođđa várrepresideanta nama.
     .ref-1 = 
