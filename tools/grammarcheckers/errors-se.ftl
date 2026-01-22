@@ -229,7 +229,7 @@ msyn-acc-to-adv = Boasttukásus
     .ref-1 = Nickel1994:485,488
     
 msyn-acc-to-velggolaš = Boasttukásus
-    .desc = Sátni ("{$1}") orru leamen boasttukásusis. Sátni "velggolaš" gáibida numerála akkusatiivvas ("{€1}").    
+    .desc = Sátni ("{$1}") orru leamen boasttukásusis. Sátni "velggolaš" gáibida lohkosáni akkusatiivvas ("{€1}").    
     .example-1 = Ándde lea munnje guovtti ruvnnu velggolaš.
     .ref-1 = Nickel1994:485
 
@@ -257,7 +257,7 @@ msyn-demphrase-plloc = Boasttukásus
     .example-1 = Álbmotrievttalaš mearrádusat, nugo mat ILO konvenšuvdna 169, leat dehálaš oasit daid čovdosiin maid de šaddá válljet.
 
 syn-number_congruence-subj-verb = Kongrueansameattáhus
-    .desc = Don leat čállán vearbba ("{$1}") boasttupersovnnas. Subjeavtta ja vearbba gaskkas galgá leat kongrueansa sihke persovnnas ja logus.
+    .desc = Don leat čállán vearbba ("{$1}") boasttupersovnnas. Vearba galgá sodjat persovnna ja logu mielde.
     .example-1 = Sis lea erenoamáš lávlunárbevierut.
     .example-2 = Mun leat boaris.
     .example-3 = Mun it leat sordojuvvon, muhto mun jáhkan ahte mu sámevuohta lea dan.
@@ -271,7 +271,7 @@ syn-number_congruence-subj-verb = Kongrueansameattáhus
     .example-11 = Ávvir čálii ovdal dán vahkkus ahte Odd Erling ja su searvvi stivrajođiheaddji Mikhail Pogodaev mátkkošteaba Amerihká New York gávpogii, gos soai galgá oassálastit ON čoahkkimis.
 
 syn-number_congruence-subj-verb-pl1 = Kongrueansameattáhus
-    .desc = Subjeavtta ja vearbba gaskkas galgá leat kongrueansa sihke persovnnas ja logus.
+    .desc = Vearba ("{$1}") galgá sodjat persovnna ja logu mielde.
     .example-1 = Dieđusge mii máhttet sámegiela, go leat ohcan stipeandda lohkat sámegiela vuosttašgiellan.
 
 real-ImprtPl2-PrsPl3 = Čállinmeattáhus dán oktavuođas
@@ -323,7 +323,7 @@ real-vázzi-váccii = Čállinmeattáhus dán oktavuođas
     .example-1 = Gaup vázzi neavttárskuvlla Stáda Teáhterallaskuvllas, ja eksámena válddii 1978:is.
 
 syn-pers-refl-congruence = Kongrueansameattáhus !!
-    .desc = Subjeavtta ja refleksiiva pronomena ("{$1}") gaskkas galgá leat kongrueansa sihke persovnnas ja logus. 
+    .desc = Refleksiiva pronomen ("{$1}") galgá sodjat sihke persovnna ja logu mielde. 
     .example-1 = Lea sin iežas sivva ahte dorohallet, go bahkkejit sarvá lusa go lea rahkame, dadjá son.
 
 syn-case-congruence-buorre = Kongrueansameattáhus
@@ -393,12 +393,12 @@ syn-sg-not-pl-after-num = Boasttuhápmi
     .desc = Berrešii leat ovttaidlohku
     .example-1 = Fitnodaga álggaheaddji ja sáivačáhcebiologa Rune Muladal muitala Ávvirii ahte Deanu čázádagas lea nu guhkes gaska gaskal luossaveajehiid, ahte ádjána 5-6 geardde guhkit čohket  nu máŋga veajehiid go dárbbašit .
 
-msyn-numphrase-sgnom = Numerálagihppomeattáhus 
+msyn-numphrase-sgnom = Lohkosátnemeattáhus 
     .desc = Don leat čállán numerálagihpu nominatiivvas. Substantiiva "{$1}" galgá leat ovttaidlogu gentiivvas "{€1}" go lea "{$2}" maŋŋel. 
     .example-1 = Vihtta studeantta leat dán vahkku álgán dán ohppui, ja guokte studeanttat vel bohtet čavčča mielde."
     .ref-1 = 
     
-msyn-gen-numeral-jahkasaš  = Numerálagihppomeattáhus 
+msyn-gen-numeral-jahkasaš  = Lohkosátnemeattáhus 
     .desc = Substantiiva "{$1}" galgá gentiivvas. 
     .example-1 = Muhtumiin lea okta jahkásaš váldodoallu dahje meannu.
     .ref-1 = 
@@ -431,7 +431,7 @@ syn-not-actio = Boasttuhápmi !!
     .ref-1 = Nickel1994:441ff
 
 real-Derh-Inf = Konsonántameattáhus
-    .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") konsonántaguovddážis. Don leat čállán kausatiiva hámi dan sajis go infinitiiva hámi.
+    .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") konsonántaguovddážis. Don leat čállán kausatiiva hámi. Dás galgá geavahit infinitiiva hámi. 
     .example-1 = Studeanta ferte ceavzzit goappašiid eksámeniid.
 real-Ess-PrfPrc = Konsonántameattáhus
     .desc = Orru leamen čállinmeattáhus sáni ("{$1}") konsonántaguovddážis. Don leat čállán substantiivva essiivvas. Galgá go leat vearba perfeakta partisihppahámis?
