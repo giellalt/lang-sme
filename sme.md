@@ -11128,9 +11128,9 @@ the tag `+Err/Lexc`.
 * **LEXICON DER-SAS ** gets Der/sasj and points to AHKASAS
 
 * **LEXICON Noun  ** dividing in NounNoPx, NounPx (with a P.Px.add flag)  and NounPxKin (with a P.Nom3Px.add flag)
- *                           NounNoPx ;  default nouns, no px 
-* @P.Px.add@                NounPx ;  nouns with px 
-* @P.Px.add@@P.Nom3Px.add@  NounPxKin ;  kinship nouns with px 
+ * NounNoPx ;  default nouns, no px
+* @P.Px.add@ NounPx ;  nouns with px
+* @P.Px.add@@P.Nom3Px.add@ NounPxKin ;  kinship nouns with px
 
 * **LEXICON NounNoPx   ** here goes nouns not taking Px.
 
