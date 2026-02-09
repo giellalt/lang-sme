@@ -218,6 +218,7 @@ msyn-gen-before-postp = Boasttukásus
     .desc = Sátni ("{$1}") orru leamen boasttukásusis. Postposišuvnna maŋŋel galgá nomen leat genetiivvas.
     .example-1 = Mii leat dávjá ságastallan dan diŋga birra.
     .example-2 = Luoikkaheaddjis lea maid vejolaš oastit skearru girji sadjái.
+    .example-3 = Iežas lohká illudit go beassá ná ollu olbmuide muitalit Jesusis, ja oaivvilda iežas Ipmila dáhttu mielde bargat go sárdnida Ipmilsánis.
 
 msyn-gen-after-prep = Boasttukásus
     .desc = Sátni ("{$1}") orru leamen boasttukásusis. Preposišuvnna maŋŋel galgá nomen leat genetiivvas.
@@ -363,53 +364,70 @@ msyn-gen-nom = Boasttukásus
     .ref-1 = 
 
 msyn-sgnom-sggen = Boasttukásus
-    .desc = Don leat čállán sáni ("{$1}") nominatiivvas. Dat galgá leat genetiivvas.
+    .desc = Don leat čállán sáni "{$1}" nominatiivvas. Dat galgá leat genetiivvas.
     .example-1 = Mun dovddan ahte lean váillahan ritnon muoraid ja skábma čuovgga, lohká Mari.
     .example-2 = Dáhttu diehtit ođđa várrepresideanta nama.
     .ref-1 = 
 
 msyn-attr-sgnom = Boasttuhápmi 
-    .desc = Don leat čállán adjektiivva ("{$1}") attribuhttahámis. Dat galgá leat predikatiivahámis.
+    .desc = Don leat čállán adjektiivva "{$1}" attribuhttahámis. Dat galgá leat predikatiivahámis.
     .example-1 = Su musihkka lea poehtalaš ja das lea roavis ja ihána čáppa ja fiinna.
     .example-2 = Spábba ii leat  geahppa nu go láve.
     .ref-1 = 
 
 msyn-ASgLoc-AAttr = Boasttuhápmi
-    .desc = Don leat čállán adjektiivva lokatiivahámis ("{$1}"). Jus oaivvildat adjektiivaattribuhta, dárkkis dan hámi. 
+    .desc = Don leat čállán adjektiivva lokatiivahámis "{$1}". Jus oaivvildat adjektiivaattribuhta, dárkkis dan hámi. 
     .example-1 = Dán oainnu nanne maiddái Mikkel Nils Sara go lohká ahte eiseváldit gehččet teknihkalaččat ja atnet boazodoalu álkis gaskavuohtan olbmo, bohcco ja guohtuma gaskka, eai ge ipmir organiserema beali.
     .example-2 = Sámi servodaga iešdovdu lea ain rašši, servodat hálida čáppa, linis govaid jeđđehussan rašis dovdduide.
     .ref-1 = 
 
-msyn-ASgLoc-AAttrORAdv = !!
-    .desc = 
+msyn-ASgLoc-AAttrORAdv = Boasttuhápmi
+    .desc = Don leat čállán adjektiivva lokatiivahámis "{$1}". Jus oaivvildat adjektiivaattribuhta dahje advearbba, dárkkis dan hámi.
     .example-1 = Go fáŋggat eai beasa geavahit iežaset giela, de lassána isolerenvárra ja várra oažžut dárbbašmeahttumis lossa ráŋggáštumi lea stuorat go earáide.
     .example-2 = Ohcejoga gielddaráđđehus lea sihkastan eret guokte oahpaheaddjiidvirggi ja doaimmaha sámegielat beaiveruovttuid dohkkemeahttumis gáržžes latnjadilis.
     .ref-1 = 
 
-
-syn-noun-not-nomag = Boasttuhápmi !!
-    .desc = Berrešii leat nominatiiva
-    .example-1 = Iežas lohká illudit go beassá ná ollu olbmuide muitalit Jesusis, ja oaivvilda iežas Ipmila dáhttu  mielde bargat go sárdnida Ipmilsánis.
-    .ref-1 = 
-
-syn-sgnumeral = Boasttuhápmi !!
+syn-sg-not-pl-after-num = Boasttuhápmi !!
     .desc = Berrešii leat ovttaidlohku
-    .example-1 = Veagat guvttiiguin mánáiguin.
-    .example-2 = Veagat golmmaiguin dahje eanet mánáiguin.
-syn-sg-not-pl-after-num = Boasttuhápmi
-    .desc = Berrešii leat ovttaidlohku
-    .example-1 = Fitnodaga álggaheaddji ja sáivačáhcebiologa Rune Muladal muitala Ávvirii ahte Deanu čázádagas lea nu guhkes gaska gaskal luossaveajehiid, ahte ádjána 5-6 geardde guhkit čohket  nu máŋga veajehiid go dárbbašit .
+    .example-1 = Fitnodaga álggaheaddji ja sáivačáhcebiologa Rune Muladal muitala Ávvirii ahte Deanu čázádagas lea nu guhkes gaska gaskal luossaveajehiid, ahte ádjána 5-6 geardde guhkit čohket nu máŋga veajehiid go dárbbašit.
 
-msyn-numphrase-sgnom = Numerálagihppomeattáhus 
-    .desc = Don leat čállán numerálagihpu nominatiivvas. Substantiiva ("{$1}") galgá leat ovttaidlogu genetiivvas ("{€1}") go lea lohkosáni maŋŋel. 
+msyn-numphrase-sgnom = Numerálagihppomeattáhus
+    .desc = Don leat čállán numerálagihpu nominatiivvas. Substantiiva ("{$1}") galgá leat ovttaidlogu genetiivvas ("{€1}") go lea numerálagihpus. 
     .example-1 = Vihtta studeantta leat dán vahkku álgán dán ohppui, ja guokte studeanttat vel bohtet čavčča mielde."
     .ref-1 = 
+    
+msyn-numphrase-sggen = Numerálagihppomeattáhus
+    .desc = Don leat čállán numerálagihpu genetiivvas. Sihke substantiiva ja numerála galget leat ovttaidlogu genetiivvas go leat numerálagihpus. 
+    .example-1 = Vihtta studeanttaid eksámenat leat maŋiduvvon.
+    .ref-1 =
+
+msyn-numphrase-sgacc = Numerálagihppomeattáhus
+    .desc = Don leat čállán numerálagihpu akkusatiivvas. Sihke substantiiva ja numerála galget leat ovttaidlogu akkusatiivvas go leat numerálagihpus. 
+    .example-1 =
+    .ref-1 =
+
+msyn-numphrase-sgill =
+    .desc =
+    .example-1 =
+    .ref-1 =
+
+msyn-numphrase-sgcom = 
+    .desc =
+    .example-1 =
+    .ref-1 =
+
+msyn-numphrase-sgloc =
+    .desc =
+    .example-1 =
+    .ref-1 = 
+
     
 msyn-gen-numeral-jahkasaš  = Kásusmeattáhus
     .desc = Don leat čállán sáni ("{$2}"). Dat gáibida lohkosáni ("{$1}") genetiivvas. 
     .example-1 = Muhtumiin lea okta jahkásaš váldodoallu dahje meannu.
     .example-2 = Dasa lassin galget lágiduvvot guokte jahkásaš ovttasbargočoahkkima gaskal Sámedikki ja Davvi Dearvvasvuođa RHF.
     .ref-1 = 
+
 
 syn-acc-not-nom = Boasttuhápmi !!
     .desc = Berrešii leat akkusatiiva
@@ -763,7 +781,7 @@ punct-rihkku = Rihkkomeattáhus
     .example-1 = Son livččii gal viššal muhto sus ii leat goassege dilli bargat.
     .ref-1 = 
 
-typo = Čállinmeattáhus !!
+typo = Čállinmeattáhus
     .desc = Hápmi ii leat sátnelisttus.
 
 double-space-before = Sátnegaskameattáhus
