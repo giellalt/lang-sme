@@ -403,22 +403,22 @@ msyn-numphrase-sggen = Numerálagihppomeattáhus
 
 msyn-numphrase-sgacc = Numerálagihppomeattáhus
     .desc = Don leat čállán numerálagihpu akkusatiivvas. Sihke substantiiva ja numerála galget leat ovttaidlogu akkusatiivvas go leat numerálagihpus. 
-    .example-1 =
+    .example-1 = Fitnodaga álggaheaddji ja sáivačáhcebiologa Rune Muladal muitala Ávvirii ahte Deanu čázádagas lea nu guhkes gaska gaskal luossaveajehiid, ahte ádjána 5-6 geardde guhkit čohket nu máŋga veajehiid go dárbbašit.
     .ref-1 =
 
 msyn-numphrase-sgill = Numerálagihppomeattáhus
-    .desc =
-    .example-1 =
+    .desc = Don leat čállán numerálagihpu illatiivvas. Dat gáibida substantiivva ovttaidlogu illátiivvas ja numerála ovttaidlogu genetiivvas.
+    .example-1 = Bargu lea organiserejuvvon golbma belohahkii latnjalaga oasseprošektii.
     .ref-1 =
 
-msyn-numphrase-sgcom = 
-    .desc =
-    .example-1 =
+msyn-numphrase-sgcom = Numerálagihppomeattáhus
+    .desc = Don leat čállán numerálagihpu komitatiivvas. Sihke substantiiva ja numerála galget leat ovttaidlogu komitattiivvas go leat numerálagihpus. 
+    .example-1 = Máŋgga gielddas ii leat vejolašvuohta levget guvttiin dahje eanet leavggaiguin oktanaga.
     .ref-1 =
 
-msyn-numphrase-sgloc =
-    .desc =
-    .example-1 =
+msyn-numphrase-sgloc = Numerálagihppomeattáhus
+    .desc = Don leat čállán numerálagihpu lokatiivvas. Dat gáibida substantiivva ovttaidlogu lokatiivvas ja numerála ovttaidlogu genetiivvas.
+    .example-1 = Dán golmma suohkanjogain lea sullii mettar asu jiekŋa.
     .ref-1 = 
 
     
