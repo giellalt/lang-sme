@@ -406,7 +406,7 @@ msyn-numphrase-sgacc = Numerálagihppomeattáhus
     .example-1 =
     .ref-1 =
 
-msyn-numphrase-sgill = !!
+msyn-numphrase-sgill = Numerálagihppomeattáhus
     .desc =
     .example-1 =
     .ref-1 =
