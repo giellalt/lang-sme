@@ -152,6 +152,8 @@ Divvun & Giellatekno - open source grammars for Sámi and other languages
 
 * **LEXICON JIEDNAI_DECLINED** misses most cases
 
+* **LEXICON NJOLVAI** njolvái #njolvás. No further declination, ref. Nielsen's dictionary.
+
 * **LEXICON BOARIS**  As GAPPUS, but with different attr.
 
 * **LEXICON BOARIS_NOCOMP**
