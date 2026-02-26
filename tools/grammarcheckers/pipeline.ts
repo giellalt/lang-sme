@@ -13,6 +13,17 @@ export default function smeGramRelease(entry: StringEntry): Command {
   x = divvun.cgspell("speller", x, {
     acc_model_path: "acceptor.default.hfst",
     err_model_path: "errmodel.default.hfst",
+    config: {
+        n_best: 15,              // Maks antal forslag per ord
+        max_weight: 10000.0,      // Maks redigeringsdistanse
+        beam: 49.0,              // Vektområde, meir enn for sjølvstendig stavekontroll - vi kan filtrera med cg-reglar
+        reweight: {              // Straffekostar for ulike feiltypar
+            start_penalty: 20.0,
+            end_penalty: 10.0,
+            mid_penalty: 5.0,
+        },
+        recase: true,            // Prøv å endre kun stor/liten bokstav først
+    },
   });
   x = cg3.vislcg3("postspell-valency", x, { model_path: "valency-postspell.bin" });
   x = cg3.vislcg3("grc-disamb", x, { model_path: "grc-disambiguator.bin" });
@@ -31,6 +42,17 @@ export function smeGram(entry: StringEntry): Command {
   x = divvun.cgspell("speller", x, {
     acc_model_path: "acceptor.default.hfst",
     err_model_path: "errmodel.default.hfst",
+    config: {
+        n_best: 15,              // Maks antal forslag per ord
+        max_weight: 10000.0,      // Maks redigeringsdistanse
+        beam: 49.0,              // Vektområde, meir enn for sjølvstendig stavekontroll - vi kan filtrera med cg-reglar
+        reweight: {              // Straffekostar for ulike feiltypar
+            start_penalty: 20.0,
+            end_penalty: 10.0,
+            mid_penalty: 5.0,
+        },
+        recase: true,            // Prøv å endre kun stor/liten bokstav først
+    },
   });
   x = cg3.vislcg3("postspell-valency", x, { model_path: "valency-postspell.bin" });
   x = cg3.vislcg3("grc-disamb", x, { model_path: "grc-disambiguator.bin" });
