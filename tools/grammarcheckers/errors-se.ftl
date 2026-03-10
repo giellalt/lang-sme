@@ -22,13 +22,13 @@ msyn-Sg3-ConNeg = Boasttuhápmi gieldinvearbba maŋŋel
     .example-3 = In mun nu bures ja inge nu čábbát máhtášii čállit ja lávlut, jos livččen eahpelihkostuvvan olmmoš.
 
 msyn-compound = Goallossátnemeattáhus
-    .desc = Don leat čállán ("{$1}") guoktin sátnin. Dat galgá leat goallosátni. 
+    .desc = Don leat čállán ("{$1}") guoktin sátnin. Dat galgá leat goallossátni. 
     .example-1 = Guollenáhkki lea árbevirolaš materiála mii geavahuvvo sihke čikŋan ja atnu ávnnasin.
     .example-2 = Dat lea illu sáhka midjiide, go juovlamánus bargguhisvuohta Finnmárkkus lea 3,1 proseantta..
     .example-3 = Muhto dattege, vaikke vel dát dieđusge lea illu diehtu sidjiide geat beroštit sámegielat girjiin, de bođii gielddastivrra mearrádus gieskat veahá ártegis vuogi mielde.
 
 msyn-unspace-compound = Goallossátnemeattáhus
-    .desc = Don leat čállán ("{$1}") goallosátnin. Dat galgá leat sátnelihttu.
+    .desc = Don leat čállán ("{$1}") goallossátnin. Dat galgá leat sátnelihttu.
     .example-1 = Sámediggeáirras Randi A. Skum (NSR) jearrá dasto odne gažaldagaid sámediggeráđđái ahte máid lea Sámediggeráđđi dássážii bargan čoavdindihti divatgažaldaga boazodoalus ja makkár strategiija lea Sámediggeráđis ovddasguvlui oažžun dihti vuoiggalaš divatortnega boazodollui.
     .example-2 = Udmurtat lea álgoálbmot Ruoššabealde. 
 
