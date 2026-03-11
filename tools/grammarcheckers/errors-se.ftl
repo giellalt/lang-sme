@@ -428,13 +428,14 @@ msyn-gen-numeral-jahkasaš  = Kásusmeattáhus
     .ref-1 = 
 
 
-syn-acc-not-nom = Boasttuhápmi !!
-    .desc = Berrešii leat akkusatiiva
+msyn-sgnom-sgacc = Boasttukásus
+    .desc = Don leat čállán nominatiivva "{$1}". Das galgá leat akkusatiiva.
     .example-1 = Sámediggi berre dás doallat vuollegis profiila.
+    .example-2 = Jagi 2004:is ráhkadii Gaup goansta mii lea ain dál okta dan goansttain FMX:s.
     .ref-1 = 
 
-syn-no-agent-with-ot-passive = Cealkkameattáhus !!
-    .desc = Passiivvaiguin ovttas ii heive geavahit lokatiiva
+syn-uvvot-passive-active = Cealkkameattáhus 
+    .desc = Don leat čállán passiivacealkaga. Livččiigo vejolaš baicce čállit aktiivacealkaga?
     .example-1 = Eanan gos barta čuožžu, eaiggáduvvo viđa olbmos, namalassii dan golbma vieljažiin, daid oappás ja sin neabis.
     .ref-1 = Nickel1994:227
     .ref-2 = Mikalsen1993:17
