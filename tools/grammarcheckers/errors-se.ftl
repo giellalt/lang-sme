@@ -41,8 +41,7 @@ real-hallan = Boasttuvearbasuorggádus
     .example-1 = Mii gávnnaimet elliid mat ledje jápmán, main ledje borahallon seaibbit, bealjit ja vel juolggit ge.
     .example-2 = Dat ferte oainnahallot ovdal go sáhttit báhčit dan, lohká son.
     .example-3 = Lojes gumpe Lea máŋga vahkku áigi dan rájes go gumppe álggos beakkehii Kárášjoga guovllus, ja Gaup atnáge imašin go gumpe lea dan rájes sihke vuddjon biilii, ja maiddái oainnahallon viesuid lahka.
-    .example-4 =
-    Dušše 40 mehtera Kjell Østmo viesus eret, lea gumpe oainnahallon ja vuhtton maŋŋebárgga. Kjell Østmo giettis, Rávdojoganjárggas, Kárášjogas, lea gumpe sihke vuhtton ja oainnahallon maŋŋebárgga eahkeda.
+    .example-4 = Dušše 40 mehtera Kjell Østmo viesus eret, lea gumpe oainnahallon ja vuhtton maŋŋebárgga. Kjell Østmo giettis, Rávdojoganjárggas, Kárášjogas, lea gumpe sihke vuhtton ja oainnahallon maŋŋebárgga eahkeda.
 
 real-rađastaddat = Akseanta-a meattáhus
     .desc = Orru leamen čállinmeattáhus vuosttaš stávvala vokálas "á". Oaivvildat go "{€1}"?
@@ -94,7 +93,7 @@ real-gierastallat = Akseanta-a meattáhus
     
 real-gierástallat = Akseanta-a meattáhus
     .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "a". Oaivvildat go "{€1}"?
-        .example-1 = Bengtsson gierastalai suinna.
+    .example-1 = Bengtsson gierastalai suinna.
 
 real-buorranaddat = Akseanta-a meattáhus
     .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á". Oaivvildat go "{€1}"?
@@ -836,11 +835,11 @@ msyn-moddii =
     .desc =
     .example-1 = Bileahtaid konsertii vuvde badjel 500, mii lea guokte geardde eanet go maŋimus jagiid.
 
-msyn-pron-acc-nom
+msyn-pron-acc-nom = xxx
     .desc =
     .example-1 = Dan sivas su lea čuohpaduvvon guovtte háve sihke Oslos ahte Helssegis.
 
-msyn-plloc-ess
+msyn-plloc-ess = xxx
     .desc =
     .example-1 = Barggan giellaveahkin ruoššastudeanttaide. 
 
@@ -978,15 +977,15 @@ real-áibbas =
 
 real-áiggi =
     .desc =
-    .example-1
+    .example-1 =
 
 real-ale =
     .desc =
-    .example-1
+    .example-1 =
 
 real-allet =
     .desc =
-    .example-1
+    .example-1 =
 
 real-állut =
     .desc =
@@ -1170,7 +1169,7 @@ real-ImprtPl2-DerhPrsConNeg =
 
 real-ImprtPl2-Inf =
     .desc =
-    .example-1
+    .example-1 =
 
 real-ImprtSg1-DerPassPrfPrc =
     .desc =
@@ -1206,11 +1205,11 @@ real-johtui
 
 real-lahkalagaid
     .desc =
-    .example-1
+    .example-1 =
 
 real-luohti =
     .desc =
-    .example-1 0
+    .example-1 =
 
 real-mahká =
     .desc =
@@ -1411,7 +1410,3 @@ syn-super-erenoamáš =
 syn-super-erenoamážit =
     .desc =
     .example-1 =
-
-
-
-
