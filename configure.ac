@@ -71,7 +71,7 @@ AC_SUBST([SPELLER_DESC_NATIVE], ["Davvisámi čállindárkkisteaddji ráhkaduvvo
 ### Grammar checker release version (usually different from the package version,
 ### typically grammar checkers are released more often than the language
 ### package, and also different from the speller release version):
-AC_SUBST([GRAMCHECKVERSION], [1.3.0])
+AC_SUBST([GRAMCHECKVERSION], [1.3.1])
 
 ### Hyphenation release version
 AC_SUBST([HYPHVERSION], [0.1.0])
