@@ -802,7 +802,7 @@ lex-majuscule = Stuora álgobustávva
 lex-vallji-valjit = Sátni ii heive
     .desc = Don leat čállán "vallji", mii lea ovttaidloguhápmi. Das galgá leat máŋggaidloguhápmi "valjit". 
     .example-1 = Vaikko diein leat vallji bohccot.
-    
+
 msyn-ASgLoc-AAttrORAdv = !!
     .desc =
     .example-1 = Go fáŋggat eai beasa geavahit iežaset giela, de lassána isolerenvárra ja várra oažžut dárbbašmeahttumis lossa ráŋggáštumi lea stuorat go earáide.
