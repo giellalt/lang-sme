@@ -793,6 +793,7 @@ msyn-valljugas-sgnom-attr = Boasttuhápmi
 lex-gaskan-gaskkas = !!
     .desc = gaskkas iige gaskan
     .example-1 = Lea 96 jiena earru blohkaid gaskan, Vuovdega sáhttá oažžut mearrideaddji rolla.
+    .example-2 = 600 000 euro stáhtadoarjja juohkášuvai sámiid ruovttuguovllugielddaid gaskan čuovvovaččat:
     
 lex-majuscule = !!
     .desc = sámedikki lea boasttut
