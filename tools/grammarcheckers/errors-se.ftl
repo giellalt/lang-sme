@@ -790,13 +790,13 @@ msyn-valljugas-sgnom-attr = Boasttuhápmi
     .example-2 = Eallámušvallji eanan šaddá go gehppesmolláneaddji báktešlájat, ábaida kálkavallji šlájat, váikkuhuvvojit ja nu háddjanit (golladuvvojit).
     .example-3 = Seamulvallji // urtavallji goahccevuovdi
 
-lex-gaskan-gaskkas = !!
-    .desc = gaskkas iige gaskan
+lex-gaskan-gaskkas = Sátni ii heive
+    .desc = Don leat čállán postposišuvnna "gaskan". Dasa heive "gaskkas" buorebut. 
     .example-1 = Lea 96 jiena earru blohkaid gaskan, Vuovdega sáhttá oažžut mearrideaddji rolla.
-    .example-2 = 600 000 euro stáhtadoarjja juohkášuvai sámiid ruovttuguovllugielddaid gaskan čuovvovaččat:
+    .example-2 = 600 000 euro stáhtadoarjja juohkášuvai sámiid ruovttuguovllugielddaid gaskan čuovvovaččat.
     
-lex-majuscule = !!
-    .desc = sámedikki lea boasttut
+lex-majuscule = Stuora álgobustávva
+    .desc = Namas "{$1}" galgá leat stuora álgobustávva.
     .example-1 = Dáid gávdná sámedikki ruovttusiidduin ságat-gaskabláđi olis.
 
 lex-plc-mal = !!
