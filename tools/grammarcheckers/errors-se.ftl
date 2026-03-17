@@ -799,8 +799,8 @@ lex-majuscule = Stuora álgobustávva
     .desc = Namas "{$1}" galgá leat stuora álgobustávva.
     .example-1 = Dáid gávdná sámedikki ruovttusiidduin ságat-gaskabláđi olis.
 
-lex-vallji-valjit = Sátni ii heive
-    .desc = Don leat čállán "vallji", mii lea ovttaidloguhápmi. Das galgá leat máŋggaidloguhápmi "valjit". 
+lex-vallji-valjit = Sátni ii heive !!
+    .desc = Don leat čállán "vallji", mii lea substantiiva. Das galgá leat advearba "valjit". 
     .example-1 = Vaikko diein leat vallji bohccot.
 
 msyn-ASgLoc-AAttrORAdv = !!
