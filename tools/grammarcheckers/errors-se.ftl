@@ -803,14 +803,9 @@ lex-vallji-valjit = Sátni ii heive !!
     .desc = Don leat čállán "vallji", mii lea substantiiva. Das galgá leat advearba "valjit". 
     .example-1 = Vaikko diein leat vallji bohccot.
 
-msyn-ASgLoc-AAttrORAdv = !!
-    .desc =
-    .example-1 = Go fáŋggat eai beasa geavahit iežaset giela, de lassána isolerenvárra ja várra oažžut dárbbašmeahttumis lossa ráŋggáštumi lea stuorat go earáide.
-    .example-2 = Ohcejoga gielddaráđđehus lea sihkastan eret guokte oahpaheaddjiidvirggi ja doaimmaha sámegielat beaiveruovttuid dohkkemeahttumis gáržžes latnjadilis.
-
-msyn-moddii = !!
-    .desc =
-    .example-1 = Bileahtaid konsertii vuvde badjel 500, mii lea guokte geardde eanet go maŋimus jagiid.
+msyn-msyn-num_geardde-Ill = Konstrukšuvdnaválljen
+    .desc = Don leat čállán konstrukšuvnna "{$1}". Dás livččii vuogas baicce sojahit numerála illatiivan.
+    .example-1 = Dán áigge áidna sámegielat aviisa lea Norggas almmustuvvi Avvir, mii almmustuvvá guovtti geardde vahkus.
 
 msyn-pron-acc-nom = xxx !!
     .desc =
