@@ -440,8 +440,8 @@ syn-uvvot-passive-active = Cealkkameattáhus
     .ref-1 = Nickel1994:227
     .ref-2 = Mikalsen1993:17
 
-syn-illative-agent-with-hallat-passive = Boasttuhápmi !!
-    .desc = Illatiiva -hallat-passiivvain ovttas
+syn-illative-agent-with-hallat-passive = Boasttuhápmi
+    .desc = Don leat čállán -hallat-passiivva. Dat gáibida dahkki illatiivvas.
     .example-1 = Prospero lea herttot Milanos Itálias, muhto rivvehallá vieljastis válddi.
     .example-2 = Sámi álbmot, earenoamážit boazodoallu lea hirbmadit cuiggohallan dáža mediain go mahkká billistit luonddu.
     .ref-1 = Nickel1994:228
@@ -807,8 +807,8 @@ msyn-msyn-num_geardde-Ill = Konstrukšuvdnaválljen
     .desc = Don leat čállán konstrukšuvnna "{$1}". Dás livččii vuogas baicce sojahit numerála illatiivan.
     .example-1 = Dán áigge áidna sámegielat aviisa lea Norggas almmustuvvi Avvir, mii almmustuvvá guovtti geardde vahkus.
 
-msyn-pron-acc-nom = xxx !!
-    .desc =
+msyn-pron-acc-nom = Boasttukásus
+    .desc = Don leat čállán sáni "{$1}" akkusatiivvas. Dat galgá leat nominatiivvas danin go lea passiivakonstrukšuvdna.
     .example-1 = Dan sivas su lea čuohpaduvvon guovtte háve sihke Oslos ahte Helssegis.
 
 msyn-plloc-ess = xxx !!
