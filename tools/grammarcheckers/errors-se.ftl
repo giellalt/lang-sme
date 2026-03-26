@@ -823,8 +823,8 @@ msyn-valency-add-leat = !!
     .desc =
     .example-1 = Doppe gos gáibiduvvo ovttasbargu ja searvevuohta, doppe liikot don nai.
 
-msyn-valency-ahte-not-fs = !!
-    .desc =
+msyn-valency-ahte-not-fs = Subjunkšuvdna váilu
+    .desc = Don leat čállán oalgecealkaga. Dan álgui galgá subjunkšuvdna "ahte". 
     .example-1 = Muhto kantorolbmái jorggihii čállinmášiidnii go ipmirdii mii leimme márškku bártnit.
     .example-2 = Berntsen áiggui ságastit Eirain, muhto Eira bávččagii go Berntsen cikcii su ja balai Berntsen áiggui čorbmadit su.
     .example-3 = Lávdegoddi ballá boazologuovdáneapmi lihkkostuvva ja ahte boazoeaiggádat eai beasa njuovvat dan mađe ahte eastadit lassánemiid. 
