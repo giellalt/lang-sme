@@ -811,14 +811,6 @@ msyn-pron-acc-nom = Boasttukásus
     .desc = Don leat čállán sáni "{$1}" akkusatiivvas. Dat galgá leat nominatiivvas danin go lea passiivakonstrukšuvdna.
     .example-1 = Dan sivas su lea čuohpaduvvon guovtte háve sihke Oslos ahte Helssegis.
 
-msyn-plloc-ess = xxx !!
-    .desc =
-    .example-1 = Barggan giellaveahkin ruoššastudeanttaide. 
-
-msyn-prs_not_prt_subclause = !!
-    .desc =
-    .example-1 = Mon jáhkken ahte don lohket iežat jallan.
-
 msyn-valency-add-acc-prfprc = !!
     .desc =
     .example-1 = Ledje garra sánit sátnejođiheaddjis, muhto moai letne čielggadan ášši ja ipmirdan dieđusge ahte son balai dán soardit suohkana álbmoga, dadjá Ellen Zahl Jonassen ja lohká gullan sátnejođiheaddjis ahte ii boađe danin go lea mátkkošteame.
