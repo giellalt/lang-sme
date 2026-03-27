@@ -785,10 +785,16 @@ no-space-after-punct-mark = Sátnegaskameattáhus
     .example = 
 
 msyn-valljugas-sgnom-attr = Boasttuhápmi
-    .desc = Don leat čálllán adjektiivva "vallji" predikatiivahámi. Dás galggalii leat attribuhttahápmi "valljugaš". 
+    .desc = Don leat čálllán adjektiivva "vallji" predikatiivahámi. Dás galggalii leat attribuhttahápmi "valljugas". 
     .example-1 = Dasa lea sivvan ahte Josef Stalin siđai atnit ávkin davviguovlluid vallji luondduriggodagaid ja ásahii danin gulag-leairraid dohko.
-    .example-2 = Eallámušvallji eanan šaddá go gehppesmolláneaddji báktešlájat, ábaida kálkavallji šlájat, váikkuhuvvojit ja nu háddjanit (golladuvvojit).
-    .example-3 = Seamulvallji // urtavallji goahccevuovdi
+
+lex-vallji-valjit = Sátni ii heive
+    .desc = Don leat čállán "vallji", mii lea substantiiva. Das galgá leat advearba "valjit" dahje "valjis". 
+    .example-1 = Vaikko diein leat vallji bohccot.
+
+lex-valjis-valljugas = Sátni ii heive
+     .desc = 
+     .example-1 =
 
 lex-gaskan-gaskkas = Sátni ii heive
     .desc = Don leat čállán postposišuvnna "gaskan". Dasa heive "gaskkas" buorebut. 
@@ -799,9 +805,6 @@ lex-majuscule = Stuora álgobustávva
     .desc = Namas "{$1}" galgá leat stuora álgobustávva.
     .example-1 = Dáid gávdná sámedikki ruovttusiidduin ságat-gaskabláđi olis.
 
-lex-vallji-valjit = Sátni ii heive !!
-    .desc = Don leat čállán "vallji", mii lea substantiiva. Das galgá leat advearba "valjit". 
-    .example-1 = Vaikko diein leat vallji bohccot.
 
 msyn-msyn-num_geardde-Ill = Konstrukšuvdnaválljen
     .desc = Don leat čállán konstrukšuvnna "{$1}". Dás livččii vuogas baicce sojahit numerála illatiivan.
@@ -1298,10 +1301,6 @@ real-vahkku = !!
     .example-1 =
 
 real-váldii = !!
-    .desc =
-    .example-1 =
-
-real-valljugas = !!
     .desc =
     .example-1 =
 
