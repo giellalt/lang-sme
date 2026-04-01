@@ -77,7 +77,7 @@ AC_SUBST([GRAMCHECKVERSION], [1.3.1])
 AC_SUBST([HYPHVERSION], [0.1.0])
 
 ### TTS text processing release version
-AC_SUBST([TTSTEXTPROCVERSION], [0.1.0])
+AC_SUBST([TTSTEXTPROCVERSION], [1.0.1])
 
 # Alternate writing system(s) should be listed here using the ISO 15924 code.
 # Multiple alternate WS's should be space separated. For a list of such codes
