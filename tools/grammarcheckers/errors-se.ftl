@@ -345,19 +345,19 @@ msyn-plcom-plloc = Boasttukásus
     .example-3 = Muhtin biirres leat gávcci obbalaččat 12 válljejuvvon áirasiiguin leamaš nissonolbmot, ja eará biirres leat buohkat geat leat válljejuvvon leamaš dievddut.
 
 msyn-partitive-loc = Boasttukásus
-    .desc = Don leat čállán sáni ("{$2}"). Dat gábida substantiivva lokatiivvas.
+    .desc = Don leat čállán sáni "{$2}". Dat gábida substantiivva lokatiivvas.
     .example-1 = Vaikko eanaš oassi olbmuid eai liiko sudno politihkkii, de dan eaba válde vuhtii Putin ja Medvedev.
     .ref-1 = Nickel1994:498
 
 msyn-ess-sgcom = Boasttukásus
-    .desc = Don leat čállán sáni ("{$1}") essiivvas. Dat galgá leat komitatiivvas.
+    .desc = Don leat čállán sáni "{$1}" essiivvas. Dat galgá leat komitatiivvas.
     .example-1 = Buvttadeapme lassána njeljiin proseantan dan jage, vaikko diibmá juo lei viehka buorre jahki.
     .example-2 = Dá lea ášši máid boađán fas loktet Sámediggái politihkalaš meannudeapmái dainna ulbmilin ahte Sámediggi bidjá deattu eiseválddiid vuostá vai šaddá buoret boranávddiid hálddašeapmi, dadjá Bæhr.
     .example-3 = Sii dihtet ahte dat sáhttá dahkkot, jus dan seammás áddet Älvsbyn eret.
     .ref-1 = 
 
 msyn-gen-nom = Boasttukásus
-    .desc = Don leat čállán sáni ("{$1}") genetiivvas. Dat galgá leat nominatiivvas. 
+    .desc = Don leat čállán sáni "{$1}" genetiivvas. Dat galgá leat nominatiivvas. 
     .example-1 = Eatni Inger Anne Siri Triumf ii loga árvalusa ávkin su niidii gii vázzá priváhta joatkkaskuvlla.
     .example-2 = Olli lohká Ávjováris válgaguovllus hálidan sámegielat presideantta ja lohká buorre go várrepresideantta hálddaša sámegiela.
     .ref-1 = 
@@ -375,13 +375,13 @@ msyn-attr-sgnom = Boasttuhápmi
     .ref-1 = 
 
 msyn-ASgLoc-AAttr = Boasttuhápmi
-    .desc = Don leat čállán adjektiivva lokatiivahámis "{$1}". Jus oaivvildat adjektiivaattribuhta, dárkkis dan hámi. 
+    .desc = Don leat čállán adjektiivva "{$1}" lokatiivahámis . Jus oaivvildat adjektiivaattribuhta, dárkkis dan hámi. 
     .example-1 = Dán oainnu nanne maiddái Mikkel Nils Sara go lohká ahte eiseváldit gehččet teknihkalaččat ja atnet boazodoalu álkis gaskavuohtan olbmo, bohcco ja guohtuma gaskka, eai ge ipmir organiserema beali.
     .example-2 = Sámi servodaga iešdovdu lea ain rašši, servodat hálida čáppa, linis govaid jeđđehussan rašis dovdduide.
     .ref-1 = 
 
 msyn-ASgLoc-AAttrORAdv = Boasttuhápmi
-    .desc = Don leat čállán adjektiivva lokatiivahámis "{$1}". Jus oaivvildat adjektiivaattribuhta dahje advearbba, dárkkis dan hámi.
+    .desc = Don leat čállán adjektiivva "{$1}" lokatiivahámis. Jus oaivvildat adjektiivaattribuhta dahje advearbba, dárkkis dan hámi.
     .example-1 = Go fáŋggat eai beasa geavahit iežaset giela, de lassána isolerenvárra ja várra oažžut dárbbašmeahttumis lossa ráŋggáštumi lea stuorat go earáide.
     .example-2 = Ohcejoga gielddaráđđehus lea sihkastan eret guokte oahpaheaddjiidvirggi ja doaimmaha sámegielat beaiveruovttuid dohkkemeahttumis gáržžes latnjadilis.
     .ref-1 = 
@@ -429,7 +429,7 @@ msyn-gen-numeral-jahkasaš  = Kásusmeattáhus
 
 
 msyn-sgnom-sgacc = Boasttukásus
-    .desc = Don leat čállán nominatiivva "{$1}". Das galgá leat akkusatiiva.
+    .desc = Don leat čállán sáni "{$1}" nominatiivvas. Das galgá leat akkusatiiva.
     .example-1 = Sámediggi berre dás doallat vuollegis profiila.
     .example-2 = Jagi 2004:is ráhkadii Gaup goansta mii lea ain dál okta dan goansttain FMX:s.
     .ref-1 = 
@@ -513,18 +513,18 @@ syn-ge_not_ja = Cealkkameattáhus
     .ref-1 = 
 
 syn-timeadverbial-accusative = Boasttukásus
-    .desc = Don leat čállán nominatiivva "{$1}". Dat galgá leat akkusatiivvas.
+    .desc = Don leat čállán sáni "{$1}" nominatiivvas. Dat galgá leat akkusatiivvas.
     .example-1 = Dál lea son oktiibuot jahki orron Sámis, ja dasa lea fargga jagi áigi go álggahii iežas silbarávdefitnodaga Kárášjohkii.
     .ref-1 = 
 
 msyn-valency-ill-acc = Boasttukásus
-    .desc = Don leat čállán akkusatiivva "{$1}", muhto vearba gáibida sáni illatiivvas.
+    .desc = Don leat čállán sáni "{$1}" akkusatiivvas, muhto vearba gáibida sáni illatiivvas.
     .example-1 = Dá lea oahppu dutnje gii liikot hástalusaid!
     .example-2 = Váttis jearaldat, liikon dieđusge buoremusat Gárasavvona ja Guovdageainnu gávtti
     .ref-1 = 
 
 msyn-valency-ill-nom = Boasttukásus
-    .desc = Don leat čállán nominatiivva "{$1}", muhto vearba gáibida sáni illatiivvas.
+    .desc = Don leat čállán sáni "{$1}" nominatiivvas, muhto vearba gáibida sáni illatiivvas.
     .example-1 = Liikon dat mii lea simpal ja vulgeara, maiddái geasuha energiija mii lea punk-ja garramushkas ja dan vikkan jođihit iežas dáidagiid.
     .ref-1 = 
 
@@ -560,18 +560,18 @@ msyn-valency-aktioloc-aktioess = Boasttuvearbahápmi
     .ref-1 = 
 
 msyn-valency-loc-ill = Boasttukásus
-    .desc = Don leat čállán illatiiivva "{$1}". Dat galgá leat lokatiivvas.
+    .desc = Don leat čállán sáni "{$1}" illatiiivvas. Dat galgá leat lokatiivvas.
     .example-1 = Okta eaŋgas lihkkudutki, Lord Layard, čállá ahte olbmot geat beroštit earáin, leat gaskamearrálaččat eambbo lihkolaččat og olbmot geat dušše beroštit alcces.
     .ref-1 = 
 
 msyn-valency-loc-com = Boasttukásus
-    .desc = Don leat čállán komitatiivva "{$1}". Dat galgá leat lokatiivvas.
+    .desc = Don leat čállán sáni "{$1}"komitatiivvas. Dat galgá leat lokatiivvas.
     .example-1 = – Dat ii dárbbašuvvo nu olu suohkana bealis, mii čájeha ahte suohkan berošta iežas nuoraiguin ja hálida sin ruoktot boahtit bargat, loahpaha Barbro Lill Hætta.
     .example-2 = ja seammas ballat ođđa dieđuiguin.
     .ref-1 = 
 
 msyn-valency-nom-acc = Boasttukásus 
-    .desc = Don leat čállán nominatiivva "{$1}". Dat galgá leat akkusatiivvas. 
+    .desc = Don leat čállán sáni "{$1}" nominatiivvas. Dat galgá leat akkusatiivvas. 
     .example-1 = Mun čálán reive.
     .ref-1 = 
 
@@ -581,7 +581,7 @@ msyn-sgcom-plcom = Boasttukásus
     .ref-1 = 
 
 msyn-com-ess = Boasttukásus
-    .desc = Don leat čállán komitatiivva ovttaidlogu "{$1}". Dat galgá leat essiivvas. 
+    .desc = Don leat čállán sáni "{$1}" komitatiivva ovttaidlogus. Dat galgá leat essiivvas. 
     .example-1 = NSR/SáB Nuortaguovllu válgabiire sámediggeáirras Trond Are Anti čilge ahte dát hástalus lea ovddiduvvon ođđa áššiin ja jerron ovdalis ráđis Sámedikki dievasčoahkkimis.
     .ref-1 = 
 
