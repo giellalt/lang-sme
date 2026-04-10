@@ -576,7 +576,7 @@ msyn-valency-nom-acc = Boasttukásus
     .ref-1 = 
 
 msyn-sgcom-plcom = Boasttukásus
-    .desc = Don leat čállán komitatiivva ovttaidlogu "{$1}". Dat galgá leat komitatiivva máŋggaidlogu gehčosiin "-guin".
+    .desc = Don leat čállán sáni "{$1}" komitatiivva ovttaidlogus. Dat galgá leat komitatiivva máŋggaidlogu gehčosiin "-guin".
     .example-1 = Leago dus miella oahppat eanet davviálbmogiid birra ja deaivvadit eará davviguovlluid nuorain?
     .ref-1 = 
 
