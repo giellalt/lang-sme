@@ -124,11 +124,16 @@ AM_CONDITIONAL([WANT_ALT_ORTH_PROOFTOOLS], [ false ])
 AM_CONDITIONAL([DEFAULT_CASE_HANDLING], [ true ])
 
 # Specify the tags for all dialects in this variable, leave it empty if you do
-# NOT support dialectal variant fst's. Use upper case, separate with space.
-# Dialects are presently only used in Oahpa fst's, and only support dialectal
+# NOT support dialectal variant fst's. Use initial case, separate with space.
+# Dialects are mostly used in Oahpa fst's, and only support dialectal
 # variation within the -norm- fst's.
+AC_SUBST([DIALECTS], [""])
 #AC_SUBST([DIALECTS], ["GG KJ GS"])
 AM_CONDITIONAL([HAVE_DIALECTS], [test "x$DIALECTS" != "x"])
+# Specify whether spellers and other proofing tools for dialects should be built,
+# the default is NOT to build them. Change the value below from 'false' to 'true'
+# if such spellers ARE wanted.
+AM_CONDITIONAL([WANT_DIALECT_PROOFTOOLS], [ false ])
 
 ########## LANGUAGE SPECIFIC _BUILD_ SETTINGS ##########
 
