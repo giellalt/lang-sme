@@ -28,7 +28,7 @@ Projects involving North Saami
 ==============================
 
 -   [Oversyn over ulike FST-ar for nordsamisk](KompilereFST.html)
--   [Dictionary projects](/dicts/dicts.html)
+-   [Dictionary projects](/dicts/)
 -   [ICALL](/ped/index.html)
 -   [Machine translation](/mt/MachineTranslation.html)
     -   [Converting the transducers to Apertium

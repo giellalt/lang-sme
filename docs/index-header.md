@@ -67,7 +67,7 @@ Here we document the different components of the analysers and the tags used. We
 
 # Other projects using the North Saami analysers
 
--   [Dictionary projects](/dicts/dicts.html)
+-   [Dictionary projects](/dicts/)
 -   [Machine translation](/mt/MachineTranslation.html)
 -   [ICALL](https://giellalt.uit.no/ped/index.html)
 
