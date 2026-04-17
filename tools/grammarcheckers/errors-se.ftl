@@ -709,7 +709,7 @@ real-jámas = Čállinmeattáhus dán oktavuođas
 
 lex-máŋggas-ollugat = Sátni ii heive
     .desc = Don leat čállán "{$1}". Dasa heive "{€1}" buorebut.
-    .example-1 = Earát eai bovde nu máŋgasa dahje eai heajastala ge.
+    .example-1 = Earát eai bovde nu máŋgasa dahje eai heajastala ge.all
     .ref-1 = 
 
 lex-not-maŋga =  Sátni ii heive
@@ -784,8 +784,8 @@ no-space-after-punct-mark = Sátnegaskameattáhus
     .desc = Cealkaga loahpas, maŋŋel "{$1}" galgá leat sátnegaska.
     .example = 
 
-msyn-valljugas-sgnom-attr = Boasttuhápmi
-    .desc = Don leat čálllán adjektiivva "vallji" predikatiivahámi. Dás galggalii leat attribuhttahápmi "valljugas". 
+lex-vallji-valljugas = Sátni ii heive
+    .desc = Don leat čálllán adjektiivva "vallji" predikatiivahámi. Das galggalii leat attribuhttahápmi "valljugas". 
     .example-1 = Dasa lea sivvan ahte Josef Stalin siđai atnit ávkin davviguovlluid vallji luondduriggodagaid ja ásahii danin gulag-leairraid dohko.
 
 lex-vallji-valjit = Sátni ii heive
@@ -793,8 +793,8 @@ lex-vallji-valjit = Sátni ii heive
     .example-1 = Vaikko diein leat vallji bohccot.
 
 lex-valjis-valljugas = Sátni ii heive
-     .desc = 
-     .example-1 =
+     .desc = Don leat čállán "valjis" mii lea advearba dahje substantiiva. Das galggalii leat adjektiivaattribuhtta "valljugas".
+     .example-1 = Guovdageainnus lea valjis ja girjás kultureallin.
 
 lex-gaskan-gaskkas = Sátni ii heive
     .desc = Don leat čállán postposišuvnna "gaskan". Dasa heive "gaskkas" buorebut. 
@@ -805,7 +805,6 @@ lex-majuscule = Stuora álgobustávva
     .desc = Namas "{$1}" galgá leat stuora álgobustávva.
     .example-1 = Dáid gávdná sámedikki ruovttusiidduin ságat-gaskabláđi olis.
 
-
 msyn-msyn-num_geardde-Ill = Konstrukšuvdnaválljen
     .desc = Don leat čállán konstrukšuvnna "{$1}". Dás livččii vuogas baicce sojahit numerála illatiivan.
     .example-1 = Dán áigge áidna sámegielat aviisa lea Norggas almmustuvvi Avvir, mii almmustuvvá guovtti geardde vahkus.
@@ -814,17 +813,17 @@ msyn-pron-acc-nom = Boasttukásus
     .desc = Don leat čállán sáni "{$1}" akkusatiivvas. Dat galgá leat nominatiivvas danin go lea passiivakonstrukšuvdna.
     .example-1 = Dan sivas su lea čuohpaduvvon guovtte háve sihke Oslos ahte Helssegis.
 
-msyn-valency-add-acc-prfprc = !!
-    .desc =
+msyn-valency-add-acc-prfprc = Akkusatiivapronomen váilu
+    .desc = Don leat geavahan vearbba mii gáibida akkusatiivva ("iežas", "dan" jna.) ovttas infinihttahámiin.
     .example-1 = Ledje garra sánit sátnejođiheaddjis, muhto moai letne čielggadan ášši ja ipmirdan dieđusge ahte son balai dán soardit suohkana álbmoga, dadjá Ellen Zahl Jonassen ja lohká gullan sátnejođiheaddjis ahte ii boađe danin go lea mátkkošteame.
+    .example-2 = Ballá lassi ráŋggáštusa ožžon.
+    .example-3 = Ballá manahan vuoittu.
+    .example-4 = Dán oktavuođas ballá maiddái dagahan vahágiid miessešaddui go eallu lea alimus ragatáiggi muosehuvvan.
 
-msyn-valency-add-acc-to-ess = !!
-    .desc =
-    .example-1 = Eira ballá dasto váttisin oažžut lobi báhčit getkkiid maid, ii ge dušše albasiid.
-
-msyn-valency-add-leat = !!
+msyn-valency-add-leat = Vearba váilu !!
     .desc =
     .example-1 = Doppe gos gáibiduvvo ovttasbargu ja searvevuohta, doppe liikot don nai.
+    .example-2 =  Juohke sorttas lea biras gos liiko buoremusat.
 
 msyn-valency-ahte-not-fs = Subjunkšuvdna váilu
     .desc = Don leat čállán oalgecealkaga. Dan álgui galgá subjunkšuvdna "ahte". 
