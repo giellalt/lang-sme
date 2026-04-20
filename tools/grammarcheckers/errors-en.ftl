@@ -694,6 +694,14 @@ lex-badjelii-not-badjel = Wrong word
 lex-mielde-not-rastá = Wrong word
     .desc = Seems to be wrong word
     .ref-1 = 
+    
+lex-valjis-valljugas = Wrong word
+    .desc = Seems to be wrong word
+    .ref-1 = 
+    
+lex-vallji-valljugas = Wrong word
+    .desc = Seems to be wrong word
+    .ref-1 = 
 
 cmp-nomhyph-or-gen = Wrong form
     .desc = Nominative with hyphen, otherwise genitive
