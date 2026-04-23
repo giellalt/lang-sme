@@ -343,6 +343,7 @@ msyn-plcom-plloc = Boasttukásus
     .example-1 = Muhtimat olggobeale olbmuiguin dadjet ahte ii leat dárbu loddet.
     .example-2 = Dat sáhttet leat oassin árvvoštallamiiguin.
     .example-3 = Muhtin biirres leat gávcci obbalaččat 12 válljejuvvon áirasiiguin leamaš nissonolbmot, ja eará biirres leat buohkat geat leat válljejuvvon leamaš dievddut.
+    .exampe-4 = Mon mannen heajaiguin. 
 
 msyn-partitive-loc = Boasttukásus
     .desc = Don leat čállán sáni "{$2}". Dat gábida substantiivva lokatiivvas.
@@ -559,7 +560,7 @@ msyn-valency-aktioloc-aktioess = Boasttuvearbahápmi
     .example-1 = Sámedikki politihkkárat eai galgga maid darbbašit ballat čalmmustahttimin fitnodagaid.
     .ref-1 = 
 
-msyn-valency-loc-ill = Boasttukásus
+msyn-valency-ill-loc = Boasttukásus
     .desc = Don leat čállán sáni "{$1}" illatiiivvas. Dat galgá leat lokatiivvas.
     .example-1 = Okta eaŋgas lihkkudutki, Lord Layard, čállá ahte olbmot geat beroštit earáin, leat gaskamearrálaččat eambbo lihkolaččat og olbmot geat dušše beroštit alcces.
     .ref-1 = 
@@ -580,9 +581,10 @@ msyn-sgcom-plcom = Boasttukásus
     .example-1 = Leago dus miella oahppat eanet davviálbmogiid birra ja deaivvadit eará davviguovlluid nuorain?
     .ref-1 = 
 
-msyn-com-ess = Boasttukásus
+msyn-sgcom-ess = Boasttukásus
     .desc = Don leat čállán sáni "{$1}" komitatiivva ovttaidlogus. Dat galgá leat essiivvas. 
     .example-1 = NSR/SáB Nuortaguovllu válgabiire sámediggeáirras Trond Are Anti čilge ahte dát hástalus lea ovddiduvvon ođđa áššiin ja jerron ovdalis ráđis Sámedikki dievasčoahkkimis.
+    .example-2 = Lávdegoddi oaivvilldda ahte juohehaččas galgá leat vuoigatvuohta bivdit iežas adnui, vuoigatvuohta beassat álgit ealáhusguolásteaddjiin ja bivdit nu ollu ahte dat addá eallinláibbi.
     .ref-1 = 
 
 msyn-wrong-case-in-coordination = Boasttukásus
@@ -820,80 +822,20 @@ msyn-valency-add-acc-prfprc = Akkusatiivapronomen váilu
     .example-3 = Ballá manahan vuoittu.
     .example-4 = Dán oktavuođas ballá maiddái dagahan vahágiid miessešaddui go eallu lea alimus ragatáiggi muosehuvvan.
 
-msyn-valency-add-leat = Vearba váilu !!
-    .desc =
-    .example-1 = Doppe gos gáibiduvvo ovttasbargu ja searvevuohta, doppe liikot don nai.
-    .example-2 =  Juohke sorttas lea biras gos liiko buoremusat.
-
 msyn-valency-ahte-not-fs = Subjunkšuvdna váilu
     .desc = Don leat čállán oalgecealkaga. Dan álgui galgá subjunkšuvdna "ahte". 
-    .example-1 = Muhto kantorolbmái jorggihii čállinmášiidnii go ipmirdii mii leimme márškku bártnit.
-    .example-2 = Berntsen áiggui ságastit Eirain, muhto Eira bávččagii go Berntsen cikcii su ja balai Berntsen áiggui čorbmadit su.
+    .example-1 = Berntsen áiggui ságastit Eirain, muhto Eira bávččagii go Berntsen cikcii su ja balai Berntsen áiggui čorbmadit su.
     .example-3 = Lávdegoddi ballá boazologuovdáneapmi lihkkostuvva ja ahte boazoeaiggádat eai beasa njuovvat dan mađe ahte eastadit lassánemiid. 
 
-msyn-valency-ill-com = !!
-    .desc =
-    .example-1 = Elina muitalii ahte son lea álo liikon ivnniiguin ja daid son lea málen dávváliin.
-
-msyn-valency-ill-loc = !!
-    .desc =
-    .example-1 = Mo áddet dan ahte nubbi geas don liikot vállje baicce jápmima ovdalgo eallima, du ja su lagamuččaid? 
-
-msyn-valency-ill-missing = !!
-    .desc =
-    .example-1 = Gaskaboddosaš presideanta Sámedikkis, Laila Susanne Vars, liiko maid gullá.
-
-msyn-valency-ill-ovddas = !!
-    .desc =
-    .example-1 = Boares áhkku nu liikui veahki ovddas, ja attii bárdnái soappi.
-
-msyn-valency-inf-not-fs = !!
-    .desc =
-    .example-1 = Son liiko gáhtet iežas.
-
-msyn-valency-loc-acc = !!
-    .desc =
-    .example-1 = Ráđđeolmmái jearai jos poasta ii lean beroštan ođđa dieđuid mat ledjet boahtán áššis, ja namuhii rasfare, ja ahte poastakantuvrii lea sullii 40 kilomehtera, nu ahte šaddá gal menddo guhki fitnat poasta áššiid dahkamin.
-
-msyn-valency-loc-missing = !!
-    .desc =
-    .example-1 = Oahpaheddjiid searvi ballá rektorvirggiid oktiičaskin hehtte dán mihttomeari.
-
-msyn-valency-loc-acc = !!
-    .desc =
-    .example-1 = Mun boagustan dus.
-
-msyn-valency-lusa-ill = !!
-    .desc =
-    .example-1 = Áibbašan káfe lusa.
-
-msyn-valency-not-ahte = !!
-    .desc =
-    .example-1 =
-
-msyn-valency-not-inf = !!
-    .desc =
-    .example-1 = In livčče beassan ollášuhttit iežan niegu ja gokčat iežan áibbašeami ruoktot beassat fárret.
-
-msyn-valency-not-maŋŋái = !!
-    .desc =
-    .example-1 = Mii eat áibbaš Romssa maŋŋái.
-
-msyn-valency-ahte-not-fs = !!
-    .desc =
-    .example-1 = Muhto kantorolbmái jorggihii čállinmášiidnii go ipmirdii mii leimme márškku bártnit.
-
-msyn-valency-inf-aktioloc = !!
-    .desc =
-    .example-1 = Jearahallamis čájehuvvo ahte okta juohke njealját olbmos ballá roasmmehuvvat rakeahtaid geažil.
-
-msyn-valency-com-ess = !!
-    .desc =
-    .example-1 =
+msyn-valency-loc-ill = Boasttukásus
+    .desc = Don leat čállán vearbba, mii dán oktavuođas gáibida substantiivva illatiivvas.
+    .example-1 = Mo áddet dan ahte nubbi geas don liikot vállje baicce jápmima ovdalgo eallima, du ja su lagamuččaid?
+    .example-2 = Ale suhta sus. 
 
 msyn-valency-das-before-fs = !!
     .desc =
-    .example-1 =
+    .example-1 = Balan mii viidáseappot dál geavvá ja ferten go orrut lohkkadan uvssa duohken, imašta stohpoeaiggát.
+    .example-2 = Advokáhtta Jens Johan Hjort ballá makkár váikkuhusat Ernst Pedersen riekteáššis sáhttet čuožžilit, jus son vuoitá lágamannerievttis Tromsø Idrettslag (TIL) joavkku vuostá.
 
 msyn-valency-dasa-before-fs = !!
     .desc =
