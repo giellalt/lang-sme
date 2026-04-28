@@ -779,6 +779,14 @@ space-before-paren-end = Sátnegaskameattáhus
     .desc =  Ruođu "{$1}" ovdal ii galgga leat sátnegaska.
     .example-1 = Son (Áilu ) livččii gal viššal.
 
+parenthesis-missing-space = Sátnegaskameattáhus
+    .desc = Ruođuid ovdal ja maŋŋel galgá leat sátnegaska.
+    .example-1 = Vuoigatvuođa Lávdegotti(SVL)čilgehus.
+
+quotation-marks = Áisttonmearkameattáhus
+    .desc = Don leat čállán áisttonmearkkaid, mat eai leat dohkkehuvvon davvisámegiela riektačállinrávvagiid mielde. Áisttonmearkkaid galgá merket {€1}.  
+    .example-1 = 
+
 space-before-punct-mark = Sátnegaskameattáhus
     .desc = Cealkaga loahpas, ovdal "{$1}" ii galgga leat sátnegaska.
 
@@ -832,34 +840,29 @@ msyn-valency-loc-ill = Boasttukásus
     .example-1 = Mo áddet dan ahte nubbi geas don liikot vállje baicce jápmima ovdalgo eallima, du ja su lagamuččaid?
     .example-2 = Ale suhta sus. 
 
-msyn-valency-das-before-fs = !!
-    .desc =
+msyn-valency-das-before-fs = Pronomen váilu !!
+    .desc = Don leat čállán relatiivapronomena "{$1}". Dat gáibida refereantta masa čujuha, mii dán oktavuođas livččii demonstratiivapronomen lokatiivvas "das".
     .example-1 = Balan mii viidáseappot dál geavvá ja ferten go orrut lohkkadan uvssa duohken, imašta stohpoeaiggát.
     .example-2 = Advokáhtta Jens Johan Hjort ballá makkár váikkuhusat Ernst Pedersen riekteáššis sáhttet čuožžilit, jus son vuoitá lágamannerievttis Tromsø Idrettslag (TIL) joavkku vuostá.
+    .example-3 = Mánát ballet mii etniin geavvá jus eai fuolat su.
+    .example-4 = Balan mii dáhpáhuvaš jus ráđđehus beassá diehtit ahte moaittán sin.
+    .example-5 = Ballen maid earát jurddašit jus čuožžilan.
+    .example-6 = Nancy Porsanger ballá maid dákkárráŋggaštusvugiid dagahit riidduid orohagaid siskkabeallái.
+    .example-7 = Son ballá maid Káhtarin dadjá, go son ii baljo eará oppa hála ge.
+    .example-9 = Guollebivdi ii beroštan maid olmmái dajai, son sugai fas eará mađđái.
+    .example-10 = Ale beroš maid Anders dadjá.
+    .example-11 = Mun in beroš maid bargabeahtti, go fal eahppi ráhkat bárttiid earáide.
+    .example-12 = Mun in beroš gii don leat!
+    .example-13 = Ii ge dat amas ahte kapitalismat dušše smihttet ruđa birra, ja muđui eai beroš mii geavvá luondduin, elliiguin ja olbmuiguin.
 
-msyn-valency-dasa-before-fs = !!
-    .desc =
-    .example-1 =
-
-no-space-after-parent-end = !!
-    .desc =
-    .example-1 =
-
-no-space-before-parent-start = !!
-    .desc =
-    .example-1 =
-
-punct-aistton-right = !!
-    .desc =
-    .example-1 =
-
-punct-aistton-siste = !!
-    .desc =
-    .example-1 =
-
-punct-sáhcu = !!
-    .desc =
-    .example-1 =
+msyn-valency-dasa-before-fs = Pronomen váilu !!
+    .desc = Don leat čállán relatiivapronomena "{$1}". Dat gáibida refereantta masa čujuha, mii dán oktavuođas livččii demonstratiivapronomen illatiivvas "dasa".
+    .example-1 = Gaskaboddosaš presideanta Sámedikkis, Laila Susanne Vars, liiko maid gullá.
+    .example-2 = Son vel vuittii lasi 11.000 ruvnnu ja Márjá lea hui movtta go lea vuoitán ja ahte olbmot liikojit maid son lea designen.
+    .example-3 = Hirbmat somá go álbmot liikui maid mun lean rahkadan, dat attii munnje hui buorre dovddu ja dat dušše addá munnje eanet miela designet viidásabbot, muitala lihkolaš vuoiti Karin Olsen.
+    .example-4 = Dieđusge livččiimet galgan geahččat ášši dárkileappot, iige dušše luohttit mii doppe lei daddjon, dadjá Nilsen.
+    .example-5 = Áhkku gal ii várra liikon maid oinnii ja lea váidan ášši leansmánnii.
+    .example-6 = Movt sáhttá ealáhus dakkár dutkái luohttit mii ovdagihtii lea konkluderen ahte bieggamillut eai leat vahágin, jearrá Ánne.
 
 real-ActioNom-PrfPrc = !!
     .desc =
