@@ -785,7 +785,7 @@ parenthesis-missing-space = Sátnegaskameattáhus
 
 quotation-marks = Áisttonmearkameattáhus
     .desc = Don leat čállán áisttonmearkkaid, mat eai leat dohkkehuvvon davvisámegiela riektačállinrávvagiid mielde. Áisttonmearkkaid galgá merket {€1}.  
-    .example-1 = 
+    .example-1 = Obbalaččat lei nu ahte eatnasat geat áigo sátnesaji oaivvildedje ahte «Fjellfinnhua« filbma ii dagat ahte buorrána gaskavuohta olbmočearddaid gaskka davviguovllus.*
 
 space-before-punct-mark = Sátnegaskameattáhus
     .desc = Cealkaga loahpas, ovdal "{$1}" ii galgga leat sátnegaska.
@@ -840,7 +840,7 @@ msyn-valency-loc-ill = Boasttukásus
     .example-1 = Mo áddet dan ahte nubbi geas don liikot vállje baicce jápmima ovdalgo eallima, du ja su lagamuččaid?
     .example-2 = Ale suhta sus. 
 
-msyn-valency-das-before-fs = Pronomen váilu !!
+msyn-valency-das-before-fs = Pronomen váilu
     .desc = Don leat čállán relatiivapronomena "{$1}". Dat gáibida refereantta masa čujuha, mii dán oktavuođas livččii demonstratiivapronomen lokatiivvas "das".
     .example-1 = Balan mii viidáseappot dál geavvá ja ferten go orrut lohkkadan uvssa duohken, imašta stohpoeaiggát.
     .example-2 = Advokáhtta Jens Johan Hjort ballá makkár váikkuhusat Ernst Pedersen riekteáššis sáhttet čuožžilit, jus son vuoitá lágamannerievttis Tromsø Idrettslag (TIL) joavkku vuostá.
@@ -854,8 +854,9 @@ msyn-valency-das-before-fs = Pronomen váilu !!
     .example-11 = Mun in beroš maid bargabeahtti, go fal eahppi ráhkat bárttiid earáide.
     .example-12 = Mun in beroš gii don leat!
     .example-13 = Ii ge dat amas ahte kapitalismat dušše smihttet ruđa birra, ja muđui eai beroš mii geavvá luondduin, elliiguin ja olbmuiguin.
+    .ref-1 = !!
 
-msyn-valency-dasa-before-fs = Pronomen váilu !!
+msyn-valency-dasa-before-fs = Pronomen váilu
     .desc = Don leat čállán relatiivapronomena "{$1}". Dat gáibida refereantta masa čujuha, mii dán oktavuođas livččii demonstratiivapronomen illatiivvas "dasa".
     .example-1 = Gaskaboddosaš presideanta Sámedikkis, Laila Susanne Vars, liiko maid gullá.
     .example-2 = Son vel vuittii lasi 11.000 ruvnnu ja Márjá lea hui movtta go lea vuoitán ja ahte olbmot liikojit maid son lea designen.
@@ -863,10 +864,11 @@ msyn-valency-dasa-before-fs = Pronomen váilu !!
     .example-4 = Dieđusge livččiimet galgan geahččat ášši dárkileappot, iige dušše luohttit mii doppe lei daddjon, dadjá Nilsen.
     .example-5 = Áhkku gal ii várra liikon maid oinnii ja lea váidan ášši leansmánnii.
     .example-6 = Movt sáhttá ealáhus dakkár dutkái luohttit mii ovdagihtii lea konkluderen ahte bieggamillut eai leat vahágin, jearrá Ánne.
+    .ref-2= !!
 
-real-ActioNom-PrfPrc = !!
-    .desc =
-    .example-1 =
+real-ActioNom-PrfPrc = Vokálameattáhus 
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "u". Das galgá leat "o".
+    .example-1 = Dát smávva čuvllat, leat maid gorrojuvvon biktasiin mat ledje nie baskun.
 
 real-adde = !!
     .desc =
