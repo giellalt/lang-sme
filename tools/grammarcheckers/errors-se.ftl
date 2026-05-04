@@ -381,7 +381,7 @@ real-orrut = Čállinmeattáhus dán oktavuođas
 real-oainnat = Čállinmeattáhus dán oktavuođas
     .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "á". Jus oaivvildat advearbba, de galgá leat "a".
     .example-1 = Dalle oainnát sáddii gielddastivra fas ášši ruovttoluotta dalá huksenráđđái, mii ii šat bargan áššiin maide.
-bohccuid, čilge namahis boazodoalli.
+
 syn-super = Komparerenmeattáhus
     .desc = Don leat čállán "eanemus {$1}". Galgá go baicce adjektiivva kompareret? 
     .example-1 = Earet eará Guovdageainnu eanemus bivnnuhis sajis, Juhls Silver Gallerys, dánsunoahpaheaddjis, Beyoncés ja orodettiin Ođđa Zealánddas.
@@ -795,18 +795,18 @@ real-adnui-atnui = real-guovddáškonsonánta
     .example-3 = Badjealbmát vurde miessemearkuma, eanadoallit čohkke hášestoalppuid, ordnejedje bargobiergasiid.
     .example-4 = Duvka lei čohken arvečázi, ja dát golggai oaivejietnabeavddi ala.
     .example-5 = Konklušuvdna lea ávžžuhit ahte suohkan čohke opmodathálddašeami ovddasvástádusa suohkanlaš doibmii.
-    .example-6 = Midjiide sápmelaččaide gártá nu 
+    .example-6 = Midjiide sápmelaččaide gártá nu bohccuid,
     .example-7 = Dat bovttii garra vuosteháguid muhtun bargiid gaskkii, go oaivvildedje ahte oskuáššiid.
     .example-8 = Lean geavahan olles iežan eallima dasa ja gusto dasa eai adde veaháš ge árvvu, muhto mii gal eat vuollán.
     .example-9 = Dán ferte fitnet sisa movt nu.
     .example-10 = Dat lei divrras oasttit áibbas ođđa pláhta, muhto lei dan veara.
     .example-11 = Lea oainnat nu ahte bohtet Suoma bealde deikke oasttit guliid.
     .example-12 = Beaivet lea dábálaš váccašit márkanis, guovlat mii fállojuvvo, ja soaitá vel oasttit dujiid, biepmuid dahje eará.
-    .example-13 = Jos mis livčče basttat, de fitnodat livčče ferten oasttit mis bálvalusaid ja mii leimmet beassat dalle ieža mearredit goas min mielas lea buoremussan gáldet iežamet 
+    .example-13 = Jos mis livčče basttat, de fitnodat livčče ferten oasttit mis bálvalusaid ja mii leimmet beassat dalle ieža mearredit goas min mielas lea buoremussan gáldet iežamet čilge namahis boazodoalli.
 
 real-áibbaš-áibbas = !!
     .desc =
-    .example-1 =
+    .example-1 = Nu guhkás go čájehuvvo leat dárbbašlažžan vuovddi seailluheami, ođasmahttima dahje ođđasit šaddama dihte dahje dan dihte go guovllus lea muorravátni, de sáhttá Gonagasláhkaásahusaid bokte gáržžidit dahje áibbaš gieldit muoraid váldimis dárkileappot mearriduvvon guovlluin, ja dan olis mearridit ee. ahte varas muorat sáhttet váldot duššefal čájeheami mielde.
 
 real-áiggi = !!
     .desc =
