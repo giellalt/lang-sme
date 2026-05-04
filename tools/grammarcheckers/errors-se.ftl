@@ -207,7 +207,7 @@ msyn-ačča-aččat = Boasttuhápmi
     .ref-1 = Pope2004:120
 
 real-PrsSg1-DerNomActNom = Konsonántameattáhus
-    .desc = Orru leamen meattáhus konsonántaguovddážis. Don leat čállán 1. persovnna sg. vearbba ("{$1}"). Jus oaivvildat substantiivva, de galgá leat ("{€1}"). 
+    .desc = Orru leamen meattáhus guovddáškonsonánttas. Don leat čállán 1. persovnna sg. vearbba ("{$1}"). Jus oaivvildat substantiivva, de galgá leat ("{€1}"). 
     .example-1 = Dutkkan ja turisma leat šaddan dehálaš liigeealáhussan lassin Svalbárdda Universitehtaguovddážii ja Svalbárdda máilmmiviidosaš siepmanvárrehussii.
     .example-2 = Iskkan ja geahččaleapmi leat dehálaš oasit dutkamis. 
     .example-3 = Goarkŋun lea somás astoáigehom
@@ -221,7 +221,7 @@ msyn-ba-ga = Boasttuhápmi
     .example-1 = Jođiheaddji guovttosges oaččuiba jo ánsoruossa, mii lea čuovvovaš ánsu maŋŋá gollemedálja.
 
 real-ImprtPl1-PassInf = Konsonántameattáhus
-    .desc = Orru leamen meattáhus konsonántaguovddážis. Don leat čállán vearbba ("{$1}") gohččunhámis. Jus oaivvildat infinitiiva leat ("{€1}"). 
+    .desc = Orru leamen meattáhus guovddáškonsonánttas. Don leat čállán vearbba ("{$1}") gohččunhámis. Jus oaivvildat infinitiiva leat ("{€1}"). 
     .example-1 = Fátmmastit šiehtadussii sáhttá atnot sámi vuoigatvuođaeaiggadiid vuosttá, ja eará álgoálbmogiid sullasaš vuoigatvuođaiguin boahttevaš riekteproseassain.
     .ref-1 = Pope2004:278
 
@@ -360,20 +360,20 @@ syn-illative-agent-with-hallat-passive = Boasttuhápmi
     .ref-1 = Nickel1994:228
 
 real-Derh-Inf = Konsonántameattáhus
-    .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") konsonántaguovddážis. Don leat čállán kausatiiva hámi. Dás galgá geavahit infinitiiva hámi. 
+    .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") guovddáškonsonánttas. Don leat čállán kausatiiva hámi. Dás galgá geavahit infinitiiva hámi. 
     .example-1 = Studeanta ferte ceavzzit goappašiid eksámeniid.
 real-Ess-PrfPrc = Konsonántameattáhus
-    .desc = Orru leamen čállinmeattáhus sáni ("{$1}") konsonántaguovddážis. Don leat čállán substantiivva essiivvas. Galgá go leat vearba perfeakta partisihppahámis?
+    .desc = Orru leamen čállinmeattáhus sáni ("{$1}") guovddáškonsonánttas. Don leat čállán substantiivva essiivvas. Galgá go leat vearba perfeakta partisihppahámis?
     .example-1 = Sámegielat oahpaheddjiid háhkkan lea stuorra hástalussan dáin skuvllain.
 real-ImprtDu1-NSgNom = Konsonántameattáhus
-    .desc = Orru leamen čállinmeattáhus sáni ("{$1}") konsonántaguovddážis. Don leat čállán guvttiidlogu vearbba imperatiivvas. Galgá go leat substantiiva?
+    .desc = Orru leamen čállinmeattáhus sáni ("{$1}") guovddáškonsonánttas. Don leat čállán guvttiidlogu vearbba imperatiivvas. Galgá go leat substantiiva?
     .example-1 = Mii váldit sámegiela duođas, lea Rettera čielga diehttu.
 real-eallá = Čállinmeattáhus dán oktavuođas
     .desc = Orru leamen čállinmeattáhus sáni ("{$1}") loahpas. Jus oaivvildat vearbba 3. perosvnna ovttaidlogus, de galgá leat akseanta-a.
     .example-1 = Dat gii ealla beassá dan vásihit.
     .example-2 = Stuorámus ealli máilmmis mii ealla goikásis, dahje eatnan alde.
 real-oažžut = Čállinmeattáhus dán oktavuođas
-    .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") konsonántaguovddážis. Das galgá leat gievrrasdássi "žž".
+    .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") guovddáškonsonánttas. Das galgá leat gievrrasdássi "žž".
     .example-1 = Dat livčče gal oba vuogas, jus ná geavašii, go muhtin mánát fertejit mannat priváhta skuvlii, jus áigot oaččut dakkár oahpu, mii ii gávdno stáhta skuvllain.
 real-orrut = Čállinmeattáhus dán oktavuođas
     .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "o". Das galgá leat "u".
@@ -606,7 +606,7 @@ real-vuosttaš = Čállinmeattáhus dán oktavuođas
     .ref-1 = Sammallahti2005
 
 real-vuostá = Čállinmeattáhus dán oktavuođas
-    .desc = Orru leamen čállinmeattáhus konsonántaguovddážis. Jus oaivvildat postposišuvnna, de galgá leat "st".
+    .desc = Orru leamen čállinmeattáhus guovddáškonsonánttas. Jus oaivvildat postposišuvnna, de galgá leat "st".
     .example-1 = o elrávdnjerehket boahtá juohke nuppi mánu lea vuosttaš mánu a-konto máksn (500,- ru.), ja maŋit mánu rehkega vuosttá.
     .example-2 = Buot dát leat joavkkut geaid vuosttá sápmi lea čiekčan.
 
