@@ -770,7 +770,6 @@ msyn-valency-dasa-before-fs = Pronomen váilu
     .example-3 = Hirbmat somá go álbmot liikui maid mun lean rahkadan, dat attii munnje hui buorre dovddu ja dat dušše addá munnje eanet miela designet viidásabbot, muitala lihkolaš vuoiti Karin Olsen.
     .example-4 = Dieđusge livččiimet galgan geahččat ášši dárkileappot, iige dušše luohttit mii doppe lei daddjon, dadjá Nilsen.
     .example-5 = Áhkku gal ii várra liikon maid oinnii ja lea váidan ášši leansmánnii.
-    .example-6 = Movt sáhttá ealáhus dakkár dutkái luohttit mii ovdagihtii lea konkluderen ahte bieggamillut eai leat vahágin, jearrá Ánne.
     .ref-2= !!
 
 real-ActioNom-PrfPrc = Vokálameattáhus 
