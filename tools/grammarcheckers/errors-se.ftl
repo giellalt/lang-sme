@@ -806,7 +806,7 @@ real-adnui-atnui = real-guovddáškonsonánta
 real-áibbaš-áibbas = !!
     .desc =
     .example-1 = Nu guhkás go čájehuvvo leat dárbbašlažžan vuovddi seailluheami, ođasmahttima dahje ođđasit šaddama dihte dahje dan dihte go guovllus lea muorravátni, de sáhttá Gonagasláhkaásahusaid bokte gáržžidit dahje áibbaš gieldit muoraid váldimis dárkileappot mearriduvvon guovlluin, ja dan olis mearridit ee. ahte varas muorat sáhttet váldot duššefal čájeheami mielde.
-
+    .example-2 = Sii geat leat govvidan Finnmárkku dáčča álbmotovdáneami 1500-logus, eai leat goitge áibbaš ovttaoaivilis.
 real-áiggi = !!
     .desc =
     .example-1 =
