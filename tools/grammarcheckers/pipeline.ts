@@ -14,15 +14,15 @@ export default function smeGramRelease(entry: StringEntry): Command {
     acc_model_path: "acceptor.default.hfst",
     err_model_path: "errmodel.default.hfst",
     config: {
-        n_best: 15,              // Maks antal forslag per ord
-        max_weight: 10000.0,      // Maks redigeringsdistanse
+        n_best: 15,              // Maks tal på forslag per ord
+        max_weight: 10000.0,     // Maks vekt for forslag - alle forslag med høgare vekt blir automatisk fjerna
         beam: 49.0,              // Vektområde, meir enn for sjølvstendig stavekontroll - vi kan filtrera med cg-reglar
-        reweight: {              // Straffekostar for ulike feiltypar
+        reweight: {              // Ekstra straffepoeng for endringar etter posisjon
             start_penalty: 20.0,
             end_penalty: 10.0,
             mid_penalty: 5.0,
         },
-        recase: true,            // Prøv å endre kun stor/liten bokstav først
+        recase: true,            // Prøv å endra berre stor/liten bokstav først
     },
   });
   x = cg3.vislcg3("postspell-valency", x, { model_path: "valency-postspell.bin" });
@@ -43,15 +43,15 @@ export function smeGram(entry: StringEntry): Command {
     acc_model_path: "acceptor.default.hfst",
     err_model_path: "errmodel.default.hfst",
     config: {
-        n_best: 15,              // Maks antal forslag per ord
-        max_weight: 10000.0,      // Maks redigeringsdistanse
+        n_best: 15,              // Maks tal på forslag per ord
+        max_weight: 10000.0,     // Maks vekt for forslag - alle forslag med høgare vekt blir automatisk fjerna
         beam: 49.0,              // Vektområde, meir enn for sjølvstendig stavekontroll - vi kan filtrera med cg-reglar
-        reweight: {              // Straffekostar for ulike feiltypar
+        reweight: {              // Ekstra straffepoeng for endringar etter posisjon
             start_penalty: 20.0,
             end_penalty: 10.0,
             mid_penalty: 5.0,
         },
-        recase: true,            // Prøv å endre kun stor/liten bokstav først
+        recase: true,            // Prøv å endra berre stor/liten bokstav først
     },
   });
   x = cg3.vislcg3("postspell-valency", x, { model_path: "valency-postspell.bin" });
