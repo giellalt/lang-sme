@@ -2152,6 +2152,20 @@ SET PRE-APP   = COMMA OR PUNCT-LEFT OR PRE-NP-HEAD ;
                             # stand in front of appositions but also
                             # postmodifiers.
 
+#!! The set **NOT-NPMOD** is used to find barriers between NPs.
+#!! Typical usage: ... (*1 N BARRIER NPT-NPMOD) ...
+#!! meaning: Scan to the first noun, ignoring anything that can be
+#!! part of the noun phrase of that noun (i.e., "scan to the next NP head")
+
+SET NOT-NPMOD     = WORD - PRE-NP-HEAD OR ABBR OR @CVP ;                     
+# This is the previous NPNH (npnh) set.
+# NOT-NPMOD  = "NOT-PRE-NP-HEAD"
+
+
+SET NOT-NPMOD-ACC     = NOT-NPMOD - Acc OR ABBR ; 
+SET NOT-NPMOD-ACC-ADV     = NOT-NPMOD - Acc - Adv OR ABBR ; 
+# To be used in mappingrules, before the disambuation of Acc and Gen.  
+
 # V NPNHAIIP... N
 # BOS ... N V
 
@@ -6943,6 +6957,26 @@ SELECT:r1094 Nom - Err/Any IF (-1 (":") LINK -1 CARDINALS LINK -1 (Prop Sem/Sur 
 
 SELECT (Num Nom) - Err/Any IF (-1 KLASS + Nom);    
    ## Ášši 07/00 Sámedikki 1999 jahkedieđáhus.
+   
+#!! * **WWNumOrdIllAttr** selects Ill Attr and Loc Attr for numerals and ordinals
+SELECT:WWNumOrdIllAttr (Ill Attr) IF (0 Num OR Ord) (*1 (N Ill) - Arab OR (Num Ill) - Arab BARRIER NOT-A);	
+	#$ Mun attán girjji ovtta oahppái.
+	#$ Skuvlaáigi lei gáržžiduvvon golmma vahkkui.
+	#$ Spábba guoskkai ovtta Snøgga čiekčái ja manai mollii.
+	#Comment: We are lacking some rules for: 'Skuvlaáigi lei gáržžiduvvon 3 vahkkui.' and also: 'Skuvlaáigi lei gáržžiduvvon guovtti dahje golmma vahkkui, jus juo obanassiige čađahuvvui oahpahus.' the last one beeing a coordinated sentence.
+SELECT:WWNumOrdIllAttr (Ill Attr) IF (0 NUM OR Ord OR ("nubbi")) (1 (N Gen) LINK *1 (N Ill) BARRIER NOT-A)(NEGATE 0 (Num Nom) LINK 1 (N Sg Gen));	
+SELECT:WWNumOrdLocAttr (Loc Attr) IF (0 NUM OR Ord OR ("nubbi") LINK NOT 0 Sem/Date OR Sem/Year) (*1 (N Sg Loc) BARRIER NOT-A - Indef OR Ord) ;	
+SELECT:WWNumGen Gen IF (0 ("nubbi") LINK NOT 0 Sem/Date OR Sem/Year) (*1 (N Gen) BARRIER NOT-A - Indef OR Ord) ;	
+
+#SELECT:WWNumOrdLocAttr (Loc Attr) IF (0 Num - Sem/Date - Sem/Year OR Ord)(*1 (N Sg Loc) BARRIER NOT-A - Indef OR Ord) ;	
+	## Ovtta ovddasteaddjis divššohasa ovddas lea vuoigatvuohta...
+	## Na gal don dal oaččut dan beannot čuohtái, go juo válddežat.	
+REMOVE:WWNumOrdAttr (Num Attr) + ADVLCASE OR Indef + Attr + ADVLCASE   IF (NEGATE *1 ADVLCASE + N BARRIER NOT-NPMOD-ACC OR Ord) ;	
+	#$ Nuppi vuoru goalmmát minuvttas Anette nivkalii čiehkačievččastaga čábbát njuolga mollii.
+
+SELECT:SUBNumOrdAttr Loc + Attr IF (0 NUM LINK NOT 0 Sem/Date OR Sem/Year) (*1 (N Pl Loc) BARRIER NOT-A - Indef OR Ord) ;	
+	#$ Son lei okta dain 20 nissoniin.
+SELECT:SUBNumOrdAttr Ill + Attr IF (0 NUM LINK NOT 0 Sem/Date OR Sem/Year) (*1 (N Pl Ill) BARRIER NOT-A - Indef OR Ord) ;	
 
 	# ========================== #
 	# Disambiguating adpositions #
