@@ -747,7 +747,7 @@ msyn-valency-loc-ill = Boasttukásus
     .example-1 = Mo áddet dan ahte nubbi geas don liikot vállje baicce jápmima ovdalgo eallima, du ja su lagamuččaid?
     .example-2 = Ale suhta sus. 
 
-msyn-valency-das-before-fs = Pronomen váilu
+msyn-valency-das-before-fs = Pronomen váilu !!
     .desc = Don leat čállán relatiivapronomena "{$1}". Dat gáibida refereantta masa čujuha, mii dán oktavuođas livččii demonstratiivapronomen lokatiivvas "das".
     .example-1 = Balan mii viidáseappot dál geavvá ja ferten go orrut lohkkadan uvssa duohken, imašta stohpoeaiggát.
     .example-2 = Advokáhtta Jens Johan Hjort ballá makkár váikkuhusat Ernst Pedersen riekteáššis sáhttet čuožžilit, jus son vuoitá lágamannerievttis Tromsø Idrettslag (TIL) joavkku vuostá.
@@ -763,7 +763,7 @@ msyn-valency-das-before-fs = Pronomen váilu
     .example-13 = Ii ge dat amas ahte kapitalismat dušše smihttet ruđa birra, ja muđui eai beroš mii geavvá luondduin, elliiguin ja olbmuiguin.
     .ref-1 = !!
 
-msyn-valency-dasa-before-fs = Pronomen váilu
+msyn-valency-dasa-before-fs = Pronomen váilu !!
     .desc = Don leat čállán relatiivapronomena "{$1}". Dat gáibida refereantta masa čujuha, mii dán oktavuođas livččii demonstratiivapronomen illatiivvas "dasa".
     .example-1 = Gaskaboddosaš presideanta Sámedikkis, Laila Susanne Vars, liiko maid gullá.
     .example-2 = Son vel vuittii lasi 11.000 ruvnnu ja Márjá lea hui movtta go lea vuoitán ja ahte olbmot liikojit maid son lea designen.
