@@ -461,12 +461,7 @@ real-sutnje = Čállinmeattáhus dán oktavuođas
 real-sáhkki = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán illatiivva substantiivva "{$1}". Jus oaivvildat adjektiivva, de galgá leat "sáhkkii".
     .example-1 = Leatgo sáhkii?
-    .ref-1 = 
-
-real-sárgon = Čállinmeattáhus dán oktavuođas
-    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "u". Jus oaivvildat vearbba perfeavtta partisihpas, de galgá leat "o".
-    .example-1 = Anne-Grethe Leine Bientie lea čállán teavstta ja su nieida Ellen Sara lea ges govaid sárgun.
-    .ref-1 = 
+    .ref-1 =  
 
 real-guhká = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán vearbba"{$1}".  Jus oaivvildat advearbba de galgá leat "
@@ -479,11 +474,6 @@ real-guhká = Čállinmeattáhus dán oktavuođas
 real-eahkes = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán substantiivva "{$1}". Das galgá leat advearba "eahkes".
     .example-1 = Rahpandilálašvuođa maŋŋá eahket joatkašuvai konsearttain Sajosa auditorios .
-    .ref-1 = 
-
-real-earret = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán vearbba "{$1}". Das galgá leat preposišuvdna "earret".
-    .example-1 = Eandalit čáhppes beana lea buot divraseamos borramuš, čállá Kitti erret eará dán nuppi mátkkereivves Thailánddas.
     .ref-1 = 
 
 real-Ess-PrsSg1 = Čállinmeattáhus dán oktavuođas
@@ -738,29 +728,39 @@ real-second-uo = Vokálameattáhus
     .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas. Oaivvildat go "{€1}"?
     .example-1 = Dát smávva čuvllat, leat maid gorrojuvvon biktasiin mat ledje nie baskun.
     .example-2 = Doppe lei stuorra gorži, mii lei 15 mehter alo, gos mii njuikkodeimmet liegga sevdjnes eahkediin.
+    .example-3 = Anne-Grethe Leine Bientie lea čállán teavstta ja su nieida Ellen Sara lea ges govaid sárgun.
 
-real-guovddáškonsonánta = Konsonántameattáhus
+real-dt = Konsonántameattáhus !!
     .desc = Orru leamen čállinmeattáhus ("{$1}") guovddáškonsonánttas. Oaivvildat go "{€1}"?
     .example-1 = Diehtojuohkinsihkarvuođa gealbobirrasa ásahemiin sáhttá Difi maiddái váikkuhit dasa ahte dohkkehuvvon diehtojuohkinsihkarvuođa standárddat ja stivrejumit váldojit adnui.
-    .example-2 = Sii eai leat čohkán earo diibmobeali, muhto son jo máhttá vástidit : In, orun goađis .
-    .example-3 = Badjealbmát vurde miessemearkuma, eanadoallit čohkke hášestoalppuid, ordnejedje bargobiergasiid.
-    .example-4 = Duvka lei čohken arvečázi, ja dát golggai oaivejietnabeavddi ala.
-    .example-5 = Konklušuvdna lea ávžžuhit ahte suohkan čohke opmodathálddašeami ovddasvástádusa suohkanlaš doibmii.
-    .example-6 = Midjiide sápmelaččaide gártá nu bohccuid,
-    .example-7 = Dat bovttii garra vuosteháguid muhtun bargiid gaskkii, go oaivvildedje ahte oskuáššiid.
-    .example-8 = Lean geavahan olles iežan eallima dasa ja gusto dasa eai adde veaháš ge árvvu, muhto mii gal eat vuollán.
-    .example-9 = Dán ferte fitnet sisa movt nu.
-    .example-10 = Dat lei divrras oasttit áibbas ođđa pláhta, muhto lei dan veara.
-    .example-11 = Lea oainnat nu ahte bohtet Suoma bealde deikke oasttit guliid.
-    .example-12 = Beaivet lea dábálaš váccašit márkanis, guovlat mii fállojuvvo, ja soaitá vel oasttit dujiid, biepmuid dahje eará.
-    .example-13 = Jos mis livčče basttat, de fitnodat livčče ferten oasttit mis bálvalusaid ja mii leimmet beassat dalle ieža mearredit goas min mielas lea buoremussan gáldet iežamet čilge namahis boazodoalli.
-    .example-14 = Leat smávit áššit main sii eai leat ovttaoaivilis, nu ahte mii geahčalit ain bargat oažžut šiehtadusa, muitala NSR šiehtadallanjoavkku jođiheaddji Klemet Erland Hætta. 
-    .example-15 = Dál ii leat šat guhkki din biddjui, gullui vilgessáhpan gii ovddemusas lei dieđiheame. 
-    .example-16 = Go suohkanrádji ođđasit áiggi bidjui Unjárgga (Nesseby) ja Čáhcesullo gaskal, de bidjui ge dat juste dakko (Niemi 1983 : 190).
-    .example-17 = Seammás lea balus ahte Guovdageainnu suohkan viggá dasto das beassadit eret, go lea gullán ahte háliidit priváhta oamastussii dálá giliviesu, mii lea dološ skuvlainternáhtta. 
-    .example-18 = Dán vahkku leat hui doaimmalaš, eanet go leat leamaš goassege ovdal ja don fuobmát ođđa doaimmaid mat maid ožžot hormonaid johttui. 
-    .example-19 = Lean giitevaš go lean beassan {johttit} máilmmes ja miehtá sámi ja dakko bokte ožžon inspisrašuvnna iežan čállin dáidagiid ja duodjái, lohká Thomas. 
-    .example-20 = Mun háliidivččen galledit Njeareveaji - ja áinnas háliidivččen dohko vuoddjit biillain. 
+    
+real-guovddáškonsonánta = Konsonántameattáhus !!
+    .example-1 = Sii eai leat čohkán earo diibmobeali, muhto son jo máhttá vástidit : In, orun goađis .
+    .example-2 = Badjealbmát vurde miessemearkuma, eanadoallit čohkke hášestoalppuid, ordnejedje bargobiergasiid.
+    .example-3 = Duvka lei čohken arvečázi, ja dát golggai oaivejietnabeavddi ala.
+    .example-4 = Konklušuvdna lea ávžžuhit ahte suohkan čohke opmodathálddašeami ovddasvástádusa suohkanlaš doibmii.
+    .example-5 = Midjiide sápmelaččaide gártá nu bohccuid,
+    .example-6 = Dat bovttii garra vuosteháguid muhtun bargiid gaskkii, go oaivvildedje ahte oskuáššiid.
+    .example-7 = Lean geavahan olles iežan eallima dasa ja gusto dasa eai adde veaháš ge árvvu, muhto mii gal eat vuollán.
+    .example-8 = Dán ferte fitnet sisa movt nu.
+    .example-9 = Dat lei divrras oasttit áibbas ođđa pláhta, muhto lei dan veara.
+    .example-10 = Lea oainnat nu ahte bohtet Suoma bealde deikke oasttit guliid.
+    .example-11 = Beaivet lea dábálaš váccašit márkanis, guovlat mii fállojuvvo, ja soaitá vel oasttit dujiid, biepmuid dahje eará.
+    .example-12 = Jos mis livčče basttat, de fitnodat livčče ferten oasttit mis bálvalusaid ja mii leimmet beassat dalle ieža mearredit goas min mielas lea buoremussan gáldet iežamet čilge namahis boazodoalli.
+    .example-13 = Leat smávit áššit main sii eai leat ovttaoaivilis, nu ahte mii geahčalit ain bargat oažžut šiehtadusa, muitala NSR šiehtadallanjoavkku jođiheaddji Klemet Erland Hætta. 
+    .example-14 = Dál ii leat šat guhkki din biddjui, gullui vilgessáhpan gii ovddemusas lei dieđiheame. 
+    .example-15 = Go suohkanrádji ođđasit áiggi bidjui Unjárgga (Nesseby) ja Čáhcesullo gaskal, de bidjui ge dat juste dakko (Niemi 1983 : 190).
+    .example-16 = Seammás lea balus ahte Guovdageainnu suohkan viggá dasto das beassadit eret, go lea gullán ahte háliidit priváhta oamastussii dálá giliviesu, mii lea dološ skuvlainternáhtta. 
+    .example-17 = Dán vahkku leat hui doaimmalaš, eanet go leat leamaš goassege ovdal ja don fuobmát ođđa doaimmaid mat maid ožžot hormonaid johttui. 
+    .example-18 = Lean giitevaš go lean beassan {johttit} máilmmes ja miehtá sámi ja dakko bokte ožžon inspisrašuvnna iežan čállin dáidagiid ja duodjái, lohká Thomas. 
+    .example-19 = Mun háliidivččen galledit Njeareveaji - ja áinnas háliidivččen dohko vuoddjit biillain. 
+    .example-20 = Isabel ii leat orrun go moadde váhku Leavnnjas, muhto liiko jo Leavnnja hui bures. 
+    
+
+real-ea-e = Diftoŋgameattáhus !!
+    .desc = Don leat čállán vokála "e". Das galgá leat diftoŋga "ea".
+    .example-1 = Eandalit čáhppes beana lea buot divraseamos borramuš, čállá Kitti erret eará dán nuppi mátkkereivves Thailánddas.
+    .ref-1 = 
 
 real-bállen = !!
     .desc =
@@ -1036,10 +1036,6 @@ real-sáhtáš = !!
     .example-1 =
 
 real-sáhtát = !!
-    .desc =
-    .example-1 =
-
-real-vahkku = !!
     .desc =
     .example-1 =
 
