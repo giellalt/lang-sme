@@ -4,6 +4,10 @@
 ## Default patterns: re:real-.*, re:real-.*-.*, 
 spelling-error = Čállinmeattáhus dán oktavuođas
     .desc = Sátni šattai eará go dan maid don orut oaivvildeame.
+    .example-1 = Duodjestudeanttat Maire Aslaksen ja Inga Elisa Påve čohkkaba stuolus ja beavdeguoras masa sudno
+    .example-2 = Soai čohkába seaidneguoras ja muittašeaba borggudettiin duhpáha.
+    .example-3 = Dá čohkába davvisámedulkkaguovttos Berit Margrethe Oskal ja Brita E. Kåven bargosajis.
+
     
 ## Default patterns: re:punct-aistton.*
 quotation-marks = Aisttonmearkameattáhus
@@ -686,6 +690,9 @@ real-first-aá = Akseanta-a meattáhus.
     .example-16 = Go boahttevuođas gálga iskat man ollu ávki gielladoarjagiin lea, de savášii Guovdageainnu suohkan ahte čađahivčče kvalitatiiva mihtidemiid maid, eai ge dušše kvantitatiiva.
     .example-17 = Dalle sáhttá ihtit vuogádatlaš givssideapmi jus rávisolbmos ii leat gelbbolašvuohta ja gálga bidjat rájiid ja bagadallat ovttasdoaibmama.
     .example-18 = De ii leat go álgit ráhkkanit johttát, ja čorgestit dálvebáikki, nu ahte ii báze dego livččii ballan eret doppe.
+    .example-19 = Don fal muittát man ollu čuoikkat diibmá ledje, ii ballen baljo jaska čohkkat.
+    .example-20 = Gávdnen govvejeaddji Knut Kosmo 20 jagi dássá báddejuvvon soalddátveteránaid muitalusaid ja nu ihte eambbo dieđut, čilge Tollefsen. 
+    .example-21 = Jahkásaččat sturrot dievdolbmuin bealjit gaskamearálaččat 0,22 mm dássá deavdá 30 jagi.
     .ref-1 = 
 
 
@@ -729,12 +736,10 @@ real-second-uo = Vokálameattáhus
     .example-1 = Dát smávva čuvllat, leat maid gorrojuvvon biktasiin mat ledje nie baskun.
     .example-2 = Doppe lei stuorra gorži, mii lei 15 mehter alo, gos mii njuikkodeimmet liegga sevdjnes eahkediin.
     .example-3 = Anne-Grethe Leine Bientie lea čállán teavstta ja su nieida Ellen Sara lea ges govaid sárgun.
+    .example-4 = Bargiidbellodaga Sámediggepresideantta evttohas áigu oahppat sámegiela vuoi gulahallá olbmuiguin, muhto ii dáhtu sámegilli gal searvat digáštallamiidda.
 
-real-dt = Konsonántameattáhus !!
+real-guovddáškonsonánta = Konsonántameattáhus 
     .desc = Orru leamen čállinmeattáhus ("{$1}") guovddáškonsonánttas. Oaivvildat go "{$1}"?
-    .example-1 = Diehtojuohkinsihkarvuođa gealbobirrasa ásahemiin sáhttá Difi maiddái váikkuhit dasa ahte dohkkehuvvon diehtojuohkinsihkarvuođa standárddat ja stivrejumit váldojit adnui.
-    
-real-guovddáškonsonánta = Konsonántameattáhus !!
     .example-1 = Sii eai leat čohkán earo diibmobeali, muhto son jo máhttá vástidit : In, orun goađis .
     .example-2 = Badjealbmát vurde miessemearkuma, eanadoallit čohkke hášestoalppuid, ordnejedje bargobiergasiid.
     .example-3 = Duvka lei čohken arvečázi, ja dát golggai oaivejietnabeavddi ala.
@@ -755,41 +760,13 @@ real-guovddáškonsonánta = Konsonántameattáhus !!
     .example-18 = Lean giitevaš go lean beassan {johttit} máilmmes ja miehtá sámi ja dakko bokte ožžon inspisrašuvnna iežan čállin dáidagiid ja duodjái, lohká Thomas. 
     .example-19 = Mun háliidivččen galledit Njeareveaji - ja áinnas háliidivččen dohko vuoddjit biillain. 
     .example-20 = Isabel ii leat orrun go moadde váhku Leavnnjas, muhto liiko jo Leavnnja hui bures. 
-    
+    .example-21 = Diehtojuohkinsihkarvuođa gealbobirrasa ásahemiin sáhttá Difi maiddái váikkuhit dasa ahte dohkkehuvvon diehtojuohkinsihkarvuođa standárddat ja stivrejumit váldojit adnui.
 
-real-ea-e = Diftoŋgameattáhus !!
+
+real-erret-earret = Diftoŋgameattáhus
     .desc = Don leat čállán vokála "e". Das galgá leat diftoŋga "ea".
     .example-1 = Eandalit čáhppes beana lea buot divraseamos borramuš, čállá Kitti erret eará dán nuppi mátkkereivves Thailánddas.
     .ref-1 = 
-
-real-bállen = !!
-    .desc =
-    .example-1 =
-
-
-real-boahtá = !!
-    .desc =
-    .example-1 =
-
-real-bokte = !!
-    .desc =
-    .example-1 =
-
-real-čohkkába = !!
-    .desc =
-    .example-1 =
-
-real-dáhto = !!
-    .desc =
-    .example-1 =
-
-real-dáruiduhttin = !!
-    .desc =
-    .example-1 =
-
-real-dassá = !!
-    .desc =
-    .example-1 =
 
 real-dássái = !!
     .desc =
