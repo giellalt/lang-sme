@@ -80,6 +80,7 @@ export function localTest_dev(entry: StringEntry): Command {
 export function localTestTrace_dev(entry: StringEntry): Command {
   let x = hfst.tokenize("tokenize", entry, { model_path: "@./tokeniser-gramcheck-gt-desc.pmhfst" });
   x = divvun.blanktag("whitespace", x, { model_path: "@./analyser-gt-whitespace.hfst" });
+  x = cg3.vislcg3("valency", x, { model_path: "@../../src/cg3/valency.cg3", config: { trace: true } });
   x = cg3.vislcg3("mwe-dis", x, { model_path: "@../tokenisers/mwe-dis.cg3", config: { trace: true } });
   x = cg3.mwesplit("mwesplit", x);
   x = divvun.blanktag("errorwhitespace", x, { model_path: "@./analyser-gt-errorwhitespace.hfst" });
@@ -88,7 +89,8 @@ export function localTestTrace_dev(entry: StringEntry): Command {
     err_model_path: "@./errmodel.default.hfst",
     config: spellcheckerConfig,
   });
-  x = cg3.vislcg3("disamb", x, { model_path: "@../../src/cg3/disambiguator.cg3", config: { trace: true } });
+  x = cg3.vislcg3("postspell-valency", x, { model_path: "@./valency-postspell.cg3", config: { trace: true } });
+  x = cg3.vislcg3("grc-disamb", x, { model_path: "@./grc-disambiguator.cg3", config: { trace: true } });
   x = cg3.vislcg3("spell-sugg-filtering", x, { model_path: "@./spellchecker.cg3", config: { trace: true } });
   x = cg3.vislcg3("gramcheck", x, { model_path: "@./grammarchecker.cg3", config: { trace: true } });
   return divvun.suggest("suggestions", x, { model_path: "@./generator-gramcheck-gt-norm.hfstol" });
