@@ -31,6 +31,7 @@ TESTS=\
 	real-ImprtPl2-Inf-PASS.yaml \
 	real-ImprtPl2-PrsPl3-PASS.yaml \
 	real-ImprtSg1-DerPassPrfPrc-PASS.yaml \
+	real-ImprtSg2-Inf-PASS.yaml \
 	real-NSgIll-ASgNom-PASS.yaml \
 	real-NSgIll-PrtSg3-PASS.yaml \
 	real-NomAgIll-PrtSg3-PASS.yaml \
