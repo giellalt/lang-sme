@@ -776,6 +776,8 @@ real-erret-earret = Diftoŋgameattáhus
     .example-1 = Eandalit čáhppes beana lea buot divraseamos borramuš, čállá Kitti erret eará dán nuppi mátkkereivves Thailánddas.
     .ref-1 = 
 
+sty-prop-not-čearru = !!
+
 real-dássái = !!
     .desc =
     .example-1 =
