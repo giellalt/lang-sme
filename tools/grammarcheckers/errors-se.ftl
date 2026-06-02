@@ -739,12 +739,10 @@ real-guovddáškonsonánta = Konsonántameattáhus
     .example-19 = Mun háliidivččen galledit Njeareveaji - ja áinnas háliidivččen dohko vuoddjit biillain. 
     .example-20 = Isabel ii leat orrun go moadde váhku Leavnnjas, muhto liiko jo Leavnnja hui bures. 
     .example-21 = Diehtojuohkinsihkarvuođa gealbobirrasa ásahemiin sáhttá Difi maiddái váikkuhit dasa ahte dohkkehuvvon diehtojuohkinsihkarvuođa standárddat ja stivrejumit váldojit adnui.
-    
-real-PrsSg1-DerNomActNom = Konsonántameattáhus !!
-    .desc = Orru leamen meattáhus guovddáškonsonánttas. Don leat čállán 1. persovnna sg. vearbba ("{$1}"). Jus oaivvildat substantiivva, de galgá leat ("{$1}"). 
-    .example-1 = Dutkkan ja turisma leat šaddan dehálaš liigeealáhussan lassin Svalbárdda Universitehtaguovddážii ja Svalbárdda máilmmiviidosaš siepmanvárrehussii.
-    .example-2 = Iskkan ja geahččaleapmi leat dehálaš oasit dutkamis. 
-    .example-3 = Goarkŋun lea somás astoáigehommá. 
+    .example-22 = Mannan vahkkus mearredii ge SáB jahkečoahkkin ahte báikalaš searvvit {oččot} ieža mearridit geainna barget ovttas, muhto galget čuovvut vissis vuodjin njuolggadusaid mat leat sierranas čieža čuoggán bidjon.
+    .example-23 = Dutkkan ja turisma leat šaddan dehálaš liigeealáhussan lassin Svalbárdda Universitehtaguovddážii ja Svalbárdda máilmmiviidosaš siepmanvárrehussii.
+    .example-24 = Iskkan ja geahččaleapmi leat dehálaš oasit dutkamis. 
+    .example-25 = Goarkŋun lea somás astoáigehommá. 
     
 real-ImprtPl1-PassInf = Konsonántameattáhus !!
     .desc = Orru leamen meattáhus guovddáškonsonánttas. Don leat čállán vearbba ("{$1}") gohččunhámis. Jus oaivvildat infinitiiva leat ("{$1}"). 
@@ -776,19 +774,17 @@ real-erret-earret = Diftoŋgameattáhus
     .example-1 = Eandalit čáhppes beana lea buot divraseamos borramuš, čállá Kitti erret eará dán nuppi mátkkereivves Thailánddas.
     .ref-1 = 
 
-sty-prop-not-čearru = !!
+sty-prop-not-čearru = Nammageavahus
+    .desc = Dán konteavsttas lea vuogas guođđit sáni "čearru". Namma iešalddis juo čujuha čerrui.
+    .example-1 = Girjás čearru vuittii Ruoŧa stáhta vuostá diggis.
+    .example-2 = Gabna čearru lea váidán LKAB ruvkefitnodaga minerálaohcanlobi Luossaváris, Gironis, Hálddahusriektái.
+    .example-3 = Guovssonásti illuda Girjás čearuin.
+    .example-4 = Dálmmá čearru lea garrasit vuosttildan dán ruvkke, dannego boazoguohtunguovlu gáržu.
+    .ref-1 =
 
-real-dássái = !!
+real-dassá-dassážii = !! Leago dábálaš meattáhus?
     .desc =
-    .example-1 =
-
-real-dassážii = !!
-    .desc =
-    .example-1 =
-
-real-DerdImprtSg2-PrsPl3 = !!
-    .desc =
-    .example-1 =
+    .example-1 = Nu sáhttá interneahtta šaddat sámi mánáide ja nuoraide oahpasnuvvan, gávnnadan, ja oahppogazzanbáikin, ja dan vel eambbo go juo dássá ii lea leamašan.
 
 real-DerNomActSgGen-PrfPrc = !!
     .desc =
