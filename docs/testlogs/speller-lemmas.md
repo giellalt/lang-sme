@@ -1,38 +1,10 @@
 # Results for lemmatesting spell-checker
 
 
-**ovccičuohti** is missing. 
-following suggestions:
-* okcičuohti		35.00000
-* ovccičuohte		35.00000
-* ovccičuođi		35.00000
-* ovccičuohtái		46.00000
-* okcičuođi		60.00000
-* ovccičuođis		76.00000
-* uhcisčuohti		141.00000
-* ahccičuohti		143.00000
-* uhcissuohta		155.00000
-* uhcissuođđi		167.00000
-* 
-
-**gávccičuohti** is missing. 
-following suggestions:
-* gákcičuohti		35.00000
-* gávccičuohte		35.00000
-* gávccičuođi		35.00000
-* gávccičuohtái		46.00000
-* gákcičuođi		60.00000
-* gávccičuođis		76.00000
-* gahcičuohti		90.00000
-* gahcičuhti		105.00000
-* gahcičuođi		115.00000
-* gahcičuđi		130.00000
-* 
-
 ## Lemma statistics:
 
 * 137543 lemmas
-* 99.99854590927927 % accepted
+* 100.0 % accepted
 
 ## Configuration:
 
