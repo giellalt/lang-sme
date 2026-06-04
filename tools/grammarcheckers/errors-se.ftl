@@ -699,11 +699,9 @@ real-second-uo = Vokálameattáhus
     .example-2 = Doppe lei stuorra gorži, mii lei 15 mehter alo, gos mii njuikkodeimmet liegga sevdjnes eahkediin.
     .example-3 = Anne-Grethe Leine Bientie lea čállán teavstta ja su nieida Ellen Sara lea ges govaid sárgun.
     .example-4 = Bargiidbellodaga Sámediggepresideantta evttohas áigu oahppat sámegiela vuoi gulahallá olbmuiguin, muhto ii dáhtu sámegilli gal searvat digáštallamiidda.
-
-
-real-orrut = Čállinmeattáhus dán oktavuođas !! gullá rea-second-uo
-    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas "o". Das galgá leat "u".
-    .example-1 = Lávejit nu máilmmi fiidnát orrome diet doahpagat.
+    .example-5 = Máŋga nissona goddet fuolkkit, go leat rihkkun bearraša sávaldagaiguin, ja nu maid sin gudni.
+    .example-6 = Sámediggeráđđi lea gohččun čoahkkimii ođđajagimánu 15. b. daid Sámedikki áirasiiguin geat leat Gasko- ja Davvi-Norgga regionála dutkanfoanddaid stivrrain.
+    .example-7 = Lávejit nu máilmmi fiidnát orrome diet doahpagat.
 
 real-Inf-PrsPl3 = Vokálameattáhus !! Gullágo dát uo vuollái vai divvu go dát maiddái iežá vearbbaid?
     .desc = Orru leamen čállimeattáhus sáni ("{$1}") soggevokálas. Jus oaivvildat 3. persovnna pl. vearbba, de galgá leat ("{$1}"). 
@@ -713,8 +711,6 @@ real-PrtPl3-PrsSg3 = Boasttuhápmi !!
     .desc = Orru leamen čállimeattáhus sáni ("{$1}") soggevokálas. Jus oaivvildat 3. persovnna sg. vearbba, de galgá leat ("{$1}"). 
     .example-1 = Dál son áigo vuoiŋŋastit guokte mánu iežas lagámušaid luhtte.
     .example-2 = Lea dušše dat veahá mii váilo.
-
-
 
 real-guovddáškonsonánta = Konsonántameattáhus 
     .desc = Orru leamen čállinmeattáhus ("{$1}") guovddáškonsonánttas. Oaivvildat go "{$1}"?
@@ -752,12 +748,15 @@ real-ImprtPl1-PassInf = Konsonántameattáhus !!
 real-Derh-Inf = Konsonántameattáhus!!
     .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") guovddáškonsonánttas. Don leat čállán kausatiiva hámi. Dás galgá geavahit infinitiiva hámi. 
     .example-1 = Studeanta ferte ceavzzit goappašiid eksámeniid.
+    
 real-Ess-PrfPrc = Konsonántameattáhus!!
     .desc = Orru leamen čállinmeattáhus sáni ("{$1}") guovddáškonsonánttas. Don leat čállán substantiivva essiivvas. Galgá go leat vearba perfeakta partisihppahámis?
     .example-1 = Sámegielat oahpaheddjiid háhkkan lea stuorra hástalussan dáin skuvllain.
+    
 real-ImprtDu1-NSgNom = Konsonántameattáhus!!
     .desc = Orru leamen čállinmeattáhus sáni ("{$1}") guovddáškonsonánttas. Don leat čállán guvttiidlogu vearbba imperatiivvas. Galgá go leat substantiiva?
     .example-1 = Mii váldit sámegiela duođas, lea Rettera čielga diehttu.
+    
 real-oažžut = Čállinmeattáhus dán oktavuođas!!
     .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") guovddáškonsonánttas. Das galgá leat gievrrasdássi "žž".
     .example-1 = Dat livčče gal oba vuogas, jus ná geavašii, go muhtin mánát fertejit mannat priváhta skuvlii, jus áigot oaččut dakkár oahpu, mii ii gávdno stáhta skuvllain.
@@ -786,9 +785,7 @@ real-dassá-dassážii = !! Leago dábálaš meattáhus?
     .desc =
     .example-1 = Nu sáhttá interneahtta šaddat sámi mánáide ja nuoraide oahpasnuvvan, gávnnadan, ja oahppogazzanbáikin, ja dan vel eambbo go juo dássá ii lea leamašan.
 
-real-DerNomActSgGen-PrfPrc = !!
-    .desc =
-    .example-1 =
+
 
 real-DerNomActSgGen-PrsSg1 = !!
     .desc =
