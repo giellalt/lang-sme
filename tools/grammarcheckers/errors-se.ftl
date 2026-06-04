@@ -702,6 +702,8 @@ real-second-uo = Vokálameattáhus
     .example-5 = Máŋga nissona goddet fuolkkit, go leat rihkkun bearraša sávaldagaiguin, ja nu maid sin gudni.
     .example-6 = Sámediggeráđđi lea gohččun čoahkkimii ođđajagimánu 15. b. daid Sámedikki áirasiiguin geat leat Gasko- ja Davvi-Norgga regionála dutkanfoanddaid stivrrain.
     .example-7 = Lávejit nu máilmmi fiidnát orrome diet doahpagat.
+    .example-8 = Mun gal bearehaga lillun du!
+
 
 real-Inf-PrsPl3 = Vokálameattáhus !! Gullágo dát uo vuollái vai divvu go dát maiddái iežá vearbbaid?
     .desc = Orru leamen čállimeattáhus sáni ("{$1}") soggevokálas. Jus oaivvildat 3. persovnna pl. vearbba, de galgá leat ("{$1}"). 
@@ -739,6 +741,9 @@ real-guovddáškonsonánta = Konsonántameattáhus
     .example-23 = Dutkkan ja turisma leat šaddan dehálaš liigeealáhussan lassin Svalbárdda Universitehtaguovddážii ja Svalbárdda máilmmiviidosaš siepmanvárrehussii.
     .example-24 = Iskkan ja geahččaleapmi leat dehálaš oasit dutkamis. 
     .example-25 = Goarkŋun lea somás astoáigehommá. 
+    .example-26 = Dieđusge háliidivččen eallit dakkár "bohem-eallima", mas dušše čohkkášin ruovttus ja málen go oažžun inspirašuvnna, muhto in jáhke dan vejolažžan dáppe Sámis.
+    .example-27 = Kárášjoga festivála buvttadeaddji Anne Berit Anti ii lohkan vel diehttit man olu olbmot ledje ikte konsearttas, muhto measta buot čohkkánsajit ledje dievvan
+
     
 real-ImprtPl1-PassInf = Konsonántameattáhus !!
     .desc = Orru leamen meattáhus guovddáškonsonánttas. Don leat čállán vearbba ("{$1}") gohččunhámis. Jus oaivvildat infinitiiva leat ("{$1}"). 
@@ -786,34 +791,15 @@ real-dassá-dassážii = !! Leago dábálaš meattáhus?
     .example-1 = Nu sáhttá interneahtta šaddat sámi mánáide ja nuoraide oahpasnuvvan, gávnnadan, ja oahppogazzanbáikin, ja dan vel eambbo go juo dássá ii lea leamašan.
 
 
+real-dihti-dihtii = Vokálameattáhus
+    .desc = Orru leamen čállinmeattáhus sáni ("{$1}") nuppi stávvala vokálas. Jus oaivvildat postposišuvnna, de galgá leat "-ii". 
+    .example-1 = Olles Kárasjohka  veadjá boahtit borrat gumposiid servodatviesus dál guokte beaivvi, muhto nissonolbmo guovttos eaba gal dara dan dihti  ja leaikkastallaba das gaskaneaskka.
+    .example-2 = Doaimmat dahje fitnodagat mat ožžot doaibmadoarjaga Sámedikki bušeahta eará poasttain ovdamearkka dihti duodjegávppiide ja sámi deaivvadansajiide, eai oaččo doarjaga dán poasttas. 
+	.example-3 = Loga eanet doaimmaid birra hehtten dihti skuvlaheaitima joatkkaskuvllas Máhttodepartemeantta ruovttusiidduin. 
+    .example-4 = Dán doaimma, maid sáhtán bealistan dáhkidit, áiggun dárkilit čuovvut sierra čoahkkimiid bokte sihkkarastin dihti ovdáneami. 
+    .example-5 = NSR oaivvilda ahte sámi deaivvadanbáikkit leat hui dehálaččat, ja háliida dan dihti ahte Sámediggi veahkeha proseassas álggahit sámi viesu Bergenii. 
+    .example-6 = Dá lea dat unnimus maid sáhttit dahkat sihkkarastin dihti ahte guollebiebmanealáhus livčii ceavzil, ja maiddái sihkkarastin dihti ahte vuonat ja riddoguovllut eai billohuvva guhkit áigge badjel.
 
-real-DerNomActSgGen-PrsSg1 = !!
-    .desc =
-    .example-1 =
-
-real-DerNomActSgGen-PrsSg1 = !!
-    .desc =
-    .example-1 =
-
-real-DerNomActSgGen-PrtSg1 = !!
-    .desc =
-    .example-1 =
-
-real-DerNomActSgGen-PrtSg1 = !!
-    .desc =
-    .example-1 =
-
-real-DerNomAgSgAcc-PrtSg3 = !!
-    .desc =
-    .example-1 =
-
-real-diehtit = !!
-    .desc =
-    .example-1 =
-
-real-dihtii = !!
-    .desc =
-    .example-1 =
 
 real-dohko = !!
     .desc =
