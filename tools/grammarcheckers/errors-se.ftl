@@ -595,7 +595,7 @@ msyn-valency-loc-ill = Boasttukásus
     .example-1 = Mo áddet dan ahte nubbi geas don liikot vállje baicce jápmima ovdalgo eallima, du ja su lagamuččaid?
     .example-2 = Ale suhta sus. 
 
-msyn-valency-das-before-fs = Pronomen váilu !!
+msyn-valency-das-before-fs = Pronomen váilu !! 
     .desc = Don leat čállán relatiivapronomena "{$1}". Dat gáibida refereantta masa čujuha, mii dán oktavuođas livččii demonstratiivapronomen lokatiivvas "das".
     .example-1 = Balan mii viidáseappot dál geavvá ja ferten go orrut lohkkadan uvssa duohken, imašta stohpoeaiggát.
     .example-2 = Advokáhtta Jens Johan Hjort ballá makkár váikkuhusat Ernst Pedersen riekteáššis sáhttet čuožžilit, jus son vuoitá lágamannerievttis Tromsø Idrettslag (TIL) joavkku vuostá.
@@ -744,34 +744,51 @@ real-guovddáškonsonánta = Konsonántameattáhus
     .example-26 = Dieđusge háliidivččen eallit dakkár "bohem-eallima", mas dušše čohkkášin ruovttus ja málen go oažžun inspirašuvnna, muhto in jáhke dan vejolažžan dáppe Sámis.
     .example-27 = Kárášjoga festivála buvttadeaddji Anne Berit Anti ii lohkan vel diehttit man olu olbmot ledje ikte konsearttas, muhto measta buot čohkkánsajit ledje dievvan
 
-    
-real-ImprtPl1-PassInf = Konsonántameattáhus !!
+
+real-ImprtPl1-PassInf = Konsonántameattáhus #!!
     .desc = Orru leamen meattáhus guovddáškonsonánttas. Don leat čállán vearbba ("{$1}") gohččunhámis. Jus oaivvildat infinitiiva leat ("{$1}"). 
     .example-1 = Fátmmastit šiehtadussii sáhttá atnot sámi vuoigatvuođaeaiggadiid vuosttá, ja eará álgoálbmogiid sullasaš vuoigatvuođaiguin boahttevaš riekteproseassain.
     .ref-1 = Pope2004:278
 
-real-Derh-Inf = Konsonántameattáhus!!
+real-Derh-Inf = Konsonántameattáhus #!!
     .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") guovddáškonsonánttas. Don leat čállán kausatiiva hámi. Dás galgá geavahit infinitiiva hámi. 
     .example-1 = Studeanta ferte ceavzzit goappašiid eksámeniid.
     
-real-Ess-PrfPrc = Konsonántameattáhus!!
+real-Ess-PrfPrc = Konsonántameattáhus #!!
     .desc = Orru leamen čállinmeattáhus sáni ("{$1}") guovddáškonsonánttas. Don leat čállán substantiivva essiivvas. Galgá go leat vearba perfeakta partisihppahámis?
     .example-1 = Sámegielat oahpaheddjiid háhkkan lea stuorra hástalussan dáin skuvllain.
     
-real-ImprtDu1-NSgNom = Konsonántameattáhus!!
+real-ImprtDu1-NSgNom = Konsonántameattáhus #!!
     .desc = Orru leamen čállinmeattáhus sáni ("{$1}") guovddáškonsonánttas. Don leat čállán guvttiidlogu vearbba imperatiivvas. Galgá go leat substantiiva?
     .example-1 = Mii váldit sámegiela duođas, lea Rettera čielga diehttu.
     
-real-oažžut = Čállinmeattáhus dán oktavuođas!!
+real-oažžut = Čállinmeattáhus dán oktavuođas #!!
     .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") guovddáškonsonánttas. Das galgá leat gievrrasdássi "žž".
     .example-1 = Dat livčče gal oba vuogas, jus ná geavašii, go muhtin mánát fertejit mannat priváhta skuvlii, jus áigot oaččut dakkár oahpu, mii ii gávdno stáhta skuvllain.
 
-
-real-vuostá = Čállinmeattáhus dán oktavuođas !!
+real-vuostá = Čállinmeattáhus dán oktavuođas #!!
     .desc = Orru leamen čállinmeattáhus guovddáškonsonánttas. Jus oaivvildat postposišuvnna, de galgá leat "st".
     .example-1 = o elrávdnjerehket boahtá juohke nuppi mánu lea vuosttaš mánu a-konto máksn (500,- ru.), ja maŋit mánu rehkega vuosttá.
     .example-2 = Buot dát leat joavkkut geaid vuosttá sápmi lea čiekčan.
 
+real-dohkko-dohko = Konsonántameattáhus #!!
+    .desc = Orru leamen čállinmeattáhus guovddáškonsonánttas.
+    .example-1 Dohkko sáhttále buot heargegilvaleaddjit oassálastit.
+    .example-2 = Mánát sáhttet dohkko gahččat ja duššat.
+
+real-NSgIll-ASgNom = Konsonántameattáhus #!!
+    .desc = Orru leamen čállinmeattáhus guovddáškonsonánttas.
+    .example-1 =  Ja dat lea maiddái stuorra bálkášupmi olles dan duoddjái.
+    .example-2 = Skuvla maid oahpaha fáttáin mat gusket boazodollui, meahccásteapmái, árbevieruide ja duoddjái.
+    .example-3 = Sámi duoddjái leamaš son hirbmat dehálaš.
+    .example-4 = Ii oktage sisaoastinkonsuleanta geas lea ovddasvástádus duoddjái, leat gielddahallan oastimis dáidaga man lea plánen, dadjá son.
+    .example-5 = Ruoŧas ii leat sullásaš ortnet sámi dáidagii ja duoddjái.
+    .example-6 = Fenger Lynge lohká iežas ožžon ollu inspirašuvnna sámi duojis, olbmot lea šaddagoahtán positiivvat njuorjjonáhkke duoddjái.
+
+real-NSgIll-PrtSg3 = Konsonántameattáhus #!!
+    .desc =
+    .example-1 = Eanadoallo- ja biebmodepartemeanta gohččui Stáhtavuvddiid vuovdit daid geassemánus 2011.
+    .example-2 = Son dohppii roavggu mii lei biggomen olgun ja gohččui skuovvadivodeaddji dohppet nuppe geahčái.
 
 real-erret-earret = Diftoŋgameattáhus
     .desc = Don leat čállán vokála "e". Das galgá leat diftoŋga "ea".
@@ -799,11 +816,6 @@ real-dihti-dihtii = Vokálameattáhus
     .example-4 = Dán doaimma, maid sáhtán bealistan dáhkidit, áiggun dárkilit čuovvut sierra čoahkkimiid bokte sihkkarastin dihti ovdáneami. 
     .example-5 = NSR oaivvilda ahte sámi deaivvadanbáikkit leat hui dehálaččat, ja háliida dan dihti ahte Sámediggi veahkeha proseassas álggahit sámi viesu Bergenii. 
     .example-6 = Dá lea dat unnimus maid sáhttit dahkat sihkkarastin dihti ahte guollebiebmanealáhus livčii ceavzil, ja maiddái sihkkarastin dihti ahte vuonat ja riddoguovllut eai billohuvva guhkit áigge badjel.
-
-
-real-dohko = !!
-    .desc =
-    .example-1 =
 
 real-duodjái = !!
     .desc =
