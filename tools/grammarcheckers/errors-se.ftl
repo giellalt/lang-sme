@@ -786,9 +786,18 @@ real-NSgIll-ASgNom = Konsonántameattáhus #!!
     .example-6 = Fenger Lynge lohká iežas ožžon ollu inspirašuvnna sámi duojis, olbmot lea šaddagoahtán positiivvat njuorjjonáhkke duoddjái.
 
 real-NSgIll-PrtSg3 = Konsonántameattáhus #!!
-    .desc =
+    .desc = Orru leamen čállinmeattáhus guovddáškonsonánttas.
     .example-1 = Eanadoallo- ja biebmodepartemeanta gohččui Stáhtavuvddiid vuovdit daid geassemánus 2011.
     .example-2 = Son dohppii roavggu mii lei biggomen olgun ja gohččui skuovvadivodeaddji dohppet nuppe geahčái.
+
+real-eannet-eanet = Konsonántameattáhus #!!
+    .desc = Orru leamen čállinmeattáhus guovddáškonsonánttas. Jus oaivvildat advearbba, de galgá leat okta "n".
+    .example-1 = Earenoamážit jus ii luohte eannet iežat intuišuvdnii ja jierpmálašvuhtii, de manná duinna hui bures.
+
+real-geahčalii-geahččalii = Konsonántameattáhus #!! Dát leat máhcahat-evttohus
+    .desc = Orru leamen čállinmeattáhus guovddáškonsonánttas. Oaivvildatgo geahččat-vearbba konditionálahámi "geahčalii" vai geahččalit-hámi 3. persovnna hámi "geahččalii"?
+    .example-1 = Gabrielsen jovssai spábba ja Guovdageainnu moallaalmmai geahčalii boahtit ovddal.
+
 
 real-erret-earret = Diftoŋgameattáhus
     .desc = Don leat čállán vokála "e". Das galgá leat diftoŋga "ea".
@@ -818,14 +827,6 @@ real-dihti-dihtii = Vokálameattáhus
     .example-6 = Dá lea dat unnimus maid sáhttit dahkat sihkkarastin dihti ahte guollebiebmanealáhus livčii ceavzil, ja maiddái sihkkarastin dihti ahte vuonat ja riddoguovllut eai billohuvva guhkit áigge badjel.
 
 real-duodjái = !!
-    .desc =
-    .example-1 =
-
-real-eanet = !!
-    .desc =
-    .example-1 =
-
-real-geahččalii = !!
     .desc =
     .example-1 =
 
