@@ -798,6 +798,10 @@ real-geahčalii-geahččalii = Konsonántameattáhus #!! Dát leat máhcahat-evt
     .desc = Orru leamen čállinmeattáhus guovddáškonsonánttas. Oaivvildatgo geahččat-vearbba konditionálahámi "geahčalii" vai geahččalit-hámi 3. persovnna hámi "geahččalii"?
     .example-1 = Gabrielsen jovssai spábba ja Guovdageainnu moallaalmmai geahčalii boahtit ovddal.
 
+real-geahčalin-geahččalin = Konsonántameattáhus #!!
+    .desc = Orru leamen čállinmeattáhus guovddáškonsonánttas. Oaivvildatgo geahččat-vearbba konditionálahámi "geahčalin" vai geahččalit-hámi 1. persovnna hámi "geahččalin"?
+    .example-1 = Go geahčalin jearrat manne nu máŋgii fertii mu bissehit, de vástidii " Dát ii gula dutnje.
+    .example-2 = In leat transkriberen, muhto geahčalin buoremus ládje oažžut
 
 real-erret-earret = Diftoŋgameattáhus
     .desc = Don leat čállán vokála "e". Das galgá leat diftoŋga "ea".
@@ -830,17 +834,10 @@ real-duodjái = !!
     .desc =
     .example-1 =
 
-real-geahččalin = !!
-    .desc =
-    .example-1 =
-
-real-geahpis = !!
-    .desc =
-    .example-1 =
-
-real-geažes = !!
-    .desc =
-    .example-1 =
+real-geahčes-geažes_geahčen = Čállinmeattáhus dán oktavuođas
+    .desc = Don leat čállán "geahččat"-vearbba gohččunhámi ("{$1}"). Oaivvildat go postposišuvnna "geahčen" dahje "geažes"?
+    .example-1 = Guttorm Utsi ballá sákka árbevirolaš sámi duodji sáhttá jávkat 10 jagi geahčes Deanus jos dasa ii dahkkut miige.
+    .example-2 = Vissis áiggi geahčes, omd. 30 minuhtta, de galget gávdnat ja oahppat nu ollu substantiivvaid go vejolaš.
 
 real-girji = !!
     .desc =
