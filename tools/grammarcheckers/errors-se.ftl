@@ -835,7 +835,7 @@ real-duodjái = !!
     .example-1 =
 
 real-geahčes-geažes_geahčen = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán "geahččat"-vearbba gohččunhámi ("{$1}"). Oaivvildat go postposišuvnna "geahčen" dahje "geažes"?
+    .desc = Don leat čállán "geahččat"-vearbba gohččunhámi ("{$1}"). Oaivvildat go postposišuvnna "geahčen" vai "geažes"?
     .example-1 = Guttorm Utsi ballá sákka árbevirolaš sámi duodji sáhttá jávkat 10 jagi geahčes Deanus jos dasa ii dahkkut miige.
     .example-2 = Vissis áiggi geahčes, omd. 30 minuhtta, de galget gávdnat ja oahppat nu ollu substantiivvaid go vejolaš.
 
