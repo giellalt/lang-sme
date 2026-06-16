@@ -659,7 +659,7 @@ real-first-aá = Akseanta-a meattáhus.
 
 
 real-second-aá = Akseanta-a meattáhus
-    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas. Oaivvildat go "{$1}"?
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas. Oaivvildat go "{€1}"?
     .example-1 = Bengtsson gierastalai suinna.
     .example-2 = Dalle oainnát sáddii gielddastivra fas ášši ruovttoluotta dalá huksenráđđái, mii ii šat bargan áššiin maide.
     .example-3 = Vihtta čohkká Guovdageainnu suohkanis leat “áibbas duoddaris” čohkain gos olbmot sáhttet finadit dán geasi.
@@ -694,7 +694,7 @@ real-second-aá = Akseanta-a meattáhus
 
 
 real-second-uo = Vokálameattáhus
-    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas. Oaivvildat go "{$1}"?
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas. Oaivvildat go "{€1}"?
     .example-1 = Dát smávva čuvllat, leat maid gorrojuvvon biktasiin mat ledje nie baskun.
     .example-2 = Doppe lei stuorra gorži, mii lei 15 mehter alo, gos mii njuikkodeimmet liegga sevdjnes eahkediin.
     .example-3 = Anne-Grethe Leine Bientie lea čállán teavstta ja su nieida Ellen Sara lea ges govaid sárgun.
