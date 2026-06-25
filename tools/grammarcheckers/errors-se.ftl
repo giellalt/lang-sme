@@ -1,4 +1,4 @@
-# Error messages for language: se
++# Error messages for language: se
 # Generated from XML by xml-conv
 
 ## Default patterns: re:real-.*, re:real-.*-.*, 
@@ -32,7 +32,7 @@ msyn-compound = Goallossátnemeattáhus
     .example-3 = Muhto dattege, vaikke vel dát dieđusge lea illu diehtu sidjiide geat beroštit sámegielat girjiin, de bođii gielddastivrra mearrádus gieskat veahá ártegis vuogi mielde.
 
 msyn-unspace-compound = Goallossátnemeattáhus
-    .desc = Don leat čállán (("{$1}")) goallossátnin. Dat galgá leat sátnelihttu.
+    .desc = Don leat čállán ("{$1}") goallossátnin. Dat galgá leat sátnelihttu.
     .example-1 = Sámediggeáirras Randi A. Skum (NSR) jearrá dasto odne gažaldagaid sámediggeráđđái ahte máid lea Sámediggeráđđi dássážii bargan čoavdindihti divatgažaldaga boazodoalus ja makkár strategiija lea Sámediggeráđis ovddasguvlui oažžun dihti vuoiggalaš divatortnega boazodollui.
     .example-2 = Udmurtat lea álgoálbmot Ruoššabealde. 
 
@@ -126,7 +126,7 @@ syn-number_congruence_relative_pronoun = Kongrueansameattáhus
     .example-1 = Thoralf Henriksen mielas leat Sámedikkis buorit áigumušat dain prošeavttain masa leat evttohan geavahit 2,4 miljovnna ruvnno, muhto ballá dáid ruđaid bálkestit duššái jus ii leat dáhttu ásahit meahcásteddjiide maid ealáhusšiehtadusa.
 
 syn-double-negation = Boasttuhápmi
-    .desc = Lea boasttuvuohki sojahit sihke ("{$1}") ja čuovvovaš gieldinvearbba.   
+    .desc = Ii galgga sojahit sihke ("{$1}") ja čuovvovaš gieldinvearbba.   
     .example-1 = Čiegain lea botken buot máđiid amaset eat beasa vuojániiguin luomejekkiide.
 
 msyn-ačča-aččat = Boasttuhápmi
@@ -399,7 +399,7 @@ msyn-sgloc-attr = Boasttuhápmi
     .ref-1 = 
 
 real-ihtit = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán advearbba "{$1}". Jus oaivvildat ihtit-vearbba leat infinititiivvas de galgá leat "ihtit".
+    .desc = Don leat čállán advearbba ("{$1}"). Jus oaivvildat ihtit-vearbba leat infinititiivvas de galgá leat "ihtit".
     .example-1 = 1900-logus álge dat liberálakonservatiiva áššit ihttin eanet.
     .ref-1 = 
 
@@ -846,21 +846,19 @@ real-vázzi-váccii = Čállinmeattáhus dán oktavuođas
     .example-1 = Gaup vázzi neavttárskuvlla Stáda Teáhterallaskuvllas, ja eksámena válddii 1978:is.
 
 real-čohkki-čohkkii = Vokálameattáhus
-    .desc = Orru leamen čállinmeattáhus sáni ("{$1}") loahpas. Jus oaivvildat vearbba "čohkket" 3. p. vássánáiggi hámis de galgá leat "-ii".
+    .desc = Orru leamen čállinmeattáhus sáni ("{$1}") loahpas. Jus oaivvildat vearbba "čohkket" 3. p. preterihtas de galgá leat "-ii".
     .example-1 = Eahkedis čohkki Lloyde olbmáideaset bankehttii.
 
-real-sáhkkii-sáhkki =
-    .desc =
-    .example-1 = Ja lean maid šaddan hui sáhkii álgoálbmot áššiide , muhto dál leat mus vuos eambbo gažaldagat go dieđut, dadjá Olga, gii háliida oahppat nu ollu go vejolaš , go oaidná iežas ovdasvástádussan áimmahuššat Ruoššabeale Sámiid servvodat dili boahtte áiggis .
+real-girjii-girjji = Čállinmeattáhus dán oktavuođas
+    .desc = Don leat čállán "girjet"-vearbba 3. p. ovttaidlogu preterihta ("{$1}"). Jus oaivvildat "girji"-sáni genetiiva-/akkusatiivahámi, de galgá leat ("{€1}").
+    .example-1 = ČálliidLágádus Kárášjogas lea dáid beivviid gárvemin ođđa girjii.
+    .example-2 = Liikon hirbmadit 1920- logu, ja lean lohkan girjii ja filmma The Great Gatsby, danin šattai Gatsby, muitala Ann
+    .example-3 = Ollesolbmuidprográmmas boahtá čálli John Gustavsen muitalit Johan Turi birra, gii čálii girjii «Muitalus sámiid birra».
+    .example-4 = Lea vuosttaš geardde go dát fágabiras lea ovttas čállán girjii.
 
-
-real-girjii-girjji = !!
-    .desc =
-    .example-1 =
-
-real-girjjiide = !!
-    .desc =
-    .example-1 =
+real-girjiide-girjjiide = Čállinmeattáhus dán oktavuođas
+    .desc = Don leat čállán "girjet"-vearbba 2. p. guvttiidlogu preterihta ("{$1}"). Jus oaivvildat "girji"-sáni máŋggaidlogu illatiivahámi, de galgá leat ("{€1}").
+    .example-1 = Lassin girjiide leat girjerádjosis ollu áigečállagat mat gusket min fágasurggiide, ja neahttasiiddus Idunn.no gávnnát eambbo áigečállagiid almmuhuvvon lágádusa Universitetsforlaget bokte. 
 
 real-guhkká-guhká = !!
     .desc =
