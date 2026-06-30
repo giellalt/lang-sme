@@ -684,7 +684,6 @@ real-second-aá = Akseanta-a meattáhus
     .example-30 = Eatnamis sáhttá jaska veallat ja guldalit movt luonddus gullojit skoahpamat, haksit arvehája, ja dovdat niera vuostá arvečalmmi.
     .example-31 = Ii dát galgá ádjanit nu guhka. 
 
-
 real-second-uo = Vokálameattáhus
     .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas. Oaivvildat go ("{€1}")?
     .example-1 = Dát smávva čuvllat, leat maid gorrojuvvon biktasiin mat ledje nie baskun.
@@ -695,6 +694,7 @@ real-second-uo = Vokálameattáhus
     .example-6 = Sámediggeráđđi lea gohččun čoahkkimii ođđajagimánu 15. b. daid Sámedikki áirasiiguin geat leat Gasko- ja Davvi-Norgga regionála dutkanfoanddaid stivrrain.
     .example-7 = Lávejit nu máilmmi fiidnát orrome diet doahpagat.
     .example-8 = Mun gal bearehaga lillun du!
+    .example-9 = Heaikkas váilot dát dáiddut, son biddju jurddašeaddji, filosofa posišuvdnii, dakkár gii smiehtada dálá – dološ – ja boahtteáiggi, dakkár gii jurddašaddá eallima mohkas gažaldagaid.
 
 
 real-Inf-PrsPl3 = Vokálameattáhus !! Gullágo dát uo vuollái vai divvu go dát maiddái iežá vearbbaid?
@@ -734,8 +734,12 @@ real-guovddáškonsonánta = Konsonántameattáhus
     .example-24 = Iskkan ja geahččaleapmi leat dehálaš oasit dutkamis. 
     .example-25 = Goarkŋun lea somás astoáigehommá. 
     .example-26 = Dieđusge háliidivččen eallit dakkár "bohem-eallima", mas dušše čohkkášin ruovttus ja málen go oažžun inspirašuvnna, muhto in jáhke dan vejolažžan dáppe Sámis.
-    .example-27 = Kárášjoga festivála buvttadeaddji Anne Berit Anti ii lohkan vel diehttit man olu olbmot ledje ikte konsearttas, muhto measta buot čohkkánsajit ledje dievvan
+    .example-27 = Kárášjoga festivála buvttadeaddji Anne Berit Anti ii lohkan vel diehttit man olu olbmot ledje ikte konsearttas, muhto measta buot čohkkánsajit ledje dievvan.
+    .example-28 = Ráhkisvuohta gal ii bistán guhkká, muhto ráhkisvuohta musihkkii buolligođii fas gulul.
 
+real-ImprtPl2-DerhPrsConNeg = Konsonántameattáhus!!
+    .desc = Orru leamen čállinmeattáhus ("{$1}") guovddáškonsonánttas. Oaivvildat go ("{€1}")?
+    .example-1 = Biret šattai bonjastit biilla doares beallái nu ahte biillat eaba beašket oktii.
 
 real-ImprtPl1-PassInf = Konsonántameattáhus #!!
     .desc = Orru leamen meattáhus guovddáškonsonánttas. Don leat čállán vearbba ("{$1}") gohččunhámis. Jus oaivvildat infinitiiva leat ("{€1}"). 
@@ -860,25 +864,20 @@ real-girjiide-girjjiide = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán "girjet"-vearbba 2. p. guvttiidlogu preterihta ("{$1}"). Jus oaivvildat "girji"-sáni máŋggaidlogu illatiivahámi, de galgá leat ("{€1}").
     .example-1 = Lassin girjiide leat girjerádjosis ollu áigečállagat mat gusket min fágasurggiide, ja neahttasiiddus Idunn.no gávnnát eambbo áigečállagiid almmuhuvvon lágádusa Universitetsforlaget bokte. 
 
-real-guhkká-guhká = !!
-    .desc =
-    .example-1 =
-
-real-hallan = !!
-    .desc =
-    .example-1 =
-
-real-ImprtDu1-DerPassPrsSg3 = !!
-    .desc =
-    .example-1 =
-
-real-ImprtPl2-DerhPrsConNeg = !!
-    .desc =
-    .example-1 =
-
 real-ImprtPl2-Inf = !!
     .desc =
-    .example-1 =
+    .example-1 = Dáin galgá unnimusat 5 miljovnna ruvnno adnit Munch-ávvudeapmái jagi 2013:s.
+    .example-2 = Eará jearaldagaid sáhtát jearret kunddarguovddážis, telefuvdna 06640.
+    .example-3 = Mii juohkkit eanaš ruđa dán čavčča, nu ahte boazodoalliide gánnáha čakčat vuovdit nu ollu go vejolaš, ávžžuha Berit Anne Sara Triumf.
+    .example-4 = Sara gal reagere hui garrasit dása go boanddat leat álgán johttit sávzzaiguin sin orohahkii, seammás go boazodoalus leat garra unnidan gáibádusat.
+    .example-5 = Ikte leat Romssa fylkkamánne birasgáhttenossodagas leamaš bargit sullos, geat galge báhččit goaskima. 
+    .example-6 = Go gávdne dievddu ja vigge suinna oažžut oktavuođa, de geaivugođii bissuin politiijaid guvlui, ja nu sii mearridedje báhččit, muitala Bergena politiija Lars Geitle NRK:i.
+
+
+
+
+
+
 
 real-ImprtSg1-DerPassPrfPrc = !!
     .desc =
