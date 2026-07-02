@@ -921,25 +921,36 @@ real-maŋit-maŋŋit = !!
     .desc =
     .example-1 = Loddenáigi lea maŋit eahket, ihkku ja iđđesija.
 
-real-measta = !!
+real-meastta-measta = !!
     .desc =
-    .example-1 =
+    .example-1 = Meastta  seamma stuora ruškesguovža gávdo  maiddái Kamtsjatkanjárggas ja Parammushirsullos Ruoššas, muhto diet guovža, mii gohčoduvvo kamtsjatkaguovžan, ii leat dohkkehuvvon sierra vuollešládjan.
+    .example-2 = Njálla lea meastta jávkan Norgga duoddariin.
 
-real-muhtumin = !!
+real-muhttomin-muhtumin = !!
     .desc =
-    .example-1 =
+    .example-1 = Dál duddjo dušše muhttomin.
+    .example-2 = Dan guovtti suohkanis ii gávdno odne makkárlágan plána mo galget ovddidit Sámegiela suohkanin, dat lea heahpat ja muhttomin dat orru maid nu ahte suohkaniid bealis leat máŋgii bargan sin vuostá geat leat bargan sámegielain, dadjá Olav Andersen.
+     .example-3 = MUOHTTAGIS: Skuohtanjárgga ovdaolmmoš Mikkel Nils Sara dadjá sin dárkilin, muhto muhttomin sáhttá leat váttis ja de šaddá gieđaid bassalit muohttagis.
 
-real-muoŧás = !!
+real-muoŧŧás-muoŧás  = !!
     .desc =
-    .example-1 =
+    .example-1 = Ja bisošii hal doppe nuppiin bieđagiin ovttas ovtta gaskka – de livččii ráfi ajihustit go dál ii leat čivga ge boŋkime, dat lea vižžojuvvon gávpogii eatnis olbmuid lusa ja galgá orrut muoŧŧás luhtte gitta go eatnis varrostuvvá.
 
-real-njaŋgát = !!
+real-njaŋgat-njaŋgát = !!
     .desc =
-    .example-1 =
+    .example-1 = Háliidan várra dušše njaŋgat dás.
+
+real-oainnát-oainnat = !!
+    .desc =
+    .example-1 = Mii leimmet, oainnát, čállán ahte mii doarjut oljo- ja gássabohkama Barentsábis.
+    .example-2 = Gielda oainnát ii sáhte álgit olbmuin gáibidit mávssu jus kloáhkat eai leat gurrejuvvon.
+    .example-3 = Dainna lágin oainnát ii leat boazodoallaláhka, oaivvilda Bæhr.
+    .example-4 = Jahkečoahkkin oainnát ávžžuhii stivra bargat dainna áššiin.
+    .example-5 = Soai oainnát eaba lean vuordán vuoitit, go eaba lean šaddan hárjehallat ovttas bearehaga.
 
 real-NomAgIll-PrtSg3 = !!
     .desc =
-    .example-1 =
+    .example-1 = Máhtes ábbui báhti.
 
 real-NSgIll-ASgNom = !!
     .desc =
