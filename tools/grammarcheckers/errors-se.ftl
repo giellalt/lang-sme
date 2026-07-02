@@ -882,23 +882,25 @@ real-ImprtPl2-Inf = !!
 
 real-ImprtSg2-Inf = !!
     .desc =
-    .example-1 =
+    .example-1 = Dan dihte lea giella ja oahpahus guovddáš fáddat mu politihkkalaš barggus, dadjá Keskitalo. #fáddat
+    .example-2 = Mii leat dattetge almmuhan dan dás, vai lohkkit besset lohkkat dan girjeartihkkaliid lassin.
+    .example-3 = Go álgen nuoraid skuvli de ledjen mielde dakkar gielddalaš musihkka skuvla gos ohppen nuohtaid lohkkat ja čállit.
+    .example-4 = Neahttasiiddus ung.no sáhtát eambbo lohkkat alkoholageavaheami birra ja anonymat jearrat gažaldagaid fágaolbmuin.
+    .example-5 = Muhtin universitehtain beasat lohkkat sámegiela ja sámekultuvrra.
 
-real-jearrá = !!
+real-jeara-jearrá = !!
     .desc = 
-    .example-1 =
+    .example-1 = Man lahkai  kvalitehtasihkkarastá Sámediggi ahte lea sámi buvtta man Sámediggi doarju, jeara  NSR.
 
-real-jearran = !!
+real-jearan-jearran = !!
     .desc =
-    .exampe-1 =
+    .exampe-1 = Ii leat vuos oktage jearan autográfa
 
-real-joatkán = !!
+real-johttui-johtui = !!
     .desc =
-    .example-1 =
-
-real-johtui = !!
-    .desc =
-    .example-1 =
+    .example-1 = Máŋgga sajiin leat sii jo boahtán bures johttui.
+    .example-2 = Dalle bijai Norgga stádaministtar Oddvar Nordli Sámi vuoigatvuođalávdegoddi johttui.
+    .example-3 = Dán vahkku leat hui doaimmalaš, eanet go leat leamaš goassege ovdal ja don fuobmát ođđa doaimmaid mat maid ožžot hormonaid johttui.
 
 real-lahkalagaid = !!
     .desc =
