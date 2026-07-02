@@ -962,19 +962,22 @@ real-NSgIll-ASgNom = !!
 
 real-NSgIll-PrtSg3 = !!
     .desc =
-    .example-1 =
+    .example-1 = Eanadoallo- ja biebmodepartemeanta gohččui Stáhtavuvddiid vuovdit daid geassemánus 2011.
+    .example-2 = Son dohppii roavggu mii lei biggomen olgun ja gohččui skuovvadivodeaddji dohppet nuppe geahčái.
 
-real-nuorain = !!
+real-nuoran-nuorain = !!
     .desc =
-    .example-1 =
+    .example-1 = Ingebrigtsen muitalii bearjadaga, ahte sus lei seksuála oktavuohta 2004:is  ovtta AUF nuoran, gii lei dalle 17-jahkkásaš.
 
-real-nuorran = !!
+real-nuorrán-nuorran = !!
     .desc =
-    .example-1 =
+    .example-1 = Vuoruhit spábbačiekčama Adam Klemet lávi maid nuorrán čiekčat spáppa, muhto ii vuoruhan spábbačiekčama gal nu nuorran go dan maid Marja Sofe lea. 
+    .example-2 = Inga Nordsletta Pedersen lea riegádan Kárášjogas muhto fárrii Mátta-Norgii jo nuorrán.
 
-real-nuppádassii = !!
+real-nuppádussii-nuppádassii = !!
     .desc =
-    .example-1 =
+    .example-1 = Vaikko juristtat eai leat geargan guorahallamis rihkku go Finnmárkoláhka árvalus álbmotrivttiin, de Stuoradikki Justislávdegoddi lea boahtán Finnmárkui gullat nuppádussii maid álbmot oaivvilda láhkaárvalussii.
+    .example-2 = Dál ballet Romssa sámit dán nuppádussii dáhpáhuvvat. 
 
 real-oaččut = !!
     .desc =
