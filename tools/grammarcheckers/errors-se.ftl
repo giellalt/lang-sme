@@ -736,6 +736,13 @@ real-guovddáškonsonánta = Konsonántameattáhus
     .example-26 = Dieđusge háliidivččen eallit dakkár "bohem-eallima", mas dušše čohkkášin ruovttus ja málen go oažžun inspirašuvnna, muhto in jáhke dan vejolažžan dáppe Sámis.
     .example-27 = Kárášjoga festivála buvttadeaddji Anne Berit Anti ii lohkan vel diehttit man olu olbmot ledje ikte konsearttas, muhto measta buot čohkkánsajit ledje dievvan.
     .example-28 = Ráhkisvuohta gal ii bistán guhkká, muhto ráhkisvuohta musihkkii buolligođii fas gulul.
+    .example-29 = Lávdegoddi lea čoagganan guovtte gearddi jagis, muhto ollu áigi lea atnon guorahallat áiddiid.
+    .example-30 = Kapos šaddá nubbi: son lea atnon earáláganin earáid ektui. 
+    .exanple-31 = Girji lea láhpon, muhto Alaj Mikhalkova 1606-1608 "olmmošlogut" galget leahkit Agalina girjji mielde. 
+    .example-32 = Kommišuvdna lea jagi 1997 cuoŋománu rájis bargan doaimmaiguin mat dasa ledje bidjon ja lea odne, čoahkkimis Helssegis, loahpahan barggu ovttajienalaš evttohusain.
+    .example-33 = Evttohuvvo ahte fierbmečalbmi galgá leat uhcimus 58 mm, ja ahte galgá leat dušše vejolaš geavahit batnon nylonárppu, árpu mii lea seakkit go 10 denier.
+
+
 
 real-ImprtPl2-DerhPrsConNeg = Konsonántameattáhus!!
     .desc = Orru leamen čállinmeattáhus ("{$1}") guovddáškonsonánttas. Oaivvildat go ("{€1}")?
@@ -872,20 +879,6 @@ real-ImprtPl2-Inf = !!
     .example-4 = Sara gal reagere hui garrasit dása go boanddat leat álgán johttit sávzzaiguin sin orohahkii, seammás go boazodoalus leat garra unnidan gáibádusat.
     .example-5 = Ikte leat Romssa fylkkamánne birasgáhttenossodagas leamaš bargit sullos, geat galge báhččit goaskima. 
     .example-6 = Go gávdne dievddu ja vigge suinna oažžut oktavuođa, de geaivugođii bissuin politiijaid guvlui, ja nu sii mearridedje báhččit, muitala Bergena politiija Lars Geitle NRK:i.
-
-
-
-
-
-
-
-real-ImprtSg1-DerPassPrfPrc = !!
-    .desc =
-    .example-1 =
-
-real-ImprtSg1-PrfPrc = !!
-    .desc = 
-    .example-1 =
 
 real-ImprtSg2-Inf = !!
     .desc =
