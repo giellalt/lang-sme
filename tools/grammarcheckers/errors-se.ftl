@@ -981,21 +981,19 @@ real-nuppádussii-nuppádassii = !!
 
 real-oaččut = !!
     .desc =
-    .example-1 =
+    .example-1 = Jos háliidat báddet vuoras olbmuid de oažžut mis luoikkasin báddenmašiinna. 
+    .example-2 = Jos háliidat váldit videogova de oažžot  mis luoikkasin videokamera.
 
-real-oktage = !!
+real-oktege-oktage = !!
     .desc =
-    .example-1 =
-
-real-orrut = !!
-    .desc =
-    .example-1 =
+    .example-1 = Amasgiela-dásis  ii leat dál oktege oahppi.
 
 real-PlNomPxSg2-PlNom = !!
     .desc =
-    .example-1 =
+    .example-1 = Márkaniin lei guoimmuheapmi, njálgosat, imašlaš báhkkat ja lihkkoreivvet.
+    .example-2 = Eará ofelaččat leat du bargoustibat álggus jagis, muhto dađistaga šaddet dego oabbát ja/dahje/ja vieljat!
 
-real-prs-pl3-not-imprt-pl2 = !!
+real-ImprtPl2-PrsPl3 = !!
     .desc =
     .example-1 =
 
