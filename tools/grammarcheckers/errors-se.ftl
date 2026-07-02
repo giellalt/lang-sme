@@ -902,21 +902,24 @@ real-johttui-johtui = !!
     .example-2 = Dalle bijai Norgga stádaministtar Oddvar Nordli Sámi vuoigatvuođalávdegoddi johttui.
     .example-3 = Dán vahkku leat hui doaimmalaš, eanet go leat leamaš goassege ovdal ja don fuobmát ođđa doaimmaid mat maid ožžot hormonaid johttui.
 
-real-lahkalagaid = !!
+real-láhkalágaid-lahkalagaid = !!
     .desc =
-    .example-1 =
+    .example-1 = Giellabargit bohtet bargat hui láhkalágaid giellajuhkosiin.
 
-real-luohti = !!
+real-luohtti-luohti = !!
     .desc =
-    .example-1 =
+    .example-1 = Luohtti fámoleabbo go leat máŋggas.
+    .example-2 = Leai miellagiddevaš gullat man láhkai boares Lars Nilsson Ruong luohtti gullui.
 
-real-mahká = !!
+real-mahkká-mahká = !!
     .desc =
-    .example-1 =
+    .example-1 = Jus galggašii mahkká Finnmárkui ráhkadit dakkár meieriija mii buot dieid ráhklada, de šattašii muhtun meieriijá máddin heaitit.
+    .example-2 = In nagot oaidnit maid mahkká Sámediggi sáhtášii dahkat, lohká son.
+    .example-3 = Dološ skuvlema ja boradeami čájálmasain nekte sihke suoma- ja sámeluohkáid oahpaheaddjit skuvlema jagis 1958, mas	mahkká	ledje ávvudeamen skuvlabiepmu 10-jagi ávvudeami.
 
-real-maŋŋit = !!
+real-maŋit-maŋŋit = !!
     .desc =
-    .example-1 =
+    .example-1 = Loddenáigi lea maŋit eahket, ihkku ja iđđesija.
 
 real-measta = !!
     .desc =
