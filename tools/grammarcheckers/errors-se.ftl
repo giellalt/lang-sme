@@ -954,7 +954,11 @@ real-NomAgIll-PrtSg3 = !!
 
 real-NSgIll-ASgNom = !!
     .desc =
-    .example-1 =
+    .example-1 = Sisdoallu: Leago dus beroštupmi árbevirolaš ja ođđaáigásaš duoddjái, ja liikot duddjot ja hábmet?
+    .example-2 = Digitála bargovuogit, dego ovdamearkka dihte govven, filbmen ja sosiála media, leat veahkkeneavvun go ráhkadit duoddjái muitalusa.
+    .example-3 = Lihkkosávaldagat čeahccái du riegádanbeaivái mii lea juovlamánu 13. beaivvi.
+    .example-4 = Mii háliidit cealkit ollu lihkkosávaldagaid min čeahccái gii deavdá 60 jagi guovvamánu 24. beaivvi.
+    .example-5 = Ii leat nappo dárbu bargat vel golbma jagi maŋŋel go lea ollen válddálašvuođa ahkkái.
 
 real-NSgIll-PrtSg3 = !!
     .desc =
