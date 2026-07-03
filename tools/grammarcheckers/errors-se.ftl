@@ -995,7 +995,8 @@ real-PlNomPxSg2-PlNom = !!
 
 real-ImprtPl2-PrsPl3 = !!
     .desc =
-    .example-1 =
+    .example-1 = Mii dovdat Ovddádusbellodaga oainnu Sámediggái, eatge hirpmáhuva go Hans J. Eriksen, Carl I. Hagen ja Siv Jensen cealket juoidá dán áššis.
+    .example-2 = Son čájehii govaid buotlágan borramušain maid sii luonddus viežžet.
 
 real-PrsConNeg-PrsPl3 = !!
     .desc =
