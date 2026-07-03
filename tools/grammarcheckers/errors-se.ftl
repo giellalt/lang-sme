@@ -1008,96 +1008,104 @@ real-PrsConNeg-PrtPl3 = !!
 
 real-PrsSg1-PrfPrc = !!
     .desc =
-    .example-1 =
+    .example-1 = Álggus sáhttá váidalit njuolga dan olbmui guhte lea iskkan dahje dikšun du.
+    .example-2 = Návet lea áigá jo mieskkan ja gahččan.
+    .example-3 = Lean visot njuoskkan.
+    .example-4 = Dán čavčča loahpahuvvo okta golbmajahkásaš našunála prošeakta gos dutkit leat lohkan rievssahiid ja iskkan makkár guovlluin leat hui unnán rievssahat.
 
-real-raddi = !!
+real-rátti-ratti = !!
     .desc =
-    .example-1 =
+    .example-1 = Ballu čarvvui ráttis ja geahččalin garvit ášši. 
+    .example-2 = Sihkkaris gáldut geaiguin Nordlys aviisa lea hupman, lohket dievddu čukkohallan máŋgii rátti ja čoavjji bokte.
 
-real-ráđđi = !!
+real-ráddi-ráđđi = !!
     .desc =
-    .example-1 =
+    .example-1 = Váhnemiid mielan ii lean iežá ráddi.
+    .example-2 = Lea Ráddi guhte nammada Doarjjastivrra áirasiid ja dat dáhpáhuvvá maŋŋá.	
+    .example-3 = s e.e. nugo čállingotteossodaga ásaheami forumii mii čadnošii ON:a ekonomálaš ja sosiála ráddái New York:ii.
+    .example-4 = Ráđđehus dáhttu arvagit doarjut Foruma doaimmaid, daidgaskkas e.e. nugo čállingotteossodaga ásaheami forumii mii čadnošii ON:a ekonomálaš ja sosiála ráddái New York:ii.	
+    .example-5 = Sámi parlamentáralas ráddi lea čoahkkinastan davviriikkalas ministarrádiin, Københámmanis.
+    .example-6 = – Mun oainnán positiiva signálan ahte Davviriikkaid Ráddi sáddii ruovttoluotta ráđi presidia evttohusa, lohká Sámedikkepresideanta Sven-Roald Nystø
 
-real-Ráđđi = !!
-    .desc =
-    .example-1 =
 
-real-ragada = !!
+
+real-Ráddi-Ráđđi = !!
     .desc =
-    .example-1 =
+    .example-1 = Sámi Parlamentáralaš Ráddi.
+
+real-ragaha-ragada = !!
+    .desc =
+    .example-1 = Miesse- ja árranjuovvandoarjjaortnet galgá movttiidahttit ovdal ragaha ja ovdal juovllaid njuovvama ja dat guoská seamma bures guovlluide máttabealde Romssa go Romssas ja Finnmárkkus ja danne berrejit máksomearit leat ovttastuoru.
 
 real-sáhtaš = !!
     .desc =
-    .example-1 =
+    .example-1 = Son lohká ahte jus luohti dohkkejuvvošii veahkkeneavvun vuoiŋŋalaš divššus, de sáhtašii terapevtta / divššár jearrat dan gii juoigá: «Gean don juiget ja manne juste dán luođi rohttejit dál?
 
 real-sáhtáš = !!
     .desc = 
-    .example-1 =
+    .example-1 = Juste dál sáhtašin baicca dego civnna girdilit biekka mielde ja girddašit gosa dal de dolvvošii, guhkas.
 
-real-sáhtát = !!
+real-válddi-váldii = !!
     .desc =
-    .example-1 =
+    .example-1 = Dát ahte váldá ná guhkes áiggi dohkkehit sámi museaid, čájeha dušše ahte mo sámi museaid meannudit, vaikko Sámediggi juo logi jagi áigi válddi badjelasas sámi museaid, dadjá Andreassen.
 
-real-váldii = !!
+real-varra-várra = !!
     .desc =
-    .example-1 =
-
-real-várra = !!
-    .desc =
-    .example-1 =
+    .example-1 = De gal lohká okta dain jiehtanasain ahte bussá gal varra geassá fatnasa, go sidjiide earáide lea nu lossat. 
+    .example-2 = Sundi Paus, gii veahá maŋŋel 1700-logu gaskkamutto varra lei Finnmárkku ja čearddalaš ealáhusvuođu heivehemiid oahppáseamos olmmoš, čilgii sápmelaččaid ja dáččaid erohusa guovddáš borramušriggodagaid geavaheami oktavuođas.
 
 real-vuvdii = !!
     .desc =
-    .example-1 =
-
-syn-case_congruence = !!
-    .desc =
-    .example-1 =
+    .example-1 = Mannán  ráhkadii son juo vuodjaskáhppuid ja vuvdiid daid, nie tiinnii álcces ođđa sk Mannan vahko  čoagganedje 160 olbmo miehtá Suomabeale Sámi Ohcejohkii ávvudit Ohcejoga soahteveteránaid searvvi 40-jagi.
 
 syn-congruence-com-num = !!
     .desc =
     .example-1 =
 
-syn-congruence-loc-num= !!
+syn-congruence-loc-num = !!
     .desc =
     .example-1 =
 
 syn-double-inchoative = !!
     .desc =
-    .example-1 =
+    .example-1 = Go leimme mihtidan nu máŋga rusttega ahte álggiime ollet lohppi, álgen mun ballagoahtit.
 
 syn-go-not-ahte = !!
     .desc =
-    .example-1 =
+    .example-1 = Buorre ahte boađát.
+    .example-2 = Dasa lei sivvan dat, ahte son čorbmagođii mu reaŋgabártnáža.
 
 syn-not-aidna = !!
     .desc =
-    .example-1 =
-
-syn-object_missing = !!
-    .desc =
-    .example-1 =
+    .example-1 = Áidna gii váilu dán govas lea bussevuoddji.	Ii váillo eará go bussevuoddji dán govas. Váilu dušše bussevuoddji dán govas.
+    .example-2 = Áidna man alde beaivvi vuostálastit ain nárrohaddet lea, nu mo vihtta jagi dassái, symbolaid alde. Beaivvi vuostálastit eai nárrohatta dál šat eanet go, nu mo vihtta jagi dassái, symbolaid alde.
+    .example-3 = Kárášjoga gymnásas lei sámegielfága skuvlla «gálvomearkan», ja álggu rájes measta áidna mii earuhii skuvlla eará gymnásain.
 
 syn-PassPrsPl1-PrtPl1 = !!
     .desc =
-    .example-1 =
+    .example-1 = Go mii čurvot nuoraide de galge vástidit.
 
 syn-PassPrtSg3-PrtSg3 = !!
     .desc =
-    .example-1 =
+    .example-1 = Maŋŋel go válgabohtosat čilge, de lea son gártan viđat sadjái Ellen Inga O. Hætta maŋábeallai, gii gal baicca gizzui ollu go oaččui liigejienaid.
 
 syn-short-gen = !!
     .desc =
-    .example-1 =
+    .example-1 = Dainna vugiin meinejit skealmmat ahte sii sáhttet du rehket ala riŋget.
+    .example-2 = Njuovvanplána, boazolohku, johtináiggit ja -geainnut, ja eará leat de mearriduvvon báhper ala.
+    .example-3 = Mun orun dáppe dassážii fas boahtá johka mu eatnan ala, lohká Návuonbađa boanda Gunnar S. Mun orun dáppe dassážii fas boahtá johka mu eatnama ala, lohká Návuonbađa boanda Gunnar S.
 
 syn-super-erenoamáš-buot = !!
     .desc =
-    .example-1 =
+    .example-1 = Buot eanemus vuorjjahahtti dás lea dat eahpesihkarvuohta.
+    .example-2 = Telefuvdna ságastallan maid lohká eanemus earenoamážin.
 
 syn-super-erenoamáš = !!
     .desc = 
-    .example-1 =
+    .example-1 = Buot eanemus vuorjjahahtti dás lea dat eahpesihkarvuohta.
+    .example-2 = Unnimusaide soaitá leat eanemus geasuheaddjin go buohkat
+    .example-3 = Dás lea sáhka eanemus guovddáš árvvuid birra
 
 syn-super-erenoamážit = !!
     .desc =
-    .example-1 =
+    .example-1 = Telefuvdna ságastallan maid lohká eanemus earenoamážin.
