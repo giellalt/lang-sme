@@ -1000,11 +1000,11 @@ real-ImprtPl2-PrsPl3 = !!
 
 real-PrsConNeg-PrsPl3 = !!
     .desc =
-    .example-1 =
+    .example-1 = Sihke organiseren ja hábmen málle lea hástalus go maid oahpaheaddjit váillot, sadjásažžat váilot ja go skuvlaeaiggádin lean nu iešguđetlágan málle mot juhket diimmuid diibmologoresurssaid ektui sámegielas ja oahpahusa organiseren obbalažžat daguha ahte go eai leat čielga mállet mot láhčet oahpahusa ja šaddá maiddai soaittáhagas mot organiserejuvvo vuođđoskuvllas sámegieloahpahus.
 
 real-PrsConNeg-PrtPl3 = !!
     .desc =
-    .example-1 =
+    .example-1 = Ánnu ii dadjan maidege, muhto vuhttui ahte Čormmoža sánit jorbbodahte su.
 
 real-PrsSg1-PrfPrc = !!
     .desc =
