@@ -147,6 +147,7 @@ LIST Der/NomAg = Der/NomAg ;
 LIST Gram/NomAg = Gram/NomAg ;
 SET NOMAG = NomAg OR Der/NomAg ;
 LIST G3 = G3 ;
+LIST Known = Known ;
 LIST Gram/3syll = Gram/3syll ;
 LIST Prop = Prop ;
 LIST Symbol  = Symbol  ;
@@ -1172,6 +1173,7 @@ LIST &lex-vallji-valljugas = &lex-vallji-valljugas ;
 LIST &msyn-ačča-aččat = &msyn-ačča-aččat ;
 LIST &syn-add-go = &syn-add-go ;
 LIST &syn-ccii-not-zzi = &syn-ccii-not-zzi ;
+LIST &syn-boasttu-compound = &syn-boasttu-compound ;
 LIST &syn-pers-refl-congruence = &syn-pers-refl-congruence ;
 LIST &msyn-gen-numeral-jahkasaš = &msyn-gen-numeral-jahkasaš ;
 LIST &msyn-demphrase-plill = &msyn-demphrase-plill ;
@@ -1497,6 +1499,7 @@ LIST &real-ráđástallat = &real-ráđástallat ;
 LIST &real-ráđastaddat = &real-ráđastaddat ;
 LIST &real-rađastaddat = &real-rađastaddat ;
 LIST &real-sakka = &real-sakka ;
+LIST &real-sábmái-sabmái = &real-sábmái-sabmái ;
 LIST &real-sámediggedievasčoahkkin = &real-sámediggedievasčoahkkin ;
 LIST &real-sáhtáš = &real-sáhtáš ;
 LIST &real-sáhtaš = &real-sáhtaš ;
@@ -3737,7 +3740,7 @@ COPY:real-hallan (PrfPrc SUGGEST) EXCEPT (Imprt Sg1 &real-hallan) TARGET (Imprt 
  # barggan > barggán+A+Sg+Nom
  
 
-ADD:real-barggan-barggán (&real-barggan-barggán) TARGET ("bargat" V TV Ind Prs Sg1) IF (-1 GRADE-ADV OR ("man" Adv) OR ("mii" Pron Rel Sg Acc Known) OR -1 ("leat" Ind Sg1));
+ADD:real-barggan-barggán (&real-barggan-barggán) TARGET ("bargat" V TV Ind Prs Sg1) IF (-1 GRADE-ADV OR ("man" Adv) OR ("mii" Pron Rel Sg Acc Known) OR ("leat" Ind Sg1));
 	## Lean barggan.
 
 ADD:real-barggan-barggán (&real-barggan-barggán) TARGET ("bargat" V TV Ind Prs Sg1) IF (-1 Inf LINK -1 AUX);
@@ -3756,6 +3759,15 @@ ADD:real-buollat-buollát (&real-buollat-buollát) TARGET ("buolla" N Sg Nom PxS
 
 COPY:real-buollat-buollát ("buollát" V IV Inf SUGGEST) EXCEPT ("buolla" N Sg Nom PxSg2) OR  ("buolladit" Imprt ConNeg) OR ("buolladit" Imprt Sg2) OR ("buolladit" Ind Prs ConNeg) OR ("buollahit" Ind Prs ConNeg)  TARGET &real-buollat-buollát IF (*-1 ("mii" Pron Indef Sg) OR ("son" Pers Pl3 Nom)) ;
 
+
+
+ # sábmái > sabmái (skimtes)
+
+ADD:xreal-sábmái-sabmái (&real-sábmái-sabmái) TARGET ("sábmái" A Sg Nom) OR ("sápmi" N Sg Ill Err/Confused-ASgNom) OR ("sápmi" N Sg Ill) IF (*1 (Prop Sg Nom) + Sem/Plc BARRIER NOT-ADV-PCLE - ("ieš"));
+
+COPY:xreal-sábmái-sabmái ("sabmát" V IV Ind Prt Sg3 SUGGEST) EXCEPT ("sábmái" A Sg Nom) OR ("sápmi" N Sem/Hum_Lang Sg Ill Err/Confused-ASgNom) OR ("sápmi" N Sg Ill) TARGET &real-sábmái-sabmái ;
+	## Ja ii manannge šat guhká go ovddabealde sábmái ieš Rádjeoaivi, mii lea dego čuorvvasmearka gaskku dán meahcceguovllu.
+	## Ja ii mannange vehá badjelas moadde diimmu go ovddabealde sábmái Bálojávri, mii lea okta čábbáseamus jávrriin dán guovllus.
 
 
     # Compound errors
@@ -3797,6 +3809,21 @@ COPY:compound (SUGGEST) EXCEPT (Err/Orth Err/MissingSpace &msyn-unspace-compound
 	## sihkkarastindihti
 
 COPY:compound (SUGGEST) EXCEPT (Err/Orth Err/MissingHyph &msyn-unspace-compound) OR (Err/Orth-a-á Err/MissingHyph &msyn-unspace-compound) OR (Err/Orth-nom-acc Err/MissingHyph &msyn-unspace-compound) OR (Err/Orth-nom-gen Err/MissingHyph &msyn-unspace-compound) OR (Err/MissingHyph &msyn-unspace-compound) TARGET (Err/MissingHyph &msyn-unspace-compound);
+
+
+ # boasttu + N # FLAMMIE HELP
+ 
+ADD:xsyn-boasttu-compound &syn-boasttu-compound TARGET ("boasttu" A Attr Err/Lex) IF (1 N - <spelled>) ;
+
+ADD:xsyn-boasttu-compound &syn-boasttu-compound TARGET N IF (-1 ("boasttu" &syn-boasttu-compound)) ;
+
+ADDRELATION (LEFT) (N &syn-boasttu-compound) TO (-1 ("boasttu" &syn-boasttu-compound)) ;
+
+#ADDRELATION (DELETE) (N &syn-boasttu-compound) TO (-1 ("boasttu" &syn-boasttu-compound)) ;
+
+#COPY:syn-boasttu-compound ("boastto" A Cmp/Attr Cmp SUGGEST) TARGET (N &syn-boasttu-compound) ;
+
+
 
 
 # compound or not:
@@ -6702,7 +6729,7 @@ ADD:real-NSgIll-ASgNom (&real-NSgIll-ASgNom) TARGET (N Sg Ill Err/Confused-ASgNo
 
 	# Ill valency
 
-ADD:real-NSgIll-ASgNom (&real-NSgIll-ASgNom) TARGET (N Sg Ill Err/Confused-ASgNom) + Á-I-U-NOUNS IF (0 CONC-2 OR CONC-3 OR CONC-3A-GRADE-II) (*0 (<.*-Ill-.*>r) OR (<.*-Ill-.*><.*>r) BARRIER NOT-ADV-PCLE)(NEGATE -1 CC LINK -1 (A Sg Nom))(NEGATE 1 CC LINK 1 (A Sg Nom))(NEGATE 0 VFIN)(NEGATE 0 &real-NSgIll-PrtSg3)(NEGATE *-1 ("leat") OR <copula> BARRIER NOT-ADV-PCLE LINK *-1 (Sg Nom) OR (Pers Nom));
+ADD:real-NSgIll-ASgNom (&real-NSgIll-ASgNom) TARGET (N Sg Ill Err/Confused-ASgNom) + Á-I-U-NOUNS IF (0 CONC-2 OR CONC-3 OR CONC-3A-GRADE-II) (*0 (<.*-Ill-.*>r) OR (<.*-Ill-.*><.*>r) BARRIER NOT-ADV-PCLE LINK NOT 0 ("leat"))(NEGATE -1 CC LINK -1 (A Sg Nom))(NEGATE 1 CC LINK 1 (A Sg Nom))(NEGATE 0 VFIN)(NEGATE 0 &real-NSgIll-PrtSg3)(NEGATE *-1 ("leat") OR <copula> BARRIER NOT-ADV-PCLE LINK *-1 (Sg Nom) OR (Pers Nom));
 	## Fágalaš gelbbolašvuođa olaheapmi lea oahpahusfágaid váldomihttu, mas ámmátfágalaš perspektiiva, pedagogihkka ja oahppimáhttu (ahkkái heivehuvvon), fágadidaktihkka, fágaid gaskasašvuohta ja hárjehallan leat heivehuvvon oktii.
 
 
@@ -6726,7 +6753,7 @@ ADD:real-NSgIll-ASgNom (&real-NSgIll-ASgNom) TARGET (Err/Orth Ind Prt Sg3) IF (0
 	## Iđđes gohččui áddjá báhpa ja su eamida boahtit guossái.
 	## Čájet munnje láibbi, gohččui olmmái.
 
-ADD:real-NSgIll-ASgNom (&real-NSgIll-ASgNom) TARGET (Err/Orth Ind Prt Sg3) IF (0 CONC-2 OR CONC-3 OR CONC-3A-GRADE-II) (-1 (N Sg Nom) + Sem/Human)(NEGATE 0 &real-NSgIll-PrtSg3);
+ADD:real-NSgIll-ASgNom (&real-NSgIll-ASgNom) TARGET (Err/Orth Ind Prt Sg3) IF (0 CONC-2 OR CONC-3 OR CONC-3A-GRADE-II) (-1 (N Sg Nom) + Sem/Human)(NEGATE 0 &real-NSgIll-PrtSg3 OR (Ind Prt Sg3) - Err/Orth);
 	## Dalle Herodes gohččui suoli viisáid lusas ja jearahalai sis áiggi goas násti lei ihtán.
 
 COPY:real-NSgIll-ASgNom (SUGGEST) EXCEPT (Err/Orth &real-NSgIll-ASgNom) TARGET (Err/Orth Ind Prt Sg3 &real-NSgIll-ASgNom) ;
