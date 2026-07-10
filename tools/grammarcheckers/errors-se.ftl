@@ -39,6 +39,10 @@ msyn-unspace-compound = Goallossátnemeattáhus
 msyn-addhyphen = Goallossáhcomeattáhus
     .desc = Don leat čállán guokte goallossáni, main lea oktasaš vuođđooassi. Danin vuosttaš oasis ("{$1}") galgá leat goallossáhcu.
     .example-1 = Ossodagat addet maiddái doarjaga dutkamii, geahččalan ja ovdánahttinbargui, ja servet riikkaidgaskasaš ovttasbargguide sin fágasurggiineaset.
+    
+syn-boasttu-compound = Goallossátnemeattáhus
+    .desc = Don leat čállán ("{$1}") guoktin sátnin. "boasttu" goallostuvvo manjit sániin ovttas. 
+    .example-1 = Mon álo válddan boasttu niibbi!
 
 real-hallan = Boasttuvearbasuorggádus
     .desc = Don leat čállán vearbba ("{$1}"). "-hallat" passiivvas ii rievdda goassege maŋemus a-vokála.
