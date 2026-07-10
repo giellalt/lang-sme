@@ -401,6 +401,10 @@ msyn-sgloc-attr = Boasttuhápmi
     .example-1 = Snoranuohtti lea gehppes ja álkis veahkkeneavvu.
     .example-2 = Riehpponjohka lea čájehuvvon dás ovdamearkan danin go doppe leat eanemus soahpameahttunvuođat leamaš, muhto maiddái danin go lea álkis ipmirdahtti duogáš dákkár soahpameahttunvuođaide.
     .ref-1 = 
+    
+real-barggan-barggán = Čállinmeattáhus dán oktavuođas
+    .desc = 
+    .example-1 = Jus don livččet riegádan beaivvi ovdal, de livččet don rikkis, návccalaš, barggan, smáđáhkes ja buoremielalaš olmmoš
 
 real-ihtit = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán advearbba ("{$1}"). Jus oaivvildat ihtit-vearbba leat infinititiivvas de galgá leat "ihtit".
@@ -424,6 +428,10 @@ real-sutnje = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán vearbba ("{$1}"). Jus oaivvildat persovnnalaš pronomena, de galgá leat "sutnje".
     .example-1 = Dás gal lea oalle stuorra mearkkašupmi, suidne lea čuohcan garrasit, go dát diggeášši leamas vuordimis, dál su noađđi lea gehppon olu, muitala Bakke.
     .ref-1 = 
+    
+real-sábmái-sabmái = Čállinmeattáhus dán oktavuođas !!
+    .desc = 
+    .example-1 = Ja ii manannge šat guhká go ovddabealde sábmái ieš Rádjeoaivi, mii lea dego čuorvvasmearka gaskku dán meahcceguovllu.
 
 real-sáhkki = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán illatiivva substantiivva ("{$1}"). Jus oaivvildat adjektiivva, de galgá leat "sáhkkii".
