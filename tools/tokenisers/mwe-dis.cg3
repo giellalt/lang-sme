@@ -2104,6 +2104,50 @@ SET V-TRANS-ACT-NOT-ACT = V-TRANS - Der/Pass - Der/NomAct - Actio - NOMAG - PrsP
 SET V-TRANS-ACT-NOT-ACT-NOT-AUX = V-TRANS - Der/Pass - Der/NomAct - Actio - NOMAG - AUX OR (Actio Ess) ;
 
 
+# Amount sets
+# - - - - - -
+
+LIST VOLUME = "cl" "lihtar" (".*lihtter"r) "dl" "lihtter" "ml"  ;
+
+LIST WEIGHT = "mg" "kg" "kilo" "kilu" "gilo" "tonna" ;
+
+LIST LENGTH = "čuoldabadji" "dumá" "fierbmebadji" "gaska" "miila" (".*mehtar"r) (".*mehter"r) "mehtar" "mehter" "sente" "cm" "tumá" "állan" "salla" ;
+
+LIST TEMPERATURE = "buolašceahkki" "buolašgráda" "lieggaceahkki" "lieggagráda" ;
+
+LIST AMOUNT = "uhcánaš" "unnánaš" ;
+
+LIST TIME-UNIT = "jahki" "minukta" "sekunda" "vahkku" "mánnu" "diibmu" ;
+	# For use for rules hitting "maŋŋel" as Adv instead of Po. Also in MEASURE-set.
+
+SET MEASURE = VOLUME OR WEIGHT OR LENGTH OR AMOUNT OR TEMPERATURE OR TIME-UNIT ;
+
+LIST CURRENCY = "denara" "dollár" "euro" "kruvdnu" "kr" "ru" "rubel" "ruvdno" "ruvdnu" "¢" "€" "$";
+
+SET CURRENCY-GEN = CURRENCY + Gen ;
+
+SET NOT-CURRENCY-GEN = N - CURRENCY-GEN ;
+
+
+LIST NUMUNIT = "čuohti" "duhát" "miljon" "millijovdna" "milliovdna" "mill" "milj" "miljo" "miljarda" "mrd";
+
+LIST KIND = (".*šládja"r)  ;
+
+LIST COUNTABLE = "gáhppálat" "oassi" "kapihttal" "paragráfa" ;
+
+LIST NUMMAR = "identifiserennummar" "njuolggotlf" "nr" (".*nummar"r) "nummir" "tabeallanummar" "Vuorkááššenr" ;
+
+LIST KLASS = "art" "ášši" "bálkáceahkki" "čuokkis" "dieđ.nr" "nr" "s" "siidu" "§" "§§" "paragráfa" "S.nr" "st.dieđ. nr" "od.prp.nr" "Ot.prp. nr" "oassi" "kap" "kapihttal" "kapihtal";
+
+LIST PEOPLE-NUM = "guovttis" "golmmas" "njealjis" "viđas" "guđas" "čiežas" "gávccis" "ovccis" "logis" ;
+
+SET PLURAL-QUANTIFIERS-smj = ("moadda" Nom) OR ("moadda" Indef Sg Acc) OR ("moattes" Nom) OR (Num Sg Nom) - ("akta") ;
+SET PLURAL-QUANTIFIERS-sme = ("moadde" Nom) OR ("moadde" Indef Sg Acc) OR ("moattes" Nom) OR (Num Sg Nom) - ("okta") ;
+SET PLURAL-QUANTIFIERS-sma = ("måedtie" Nom) OR ("måedtie" Indef Sg Acc) OR ("moattes" Nom) OR (Num Sg Nom) - ("akte") ;
+SET PLURAL-QUANTIFIERS-smn = ("moadda" Nom) OR ("moadda" Indef Sg Acc) OR ("moattes" Nom) OR (Num Sg Nom) - ("akta") ;
+SET PLURAL-QUANTIFIERS = PLURAL-QUANTIFIERS-smj OR PLURAL-QUANTIFIERS-sme OR PLURAL-QUANTIFIERS-sma OR PLURAL-QUANTIFIERS-smn ;
+
+
 	###############
 	BEFORE-SECTIONS
 	###############
@@ -2829,6 +2873,12 @@ REMOVE:AttrCmp2nd (Err/SpaceCmp) (0/0 (A Attr))(0/1 Nom - Sem/Plc)(*1 N BARRIER 
 REMOVE:AttrCmp (Err/SpaceCmp) (0/1 (Num Attr) - Err/Lex OR (Pron Attr) - Err/Lex OR Dem)(NEGATE 0 ("dieđusge"))(NEGATE 0/1 ("árvvus"));
 	## Miesi ja álddu gaska lei sulli čuohte mehter.
 	
+	# Indef + Num
+	# ------------
+	
+SELECT:IndefNum (Err/SpaceCmp) (0/1 ("máŋga") LINK 0 Nom OR Gen OR Acc)(0/0 Num + NUMUNIT) ;
+	## Gaskkaáiggis šadde máŋga duhát uhcit ja stuorát kloastarat mat galge oahpahit mánáide risttalašvuođa, Kloastariin ledje girjerájut, buohcceviesut, girječállit ja sii dikšo ja bibme maiddái gefiid. 
+	
 	# Pron Refl
 	# ---------
 	
@@ -3108,8 +3158,6 @@ REMOVE:proseanta ("." CLB) IF (0 ("pst"))(1*> (>>>) BARRIER (>>>) LINK 1 Gen OR 
 	# Arab + CLB vs. A Ord Attr
 	# -------------------------
 	
-LIST KLASS = "art" "ášši" "bálkáceahkki" "čuokkis" "dieđ.nr" "nr" "s" "siidu" "§" "§§" "paragráfa" "S.nr" "st.dieđ. nr" "od.prp.nr" "Ot.prp. nr" "oassi" "kap" "kapihttal" "kapihtal";
-
 REMOVE (A Ord Attr) IF (-1 ("go") LINK -1 ("eanet") + Comp OR ("eanet") + Superl);
 	## Dat lea eanet go 10. Dat lea eanet go 10.	
 
