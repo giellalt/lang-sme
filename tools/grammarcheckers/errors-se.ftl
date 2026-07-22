@@ -985,6 +985,16 @@ real-nuorrán-nuorran = !!
     .desc =
     .example-1 = Vuoruhit spábbačiekčama Adam Klemet lávi maid nuorrán čiekčat spáppa, muhto ii vuoruhan spábbačiekčama gal nu nuorran go dan maid Marja Sofe lea. 
     .example-2 = Inga Nordsletta Pedersen lea riegádan Kárášjogas muhto fárrii Mátta-Norgii jo nuorrán.
+    
+real-fitnet-fidnet = !!
+    .desc =
+    .example-1 = Dán ferte fitnet sisa movt nu.  
+    .example-2 = Jos mii fitnet doaluid, de fertet fargga bargagoahttit bovdejumiiguin ja eará osiiguin spábbačiekčama olis, muhto de dárbbašat hui fárgga vástádusa fitnet go sámecupa vuoi eat, loahpaha Bueng.
+    
+real-galgá = !!
+    .desc =
+    .example-1 = Jua, de gálga leat.  
+    .example-2 = Go boahttevuođas gálga iskat man ollu ávki gielladoarjagiin lea, de savášii Guovdageainnu suohkan ahte čađahivčče kvalitatiiva mihtidemiid maid, eai ge dušše kvantitatiiva.
 
 real-nuppádussii-nuppádassii = !!
     .desc =
