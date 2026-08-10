@@ -419,10 +419,7 @@ real-lohká = Čállinmeattáhus dán oktavuođas
     .example-3 = Sii jotket nu dálá oamasteaddji vuođuin, lohka Martinsen.
     .ref-1 = 
 
-real-lohkat = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán ("{$1}"). Jus oaivvildat vearbba 3. persovnna máŋggaidlogus, de galgá leat "lohkat". 
-    .example-1 = Eat mii viša dien lohkkat, mii háliidit lohkat eambbo Mari birra.
-    .ref-1 = 
+
 
 real-sutnje = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán vearbba ("{$1}"). Jus oaivvildat persovnnalaš pronomena, de galgá leat "sutnje".
@@ -753,7 +750,17 @@ real-guovddáškonsonánta = Konsonántameattáhus
     .exanple-31 = Girji lea láhpon, muhto Alaj Mikhalkova 1606-1608 "olmmošlogut" galget leahkit Agalina girjji mielde. 
     .example-32 = Kommišuvdna lea jagi 1997 cuoŋománu rájis bargan doaimmaiguin mat dasa ledje bidjon ja lea odne, čoahkkimis Helssegis, loahpahan barggu ovttajienalaš evttohusain.
     .example-33 = Evttohuvvo ahte fierbmečalbmi galgá leat uhcimus 58 mm, ja ahte galgá leat dušše vejolaš geavahit batnon nylonárppu, árpu mii lea seakkit go 10 denier.
-
+    .example-34 = Dáin galgá unnimusat 5 miljovnna ruvnno adnit Munch-ávvudeapmái jagi 2013:s.
+    .example-35 = Mii juohkkit eanaš ruđa dán čavčča, nu ahte boazodoalliide gánnáha čakčat vuovdit nu ollu go vejolaš, ávžžuha Berit Anne Sara Triumf.
+    .example-36 = Sara gal reagere hui garrasit dása go boanddat leat álgán johttit sávzzaiguin sin orohahkii, seammás go boazodoalus leat garra unnidan gáibádusat.
+    .example-37 = Ikte leat Romssa fylkkamánne birasgáhttenossodagas leamaš bargit sullos, geat galge báhččit goaskima. 
+    .example-38 = Go gávdne dievddu ja vigge suinna oažžut oktavuođa, de geaivugođii bissuin politiijaid guvlui, ja nu sii mearridedje báhččit, muitala Bergena politiija Lars Geitle NRK:i.
+        .example-1 = Dan dihte lea giella ja oahpahus guovddáš fáddat mu politihkkalaš barggus, dadjá Keskitalo. #fáddat
+    .example-39 = Mii leat dattetge almmuhan dan dás, vai lohkkit besset lohkkat dan girjeartihkkaliid lassin.
+    .example-40 = Go álgen nuoraid skuvli de ledjen mielde dakkar gielddalaš musihkka skuvla gos ohppen nuohtaid lohkkat ja čállit.
+    .example-41 = Neahttasiiddus ung.no sáhtát eambbo lohkkat alkoholageavaheami birra ja anonymat jearrat gažaldagaid fágaolbmuin.
+    .example-42 = Muhtin universitehtain beasat lohkkat sámegiela ja sámekultuvrra.
+    .example-43 = Eat mii viša dien lohkkat, mii háliidit lohkat eambbo Mari birra.
 
 
 real-ImprtPl2-DerhPrsConNeg = Konsonántameattáhus!!
@@ -883,26 +890,9 @@ real-girjiide-girjjiide = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán "girjet"-vearbba 2. p. guvttiidlogu preterihta ("{$1}"). Jus oaivvildat "girji"-sáni máŋggaidlogu illatiivahámi, de galgá leat ("{€1}").
     .example-1 = Lassin girjiide leat girjerádjosis ollu áigečállagat mat gusket min fágasurggiide, ja neahttasiiddus Idunn.no gávnnát eambbo áigečállagiid almmuhuvvon lágádusa Universitetsforlaget bokte. 
 
-real-ImprtPl2-Inf = !!
-    .desc =
-    .example-1 = Dáin galgá unnimusat 5 miljovnna ruvnno adnit Munch-ávvudeapmái jagi 2013:s.
-    .example-2 = Eará jearaldagaid sáhtát jearret kunddarguovddážis, telefuvdna 06640.
-    .example-3 = Mii juohkkit eanaš ruđa dán čavčča, nu ahte boazodoalliide gánnáha čakčat vuovdit nu ollu go vejolaš, ávžžuha Berit Anne Sara Triumf.
-    .example-4 = Sara gal reagere hui garrasit dása go boanddat leat álgán johttit sávzzaiguin sin orohahkii, seammás go boazodoalus leat garra unnidan gáibádusat.
-    .example-5 = Ikte leat Romssa fylkkamánne birasgáhttenossodagas leamaš bargit sullos, geat galge báhččit goaskima. 
-    .example-6 = Go gávdne dievddu ja vigge suinna oažžut oktavuođa, de geaivugođii bissuin politiijaid guvlui, ja nu sii mearridedje báhččit, muitala Bergena politiija Lars Geitle NRK:i.
-
-real-ImprtSg2-Inf = !!
-    .desc =
-    .example-1 = Dan dihte lea giella ja oahpahus guovddáš fáddat mu politihkkalaš barggus, dadjá Keskitalo. #fáddat
-    .example-2 = Mii leat dattetge almmuhan dan dás, vai lohkkit besset lohkkat dan girjeartihkkaliid lassin.
-    .example-3 = Go álgen nuoraid skuvli de ledjen mielde dakkar gielddalaš musihkka skuvla gos ohppen nuohtaid lohkkat ja čállit.
-    .example-4 = Neahttasiiddus ung.no sáhtát eambbo lohkkat alkoholageavaheami birra ja anonymat jearrat gažaldagaid fágaolbmuin.
-    .example-5 = Muhtin universitehtain beasat lohkkat sámegiela ja sámekultuvrra.
-
-real-jeara-jearrá = !!
-    .desc = 
-    .example-1 = Man lahkai  kvalitehtasihkkarastá Sámediggi ahte lea sámi buvtta man Sámediggi doarju, jeara  NSR.
+real-jeara-jearrá = Čállinmeattáhus dán oktavuođas
+    .desc = - Don leat čállán "{$1}". Oaivvildatgo "{€1}"?
+    .example-1 = Man lahkai kvalitehtasihkkarastá Sámediggi ahte lea sámi buvtta man Sámediggi doarju, jeara NSR.
 
 real-jearan-jearran = !!
     .desc =
