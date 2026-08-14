@@ -12,6 +12,9 @@ let spellcheckerConfig = {
             end_penalty: 10.0,
             mid_penalty: 5.0,
         },
+        "reweight-exceptions": [
+          "nuvviDspeller"
+        ],
         recase: true,            // Prøv å endra berre stor/liten bokstav først
     }
 export default function smeGramRelease(entry: StringEntry): Command {
