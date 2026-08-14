@@ -1,4 +1,4 @@
-+# Error messages for language: se
+# Error messages for language: se
 # Generated from XML by xml-conv
 
 ## Default patterns: re:real-.*, re:real-.*-.*, 
@@ -51,7 +51,6 @@ real-hallan = Boasttuvearbasuorggádus
     .example-3 = Lojes gumpe Lea máŋga vahkku áigi dan rájes go gumppe álggos beakkehii Kárášjoga guovllus, ja Gaup atnáge imašin go gumpe lea dan rájes sihke vuddjon biilii, ja maiddái oainnahallon viesuid lahka.
     .example-4 = Dušše 40 mehtera Kjell Østmo viesus eret, lea gumpe oainnahallon ja vuhtton maŋŋebárgga. Kjell Østmo giettis, Rávdojoganjárggas, Kárášjogas, lea gumpe sihke vuhtton ja oainnahallon maŋŋebárgga eahkeda.
 
-    
 real-čoahkkái = Čállinmeattáhus dán oktavuođas
     .desc = Orru leamen čállinmeattáhus vearbba ("{$1}") vokálaguovddážis. Oaivvildat go ("{€1}")?
     .example-1 = Áviisa čállá stuorsáhpán lei gáskkistan aitto giehtagávvii gokko varravárri lea njuolganaga čohkkái.
