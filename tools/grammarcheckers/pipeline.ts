@@ -4,9 +4,9 @@ import * as hfst from "./.divvun-rt/hfst.ts";
 import { Command, StringEntry } from "./.divvun-rt/mod.ts";
 
 let spellcheckerConfig = {
-        n_best: 15,              // Maks tal på forslag per ord
+        n_best: 100,             // Maks tal på forslag per ord
         max_weight: 10000.0,     // Maks vekt for forslag - alle forslag med høgare vekt blir automatisk fjerna
-        beam: 49.0,              // Vektområde, meir enn for sjølvstendig stavekontroll - vi kan filtrera med cg-reglar
+        beam: 38.0,              // Vektområde, meir enn for sjølvstendig stavekontroll - vi kan filtrera med cg-reglar
         reweight: {              // Ekstra straffepoeng for endringar etter posisjon
             start_penalty: 20.0,
             end_penalty: 10.0,
