@@ -3,7 +3,7 @@
 
 ## Lemma statistics:
 
-* 137668 lemmas
+* 137624 lemmas
 * 100.0 % accepted
 
 ## Configuration:
@@ -11,7 +11,7 @@
 ```json
 {
     "exclusions": [
-        "(\\+PUNCT|\\sIj\\s;|\\sab-dot-|trab\\s;|trnumab\\s;|\\sProperNoun\\s;|\\sFINJU-|DUHAT\\s;|2TO9CUO\\s;|CUODI\\s;|\\sCUODICASE\\s|\\sALLGUOVT\\s|\\sLOTLOHKU\\s|NOTLEMMA|Use/-Spell|\\sK-ge-only\\s|\\soblindefcas\\s|\\sGUHTEGECASE\\s|\\sGUHTECASE\\s|\\sGUHTEMU\u0160CASE\\s|@P.Pmatch.Backtrack@|%\\sguoibmi|%\\snubbi|Use/MT|\\sK-son\\s|\\soblintercas_indef\\s|\\sRHyph\\s|\\sJUSTDUHAT\\s|\\sDUHAT\\s|\\sCUODI\\s|\\s2TO9CUO\\s|\\sCUODICASE\\s|\\sNUMERALCOMPOUNDS\\s)"
+        "(\\+PUNCT|\\sIj\\s;|\\sab-dot-|trab\\s;|trnumab\\s;|\\sProperNoun\\s;|\\sFINJU-|DUHAT\\s;|2TO9CUO\\s;|CUODI\\s;|\\sCUODICASE\\s|\\sALLGUOVT\\s|\\sLOTLOHKU\\s|NOTLEMMA|Use/-Spell|Err/Orth|\\sK-ge-only\\s|\\soblindefcas\\s|\\sGUHTEGECASE\\s|\\sGUHTECASE\\s|\\sGUHTEMU\u0160CASE\\s|@P.Pmatch.Backtrack@|%\\sguoibmi|%\\snubbi|Use/MT|\\sK-son\\s|\\soblintercas_indef\\s|\\sRHyph\\s|\\sJUSTDUHAT\\s|\\sDUHAT\\s|\\sCUODI\\s|\\s2TO9CUO\\s|\\sCUODICASE\\s|\\sNUMERALCOMPOUNDS\\s)"
     ],
     "lexcfiles": [
         ".../adjectives.lexc",
