@@ -3,7 +3,7 @@
 
 ## Lemma statistics:
 
-* 137662 lemmas
+* 137664 lemmas
 * 100.0 % accepted
 
 ## Configuration:
