@@ -121,6 +121,179 @@ se-cg.zhfst: $(srcdir)/index.xml \
 		save stack $@\n\
 		quit\n" | $(XFST_TOOL) --format=openfst-tropical
 
+# The lexicon carries curated knowledge about known misspellings: an entry
+# tagged +Err/Orth* has the normative lemma and inflection on the analysis side
+# and the misspelled word form on the surface side. The normative build throws
+# all of it away (filters/remove-error-strings), so it never reaches the
+# speller. Recover it here, as alternation rules rather than as a word list.
+#
+# Composing the descriptive analyser with the normative generator turns those
+# 10237 entries into a misspelling -> correct-form relation directly. Shipping
+# that relation as a whole-word error model works, but it is a word list with a
+# transducer's clothes on: a 350k-state trie that freezes the lexicon at build
+# time and cannot touch a dynamic compound whose error-tagged stem it never
+# enumerated. extract-errorth-strings.py reduces the relation to what actually
+# differs -- the minimal span where the misspelling and the correction disagree,
+# padded with enough context to be more than a letter confusion -- and writes
+# rules in the same idiom as the hand-written strings.default.regex. Those apply
+# anywhere in a word, so an alternation learnt from a simplex form also fires
+# inside a compound that was never in the lexicon.
+#
+# The generated rules are checked in as strings.errorth.default.regex and
+# regenerated on demand with `make errorth-regen`, not on every build. The
+# composition below takes some five minutes, and it is the only thing in the
+# error model that wants the descriptive analyser at all: wiring it into the
+# default build would put a src/fst dependency, and those five minutes, on
+# every edit to a hand-written regex that otherwise rebuilds in one. Rerun it
+# when the +Err/Orth* entries in src/fst/morphology/stems/ change. It is
+# deterministic -- same lexicon, same file, byte for byte.
+ERRORTH_STRINGS = $(srcdir)/strings.errorth.default.regex
+ERRORTH_EXTRACT = $(srcdir)/extract-errorth-strings.py
+
+# Cost of one chunk rewrite. The hand-written strings carry ::1 because there
+# are sixty of them and each was justified by hand; there are five thousand of
+# these, so they pay a real price and win only where the alternation is the
+# whole story. Swept against tools/spellcheckers/test/typos.tsv at the
+# production config, first-position hits out of 10679:
+#
+#     5    10    20    30    40    50    70     (no rules: 8848)
+#  7741  8567  8829  8871  8882  8882  8864
+#
+# The left half of that curve is the whole argument for pricing them high: at
+# 10 a chunk rewrite undercuts a single letter edit, five thousand of them
+# undercut it at once, and the model answers a fifth of the corpus with a
+# plausible wrong word before it gets to the right one. Past 40 the rules stop
+# being reachable and the curve settles back towards the no-rules number.
+ERRORTH_WEIGHT = 40
+
+# Longest word form to enumerate out of the recovered relation. Enumeration is
+# the reason this bound exists at all: unbounded, the relation has 1.8e9 paths,
+# because the analyser is happy to build word forms far past anything a speller
+# will meet. The alternation lives in the stem and every paradigm re-states it,
+# so the bound costs nothing -- raising it from 16 to 24 changes the extracted
+# rule set by 129 rules out of 5238, and 24 keeps the dump at half a minute.
+ERRORTH_MAX_LENGTH = 24
+
+HFST_ELIMINATE_FLAGS = $(dir $(HFST_COMPOSE))hfst-eliminate-flags
+HFST_DUMP_ALPHABETS = $(dir $(HFST_COMPOSE))hfst-dump-alphabets
+
+# Compiled exactly like strings.%.regex is compiled in the shared include: the
+# rules describe an edit that may happen anywhere in the word, so the component
+# is wrapped in ?* on both sides, and repeated to the same string edit distance.
+#
+# Named for the one error model this language builds rather than written as a
+# pattern rule, and the same for the override below. That is not cosmetic:
+# make's implicit rule search only reaches for a pattern rule whose
+# prerequisites already exist or are named as targets somewhere, so a pattern
+# rule here would quietly lose the override to the shared include's version of
+# it whenever the errorth component had not been built yet -- which is to say,
+# on every clean tree.
+.generated/strings.errorth.default.desktop.hfst: $(ERRORTH_STRINGS) \
+				 .generated/anystar.hfst
+	$(AM_V_RGX2FST)$(HFST_REGEXP2FST) -S $(HFST_FLAGS) -i $< \
+	   --format=openfst-tropical \
+		| $(HFST_CONCATENATE)   .generated/anystar.hfst - \
+		| $(HFST_CONCATENATE) - .generated/anystar.hfst   \
+		| $(HFST_REPEAT) -f 1 -t $(STRING_REGEX_EDIT_DISTANCE) \
+		-o $@
+
+# Local override of the shared .generated/editdist.all.%.desktop.hfst rule:
+# same union of string edits and letter edits, with the recovered alternations
+# as one more operand. Keep in step with the shared recipe if that one changes.
+.generated/editdist.all.default.desktop.hfst: \
+				 .generated/strings.all.default.desktop.hfst \
+				 .generated/strings.errorth.default.desktop.hfst \
+				 .generated/editdist.default.hfst
+	$(AM_V_UNION)$(HFST_DISJUNCT) $(MORE_VERBOSITY) \
+		    .generated/strings.all.default.desktop.hfst \
+		    .generated/strings.errorth.default.desktop.hfst \
+		| $(HFST_DISJUNCT) $(MORE_VERBOSITY) - .generated/editdist.default.hfst \
+		| $(HFST_REPEAT) -f 1 -t $(EDIT_DISTANCE) \
+		-o $@
+
+####### Regeneration of the checked-in rule file: `make errorth-regen` #######
+
+# src/fst builds these, and SUBDIRS puts src before tools, so by the time we get
+# here they are current. The empty recipes are load-bearing: without them make
+# matches the local `analyser-%.hfst: generator-%.hfst` and `%.hfst:
+# .generated/%.tmp.hfst` implicit rules against the src/fst paths (implicit-rule
+# search strips the directory prefix) and overwrites the real transducers with
+# an inversion or a copy of an unrelated intermediate.
+$(top_builddir)/src/fst/analyser-gt-desc.hfst: ;
+$(top_builddir)/src/fst/generator-gt-norm.hfst: ;
+
+# Restrict the analysis side to paths that carry an +Err/Orth* tag and no tag
+# from a paradigm-multiplying family. Dynamic compounds are left out on purpose,
+# as they were in every earlier attempt at this: an error-tagged stem times every
+# possible second member multiplies the relation sevenfold, for forms the chunk
+# rules now reach from the other direction anyway. The rest of the exclusion --
+# derivations, possessives, clitics -- is what makes the relation enumerable;
+# the alternation being extracted sits in the stem, and a possessive form of a
+# misspelling re-states the same span as its nominative.
+.generated/errorth-filter.hfst: $(ERRORTH_EXTRACT) \
+				 $(top_builddir)/src/fst/analyser-gt-desc.hfst \
+				 $(GENDIR)
+	$(AM_V_RGX2FST)$(HFST_DUMP_ALPHABETS) \
+		    $(top_builddir)/src/fst/analyser-gt-desc.hfst 2>/dev/null \
+		| $(PYTHON) $(ERRORTH_EXTRACT) filter \
+		| $(HFST_REGEXP2FST) -S $(HFST_FLAGS) \
+		   --format=openfst-tropical \
+		-o $@
+
+# Letters only, no digits and no hyphen. The numeral and acronym sub-lexicons
+# reach the relation through the same +Err/Orth entries and bring letter and
+# digit loops with them, which is what makes the unfiltered relation cyclic and
+# its enumeration unbounded.
+.generated/errorth-wordshape.hfst: $(ERRORTH_EXTRACT) $(GENDIR)
+	$(AM_V_RGX2FST)$(PYTHON) $< wordshape \
+		| $(HFST_REGEXP2FST) -S $(HFST_FLAGS) \
+		   --format=openfst-tropical \
+		-o $@
+
+.generated/errorth-length.hfst: $(GENDIR)
+	$(AM_V_RGX2FST)$(PRINTF) '[ ?^{1,$(ERRORTH_MAX_LENGTH)} ] ;\n' \
+		| $(HFST_REGEXP2FST) -S $(HFST_FLAGS) \
+		   --format=openfst-tropical \
+		-o $@
+
+# Flag diacritics survive both composition steps as ordinary symbols, and
+# fst2strings walks the result without interpreting them, so they have to be
+# resolved into the structure before anything can be enumerated out of it.
+.generated/errorth-pairs.hfst: .generated/errorth-filter.hfst \
+				 .generated/errorth-wordshape.hfst \
+				 .generated/errorth-length.hfst \
+				 $(top_builddir)/src/fst/analyser-gt-desc.hfst \
+				 $(top_builddir)/src/fst/generator-gt-norm.hfst
+	$(AM_V_GEN)$(HFST_COMPOSE) $(MORE_VERBOSITY) -F \
+		    -1 $(top_builddir)/src/fst/analyser-gt-desc.hfst \
+		    -2 .generated/errorth-filter.hfst \
+		| $(HFST_SUBSTITUTE) -f '+Err/Orth'         -t '@_EPSILON_SYMBOL_@' \
+		| $(HFST_SUBSTITUTE) -f '+Err/Orth-a-á'     -t '@_EPSILON_SYMBOL_@' \
+		| $(HFST_SUBSTITUTE) -f '+Err/Orth-nom-acc' -t '@_EPSILON_SYMBOL_@' \
+		| $(HFST_SUBSTITUTE) -f '+Err/Orth-nom-gen' -t '@_EPSILON_SYMBOL_@' \
+		| $(HFST_COMPOSE) $(MORE_VERBOSITY) -F \
+		    -1 - -2 $(top_builddir)/src/fst/generator-gt-norm.hfst \
+		| $(HFST_MINIMIZE) \
+		| $(HFST_ELIMINATE_FLAGS) \
+		| $(HFST_MINIMIZE) \
+		| $(HFST_COMPOSE) $(MORE_VERBOSITY) \
+		    -1 .generated/errorth-wordshape.hfst -2 - \
+		| $(HFST_COMPOSE) $(MORE_VERBOSITY) \
+		    -1 - -2 .generated/errorth-wordshape.hfst \
+		| $(HFST_COMPOSE) $(MORE_VERBOSITY) \
+		    -1 .generated/errorth-length.hfst -2 - \
+		| $(HFST_MINIMIZE) \
+		| $(HFST_PRUNE_ALPHABET) \
+		-o $@
+
+errorth-regen: .generated/errorth-pairs.hfst $(ERRORTH_EXTRACT)
+	$(AM_V_GEN)$(HFST_FST2STRINGS) -X quote-special $< \
+		| $(PYTHON) $(ERRORTH_EXTRACT) extract \
+		    --weight $(ERRORTH_WEIGHT) \
+		    -o $(ERRORTH_STRINGS)
+
+.PHONY: errorth-regen
+
 # errmodel.default.predict.hfst: predict.default.hfst
 .generated/predict.default.regex: editdist.default.mobile.txt
 	$(AM_V_GEN)$(GTCORE)/scripts/predict.py \
