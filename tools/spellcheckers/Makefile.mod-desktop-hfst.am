@@ -294,6 +294,48 @@ errorth-regen: .generated/errorth-pairs.hfst $(ERRORTH_EXTRACT)
 
 .PHONY: errorth-regen
 
+# Opt-in compact speller: `make se.bhfst`. Not part of the default build.
+#
+# The shared zhfst recipe compiles the error model through xre, which
+# statically determinises the union into hundreds of MB purely so that
+# NFA-walking speller runtimes can search it quickly. divvunspell (with
+# on-the-fly mutator determinisation) searches the plain union at the
+# same speed, so this target ships it un-expanded, packed with the
+# acceptor into divvunspell's native BHFST box format. Roughly a tenth
+# of the error model bytes, and the expansion step disappears from the
+# build.
+#
+# Only for divvunspell new enough to determinise during search; C++
+# hfst-ospell consumers and older divvunspell releases need the regular
+# se.zhfst, which this target does not replace.
+HFST_BHFST = $(dir $(HFST_FST2FST))hfst-bhfst
+
+.generated/errmodel.compact.default.hfst: .generated/words.default.desktop.hfst \
+		.generated/editdist.all.default.desktop.hfst \
+		.generated/final_strings.all.default.desktop.hfst
+	$(AM_V_GEN)$(HFST_REPEAT) -f 0 -t 1 \
+		.generated/final_strings.all.default.desktop.hfst \
+		-o .generated/final_strings.opt.default.hfst
+	$(AM_V_at)$(HFST_CONCATENATE) \
+		.generated/editdist.all.default.desktop.hfst \
+		.generated/final_strings.opt.default.hfst \
+		-o .generated/editdist.chain.default.hfst
+	$(AM_V_at)$(HFST_DISJUNCT) \
+		.generated/words.default.desktop.hfst \
+		.generated/editdist.chain.default.hfst \
+		| $(HFST_PUSH_WEIGHTS) --push=initial -o $@
+	$(AM_V_at)rm -f .generated/final_strings.opt.default.hfst \
+		.generated/editdist.chain.default.hfst
+
+se.bhfst: .generated/acceptor.default.hfst \
+		.generated/errmodel.compact.default.hfst \
+		$(srcdir)/index.xml
+	$(AM_V_GEN)$(HFST_BHFST) \
+		-a .generated/acceptor.default.hfst \
+		-e .generated/errmodel.compact.default.hfst \
+		-X $(srcdir)/index.xml \
+		-o $@
+
 # errmodel.default.predict.hfst: predict.default.hfst
 .generated/predict.default.regex: editdist.default.mobile.txt
 	$(AM_V_GEN)$(GTCORE)/scripts/predict.py \
