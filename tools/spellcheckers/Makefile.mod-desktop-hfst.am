@@ -164,7 +164,24 @@ ERRORTH_EXTRACT = $(srcdir)/extract-errorth-strings.py
 # undercut it at once, and the model answers a fifth of the corpus with a
 # plausible wrong word before it gets to the right one. Past 40 the rules stop
 # being reachable and the curve settles back towards the no-rules number.
-ERRORTH_WEIGHT = 40
+#
+# Re-swept on the current lexicon and tag weights, at the production config, as
+# the change in first-position / top-five / offered-at-all against 40, out of
+# 10675, on the even-index half of typos.tsv (tuning) and the odd half (held
+# out):
+#
+#            25           30           32           35        40         50
+#  train -10/ +5/ +8   +0/ +8/ +9  +1/ +4/ +4  -1/ +3/ +2   (base)  -1/ -8/ -7
+#  held   -6/ +1/ +5   +3/ +1/ +4  +2/ +2/ +4  +3/ +2/ +1   (base)  +7/ -7/ -6
+#
+# The collapse the paragraph above describes starts at 25, not below 40, so the
+# reachable window is 30..35. Within it 30 and 32 are indistinguishable on
+# held-out data -- for the whole shipped configuration, +22/+7/+8 against
+# +20/+8/+8 -- and 30's larger tuning-half gain does not carry over. Weighted
+# minimisation shares much less structure at 30 than at 32 though, and the
+# shipped speller pays 222 MB against 198 MB for it: 32 is the same speller,
+# 24 MB smaller.
+ERRORTH_WEIGHT = 32
 
 # Longest word form to enumerate out of the recovered relation. Enumeration is
 # the reason this bound exists at all: unbounded, the relation has 1.8e9 paths,
