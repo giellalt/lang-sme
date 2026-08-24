@@ -133,11 +133,14 @@ se-cg.zhfst: $(srcdir)/index.xml \
 # transducer's clothes on: a 350k-state trie that freezes the lexicon at build
 # time and cannot touch a dynamic compound whose error-tagged stem it never
 # enumerated. extract-errorth-strings.py reduces the relation to what actually
-# differs -- the minimal span where the misspelling and the correction disagree,
+# differs -- each place where the misspelling and the correction disagree,
 # padded with enough context to be more than a letter confusion -- and writes
 # rules in the same idiom as the hand-written strings.default.regex. Those apply
 # anywhere in a word, so an alternation learnt from a simplex form also fires
-# inside a compound that was never in the lexicon.
+# inside a compound that was never in the lexicon. A pair that differs in
+# several places gives one rule per place: rules in a strings component fire
+# together in one pass, so the pair is recovered by composing them rather than
+# by memorising the stretch of word between them.
 #
 # The generated rules are checked in as strings.errorth.default.regex and
 # regenerated on demand with `make errorth-regen`, not on every build. The
@@ -182,6 +185,30 @@ ERRORTH_EXTRACT = $(srcdir)/extract-errorth-strings.py
 # shipped speller pays 222 MB against 198 MB for it: 32 is the same speller,
 # 24 MB smaller.
 ERRORTH_WEIGHT = 32
+
+# Cost of a chunk rewrite that only a multi-region pair attests. A pair that
+# differs from its correction in several places contributes one rule per place,
+# and those rules are weaker evidence than a single-region one: the pair is
+# evidence that they are right *together*, not that any of them is the whole
+# correction. 1700 of the 6933 rules are of this kind, and pricing them with
+# the rest is what makes them cost something. Swept against typos.tsv at the
+# n-best-100 config, as first-position / top-five out of 10675 and mean
+# per-word time, with the 5233-rule model as the base:
+#
+#             32            40            45            55      (base: 9161/
+#  typos  9157/10382    9160/10382    9164/10382    9164/10380     10377)
+#  mean      0.505 s       0.305 s       0.299 s       0.303 s    (0.272 s)
+#
+# At the shared 32 the new rules undercut the search everywhere and cost 86% in
+# time for a first-position regression -- the same collapse the sweep above
+# found below 30, arriving earlier because these rules are more numerous and
+# individually weaker. From 40 up they are priced out of words that already
+# have an answer, and the time goes back to within 10% of the base. What they
+# are for is untouched across the whole window: the words the model previously
+# could not answer at all have nothing cheaper to lose to, and 45 recovers the
+# same 102 of them that 32 does. 45 is the top of the accuracy curve on both
+# halves of the measure, so it is what ships.
+ERRORTH_MULTI_WEIGHT = 45
 
 # Longest word form to enumerate out of the recovered relation. Enumeration is
 # the reason this bound exists at all: unbounded, the relation has 1.8e9 paths,
@@ -307,6 +334,7 @@ errorth-regen: .generated/errorth-pairs.hfst $(ERRORTH_EXTRACT)
 	$(AM_V_GEN)$(HFST_FST2STRINGS) -X quote-special $< \
 		| $(PYTHON) $(ERRORTH_EXTRACT) extract \
 		    --weight $(ERRORTH_WEIGHT) \
+		    --multi-weight $(ERRORTH_MULTI_WEIGHT) \
 		    -o $(ERRORTH_STRINGS)
 
 .PHONY: errorth-regen
