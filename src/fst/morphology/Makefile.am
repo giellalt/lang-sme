@@ -128,15 +128,15 @@ GT_DISTRO_SRCS= $(srcdir)/stems/$(GTLANG)-propernouns.lexc   \
 
 GIELLA_LOCAL_TARGETS=
 
-if CAN_FOMA
-.generated/lexicon.hfst: .generated/lexicon.foma
-	$(AM_V_FOMA)$(PRINTF) "\
-		load $<\n\
-		write prolog > $@.prolog\n\
-		quit\n" | $(FOMA) $(VERBOSITY)
-	$(AM_V_TXT2FST)$(HFST_TXT2FST) --prolog -i $@.prolog -o $@
-#	$(AM_V_at)rm -f $@.prolog
-endif # CAN_FOMA
+##if CAN_FOMA
+##.generated/lexicon.hfst: .generated/lexicon.foma
+##	$(AM_V_FOMA)$(PRINTF) "\
+##		load $<\n\
+##		write prolog > $@.prolog\n\
+##		quit\n" | $(FOMA) $(VERBOSITY)
+##	$(AM_V_TXT2FST)$(HFST_TXT2FST) --prolog -i $@.prolog -o $@
+###	$(AM_V_at)rm -f $@.prolog
+##endif # CAN_FOMA
 
 ### END: Local processing: ###
 
