@@ -1,18 +1,9 @@
 # Lemma-tests for *nouns* in ...`nouns.lexc`
 
 
-**eananiehttevuodja** failures:
-
-* `eananiehttevuodja+N+Sg+Nom` => `eananniehttevuodja`
-* `eananiehttevuodja+N+Pl+Nom` => `eananniehttevuojat`
-* `eananiehttevuodja` has following analyses:
-  * `eana+N+Cmp/SgNom+Cmp#niehttevuodja+N+Sg+Nom`
-  * `eananiehtti+N+Cmp/SgNom+Cmp#vuodja+N+Sg+Nom`
-  * `eana+N+Cmp/SgNom+Cmp#niehtti+N+Cmp/SgNom+Cmp#vuodja+N+Sg+Nom`
-
 ## Lemma statistics
-* 91327 lemmas
-* 99.99890503356073 % success
+* 91328 lemmas
+* 100.0 % success
 
 ## Settings used
 
