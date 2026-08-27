@@ -1,0 +1,112 @@
+## Process this file with automake to produce Makefile.in
+## Copyright: Sámediggi/Divvun/UiT
+## Licence: GPL v3+
+
+####### Stem-level lemma-frequency weights #######
+#
+# PROTOTYPE. To enable in a configured tree, add
+#
+#     include $(srcdir)/Makefile.mod-stem-weights.am
+#
+# as the LAST include in tools/spellcheckers/Makefile.am. It has to come after
+# the giella-core shared rules because it overrides
+# generator-desktopspeller-gt-norm-tag_weighted.hfst, and make takes the last
+# recipe it is given; make says "overriding recipe for target" on every run and
+# that line is expected.
+#
+# What the shared pipeline does with frequency is price a *word form* by that
+# form's own corpus count (step 2, composition with surfweights) and everything
+# else by one flat OOV weight (step 3, union with unitweighted). Nothing in it
+# knows which lemma a form belongs to, so a rare inflection of `leat` is priced
+# like a rare inflection of a lemma nobody writes.
+#
+# What this file adds is a *stem* term: the corpus run through the full
+# analyser pipeline (tokenise, analyse, CG-disambiguate), counted per lemma,
+# turned into a weighted trie over lemma strings, and composed onto the LEXICAL
+# side of the speller so the weight reaches every inflection of the stem --
+# seen or unseen. See weights/00README.stem-weights.txt.
+#
+# The composition happens AFTER the freq/unit union, not before, which is the
+# whole difference from the earlier lemma-backoff experiment
+# (Makefile.mod-lemma-weights.am). There, the lemma weight lived on one branch
+# of a tropical union, so it could only ever undercut the corpus weight of a
+# seen form, never add to it. Here it is added to whatever the union produced,
+# which is what a weight on a lexc stem entry would do.
+
+STEM_WEIGHT_SCRIPT = $(srcdir)/weights/corpus2stemweights.py
+STEM_WEIGHT_CONFIG = $(srcdir)/weights/stem-weights.json
+STEM_WEIGHT_COUNTS = $(srcdir)/weights/stem.counts.tsv
+
+# hfst-dump-alphabets over the speller lexicon: the source of the tag list the
+# stem trie anchors on.
+.generated/speller-alphabet.txt: $(UW_SPELLER_SRC)
+	$(AM_V_GEN)$(HFST_DUMP_ALPHABETS) $< 2>/dev/null > $@
+
+.generated/stem-tagclass.regex: .generated/speller-alphabet.txt \
+				 $(STEM_WEIGHT_SCRIPT)
+	$(AM_V_GEN)$(PYTHON) $(STEM_WEIGHT_SCRIPT) tagclass \
+		--alphabet $< -o $@
+
+.generated/stem-weights.tsv: $(STEM_WEIGHT_COUNTS) $(STEM_WEIGHT_CONFIG) \
+				 $(STEM_WEIGHT_SCRIPT) $(GENDIR)
+	$(AM_V_GEN)$(PYTHON) $(STEM_WEIGHT_SCRIPT) weights \
+		-i $(STEM_WEIGHT_COUNTS) \
+		-c $(STEM_WEIGHT_CONFIG) \
+		--base-out .generated/stem-base.txt \
+		-o $@
+
+.generated/stem-base.txt: .generated/stem-weights.tsv
+
+# Same two-column format the corpus LM is compiled from, so the same tool
+# builds it: a weighted trie over lemma strings.
+.generated/stem-lemma.hfst: .generated/stem-weights.tsv
+	$(AM_V_STR2FST)$(HFST_STRINGS2FST) -j $(HFST_FLAGS) \
+		-f openfst-tropical -i $< -o $@
+
+.generated/stem-tagclass.hfst: .generated/stem-tagclass.regex
+	$(AM_V_RGX2FST)$(HFST_REGEXP2FST) -S $(HFST_FLAGS) -i $< \
+		--format=openfst-tropical -o $@
+
+# A stem the table does not price keeps its path through the lexicon via an
+# otherwise-unweighted `?*` carrying the unlisted-stem weight. Composition
+# keeps both branches where they overlap and the tropical semiring takes the
+# cheaper, which is the trie's whenever the stem is listed -- the table is
+# anchored so no listed weight is above the fallback.
+.generated/stem-fallback.hfst: .generated/anystar.hfst \
+				 .generated/stem-base.txt
+	$(AM_V_REWEIGHT)$(HFST_REWEIGHT) $(HFST_FLAGS) \
+		-e -a $$(cat .generated/stem-base.txt) -i $< -o $@
+
+.generated/stem-weights.hfst: .generated/stem-lemma.hfst \
+				 .generated/stem-tagclass.hfst \
+				 .generated/stem-fallback.hfst \
+				 .generated/anystar.hfst
+	$(AM_V_UNION)$(HFST_CONCATENATE) $(MORE_VERBOSITY) \
+		    .generated/stem-lemma.hfst .generated/stem-tagclass.hfst \
+		| $(HFST_CONCATENATE) $(MORE_VERBOSITY) - .generated/anystar.hfst \
+		| $(HFST_DISJUNCT) $(MORE_VERBOSITY) - .generated/stem-fallback.hfst \
+		-o $@
+
+# Overrides the shared step-4 rule (tag weighting). -F is required: the lexicon
+# carries flag diacritics and without harmonising them the composition matches
+# almost nothing -- it silently returns a transducer orders of magnitude too
+# small, which is not an error, just an empty speller.
+.generated/generator-desktopspeller-gt-norm-tag_weighted.hfst: $(tag_weighted_dep) \
+					 $(srcdir)/weights/$(TAGWEIGHTS) \
+					 .generated/stem-weights.hfst
+	$(AM_V_COMPOSE)$(HFST_COMPOSE) $(HFST_FLAGS) $(MORE_VERBOSITY) -F \
+		-1 .generated/stem-weights.hfst -2 $< \
+	| $(HFST_REWEIGHT) $(MORE_VERBOSITY) $(HFST_FLAGS) \
+		-T $(srcdir)/weights/$(TAGWEIGHTS) --arcs-only \
+		-o $@
+
+.SECONDARY: .generated/speller-alphabet.txt \
+            .generated/stem-tagclass.regex \
+            .generated/stem-weights.tsv \
+            .generated/stem-base.txt \
+            .generated/stem-lemma.hfst \
+            .generated/stem-tagclass.hfst \
+            .generated/stem-fallback.hfst \
+            .generated/stem-weights.hfst
+
+# vim: set ft=automake:

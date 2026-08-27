@@ -1,0 +1,50 @@
+## Process this file with automake to produce Makefile.in
+## Copyright: Sámediggi/Divvun/UiT
+## Licence: GPL v3+
+
+####### Stem-level lemma-frequency weights #######
+#
+# PROTOTYPE. To enable in a configured tree, add
+#
+#     include $(srcdir)/Makefile.mod-stem-weights.am
+#
+# as the LAST include in src/fst/morphology/Makefile.am. It overrides the
+# shared `.generated/lexicon.lexc` rule, so it has to come after the giella-core
+# includes; make says "overriding recipe for target" on every run and that line
+# is expected.
+#
+# The stakeholder proposal is "use the full analyser pipeline (with
+# disambiguation and all), then calculate the frequencies, and store the
+# frequencies in the stem lexicons". This is the "store" half. A lexc entry may
+# carry a weight in its gloss (`"... weight: N"`); hfst-lexc puts it on the
+# entry's own arc, before the lexicon is determinised and minimised, so every
+# path through that stem pays it once and every inflection of the stem
+# inherits it -- seen in the corpus or not.
+#
+# Nothing under stems/ is edited. The rule pipes the *generated* concatenation
+# of all lexc sources through the injector, so the weights exist only in the
+# build tree and dropping the include reverts the lexicon exactly.
+#
+# Note the scope: this weights the shared morphology, so the weights show up in
+# every analyser and generator built from it, not only in the speller. That is
+# inherent to putting frequency in the stem lexicon and is the main thing to
+# decide before this ships -- see tools/spellcheckers/weights/
+# 00README.stem-weights.txt, which also records why the speller-local
+# alternative (composing a lemma-keyed weight transducer onto the lexical side
+# of the finished speller) was measured and rejected.
+
+STEM_WEIGHT_DIR = $(top_srcdir)/tools/spellcheckers/weights
+STEM_WEIGHT_SCRIPT = $(STEM_WEIGHT_DIR)/stemweights2lexc.py
+STEM_WEIGHT_CONFIG = $(STEM_WEIGHT_DIR)/stem-weights.json
+STEM_WEIGHT_COUNTS = $(STEM_WEIGHT_DIR)/stem.counts.tsv
+
+.generated/lexicon.lexc: $(GT_LEXC_ROOT) $(GT_LEXC_SRCS) $(GENERATED_LEXC_SRCS) \
+				 $(STEM_WEIGHT_SCRIPT) $(STEM_WEIGHT_CONFIG) \
+				 $(STEM_WEIGHT_COUNTS) $(GENDIR)
+	$(AM_V_at)echo "! automatically generated combined lexc file!!!" > $@
+	$(AM_V_GEN)cat $(filter %.lexc,$^) \
+		| $(PYTHON) $(STEM_WEIGHT_SCRIPT) inject \
+			-c $(STEM_WEIGHT_CONFIG) \
+			-i $(STEM_WEIGHT_COUNTS) >> $@
+
+# vim: set ft=automake:
