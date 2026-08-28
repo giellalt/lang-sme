@@ -25,7 +25,9 @@ GIELLA_GC_VALENCY_SRC=valency.cg3
 # specify here:
 LOCAL_GC_ZIP_FILES=after-speller-disambiguator.bin \
 					valency-postspell.bin \
-					grammarchecker-release.bin
+					grammarchecker-release.bin \
+					err-to-unknown.bin \
+					spell-emit.bin
 
 #### BEGIN: Local build targets: ####
 

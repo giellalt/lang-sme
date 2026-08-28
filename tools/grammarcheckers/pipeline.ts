@@ -3,15 +3,23 @@ import * as divvun from "./.divvun-rt/divvun.ts";
 import * as hfst from "./.divvun-rt/hfst.ts";
 import { Command, StringEntry } from "./.divvun-rt/mod.ts";
 
+// Held in step with tools/spellcheckers/config.json. These drifted apart: the
+// beam comment below was written when the standalone speller used 28, and the
+// accuracy work later took it to 80 and start_penalty to 10 without this copy
+// following. The pipeline was then running a narrower beam than the standalone
+// speller it claims to widen on, and lost the correct suggestion outright in
+// 18 of 77 measured cases. Change both files together.
 let spellcheckerConfig = {
         n_best: 100,             // Maks tal på forslag per ord
         max_weight: 10000.0,     // Maks vekt for forslag - alle forslag med høgare vekt blir automatisk fjerna
-        beam: 38.0,              // Vektområde, meir enn for sjølvstendig stavekontroll - vi kan filtrera med cg-reglar
+        beam: 80.0,              // Vektområde, meir enn for sjølvstendig stavekontroll - vi kan filtrera med cg-reglar
         reweight: {              // Ekstra straffepoeng for endringar etter posisjon
-            start_penalty: 20.0,
+            start_penalty: 10.0,
             end_penalty: 10.0,
             mid_penalty: 5.0,
+            curve: 12.0,         // Kor bratt start-/sluttstraffa fell av inn i ordet
         },
+        search_budget: 1000000,  // Tak på søkjearbeid per ord; slår ikkje inn ved redigeringsavstand 2
         recase: true,            // Prøv å endra berre stor/liten bokstav først
     }
 export default function smeGramRelease(entry: StringEntry): Command {

@@ -1,0 +1,23 @@
+# Make surviving speller suggestions reportable.
+#
+# divvun.suggest only emits a cohort that carries an error tag, and in the
+# grammar checker pipeline that tag comes from grammarchecker.cg3, which this
+# speller-only pipeline does not run. &SUGGESTWF (rather than &SUGGEST) is what
+# we want: it takes the literal "form"S wordform the speller produced, instead
+# of regenerating a form from the analysis.
+#
+# spellchecker.cg3:1229-1232 carries this same rule, commented out.
+
+DELIMITERS = "<.>" "<!>" "<?>" "<...>" "<¶>" ;
+
+LIST <spelled> = <spelled> ;
+
+SECTION
+
+# SUBSTITUTE, not ADD: ADD is a mapping rule and CG3 will not apply one to a
+# reading that already carries a mapping tag. Every reading the disambiguator
+# has assigned a syntactic function to (@+FAUXV and friends) is already mapped,
+# so ADD silently reaches only the untouched ones -- one reading of "bissov",
+# none at all of "hálidit". spellchecker.cg3:1229 has it as SUBSTITUTE for this
+# reason.
+SUBSTITUTE:spelled (<spelled>) (<spelled> &typo &SUGGESTWF) <spelled> ;
