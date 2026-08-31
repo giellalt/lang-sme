@@ -1,0 +1,118 @@
+## Process this file with automake to produce Makefile.in
+## Copyright: Sámediggi/Divvun/UiT
+## Licence: GPL v3+
+
+####### Morphology-aware weights for out-of-corpus word forms #######
+#
+# Included after the giella-core shared rules on purpose: this file overrides
+# .generated/unitweighted.hfst, the shared include defines that target with an
+# explicit rule, and make takes the last recipe it is given. Make says so on
+# every run ("overriding recipe for target"); that line is expected.
+#
+# What the shared rule does is add one flat weight -- the LM's maxweight, which
+# is also its OOV weight -- to every path of the speller lexicon, and union the
+# result with the corpus-weighted lexicon so that a word form the corpus never
+# saw still has a path. That flat weight is the whole out-of-corpus model: an
+# unseen inflection of `leat` and an unseen derivation of a lemma nobody has
+# written down are priced the same, though the lexicon knows which lemma each
+# belongs to.
+#
+# What this file does instead is compose the lexicon with a weighted trie of
+# lemmas, so the flat weight becomes a function of the lemma's corpus
+# frequency. See weights/00README.txt for the fitted slope.
+
+LEMMA_BACKOFF_SCRIPT = $(srcdir)/weights/corpus2lemmaweights.py
+LEMMA_BACKOFF_CONFIG = $(srcdir)/weights/lemma-backoff.json
+LEMMA_BACKOFF_ANALYSER = $(top_builddir)/src/fst/analyser-gt-norm.hfstol
+
+# src/fst builds this and SUBDIRS puts src before tools, so it is current by the
+# time we get here. The empty recipe keeps make from matching the local
+# `%.hfst: .generated/%.tmp.hfst` implicit rule against the src/fst path --
+# implicit-rule search strips the directory prefix -- and overwriting the real
+# analyser with a copy of an unrelated intermediate.
+$(top_builddir)/src/fst/analyser-gt-norm.hfstol: ;
+
+# The corpus vocabulary, tokenised exactly as corpus2unigramlm.py tokenises it.
+.generated/$(CORPUSNAME).types.tsv: $(srcdir)/weights/$(CORPUSNAME).raw.txt \
+				 $(LEMMA_BACKOFF_SCRIPT) $(GENDIR)
+	$(AM_V_GEN)$(PYTHON) $(LEMMA_BACKOFF_SCRIPT) types -i $< -o $@
+
+# Types, not tokens: 166k lookups instead of 3.1M, and the analyser is a
+# function, so the token counts are applied afterwards.
+.generated/$(CORPUSNAME).analyses.txt: .generated/$(CORPUSNAME).types.tsv \
+				 $(LEMMA_BACKOFF_ANALYSER)
+	$(AM_V_GEN)cut -f1 $< \
+		| $(HFST_LOOKUP) -q $(LEMMA_BACKOFF_ANALYSER) \
+		> $@
+
+.generated/speller-alphabet.txt: $(UW_SPELLER_SRC)
+	$(AM_V_GEN)$(HFST_DUMP_ALPHABETS) $< 2>/dev/null > $@
+
+.generated/oov-lemma.tsv: .generated/$(CORPUSNAME).types.tsv \
+				 .generated/$(CORPUSNAME).analyses.txt \
+				 $(LEMMA_BACKOFF_CONFIG) $(LEMMA_BACKOFF_SCRIPT)
+	$(AM_V_GEN)$(PYTHON) $(LEMMA_BACKOFF_SCRIPT) weights \
+		-t .generated/$(CORPUSNAME).types.tsv \
+		-a .generated/$(CORPUSNAME).analyses.txt \
+		-c $(LEMMA_BACKOFF_CONFIG) \
+		--base-out .generated/oov-base.txt \
+		-o $@
+
+.generated/oov-base.txt: .generated/oov-lemma.tsv
+
+.generated/oov-tagclass.regex: .generated/speller-alphabet.txt \
+				 $(LEMMA_BACKOFF_SCRIPT)
+	$(AM_V_GEN)$(PYTHON) $(LEMMA_BACKOFF_SCRIPT) tagclass \
+		--alphabet $< -o $@
+
+# Same two-column format the corpus LM is compiled from, so the same tool
+# builds it: a weighted trie over lemma strings.
+.generated/oov-lemma.hfst: .generated/oov-lemma.tsv
+	$(AM_V_STR2FST)$(HFST_STRINGS2FST) -j $(HFST_FLAGS) \
+		-f openfst-tropical -i $< -o $@
+
+.generated/oov-tagclass.hfst: .generated/oov-tagclass.regex
+	$(AM_V_RGX2FST)$(HFST_REGEXP2FST) -S $(HFST_FLAGS) -i $< \
+		--format=openfst-tropical -o $@
+
+# A lemma the table does not price has to keep its path through the lexicon, so
+# the trie branch is unioned with an unweighted-except-at-the-end `?*` carrying
+# the flat OOV weight. Composition keeps both branches where they overlap and
+# the tropical semiring takes the cheaper, which is the trie's whenever the
+# lemma is in the table.
+.generated/oov-fallback.hfst: .generated/anystar.hfst \
+				 .generated/oov-base.txt
+	$(AM_V_REWEIGHT)$(HFST_REWEIGHT) $(HFST_FLAGS) \
+		-e -a $$(cat .generated/oov-base.txt) -i $< -o $@
+
+.generated/oov-weights.hfst: .generated/oov-lemma.hfst \
+				 .generated/oov-tagclass.hfst \
+				 .generated/oov-fallback.hfst \
+				 .generated/anystar.hfst
+	$(AM_V_UNION)$(HFST_CONCATENATE) $(MORE_VERBOSITY) \
+		    .generated/oov-lemma.hfst .generated/oov-tagclass.hfst \
+		| $(HFST_CONCATENATE) $(MORE_VERBOSITY) - .generated/anystar.hfst \
+		| $(HFST_DISJUNCT) $(MORE_VERBOSITY) - .generated/oov-fallback.hfst \
+		-o $@
+
+# Overrides the shared rule. -F is required: the lexicon carries flag
+# diacritics and without harmonising them the composition matches almost
+# nothing (it silently returns a transducer three orders of magnitude too
+# small, which is not an error, just an empty speller).
+.generated/unitweighted.hfst: $(UW_SPELLER_SRC) \
+				 .generated/oov-weights.hfst
+	$(AM_V_COMPOSE)$(HFST_COMPOSE) $(HFST_FLAGS) $(MORE_VERBOSITY) -F \
+		-1 .generated/oov-weights.hfst -2 $< \
+		-o $@
+
+.SECONDARY: .generated/$(CORPUSNAME).types.tsv \
+            .generated/$(CORPUSNAME).analyses.txt \
+            .generated/speller-alphabet.txt \
+            .generated/oov-lemma.tsv \
+            .generated/oov-tagclass.regex \
+            .generated/oov-lemma.hfst \
+            .generated/oov-tagclass.hfst \
+            .generated/oov-fallback.hfst \
+            .generated/oov-weights.hfst
+
+# vim: set ft=automake:
