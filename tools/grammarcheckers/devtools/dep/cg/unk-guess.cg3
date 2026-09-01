@@ -1,0 +1,50 @@
+# Speller-specific pre-pass: make an out-of-vocabulary cohort attachable.
+#
+# dependency.cg3 keys entirely on the syntactic function tags that functions.cg3
+# assigns from POS and morphology.  A cohort whose only reading is "?" has
+# neither, so nothing attaches to it and it attaches to nothing.  This pass
+# turns the opaque cohort into an ambiguous one: a set of open-class guesses the
+# disambiguator can choose between from context.
+#
+# The guesses carry the case paradigm rather than one default form, because case
+# is what drives the Sámi function rules.
+
+DELIMITERS = "<.>" "<!>" "<?>" "<...>" "<¶>" ;
+MAPPING-PREFIX = @ ;
+
+LIST UNK = ? ;
+LIST GUESS = <guess> ;
+SET PLAIN = UNK - GUESS ;
+
+SECTION
+
+COPY:gN (<guess> N Sem/Dummytag Sg Nom) EXCEPT (?) TARGET PLAIN ;
+COPY:gN (<guess> N Sem/Dummytag Sg Gen) EXCEPT (?) TARGET PLAIN ;
+COPY:gN (<guess> N Sem/Dummytag Sg Acc) EXCEPT (?) TARGET PLAIN ;
+COPY:gN (<guess> N Sem/Dummytag Sg Ill) EXCEPT (?) TARGET PLAIN ;
+COPY:gN (<guess> N Sem/Dummytag Sg Loc) EXCEPT (?) TARGET PLAIN ;
+COPY:gN (<guess> N Sem/Dummytag Sg Com) EXCEPT (?) TARGET PLAIN ;
+COPY:gN (<guess> N Sem/Dummytag Ess) EXCEPT (?) TARGET PLAIN ;
+COPY:gN (<guess> N Sem/Dummytag Pl Nom) EXCEPT (?) TARGET PLAIN ;
+COPY:gN (<guess> N Sem/Dummytag Pl Gen) EXCEPT (?) TARGET PLAIN ;
+COPY:gN (<guess> N Sem/Dummytag Pl Acc) EXCEPT (?) TARGET PLAIN ;
+COPY:gN (<guess> N Sem/Dummytag Pl Ill) EXCEPT (?) TARGET PLAIN ;
+COPY:gN (<guess> N Sem/Dummytag Pl Loc) EXCEPT (?) TARGET PLAIN ;
+COPY:gN (<guess> N Sem/Dummytag Pl Com) EXCEPT (?) TARGET PLAIN ;
+
+COPY:gV (<guess> V IV Ind Prs Sg3) EXCEPT (?) TARGET PLAIN ;
+COPY:gV (<guess> V IV Ind Prs Pl3) EXCEPT (?) TARGET PLAIN ;
+COPY:gV (<guess> V IV Ind Prt Sg3) EXCEPT (?) TARGET PLAIN ;
+COPY:gV (<guess> V IV Ind Prt Pl3) EXCEPT (?) TARGET PLAIN ;
+COPY:gV (<guess> V TV Ind Prs Sg3) EXCEPT (?) TARGET PLAIN ;
+COPY:gV (<guess> V TV Ind Prt Sg3) EXCEPT (?) TARGET PLAIN ;
+COPY:gV (<guess> V IV Inf) EXCEPT (?) TARGET PLAIN ;
+COPY:gV (<guess> V IV PrfPrc) EXCEPT (?) TARGET PLAIN ;
+
+COPY:gA (<guess> A Sg Nom) EXCEPT (?) TARGET PLAIN ;
+COPY:gA (<guess> A Attr) EXCEPT (?) TARGET PLAIN ;
+COPY:gAdv (<guess> Adv) EXCEPT (?) TARGET PLAIN ;
+
+# The bare "?" reading would otherwise survive: no rule can select against a
+# reading that has no tags to test.
+REMOVE:dropBare PLAIN IF (0 GUESS) ;
