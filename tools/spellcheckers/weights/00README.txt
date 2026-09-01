@@ -18,11 +18,37 @@ the default name.
 spellercorpus.raw.txt
 ---------------------
 
-This file contains the raw corpus text used as basis for the frequency weighting
-of the speller fst. Replace the dummy content with real text in your language.
+This file is the *fallback* corpus text for the frequency weighting, used only
+when the corpus repos are not available at build time.
 
-TODO: add a build option to use corpus text stored elsewhere, to avoid filling
-up svn with replicas of corpus material.
+The build prefers the corpus repos. If `corpus-sme` and/or `corpus-sme-x-closed`
+are checked out beside this repo, their `converted/` trees are extracted to
+running text and that text is weighted instead of this file. Nothing is copied
+into this repo: the text is assembled under `.generated/` at build time and
+never committed. That matters for `corpus-sme-x-closed`, which is not public and
+must never end up in a language repo.
+
+Which source was used is printed by make:
+
+    CORPUS   .generated/spellercorpus.corpus.txt <- ../corpus-sme ../corpus-sme-x-closed
+    CORPUS   .generated/spellercorpus.corpus.txt <- weights/spellercorpus.raw.txt (no corpus-sme checkout beside ...)
+
+A missing corpus repo is never an error; the build falls back to this file.
+
+The search can be redirected or switched off:
+
+    make GIELLA_CORPUS_ROOT=/path/to/checkouts
+    make GIELLA_CORPUS_DIRS="/path/to/corpus-sme /path/to/corpus-sme-x-closed"
+    make GIELLA_CORPUS_DIRS=          # force this file
+
+The mechanism lives in giella-core: the make rules in
+`am-shared/tools-spellcheckers-fstbased-desktop_weights-dir-include.am` and the
+XML extraction in `scripts/corpus2rawtext.py`. It is the same for every
+language, so nothing here needs changing to use it.
+
+Note that the corpus is much larger than this file (sme: 42M tokens against
+3.2M), and `config.json`'s `maxweight` is corpus-size dependent — re-sweep it
+when the corpus source changes rather than carrying the old value over.
 
 tags.reweight
 -------------
