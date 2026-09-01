@@ -2,7 +2,7 @@
 
 
 ## Lemma statistics
-* 9628 lemmas
+* 9639 lemmas
 * 100.0 % success
 
 ## Settings used
