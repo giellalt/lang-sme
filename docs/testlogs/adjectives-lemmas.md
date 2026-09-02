@@ -2,7 +2,7 @@
 
 
 ## Lemma statistics
-* 9639 lemmas
+* 9640 lemmas
 * 100.0 % success
 
 ## Settings used
@@ -18,10 +18,11 @@
             "+A+Attr",
             "+A+Pl+Nom"
         ],
-        "lexcfile": ".../adjectives.lexc"
+        "lexcfile": ".../stems/adjectives.lexc"
     },
     "analyser": ".../analyser-gt-norm.hfstol",
     "generator": ".../generator-gt-norm.hfstol",
+    "lexcroot": ".../root.lexc",
     "nouns": {
         "exclusions": [
             "(CmpN/Onlu|ShCmp|\\+Cmp/SplitR|\\+V\\+|AGAdj|AHKASAS|NOT-TO-LEMMATEST|ALLGUOVT|\\+Use/MT|RHyph|Cmp/Sh|Rnoun)"
@@ -34,8 +35,31 @@
             "+N+G3+Sg+Nom",
             "+N+G7+Sg+Nom"
         ],
-        "lexcfile": ".../nouns.lexc"
+        "lexcfile": ".../stems/nouns.lexc"
     },
+    "otherlexcs": [
+        ".../stems/adpositions.lexc",
+        ".../stems/adverbs.lexc",
+        ".../stems/numerals.lexc",
+        ".../stems/conjunctions.lexc",
+        ".../stems/interjections.lexc",
+        ".../stems/numerals.lexc",
+        ".../stems/pronouns.lexc",
+        ".../affixes/abbreviations.lexc",
+        ".../affixes/adjectives.lexc",
+        ".../affixes/nouns.lexc",
+        ".../affixes/numerals.lexc",
+        ".../affixes/possessive-suffixes.lexc",
+        ".../affixes/propernouns.lexc",
+        ".../affixes/symbols.lexc",
+        ".../affixes/verbs.lexc",
+        ".../generated_files/smi-sme-abbreviations.lexc",
+        ".../generated_files/smi-sme-acronyms.lexc",
+        ".../generated_files/smi-sme-arabic_roman_digits.lexc",
+        ".../generated_files/smi-sme-digits.lexc",
+        ".../generated_files/mul-sme-punctuation.lexc",
+        ".../generated_files/mul-sme-symbols.lexc"
+    ],
     "propernouns": {
         "exclusions": [
             "(ProperNoun|\\+Use/MT)"
@@ -45,7 +69,7 @@
             "+N+Prop+Pl+Nom",
             "+N+Prop+Attr"
         ],
-        "lexcfile": ".../sme-propernouns.lexc"
+        "lexcfile": ".../stems/sme-propernouns.lexc"
     },
     "verbs": {
         "exclusions": [
@@ -54,7 +78,7 @@
         "lemmatags": [
             "+V+Inf"
         ],
-        "lexcfile": ".../verbs.lexc"
+        "lexcfile": ".../stems/verbs.lexc"
     }
 }
 ```
