@@ -88,15 +88,19 @@ msyn-kkun-kon = Boasttuhápmi
     .example-1 = Muhtin biktasiid lohke baskkun skáhppii heaŋgát, eaige šat heiven.
 
 msyn-demphrase-plill = Boasttukásus
-    .desc = Demonstratiivapronomen "{$1}" galgá leat seamma kásushámis go substantiiva  "{$2}" . 
+    .desc = Demonstratiivapronomen "{$1}" galgá leat seamma kásushámis go substantiiva "{$2}" . 
     .example-1 = Dát mearriduvvui easkka jagi maŋŋil, dan láhkái ahte ráđđehus dorvvastii daid bellodagaide mat álggos ledje dan vuostá ahte 6-jahkásaččat galge álgit skuvlii.
     .example-2 = Jos fas olmmošvuoigatvuođat leat olbmuid vuoigatvuođaid sin olmmošvuođa dihte, de dasto vuoigatvuođat gullet maid daid olbmuide geat ásset ii-riektestáhtain.
     .example-3 = rustis váikkuha daid meroštallamiidda maid mii ieža dahkat, ja go sámi kulturdutkan ge iešalddes lea oalle nuorra dieđasuorgi, de ii das ge leat vel nu ollu veahki viežžamis jurddašit molssaeaktulaččat dáid áššiid.
     .example-4 = Go oahpásmuvvat Árbbolaččat persovnnaide, de dan bokte maiddá oahpásmuvvat daid jurdagiidda mat leamaš mielde ovddideamen báikkálaš sámi kultuvrra dasa mii dat dál lea.
 
 msyn-demphrase-plloc = Boasttukásus
-    .desc = Demonstratiivapronomen "{$1}" galgá leat seamma kásushámis go substantiiva  "{$2}" . 
+    .desc = Demonstratiivapronomen "{$1}" galgá leat seamma kásushámis go substantiiva "{$2}" . 
     .example-1 = Álbmotrievttalaš mearrádusat, nugo mat ILO konvenšuvdna 169, leat dehálaš oasit daid čovdosiin maid de šaddá válljet.
+
+msyn-demphrase-placc = Boasttukásus
+    .desc = Demonstratiivapronomen "{$1}" galgá leat seamma kásushámis go substantiiva "{$2}" . 
+    .example-1 =
 
 syn-number_congruence-subj-verb = Kongrueansameattáhus
     .desc = Don leat čállán vearbba "{$1}" boasttupersovnnas. Vearba galgá sodjat persovnna ja logu mielde.
@@ -796,9 +800,9 @@ real-jeara-jearrá = Čállinmeattáhus dán oktavuođas
     .desc = - Don leat čállán "{$1}". Oaivvildatgo "€1"?
     .example-1 = Man lahkai kvalitehtasihkkarastá Sámediggi ahte lea sámi buvtta man Sámediggi doarju, jeara NSR.
 
-real-jearan-jearran = !!
+real-jearan-jearran = Čállinmeattáhus dán oktavuođas. !! 
     .desc =
-    .exampe-1 = Ii leat vuos oktage jearan autográfa
+    .exampe-1 = Ii leat vuos oktage jearan autográfa.
 
 real-johttui-johtui = !!
     .desc =
