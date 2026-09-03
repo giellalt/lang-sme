@@ -7,7 +7,7 @@ echo "\n"
 echo "Are the rule tags in grammarchecker.cg3 in use and declared in the error tags files?"
 echo "=========================================================================\n"
 cat grammarchecker.cg3 |grep "^LIST &"|cut -d" " -f2|tr -d "&"|sort | uniq > xxg
-cat grammarchecker.cg3 |grep "^ADD:"|tr "\t" " "| tr -s " "| cut -d" " -f1|cut -d":" -f2|sort -u > xxb   # in use
+cat grammarchecker.cg3 |grep "^ADD:"|tr "\t" " "| tr -s " "| cut -d" " -f1|cut -d":" -f2|sort|uniq > xxb   # in use
 cat errors-se.ftl |grep "^[a-z]"|cut -d" " -f1|sort | uniq > xxn
 cat errors-en.ftl |grep "^[a-z]"|cut -d" " -f1|sort | uniq > xxe
 cat errors.json |grep '"id"'|cut -d'"' -f4|sort | uniq > xxj
@@ -44,6 +44,51 @@ echo "The tags missing in errors.xml were: "
 comm -23 xxg xxx
 echo "\n"
 
+# summary
+
+echo "\n"
+echo "Summary"
+
+echo " Tags defined:"
+cat xxg |wc -l
+
+echo " Tags used:"
+cat xxb |wc -l 
+
+echo " Tags in native ftl:"
+cat xxn |wc -l 
+
+echo " Tags in en ftl:"
+cat xxe |wc -l 
+
+echo "Tags in json"
+cat xx |wc -l 
+
+echo "Tags in xml"
+cat xxx |wc -l 
+
+
+
+echo "Number of tags not in use: "
+comm -23 xxg xxb | wc -l
+echo "\n"
+
+echo "Number of tags missing in errors-se.ftl: "
+comm -23 xxg xxn | wc -l
+echo "\n"
+
+echo "Number of tags missing in errors-en.ftl: "
+comm -23 xxg xxe | wc -l
+echo "\n"
+ 
+echo "Number of tags missing in errors.json: "
+comm -23 xxg xxj | wc -l
+echo "\n"
+
+echo "Number of tags missing in errors.source.xml: "
+comm -23 xxg xxx | wc -l
+echo "\n"
+
 #echo "Delete auxiliary xx* files\n"
-#rm -f xxb xxe xxn xxg xxj xxx 
+rm -f xxb xxe xxn xxg xxj xxx 
 
