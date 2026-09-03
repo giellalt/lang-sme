@@ -65,5 +65,5 @@ echo "\n"
 
 
 #echo "Delete auxiliary xx* files\n"
-#rm -f xxb xxe xxn xxd xxj xxx 
+rm -f xxb xxe xxn xxd xxj xxx 
 
