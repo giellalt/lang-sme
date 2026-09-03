@@ -797,11 +797,11 @@ real-girjiide-girjjiide = Čállinmeattáhus dán oktavuođas
     .example-1 = Lassin girjiide leat girjerádjosis ollu áigečállagat mat gusket min fágasurggiide, ja neahttasiiddus Idunn.no gávnnát eambbo áigečállagiid almmuhuvvon lágádusa Universitetsforlaget bokte. 
 
 real-jeara-jearrá = Čállinmeattáhus dán oktavuođas
-    .desc = - Don leat čállán "{$1}". Oaivvildatgo "€1"?
+    .desc = Don leat čállán "{$1}". Oaivvildatgo "€1"?
     .example-1 = Man lahkai kvalitehtasihkkarastá Sámediggi ahte lea sámi buvtta man Sámediggi doarju, jeara NSR.
 
 real-jearan-jearran = Čállinmeattáhus dán oktavuođas. !! 
-    .desc =
+    .desc = Don leat čállán "{$1}". Oaivvildatgo "€1"?
     .exampe-1 = Ii leat vuos oktage jearan autográfa.
 
 real-johttui-johtui = !!
