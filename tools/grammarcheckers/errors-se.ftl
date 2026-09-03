@@ -985,7 +985,11 @@ syn-congruence-loc-num = !!
 syn-double-inchoative = !!
     .desc =
     .example-1 = Go leimme mihtidan nu máŋga rusttega ahte álggiime ollet lohppi, álgen mun ballagoahtit.
-
+    
+msyn-pers-refl-pron =
+    .desc =
+    .example-1 = Mun válddán mu girjji.
+    
 syn-go-not-ahte = !!
     .desc =
     .example-1 = Buorre ahte boađát.
