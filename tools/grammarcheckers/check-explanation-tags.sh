@@ -4,13 +4,21 @@
 # Compares the list against the various error files.
 
 echo "\n"
-echo "Are the rule tags in grammarchecker.cg3 declared in the error tags files?"
+echo "Are the rule tags in grammarchecker.cg3 in use and declared in the error tags files?"
 echo "=========================================================================\n"
 cat grammarchecker.cg3 |grep "^LIST &"|cut -d" " -f2|tr -d "&"|sort | uniq > xxg
+cat grammarchecker.cg3 |grep "^ADD:"|tr "\t" " "| tr -s " "| cut -d" " -f1|cut -d":" -f2|sort -u > xxb   # in use
 cat errors-se.ftl |grep "^[a-z]"|cut -d" " -f1|sort | uniq > xxn
 cat errors-en.ftl |grep "^[a-z]"|cut -d" " -f1|sort | uniq > xxe
 cat errors.json |grep '"id"'|cut -d'"' -f4|sort | uniq > xxj
 cat errors.source.xml | grep "error id"|cut -d'"' -f2|sort | uniq > xxx
+
+echo "Number of tags not in use: "
+comm -23 xxg xxb | wc -l
+echo "The tags declared but not used in the grammarchecker file are:"
+comm -23 xxg xxb
+echo "\n"
+
 
 echo "Number of tags missing in errors-se.ftl: "
 comm -23 xxg xxn | wc -l
@@ -37,5 +45,5 @@ comm -23 xxg xxx
 echo "\n"
 
 #echo "Delete auxiliary xx* files\n"
-rm -f xxe xxn xxg xxj xxx 
+#rm -f xxb xxe xxn xxg xxj xxx 
 
