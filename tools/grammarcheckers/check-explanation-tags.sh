@@ -27,6 +27,9 @@ comm -23 xxb xxd | wc -l
 echo "The tags declared but not used in the grammarchecker file are:"
 comm -23 xxd xxb | tr "\n" ","|sed 's/,/, /g;'
 echo "\n"
+echo "The tags used in the grammarchecker.cg3 file but not defined are:"
+comm -13 xxd xxb | tr "\n" ","|sed 's/,/, /g;'
+echo "\n"
 
 
 echo " Tags in native ftl:"
