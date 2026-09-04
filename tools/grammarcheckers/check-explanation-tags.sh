@@ -34,8 +34,11 @@ cat xxn |wc -l
 
 echo "Number of tags missing in errors-se.ftl: "
 comm -23 xxd xxn | wc -l
-echo "The tags tags missing in the native ftl file were:"
+echo "The tags missing in the native ftl file were:"
 comm -23 xxd xxn | tr "\n" ","|sed 's/,/, /g;'
+echo "\n"
+echo "The tags in the native ftl file but not in use were:"
+comm -13 xxd xxn | tr "\n" ","|sed 's/,/, /g;'
 echo "\n"
 
 echo " Tags in en ftl:"
@@ -46,6 +49,9 @@ comm -23 xxd xxe | wc -l
 echo "The tags tags missing in errors-en.ftl file were:"
  comm -23 xxd xxe | tr "\n" ","|sed 's/,/, /g;'
 echo "\n"
+echo "The tags in errors-en.ftl but not in use were:"
+comm -13 xxd xxe | tr "\n" ","|sed 's/,/, /g;'
+echo "\n"
  
 echo "Tags in json:"
 cat xxj |wc -l 
@@ -53,6 +59,9 @@ echo "Number of tags missing in errors.json: "
 comm -23 xxd xxj | wc -l
 echo "The tags issing in errors.json were: "
 comm -23 xxd xxj | tr "\n" ","|sed 's/,/, /g;'
+echo "\n"
+echo "The tags in errors.json but not in use were:"
+comm -13 xxd xxj | tr "\n" ","|sed 's/,/, /g;'
 echo "\n"
 
 echo "Tags in xml:"
