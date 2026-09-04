@@ -48,7 +48,7 @@ echo "The tags tags missing in errors-en.ftl file were:"
 echo "\n"
  
 echo "Tags in json:"
-cat xxjx |wc -l 
+cat xxj |wc -l 
 echo "Number of tags missing in errors.json: "
 comm -23 xxd xxj | wc -l
 echo "The tags issing in errors.json were: "
