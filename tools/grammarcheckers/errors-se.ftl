@@ -959,7 +959,7 @@ syn-PassPrsPl1-PrtPl1 = !!
     .desc =
     .example-1 = Go mii čurvot nuoraide de galge vástidit.
 
-syn-PassPrtSg3-PrtSg3 = !!
+msyn-PassPrtSg3-PrtSg3 = !!
     .desc =
     .example-1 = Maŋŋel go válgabohtosat čilge, de lea son gártan viđat sadjái Ellen Inga O. Hætta maŋábeallai, gii gal baicca gizzui ollu go oaččui liigejienaid.
 
