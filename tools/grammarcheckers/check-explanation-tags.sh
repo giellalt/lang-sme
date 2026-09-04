@@ -7,7 +7,7 @@ echo "\n"
 echo "Are the rule tags in grammarchecker.cg3 in use and declared in the error tags files?"
 echo "=========================================================================\n"
 cat grammarchecker.cg3 |grep "^LIST &"|tr -s " "|cut -d" " -f2|tr -d "&"|sort | uniq > xxd # defined
-cat grammarchecker.cg3 |grep "^ADD:"|tr "\t" " "| tr -s " "| cut -d" " -f1|cut -d":" -f2|sort|uniq > xxb   # in use
+cat grammarchecker.cg3 |grep "^ADD:"|tr "\t" " "| tr -s " "| sed 's/:x/:/'|cut -d" " -f1|cut -d":" -f2|sort|uniq > xxb   # in use
 cat errors-se.ftl |grep "^[a-z]"|cut -d" " -f1|sort | uniq > xxn # native
 cat errors-en.ftl |grep "^[a-z]"|cut -d" " -f1|sort | uniq > xxe # emglish
 cat errors.json |grep '"id"'|cut -d'"' -f4|sort | uniq > xxj #json
