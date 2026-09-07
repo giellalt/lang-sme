@@ -43,7 +43,7 @@ syn-boasttu-compound = Goallossátnemeattáhus
     .desc = Don leat čállán  "{$1}" guoktin sátnin. "boasttu" goallostuvvo manjit sániin ovttas. 
     .example-1 = Mon álo válddan boasttu niibbi!
 
-real-hallan = Boasttuvearbasuorggádus
+real-hallan = Boasttusojaheapmi
     .desc = Don leat čállán vearbba  "{$1}". "-hallat" passiivvas ii rievdda goassege maŋemus a-vokála.
     .example-1 = Mii gávnnaimet elliid mat ledje jápmán, main ledje borahallon seaibbit, bealjit ja vel juolggit ge.
     .example-2 = Dat ferte oainnahallot ovdal go sáhttit báhčit dan, lohká son.
@@ -317,15 +317,11 @@ msyn-valency-dasa-before-ahte = Illatiivapronomen váilu
     .desc = Don leat geavahan vearbba mii gáibida illatiivva. Ovdal "{$1}" galgá leat illatiivapronomen "dasa".
     .example-1 = Ráđđehus luohttá ahte Sámediggi, demokráhtalaš álbmotválljejuvvon orgánan, váfista ahte diekkár vuđolaš demokráhtalaš prinsihpat ja juksanmearit áimmahuššojuvvojit válgaortnega vejolaš earáhuhttimis.
 
-msyn-valency-go-inf = Cealkkameattáhus
-    .desc = Don leat čállán infinitiivva. Dan sajis galgá leat "go" -oalgecealkka ja finihttavearba.
-    .example-1 = Soai leaigga sihke dolkan ja suhttan gullat olbmuid šláddariid sudno birra, ja bovdiiga.
-
 msyn-valency-birra-loc = Cealkkameattáhus
     .desc = Don leat čállán "birra", muhto vearba gáibida lokatiiva.
     .example-1 = Mun sáddejin ohcama ja čállen oanehaččat iežan birra, ja sáddejin velá čállosa globaliserema birra, man birra mun beroštan.
 
-msyn-valency-aktioloc-aktioess = Boasttuvearbahápmi
+msyn-valency-aktioloc-aktioess = Boasttuhápmi
     .desc = Don leat čállán vearbba "{$1}" aktio essiivvas. Dat galgá leat aktio lokatiivvas.
     .example-1 = Sámedikki politihkkárat eai galgga maid darbbašit ballat čalmmustahttimin fitnodagaid.
 
@@ -607,6 +603,8 @@ real-second-aá = Akseanta-a meattáhus
     .example-31 = Ii dát galgá ádjanit nu guhka. 
     .example-32 = Giellabargit bohtet bargat hui láhkalágaid giellajuhkosiin. #real-láhkalágaid-lahkalagaid
     .example-33 = Háliidan várra dušše njaŋgat dás. #real-njaŋgat-njaŋgát
+    .example-34 = Eatnamis sáhttá jaska veallat ja guldalit movt luonddus gullojit skoahpamat, haksit arvehája, ja dovdat niera vuostá arvečalmmi. #real-veallat-veallát
+    .example-35 = Daste dáppe galgá váidni veallat vahku ovdal go hávdáduvvo, danin vai ii dáhpáhuvai ovttage ealli olbmo hávdáda. #real-veallat-veallát
 
 real-several-aá = Akseanta-a meattáhusat
     .desc = Orrot leamen akseanta-a meattáhusat sánis "{$1}". Oaivvildatgo "{€1}"?  
@@ -696,13 +694,22 @@ real-guovddáškonsonánta = Konsonántameattáhus
     .example-64 = Son dohppii roavggu mii lei biggomen olgun ja gohččui skuovvadivodeaddji dohppet nuppe geahčái. #real-NSgIll-PrtSg3
     .example-65 = Dán ferte fitnet sisa movt nu. #real-fitnet-fidnet
     .example-66 = Jos mii fitnet doaluid, de fertet fargga bargagoahttit bovdejumiiguin ja eará osiiguin spábbačiekčama olis, muhto de dárbbašat hui fárgga vástádusa fitnet go sámecupa vuoi eat, loahpaha Bueng. #real-fitnet-fidnet
+    .example-67 = Eará ofelaččat leat du bargoustibat álggus jagis, muhto dađistaga šaddet dego oabbát ja/dahje/ja vieljat! #real-PlNomPxSg2-PlNom
+    .example-68 = Servodat lea rievdan ja mii oahppat ja {vádlit}${váldit} {adnui}¢{atnui} eará ja ođđa reaidduid ja vugiid čoavdit hástalusaid." #real-PlNomPxSg2-PlNom
+    .example-69 = Sihke organiseren ja hábmen málle lea hástalus go maid oahpaheaddjit váillot, sadjásažžat váilot ja go skuvlaeaiggádin lean nu iešguđetlágan málle mot juhket diimmuid diibmologoresurssaid ektui sámegielas ja oahpahusa organiseren obbalažžat daguha ahte go eai leat čielga mállet mot láhčet oahpahusa ja šaddá maiddai soaittáhagas mot organiserejuvvo vuođđoskuvllas sámegieloahpahus. #real-PrsConNeg-PrsPl3 
+    .example-70 = Ánnu ii dadjan maidege, muhto vuhttui ahte Čormmoža sánit jorbbodahte su. #real-PrsConNeg-PrtPl3
+    .example-71 = Máŋggat sámitge jáhke ahte ng. eanaregisttargilli doaimmai buorebut go árbevirolaš sámisiida. #real-PrsConNeg-PrtPl3
+    .example-72 = Álggus sáhttá váidalit njuolga dan olbmui guhte lea iskkan dahje dikšun du. #real-PrsSg1-PrfPrc
+    .example-73 = Návet lea áigá jo mieskkan ja gahččan. #real-PrsSg1-PrfPrc
+    .example-74 = Lean visot njuoskkan. #real-PrsSg1-PrfPrc
+    .example-75 = Dán čavčča loahpahuvvo okta golbmajahkásaš našunála prošeakta gos dutkit leat lohkan rievssahiid ja iskkan makkár guovlluin leat hui unnán rievssahat. #real-PrsSg1-PrfPrc
 
 real-ImprtPl2-DerhPrsConNeg = Boasttuhápmi !!
     .desc = 
     .example-1 = Biret šattai bonjastit biilla doares beallái nu ahte biillat eaba beašket oktii.
 
 real-ImprtPl1-PassInf = Konsonántameattáhus #!!
-    .desc = Orru leamen meattáhus guovddáškonsonánttas. Don leat čállán vearbba "{$1}" gohččunhámis. Jus oaivvildat infinitiiva leat "{€1}". 
+    .desc = Orru leamen meattáhus guovddáškonsonánttas. Don leat čállán vearbba "{$1}" gohččunvugiin. Jus oaivvildat infinitiiva leat "{€1}". 
     .example-1 = Fátmmastit šiehtadussii sáhttá atnot sámi vuoigatvuođaeaiggadiid vuosttá, ja eará álgoálbmogiid sullasaš vuoigatvuođaiguin boahttevaš riekteproseassain.
     .ref-1 = Pope2004:278
 
@@ -781,7 +788,7 @@ real-dassá-dassážii = !! Leago dábálaš meattáhus?
     .example-1 = Nu sáhttá interneahtta šaddat sámi mánáide ja nuoraide oahpasnuvvan, gávnnadan, ja oahppogazzanbáikin, ja dan vel eambbo go juo dássá ii lea leamašan.
 
 real-geahčes-geažes_geahčen = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán "geahččat"-vearbba gohččunhámi "{$1}". Oaivvildat go postposišuvnna "geahčen" vai "geažes"?
+    .desc = Don leat čállán "geahččat"-vearbba gohččunvuogi "{$1}". Oaivvildat go postposišuvnna "geahčen" vai "geažes"?
     .example-1 = Guttorm Utsi ballá sákka árbevirolaš sámi duodji sáhttá jávkat 10 jagi geahčes Deanus jos dasa ii dahkkut miige.
     .example-2 = Vissis áiggi geahčes, omd. 30 minuhtta, de galget gávdnat ja oahppat nu ollu substantiivvaid go vejolaš.
 
@@ -846,8 +853,8 @@ real-oainnát-oainnat = Čállinmeattáhus dán oktavuođas
     .example-4 = Jahkečoahkkin oainnát ávžžuhii stivra bargat dainna áššiin.
     .example-5 = Soai oainnát eaba lean vuordán vuoitit, go eaba lean šaddan hárjehallat ovttas bearehaga.
 
-real-nuppádussii-nuppádassii = !!
-    .desc =
+real-nuppádussii-nuppádassii = Čállinmeattáhus dán oktavuođas
+    .desc = Don leat čállán "{$1}". Oaivvildatgo advearbba "{€1}"?
     .example-1 = Vaikko juristtat eai leat geargan guorahallamis rihkku go Finnmárkoláhka árvalus álbmotrivttiin, de Stuoradikki Justislávdegoddi lea boahtán Finnmárkui gullat nuppádussii maid álbmot oaivvilda láhkaárvalussii.
     .example-2 = Dál ballet Romssa sámit dán nuppádussii dáhpáhuvvat. 
 
@@ -860,30 +867,11 @@ real-oktege-oktage = Vokálameattáhus
     .desc = Don leat čállán "oktege". Dán oktavuođas orru baicce galgame "oktage"?
     .example-1 = Amasgiela-dásis  ii leat dál oktege oahppi.
 
-real-PlNomPxSg2-PlNom = !!
-    .desc =
-    .example-1 = Márkaniin lei guoimmuheapmi, njálgosat, imašlaš báhkkat ja lihkkoreivvet.
-    .example-2 = Eará ofelaččat leat du bargoustibat álggus jagis, muhto dađistaga šaddet dego oabbát ja/dahje/ja vieljat!
-
-real-ImprtPl2-PrsPl3 = !!
-    .desc =
+real-ImprtPl2-PrsPl3 = Boasttusojaheapmi
+    .desc = Don leat čállán vearbba "{$1}" gohččunvuogi (imperatiivva). Dán oktavuođas vearba galgá duohtavuogis (indikatiivvas) "{€1}"?
     .example-1 = Mii dovdat Ovddádusbellodaga oainnu Sámediggái, eatge hirpmáhuva go Hans J. Eriksen, Carl I. Hagen ja Siv Jensen cealket juoidá dán áššis.
     .example-2 = Son čájehii govaid buotlágan borramušain maid sii luonddus viežžet.
-
-real-PrsConNeg-PrsPl3 = !!
-    .desc =
-    .example-1 = Sihke organiseren ja hábmen málle lea hástalus go maid oahpaheaddjit váillot, sadjásažžat váilot ja go skuvlaeaiggádin lean nu iešguđetlágan málle mot juhket diimmuid diibmologoresurssaid ektui sámegielas ja oahpahusa organiseren obbalažžat daguha ahte go eai leat čielga mállet mot láhčet oahpahusa ja šaddá maiddai soaittáhagas mot organiserejuvvo vuođđoskuvllas sámegieloahpahus.
-
-real-PrsConNeg-PrtPl3 = !!
-    .desc =
-    .example-1 = Ánnu ii dadjan maidege, muhto vuhttui ahte Čormmoža sánit jorbbodahte su.
-
-real-PrsSg1-PrfPrc = !!
-    .desc =
-    .example-1 = Álggus sáhttá váidalit njuolga dan olbmui guhte lea iskkan dahje dikšun du.
-    .example-2 = Návet lea áigá jo mieskkan ja gahččan.
-    .example-3 = Lean visot njuoskkan.
-    .example-4 = Dán čavčča loahpahuvvo okta golbmajahkásaš našunála prošeakta gos dutkit leat lohkan rievssahiid ja iskkan makkár guovlluin leat hui unnán rievssahat.
+    .example-3 = Buot maid dii dáhttubehtet earáid dahkat alcceseattet, dahket dii ge sidjiide.
 
 real-rátti-ratti = !!
     .desc =
