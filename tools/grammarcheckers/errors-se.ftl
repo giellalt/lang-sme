@@ -203,7 +203,7 @@ msyn-ASgLoc-AAttrORAdv = Boasttuhápmi
     .example-1 = Go fáŋggat eai beasa geavahit iežaset giela, de lassána isolerenvárra ja várra oažžut dárbbašmeahttumis lossa ráŋggáštumi lea stuorat go earáide.
     .example-2 = Ohcejoga gielddaráđđehus lea sihkastan eret guokte oahpaheaddjiidvirggi ja doaimmaha sámegielat beaiveruovttuid dohkkemeahttumis gáržžes latnjadilis.
 
-syn-sg-not-pl-after-num = Boasttuhápmi !!
+syn-sg-not-pl-after-num = Numerálagihppomeattáhus
     .desc = Berrešii leat ovttaidlohku
     .example-1 = Fitnodaga álggaheaddji ja sáivačáhcebiologa Rune Muladal muitala Ávvirii ahte Deanu čázádagas lea nu guhkes gaska gaskal luossaveajehiid, ahte ádjána 5-6 geardde guhkit čohket nu máŋga veajehiid go dárbbašit.
 
@@ -567,6 +567,8 @@ real-first-aá = Akseanta-a meattáhus
     .example-19 = Don fal muittát man ollu čuoikkat diibmá ledje, ii ballen baljo jaska čohkkat.
     .example-20 = Gávdnen govvejeaddji Knut Kosmo 20 jagi dássá báddejuvvon soalddátveteránaid muitalusaid ja nu ihte eambbo dieđut, čilge Tollefsen. 
     .example-21 = Jahkásaččat sturrot dievdolbmuin bealjit gaskamearálaččat 0,22 mm dássá deavdá 30 jagi.
+    .example-22 = Ballu čarvvui ráttis ja geahččalin garvit ášši. #real-rátti-ratti 
+    .example-23 = Sihkkaris gáldut geaiguin Nordlys aviisa lea hupman, lohket dievddu čukkohallan máŋgii rátti ja čoavjji bokte. #real-rátti-ratti 
 
 real-second-aá = Akseanta-a meattáhus
     .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas. Oaivvildat go "{€1}" ?
@@ -783,7 +785,7 @@ sty-prop-not-čearru = Nammageavahus
     .example-4 = Dálmmá čearru lea garrasit vuosttildan dán ruvkke, dannego boazoguohtunguovlu gáržu.
     .ref-1 =
 
-real-dassá-dassážii = !! Leago dábálaš meattáhus?
+real-dassá-dassážii = !! #Leago dábálaš meattáhus?
     .desc =
     .example-1 = Nu sáhttá interneahtta šaddat sámi mánáide ja nuoraide oahpasnuvvan, gávnnadan, ja oahppogazzanbáikin, ja dan vel eambbo go juo dássá ii lea leamašan.
 
@@ -873,26 +875,18 @@ real-ImprtPl2-PrsPl3 = Boasttusojaheapmi
     .example-2 = Son čájehii govaid buotlágan borramušain maid sii luonddus viežžet.
     .example-3 = Buot maid dii dáhttubehtet earáid dahkat alcceseattet, dahket dii ge sidjiide.
 
-real-rátti-ratti = !!
-    .desc =
-    .example-1 = Ballu čarvvui ráttis ja geahččalin garvit ášši. 
-    .example-2 = Sihkkaris gáldut geaiguin Nordlys aviisa lea hupman, lohket dievddu čukkohallan máŋgii rátti ja čoavjji bokte.
-
-real-ráddi-ráđđi = !!
-    .desc =
-    .example-1 = Váhnemiid mielan ii lean iežá ráddi.
-    .example-2 = Lea Ráddi guhte nammada Doarjjastivrra áirasiid ja dat dáhpáhuvvá maŋŋá.
-    .example-3 = s e.e. nugo čállingotteossodaga ásaheami forumii mii čadnošii ON:a ekonomálaš ja sosiála ráddái New York:ii.
-    .example-4 = Ráđđehus dáhttu arvagit doarjut Foruma doaimmaid, daidgaskkas e.e. nugo čállingotteossodaga ásaheami forumii mii čadnošii ON:a ekonomálaš ja sosiála ráddái New York:ii.
-    .example-5 = Sámi parlamentáralas ráddi lea čoahkkinastan davviriikkalas ministarrádiin, Københámmanis.
-    .example-6 = – Mun oainnán positiiva signálan ahte Davviriikkaid Ráddi sáddii ruovttoluotta ráđi presidia evttohusa, lohká Sámedikkepresideanta Sven-Roald Nystø
-
-real-Ráddi-Ráđđi = !!
-    .desc =
-    .example-1 = Sámi Parlamentáralaš Ráddi.
+real-dđ = Konsonántameattáhus
+    .desc = Orru leamen čállinmeattáhus sánis "{$1}". Oaivvildatgo "{€1}"
+    .example-1 = Váhnemiid mielan ii lean iežá ráddi. #real-ráddi-ráđđi
+    .example-2 = Lea Ráddi guhte nammada Doarjjastivrra áirasiid ja dat dáhpáhuvvá maŋŋá. #real-ráddi-ráđđi
+    .example-3 = s e.e. nugo čállingotteossodaga ásaheami forumii mii čadnošii ON:a ekonomálaš ja sosiála ráddái New York:ii. #real-ráddi-ráđđi
+    .example-4 = Ráđđehus dáhttu arvagit doarjut Foruma doaimmaid, daidgaskkas e.e. nugo čállingotteossodaga ásaheami forumii mii čadnošii ON:a ekonomálaš ja sosiála ráddái New York:ii. #real-ráddi-ráđđi
+    .example-5 = Sámi parlamentáralas ráddi lea čoahkkinastan davviriikkalas ministarrádiin, Københámmanis. #real-ráddi-ráđđi
+    .example-6 = Mun oainnán positiiva signálan ahte Davviriikkaid Ráddi sáddii ruovttoluotta ráđi presidia evttohusa, lohká Sámedikkepresideanta Sven-Roald Nystø. #real-ráddi-ráđđi
+    .example-7 = Sámi Parlamentáralaš Ráddi.#real-Ráddi-Ráđđi
 
 real-ragaha-ragada = !!
-    .desc =
+    .desc = 
     .example-1 = Miesse- ja árranjuovvandoarjjaortnet galgá movttiidahttit ovdal ragaha ja ovdal juovllaid njuovvama ja dat guoská seamma bures guovlluide máttabealde Romssa go Romssas ja Finnmárkkus ja danne berrejit máksomearit leat ovttastuoru.
 
 real-sáhtaš = !!
