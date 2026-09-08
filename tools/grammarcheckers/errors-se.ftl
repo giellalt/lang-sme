@@ -912,10 +912,6 @@ real-varra-várra = !!
     .example-1 = De gal lohká okta dain jiehtanasain ahte bussá gal varra geassá fatnasa, go sidjiide earáide lea nu lossat. 
     .example-2 = Sundi Paus, gii veahá maŋŋel 1700-logu gaskkamutto varra lei Finnmárkku ja čearddalaš ealáhusvuođu heivehemiid oahppáseamos olmmoš, čilgii sápmelaččaid ja dáččaid erohusa guovddáš borramušriggodagaid geavaheami oktavuođas.
 
-real-vuvdii = !!
-    .desc =
-    .example-1 = Mannán  ráhkadii son juo vuodjaskáhppuid ja vuvdiid daid, nie tiinnii álcces ođđa sk Mannan vahko  čoagganedje 160 olbmo miehtá Suomabeale Sámi Ohcejohkii ávvudit Ohcejoga soahteveteránaid searvvi 40-jagi.
-
 syn-congruence-com-num = !!
     .desc =
     .example-1 =
