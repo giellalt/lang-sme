@@ -155,11 +155,19 @@ syn-case-congruence-buorre = Kongrueansameattáhus
 msyn-case-number-congruence-moanat-all = Kongrueansameattáhus
     .desc = Sihke sátni "moanat" ja čuovvovaš substantiiva "{$1}" galget sodjat kásusiid mielde. "Moanat" gáibida maiddái máŋggaidlogu substantiivva. 
     .example-1 = Moanat buori spábbačiekči leat boahtán Jergolis.
+    
+lex-majuscule = !!
+    .desc = 
+    .example-1 = Dáid gávdná sámedikki ruovttusiidduin ságat-gaskabláđi olis.
 
 lex-transitive = Sátni ii heive
     .desc = Don leat čállán vearbba  "{$1}" . Dat ii oro heiveme dán oktavuhtii. Oaivvildat go  "{€1}" ?
     .example-1 = Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta.
-
+    
+msyn-miehtá-Acc = !!
+    .desc = 
+    .example-1 = Mii háliidit ahte Guovdageaidnu ja Sámi allaskuvla dál maid galgá leat sámi nuoraid ja earáid deaivvadanbáiki, ja čohkket ollu sámi studeanttaid miehtá Sámis.
+    
 msyn-plcom-plloc = Boasttukásus
     .desc = "-guin" lea komitatiivageažus. Dás galgá leat lokatiiva "-in".
     .example-1 = Muhtimat olggobeale olbmuiguin dadjet ahte ii leat dárbu loddet.
@@ -718,6 +726,10 @@ real-ImprtPl1-DerPassInf = Konsonántameattáhus #!!
 real-Derh-Inf = Konsonántameattáhus #!!
     .desc = Orru leamen čállinmeattáhus vearbba "{$1}" guovddáškonsonánttas. Don leat čállán kausatiiva hámi. Dás galgá geavahit infinitiiva hámi. 
     .example-1 = Studeanta ferte ceavzzit goappašiid eksámeniid.
+    
+real-DerNomActSgGen-ActioEss =  #!! i-e
+    .desc =  
+    .example-1 = Duortnoseanu luosa dearvvašvuohta lea buorráneami.
 
 real-Ess-PrfPrc = Konsonántameattáhus #!!
     .desc = Orru leamen čállinmeattáhus sáni "{$1}" guovddáškonsonánttas. Don leat čállán substantiivva essiivvas. Galgá go leat vearba perfeakta partisihppahámis?
