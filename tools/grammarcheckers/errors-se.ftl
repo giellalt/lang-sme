@@ -860,10 +860,13 @@ real-nuppádussii-nuppádassii = Čállinmeattáhus dán oktavuođas
     .example-1 = Vaikko juristtat eai leat geargan guorahallamis rihkku go Finnmárkoláhka árvalus álbmotrivttiin, de Stuoradikki Justislávdegoddi lea boahtán Finnmárkui gullat nuppádussii maid álbmot oaivvilda láhkaárvalussii.
     .example-2 = Dál ballet Romssa sámit dán nuppádussii dáhpáhuvvat. 
 
-real-oaččut = !!
+real-oaččut-oažžut = !!
     .desc =
-    .example-1 = Jos háliidat báddet vuoras olbmuid de oažžut mis luoikkasin báddenmašiinna. 
-    .example-2 = Jos háliidat váldit videogova de oažžot mis luoikkasin videokamera.
+    .example-1 = Jos háliidat báddet vuoras olbmuid de oažžut mis luoikkasin báddenmašiinna.
+    
+real-oažžot-oaččut = !!
+    .desc = 
+    .example-1 = Jos háliidat váldit videogova de oažžot mis luoikkasin videokamera.
 
 real-oktege-oktage = Vokálameattáhus
     .desc = Don leat čállán "oktege". Dán oktavuođas orru baicce galgame "oktage"?
@@ -889,11 +892,11 @@ real-ragaha-ragada = !!
     .desc = 
     .example-1 = Miesse- ja árranjuovvandoarjjaortnet galgá movttiidahttit ovdal ragaha ja ovdal juovllaid njuovvama ja dat guoská seamma bures guovlluide máttabealde Romssa go Romssas ja Finnmárkkus ja danne berrejit máksomearit leat ovttastuoru.
 
-real-sáhtaš = !!
+real-sáhtáš-sáhtaš = !!
     .desc =
     .example-1 = Son lohká ahte jus luohti dohkkejuvvošii veahkkeneavvun vuoiŋŋalaš divššus, de sáhtašii terapevtta / divššár jearrat dan gii juoigá: «Gean don juiget ja manne juste dán luođi rohttejit dál?
 
-real-sáhtáš = !!
+real-sáhtáš-sáhtáš = !!
     .desc = 
     .example-1 = Juste dál sáhtašin baicca dego civnna girdilit biekka mielde ja girddašit gosa dal de dolvvošii, guhkas.
 
