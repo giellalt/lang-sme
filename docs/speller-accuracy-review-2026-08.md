@@ -1,8 +1,31 @@
 # North Sámi speller accuracy review — path to 95% top‑1 / 99% top‑5
 
-**Date:** 2026‑08‑20 (outcomes addendum 2026‑08‑21)
+**Date:** 2026‑08‑20 (outcomes addendum 2026‑08‑21; round‑3 addendum 2026‑08‑22)
 **Scope:** `lang-sme` desktop speller (`se.zhfst`) suggestion quality
 **Author:** Divvun tooling review (automated analysis + build-system survey)
+
+## Round 3 (addendum, 2026‑08‑22): per-category analysis and cost recalibration
+
+The per-category programme recommended below was executed. First finding: the round‑2 engine fixes (out-of-alphabet input handling, unknown-output enumeration) were worth far more than previously reported — re-measuring with the current engine put the true starting point at **83.33% top‑1 / 96.02% top‑5 / 98.50% offered-at-all** under the analysis config, and cut the never-offered pool from 494 to 160. All round‑2 reports had been produced with a stale binary; the numbers in the 2026‑08‑21 addendum understate what had already shipped.
+
+Round‑3 changes, each validated by a full A/B run over the gold set:
+
+1. **Edit-cost recalibration** (`editdist.default-new.regex`), driven by a re-ranking simulator over the per-word reports that predicts the net effect of any single-edit cost change before a rebuild. Landed: same-letter single↔double consonant (gradation slips, the canonical Sámi writing error) 15→10 for **all** consonants — previously only 8 letters had a dedicated class, priced the same as cross-consonant changes; `o↔u` and `e↔i` 15→8; word-final `s↔š` at 8; word-final `-ii`→`-iid` (illative vs genitive-plural) at 10; initial-uppercase 25→12. Net **+39 top‑1** in isolation. The delete direction of the `-iid` rule was tried and reverted — it promoted spurious short forms (net negative), and the simulator's per-lever attribution caught it in one iteration.
+2. **19 new chunk rules** (`strings.default.regex`), mined from the 425 residual failures with per-rule collateral measurement: every rule's left side was checked against all 9,076 attested correct forms; chunks impossible in correct Sámi (`ä`, `járvv`, unaccented `aigge`…) ride at weight 1, chunks whose left side occurs in real words ride at 25 so they never undercut a letter edit. Net **+28 top‑1, +40 top‑5**. The Norwegian-definite family (`-hallenis`, `-festivalenis`) was evaluated and *rejected*: any covering rule fires on hundreds of correct locative/diminutive forms.
+3. **divvunspell case-handling fixes** (benefit all Giella languages): all-caps detection is no longer defeated by a single stray lower-case character (`RÁðI` now yields `RÁĐI`; previously junk like `R6-I`), and corrections for irregular-cased inputs are re-capitalized (`EOvddidat` → `Ovddidat`, `ŦMuitalusat` → `Muitalusat`; previously emitted lower-case and never matched).
+4. **Corpus hygiene:** 7 rows — 2 still expected the substandard `ollusat` (contradicting its `+Err/Orth` reclassification), 5 expected a casing that contradicted the input's case context.
+
+| Metric (n‑best 100) | True round‑2 (re-measured) | **Round 3** |
+|---|---|---|
+| Top‑1 | 8,896 (83.33%) | **8,968 (84.02%)** |
+| Top‑5 | 10,250 (96.02%) | **10,305 (96.53%)** |
+| Correct offered at all | 10,515 (98.50%) | **10,543 (98.76%)** |
+| Never offered | 160 | **132** |
+| False accepts / false negatives | 2 / 0 | **0 / 0** |
+
+**Ceiling analysis (the honest part).** With the current candidate generator, a *perfect* re-ranker — one that always picks the intended word whenever it sits within a given weight window of the current winner — reaches: 88.2% top‑1 (window +5), 90.9% (+10), 93.0% (+15), 94.4% (+20), 96.0% (+30). **95% top‑1 therefore demands near-flawless discrimination across a ±30-unit window** — two full edit operations — which isolated-word unigram frequency cannot deliver: the median winner-vs-intended gap is a single weight unit, and per-case attribution shows the edit model prefers the wrong winner in 56% of near-misses, lexicon frequency in 23%, with the rest mixed. The credible remaining levers, in order: a properly trained frequency model (the current LM compresses the whole corpus into ≤50 weight units; its estimates alone account for 312 measured near-miss losses), context-aware re-ranking (the grammar-checker pipeline is the natural home — a speller that sees only one word at a time cannot choose between `boahtte`/`bohte` when both are one cheap edit away), and continued chunk mining against fresh error corpora. 99% top‑5 likewise first requires pushing offered-at-all above 99%: of the 132 still-missing, ~50 are proper-noun rewrites (`Näkkeljoga`→`Neahčiljoga`) and ~65 are distance‑4+ one-offs no generalizable rule covers — the realistic route is more curated Err/Orth-style knowledge, not larger edit budgets.
+
+Sign‑off: `make check` green under the Divvun HFST toolchain (this round touches only error-model weights, chunk rules, and the test corpus — no analyser sources); zero false accepts and zero false negatives for the first time.
 
 ## Outcomes (addendum, 2026‑08‑21)
 

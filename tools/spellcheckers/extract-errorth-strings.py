@@ -13,12 +13,22 @@ freezes the lexicon at build time, and it cannot touch a dynamic compound whose
 error-tagged stem was never enumerated.
 
 This script reduces the relation to what actually differs.  For every recovered
-pair it finds the minimal contiguous span where the misspelling and the correct
-form disagree, pads it with just enough surrounding context to be more than a
-letter confusion, and aggregates the result into `{err} (->) {norm}::W ,` rules
-in the same idiom as the hand-written strings.default.regex.  Those rules apply
+pair it finds the places where the misspelling and the correct form disagree,
+pads each with just enough surrounding context to be more than a letter
+confusion, and aggregates the result into `{err} (->) {norm}::W ,` rules in the
+same idiom as the hand-written strings.default.regex.  Those rules apply
 anywhere in a word, so a stem alternation learnt from `bearpmehat` also fires
 inside `sohkabearpmehat` -- a form no enumerated pair list would contain.
+
+A pair may disagree in more than one place, and those pairs used to be dropped
+whole: one span across both places is a memorised word fragment rather than an
+alternation, and there was nothing else on offer.  There is, though -- the rules
+ride in the strings component, and a component is wrapped in ?* and applied in
+one pass, so several rules fire together within one edit-budget slot.  Each
+region can therefore be its own rule and the pair is recovered by composition
+rather than by memorisation.  That is what reaches the long loan compounds
+(`bajimusingeniora` -> `bajimusinšenevrra` is `nge` -> `nše` plus `nio` ->
+`nev`), and the wrong-side finals that ride along with them.
 
 Three modes:
 
@@ -155,25 +165,36 @@ def span(err, norm):
 
 
 def regions(err, norm, gap):
-    """How many separated places does this pair differ in?
+    """The separated places this pair differs in, as (start, err, norm) triples.
 
     Trimming a shared prefix and suffix always yields one span, but when a word
     differs from its correction in two distant places that span swallows the
-    identical material between them and the resulting rule is a memorised word
-    fragment, not an alternation.  Counting difflib's non-equal opcodes tells
+    identical material between them and a rule cut from it is a memorised word
+    fragment, not an alternation.  Grouping difflib's non-equal opcodes tells
     the two cases apart; runs closer together than `gap` are one alternation
-    written across a couple of characters (tnj -> kŋ), not two.
+    written across a couple of characters (tnj -> kŋ), not two, so they are
+    merged and the material between them is taken into the region.
+
+    `start` indexes into `err`; the two cores are what that region replaces and
+    what it replaces it with.  A single-region result describes the same
+    difference `span` does, and a multi-region result is the list of rules the
+    pair needs in order to be corrected in one pass.
     """
     ops = [op for op in difflib.SequenceMatcher(None, err, norm, autojunk=False)
            .get_opcodes() if op[0] != "equal"]
-    n = 1 if ops else 0
+    if not ops:
+        return []
+    groups = [[ops[0]]]
     for prev, cur in zip(ops, ops[1:]):
         if cur[1] - prev[2] > gap:
-            n += 1
-    return n
+            groups.append([cur])
+        else:
+            groups[-1].append(cur)
+    return [(g[0][1], err[g[0][1]:g[-1][2]], norm[g[0][3]:g[-1][4]])
+            for g in groups]
 
 
-def contextualise(err, p, core_err, core_norm, want):
+def contextualise(err, p, core_err, core_norm, want, lo=0, hi=None):
     """Pad the span with shared context until the rule is `want` chars long.
 
     Context is taken from the left first, then the right, alternating: a stem
@@ -185,21 +206,30 @@ def contextualise(err, p, core_err, core_norm, want):
     boundary there.  Context length is the only handle on overgeneration, which
     is why a span that cannot reach `want` characters is dropped rather than
     emitted bare.
+
+    `lo` and `hi` bound the padding.  Context is only context if it is the same
+    on both sides of the pair, and for one region of a multi-region pair that
+    is true only up to its neighbours: padding past them would copy the other
+    region's misspelt letters into the right-hand side and assert a correction
+    that leaves them standing.  Bounding to the neighbours makes such a region
+    run out of context and be dropped, which is the right answer for it.
     """
+    if hi is None:
+        hi = len(err)
     left, right = p, p + len(core_err)
     take_left = True
     while len(err[left:right]) < want:
         moved = False
-        if take_left and left > 0:
+        if take_left and left > lo:
             left -= 1
             moved = True
-        elif not take_left and right < len(err):
+        elif not take_left and right < hi:
             right += 1
             moved = True
-        elif left > 0:
+        elif left > lo:
             left -= 1
             moved = True
-        elif right < len(err):
+        elif right < hi:
             right += 1
             moved = True
         if not moved:
@@ -219,10 +249,50 @@ def escape(s):
     return "".join(out)
 
 
+def rule_for(err, p, core_err, core_norm, args, st, tag, lo=0, hi=None):
+    """Turn one differing region into a rule, or None with the reason counted.
+
+    The same chain guards both paths: a region wide enough to be a word
+    fragment, one the Levenshtein model already crosses, one that cannot be
+    told apart from its surroundings, and one that would introduce a symbol the
+    error model's alphabet does not have are all refused here.  Sharing it is
+    what makes "the same safety filters" true of the multi-region path rather
+    than merely intended.
+    """
+    if len(core_err) > args.max_span or len(core_norm) > args.max_span:
+        st[tag + "span_too_long"] += 1
+        return None
+    if cheap(core_err, core_norm):
+        st[tag + "cheap_editdist"] += 1
+        return None
+    rule_err, rule_norm = contextualise(
+        err, p, core_err, core_norm, args.min_context, lo, hi)
+    if len(rule_err) < args.min_context:
+        st[tag + "no_context"] += 1
+        return None
+    if len(rule_err) > args.max_rule or len(rule_norm) > args.max_rule:
+        st[tag + "rule_too_long"] += 1
+        return None
+    if not rule_err:
+        st[tag + "empty_lhs"] += 1
+        return None
+    if rule_err == rule_norm:
+        st[tag + "identity_rule"] += 1
+        return None
+    if not set(rule_err) | set(rule_norm) <= ALLOWED:
+        st[tag + "outside_alphabet"] += 1
+        return None
+    return rule_err, rule_norm
+
+
 def extract(lines, args, out, stats_out):
     st = Counter()
     rules = Counter()
     support = defaultdict(set)
+    # A rule the single-region path found is priced at --weight even if the
+    # multi-region path found it again: it stands on its own as a whole
+    # correction, and repricing it would move rules that are already shipping.
+    solo = set()
     for line in lines:
         st["pairs_read"] += 1
         line = line.rstrip("\n")
@@ -251,64 +321,78 @@ def extract(lines, args, out, stats_out):
             st["drop_identity"] += 1
             continue
         st["spans_computed"] += 1
+        regs = regions(err, norm, args.max_gap)
+        if len(regs) > 1:
+            # Every region gets its own rule, bounded by its neighbours so that
+            # what it calls context really is shared.  Regions that fail the
+            # filters are simply not emitted: a cheap one is a step the
+            # Levenshtein model takes anyway, and the pair is still corrected
+            # as long as its expensive regions are covered.
+            st["multi_region_pairs"] += 1
+            if len(regs) > args.max_regions:
+                st["mr_drop_too_many_regions"] += 1
+                continue
+            for i, (rp, core_err, core_norm) in enumerate(regs):
+                st["mr_regions_seen"] += 1
+                lo = regs[i - 1][0] + len(regs[i - 1][1]) if i else 0
+                hi = regs[i + 1][0] if i + 1 < len(regs) else len(err)
+                rule = rule_for(err, rp, core_err, core_norm,
+                                args, st, "mr_drop_", lo, hi)
+                if rule is None:
+                    continue
+                st["mr_rules_before_aggregation"] += 1
+                rules[rule] += 1
+                support[rule].add(err[:rp])
+            continue
         p, core_err, core_norm = span(err, norm)
-        if len(core_err) > args.max_span or len(core_norm) > args.max_span:
-            st["drop_span_too_long"] += 1
-            continue
-        if regions(err, norm, args.max_gap) > 1:
-            st["drop_multi_region"] += 1
-            continue
-        if cheap(core_err, core_norm):
-            st["drop_cheap_editdist"] += 1
-            continue
-        rule_err, rule_norm = contextualise(
-            err, p, core_err, core_norm, args.min_context)
-        if len(rule_err) < args.min_context:
-            st["drop_no_context"] += 1
-            continue
-        if len(rule_err) > args.max_rule or len(rule_norm) > args.max_rule:
-            st["drop_rule_too_long"] += 1
-            continue
-        if not rule_err:
-            st["drop_empty_lhs"] += 1
-            continue
-        if rule_err == rule_norm:
-            st["drop_identity_rule"] += 1
-            continue
-        text = set(rule_err) | set(rule_norm)
-        if not text <= ALLOWED:
-            st["drop_outside_alphabet"] += 1
+        rule = rule_for(err, p, core_err, core_norm, args, st, "drop_")
+        if rule is None:
             continue
         st["rules_before_aggregation"] += 1
-        rules[(rule_err, rule_norm)] += 1
-        support[(rule_err, rule_norm)].add(err[:p])
+        rules[rule] += 1
+        support[rule].add(err[:p])
+        solo.add(rule)
 
     st["rules_aggregated"] = len(rules)
     final = [(k, c) for k, c in rules.items()
              if c >= args.min_count and len(support[k]) >= args.min_support]
     st["drop_below_threshold"] = len(rules) - len(final)
     st["rules_emitted"] = len(final)
+    st["rules_emitted_multi_region_only"] = sum(
+        1 for k, _ in final if k not in solo)
 
+    multi_weight = args.weight if args.multi_weight is None else args.multi_weight
     final.sort(key=lambda kc: (-kc[1], kc[0]))
     out.write("! Generated by extract-errorth-strings.py - do not edit.\n")
     out.write("! Stem alternations recovered from the lexicon's +Err/Orth* entries.\n")
     out.write("! %d rules, weight %s, min context %d.\n"
               % (len(final), fmt_weight(args.weight), args.min_context))
+    out.write("! %d of them come only from pairs that differ in several places,"
+              " at weight %s.\n"
+              % (st["rules_emitted_multi_region_only"], fmt_weight(multi_weight)))
     out.write("\n[\n\n")
     for i, ((rule_err, rule_norm), count) in enumerate(final):
         rhs = "{%s}" % escape(rule_norm) if rule_norm else "0"
+        weight = args.weight if (rule_err, rule_norm) in solo else multi_weight
         out.write("{%s} (->) %s::%s%s\t! %d forms, %d stems\n" % (
-            escape(rule_err), rhs, fmt_weight(args.weight),
+            escape(rule_err), rhs, fmt_weight(weight),
             " ," if i + 1 < len(final) else "", count, len(support[(rule_err, rule_norm)])))
     out.write("\n]\n;\n")
 
     for key in ("pairs_read", "drop_unparseable", "drop_empty", "drop_identity",
-                "spans_computed", "drop_span_too_long", "drop_multi_region",
+                "spans_computed", "drop_span_too_long",
                 "drop_cheap_editdist", "drop_no_context", "drop_rule_too_long",
                 "drop_empty_lhs", "drop_identity_rule", "drop_outside_alphabet",
-                "rules_before_aggregation", "rules_aggregated",
-                "drop_below_threshold", "rules_emitted"):
-        stats_out.write("%-28s %d\n" % (key, st[key]))
+                "rules_before_aggregation",
+                "multi_region_pairs", "mr_drop_too_many_regions",
+                "mr_regions_seen", "mr_drop_span_too_long",
+                "mr_drop_cheap_editdist", "mr_drop_no_context",
+                "mr_drop_rule_too_long", "mr_drop_empty_lhs",
+                "mr_drop_identity_rule", "mr_drop_outside_alphabet",
+                "mr_rules_before_aggregation", "rules_aggregated",
+                "drop_below_threshold", "rules_emitted",
+                "rules_emitted_multi_region_only"):
+        stats_out.write("%-32s %d\n" % (key, st[key]))
 
 
 def fmt_weight(w):
@@ -323,6 +407,12 @@ def main():
     ap.add_argument("-i", "--input", default="-")
     ap.add_argument("--weight", type=float, default=10.0,
                     help="cost of one rule application (default 10)")
+    ap.add_argument("--multi-weight", type=float, default=None,
+                    help="cost of a rule only a multi-region pair attests "
+                         "(default: same as --weight)")
+    ap.add_argument("--max-regions", type=int, default=4,
+                    help="most differing places a pair may have and still be "
+                         "used (default 4)")
     ap.add_argument("--min-context", type=int, default=3,
                     help="shortest left-hand side to emit (default 3)")
     ap.add_argument("--max-span", type=int, default=6,
