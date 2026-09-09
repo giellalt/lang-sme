@@ -710,7 +710,7 @@ real-ImprtPl2-DerhPrsConNeg = Boasttuhápmi !!
     .desc = 
     .example-1 = Biret šattai bonjastit biilla doares beallái nu ahte biillat eaba beašket oktii.
 
-real-ImprtPl1-PassInf = Konsonántameattáhus #!!
+real-ImprtPl1-DerPassInf = Konsonántameattáhus #!!
     .desc = Orru leamen meattáhus guovddáškonsonánttas. Don leat čállán vearbba "{$1}" gohččunvugiin. Jus oaivvildat infinitiiva leat "{€1}". 
     .example-1 = Fátmmastit šiehtadussii sáhttá atnot sámi vuoigatvuođaeaiggadiid vuosttá, ja eará álgoálbmogiid sullasaš vuoigatvuođaiguin boahttevaš riekteproseassain.
     .ref-1 = Pope2004:278
