@@ -727,7 +727,7 @@ real-ImprtDu1-NSgNom = Konsonántameattáhus #!!
     .desc = Orru leamen čállinmeattáhus sáni "{$1}" guovddáškonsonánttas. Don leat čállán guvttiidlogu vearbba imperatiivvas. Galgá go leat substantiiva?
     .example-1 = Mii váldit sámegiela duođas, lea Rettera čielga diehttu.
 
-real-oažžut = Čállinmeattáhus dán oktavuođas #!!
+real-oaččut-oažžut = Čállinmeattáhus dán oktavuođas #!!
     .desc = Orru leamen čállinmeattáhus vearbba "{$1}" guovddáškonsonánttas. Das galgá leat gievrrasdássi "žž".
     .example-1 = Dat livčče gal oba vuogas, jus ná geavašii, go muhtin mánát fertejit mannat priváhta skuvlii, jus áigot oaččut dakkár oahpu, mii ii gávdno stáhta skuvllain.
 
