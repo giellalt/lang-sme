@@ -396,7 +396,7 @@ real-guhká = Čállinmeattáhus dán oktavuođas
     .example-2 = Guhka lean smiehtan rahkadit dakkár borramuš, muhto dušše odne ollašuvvai smavvá niehku.
     .example-3 = Ráhkisvuohta gal ii bistán beare guhkká, muhto ráhkisvuohta musihkkii buolligođii fas gulul.
 
-real-eahkes = Čállinmeattáhus dán oktavuođas
+real-eahket-eahkes = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán substantiivva  "{$1}" . Das galgá leat advearba "eahkes".
     .example-1 = Rahpandilálašvuođa maŋŋá eahket joatkašuvai konsearttain Sajosa auditorios.
 
@@ -860,7 +860,7 @@ real-nuppádussii-nuppádassii = Čállinmeattáhus dán oktavuođas
     .example-1 = Vaikko juristtat eai leat geargan guorahallamis rihkku go Finnmárkoláhka árvalus álbmotrivttiin, de Stuoradikki Justislávdegoddi lea boahtán Finnmárkui gullat nuppádussii maid álbmot oaivvilda láhkaárvalussii.
     .example-2 = Dál ballet Romssa sámit dán nuppádussii dáhpáhuvvat. 
 
-real-oaččut-oažžut = !!
+real-oažžut-oaččut = !!
     .desc =
     .example-1 = Jos háliidat báddet vuoras olbmuid de oažžut mis luoikkasin báddenmašiinna.
     
