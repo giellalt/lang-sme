@@ -375,10 +375,6 @@ real-barggan-barggán = Čállinmeattáhus dán oktavuođas
     .desc = 
     .example-1 = Jus don livččet riegádan beaivvi ovdal, de livččet don rikkis, návccalaš, barggan, smáđáhkes ja buoremielalaš olmmoš
 
-real-ihtit = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán advearbba  "{$1}" . Jus oaivvildat ihtit-vearbba leat infinititiivvas de galgá leat "ihtit".
-    .example-1 = 1900-logus álge dat liberálakonservatiiva áššit ihttin eanet.
-
 real-lohká = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán substantiivva  "{$1}" . Jus oaivvildat vearbba 3. persovnna ovttaidlogus, de galgá leat "lohká". 
     .example-1 = Boazoeaiggát Magne Huva lohka gávdnan ráppiid.
