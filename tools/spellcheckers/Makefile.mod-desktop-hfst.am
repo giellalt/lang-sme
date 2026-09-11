@@ -372,13 +372,19 @@ HFST_BHFST = $(dir $(HFST_FST2FST))hfst-bhfst
 	$(AM_V_at)rm -f .generated/final_strings.opt.default.hfst \
 		.generated/editdist.chain.default.hfst
 
+# The tuned runtime config (beam, n-best, reweighting) rides in the archive's
+# meta.json, so divvunspell applies it instead of its built-in defaults - the
+# bhfst counterpart of the speller-config.json giella-core bundles into the
+# zhfst. Needs the Rust hfst with the -c flag.
 se.bhfst: .generated/acceptor.default.hfst \
 		.generated/errmodel.compact.default.hfst \
-		index.xml
+		index.xml \
+		$(top_srcdir)/tools/spellcheckers/config.json
 	$(AM_V_GEN)$(HFST_BHFST) \
 		-a .generated/acceptor.default.hfst \
 		-e .generated/errmodel.compact.default.hfst \
 		-X index.xml \
+		-c $(top_srcdir)/tools/spellcheckers/config.json \
 		-o $@
 
 # errmodel.default.predict.hfst: predict.default.hfst
