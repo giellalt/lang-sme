@@ -50,10 +50,6 @@ real-hallan = Boasttusojaheapmi
     .example-3 = Lojes gumpe Lea máŋga vahkku áigi dan rájes go gumppe álggos beakkehii Kárášjoga guovllus, ja Gaup atnáge imašin go gumpe lea dan rájes sihke vuddjon biilii, ja maiddái oainnahallon viesuid lahka.
     .example-4 = Dušše 40 mehtera Kjell Østmo viesus eret, lea gumpe oainnahallon ja vuhtton maŋŋebárgga. Kjell Østmo giettis, Rávdojoganjárggas, Kárášjogas, lea gumpe sihke vuhtton ja oainnahallon maŋŋebárgga eahkeda.
 
-real-čohkkái-čoahkkái = Čállinmeattáhus dán oktavuođas
-    .desc = Orru leamen čállinmeattáhus vearbba  "{$1}" vokálaguovddážis. Oaivvildat go  "{€1}"?
-    .example-1 = Áviisa čállá stuorsáhpán lei gáskkistan aitto giehtagávvii gokko varravárri lea njuolganaga čohkkái.
-    .example-2 = Čujuhit erenoamažit Leage Várrogas-plakáhta 4.5 čuoggái mas geassá čohkkái makkár áššiid galgá deattuhit.
 
 msyn-gen-before-postp = Boasttukásus
     .desc = Sátni  "{$1}" orru leamen boasttukásusis. Postposišuvnna maŋŋel galgá nomen leat genetiivvas.
@@ -784,6 +780,11 @@ real-erret-earret = Diftoŋgameattáhus
     .desc = Don leat čállán vokála "e". Das galgá leat diftoŋga "ea".
     .example-1 = Eandalit čáhppes beana lea buot divraseamos borramuš, čállá Kitti erret eará dán nuppi mátkkereivves Thailánddas.
     .ref-1 = 
+    
+real-čohkkái-čoahkkái = Diftoŋgameattáhus
+    .desc = Don leat čállán vokála "o". Das galgá leat diftoŋga "oa".
+    .example-1 = Áviisa čállá stuorsáhpán lei gáskkistan aitto giehtagávvii gokko varravárri lea njuolganaga čohkkái.
+    .example-2 = Čujuhit erenoamažit Leage Várrogas-plakáhta 4.5 čuoggái mas geassá čohkkái makkár áššiid galgá deattuhit.
 
 sty-prop-not-čearru = Nammageavahus
     .desc = Dán konteavsttas lea vuogas guođđit sáni "čearru". Namma iešalddis juo čujuha čerrui.
