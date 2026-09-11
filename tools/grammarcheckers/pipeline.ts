@@ -1,32 +1,13 @@
 import * as cg3 from "./.divvun-rt/cg3.ts";
 import * as divvun from "./.divvun-rt/divvun.ts";
 import * as hfst from "./.divvun-rt/hfst.ts";
-import { Command, StringEntry } from "./.divvun-rt/mod.ts";
+import { Command, fromKebabKeys, StringEntry } from "./.divvun-rt/mod.ts";
+import spellerBase from "../spellcheckers/config.json" with { type: "json" };
 
-// The tuned speller config, from tools/spellcheckers/config.json. It is copied
-// in rather than imported because divvun-runtime relocates a pipeline's source
-// into a temporary directory before bundling it, where no relative import
-// resolves. Regenerate after retuning the speller:
-//
-//     deno run --allow-read --allow-write sync-speller-config.ts
-//
-// --- BEGIN GENERATED from tools/spellcheckers/config.json ---
-const SPELLER_BASE = {
-    n_best: 100,
-    max_weight: 10000,
-    beam: 80,
-    search_budget: 1000000,
-    reweight: {
-        start_penalty: 10,
-        end_penalty: 10,
-        mid_penalty: 5,
-        curve: 12,
-    },
-    node_pool_size: 128,
-    recase: true,
-    word_split_weight: 65,
-};
-// --- END GENERATED ---
+// The tuned speller config, imported live from tools/spellcheckers/config.json.
+// fromKebabKeys bridges the JSON's kebab-case keys to the snake_case these
+// bindings declare; the Rust side accepts both.
+const SPELLER_BASE = fromKebabKeys(spellerBase);
 
 // Where this pipeline departs from the tuned speller, and only there. The
 // effective values are the same ones the hand-written copy this replaced set,
