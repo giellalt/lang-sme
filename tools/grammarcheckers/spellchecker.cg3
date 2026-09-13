@@ -1248,7 +1248,13 @@ ADD:dyn-cmp (<cohort-with-dynamic-compound>) TARGET (*) IF (0/* (N Cmp))(0/* <sp
 SELECT Inf IF (-1 <aux>)(0 V + <spelled>);
 	## Das galgá dahkidit iešguđet joavkkuid oassálastima, eandalitge boarrásut buolvva olbmuid, geain leat buot eanemus {báikkálaš} diehtu iešguđet báikkiid ja guovlluid mearkkašumis ja anus.
 	
-SELECT (Prop Sem/Sur) IF (-1 Sem/Sur OR Sem/Mal OR Sem/Fem)(0 <spelled>);	
+# DISABLED. Measured over 3695 real misspellings in their own sentences
+# (devtools/rank/README.md): on its own this rule is +0/-2 at rank 1 and -3
+# out of the top 5.
+# SELECT over a cohort of speller suggestions deletes vocabulary rather than
+# choosing among analyses of one word, and a preceding name is weak evidence
+# that THIS word is one.
+# SELECT (Prop Sem/Sur) IF (-1 Sem/Sur OR Sem/Mal OR Sem/Fem)(0 <spelled>);	
 	## Matthew Ngau Jau, okta DAID eanemus {dovddus} čuojaheddjiin oaivvilda ahte nu olgoriikkas váldet vuostá dán čuojanasa mearrida liikostišgohtet go otná Sarawak nuorat dasa dahje eai.
 	
 	
@@ -1282,14 +1288,24 @@ SELECT Attr OR A IF (-1 GRADE-ADV) (1 N)(0 <spelled> LINK NOT 0 Guess)(NEGATE 0 
     #$ - Sáddet sisbuvssaid lea hui {intima} dahkku, ja danne oaččun hui unohas dovddu.	
 
 
-SELECT Attr - Foc/mat OR Gen - Foc/mat IF (1 N)(0 <spelled> LINK NOT 0 Guess)(NEGATE 0 VFIN OR Inf OR ADVLCASE OR <cohort-with-dynamic-compound>);	
+# DISABLED. Measured over 3695 real misspellings in their own sentences
+# (devtools/rank/README.md): on its own this rule is +12/-33 at rank 1 and -44
+# out of the top 5.
+# (1 N) is a test of adjacency, not of modification. It fires on every noun
+# that merely sits next to another noun, and the SELECT then deletes every
+# candidate that is not an attribute -- the correction included.
+# SELECT Attr - Foc/mat OR Gen - Foc/mat IF (1 N)(0 <spelled> LINK NOT 0 Guess)(NEGATE 0 VFIN OR Inf OR ADVLCASE OR <cohort-with-dynamic-compound>);	
 	## Dáid siiddaid garra riiddut leat {moanat} jagiid beaggán [viidat] mediain
 	#$ Bargiidbellodaga sámedikkejoavku lea {reivvistis} sámedikkepresidentii dáhttun ahte čoahkkimis Girko- , oahpahus- , dutkandepartementta ( GOD ) politihkalaš jođiheaddjiiguin , bearjadaga 17.9. dán jagi, erenoamážit ferte deattuhit guokte ášši.
 	#$ Dát viidodagat leat sulaid golmmádas {riikkamet} ollesviidodagas.
 	#$ Oaidnit leaš makkár ákkat geavahuvvojit {čaggat} Lujávrri sámi searvvi beassama Sámiráđđái.
 	
 	
-REMOVE V IF (0 N)(-1 (Pron Attr))(*1 VFIN BARRIER GRAMCHK-S-BOUNDARY)(0 <spelled>);	
+# DISABLED. Measured over 3695 real misspellings in their own sentences
+# (devtools/rank/README.md): on its own this rule is +0/-1 at rank 1 and -1
+# out of the top 5.
+# Never fires usefully on real data.
+# REMOVE V IF (0 N)(-1 (Pron Attr))(*1 VFIN BARRIER GRAMCHK-S-BOUNDARY)(0 <spelled>);	
 	## Dákkár vuojanat leat moanat garra digaštallamiid bullehan
 	
 	
@@ -1298,7 +1314,12 @@ REMOVE V IF (0 N)(-1 (Pron Attr))(*1 VFIN BARRIER GRAMCHK-S-BOUNDARY)(0 <spelled
 	
 	# oamastangehčosat
 
-REMOVE Px - Sem/Hum - Sem/Ani - Sem/Body IF (0 <spelled> LINK 0 N - Px);	
+# DISABLED. Measured over 3695 real misspellings in their own sentences
+# (devtools/rank/README.md): on its own this rule is +2/-5 at rank 1 and -16
+# out of the top 5.
+# Takes the last reading carrying a form more often than it takes a wrong
+# possessive.
+# REMOVE Px - Sem/Hum - Sem/Ani - Sem/Body IF (0 <spelled> LINK 0 N - Px);	
 	## Mun doaivvun ahte dán rulla [lávllaga] gal besset vel moanat gullat boahtteáiggis
 
 
@@ -1324,3 +1345,92 @@ REMOVE Px - Sem/Hum - Sem/Ani - Sem/Body IF (0 <spelled> LINK 0 N - Px);
 #Eanemus {vejolaš} ovttagaslaš giellapolitihkka davviriikkain nannešii sámi giela ollislaččat ja váikkuhivččii giela [statusa] loktemii.
 #Eanemus dovddus lea son “Ammul ja alit [oarbmælli]” mánáidgirjjiin mii ilmmai 1976:s.
 #Vealahuvvomat leat álo atnán [kyrie] - čuorvuma Ipmilii - ja rohkosa vai bávččas geahpiduvvošii, ja dat teologiija mii lea eanemus {dábálaš} eallima lahka lea čuožžilan dakkár [dilalašvuođain].
+
+# ===========================================================================
+# Suggestion re-ranking
+# ===========================================================================
+#
+# divvun.suggest orders a cohort's speller suggestions by <W:...> ascending and
+# then drops repeats keeping the first, so rewriting that tag is the only
+# reordering operation available to a grammar -- CG3 has none of its own.
+#
+# Reordering rather than deleting is the point. A demotion cannot take the
+# correction out of the list; the SELECT and REMOVE rules this file used to
+# carry could and did, costing 47 rows out of the top 5 on 3695 with no gains
+# at all (devtools/rank/README.md).
+#
+# These act at candidate level for free: a form is shown at the position of its
+# CHEAPEST surviving reading, so demoting some readings of a form moves the form
+# only when every reading carrying it was demoted.
+
+LIST RANK-SPELLED = <spelled> ;
+LIST RANK-PROP = Prop ;
+LIST RANK-DUMMY = Sem/Dummytag ;
+SET RANK-SPELLED-PROP = RANK-SPELLED + RANK-PROP ;
+SET RANK-SPELLED-DUMMY = RANK-SPELLED + RANK-DUMMY ;
+
+# The token as the writer actually typed it begins with a lower-case letter.
+SET RANK-LOWERTOKEN = ("<[a-záčđŋšŧžæøåäöü].*>"r) ;
+
+# +20 on the speller's scale, in bands of 10 up to 140, because CG3 has no
+# arithmetic on numeric tags.
+#
+# The band has to be part of the TARGET, not a context test. (0 (<W:<50>)) asks
+# whether the COHORT holds a reading under 50, which is true whenever any
+# cheaper suggestion exists at all, so it would gate each rule on the wrong
+# reading. ANDing the numeric tag into the target set constrains the reading
+# actually being substituted.
+#
+# The rules run in descending order, so a reading moved up into a higher band
+# cannot be caught again: every rule still to come tests a lower ceiling.
+LIST RANK-W-GE-130 = (<W:>=130>) ;
+SET RANK-DUMMY-140 = RANK-SPELLED-DUMMY + RANK-W-GE-130 ;
+LIST RANK-W-GE-120 = (<W:>=120>) ;
+SET RANK-DUMMY-130 = RANK-SPELLED-DUMMY + RANK-W-GE-120 ;
+LIST RANK-W-GE-110 = (<W:>=110>) ;
+SET RANK-DUMMY-120 = RANK-SPELLED-DUMMY + RANK-W-GE-110 ;
+LIST RANK-W-GE-100 = (<W:>=100>) ;
+SET RANK-DUMMY-110 = RANK-SPELLED-DUMMY + RANK-W-GE-100 ;
+LIST RANK-W-GE-90 = (<W:>=90>) ;
+SET RANK-DUMMY-100 = RANK-SPELLED-DUMMY + RANK-W-GE-90 ;
+LIST RANK-W-GE-80 = (<W:>=80>) ;
+SET RANK-DUMMY-90 = RANK-SPELLED-DUMMY + RANK-W-GE-80 ;
+LIST RANK-W-GE-70 = (<W:>=70>) ;
+SET RANK-DUMMY-80 = RANK-SPELLED-DUMMY + RANK-W-GE-70 ;
+LIST RANK-W-GE-60 = (<W:>=60>) ;
+SET RANK-DUMMY-70 = RANK-SPELLED-DUMMY + RANK-W-GE-60 ;
+LIST RANK-W-GE-50 = (<W:>=50>) ;
+SET RANK-DUMMY-60 = RANK-SPELLED-DUMMY + RANK-W-GE-50 ;
+LIST RANK-W-GE-40 = (<W:>=40>) ;
+SET RANK-DUMMY-50 = RANK-SPELLED-DUMMY + RANK-W-GE-40 ;
+LIST RANK-W-GE-30 = (<W:>=30>) ;
+SET RANK-DUMMY-40 = RANK-SPELLED-DUMMY + RANK-W-GE-30 ;
+LIST RANK-W-GE-20 = (<W:>=20>) ;
+SET RANK-DUMMY-30 = RANK-SPELLED-DUMMY + RANK-W-GE-20 ;
+LIST RANK-W-GE-10 = (<W:>=10>) ;
+SET RANK-DUMMY-20 = RANK-SPELLED-DUMMY + RANK-W-GE-10 ;
+
+SECTION
+
+# A name where the writer wrote a common word. Proper nouns are cheap in the
+# acceptor and crowd the top of the list. Measured +6/-0 at rank 1 on 3695 rows.
+SUBSTITUTE:rank-prop (<W:<1000>) (<W:1000>) TARGET RANK-SPELLED-PROP IF (0 RANK-LOWERTOKEN) ;
+
+# Sem/Dummytag is the lexicon's "no semantic class assigned", which in practice
+# selects thin and marginal entries. This is a lexical-reliability prior, not a
+# context test, and it belongs in the speller's weight model; it is here because
+# that is not reachable from a CG stage.
+SUBSTITUTE:rank-dummy-140 (<W:<140>) (<W:160>) TARGET RANK-DUMMY-140 IF (0 RANK-LOWERTOKEN) ;
+SUBSTITUTE:rank-dummy-130 (<W:<130>) (<W:150>) TARGET RANK-DUMMY-130 IF (0 RANK-LOWERTOKEN) ;
+SUBSTITUTE:rank-dummy-120 (<W:<120>) (<W:140>) TARGET RANK-DUMMY-120 IF (0 RANK-LOWERTOKEN) ;
+SUBSTITUTE:rank-dummy-110 (<W:<110>) (<W:130>) TARGET RANK-DUMMY-110 IF (0 RANK-LOWERTOKEN) ;
+SUBSTITUTE:rank-dummy-100 (<W:<100>) (<W:120>) TARGET RANK-DUMMY-100 IF (0 RANK-LOWERTOKEN) ;
+SUBSTITUTE:rank-dummy-90 (<W:<90>) (<W:110>) TARGET RANK-DUMMY-90 IF (0 RANK-LOWERTOKEN) ;
+SUBSTITUTE:rank-dummy-80 (<W:<80>) (<W:100>) TARGET RANK-DUMMY-80 IF (0 RANK-LOWERTOKEN) ;
+SUBSTITUTE:rank-dummy-70 (<W:<70>) (<W:90>) TARGET RANK-DUMMY-70 IF (0 RANK-LOWERTOKEN) ;
+SUBSTITUTE:rank-dummy-60 (<W:<60>) (<W:80>) TARGET RANK-DUMMY-60 IF (0 RANK-LOWERTOKEN) ;
+SUBSTITUTE:rank-dummy-50 (<W:<50>) (<W:70>) TARGET RANK-DUMMY-50 IF (0 RANK-LOWERTOKEN) ;
+SUBSTITUTE:rank-dummy-40 (<W:<40>) (<W:60>) TARGET RANK-DUMMY-40 IF (0 RANK-LOWERTOKEN) ;
+SUBSTITUTE:rank-dummy-30 (<W:<30>) (<W:50>) TARGET RANK-DUMMY-30 IF (0 RANK-LOWERTOKEN) ;
+SUBSTITUTE:rank-dummy-20 (<W:<20>) (<W:40>) TARGET RANK-DUMMY-20 IF (0 RANK-LOWERTOKEN) ;
+SUBSTITUTE:rank-dummy-10 (<W:<10>) (<W:30>) TARGET RANK-SPELLED-DUMMY IF (0 RANK-LOWERTOKEN) ;
