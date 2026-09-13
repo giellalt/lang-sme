@@ -1,0 +1,32 @@
+# Route Err-only cohorts to the speller.
+#
+# The grammar checker's tokeniser-analyser is descriptive: it recognises a great
+# many misspellings outright and tags them Err/Orth, so they never reach
+# cgspell and are corrected normatively instead. That is the right behaviour for
+# a grammar checker -- don't guess when you know -- but it means the grammar
+# checker pipeline cannot be used to judge the speller: half the words bypass it.
+#
+# This grammar puts the input back on the speller's footing. A cohort whose
+# every reading is an Err reading is one the plain speller would have seen as
+# unknown, so it is marked +? here and cgspell replaces its readings with
+# suggestions. Cohorts with at least one clean reading are left alone: those are
+# words the speller would have accepted.
+
+DELIMITERS = "<.>" "<!>" "<?>" "<...>" "<¶>" ;
+
+LIST Err/Orth-any = Err/Orth Err/Orth-a-á Err/Orth-nom-gen Err/Orth-nom-acc ;
+
+# Every Err tag the analyser can emit, not just the orthographic ones: a cohort
+# analysed solely as any kind of error is still a word the speller never had a
+# clean reading for.
+LIST ERR-ANY = Err/Orth Err/Orth-a-á Err/Orth-nom-gen Err/Orth-nom-acc
+               Err/Lex Err/DerSub Err/CmpSub Err/HyphSub Err/Hyph
+               Err/MissingHyph Err/SpaceCmp Err/MissingSpace ;
+
+LIST UNKNOWN = (+?) ;
+
+SECTION
+
+# Mark the cohort unknown when no reading is error-free. NEGATE ... - ERR-ANY
+# reads as "there is no reading that is not an Err reading".
+ADD:err-to-unknown (+?) TARGET (*) IF (NEGATE 0 (*) - ERR-ANY) (NOT 0 UNKNOWN) ;
