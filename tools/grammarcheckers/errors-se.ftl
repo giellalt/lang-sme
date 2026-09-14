@@ -897,7 +897,7 @@ real-dđ = Konsonántameattáhus
     .example-6 = Mun oainnán positiiva signálan ahte Davviriikkaid Ráddi sáddii ruovttoluotta ráđi presidia evttohusa, lohká Sámedikkepresideanta Sven-Roald Nystø. #real-ráddi-ráđđi
     .example-7 = Sámi Parlamentáralaš Ráddi.#real-Ráddi-Ráđđi
 
-real-ragaha-ragada = !!
+real-aha-ada = !!
     .desc = 
     .example-1 = Miesse- ja árranjuovvandoarjjaortnet galgá movttiidahttit ovdal ragaha ja ovdal juovllaid njuovvama ja dat guoská seamma bures guovlluide máttabealde Romssa go Romssas ja Finnmárkkus ja danne berrejit máksomearit leat ovttastuoru.
 
