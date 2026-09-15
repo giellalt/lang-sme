@@ -733,3 +733,24 @@ space-before-punct-mark = Space error
 no-space-after-punct-mark = Space error
     .desc = There is no space after the punctuation mark {$1}
 
+
+lex-Lávnnjitvuopmi-Lávnjitvuopmi = Name spelling
+    .desc = In this context, the name "{$1}" should use "nj" instead of "nnj".
+
+msyn-valency-acc-loc = Wrong case with this verb
+    .desc = The verb in this construction takes the locative case. Check the case of "{$1}".
+
+msyn-pers-refl-pron = Reflexive pronoun needed
+    .desc = The possessor is also the subject here. Use a reflexive pronoun in place of "{$1}".
+
+no-space-after-punct = Missing space after punctuation
+    .desc = Insert a space after the punctuation mark "{$1}".
+
+real-first-uo = Conjunction or verb form
+    .desc = "{$1}" is a verb form. If you mean the conjunction "muhto" ("but"), write "muhto".
+
+real-PassPrsPl1-PrtPl1 = Active or passive verb form
+    .desc = "{$1}" is a passive verb form. Consider an active verb form in this context.
+
+real-aha-ada = Noun form needed
+    .desc = "{$1}" should be the genitive form of a noun in this context.
