@@ -62,17 +62,17 @@ msyn-gen-after-prep = Boasttukásus
     .example-1 = Ale diškkut čázi gasku gonagas.
 
 msyn-acc-to-adv = Boasttukásus
-    .desc = Sátni  "{$1}" orru leamen boasttukásusis. Sánit dego "{$2}", mat muitalit mihtuid ja meriid birra, gáibidit lohkosáni akkusatiivvas  "{€1}".
+    .desc = Sátni  "{$1}" orru leamen boasttukásusis. Sánit dego "{$2}", mat muitalit mihtuid ja meriid birra, gáibidit lohkosáni akkusatiivvas  "€1".
     .example-1 = Visti lei viđa mehter alu.
     .ref-1 = Nickel1994:485,488
 
 msyn-acc-to-velggolaš = Boasttukásus
-    .desc = Sátni  "{$1}" orru leamen boasttukásusis. Sátni "velggolaš" gáibida lohkosáni akkusatiivvas  "{€1}".    
+    .desc = Sátni  "{$1}" orru leamen boasttukásusis. Sátni "velggolaš" gáibida lohkosáni akkusatiivvas  "€1".    
     .example-1 = Ándde lea munnje guovtti ruvnnu velggolaš.
     .ref-1 = Nickel1994:485
 
 msyn-acc-to-comp = Boasttukásus
-    .desc = Sátni  "{$1}" orru leamen boasttukásusis. Sánit dego "{$2}", mat muitalit mihtuid ja meriid birra, gáibidit lohkosáni akkusatiivvas  "{€1}".
+    .desc = Sátni  "{$1}" orru leamen boasttukásusis. Sánit dego "{$2}", mat muitalit mihtuid ja meriid birra, gáibidit lohkosáni akkusatiivvas  "€1".
     .example-1 = Máhtte lea viđa jagi nuorat go mun.
     .example-2 = Dat šattai guovtti mehtera guhkit go galggašii.
     .example-3 = Son vuvddii daid bohccuid viđa ruvnno hálbbibui.
@@ -117,7 +117,7 @@ syn-number_congruence-subj-verb-pl1 = Kongrueansameattáhus
     .example-1 = Dieđusge mii máhttet sámegiela, go leat ohcan stipeandda lohkat sámegiela vuosttašgiellan.
 
 real-ImprtPl2-PrsPl3 = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán vearbba  "{$1}" . Oaivvildat go  "{€1}" ? 
+    .desc = Don leat čállán vearbba  "{$1}" . Oaivvildat go  "€1" ? 
     .example-1 = Son čájehii govaid buotlágan borramušain maid sii luonddus viežžet.
     .example-2 = Maiddái áibmu lea nuoskiduvvon, ja leage varra sivvan manne nu olu olbmot jábmet borasdávdii.
     .example-3 = Čájálmasa vuosttaščájáhus lea golggotmánu 7. beaivve Guovdageainnus ja bihtáin johttet miehtá Sámi, sihke Norgga, Suoma ja Ruoŧa bealde.
@@ -157,7 +157,7 @@ lex-majuscule = !!
     .example-1 = Dáid gávdná sámedikki ruovttusiidduin ságat-gaskabláđi olis.
 
 lex-transitive = Sátni ii heive
-    .desc = Don leat čállán vearbba  "{$1}" . Dat ii oro heiveme dán oktavuhtii. Oaivvildat go  "{€1}" ?
+    .desc = Don leat čállán vearbba  "{$1}" . Dat ii oro heiveme dán oktavuhtii. Oaivvildat go  "€1" ?
     .example-1 = Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta.
     
 msyn-miehtá-Acc = !!
@@ -212,7 +212,7 @@ syn-sg-not-pl-after-num = Numerálagihppomeattáhus
     .example-1 = Fitnodaga álggaheaddji ja sáivačáhcebiologa Rune Muladal muitala Ávvirii ahte Deanu čázádagas lea nu guhkes gaska gaskal luossaveajehiid, ahte ádjána 5-6 geardde guhkit čohket nu máŋga veajehiid go dárbbašit.
 
 msyn-numphrase-sgnom = Numerálagihppomeattáhus
-    .desc = Don leat čállán numerálagihpu nominatiivvas. Substantiiva "{$1}" galgá leat ovttaidlogu genetiivvas  "{€1}"  go lea numerálagihpus. 
+    .desc = Don leat čállán numerálagihpu nominatiivvas. Substantiiva "{$1}" galgá leat ovttaidlogu genetiivvas  "€1"  go lea numerálagihpus. 
     .example-1 = Vihtta studeantta leat dán vahkku álgán dán ohppui, ja guokte studeanttat vel bohtet čavčča mielde."
 
 msyn-numphrase-sggen = Numerálagihppomeattáhus
@@ -273,7 +273,7 @@ syn-comp = Komparerenmeattáhus
     .ref-1 = Nickel1994:350
 
 syn-inf-after-soaitit = Boasttuhápmi
-    .desc = Don leat čállán "{$1}" finihttavearban.  "{$2}"  maŋŋel galgá leat infinihttahápmi  "{€1}" .
+    .desc = Don leat čállán "{$1}" finihttavearban.  "{$2}"  maŋŋel galgá leat infinihttahápmi  "€1" .
     .example-1 = Boahtte háve soaittán válddán govven- dahje filbmenbarggu.
     .ref-1 = Nickel1994:350
 
@@ -291,7 +291,7 @@ syn-not-dego = Cealkkameattáhus
     .example-1 = SNF doaibmá dál juo dego resursaguovddážin.
 
 syn-ge_not_ja = Cealkkameattáhus
-    .desc = Don leat čállán "ja {$2}". Das galgá leat  "{€1}" . 
+    .desc = Don leat čállán "ja {$2}". Das galgá leat  "€1" . 
     .example-1 = Dat lea nominašuvdnačoahkkin gii vállje gean bidjá bajimussii, ja in mun.
 
 syn-timeadverbial-accusative = Boasttukásus
@@ -401,7 +401,7 @@ real-eahket-eahkes = Čállinmeattáhus dán oktavuođas
     .example-1 = Rahpandilálašvuođa maŋŋá eahket joatkašuvai konsearttain Sajosa auditorios.
 
 real-Ess-PrsSg1 = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán substantiivva essiivvas  "{$1}" . Jus oaivvildat vearbba 1. persovnna ovttaidlogus, de galgá leat  "{€1}" .
+    .desc = Don leat čállán substantiivva essiivvas  "{$1}" . Jus oaivvildat vearbba 1. persovnna ovttaidlogus, de galgá leat  "€1" .
     .example-1 = Muhto ihttin lean fas sápmelaš, muhto juste dál melden olggos, vuolggan geahččat Greys Anatomy.
     .example = Go šieđđaluvan, de dalle mun čohkkedan ja fas joatkkan mátki.
 
@@ -415,27 +415,27 @@ real-lasse-lassi = Čállinmeattáhus dán oktavuođas
     .example-1 = Doaivvabiebmu ja lasse juhkamuš.
 
 lex-máŋggas-ollugat = Sátni ii heive
-    .desc = Don leat čállán  "{$1}" . Dasa heive  "{€1}"  buorebut.
+    .desc = Don leat čállán  "{$1}" . Dasa heive  "€1"  buorebut.
     .example-1 = Earát eai bovde nu máŋgasa dahje eai heajastala ge.all
 
 lex-not-maŋga =  Sátni ii heive
-    .desc = Don leat čállán  "{$1}" . Dasa heive  "{€1}"  vai  "€2"  buorebut.
+    .desc = Don leat čállán  "{$1}" . Dasa heive  "€1"  vai  "€2"  buorebut.
     .example-1 = Man máŋga olbmo doppe ledje?
 
 lex-maŋŋelis-maŋis = Sátni ii heive
-    .desc = Don leat čállán  "{$1}" . Dasa heive  "{€1}"  buorebut.
+    .desc = Don leat čállán  "{$1}" . Dasa heive  "€1"  buorebut.
     .example-1 = Beakkán Terje Håkonsen čierastii muohtafielluin hearggi maŋŋelis.
 
 lex-miehtá-olles = Sátni ii heive
-    .desc = Don leat čállán  "{$1}" . Dasa heive  "{€1}"  buorebut.
+    .desc = Don leat čállán  "{$1}" . Dasa heive  "€1"  buorebut.
     .example-1 = Mii háliidit ahte Guovdageaidnu ja Sámi allaskuvla dál maid galgá leat sámi nuoraid ja earáid deaivvadanbáiki, ja čohkket ollu sámi studeanttaid miehtá Sámis.
 
 lex-guorralit-guorrasit = Sátni ii heive
-    .desc = Don leat čállán  "{$1}" . Dasa heive  "{€1}"  buorebut.
+    .desc = Don leat čállán  "{$1}" . Dasa heive  "€1"  buorebut.
     .example-1 = Sámediggi guorralii ráđi evttohussii, ja jienasteami bokte čuovvolii ráđi evttohusa.
 
 lex-meannudit-mearridit = Sátni ii heive
-    .desc = Don leat čállán  "{$1}" . Dasa heive  "{€1}"  buorebut.
+    .desc = Don leat čállán  "{$1}" . Dasa heive  "€1"  buorebut.
     .example-1 = Sii leat meannudan ahte sii eai hálit bismmain hupmat vuoiŋŋalaš áššiid birra.
 
 msyn-valency-badjel-acc = Badjelmearálaš postposišuvdna
@@ -443,15 +443,15 @@ msyn-valency-badjel-acc = Badjelmearálaš postposišuvdna
     .example-1 = Idjabiegga liekkus jiella sihkoda alážiid badjel.
 
 lex-badjel-rastá = Sátni ii heive
-    .desc = Don leat čállán postposišuvnna  "{$1}" . Dasa heive  "{€1}"  buorebut.
+    .desc = Don leat čállán postposišuvnna  "{$1}" . Dasa heive  "€1"  buorebut.
     .example-1 = Sii leat vel dakkárat mat vudjet jávrriid badjel ja dainna lágiin ollejit ge váikko gosa.
 
 lex-badjel-bokte = Sátni ii heive
-    .desc = Don leat čállán postposišuvnna  "{$1}" . Dasa heive  "{€1}"  buorebut.
+    .desc = Don leat čállán postposišuvnna  "{$1}" . Dasa heive  "€1"  buorebut.
     .example-1 = Ovdalgihtiigeassima sierra máksingoartta ferte álohii atnit go máksá boastagiro dahje báŋku badjel.
 
 msyn-gii-mii = Boasttupronomen
-    .desc = Don leat čállán pronomena  "{$1}" . Das galgá leat  "{€1}" . 
+    .desc = Don leat čállán pronomena  "{$1}" . Das galgá leat  "€1" . 
     .example-1 = Ledje Guovdageainnu Lunttat ja Falástallan searvvi A-joavku geat ledje čiekčanšiljus juste de go álddagas beaškalii nu issorasat ahte olles Báktevárri bávkkehii.
 
 punct-rihkku = Rihkkomeattáhus
@@ -508,7 +508,7 @@ lex-majuscule = Stuora álgobustávva
     .desc = Namas "{$1}" galgá leat stuora álgobustávva.
     .example-1 = Dáid gávdná sámedikki ruovttusiidduin ságat-gaskabláđi olis.
 
-#msyn-num_geardde-Ill = Konstrukšuvdnaválljen - kommenterejuvvon eret
+# msyn-num_geardde-Ill = Konstrukšuvdnaválljen - kommenterejuvvon eret
 #    .desc = Don leat čállán konstrukšuvnna "{$1}" . Dás livččii vuogas baicce sojahit numerála illatiivan.
 #    .example-1 = Dán áigge áidna sámegielat aviisa lea Norggas almmustuvvi Avvir, mii almmustuvvá guovtti geardde vahkus.
 
@@ -534,18 +534,18 @@ msyn-valency-loc-ill = Boasttukásus
     .example-2 = Ale suhta sus. 
 
 real-áibbaš-áibbas = Konsonántameattáhus
-    .desc = Orru leamen čállinmeattáhus loahppavokálas "š". Oaivvildat go "{€1}" ?
+    .desc = Orru leamen čállinmeattáhus loahppavokálas "š". Oaivvildat go "€1" ?
     .example-1 = Nu guhkás go čájehuvvo leat dárbbašlažžan vuovddi seailluheami, ođasmahttima dahje ođđasit šaddama dihte dahje dan dihte go guovllus lea muorravátni, de sáhttá Gonagasláhkaásahusaid bokte gáržžidit dahje áibbaš gieldit muoraid váldimis dárkileappot mearriduvvon guovlluin, ja dan olis mearridit ee. ahte varas muorat sáhttet váldot duššefal čájeheami mielde.
     .example-2 = Sii geat leat govvidan Finnmárkku dáčča álbmotovdáneami 1500-logus, eai leat goitge áibbaš ovttaoaivilis.
 
 real-ággi-áiggi =  Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán "{$1}" . Oaivvildat go "{€1}" ?
+    .desc = Don leat čállán "{$1}" . Oaivvildat go "€1" ?
     .example-1 = Báddemat leat dahkkon sihke guhkkit ja oanehabbot ággi badjel.
     .example-2 = Guhte háliida váldit alibuš oahpu sámegillii, dárbbaša dábálaččat lasi ággi háhkan_dihte alcces dárbbu mielde máhtu sámegielas.
     .example-3 = Sáhttá váldit guhkit ággi jus lea earenoamáš ášši, dahje jus ferte viežžat eanet dieđuid.
 
 real-first-aá = Akseanta-a meattáhus
-    .desc = Orru leamen čállinmeattáhus vuosttaš stávvala vokálas. Oaivvildat go "{€1}" ?
+    .desc = Orru leamen čállinmeattáhus vuosttaš stávvala vokálas. Oaivvildat go "€1" ?
     .example-1 = Gieddi lanjastuvvá.
     .example-2 = Ingos-Máhte Joavnna muitalii ahte son lea vánddardan Ruoššas, ja oaidnán ahte doppe eai gávdno nohkka buorit rusttegat gáldet dahje gaskit varis bohccuid.
     .example-3 = Ii son ge leat oaivvildan, nugo mii addet, ahte sápmelaččain lea eanariekte- ja hálddašanriekte vuoigatvuohta ILO-konvenšuvnna artihkkala 14.1 vuođul, muhto baicce.
@@ -571,7 +571,7 @@ real-first-aá = Akseanta-a meattáhus
     .example-23 = Sihkkaris gáldut geaiguin Nordlys aviisa lea hupman, lohket dievddu čukkohallan máŋgii rátti ja čoavjji bokte. #real-rátti-ratti 
 
 real-second-aá = Akseanta-a meattáhus
-    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas. Oaivvildat go "{€1}" ?
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas. Oaivvildat go "€1" ?
     .example-1 = Bengtsson gierastalai suinna.
     .example-2 = Dalle oainnát sáddii gielddastivra fas ášši ruovttoluotta dalá huksenráđđái, mii ii šat bargan áššiin maide.
     .example-3 = Vihtta čohkká Guovdageainnu suohkanis leat “áibbas duoddaris” čohkain gos olbmot sáhttet finadit dán geasi.
@@ -609,12 +609,12 @@ real-second-aá = Akseanta-a meattáhus
     .example-35 = Daste dáppe galgá váidni veallat vahku ovdal go hávdáduvvo, danin vai ii dáhpáhuvai ovttage ealli olbmo hávdáda. #real-veallat-veallát
 
 real-several-aá = Akseanta-a meattáhusat
-    .desc = Orrot leamen akseanta-a meattáhusat sánis "{$1}". Oaivvildatgo "{€1}"?  
+    .desc = Orrot leamen akseanta-a meattáhusat sánis "{$1}". Oaivvildatgo "€1"?  
     .example-1 = Jua, de gálga leat.  #real-galgá
     .example-2 = Go boahttevuođas gálga iskat man ollu ávki gielladoarjagiin lea, de savášii Guovdageainnu suohkan ahte čađahivčče kvalitatiiva mihtidemiid maid, eai ge dušše kvantitatiiva.#real-galgá 
 
 real-second-uo = Vokálameattáhus
-    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas. Oaivvildat go "{€1}" ?
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas. Oaivvildat go "€1" ?
     .example-1 = Dát smávva čuvllat, leat maid gorrojuvvon biktasiin mat ledje nie baskun.
     .example-2 = Doppe lei stuorra gorži, mii lei 15 mehter alo, gos mii njuikkodeimmet liegga sevdjnes eahkediin.
     .example-3 = Anne-Grethe Leine Bientie lea čállán teavstta ja su nieida Ellen Sara lea ges govaid sárgun.
@@ -629,7 +629,7 @@ real-second-uo = Vokálameattáhus
     .example-12 = Lea dušše dat veahá mii váilo.
 
 real-guovddáškonsonánta = Konsonántameattáhus 
-    .desc = Orru leamen čállinmeattáhus "{$1}" guovddáškonsonánttas. Oaivvildat go "{€1}"?
+    .desc = Orru leamen čállinmeattáhus "{$1}" guovddáškonsonánttas. Oaivvildat go "€1"?
     .example-1 = Sii eai leat čohkán earo diibmobeali, muhto son jo máhttá vástidit : In, orun goađis .
     .example-2 = Badjealbmát vurde miessemearkuma, eanadoallit čohkke hášestoalppuid, ordnejedje bargobiergasiid.
     .example-3 = Duvka lei čohken arvečázi, ja dát golggai oaivejietnabeavddi ala.
@@ -711,7 +711,7 @@ real-ImprtPl2-DerhPrsConNeg = Boasttuhápmi !!
     .example-1 = Biret šattai bonjastit biilla doares beallái nu ahte biillat eaba beašket oktii.
 
 real-ImprtPl1-DerPassInf = Konsonántameattáhus #!!
-    .desc = Orru leamen meattáhus guovddáškonsonánttas. Don leat čállán vearbba "{$1}" gohččunvugiin. Jus oaivvildat infinitiiva leat "{€1}". 
+    .desc = Orru leamen meattáhus guovddáškonsonánttas. Don leat čállán vearbba "{$1}" gohččunvugiin. Jus oaivvildat infinitiiva leat "€1". 
     .example-1 = Fátmmastit šiehtadussii sáhttá atnot sámi vuoigatvuođaeaiggadiid vuosttá, ja eará álgoálbmogiid sullasaš vuoigatvuođaiguin boahttevaš riekteproseassain.
     .ref-1 = Pope2004:278
 
@@ -804,7 +804,7 @@ real-geahčes-geažes_geahčen = Čállinmeattáhus dán oktavuođas
     .example-2 = Vissis áiggi geahčes, omd. 30 minuhtta, de galget gávdnat ja oahppat nu ollu substantiivvaid go vejolaš.
 
 real-girjii-girji = Vokálameattáhus
-    .desc = Orru leamen čállinmeattáhus sáni "{$1}" loahpas. Jus oaivvildat substantiivva, de galgá leat "{€1}" .
+    .desc = Orru leamen čállinmeattáhus sáni "{$1}" loahpas. Jus oaivvildat substantiivva, de galgá leat "€1" .
     .example-1 = Davvi Girjii, Kárasjoga gielda - Jagi 2004 doaibmadoarjagiid julludeapmi sámi lágádusaide, ášši 025/04/025 mearrádusa guoddaleapmi.
     .example-2 = Dál gávdno dákkár girjii ja dat lea erenoamáš ja dat lea dušše čuovvut dan, lohket girječállit.
     .example-3 = Girjii leat vuvdon ja vissá ledje máŋggas geat ožžo girjji juovlaskeaŋkan.
@@ -824,7 +824,7 @@ real-dihti-dihtii = Vokálameattáhus
     .example-6 = Dá lea dat unnimus maid sáhttit dahkat sihkkarastin dihti ahte guollebiebmanealáhus livčii ceavzil, ja maiddái sihkkarastin dihti ahte vuonat ja riddoguovllut eai billohuvva guhkit áigge badjel.
 
 real-vázzi-váccii = Čállinmeattáhus dán oktavuođas
-    .desc = Vearba "{$1}" orru leamen boastut. Jus oaivvildat 3. persovnna sg. vearbba de galgá leat "{€1}". 
+    .desc = Vearba "{$1}" orru leamen boastut. Jus oaivvildat 3. persovnna sg. vearbba de galgá leat "€1". 
     .example-1 = Gaup vázzi neavttárskuvlla Stáda Teáhterallaskuvllas, ja eksámena válddii 1978:is.
 
 real-čohkki-čohkkii = Vokálameattáhus
@@ -832,26 +832,26 @@ real-čohkki-čohkkii = Vokálameattáhus
     .example-1 = Eahkedis čohkki Lloyde olbmáideaset bankehttii.
 
 real-girjii-girjji = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán "girjet"-vearbba 3. p. ovttaidlogu preterihta "{$1}". Jus oaivvildat "girji"-sáni genetiiva-/akkusatiivahámi, de galgá leat "{€1}".
+    .desc = Don leat čállán "girjet"-vearbba 3. p. ovttaidlogu preterihta "{$1}". Jus oaivvildat "girji"-sáni genetiiva-/akkusatiivahámi, de galgá leat "€1".
     .example-1 = ČálliidLágádus Kárášjogas lea dáid beivviid gárvemin ođđa girjii.
     .example-2 = Liikon hirbmadit 1920- logu, ja lean lohkan girjii ja filmma The Great Gatsby, danin šattai Gatsby, muitala Ann
     .example-3 = Ollesolbmuidprográmmas boahtá čálli John Gustavsen muitalit Johan Turi birra, gii čálii girjii «Muitalus sámiid birra».
     .example-4 = Lea vuosttaš geardde go dát fágabiras lea ovttas čállán girjii.
 
 real-girjiide-girjjiide = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán "girjet"-vearbba 2. p. guvttiidlogu preterihta "{$1}". Jus oaivvildat "girji"-sáni máŋggaidlogu illatiivahámi, de galgá leat "{€1}".
+    .desc = Don leat čállán "girjet"-vearbba 2. p. guvttiidlogu preterihta "{$1}". Jus oaivvildat "girji"-sáni máŋggaidlogu illatiivahámi, de galgá leat "€1".
     .example-1 = Lassin girjiide leat girjerádjosis ollu áigečállagat mat gusket min fágasurggiide, ja neahttasiiddus Idunn.no gávnnát eambbo áigečállagiid almmuhuvvon lágádusa Universitetsforlaget bokte. 
 
 real-jeara-jearrá = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán "{$1}". Oaivvildatgo "{€1}"?
+    .desc = Don leat čállán "{$1}". Oaivvildatgo "€1"?
     .example-1 = Man lahkai kvalitehtasihkkarastá Sámediggi ahte lea sámi buvtta man Sámediggi doarju, jeara NSR.
 
 real-jearan-jearran = Čállinmeattáhus dán oktavuođas. 
-    .desc = Don leat čállán "{$1}". Oaivvildatgo "{€1}"?
+    .desc = Don leat čállán "{$1}". Oaivvildatgo "€1"?
     .exampe-1 = Ii leat vuos oktage jearan autográfa.
 
 real-muhttomin-muhtumin = Čállinmeattáhus dán oktavuođas. 
-    .desc = Don leat čállán vearbba "{$1}". Oaivvildatgo "{€1}"?    
+    .desc = Don leat čállán vearbba "{$1}". Oaivvildatgo "€1"?    
     .example-1 = Dál duddjo dušše muhttomin.
     .example-2 = Dan guovtti suohkanis ii gávdno odne makkárlágan plána mo galget ovddidit Sámegiela suohkanin, dat lea heahpat ja muhttomin dat orru maid nu ahte suohkaniid bealis leat máŋgii bargan sin vuostá geat leat bargan sámegielain, dadjá Olav Andersen.
      .example-3 = Skuohtanjárgga ovdaolmmoš dadjá sin dárkilin, muhto muhttomin sáhttá leat váttis ja de šaddá gieđaid bassalit muohttagis.
@@ -865,7 +865,7 @@ real-oainnát-oainnat = Čállinmeattáhus dán oktavuođas
     .example-5 = Soai oainnát eaba lean vuordán vuoitit, go eaba lean šaddan hárjehallat ovttas bearehaga.
 
 real-nuppádussii-nuppádassii = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán "{$1}". Oaivvildatgo advearbba "{€1}"?
+    .desc = Don leat čállán "{$1}". Oaivvildatgo advearbba "€1"?
     .example-1 = Vaikko juristtat eai leat geargan guorahallamis rihkku go Finnmárkoláhka árvalus álbmotrivttiin, de Stuoradikki Justislávdegoddi lea boahtán Finnmárkui gullat nuppádussii maid álbmot oaivvilda láhkaárvalussii.
     .example-2 = Dál ballet Romssa sámit dán nuppádussii dáhpáhuvvat. 
 
@@ -882,13 +882,13 @@ real-oktege-oktage = Vokálameattáhus
     .example-1 = Amasgiela-dásis  ii leat dál oktege oahppi.
 
 real-ImprtPl2-PrsPl3 = Boasttusojaheapmi
-    .desc = Don leat čállán vearbba "{$1}" gohččunvuogi (imperatiivva). Dán oktavuođas vearba galgá duohtavuogis (indikatiivvas) "{€1}"?
+    .desc = Don leat čállán vearbba "{$1}" gohččunvuogi (imperatiivva). Dán oktavuođas vearba galgá duohtavuogis (indikatiivvas) "€1"?
     .example-1 = Mii dovdat Ovddádusbellodaga oainnu Sámediggái, eatge hirpmáhuva go Hans J. Eriksen, Carl I. Hagen ja Siv Jensen cealket juoidá dán áššis.
     .example-2 = Son čájehii govaid buotlágan borramušain maid sii luonddus viežžet.
     .example-3 = Buot maid dii dáhttubehtet earáid dahkat alcceseattet, dahket dii ge sidjiide.
 
 real-dđ = Konsonántameattáhus
-    .desc = Orru leamen čállinmeattáhus sánis "{$1}". Oaivvildatgo "{€1}"
+    .desc = Orru leamen čállinmeattáhus sánis "{$1}". Oaivvildatgo "€1"
     .example-1 = Váhnemiid mielan ii lean iežá ráddi. #real-ráddi-ráđđi
     .example-2 = Lea Ráddi guhte nammada Doarjjastivrra áirasiid ja dat dáhpáhuvvá maŋŋá. #real-ráddi-ráđđi
     .example-3 = s e.e. nugo čállingotteossodaga ásaheami forumii mii čadnošii ON:a ekonomálaš ja sosiála ráddái New York:ii. #real-ráddi-ráđđi
@@ -897,9 +897,10 @@ real-dđ = Konsonántameattáhus
     .example-6 = Mun oainnán positiiva signálan ahte Davviriikkaid Ráddi sáddii ruovttoluotta ráđi presidia evttohusa, lohká Sámedikkepresideanta Sven-Roald Nystø. #real-ráddi-ráđđi
     .example-7 = Sámi Parlamentáralaš Ráddi.#real-Ráddi-Ráđđi
 
-real-aha-ada = !!
-    .desc = 
-    .example-1 = Miesse- ja árranjuovvandoarjjaortnet galgá movttiidahttit ovdal ragaha ja ovdal juovllaid njuovvama ja dat guoská seamma bures guovlluide máttabealde Romssa go Romssas ja Finnmárkkus ja danne berrejit máksomearit leat ovttastuoru.
+# English fallback is used until this example has a reviewed Sámi explanation.
+# real-aha-ada = !!
+#     .desc = 
+#     .example-1 = Miesse- ja árranjuovvandoarjjaortnet galgá movttiidahttit ovdal ragaha ja ovdal juovllaid njuovvama ja dat guoská seamma bures guovlluide máttabealde Romssa go Romssas ja Finnmárkkus ja danne berrejit máksomearit leat ovttastuoru.
 
 real-sáhtáš-sáhtaš = !!
     .desc =
