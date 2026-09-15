@@ -1,31 +1,34 @@
 import * as cg3 from "./.divvun-rt/cg3.ts";
 import * as divvun from "./.divvun-rt/divvun.ts";
 import * as hfst from "./.divvun-rt/hfst.ts";
-import { Command, fromKebabKeys, StringEntry } from "./.divvun-rt/mod.ts";
+import { Command, StringEntry } from "./.divvun-rt/mod.ts";
+import type { ReweightingConfig, SpellerConfig } from "./.divvun-rt/divvun.ts";
 import spellerBase from "../spellcheckers/config.json" with { type: "json" };
 
 // The tuned speller config, imported live from tools/spellcheckers/config.json.
-// fromKebabKeys bridges the JSON's kebab-case keys to the snake_case these
-// bindings declare; the Rust side accepts both.
-const SPELLER_BASE = fromKebabKeys(spellerBase);
+// The file is in the wire format the runtime deserializes, which is what the
+// cast asserts; these bindings render those keys as TypeScript identifiers.
+const SPELLER_BASE = spellerBase as unknown as SpellerConfig;
 
 // Where this pipeline departs from the tuned speller, and only there. The
 // effective values are the same ones the hand-written copy this replaced set,
 // so behaviour is unchanged; every field not named here now follows the tuned
 // config as it is retuned.
-const spellcheckerConfig = {
+const spellcheckerConfig: SpellerConfig = {
     ...SPELLER_BASE,
     // Vektområde, meir enn for sjølvstendig stavekontroll - vi kan filtrera med
     // cg-reglar. Compare the base above before trusting that: the standalone
     // speller has since been retuned past this beam, so the reason given no
     // longer describes which of the two is wider. Needs evaluation.
     beam: 38.0,
+    // The base always carries all three penalties, and the runtime defaults
+    // any it did not; the spread alone cannot say so.
     reweight: {             // Ekstra straffepoeng for endringar etter posisjon
         ...SPELLER_BASE.reweight,
         // Pre-existing values, predating the base's retuning. Needs evaluation.
         start_penalty: 20.0,
         curve: undefined,   // the base curves the penalties; this does not
-    },
+    } as ReweightingConfig,
     // Pre-existing: both left unset here, both set in the base. Needs evaluation.
     search_budget: undefined,
     word_split_weight: undefined,
