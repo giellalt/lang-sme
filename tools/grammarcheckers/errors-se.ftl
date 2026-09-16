@@ -931,8 +931,8 @@ syn-double-inchoative = !!
     .desc =
     .example-1 = Go leimme mihtidan nu máŋga rusttega ahte álggiime ollet lohppi, álgen mun ballagoahtit.
     
-msyn-pers-refl-pron =
-    .desc =
+msyn-pers-refl-pron = Pronomengeavahus
+    .desc = Don leat čállán persovnnalaš pronomena "{$1}". Dán oktavuođas galgá geavahit refleksiiva prononmena "{€1}".
     .example-1 = Mun válddán mu girjji.
     
 syn-go-not-ahte = !!
