@@ -2,13 +2,14 @@ import * as cg3 from "./.divvun-rt/cg3.ts";
 import * as divvun from "./.divvun-rt/divvun.ts";
 import * as hfst from "./.divvun-rt/hfst.ts";
 import { Command, StringEntry } from "./.divvun-rt/mod.ts";
-import type { ReweightingConfig, SpellerConfig } from "./.divvun-rt/divvun.ts";
+import type { SpellerConfig } from "./.divvun-rt/divvun.ts";
 import spellerBase from "../spellcheckers/config.json" with { type: "json" };
 
 // The tuned speller config, imported live from tools/spellcheckers/config.json.
-// The file is in the wire format the runtime deserializes, which is what the
-// cast asserts; these bindings render those keys as TypeScript identifiers.
-const SPELLER_BASE = spellerBase as unknown as SpellerConfig;
+// Kept in the wire format the runtime deserializes: an override must use the
+// same spelling as the key it replaces, or the spread keeps both and the
+// runtime rejects the pair as a duplicate field.
+const SPELLER_BASE = spellerBase;
 
 // Where this pipeline departs from the tuned speller, and only there. The
 // effective values are the same ones the hand-written copy this replaced set,
@@ -25,17 +26,15 @@ const spellcheckerConfig = {
     // speller has since been retuned past this beam, so the reason given no
     // longer describes which of the two is wider. Needs evaluation.
     beam: 38.0,
-    // The base always carries all three penalties, and the runtime defaults
-    // any it did not; the spread alone cannot say so.
     reweight: {             // Ekstra straffepoeng for endringar etter posisjon
         ...SPELLER_BASE.reweight,
         // Pre-existing values, predating the base's retuning. Needs evaluation.
-        start_penalty: 20.0,
+        "start-penalty": 20.0,
         curve: undefined,   // the base curves the penalties; this does not
-    } as ReweightingConfig,
+    },
     // Pre-existing: both left unset here, both set in the base. Needs evaluation.
-    search_budget: undefined,
-    word_split_weight: undefined,
+    "search-budget": undefined,
+    "word-split-weight": undefined,
 };
 
 export default function smeGramRelease(entry: StringEntry): Command {
@@ -48,7 +47,7 @@ export default function smeGramRelease(entry: StringEntry): Command {
   x = divvun.cgspell("speller", x, {
     acc_model_path: "acceptor.default.hfst",
     err_model_path: "errmodel.default.hfst",
-    config: spellcheckerConfig,
+    config: spellcheckerConfig as unknown as SpellerConfig,
   });
   x = cg3.vislcg3("postspell-valency", x, { model_path: "valency-postspell.bin" });
   x = cg3.vislcg3("grc-disamb", x, { model_path: "grc-disambiguator.bin" });
@@ -67,7 +66,7 @@ export function smeGram(entry: StringEntry): Command {
   x = divvun.cgspell("speller", x, {
     acc_model_path: "acceptor.default.hfst",
     err_model_path: "errmodel.default.hfst",
-    config: spellcheckerConfig,
+    config: spellcheckerConfig as unknown as SpellerConfig,
   });
   x = cg3.vislcg3("postspell-valency", x, { model_path: "valency-postspell.bin" });
   x = cg3.vislcg3("grc-disamb", x, { model_path: "grc-disambiguator.bin" });
@@ -89,7 +88,7 @@ export function localTest_dev(entry: StringEntry): Command {
   x = divvun.cgspell("speller", x, {
     acc_model_path: "@./acceptor.default.hfst",
     err_model_path: "@./errmodel.default.hfst",
-    config: spellcheckerConfig,
+    config: spellcheckerConfig as unknown as SpellerConfig,
   });
   x = cg3.vislcg3("postspell-valency", x, { model_path: "@./valency-postspell.cg3" });
   x = cg3.vislcg3("grc-disamb", x, { model_path: "@./grc-disambiguator.cg3" });
@@ -111,7 +110,7 @@ export function localTestTrace_dev(entry: StringEntry): Command {
   x = divvun.cgspell("speller", x, {
     acc_model_path: "@./acceptor.default.hfst",
     err_model_path: "@./errmodel.default.hfst",
-    config: spellcheckerConfig,
+    config: spellcheckerConfig as unknown as SpellerConfig,
   });
   x = cg3.vislcg3("postspell-valency", x, { model_path: "@./valency-postspell.cg3", config: { trace: true } });
   x = cg3.vislcg3("grc-disamb", x, { model_path: "@./grc-disambiguator.cg3", config: { trace: true } });
