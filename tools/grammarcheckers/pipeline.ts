@@ -14,7 +14,11 @@ const SPELLER_BASE = spellerBase as unknown as SpellerConfig;
 // effective values are the same ones the hand-written copy this replaced set,
 // so behaviour is unchanged; every field not named here now follows the tuned
 // config as it is retuned.
-const spellcheckerConfig: SpellerConfig = {
+//
+// Deliberately not annotated with SpellerConfig: the bindings are regenerated
+// by whichever divvun-runtime built the bundle, and annotating makes this
+// literal fail on any builder whose bindings predate a field named here.
+const spellcheckerConfig = {
     ...SPELLER_BASE,
     // Vektområde, meir enn for sjølvstendig stavekontroll - vi kan filtrera med
     // cg-reglar. Compare the base above before trusting that: the standalone
