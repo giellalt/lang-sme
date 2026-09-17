@@ -1,7 +1,7 @@
 The North Sami morphology and tools
 ==========================================
 
-[![Maturity](https://github.com/giellalt/lang-sme/raw/generated/docs-data/fst-maturity.svg)](https://giellalt.github.io/MaturityClassification.html)
+[![Maturity](https://github.com/giellalt/lang-sme/raw/generated/docs-data/pkg-maturity.svg)](https://giellalt.github.io/MaturityClassification.html)
 ![Lemma count](https://github.com/giellalt/lang-sme/raw/generated/docs-data/fst-lemmacount.svg)
 [![Speller suggestion quality](https://github.com/giellalt/lang-sme/raw/generated/docs-data/speller-suggestions.svg)](https://giellalt.github.io/lang-sme/typosreport/)
 [![GitHub issues](https://img.shields.io/github/issues-raw/giellalt/lang-sme)](https://github.com/giellalt/lang-sme/issues)
