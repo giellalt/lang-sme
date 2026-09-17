@@ -120,15 +120,33 @@ AS_IF([test "x$with_giella_core" != "xfalse" -a \
 ])
 AC_MSG_RESULT([$GIELLA_CORE])
 
+###############################################################
+### This is the version of the Giella Core that we require. ###
+### UPDATE AS NEEDED.
+_giella_core_min_version=1.12.0
+
 # GIELLA_CORE/GTCORE env. variable, required by the infrastructure to find scripts:
 AC_ARG_VAR([GIELLA_CORE], [directory for the Giella infra core scripts and other required resources])
 
 GTCORE=${GIELLA_CORE}
 AC_ARG_VAR([GTCORE], [GTCORE = GIELLA_CORE, retained for backwards compatibility while being cleaned out])
 
-##### Identify the version of giella-core:
-# Reported for the record only. There is no minimum: the infra is rolling
-# release, so a lang repo tracks whatever giella-core is beside it.
+##### Check the version of the giella-core, and stop with error message if too old:
+# This is the error message:
+giella_core_too_old_message="
+
+The giella-core is too old, we require at least $_giella_core_min_version.
+
+*** ==> PLEASE ENTER THE FOLLOWING COMMANDS: <== ***
+
+cd $GTCORE
+git pull --rebase # or: 'svn up' if you are using svn
+make
+
+Then retry.
+"
+
+# Identify the version of giella-core:
 AC_PATH_PROG([GIELLA_CORE_VERSION], [gt-version.sh], [no],
     [$GTCORE/scripts$PATH_SEPARATOR$GTHOME/giella-core/scripts$PATH_SEPARATOR$PATH])
 AC_MSG_CHECKING([the version of the Giella Core])
@@ -137,6 +155,13 @@ AS_IF([test "x${GIELLA_CORE_VERSION}" != xno],
         [gt_MSG_ERROR([gt-version.sh could not be found, installation is incomplete!])
     ])
 AC_MSG_RESULT([$_giella_core_version])
+
+AC_MSG_CHECKING([whether the Giella Core version is at least $_giella_core_min_version])
+# Compare it to the required version, and error out if too old:
+AX_COMPARE_VERSION([$_giella_core_version], [ge], [$_giella_core_min_version],
+                   [giella_core_version_ok=yes], [giella_core_version_ok=no])
+AS_IF([test "x${giella_core_version_ok}" != xno], [AC_MSG_RESULT([$giella_core_version_ok])],
+[gt_MSG_ERROR([$giella_core_too_old_message])])
 
 ################################
 ### Some software that we either depend on or we need for certain functionality:
