@@ -11,9 +11,21 @@ set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 LANG_SME="$HERE/../.."
 SHARED_SMI="${SHARED_SMI:-$LANG_SME/../shared-smi}"
+GIELLA_CORE="${GIELLA_CORE:-$LANG_SME/../giella-core}"
 ZCHECK_DIR="${ZCHECK_DIR:-$LANG_SME/../files/se-zcheck}"
 
 mkdir -p "$HERE/assets"
+
+# semsets.cg3 is generated, never tracked: the disambiguator INCLUDEs the
+# semantic-tag sets extracted from the lexicon, and a fresh checkout has
+# nothing at that name. Same rule as src/cg3/Makefile.am — plain python
+# over a tracked source, no FST toolchain needed — run here so the flatten
+# below never depends on a stale copy lying around a working tree.
+GEN_DIR="$(mktemp -d)"
+trap 'rm -rf "$GEN_DIR"' EXIT
+python3 "$GIELLA_CORE/scripts/generate-semsets.py" \
+  -i "$LANG_SME/src/fst/morphology/root.lexc" \
+  -o "$GEN_DIR/semsets.cg3"
 cp "$ZCHECK_DIR/tokeniser-gramcheck-gt-desc.pmhfst" "$HERE/assets/"
 cp "$ZCHECK_DIR/analyser-gt-whitespace.hfst" "$HERE/assets/"
 cp "$ZCHECK_DIR/mwe-dis.bin" "$HERE/assets/"
@@ -40,10 +52,10 @@ flatten() { # flatten <grammar> <include-dir...>
 }
 
 flatten "$LANG_SME/src/cg3/disambiguator.cg3" \
-  "$LANG_SME/src/cg3" "$SHARED_SMI/src/cg3" \
+  "$GEN_DIR" "$LANG_SME/src/cg3" "$SHARED_SMI/src/cg3" \
   > "$HERE/assets/disambiguator.cg3"
 flatten "$SHARED_SMI/src/cg3/konteaksta.cg3" \
-  "$LANG_SME/src/cg3" "$SHARED_SMI/src/cg3" \
+  "$GEN_DIR" "$LANG_SME/src/cg3" "$SHARED_SMI/src/cg3" \
   > "$HERE/assets/konteaksta.cg3"
 
 if grep -q '^# unresolved:' "$HERE/assets/"*.cg3; then
