@@ -152,7 +152,7 @@ msyn-case-number-congruence-moanat-all = Kongrueansameattáhus
     .desc = Sihke sátni "moanat" ja čuovvovaš substantiiva "{$1}" galget sodjat kásusiid mielde. "Moanat" gáibida maiddái máŋggaidlogu substantiivva. 
     .example-1 = Moanat buori spábbačiekči leat boahtán Jergolis.
     
-lex-majuscule = !!
+lex-majuscule = #!!
     .desc = 
     .example-1 = Dáid gávdná sámedikki ruovttusiidduin ságat-gaskabláđi olis.
 
@@ -160,7 +160,7 @@ lex-transitive = Sátni ii heive
     .desc = Don leat čállán vearbba  "{$1}" . Dat ii oro heiveme dán oktavuhtii. Oaivvildat go  "€1" ?
     .example-1 = Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta.
     
-msyn-miehtá-Acc = !!
+msyn-miehtá-Acc = Boasttukásus !!
     .desc = 
     .example-1 = Mii háliidit ahte Guovdageaidnu ja Sámi allaskuvla dál maid galgá leat sámi nuoraid ja earáid deaivvadanbáiki, ja čohkket ollu sámi studeanttaid miehtá Sámis.
     
@@ -381,7 +381,7 @@ real-suidne-sutnje = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán vearbba  "{$1}" . Jus oaivvildat persovnnalaš pronomena, de galgá leat "sutnje".
     .example-1 = Dás gal lea oalle stuorra mearkkašupmi, suidne lea čuohcan garrasit, go dát diggeášši leamas vuordimis, dál su noađđi lea gehppon olu, muitala Bakke.
 
-real-sábmái-sabmái = Čállinmeattáhus dán oktavuođas !!
+real-sábmái-sabmái = Čállinmeattáhus dán oktavuođas #!!
     .desc = 
     .example-1 = Ja ii manannge šat guhká go ovddabealde sábmái ieš Rádjeoaivi, mii lea dego čuorvvasmearka gaskku dán meahcceguovllu.
 
@@ -705,10 +705,11 @@ real-guovddáškonsonánta = Konsonántameattáhus
     .example-73 = Návet lea áigá jo mieskkan ja gahččan. #real-PrsSg1-PrfPrc
     .example-74 = Lean visot njuoskkan. #real-PrsSg1-PrfPrc
     .example-75 = Dán čavčča loahpahuvvo okta golbmajahkásaš našunála prošeakta gos dutkit leat lohkan rievssahiid ja iskkan makkár guovlluin leat hui unnán rievssahat. #real-PrsSg1-PrfPrc
-
-real-ImprtPl2-DerhPrsConNeg = Boasttuhápmi !!
+    .example-76 = Jos háliidat báddet vuoras olbmuid de oažžut mis luoikkasin báddenmašiinna.
+    
+real-ImprtPl2-DerhPrsConNeg = Boasttuhápmi #!!
     .desc = 
-    .example-1 = Biret šattai bonjastit biilla doares beallái nu ahte biillat eaba beašket oktii.
+    .example-1 = Biret šattai bonjastit biilla doares beallái nu ahte biillat eaba beašket oktii. #real-oažžut-oaččut
 
 real-ImprtPl1-DerPassInf = Konsonántameattáhus #!!
     .desc = Orru leamen meattáhus guovddáškonsonánttas. Don leat čállán vearbba "{$1}" gohččunvugiin. Jus oaivvildat infinitiiva leat "€1". 
@@ -868,10 +869,6 @@ real-nuppádussii-nuppádassii = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán "{$1}". Oaivvildatgo advearbba "€1"?
     .example-1 = Vaikko juristtat eai leat geargan guorahallamis rihkku go Finnmárkoláhka árvalus álbmotrivttiin, de Stuoradikki Justislávdegoddi lea boahtán Finnmárkui gullat nuppádussii maid álbmot oaivvilda láhkaárvalussii.
     .example-2 = Dál ballet Romssa sámit dán nuppádussii dáhpáhuvvat. 
-
-real-oažžut-oaččut = !!
-    .desc =
-    .example-1 = Jos háliidat báddet vuoras olbmuid de oažžut mis luoikkasin báddenmašiinna.
     
 real-oažžot-oaččut = !!
     .desc = 
@@ -910,24 +907,24 @@ real-sáhtáš-sáhtáš = !!
     .desc = 
     .example-1 = Juste dál sáhtašin baicca dego civnna girdilit biekka mielde ja girddašit gosa dal de dolvvošii, guhkas.
 
-real-válddi-váldii = !!
+real-válddi-váldii = #!!
     .desc =
     .example-1 = Dát ahte váldá ná guhkes áiggi dohkkehit sámi museaid, čájeha dušše ahte mo sámi museaid meannudit, vaikko Sámediggi juo logi jagi áigi válddi badjelasas sámi museaid, dadjá Andreassen.
 
-real-varra-várra = !!
+real-varra-várra = Čállinmeattáhus dán oktavuođas #!!
     .desc =
     .example-1 = De gal lohká okta dain jiehtanasain ahte bussá gal varra geassá fatnasa, go sidjiide earáide lea nu lossat. 
     .example-2 = Sundi Paus, gii veahá maŋŋel 1700-logu gaskkamutto varra lei Finnmárkku ja čearddalaš ealáhusvuođu heivehemiid oahppáseamos olmmoš, čilgii sápmelaččaid ja dáččaid erohusa guovddáš borramušriggodagaid geavaheami oktavuođas.
 
-syn-congruence-com-num = !!
+syn-congruence-com-num = #!!
     .desc =
     .example-1 =
 
-syn-congruence-loc-num = !!
+syn-congruence-loc-num = #!!
     .desc =
     .example-1 =
 
-syn-double-inchoative = !!
+syn-double-inchoative = #!!
     .desc =
     .example-1 = Go leimme mihtidan nu máŋga rusttega ahte álggiime ollet lohppi, álgen mun ballagoahtit.
     
@@ -935,12 +932,12 @@ msyn-pers-refl-pron = Pronomengeavahus
     .desc = Don leat čállán persovnnalaš pronomena "{$1}". Dán oktavuođas galgá geavahit refleksiiva prononmena "{€1}".
     .example-1 = Mun válddán mu girjji.
     
-syn-go-not-ahte = !!
+syn-go-not-ahte = #!!
     .desc =
     .example-1 = Buorre ahte boađát.
     .example-2 = Dasa lei sivvan dat, ahte son čorbmagođii mu reaŋgabártnáža.
 
-syn-not-aidna = !!
+syn-not-aidna = #!!
     .desc =
     .example-1 = Áidna gii váilu dán govas lea bussevuoddji. Ii váillo eará go bussevuoddji dán govas. Váilu dušše bussevuoddji dán govas.
     .example-2 = Áidna man alde beaivvi vuostálastit ain nárrohaddet lea, nu mo vihtta jagi dassái, symbolaid alde. Beaivvi vuostálastit eai nárrohatta dál šat eanet go, nu mo vihtta jagi dassái, symbolaid alde.
@@ -950,27 +947,27 @@ syn-PassPrsPl1-PrtPl1 = !!
     .desc =
     .example-1 = Go mii čurvot nuoraide de galge vástidit.
 
-msyn-PassPrtSg3-PrtSg3 = !!
+msyn-PassPrtSg3-PrtSg3 = #!!
     .desc =
     .example-1 = Maŋŋel go válgabohtosat čilge, de lea son gártan viđat sadjái Ellen Inga O. Hætta maŋábeallai, gii gal baicca gizzui ollu go oaččui liigejienaid.
 
-syn-short-gen = !!
+syn-short-gen = #!!
     .desc =
     .example-1 = Dainna vugiin meinejit skealmmat ahte sii sáhttet du rehket ala riŋget.
     .example-2 = Njuovvanplána, boazolohku, johtináiggit ja -geainnut, ja eará leat de mearriduvvon báhper ala.
     .example-3 = Mun orun dáppe dassážii fas boahtá johka mu eatnan ala, lohká Návuonbađa boanda Gunnar S. Mun orun dáppe dassážii fas boahtá johka mu eatnama ala, lohká Návuonbađa boanda Gunnar S.
 
-syn-super-erenoamáš-buot = !!
+syn-super-erenoamáš-buot = #!!
     .desc =
     .example-1 = Buot eanemus vuorjjahahtti dás lea dat eahpesihkarvuohta.
     .example-2 = Telefuvdna ságastallan maid lohká eanemus earenoamážin.
 
-syn-super-erenoamáš = !!
+syn-super-erenoamáš = #!!
     .desc = 
     .example-1 = Buot eanemus vuorjjahahtti dás lea dat eahpesihkarvuohta.
     .example-2 = Unnimusaide soaitá leat eanemus geasuheaddjin go buohkat
     .example-3 = Dás lea sáhka eanemus guovddáš árvvuid birra
 
-syn-super-erenoamážit = !!
+syn-super-erenoamážit = #!!
     .desc =
     .example-1 = Telefuvdna ságastallan maid lohká eanemus earenoamážin.
