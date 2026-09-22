@@ -607,6 +607,8 @@ real-second-aá = Akseanta-a meattáhus
     .example-33 = Háliidan várra dušše njaŋgat dás. #real-njaŋgat-njaŋgát
     .example-34 = Eatnamis sáhttá jaska veallat ja guldalit movt luonddus gullojit skoahpamat, haksit arvehája, ja dovdat niera vuostá arvečalmmi. #real-veallat-veallát
     .example-35 = Daste dáppe galgá váidni veallat vahku ovdal go hávdáduvvo, danin vai ii dáhpáhuvai ovttage ealli olbmo hávdáda. #real-veallat-veallát
+    .example-36 = Son lohká ahte jus luohti dohkkejuvvošii veahkkeneavvun vuoiŋŋalaš divššus, de sáhtašii terapevtta / divššár jearrat dan gii juoigá: Gean don juiget ja manne juste dán luođi rohttejit dál? #real-sáhtaš-sáhtáš
+    .example-37 = Mon sáhtášin su ovddos maŋos. #real-sáhtáš-sáhtaš
 
 real-several-aá = Akseanta-a meattáhusat
     .desc = Orrot leamen akseanta-a meattáhusat sánis "{$1}". Oaivvildatgo "€1"?  
@@ -899,17 +901,15 @@ real-dđ = Konsonántameattáhus
 #     .desc = 
 #     .example-1 = Miesse- ja árranjuovvandoarjjaortnet galgá movttiidahttit ovdal ragaha ja ovdal juovllaid njuovvama ja dat guoská seamma bures guovlluide máttabealde Romssa go Romssas ja Finnmárkkus ja danne berrejit máksomearit leat ovttastuoru.
 
-real-sáhtáš-sáhtaš = !!
-    .desc =
-    .example-1 = Son lohká ahte jus luohti dohkkejuvvošii veahkkeneavvun vuoiŋŋalaš divššus, de sáhtašii terapevtta / divššár jearrat dan gii juoigá: «Gean don juiget ja manne juste dán luođi rohttejit dál?
+real-i-ii = Vokálameattáhus
+    .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas. Don lea čállán "i" ja de šaddá iežá sátni. Oaivvildat go "€1" ?
+    .example-1 = Dát ahte váldá ná guhkes áiggi dohkkehit sámi museaid, čájeha dušše ahte mo sámi museaid meannudit, vaikko Sámediggi juo logi jagi áigi válddi badjelasas sámi museaid, dadjá Andreassen. # real-NSgGen-PrtSg3 
+    .example-2 = Soabadallamiid oktavuođas stáhtain bođi dákkár kompromissa ahte vuoigatvuođat guolásteapmái vuotna- , riddo- ja áhpeguovlluin váldojuvvui eret Finnmárkolágas. #real-NSgGen-PrtSg3 
 
-real-sáhtáš-sáhtáš = !!
-    .desc = 
-    .example-1 = Juste dál sáhtašin baicca dego civnna girdilit biekka mielde ja girddašit gosa dal de dolvvošii, guhkas.
+real-
+    .example-2 = Ođđa boazodoalloláhka bođi fápmui 2007:s, ja dan vuođul lea boazodoalus stuorát váikkuhanfápmu iežas siskkáldas organiseremii.
+    .example-3 Finnmárken aviisa čáli dán girjjis dan ahte kulturpolitihká lea čálli rámidan, muhto guolástuspolitihká son gal láitá.
 
-real-válddi-váldii = #!!
-    .desc =
-    .example-1 = Dát ahte váldá ná guhkes áiggi dohkkehit sámi museaid, čájeha dušše ahte mo sámi museaid meannudit, vaikko Sámediggi juo logi jagi áigi válddi badjelasas sámi museaid, dadjá Andreassen.
 
 real-varra-várra = Čállinmeattáhus dán oktavuođas #!!
     .desc =
