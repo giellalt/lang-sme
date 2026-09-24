@@ -905,10 +905,10 @@ real-i-ii = Vokálameattáhus
     .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas. Don lea čállán "i" ja de šaddá iežá sátni. Oaivvildat go "€1" ?
     .example-1 = Dát ahte váldá ná guhkes áiggi dohkkehit sámi museaid, čájeha dušše ahte mo sámi museaid meannudit, vaikko Sámediggi juo logi jagi áigi válddi badjelasas sámi museaid, dadjá Andreassen. # real-NSgGen-PrtSg3 
     .example-2 = Soabadallamiid oktavuođas stáhtain bođi dákkár kompromissa ahte vuoigatvuođat guolásteapmái vuotna- , riddo- ja áhpeguovlluin váldojuvvui eret Finnmárkolágas. #real-NSgGen-PrtSg3 
-
-real-
-    .example-2 = Ođđa boazodoalloláhka bođi fápmui 2007:s, ja dan vuođul lea boazodoalus stuorát váikkuhanfápmu iežas siskkáldas organiseremii.
-    .example-3 Finnmárken aviisa čáli dán girjjis dan ahte kulturpolitihká lea čálli rámidan, muhto guolástuspolitihká son gal láitá.
+    .example-3 = Ođđa boazodoalloláhka bođi fápmui 2007:s, ja dan vuođul lea boazodoalus stuorát váikkuhanfápmu iežas siskkáldas organiseremii. #real-
+    .example-4 Finnmárken aviisa čáli dán girjjis dan ahte kulturpolitihká lea čálli rámidan, muhto guolástuspolitihká son gal láitá. #real-
+    .example-5 = Gii čáli vuosttaš sámi mánáidgirjji? #real-
+    .example-6 = 
 
 
 real-varra-várra = Čállinmeattáhus dán oktavuođas #!!
