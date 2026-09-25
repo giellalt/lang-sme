@@ -74,7 +74,7 @@ AC_SUBST([SPELLER_DESC_NATIVE], ["Davvisámi čállindárkkisteaddji ráhkaduvvo
 AC_SUBST([GRAMCHECKVERSION], [1.3.4])
 
 ### Hyphenation release version
-AC_SUBST([HYPHVERSION], [0.1.0])
+AC_SUBST([HYPHVERSION], [1.0.0])
 
 ### TTS text processing release version
 AC_SUBST([TTSTEXTPROCVERSION], [1.0.1])
