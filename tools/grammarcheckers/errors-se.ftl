@@ -8,16 +8,6 @@ spelling-error = Čállinmeattáhus dán oktavuođas
     .example-2 = Soai čohkába seaidneguoras ja muittašeaba borggudettiin duhpáha.
     .example-3 = Dá čohkába davvisámedulkkaguovttos Berit Margrethe Oskal ja Brita E. Kåven bargosajis.
 
-## Default patterns: re:punct-aistton.*
-quotation-marks = Aisttonmearkameattáhus
-    .desc = Davvisámegielas čállit áisttonmearkkaid ná: ”sátni”.
-    .example-1 = Doarjja addo vuosttažettiin «Sámi dutkama prográmmii» (2001–05)
-
-## Default patterns: re:no-space-after-paren.*, re:no-space-before-paren.*
-parenthesis-missing-space = Sátnegaskameattáhus
-    .desc = Don leat vajálduhttán sátnegaskka. Sihke ruođu "{$1}" ovdal ja maŋŋel galgá leat sátnegaska.
-    .example-1 = Vuoigatvuođa Lávdegotti(SVL)čilgehus
-
 msyn-Sg3-ConNeg = Boasttuhápmi
     .desc = Don leat čállán gieldinvearbba "{$2}". Dan maŋŋel galgá boahtit vearba konnegatiivva hámis. 
     .example-1 = Náhkkedikšun ja -goarrun lea nu árbevirolaš bargu ahte earálágan oahpahus go dat man láhkai lea ohppojuvvon boares áiggi rájes, ii buoridivččii sámiid ruhtadili iige dat heivešii kultuvrralaš prográmmii nu mo skuvla dan lea jurddašan.
@@ -49,7 +39,6 @@ real-hallan = Boasttusojaheapmi
     .example-2 = Dat ferte oainnahallot ovdal go sáhttit báhčit dan, lohká son.
     .example-3 = Lojes gumpe Lea máŋga vahkku áigi dan rájes go gumppe álggos beakkehii Kárášjoga guovllus, ja Gaup atnáge imašin go gumpe lea dan rájes sihke vuddjon biilii, ja maiddái oainnahallon viesuid lahka.
     .example-4 = Dušše 40 mehtera Kjell Østmo viesus eret, lea gumpe oainnahallon ja vuhtton maŋŋebárgga. Kjell Østmo giettis, Rávdojoganjárggas, Kárášjogas, lea gumpe sihke vuhtton ja oainnahallon maŋŋebárgga eahkeda.
-
 
 msyn-gen-before-postp = Boasttukásus
     .desc = Sátni  "{$1}" orru leamen boasttukásusis. Postposišuvnna maŋŋel galgá nomen leat genetiivvas.
@@ -115,13 +104,6 @@ syn-number_congruence-subj-verb = Kongrueansameattáhus
 syn-number_congruence-subj-verb-pl1 = Kongrueansameattáhus
     .desc = Vearba "{$1}" galgá sodjat persovnna ja logu mielde.
     .example-1 = Dieđusge mii máhttet sámegiela, go leat ohcan stipeandda lohkat sámegiela vuosttašgiellan.
-
-real-ImprtPl2-PrsPl3 = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán vearbba  "{$1}" . Oaivvildat go  "€1" ? 
-    .example-1 = Son čájehii govaid buotlágan borramušain maid sii luonddus viežžet.
-    .example-2 = Maiddái áibmu lea nuoskiduvvon, ja leage varra sivvan manne nu olu olbmot jábmet borasdávdii.
-    .example-3 = Čájálmasa vuosttaščájáhus lea golggotmánu 7. beaivve Guovdageainnus ja bihtáin johttet miehtá Sámi, sihke Norgga, Suoma ja Ruoŧa bealde.
-    .example-4 = Vaikko vel eai gávdnoge almmolaš logut mat muitalit man galle sápmelačča leat, eai obbalaččat, eaige vissis guovlluide, de lea goitge dovddus ipmárdus ahte eai lahkage buohkat sii geat formálalaččat deavdet eavttuid dieđihit jienastuslohkui, albma ilmmis geavat dán rievtti. 
 
 syn-number_congruence_relative_pronoun = Kongrueansameattáhus
     .desc = Relatiivapromomen "{$1}" galgá leat seamma logus go dat nomen, masa dat čujuha.
@@ -469,13 +451,18 @@ space-before-paren-end = Sátnegaskameattáhus
     .desc =  Ruođu "{$1}" ovdal ii galgga leat sátnegaska.
     .example-1 = Son (Áilu ) livččii gal viššal.
 
+## Default patterns: re:no-space-after-paren.*, re:no-space-before-paren.*
 parenthesis-missing-space = Sátnegaskameattáhus
-    .desc = Ruođuid ovdal ja maŋŋel galgá leat sátnegaska.
+##    .desc = Ruođuid ovdal ja maŋŋel galgá leat sátnegaska.
+    .desc = Don leat vajálduhttán sátnegaskka. Sihke ruođu "{$1}" ovdal ja maŋŋel galgá leat sátnegaska.
     .example-1 = Vuoigatvuođa Lávdegotti(SVL)čilgehus.
 
+## Default patterns: re:punct-aistton.*
 quotation-marks = Áisttonmearkameattáhus
+##    .desc = Davvisámegielas čállit áisttonmearkkaid ná: ”sátni”.
     .desc = Don leat čállán áisttonmearkkaid, mat eai leat dohkkehuvvon davvisámegiela riektačállinrávvagiid mielde. Áisttonmearkkaid galgá merket {$1}.  
-    .example-1 = Obbalaččat lei nu ahte eatnasat geat áigo sátnesaji oaivvildedje ahte «Fjellfinnhua« filbma ii dagat ahte buorrána gaskavuohta olbmočearddaid gaskka davviguovllus.*
+    .example-1 = Doarjja addo vuosttažettiin «Sámi dutkama prográmmii» (2001–05)
+    .example-2 = Obbalaččat lei nu ahte eatnasat geat áigo sátnesaji oaivvildedje ahte «Fjellfinnhua« filbma ii dagat ahte buorrána gaskavuohta olbmočearddaid gaskka davviguovllus.
 
 space-before-punct-mark = Sátnegaskameattáhus
     .desc = Cealkaga loahpas, ovdal "{$1}" ii galgga leat sátnegaska.
@@ -892,11 +879,16 @@ real-oktege-oktage = Vokálameattáhus
     .desc = Don leat čállán "oktege". Dán oktavuođas orru baicce galgame "oktage"?
     .example-1 = Amasgiela-dásis  ii leat dál oktege oahppi.
 
-real-ImprtPl2-PrsPl3 = Boasttusojaheapmi
+real-ImprtPl2-PrsPl3 = Čállinmeattáhus dán oktavuođas
+## real-ImprtPl2-PrsPl3 = Boasttusojaheapmi
+##    .desc = Don leat čállán vearbba  "{$1}" . Oaivvildat go  "€1" ? 
     .desc = Don leat čállán vearbba "{$1}" gohččunvuogi (imperatiivva). Dán oktavuođas vearba galgá duohtavuogis (indikatiivvas) "€1"?
     .example-1 = Mii dovdat Ovddádusbellodaga oainnu Sámediggái, eatge hirpmáhuva go Hans J. Eriksen, Carl I. Hagen ja Siv Jensen cealket juoidá dán áššis.
     .example-2 = Son čájehii govaid buotlágan borramušain maid sii luonddus viežžet.
     .example-3 = Buot maid dii dáhttubehtet earáid dahkat alcceseattet, dahket dii ge sidjiide.
+    .example-4 = Maiddái áibmu lea nuoskiduvvon, ja leage varra sivvan manne nu olu olbmot jábmet borasdávdii.
+    .example-5 = Čájálmasa vuosttaščájáhus lea golggotmánu 7. beaivve Guovdageainnus ja bihtáin johttet miehtá Sámi, sihke Norgga, Suoma ja Ruoŧa bealde.
+    .example-6 = Vaikko vel eai gávdnoge almmolaš logut mat muitalit man galle sápmelačča leat, eai obbalaččat, eaige vissis guovlluide, de lea goitge dovddus ipmárdus ahte eai lahkage buohkat sii geat formálalaččat deavdet eavttuid dieđihit jienastuslohkui, albma ilmmis geavat dán rievtti. 
 
 real-dđ = Konsonántameattáhus
     .desc = Orru leamen čállinmeattáhus sánis "{$1}". Oaivvildatgo "€1"
