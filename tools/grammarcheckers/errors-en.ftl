@@ -302,8 +302,8 @@ syn-case-congruence-buorre = Wrong form
 # syn-finitev_missing-end = Missing word
 #     .desc = Finitive verb is missing
 
-lex-transitive = Wrong word
-    .desc = Should be a transitive verb
+lex-transitive = Wrong verb for context
+    .desc = You have written the verb "{$1}". It does not seem to fit in this context. Did you mean "€1"?
 
 # syn-conneg = Wrong form
 #     .desc = It should be a negation form
@@ -655,8 +655,8 @@ real-vuostá = Spelling error
 #     .desc = Seems to be wrong word
 #     .ref-1 =
 
-lex-not-maŋga = Wrong word
-    .desc = Seems to be wrong word
+lex-not-maŋga = Wrong word for context
+    .desc = You have written "{$1}". "€1" or "€2" would fit better here.
     .ref-1 = 
 
 # lex-maŋis-not-maŋŋelis = Wrong word
@@ -695,12 +695,12 @@ lex-not-maŋga = Wrong word
 #     .desc = Seems to be wrong word
 #     .ref-1 =
     
-lex-valjis-valljugas = Wrong word
-    .desc = Seems to be wrong word
+lex-valjis-valljugas = Wrong word for context
+    .desc = You have written "valjis", an adverb or a noun. The attributive adjective "valljugas" should be used here.
     .ref-1 = 
     
-lex-vallji-valljugas = Wrong word
-    .desc = Seems to be wrong word
+lex-vallji-valljugas = Wrong word for context
+    .desc = You have written the predicative form "vallji" of the adjective. The attributive form "valljugas" should be used here.
     .ref-1 = 
 
 # cmp-nomhyph-or-gen = Wrong form
@@ -887,48 +887,48 @@ real-lasse-lassi = Spelling error in this context
     .example-1 = Dalle váldojuvvo lasse mammongráfagovat ja dalle dutkojuvvo dávjá maid Ultra-jienain.
     .example-1 = Doaivvabiebmu ja lasse juhkamuš.
 
-lex-máŋggas-ollugat = Wrong word
-    .desc = You have written "{$1}". "€1" fits better here.
-    .example-1 = Earát eai bovde nu máŋgasa dahje eai heajastala ge.all
+lex-máŋggas-ollugat = Wrong word for context
+    .desc = You have written "{$1}". "€1" is more appropriate here.
+    .example-1 = Earát eai bovde nu máŋgasa dahje eai heajastala ge.
 
-lex-maŋŋelis-maŋis = Wrong word
-    .desc = You have written "{$1}". "€1" fits better here.
+lex-maŋŋelis-maŋis = Wrong word for context
+    .desc = You have written "{$1}". "€1" is more appropriate here.
     .example-1 = Beakkán Terje Håkonsen čierastii muohtafielluin hearggi maŋŋelis.
 
-lex-miehtá-olles = Wrong word
-    .desc = You have written "{$1}". "€1" fits better here.
+lex-miehtá-olles = Wrong word for context
+    .desc = You have written "{$1}". "€1" is more appropriate here.
     .example-1 = Mii háliidit ahte Guovdageaidnu ja Sámi allaskuvla dál maid galgá leat sámi nuoraid ja earáid deaivvadanbáiki, ja čohkket ollu sámi studeanttaid miehtá Sámis.
 
-lex-guorralit-guorrasit = Wrong word
-    .desc = You have written "{$1}". "€1" fits better here.
+lex-guorralit-guorrasit = Wrong word for context
+    .desc = You have written "{$1}". "€1" is more appropriate here.
     .example-1 = Sámediggi guorralii ráđi evttohussii, ja jienasteami bokte čuovvolii ráđi evttohusa.
 
-lex-meannudit-mearridit = Wrong word
-    .desc = You have written "{$1}". "€1" fits better here.
+lex-meannudit-mearridit = Wrong word for context
+    .desc = You have written "{$1}". "€1" is more appropriate here.
     .example-1 = Sii leat meannudan ahte sii eai hálit bismmain hupmat vuoiŋŋalaš áššiid birra.
 
 msyn-valency-badjel-acc = Unnecessary postposition
     .desc = You have written the postposition "{$1}". It is unnecessary here.
     .example-1 = Idjabiegga liekkus jiella sihkoda alážiid badjel.
 
-lex-badjel-rastá = Wrong word
-    .desc = You have written the postposition "{$1}". "€1" fits better here.
+lex-badjel-rastá = Wrong word for context
+    .desc = You have written the postposition "{$1}". "€1" is more appropriate here.
     .example-1 = Sii leat vel dakkárat mat vudjet jávrriid badjel ja dainna lágiin ollejit ge váikko gosa.
 
-lex-badjel-bokte = Wrong word
-    .desc = You have written the postposition "{$1}". "€1" fits better here.
+lex-badjel-bokte = Wrong word for context
+    .desc = You have written the postposition "{$1}". "€1" is more appropriate here.
     .example-1 = Ovdalgihtiigeassima sierra máksingoartta ferte álohii atnit go máksá boastagiro dahje báŋku badjel.
 
 msyn-gii-mii = Wrong pronoun
     .desc = You have written the pronoun "{$1}". It should be "€1".
     .example-1 = Ledje Guovdageainnu Lunttat ja Falástallan searvvi A-joavku geat ledje čiekčanšiljus juste de go álddagas beaškalii nu issorasat ahte olles Báktevárri bávkkehii.
 
-lex-vallji-valjit = Wrong word
-    .desc = You have written "vallji", which is a noun. Use the adverb "valjit" or "valjis" instead.
+lex-vallji-valjit = Wrong word for context
+    .desc = You have written "vallji", which is a noun. The adverb "valjit" or "valjis" should be used here.
     .example-1 = Vaikko diein leat vallji bohccot.
 
-lex-gaskan-gaskkas = Wrong word
-    .desc = You have written the postposition "gaskan". "Gaskkas" fits better here.
+lex-gaskan-gaskkas = Wrong word for context
+    .desc = You have written the postposition "gaskan". "Gaskkas" is more appropriate here.
     .example-1 = Lea 96 jiena earru blohkaid gaskan, Vuovdega sáhttá oažžut mearrideaddji rolla.
     .example-2 = 600 000 euro stáhtadoarjja juohkášuvai sámiid ruovttuguovllugielddaid gaskan čuovvovaččat.
 
