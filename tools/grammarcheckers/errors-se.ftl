@@ -394,7 +394,7 @@ real-lasse-lassi = Čállinmeattáhus dán oktavuođas
 
 lex-máŋggas-ollugat = Sátni ii heive
     .desc = Don leat čállán  "{$1}" . Dasa heive  "€1"  buorebut.
-    .example-1 = Earát eai bovde nu máŋgasa dahje eai heajastala ge.all
+    .example-1 = Earát eai bovde nu máŋgasa dahje eai heajastala ge.
 
 lex-not-maŋga =  Sátni ii heive
     .desc = Don leat čállán  "{$1}" . Dasa heive  "€1"  vai  "€2"  buorebut.
