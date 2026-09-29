@@ -479,8 +479,8 @@ lex-vallji-valjit = Sátni ii heive
     .example-1 = Vaikko diein leat vallji bohccot.
 
 lex-valjis-valljugas = Sátni ii heive
-     .desc = Don leat čállán "valjis" mii lea advearba dahje substantiiva. Das galggalii leat adjektiivaattribuhtta "valljugas".
-     .example-1 = Guovdageainnus lea valjis ja girjás kultureallin.
+    .desc = Don leat čállán "valjis" mii lea advearba dahje substantiiva. Das galggalii leat adjektiivaattribuhtta "valljugas".
+    .example-1 = Guovdageainnus lea valjis ja girjás kultureallin.
 
 lex-gaskan-gaskkas = Sátni ii heive
     .desc = Don leat čállán postposišuvnna "gaskan". Dasa heive "gaskkas" buorebut. 
@@ -855,7 +855,7 @@ real-muhttomin-muhtumin = Čállinmeattáhus dán oktavuođas.
     .desc = Don leat čállán vearbba "{$1}". Oaivvildatgo "€1"?    
     .example-1 = Dál duddjo dušše muhttomin.
     .example-2 = Dan guovtti suohkanis ii gávdno odne makkárlágan plána mo galget ovddidit Sámegiela suohkanin, dat lea heahpat ja muhttomin dat orru maid nu ahte suohkaniid bealis leat máŋgii bargan sin vuostá geat leat bargan sámegielain, dadjá Olav Andersen.
-     .example-3 = Skuohtanjárgga ovdaolmmoš dadjá sin dárkilin, muhto muhttomin sáhttá leat váttis ja de šaddá gieđaid bassalit muohttagis.
+    .example-3 = Skuohtanjárgga ovdaolmmoš dadjá sin dárkilin, muhto muhttomin sáhttá leat váttis ja de šaddá gieđaid bassalit muohttagis.
 
 real-oainnát-oainnat = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán vearbba 2. persovnna vearbba "(don) oainnát". Dán oktavuođas galggalii leat advearba "oainnat". 
@@ -902,8 +902,8 @@ real-dđ = Konsonántameattáhus
 
 # English fallback is used until this example has a reviewed Sámi explanation.
 # real-aha-ada = !!
-#     .desc = 
-#     .example-1 = Miesse- ja árranjuovvandoarjjaortnet galgá movttiidahttit ovdal ragaha ja ovdal juovllaid njuovvama ja dat guoská seamma bures guovlluide máttabealde Romssa go Romssas ja Finnmárkkus ja danne berrejit máksomearit leat ovttastuoru.
+#    .desc = 
+#    .example-1 = Miesse- ja árranjuovvandoarjjaortnet galgá movttiidahttit ovdal ragaha ja ovdal juovllaid njuovvama ja dat guoská seamma bures guovlluide máttabealde Romssa go Romssas ja Finnmárkkus ja danne berrejit máksomearit leat ovttastuoru.
 
 real-i-ii = Vokálameattáhus
     .desc = Orru leamen čállinmeattáhus nuppi stávvala vokálas. Don lea čállán "i" ja de šaddá iežá sátni. Oaivvildat go "€1" ?
