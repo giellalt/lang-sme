@@ -152,11 +152,6 @@ msyn-case-number-congruence-moanat-all = Kongrueansameattáhus
     .desc = Sihke sátni "moanat" ja čuovvovaš substantiiva "{$1}" galget sodjat kásusiid mielde. "Moanat" gáibida maiddái máŋggaidlogu substantiivva. 
     .example-1 = Moanat buori spábbačiekči leat boahtán Jergolis.
     
-## !!
-lex-majuscule =
-    .desc = 
-    .example-1 = Dáid gávdná sámedikki ruovttusiidduin ságat-gaskabláđi olis.
-
 lex-transitive = Sátni ii heive
     .desc = Don leat čállán vearbba  "{$1}" . Dat ii oro heiveme dán oktavuhtii. Oaivvildat go  "€1" ?
     .example-1 = Dasa lassin bargá suohkan dan ala ahte ovdánit iežas fálaldaga kvalitehta.
@@ -505,7 +500,7 @@ lex-gaskan-gaskkas = Sátni ii heive
     .desc = Don leat čállán postposišuvnna "gaskan". Dasa heive "gaskkas" buorebut. 
     .example-1 = Lea 96 jiena earru blohkaid gaskan, Vuovdega sáhttá oažžut mearrideaddji rolla.
     .example-2 = 600 000 euro stáhtadoarjja juohkášuvai sámiid ruovttuguovllugielddaid gaskan čuovvovaččat.
-    
+
 lex-majuscule = Stuora álgobustávva
     .desc = Namas "{$1}" galgá leat stuora álgobustávva.
     .example-1 = Dáid gávdná sámedikki ruovttusiidduin ságat-gaskabláđi olis.
