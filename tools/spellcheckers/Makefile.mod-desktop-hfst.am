@@ -53,6 +53,9 @@ STRING_EDITS=regex
 # version of the strings file. The total edit distance for those operations is
 # this value multiplied with the value of the EDIT_DISTANCE variable.
 STRING_REGEX_EDIT_DISTANCE=1
+# Compile the strings regex files as single rewrite passes for the compact
+# bhfst speller (`make se.bhfst`). Every rule must be optional (->).
+STRING_REGEX_PASS=yes
 
 # Variable to define whether to enable edits of word-final strings (as opposed
 # to single letters). Possible values are:
@@ -251,6 +254,25 @@ HFST_DUMP_ALPHABETS = $(dir $(HFST_COMPOSE))hfst-dump-alphabets
 	$(AM_V_UNION)$(HFST_DISJUNCT) $(MORE_VERBOSITY) \
 		    .generated/strings.all.default.desktop.hfst \
 		    .generated/strings.errorth.default.desktop.hfst \
+		| $(HFST_DISJUNCT) $(MORE_VERBOSITY) - .generated/editdist.default.hfst \
+		| $(HFST_REPEAT) -f 1 -t $(EDIT_DISTANCE) \
+		-o $@
+
+# The same two rules for the compact bhfst speller (`make se.bhfst`), where
+# strings regex files are compiled as single rewrite passes.
+.generated/strings.errorth.default.pass.hfst: $(ERRORTH_STRINGS) $(GENDIR)
+	$(AM_V_RGX2FST)$(HFST_REGEXP2FST) -S --replace-pass $(HFST_FLAGS) -i $< \
+	   --format=openfst-tropical \
+		| $(HFST_REPEAT) -f 1 -t $(STRING_REGEX_EDIT_DISTANCE) \
+		-o $@
+
+.generated/editdist.all.default.pass.hfst: \
+				 .generated/strings.all.default.pass.hfst \
+				 .generated/strings.errorth.default.pass.hfst \
+				 .generated/editdist.default.hfst
+	$(AM_V_UNION)$(HFST_DISJUNCT) $(MORE_VERBOSITY) \
+		    .generated/strings.all.default.pass.hfst \
+		    .generated/strings.errorth.default.pass.hfst \
 		| $(HFST_DISJUNCT) $(MORE_VERBOSITY) - .generated/editdist.default.hfst \
 		| $(HFST_REPEAT) -f 1 -t $(EDIT_DISTANCE) \
 		-o $@
