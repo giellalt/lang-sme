@@ -3,16 +3,16 @@
 
 ## Default patterns: re:no-space-after-paren.*, re:no-space-before-paren.*
 parenthesis-missing-space = Sátnegaskameattáhus
-##    .desc = Ruođuid ovdal ja maŋŋel galgá leat sátnegaska.
     .desc = Don leat vajálduhttán sátnegaskka. Sihke ruođu "{$1}" ovdal ja maŋŋel galgá leat sátnegaska.
     .example-1 = Vuoigatvuođa Lávdegotti(SVL)čilgehus.
+##    .desc = Ruođuid ovdal ja maŋŋel galgá leat sátnegaska.
 
 ## Default patterns: re:punct-aistton.*
 quotation-marks = Áisttonmearkameattáhus
-##    .desc = Davvisámegielas čállit áisttonmearkkaid ná: ”sátni”.
     .desc = Don leat čállán áisttonmearkkaid, mat eai leat dohkkehuvvon davvisámegiela riektačállinrávvagiid mielde. Áisttonmearkkaid galgá merket {$1}.  
     .example-1 = Doarjja addo vuosttažettiin «Sámi dutkama prográmmii» (2001–05)
     .example-2 = Obbalaččat lei nu ahte eatnasat geat áigo sátnesaji oaivvildedje ahte «Fjellfinnhua« filbma ii dagat ahte buorrána gaskavuohta olbmočearddaid gaskka davviguovllus.
+##    .desc = Davvisámegielas čállit áisttonmearkkaid ná: ”sátni”.
 
 ## Default patterns: re:real-.*, re:real-.*-.*, id:unreal-girjji
 spelling-error = Čállinmeattáhus dán oktavuođas
@@ -230,7 +230,7 @@ msyn-PassPrtSg3-PrtSg3 =
     .example-1 = Maŋŋel go válgabohtosat čilge, de lea son gártan viđat sadjái Ellen Inga O. Hætta maŋábeallai, gii gal baicca gizzui ollu go oaččui liigejienaid.
 
 msyn-pers-refl-pron = Pronomengeavahus
-    .desc = Don leat čállán persovnnalaš pronomena "{$1}". Dán oktavuođas galgá geavahit refleksiiva prononmena "{€1}".
+    .desc = Don leat čállán persovnnalaš pronomena "{$1}". Dán oktavuođas galgá geavahit refleksiiva prononmena "€1".
     .example-1 = Mun válddán mu girjji.
 
 msyn-plcom-plloc = Boasttukásus
@@ -599,7 +599,7 @@ real-i-ii = Vokálameattáhus
     .example-1 = Dát ahte váldá ná guhkes áiggi dohkkehit sámi museaid, čájeha dušše ahte mo sámi museaid meannudit, vaikko Sámediggi juo logi jagi áigi válddi badjelasas sámi museaid, dadjá Andreassen. # real-NSgGen-PrtSg3 
     .example-2 = Soabadallamiid oktavuođas stáhtain bođi dákkár kompromissa ahte vuoigatvuođat guolásteapmái vuotna- , riddo- ja áhpeguovlluin váldojuvvui eret Finnmárkolágas. #real-NSgGen-PrtSg3 
     .example-3 = Ođđa boazodoalloláhka bođi fápmui 2007:s, ja dan vuođul lea boazodoalus stuorát váikkuhanfápmu iežas siskkáldas organiseremii. #real-
-    .example-4 Finnmárken aviisa čáli dán girjjis dan ahte kulturpolitihká lea čálli rámidan, muhto guolástuspolitihká son gal láitá. #real-
+    .example-4 = Finnmárken aviisa čáli dán girjjis dan ahte kulturpolitihká lea čálli rámidan, muhto guolástuspolitihká son gal láitá. #real-
     .example-5 = Gii čáli vuosttaš sámi mánáidgirjji? #real-
     .example-6 = 
 
@@ -620,8 +620,6 @@ real-ImprtPl2-DerhPrsConNeg = Boasttuhápmi
     .example-1 = Biret šattai bonjastit biilla doares beallái nu ahte biillat eaba beašket oktii. #real-oažžut-oaččut
 
 real-ImprtPl2-PrsPl3 = Čállinmeattáhus dán oktavuođas
-## real-ImprtPl2-PrsPl3 = Boasttusojaheapmi
-##    .desc = Don leat čállán vearbba  "{$1}" . Oaivvildat go  "€1" ? 
     .desc = Don leat čállán vearbba "{$1}" gohččunvuogi (imperatiivva). Dán oktavuođas vearba galgá duohtavuogis (indikatiivvas) "€1"?
     .example-1 = Mii dovdat Ovddádusbellodaga oainnu Sámediggái, eatge hirpmáhuva go Hans J. Eriksen, Carl I. Hagen ja Siv Jensen cealket juoidá dán áššis.
     .example-2 = Son čájehii govaid buotlágan borramušain maid sii luonddus viežžet.
@@ -629,6 +627,8 @@ real-ImprtPl2-PrsPl3 = Čállinmeattáhus dán oktavuođas
     .example-4 = Maiddái áibmu lea nuoskiduvvon, ja leage varra sivvan manne nu olu olbmot jábmet borasdávdii.
     .example-5 = Čájálmasa vuosttaščájáhus lea golggotmánu 7. beaivve Guovdageainnus ja bihtáin johttet miehtá Sámi, sihke Norgga, Suoma ja Ruoŧa bealde.
     .example-6 = Vaikko vel eai gávdnoge almmolaš logut mat muitalit man galle sápmelačča leat, eai obbalaččat, eaige vissis guovlluide, de lea goitge dovddus ipmárdus ahte eai lahkage buohkat sii geat formálalaččat deavdet eavttuid dieđihit jienastuslohkui, albma ilmmis geavat dán rievtti. 
+## real-ImprtPl2-PrsPl3 = Boasttusojaheapmi
+##    .desc = Don leat čállán vearbba  "{$1}" . Oaivvildat go  "€1" ? 
 
 real-jeara-jearrá = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán "{$1}". Oaivvildatgo "€1"?
