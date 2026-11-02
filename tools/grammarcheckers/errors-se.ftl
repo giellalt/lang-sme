@@ -620,7 +620,7 @@ real-ImprtPl2-DerhPrsConNeg = Boasttuhápmi
     .example-1 = Biret šattai bonjastit biilla doares beallái nu ahte biillat eaba beašket oktii. #real-oažžut-oaččut
 
 real-ImprtPl2-PrsPl3 = Čállinmeattáhus dán oktavuođas
-    .desc = Don leat čállán vearbba "{$1}" gohččunvuogi (imperatiivva). Dán oktavuođas vearba galgá duohtavuogis (indikatiivvas) "€1"?
+    .desc = Don leat čállán vearbba "{$1}" gohččunvuogi (imperatiivva). Dán oktavuođas vearba galgá leat duohtavuogis (indikatiivvas) "€1"?
     .example-1 = Mii dovdat Ovddádusbellodaga oainnu Sámediggái, eatge hirpmáhuva go Hans J. Eriksen, Carl I. Hagen ja Siv Jensen cealket juoidá dán áššis.
     .example-2 = Son čájehii govaid buotlágan borramušain maid sii luonddus viežžet.
     .example-3 = Buot maid dii dáhttubehtet earáid dahkat alcceseattet, dahket dii ge sidjiide.
