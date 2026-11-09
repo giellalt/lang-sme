@@ -381,8 +381,8 @@ real-Derh-Inf = Konsonántameattáhus
     .example-1 = Studeanta ferte ceavzzit goappašiid eksámeniid.
 
 ## !! i-e
-real-DerNomActSgGen-ActioEss = 
-    .desc =  
+real-DerNomActSgGen-ActioEss = Vokálameattáhus
+    .desc = Vearbageažus "-eami" galgá leat "-eame".
     .example-1 = Duortnoseanu luosa dearvvašvuohta lea buorráneami.
 
 real-dihti-dihtii = Vokálameattáhus
@@ -459,7 +459,8 @@ real-first-aá = Akseanta-a meattáhus
     .example-21 = Jahkásaččat sturrot dievdolbmuin bealjit gaskamearálaččat 0,22 mm dássá deavdá 30 jagi.
     .example-22 = Ballu čarvvui ráttis ja geahččalin garvit ášši. #real-rátti-ratti 
     .example-23 = Sihkkaris gáldut geaiguin Nordlys aviisa lea hupman, lohket dievddu čukkohallan máŋgii rátti ja čoavjji bokte. #real-rátti-ratti 
-
+    .example-24 = Ja ii manannge šat guhká go ovddabealde sábmái ieš Rádjeoaivi, mii lea dego čuorvvasmearka gaskku dán meahcceguovllu. #real-sábmái-sabmái
+    
 ## !! Dás orru gánnáheame "suhkkes máhcahat"
 real-gaskkii-gaskii = Konsonántameattáhus
     .desc = Orru leamen čállinmeattáhus guovddáškonsonánttas. Jus oaivvildat postposišuvnna, de galgá leat gievrrasdássi "sk".
@@ -615,8 +616,8 @@ real-ImprtPl1-DerPassInf = Konsonántameattáhus
     .ref-1 = Pope2004:278
 
 ## !!
-real-ImprtPl2-DerhPrsConNeg = Boasttuhápmi
-    .desc = 
+real-ImprtPl2-DerhPrsConNeg = Konsonántameattáhus
+    .desc = Orru leamen čállinmeattáhus vearbba "{$1}" guovddáškonsonánttas.
     .example-1 = Biret šattai bonjastit biilla doares beallái nu ahte biillat eaba beašket oktii. #real-oažžut-oaččut
 
 real-ImprtPl2-PrsPl3 = Čállinmeattáhus dán oktavuođas
@@ -694,8 +695,8 @@ real-oaččut-oažžut = Čállinmeattáhus dán oktavuođas
     .example-1 = Dat livčče gal oba vuogas, jus ná geavašii, go muhtin mánát fertejit mannat priváhta skuvlii, jus áigot oaččut dakkár oahpu, mii ii gávdno stáhta skuvllain.
 
 ## !!
-real-oažžot-oaččut = 
-    .desc = 
+real-oažžot-oaččut = Konsonántameattáhus
+    .desc = Orru leamen čállinmeattáhus vearbba "{$1}" guovddáškonsonánttas.
     .example-1 = Jos háliidat váldit videogova de oažžot mis luoikkasin videokamera.
 
 real-oktege-oktage = Vokálameattáhus
@@ -766,18 +767,13 @@ real-suidne-sutnje = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán vearbba  "{$1}" . Jus oaivvildat persovnnalaš pronomena, de galgá leat "sutnje".
     .example-1 = Dás gal lea oalle stuorra mearkkašupmi, suidne lea čuohcan garrasit, go dát diggeášši leamas vuordimis, dál su noađđi lea gehppon olu, muitala Bakke.
 
-## !!
-real-sábmái-sabmái = Čállinmeattáhus dán oktavuođas
-    .desc = 
-    .example-1 = Ja ii manannge šat guhká go ovddabealde sábmái ieš Rádjeoaivi, mii lea dego čuorvvasmearka gaskku dán meahcceguovllu.
-
 real-sáhkki = Čállinmeattáhus dán oktavuođas
     .desc = Don leat čállán illatiivva substantiivva  "{$1}" . Jus oaivvildat adjektiivva, de galgá leat "sáhkkii".
     .example-1 = Leatgo sáhkii?
 
 ## !!
 real-varra-várra = Čállinmeattáhus dán oktavuođas
-    .desc =
+    .desc = Orru leamen čállinmeattáhus vuosttaš stávvala vokálas.
     .example-1 = De gal lohká okta dain jiehtanasain ahte bussá gal varra geassá fatnasa, go sidjiide earáide lea nu lossat. 
     .example-2 = Sundi Paus, gii veahá maŋŋel 1700-logu gaskkamutto varra lei Finnmárkku ja čearddalaš ealáhusvuođu heivehemiid oahppáseamos olmmoš, čilgii sápmelaččaid ja dáččaid erohusa guovddáš borramušriggodagaid geavaheami oktavuođas.
 
@@ -853,18 +849,8 @@ syn-comp = Komparerenmeattáhus
     .ref-1 = Nickel1994:350
 
 ## !!
-syn-congruence-com-num =
-    .desc =
-    .example-1 =
-
-## !!
-syn-congruence-loc-num =
-    .desc =
-    .example-1 =
-
-## !!
-syn-double-inchoative =
-    .desc =
+syn-double-inchoative = Boasttusojaheapmi
+    .desc = Don leat čállán vearbba  "{$1}". "-goahtit" ii galgga leat  "álgit"-vearbba maŋŋel.
     .example-1 = Go leimme mihtidan nu máŋga rusttega ahte álggiime ollet lohppi, álgen mun ballagoahtit.
 
 syn-double-negation = Boasttuhápmi
@@ -876,8 +862,8 @@ syn-ge_not_ja = Cealkkameattáhus
     .example-1 = Dat lea nominašuvdnačoahkkin gii vállje gean bidjá bajimussii, ja in mun.
 
 ## !!
-syn-go-not-ahte =
-    .desc =
+syn-go-not-ahte = Boasttukonjunkšuvdna
+    .desc = Don leat čállán konjunkšuvnna "{$1}".
     .example-1 = Buorre ahte boađát.
     .example-2 = Dasa lei sivvan dat, ahte son čorbmagođii mu reaŋgabártnáža.
 
@@ -893,7 +879,7 @@ syn-inf-after-soaitit = Boasttuhápmi
     .ref-1 = Nickel1994:350
 
 ## !!
-syn-not-aidna =
+syn-not-aidna = Boasttukonstrukšuvdna
     .desc =
     .example-1 = Áidna gii váilu dán govas lea bussevuoddji. Ii váillo eará go bussevuoddji dán govas. Váilu dušše bussevuoddji dán govas.
     .example-2 = Áidna man alde beaivvi vuostálastit ain nárrohaddet lea, nu mo vihtta jagi dassái, symbolaid alde. Beaivvi vuostálastit eai nárrohatta dál šat eanet go, nu mo vihtta jagi dassái, symbolaid alde.
@@ -925,11 +911,6 @@ syn-number_congruence_relative_pronoun = Kongrueansameattáhus
     .desc = Relatiivapromomen "{$1}" galgá leat seamma logus go dat nomen, masa dat čujuha.
     .example-1 = Thoralf Henriksen mielas leat Sámedikkis buorit áigumušat dain prošeavttain masa leat evttohan geavahit 2,4 miljovnna ruvnno, muhto ballá dáid ruđaid bálkestit duššái jus ii leat dáhttu ásahit meahcásteddjiide maid ealáhusšiehtadusa.
 
-## !!
-syn-PassPrsPl1-PrtPl1 = 
-    .desc =
-    .example-1 = Go mii čurvot nuoraide de galge vástidit.
-
 syn-pers-refl-congruence = Kongrueansameattáhus 
     .desc = Refleksiiva pronomen "{$1}" galgá sodjat sihke persovnna ja logu mielde. 
     .example-1 = Lea sin iežas sivva ahte dorohallet, go bahkkejit sarvá lusa go lea rahkame, dadjá son.
@@ -951,26 +932,14 @@ syn-super = Komparerenmeattáhus
     .example-2 = Danne lea eanemus lunddolaš earuhit iešguđet doaimmaid maid Sámediggi čađaha.
     .example-3 = Logut maid geavahit kápihttalis, leat goitge dat maid atnit eanemus rievttes lohkun mat leat oažžumis dássážii.
     .example-4 = Figuvra 3.10 čájeha ahte Lulli-Trøndelagas / Hedemárkkus lea leamašan eanemus bissovaš ja alimus gaskamearálaš lohku bohccot juohke siidaoasis dán áigodagas (1990-2008).
+    .example-5 = Buot eanemus vuorjjahahtti dás lea dat eahpesihkarvuohta.
+    .example-6 = Unnimusaide soaitá leat eanemus geasuheaddjin go buohkat
+    .example-7 = Dás lea sáhka eanemus guovddáš árvvuid birra
+    .example-8 = Telefuvdna ságastallan maid lohká eanemus earenoamážin.
     .ref-1 = Nickel1994:350
     .ref-2 = Svonni2015:69
 
-## !!
-syn-super-erenoamáš =
-    .desc = 
-    .example-1 = Buot eanemus vuorjjahahtti dás lea dat eahpesihkarvuohta.
-    .example-2 = Unnimusaide soaitá leat eanemus geasuheaddjin go buohkat
-    .example-3 = Dás lea sáhka eanemus guovddáš árvvuid birra
 
-## !!
-syn-super-erenoamáš-buot =
-    .desc =
-    .example-1 = Buot eanemus vuorjjahahtti dás lea dat eahpesihkarvuohta.
-    .example-2 = Telefuvdna ságastallan maid lohká eanemus earenoamážin.
-
-## !!
-syn-super-erenoamážit =
-    .desc =
-    .example-1 = Telefuvdna ságastallan maid lohká eanemus earenoamážin.
 
 syn-timeadverbial-accusative = Boasttukásus
     .desc = Don leat čállán sáni "{$1}" nominatiivvas. Dat galgá leat akkusatiivvas.
