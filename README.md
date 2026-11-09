@@ -53,7 +53,8 @@ Core dependencies
 In order to compile and use North Sami language morphology and
 dictionaries, you need:
 
-- an FST compiler: [HFST](https://github.com/hfst/hfst), [Foma](https://github.com/mhulden/foma) or [Xerox Xfst](https://web.stanford.edu/~laurik/fsmbook/home.html)
+- an FST compiler: [HFST](https://github.com/hfst/hfst) or [Foma](https://github.com/mhulden/foma),
+  (a discontinued commercial [Xerox Xfst](https://web.archive.org/web/20260000000000*/https://web.stanford.edu/~laurik/fsmbook/home.html) may be found from the Internet Archive)
 - [VislCG3](https://visl.sdu.dk/svn/visl/tools/vislcg3/trunk) Constraint Grammar tools
 
 To install VislCG3 and HFST, just copy/paste this into your Terminal on **macOS**:
