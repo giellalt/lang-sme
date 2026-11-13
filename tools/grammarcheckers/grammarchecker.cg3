@@ -673,6 +673,7 @@ LIST <mv> = <mv> ;
 LIST <aux> = <aux> ;
 LIST <copula> = <copula> ;
 LIST <AttrPred> = <AttrPred> ;
+LIST <NomAccSg> = <NomAccSg> ;
 LIST <firstCohortOfParagraph> = <firstCohortOfParagraph> ;
 LIST <NoSpaceAfterPunctMark> = <NoSpaceAfterPunctMark> ;
 LIST <NoSpaceAfterParenEnd> = <NoSpaceAfterParenEnd> ;
@@ -13777,12 +13778,84 @@ SUBSTITUTE (&msyn-numphrase-sgnom) (co&msyn-numphrase-sgnom) TARGET (SUGGEST);
 
 # Noun
 
-#ADD:xsyn-sgnumeral (&syn-sgnumeral) TARGET (Num Pl) IF (NOT 0 (Num Sg) OR Sem/Year OR Arab)(*1 N - PL-NOUN BARRIER NOT-NUM)(NEGATE 0 ("máŋga") LINK 1 Pl + Sem/Time) ; 
-#COPY:syn-sgnumeral (Sg SUGGEST) EXCEPT (Pl &syn-sgnumeral) TARGET (Num &syn-sgnumeral) ; 
-    # in errors.xml
+ADD:msyn-numphrase-sggen (&msyn-numphrase-sggen) TARGET (N Pl Gen) IF (*-1 (Num Sg Nom) OR (Num Sg Acc) OR (Num Sg Gen) OR NUM-INDEF + (Sg Nom) OR NUM-INDEF + (Sg Acc) OR NUM-INDEF + (Sg Gen) BARRIER NOT-Attr - PrfPrc - GRADE-ADV  - (A <AttrPred> Sg Nom) - (A <AttrPred> Sg Gen) - (A <AttrPred> Sg Acc) - (Pcle Foc/Neg-ge) - (Pcle Foc/Pos-ge) OR JAHKASAS LINK NOT 0 <spelled> LINK NEGATE -1 KLASS)
+(NEGATE 0 <spelled> LINK NEGATE 0 NP-HEAD)
+(NEGATE 0 (Sg Gen) LINK *-1 (Num Sg Gen) OR NUM-INDEF + (Sg Gen))
+(NEGATE 0 Attr LINK 1 ADVLCASE) # vihtta guovddáš mihttosuorgái 
+(NEGATE *-1 ("okta") OR ("1") BARRIER NOT-Attr - PrfPrc)
+(NEGATE *-1 (Num Sem/Year) BARRIER NOT-Attr - PrfPrc)
+(NEGATE *-1 (Num Rom) BARRIER NOT-Attr - PrfPrc)
+(NEGATE *-1 Num BARRIER NOT-Attr - PrfPrc LINK -1 KLASS OR NUMMAR OR COUNTABLE)
+(NEGATE *-1 (Arab Ord) BARRIER NPNHA OR Num)
+(NEGATE *-1 (Num Sem/ID) BARRIER NPNHA OR Num)
+(NEGATE *-1 Num BARRIER NPNHA LINK 0 ("aktan" Adv))
+(NEGATE *-1 Num BARRIER NPNHA LINK 1 Dem)
+(NEGATE *-1 (Num "<[§].*>"r) OR (Num "<.*%>"r) OR ("%") BARRIER NPNHA - Num)
+(NEGATE *-1 (Num "<.*[0123456789]-.*>"r) BARRIER NPNHA OR Num)
+(NEGATE *-1 (Num Sg Nom) BARRIER NPNHA LINK -1 BE + Sg3 OR BE + Du3 OR BE + Pl3 LINK -1 (Dem Pl Loc) OR (Pers Pl3 Loc) OR (Pers Pl2 Loc) OR (Pers Pl1 Loc)) 
+(NEGATE -1 JAHKASAS LINK -1 (Num)) 
+(NEGATE -1 NUMUNIT LINK -1 PLURAL-QUANTIFIERS OR Num)
+(NEGATE -1 NUMUNIT LINK -1 Num OR ("moadde"))
+(NEGATE -1 Sem/Time)
+(NEGATE -1 COMMA OR CC)
+(NEGATE -1 CLB)
+(NEGATE -1 (PUNCT RIGHT) LINK -1 Num) 
+(NEGATE 0 ABBR OR Prop)
+(NEGATE 0 ("lohku"))
+#(NEGATE 0 ("<[A-Z].*>"r) OR ("<Å.*>"r) OR ("<Æ.*>"r) OR ("<Ø.*>"r) LINK -1 (Arab Nom))
+#(NEGATE 0 (Der/NomAct Sg Nom) LINK 0 PrfPrc LINK *1 (N Pl Nom)  BARRIER NOT-Attr) 
+(NEGATE 0 <spelled> OR &real)
+(NEGATE 0 Symbol)
+(NEGATE 0 ("luohkká") LINK -1 (".*[a-z]"r Arab));
+ 
+COPY:msyn-numphrase-sggen (Sg SUGGEST) EXCEPT (Pl) BEFORE CASE TARGET (Pl N &msyn-numphrase-sggen) ;
+	## Vihtta studeanttaid eksámenat leat maŋiduvvon.
+
+# Num wrong Num
+
+ADD:msyn-numphrase-sggen (&msyn-numphrase-sggen) TARGET (Num Sg Nom) OR NUM-INDEF + (Sg Nom) - <NomAccSg> OR NUM-INDEF + (Sg Acc) IF (*1 (N Gen &msyn-numphrase-sggen) OR (N Sg Gen) - &msyn-numphrase-sgacc BARRIER NOT-Attr - PrfPrc - GRADE-ADV - (A <AttrPred> Sg Nom) - (A <AttrPred> Sg Gen) - (A <AttrPred> Sg Acc)  - (Pcle Foc/Neg-ge) - (Pcle Foc/Pos-ge) LINK NOT 0 (Sg Nom)) # ("okta" Sg Nom) OR ("1" Sg Nom) 
+(NEGATE 0 (Sg Acc))
+(NEGATE 0 ("<.*%>"r)) 
+(NEGATE 0 (Num "<[0123456789]-.*>"r))
+(NEGATE 0 (Num "<biel.*>"r))
+(NEGATE 0 Sem/Date OR (N Coll Nom) OR ("tuvsán" Num Pl Nom) OR Sem/Year) 
+(NEGATE 0 (Arab Nom) LINK 1 ("<[A-Z].*>"r) OR ("<Å.*>"r) OR ("<Æ.*>"r) OR ("<Ø.*>"r))
+(NEGATE 0 (Num Rom)) 
+(NEGATE 0 &msyn-gen-numeral-jahkasaš)
+(NEGATE 1 Prop)
+(NEGATE 0 Arab LINK 1 ABBR )
+(NEGATE 1 Num LINK NOT 0 NUMUNIT)
+(NEGATE 1 Dem) 
+(NEGATE 1 COMMA) 
+(NEGATE 1 (PUNCT RIGHT))
+(NEGATE 1 ("ja"))
+(NEGATE 1 ("låhko"))
+(NEGATE 1 JAHKASAS)
+(NEGATE *1 (N <spelled>) BARRIER NPNHA) ;
+
+	# incorrect noun
+	
+ADDRELATION ($2 LEFT) (N &msyn-numphrase-sggen) OR NUMUNIT + &msyn-numphrase-sggen OR NUM-INDEF + &msyn-numphrase-sggen TO (*-1 (Num &msyn-numphrase-sggen) OR (Num Sg Gen) - &msyn-numphrase-sggen OR NUM-INDEF + (Sg &msyn-numphrase-sggen));
+
+	# correct noun wrong numeral
+	
+ADDRELATION ($2 RIGHT) (Num &msyn-numphrase-sggen) OR NUM-INDEF + (Sg &msyn-numphrase-sggen) TO (*1 (N Sg Gen)  - &msyn-numphrase-sggen OR NUMUNIT + (Sg Gen) - &msyn-numphrase-sggen OR NUM-INDEF + (Sg Gen) - &msyn-numphrase-sggen) ;
 
 
-	#$ Dál áigo ádjat dieđihit áhkuide, go leat šaddan máŋggaid jagiid gierddahallat sin.
+COPY:msyn-numphrase-sggen (Sg Gen SUGGEST) EXCEPT (Pl Gen) OR (Sg Acc) TARGET (Num Pl &msyn-numphrase-sggen) OR (Num Sg Nom &msyn-numphrase-sggen) OR NUM-INDEF + (Pl &msyn-numphrase-sggen);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Accusative numeral phrase
@@ -14346,7 +14419,7 @@ COPY:syn-sg-not-pl-after-num (Sg SUGGEST) EXCEPT (Err/Orth Pl &syn-sg-not-pl-aft
 	# ------------------------- 	
 	
 #DELETE we have to look into this one again, for now I delete it
-ADD:xmsyn-partitive-loc  (&msyn-partitive-loc) TARGET (Pl Acc) OR (Pl Gen) IF (0 NP-HEAD LINK *-1 OASSI OR (Num Sg Nom) OR (Num Sg Acc) OR ("guhtege") OR (Sg LOC_BIRRA) BARRIER NOT-ADV-PCLE LINK NOT 0 <spelled>) (NEGATE *1 Po BARRIER NOT-ADV-PCLE) (NEGATE 0 NP-HEAD LINK *-1 OASSI OR (Num Sg Nom) OR (Num Sg Acc) BARRIER NOT-ADV-PCLE LINK *1 TV BARRIER GRAMCHK-S-BOUNDARY - ("mii") - ("gii")) (NEGATE *1 Loc BARRIER GRAMCHK-NPNHA LINK NOT 0 SUGGEST) (NEGATE 0 ADV-AFTER-NUM LINK *-1 (Num Sg Nom)BARRIER NOT-ADV-PCLE ) (NEGATE 0 TIME OR Sem/Time OR ("lohku"));
+ADD:xmsyn-partitive-loc  (&msyn-partitive-loc) TARGET (Pl Acc) OR (Pl Gen) IF (0 NP-HEAD LINK *-1 OASSI OR ("guhtege") OR (Sg LOC_BIRRA) BARRIER NOT-ADV-PCLE LINK NOT 0 <spelled>) (NEGATE *1 Po BARRIER NOT-ADV-PCLE) (NEGATE 0 NP-HEAD LINK *-1 OASSI OR (Num Sg Nom) OR (Num Sg Acc) BARRIER NOT-ADV-PCLE LINK *1 TV BARRIER GRAMCHK-S-BOUNDARY - ("mii") - ("gii")) (NEGATE *1 Loc BARRIER GRAMCHK-NPNHA LINK NOT 0 SUGGEST) (NEGATE 0 ADV-AFTER-NUM LINK *-1 (Num Sg Nom)BARRIER NOT-ADV-PCLE ) (NEGATE 0 TIME OR Sem/Time OR ("lohku"));
 
 	#$ Dasa lassin gávdno maiddái eará ortnet, mas buot Norgga olbmot geat orrot geainnohis báikkiin ožžot máksot ruovttoluotta oasi {bensiidnadivadiid}. = får tilbakabetalt en del bensingebyr
     #$ Eanadikke- ja gielddalašvearut ruhtadit eanaš oasi dearvvašvuođa ja buohccedikšuma Ruoŧas. = finansierer till største del helsen och sjukskjøtandet
@@ -14374,7 +14447,7 @@ ADD:xmsyn-partitive-loc (&msyn-partitive-loc) TARGET (Pl Acc) OR (Pl Gen) IF (0 
 	
 #DELETE we have to look into this one again, for now I delete it
 ADD:xmsyn-partitive-loc  (&msyn-partitive-loc) TARGET (Pl Acc) OR (Pl Gen) IF (0 NP-HEAD LINK *-1 CC OR COMMA BARRIER NOT-ADV-PCLE LINK -1 (&msyn-plcom-plloc) OR (Pl Loc) LINK *-1 OASSI OR (Num Sg Nom) OR (Num Sg Acc) OR LOC_BIRRA BARRIER GRAMCHK-NPNHA) (NEGATE *1 Po BARRIER NOT-ADV-PCLE) ;
-COPY:msyn-partitive-loc (Loc SUGGEST) EXCEPT (Acc &msyn-partitive-loc) TARGET (N &msyn-partitive-loc) ;	
+COPY:msyn-partitive-loc (Loc SUGGEST) EXCEPT (Acc &msyn-partitive-loc) OR (Gen &msyn-partitive-loc) TARGET (N &msyn-partitive-loc) ;	
   ## Vaikko eanaš oassi olbmuid eai liiko sudno politihkkii, de dan eaba válde vuhtii Putin ja Medvedev. Vaikko eanaš oassi olbmuin eai liiko sudno politihkkii, de dan eaba váldde vuhtii Putin ja Medvedev. - rule doesnt work
   #R Nickel1994:498 "Goabbá dudnos sihtá láibbi?"
   # Duommá we need more examples
