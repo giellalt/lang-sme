@@ -199,8 +199,8 @@ LIST Ess = Ess ;
 
 LIST Allegro = Allegro ;
 
-LIST <NomGenSg> = <NomGenSg> ; #substantiver der nominativ og genitiv er homonyme
-LIST <NomAccSg> = <NomAccSg> ; #numeraler og indefinitt pronomener der nominativ og akkusativ er homonyme
+LIST <NomGenSg> = <NomGenSg> ; # substantiver eller numeraler der nominativ og genitiv er homonyme
+LIST <NomAccSg> = <NomAccSg> ; # numeraler og indefinitt pronomener der nominativ og akkusativ er homonyme
 LIST <DerNomAgPlNomInf> = <DerNomAgPlNomInf> ;
 
 LIST Sg = Sg ;
@@ -13812,7 +13812,7 @@ COPY:msyn-numphrase-sggen (Sg SUGGEST) EXCEPT (Pl) BEFORE CASE TARGET (Pl N &msy
 
 # Num wrong Num
 
-ADD:msyn-numphrase-sggen (&msyn-numphrase-sggen) TARGET (Num Sg Nom) OR NUM-INDEF + (Sg Nom) - <NomAccSg> OR NUM-INDEF + (Sg Acc) IF (*1 (N Gen &msyn-numphrase-sggen) OR (N Sg Gen) - &msyn-numphrase-sgacc BARRIER NOT-Attr - PrfPrc - GRADE-ADV - (A <AttrPred> Sg Nom) - (A <AttrPred> Sg Gen) - (A <AttrPred> Sg Acc)  - (Pcle Foc/Neg-ge) - (Pcle Foc/Pos-ge) LINK NOT 0 (Sg Nom)) # ("okta" Sg Nom) OR ("1" Sg Nom) 
+ADD:msyn-numphrase-sggen (&msyn-numphrase-sggen) TARGET (Num Sg Nom) - <NomGenSg> OR NUM-INDEF + (Sg Nom) - <NomGenSg> OR NUM-INDEF + (Sg Acc) IF (*1 (N Gen &msyn-numphrase-sggen) OR (N Sg Gen) - &msyn-numphrase-sgacc BARRIER NOT-Attr - PrfPrc - GRADE-ADV - (A <AttrPred> Sg Nom) - (A <AttrPred> Sg Gen) - (A <AttrPred> Sg Acc)  - (Pcle Foc/Neg-ge) - (Pcle Foc/Pos-ge) LINK NOT 0 (Sg Nom)) # ("okta" Sg Nom) OR ("1" Sg Nom) 
 (NEGATE 0 (Sg Acc))
 (NEGATE 0 ("<.*%>"r)) 
 (NEGATE 0 (Num "<[0123456789]-.*>"r))
@@ -13844,15 +13844,6 @@ ADDRELATION ($2 RIGHT) (Num &msyn-numphrase-sggen) OR NUM-INDEF + (Sg &msyn-nump
 
 
 COPY:msyn-numphrase-sggen (Sg Gen SUGGEST) EXCEPT (Pl Gen) OR (Sg Acc) TARGET (Num Pl &msyn-numphrase-sggen) OR (Num Sg Nom &msyn-numphrase-sggen) OR NUM-INDEF + (Pl &msyn-numphrase-sggen);
-
-
-
-
-
-
-
-
-
 
 
 
@@ -13995,7 +13986,8 @@ COPY:msyn-numphrase-sgill (Sg SUGGEST) EXCEPT (Pl) BEFORE CASE TARGET (Pl N &msy
 
 # correct noun wrong Num
 
-ADD:msyn-numphrase-sgill (&msyn-numphrase-sgill) TARGET (N Sg Ill) IF (*-1 (Num Sg Nom) OR (Num Sg Acc) OR (Num Pl Ill) OR NUM-INDEF + (Sg Nom) OR NUM-INDEF + (Sg Acc) OR NUM-INDEF + (Pl Ill) BARRIER NOT-Attr - PrfPrc - GRADE-ADV  - (A <AttrPred> Sg Nom) - (A <AttrPred> Sg Gen) - (A <AttrPred> Sg Acc) - (Pcle Foc/Neg-ge) - (Pcle Foc/Pos-ge) - (N Gen) OR JAHKASAS LINK NEGATE -1 KLASS) 
+ADD:msyn-numphrase-sgill (&msyn-numphrase-sgill) TARGET (N Sg Ill) IF (*-1 (Num Sg Nom) - <NomGenSg>  OR (Num Sg Acc) OR (Num Pl Ill) OR NUM-INDEF + (Sg Nom) OR NUM-INDEF + (Sg Acc) OR NUM-INDEF + (Pl Ill) BARRIER NOT-Attr - PrfPrc - GRADE-ADV - (A <AttrPred> Sg Nom) - (A <AttrPred> Sg Gen) - (A <AttrPred> Sg Acc) - (Pcle Foc/Neg-ge) - (Pcle Foc/Pos-ge) - (N Gen) OR JAHKASAS LINK NEGATE -1 KLASS) 
+(NEGATE *-1 PrfPrc BARRIER NOT-Attr  LINK -1 (N Sg Gen))
 (NEGATE *-1 (N Sg Gen) BARRIER NOT-Attr - PrfPrc - GRADE-ADV - Gen LINK *-1 (Num Sg Gen) OR (Num Sg Acc) BARRIER NOT-Attr - PrfPrc - GRADE-ADV - Gen) # jus lea sggen ja riekta
 #(NEGATE *-1 ("okta") OR ("1") BARRIER NOT-Attr - PrfPrc)
 (NEGATE *-1 (Num Sem/Year) BARRIER NOT-Attr - PrfPrc)
@@ -14042,7 +14034,8 @@ ADD:msyn-numphrase-sgill (&msyn-numphrase-sgill) TARGET (Pl Ill) IF ((0 N) OR (0
 	
 # Num
 
-ADD:msyn-numphrase-sgill (&msyn-numphrase-sgill) TARGET (Num Sg Nom) OR (Num Sg Acc) OR (Num Pl Ill) OR (Num Sg Ill) OR (Num Ill Attr) OR NUM-INDEF + (Sg Nom) OR NUM-INDEF + (Sg Gen) OR NUM-INDEF + (Sg Acc) OR NUM-INDEF + (Sg Ill) OR NUM-INDEF + (Pl Ill) IF (*1 (N Ill &msyn-numphrase-sgill) BARRIER NOT-Attr - PrfPrc - GRADE-ADV - (A <AttrPred> Sg Nom) - (A <AttrPred> Sg Gen) - (A <AttrPred> Sg Acc)  - (Pcle Foc/Neg-ge) - (Pcle Foc/Pos-ge) - (N Gen)) # ("okta" Sg Nom) OR ("1" Sg Nom) 
+ADD:msyn-numphrase-sgill (&msyn-numphrase-sgill) TARGET (Num Sg Nom) - <NomGenSg> OR (Num Sg Acc) OR (Num Pl Ill) OR (Num Sg Ill) OR (Num Ill Attr) OR NUM-INDEF + (Sg Nom) OR NUM-INDEF + (Sg Gen) OR NUM-INDEF + (Sg Acc) OR NUM-INDEF + (Sg Ill) OR NUM-INDEF + (Pl Ill) IF (*1 (N Ill &msyn-numphrase-sgill) BARRIER NOT-Attr - PrfPrc - GRADE-ADV - (A <AttrPred> Sg Nom) - (A <AttrPred> Sg Gen) - (A <AttrPred> Sg Acc)  - (Pcle Foc/Neg-ge) - (Pcle Foc/Pos-ge) - (N Gen)) # ("okta" Sg Nom) OR ("1" Sg Nom) 
+(NEGATE 1 (N Sg Gen) LINK *1 PrfPrc LINK *1 (N Ill &msyn-numphrase-sgill) BARRIER NOT-Attr)
 (NEGATE 0 ("<.*%>"r)) 
 (NEGATE 0 (Num "<[0123456789]-.*>"r))
 (NEGATE 0 (Num "<biel.*>"r))
