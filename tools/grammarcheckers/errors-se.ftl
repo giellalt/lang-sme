@@ -226,9 +226,15 @@ msyn-partitive-loc = Boasttukásus
     .ref-1 = Nickel1994:498
 
 ## !!
-msyn-PassPrtSg3-PrtSg3 =
-    .desc =
+msyn-PassPrtSg3-PrtSg3 = Boasttuhápmi
+    .desc = 
     .example-1 = Maŋŋel go válgabohtosat čilge, de lea son gártan viđat sadjái Ellen Inga O. Hætta maŋábeallai, gii gal baicca gizzui ollu go oaččui liigejienaid.
+
+
+msyn-PassPrsPl1-PrtPl1  = Boasttuhápmi
+    .desc = 
+    .example-1 = Go mii čurvot nuoraide de galge vástidit.
+
 
 msyn-pers-refl-pron = Pronomengeavahus
     .desc = Don leat čállán persovnnalaš pronomena "$1". Dán oktavuođas galgá geavahit refleksiiva prononmena "€1".
